@@ -1,0 +1,44 @@
+lines 992-1033 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_free_available}
+{xrst_spell
+   inuse
+}
+
+Free Memory Currently Available for Quick Use by a Thread
+#########################################################
+
+Syntax
+******
+``thread_alloc::free_available`` ( *thread* )
+
+Purpose
+*******
+Return to the system all the memory that is currently being
+:ref:`held<ta_hold_memory-name>` for quick use by the specified thread.
+
+Extra Memory
+============
+In the case where *thread*  > 0 ,
+some extra memory is used to track allocations by the specified thread.
+If
+
+   ``thread_alloc::inuse`` ( *thread* ) == 0
+
+the extra memory is also returned to the system.
+
+thread
+******
+This argument has prototype
+
+   ``size_t`` *thread*
+
+Either :ref:`thread_num<ta_thread_num-name>` must be the same as *thread* ,
+or the current execution mode must be sequential
+(not :ref:`parallel<ta_in_parallel-name>` ).
+
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_free_available}

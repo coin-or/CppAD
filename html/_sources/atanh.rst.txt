@@ -1,0 +1,37 @@
+lines 183-217 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin atanh}
+{xrst_spell
+   tanh
+}
+The Inverse Hyperbolic Tangent Function: atanh
+##############################################
+
+Syntax
+******
+*y* = ``atanh`` ( *x* )
+
+Description
+***********
+The inverse hyperbolic tangent function is defined by
+*x* == ``tanh`` ( *y* ) .
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/atanh.cpp
+}
+The file
+:ref:`atanh.cpp-name`
+contains an example and test of this function.
+
+{xrst_end atanh}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/utility/thread_alloc.cpp
+
+{xrst_begin thread_alloc.cpp}
+
+Fast Multi-Threading Memory Allocator: Example and Test
+#######################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end thread_alloc.cpp}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/div.cpp
+
+{xrst_begin div.cpp}
+
+AD Binary Division: Example and Test
+####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end div.cpp}

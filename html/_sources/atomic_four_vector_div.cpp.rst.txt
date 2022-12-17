@@ -1,0 +1,27 @@
+lines 6-30 of file: example/atomic_four/vector/div.cpp
+
+{xrst_begin atomic_four_vector_div.cpp}
+
+Atomic Vector Division Example
+##############################
+
+f(u, v, w)
+**********
+For this example,
+:math:`f : \B{R}^{2m} \rightarrow \B{R}^m`
+is defined by :math:`f(u, v) = u * u / v`.
+where *u* and *v* are in :math:`\B{R}^m`.
+
+g(u, v)
+*******
+For this example :math:`g : \B{R}^{2m} \rightarrow \B{R}^m`
+is defined by :math:`g_i (u, v) = \partial_{v[i]}  f_i (u, v)`
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_div.cpp}

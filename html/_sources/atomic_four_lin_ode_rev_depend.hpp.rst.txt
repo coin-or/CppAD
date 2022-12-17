@@ -1,0 +1,57 @@
+lines 8-62 of file: include/cppad/example/atomic_four/lin_ode/rev_depend.hpp
+
+{xrst_begin atomic_four_lin_ode_rev_depend.hpp}
+{xrst_spell
+   wk
+}
+
+Atomic Linear ODE Forward Type Calculation: Example Implementation
+##################################################################
+
+Purpose
+*******
+The ``rev_depend`` routine overrides the virtual functions
+used by the atomic_four base; see
+:ref:`rev_depend<atomic_four_rev_depend-name>` .
+
+Notation
+********
+We use the notation:
+:ref:`atomic_four_lin_ode@call_id`
+:ref:`atomic_four_lin_ode@r`
+:ref:`atomic_four_lin_ode@pattern`
+:ref:`atomic_four_lin_ode@transpose`
+:ref:`atomic_four_lin_ode@pattern@nnz` ,
+:ref:`atomic_four_lin_ode@pattern@row` ,
+:ref:`atomic_four_lin_ode@pattern@col` ,
+:ref:`atomic_four_lin_ode@x` ,
+:ref:`atomic_four_lin_ode@x@n` ,
+:ref:`atomic_four_lin_ode@x@A(x)` ,
+:ref:`atomic_four_lin_ode@x@b(x)` ,
+:ref:`atomic_four_lin_ode@y(x)` ,
+:ref:`atomic_four_lin_ode@y(x)@m` ,
+:ref:`atomic_four_lin_ode@vk(x)` ,
+and the following additional notation:
+
+wk(x)
+=====
+Note that the factor :math:`r / k`,
+in the definition of :math:`v^k (x)`,
+is constant (with respect to the variables).
+Hence it suffices to compute the dependency for
+
+.. math::
+
+   h (x) = \sum_{k=0}^4 w^k (x)
+
+where :math:`w^0 (x) = b(x)` and for :math:`k = 1, 2, \ldots`,
+:math:`w^k (x) = A(x) w^{k-1} (x)`.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_rev_depend.hpp}

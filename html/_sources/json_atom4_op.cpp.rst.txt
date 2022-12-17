@@ -1,0 +1,15 @@
+lines 6-18 of file: example/json/atom4_op.cpp
+
+{xrst_begin json_atom4_op.cpp}
+
+Json Atomic Function Operator: Example and Test
+###############################################
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end json_atom4_op.cpp}

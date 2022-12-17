@@ -1,0 +1,37 @@
+lines 327-361 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin erfc}
+{xrst_spell
+   erfc
+}
+The Complementary Error Function: erfc
+######################################
+
+Syntax
+******
+*y* = ``erfc`` ( *x* )
+
+Description
+***********
+Returns the value of the complementary error function which is defined by
+*y* == 1 ``- erf`` ( *x* ) .
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/erfc.cpp
+}
+The file
+:ref:`erfc.cpp-name`
+contains an example and test of this function.
+
+{xrst_end erfc}

@@ -1,0 +1,38 @@
+lines 8-43 of file: example/ipopt_solve/get_started.cpp
+
+{xrst_begin ipopt_solve_get_started.cpp}
+{xrst_spell
+   lc
+}
+
+Nonlinear Programming Using CppAD and Ipopt: Example and Test
+#############################################################
+
+Purpose
+*******
+This example program demonstrates how to use :ref:`ipopt_solve-name` to
+solve the example problem in the Ipopt documentation; i.e., the problem
+
+.. math::
+
+   \begin{array}{lc}
+   {\rm minimize \; }      &  x_1 * x_4 * (x_1 + x_2 + x_3) + x_3
+   \\
+   {\rm subject \; to \; } &  x_1 * x_2 * x_3 * x_4  \geq 25
+   \\
+                     &  x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40
+   \\
+                     &  1 \leq x_1, x_2, x_3, x_4 \leq 5
+   \end{array}
+
+Configuration Requirement
+*************************
+This example will be compiled and tested provided
+:ref:`cmake@include_ipopt` is on the cmake command line.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end ipopt_solve_get_started.cpp}

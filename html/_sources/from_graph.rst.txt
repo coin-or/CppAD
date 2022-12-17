@@ -1,0 +1,98 @@
+lines 14-109 of file: include/cppad/core/graph/from_graph.hpp
+
+{xrst_begin from_graph}
+
+ADFun Object Corresponding to a CppAD Graph
+###########################################
+
+Syntax
+******
+
+| |tab| ``cpp_graph`` *graph_obj*
+| |tab| ``ADFun<`` *Base* > *fun*
+| |tab| *fun* . ``from_graph`` ( *graph_obj* )
+| |tab| *fun* . ``from_graph`` ( *graph_obj* , *dyn2var* , *var2dyn* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ONE_ARGUMENT
+   // END_ONE_ARGUMENT
+}
+{xrst_literal
+   // BEGIN_WITH_IS_DYNAMIC
+   // END_WITH_IS_DYNAMIC
+}
+
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
+
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+
+graph_obj
+*********
+is a :ref:`cpp_ad_graph-name` representation of this function.
+
+dyn2var
+*******
+is a vector with size equal to the number of independent dynamic parameters
+in the graph; i.e., the size of :ref:`cpp_ad_graph@Node Indices@p` .
+It specifies which independent dynamic parameters in the graph are
+independent variables in the function *fun* .
+
+var2dyn
+*******
+is a vector with size equal to the number of independent variables
+in the graph; i.e., the size of :ref:`cpp_ad_graph@Node Indices@x` .
+It specifies which independent variables in the graph are
+independent dynamic parameters in the function *fun* .
+
+fun
+***
+It *dyn2var* and *var2dyn* are not present,
+the independent dynamic parameters and independent variables in *fun*
+are the same as for the graph.
+Otherwise, they are described below.
+
+m_true, m_false
+===============
+Let *m_true* ( *m_false* ) be the number of true (false)
+elements of *dyn2var* .
+
+n_true, n_false
+===============
+Let *n_true* ( *n_false* ) be the number of true (false)
+elements of *var2dyn* .
+
+Independent Dynamic Parameters
+==============================
+The first *m_false* independent dynamic parameters in *fun*
+correspond to the false components of *dyn2var*
+and have the same order as in the graph.
+The next *n_true* independent dynamic parameters in *fun*
+correspond to the true components of *var2dyn*
+and have the same order as in the graph.
+
+Independent Variables
+=====================
+The first *m_true* independent variables in *fun*
+correspond to the true components of *dyn2var*
+and have the same order as in the graph.
+The next *n_false* independent variables in *fun*
+correspond to the false components of *var2dyn*
+and have the same order as in the graph.
+{xrst_toc_hidden
+   example/graph/switch_var_dyn.cpp
+}
+Examples
+********
+The file :ref:`switch_var_dyn.cpp-name` contains an example and test
+of this routine.
+For simpler examples, that do not change the dynamic parameters and variables;
+see :ref:`graph_op_enum examples<graph_op_enum@Examples>` .
+
+{xrst_end from_graph}

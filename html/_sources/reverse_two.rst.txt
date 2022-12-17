@@ -1,0 +1,192 @@
+lines 5-194 of file: xrst/reverse/reverse_two.xrst
+
+{xrst_begin reverse_two}
+{xrst_spell
+   dw
+}
+
+Second Order Reverse Mode
+#########################
+
+Syntax
+******
+*dw* = *f* . ``Reverse`` (2, *w* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+Reverse mode computes the derivative of the :ref:`Forward-name` mode
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>`
+with respect to the domain variable :math:`x`.
+
+x^(k)
+*****
+For :math:`k = 0, 1`,
+the vector :math:`x^{(k)} \in \B{R}^n` is defined as the value of
+*x_k* in the previous call (counting this call) of the form
+
+   *f* . ``Forward`` ( *k* , *x_k* )
+
+If there is no previous call with :math:`k = 0`,
+:math:`x^{(0)}` is the value of the independent variables when the
+corresponding
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` was recorded.
+
+Capital W
+*********
+The functions
+:math:`W_0 : \B{R}^n \rightarrow \B{R}` and
+:math:`W_1 : \B{R}^n \rightarrow \B{R}`
+are defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   W_0 ( u ) & = & w_0 * F_0 ( u ) + \cdots + w_{m-1} * F_{m-1} (u)
+   \\
+   W_1 ( u ) & = &
+   w_0 * F_0^{(1)} ( u ) * x^{(1)}
+      + \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
+   \end{eqnarray}
+
+This operation computes the derivatives
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   W_0^{(1)} (u) & = &
+      w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
+   \\
+   W_1^{(1)} (u) & = &
+      w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
+      + \cdots +
+      w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
+   \end{eqnarray}
+
+at :math:`u = x^{(0)}`.
+
+f
+*
+The object *f* has prototype
+
+   ``const ADFun<`` *Base* > *f*
+
+Before this call to ``Reverse`` , the value returned by
+
+   *f* . ``size_order`` ()
+
+must be greater than or equal two (see :ref:`size_order-name` ).
+
+Lower w
+*******
+The argument *w* has prototype
+
+   ``const`` *Vector* & *w*
+
+(see :ref:`reverse_two@Vector` below)
+and its size
+must be equal to *m* , the dimension of the
+:ref:`fun_property@Range` space for *f* .
+
+dw
+**
+The result *dw* has prototype
+
+   *Vector* *dw*
+
+(see :ref:`reverse_two@Vector` below).
+It contains both the derivative
+:math:`W^{(1)} (x)` and the derivative :math:`U^{(1)} (x)`.
+The size of *dw*
+is equal to :math:`n \times 2`,
+where :math:`n` is the dimension of the
+:ref:`fun_property@Domain` space for *f* .
+
+First Order Partials
+====================
+For :math:`j = 0 , \ldots , n - 1`,
+
+.. math::
+
+   dw [ j * 2 + 0 ]
+   =
+   \D{ W_0 }{ u_j } \left( x^{(0)} \right)
+   =
+   w_0 * \D{ F_0 }{ u_j } \left( x^{(0)} \right)
+   + \cdots +
+   w_{m-1} * \D{ F_{m-1} }{ u_j } \left( x^{(0)} \right)
+
+This part of *dw* contains the same values as are returned
+by :ref:`reverse_one-name` .
+
+Second Order Partials
+=====================
+For :math:`j = 0 , \ldots , n - 1`,
+
+.. math::
+
+   dw [ j * 2 + 1 ]
+   =
+   \D{ W_1 }{ u_j } \left( x^{(0)} \right)
+   =
+   \sum_{\ell=0}^{n-1} x_\ell^{(1)} \left[
+   w_0 * \DD{ F_0 }{ u_\ell }{ u_j } \left( x^{(0)} \right)
+   + \cdots +
+   w_{m-1} * \DD{ F_{m-1} }{ u_\ell }{ u_j } \left( x^{(0)} \right)
+   \right]
+
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Hessian Times Direction
+***********************
+Suppose that :math:`w` is the *i*-th elementary vector.
+It follows that for :math:`j = 0, \ldots, n-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   dw[ j * 2 + 1 ]
+   & = &
+   w_i \sum_{\ell=0}^{n-1}
+   \DD{F_i}{ u_j }{ u_\ell } \left( x^{(0)} \right) x_\ell^{(1)}
+   \\
+   & = &
+   \left[ F_i^{(2)} \left( x^{(0)} \right) * x^{(1)} \right]_j
+   \end{eqnarray}
+
+Thus the vector :math:`( dw[1], dw[3], \ldots , dw[ n * q - 1 ] )`
+is equal to the Hessian of :math:`F_i (x)` times the direction
+:math:`x^{(1)}`.
+In the special case where
+:math:`x^{(1)}` is the *l*-th
+:ref:`glossary@Elementary Vector` ,
+
+.. math::
+
+   dw[ j * 2 + 1 ] = \DD{ F_i }{ x_j }{ x_\ell } \left( x^{(0)} \right)
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/reverse_two.cpp
+   example/general/hes_times_dir.cpp
+}
+The files
+:ref:`reverse_two.cpp-name`
+and
+:ref:`hes_times_dir.cpp-name`
+contain a examples and tests of reverse mode calculations.
+They return true if they succeed and false otherwise.
+
+{xrst_end reverse_two}

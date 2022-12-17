@@ -1,0 +1,32 @@
+lines 6-35 of file: speed/cppadcg/det_lu.cpp
+
+{xrst_begin cppadcg_det_lu.cpp}
+
+Cppadcg Speed: Gradient of Determinant Using Lu Factorization
+#############################################################
+
+Specifications
+**************
+:ref:`link_det_lu-name`
+
+Implementation
+**************
+A cppadcg version of this test is not yet implemented
+{xrst_spell_off}
+{xrst_code cpp} */
+# include <map>
+# include <cppad/utility/vector.hpp>
+
+// list of possible options
+extern std::map<std::string, bool> global_option;
+
+bool link_det_lu(
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &gradient )
+{  return false; }
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppadcg_det_lu.cpp}

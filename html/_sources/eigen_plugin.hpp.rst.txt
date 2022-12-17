@@ -1,0 +1,17 @@
+lines 8-22 of file: include/cppad/example/eigen_plugin.hpp
+
+{xrst_begin eigen_plugin.hpp}
+{xrst_spell
+   plugin
+}
+
+Source Code for eigen_plugin.hpp
+################################
+{xrst_spell_off}
+{xrst_code cpp} */
+// Declaration needed, before eigen-3.3.3, so Eigen vector is a simple vector
+typedef Scalar value_type;
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end eigen_plugin.hpp}

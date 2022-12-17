@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="simplex_method, abs_normal:, solve, a, linear, program, using, simplex, method" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="prototype" name="keywords" />
+<meta content="source" name="keywords" />
+<meta content="problem" name="keywords" />
+<meta content="vector" name="keywords" />
+<meta content="level" name="keywords" />
+<meta content="a" name="keywords" />
+<meta content="b" name="keywords" />
+<meta content="c" name="keywords" />
+<meta content="maxitr" name="keywords" />
+<meta content="xout" name="keywords" />
+<meta content="ok" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simplex_method &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="simplex_method.cpp" href="simplex_method.cpp.html" />
+    <link rel="prev" title="abs_eval.hpp" href="abs_eval.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="other_adfun.html">other_adfun</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base2ad.html">base2ad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_ad_graph.html">json_ad_graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_ad_graph.html">cpp_ad_graph</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="abs_normal_fun.html">abs_normal_fun</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="example_abs_normal.html">example_abs_normal</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="abs_get_started.cpp.html">abs_get_started.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_print_mat.html">abs_print_mat</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_eval.html">abs_eval</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">simplex_method</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="simplex_method.cpp.html">simplex_method.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="simplex_method.hpp.html">simplex_method.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="lp_box.html">lp_box</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_min_linear.html">abs_min_linear</a></li>
+<li class="toctree-l6"><a class="reference internal" href="min_nso_linear.html">min_nso_linear</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qp_interior.html">qp_interior</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qp_box.html">qp_box</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_min_quad.html">abs_min_quad</a></li>
+<li class="toctree-l6"><a class="reference internal" href="min_nso_quad.html">min_nso_quad</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="other_adfun.html">other_adfun</a> &raquo;</li>
+          <li><a href="abs_normal_fun.html">abs_normal_fun</a> &raquo;</li>
+          <li><a href="example_abs_normal.html">example_abs_normal</a> &raquo;</li>
+      <li>simplex_method</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/simplex_method.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="simplex-method">
+<span id="simplex-method-name"></span><h1>simplex_method<a class="headerlink" href="#simplex-method" title="Permalink to this headline"></a></h1>
+<section id="abs-normal-solve-a-linear-program-using-simplex-method">
+<span id="simplex-method-title"></span><span id="index-0"></span><h2>abs_normal: Solve a Linear Program Using Simplex Method<a class="headerlink" href="#abs-normal-solve-a-linear-program-using-simplex-method" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#prototype" id="id2">Prototype</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id3">Source</a></p></li>
+<li><p><a class="reference internal" href="#problem" id="id4">Problem</a></p></li>
+<li><p><a class="reference internal" href="#vector" id="id5">Vector</a></p></li>
+<li><p><a class="reference internal" href="#level" id="id6">level</a></p></li>
+<li><p><a class="reference internal" href="#a" id="id7">A</a></p></li>
+<li><p><a class="reference internal" href="#b" id="id8">b</a></p></li>
+<li><p><a class="reference internal" href="#c" id="id9">c</a></p></li>
+<li><p><a class="reference internal" href="#maxitr" id="id10">maxitr</a></p></li>
+<li><p><a class="reference internal" href="#xout" id="id11">xout</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id12">ok</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id13">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="simplex-method-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>ok</em> = <code class="docutils literal notranslate"><span class="pre">simplex_method</span></code> ( <em>level</em> , <em>b</em> , <em>A</em> , <em>c</em> , <em>maxitr</em> , <em>xout</em> )</p>
+</div></blockquote>
+</section>
+<section id="prototype">
+<span id="simplex-method-prototype"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Prototype</a><a class="headerlink" href="#prototype" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">simplex_method</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">        </span><span class="n">level</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">A</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">b</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">        </span><span class="n">maxitr</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w">       </span><span class="n">xout</span><span class="w">    </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="source">
+<span id="simplex-method-source"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<p>This following is a link to the source code for this example:
+<a class="reference internal" href="simplex_method.hpp.html#simplex-method-hpp-name"><span class="std std-ref">simplex_method.hpp</span></a> .</p>
+</section>
+<section id="problem">
+<span id="simplex-method-problem"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Problem</a><a class="headerlink" href="#problem" title="Permalink to this headline"></a></h3>
+<p>We are given
+<span class="math notranslate nohighlight">\(A \in \B{R}^{m \times n}\)</span>,
+<span class="math notranslate nohighlight">\(b \in \B{R}^m\)</span>,
+<span class="math notranslate nohighlight">\(c \in \B{R}^n\)</span>.
+This routine solves the problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rl}
+\R{minimize} &amp;
+g^T x \; \R{w.r.t} \; x \in \B{R}_+^n
+\\
+\R{subject \; to} &amp; A x + b \leq 0
+\end{array}\end{split}\]</div>
+</section>
+<section id="vector">
+<span id="simplex-method-vector"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Vector</a><a class="headerlink" href="#vector" title="Permalink to this headline"></a></h3>
+<p>The type <em>Vector</em> is a
+simple vector with elements of type <code class="docutils literal notranslate"><span class="pre">double</span></code> .</p>
+</section>
+<section id="level">
+<span id="simplex-method-level"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">level</a><a class="headerlink" href="#level" title="Permalink to this headline"></a></h3>
+<p>This value is less than or equal two.
+If <em>level</em>  == 0 ,
+no tracing is printed.
+If <em>level</em>  &gt;= 1 ,
+a trace <span class="math notranslate nohighlight">\(x\)</span> and the corresponding objective <span class="math notranslate nohighlight">\(z\)</span>
+is printed at each iteration.
+If <em>level</em>  == 2 ,
+a trace of the simplex Tableau is printed at each iteration.</p>
+</section>
+<section id="a">
+<span id="simplex-method-a"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">A</a><a class="headerlink" href="#a" title="Permalink to this headline"></a></h3>
+<p>This is a <a class="reference internal" href="glossary.html#glossary-row-major-representation"><span class="std std-ref">row-major</span></a> representation
+of the matrix <span class="math notranslate nohighlight">\(A\)</span> in the problem.</p>
+</section>
+<section id="b">
+<span id="simplex-method-b"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">b</a><a class="headerlink" href="#b" title="Permalink to this headline"></a></h3>
+<p>This is the vector <span class="math notranslate nohighlight">\(b\)</span> in the problem.</p>
+</section>
+<section id="c">
+<span id="simplex-method-c"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">c</a><a class="headerlink" href="#c" title="Permalink to this headline"></a></h3>
+<p>This is the vector <span class="math notranslate nohighlight">\(c\)</span> in the problem.</p>
+</section>
+<section id="maxitr">
+<span id="simplex-method-maxitr"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">maxitr</a><a class="headerlink" href="#maxitr" title="Permalink to this headline"></a></h3>
+<p>This is the maximum number of simplex iterations to try before giving up
+on convergence.</p>
+</section>
+<section id="xout">
+<span id="simplex-method-xout"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">xout</a><a class="headerlink" href="#xout" title="Permalink to this headline"></a></h3>
+<p>This argument has size is <em>n</em> and
+the input value of its elements does no matter.
+Upon return it is the primal variables corresponding to the problem solution.</p>
+</section>
+<section id="ok">
+<span id="simplex-method-ok"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>If the return value <em>ok</em> is true, a solution has been found.</p>
+</section>
+<section id="example">
+<span id="simplex-method-example"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="simplex_method.cpp.html#simplex-method-cpp-name"><span class="std std-ref">simplex_method.cpp</span></a> contains an example and test of
+<code class="docutils literal notranslate"><span class="pre">simplex_method</span></code> .</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="abs_eval.hpp.html" class="btn btn-neutral float-left" title="abs_eval.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simplex_method.cpp.html" class="btn btn-neutral float-right" title="simplex_method.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

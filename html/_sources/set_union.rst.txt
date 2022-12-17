@@ -1,0 +1,52 @@
+lines 9-58 of file: include/cppad/utility/set_union.hpp
+
+{xrst_begin set_union}
+
+Union of Standard Sets
+######################
+
+Syntax
+******
+
+   # ``include <cppad/utility/set_union.hpp>``
+
+*result* = ``set_union`` ( *left* , *right* )
+
+Purpose
+*******
+This is a simplified (and restricted) interface to
+the ``std::union`` operation.
+
+Element
+*******
+This is the type of the elements of the sets.
+
+left
+****
+This argument has prototype
+
+   ``const std::set<`` *Element* >& *left*
+
+right
+*****
+This argument has prototype
+
+   ``const std::set<`` *Element* >& *right*
+
+result
+******
+The return value has prototype
+
+   ``std::set<`` *Element* >& *result*
+
+It contains the union of *left* and *right* .
+Note that C++11 detects that the return value is a temporary
+and uses it for the result instead of making a separate copy.
+{xrst_toc_hidden
+   example/utility/set_union.cpp
+}
+Example
+*******
+The file :ref:`set_union.cpp-name` contains an example and test of this
+
+{xrst_end set_union}

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="fun_deprecated, adfun, object, deprecated, member, functions" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="dependent" name="keywords" />
+<meta content="deprecated, 2007-08-07" name="keywords" />
+<meta content="order" name="keywords" />
+<meta content="deprecated, 2006-03-31" name="keywords" />
+<meta content="memory" name="keywords" />
+<meta content="deprecated, 2006-03-31" name="keywords" />
+<meta content="size" name="keywords" />
+<meta content="deprecated, 2006-04-03" name="keywords" />
+<meta content="taylor_size" name="keywords" />
+<meta content="deprecated, 2006-06-17" name="keywords" />
+<meta content="use_vecad" name="keywords" />
+<meta content="deprecated, 2006-04-08" name="keywords" />
+<meta content="size_taylor" name="keywords" />
+<meta content="deprecated, 2014-03-18" name="keywords" />
+<meta content="capacity_taylor" name="keywords" />
+<meta content="deprecated, 2014-03-18" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fun_deprecated &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CompareChange" href="CompareChange.html" />
+    <link rel="prev" title="include_deprecated" href="include_deprecated.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="deprecated.html">deprecated</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="include_deprecated.html">include_deprecated</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">fun_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CompareChange.html">CompareChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_max_thread.html">omp_max_thread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="track_new_del.html">track_new_del</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_alloc.html">omp_alloc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory_leak.html">memory_leak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epsilon.html">epsilon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_ipopt_nlp.html">cppad_ipopt_nlp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_one.html">atomic_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two.html">atomic_two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two_example.html">atomic_two_example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_two.cpp.html">multi_atomic_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chkpoint_one.html">chkpoint_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_one.cpp.html">multi_chkpoint_one.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zdouble.html">zdouble</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autotools.html">autotools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="deprecated.html">deprecated</a> &raquo;</li>
+      <li>fun_deprecated</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/fun_deprecated.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="fun-deprecated">
+<span id="fun-deprecated-name"></span><h1>fun_deprecated<a class="headerlink" href="#fun-deprecated" title="Permalink to this headline"></a></h1>
+<section id="adfun-object-deprecated-member-functions">
+<span id="fun-deprecated-title"></span><span id="index-0"></span><h2>ADFun Object Deprecated Member Functions<a class="headerlink" href="#adfun-object-deprecated-member-functions" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id3">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id4">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#dependent" id="id5">Dependent</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deprecated-2007-08-07" id="id6">Deprecated 2007-08-07</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#order" id="id7">Order</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deprecated-2006-03-31" id="id8">Deprecated 2006-03-31</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#memory" id="id9">Memory</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fun-deprecated-memory-deprecated-2006-03-31" id="id10">Deprecated 2006-03-31</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#size" id="id11">Size</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deprecated-2006-04-03" id="id12">Deprecated 2006-04-03</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#taylor-size" id="id13">taylor_size</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deprecated-2006-06-17" id="id14">Deprecated 2006-06-17</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#use-vecad" id="id15">use_VecAD</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deprecated-2006-04-08" id="id16">Deprecated 2006-04-08</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#size-taylor" id="id17">size_taylor</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deprecated-2014-03-18" id="id18">Deprecated 2014-03-18</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#capacity-taylor" id="id19">capacity_taylor</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fun-deprecated-capacity-taylor-deprecated-2014-03-18" id="id20">Deprecated 2014-03-18</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="syntax">
+<span id="fun-deprecated-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id3">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Dependent</span></code> ( <em>y</em> )</div>
+<div class="line"><em>o</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Order</span></code> ()</div>
+<div class="line"><em>m</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Memory</span></code> ()</div>
+<div class="line"><em>s</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Size</span></code> ()</div>
+<div class="line"><em>t</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">taylor_size</span></code> ()</div>
+<div class="line"><em>u</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">use_VecAD</span></code> ()</div>
+<div class="line"><em>v</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_taylor</span></code> ()</div>
+<div class="line"><em>w</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">capacity_taylor</span></code> ()</div>
+</div>
+</section>
+<section id="purpose">
+<span id="fun-deprecated-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id4">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; functions documented here have been deprecated;
+i.e., they are no longer approved of and may be removed from some future
+version of CppAD.</p>
+</section>
+<section id="dependent">
+<span id="fun-deprecated-dependent"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id5">Dependent</a><a class="headerlink" href="#dependent" title="Permalink to this headline"></a></h3>
+<p>A recording of and AD of <em>Base</em>
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a>
+is started by a call of the form</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Independent</span></code> ( <em>x</em> )</p>
+</div></blockquote>
+<p>If there is only one such recording at the current time,
+you can use <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Dependent</span></code> ( <em>y</em> ) in place of</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Dependent</span></code> ( <em>x</em> , <em>y</em> )</p>
+</div></blockquote>
+<p>See <a class="reference internal" href="Dependent.html#dependent-name"><span class="std std-ref">Dependent</span></a> for a description of this operation.</p>
+<section id="deprecated-2007-08-07">
+<span id="fun-deprecated-dependent-deprecated-2007-08-07"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id6">Deprecated 2007-08-07</a><a class="headerlink" href="#deprecated-2007-08-07" title="Permalink to this headline"></a></h4>
+<p>This syntax was deprecated when CppAD was extended to allow
+for more than one <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; recording to be
+active at one time.
+This was necessary to allow for multiple threading applications.</p>
+</section>
+</section>
+<section id="order">
+<span id="fun-deprecated-order"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id7">Order</a><a class="headerlink" href="#order" title="Permalink to this headline"></a></h3>
+<p>The result <em>o</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>o</em></p>
+</div></blockquote>
+<p>and is the order of the previous forward operation
+using the function <em>f</em> .
+This is the highest order of the
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a>
+that are currently stored in <em>f</em> .</p>
+<section id="deprecated-2006-03-31">
+<span id="fun-deprecated-order-deprecated-2006-03-31"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id8">Deprecated 2006-03-31</a><a class="headerlink" href="#deprecated-2006-03-31" title="Permalink to this headline"></a></h4>
+<p>Zero order corresponds to function values being stored in <em>f</em> .
+In the future, we would like to be able to erase the function
+values so that <em>f</em> uses less memory.
+In this case, the return value of <code class="docutils literal notranslate"><span class="pre">Order</span></code> would not make sense.
+Use <a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">size_order</span></a> to obtain
+the number of Taylor coefficients currently stored
+in the ADFun object <em>f</em>
+(which is equal to the order plus one).</p>
+</section>
+</section>
+<section id="memory">
+<span id="fun-deprecated-memory"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id9">Memory</a><a class="headerlink" href="#memory" title="Permalink to this headline"></a></h3>
+<p>The result</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>m</em></p>
+</div></blockquote>
+<p>and is the number of memory units (<code class="docutils literal notranslate"><span class="pre">sizeof</span></code> ) required for the
+information currently stored in <em>f</em> .
+This memory is returned to the system when the destructor for
+<em>f</em> is called.</p>
+<section id="fun-deprecated-memory-deprecated-2006-03-31">
+<span id="index-8"></span><span id="id1"></span><h4><a class="toc-backref" href="#id10">Deprecated 2006-03-31</a><a class="headerlink" href="#fun-deprecated-memory-deprecated-2006-03-31" title="Permalink to this headline"></a></h4>
+<p>It used to be the case that an ADFun object just kept increasing its
+buffers to the maximum size necessary during its lifetime.
+It would then return the buffers to the system when its destructor
+was called.
+This is no longer the case, an ADFun object now returns memory
+when it no longer needs the values stored in that memory.
+Thus the <code class="docutils literal notranslate"><span class="pre">Memory</span></code> function is no longer well defined.</p>
+</section>
+</section>
+<section id="size">
+<span id="fun-deprecated-size"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id11">Size</a><a class="headerlink" href="#size" title="Permalink to this headline"></a></h3>
+<p>The result <em>s</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>s</em></p>
+</div></blockquote>
+<p>and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using <em>f</em> is roughly proportional to <em>s</em> .</p>
+<section id="deprecated-2006-04-03">
+<span id="fun-deprecated-size-deprecated-2006-04-03"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id12">Deprecated 2006-04-03</a><a class="headerlink" href="#deprecated-2006-04-03" title="Permalink to this headline"></a></h4>
+<p>There are other sizes attached to an ADFun object, for example,
+the number of operations in the sequence.
+In order to avoid confusion with these other sizes,
+use <a class="reference internal" href="fun_property.html#fun-property-size-var"><span class="std std-ref">size_var</span></a> to obtain
+the number of variables in the operation sequence.</p>
+</section>
+</section>
+<section id="taylor-size">
+<span id="fun-deprecated-taylor-size"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id13">taylor_size</a><a class="headerlink" href="#taylor-size" title="Permalink to this headline"></a></h3>
+<p>The result <em>t</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>t</em></p>
+</div></blockquote>
+<p>and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object <em>f</em> .</p>
+<section id="deprecated-2006-06-17">
+<span id="fun-deprecated-taylor-size-deprecated-2006-06-17"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id14">Deprecated 2006-06-17</a><a class="headerlink" href="#deprecated-2006-06-17" title="Permalink to this headline"></a></h4>
+<p>This function has been replaced by <a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">size_order</span></a> .</p>
+</section>
+</section>
+<section id="use-vecad">
+<span id="fun-deprecated-use-vecad"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id15">use_VecAD</a><a class="headerlink" href="#use-vecad" title="Permalink to this headline"></a></h3>
+<p>The result <em>u</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>u</em></p>
+</div></blockquote>
+<p>If it is true, the
+AD of <em>Base</em>
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a>
+stored in <em>f</em> contains
+<a class="reference internal" href="VecAD.html#vecad-vecad-base-reference"><span class="std std-ref">VecAD</span></a> operands.
+Otherwise <em>u</em> is false.</p>
+<section id="deprecated-2006-04-08">
+<span id="fun-deprecated-use-vecad-deprecated-2006-04-08"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id16">Deprecated 2006-04-08</a><a class="headerlink" href="#deprecated-2006-04-08" title="Permalink to this headline"></a></h4>
+<p>You can instead use</p>
+<blockquote>
+<div><p><em>u</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_VecAD</span></code> () &gt; 0</p>
+</div></blockquote>
+</section>
+</section>
+<section id="size-taylor">
+<span id="fun-deprecated-size-taylor"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id17">size_taylor</a><a class="headerlink" href="#size-taylor" title="Permalink to this headline"></a></h3>
+<p>The result <em>v</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>v</em></p>
+</div></blockquote>
+<p>and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object <em>f</em> .</p>
+<section id="deprecated-2014-03-18">
+<span id="fun-deprecated-size-taylor-deprecated-2014-03-18"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id18">Deprecated 2014-03-18</a><a class="headerlink" href="#deprecated-2014-03-18" title="Permalink to this headline"></a></h4>
+<p>This function has been replaced by <a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">size_order</span></a> .</p>
+</section>
+</section>
+<section id="capacity-taylor">
+<span id="fun-deprecated-capacity-taylor"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id19">capacity_taylor</a><a class="headerlink" href="#capacity-taylor" title="Permalink to this headline"></a></h3>
+<p>The result <em>w</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>w</em></p>
+</div></blockquote>
+<p>and is the number of Taylor coefficient orders currently allocated
+in the ADFun object <em>f</em> .</p>
+<section id="fun-deprecated-capacity-taylor-deprecated-2014-03-18">
+<span id="index-18"></span><span id="id2"></span><h4><a class="toc-backref" href="#id20">Deprecated 2014-03-18</a><a class="headerlink" href="#fun-deprecated-capacity-taylor-deprecated-2014-03-18" title="Permalink to this headline"></a></h4>
+<p>This function has been replaced by <a class="reference internal" href="capacity_order.html#capacity-order-name"><span class="std std-ref">capacity_order</span></a> .</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="include_deprecated.html" class="btn btn-neutral float-left" title="include_deprecated" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CompareChange.html" class="btn btn-neutral float-right" title="CompareChange" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

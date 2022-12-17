@@ -1,0 +1,13 @@
+lines 7-17 of file: example/chkpoint_two/compare.cpp
+
+{xrst_begin chkpoint_two_compare.cpp}
+
+Compare With and Without Checkpointing: Example and Test
+########################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end chkpoint_two_compare.cpp}

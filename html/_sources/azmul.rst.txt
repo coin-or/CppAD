@@ -1,0 +1,76 @@
+lines 8-81 of file: include/cppad/core/azmul.hpp
+
+{xrst_begin azmul}
+{xrst_spell
+   ieee
+}
+
+Absolute Zero Multiplication
+############################
+
+Syntax
+******
+*z* = ``azmul`` ( *x* , *y* )
+
+Purpose
+*******
+Evaluates multiplication with an absolute zero
+for any of the possible types listed below.
+The result is given by
+
+.. math::
+
+   z = \left\{ \begin{array}{ll}
+      0          & {\rm if} \; x = 0 \\
+      x \cdot y  & {\rm otherwise}
+   \end{array} \right.
+
+Note if *x* is zero and *y* is infinity,
+ieee multiplication would result in not a number whereas
+*z* would be zero.
+
+Base
+****
+If *Base* satisfies the
+:ref:`base type requirements<base_require-name>`
+and arguments *x* , *y* have prototypes
+
+| |tab| ``const`` *Base* & *x*
+| |tab| ``const`` *Base* & *y*
+
+then the result *z* has prototype
+
+   *Base* *z*
+
+AD<Base>
+********
+If the arguments *x* , *y* have prototype
+
+| |tab| ``const AD<`` *Base* >& *x*
+| |tab| ``const AD<`` *Base* >& *y*
+
+then the result *z* has prototype
+
+   ``AD<`` *Base* > *z*
+
+VecAD<Base>
+***********
+If the arguments *x* , *y* have prototype
+
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *y*
+
+then the result *z* has prototype
+
+   ``AD<`` *Base* > *z*
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/azmul.cpp
+}
+The file
+:ref:`azmul.cpp-name`
+is an examples and tests of this function.
+
+{xrst_end azmul}

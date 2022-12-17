@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="index_sort, returns, indices, that, sort, a, vector" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="keys" name="keywords" />
+<meta content="ind" name="keywords" />
+<meta content="input" name="keywords" />
+<meta content="return" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>index_sort &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="index_sort.cpp" href="index_sort.cpp.html" />
+    <link rel="prev" title="cppad_assert" href="cppad_assert.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">index_sort</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="index_sort.cpp.html">index_sort.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>index_sort</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index_sort.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="index-sort">
+<span id="index-sort-name"></span><h1>index_sort<a class="headerlink" href="#index-sort" title="Permalink to this headline"></a></h1>
+<section id="returns-indices-that-sort-a-vector">
+<span id="index-sort-title"></span><span id="index-0"></span><h2>Returns Indices that Sort a Vector<a class="headerlink" href="#returns-indices-that-sort-a-vector" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#keys" id="id2">keys</a></p></li>
+<li><p><a class="reference internal" href="#ind" id="id3">ind</a></p>
+<ul>
+<li><p><a class="reference internal" href="#input" id="id4">Input</a></p></li>
+<li><p><a class="reference internal" href="#return" id="id5">Return</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#example" id="id6">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="index-sort-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/index_sort.hpp&gt;</span></code></p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">index_sort</span></code> ( <em>keys</em> , <em>ind</em> )</p>
+</section>
+<section id="keys">
+<span id="index-sort-keys"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">keys</a><a class="headerlink" href="#keys" title="Permalink to this headline"></a></h3>
+<p>The argument <em>keys</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>KeyVector</em> &amp; <em>keys</em></p>
+</div></blockquote>
+<p>where <em>KeyVector</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with elements that support the <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>
+operation.</p>
+</section>
+<section id="ind">
+<span id="index-sort-ind"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">ind</a><a class="headerlink" href="#ind" title="Permalink to this headline"></a></h3>
+<p>The argument <em>ind</em> has prototype</p>
+<blockquote>
+<div><p><em>SizeVector</em> &amp; <em>ind</em></p>
+</div></blockquote>
+<p>where <em>SizeVector</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with elements of type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+<section id="input">
+<span id="index-sort-ind-input"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id4">Input</a><a class="headerlink" href="#input" title="Permalink to this headline"></a></h4>
+<p>The size of <em>ind</em> must be the same as the size of <em>keys</em>
+and the value of its input elements does not matter.</p>
+</section>
+<section id="return">
+<span id="index-sort-ind-return"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">Return</a><a class="headerlink" href="#return" title="Permalink to this headline"></a></h4>
+<p>Upon return, <em>ind</em> is a permutation of the set of indices
+that yields increasing order for <em>keys</em> .
+In other words, for all <em>i</em> != <em>j</em> ,</p>
+<blockquote>
+<div><p><em>ind</em> [ <em>i</em> ] != <em>ind</em> [ <em>j</em> ]</p>
+</div></blockquote>
+<p>and for <em>i</em> = 0 , … , <em>size</em> <code class="docutils literal notranslate"><span class="pre">-2</span></code> ,</p>
+<blockquote>
+<div><p>( <em>keys</em> [ <em>ind</em> [ <em>i</em> +1] ] &lt; <em>keys</em> [ <em>ind</em> [ <em>i</em> ] ] ) == <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+</div></blockquote>
+</section>
+</section>
+<section id="example">
+<span id="index-sort-example"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="index_sort.cpp.html#index-sort-cpp-name"><span class="std std-ref">index_sort.cpp</span></a> contains an example
+and test of this routine.
+It return true if it succeeds and false otherwise.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cppad_assert.html" class="btn btn-neutral float-left" title="cppad_assert" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index_sort.cpp.html" class="btn btn-neutral float-right" title="index_sort.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

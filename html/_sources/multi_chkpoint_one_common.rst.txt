@@ -1,0 +1,20 @@
+lines 102-119 of file: example/multi_thread/multi_chkpoint_one.cpp
+
+{xrst_begin multi_chkpoint_one_common}
+
+Multi-Threaded chkpoint_one Common Information
+##############################################
+
+Purpose
+*******
+This source code defines the common variables that are used by
+the ``multi_chkpoint_one_`` *name* functions.
+
+Source
+******
+{xrst_literal
+   // BEGIN COMMON C++
+   // END COMMON C++
+}
+
+{xrst_end multi_chkpoint_one_common}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/chkpoint_two/base2ad.cpp
+
+{xrst_begin chkpoint_two_base2ad.cpp}
+
+Checkpointing With base2ad: Example and Test
+############################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end chkpoint_two_base2ad.cpp}

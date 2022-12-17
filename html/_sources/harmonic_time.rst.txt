@@ -1,0 +1,92 @@
+lines 375-464 of file: example/multi_thread/harmonic.cpp
+
+{xrst_begin harmonic_time}
+
+Timing Test of Multi-Threaded Summation of 1/i
+##############################################
+
+Syntax
+******
+
+| *ok* = ``harmonic_time`` (
+| |tab| *time_out* , *test_time* , *num_threads* , *mega_sum*
+| )
+
+Purpose
+*******
+Runs a correctness and timing test for a multi-threaded
+computation of the summation that defines the harmonic series
+
+.. math::
+
+   1 + 1/2 + 1/3 + ... + 1/n
+
+Thread
+******
+It is assumed that this function is called by thread zero in sequential
+mode; i.e., not :ref:`in_parallel<ta_in_parallel-name>` .
+
+ok
+**
+This return value has prototype
+
+   ``bool`` *ok*
+
+If it is true,
+``harmonic_time`` passed the correctness test.
+Otherwise it is false.
+
+time_out
+********
+This argument has prototype
+
+   ``double&`` *time_out*
+
+The input value of the argument does not matter.
+Upon return it is the number of wall clock seconds required for
+to compute the summation.
+
+test_time
+*********
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached.
+The reported *time_out* is the total wall clock time divided by the
+number of repeats.
+
+num_threads
+***********
+This argument has prototype
+
+   ``size_t`` *num_threads*
+
+It specifies the number of threads that are available for this test.
+If it is zero, the test is run without the multi-threading environment and
+
+   1 == ``thread_alloc::num_threads`` ()
+
+when ``harmonic_time`` is called.
+If it is non-zero, the test is run with the multi-threading and
+
+   *num_threads* = ``thread_alloc::num_threads`` ()
+
+when ``harmonic_time`` is called.
+
+mega_sum
+********
+This argument has prototype
+
+   ``size_t&`` *mega_sum*
+
+and is greater than zero.
+The value :math:`n` in the summation
+is equal to :math:`10^6` times *mega_sum* .
+
+Source
+******
+{xrst_literal
+   // BEGIN TIME C++
+   // END TIME C++
+}
+
+{xrst_end harmonic_time}

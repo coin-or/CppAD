@@ -1,0 +1,37 @@
+lines 9-43 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin acos}
+
+Inverse Cosine Function: acos
+#############################
+
+Syntax
+******
+*y* = ``acos`` ( *x* )
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Derivative
+**********
+
+.. math::
+
+   \R{acos}^{(1)} (x) = - (1 - x * x)^{-1/2}
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/acos.cpp
+}
+The file
+:ref:`acos.cpp-name`
+contains an example and test of this function.
+
+{xrst_end acos}

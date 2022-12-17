@@ -1,0 +1,53 @@
+lines 8-58 of file: include/cppad/example/atomic_four/lin_ode/base_solver.hpp
+
+{xrst_begin atomic_four_lin_ode_base_solver.hpp}
+
+Atomic Multiply Base Matrices: Example Implementation
+#####################################################
+
+Syntax
+******
+
+| *lin_ode* . ``base_solver`` (
+| |tab| *r* , *step* , *pattern* , *transpose* , *x* , *y*
+| )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Notation
+********
+We use the notation:
+:ref:`atomic_four_lin_ode@call_id`
+:ref:`atomic_four_lin_ode@r`
+:ref:`atomic_four_lin_ode@pattern`
+:ref:`atomic_four_lin_ode@transpose`
+:ref:`atomic_four_lin_ode@pattern@nnz` ,
+:ref:`atomic_four_lin_ode@pattern@row` ,
+:ref:`atomic_four_lin_ode@pattern@col` ,
+:ref:`atomic_four_lin_ode@x` ,
+:ref:`atomic_four_lin_ode@x@n` ,
+:ref:`atomic_four_lin_ode@x@A(x)` ,
+:ref:`atomic_four_lin_ode@x@b(x)` ,
+:ref:`atomic_four_lin_ode@y(x)` ,
+:ref:`atomic_four_lin_ode@y(x)@m` ,
+:ref:`atomic_four_lin_ode@vk(x)`
+
+Rosen34
+*******
+This example uses one step of
+:ref:`rosen34-name` ODE solver.
+Any initial value ODE solver, with any number of steps, could be used.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_base_solver.hpp}

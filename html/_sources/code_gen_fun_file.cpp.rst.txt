@@ -1,0 +1,13 @@
+lines 7-17 of file: example/code_gen_fun/file.cpp
+
+{xrst_begin code_gen_fun_file.cpp}
+
+File Store and Retrieve a Code Gen Function: Example and Test
+#############################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end code_gen_fun_file.cpp}

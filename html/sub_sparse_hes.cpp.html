@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="sub_sparse_hes.cpp, computing, sparse, hessian, for, a, subset, of, variables" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="see, also" name="keywords" />
+<meta content="function" name="keywords" />
+<meta content="subset" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sub_sparse_hes.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sparse_sub_hes.cpp" href="sparse_sub_hes.cpp.html" />
+    <link rel="prev" title="sparse_hessian.cpp" href="sparse_hessian.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sparse_jac.html">sparse_jac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_jacobian.html">sparse_jacobian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hes.html">sparse_hes</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="sparse_hessian.html">sparse_hessian</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="sparse_hessian.cpp.html">sparse_hessian.cpp</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">sub_sparse_hes.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sparse_sub_hes.cpp.html">sparse_sub_hes.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_jac_rev.html">subgraph_jac_rev</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparse_derivative.html">sparse_derivative</a> &raquo;</li>
+          <li><a href="sparse_hessian.html">sparse_hessian</a> &raquo;</li>
+      <li>sub_sparse_hes.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sub_sparse_hes.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="sub-sparse-hes-cpp">
+<span id="sub-sparse-hes-cpp-name"></span><h1>sub_sparse_hes.cpp<a class="headerlink" href="#sub-sparse-hes-cpp" title="Permalink to this headline"></a></h1>
+<section id="computing-sparse-hessian-for-a-subset-of-variables">
+<span id="sub-sparse-hes-cpp-title"></span><span id="index-0"></span><h2>Computing Sparse Hessian for a Subset of Variables<a class="headerlink" href="#computing-sparse-hessian-for-a-subset-of-variables" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id2">See Also</a></p></li>
+<li><p><a class="reference internal" href="#function" id="id3">Function</a></p></li>
+<li><p><a class="reference internal" href="#subset" id="id4">Subset</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id5">Example</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="sub-sparse-hes-cpp-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This example uses
+<a class="reference internal" href="mul_level.html#mul-level-name"><span class="std std-ref">multiple levels of AD</span></a>
+to compute the Hessian for a subset of the variables
+without having to compute the sparsity pattern for the entire function.</p>
+</section>
+<section id="see-also">
+<span id="sub-sparse-hes-cpp-see-also"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="sparse_sub_hes.cpp.html#sparse-sub-hes-cpp-name"><span class="std std-ref">sparse_sub_hes.cpp</span></a> , <a class="reference internal" href="sparsity_sub.cpp.html#sparsity-sub-cpp-name"><span class="std std-ref">sparsity_sub.cpp</span></a> ,</p>
+</section>
+<section id="function">
+<span id="sub-sparse-hes-cpp-function"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Function</a><a class="headerlink" href="#function" title="Permalink to this headline"></a></h3>
+<p>We consider the function
+<span class="math notranslate nohighlight">\(f : \B{R}^{nu} \times \B{R}^{nv}  \rightarrow \B{R}\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[f (u, v) =
+\left( \sum_{j=0}^{nu-1} u_j^3 \right)
+\left( \sum_{j=0}^{nv-1} v_j \right)\]</div>
+</section>
+<section id="subset">
+<span id="sub-sparse-hes-cpp-subset"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Subset</a><a class="headerlink" href="#subset" title="Permalink to this headline"></a></h3>
+<p>Suppose that we are only interested computing the function</p>
+<div class="math notranslate nohighlight">
+\[H(u, v) = \partial_u \partial_u f (u, v)\]</div>
+<p>where this Hessian is sparse.</p>
+</section>
+<section id="example">
+<span id="sub-sparse-hes-cpp-example"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The following code shows one way to compute this subset of the
+Hessian of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Scalar</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">   </span><span class="n">Scalar</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Scalar</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Scalar</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">Scalar</span><span class="w"> </span><span class="n">sum_v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Scalar</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum_v</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">Scalar</span><span class="w"> </span><span class="n">sum_cube_u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Scalar</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum_cube_u</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">6.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">sum_v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sum_cube_u</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">sub_sparse_hes</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w">   </span><span class="n">adouble</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">adouble</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a2double</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">pattern</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// start recording with x = (u , v)</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">nu</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nv</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">adouble</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ax</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adouble</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">ax</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// extract u as independent variables</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">a2double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a2u</span><span class="p">(</span><span class="n">nu</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nu</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a2u</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a2double</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">a2u</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// extract v as parameters</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">a2double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a2v</span><span class="p">(</span><span class="n">nv</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nv</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a2v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ax</span><span class="p">[</span><span class="n">nu</span><span class="o">+</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// record g(u)</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">a2double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a2y</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">a2y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">a2u</span><span class="p">,</span><span class="w"> </span><span class="n">a2v</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="n">adouble</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">g</span><span class="p">.</span><span class="n">Dependent</span><span class="p">(</span><span class="n">a2u</span><span class="p">,</span><span class="w"> </span><span class="n">a2y</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// compue sparsity pattern for Hessian of g(u)</span>
+<span class="w">   </span><span class="n">pattern</span><span class="w"> </span><span class="nf">r</span><span class="p">(</span><span class="n">nu</span><span class="p">),</span><span class="w"> </span><span class="n">s</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nu</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">insert</span><span class="p">(</span><span class="n">j</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">g</span><span class="p">.</span><span class="n">ForSparseJac</span><span class="p">(</span><span class="n">nu</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">pattern</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span><span class="p">.</span><span class="n">RevSparseHes</span><span class="p">(</span><span class="n">nu</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Row and column indices for non-zeros in lower triangle of Hessian</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nu</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">itr</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">itr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">itr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="n">itr</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">itr</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w">  </span><span class="n">row</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">col</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">j</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_hessian_work</span><span class="w"> </span><span class="n">work</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">adouble</span><span class="o">&gt;</span><span class="w"> </span><span class="n">au</span><span class="p">(</span><span class="n">nu</span><span class="p">),</span><span class="w"> </span><span class="n">ahes</span><span class="p">(</span><span class="n">K</span><span class="p">),</span><span class="w"> </span><span class="n">aw</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">aw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nu</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">au</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span><span class="p">.</span><span class="n">SparseHessian</span><span class="p">(</span><span class="n">au</span><span class="p">,</span><span class="w"> </span><span class="n">aw</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="n">ahes</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// The Hessian w.r.t u is diagonal</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// record H(u, v) = Hessian of f w.r.t u</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">H</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">ahes</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// remove unecessary operations</span>
+<span class="w">   </span><span class="n">H</span><span class="p">.</span><span class="n">optimize</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Now evaluate the Hessian at a particular value for u, v</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">u</span><span class="p">(</span><span class="n">nu</span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">nv</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Now check the Hessian</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">sum_v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nv</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">sum_v</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">nu</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">i</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">j</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">double</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum_v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">(</span><span class="n">hes</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="w"> </span><span class="n">check</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparse_hessian.cpp.html" class="btn btn-neutral float-left" title="sparse_hessian.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sparse_sub_hes.cpp.html" class="btn btn-neutral float-right" title="sparse_sub_hes.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

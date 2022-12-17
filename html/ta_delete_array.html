@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="ta_delete_array, deallocate, an, array, and, call, destructor, for, its, elements" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="type" name="keywords" />
+<meta content="array" name="keywords" />
+<meta content="thread" name="keywords" />
+<meta content="delta" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ta_delete_array &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ta_free_all" href="ta_free_all.html" />
+    <link rel="prev" title="ta_create_array" href="ta_create_array.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="thread_alloc.html">thread_alloc</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="thread_alloc.cpp.html">thread_alloc.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_parallel_setup.html">ta_parallel_setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_num_threads.html">ta_num_threads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_in_parallel.html">ta_in_parallel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_thread_num.html">ta_thread_num</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_get_memory.html">ta_get_memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_return_memory.html">ta_return_memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_free_available.html">ta_free_available</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_hold_memory.html">ta_hold_memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_inuse.html">ta_inuse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_available.html">ta_available</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_create_array.html">ta_create_array</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">ta_delete_array</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ta_free_all.html">ta_free_all</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+          <li><a href="thread_alloc.html">thread_alloc</a> &raquo;</li>
+      <li>ta_delete_array</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ta_delete_array.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="ta-delete-array">
+<span id="ta-delete-array-name"></span><h1>ta_delete_array<a class="headerlink" href="#ta-delete-array" title="Permalink to this headline"></a></h1>
+<section id="deallocate-an-array-and-call-destructor-for-its-elements">
+<span id="ta-delete-array-title"></span><span id="index-0"></span><h2>Deallocate An Array and Call Destructor for its Elements<a class="headerlink" href="#deallocate-an-array-and-call-destructor-for-its-elements" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#type" id="id3">Type</a></p></li>
+<li><p><a class="reference internal" href="#array" id="id4">array</a></p></li>
+<li><p><a class="reference internal" href="#thread" id="id5">Thread</a></p></li>
+<li><p><a class="reference internal" href="#delta" id="id6">Delta</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id7">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="ta-delete-array-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">thread_alloc::delete_array</span></code> ( <em>array</em> ) .</p>
+</section>
+<section id="purpose">
+<span id="ta-delete-array-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Returns memory corresponding to an array created by
+(create by <a class="reference internal" href="ta_create_array.html#ta-create-array-name"><span class="std std-ref">create_array</span></a> ) to the
+<a class="reference internal" href="ta_available.html#ta-available-name"><span class="std std-ref">available</span></a> memory pool for the current thread.</p>
+</section>
+<section id="type">
+<span id="ta-delete-array-type"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Type</a><a class="headerlink" href="#type" title="Permalink to this headline"></a></h3>
+<p>The type of the elements of the array.</p>
+</section>
+<section id="array">
+<span id="ta-delete-array-array"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">array</a><a class="headerlink" href="#array" title="Permalink to this headline"></a></h3>
+<p>The argument <em>array</em> has prototype</p>
+<blockquote>
+<div><p><em>Type</em> * <em>array</em></p>
+</div></blockquote>
+<p>It is a value returned by <a class="reference internal" href="ta_create_array.html#ta-create-array-name"><span class="std std-ref">create_array</span></a> and not yet deleted.
+The <em>Type</em> destructor is called for each element in the array.</p>
+</section>
+<section id="thread">
+<span id="ta-delete-array-thread"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Thread</a><a class="headerlink" href="#thread" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="ta_thread_num.html#ta-thread-num-name"><span class="std std-ref">current thread</span></a> must be the
+same as when <a class="reference internal" href="ta_create_array.html#ta-create-array-name"><span class="std std-ref">create_array</span></a> returned the value <em>array</em> .
+There is an exception to this rule:
+when the current execution mode is sequential
+(not <a class="reference internal" href="ta_in_parallel.html#ta-in-parallel-name"><span class="std std-ref">parallel</span></a> ) the current thread number does not matter.</p>
+</section>
+<section id="delta">
+<span id="ta-delete-array-delta"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Delta</a><a class="headerlink" href="#delta" title="Permalink to this headline"></a></h3>
+<p>The amount of memory <a class="reference internal" href="ta_inuse.html#ta-inuse-name"><span class="std std-ref">inuse</span></a> will decrease by <em>delta</em> ,
+and the <a class="reference internal" href="ta_available.html#ta-available-name"><span class="std std-ref">available</span></a> memory will increase by <em>delta</em> ,
+where <a class="reference internal" href="ta_create_array.html#ta-create-array-delta"><span class="std std-ref">Delta</span></a>
+is the same as for the corresponding call to <code class="docutils literal notranslate"><span class="pre">create_array</span></code> .</p>
+</section>
+<section id="example">
+<span id="ta-delete-array-example"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="thread_alloc.cpp.html#thread-alloc-cpp-name"><span class="std std-ref">thread_alloc.cpp</span></a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ta_create_array.html" class="btn btn-neutral float-left" title="ta_create_array" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ta_free_all.html" class="btn btn-neutral float-right" title="ta_free_all" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

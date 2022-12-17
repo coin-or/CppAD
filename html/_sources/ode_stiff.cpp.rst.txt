@@ -1,0 +1,39 @@
+lines 7-43 of file: example/general/ode_stiff.cpp
+
+{xrst_begin ode_stiff.cpp}
+
+A Stiff Ode: Example and Test
+#############################
+
+Define
+:math:`x : \B{R} \rightarrow \B{R}^2` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x_0 (0)        & = & 1 \\
+      x_1 (0)        & = & 0 \\
+      x_0^\prime (t) & = & - a_0 x_0 (t) \\
+      x_1^\prime (t) & = & + a_0 x_0 (t) - a_1 x_1 (t)
+   \end{eqnarray}
+
+If :math:`a_0 \gg a_1 > 0`, this is a stiff Ode and
+the analytic solution is
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   x_0 (t)    & = & \exp( - a_0 t ) \\
+   x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
+   \end{eqnarray}
+
+The example tests Rosen34 using the relations above:
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end ode_stiff.cpp}

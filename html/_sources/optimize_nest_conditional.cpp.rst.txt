@@ -1,0 +1,17 @@
+lines 6-20 of file: example/optimize/nest_conditional.cpp
+
+{xrst_begin optimize_nest_conditional.cpp}
+
+Optimize Nested Conditional Expressions: Example and Test
+#########################################################
+
+See Also
+********
+:ref:`cond_exp.cpp-name`
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end optimize_nest_conditional.cpp}

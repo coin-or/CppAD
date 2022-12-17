@@ -1,0 +1,15 @@
+lines 6-18 of file: example/graph/atom4_op.cpp
+
+{xrst_begin graph_atom4_op.cpp}
+
+C++ AD Graph Atomic Four Functions: Example and Test
+####################################################
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end graph_atom4_op.cpp}

@@ -1,0 +1,99 @@
+lines 8-104 of file: example/abs_normal/simplex_method.hpp
+
+{xrst_begin simplex_method}
+{xrst_spell
+   maxitr
+   rl
+   xout
+}
+
+abs_normal: Solve a Linear Program Using Simplex Method
+#######################################################
+
+Syntax
+******
+
+   *ok* = ``simplex_method`` ( *level* , *b* , *A* , *c* , *maxitr* , *xout* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
+This following is a link to the source code for this example:
+:ref:`simplex_method.hpp-name` .
+
+Problem
+*******
+We are given
+:math:`A \in \B{R}^{m \times n}`,
+:math:`b \in \B{R}^m`,
+:math:`c \in \B{R}^n`.
+This routine solves the problem
+
+.. math::
+
+   \begin{array}{rl}
+   \R{minimize} &
+   g^T x \; \R{w.r.t} \; x \in \B{R}_+^n
+   \\
+   \R{subject \; to} & A x + b \leq 0
+   \end{array}
+
+Vector
+******
+The type *Vector* is a
+simple vector with elements of type ``double`` .
+
+level
+*****
+This value is less than or equal two.
+If *level*  == 0 ,
+no tracing is printed.
+If *level*  >= 1 ,
+a trace :math:`x` and the corresponding objective :math:`z`
+is printed at each iteration.
+If *level*  == 2 ,
+a trace of the simplex Tableau is printed at each iteration.
+
+A
+*
+This is a :ref:`row-major<glossary@Row-major Representation>` representation
+of the matrix :math:`A` in the problem.
+
+b
+*
+This is the vector :math:`b` in the problem.
+
+c
+*
+This is the vector :math:`c` in the problem.
+
+maxitr
+******
+This is the maximum number of simplex iterations to try before giving up
+on convergence.
+
+xout
+****
+This argument has size is *n* and
+the input value of its elements does no matter.
+Upon return it is the primal variables corresponding to the problem solution.
+
+ok
+**
+If the return value *ok* is true, a solution has been found.
+{xrst_toc_hidden
+   example/abs_normal/simplex_method.cpp
+   example/abs_normal/simplex_method.xrst
+}
+Example
+*******
+The file :ref:`simplex_method.cpp-name` contains an example and test of
+``simplex_method`` .
+
+{xrst_end simplex_method}

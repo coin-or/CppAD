@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="adolc, including, adolc, examples, and, tests" name="keywords" />
+<meta content="adolc, home, page" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="include_adolc" name="keywords" />
+<meta content="examples" name="keywords" />
+<meta content="speed, tests" name="keywords" />
+<meta content="unix" name="keywords" />
+<meta content="cygwin" name="keywords" />
+<meta content="get_adolc" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>adolc &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="eigen" href="eigen.html" />
+    <link rel="prev" title="get_sacado.sh" href="get_sacado.sh.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Install.html">Install</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="download.html">download</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="cmake.html">cmake</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="get_optional.sh.html">get_optional.sh</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">adolc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="eigen.html">eigen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppadcg.html">cppadcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ipopt.html">ipopt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fadbad_prefix.html">fadbad_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sacado_prefix.html">sacado_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="colpack_prefix.html">colpack_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_testvector.html">cppad_testvector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_check.html">cmake_check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgconfig.html">pkgconfig</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Install.html">Install</a> &raquo;</li>
+          <li><a href="cmake.html">cmake</a> &raquo;</li>
+      <li>adolc</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/adolc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="adolc">
+<span id="adolc-name"></span><h1>adolc<a class="headerlink" href="#adolc" title="Permalink to this headline"></a></h1>
+<section id="including-adolc-examples-and-tests">
+<span id="adolc-title"></span><span id="index-0"></span><h2>Including Adolc Examples and Tests<a class="headerlink" href="#including-adolc-examples-and-tests" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#adolc-home-page" id="id1">Adolc Home Page</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#include-adolc" id="id3">include_adolc</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id4">Examples</a></p></li>
+<li><p><a class="reference internal" href="#speed-tests" id="id5">Speed Tests</a></p></li>
+<li><p><a class="reference internal" href="#unix" id="id6">Unix</a></p></li>
+<li><p><a class="reference internal" href="#cygwin" id="id7">Cygwin</a></p></li>
+<li><p><a class="reference internal" href="#get-adolc" id="id8">get_adolc</a></p></li>
+</ul>
+</div>
+<section id="adolc-home-page">
+<span id="adolc-adolc-home-page"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Adolc Home Page</a><a class="headerlink" href="#adolc-home-page" title="Permalink to this headline"></a></h3>
+<p><a class="reference external" href="https://projects.coin-or.org/ADOL-C">https://projects.coin-or.org/ADOL-C</a></p>
+</section>
+<section id="purpose">
+<span id="adolc-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>CppAD includes examples and tests that can use the AD package Adolc.
+The includes speed comparison with other AD packages; see
+<a class="reference internal" href="speed_adolc.html#speed-adolc-name"><span class="std std-ref">speed_adolc</span></a> .
+It also includes examples that combine Adolc with
+CppAD; see</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>base_adolc.hpp</p></td>
+<td><p><a class="reference internal" href="base_adolc.hpp.html#base-adolc-hpp-title"><span class="std std-ref">Enable use of AD&lt;Base&gt; where Base is Adolc’s adouble Type</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>mul_level_adolc.cpp</p></td>
+<td><p><a class="reference internal" href="mul_level_adolc.cpp.html#mul-level-adolc-cpp-title"><span class="std std-ref">Using Adolc with Multiple Levels of Taping: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>mul_level_adolc_ode.cpp</p></td>
+<td><p><a class="reference internal" href="mul_level_adolc_ode.cpp.html#mul-level-adolc-ode-cpp-title"><span class="std std-ref">Taylor’s Ode Solver: A Multi-Level Adolc Example and Test</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="include-adolc">
+<span id="adolc-include-adolc"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">include_adolc</a><a class="headerlink" href="#include-adolc" title="Permalink to this headline"></a></h3>
+<p>If Adolc is installed on your system, you can
+specify <code class="docutils literal notranslate"><span class="pre">include_adolc=true</span></code> on the
+<a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command line.
+The value of <code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH</span></code> must be such that the command</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">pkg-config</span> <span class="pre">adolc</span> <span class="pre">--path</span> <span class="pre">--print-errors</span></code></p>
+</div></blockquote>
+<p>finds the location of the file <code class="docutils literal notranslate"><span class="pre">adolc.pc</span></code> .
+Note that CppAD assumes adolc has been configured with
+its sparse matrix computations enabled; i.e, using</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">--with-colpack</span></code> = <em>adolc_prefix</em></p>
+</div></blockquote>
+<p>In other words ColPack is installed and
+with the same prefix as ACOL-C; see
+<a class="reference internal" href="get_colpack.sh.html#get-colpack-sh-name"><span class="std std-ref">get_colpack.sh</span></a> .</p>
+</section>
+<section id="examples">
+<span id="adolc-examples"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<p>If you specify <a class="reference internal" href="cmake.html#cmake-include-adolc"><span class="std std-ref">include_adolc</span></a> on the cmake command
+line, you will be able to run the Adolc examples listed above
+by executing the following commands starting in the
+<a class="reference internal" href="download.html#download-distribution-directory"><span class="std std-ref">Distribution Directory</span></a> :</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">build/example</span></code></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_example</span></code></div>
+</div>
+<p>If you do this,
+you will see an indication that the examples
+<code class="docutils literal notranslate"><span class="pre">mul_level_adolc</span></code> and <code class="docutils literal notranslate"><span class="pre">mul_level_adolc_ode</span></code>
+have passed their correctness check.</p>
+</section>
+<section id="speed-tests">
+<span id="adolc-speed-tests"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Speed Tests</a><a class="headerlink" href="#speed-tests" title="Permalink to this headline"></a></h3>
+<p>If you include <em>adolc_prefix</em> on the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command line,
+you will be able to run the Adolc speed correctness tests
+by executing the following commands starting in the
+<a class="reference internal" href="download.html#download-distribution-directory"><span class="std std-ref">Distribution Directory</span></a> :</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">build/speed/adolc</span></code></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_speed_adolc</span></code></div>
+</div>
+<p>After executing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_speed_adolc</span></code> ,
+you can run a specific Adolc speed tests
+by executing the command <code class="docutils literal notranslate"><span class="pre">./speed_adolc</span></code> ;
+see <a class="reference internal" href="speed_main.html#speed-main-name"><span class="std std-ref">speed_main</span></a> for the meaning of the command line
+options to this program.</p>
+</section>
+<section id="unix">
+<span id="adolc-unix"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Unix</a><a class="headerlink" href="#unix" title="Permalink to this headline"></a></h3>
+<p>If you are using Unix,
+you may have to add
+<em>adolc_prefix</em> to <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> .
+For example, if you use the <code class="docutils literal notranslate"><span class="pre">bash</span></code> shell to run your programs,
+you could include</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> = <em>adolc_prefix</em> / <code class="docutils literal notranslate"><span class="pre">lib:$</span></code> { <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> }</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">LD_LIBRARY_PATH</span></code></div>
+</div>
+<p>in your <code class="docutils literal notranslate"><span class="pre">$HOME/.bashrc</span></code> file.</p>
+</section>
+<section id="cygwin">
+<span id="adolc-cygwin"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Cygwin</a><a class="headerlink" href="#cygwin" title="Permalink to this headline"></a></h3>
+<p>If you are using Cygwin,
+you may have to add to following lines to the file
+<code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> in your home directory:</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">PATH</span></code> = <em>adolc_prefix</em> / <code class="docutils literal notranslate"><span class="pre">bin:$</span></code> { <code class="docutils literal notranslate"><span class="pre">PATH</span></code> }</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH</span></code></div>
+</div>
+<p>in order for Adolc to run properly.
+If <em>adolc_prefix</em> begins with a disk specification,
+you must use the Cygwin format for the disk specification.
+For example,
+if <code class="docutils literal notranslate"><span class="pre">d:/adolc_base</span></code> is the proper directory,
+<code class="docutils literal notranslate"><span class="pre">/cygdrive/d/adolc_base</span></code> should be used for <em>adolc_prefix</em> .</p>
+</section>
+<section id="get-adolc">
+<span id="adolc-get-adolc"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">get_adolc</a><a class="headerlink" href="#get-adolc" title="Permalink to this headline"></a></h3>
+<p>If you are using Unix, you can download and install
+a copy of Adolc using <a class="reference internal" href="get_adolc.sh.html#get-adolc-sh-name"><span class="std std-ref">get_adolc.sh</span></a> .
+The corresponding install prefix is
+<code class="docutils literal notranslate"><span class="pre">build/prefix</span></code> .</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_sacado.sh.html" class="btn btn-neutral float-left" title="get_sacado.sh" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="eigen.html" class="btn btn-neutral float-right" title="eigen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

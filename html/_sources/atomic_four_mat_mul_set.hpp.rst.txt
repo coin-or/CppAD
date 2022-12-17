@@ -1,0 +1,48 @@
+lines 8-53 of file: include/cppad/example/atomic_four/mat_mul/set.hpp
+
+{xrst_begin atomic_four_mat_mul_set.hpp}
+
+atomic_mat_mul Set Routine: Example Implementation
+##################################################
+
+Syntax
+******
+*call_id* = *mat_mul* . ``set`` ( *n_left* , *n_middle* , *n_right* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Purpose
+*******
+Stores the dimension information for a an atomic operation that computes
+the matrix product *R* = *A* * *B* .
+
+n_left
+******
+This argument is the row dimension of the matrices *A* and *R* .
+
+n_middle
+********
+This argument is the column dimension of the matrix *A*
+and row dimension of the matrix *B* .
+
+n_right
+*******
+This argument is the column dimension of the matrices *B* and *R* .
+
+call_id
+*******
+This return value identifies the dimension information above.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_set.hpp}

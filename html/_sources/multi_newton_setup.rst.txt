@@ -1,0 +1,61 @@
+lines 79-137 of file: example/multi_thread/multi_newton.cpp
+
+{xrst_begin multi_newton_setup}
+{xrst_spell
+   xlow
+   xup
+}
+
+Set Up Multi-Threaded Newton Method
+###################################
+
+Syntax
+******
+
+| *ok* = ``multi_newton_setup`` (
+| |tab| *num_sub* , *xlow* , *xup* , *epsilon* , *max_itr* , *num_threads*
+| )
+
+Purpose
+*******
+These routine does the setup for splitting finding all the zeros in an
+interval into separate sub-intervals, one for each thread.
+
+Thread
+******
+It is assumed that this function is called by thread zero,
+and all the other threads are blocked (waiting).
+
+num_sub
+*******
+See *num_sub* in :ref:`multi_newton_run<multi_newton_run@num_sub>` .
+
+xlow
+****
+See *xlow* in :ref:`multi_newton_run<multi_newton_run@xlow>` .
+
+xup
+***
+See *xup* in :ref:`multi_newton_run<multi_newton_run@xup>` .
+
+epsilon
+*******
+See *epsilon* in :ref:`multi_newton_run<multi_newton_run@epsilon>` .
+
+max_itr
+*******
+See *max_itr* in :ref:`multi_newton_run<multi_newton_run@max_itr>` .
+
+num_threads
+***********
+See *num_threads* in
+:ref:`multi_newton_run<multi_newton_run@num_threads>` .
+
+Source
+******
+{xrst_literal
+   // BEGIN SETUP C++
+   // END SETUP C++
+}
+
+{xrst_end multi_newton_setup}

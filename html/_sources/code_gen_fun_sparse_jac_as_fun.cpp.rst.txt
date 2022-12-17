@@ -1,0 +1,13 @@
+lines 7-17 of file: example/code_gen_fun/sparse_jac_as_fun.cpp
+
+{xrst_begin code_gen_fun_sparse_jac_as_fun.cpp}
+
+Pass Sparse Jacobian as Code Gen Function: Example and Test
+###########################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end code_gen_fun_sparse_jac_as_fun.cpp}

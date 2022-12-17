@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="RombergOne, one, dimensionalromberg, integration" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="description" name="keywords" />
+<meta content="include" name="keywords" />
+<meta content="r" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="a" name="keywords" />
+<meta content="b" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="e" name="keywords" />
+<meta content="float" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="source, code" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RombergOne &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="romberg_one.cpp" href="romberg_one.cpp.html" />
+    <link rel="prev" title="romberg_mul.cpp" href="romberg_mul.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RombergOne</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="romberg_one.cpp.html">romberg_one.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>RombergOne</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/RombergOne.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="rombergone">
+<span id="rombergone-name"></span><h1>RombergOne<a class="headerlink" href="#rombergone" title="Permalink to this headline"></a></h1>
+<section id="one-dimensionalromberg-integration">
+<span id="rombergone-title"></span><span id="index-0"></span><h2>One DimensionalRomberg Integration<a class="headerlink" href="#one-dimensionalromberg-integration" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#description" id="id2">Description</a></p></li>
+<li><p><a class="reference internal" href="#include" id="id3">Include</a></p></li>
+<li><p><a class="reference internal" href="#r" id="id4">r</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id5">F</a></p></li>
+<li><p><a class="reference internal" href="#a" id="id6">a</a></p></li>
+<li><p><a class="reference internal" href="#b" id="id7">b</a></p></li>
+<li><p><a class="reference internal" href="#n" id="id8">n</a></p></li>
+<li><p><a class="reference internal" href="#p" id="id9">p</a></p></li>
+<li><p><a class="reference internal" href="#e" id="id10">e</a></p></li>
+<li><p><a class="reference internal" href="#float" id="id11">Float</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id12">Example</a></p></li>
+<li><p><a class="reference internal" href="#source-code" id="id13">Source Code</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="rombergone-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/romberg_one.hpp&gt;</span></code></p>
+</div></blockquote>
+<p><em>r</em> = <code class="docutils literal notranslate"><span class="pre">RombergOne</span></code> ( <em>F</em> , <em>a</em> , <em>b</em> , <em>n</em> , <em>e</em> )</p>
+</section>
+<section id="description">
+<span id="rombergone-description"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Description</a><a class="headerlink" href="#description" title="Permalink to this headline"></a></h3>
+<p>Returns the Romberg integration estimate
+<span class="math notranslate nohighlight">\(r\)</span> for a one dimensional integral</p>
+<div class="math notranslate nohighlight">
+\[r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}\]</div>
+</section>
+<section id="include">
+<span id="rombergone-include"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Include</a><a class="headerlink" href="#include" title="Permalink to this headline"></a></h3>
+<p>The file <code class="docutils literal notranslate"><span class="pre">cppad/utility/romberg_one.hpp</span></code>
+is included by <code class="docutils literal notranslate"><span class="pre">cppad/cppad.hpp</span></code>
+but it can also be included separately with out the rest of
+the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> routines.</p>
+</section>
+<section id="r">
+<span id="rombergone-r"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">r</a><a class="headerlink" href="#r" title="Permalink to this headline"></a></h3>
+<p>The return value <em>r</em> has prototype</p>
+<blockquote>
+<div><p><em>Float</em> <em>r</em></p>
+</div></blockquote>
+<p>It is the estimate computed by <code class="docutils literal notranslate"><span class="pre">RombergOne</span></code> for the integral above.</p>
+</section>
+<section id="f">
+<span id="rombergone-f"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">F</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>F</em> can be of any type, but it must support
+the operation</p>
+<blockquote>
+<div><p><em>F</em> ( <em>x</em> )</p>
+</div></blockquote>
+<p>The argument <em>x</em> to <em>F</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>The return value of <em>F</em> is a <em>Float</em> object
+(see description of <a class="reference internal" href="#rombergone-float"><span class="std std-ref">Float</span></a> below).</p>
+</section>
+<section id="a">
+<span id="rombergone-a"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">a</a><a class="headerlink" href="#a" title="Permalink to this headline"></a></h3>
+<p>The argument <em>a</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>a</em></p>
+</div></blockquote>
+<p>It specifies the lower limit for the integration.</p>
+</section>
+<section id="b">
+<span id="rombergone-b"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">b</a><a class="headerlink" href="#b" title="Permalink to this headline"></a></h3>
+<p>The argument <em>b</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>b</em></p>
+</div></blockquote>
+<p>It specifies the upper limit for the integration.</p>
+</section>
+<section id="n">
+<span id="rombergone-n"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h3>
+<p>The argument <em>n</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>n</em></p>
+</div></blockquote>
+<p>A total number of <span class="math notranslate nohighlight">\(2^{n-1} + 1\)</span> evaluations of <em>F</em> ( <em>x</em> )
+are used to estimate the integral.</p>
+</section>
+<section id="p">
+<span id="rombergone-p"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">p</a><a class="headerlink" href="#p" title="Permalink to this headline"></a></h3>
+<p>The argument <em>p</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>p</em></p>
+</div></blockquote>
+<p>It must be less than or equal <span class="math notranslate nohighlight">\(n\)</span>
+and determines the accuracy order in the approximation for the integral
+that is returned by <code class="docutils literal notranslate"><span class="pre">RombergOne</span></code> .
+To be specific</p>
+<div class="math notranslate nohighlight">
+\[r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}\]</div>
+</section>
+<section id="e">
+<span id="rombergone-e"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">e</a><a class="headerlink" href="#e" title="Permalink to this headline"></a></h3>
+<p>The argument <em>e</em> has prototype</p>
+<blockquote>
+<div><p><em>Float</em> &amp; <em>e</em></p>
+</div></blockquote>
+<p>The input value of <em>e</em> does not matter
+and its output value is an approximation for the error in
+the integral estimates; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[e \approx \left| r - \int_a^b F(x) {\bf d} x \right|\]</div>
+</section>
+<section id="float">
+<span id="rombergone-float"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Float</a><a class="headerlink" href="#float" title="Permalink to this headline"></a></h3>
+<p>The type <em>Float</em> must satisfy the conditions
+for a <a class="reference internal" href="NumericType.html#numerictype-name"><span class="std std-ref">NumericType</span></a> type.
+The routine <a class="reference internal" href="CheckNumericType.html#checknumerictype-name"><span class="std std-ref">CheckNumericType</span></a> will generate an error message
+if this is not the case.
+In addition, if <em>x</em> and <em>y</em> are <em>Float</em> objects,</p>
+<blockquote>
+<div><p><em>x</em> &lt; <em>y</em></p>
+</div></blockquote>
+<p>returns the <code class="docutils literal notranslate"><span class="pre">bool</span></code> value true if <em>x</em> is less than
+<em>y</em> and false otherwise.</p>
+</section>
+<section id="example">
+<span id="rombergone-example"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="romberg_one.cpp.html#romberg-one-cpp-name"><span class="std std-ref">romberg_one.cpp</span></a>
+contains an example and test a test of using this routine.</p>
+</section>
+<section id="source-code">
+<span id="rombergone-source-code"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Source Code</a><a class="headerlink" href="#source-code" title="Permalink to this headline"></a></h3>
+<p>The source code for this routine is in the file
+<code class="docutils literal notranslate"><span class="pre">cppad/romberg_one.hpp</span></code> .</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="romberg_mul.cpp.html" class="btn btn-neutral float-left" title="romberg_mul.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="romberg_one.cpp.html" class="btn btn-neutral float-right" title="romberg_one.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

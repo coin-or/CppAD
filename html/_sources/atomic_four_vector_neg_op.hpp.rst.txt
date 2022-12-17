@@ -1,0 +1,20 @@
+lines 8-25 of file: include/cppad/example/atomic_four/vector/neg_op.hpp
+
+{xrst_begin atomic_four_vector_neg_op.hpp}
+
+Atomic Vector Negative Operator: Example Implementation
+#######################################################
+
+Example
+*******
+The file :ref:`atomic_four_vector_neg.cpp-name` contains an example
+and test for this operator.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_neg_op.hpp}

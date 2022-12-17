@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="forward_theory, the, theory, of, forward, mode" name="keywords" />
+<meta content="taylor, notation" name="keywords" />
+<meta content="binary, operators" name="keywords" />
+<meta content="addition" name="keywords" />
+<meta content="subtraction" name="keywords" />
+<meta content="multiplication" name="keywords" />
+<meta content="division" name="keywords" />
+<meta content="standard, math, functions" name="keywords" />
+<meta content="differential, equation" name="keywords" />
+<meta content="taylor, coefficients, recursion, formula" name="keywords" />
+<meta content="cases, that, apply, recursion, above" name="keywords" />
+<meta content="special, cases" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>forward_theory &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exp_forward" href="exp_forward.html" />
+    <link rel="prev" title="exp_apx.cpp" href="exp_apx.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Theory.html">Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">forward_theory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exp_forward.html">exp_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="log_forward.html">log_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sqrt_forward.html">sqrt_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sin_cos_forward.html">sin_cos_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan_forward.html">atan_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asin_forward.html">asin_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acos_forward.html">acos_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pow_forward.html">pow_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tan_forward.html">tan_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erf_forward.html">erf_forward</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_theory.html">reverse_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_identity.html">reverse_identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taylor_ode.html">taylor_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research.html">research</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Theory.html">Theory</a> &raquo;</li>
+      <li>forward_theory</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/forward_theory.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="forward-theory">
+<span id="forward-theory-name"></span><h1>forward_theory<a class="headerlink" href="#forward-theory" title="Permalink to this headline"></a></h1>
+<section id="the-theory-of-forward-mode">
+<span id="forward-theory-title"></span><span id="index-0"></span><h2>The Theory of Forward Mode<a class="headerlink" href="#the-theory-of-forward-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#taylor-notation" id="id1">Taylor Notation</a></p></li>
+<li><p><a class="reference internal" href="#binary-operators" id="id2">Binary Operators</a></p>
+<ul>
+<li><p><a class="reference internal" href="#addition" id="id3">Addition</a></p></li>
+<li><p><a class="reference internal" href="#subtraction" id="id4">Subtraction</a></p></li>
+<li><p><a class="reference internal" href="#multiplication" id="id5">Multiplication</a></p></li>
+<li><p><a class="reference internal" href="#division" id="id6">Division</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#standard-math-functions" id="id7">Standard Math Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#differential-equation" id="id8">Differential Equation</a></p></li>
+<li><p><a class="reference internal" href="#taylor-coefficients-recursion-formula" id="id9">Taylor Coefficients Recursion Formula</a></p></li>
+<li><p><a class="reference internal" href="#cases-that-apply-recursion-above" id="id10">Cases that Apply Recursion Above</a></p></li>
+<li><p><a class="reference internal" href="#special-cases" id="id11">Special Cases</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="taylor-notation">
+<span id="forward-theory-taylor-notation"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Taylor Notation</a><a class="headerlink" href="#taylor-notation" title="Permalink to this headline"></a></h3>
+<p>In Taylor notation, each variable corresponds to
+a function of a single argument which we denote by <em>t</em>
+(see Section 10.2 of
+<a class="reference internal" href="Bib.html#bib-evaluating-derivatives"><span class="std std-ref">Evaluating Derivatives</span></a> ).
+Here and below
+<span class="math notranslate nohighlight">\(X(t)\)</span>, <span class="math notranslate nohighlight">\(Y(t)\)</span>, and <em>Z</em> ( <em>t</em> ) are scalar valued functions
+and the corresponding <em>p</em>-th order Taylor coefficients row vectors are
+<span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span>; i.e.,</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+X(t) &amp; = &amp; x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + o( t^p ) \\
+Y(t) &amp; = &amp; y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + o( t^p ) \\
+Z(t) &amp; = &amp; z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + o( t^p )
+\end{eqnarray}</div><p>For the purposes of this section, we are given <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>
+and need to determine <span class="math notranslate nohighlight">\(z\)</span>.</p>
+</section>
+<section id="binary-operators">
+<span id="forward-theory-binary-operators"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Binary Operators</a><a class="headerlink" href="#binary-operators" title="Permalink to this headline"></a></h3>
+<section id="addition">
+<span id="forward-theory-binary-operators-addition"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id3">Addition</a><a class="headerlink" href="#addition" title="Permalink to this headline"></a></h4>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+Z(t)
+&amp; = &amp; X(t)   + Y(t)
+\\
+\sum_{j=0}^p z^{(j)} * t^j
+&amp; = &amp; \sum_{j=0}^p x^{(j)} * t^j + \sum_{j=0}^p y^{(j)} * t^j  + o( t^p )
+\\
+z^{(j)} &amp; = &amp; x^{(j)} + y^{(j)}
+\end{eqnarray}</div></section>
+<section id="subtraction">
+<span id="forward-theory-binary-operators-subtraction"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id4">Subtraction</a><a class="headerlink" href="#subtraction" title="Permalink to this headline"></a></h4>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+Z(t)
+&amp; = &amp; X(t) - Y(t)
+\\
+\sum_{j=0}^p z^{(j)} * t^j
+&amp; = &amp; \sum_{j=0}^p x^{(j)} * t^j - \sum_{j=0}^p y^{(j)} * t^j  + o( t^p )
+\\
+z^{(j)} &amp; = &amp; x^{(j)} - y^{(j)}
+\end{eqnarray}</div></section>
+<section id="multiplication">
+<span id="forward-theory-binary-operators-multiplication"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">Multiplication</a><a class="headerlink" href="#multiplication" title="Permalink to this headline"></a></h4>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+Z(t)
+&amp; = &amp; X(t) * Y(t)
+\\
+\sum_{j=0}^p z^{(j)} * t^j
+&amp; = &amp; \left( \sum_{j=0}^p x^{(j)} * t^j \right)
+*
+\left( \sum_{j=0}^p y^{(j)} * t^j \right) + o( t^p )
+\\
+z^{(j)} &amp; = &amp; \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+\end{eqnarray}</div></section>
+<section id="division">
+<span id="forward-theory-binary-operators-division"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Division</a><a class="headerlink" href="#division" title="Permalink to this headline"></a></h4>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+Z(t)
+&amp; = &amp; X(t) / Y(t)
+\\
+x
+&amp; = &amp; z * y
+\\
+\sum_{j=0}^p x^{(j)} * t^j
+&amp; = &amp;
+\left( \sum_{j=0}^p z^{(j)} * t^j \right)
+*
+\left( \sum_{j=0}^p y^{(j)} * t^j \right)
++
+o( t^p )
+\\
+x^{(j)} &amp; = &amp; \sum_{k=0}^j z^{(j-k)} y^{(k)}
+\\
+z^{(j)} &amp; = &amp; \frac{1}{y^{(0)}} \left( x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)} \right)
+\end{eqnarray}</div></section>
+</section>
+<section id="standard-math-functions">
+<span id="forward-theory-standard-math-functions"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Standard Math Functions</a><a class="headerlink" href="#standard-math-functions" title="Permalink to this headline"></a></h3>
+<p>Suppose that <span class="math notranslate nohighlight">\(F\)</span> is a standard math function and</p>
+<div class="math notranslate nohighlight">
+\[Z(t) = F[ X(t) ]\]</div>
+<section id="differential-equation">
+<span id="forward-theory-standard-math-functions-differential-equation"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">Differential Equation</a><a class="headerlink" href="#differential-equation" title="Permalink to this headline"></a></h4>
+<p>All of the standard math functions
+satisfy a differential equation of the form</p>
+<div class="math notranslate nohighlight">
+\[B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)\]</div>
+<p>We use <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(d\)</span> to denote the
+<em>p</em>-th order Taylor coefficient row vectors for
+<span class="math notranslate nohighlight">\(A [ X (t) ]\)</span>, <span class="math notranslate nohighlight">\(B [ X (t) ]\)</span> and <span class="math notranslate nohighlight">\(D [ X (t) ]\)</span>
+respectively.
+We assume that these coefficients are known functions of <span class="math notranslate nohighlight">\(x\)</span>,
+the <em>p</em>-th order Taylor coefficients for <span class="math notranslate nohighlight">\(X(t)\)</span>.</p>
+</section>
+<section id="taylor-coefficients-recursion-formula">
+<span id="forward-theory-standard-math-functions-taylor-coefficients-recursion-formula"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">Taylor Coefficients Recursion Formula</a><a class="headerlink" href="#taylor-coefficients-recursion-formula" title="Permalink to this headline"></a></h4>
+<p>Our problem here is to express <span class="math notranslate nohighlight">\(z\)</span>,
+the <em>p</em>-th order Taylor coefficient row vector for <span class="math notranslate nohighlight">\(Z(t)\)</span>,
+in terms of these other known coefficients.
+It follows from the formulas above that</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+Z^{(1)} (t)
+&amp; = &amp; F^{(1)} [ X(t) ] * X^{(1)} (t)
+\\
+B[ X(t) ] * Z^{(1)} (t)
+&amp; = &amp; \{ D[ X(t) ] + A[ X(t) ] * Z(t) \} * X^{(1)} (t)
+\\
+B[ X(t) ] * Z^{(1)} (t) &amp; = &amp; E(t) * X^{(1)} (t)
+\end{eqnarray}</div><p>where we define</p>
+<div class="math notranslate nohighlight">
+\[E(t) =  D[X(t)] + A[X(t)] * Z(t)\]</div>
+<p>We can compute the value of <span class="math notranslate nohighlight">\(z^{(0)}\)</span> using the formula</p>
+<div class="math notranslate nohighlight">
+\[z^{(0)} = F ( x^{(0)} )\]</div>
+<p>Suppose by induction (on <span class="math notranslate nohighlight">\(j\)</span>) that we are given the
+Taylor coefficients of <span class="math notranslate nohighlight">\(E(t)\)</span> up to order <span class="math notranslate nohighlight">\(j-1\)</span>; i.e.,
+<span class="math notranslate nohighlight">\(e^{(k)}\)</span> for <span class="math notranslate nohighlight">\(k = 0 , \ldots , j-1\)</span>
+and the coefficients
+<span class="math notranslate nohighlight">\(z^{(k)}\)</span> for <span class="math notranslate nohighlight">\(k = 0 , \ldots , j\)</span>.
+We can compute <span class="math notranslate nohighlight">\(e^{(j)}\)</span> using the formula</p>
+<div class="math notranslate nohighlight">
+\[e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}\]</div>
+<p>We need to complete the induction by finding formulas for <span class="math notranslate nohighlight">\(z^{(j+1)}\)</span>.
+It follows from the definition of <span class="math notranslate nohighlight">\(E(t)\)</span> that</p>
+<div class="math notranslate nohighlight">
+\[\left( \sum_{k=0}^j b^{(k)} * t^k \right)
+*
+\left( \sum_{k=1}^{j+1} k z^{(k)} * t^{k-1} \right)
+=
+\left( \sum_{k=0}^j e^{(k)} * t^k \right)
+*
+\left( \sum_{k=1}^{j+1} k x^{(k)} * t^{k-1} \right)
++
+o( t^p )\]</div>
+<p>Setting the left and right side coefficients of <span class="math notranslate nohighlight">\(t^j\)</span> equal,
+and using the formula for
+<a class="reference internal" href="#forward-theory-binary-operators-multiplication"><span class="std std-ref">Multiplication</span></a> ,
+we obtain</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\sum_{k=0}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+&amp; = &amp;
+\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+\\
+z^{(j+1)} &amp; = &amp; \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+   \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+   - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+\right)
+\\
+z^{(j+1)} &amp; = &amp; \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+   \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+\right)
+\end{eqnarray}</div><p>This completes the induction that computes <span class="math notranslate nohighlight">\(e^{(j)}\)</span>
+and <span class="math notranslate nohighlight">\(z^{(j+1)}\)</span>.</p>
+</section>
+<section id="cases-that-apply-recursion-above">
+<span id="forward-theory-standard-math-functions-cases-that-apply-recursion-above"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">Cases that Apply Recursion Above</a><a class="headerlink" href="#cases-that-apply-recursion-above" title="Permalink to this headline"></a></h4>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>exp_forward</p></td>
+<td><p><a class="reference internal" href="exp_forward.html#exp-forward-title"><span class="std std-ref">Exponential Function Forward Mode Theory</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>log_forward</p></td>
+<td><p><a class="reference internal" href="log_forward.html#log-forward-title"><span class="std std-ref">Logarithm Function Forward Mode Theory</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>sqrt_forward</p></td>
+<td><p><a class="reference internal" href="sqrt_forward.html#sqrt-forward-title"><span class="std std-ref">Square Root Function Forward Mode Theory</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>sin_cos_forward</p></td>
+<td><p><a class="reference internal" href="sin_cos_forward.html#sin-cos-forward-title"><span class="std std-ref">Trigonometric and Hyperbolic Sine and Cosine Forward Theory</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atan_forward</p></td>
+<td><p><a class="reference internal" href="atan_forward.html#atan-forward-title"><span class="std std-ref">Inverse Tangent and Hyperbolic Tangent Forward Mode Theory</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>asin_forward</p></td>
+<td><p><a class="reference internal" href="asin_forward.html#asin-forward-title"><span class="std std-ref">Inverse Sine and Hyperbolic Sine Forward Mode Theory</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>acos_forward</p></td>
+<td><p><a class="reference internal" href="acos_forward.html#acos-forward-title"><span class="std std-ref">Inverse Cosine and Hyperbolic Cosine Forward Mode Theory</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>pow_forward</p></td>
+<td><p><a class="reference internal" href="pow_forward.html#pow-forward-title"><span class="std std-ref">Power Function Forward Mode Theory</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="special-cases">
+<span id="forward-theory-standard-math-functions-special-cases"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id11">Special Cases</a><a class="headerlink" href="#special-cases" title="Permalink to this headline"></a></h4>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>tan_forward</p></td>
+<td><p><a class="reference internal" href="tan_forward.html#tan-forward-title"><span class="std std-ref">Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>erf_forward</p></td>
+<td><p><a class="reference internal" href="erf_forward.html#erf-forward-title"><span class="std std-ref">Error Function Forward Taylor Polynomial Theory</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="exp_apx.cpp.html" class="btn btn-neutral float-left" title="exp_apx.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exp_forward.html" class="btn btn-neutral float-right" title="exp_forward" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

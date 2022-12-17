@@ -1,0 +1,15 @@
+lines 6-18 of file: example/json/unary_op.cpp
+
+{xrst_begin json_unary_op.cpp}
+
+Json Unary Operators: Example and Test
+######################################
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end json_unary_op.cpp}

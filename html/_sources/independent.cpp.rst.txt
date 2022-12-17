@@ -1,0 +1,14 @@
+lines 8-19 of file: example/general/independent.cpp
+
+{xrst_begin independent.cpp}
+
+{xrst_comment ! NOTE the title states that this example is used two places !}
+Independent and ADFun Constructor: Example and Test
+###################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end independent.cpp}

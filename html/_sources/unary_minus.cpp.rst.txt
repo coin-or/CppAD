@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/unary_minus.cpp
+
+{xrst_begin unary_minus.cpp}
+
+AD Unary Minus Operator: Example and Test
+#########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end unary_minus.cpp}

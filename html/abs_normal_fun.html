@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="abs_normal_fun, create, an, abs-normal, representation, of, a, function" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="m" name="keywords" />
+<meta content="s" name="keywords" />
+<meta content="a" name="keywords" />
+<meta content="zeta" name="keywords" />
+<meta content="a(x)" name="keywords" />
+<meta content="g" name="keywords" />
+<meta content="z(x,, u)" name="keywords" />
+<meta content="y(x,, u)" name="keywords" />
+<meta content="affine, approximation" name="keywords" />
+<meta content="abs-normal, approximation" name="keywords" />
+<meta content="approximating, a(x)" name="keywords" />
+<meta content="approximating, f(x)" name="keywords" />
+<meta content="correspondence, to, literature" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>abs_normal_fun &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="example_abs_normal" href="example_abs_normal.html" />
+    <link rel="prev" title="to_graph" href="to_graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="other_adfun.html">other_adfun</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base2ad.html">base2ad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_ad_graph.html">json_ad_graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_ad_graph.html">cpp_ad_graph</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">abs_normal_fun</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="example_abs_normal.html">example_abs_normal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="other_adfun.html">other_adfun</a> &raquo;</li>
+      <li>abs_normal_fun</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/abs_normal_fun.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="abs-normal-fun">
+<span id="abs-normal-fun-name"></span><h1>abs_normal_fun<a class="headerlink" href="#abs-normal-fun" title="Permalink to this headline"></a></h1>
+<section id="create-an-abs-normal-representation-of-a-function">
+<span id="abs-normal-fun-title"></span><span id="index-0"></span><h2>Create An Abs-normal Representation of a Function<a class="headerlink" href="#create-an-abs-normal-representation-of-a-function" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id2">f</a></p>
+<ul>
+<li><p><a class="reference internal" href="#n" id="id3">n</a></p></li>
+<li><p><a class="reference internal" href="#m" id="id4">m</a></p></li>
+<li><p><a class="reference internal" href="#s" id="id5">s</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#a" id="id6">a</a></p>
+<ul>
+<li><p><a class="reference internal" href="#zeta" id="id7">zeta</a></p></li>
+<li><p><a class="reference internal" href="#a-x" id="id8">a(x)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#g" id="id9">g</a></p>
+<ul>
+<li><p><a class="reference internal" href="#z-x-u" id="id10">z(x, u)</a></p></li>
+<li><p><a class="reference internal" href="#y-x-u" id="id11">y(x, u)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#affine-approximation" id="id12">Affine Approximation</a></p></li>
+<li><p><a class="reference internal" href="#abs-normal-approximation" id="id13">Abs-normal Approximation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#approximating-a-x" id="id14">Approximating a(x)</a></p></li>
+<li><p><a class="reference internal" href="#approximating-f-x" id="id15">Approximating f(x)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#correspondence-to-literature" id="id16">Correspondence to Literature</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id17">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="abs-normal-fun-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">abs_normal_fun</span></code> ( <em>g</em> , <em>a</em> )</p>
+</section>
+<section id="f">
+<span id="abs-normal-fun-f"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt;&amp; <em>f</em></p>
+</div></blockquote>
+<p>It represents a function <span class="math notranslate nohighlight">\(f : \B{R}^n \rightarrow \B{R}^m\)</span>.
+We assume that the only non-smooth terms in the representation are
+absolute value functions and use <span class="math notranslate nohighlight">\(s \in \B{Z}_+\)</span>
+to represent the number of these terms.</p>
+<section id="n">
+<span id="abs-normal-fun-f-n"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id3">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h4>
+<p>We use <em>n</em> to denote the dimension of the domain space for <em>f</em> .</p>
+</section>
+<section id="m">
+<span id="abs-normal-fun-f-m"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id4">m</a><a class="headerlink" href="#m" title="Permalink to this headline"></a></h4>
+<p>We use <em>m</em> to denote the dimension of the range space for <em>f</em> .</p>
+</section>
+<section id="s">
+<span id="abs-normal-fun-f-s"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">s</a><a class="headerlink" href="#s" title="Permalink to this headline"></a></h4>
+<p>We use <em>s</em> to denote the number of absolute value terms in <em>f</em> .</p>
+</section>
+</section>
+<section id="a">
+<span id="abs-normal-fun-a"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">a</a><a class="headerlink" href="#a" title="Permalink to this headline"></a></h3>
+<p>The object <em>a</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>a</em></p>
+</div></blockquote>
+<p>The initial function representation in <em>a</em> is lost.
+Upon return it represents the result of the absolute terms
+<span class="math notranslate nohighlight">\(a : \B{R}^n \rightarrow \B{R}^s\)</span>; see <span class="math notranslate nohighlight">\(a(x)\)</span> defined below.
+Note that <em>a</em> is constructed by copying <em>f</em>
+and then changing the dependent variables. There may
+be many calculations in this representation that are not necessary
+and can be removed using</p>
+<blockquote>
+<div><p><em>a</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> ()</p>
+</div></blockquote>
+<p>This optimization is not done automatically by <code class="docutils literal notranslate"><span class="pre">abs_normal_fun</span></code>
+because it may take a significant amount of time.</p>
+<section id="zeta">
+<span id="abs-normal-fun-a-zeta"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">zeta</a><a class="headerlink" href="#zeta" title="Permalink to this headline"></a></h4>
+<p>Let <span class="math notranslate nohighlight">\(\zeta_0 ( x )\)</span>
+denote the argument for the first absolute value term in <span class="math notranslate nohighlight">\(f(x)\)</span>,
+<span class="math notranslate nohighlight">\(\zeta_1 ( x , |\zeta_0 (x)| )\)</span> for the second term, and so on.</p>
+</section>
+<section id="a-x">
+<span id="abs-normal-fun-a-a-x"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">a(x)</a><a class="headerlink" href="#a-x" title="Permalink to this headline"></a></h4>
+<p>For <span class="math notranslate nohighlight">\(i = 0 , \ldots , {s-1}\)</span> define</p>
+<div class="math notranslate nohighlight">
+\[a_i (x)
+=
+| \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |\]</div>
+<p>This defines <span class="math notranslate nohighlight">\(a : \B{R}^n \rightarrow \B{R}^s\)</span>.</p>
+</section>
+</section>
+<section id="g">
+<span id="abs-normal-fun-g"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">g</a><a class="headerlink" href="#g" title="Permalink to this headline"></a></h3>
+<p>The object <em>g</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>g</em></p>
+</div></blockquote>
+<p>The initial function representation in <em>g</em> is lost.
+Upon return it represents the smooth function
+<span class="math notranslate nohighlight">\(g : \B{R}^{n + s} \rightarrow  \B{R}^{m + s}\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}g( x , u )
+=
+\left[ \begin{array}{c} y(x, u) \\ z(x, u) \end{array} \right]\end{split}\]</div>
+<p>were <span class="math notranslate nohighlight">\(y(x, u)\)</span> and <span class="math notranslate nohighlight">\(z(x, u)\)</span> are defined below.</p>
+<section id="z-x-u">
+<span id="abs-normal-fun-g-z-x-u"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">z(x, u)</a><a class="headerlink" href="#z-x-u" title="Permalink to this headline"></a></h4>
+<p>Define the smooth function
+<span class="math notranslate nohighlight">\(z : \B{R}^{n + s} \rightarrow  \B{R}^s\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[z_i ( x , u ) = \zeta_i ( x , u_0 , \ldots , u_{i-1} )\]</div>
+<p>Note that the partial of <span class="math notranslate nohighlight">\(z_i\)</span> with respect to <span class="math notranslate nohighlight">\(u_j\)</span> is zero
+for <span class="math notranslate nohighlight">\(j \geq i\)</span>.</p>
+</section>
+<section id="y-x-u">
+<span id="abs-normal-fun-g-y-x-u"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id11">y(x, u)</a><a class="headerlink" href="#y-x-u" title="Permalink to this headline"></a></h4>
+<p>There is a smooth function
+<span class="math notranslate nohighlight">\(y : \B{R}^{n + s} \rightarrow  \B{R}^m\)</span>
+such that <span class="math notranslate nohighlight">\(y( x , u ) = f(x)\)</span> whenever <span class="math notranslate nohighlight">\(u = a(x)\)</span>.</p>
+</section>
+</section>
+<section id="affine-approximation">
+<span id="abs-normal-fun-affine-approximation"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Affine Approximation</a><a class="headerlink" href="#affine-approximation" title="Permalink to this headline"></a></h3>
+<p>We define the affine approximations</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+y[ \hat{x} ]( x , u )
+&amp; = &amp;
+y ( \hat{x}, a( \hat{x} ) )
+   + \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+\\
+z[ \hat{x} ]( x , u )
+&amp; = &amp;
+z ( \hat{x}, a( \hat{x} ) )
+   + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+\end{eqnarray}</div><p>It follows that</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+y( x , u )
+&amp; = &amp;
+y[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+\\
+z( x , u )
+&amp; = &amp;
+z[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+\end{eqnarray}</div></section>
+<section id="abs-normal-approximation">
+<span id="abs-normal-fun-abs-normal-approximation"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Abs-normal Approximation</a><a class="headerlink" href="#abs-normal-approximation" title="Permalink to this headline"></a></h3>
+<section id="approximating-a-x">
+<span id="abs-normal-fun-abs-normal-approximation-approximating-a-x"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id14">Approximating a(x)</a><a class="headerlink" href="#approximating-a-x" title="Permalink to this headline"></a></h4>
+<p>The function <span class="math notranslate nohighlight">\(a(x)\)</span> is not smooth, but it is equal to
+<span class="math notranslate nohighlight">\(| z(x, u) |\)</span> when <span class="math notranslate nohighlight">\(u = a(x)\)</span>.
+Furthermore</p>
+<div class="math notranslate nohighlight">
+\[z[ \hat{x} ]( x , u )
+=
+z ( \hat{x}, a( \hat{x} ) )
+   + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )\]</div>
+<p>The partial of <span class="math notranslate nohighlight">\(z_i\)</span> with respect to <span class="math notranslate nohighlight">\(u_j\)</span> is zero
+for <span class="math notranslate nohighlight">\(j \geq i\)</span>. It follows that</p>
+<div class="math notranslate nohighlight">
+\[z_i [ \hat{x} ]( x , u )
+=
+z_i ( \hat{x}, a( \hat{x} ) )
+   + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \sum_{j &lt; i} \partial_{u(j)}
+      z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )\]</div>
+<p>Considering the case <span class="math notranslate nohighlight">\(i = 0\)</span> we define</p>
+<div class="math notranslate nohighlight">
+\[a_0 [ \hat{x} ]( x )
+=
+| z_0 [ \hat{x} ]( x , u ) |
+=
+\left|
+   z_0 ( \hat{x}, a( \hat{x} ) )
+   + \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+\right|\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )\]</div>
+<p>In general, we define <span class="math notranslate nohighlight">\(a_i [ \hat{x} ]\)</span> using
+<span class="math notranslate nohighlight">\(a_j [ \hat{x} ]\)</span> for <span class="math notranslate nohighlight">\(j &lt; i\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[a_i [ \hat{x} ]( x )
+=
+\left |
+   z_i ( \hat{x}, a( \hat{x} ) )
+   + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \sum_{j &lt; i} \partial_{u(j)}
+      z_i ( \hat{x}, a( \hat{x} ) )
+         ( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
+\right|\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[a (x) = a[ \hat{x} ]( x ) + o ( x - \hat{x} )\]</div>
+<p>Note that in the case where <span class="math notranslate nohighlight">\(z(x, u)\)</span> and <span class="math notranslate nohighlight">\(y(x, u)\)</span> are
+affine,</p>
+<div class="math notranslate nohighlight">
+\[a[ \hat{x} ]( x ) = a( x )\]</div>
+</section>
+<section id="approximating-f-x">
+<span id="abs-normal-fun-abs-normal-approximation-approximating-f-x"></span><span id="index-15"></span><h4><a class="toc-backref" href="#id15">Approximating f(x)</a><a class="headerlink" href="#approximating-f-x" title="Permalink to this headline"></a></h4>
+<div class="math notranslate nohighlight">
+\[f(x)
+=
+y ( x , a(x ) )
+=
+y [ \hat{x} ] ( x , a[ \hat{x} ] ( x ) )
++ o( x - \hat{x} )\]</div>
+</section>
+</section>
+<section id="correspondence-to-literature">
+<span id="abs-normal-fun-correspondence-to-literature"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">Correspondence to Literature</a><a class="headerlink" href="#correspondence-to-literature" title="Permalink to this headline"></a></h3>
+<p>Using the notation
+<span class="math notranslate nohighlight">\(Z = \partial_x z(\hat{x}, \hat{u})\)</span>,
+<span class="math notranslate nohighlight">\(L = \partial_u z(\hat{x}, \hat{u})\)</span>,
+<span class="math notranslate nohighlight">\(J = \partial_x y(\hat{x}, \hat{u})\)</span>,
+<span class="math notranslate nohighlight">\(Y = \partial_u y(\hat{x}, \hat{u})\)</span>,
+the approximation for <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+z[ \hat{x} ]( x , u )
+&amp; = &amp;
+z ( \hat{x}, a( \hat{x} ) ) + Z ( x - \hat{x} ) + L ( u - a( \hat{x} ) )
+\\
+y[ \hat{x} ]( x , u )
+&amp; = &amp;
+y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
+\end{eqnarray}</div><p>Moving the terms with <span class="math notranslate nohighlight">\(\hat{x}\)</span> together, we have</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+z[ \hat{x} ]( x , u )
+&amp; = &amp;
+z ( \hat{x}, a( \hat{x} ) ) - Z \hat{x} - L a( \hat{x} )  + Z x + L u
+\\
+y[ \hat{x} ]( x , u )
+&amp; = &amp;
+y ( \hat{x}, a( \hat{x} ) ) - J \hat{x} - Y a( \hat{x} )  + J x + Y u
+\end{eqnarray}</div><p>Using the notation
+<span class="math notranslate nohighlight">\(c = z ( \hat{x}, \hat{u} ) - Z \hat{x} - L \hat{u}\)</span>,
+<span class="math notranslate nohighlight">\(b = y ( \hat{x}, \hat{u} ) - J \hat{x} - Y \hat{u}\)</span>,
+we have</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+z[ \hat{x} ]( x , u ) &amp; = &amp; c + Z x + L u
+\\
+y[ \hat{x} ]( x , u ) &amp; = &amp; b + J x + Y u
+\end{eqnarray}</div><p>Considering the affine case, where the approximations are exact,
+and choosing <span class="math notranslate nohighlight">\(u = a(x) = |z(x, u)|\)</span>, we obtain</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+z( x , a(x ) ) &amp; = &amp; c + Z x + L |z( x , a(x ) )|
+\\
+y( x , a(x ) ) &amp; = &amp; b + J x + Y |z( x , a(x ) )|
+\end{eqnarray}</div><p>This is Equation (2) of the
+<a class="reference internal" href="example_abs_normal.html#example-abs-normal-reference"><span class="std std-ref">Reference</span></a> .</p>
+</section>
+<section id="example">
+<span id="abs-normal-fun-example"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="abs_get_started.cpp.html#abs-get-started-cpp-name"><span class="std std-ref">abs_get_started.cpp</span></a> contains
+an example and test using this operation.
+The section <a class="reference internal" href="example_abs_normal.html#example-abs-normal-name"><span class="std std-ref">example_abs_normal</span></a>
+has a links to all the abs normal examples.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="to_graph.html" class="btn btn-neutral float-left" title="to_graph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_abs_normal.html" class="btn btn-neutral float-right" title="example_abs_normal" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

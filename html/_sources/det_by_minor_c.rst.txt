@@ -1,0 +1,74 @@
+lines 232-303 of file: test_more/compare_c/det_by_minor.c
+
+{xrst_begin det_by_minor_c}
+
+Compute Determinant using Expansion by Minors
+#############################################
+
+Syntax
+******
+*d* = ``det_by_minor`` ( *a* , *n* )
+
+Purpose
+*******
+returns the determinant of the matrix :math:`A`
+using expansion by minors.
+The elements of the :math:`n \times n` minor :math:`M`
+of the matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
+
+.. math::
+
+   M_{i,j} = A_{i, j}
+
+a
+*
+The argument *a* has prototype
+
+   ``const double`` * *a*
+
+and is a vector with size :math:`m * m`.
+The elements of the :math:`m \times m` matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , m-1` and :math:`j = 0 , \ldots , m-1`, by
+
+.. math::
+
+   A_{i,j} = a[ i * m + j]
+
+m
+*
+The argument *m* has prototype
+
+   ``size_t`` *m*
+
+and is the number of rows (and columns) in the square matrix :math:`A`.
+
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
+double det_by_minor(double* a, size_t m)
+{  size_t *r, *c, i;
+   double value;
+
+   r = (size_t*) malloc( (m+1) * sizeof(size_t) );
+   c = (size_t*) malloc( (m+1) * sizeof(size_t) );
+
+   assert(m <= 100);
+   for(i = 0; i < m; i++)
+   {  r[i] = i+1;
+      c[i] = i+1;
+   }
+   r[m] = 0;
+   c[m] = 0;
+
+   value = det_of_minor(a, m, m, r, c);
+
+   free(r);
+   free(c);
+   return value;
+}
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end det_by_minor_c}

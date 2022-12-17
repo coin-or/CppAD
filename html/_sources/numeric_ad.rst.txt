@@ -1,0 +1,18 @@
+lines 6-21 of file: xrst/appendix/numeric_ad.xrst
+
+{xrst_begin numeric_ad}
+
+Some Numerical AD Utilities
+###########################
+The routines listed below are numerical utilities that are
+designed to work with CppAD in particular.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/bender_quad.hpp
+   include/cppad/core/opt_val_hes.hpp
+   include/cppad/core/lu_ratio.hpp
+}
+
+{xrst_end numeric_ad}

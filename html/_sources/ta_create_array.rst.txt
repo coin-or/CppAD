@@ -1,0 +1,80 @@
+lines 1247-1324 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_create_array}
+{xrst_spell
+   inuse
+}
+
+Allocate An Array and Call Default Constructor for its Elements
+###############################################################
+
+Syntax
+******
+*array* = ``thread_alloc::create_array<`` *Type* >( *size_min* , *size_out* ) .
+
+Purpose
+*******
+Create a new raw array using :ref:`thread_alloc-name` memory allocator
+(works well in a multi-threading environment)
+and call default constructor for each element.
+
+Type
+****
+The type of the elements of the array.
+
+size_min
+********
+This argument has prototype
+
+   ``size_t`` *size_min*
+
+This is the minimum number of elements that there can be
+in the resulting *array* .
+
+size_out
+********
+This argument has prototype
+
+   ``size_t&`` *size_out*
+
+The input value of this argument does not matter.
+Upon return, it is the actual number of elements
+in *array*
+( *size_min* <= *size_out* ).
+
+array
+*****
+The return value *array* has prototype
+
+   *Type* * *array*
+
+It is array with *size_out* elements.
+The default constructor for *Type* is used to initialize the
+elements of *array* .
+Note that :ref:`delete_array<ta_delete_array-name>`
+should be used to destroy the array when it is no longer needed.
+
+Delta
+*****
+The amount of memory :ref:`inuse<ta_inuse-name>` by the current thread,
+will increase *delta* where
+
+   ``sizeof`` ( *Type* ) * ( *size_out* + 1) > *delta* >= ``sizeof`` ( *Type* ) * *size_out*
+
+The :ref:`available<ta_available-name>` memory will decrease by *delta* ,
+(and the allocation will be faster)
+if a previous allocation with *size_min* between its current value
+and *size_out* is available.
+
+Alignment
+*********
+We call a memory allocation aligned if the address is a multiple
+of the number of bytes in a ``size_t`` value.
+If the system ``new`` allocator is aligned, then *array*
+pointer is also aligned.
+
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_create_array}

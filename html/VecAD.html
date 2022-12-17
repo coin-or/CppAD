@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="VecAD, ad, vectors, that, record, index, operations" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="alternatives" name="keywords" />
+<meta content="efficiency" name="keywords" />
+<meta content="vecad&lt;base&gt;::reference" name="keywords" />
+<meta content="exceptions" name="keywords" />
+<meta content="constructor" name="keywords" />
+<meta content="vec" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="size" name="keywords" />
+<meta content="base, indexing" name="keywords" />
+<meta content="i" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="ad, indexing" name="keywords" />
+<meta content="ind" name="keywords" />
+<meta content="result" name="keywords" />
+<meta content="right" name="keywords" />
+<meta content="left" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="base2ad" name="keywords" />
+<meta content="speed, and, memory" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VecAD &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="vec_ad.cpp" href="vec_ad.cpp.html" />
+    <link rel="prev" title="equal_op_seq.cpp" href="equal_op_seq.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ADValued.html">ADValued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">VecAD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="vec_ad.cpp.html">vec_ad.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+      <li>VecAD</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/VecAD.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="vecad">
+<span id="vecad-name"></span><h1>VecAD<a class="headerlink" href="#vecad" title="Permalink to this headline"></a></h1>
+<section id="ad-vectors-that-record-index-operations">
+<span id="vecad-title"></span><span id="index-0"></span><h2>AD Vectors that Record Index Operations<a class="headerlink" href="#ad-vectors-that-record-index-operations" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#alternatives" id="id3">Alternatives</a></p></li>
+<li><p><a class="reference internal" href="#efficiency" id="id4">Efficiency</a></p></li>
+<li><p><a class="reference internal" href="#vecad-base-reference" id="id5">VecAD&lt;Base&gt;::reference</a></p>
+<ul>
+<li><p><a class="reference internal" href="#exceptions" id="id6">Exceptions</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#constructor" id="id7">Constructor</a></p>
+<ul>
+<li><p><a class="reference internal" href="#vec" id="id8">vec</a></p></li>
+<li><p><a class="reference internal" href="#n" id="id9">n</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#size" id="id10">size</a></p></li>
+<li><p><a class="reference internal" href="#base-indexing" id="id11">Base Indexing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#i" id="id12">i</a></p></li>
+<li><p><a class="reference internal" href="#base" id="id13">base</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ad-indexing" id="id14">AD Indexing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ind" id="id15">ind</a></p></li>
+<li><p><a class="reference internal" href="#result" id="id16">result</a></p></li>
+<li><p><a class="reference internal" href="#right" id="id17">right</a></p></li>
+<li><p><a class="reference internal" href="#left" id="id18">left</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#example" id="id19">Example</a></p></li>
+<li><p><a class="reference internal" href="#base2ad" id="id20">base2ad</a></p></li>
+<li><p><a class="reference internal" href="#speed-and-memory" id="id21">Speed and Memory</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="vecad-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt; <em>vec</em> ( <em>n</em> )</p>
+<p><em>vec</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> ()</p>
+<p><em>base</em> = <em>vec</em> [ <em>i</em> ]</p>
+<div class="line-block">
+<div class="line"><em>abase</em> = <em>vec</em> [ <em>ind</em> ]</div>
+<div class="line"><em>vec</em> [ <em>ind</em> ]   = <em>right</em></div>
+<div class="line"><em>left</em> = <em>vec</em> [ <em>ind</em> ]</div>
+</div>
+</section>
+<section id="purpose">
+<span id="vecad-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>If either <em>vec</em> or <em>ind</em> is a
+<a class="reference internal" href="glossary.html#glossary-variable"><span class="std std-ref">Variable</span></a> or
+<a class="reference internal" href="glossary.html#glossary-parameter-dynamic"><span class="std std-ref">dynamic parameter</span></a> ,
+the indexing operation</p>
+<blockquote>
+<div><p><em>vec</em> [ <em>ind</em> ]</p>
+</div></blockquote>
+<p>is recorded in the corresponding <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt;
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a> and
+included in the corresponding <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> .
+Such an index can change each time
+zero order <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">f.Forward</span></a> is used; i.e.,
+each time <em>f</em> is evaluated with new value for the
+<a class="reference internal" href="glossary.html#glossary-tape-independent-variable"><span class="std std-ref">independent variables</span></a> .
+Note that the value of <em>vec</em> [ <em>ind</em> ]
+depends on the value of <em>ind</em>
+in a discrete fashion and CppAD computes its partial derivative with
+respect to <em>ind</em> as zero.</p>
+</section>
+<section id="alternatives">
+<span id="vecad-alternatives"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Alternatives</a><a class="headerlink" href="#alternatives" title="Permalink to this headline"></a></h3>
+<p>If only the values in <em>vec</em> ,
+and not the indices <em>ind</em> ,
+depend on the independent variables,
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements of type <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt;
+would be more efficient than using <code class="docutils literal notranslate"><span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt; .
+If only the indices, and not the values in the vector,
+depend on the independent variables,
+a <a class="reference internal" href="Discrete.html#discrete-name"><span class="std std-ref">Discrete</span></a> functions would be a much more efficient.</p>
+</section>
+<section id="efficiency">
+<span id="vecad-efficiency"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Efficiency</a><a class="headerlink" href="#efficiency" title="Permalink to this headline"></a></h3>
+<p>If one uses <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> vector where one could use a simple vector,
+the <a class="reference internal" href="sparsity_pattern.html#sparsity-pattern-name"><span class="std std-ref">sparsity_pattern</span></a> will be less efficient
+because the dependence on different elements cannot be separated.
+In addition, <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> objects that only depend on dynamic parameters
+are treated as if they were variables making sparsity patterns
+even less efficient (have more possibly non-zero values than necessary);
+see <a class="reference internal" href="wish_list.html#wish-list-dynamic-parameters-vecad-vectors"><span class="std std-ref">VecAD Vectors</span></a>
+under dynamic parameters in the wish list.</p>
+</section>
+<section id="vecad-base-reference">
+<span id="vecad-vecad-base-reference"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">VecAD&lt;Base&gt;::reference</a><a class="headerlink" href="#vecad-base-reference" title="Permalink to this headline"></a></h3>
+<p>The expression <em>vec</em> [ <em>ind</em> ] has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt;:: <code class="docutils literal notranslate"><span class="pre">reference</span></code> <em>vec</em> [ <em>ind</em> ]</p>
+</div></blockquote>
+<p>which is like the <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; type
+with some notable exceptions:</p>
+<section id="exceptions">
+<span id="vecad-vecad-base-reference-exceptions"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Exceptions</a><a class="headerlink" href="#exceptions" title="Permalink to this headline"></a></h4>
+<ol class="arabic">
+<li><p>This object cannot be used with the
+<a class="reference internal" href="Value.html#value-name"><span class="std std-ref">Value</span></a> function to compute the corresponding <em>Base</em> value.
+In some cases, the syntax</p>
+<blockquote>
+<div><p><em>vec</em> [ <em>i</em> ]</p>
+</div></blockquote>
+<p>can be used to obtain the corresponding <em>Base</em> value; see below.</p>
+</li>
+<li><p>This object cannot be used as the left hand side in a
+with a <a class="reference internal" href="compound_assign.html#compound-assign-name"><span class="std std-ref">compound assignment</span></a> ; i.e.,
+<code class="docutils literal notranslate"><span class="pre">+=</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">-=</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">*=</span></code> , or
+<code class="docutils literal notranslate"><span class="pre">/=</span></code> .
+For example, the following syntax is not valid:</p>
+<blockquote>
+<div><p><em>vec</em> [ <em>ind</em> ] += <em>z</em> ;</p>
+</div></blockquote>
+<p>no matter what the types of <em>z</em> .</p>
+</li>
+<li><p>Assignment to <code class="docutils literal notranslate"><span class="pre">vec</span></code> [ <code class="docutils literal notranslate"><span class="pre">ind</span></code> ] returns a <code class="docutils literal notranslate"><span class="pre">void</span></code> .
+For example, the following syntax is not valid:</p>
+<blockquote>
+<div><p><em>z</em> = <em>vec</em> [ <em>ind</em> ] = <em>u</em> ;</p>
+</div></blockquote>
+<p>no matter what the types of <em>z</em> , and <em>u</em> .</p>
+</li>
+<li><p>A <em>vec</em> [ <em>ind</em> ] object cannot appear in a <a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">CondExp</span></a> ;
+For example, the following syntax is not valid:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CondExpGt</span></code> ( <em>vec</em> [ <em>ind</em> ], <em>u</em> , <em>v</em> , <em>w</em> )</p>
+</div></blockquote>
+<p>no matter what the types of <em>u</em> , <em>v</em> , and <em>w</em> .</p>
+</li>
+<li><p>A <em>vec</em> [ <em>ind</em> ] object should not be used with the
+<code class="docutils literal notranslate"><span class="pre">Constant</span></code> , <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code> , <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> , and <code class="docutils literal notranslate"><span class="pre">Variable</span></code>
+functions (see <a class="reference internal" href="con_dyn_var.html#con-dyn-var-name"><span class="std std-ref">con_dyn_var</span></a> ).
+The entire vector <em>vec</em> should be used instead.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> vector
+cannot be passed to <code class="docutils literal notranslate"><span class="pre">Independent</span></code> function.</p></li>
+</ol>
+</section>
+</section>
+<section id="constructor">
+<span id="vecad-constructor"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Constructor</a><a class="headerlink" href="#constructor" title="Permalink to this headline"></a></h3>
+<section id="vec">
+<span id="vecad-constructor-vec"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">vec</a><a class="headerlink" href="#vec" title="Permalink to this headline"></a></h4>
+<p>The syntax</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt; <em>vec</em> ( <em>n</em> )</p>
+</div></blockquote>
+<p>creates an <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> object <em>vec</em> with
+<em>n</em> elements.
+The initial value of the elements of <em>vec</em> is unspecified.</p>
+</section>
+<section id="n">
+<span id="vecad-constructor-n"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h4>
+<p>The argument <em>n</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>n</em></p>
+</div></blockquote>
+</section>
+</section>
+<section id="size">
+<span id="vecad-size"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">size</a><a class="headerlink" href="#size" title="Permalink to this headline"></a></h3>
+<p>The syntax</p>
+<blockquote>
+<div><p><em>vec</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> ()</p>
+</div></blockquote>
+<p>returns the number of elements in the vector <em>vec</em> ;
+i.e., the value of <em>n</em> when it was constructed.</p>
+</section>
+<section id="base-indexing">
+<span id="vecad-base-indexing"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Base Indexing</a><a class="headerlink" href="#base-indexing" title="Permalink to this headline"></a></h3>
+<p>We refer to the syntax</p>
+<blockquote>
+<div><p><em>base</em> = <em>vec</em> [ <em>i</em> ]</p>
+</div></blockquote>
+<p>as base indexing of a <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> object.
+This indexing is only valid if the vector <em>vec</em> is a
+<a class="reference internal" href="con_dyn_var.html#con-dyn-var-constant"><span class="std std-ref">Constant</span></a> ; i.e.,
+it does not depend on the independent variables.</p>
+<section id="i">
+<span id="vecad-base-indexing-i"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id12">i</a><a class="headerlink" href="#i" title="Permalink to this headline"></a></h4>
+<p>The operand <em>i</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>i</em></p>
+</div></blockquote>
+<p>and must be less than <em>n</em> ; i.e., less than
+the number of elements in <em>vec</em> .</p>
+</section>
+<section id="base">
+<span id="vecad-base-indexing-base"></span><span id="index-13"></span><h4><a class="toc-backref" href="#id13">base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h4>
+<p>The result <em>base</em> has prototype</p>
+<blockquote>
+<div><p><em>Base</em> &amp; <em>base</em></p>
+</div></blockquote>
+<p>i.e., it is a reference to the <em>i</em>-th element in the vector <em>vec</em> .
+It can be used to change the element value;
+for example,</p>
+<blockquote>
+<div><p><em>vec</em> [ <em>i</em> ] = <em>b</em></p>
+</div></blockquote>
+<p>is valid where <em>b</em> is a <em>Base</em> object.
+The reference <em>base</em> is no longer valid once the
+<em>vec</em> changes in any way; i.e., has another assignment.</p>
+</section>
+</section>
+<section id="ad-indexing">
+<span id="vecad-ad-indexing"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">AD Indexing</a><a class="headerlink" href="#ad-indexing" title="Permalink to this headline"></a></h3>
+<p>We refer to the syntax</p>
+<blockquote>
+<div><p><em>vec</em> [ <em>ind</em> ]</p>
+</div></blockquote>
+<p>as AD indexing of a <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> object.</p>
+<section id="ind">
+<span id="vecad-ad-indexing-ind"></span><span id="index-15"></span><h4><a class="toc-backref" href="#id15">ind</a><a class="headerlink" href="#ind" title="Permalink to this headline"></a></h4>
+<p>The argument <em>ind</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt;&amp; <em>ind</em></p>
+</div></blockquote>
+<p>The value of <em>ind</em> must be greater than or equal zero
+and less than <em>n</em> ; i.e., less than
+the number of elements in <em>vec</em> .</p>
+</section>
+<section id="result">
+<span id="vecad-ad-indexing-result"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id16">result</a><a class="headerlink" href="#result" title="Permalink to this headline"></a></h4>
+<p>The resulting expression has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt;:: <code class="docutils literal notranslate"><span class="pre">reference</span></code> <em>vec</em> [ <em>ind</em> ]</p>
+</div></blockquote>
+<p>This objects operations are recorded as part of the <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt;
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a> .
+It acts like a reference to the
+element with index <code class="docutils literal notranslate"><span class="pre">floor</span></code> ( <em>ind</em> ) in the vector <em>vec</em> ;
+( <code class="docutils literal notranslate"><span class="pre">floor</span></code> ( <em>ind</em> ) is
+the greatest integer less than or equal <em>ind</em> ).</p>
+</section>
+<section id="right">
+<span id="vecad-ad-indexing-right"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id17">right</a><a class="headerlink" href="#right" title="Permalink to this headline"></a></h4>
+<p>Is the right hand side of the assignment statement
+and specifies the new value for the corresponding element of <em>vec</em> .
+It has one of the following prototypes:</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">int</span></code> <em>right</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>right</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt;&amp; <em>right</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">VecAD_reverence&lt;</span></code> <em>Base</em> &gt;&amp; <em>right</em></div>
+</div>
+</section>
+<section id="left">
+<span id="vecad-ad-indexing-left"></span><span id="index-18"></span><h4><a class="toc-backref" href="#id18">left</a><a class="headerlink" href="#left" title="Permalink to this headline"></a></h4>
+<p>Is the left hand side of the assignment statement
+is the current value for the corresponding element of <em>vec</em> .
+It has the following prototype:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt;&amp; <em>left</em></p>
+</div></blockquote>
+</section>
+</section>
+<section id="example">
+<span id="vecad-example"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id19">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="vec_ad.cpp.html#vec-ad-cpp-name"><span class="std std-ref">vec_ad.cpp</span></a>
+contains an example and test using <code class="docutils literal notranslate"><span class="pre">VecAD</span></code> vectors.</p>
+</section>
+<section id="base2ad">
+<span id="vecad-base2ad"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id20">base2ad</a><a class="headerlink" href="#base2ad" title="Permalink to this headline"></a></h3>
+<p>Forward mode on a <code class="docutils literal notranslate"><span class="pre">base2ad</span></code> function does not preserve
+<a class="reference internal" href="#vecad-name"><span class="std std-ref">VecAD</span></a> operations (which might be expected); see the
+<a class="reference internal" href="base2vec_ad.cpp.html#base2vec-ad-cpp-name"><span class="std std-ref">base2vec_ad.cpp</span></a> example.</p>
+</section>
+<section id="speed-and-memory">
+<span id="vecad-speed-and-memory"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id21">Speed and Memory</a><a class="headerlink" href="#speed-and-memory" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="#vecad-name"><span class="std std-ref">VecAD</span></a> vector type is inefficient because every
+time an element of a vector is accessed, a new CppAD
+<a class="reference internal" href="glossary.html#glossary-variable"><span class="std std-ref">Variable</span></a> is created on the tape
+using either the <code class="docutils literal notranslate"><span class="pre">Ldp</span></code> or <code class="docutils literal notranslate"><span class="pre">Ldv</span></code> operation
+(unless all of the elements of the vector are
+<a class="reference internal" href="glossary.html#glossary-parameter"><span class="std std-ref">parameters</span></a> ).
+The effect of this can be seen by executing the following steps:</p>
+<ol class="arabic">
+<li><p>In the file <code class="docutils literal notranslate"><span class="pre">cppad/local/forward1sweep.h</span></code> ,
+change the definition of <code class="docutils literal notranslate"><span class="pre">CPPAD_FORWARD1SWEEP_TRACE</span></code> to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># define CPPAD_FORWARD1SWEEP_TRACE 1</span>
+</pre></div>
+</div>
+</li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Example</span></code> directory, execute the command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test_one</span><span class="o">.</span><span class="n">sh</span> <span class="n">lu_vec_ad_ok</span><span class="o">.</span><span class="n">cpp</span> <span class="n">lu_vec_ad</span><span class="o">.</span><span class="n">cpp</span> <span class="o">-</span><span class="n">DNDEBUG</span> <span class="o">&gt;</span> <span class="n">lu_vec_ad_ok</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p>This will write a trace of all the forward tape operations,
+for the test case <a class="reference internal" href="lu_vec_ad_ok.cpp.html#lu-vec-ad-ok-cpp-name"><span class="std std-ref">lu_vec_ad_ok.cpp</span></a> ,
+to the file <code class="docutils literal notranslate"><span class="pre">lu_vec_ad_ok.log</span></code> .</p>
+</li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Example</span></code> directory execute the commands</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;op=&quot;</span>           <span class="n">lu_vec_ad_ok</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">grep</span> <span class="s2">&quot;op=Ld[vp]&quot;</span>     <span class="n">lu_vec_ad_ok</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">grep</span> <span class="s2">&quot;op=St[vp][vp]&quot;</span> <span class="n">lu_vec_ad_ok</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+</div>
+<p>The first command counts the number of operators in the tracing,
+the second counts the number of VecAD load operations,
+and the third counts the number of VecAD store operations.
+(For CppAD version 05-11-20 these counts were 956, 348, and 118
+respectively.)</p>
+</li>
+</ol>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="equal_op_seq.cpp.html" class="btn btn-neutral float-left" title="equal_op_seq.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vec_ad.cpp.html" class="btn btn-neutral float-right" title="vec_ad.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

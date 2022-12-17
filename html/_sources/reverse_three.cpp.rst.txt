@@ -1,0 +1,31 @@
+lines 7-35 of file: example/general/reverse_three.cpp
+
+{xrst_begin reverse_three.cpp}
+
+Third Order Reverse Mode: Example and Test
+##########################################
+
+Taylor Coefficients
+*******************
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X(t) & = & x^{(0)} + x^{(1)} t + x^{(2)} t^2
+      \\
+      X^{(1)} (t) & = &  x^{(1)} + 2 x^{(2)} t
+      \\
+      X^{(2)} (t) & = &   2 x^{(2)}
+   \end{eqnarray}
+
+Thus, we need to be careful to properly account for the fact that
+:math:`X^{(2)} (0) = 2 x^{(2)}`
+(and similarly :math:`Y^{(2)} (0) = 2 y^{(2)}`).
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end reverse_three.cpp}

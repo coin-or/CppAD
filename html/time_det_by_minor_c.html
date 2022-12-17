@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="time_det_by_minor_c, determine, amount, of, time, to, execute, det_by_minor" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="time_min" name="keywords" />
+<meta content="time" name="keywords" />
+<meta content="source, code" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>time_det_by_minor_c &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="main_compare_c" href="main_compare_c.html" />
+    <link rel="prev" title="elapsed_seconds_c" href="elapsed_seconds_c.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deprecated.html">deprecated</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="compare_c.html">compare_c</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="det_of_minor_c.html">det_of_minor_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="det_by_minor_c.html">det_by_minor_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uniform_01_c.html">uniform_01_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="correct_det_by_minor_c.html">correct_det_by_minor_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="repeat_det_by_minor_c.html">repeat_det_by_minor_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="elapsed_seconds_c.html">elapsed_seconds_c</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">time_det_by_minor_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="main_compare_c.html">main_compare_c</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="compare_c.html">compare_c</a> &raquo;</li>
+      <li>time_det_by_minor_c</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/time_det_by_minor_c.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="time-det-by-minor-c">
+<span id="time-det-by-minor-c-name"></span><h1>time_det_by_minor_c<a class="headerlink" href="#time-det-by-minor-c" title="Permalink to this headline"></a></h1>
+<section id="determine-amount-of-time-to-execute-det-by-minor">
+<span id="time-det-by-minor-c-title"></span><span id="index-0"></span><h2>Determine Amount of Time to Execute det_by_minor<a class="headerlink" href="#determine-amount-of-time-to-execute-det-by-minor" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#time-min" id="id3">time_min</a></p></li>
+<li><p><a class="reference internal" href="#time" id="id4">time</a></p></li>
+<li><p><a class="reference internal" href="#source-code" id="id5">Source Code</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="time-det-by-minor-c-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><em>time</em> = <code class="docutils literal notranslate"><span class="pre">time_test</span></code> ( <em>size</em> , <em>time_min</em> )</p>
+</section>
+<section id="purpose">
+<span id="time-det-by-minor-c-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>reports the amount of wall clock time for <code class="docutils literal notranslate"><span class="pre">det_by_minor</span></code>
+to compute the determinant of a square matrix.</p>
+<p>The <em>size</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>size</em></p>
+</div></blockquote>
+<p>It specifies the number of rows (and columns) in the square matrix
+that the determinant is being calculated for.</p>
+</section>
+<section id="time-min">
+<span id="time-det-by-minor-c-time-min"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">time_min</a><a class="headerlink" href="#time-min" title="Permalink to this headline"></a></h3>
+<p>The argument <em>time_min</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">double</span></code> <em>time_min</em></p>
+</div></blockquote>
+<p>It specifies the minimum amount of time in seconds
+that the <em>test</em> routine should take.
+The calculations is repeated the necessary number of times so that
+this amount of execution time (or more) is reached.</p>
+</section>
+<section id="time">
+<span id="time-det-by-minor-c-time"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">time</a><a class="headerlink" href="#time" title="Permalink to this headline"></a></h3>
+<p>The return value <em>time</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">double</span></code> <em>time</em></p>
+</div></blockquote>
+<p>and is the number of wall clock seconds that it took for
+<code class="docutils literal notranslate"><span class="pre">det_by_minor</span></code> to compute its determinant
+(plus overhead which includes choosing a random matrix).</p>
+</section>
+<section id="source-code">
+<span id="time-det-by-minor-c-source-code"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Source Code</a><a class="headerlink" href="#source-code" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">time_det_by_minor</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">time_min</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">repeat</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">repeat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">s0</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">s1</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">s0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">while</span><span class="p">(</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">time_min</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">repeat</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">repeat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">repeat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">repeat</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">s0</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">repeat_det_by_minor</span><span class="p">(</span><span class="n">repeat</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">s1</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">s1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s0</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">repeat</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">time</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="elapsed_seconds_c.html" class="btn btn-neutral float-left" title="elapsed_seconds_c" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="main_compare_c.html" class="btn btn-neutral float-right" title="main_compare_c" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

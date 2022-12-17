@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/check_for_nan.cpp
+
+{xrst_begin check_for_nan.cpp}
+
+ADFun Checking For Nan: Example and Test
+########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end check_for_nan.cpp}

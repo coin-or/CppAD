@@ -1,0 +1,101 @@
+lines 8-106 of file: include/cppad/speed/det_by_lu.hpp
+
+{xrst_begin det_by_lu}
+
+Determinant Using Expansion by Lu Factorization
+###############################################
+
+Syntax
+******
+
+| # ``include <cppad/speed/det_by_lu.hpp>``
+| ``det_by_lu<`` *Scalar* > *det* ( *n* )
+| *d* = *det* ( *a* )
+
+Inclusion
+*********
+The template class ``det_by_lu`` is defined in the ``CppAD``
+namespace by including
+the file ``cppad/speed/det_by_lu.hpp``
+(relative to the CppAD distribution directory).
+
+Constructor
+***********
+The syntax
+
+   ``det_by_lu<`` *Scalar* > *det* ( *n* )
+
+constructs the object *det* which can be used for
+evaluating the determinant of *n* by *n* matrices
+using LU factorization.
+
+Scalar
+******
+The type *Scalar* can be any
+:ref:`NumericType-name`
+
+n
+*
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+det
+***
+The syntax
+
+   *d* = *det* ( *a* )
+
+returns the determinant of the matrix :math:`A` using LU factorization.
+
+a
+=
+The argument *a* has prototype
+
+   ``const`` *Vector* & *a*
+
+It must be a *Vector* with length :math:`n * n` and with
+It must be a *Vector* with length :math:`n * n` and with
+elements of type *Scalar* .
+The elements of the :math:`n \times n` matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
+
+.. math::
+
+   A_{i,j} = a[ i * m + j]
+
+d
+=
+The return value *d* has prototype
+
+   *Scalar* *d*
+
+Vector
+******
+If *y* is a *Vector* object,
+it must support the syntax
+
+   *y* [ *i* ]
+
+where *i* has type ``size_t`` with value less than :math:`n * n`.
+This must return a *Scalar* value corresponding to the *i*-th
+element of the vector *y* .
+This is the only requirement of the type *Vector* .
+{xrst_toc_hidden
+   speed/example/det_by_lu.cpp
+   xrst/det_by_lu_hpp.xrst
+}
+
+Example
+*******
+The file
+:ref:`det_by_lu.cpp-name`
+contains an example and test of ``det_by_lu.hpp`` .
+
+Source Code
+***********
+The file
+:ref:`det_by_lu.hpp-name`
+contains the source for this template function.
+
+{xrst_end det_by_lu}

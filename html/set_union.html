@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="set_union, union, of, standard, sets" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="element" name="keywords" />
+<meta content="left" name="keywords" />
+<meta content="right" name="keywords" />
+<meta content="result" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>set_union &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="set_union.cpp" href="set_union.cpp.html" />
+    <link rel="prev" title="runge_45.cpp" href="runge_45.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">set_union</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="set_union.cpp.html">set_union.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>set_union</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/set_union.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="set-union">
+<span id="set-union-name"></span><h1>set_union<a class="headerlink" href="#set-union" title="Permalink to this headline"></a></h1>
+<section id="union-of-standard-sets">
+<span id="set-union-title"></span><span id="index-0"></span><h2>Union of Standard Sets<a class="headerlink" href="#union-of-standard-sets" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#element" id="id3">Element</a></p></li>
+<li><p><a class="reference internal" href="#left" id="id4">left</a></p></li>
+<li><p><a class="reference internal" href="#right" id="id5">right</a></p></li>
+<li><p><a class="reference internal" href="#result" id="id6">result</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id7">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="set-union-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/set_union.hpp&gt;</span></code></p>
+</div></blockquote>
+<p><em>result</em> = <code class="docutils literal notranslate"><span class="pre">set_union</span></code> ( <em>left</em> , <em>right</em> )</p>
+</section>
+<section id="purpose">
+<span id="set-union-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This is a simplified (and restricted) interface to
+the <code class="docutils literal notranslate"><span class="pre">std::union</span></code> operation.</p>
+</section>
+<section id="element">
+<span id="set-union-element"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Element</a><a class="headerlink" href="#element" title="Permalink to this headline"></a></h3>
+<p>This is the type of the elements of the sets.</p>
+</section>
+<section id="left">
+<span id="set-union-left"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">left</a><a class="headerlink" href="#left" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::set&lt;</span></code> <em>Element</em> &gt;&amp; <em>left</em></p>
+</div></blockquote>
+</section>
+<section id="right">
+<span id="set-union-right"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">right</a><a class="headerlink" href="#right" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::set&lt;</span></code> <em>Element</em> &gt;&amp; <em>right</em></p>
+</div></blockquote>
+</section>
+<section id="result">
+<span id="set-union-result"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">result</a><a class="headerlink" href="#result" title="Permalink to this headline"></a></h3>
+<p>The return value has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::set&lt;</span></code> <em>Element</em> &gt;&amp; <em>result</em></p>
+</div></blockquote>
+<p>It contains the union of <em>left</em> and <em>right</em> .
+Note that C++11 detects that the return value is a temporary
+and uses it for the result instead of making a separate copy.</p>
+</section>
+<section id="example">
+<span id="set-union-example"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="set_union.cpp.html#set-union-cpp-name"><span class="std std-ref">set_union.cpp</span></a> contains an example and test of this</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="runge_45.cpp.html" class="btn btn-neutral float-left" title="runge_45.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="set_union.cpp.html" class="btn btn-neutral float-right" title="set_union.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

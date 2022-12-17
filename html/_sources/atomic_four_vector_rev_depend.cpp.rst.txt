@@ -1,0 +1,22 @@
+lines 6-25 of file: example/atomic_four/vector/rev_depend.cpp
+
+{xrst_begin atomic_four_vector_rev_depend.cpp}
+
+Example Optimizing Atomic Vector Usage
+######################################
+
+f(u, v)
+*******
+For this example,
+:math:`f : \B{R}^{3m} \rightarrow \B{R}`
+is defined by :math:`f(u, v, w) = - ( u_0 + v_0 ) * w_0`.
+where *u* , *v* , and *w* are in :math:`\B{R}^m`.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_rev_depend.cpp}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_four_lin_ode_reverse_2, atomic, linear, ode, second, order, reverse" name="keywords" />
+<meta content="x^1, partial" name="keywords" />
+<meta content="x^0, partial" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_four_lin_ode_reverse_2 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_four_lin_ode_jac_sparsity.hpp" href="atomic_four_lin_ode_jac_sparsity.hpp.html" />
+    <link rel="prev" title="atomic_four_lin_ode_reverse.hpp" href="atomic_four_lin_ode_reverse.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_four.html">atomic_four</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="atomic_four_define.html">atomic_four_define</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="atomic_four_example.html">atomic_four_example</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_get_started.cpp.html">atomic_four_get_started.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_norm_sq.cpp.html">atomic_four_norm_sq.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_forward.cpp.html">atomic_four_forward.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_dynamic.cpp.html">atomic_four_dynamic.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_vector.html">atomic_four_vector</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_mat_mul.html">atomic_four_mat_mul</a></li>
+<li class="toctree-l7 current"><a class="reference internal" href="atomic_four_lin_ode.html">atomic_four_lin_ode</a><ul class="current">
+<li class="toctree-l8 current"><a class="reference internal" href="atomic_four_lin_ode_implement.html">atomic_four_lin_ode_implement</a><ul class="current">
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode.hpp.html">atomic_four_lin_ode.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_set.hpp.html">atomic_four_lin_ode_set.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_get.hpp.html">atomic_four_lin_ode_get.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_base_solver.hpp.html">atomic_four_lin_ode_base_solver.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_for_type.hpp.html">atomic_four_lin_ode_for_type.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_forward.hpp.html">atomic_four_lin_ode_forward.hpp</a></li>
+<li class="toctree-l9 current"><a class="reference internal" href="atomic_four_lin_ode_reverse.hpp.html">atomic_four_lin_ode_reverse.hpp</a><ul class="current">
+<li class="toctree-l10 current"><a class="current reference internal" href="#">atomic_four_lin_ode_reverse_2</a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_jac_sparsity.hpp.html">atomic_four_lin_ode_jac_sparsity.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_hes_sparsity.hpp.html">atomic_four_lin_ode_hes_sparsity.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_lin_ode_rev_depend.hpp.html">atomic_four_lin_ode_rev_depend.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_lin_ode_forward.cpp.html">atomic_four_lin_ode_forward.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_lin_ode_reverse.cpp.html">atomic_four_lin_ode_reverse.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_lin_ode_sparsity.cpp.html">atomic_four_lin_ode_sparsity.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_lin_ode_rev_depend.cpp.html">atomic_four_lin_ode_rev_depend.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_three.html">atomic_three</a></li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_four.html">atomic_four</a> &raquo;</li>
+          <li><a href="atomic_four_example.html">atomic_four_example</a> &raquo;</li>
+          <li><a href="atomic_four_lin_ode.html">atomic_four_lin_ode</a> &raquo;</li>
+          <li><a href="atomic_four_lin_ode_implement.html">atomic_four_lin_ode_implement</a> &raquo;</li>
+          <li><a href="atomic_four_lin_ode_reverse.hpp.html">atomic_four_lin_ode_reverse.hpp</a> &raquo;</li>
+      <li>atomic_four_lin_ode_reverse_2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_four_lin_ode_reverse_2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-four-lin-ode-reverse-2">
+<span id="atomic-four-lin-ode-reverse-2-name"></span><h1>atomic_four_lin_ode_reverse_2<a class="headerlink" href="#atomic-four-lin-ode-reverse-2" title="Permalink to this headline"></a></h1>
+<section id="atomic-linear-ode-second-order-reverse">
+<span id="atomic-four-lin-ode-reverse-2-title"></span><span id="index-0"></span><h2>Atomic Linear ODE Second Order Reverse<a class="headerlink" href="#atomic-linear-ode-second-order-reverse" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#x-1-partial" id="id1">x^1 Partial</a></p></li>
+<li><p><a class="reference internal" href="#x-0-partial" id="id2">x^0 Partial</a></p></li>
+</ul>
+</div>
+<section id="x-1-partial">
+<span id="atomic-four-lin-ode-reverse-2-x-1-partial"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">x^1 Partial</a><a class="headerlink" href="#x-1-partial" title="Permalink to this headline"></a></h3>
+<p>We need to compute</p>
+<div class="math notranslate nohighlight">
+\[\R{partial\_x} [ j  * q + 1 ]
+=
+\sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+   ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1 )\]</div>
+<p>where <span class="math notranslate nohighlight">\(q = 2\)</span> and <span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>.
+Using the <a class="reference internal" href="reverse_identity.html#reverse-identity-name"><span class="std std-ref">reverse_identity</span></a> we have</p>
+<div class="math notranslate nohighlight">
+\[\partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1
+=
+\partial y_i^0 ( x^0 ) / \partial x_j^0\]</div>
+<div class="math notranslate nohighlight">
+\[\R{partial\_x} [ j  * q + 1 ]
+=
+\sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+   ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )\]</div>
+<p>which is the same as the first order
+<a class="reference internal" href="atomic_four_lin_ode_reverse.hpp.html#atomic-four-lin-ode-reverse-hpp-first-order-theory"><span class="std std-ref">theory</span></a> with</p>
+<div class="math notranslate nohighlight">
+\[w_i = \R{partial\_y} [ i * q + 1]\]</div>
+</section>
+<section id="x-0-partial">
+<span id="atomic-four-lin-ode-reverse-2-x-0-partial"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">x^0 Partial</a><a class="headerlink" href="#x-0-partial" title="Permalink to this headline"></a></h3>
+<p>We also need to compute</p>
+<div class="math notranslate nohighlight">
+\[\R{partial\_x} [ j  * q + 0 ]
+=
+\sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 0]
+   ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
++
+\R{partial\_y} [ i * q + 1]
+   ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^0 )\]</div>
+<p>Note that we can solve for</p>
+<div class="math notranslate nohighlight">
+\[y^1 ( x^0 , x^1 ) = z^1 ( r , x^0 , x^1 )\]</div>
+<p>using the following extended ODE; see
+<a class="reference internal" href="atomic_four_lin_ode_forward.hpp.html#atomic-four-lin-ode-forward-hpp-theory"><span class="std std-ref">forward theory</span></a> .</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left[ \begin{array}{c}
+z^0_t (t, x^0 ) \\
+z^1_t (t, x^0 , x^1 )
+\end{array} \right]
+=
+\left[ \begin{array}{cc}
+A^0 &amp; 0   \\
+A^1 &amp; A^0
+\end{array} \right]
+\left[ \begin{array}{c}
+z^0 (t, x^0 ) \\
+z^1 (t, x^0 , x^1 )
+\end{array} \right]
+\; , \;
+\left[ \begin{array}{c}
+z^0 (0, x^0 ) \\
+z^1 (0, x^0 , x^1 )
+\end{array} \right]
+=
+\left[ \begin{array}{c}
+b^0 \\
+b^1
+\end{array} \right]\end{split}\]</div>
+<p>Note that
+<span class="math notranslate nohighlight">\(A^0\)</span>, <span class="math notranslate nohighlight">\(b^0\)</span> are components of <span class="math notranslate nohighlight">\(x^0\)</span>
+and
+<span class="math notranslate nohighlight">\(A^1\)</span>, <span class="math notranslate nohighlight">\(b^1\)</span> are components of <span class="math notranslate nohighlight">\(x^1\)</span>.
+We use the following notation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bar{x} = \left[ \begin{array}{c}
+   x^0 \\ x^1
+\end{array} \right]
+\W{,}
+\bar{z}(t , \bar{x} ) = \left[ \begin{array}{c}
+   z^0 (t, x^0) \\ z^1 ( t, x^0 , x^1 )
+\end{array} \right]
+\W{,}
+\bar{A} =
+\left[ \begin{array}{cc}
+A^0 &amp; 0   \\
+A^1 &amp; A^0
+\end{array} \right]
+\W{,}
+\bar{b} = \left[ \begin{array}{c}
+   b^0 \\ b^1
+\end{array} \right]\end{split}\]</div>
+<p>Using this notation we have</p>
+<div class="math notranslate nohighlight">
+\[\bar{z}_t ( t , \bar{x} ) = \bar{A} \bar{z} (t, \bar{x} )
+\W{,}
+\bar{z} (0, \bar{x} ) = \bar{b}\]</div>
+<p>Define <span class="math notranslate nohighlight">\(\bar{w} \in \B{R}^{m + m}\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[\bar{w}_i = \R{partial\_y}[ i * q + 0 ]
+\W{,}
+\bar{w}_{m + i} = \R{partial\_y}[ i * q + 1 ]\]</div>
+<p>For this case, we can compute</p>
+<div class="math notranslate nohighlight">
+\[\partial_\bar{x} \bar{w}^\R{T} \bar{z}(r, \bar{x} )\]</div>
+<p>which is same as the first order case but with the extended variables
+and extended ODE.
+We will only use the components of
+<span class="math notranslate nohighlight">\(\partial_\bar{x}\)</span> that correspond to partials w.r.t. <span class="math notranslate nohighlight">\(x^0\)</span>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_four_lin_ode_reverse.hpp.html" class="btn btn-neutral float-left" title="atomic_four_lin_ode_reverse.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_four_lin_ode_jac_sparsity.hpp.html" class="btn btn-neutral float-right" title="atomic_four_lin_ode_jac_sparsity.hpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

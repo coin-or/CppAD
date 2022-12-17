@@ -1,0 +1,32 @@
+lines 593-622 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_in_parallel}
+
+Is The Current Execution in Parallel Mode
+#########################################
+
+Syntax
+******
+*flag* = ``thread_alloc::in_parallel`` ()
+
+Purpose
+*******
+Some of the :ref:`thread_alloc-name` allocation routines have different
+specifications for parallel (not sequential) execution mode.
+This routine enables you to determine if the current execution mode
+is sequential or parallel.
+
+flag
+****
+The return value has prototype
+
+   ``bool`` *flag*
+
+It is true if the current execution is in parallel mode
+(possibly multi-threaded) and false otherwise (sequential mode).
+
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_in_parallel}

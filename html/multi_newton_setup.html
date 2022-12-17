@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="multi_newton_setup, set, up, multi-threaded, newton, method" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="thread" name="keywords" />
+<meta content="num_sub" name="keywords" />
+<meta content="xlow" name="keywords" />
+<meta content="xup" name="keywords" />
+<meta content="epsilon" name="keywords" />
+<meta content="max_itr" name="keywords" />
+<meta content="num_threads" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multi_newton_setup &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="multi_newton_worker" href="multi_newton_worker.html" />
+    <link rel="prev" title="multi_newton_common" href="multi_newton_common.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="multi_thread.html">multi_thread</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="parallel_ad.html">parallel_ad</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="thread_test.cpp.html">thread_test.cpp</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="a11c_openmp.cpp.html">a11c_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_bthread.cpp.html">a11c_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_pthread.cpp.html">a11c_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_openmp.cpp.html">simple_ad_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_bthread.cpp.html">simple_ad_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_pthread.cpp.html">simple_ad_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_example.cpp.html">team_example.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="harmonic.cpp.html">harmonic.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_three.cpp.html">multi_atomic_three.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_two.cpp.html">multi_chkpoint_two.cpp</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="multi_newton.cpp.html">multi_newton.cpp</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="multi_newton_common.html">multi_newton_common</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">multi_newton_setup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_newton_worker.html">multi_newton_worker</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_newton_takedown.html">multi_newton_takedown</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_newton_run.html">multi_newton_run</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_newton_time.html">multi_newton_time</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="team_thread.hpp.html">team_thread.hpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="multi_thread.html">multi_thread</a> &raquo;</li>
+          <li><a href="thread_test.cpp.html">thread_test.cpp</a> &raquo;</li>
+          <li><a href="multi_newton.cpp.html">multi_newton.cpp</a> &raquo;</li>
+      <li>multi_newton_setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/multi_newton_setup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="multi-newton-setup">
+<span id="multi-newton-setup-name"></span><h1>multi_newton_setup<a class="headerlink" href="#multi-newton-setup" title="Permalink to this headline"></a></h1>
+<section id="set-up-multi-threaded-newton-method">
+<span id="multi-newton-setup-title"></span><span id="index-0"></span><h2>Set Up Multi-Threaded Newton Method<a class="headerlink" href="#set-up-multi-threaded-newton-method" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#thread" id="id3">Thread</a></p></li>
+<li><p><a class="reference internal" href="#num-sub" id="id4">num_sub</a></p></li>
+<li><p><a class="reference internal" href="#xlow" id="id5">xlow</a></p></li>
+<li><p><a class="reference internal" href="#xup" id="id6">xup</a></p></li>
+<li><p><a class="reference internal" href="#epsilon" id="id7">epsilon</a></p></li>
+<li><p><a class="reference internal" href="#max-itr" id="id8">max_itr</a></p></li>
+<li><p><a class="reference internal" href="#num-threads" id="id9">num_threads</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id10">Source</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="multi-newton-setup-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>ok</em> = <code class="docutils literal notranslate"><span class="pre">multi_newton_setup</span></code> (</div>
+<div class="line">      <em>num_sub</em> , <em>xlow</em> , <em>xup</em> , <em>epsilon</em> , <em>max_itr</em> , <em>num_threads</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="purpose">
+<span id="multi-newton-setup-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>These routine does the setup for splitting finding all the zeros in an
+interval into separate sub-intervals, one for each thread.</p>
+</section>
+<section id="thread">
+<span id="multi-newton-setup-thread"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Thread</a><a class="headerlink" href="#thread" title="Permalink to this headline"></a></h3>
+<p>It is assumed that this function is called by thread zero,
+and all the other threads are blocked (waiting).</p>
+</section>
+<section id="num-sub">
+<span id="multi-newton-setup-num-sub"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">num_sub</a><a class="headerlink" href="#num-sub" title="Permalink to this headline"></a></h3>
+<p>See <em>num_sub</em> in <a class="reference internal" href="multi_newton_run.html#multi-newton-run-num-sub"><span class="std std-ref">multi_newton_run</span></a> .</p>
+</section>
+<section id="xlow">
+<span id="multi-newton-setup-xlow"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">xlow</a><a class="headerlink" href="#xlow" title="Permalink to this headline"></a></h3>
+<p>See <em>xlow</em> in <a class="reference internal" href="multi_newton_run.html#multi-newton-run-xlow"><span class="std std-ref">multi_newton_run</span></a> .</p>
+</section>
+<section id="xup">
+<span id="multi-newton-setup-xup"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">xup</a><a class="headerlink" href="#xup" title="Permalink to this headline"></a></h3>
+<p>See <em>xup</em> in <a class="reference internal" href="multi_newton_run.html#multi-newton-run-xup"><span class="std std-ref">multi_newton_run</span></a> .</p>
+</section>
+<section id="epsilon">
+<span id="multi-newton-setup-epsilon"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">epsilon</a><a class="headerlink" href="#epsilon" title="Permalink to this headline"></a></h3>
+<p>See <em>epsilon</em> in <a class="reference internal" href="multi_newton_run.html#multi-newton-run-epsilon"><span class="std std-ref">multi_newton_run</span></a> .</p>
+</section>
+<section id="max-itr">
+<span id="multi-newton-setup-max-itr"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">max_itr</a><a class="headerlink" href="#max-itr" title="Permalink to this headline"></a></h3>
+<p>See <em>max_itr</em> in <a class="reference internal" href="multi_newton_run.html#multi-newton-run-max-itr"><span class="std std-ref">multi_newton_run</span></a> .</p>
+</section>
+<section id="num-threads">
+<span id="multi-newton-setup-num-threads"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">num_threads</a><a class="headerlink" href="#num-threads" title="Permalink to this headline"></a></h3>
+<p>See <em>num_threads</em> in
+<a class="reference internal" href="multi_newton_run.html#multi-newton-run-num-threads"><span class="std std-ref">multi_newton_run</span></a> .</p>
+</section>
+<section id="source">
+<span id="multi-newton-setup-source"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">multi_newton_setup</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_sub</span><span class="w">                              </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">xlow</span><span class="w">                                 </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">xup</span><span class="w">                                  </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">epsilon</span><span class="w">                              </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">max_itr</span><span class="w">                              </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_threads</span><span class="w">                          </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">num_threads</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">num_threads_</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">num_threads</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">          </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">thread_num</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// inputs that are same for all threads</span>
+<span class="w">   </span><span class="n">epsilon_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">epsilon</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">max_itr_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_itr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// resize the work vector to accomidate the number of threads</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">work_all_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">work_all_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">num_threads</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// length of each sub interval</span>
+<span class="w">   </span><span class="n">sub_length_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">xup</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">xlow</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">num_sub</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// determine values that are specific to each thread</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_min</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">num_sub</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="c1">// minimum num_sub</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_more</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">num_sub</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="c1">// number that have one more</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">sum_num</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">  </span><span class="c1">// sum with respect to thread of num_sub</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">thread_num</span><span class="p">,</span><span class="w"> </span><span class="n">num_sub_thread</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="cp"># if  USE_THREAD_ALLOC_FOR_WORK_ALL</span>
+<span class="w">      </span><span class="c1">// allocate separate memory for this thread to avoid false sharing</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">min_bytes</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">work_one_t</span><span class="p">)),</span><span class="w"> </span><span class="n">cap_bytes</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">v_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">get_memory</span><span class="p">(</span><span class="n">min_bytes</span><span class="p">,</span><span class="w"> </span><span class="n">cap_bytes</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">work_one_t</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">v_ptr</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// thread_alloc is a raw memory allocator; i.e., it does not call</span>
+<span class="w">      </span><span class="c1">// the constructor for the objects it creates. The vector</span>
+<span class="w">      </span><span class="c1">// class requires it&#39;s constructor to be called so we do it here</span>
+<span class="w">      </span><span class="k">new</span><span class="p">(</span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="cp"># else</span>
+<span class="w">      </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">work_one_t</span><span class="p">;</span><span class="w"></span>
+<span class="cp"># endif</span>
+
+<span class="w">      </span><span class="c1">// number of sub-intervalse for this thread</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_more</span><span class="w">  </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">num_sub_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_min</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">num_sub_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_min</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// when thread_num == 0, xlow_thread == xlow</span>
+<span class="w">      </span><span class="kt">double</span><span class="w"> </span><span class="n">xlow_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xlow</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">sum_num</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sub_length_</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// when thread_num == num_threads - 1, xup_thread = xup</span>
+<span class="w">      </span><span class="kt">double</span><span class="w"> </span><span class="n">xup_thread</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">         </span><span class="n">xlow</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">sum_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">num_sub_thread</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sub_length_</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">xup_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xup</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// update sum_num for next time through loop</span>
+<span class="w">      </span><span class="n">sum_num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">num_sub_thread</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// input information specific to this thread</span>
+<span class="w">      </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">num_sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_sub_thread</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">xlow</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">xlow_thread</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">xup</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">xup_thread</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// in case this thread does not get called</span>
+<span class="w">      </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">sum_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">num_sub</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="multi_newton_common.html" class="btn btn-neutral float-left" title="multi_newton_common" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="multi_newton_worker.html" class="btn btn-neutral float-right" title="multi_newton_worker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

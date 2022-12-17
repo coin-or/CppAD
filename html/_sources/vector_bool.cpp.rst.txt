@@ -1,0 +1,13 @@
+lines 7-17 of file: example/utility/vector_bool.cpp
+
+{xrst_begin vector_bool.cpp}
+
+CppAD::vectorBool Class: Example and Test
+#########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end vector_bool.cpp}

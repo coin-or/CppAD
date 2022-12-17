@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="memory_leak, memory, leak, detection" name="keywords" />
+<meta content="deprecated, 2012-04-06" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="thread" name="keywords" />
+<meta content="add_static" name="keywords" />
+<meta content="flag" name="keywords" />
+<meta content="inuse" name="keywords" />
+<meta content="available" name="keywords" />
+<meta content="track_count" name="keywords" />
+<meta content="error, message" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>memory_leak &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="epsilon" href="epsilon.html" />
+    <link rel="prev" title="old_max_num_threads" href="old_max_num_threads.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="deprecated.html">deprecated</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="include_deprecated.html">include_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fun_deprecated.html">fun_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CompareChange.html">CompareChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_max_thread.html">omp_max_thread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="track_new_del.html">track_new_del</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_alloc.html">omp_alloc</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">memory_leak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epsilon.html">epsilon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_ipopt_nlp.html">cppad_ipopt_nlp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_one.html">atomic_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two.html">atomic_two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two_example.html">atomic_two_example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_two.cpp.html">multi_atomic_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chkpoint_one.html">chkpoint_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_one.cpp.html">multi_chkpoint_one.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zdouble.html">zdouble</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autotools.html">autotools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="deprecated.html">deprecated</a> &raquo;</li>
+      <li>memory_leak</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/memory_leak.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="memory-leak">
+<span id="memory-leak-name"></span><h1>memory_leak<a class="headerlink" href="#memory-leak" title="Permalink to this headline"></a></h1>
+<section id="memory-leak-detection">
+<span id="memory-leak-title"></span><span id="index-0"></span><h2>Memory Leak Detection<a class="headerlink" href="#memory-leak-detection" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#deprecated-2012-04-06" id="id1">Deprecated 2012-04-06</a></p></li>
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#thread" id="id4">thread</a></p></li>
+<li><p><a class="reference internal" href="#add-static" id="id5">add_static</a></p></li>
+<li><p><a class="reference internal" href="#flag" id="id6">flag</a></p></li>
+<li><p><a class="reference internal" href="#inuse" id="id7">inuse</a></p></li>
+<li><p><a class="reference internal" href="#available" id="id8">available</a></p></li>
+<li><p><a class="reference internal" href="#track-count" id="id9">TRACK_COUNT</a></p></li>
+<li><p><a class="reference internal" href="#error-message" id="id10">Error Message</a></p></li>
+</ul>
+</div>
+<section id="deprecated-2012-04-06">
+<span id="memory-leak-deprecated-2012-04-06"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Deprecated 2012-04-06</a><a class="headerlink" href="#deprecated-2012-04-06" title="Permalink to this headline"></a></h3>
+<p>This routine has been deprecated.
+You should instead use the routine <a class="reference internal" href="ta_free_all.html#ta-free-all-name"><span class="std std-ref">ta_free_all</span></a> .</p>
+</section>
+<section id="syntax">
+<span id="memory-leak-syntax"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/memory_leak.hpp&gt;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">flag</span></code> = <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> ()</div>
+</div>
+<p><em>flag</em> = <em>memory_leak</em> ( <em>add_static</em> )</p>
+</section>
+<section id="purpose">
+<span id="memory-leak-purpose"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This routine checks that the are no memory leaks
+caused by improper use of <a class="reference internal" href="thread_alloc.html#thread-alloc-name"><span class="std std-ref">thread_alloc</span></a> memory allocator.
+The deprecated memory allocator <a class="reference internal" href="track_new_del.html#track-new-del-name"><span class="std std-ref">track_new_del</span></a> is also checked.
+Memory errors in the deprecated <a class="reference internal" href="omp_alloc.html#omp-alloc-name"><span class="std std-ref">omp_alloc</span></a> allocator are
+reported as being in <code class="docutils literal notranslate"><span class="pre">thread_alloc</span></code> .</p>
+</section>
+<section id="thread">
+<span id="memory-leak-thread"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">thread</a><a class="headerlink" href="#thread" title="Permalink to this headline"></a></h3>
+<p>It is assumed that <a class="reference internal" href="ta_in_parallel.html#ta-in-parallel-name"><span class="std std-ref">in_parallel()</span></a> is false
+and <a class="reference internal" href="ta_thread_num.html#ta-thread-num-name"><span class="std std-ref">thread_num</span></a> is zero when
+<code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> is called.</p>
+</section>
+<section id="add-static">
+<span id="memory-leak-add-static"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">add_static</a><a class="headerlink" href="#add-static" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>add_static</em></p>
+</div></blockquote>
+<p>and its default value is zero.
+Static variables hold onto memory forever.
+If the argument <em>add_static</em> is present (and non-zero),
+<code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> adds this amount of memory to the
+<a class="reference internal" href="ta_inuse.html#ta-inuse-name"><span class="std std-ref">inuse</span></a> sum that corresponds to
+static variables in the program.
+A call with <em>add_static</em> should be make after
+a routine that has static variables which
+use <a class="reference internal" href="ta_get_memory.html#ta-get-memory-name"><span class="std std-ref">get_memory</span></a> to allocate memory.
+The value of <em>add_static</em> should be the difference of</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">thread_alloc::inuse</span></code> (0)</p>
+</div></blockquote>
+<p>before and after the call.
+Since multiple statics may be allocated in different places in the program,
+it is expected that there will be multiple calls
+that use this option.</p>
+</section>
+<section id="flag">
+<span id="memory-leak-flag"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">flag</a><a class="headerlink" href="#flag" title="Permalink to this headline"></a></h3>
+<p>The return value <em>flag</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>flag</em></p>
+</div></blockquote>
+<p>If <em>add_static</em> is non-zero,
+the return value for <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> is false.
+Otherwise, the return value for <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> should be false
+(indicating that the only allocated memory corresponds to static variables).</p>
+</section>
+<section id="inuse">
+<span id="memory-leak-inuse"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">inuse</a><a class="headerlink" href="#inuse" title="Permalink to this headline"></a></h3>
+<p>It is assumed that, when <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> is called,
+there should not be any memory
+<a class="reference internal" href="ta_inuse.html#ta-inuse-name"><span class="std std-ref">inuse</span></a> or <a class="reference internal" href="omp_inuse.html#omp-inuse-name"><span class="std std-ref">omp_inuse</span></a> for any thread
+(except for inuse memory corresponding to static variables).
+If there is, a message is printed and <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> returns false.</p>
+</section>
+<section id="available">
+<span id="memory-leak-available"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">available</a><a class="headerlink" href="#available" title="Permalink to this headline"></a></h3>
+<p>It is assumed that, when <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> is called,
+there should not be any memory
+<a class="reference internal" href="ta_available.html#ta-available-name"><span class="std std-ref">available</span></a> or <a class="reference internal" href="omp_available.html#omp-available-name"><span class="std std-ref">omp_available</span></a> for any thread;
+i.e., it all has been returned to the system.
+If there is memory still available for any thread,
+<code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> returns false.</p>
+</section>
+<section id="track-count">
+<span id="memory-leak-track-count"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">TRACK_COUNT</a><a class="headerlink" href="#track-count" title="Permalink to this headline"></a></h3>
+<p>It is assumed that, when <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> is called,
+<a class="reference internal" href="track_new_del.html#track-new-del-trackcount"><span class="std std-ref">TrackCount</span></a> will return a zero value.
+If it returns a non-zero value,
+<code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> returns false.</p>
+</section>
+<section id="error-message">
+<span id="memory-leak-error-message"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Error Message</a><a class="headerlink" href="#error-message" title="Permalink to this headline"></a></h3>
+<p>If this is the first call to <code class="docutils literal notranslate"><span class="pre">memory_leak</span></code> , no message is printed.
+Otherwise, if it returns true, an error message is printed
+to standard output describing the memory leak that was detected.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="old_max_num_threads.html" class="btn btn-neutral float-left" title="old_max_num_threads" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="epsilon.html" class="btn btn-neutral float-right" title="epsilon" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

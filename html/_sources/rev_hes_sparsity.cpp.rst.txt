@@ -1,0 +1,13 @@
+lines 7-17 of file: example/sparse/rev_hes_sparsity.cpp
+
+{xrst_begin rev_hes_sparsity.cpp}
+
+Reverse Mode Hessian Sparsity: Example and Test
+###############################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end rev_hes_sparsity.cpp}

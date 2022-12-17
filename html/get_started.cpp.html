@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="get_started.cpp, getting, started, using, cppad, to, compute, derivatives" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="function" name="keywords" />
+<meta content="derivative" name="keywords" />
+<meta content="value" name="keywords" />
+<meta content="include, file" name="keywords" />
+<meta content="poly" name="keywords" />
+<meta content="cppad, namespace" name="keywords" />
+<meta content="cppad, preprocessor, symbols" name="keywords" />
+<meta content="program" name="keywords" />
+<meta content="output" name="keywords" />
+<meta content="running" name="keywords" />
+<meta content="exercises" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>get_started.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="list_all_examples" href="list_all_examples.html" />
+    <link rel="prev" title="Example" href="Example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Example.html">Example</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">get_started.cpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_all_examples.html">list_all_examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="General.html">General</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_utility.html">example_utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testvector.html">testvector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wno_conversion.html">wno_conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Example.html">Example</a> &raquo;</li>
+      <li>get_started.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/get_started.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="get-started-cpp">
+<span id="get-started-cpp-name"></span><h1>get_started.cpp<a class="headerlink" href="#get-started-cpp" title="Permalink to this headline"></a></h1>
+<section id="getting-started-using-cppad-to-compute-derivatives">
+<span id="get-started-cpp-title"></span><span id="index-0"></span><h2>Getting Started Using CppAD to Compute Derivatives<a class="headerlink" href="#getting-started-using-cppad-to-compute-derivatives" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#function" id="id2">Function</a></p></li>
+<li><p><a class="reference internal" href="#derivative" id="id3">Derivative</a></p></li>
+<li><p><a class="reference internal" href="#value" id="id4">Value</a></p></li>
+<li><p><a class="reference internal" href="#include-file" id="id5">Include File</a></p></li>
+<li><p><a class="reference internal" href="#poly" id="id6">Poly</a></p></li>
+<li><p><a class="reference internal" href="#cppad-namespace" id="id7">CppAD Namespace</a></p></li>
+<li><p><a class="reference internal" href="#cppad-preprocessor-symbols" id="id8">CppAD Preprocessor Symbols</a></p></li>
+<li><p><a class="reference internal" href="#program" id="id9">Program</a></p></li>
+<li><p><a class="reference internal" href="#output" id="id10">Output</a></p></li>
+<li><p><a class="reference internal" href="#running" id="id11">Running</a></p></li>
+<li><p><a class="reference internal" href="#exercises" id="id12">Exercises</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="get-started-cpp-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Demonstrate the use of CppAD by computing the derivative
+of a simple example function.</p>
+</section>
+<section id="function">
+<span id="get-started-cpp-function"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Function</a><a class="headerlink" href="#function" title="Permalink to this headline"></a></h3>
+<p>The example function <span class="math notranslate nohighlight">\(f : \B{R} \rightarrow \B{R}\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}\]</div>
+<p>where <em>a</em> is a fixed vector of length <em>k</em> .</p>
+</section>
+<section id="derivative">
+<span id="get-started-cpp-derivative"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Derivative</a><a class="headerlink" href="#derivative" title="Permalink to this headline"></a></h3>
+<p>The derivative of <span class="math notranslate nohighlight">\(f(x)\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2}\]</div>
+</section>
+<section id="value">
+<span id="get-started-cpp-value"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Value</a><a class="headerlink" href="#value" title="Permalink to this headline"></a></h3>
+<p>For the particular case in this example,
+<span class="math notranslate nohighlight">\(k\)</span> is equal to 5,
+<span class="math notranslate nohighlight">\(a = (1, 1, 1, 1, 1)\)</span>, and
+<span class="math notranslate nohighlight">\(x = 3\)</span>.
+If follows that</p>
+<div class="math notranslate nohighlight">
+\[f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142\]</div>
+</section>
+<section id="include-file">
+<span id="get-started-cpp-include-file"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Include File</a><a class="headerlink" href="#include-file" title="Permalink to this headline"></a></h3>
+<p>The following command, in the program below, includes the CppAD package:</p>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/cppad.hpp&gt;</span></code></p>
+</div></blockquote>
+</section>
+<section id="poly">
+<span id="get-started-cpp-poly"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Poly</a><a class="headerlink" href="#poly" title="Permalink to this headline"></a></h3>
+<p>The routine <code class="docutils literal notranslate"><span class="pre">Poly</span></code> , defined below, evaluates a polynomial.
+A general purpose polynomial evaluation routine is documented and
+distributed with CppAD; see <a class="reference internal" href="Poly.html#poly-name"><span class="std std-ref">Poly</span></a> .</p>
+</section>
+<section id="cppad-namespace">
+<span id="get-started-cpp-cppad-namespace"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">CppAD Namespace</a><a class="headerlink" href="#cppad-namespace" title="Permalink to this headline"></a></h3>
+<p>All of the functions and objects defined by CppAD are in the
+<code class="docutils literal notranslate"><span class="pre">CppAD</span></code> namespace. In the example below,</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">CppAD::AD</span></code> ;</p>
+</div></blockquote>
+<p>enables one to abbreviate <code class="docutils literal notranslate"><span class="pre">CppAD::AD</span></code> using just <code class="docutils literal notranslate"><span class="pre">AD</span></code> .</p>
+</section>
+<section id="cppad-preprocessor-symbols">
+<span id="get-started-cpp-cppad-preprocessor-symbols"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">CppAD Preprocessor Symbols</a><a class="headerlink" href="#cppad-preprocessor-symbols" title="Permalink to this headline"></a></h3>
+<p>All the <a class="reference internal" href="preprocessor.html#preprocessor-name"><span class="std std-ref">preprocessor</span></a> symbols defined by CppAD begin with
+<code class="docutils literal notranslate"><span class="pre">CPPAD_</span></code> (some deprecated symbols begin with <code class="docutils literal notranslate"><span class="pre">CppAD_</span></code> ).
+The preprocessor symbol <a class="reference internal" href="testvector.html#testvector-name"><span class="std std-ref">CPPAD_TESTVECTOR</span></a>
+is used in the example below.</p>
+</section>
+<section id="program">
+<span id="get-started-cpp-program"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Program</a><a class="headerlink" href="#program" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="c1">        // standard input/output</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="c1">          // standard vector</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="c1"> // the CppAD package</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// begin the empty namespace</span>
+<span class="w">   </span><span class="c1">// define the function Poly(a, x) = a[0] + a[1]*x[1] + ... + a[k-1]*x[k-1]</span>
+<span class="w">   </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Type</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">   </span><span class="n">Type</span><span class="w"> </span><span class="n">Poly</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">Type</span><span class="w"> </span><span class="n">y</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w">  </span><span class="c1">// initialize summation</span>
+<span class="w">      </span><span class="n">Type</span><span class="w"> </span><span class="n">x_i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w">  </span><span class="c1">// initialize x^i</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">y</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_i</span><span class="p">;</span><span class="w">  </span><span class="c1">// y   = y + a_i * x^i</span>
+<span class="w">         </span><span class="n">x_i</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">           </span><span class="c1">// x_i = x_i * x</span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">// main program</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w">   </span><span class="c1">// use AD as abbreviation for CppAD::AD</span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span><span class="w"> </span><span class="c1">// use vector as abbreviation for std::vector</span>
+
+<span class="w">   </span><span class="c1">// vector of polynomial coefficients</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">                  </span><span class="c1">// number of polynomial coefficients</span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">k</span><span class="p">);</span><span class="w"> </span><span class="c1">// vector of polynomial coefficients</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w">                 </span><span class="c1">// value of polynomial coefficients</span>
+
+<span class="w">   </span><span class="c1">// domain space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">               </span><span class="c1">// number of domain space variables</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ax</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="c1">// vector of domain space variables</span>
+<span class="w">   </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.</span><span class="p">;</span><span class="w">                 </span><span class="c1">// value at which function is recorded</span>
+
+<span class="w">   </span><span class="c1">// declare independent variables and start recording operation sequence</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">ax</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// range space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">               </span><span class="c1">// number of ranges space variables</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ay</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"> </span><span class="c1">// vector of ranges space variables</span>
+<span class="w">   </span><span class="n">ay</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Poly</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">     </span><span class="c1">// record operations that compute ay[0]</span>
+
+<span class="w">   </span><span class="c1">// store operation sequence in f: X -&gt; Y and stop recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">ay</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// compute derivative using operation sequence stored in f</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">jac</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="c1">// Jacobian of f (m by n matrix)</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w">       </span><span class="c1">// domain space vector</span>
+<span class="w">   </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.</span><span class="p">;</span><span class="w">                 </span><span class="c1">// argument value for computing derivative</span>
+<span class="w">   </span><span class="n">jac</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w">      </span><span class="c1">// Jacobian for operation sequence</span>
+
+<span class="w">   </span><span class="c1">// print the results</span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;f&#39;(3) computed by CppAD = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">jac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// check if the derivative is correct</span>
+<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">error_code</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">jac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">142.</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">      </span><span class="c1">// return code for correct case</span>
+<span class="w">   </span><span class="k">else</span><span class="w">  </span><span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">    </span><span class="c1">// return code for incorrect case</span>
+
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">error_code</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="output">
+<span id="get-started-cpp-output"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Output</a><a class="headerlink" href="#output" title="Permalink to this headline"></a></h3>
+<p>Executing the program above will generate the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sa">f</span><span class="s1">&#39;(3) computed by CppAD = 142</span>
+</pre></div>
+</div>
+</section>
+<section id="running">
+<span id="get-started-cpp-running"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Running</a><a class="headerlink" href="#running" title="Permalink to this headline"></a></h3>
+<p>After you configure your system using the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command,
+you compile and run this example by executing the command</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_example_get_started</span></code></p>
+</div></blockquote>
+<p>in the build directory; i.e., the directory where the cmake command
+was executed.</p>
+</section>
+<section id="exercises">
+<span id="get-started-cpp-exercises"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Exercises</a><a class="headerlink" href="#exercises" title="Permalink to this headline"></a></h3>
+<p>Modify the program above to accomplish the following tasks
+using CppAD:</p>
+<ol class="arabic simple">
+<li><p>Compute and print the derivative of <span class="math notranslate nohighlight">\(f(x) = 1 + x + x^2 + x^3 + x^4\)</span>
+at the point <span class="math notranslate nohighlight">\(x = 2\)</span>.</p></li>
+<li><p>Compute and print the derivative of <span class="math notranslate nohighlight">\(f(x) = 1 + x + x^2 / 2\)</span>
+at the point <span class="math notranslate nohighlight">\(x = .5\)</span>.</p></li>
+<li><p>Compute and print the derivative of <span class="math notranslate nohighlight">\(f(x) = \exp (x) - 1 - x - x^2 / 2\)</span>
+at the point <span class="math notranslate nohighlight">\(x = .5\)</span>.</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Example.html" class="btn btn-neutral float-left" title="Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="list_all_examples.html" class="btn btn-neutral float-right" title="list_all_examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

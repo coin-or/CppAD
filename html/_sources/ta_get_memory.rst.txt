@@ -1,0 +1,70 @@
+lines 663-730 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_get_memory}
+
+Get At Least A Specified Amount of Memory
+#########################################
+
+Syntax
+******
+*v_ptr* = ``thread_alloc::get_memory`` ( *min_bytes* , *cap_bytes* )
+
+Purpose
+*******
+Use :ref:`thread_alloc-name` to obtain a minimum number of bytes of memory
+(for use by the :ref:`current thread<ta_thread_num-name>` ).
+
+min_bytes
+*********
+This argument has prototype
+
+   ``size_t`` *min_bytes*
+
+It specifies the minimum number of bytes to allocate.
+This value must be less than
+::
+
+   std::numeric_limits<size_t>::max() / 2
+
+cap_bytes
+*********
+This argument has prototype
+
+   ``size_t&`` *cap_bytes*
+
+It's input value does not matter.
+Upon return, it is the actual number of bytes (capacity)
+that have been allocated for use,
+
+   *min_bytes* <= *cap_bytes*
+
+v_ptr
+*****
+The return value *v_ptr* has prototype
+
+   ``void`` * *v_ptr*
+
+It is the location where the *cap_bytes* of memory
+that have been allocated for use begins.
+
+Allocation Speed
+****************
+This allocation should be faster if the following conditions hold:
+
+#. The memory allocated by a previous call to ``get_memory``
+   is currently available for use.
+#. The current *min_bytes* is between
+   the previous *min_bytes* and previous *cap_bytes* .
+
+Alignment
+*********
+We call a memory allocation aligned if the address is a multiple
+of the number of bytes in a ``size_t`` value.
+If the system ``new`` allocator is aligned, then *v_ptr*
+pointer is also aligned.
+
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_get_memory}

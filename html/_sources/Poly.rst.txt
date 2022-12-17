@@ -1,0 +1,135 @@
+lines 8-140 of file: include/cppad/utility/poly.hpp
+
+{xrst_begin Poly}
+{xrst_spell
+   commutative
+}
+
+Evaluate a Polynomial or its Derivative
+#######################################
+
+Syntax
+******
+
+   # ``include <cppad/utility/poly.hpp>``
+
+*p* = ``Poly`` ( *k* , *a* , *z* )
+
+Description
+***********
+Computes the *k*-th derivative of the polynomial
+
+.. math::
+
+   P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
+
+If *k* is equal to zero, the return value is :math:`P(z)`.
+
+Include
+*******
+The file ``cppad/utility/poly.hpp``
+is included by ``cppad/cppad.hpp``
+but it can also be included separately with out the rest of
+the ``CppAD`` routines.
+Including this file defines
+``Poly`` within the ``CppAD`` namespace.
+
+k
+*
+The argument *k* has prototype
+
+   ``size_t`` *k*
+
+It specifies the order of the derivative to calculate.
+
+a
+*
+The argument *a* has prototype
+
+   ``const`` *Vector* & *a*
+
+(see :ref:`Poly@Vector` below).
+It specifies the vector corresponding to the polynomial :math:`P(z)`.
+
+z
+*
+The argument *z* has prototype
+
+   ``const`` *Type* & *z*
+
+(see *Type* below).
+It specifies the point at which to evaluate the polynomial
+
+p
+*
+The result *p*  has prototype
+
+   *Type* *p*
+
+(see :ref:`Poly@Type` below)
+and it is equal to the *k*-th derivative of :math:`P(z)`; i.e.,
+
+.. math::
+
+   p = \frac{k !}{0 !} a_k
+     + \frac{(k+1) !}{1 !} a_{k+1} z^1
+     + \ldots
+     + \frac{d !}{(d - k) !} a_d z^{d - k}
+
+If :math:`k > d`, *p* = *Type* (0) .
+
+Type
+****
+The type *Type* is determined by the argument *z* .
+It is assumed that
+multiplication and addition of *Type* objects
+are commutative.
+
+Operations
+==========
+The following operations must be supported where
+*x* and *y* are objects of type *Type*
+and *i* is an ``int`` :
+
+.. list-table::
+
+   * - *x* = *i*
+     - assignment
+   * - *x* = *y*
+     - assignment
+   * - *x* \\* = *y*
+     - multiplication compound assignment
+   * - *x* += *y*
+     - addition compound assignment
+
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Type* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Operation Sequence
+******************
+The *Type* operation sequence used to calculate *p* is
+:ref:`glossary@Operation@Independent`
+of *z* and the elements of *a*
+(it does depend on the size of the vector *a* ).
+{xrst_toc_hidden
+   example/utility/poly.cpp
+   xrst/poly_hpp.xrst
+}
+
+Example
+*******
+The file
+:ref:`poly.cpp-name`
+contains an example and test of this routine.
+
+Source
+******
+The file :ref:`poly.hpp-name` contains the
+current source code that implements these specifications.
+
+{xrst_end Poly}

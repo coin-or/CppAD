@@ -1,0 +1,72 @@
+lines 483-552 of file: include/cppad/utility/omp_alloc.hpp
+
+{xrst_begin omp_create_array}
+
+Allocate Memory and Create A Raw Array
+######################################
+
+Deprecated 2011-08-31
+*********************
+Use the function :ref:`thread_alloc::create_array<ta_create_array-name>` instead.
+
+Syntax
+******
+
+   # ``include <cppad/utility/omp_alloc.hpp>``
+
+*array* = ``omp_alloc::create_array<`` *Type* >( *size_min* , *size_out* ) .
+
+Purpose
+*******
+Create a new raw array using :ref:`omp_alloc-name` a fast memory allocator
+that works well in a multi-threading OpenMP environment.
+
+Type
+****
+The type of the elements of the array.
+
+size_min
+********
+This argument has prototype
+
+   ``size_t`` *size_min*
+
+This is the minimum number of elements that there can be
+in the resulting *array* .
+
+size_out
+********
+This argument has prototype
+
+   ``size_t&`` *size_out*
+
+The input value of this argument does not matter.
+Upon return, it is the actual number of elements
+in *array*
+( *size_min* <= *size_out* ).
+
+array
+*****
+The return value *array* has prototype
+
+   *Type* * *array*
+
+It is array with *size_out* elements.
+The default constructor for *Type* is used to initialize the
+elements of *array* .
+Note that :ref:`omp_delete_array-name`
+should be used to destroy the array when it is no longer needed.
+
+Delta
+*****
+The amount of memory :ref:`omp_inuse-name` by the current thread,
+will increase *delta* where
+
+   ``sizeof`` ( *Type* ) * ( *size_out* + 1) > *delta* >= ``sizeof`` ( *Type* ) * *size_out*
+
+The :ref:`omp_available-name` memory will decrease by *delta* ,
+(and the allocation will be faster)
+if a previous allocation with *size_min* between its current value
+and *size_out* is available.
+
+{xrst_end omp_create_array}

@@ -1,0 +1,16 @@
+lines 7-20 of file: example/utility/romberg_mul.cpp
+
+{xrst_begin romberg_mul.cpp}
+{xrst_spell
+   romberg
+}
+
+Multi-Dimensional Romberg Integration: Example and Test
+#######################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end romberg_mul.cpp}

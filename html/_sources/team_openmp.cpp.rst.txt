@@ -1,0 +1,14 @@
+lines 6-17 of file: example/multi_thread/openmp/team_openmp.cpp
+
+{xrst_begin team_openmp.cpp}
+
+OpenMP Implementation of a Team of AD Threads
+#############################################
+See :ref:`team_thread.hpp-name` for this routines specifications.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end team_openmp.cpp}

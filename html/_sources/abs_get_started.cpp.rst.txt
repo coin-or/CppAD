@@ -1,0 +1,42 @@
+lines 7-46 of file: example/abs_normal/get_started.cpp
+
+{xrst_begin abs_get_started.cpp}
+{xrst_spell
+   rclrcl
+}
+
+abs_normal Getting Started: Example and Test
+############################################
+
+Purpose
+*******
+Creates an :ref:`abs_normal<abs_normal_fun-name>`
+representation :math:`g` for the function
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+
+   f( x_0, x_1, x_2  ) = | x_0 + x_1 | + | x_1 + x_2 |
+
+The corresponding
+:ref:`abs_normal_fun@g` :math:`: \B{R}^5 \rightarrow \B{R}^3` is
+given by
+
+.. math::
+
+   \begin{array}{rclrcl}
+      g_0 ( x_0, x_1, x_2, u_0, u_1 ) & = & u_0 + u_1 & = & y_0 (x, u)
+      \\
+      g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_0 + x_1 & = & z_0 (x, u)
+      \\
+      g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
+   \end{array}
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_get_started.cpp}

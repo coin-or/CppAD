@@ -1,0 +1,19 @@
+lines 6-22 of file: xrst/lu_solve_hpp.xrst
+
+{xrst_begin lu_solve.hpp}
+
+Source: LuSolve
+###############
+
+| # ``ifndef CPPAD_LU_SOLVE_HPP``
+| # ``define CPPAD_LU_SOLVE_HPP``
+
+{xrst_literal
+   include/cppad/utility/lu_solve.hpp
+   // BEGIN C++
+   // END C++
+}
+
+``# endif``
+
+{xrst_end lu_solve.hpp}

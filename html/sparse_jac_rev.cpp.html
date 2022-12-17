@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="sparse_jac_rev.cpp, computing, sparse, jacobian, using, reverse, mode:, example, and, test" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sparse_jac_rev.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sparse_jacobian" href="sparse_jacobian.html" />
+    <link rel="prev" title="sparse_jac_for.cpp" href="sparse_jac_for.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sparse_jac.html">sparse_jac</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="sparse_jac_for.cpp.html">sparse_jac_for.cpp</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">sparse_jac_rev.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_jacobian.html">sparse_jacobian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hes.html">sparse_hes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hessian.html">sparse_hessian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_jac_rev.html">subgraph_jac_rev</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparse_derivative.html">sparse_derivative</a> &raquo;</li>
+          <li><a href="sparse_jac.html">sparse_jac</a> &raquo;</li>
+      <li>sparse_jac_rev.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sparse_jac_rev.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="sparse-jac-rev-cpp">
+<span id="sparse-jac-rev-cpp-name"></span><h1>sparse_jac_rev.cpp<a class="headerlink" href="#sparse-jac-rev-cpp" title="Permalink to this headline"></a></h1>
+<section id="computing-sparse-jacobian-using-reverse-mode-example-and-test">
+<span id="sparse-jac-rev-cpp-title"></span><span id="index-0"></span><h2>Computing Sparse Jacobian Using Reverse Mode: Example and Test<a class="headerlink" href="#computing-sparse-jacobian-using-reverse-mode-example-and-test" title="Permalink to this headline"></a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">sparse_jac_rev</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_rc</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_rcv</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">a_vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w">     </span><span class="n">d_vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="w">     </span><span class="n">s_vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// domain space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">a_vector</span><span class="w">  </span><span class="n">a_x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a_x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// declare independent variables and starting recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">a_x</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">a_vector</span><span class="w">  </span><span class="n">a_y</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">a_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="n">a_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="n">a_y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a_x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// create f: x -&gt; y and stop tape recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">a_x</span><span class="p">,</span><span class="w"> </span><span class="n">a_y</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// new value for the independent variable vector</span>
+<span class="w">   </span><span class="n">d_vector</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">j</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="cm">/*</span>
+<span class="cm">           [ 1 1 0 0  ]</span>
+<span class="cm">   J(x) = [ 0 0 1 1  ]</span>
+<span class="cm">           [ 1 1 1 x_3]</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// row-major order values of J(x)</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nnz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">s_vector</span><span class="w"> </span><span class="n">check_row</span><span class="p">(</span><span class="n">nnz</span><span class="p">),</span><span class="w"> </span><span class="n">check_col</span><span class="p">(</span><span class="n">nnz</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">d_vector</span><span class="w"> </span><span class="n">check_val</span><span class="p">(</span><span class="n">nnz</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nnz</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// check_val</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">check_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">check_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//</span>
+<span class="w">      </span><span class="c1">// check_row and check_col</span>
+<span class="w">      </span><span class="n">check_col</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">check_row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">check_row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">check_row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="n">check_col</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// m by m identity matrix sparsity</span>
+<span class="w">   </span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="n">s_vector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pattern_in</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">pattern_in</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// sparsity for J(x)</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">transpose</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">dependency</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">internal_bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="n">s_vector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pattern_jac</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">f</span><span class="p">.</span><span class="n">rev_jac_sparsity</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">pattern_in</span><span class="p">,</span><span class="w"> </span><span class="n">transpose</span><span class="p">,</span><span class="w"> </span><span class="n">dependency</span><span class="p">,</span><span class="w"> </span><span class="n">internal_bool</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_jac</span><span class="w"></span>
+<span class="w">   </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// compute entire reverse mode Jacobian</span>
+<span class="w">   </span><span class="n">sparse_rcv</span><span class="o">&lt;</span><span class="n">s_vector</span><span class="p">,</span><span class="w"> </span><span class="n">d_vector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="w"> </span><span class="n">pattern_jac</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_jac_work</span><span class="w"> </span><span class="n">work</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">coloring</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cppad&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">sparse_jac_rev</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_jac</span><span class="p">,</span><span class="w"> </span><span class="n">coloring</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">s_vector</span><span class="w"> </span><span class="n">row</span><span class="p">(</span><span class="w"> </span><span class="n">subset</span><span class="p">.</span><span class="n">row</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">s_vector</span><span class="w"> </span><span class="n">col</span><span class="p">(</span><span class="w"> </span><span class="n">subset</span><span class="p">.</span><span class="n">col</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">d_vector</span><span class="w"> </span><span class="n">val</span><span class="p">(</span><span class="w"> </span><span class="n">subset</span><span class="p">.</span><span class="n">val</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">s_vector</span><span class="w"> </span><span class="n">row_major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">.</span><span class="n">row_major</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">  </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">subset</span><span class="p">.</span><span class="n">nnz</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">nnz</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nnz</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="w"> </span><span class="n">row_major</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">check_row</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="w"> </span><span class="n">row_major</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">check_col</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">val</span><span class="p">[</span><span class="w"> </span><span class="n">row_major</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">check_val</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// test using work stored by previous sparse_jac_rev</span>
+<span class="w">   </span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="n">s_vector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pattern_not_used</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w">         </span><span class="n">coloring_not_used</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">sparse_jac_rev</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_jac</span><span class="p">,</span><span class="w"> </span><span class="n">coloring</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nnz</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="w"> </span><span class="n">row_major</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">check_row</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="w"> </span><span class="n">row_major</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">check_col</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">val</span><span class="p">[</span><span class="w"> </span><span class="n">row_major</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">check_val</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// compute non-zero in col 3 only, nr = m, nc = n, nnz = 2</span>
+<span class="w">   </span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="n">s_vector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pattern_col3</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">pattern_col3</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w">    </span><span class="c1">// row[0] = 1, col[0] = 3</span>
+<span class="w">   </span><span class="n">pattern_col3</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w">    </span><span class="c1">// row[1] = 2, col[1] = 3</span>
+<span class="w">   </span><span class="n">sparse_rcv</span><span class="o">&lt;</span><span class="n">s_vector</span><span class="p">,</span><span class="w"> </span><span class="n">d_vector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">subset_col3</span><span class="p">(</span><span class="w"> </span><span class="n">pattern_col3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">work</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">sparse_jac_rev</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">subset_col3</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_jac</span><span class="p">,</span><span class="w"> </span><span class="n">coloring</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">n_sweep</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">s_vector</span><span class="w"> </span><span class="n">row_col3</span><span class="p">(</span><span class="w"> </span><span class="n">subset_col3</span><span class="p">.</span><span class="n">row</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">s_vector</span><span class="w"> </span><span class="n">col_col3</span><span class="p">(</span><span class="w"> </span><span class="n">subset_col3</span><span class="p">.</span><span class="n">col</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">d_vector</span><span class="w"> </span><span class="n">val_col3</span><span class="p">(</span><span class="w"> </span><span class="n">subset_col3</span><span class="p">.</span><span class="n">val</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">subset_col3</span><span class="p">.</span><span class="n">nnz</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">row_col3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">col_col3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">val_col3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">row_col3</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">col_col3</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">val_col3</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparse_jac_for.cpp.html" class="btn btn-neutral float-left" title="sparse_jac_for.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sparse_jacobian.html" class="btn btn-neutral float-right" title="sparse_jacobian" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

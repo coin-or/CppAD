@@ -1,0 +1,79 @@
+lines 10-86 of file: include/cppad/core/con_dyn_var.hpp
+
+{xrst_begin con_dyn_var}
+
+Constant, Dynamic, Parameter, and Variable
+##########################################
+
+Syntax
+******
+
+| *b* = ``Constant`` ( *x* )
+| *b* = ``Dynamic`` ( *x* )
+| *b* = ``Parameter`` ( *x* )
+| *b* = ``Variable`` ( *x* )
+
+x
+*
+The argument *x* has prototype
+
+| |tab| ``const AD<`` *Base* >    & *x*
+| |tab| ``const VecAD<`` *Base* > & *x*
+
+b
+*
+The return value *b* has prototype
+
+   ``bool`` *b*
+
+Constant
+********
+The return value for ``Constant`` is true
+is true if and only if *x* is
+a :ref:`glossary@Parameter@Constant` parameter.
+A :ref:`VecAD\<Base><VecAD-name>` object is a constant parameter
+if no element of the vector depends on the independent variables.
+
+Dynamic
+*******
+The return value for ``Dynamic`` is true
+is true if and only if *x* is
+a :ref:`glossary@Parameter@Dynamic` parameter.
+No element of a :ref:`VecAD\<Base><VecAD-name>` object
+can depend on the dynamic parameters and this function returns false
+for these objects.
+
+Parameter
+*********
+The return value for ``Parameter`` is true
+is true if and only if *x* is
+a :ref:`glossary@Parameter` .
+A :ref:`VecAD\<Base><VecAD-name>` object is a parameter
+if no element of the vector depends on the independent variables.
+
+Variable
+********
+The return value for ``Variable`` is true
+is true if and only if *x* is
+a :ref:`glossary@Variable` .
+A :ref:`VecAD\<Base><VecAD-name>` object is a variable
+if any element of the vector depends on the independent variables.
+
+Operation Sequence
+******************
+The result of this operation is not an
+:ref:`glossary@AD of Base` object.
+Thus it will not be recorded as part of an
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/con_dyn_var.cpp
+}
+The file
+:ref:`con_dyn_var.cpp-name`
+contains an example and test of these functions.
+
+{xrst_end con_dyn_var}

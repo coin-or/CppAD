@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="link_routines, package, specific, speed, test, linking, routines" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="thread, save" name="keywords" />
+<meta content="link_name" name="keywords" />
+<meta content="contents" name="keywords" />
+<meta content="namespace" name="keywords" />
+<meta content="available" name="keywords" />
+<meta content="job" name="keywords" />
+<meta content="setup" name="keywords" />
+<meta content="run" name="keywords" />
+<meta content="teardown" name="keywords" />
+<meta content="size" name="keywords" />
+<meta content="repeat" name="keywords" />
+<meta content="other_arguments" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>link_routines &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="link_det_lu" href="link_det_lu.html" />
+    <link rel="prev" title="speed_main" href="speed_main.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="speed.html">speed</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="speed_main.html">speed_main</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">link_routines</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="link_det_lu.html">link_det_lu</a></li>
+<li class="toctree-l5"><a class="reference internal" href="link_det_minor.html">link_det_minor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="link_mat_mul.html">link_mat_mul</a></li>
+<li class="toctree-l5"><a class="reference internal" href="link_ode.html">link_ode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="link_poly.html">link_poly</a></li>
+<li class="toctree-l5"><a class="reference internal" href="link_sparse_hessian.html">link_sparse_hessian</a></li>
+<li class="toctree-l5"><a class="reference internal" href="link_sparse_jacobian.html">link_sparse_jacobian</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="speed_utility.html">speed_utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_double.html">speed_double</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_adolc.html">speed_adolc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppad.html">speed_cppad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_fadbad.html">speed_fadbad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppad_jit.html">speed_cppad_jit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppadcg.html">speed_cppadcg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_sacado.html">speed_sacado</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_xpackage.html">speed_xpackage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="speed.html">speed</a> &raquo;</li>
+          <li><a href="speed_main.html">speed_main</a> &raquo;</li>
+      <li>link_routines</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/link_routines.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="link-routines">
+<span id="link-routines-name"></span><h1>link_routines<a class="headerlink" href="#link-routines" title="Permalink to this headline"></a></h1>
+<section id="package-specific-speed-test-linking-routines">
+<span id="link-routines-title"></span><span id="index-0"></span><h2>Package Specific Speed Test Linking Routines<a class="headerlink" href="#package-specific-speed-test-linking-routines" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#thread-save" id="id4">Thread Save</a></p></li>
+<li><p><a class="reference internal" href="#link-name" id="id5">link_name</a></p></li>
+<li><p><a class="reference internal" href="#link-routines-contents" id="id6">Contents</a></p></li>
+<li><p><a class="reference internal" href="#namespace" id="id7">Namespace</a></p></li>
+<li><p><a class="reference internal" href="#available" id="id8">available</a></p></li>
+<li><p><a class="reference internal" href="#job" id="id9">job</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setup" id="id10">setup</a></p></li>
+<li><p><a class="reference internal" href="#run" id="id11">run</a></p></li>
+<li><p><a class="reference internal" href="#teardown" id="id12">teardown</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#size" id="id13">size</a></p></li>
+<li><p><a class="reference internal" href="#repeat" id="id14">repeat</a></p></li>
+<li><p><a class="reference internal" href="#other-arguments" id="id15">other_arguments</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="link-routines-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>available</em> = <em>link_name</em> ( <em>job</em> , <em>size</em> , <em>repeat</em> , <em>other_arguments</em>  )</p>
+</div></blockquote>
+</section>
+<section id="purpose">
+<span id="link-routines-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Each <a class="reference internal" href="speed_main.html#speed-main-package"><span class="std std-ref">package</span></a>
+defines a version of each <em>link_name</em> listed below.
+This is used by the <a class="reference internal" href="speed_main.html#speed-main-name"><span class="std std-ref">speed_main</span></a> program
+to run the corresponding speed and correctness tests.</p>
+</section>
+<section id="thread-save">
+<span id="link-routines-thread-save"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id4">Thread Save</a><a class="headerlink" href="#thread-save" title="Permalink to this headline"></a></h3>
+<p>The <em>link_name</em> routines may use static memory for setup and teardown
+and hence may not be thread safe.</p>
+</section>
+<section id="link-name">
+<span id="link-routines-link-name"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id5">link_name</a><a class="headerlink" href="#link-name" title="Permalink to this headline"></a></h3>
+<p>The routine <em>link_name</em> in the syntax is one of the following:</p>
+</section>
+<section id="link-routines-contents">
+<span id="index-5"></span><span id="id1"></span><h3><a class="toc-backref" href="#id6">Contents</a><a class="headerlink" href="#link-routines-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>link_det_lu</p></td>
+<td><p><a class="reference internal" href="link_det_lu.html#link-det-lu-title"><span class="std std-ref">Speed Testing Gradient of Determinant Using Lu Factorization</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>link_det_minor</p></td>
+<td><p><a class="reference internal" href="link_det_minor.html#link-det-minor-title"><span class="std std-ref">Speed Testing Gradient of Determinant by Minor Expansion</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>link_mat_mul</p></td>
+<td><p><a class="reference internal" href="link_mat_mul.html#link-mat-mul-title"><span class="std std-ref">Speed Testing Derivative of Matrix Multiply</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>link_ode</p></td>
+<td><p><a class="reference internal" href="link_ode.html#link-ode-title"><span class="std std-ref">Speed Testing the Jacobian of Ode Solution</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>link_poly</p></td>
+<td><p><a class="reference internal" href="link_poly.html#link-poly-title"><span class="std std-ref">Speed Testing Second Derivative of a Polynomial</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>link_sparse_hessian</p></td>
+<td><p><a class="reference internal" href="link_sparse_hessian.html#link-sparse-hessian-title"><span class="std std-ref">Link to Speed Test Sparse Hessian</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>link_sparse_jacobian</p></td>
+<td><p><a class="reference internal" href="link_sparse_jacobian.html#link-sparse-jacobian-title"><span class="std std-ref">Speed Testing Sparse Jacobians</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="namespace">
+<span id="link-routines-namespace"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">Namespace</a><a class="headerlink" href="#namespace" title="Permalink to this headline"></a></h3>
+<p>These routines are in the global namespace, not the CppAD namespace.</p>
+</section>
+<section id="available">
+<span id="link-routines-available"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id8">available</a><a class="headerlink" href="#available" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">bool</span></code> return value <em>available</em> is true (false)
+if the speed test <em>name</em> is (is not) available for this package.</p>
+</section>
+<section id="job">
+<span id="link-routines-job"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id9">job</a><a class="headerlink" href="#job" title="Permalink to this headline"></a></h3>
+<p>This argument can be used to cache information that does not
+depend on the function argument value without having the corresponding time
+included in the test results.
+This is expected to be important when the global option
+<a class="reference internal" href="speed_main.html#speed-main-global-options-onetape"><span class="std std-ref">onetape</span></a> is true.
+The <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code> argument <em>job</em>
+has one of the following values:</p>
+<section id="setup">
+<span id="link-routines-job-setup"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id10">setup</a><a class="headerlink" href="#setup" title="Permalink to this headline"></a></h4>
+<p>This is the first call with a new value for <em>size</em>
+and will not be used for timing.
+It can be used to setup information that should not be included in timing
+how long this routine takes.</p>
+</section>
+<section id="run">
+<span id="link-routines-job-run"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id11">run</a><a class="headerlink" href="#run" title="Permalink to this headline"></a></h4>
+<p>This call will be used for timing how long this routine takes.
+The previous call <em>job</em> was either <code class="docutils literal notranslate"><span class="pre">setup</span></code> or <code class="docutils literal notranslate"><span class="pre">run</span></code>
+and had the same value of <em>size</em> .</p>
+</section>
+<section id="teardown">
+<span id="link-routines-job-teardown"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id12">teardown</a><a class="headerlink" href="#teardown" title="Permalink to this headline"></a></h4>
+<p>This is the last call with this value of <em>size</em>
+and will not be used for timing.
+It should be used to take down the setup; e.g., fee any memory that
+was allocated.</p>
+</section>
+</section>
+<section id="size">
+<span id="link-routines-size"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id13">size</a><a class="headerlink" href="#size" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">size_t</span></code> argument <em>size</em> this is the size parameter for this
+test.  Larger sizes correspond to more computation per call.</p>
+</section>
+<section id="repeat">
+<span id="link-routines-repeat"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id14">repeat</a><a class="headerlink" href="#repeat" title="Permalink to this headline"></a></h3>
+<p>If <em>job</em> is <code class="docutils literal notranslate"><span class="pre">run</span></code> ,
+the <em>size_t</em> argument <em>repeat</em> is the number of
+randomly chosen argument values that the test derivatives should be
+evaluated for.
+The value of <em>repeat</em> is always greater than or equal one
+and all the <code class="docutils literal notranslate"><span class="pre">link_</span></code> <em>name</em> output values are always calculated.</p>
+</section>
+<section id="other-arguments">
+<span id="link-routines-other-arguments"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id15">other_arguments</a><a class="headerlink" href="#other-arguments" title="Permalink to this headline"></a></h3>
+<p>Each link function routine has specific specifications
+for <em>size</em> and their other arguments.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="speed_main.html" class="btn btn-neutral float-left" title="speed_main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="link_det_lu.html" class="btn btn-neutral float-right" title="link_det_lu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

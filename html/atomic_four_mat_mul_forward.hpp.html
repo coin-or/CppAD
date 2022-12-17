@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_four_mat_mul_forward.hpp, atomic, matrix, multiply, forward, mode:, example, implementation" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_four_mat_mul_forward.hpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_four_mat_mul_reverse.hpp" href="atomic_four_mat_mul_reverse.hpp.html" />
+    <link rel="prev" title="atomic_four_mat_mul_for_type.hpp" href="atomic_four_mat_mul_for_type.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_four.html">atomic_four</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="atomic_four_define.html">atomic_four_define</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="atomic_four_example.html">atomic_four_example</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_get_started.cpp.html">atomic_four_get_started.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_norm_sq.cpp.html">atomic_four_norm_sq.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_forward.cpp.html">atomic_four_forward.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_dynamic.cpp.html">atomic_four_dynamic.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_vector.html">atomic_four_vector</a></li>
+<li class="toctree-l7 current"><a class="reference internal" href="atomic_four_mat_mul.html">atomic_four_mat_mul</a><ul class="current">
+<li class="toctree-l8 current"><a class="reference internal" href="atomic_four_mat_mul_implement.html">atomic_four_mat_mul_implement</a><ul class="current">
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul.hpp.html">atomic_four_mat_mul.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_set.hpp.html">atomic_four_mat_mul_set.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_get.hpp.html">atomic_four_mat_mul_get.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_base_mat_mul.hpp.html">atomic_four_mat_mul_base_mat_mul.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_for_type.hpp.html">atomic_four_mat_mul_for_type.hpp</a></li>
+<li class="toctree-l9 current"><a class="current reference internal" href="#">atomic_four_mat_mul_forward.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_reverse.hpp.html">atomic_four_mat_mul_reverse.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_jac_sparsity.hpp.html">atomic_four_mat_mul_jac_sparsity.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_hes_sparsity.hpp.html">atomic_four_mat_mul_hes_sparsity.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_mat_mul_rev_depend.hpp.html">atomic_four_mat_mul_rev_depend.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_forward.cpp.html">atomic_four_mat_mul_forward.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_reverse.cpp.html">atomic_four_mat_mul_reverse.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_sparsity.cpp.html">atomic_four_mat_mul_sparsity.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_rev_depend.cpp.html">atomic_four_mat_mul_rev_depend.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_identical_zero.cpp.html">atomic_four_mat_mul_identical_zero.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_lin_ode.html">atomic_four_lin_ode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_three.html">atomic_three</a></li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_four.html">atomic_four</a> &raquo;</li>
+          <li><a href="atomic_four_example.html">atomic_four_example</a> &raquo;</li>
+          <li><a href="atomic_four_mat_mul.html">atomic_four_mat_mul</a> &raquo;</li>
+          <li><a href="atomic_four_mat_mul_implement.html">atomic_four_mat_mul_implement</a> &raquo;</li>
+      <li>atomic_four_mat_mul_forward.hpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_four_mat_mul_forward.hpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-four-mat-mul-forward-hpp">
+<span id="atomic-four-mat-mul-forward-hpp-name"></span><h1>atomic_four_mat_mul_forward.hpp<a class="headerlink" href="#atomic-four-mat-mul-forward-hpp" title="Permalink to this headline"></a></h1>
+<section id="atomic-matrix-multiply-forward-mode-example-implementation">
+<span id="atomic-four-mat-mul-forward-hpp-title"></span><span id="index-0"></span><h2>Atomic Matrix Multiply Forward Mode: Example Implementation<a class="headerlink" href="#atomic-matrix-multiply-forward-mode-example-implementation" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id2">Source</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="atomic-four-mat-mul-forward-hpp-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">forward</span></code> routine overrides the virtual functions
+used by the atomic_four base; see
+<a class="reference internal" href="atomic_four_forward.html#atomic-four-forward-name"><span class="std std-ref">forward</span></a> .</p>
+</section>
+<section id="source">
+<span id="atomic-four-mat-mul-forward-hpp-source"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/example/atomic_four/mat_mul/mat_mul.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// BEGIN_CPPAD_NAMESPACE</span>
+<span class="c1">//</span>
+<span class="c1">// forward override for Base matrix multiply</span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">atomic_mat_mul</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">forward</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                     </span><span class="n">call_id</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">select_y</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                     </span><span class="n">order_low</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                     </span><span class="n">order_up</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">taylor_x</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                       </span><span class="n">taylor_y</span><span class="w">    </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// q</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">q</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">order_up</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// n_left, n_middle, n_right</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n_left</span><span class="p">,</span><span class="w"> </span><span class="n">n_middle</span><span class="p">,</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">get</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span><span class="w"> </span><span class="n">n_left</span><span class="p">,</span><span class="w"> </span><span class="n">n_middle</span><span class="p">,</span><span class="w"> </span><span class="n">n_right</span><span class="p">);</span><span class="w"></span>
+<span class="cp"># ifndef NDEBUG</span>
+<span class="w">   </span><span class="c1">// n, m</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">taylor_x</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">taylor_y</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// check sizes</span>
+<span class="w">   </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n_middle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="n">n_right</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="cp"># endif</span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// offset</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_middle</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// for k = order_low, ..., order_up :</span>
+<span class="w">   </span><span class="c1">//    C^k = sum_ell A^ell * B^{k-ell}</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="w"> </span><span class="n">n_middle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n_right</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order_low</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// sum = 0</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Base</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">ell</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="c1">// x = [ A^ell, B^{k-ell} ]</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_middle</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taylor_x</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_middle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">x</span><span class="p">[</span><span class="n">offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taylor_x</span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ell</span><span class="p">)</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//</span>
+<span class="w">         </span><span class="c1">// y = A^ell * B^{k-ell}</span>
+<span class="w">         </span><span class="n">base_mat_mul</span><span class="p">(</span><span class="n">n_left</span><span class="p">,</span><span class="w"> </span><span class="n">n_middle</span><span class="p">,</span><span class="w"> </span><span class="n">n_right</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//</span>
+<span class="w">         </span><span class="c1">// sum += y</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// C^k = sum</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">taylor_y</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">//</span>
+<span class="c1">// forward override for AD&lt;Base&gt; matrix multiply</span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">atomic_mat_mul</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">forward</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                     </span><span class="n">call_id</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">select_y</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                     </span><span class="n">order_low</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                     </span><span class="n">order_up</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">    </span><span class="n">ataylor_x</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">          </span><span class="n">ataylor_y</span><span class="w">   </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// vector, AD</span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// q</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">q</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">order_up</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// n_left, n_middle, n_right</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n_left</span><span class="p">,</span><span class="w"> </span><span class="n">n_middle</span><span class="p">,</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">get</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span><span class="w"> </span><span class="n">n_left</span><span class="p">,</span><span class="w"> </span><span class="n">n_middle</span><span class="p">,</span><span class="w"> </span><span class="n">n_right</span><span class="p">);</span><span class="w"></span>
+<span class="cp"># ifndef NDEBUG</span>
+<span class="w">   </span><span class="c1">// n, m</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ataylor_x</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ataylor_y</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// check sizes</span>
+<span class="w">   </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n_middle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="n">n_right</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="cp"># endif</span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// offset</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_middle</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// for k = order_low, ..., order_up :</span>
+<span class="w">   </span><span class="c1">//    C^k = sum_ell A^ell * B^{k-ell}</span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ax</span><span class="p">(</span><span class="w"> </span><span class="n">n_middle</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n_right</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ay</span><span class="p">(</span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">asum</span><span class="p">(</span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order_low</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// sum = 0</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">asum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">ell</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="c1">// ax = [ A^ell, B^{k-ell} ]</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_middle</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ataylor_x</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_middle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">ax</span><span class="p">[</span><span class="n">offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ataylor_x</span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ell</span><span class="p">)</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//</span>
+<span class="w">         </span><span class="c1">// ay = A^ell * B^{k-ell}</span>
+<span class="w">         </span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)(</span><span class="n">call_id</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">ay</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//</span>
+<span class="w">         </span><span class="c1">// asum += ay</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">asum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">ay</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// C^k = asum</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_left</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_right</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">ataylor_y</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">asum</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// END_CPPAD_NAMESPACE</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_four_mat_mul_for_type.hpp.html" class="btn btn-neutral float-left" title="atomic_four_mat_mul_for_type.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_four_mat_mul_reverse.hpp.html" class="btn btn-neutral float-right" title="atomic_four_mat_mul_reverse.hpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

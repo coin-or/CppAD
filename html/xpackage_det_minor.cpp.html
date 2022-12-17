@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="xpackage_det_minor.cpp, xpackage, speed:, gradient, of, determinant, by, minor, expansion" name="keywords" />
+<meta content="specifications" name="keywords" />
+<meta content="implementation" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>xpackage_det_minor.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="xpackage_det_lu.cpp" href="xpackage_det_lu.cpp.html" />
+    <link rel="prev" title="speed_xpackage" href="speed_xpackage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="speed.html">speed</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="speed_main.html">speed_main</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_utility.html">speed_utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_double.html">speed_double</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_adolc.html">speed_adolc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppad.html">speed_cppad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_fadbad.html">speed_fadbad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppad_jit.html">speed_cppad_jit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppadcg.html">speed_cppadcg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_sacado.html">speed_sacado</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="speed_xpackage.html">speed_xpackage</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">xpackage_det_minor.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xpackage_det_lu.cpp.html">xpackage_det_lu.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xpackage_mat_mul.cpp.html">xpackage_mat_mul.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xpackage_ode.cpp.html">xpackage_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xpackage_poly.cpp.html">xpackage_poly.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xpackage_sparse_hessian.cpp.html">xpackage_sparse_hessian.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xpackage_sparse_jacobian.cpp.html">xpackage_sparse_jacobian.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="speed.html">speed</a> &raquo;</li>
+          <li><a href="speed_xpackage.html">speed_xpackage</a> &raquo;</li>
+      <li>xpackage_det_minor.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/xpackage_det_minor.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="xpackage-det-minor-cpp">
+<span id="xpackage-det-minor-cpp-name"></span><h1>xpackage_det_minor.cpp<a class="headerlink" href="#xpackage-det-minor-cpp" title="Permalink to this headline"></a></h1>
+<section id="xpackage-speed-gradient-of-determinant-by-minor-expansion">
+<span id="xpackage-det-minor-cpp-title"></span><span id="index-0"></span><h2>Xpackage Speed: Gradient of Determinant by Minor Expansion<a class="headerlink" href="#xpackage-speed-gradient-of-determinant-by-minor-expansion" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#specifications" id="id1">Specifications</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id2">Implementation</a></p></li>
+</ul>
+</div>
+<section id="specifications">
+<span id="xpackage-det-minor-cpp-specifications"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Specifications</a><a class="headerlink" href="#specifications" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="link_det_minor.html#link-det-minor-name"><span class="std std-ref">link_det_minor</span></a></p>
+</section>
+<section id="implementation">
+<span id="xpackage-det-minor-cpp-implementation"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h3>
+<p>// a xpackage version of this test is not yet implemented</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;map&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/utility/vector.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// list of possible options</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">global_option</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">link_det_minor</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w">         </span><span class="n">job</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                     </span><span class="n">size</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                     </span><span class="n">repeat</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w">     </span><span class="o">&amp;</span><span class="n">matrix</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w">     </span><span class="o">&amp;</span><span class="n">gradient</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="speed_xpackage.html" class="btn btn-neutral float-left" title="speed_xpackage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="xpackage_det_lu.cpp.html" class="btn btn-neutral float-right" title="xpackage_det_lu.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

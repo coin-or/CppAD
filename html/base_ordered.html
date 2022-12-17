@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="base_ordered, base, type, requirements, for, ordered, comparisons" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="ordered, type" name="keywords" />
+<meta content="not, ordered" name="keywords" />
+<meta content="special, requirements" name="keywords" />
+<meta content="independent" name="keywords" />
+<meta content="optimize" name="keywords" />
+<meta content="printfor" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>base_ordered &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="base_std_math" href="base_std_math.html" />
+    <link rel="prev" title="base_identical" href="base_identical.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ADValued.html">ADValued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="base_require.html">base_require</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base_member.html">base_member</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_cond_exp.html">base_cond_exp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_identical.html">base_identical</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">base_ordered</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_std_math.html">base_std_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_limits.html">base_limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_to_string.html">base_to_string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_hash.html">base_hash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_example.html">base_example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="base_require.html">base_require</a> &raquo;</li>
+      <li>base_ordered</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/base_ordered.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="base-ordered">
+<span id="base-ordered-name"></span><h1>base_ordered<a class="headerlink" href="#base-ordered" title="Permalink to this headline"></a></h1>
+<section id="base-type-requirements-for-ordered-comparisons">
+<span id="base-ordered-title"></span><span id="index-0"></span><h2>Base Type Requirements for Ordered Comparisons<a class="headerlink" href="#base-type-requirements-for-ordered-comparisons" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#ordered-type" id="id2">Ordered Type</a></p></li>
+<li><p><a class="reference internal" href="#not-ordered" id="id3">Not Ordered</a></p></li>
+<li><p><a class="reference internal" href="#special-requirements" id="id4">Special Requirements</a></p>
+<ul>
+<li><p><a class="reference internal" href="#independent" id="id5">Independent</a></p></li>
+<li><p><a class="reference internal" href="#optimize" id="id6">Optimize</a></p></li>
+<li><p><a class="reference internal" href="#printfor" id="id7">PrintFor</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="purpose">
+<span id="base-ordered-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>The following operations
+(in the CppAD namespace) are required to use the type
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Syntax</strong></p></td>
+<td><p><strong>Result</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>b</em> = <code class="docutils literal notranslate"><span class="pre">GreaterThanZero</span></code> ( <em>x</em> )</p></td>
+<td><p><span class="math notranslate nohighlight">\(x &gt; 0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>b</em> = <code class="docutils literal notranslate"><span class="pre">GreaterThanOrZero</span></code> ( <em>x</em> )</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \geq 0\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><em>b</em> = <code class="docutils literal notranslate"><span class="pre">LessThanZero</span></code> ( <em>x</em> )</p></td>
+<td><p><span class="math notranslate nohighlight">\(x &lt; 0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>b</em> = <code class="docutils literal notranslate"><span class="pre">LessThanOrZero</span></code> ( <em>x</em> )</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \leq 0\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><em>b</em> = <code class="docutils literal notranslate"><span class="pre">abs_geq</span></code> ( <em>x</em> , <em>y</em> )</p></td>
+<td><p><span class="math notranslate nohighlight">\(|x| \geq |y|\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>where the arguments and return value have the prototypes</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>x</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>y</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>b</em></div>
+</div>
+</section>
+<section id="ordered-type">
+<span id="base-ordered-ordered-type"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Ordered Type</a><a class="headerlink" href="#ordered-type" title="Permalink to this headline"></a></h3>
+<p>If the type <em>Base</em> supports ordered operations,
+these functions should have their corresponding definitions.
+For example,</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">CppAD</span></code> {</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">bool</span> <span class="pre">GreaterThanZero</span></code> ( <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <code class="docutils literal notranslate"><span class="pre">x</span></code> )</div>
+<div class="line">      { <code class="docutils literal notranslate"><span class="pre">return</span></code> ( <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> );</div>
+<div class="line">      }</div>
+<div class="line">}</div>
+</div>
+<p>The other functions would replace <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> by the corresponding operator.
+For example, see
+<a class="reference internal" href="base_alloc.hpp.html#base-alloc-hpp-ordered"><span class="std std-ref">base_alloc</span></a> .</p>
+</section>
+<section id="not-ordered">
+<span id="base-ordered-not-ordered"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Not Ordered</a><a class="headerlink" href="#not-ordered" title="Permalink to this headline"></a></h3>
+<p>If the type <em>Base</em> does not support ordering,
+one might (but need not) define <code class="docutils literal notranslate"><span class="pre">GreaterThanZero</span></code> as follows:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">CppAD</span></code> {</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">bool</span> <span class="pre">GreaterThanZero</span></code> ( <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <code class="docutils literal notranslate"><span class="pre">x</span></code> )</div>
+<div class="line">      {  // <code class="docutils literal notranslate"><span class="pre">attempt</span> <span class="pre">to</span> <span class="pre">use</span> <span class="pre">GreaterThanZero</span> <span class="pre">with</span> <span class="pre">a</span></code> <em>Base</em> <code class="docutils literal notranslate"><span class="pre">argument</span></code></div>
+<div class="line">            <code class="docutils literal notranslate"><span class="pre">assert</span></code> (0);</div>
+<div class="line">            <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">x</span></code> ;</div>
+<div class="line">      }</div>
+<div class="line">}</div>
+</div>
+<p>The other functions would have the corresponding definition.
+For example, see
+<a class="reference internal" href="base_complex.hpp.html#base-complex-hpp-ordered"><span class="std std-ref">complex Ordered</span></a> .</p>
+</section>
+<section id="special-requirements">
+<span id="base-ordered-special-requirements"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Special Requirements</a><a class="headerlink" href="#special-requirements" title="Permalink to this headline"></a></h3>
+<p>The following are special requirements when
+there is no ordered comparison for the base type:</p>
+<section id="independent">
+<span id="base-ordered-special-requirements-independent"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">Independent</a><a class="headerlink" href="#independent" title="Permalink to this headline"></a></h4>
+<p><a class="reference internal" href="Independent.html#independent-record-compare"><span class="std std-ref">record_compare</span></a> must be false
+in the call to <code class="docutils literal notranslate"><span class="pre">Independent</span></code> .</p>
+</section>
+<section id="optimize">
+<span id="base-ordered-special-requirements-optimize"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Optimize</a><a class="headerlink" href="#optimize" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="optimize.html#optimize-options-no-conditional-skip"><span class="std std-ref">no_conditional_skip</span></a>
+option must be present when <code class="docutils literal notranslate"><span class="pre">optimize</span></code> is used.</p>
+</section>
+<section id="printfor">
+<span id="base-ordered-special-requirements-printfor"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">PrintFor</a><a class="headerlink" href="#printfor" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="PrintFor.html#printfor-name"><span class="std std-ref">PrintFor</span></a> operator cannot be used.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="base_identical.html" class="btn btn-neutral float-left" title="base_identical" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="base_std_math.html" class="btn btn-neutral float-right" title="base_std_math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/fun_property.cpp
+
+{xrst_begin fun_property.cpp}
+
+ADFun Function Properties: Example and Test
+###########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end fun_property.cpp}

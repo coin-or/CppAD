@@ -1,0 +1,47 @@
+lines 7-51 of file: example/abs_normal/abs_min_linear.cpp
+
+{xrst_begin abs_min_linear.cpp}
+{xrst_spell
+   affine
+   minimizer
+}
+
+abs_min_linear: Example and Test
+################################
+
+Purpose
+*******
+The function
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f( x_0, x_1  )
+   & = &
+   | d_0 - x_0 | + | d_1 - x_0 | + | d_2 - x_0 |
+   \\
+   & + &
+   | d_3 - x_1 | + | d_4 - x_1 | + | d_5 - x_1 |
+   \\
+   \end{eqnarray}
+
+is affine, except for its absolute value terms.
+For this case, the abs_normal approximation should be equal
+to the function itself.
+In addition, the function is convex and
+:ref:`abs_min_linear-name` should find its global minimizer.
+The minimizer of this function is
+:math:`x_0 = \R{median}( d_0, d_1, d_2 )`
+and
+:math:`x_1 = \R{median}( d_3, d_4, d_5 )`
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_min_linear.cpp}

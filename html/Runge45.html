@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="Runge45, an, embedded, 4th, and, 5th, order, runge-kutta, ode, solver" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="operation, sequence" name="keywords" />
+<meta content="include" name="keywords" />
+<meta content="xf" name="keywords" />
+<meta content="fun" name="keywords" />
+<meta content="t" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="warning" name="keywords" />
+<meta content="m" name="keywords" />
+<meta content="ti" name="keywords" />
+<meta content="tf" name="keywords" />
+<meta content="xi" name="keywords" />
+<meta content="e" name="keywords" />
+<meta content="scalar" name="keywords" />
+<meta content="fabs" name="keywords" />
+<meta content="vector" name="keywords" />
+<meta content="parallel, mode" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="source, code" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Runge45 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="runge45_1.cpp" href="runge45_1.cpp.html" />
+    <link rel="prev" title="rosen_34.cpp" href="rosen_34.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Runge45</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="runge45_1.cpp.html">runge45_1.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="runge_45.cpp.html">runge_45.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>Runge45</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Runge45.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="runge45">
+<span id="runge45-name"></span><h1>Runge45<a class="headerlink" href="#runge45" title="Permalink to this headline"></a></h1>
+<section id="an-embedded-4th-and-5th-order-runge-kutta-ode-solver">
+<span id="runge45-title"></span><span id="index-0"></span><h2>An Embedded 4th and 5th Order Runge-Kutta ODE Solver<a class="headerlink" href="#an-embedded-4th-and-5th-order-runge-kutta-ode-solver" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#operation-sequence" id="id3">Operation Sequence</a></p></li>
+<li><p><a class="reference internal" href="#include" id="id4">Include</a></p></li>
+<li><p><a class="reference internal" href="#xf" id="id5">xf</a></p></li>
+<li><p><a class="reference internal" href="#fun" id="id6">Fun</a></p>
+<ul>
+<li><p><a class="reference internal" href="#t" id="id7">t</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id8">x</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id9">f</a></p></li>
+<li><p><a class="reference internal" href="#warning" id="id10">Warning</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#m" id="id11">M</a></p></li>
+<li><p><a class="reference internal" href="#ti" id="id12">ti</a></p></li>
+<li><p><a class="reference internal" href="#tf" id="id13">tf</a></p></li>
+<li><p><a class="reference internal" href="#xi" id="id14">xi</a></p></li>
+<li><p><a class="reference internal" href="#e" id="id15">e</a></p></li>
+<li><p><a class="reference internal" href="#scalar" id="id16">Scalar</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fabs" id="id17">fabs</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vector" id="id18">Vector</a></p></li>
+<li><p><a class="reference internal" href="#parallel-mode" id="id19">Parallel Mode</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id20">Example</a></p></li>
+<li><p><a class="reference internal" href="#source-code" id="id21">Source Code</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="runge45-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/runge_45.hpp&gt;</span></code></div>
+<div class="line"><em>xf</em> = <code class="docutils literal notranslate"><span class="pre">Runge45</span></code> ( <em>F</em> , <em>M</em> , <em>ti</em> , <em>tf</em> , <em>xi</em> )</div>
+<div class="line"><em>xf</em> = <code class="docutils literal notranslate"><span class="pre">Runge45</span></code> ( <em>F</em> , <em>M</em> , <em>ti</em> , <em>tf</em> , <em>xi</em> , <em>e</em> )</div>
+</div>
+</section>
+<section id="purpose">
+<span id="runge45-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This is an implementation of the
+Cash-Karp embedded 4th and 5th order Runge-Kutta ODE solver
+described in Section 16.2 of <a class="reference internal" href="Bib.html#bib-numerical-recipes"><span class="std std-ref">Numerical Recipes</span></a> .
+We use <span class="math notranslate nohighlight">\(n\)</span> for the size of the vector <em>xi</em> .
+Let <span class="math notranslate nohighlight">\(\B{R}\)</span> denote the real numbers
+and let <span class="math notranslate nohighlight">\(F : \B{R} \times \B{R}^n \rightarrow \B{R}^n\)</span>
+be a smooth function.
+The return value <em>xf</em> contains a 5th order
+approximation for the value <span class="math notranslate nohighlight">\(X(tf)\)</span> where
+<span class="math notranslate nohighlight">\(X : [ti , tf] \rightarrow \B{R}^n\)</span> is defined by
+the following initial value problem:</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   X(ti)  &amp; = &amp; xi    \\
+   X'(t)  &amp; = &amp; F[t , X(t)]
+\end{eqnarray}</div><p>If your set of ordinary differential equations
+are stiff, an implicit method may be better
+(perhaps <a class="reference internal" href="Rosen34.html#rosen34-name"><span class="std std-ref">Rosen34</span></a> .)</p>
+</section>
+<section id="operation-sequence">
+<span id="runge45-operation-sequence"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Operation Sequence</a><a class="headerlink" href="#operation-sequence" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a> for <em>Runge</em>
+does not depend on any of its <em>Scalar</em> input values provided that
+the operation sequence for</p>
+<blockquote>
+<div><p><em>F</em> . <code class="docutils literal notranslate"><span class="pre">Ode</span></code> ( <em>t</em> , <em>x</em> , <em>f</em> )</p>
+</div></blockquote>
+<p>does not on any of its <em>Scalar</em> inputs (see below).</p>
+</section>
+<section id="include">
+<span id="runge45-include"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Include</a><a class="headerlink" href="#include" title="Permalink to this headline"></a></h3>
+<p>The file <code class="docutils literal notranslate"><span class="pre">cppad/utility/runge_45.hpp</span></code>
+is included by <code class="docutils literal notranslate"><span class="pre">cppad/cppad.hpp</span></code>
+but it can also be included separately with out the rest of
+the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> routines.</p>
+</section>
+<section id="xf">
+<span id="runge45-xf"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">xf</a><a class="headerlink" href="#xf" title="Permalink to this headline"></a></h3>
+<p>The return value <em>xf</em> has the prototype</p>
+<blockquote>
+<div><p><em>Vector</em> <em>xf</em></p>
+</div></blockquote>
+<p>and the size of <em>xf</em> is equal to <em>n</em>
+(see description of <a class="reference internal" href="#runge45-vector"><span class="std std-ref">Vector</span></a> below).</p>
+<div class="math notranslate nohighlight">
+\[X(tf) = xf + O( h^6 )\]</div>
+<p>where <span class="math notranslate nohighlight">\(h = (tf - ti) / M\)</span> is the step size.
+If <em>xf</em> contains not a number <a class="reference internal" href="nan.html#nan-name"><span class="std std-ref">nan</span></a> ,
+see the discussion for <a class="reference internal" href="#runge45-fun-f"><span class="std std-ref">f</span></a> .</p>
+</section>
+<section id="fun">
+<span id="runge45-fun"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Fun</a><a class="headerlink" href="#fun" title="Permalink to this headline"></a></h3>
+<p>The class <em>Fun</em>
+and the object <em>F</em> satisfy the prototype</p>
+<blockquote>
+<div><p><em>Fun</em> &amp; <em>F</em></p>
+</div></blockquote>
+<p>The object <em>F</em> (and the class <em>Fun</em> )
+must have a member function named <code class="docutils literal notranslate"><span class="pre">Ode</span></code>
+that supports the syntax</p>
+<blockquote>
+<div><p><em>F</em> . <code class="docutils literal notranslate"><span class="pre">Ode</span></code> ( <em>t</em> , <em>x</em> , <em>f</em> )</p>
+</div></blockquote>
+<section id="t">
+<span id="runge45-fun-t"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">t</a><a class="headerlink" href="#t" title="Permalink to this headline"></a></h4>
+<p>The argument <em>t</em> to <em>F</em> . <code class="docutils literal notranslate"><span class="pre">Ode</span></code> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Scalar</em> &amp; <em>t</em></p>
+</div></blockquote>
+<p>(see description of <a class="reference internal" href="#runge45-scalar"><span class="std std-ref">Scalar</span></a> below).</p>
+</section>
+<section id="x">
+<span id="runge45-fun-x"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h4>
+<p>The argument <em>x</em> to <em>F</em> . <code class="docutils literal notranslate"><span class="pre">Ode</span></code> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Vector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>and has size <em>n</em>
+(see description of <a class="reference internal" href="#runge45-vector"><span class="std std-ref">Vector</span></a> below).</p>
+</section>
+<section id="f">
+<span id="runge45-fun-f"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h4>
+<p>The argument <em>f</em> to <em>F</em> . <code class="docutils literal notranslate"><span class="pre">Ode</span></code> has prototype</p>
+<blockquote>
+<div><p><em>Vector</em> &amp; <em>f</em></p>
+</div></blockquote>
+<p>On input and output, <em>f</em> is a vector of size <em>n</em>
+and the input values of the elements of <em>f</em> do not matter.
+On output,
+<em>f</em> is set equal to <span class="math notranslate nohighlight">\(F(t, x)\)</span> in the differential equation.
+If any of the elements of <em>f</em> have the value not a number <code class="docutils literal notranslate"><span class="pre">nan</span></code>
+the routine <code class="docutils literal notranslate"><span class="pre">Runge45</span></code> returns with all the
+elements of <em>xf</em> and <em>e</em> equal to <code class="docutils literal notranslate"><span class="pre">nan</span></code> .</p>
+</section>
+<section id="warning">
+<span id="runge45-fun-warning"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">Warning</a><a class="headerlink" href="#warning" title="Permalink to this headline"></a></h4>
+<p>The argument <em>f</em> to <em>F</em> . <code class="docutils literal notranslate"><span class="pre">Ode</span></code>
+must have a call by reference in its prototype; i.e.,
+do not forget the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> in the prototype for <em>f</em> .</p>
+</section>
+</section>
+<section id="m">
+<span id="runge45-m"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">M</a><a class="headerlink" href="#m" title="Permalink to this headline"></a></h3>
+<p>The argument <em>M</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>M</em></p>
+</div></blockquote>
+<p>It specifies the number of steps
+to use when solving the differential equation.
+This must be greater than or equal one.
+The step size is given by <span class="math notranslate nohighlight">\(h = (tf - ti) / M\)</span>, thus
+the larger <em>M</em> , the more accurate the
+return value <em>xf</em> is as an approximation
+for <span class="math notranslate nohighlight">\(X(tf)\)</span>.</p>
+</section>
+<section id="ti">
+<span id="runge45-ti"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">ti</a><a class="headerlink" href="#ti" title="Permalink to this headline"></a></h3>
+<p>The argument <em>ti</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Scalar</em> &amp; <em>ti</em></p>
+</div></blockquote>
+<p>(see description of <a class="reference internal" href="#runge45-scalar"><span class="std std-ref">Scalar</span></a> below).
+It specifies the initial time for <em>t</em> in the
+differential equation; i.e.,
+the time corresponding to the value <em>xi</em> .</p>
+</section>
+<section id="tf">
+<span id="runge45-tf"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">tf</a><a class="headerlink" href="#tf" title="Permalink to this headline"></a></h3>
+<p>The argument <em>tf</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Scalar</em> &amp; <em>tf</em></p>
+</div></blockquote>
+<p>It specifies the final time for <em>t</em> in the
+differential equation; i.e.,
+the time corresponding to the value <em>xf</em> .</p>
+</section>
+<section id="xi">
+<span id="runge45-xi"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">xi</a><a class="headerlink" href="#xi" title="Permalink to this headline"></a></h3>
+<p>The argument <em>xi</em> has the prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Vector</em> &amp; <em>xi</em></p>
+</div></blockquote>
+<p>and the size of <em>xi</em> is equal to <em>n</em> .
+It specifies the value of <span class="math notranslate nohighlight">\(X(ti)\)</span></p>
+</section>
+<section id="e">
+<span id="runge45-e"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">e</a><a class="headerlink" href="#e" title="Permalink to this headline"></a></h3>
+<p>The argument <em>e</em> is optional and has the prototype</p>
+<blockquote>
+<div><p><em>Vector</em> &amp; <em>e</em></p>
+</div></blockquote>
+<p>If <em>e</em> is present,
+the size of <em>e</em> must be equal to <em>n</em> .
+The input value of the elements of <em>e</em> does not matter.
+On output
+it contains an element by element
+estimated bound for the absolute value of the error in <em>xf</em></p>
+<div class="math notranslate nohighlight">
+\[e = O( h^5 )\]</div>
+<p>where <span class="math notranslate nohighlight">\(h = (tf - ti) / M\)</span> is the step size.
+If on output, <em>e</em> contains not a number <code class="docutils literal notranslate"><span class="pre">nan</span></code> ,
+see the discussion for <a class="reference internal" href="#runge45-fun-f"><span class="std std-ref">f</span></a> .</p>
+</section>
+<section id="scalar">
+<span id="runge45-scalar"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">Scalar</a><a class="headerlink" href="#scalar" title="Permalink to this headline"></a></h3>
+<p>The type <em>Scalar</em> must satisfy the conditions
+for a <a class="reference internal" href="NumericType.html#numerictype-name"><span class="std std-ref">NumericType</span></a> type.
+The routine <a class="reference internal" href="CheckNumericType.html#checknumerictype-name"><span class="std std-ref">CheckNumericType</span></a> will generate an error message
+if this is not the case.</p>
+<section id="fabs">
+<span id="runge45-scalar-fabs"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id17">fabs</a><a class="headerlink" href="#fabs" title="Permalink to this headline"></a></h4>
+<p>In addition, the following function must be defined for
+<em>Scalar</em> objects <em>a</em> and <em>b</em></p>
+<blockquote>
+<div><p><em>a</em> = <code class="docutils literal notranslate"><span class="pre">fabs</span></code> ( <em>b</em> )</p>
+</div></blockquote>
+<p>Note that this operation is only used for computing <em>e</em> ; hence
+the operation sequence for <em>xf</em> can still be independent of
+the arguments to <code class="docutils literal notranslate"><span class="pre">Runge45</span></code> even if</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">fabs</span></code> ( <em>b</em> ) = <code class="docutils literal notranslate"><span class="pre">std::max</span></code> ( <code class="docutils literal notranslate"><span class="pre">-</span></code> <em>b</em> , <em>b</em> )</p>
+</div></blockquote>
+<p>.</p>
+</section>
+</section>
+<section id="vector">
+<span id="runge45-vector"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">Vector</a><a class="headerlink" href="#vector" title="Permalink to this headline"></a></h3>
+<p>The type <em>Vector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type Scalar</span></a> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="parallel-mode">
+<span id="runge45-parallel-mode"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id19">Parallel Mode</a><a class="headerlink" href="#parallel-mode" title="Permalink to this headline"></a></h3>
+<p>For each set of types
+<a class="reference internal" href="#runge45-scalar"><span class="std std-ref">Scalar</span></a> ,
+<a class="reference internal" href="#runge45-vector"><span class="std std-ref">Vector</span></a> , and
+<a class="reference internal" href="#runge45-fun"><span class="std std-ref">Fun</span></a> ,
+the first call to <code class="docutils literal notranslate"><span class="pre">Runge45</span></code>
+must not be <a class="reference internal" href="ta_in_parallel.html#ta-in-parallel-name"><span class="std std-ref">parallel</span></a> execution mode.</p>
+</section>
+<section id="example">
+<span id="runge45-example"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id20">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="runge45_1.cpp.html#runge45-1-cpp-name"><span class="std std-ref">runge45_1.cpp</span></a>
+contains a simple example and test of <code class="docutils literal notranslate"><span class="pre">Runge45</span></code> .</p>
+<p>The file
+<a class="reference internal" href="runge_45.cpp.html#runge-45-cpp-name"><span class="std std-ref">runge_45.cpp</span></a> contains an example using <code class="docutils literal notranslate"><span class="pre">Runge45</span></code>
+in the context of algorithmic differentiation.
+It also returns true if it succeeds and false otherwise.</p>
+</section>
+<section id="source-code">
+<span id="runge45-source-code"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id21">Source Code</a><a class="headerlink" href="#source-code" title="Permalink to this headline"></a></h3>
+<p>The source code for this routine is in the file
+<code class="docutils literal notranslate"><span class="pre">cppad/runge_45.hpp</span></code> .</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rosen_34.cpp.html" class="btn btn-neutral float-left" title="rosen_34.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="runge45_1.cpp.html" class="btn btn-neutral float-right" title="runge45_1.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+lines 10-68 of file: include/cppad/core/atan2.hpp
+
+{xrst_begin atan2}
+
+AD Two Argument Inverse Tangent Function
+########################################
+
+Syntax
+******
+*theta* = ``atan2`` ( *y* , *x* )
+
+Purpose
+*******
+Determines an angle :math:`\theta \in [ - \pi , + \pi ]`
+such that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      \sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
+      \cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
+   \end{eqnarray}
+
+y
+*
+The argument *y* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >               & *y*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *y*
+
+x
+*
+The argument *x* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >               & *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *x*
+
+theta
+*****
+The result *theta* has prototype
+
+   ``AD<`` *Base* > *theta*
+
+Operation Sequence
+******************
+The AD of *Base*
+operation sequence used to calculate *theta* is
+:ref:`glossary@Operation@Independent`
+of *x* and *y* .
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/atan2.cpp
+}
+The file
+:ref:`atan2.cpp-name`
+contains an example and test of this function.
+
+{xrst_end atan2}

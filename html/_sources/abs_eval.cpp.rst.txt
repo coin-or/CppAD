@@ -1,0 +1,31 @@
+lines 7-35 of file: example/abs_normal/abs_eval.cpp
+
+{xrst_begin abs_eval.cpp}
+{xrst_spell
+   affine
+}
+
+abs_eval: Example and Test
+##########################
+
+Purpose
+*******
+The function
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+
+   f( x_0, x_1, x_2  ) = | x_0 + x_1 | + | x_1 + x_2 |
+
+is affine, except for its absolute value terms.
+For this case, the abs_normal approximation should be equal
+to the function itself.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_eval.cpp}

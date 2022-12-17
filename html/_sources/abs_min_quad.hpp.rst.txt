@@ -1,0 +1,14 @@
+lines 5-16 of file: example/abs_normal/abs_min_quad.xrst
+
+{xrst_begin abs_min_quad.hpp}
+
+abs_min_quad Source Code
+########################
+
+{xrst_literal
+   example/abs_normal/abs_min_quad.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_min_quad.hpp}

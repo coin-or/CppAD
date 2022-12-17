@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/erf.cpp
+
+{xrst_begin erf.cpp}
+
+The AD erf Function: Example and Test
+#####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end erf.cpp}

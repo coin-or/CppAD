@@ -1,0 +1,466 @@
+lines 6-469 of file: xrst/install/autotools.xrst
+
+{xrst_begin autotools}
+{xrst_spell
+   adouble
+   ansi
+   autotools
+   badiff
+   boostvector
+   cl
+   cxx
+   cygdrive
+   dist
+   eigenvector
+   fopenmp
+   gprof
+   htm
+   italic
+   linux
+   msvc
+   optionally
+   postfix
+   stdvector
+   testvector
+   ublas
+   usr
+   yyyymmdd
+}
+
+Autotools Unix Test and Installation
+####################################
+
+Deprecated 2012-12-26
+*********************
+This install procedure has been deprecated and no improvements
+have been added since 2012.
+For example, this install procedure will not detect any of the
+``c++11`` extensions.
+You should use the :ref:`cmake-name` instructions to install CppAD.
+
+Distribution Directory
+**********************
+You must first obtain a copy of the CppAD distribution directory
+using the :ref:`download-name` instructions.
+We refer to the corresponding
+:ref:`download@Distribution Directory` as
+*dist_dir* .
+
+Build Directory
+***************
+Create the directory *dist_dir* / ``build`` ,
+which will be referred to as the build directory below.
+
+Configure
+*********
+Execute the following command in the build directory:
+
+| ./ ``configure`` \\
+| |tab| ``--prefix`` = *prefix_dir*                     \\
+| |tab| ``--with-Documentation`` \\
+| |tab| ``--with-`` *test* ``vector`` \\
+| |tab| ``--enable-msvc`` \\
+| |tab| ``MAX_NUM_THREADS`` = *max_num_threads*          \\
+| |tab| ``CXX_FLAGS`` = *cxx_flags*                      \\
+| |tab| ``OPENMP_FLAGS`` = *openmp_flags*                \\
+| |tab| ``POSTFIX_DIR`` = *postfix_dir*                  \\
+| |tab| ``ADOLC_DIR`` = *adolc_dir*                      \\
+| |tab| ``BOOST_DIR`` = *boost_dir*                      \\
+| |tab| ``EIGEN_DIR`` = *eigen_dir*                      \\
+| |tab| ``FADBAD_DIR`` = *fadbad_dir*                    \\
+| |tab| ``SADADO_DIR`` = *sacado_dir*                    \\
+| |tab| ``IPOPT_DIR`` = *ipopt_dir*                      \\
+| |tab| ``TAPE_ADDR_TYPE`` = *tape_addr_type*            \\
+| |tab| ``TAPE_ID_TYPE`` = *tape_id_type*
+
+where only the ``configure`` line need appear; i.e.,
+the entries in all of the other lines are optional.
+The text in italic above is replaced values that you choose
+(see discussion below).
+
+make
+****
+The following command, in the build directory,
+copies the file ``configure.hpp`` from
+the build to the source directory and then builds
+some object libraries that are used by the tests:
+
+   ``make``
+
+Examples and Tests
+==================
+Once you have executed the ``make`` command,
+you can run the correctness and speed tests.
+The following command will build and run all the correctness and speed tests.
+::
+
+   make test
+
+Profiling CppAD
+***************
+The CppAD derivative speed tests mentioned above can be profiled.
+You can test that the results computed during this profiling are correct
+by executing the following commands starting in the build directory:
+
+| |tab| ``cd speed/profile``
+| |tab| ``make test``
+
+After executing ``make test`` , you can run a profile speed test
+by executing the command
+
+   ./ ``speed_profile`` *test* *seed* *option_list*
+
+see :ref:`speed_main-name` for the meaning of the command line
+arguments to this program.
+After you have run a profiling speed test,
+you can then obtain the profiling results with
+
+   ``gprof -b speed_profile``
+
+In C++, template parameters and argument types become part of a
+routines's name.
+This can make the ``gprof`` output hard to read
+(the routine names can be very long).
+You can remove the template parameters and argument types from the
+routine names by executing the following command
+::
+
+   gprof -b speed_profile | sed -f gprof.sed
+
+prefix_dir
+**********
+The default value for prefix directory is ``$HOME``
+i.e., by default the CppAD include files
+will :ref:`install<autotools@make install>` below ``$HOME`` .
+If you want to install elsewhere, you will have to use this option.
+As an example of using the ``--prefix`` = *prefix_dir* option,
+if you specify
+::
+
+   ./configure --prefix=/usr/local
+
+the CppAD include files will be installed in the directory
+
+   / ``usr/local/include/cppad``
+
+If :ref:`autotools@--with-Documentation`
+is specified, the CppAD documentation files will be installed in the directory
+
+   / ``usr/local/share/doc/cppad-`` *yyyymmdd*
+
+where *yyyymmdd* is the year, month, and day corresponding
+to the version of CppAD.
+
+--with-Documentation
+********************
+If the command line argument ``--with-Documentation`` is specified,
+the CppAD documentation HTML and XML files are copied to the directory
+
+   *prefix_dir* / ``share/doc/`` *postfix_dir* / ``cppad-`` *yyyymmdd*
+
+(see :ref:`autotools@postfix_dir` ).
+The top of the CppAD HTML documentation tree
+(with mathematics displayed as LaTex command) will be located at
+
+   *prefix_dir* / ``share/doc/`` *postfix_dir* / ``cppad-`` *yyyymmdd* / ``cppad.htm``
+
+--with-testvector
+*****************
+The :ref:`CPPAD_TESTVECTOR<testvector-name>`
+template class is used for many of the CppAD examples and tests.
+The default for this template class is ``CppAD::vector<`` *Scalar* > .
+If one, and only one, of the following command line arguments is specified:
+::
+
+   --with-stdvector
+   --with-boostvector
+   --with-eigenvector
+
+the corresponding of the following template classes is used
+
+| |tab| ``std::vector<`` *Scalar* >
+| |tab| ``boost::numeric::ublas::vector<`` *Scalar* >
+| |tab| ``Eigen::matrix<`` *Scalar* , ``Eigen::Dynamic`` , 1>
+
+See also,
+:ref:`autotools@boost_dir`
+and
+:ref:`autotools@eigen_dir` .
+
+--enable-msvc
+*************
+If this flag is present, the Microsoft ``cl`` compiler will be
+placed at the front of the list of compilers to search for.
+
+max_num_threads
+***************
+this specifies the value for the default value for the preprocessor symbol
+:ref:`multi_thread@CPPAD_MAX_NUM_THREADS` .
+It must be greater than or equal to four; i.e.,
+*max_num_threads*  >= 4 .
+
+cxx_flags
+*********
+If the command line argument *CompilerFlags* is present,
+it specifies compiler flags.
+For example,
+
+   ``CXX_FLAGS`` = ``"-Wall -ansi"``
+
+would specify that warning flags ``-Wall``
+and ``-ansi`` should be included
+in all the C++ compile commands.
+The error and warning flags chosen must be valid options
+for the C++ compiler.
+The default value for *CompilerFlags* is the
+empty string.
+
+openmp_flags
+************
+If the command line argument *OpenmpFlags* is present,
+it specifies the necessary flags so that the compiler will
+properly interpret OpenMP directives.
+For example, when using the GNU ``g++`` compiler,
+the following setting includes the OpenMP tests:
+
+   ``OPENMP_FLAGS`` = ``-fopenmp``
+
+If you specify configure command,
+the CppAD OpenMP correctness and speed tests will be built; see
+:ref:`thread_test.cpp@threading`
+multi-threading tests.
+
+postfix_dir
+***********
+By default, the postfix directory is empty; i.e., there
+is no postfix directory.
+As an example of using the ``POSTFIX_DIR`` = *postfix_dir* option,
+if you specify
+::
+
+   ./configure --prefix=/usr/local POSTFIX_DIR=coin
+
+the CppAD include files will be
+:ref:`installed<autotools@make install>` in the directory
+
+   / ``usr/local/include/coin-or/cppad``
+
+If :ref:`autotools@--with-Documentation`
+is specified, the CppAD documentation files will be installed in the directory
+
+   / ``usr/local/share/doc/coin-or/cppad-`` *yyyymmdd*
+
+adolc_dir
+*********
+If you have
+`ADOL-C <https://projects.coin-or.org/ADOL-C>`_
+installed on your system, you can
+specify a value for *adolc_dir* in the
+:ref:`autotools@Configure` command line.
+The value of *adolc_dir* must be such that
+
+   *adolc_dir* / ``include/adolc/adouble.h``
+
+is a valid way to reference ``adouble.h`` .
+In this case, you can run the Adolc speed correctness tests
+by executing the following commands starting in the build directory:
+
+| |tab| ``cd speed/adolc``
+| |tab| ``make test``
+
+After executing ``make test`` , you can run an Adolc speed tests
+by executing the command ``./adolc`` ;
+see :ref:`speed_main-name` for the meaning of the command line
+options to this program.
+Note that these speed tests assume Adolc has been configure with
+its sparse matrix computations enabled using
+
+   ``--with-colpack`` = *colpack_dir*
+
+Linux
+=====
+If you are using Linux,
+you will have to add *adolc_dir* / ``lib`` to ``LD_LIBRARY_PATH`` .
+For example, if you use the ``bash`` shell to run your programs,
+you could include
+
+| |tab| ``LD_LIBRARY_PATH`` = *adolc_dir* / ``lib:$`` { ``LD_LIBRARY_PATH`` }
+| |tab| ``export LD_LIBRARY_PATH``
+
+in your ``$HOME/.bash_profile`` file.
+
+Cygwin
+======
+If you are using Cygwin,
+you will have to add to following lines to the file
+``.bash_profile`` in your home directory:
+
+| |tab| ``PATH`` = *adolc_dir* / ``bin:$`` { ``PATH`` }
+| |tab| ``export PATH``
+
+in order for Adolc to run properly.
+If *adolc_dir* begins with a disk specification,
+you must use the Cygwin format for the disk specification.
+For example,
+if ``d:/adolc_base`` is the proper directory,
+``/cygdrive/d/adolc_base`` should be used for *adolc_dir* .
+
+boost_dir
+*********
+If the command line argument
+
+   ``BOOST_DIR`` = *boost_dir*
+
+is present, it must be such that files
+
+| |tab| *boost_dir* / ``include/boost/numeric/ublas/vector.hpp``
+| |tab| *boost_dir* / ``include/boost/thread.hpp``
+
+are present.
+In this case, these files will be used by CppAD.
+See also, :ref:`--with-boostvector<autotools@--with-testvector>`
+
+eigen_dir
+*********
+If you have
+`Eigen <http://eigen.tuxfamily.org>`_
+installed on your system, you can
+specify a value for *eigen_dir* .
+It must be such that
+
+   *eigen_dir* / ``include/Eigen/Core``
+
+is a valid include file.
+In this case CppAD will compile and test the Eigen examples; e.g.,
+:ref:`eigen_array.cpp-name` .
+See also, :ref:`--with-eigenvector<autotools@--with-testvector>`
+
+fadbad_dir
+**********
+If you have
+`Fadbad 2.1 <http://www.fadbad.com/>`_
+installed on your system, you can
+specify a value for *fadbad_dir* .
+It must be such that
+
+   *fadbad_dir* / ``include/FADBAD`` ++/ ``badiff.h``
+
+is a valid reference to ``badiff.h`` .
+In this case, you can run the Fadbad speed correctness tests
+by executing the following commands starting in the build directory:
+
+| |tab| ``cd speed/fadbad``
+| |tab| ``make test``
+
+After executing ``make test`` , you can run a Fadbad speed tests
+by executing the command ``./fadbad`` ;
+see :ref:`speed_main-name` for the meaning of the command line
+options to this program.
+
+ipopt_dir
+*********
+If you have
+`Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_
+installed on your system, you can
+specify a value for *ipopt_dir* .
+It must be such that
+
+   *ipopt_dir* / ``include/coin-or/IpIpoptApplication.hpp``
+
+is a valid reference to ``IpIpoptApplication.hpp`` .
+In this case, the CppAD interface to Ipopt
+examples can be built and tested
+by executing the following commands starting in the build directory:
+
+| |tab| ``make``
+| |tab| #
+| |tab| ``cd cppad_ipopt/example``
+| |tab| ``make test``
+| |tab| #
+| |tab| ``cd ../test``
+| |tab| ``make test``
+| |tab| #
+| |tab| ``cd ../speed``
+| |tab| ``make test``
+
+Once this has been done, you can execute the program
+``./speed`` in the ``build/cppad_ipopt/speed`` directory;
+see ``ipopt_ode_speed.cpp`` .
+
+sacado_dir
+**********
+If you have
+`Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
+installed on your system, you can
+specify a value for *sacado_dir* .
+It must be such that
+
+   *sacado_dir* / ``include/Sacado.hpp``
+
+is a valid reference to ``Sacado.hpp`` .
+In this case, you can run the Sacado speed correctness tests
+by executing the following commands starting in the build directory:
+
+| |tab| ``cd speed/sacado``
+| |tab| ``make test``
+
+After executing ``make test`` , you can run a Sacado speed tests
+by executing the command ``./sacado`` ;
+see :ref:`speed_main-name` for the meaning of the command line
+options to this program.
+
+tape_addr_type
+**************
+If the command line argument *tape_addr_type* is present,
+it specifies the type used for address in the AD recordings (tapes).
+The valid values for this argument are
+``unsigned short int`` ,
+``unsigned int`` ,
+``size_t`` .
+The smaller the value of *sizeof* ( ``tape_addr_type`` ) ,
+the less memory is used.
+On the other hand, the value
+
+   ``std::numeric_limits<`` *tape_addr_type* >:: ``max`` ()
+
+must be larger than any of the following:
+:ref:`fun_property@size_op` ,
+:ref:`fun_property@size_op_arg` ,
+:ref:`size_par<fun_property@size_text>` ,
+:ref:`fun_property@size_par` ,
+:ref:`size_par<fun_property@size_VecAD>` .
+
+tape_id_type
+************
+If the command line argument *tape_id_type* is present,
+it specifies the type used for identifying tapes.
+The valid values for this argument are
+``unsigned short int`` ,
+``unsigned int`` ,
+``size_t`` .
+The smaller the value of *sizeof* ( ``tape_id_type`` ) ,
+the less memory is used.
+On the other hand, the value
+
+   ``std::numeric_limits<`` *tape_id_type* >:: ``max`` ()
+
+must be larger than the maximum number of tapes per thread
+times :ref:`autotools@max_num_threads` .
+
+make install
+************
+Once you are satisfied that the tests are giving correct results,
+you can install CppAD into easy to use directories by executing the command
+::
+
+   make install
+
+This will install CppAD in the location specified by
+:ref:`autotools@prefix_dir` .
+You must have permission to write in the *prefix_dir*
+directory to execute this command.
+You may optionally specify a destination directory for the install; i.e.,
+
+   ``make install DESTDIR`` = *DestinationDirectory*
+
+{xrst_end autotools}

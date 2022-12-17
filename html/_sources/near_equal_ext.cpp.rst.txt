@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/near_equal_ext.cpp
+
+{xrst_begin near_equal_ext.cpp}
+
+Compare AD with Base Objects: Example and Test
+##############################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end near_equal_ext.cpp}

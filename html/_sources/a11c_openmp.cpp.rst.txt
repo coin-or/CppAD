@@ -1,0 +1,19 @@
+lines 7-23 of file: example/multi_thread/openmp/a11c_openmp.cpp
+
+{xrst_begin a11c_openmp.cpp}
+
+A Simple OpenMP Example and Test
+################################
+
+Purpose
+*******
+This example just demonstrates OpenMP and does not use CppAD at all.
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end a11c_openmp.cpp}

@@ -1,0 +1,14 @@
+lines 5-16 of file: example/abs_normal/abs_min_linear.xrst
+
+{xrst_begin abs_min_linear.hpp}
+
+abs_min_linear Source Code
+##########################
+
+{xrst_literal
+   example/abs_normal/abs_min_linear.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_min_linear.hpp}

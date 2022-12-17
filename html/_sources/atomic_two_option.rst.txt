@@ -1,0 +1,67 @@
+lines 8-72 of file: include/cppad/core/atomic/two/option.hpp
+
+{xrst_begin atomic_two_option}
+{xrst_spell
+   typedef
+}
+
+Set Atomic Function Options
+###########################
+
+Syntax
+******
+*afun* . ``option`` ( *option_value* )
+
+Scope
+*****
+These settings do not apply to individual *afun* calls,
+but rather all subsequent uses of the corresponding atomic operation
+in an :ref:`ADFun-name` object.
+
+atomic_sparsity
+***************
+Note that, if you use :ref:`optimize-name` , these sparsity patterns are used
+to determine the :ref:`dependency<dependency.cpp-name>` relationship between
+argument and result variables.
+
+pack_sparsity_enum
+==================
+If *option_value* is ``atomic_base<`` *Base* >:: ``pack_sparsity_enum`` ,
+then the type used by *afun* for
+:ref:`sparsity patterns<glossary@Sparsity Pattern>` ,
+(after the option is set) will be
+
+   ``typedef CppAD::vectorBool`` *atomic_sparsity*
+
+If *r* is a sparsity pattern
+for a matrix :math:`R \in \B{R}^{p \times q}`:
+*r* . ``size`` () == *p* * *q* .
+
+bool_sparsity_enum
+==================
+If *option_value* is ``atomic_base<`` *Base* >:: ``bool_sparsity_enum`` ,
+then the type used by *afun* for
+:ref:`sparsity patterns<glossary@Sparsity Pattern>` ,
+(after the option is set) will be
+
+   ``typedef CppAD::vector<bool>`` *atomic_sparsity*
+
+If *r* is a sparsity pattern
+for a matrix :math:`R \in \B{R}^{p \times q}`:
+*r* . ``size`` () == *p* * *q* .
+
+set_sparsity_enum
+=================
+If *option_value* is *atomic_base<* ``Base`` >:: *set_sparsity_enum* ,
+then the type used by *afun* for
+:ref:`sparsity patterns<glossary@Sparsity Pattern>` ,
+(after the option is set) will be
+
+   ``typedef CppAD::vector< std::set<size_t> >`` *atomic_sparsity*
+
+If *r* is a sparsity pattern
+for a matrix :math:`R \in \B{R}^{p \times q}`:
+*r* . ``size`` () == *p* , and for :math:`i = 0 , \ldots , p-1`,
+the elements of *r* [ *i* ] are between zero and :math:`q-1` inclusive.
+
+{xrst_end atomic_two_option}

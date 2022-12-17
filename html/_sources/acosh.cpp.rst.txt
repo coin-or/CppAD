@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/acosh.cpp
+
+{xrst_begin acosh.cpp}
+
+The AD acosh Function: Example and Test
+#######################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end acosh.cpp}

@@ -1,0 +1,44 @@
+lines 1127-1168 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_inuse}
+{xrst_spell
+   inuse
+}
+
+Amount of Memory a Thread is Currently Using
+############################################
+
+Syntax
+******
+*num_bytes* = ``thread_alloc::inuse`` ( *thread* )
+
+Purpose
+*******
+Memory being managed by :ref:`thread_alloc-name` has two states,
+currently in use by the specified thread,
+and quickly available for future use by the specified thread.
+This function informs the program how much memory is in use.
+
+thread
+******
+This argument has prototype
+
+   ``size_t`` *thread*
+
+Either :ref:`thread_num<ta_thread_num-name>` must be the same as *thread* ,
+or the current execution mode must be sequential
+(not :ref:`parallel<ta_in_parallel-name>` ).
+
+num_bytes
+*********
+The return value has prototype
+
+   ``size_t`` *num_bytes*
+
+It is the number of bytes currently in use by the specified thread.
+
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_inuse}

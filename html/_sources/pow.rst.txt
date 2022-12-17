@@ -1,0 +1,96 @@
+lines 9-102 of file: include/cppad/core/pow.hpp
+
+{xrst_begin pow}
+{xrst_spell
+   logarithms
+}
+
+The AD Power Function
+#####################
+
+Syntax
+******
+*z* = ``pow`` ( *x* , *y* )
+
+See Also
+********
+:ref:`pow_int-name`
+
+Purpose
+*******
+Determines the value of the power function which is defined by
+
+.. math::
+
+   {\rm pow} (x, y) = x^y
+
+If y is a Variable
+==================
+If *y* is a variable,
+the ``pow`` function may use
+logarithms and exponentiation to compute derivatives.
+This will not work if *x* is less than or equal zero.
+
+If y is a Parameter
+===================
+If *y* is a parameter, a different method is used to
+compute the derivatives; see :ref:`pow_forward-name` .
+In the special case where *x* is zero,
+zero is returned as the derivative.
+This is correct when *y* minus the order of the derivative
+is greater than zero.
+If *y* minus the order of the derivative is zero,
+then *y* is an integer.
+If *y* minus the order of the derivative is less than zero,
+the actual derivative is infinite.
+
+If y is an Integer
+==================
+If the value of *y* is an integer,
+the :ref:`pow_int-name` function can be used to compute this value
+using only multiplication (and division if *y* is negative).
+This will work even if *x* is less than or equal zero.
+
+x
+*
+The argument *x* has one of the following prototypes
+
+| |tab| ``const`` *Base* & *x*
+| |tab| ``const AD<`` *Base* >& *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+
+y
+*
+The argument *y* has one of the following prototypes
+
+| |tab| ``const`` *Base* & *y*
+| |tab| ``const AD<`` *Base* >& *y*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *y*
+
+z
+*
+If both *x* and *y* are *Base* objects,
+the result *z* is also a *Base* object.
+Otherwise, it has prototype
+
+   ``AD<`` *Base* > *z*
+
+Operation Sequence
+******************
+This is an AD of *Base*
+:ref:`atomic operation<glossary@Operation@Atomic>`
+and hence is part of the current
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/pow.cpp
+   example/general/pow_nan.cpp
+}
+The files
+:ref:`pow.cpp-name` and :ref:`pow_nan.cpp-name`
+are examples tests of this function.
+
+{xrst_end pow}

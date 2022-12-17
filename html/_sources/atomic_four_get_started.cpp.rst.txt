@@ -1,0 +1,27 @@
+lines 7-31 of file: example/atomic_four/get_started.cpp
+
+{xrst_begin atomic_four_get_started.cpp}
+
+Getting Started with Atomic Functions: Example and Test
+#######################################################
+
+Purpose
+*******
+This example demonstrates the minimal amount of information
+necessary for a :ref:`atomic_four-name` function.
+
+Define Atomic Function
+**********************
+{xrst_literal
+   // BEGIN_DEFINE_ATOMIC_FUNCTION
+   // END_DEFINE_ATOMIC_FUNCTION
+}
+
+Use Atomic Function
+*******************
+{xrst_literal
+   // BEGIN_USE_ATOMIC_FUNCTION
+   // END_USE_ATOMIC_FUNCTION
+}
+
+{xrst_end atomic_four_get_started.cpp}

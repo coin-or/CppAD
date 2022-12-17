@@ -1,0 +1,13 @@
+lines 6-16 of file: example/optimize/reverse_active.cpp
+
+{xrst_begin optimize_reverse_active.cpp}
+
+Optimize Reverse Activity Analysis: Example and Test
+####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end optimize_reverse_active.cpp}

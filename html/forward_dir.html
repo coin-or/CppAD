@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="forward_dir, multiple, directions, forward, mode" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="reverse, mode" name="keywords" />
+<meta content="notation" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="m" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="q" name="keywords" />
+<meta content="r" name="keywords" />
+<meta content="xq" name="keywords" />
+<meta content="zero, order" name="keywords" />
+<meta content="non-zero, lower, orders" name="keywords" />
+<meta content="x(t)" name="keywords" />
+<meta content="y(t)" name="keywords" />
+<meta content="yq" name="keywords" />
+<meta content="vector" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>forward_dir &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="forward_dir.cpp" href="forward_dir.cpp.html" />
+    <link rel="prev" title="forward_order.cpp" href="forward_order.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="Forward.html">Forward</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="new_dynamic.html">new_dynamic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_zero.html">forward_zero</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_one.html">forward_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_two.html">forward_two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_order.html">forward_order</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">forward_dir</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="forward_dir.cpp.html">forward_dir.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="size_order.html">size_order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="compare_change.html">compare_change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="capacity_order.html">capacity_order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="number_skip.html">number_skip</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="Forward.html">Forward</a> &raquo;</li>
+      <li>forward_dir</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/forward_dir.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="forward-dir">
+<span id="forward-dir-name"></span><h1>forward_dir<a class="headerlink" href="#forward-dir" title="Permalink to this headline"></a></h1>
+<section id="multiple-directions-forward-mode">
+<span id="forward-dir-title"></span><span id="index-0"></span><h2>Multiple Directions Forward Mode<a class="headerlink" href="#multiple-directions-forward-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#reverse-mode" id="id3">Reverse Mode</a></p></li>
+<li><p><a class="reference internal" href="#notation" id="id4">Notation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#n" id="id5">n</a></p></li>
+<li><p><a class="reference internal" href="#m" id="id6">m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#f" id="id7">f</a></p></li>
+<li><p><a class="reference internal" href="#q" id="id8">q</a></p></li>
+<li><p><a class="reference internal" href="#r" id="id9">r</a></p></li>
+<li><p><a class="reference internal" href="#xq" id="id10">xq</a></p></li>
+<li><p><a class="reference internal" href="#zero-order" id="id11">Zero Order</a></p></li>
+<li><p><a class="reference internal" href="#non-zero-lower-orders" id="id12">Non-Zero Lower Orders</a></p></li>
+<li><p><a class="reference internal" href="#x-t" id="id13">X(t)</a></p></li>
+<li><p><a class="reference internal" href="#y-t" id="id14">Y(t)</a></p></li>
+<li><p><a class="reference internal" href="#yq" id="id15">yq</a></p></li>
+<li><p><a class="reference internal" href="#vector" id="id16">Vector</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id17">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="forward-dir-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>yq</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>q</em> , <em>r</em> , <em>xq</em> )</p>
+</div></blockquote>
+</section>
+<section id="purpose">
+<span id="forward-dir-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a> corresponding to <em>f</em> .
+Given a function <span class="math notranslate nohighlight">\(X : \B{R} \rightarrow \B{R}^n\)</span>,
+defined by its
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a> ,
+forward mode computes the Taylor coefficients for the function</p>
+<div class="math notranslate nohighlight">
+\[Y (t) = F [ X(t) ]\]</div>
+<p>This version of forward mode computes multiple directions as the same
+time (reducing the number of passes through the tape). This requires more
+memory, but might be faster in some cases.</p>
+</section>
+<section id="reverse-mode">
+<span id="forward-dir-reverse-mode"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Reverse Mode</a><a class="headerlink" href="#reverse-mode" title="Permalink to this headline"></a></h3>
+<p>Reverse mode for multiple directions has not yet been implemented.
+If you have speed tests that indicate that multiple direction forward
+mode is faster, and you want to try multiple direction reverse mode,
+contact the CppAD project manager.</p>
+</section>
+<section id="notation">
+<span id="forward-dir-notation"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Notation</a><a class="headerlink" href="#notation" title="Permalink to this headline"></a></h3>
+<section id="n">
+<span id="forward-dir-notation-n"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h4>
+<p>We use <em>n</em> to denote the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .</p>
+</section>
+<section id="m">
+<span id="forward-dir-notation-m"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">m</a><a class="headerlink" href="#m" title="Permalink to this headline"></a></h4>
+<p>We use <em>m</em> to denote the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-range"><span class="std std-ref">Range</span></a> space for <em>f</em> .</p>
+</section>
+</section>
+<section id="f">
+<span id="forward-dir-f"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Note that the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> is not <code class="docutils literal notranslate"><span class="pre">const</span></code> .
+After this call we will have</p>
+<div class="line-block">
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_order</span></code> ()     == <em>q</em>  + 1</div>
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_direction</span></code> () == <em>r</em></div>
+</div>
+</section>
+<section id="q">
+<span id="forward-dir-q"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">q</a><a class="headerlink" href="#q" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>q</em></p>
+</div></blockquote>
+<p>It specifies the order of Taylor Coefficient that we are calculating
+and must be greater than zero.
+The zero order coefficients can only have one direction computed
+and stored in <em>f</em> so use <a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">forward_zero</span></a>
+to compute the zero order coefficients.</p>
+</section>
+<section id="r">
+<span id="forward-dir-r"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">r</a><a class="headerlink" href="#r" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>r</em></p>
+</div></blockquote>
+<p>It specifies the number of directions that are computed together.
+If ( <em>r</em>  == 1 ), you are only using one direction and
+<a class="reference internal" href="forward_order.html#forward-order-name"><span class="std std-ref">forward_order</span></a> is simpler, and should be faster,
+than this more general case.</p>
+</section>
+<section id="xq">
+<span id="forward-dir-xq"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">xq</a><a class="headerlink" href="#xq" title="Permalink to this headline"></a></h3>
+<p>The argument <em>xq</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Vector</em> &amp; <em>xq</em></p>
+</div></blockquote>
+<p>and its size must be <em>n</em> * <em>r</em>
+(see <a class="reference internal" href="#forward-dir-vector"><span class="std std-ref">Vector</span></a> below).
+For <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , r-1\)</span>,
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,
+the <em>j</em>-th component of the <em>q</em>-th order Taylor coefficient
+for <span class="math notranslate nohighlight">\(X_\ell (t)\)</span> is defined by</p>
+<p>      <span class="math notranslate nohighlight">\(x_j^{(q),\ell} =\)</span> <em>xq</em> [ <em>r</em> * <em>j</em> + <em>ell</em>  ]</p>
+</section>
+<section id="zero-order">
+<span id="forward-dir-zero-order"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Zero Order</a><a class="headerlink" href="#zero-order" title="Permalink to this headline"></a></h3>
+<p>For <span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,
+the <em>j</em>-th component of the zero order Taylor coefficient
+for <span class="math notranslate nohighlight">\(X_\ell (t)\)</span> is defined by</p>
+<p>      <span class="math notranslate nohighlight">\(x_j^{(0)} =\)</span> <em>xk</em> [ <em>j</em>  ]
+where <em>xk</em> corresponds to the previous call</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>k</em> , <em>xk</em> )</p>
+</div></blockquote>
+<p>with <em>k</em>  = 0 .</p>
+</section>
+<section id="non-zero-lower-orders">
+<span id="forward-dir-non-zero-lower-orders"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Non-Zero Lower Orders</a><a class="headerlink" href="#non-zero-lower-orders" title="Permalink to this headline"></a></h3>
+<p>For <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , r-1\)</span>,
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,
+<span class="math notranslate nohighlight">\(k = 1, \ldots , q-1\)</span>,
+the <em>j</em>-th component of the <em>k</em>-th order Taylor coefficient
+for <span class="math notranslate nohighlight">\(X_\ell (t)\)</span> is defined by</p>
+<p>      <span class="math notranslate nohighlight">\(x_j^{(k),\ell} =\)</span> <em>xk</em> [ <em>r</em> * <em>j</em> + <em>ell</em>  ]
+where <em>xk</em> corresponds to the previous call</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>k</em> , <em>r</em> , <em>xk</em> )</p>
+</div></blockquote>
+<p>Note that <em>r</em> must have the same value in this previous call.</p>
+</section>
+<section id="x-t">
+<span id="forward-dir-x-t"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">X(t)</a><a class="headerlink" href="#x-t" title="Permalink to this headline"></a></h3>
+<p>For <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , r-1\)</span>, the function
+<span class="math notranslate nohighlight">\(X_\ell : \B{R} \rightarrow \B{R}^n\)</span> is defined using
+the Taylor coefficients <span class="math notranslate nohighlight">\(x^{(k),\ell} \in \B{R}^n\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[X_\ell (t) = x^{(0)}  + x^{(1),\ell} * t^1 + \cdots +  x^{(q),\ell} t^q\]</div>
+<p>Note that the <em>k</em>-th derivative of <span class="math notranslate nohighlight">\(X_\ell (t)\)</span> is related to
+its Taylor coefficients by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   x^{(0)}       &amp; = &amp; X_\ell (0)
+   \\
+   x^{(k), \ell} &amp; = &amp; \frac{1}{k !} X_\ell^{(k)} (0)
+\end{eqnarray}</div><p>for <span class="math notranslate nohighlight">\(k = 1 , \ldots , q\)</span>.</p>
+</section>
+<section id="y-t">
+<span id="forward-dir-y-t"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">Y(t)</a><a class="headerlink" href="#y-t" title="Permalink to this headline"></a></h3>
+<p>For <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , r-1\)</span>, the function
+<span class="math notranslate nohighlight">\(Y_\ell : \B{R} \rightarrow \B{R}^m\)</span>  is defined by
+<span class="math notranslate nohighlight">\(Y_\ell (t) = F[ X_\ell (t) ]\)</span>.
+We use <span class="math notranslate nohighlight">\(y^{(0)}\)</span> for the zero order coefficient
+and <span class="math notranslate nohighlight">\(y^{(k),\ell} \in \B{R}^m\)</span> to denote the
+hight order coefficients; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[Y_\ell (t) = y^{(0)} + y^{(1),\ell} * t^1 + \cdots + y^{(q),\ell} * t^q
++ o( t^q )\]</div>
+<p>where <span class="math notranslate nohighlight">\(o( t^q ) * t^{-q} \rightarrow 0\)</span> as <span class="math notranslate nohighlight">\(t \rightarrow 0\)</span>.
+Note that the <em>k</em>-th derivative of <span class="math notranslate nohighlight">\(Y_\ell (t)\)</span> is related to
+its Taylor coefficients by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   y^{(0)}       &amp; = &amp; Y_\ell (0)
+   \\
+   y^{(k), \ell} &amp; = &amp; \frac{1}{k !} Y_\ell^{(k)} (0)
+\end{eqnarray}</div><p>for <span class="math notranslate nohighlight">\(k = 1 , \ldots , q\)</span>.</p>
+</section>
+<section id="yq">
+<span id="forward-dir-yq"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">yq</a><a class="headerlink" href="#yq" title="Permalink to this headline"></a></h3>
+<p>The argument <em>yq</em> has prototype</p>
+<blockquote>
+<div><p><em>Vector</em> <em>yq</em></p>
+</div></blockquote>
+<p>and its size is <em>m</em> * <em>r</em>
+(see <a class="reference internal" href="#forward-dir-vector"><span class="std std-ref">Vector</span></a> below).
+For <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , r-1\)</span>,
+<span class="math notranslate nohighlight">\(i = 0 , \ldots , m-1\)</span>,
+the <em>i</em>-th component of the <em>q</em>-th order Taylor coefficient
+for <span class="math notranslate nohighlight">\(Y_\ell (t)\)</span> is given by</p>
+<p>      <span class="math notranslate nohighlight">\(y_i^{(q),\ell} =\)</span> <em>yq</em> [ <em>r</em> * <em>i</em> + <em>ell</em>  ]</p>
+</section>
+<section id="vector">
+<span id="forward-dir-vector"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">Vector</a><a class="headerlink" href="#vector" title="Permalink to this headline"></a></h3>
+<p>The type <em>Vector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="example">
+<span id="forward-dir-example"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="forward_dir.cpp.html#forward-dir-cpp-name"><span class="std std-ref">forward_dir.cpp</span></a>
+contains an example and test using one order (multiple orders).
+They return true if they succeed and false otherwise.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="forward_order.cpp.html" class="btn btn-neutral float-left" title="forward_order.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="forward_dir.cpp.html" class="btn btn-neutral float-right" title="forward_dir.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

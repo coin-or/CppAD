@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="create_dll_lib, create, a, dynamic, link, library" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="prototype" name="keywords" />
+<meta content="include" name="keywords" />
+<meta content="dll_file" name="keywords" />
+<meta content="stringvector" name="keywords" />
+<meta content="csrc_files" name="keywords" />
+<meta content="options" name="keywords" />
+<meta content="compile" name="keywords" />
+<meta content="link" name="keywords" />
+<meta content="err_msg" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>create_dll_lib &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ErrorHandler" href="ErrorHandler.html" />
+    <link rel="prev" title="check_simple_vector.cpp" href="check_simple_vector.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>create_dll_lib</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/create_dll_lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="create-dll-lib">
+<span id="create-dll-lib-name"></span><h1>create_dll_lib<a class="headerlink" href="#create-dll-lib" title="Permalink to this headline"></a></h1>
+<section id="create-a-dynamic-link-library">
+<span id="create-dll-lib-title"></span><span id="index-0"></span><h2>Create a Dynamic Link Library<a class="headerlink" href="#create-a-dynamic-link-library" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#prototype" id="id2">Prototype</a></p></li>
+<li><p><a class="reference internal" href="#include" id="id3">include</a></p></li>
+<li><p><a class="reference internal" href="#dll-file" id="id4">dll_file</a></p></li>
+<li><p><a class="reference internal" href="#stringvector" id="id5">StringVector</a></p></li>
+<li><p><a class="reference internal" href="#csrc-files" id="id6">csrc_files</a></p></li>
+<li><p><a class="reference internal" href="#options" id="id7">options</a></p>
+<ul>
+<li><p><a class="reference internal" href="#compile" id="id8">compile</a></p></li>
+<li><p><a class="reference internal" href="#link" id="id9">link</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#err-msg" id="id10">err_msg</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id11">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="create-dll-lib-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/create_dll_lib.hpp&gt;</span></code></div>
+<div class="line"><em>err_msg</em> = <code class="docutils literal notranslate"><span class="pre">create_dll_lib</span></code> ( <em>dll_file</em> , <em>csrc_files</em> , <em>options</em> )</div>
+</div>
+</section>
+<section id="prototype">
+<span id="create-dll-lib-prototype"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Prototype</a><a class="headerlink" href="#prototype" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">StringVector</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">create_dll_lib</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w">                        </span><span class="n">dll_file</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">StringVector</span><span class="o">&amp;</span><span class="w">                       </span><span class="n">csrc_files</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">options</span><span class="w">    </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="include">
+<span id="create-dll-lib-include"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">include</a><a class="headerlink" href="#include" title="Permalink to this headline"></a></h3>
+<p>As with all the CppAD utilities, <code class="docutils literal notranslate"><span class="pre">create_dll_lib.hpp</span></code> is included
+by <code class="docutils literal notranslate"><span class="pre">&lt;cppad/cppad.hpp&gt;</span></code> , and can also be included separately.</p>
+</section>
+<section id="dll-file">
+<span id="create-dll-lib-dll-file"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">dll_file</a><a class="headerlink" href="#dll-file" title="Permalink to this headline"></a></h3>
+<p>This is the file where the dynamic link library file named <em>dll_file</em> .
+This file name must have the proper extension for a dynamic link library
+(<code class="docutils literal notranslate"><span class="pre">.so</span></code> on unix and <code class="docutils literal notranslate"><span class="pre">.dll</span></code> on windows).</p>
+</section>
+<section id="stringvector">
+<span id="create-dll-lib-stringvector"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">StringVector</a><a class="headerlink" href="#stringvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>StringVector</em> is a simple vector with elements
+of type <code class="docutils literal notranslate"><span class="pre">std::string</span></code> .</p>
+</section>
+<section id="csrc-files">
+<span id="create-dll-lib-csrc-files"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">csrc_files</a><a class="headerlink" href="#csrc-files" title="Permalink to this headline"></a></h3>
+<p>The vector <em>csrc_files</em> contains the names of the C source
+files that are compiled and linked to the library.
+These files do not have to have a specific extension.</p>
+</section>
+<section id="options">
+<span id="create-dll-lib-options"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">options</a><a class="headerlink" href="#options" title="Permalink to this headline"></a></h3>
+<p>The possible keys in this map are documented below.
+The default value for each key is used when the key
+does not appear in <em>options</em> .</p>
+<section id="compile">
+<span id="create-dll-lib-options-compile"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">compile</a><a class="headerlink" href="#compile" title="Permalink to this headline"></a></h4>
+<p>This is an abbreviated version of the compile command.
+It does not include the output file flag or output file name.
+If <code class="docutils literal notranslate"><span class="pre">_MSC_VER</span></code> is defined, the default value for this option is
+<code class="docutils literal notranslate"><span class="pre">cl</span> <span class="pre">/EHs</span> <span class="pre">/EHc</span> <span class="pre">/c</span> <span class="pre">/LD</span> <span class="pre">/TC</span></code>
+If <code class="docutils literal notranslate"><span class="pre">_MSC_VER</span></code> is not defined, the default value for this option is
+<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-c</span> <span class="pre">-fPIC</span></code> .</p>
+</section>
+<section id="link">
+<span id="create-dll-lib-options-link"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">link</a><a class="headerlink" href="#link" title="Permalink to this headline"></a></h4>
+<p>This is an abbreviated version of the link command.
+It does not include the output file flag or output file name.
+If <code class="docutils literal notranslate"><span class="pre">_MSC_VER</span></code> is defined, the default value for this option is
+<code class="docutils literal notranslate"><span class="pre">link</span> <span class="pre">/DLL</span></code>
+If <code class="docutils literal notranslate"><span class="pre">_MSC_VER</span></code> is not defined, the default value for this option is
+<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-shared</span></code> .</p>
+</section>
+</section>
+<section id="err-msg">
+<span id="create-dll-lib-err-msg"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">err_msg</a><a class="headerlink" href="#err-msg" title="Permalink to this headline"></a></h3>
+<p>If this string is empty, no error occurred.
+Otherwise the processing aborted and <em>err_msg</em> is the corresponding
+error message.</p>
+</section>
+<section id="example">
+<span id="create-dll-lib-example"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="dll_lib.cpp.html#dll-lib-cpp-name"><span class="std std-ref">dll_lib.cpp</span></a> contains an example and test of
+<code class="docutils literal notranslate"><span class="pre">create_dll_lib</span></code> .</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="check_simple_vector.cpp.html" class="btn btn-neutral float-left" title="check_simple_vector.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ErrorHandler.html" class="btn btn-neutral float-right" title="ErrorHandler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

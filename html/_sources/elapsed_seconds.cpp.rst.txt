@@ -1,0 +1,13 @@
+lines 7-17 of file: speed/example/elapsed_seconds.cpp
+
+{xrst_begin elapsed_seconds.cpp}
+
+Elapsed Seconds: Example and Test
+#################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end elapsed_seconds.cpp}

@@ -1,0 +1,223 @@
+lines 9-229 of file: include/cppad/utility/lu_factor.hpp
+
+{xrst_begin LuFactor}
+{xrst_spell
+   geq
+   jp
+   permuted
+   specializations
+}
+
+LU Factorization of A Square Matrix
+###################################
+
+Syntax
+******
+
+   # ``include <cppad/utility/lu_factor.hpp>``
+
+*sign* = ``LuFactor`` ( *ip* , *jp* , *LU* )
+
+Description
+***********
+Computes an LU factorization of the matrix *A*
+where *A* is a square matrix.
+
+Include
+*******
+The file ``cppad/utility/lu_factor.hpp``
+is included by ``cppad/cppad.hpp``
+but it can also be included separately with out the rest of
+the ``CppAD`` routines.
+
+Matrix Storage
+**************
+All matrices are stored in row major order.
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
+
+.. math::
+
+   Y_{i,j} = Y[ i * q + j ]
+
+sign
+****
+The return value *sign* has prototype
+
+   ``int`` *sign*
+
+If *A* is invertible, *sign* is plus or minus one
+and is the sign of the permutation corresponding to the row ordering
+*ip* and column ordering *jp* .
+If *A* is not invertible, *sign* is zero.
+
+ip
+**
+The argument *ip* has prototype
+
+   *SizeVector* & *ip*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *ip* is referred to as *n* in the
+specifications below.
+The input value of the elements of *ip* does not matter.
+The output value of the elements of *ip* determine
+the order of the rows in the permuted matrix.
+
+jp
+**
+The argument *jp* has prototype
+
+   *SizeVector* & *jp*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *jp* must be equal to *n* .
+The input value of the elements of *jp* does not matter.
+The output value of the elements of *jp* determine
+the order of the columns in the permuted matrix.
+
+LU
+**
+The argument *LU* has the prototype
+
+   *FloatVector* & *LU*
+
+and the size of *LU* must equal :math:`n * n`
+(see description of :ref:`LuFactor@FloatVector` below).
+
+A
+=
+We define *A* as the matrix corresponding to the input
+value of *LU* .
+
+P
+=
+We define the permuted matrix *P* in terms of *A* by
+
+   *P* ( *i* , *j* ) = *A* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+L
+=
+We define the lower triangular matrix *L* in terms of the
+output value of *LU* .
+The matrix *L* is zero above the diagonal
+and the rest of the elements are defined by
+
+   *L* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , i`.
+
+U
+=
+We define the upper triangular matrix *U* in terms of the
+output value of *LU* .
+The matrix *U* is zero below the diagonal,
+one on the diagonal,
+and the rest of the elements are defined by
+
+   *U* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-2` and :math:`j = i+1 , \ldots , n-1`.
+
+Factor
+======
+If the return value *sign* is non-zero,
+
+   *L* * *U* = *P*
+
+If the return value of *sign* is zero,
+the contents of *L* and *U* are not defined.
+
+Determinant
+===========
+If the return value *sign* is zero,
+the determinant of *A* is zero.
+If *sign* is non-zero,
+using the output value of *LU*
+the determinant of the matrix *A* is equal to
+
+   *sign* * *LU* [ *ip* [0], *jp* [0]] * ... * *LU* [ *ip* [ *n* ``-1`` ], *jp* [ *n* ``-1`` ]]
+
+SizeVector
+**********
+The type *SizeVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type size_t<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+FloatVector
+***********
+The type *FloatVector* must be a
+:ref:`simple vector class<SimpleVector-name>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Float
+*****
+This notation is used to denote the type corresponding
+to the elements of a *FloatVector* .
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
+of *Float* objects *x* and *y* :
+
+.. list-table::
+
+   * - **Operation**
+     - **Description**
+   * - ``log`` ( *x* )
+     - returns the logarithm of *x* as a *Float* object
+
+AbsGeq
+******
+Including the file ``lu_factor.hpp`` defines the template function
+
+| |tab| ``template <class`` *Float* >
+| |tab| ``bool AbsGeq<`` *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
+
+in the ``CppAD`` namespace.
+This function returns true if the absolute value of
+*x* is greater than or equal the absolute value of *y* .
+It is used by ``LuFactor`` to choose the pivot elements.
+This template function definition uses the operator
+``<=`` to obtain the absolute value for *Float* objects.
+If this operator is not defined for your use of *Float* ,
+you will need to specialize this template so that it works for your
+use of ``LuFactor`` .
+
+Complex numbers do not have the operation ``<=`` defined.
+The specializations
+
+| ``bool AbsGeq< std::complex<float> >``
+| |tab| ( ``const std::complex<float> &`` *x* , ``const std::complex<float> &`` *y* )
+| ``bool AbsGeq< std::complex<double> >``
+| |tab| ( ``const std::complex<double> &`` *x* , ``const std::complex<double> &`` *y* )
+
+are define by including ``lu_factor.hpp``
+These return true if the sum of the square of the real and imaginary parts
+of *x* is greater than or equal the
+sum of the square of the real and imaginary parts of *y* .
+{xrst_toc_hidden
+   example/utility/lu_factor.cpp
+   xrst/lu_factor_hpp.xrst
+}
+Example
+*******
+The file
+:ref:`lu_factor.cpp-name`
+contains an example and test of using ``LuFactor`` by itself.
+
+The file :ref:`lu_solve.hpp-name` provides a useful example usage of
+``LuFactor`` with ``LuInvert`` .
+
+Source
+******
+The file :ref:`lu_factor.hpp-name` contains the
+current source code that implements these specifications.
+
+{xrst_end LuFactor}

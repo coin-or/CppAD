@@ -1,0 +1,15 @@
+lines 6-18 of file: example/graph/discrete_op.cpp
+
+{xrst_begin graph_discrete_op.cpp}
+
+C++ AD Graph add Operator: Example and Test
+###########################################
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end graph_discrete_op.cpp}

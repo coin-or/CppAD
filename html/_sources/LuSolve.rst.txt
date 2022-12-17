@@ -1,0 +1,230 @@
+lines 9-236 of file: include/cppad/utility/lu_solve.hpp
+
+{xrst_begin LuSolve}
+{xrst_spell
+   determinants
+   geq
+   leq
+   logdet
+   signdet
+   specializations
+}
+
+Compute Determinant and Solve Linear Equations
+##############################################
+
+Syntax
+******
+
+   # ``include <cppad/utility/lu_solve.hpp>``
+
+*signdet* = ``LuSolve`` ( *n* , *m* , *A* , *B* , *X* , *logdet* )
+
+Description
+***********
+Use an LU factorization of the matrix *A* to
+compute its determinant
+and solve for *X* in the linear of equation
+
+.. math::
+
+   A * X = B
+
+where *A* is an
+*n* by *n* matrix,
+*X* is an
+*n* by *m* matrix, and
+*B* is an :math:`n x m` matrix.
+
+Include
+*******
+The file ``cppad/utility/lu_solve.hpp``
+is included by ``cppad/cppad.hpp``
+but it can also be included separately with out the rest of
+the ``CppAD`` routines.
+
+Factor and Invert
+*****************
+This routine is an easy to user interface to
+:ref:`LuFactor-name` and :ref:`LuInvert-name` for computing determinants and
+solutions of linear equations.
+These separate routines should be used if
+one right hand side *B*
+depends on the solution corresponding to another
+right hand side (with the same value of *A* ).
+In this case only one call to ``LuFactor`` is required
+but there will be multiple calls to ``LuInvert`` .
+
+Matrix Storage
+**************
+All matrices are stored in row major order.
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
+
+.. math::
+
+   Y_{i,j} = Y[ i * q + j ]
+
+signdet
+*******
+The return value *signdet* is a ``int`` value
+that specifies the sign factor for the determinant of *A* .
+This determinant of *A* is zero if and only if *signdet*
+is zero.
+
+n
+*
+The argument *n* has type ``size_t``
+and specifies the number of rows in the matrices
+*A* ,
+*X* ,
+and *B* .
+The number of columns in *A* is also equal to *n* .
+
+m
+*
+The argument *m* has type ``size_t``
+and specifies the number of columns in the matrices
+*X*
+and *B* .
+If *m* is zero,
+only the determinant of *A* is computed and
+the matrices *X* and *B* are not used.
+
+A
+*
+The argument *A* has the prototype
+
+   ``const`` *FloatVector* & *A*
+
+and the size of *A* must equal :math:`n * n`
+(see description of :ref:`LuSolve@FloatVector` below).
+This is the :math:`n` by *n* matrix that
+we are computing the determinant of
+and that defines the linear equation.
+
+B
+*
+The argument *B* has the prototype
+
+   ``const`` *FloatVector* & *B*
+
+and the size of *B* must equal :math:`n * m`
+(see description of :ref:`LuSolve@FloatVector` below).
+This is the :math:`n` by *m* matrix that
+defines the right hand side of the linear equations.
+If *m* is zero, *B* is not used.
+
+X
+*
+The argument *X* has the prototype
+
+   *FloatVector* & *X*
+
+and the size of *X* must equal :math:`n * m`
+(see description of :ref:`LuSolve@FloatVector` below).
+The input value of *X* does not matter.
+On output, the elements of *X* contain the solution
+of the equation we wish to solve
+(unless *signdet* is equal to zero).
+If *m* is zero, *X* is not used.
+
+logdet
+******
+The argument *logdet* has prototype
+
+   *Float* & *logdet*
+
+On input, the value of *logdet* does not matter.
+On output, it has been set to the
+log of the determinant of *A*
+(but not quite).
+To be more specific,
+the determinant of *A* is given by the formula
+
+   *det* = *signdet* * ``exp`` ( *logdet*  )
+
+This enables ``LuSolve`` to use logs of absolute values
+in the case where *Float* corresponds to a real number.
+
+Float
+*****
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
+of *Float* objects *x* and *y* :
+
+.. list-table::
+
+   * - **Operation**
+     - **Description**
+   * - ``log`` ( *x* )
+     - returns the logarithm of *x* as a *Float* object
+
+FloatVector
+***********
+The type *FloatVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type Float<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+LeqZero
+*******
+Including the file ``lu_solve.hpp`` defines the template function
+
+| |tab| ``template <class`` *Float* >
+| |tab| ``bool LeqZero<`` *Float* >( ``const`` *Float* & *x* )
+
+in the ``CppAD`` namespace.
+This function returns true if *x* is less than or equal to zero
+and false otherwise.
+It is used by ``LuSolve`` to avoid taking the log of
+zero (or a negative number if *Float* corresponds to real numbers).
+This template function definition assumes that the operator
+``<=`` is defined for *Float* objects.
+If this operator is not defined for your use of *Float* ,
+you will need to specialize this template so that it works for your
+use of ``LuSolve`` .
+
+Complex numbers do not have the operation or ``<=`` defined.
+In addition, in the complex case,
+one can take the log of a negative number.
+The specializations
+
+| |tab| ``bool LeqZero< std::complex<float> >`` ( ``const std::complex<float> &`` *x* )
+| |tab| ``bool LeqZero< std::complex<double> >`` ( ``const std::complex<double> &`` *x* )
+
+are defined by including ``lu_solve.hpp`` .
+These return true if *x* is zero and false otherwise.
+
+AbsGeq
+******
+Including the file ``lu_solve.hpp`` defines the template function
+
+| |tab| ``template <class`` *Float* >
+| |tab| ``bool AbsGeq<`` *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
+
+If the type *Float* does not support the ``<=`` operation
+and it is not ``std::complex<float>`` or ``std::complex<double>`` ,
+see the documentation for ``AbsGeq`` in :ref:`LuFactor<LuFactor@AbsGeq>` .
+{xrst_toc_hidden
+   example/utility/lu_solve.cpp
+   xrst/lu_solve_hpp.xrst
+}
+Example
+*******
+The file
+:ref:`lu_solve.cpp-name`
+contains an example and test of using this routine.
+
+Source
+******
+The file :ref:`lu_solve.hpp-name` contains the
+current source code that implements these specifications.
+
+{xrst_end LuSolve}

@@ -1,0 +1,37 @@
+lines 255-289 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin cosh}
+
+The Hyperbolic Cosine Function: cosh
+####################################
+
+Syntax
+******
+*y* = ``cosh`` ( *x* )
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Derivative
+**********
+
+.. math::
+
+   \R{cosh}^{(1)} (x) = \sinh(x)
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/cosh.cpp
+}
+The file
+:ref:`cosh.cpp-name`
+contains an example and test of this function.
+
+{xrst_end cosh}

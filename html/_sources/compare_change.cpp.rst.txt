@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/compare_change.cpp
+
+{xrst_begin compare_change.cpp}
+
+CompareChange and Re-Tape: Example and Test
+###########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end compare_change.cpp}

@@ -1,0 +1,22 @@
+lines 5-24 of file: include/cppad/core/atomic/atomic.xrst
+
+{xrst_begin atomic}
+
+Atomic AD Functions
+###################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atomic/four/atomic.xrst
+   include/cppad/core/atomic/three/atomic.xrst
+   include/cppad/core/chkpoint_two/chkpoint_two.hpp
+}
+
+Deprecated Atomic Function
+**************************
+:ref:`atomic_one-name` ,
+:ref:`atomic_two-name` ,
+:ref:`chkpoint_one-name` .
+
+{xrst_end atomic}

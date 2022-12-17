@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_three_hes_sparsity, atomic, function, hessian, sparsity, patterns" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="prototype" name="keywords" />
+<meta content="implementation" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="parameter_x" name="keywords" />
+<meta content="type_x" name="keywords" />
+<meta content="select_x" name="keywords" />
+<meta content="select_y" name="keywords" />
+<meta content="pattern_out" name="keywords" />
+<meta content="ok" name="keywords" />
+<meta content="examples" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_three_hes_sparsity &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_three_hes_sparsity.cpp" href="atomic_three_hes_sparsity.cpp.html" />
+    <link rel="prev" title="atomic_three_jac_sparsity.cpp" href="atomic_three_jac_sparsity.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atomic_four.html">atomic_four</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_three.html">atomic_three</a><ul class="current">
+<li class="toctree-l6 current"><a class="reference internal" href="atomic_three_define.html">atomic_three_define</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_ctor.html">atomic_three_ctor</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_afun.html">atomic_three_afun</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_for_type.html">atomic_three_for_type</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_forward.html">atomic_three_forward</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_reverse.html">atomic_three_reverse</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_jac_sparsity.html">atomic_three_jac_sparsity</a></li>
+<li class="toctree-l7 current"><a class="current reference internal" href="#">atomic_three_hes_sparsity</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="atomic_three_hes_sparsity.cpp.html">atomic_three_hes_sparsity.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_rev_depend.html">atomic_three_rev_depend</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="atomic_three_example.html">atomic_three_example</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_three.html">atomic_three</a> &raquo;</li>
+          <li><a href="atomic_three_define.html">atomic_three_define</a> &raquo;</li>
+      <li>atomic_three_hes_sparsity</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_three_hes_sparsity.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-three-hes-sparsity">
+<span id="atomic-three-hes-sparsity-name"></span><h1>atomic_three_hes_sparsity<a class="headerlink" href="#atomic-three-hes-sparsity" title="Permalink to this headline"></a></h1>
+<section id="atomic-function-hessian-sparsity-patterns">
+<span id="atomic-three-hes-sparsity-title"></span><span id="index-0"></span><h2>Atomic Function Hessian Sparsity Patterns<a class="headerlink" href="#atomic-function-hessian-sparsity-patterns" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#prototype" id="id2">Prototype</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id3">Implementation</a></p></li>
+<li><p><a class="reference internal" href="#base" id="id4">Base</a></p></li>
+<li><p><a class="reference internal" href="#parameter-x" id="id5">parameter_x</a></p></li>
+<li><p><a class="reference internal" href="#type-x" id="id6">type_x</a></p></li>
+<li><p><a class="reference internal" href="#select-x" id="id7">select_x</a></p></li>
+<li><p><a class="reference internal" href="#select-y" id="id8">select_y</a></p></li>
+<li><p><a class="reference internal" href="#pattern-out" id="id9">pattern_out</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id10">ok</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id11">Examples</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="atomic-three-hes-sparsity-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">hes_sparsity</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> , <em>select_x</em> , <em>select_y</em> , <em>pattern_out</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="prototype">
+<span id="atomic-three-hes-sparsity-prototype"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Prototype</a><a class="headerlink" href="#prototype" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">atomic_three</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">hes_sparsity</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                     </span><span class="n">parameter_x</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w">             </span><span class="n">type_x</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                     </span><span class="n">select_x</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                     </span><span class="n">select_y</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">            </span><span class="n">pattern_out</span><span class="w">  </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="implementation">
+<span id="atomic-three-hes-sparsity-implementation"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h3>
+<p>This function must be defined if
+<a class="reference internal" href="atomic_three_ctor.html#atomic-three-ctor-atomic-user-afun"><span class="std std-ref">afun</span></a> is
+used to define an <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> ,
+and Hessian sparsity patterns are computed for <em>f</em> .</p>
+</section>
+<section id="base">
+<span id="atomic-three-hes-sparsity-base"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h3>
+<p>See <a class="reference internal" href="atomic_three_afun.html#atomic-three-afun-base"><span class="std std-ref">Base</span></a> .</p>
+</section>
+<section id="parameter-x">
+<span id="atomic-three-hes-sparsity-parameter-x"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">parameter_x</a><a class="headerlink" href="#parameter-x" title="Permalink to this headline"></a></h3>
+<p>See <a class="reference internal" href="atomic_three_define.html#atomic-three-define-parameter-x"><span class="std std-ref">parameter_x</span></a> .</p>
+</section>
+<section id="type-x">
+<span id="atomic-three-hes-sparsity-type-x"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">type_x</a><a class="headerlink" href="#type-x" title="Permalink to this headline"></a></h3>
+<p>See <a class="reference internal" href="atomic_three_define.html#atomic-three-define-type-x"><span class="std std-ref">type_x</span></a> .</p>
+</section>
+<section id="select-x">
+<span id="atomic-three-hes-sparsity-select-x"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">select_x</a><a class="headerlink" href="#select-x" title="Permalink to this headline"></a></h3>
+<p>This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of <em>ax</em> .
+It specifies which domain components are included in
+the calculation of <em>pattern_out</em> .
+If <em>select_x</em> [ <em>j</em> ] is false, then there will be no indices
+<em>k</em> such that either of the following hold:</p>
+<div class="line-block">
+<div class="line">      <em>pattern_out</em> . <code class="docutils literal notranslate"><span class="pre">row</span></code> ()[ <em>k</em> ] == <em>j</em></div>
+<div class="line">      <em>pattern_out</em> . <code class="docutils literal notranslate"><span class="pre">col</span></code> ()[ <em>k</em> ] == <em>j</em></div>
+</div>
+<p>.</p>
+</section>
+<section id="select-y">
+<span id="atomic-three-hes-sparsity-select-y"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">select_y</a><a class="headerlink" href="#select-y" title="Permalink to this headline"></a></h3>
+<p>This argument has size equal to the number of results to this
+atomic function; i.e. the size of <em>ay</em> .
+It specifies which range component functions <span class="math notranslate nohighlight">\(g_i (x)\)</span> are included in
+of <em>pattern_out</em> .</p>
+</section>
+<section id="pattern-out">
+<span id="atomic-three-hes-sparsity-pattern-out"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">pattern_out</a><a class="headerlink" href="#pattern-out" title="Permalink to this headline"></a></h3>
+<p>This input value of <em>pattern_out</em> does not matter.
+Upon return it is the union,
+with respect to <em>i</em> such that <em>select_y</em> [ <em>i</em> ] is true,
+of the sparsity pattern for Hessian of <span class="math notranslate nohighlight">\(g_i (x)\)</span>.
+To be specific, there are non-negative indices
+<em>i</em> , <em>r</em> , <em>c</em> , and <em>k</em> such that</p>
+<div class="line-block">
+<div class="line">      <em>pattern_out</em> . <code class="docutils literal notranslate"><span class="pre">row</span></code> ()[ <em>k</em> ] == <em>r</em></div>
+<div class="line">      <em>pattern_out</em> . <code class="docutils literal notranslate"><span class="pre">col</span></code> ()[ <em>k</em> ] == <em>c</em></div>
+</div>
+<p>if and only if
+<em>select_y</em> [ <em>i</em> ] is true,
+<em>select_x</em> [ <em>r</em> ] is true,
+<em>select_x</em> [ <em>c</em> ] is true,
+and</p>
+<div class="math notranslate nohighlight">
+\[\partial_{x(r)} \partial_{x(c)} g_i(x)\]</div>
+<p>is possibly non-zero.
+Note that the sparsity pattern should be symmetric.</p>
+</section>
+<section id="ok">
+<span id="atomic-three-hes-sparsity-ok"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>If this calculation succeeded, <em>ok</em> is true.
+Otherwise it is false.</p>
+</section>
+<section id="examples">
+<span id="atomic-three-hes-sparsity-examples"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="atomic_three_hes_sparsity.cpp.html#atomic-three-hes-sparsity-cpp-name"><span class="std std-ref">atomic_three_hes_sparsity.cpp</span></a> contains an example and test
+that uses this routine.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_three_jac_sparsity.cpp.html" class="btn btn-neutral float-left" title="atomic_three_jac_sparsity.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_three_hes_sparsity.cpp.html" class="btn btn-neutral float-right" title="atomic_three_hes_sparsity.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/hes_minor_det.cpp
+
+{xrst_begin hes_minor_det.cpp}
+
+Gradient of Determinant Using Expansion by Minors: Example and Test
+###################################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end hes_minor_det.cpp}

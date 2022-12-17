@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="sparse_jacobian, sparse, jacobian" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="row,, col" name="keywords" />
+<meta content="jac" name="keywords" />
+<meta content="work" name="keywords" />
+<meta content="color_method" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="n_sweep" name="keywords" />
+<meta content="basevector" name="keywords" />
+<meta content="setvector" name="keywords" />
+<meta content="restrictions" name="keywords" />
+<meta content="sizevector" name="keywords" />
+<meta content="uses, forward" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sparse_jacobian &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sparse_jacobian.cpp" href="sparse_jacobian.cpp.html" />
+    <link rel="prev" title="sparse_jac_rev.cpp" href="sparse_jac_rev.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sparse_jac.html">sparse_jac</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">sparse_jacobian</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="sparse_jacobian.cpp.html">sparse_jacobian.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hes.html">sparse_hes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hessian.html">sparse_hessian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_jac_rev.html">subgraph_jac_rev</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparse_derivative.html">sparse_derivative</a> &raquo;</li>
+      <li>sparse_jacobian</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sparse_jacobian.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="sparse-jacobian">
+<span id="sparse-jacobian-name"></span><h1>sparse_jacobian<a class="headerlink" href="#sparse-jacobian" title="Permalink to this headline"></a></h1>
+<section id="sparse-jacobian-title">
+<span id="index-0"></span><span id="id1"></span><h2>Sparse Jacobian<a class="headerlink" href="#sparse-jacobian-title" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id3">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id4">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id5">f</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id6">x</a></p></li>
+<li><p><a class="reference internal" href="#p" id="id7">p</a></p></li>
+<li><p><a class="reference internal" href="#row-col" id="id8">row, col</a></p></li>
+<li><p><a class="reference internal" href="#jac" id="id9">jac</a></p></li>
+<li><p><a class="reference internal" href="#work" id="id10">work</a></p>
+<ul>
+<li><p><a class="reference internal" href="#color-method" id="id11">color_method</a></p></li>
+<li><p><a class="reference internal" href="#sparse-jacobian-work-p" id="id12">p</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#n-sweep" id="id13">n_sweep</a></p></li>
+<li><p><a class="reference internal" href="#basevector" id="id14">BaseVector</a></p></li>
+<li><p><a class="reference internal" href="#setvector" id="id15">SetVector</a></p>
+<ul>
+<li><p><a class="reference internal" href="#restrictions" id="id16">Restrictions</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#sizevector" id="id17">SizeVector</a></p></li>
+<li><p><a class="reference internal" href="#uses-forward" id="id18">Uses Forward</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id19">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="sparse-jacobian-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id3">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>jac</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseJacobian</span></code> ( <em>x</em> )</div>
+<div class="line"><em>jac</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseJacobian</span></code> ( <em>x</em> , <em>p</em> )</div>
+<div class="line"><em>n_sweep</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseJacobianForward</span></code> ( <em>x</em> , <em>p</em> , <em>row</em> , <em>col</em> , <em>jac</em> , <em>work</em> )</div>
+<div class="line"><em>n_sweep</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseJacobianReverse</span></code> ( <em>x</em> , <em>p</em> , <em>row</em> , <em>col</em> , <em>jac</em> , <em>work</em> )</div>
+</div>
+</section>
+<section id="purpose">
+<span id="sparse-jacobian-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id4">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(n\)</span> for the <a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> size,
+and <span class="math notranslate nohighlight">\(m\)</span> for the <a class="reference internal" href="fun_property.html#fun-property-range"><span class="std std-ref">Range</span></a> size of <em>f</em> .
+We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> do denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a>
+corresponding to <em>f</em> .
+The syntax above sets <em>jac</em> to the Jacobian</p>
+<div class="math notranslate nohighlight">
+\[jac = F^{(1)} (x)\]</div>
+<p>This routine takes advantage of the sparsity of the Jacobian
+in order to reduce the amount of computation necessary.
+If <em>row</em> and <em>col</em> are present, it also takes
+advantage of the reduced set of elements of the Jacobian that
+need to be computed.
+One can use speed tests (e.g. <a class="reference internal" href="speed_test.html#speed-test-name"><span class="std std-ref">speed_test</span></a> )
+to verify that results are computed faster
+than when using the routine <a class="reference internal" href="Jacobian.html#jacobian-name"><span class="std std-ref">Jacobian</span></a> .</p>
+</section>
+<section id="f">
+<span id="sparse-jacobian-f"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id5">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Note that the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> is not <code class="docutils literal notranslate"><span class="pre">const</span></code>
+(see <a class="reference internal" href="#sparse-jacobian-uses-forward"><span class="std std-ref">Uses Forward</span></a> below).</p>
+</section>
+<section id="x">
+<span id="sparse-jacobian-x"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id6">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>The argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BaseVector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#sparse-jacobian-basevector"><span class="std std-ref">BaseVector</span></a> below)
+and its size
+must be equal to <em>n</em> , the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .
+It specifies
+that point at which to evaluate the Jacobian.</p>
+</section>
+<section id="p">
+<span id="sparse-jacobian-p"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id7">p</a><a class="headerlink" href="#p" title="Permalink to this headline"></a></h3>
+<p>The argument <em>p</em> is optional and has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SetVector</em> &amp; <em>p</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#sparse-jacobian-setvector"><span class="std std-ref">SetVector</span></a> below).
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+its size is <span class="math notranslate nohighlight">\(m * n\)</span>.
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+its size is <span class="math notranslate nohighlight">\(m\)</span> and all its set elements are between
+zero and <span class="math notranslate nohighlight">\(n - 1\)</span>.
+It specifies a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for the Jacobian <span class="math notranslate nohighlight">\(F^{(1)} (x)\)</span>.</p>
+<p>If this sparsity pattern does not change between calls to
+<code class="docutils literal notranslate"><span class="pre">SparseJacobian</span></code> , it should be faster to calculate <em>p</em> once
+(using <a class="reference internal" href="ForSparseJac.html#forsparsejac-name"><span class="std std-ref">ForSparseJac</span></a> or <a class="reference internal" href="RevSparseJac.html#revsparsejac-name"><span class="std std-ref">RevSparseJac</span></a> )
+and then pass <em>p</em> to <code class="docutils literal notranslate"><span class="pre">SparseJacobian</span></code> .
+Furthermore, if you specify <em>work</em> in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+<a class="reference internal" href="#sparse-jacobian-work-p"><span class="std std-ref">p</span></a> under the <em>work</em> description.</p>
+<p>In addition,
+if you specify <em>p</em> , CppAD will use the same
+type of sparsity representation
+(vectors of <code class="docutils literal notranslate"><span class="pre">bool</span></code> or vectors of <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> )
+for its internal calculations.
+Otherwise, the representation
+for the internal calculations is unspecified.</p>
+</section>
+<section id="row-col">
+<span id="sparse-jacobian-row-col"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id8">row, col</a><a class="headerlink" href="#row-col" title="Permalink to this headline"></a></h3>
+<p>The arguments <em>row</em> and <em>col</em> are optional and have prototype</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SizeVector</em> &amp; <em>row</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SizeVector</em> &amp; <em>col</em></div>
+</div>
+<p>(see <a class="reference internal" href="#sparse-jacobian-sizevector"><span class="std std-ref">SizeVector</span></a> below).
+They specify which rows and columns of <span class="math notranslate nohighlight">\(F^{(1)} (x)\)</span> are
+computes and in what order.
+Not all the non-zero entries in <span class="math notranslate nohighlight">\(F^{(1)} (x)\)</span> need be computed,
+but all the entries specified by <em>row</em> and <em>col</em>
+must be possibly non-zero in the sparsity pattern.
+We use <span class="math notranslate nohighlight">\(K\)</span> to denote the value <em>jac</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> ()
+which must also equal the size of <em>row</em> and <em>col</em> .
+Furthermore,
+for <span class="math notranslate nohighlight">\(k = 0 , \ldots , K-1\)</span>, it must hold that
+<span class="math notranslate nohighlight">\(row[k] &lt; m\)</span> and <span class="math notranslate nohighlight">\(col[k] &lt; n\)</span>.</p>
+</section>
+<section id="jac">
+<span id="sparse-jacobian-jac"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id9">jac</a><a class="headerlink" href="#jac" title="Permalink to this headline"></a></h3>
+<p>The result <em>jac</em> has prototype</p>
+<blockquote>
+<div><p><em>BaseVector</em> &amp; <em>jac</em></p>
+</div></blockquote>
+<p>In the case where the arguments <em>row</em> and <em>col</em> are not present,
+the size of <em>jac</em> is <span class="math notranslate nohighlight">\(m * n\)</span> and
+for <span class="math notranslate nohighlight">\(i = 0 , \ldots , m-1\)</span>,
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[jac [ i * n + j ] = \D{ F_i }{ x_j } (x)\]</div>
+<p>In the case where the arguments <em>row</em> and <em>col</em> are present,
+we use <span class="math notranslate nohighlight">\(K\)</span> to denote the size of <em>jac</em> .
+The input value of its elements does not matter.
+Upon return, for <span class="math notranslate nohighlight">\(k = 0 , \ldots , K - 1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[jac [ k ] = \D{ F_i }{ x_j } (x)
+\; , \;
+\; {\rm where} \;
+i = row[k]
+\; {\rm and } \;
+j = col[k]\]</div>
+</section>
+<section id="work">
+<span id="sparse-jacobian-work"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id10">work</a><a class="headerlink" href="#work" title="Permalink to this headline"></a></h3>
+<p>If this argument is present, it has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">sparse_jacobian_work&amp;</span></code> <em>work</em></p>
+</div></blockquote>
+<p>This object can only be used with the routines
+<code class="docutils literal notranslate"><span class="pre">SparseJacobianForward</span></code> and <code class="docutils literal notranslate"><span class="pre">SparseJacobianReverse</span></code> .
+During its the first use, information is stored in <em>work</em> .
+This is used to reduce the work done by future calls to the same mode
+(forward or reverse),
+the same <em>f</em> , <em>p</em> , <em>row</em> , and <em>col</em> .
+If a future call is for a different mode,
+or any of these values have changed,
+you must first call <em>work</em> . <code class="docutils literal notranslate"><span class="pre">clear</span></code> ()
+to inform CppAD that this information needs to be recomputed.</p>
+<section id="color-method">
+<span id="sparse-jacobian-work-color-method"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id11">color_method</a><a class="headerlink" href="#color-method" title="Permalink to this headline"></a></h4>
+<p>The coloring algorithm determines which columns (forward mode)
+or rows (reverse mode) can be computed during the same sweep.
+This field has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::string</span></code> <em>work</em> . <code class="docutils literal notranslate"><span class="pre">color_method</span></code></p>
+</div></blockquote>
+<p>and its default value (after a constructor or <code class="docutils literal notranslate"><span class="pre">clear()</span></code> )
+is <code class="docutils literal notranslate"><span class="pre">&quot;cppad&quot;</span></code> .
+If <a class="reference internal" href="colpack_prefix.html#colpack-prefix-name"><span class="std std-ref">colpack_prefix</span></a> is specified on the
+<a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a> line,
+you can set this method to <code class="docutils literal notranslate"><span class="pre">&quot;colpack&quot;</span></code> .
+This value only matters on the first call to <code class="docutils literal notranslate"><span class="pre">sparse_jacobian</span></code>
+that follows the <em>work</em> constructor or a call to
+<em>work</em> . <code class="docutils literal notranslate"><span class="pre">clear</span></code> () .</p>
+</section>
+<section id="sparse-jacobian-work-p">
+<span id="index-10"></span><span id="id2"></span><h4><a class="toc-backref" href="#id12">p</a><a class="headerlink" href="#sparse-jacobian-work-p" title="Permalink to this headline"></a></h4>
+<p>If <em>work</em> is present, and it is not the first call after
+its construction or a clear,
+the sparsity pattern <em>p</em> is not used.
+This enables one to free the sparsity pattern
+and still compute corresponding sparse Jacobians.</p>
+</section>
+</section>
+<section id="n-sweep">
+<span id="sparse-jacobian-n-sweep"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id13">n_sweep</a><a class="headerlink" href="#n-sweep" title="Permalink to this headline"></a></h3>
+<p>The return value <em>n_sweep</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>n_sweep</em></p>
+</div></blockquote>
+<p>If <code class="docutils literal notranslate"><span class="pre">SparseJacobianForward</span></code> (<code class="docutils literal notranslate"><span class="pre">SparseJacobianReverse</span></code> ) is used,
+<em>n_sweep</em> is the number of first order forward (reverse) sweeps
+used to compute the requested Jacobian values.
+(This is also the number of colors determined by the coloring method
+mentioned above).
+This is proportional to the total work that <code class="docutils literal notranslate"><span class="pre">SparseJacobian</span></code> does,
+not counting the zero order forward sweep,
+or the work to combine multiple columns (rows) into a single sweep.</p>
+</section>
+<section id="basevector">
+<span id="sparse-jacobian-basevector"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id14">BaseVector</a><a class="headerlink" href="#basevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>BaseVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="setvector">
+<span id="sparse-jacobian-setvector"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id15">SetVector</a><a class="headerlink" href="#setvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SetVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">bool</span></code> or <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ;
+see <a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a> for a discussion
+of the difference.
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+<section id="restrictions">
+<span id="sparse-jacobian-setvector-restrictions"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id16">Restrictions</a><a class="headerlink" href="#restrictions" title="Permalink to this headline"></a></h4>
+<p>If <em>SetVector</em> has elements of <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+then <em>p</em> [ <em>i</em> ] must return a reference (not a copy) to the
+corresponding set.
+According to section 26.3.2.3 of the 1998 C++ standard,
+<code class="docutils literal notranslate"><span class="pre">std::valarray&lt;</span> <span class="pre">std::set&lt;size_t&gt;</span> <span class="pre">&gt;</span></code> does not satisfy
+this condition.</p>
+</section>
+</section>
+<section id="sizevector">
+<span id="sparse-jacobian-sizevector"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id17">SizeVector</a><a class="headerlink" href="#sizevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SizeVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">size_t</span></code> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="uses-forward">
+<span id="sparse-jacobian-uses-forward"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id18">Uses Forward</a><a class="headerlink" href="#uses-forward" title="Permalink to this headline"></a></h3>
+<p>After each call to <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> ,
+the object <em>f</em> contains the corresponding
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a> .
+After a call to any of the sparse Jacobian routines,
+the zero order Taylor coefficients correspond to
+<em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> (0, <em>x</em> )
+and the other coefficients are unspecified.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">SparseJacobian</span></code> ,
+the previous calls to <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> are undefined.</p>
+</section>
+<section id="example">
+<span id="sparse-jacobian-example"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id19">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The routine
+<a class="reference internal" href="sparse_jacobian.cpp.html#sparse-jacobian-cpp-name"><span class="std std-ref">sparse_jacobian.cpp</span></a>
+is examples and tests of <code class="docutils literal notranslate"><span class="pre">sparse_jacobian</span></code> .
+It return <code class="docutils literal notranslate"><span class="pre">true</span></code> , if it succeeds and <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparse_jac_rev.cpp.html" class="btn btn-neutral float-left" title="sparse_jac_rev.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sparse_jacobian.cpp.html" class="btn btn-neutral float-right" title="sparse_jacobian.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

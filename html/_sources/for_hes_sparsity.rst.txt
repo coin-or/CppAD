@@ -1,0 +1,110 @@
+lines 8-115 of file: include/cppad/core/for_hes_sparsity.hpp
+
+{xrst_begin for_hes_sparsity}
+
+Forward Mode Hessian Sparsity Patterns
+######################################
+
+Syntax
+******
+
+| *f* . ``for_hes_sparsity`` (
+| |tab| *select_domain* , *select_range* , *internal_bool* , *pattern_out*
+| )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to
+the operation sequence stored in *f* .
+Fix a diagonal matrix :math:`D \in \B{R}^{n \times n}`,
+a vector :math:`s \in \B{R}^m` and define the function
+
+.. math::
+
+   H(x) = D ( s^\R{T} F )^{(2)} ( x ) D
+
+Given  the sparsity for :math:`D` and :math:`s`,
+``for_hes_sparsity`` computes a sparsity pattern for :math:`H(x)`.
+
+x
+*
+Note that the sparsity pattern :math:`H(x)` corresponds to the
+operation sequence stored in *f* and does not depend on
+the argument *x* .
+
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
+
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
+
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+select_domain
+*************
+The argument *select_domain* has prototype
+
+   ``const`` *BoolVector* & *select_domain*
+
+It has size :math:`n` and specifies which components of the diagonal of
+:math:`D` are non-zero; i.e., *select_domain* [ *j* ] is true
+if and only if :math:`D_{j,j}` is possibly non-zero.
+
+select_range
+************
+The argument *select_range* has prototype
+
+   ``const`` *BoolVector* & *select_range*
+
+It has size :math:`m` and specifies which components of the vector
+:math:`s` are non-zero; i.e., *select_range* [ *i* ] is true
+if and only if :math:`s_i` is possibly non-zero.
+
+internal_bool
+*************
+If this is true, calculations are done with sets represented by a vector
+of boolean values. Otherwise, a vector of sets of integers is used.
+
+pattern_out
+***********
+This argument has prototype
+
+   ``sparse_rc<`` *SizeVector* >& *pattern_out*
+
+This input value of *pattern_out* does not matter.
+Upon return *pattern_out* is a sparsity pattern for :math:`H(x)`.
+
+Sparsity for Entire Hessian
+***************************
+Suppose that :math:`R` is the :math:`n \times n` identity matrix.
+In this case, *pattern_out* is a sparsity pattern for
+:math:`(s^\R{T} F) F^{(2)} ( x )`.
+
+Algorithm
+*********
+See Algorithm II in
+*Computing sparse Hessians with automatic differentiation*
+by Andrea Walther.
+Note that *s* provides the information so that
+'dead ends' are not included in the sparsity pattern.
+
+Example
+*******
+{xrst_toc_hidden
+   example/sparse/for_hes_sparsity.cpp
+}
+The file :ref:`for_hes_sparsity.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end for_hes_sparsity}

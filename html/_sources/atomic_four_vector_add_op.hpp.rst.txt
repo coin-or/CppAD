@@ -1,0 +1,30 @@
+lines 8-35 of file: include/cppad/example/atomic_four/vector/add_op.hpp
+
+{xrst_begin atomic_four_vector_add_op.hpp}
+
+Atomic Vector Add Operator: Example Implementation
+##################################################
+
+Forward Mode
+************
+see theory for forward mode
+:ref:`forward_theory@Binary Operators@Addition` .
+
+Reverse Mode
+************
+see theory for reverse mode
+:ref:`reverse_theory@Binary Operators@Addition` .
+
+Example
+*******
+The file :ref:`atomic_four_vector_add.cpp-name` contains an example
+and test for this operator.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_add_op.hpp}

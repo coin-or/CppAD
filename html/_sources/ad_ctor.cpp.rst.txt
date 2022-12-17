@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/ad_ctor.cpp
+
+{xrst_begin ad_ctor.cpp}
+
+AD Constructors: Example and Test
+#################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end ad_ctor.cpp}

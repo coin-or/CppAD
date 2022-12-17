@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="deprecated, cppad, deprecated, api, features" name="keywords" />
+<meta content="contents" name="keywords" />
+<meta content="name, changes" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>deprecated &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="include_deprecated" href="include_deprecated.html" />
+    <link rel="prev" title="whats_new_03" href="whats_new_03.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">deprecated</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="include_deprecated.html">include_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fun_deprecated.html">fun_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CompareChange.html">CompareChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_max_thread.html">omp_max_thread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="track_new_del.html">track_new_del</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_alloc.html">omp_alloc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory_leak.html">memory_leak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epsilon.html">epsilon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_ipopt_nlp.html">cppad_ipopt_nlp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_one.html">atomic_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two.html">atomic_two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two_example.html">atomic_two_example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_two.cpp.html">multi_atomic_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chkpoint_one.html">chkpoint_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_one.cpp.html">multi_chkpoint_one.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zdouble.html">zdouble</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autotools.html">autotools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+      <li>deprecated</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/deprecated.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="deprecated">
+<span id="deprecated-name"></span><h1>deprecated<a class="headerlink" href="#deprecated" title="Permalink to this headline"></a></h1>
+<section id="cppad-deprecated-api-features">
+<span id="deprecated-title"></span><span id="index-0"></span><h2>CppAD Deprecated API Features<a class="headerlink" href="#cppad-deprecated-api-features" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#deprecated-contents" id="id2">Contents</a></p></li>
+<li><p><a class="reference internal" href="#name-changes" id="id3">Name Changes</a></p></li>
+</ul>
+</div>
+<section id="deprecated-contents">
+<span id="index-1"></span><span id="id1"></span><h3><a class="toc-backref" href="#id2">Contents</a><a class="headerlink" href="#deprecated-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>include_deprecated</p></td>
+<td><p><a class="reference internal" href="include_deprecated.html#include-deprecated-title"><span class="std std-ref">Deprecated Include Files</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>fun_deprecated</p></td>
+<td><p><a class="reference internal" href="fun_deprecated.html#fun-deprecated-title"><span class="std std-ref">ADFun Object Deprecated Member Functions</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>CompareChange</p></td>
+<td><p><a class="reference internal" href="CompareChange.html#comparechange-title"><span class="std std-ref">Comparison Changes During Zero Order Forward Mode</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>omp_max_thread</p></td>
+<td><p><a class="reference internal" href="omp_max_thread.html#omp-max-thread-title"><span class="std std-ref">OpenMP Parallel Setup</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>track_new_del</p></td>
+<td><p><a class="reference internal" href="track_new_del.html#track-new-del-title"><span class="std std-ref">Routines That Track Use of New and Delete</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>omp_alloc</p></td>
+<td><p><a class="reference internal" href="omp_alloc.html#omp-alloc-title"><span class="std std-ref">A Quick OpenMP Memory Allocator Used by CppAD</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>memory_leak</p></td>
+<td><p><a class="reference internal" href="memory_leak.html#memory-leak-title"><span class="std std-ref">Memory Leak Detection</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>epsilon</p></td>
+<td><p><a class="reference internal" href="epsilon.html#epsilon-title"><span class="std std-ref">Machine Epsilon For AD Types</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>cppad_ipopt_nlp</p></td>
+<td><p><a class="reference internal" href="cppad_ipopt_nlp.html#cppad-ipopt-nlp-title"><span class="std std-ref">Nonlinear Programming Using the CppAD Interface to Ipopt</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_one</p></td>
+<td><p><a class="reference internal" href="atomic_one.html#atomic-one-title"><span class="std std-ref">Defining Atomic Functions: First Generation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>atomic_two</p></td>
+<td><p><a class="reference internal" href="atomic_two.html#atomic-two-title"><span class="std std-ref">Defining Atomic Functions: Second Generation</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_two_example</p></td>
+<td><p><a class="reference internal" href="atomic_two_example.html#atomic-two-example-title"><span class="std std-ref">Example Defining Atomic Functions: Second Generation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>multi_atomic_two.cpp</p></td>
+<td><p><a class="reference internal" href="multi_atomic_two.cpp.html#multi-atomic-two-cpp-title"><span class="std std-ref">Multi-Threading atomic_two Example / Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>chkpoint_one</p></td>
+<td><p><a class="reference internal" href="chkpoint_one.html#chkpoint-one-title"><span class="std std-ref">Checkpoint Functions: First Generation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>multi_chkpoint_one.cpp</p></td>
+<td><p><a class="reference internal" href="multi_chkpoint_one.cpp.html#multi-chkpoint-one-cpp-title"><span class="std std-ref">Multi-Threading chkpoint_one Example / Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>zdouble</p></td>
+<td><p><a class="reference internal" href="zdouble.html#zdouble-title"><span class="std std-ref">zdouble: An AD Base Type With Absolute Zero</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>autotools</p></td>
+<td><p><a class="reference internal" href="autotools.html#autotools-title"><span class="std std-ref">Autotools Unix Test and Installation</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="name-changes">
+<span id="deprecated-name-changes"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">Name Changes</a><a class="headerlink" href="#name-changes" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CppADCreateUnaryBool</span></code></p></td>
+<td><p>see Deprecated 2007-07-31 in <a class="reference internal" href="bool_fun.html#bool-fun-title"><span class="std std-ref">AD Boolean Functions</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CppADCreateDiscrete</span></code></p></td>
+<td><p>see Deprecated 2007-07-31 in <a class="reference internal" href="bool_fun.html#bool-fun-title"><span class="std std-ref">AD Boolean Functions</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nan</span></code> ( <em>zero</em> )</p></td>
+<td><p><a class="reference internal" href="nan.html#nan-nan-zero"><span class="std std-ref">nan(zero)</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">colpack.star</span></code> coloring</p></td>
+<td><p>see
+<a class="reference internal" href="sparse_hes.html#sparse-hes-coloring-colpack-star-deprecated-2017-06-01"><span class="std std-ref">sparse_hes</span></a>
+and
+<a class="reference internal" href="sparse_hessian.html#sparse-hessian-work-colpack-star-deprecated-2017-06-01"><span class="std std-ref">sparse_hessian</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="whats_new_03.html" class="btn btn-neutral float-left" title="whats_new_03" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="include_deprecated.html" class="btn btn-neutral float-right" title="include_deprecated" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

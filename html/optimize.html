@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="optimize, optimize, an, adfun, object, tape" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="options" name="keywords" />
+<meta content="no_conditional_skip" name="keywords" />
+<meta content="no_compare_op" name="keywords" />
+<meta content="no_print_for_op" name="keywords" />
+<meta content="no_cumulative_sum_op" name="keywords" />
+<meta content="collision_limit=value" name="keywords" />
+<meta content="re-optimize" name="keywords" />
+<meta content="efficiency" name="keywords" />
+<meta content="taylor, coefficients" name="keywords" />
+<meta content="speed, testing" name="keywords" />
+<meta content="atomic, functions" name="keywords" />
+<meta content="rev_sparse_jac" name="keywords" />
+<meta content="nan" name="keywords" />
+<meta content="checking, optimization" name="keywords" />
+<meta content="exceed_collision_limit" name="keywords" />
+<meta content="examples" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimize &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="optimize_twice.cpp" href="optimize_twice.cpp.html" />
+    <link rel="prev" title="subgraph_hes2jac.cpp" href="subgraph_hes2jac.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">optimize</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="optimize_twice.cpp.html">optimize_twice.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_forward_active.cpp.html">optimize_forward_active.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_reverse_active.cpp.html">optimize_reverse_active.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_compare_op.cpp.html">optimize_compare_op.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_print_for.cpp.html">optimize_print_for.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_conditional_skip.cpp.html">optimize_conditional_skip.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_nest_conditional.cpp.html">optimize_nest_conditional.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimize_cumulative_sum.cpp.html">optimize_cumulative_sum.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+      <li>optimize</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/optimize.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="optimize">
+<span id="optimize-name"></span><h1>optimize<a class="headerlink" href="#optimize" title="Permalink to this headline"></a></h1>
+<section id="optimize-an-adfun-object-tape">
+<span id="optimize-title"></span><span id="index-0"></span><h2>Optimize an ADFun Object Tape<a class="headerlink" href="#optimize-an-adfun-object-tape" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id3">f</a></p></li>
+<li><p><a class="reference internal" href="#options" id="id4">options</a></p>
+<ul>
+<li><p><a class="reference internal" href="#no-conditional-skip" id="id5">no_conditional_skip</a></p></li>
+<li><p><a class="reference internal" href="#no-compare-op" id="id6">no_compare_op</a></p></li>
+<li><p><a class="reference internal" href="#no-print-for-op" id="id7">no_print_for_op</a></p></li>
+<li><p><a class="reference internal" href="#no-cumulative-sum-op" id="id8">no_cumulative_sum_op</a></p></li>
+<li><p><a class="reference internal" href="#collision-limit-value" id="id9">collision_limit=value</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#re-optimize" id="id10">Re-Optimize</a></p></li>
+<li><p><a class="reference internal" href="#efficiency" id="id11">Efficiency</a></p></li>
+<li><p><a class="reference internal" href="#taylor-coefficients" id="id12">Taylor Coefficients</a></p></li>
+<li><p><a class="reference internal" href="#speed-testing" id="id13">Speed Testing</a></p></li>
+<li><p><a class="reference internal" href="#atomic-functions" id="id14">Atomic Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rev-sparse-jac" id="id15">rev_sparse_jac</a></p></li>
+<li><p><a class="reference internal" href="#nan" id="id16">nan</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#checking-optimization" id="id17">Checking Optimization</a></p></li>
+<li><p><a class="reference internal" href="#exceed-collision-limit" id="id18">exceed_collision_limit</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id19">Examples</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="optimize-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> ()</div>
+<div class="line"><em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> ( <em>options</em> )</div>
+<div class="line"><em>flag</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">exceed_collision_limit</span></code> ()</div>
+</div>
+</section>
+<section id="purpose">
+<span id="optimize-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>The operation sequence corresponding to an <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object can
+be very large and involve many operations; see the
+size functions in <a class="reference internal" href="fun_property.html#fun-property-name"><span class="std std-ref">fun_property</span></a> .
+The <em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> procedure reduces the number of operations,
+and thereby the time and the memory, required to
+compute function and derivative values.</p>
+</section>
+<section id="f">
+<span id="optimize-f"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+</section>
+<section id="options">
+<span id="optimize-options"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">options</a><a class="headerlink" href="#options" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code> <em>options</em></p>
+</div></blockquote>
+<p>The default for <em>options</em> is the empty string.
+If it is present, it must consist of one or more of the options below
+separated by a single space character.</p>
+<section id="no-conditional-skip">
+<span id="optimize-options-no-conditional-skip"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">no_conditional_skip</a><a class="headerlink" href="#no-conditional-skip" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">optimize</span></code> function can create conditional skip operators
+to improve the speed of conditional expressions; see
+<a class="reference internal" href="CondExp.html#condexp-optimize"><span class="std std-ref">Optimize</span></a> .
+If the sub-string <code class="docutils literal notranslate"><span class="pre">no_conditional_skip</span></code> appears in <em>options</em> ,
+conditional skip operations are not be generated.
+This may make the optimize routine use significantly less memory
+and take less time to optimize <em>f</em> .
+If conditional skip operations are generated,
+it may save a significant amount of time when
+using <em>f</em> for <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> or <a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">Reverse</span></a> mode calculations;
+see <a class="reference internal" href="number_skip.html#number-skip-name"><span class="std std-ref">number_skip</span></a> .</p>
+</section>
+<section id="no-compare-op">
+<span id="optimize-options-no-compare-op"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">no_compare_op</a><a class="headerlink" href="#no-compare-op" title="Permalink to this headline"></a></h4>
+<p>If the sub-string <code class="docutils literal notranslate"><span class="pre">no_compare_op</span></code> appears in <em>options</em> ,
+comparison operators will be removed from the optimized function.
+These operators are necessary for the
+<a class="reference internal" href="compare_change.html#compare-change-name"><span class="std std-ref">compare_change</span></a> functions to be meaningful.
+On the other hand, they are not necessary, and take extra time,
+when the compare_change functions are not used.</p>
+</section>
+<section id="no-print-for-op">
+<span id="optimize-options-no-print-for-op"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">no_print_for_op</a><a class="headerlink" href="#no-print-for-op" title="Permalink to this headline"></a></h4>
+<p>If the sub-string <code class="docutils literal notranslate"><span class="pre">no_compare_op</span></code> appears in <em>options</em> ,
+<a class="reference internal" href="PrintFor.html#printfor-name"><span class="std std-ref">PrintFor</span></a> operations will be removed form the optimized function.
+These operators are useful for reporting problems evaluating derivatives
+at independent variable values different from those used to record a function.</p>
+</section>
+<section id="no-cumulative-sum-op">
+<span id="optimize-options-no-cumulative-sum-op"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">no_cumulative_sum_op</a><a class="headerlink" href="#no-cumulative-sum-op" title="Permalink to this headline"></a></h4>
+<p>If this sub-string appears,
+no cumulative sum operations will be generated during the optimization; see
+<a class="reference internal" href="optimize_cumulative_sum.cpp.html#optimize-cumulative-sum-cpp-name"><span class="std std-ref">optimize_cumulative_sum.cpp</span></a> .</p>
+</section>
+<section id="collision-limit-value">
+<span id="optimize-options-collision-limit-value"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">collision_limit=value</a><a class="headerlink" href="#collision-limit-value" title="Permalink to this headline"></a></h4>
+<p>If this substring appears,
+where <em>value</em> is a sequence of decimal digits,
+the optimizer’s hash code collision limit will be set to <em>value</em> .
+When the collision limit is reached, the expressions with that hash code
+are removed and a new lists of expressions with that has code is started.
+The larger <em>value</em> , the more identical expressions the optimizer
+can recognize, but the slower the optimizer may run.
+The default for <em>value</em> is <code class="docutils literal notranslate"><span class="pre">10</span></code> .</p>
+</section>
+</section>
+<section id="re-optimize">
+<span id="optimize-re-optimize"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Re-Optimize</a><a class="headerlink" href="#re-optimize" title="Permalink to this headline"></a></h3>
+<p>Before 2019-06-28, optimizing twice was not supported and would fail
+if cumulative sum operators were present after the first optimization.
+This is now supported but it is not expected to have much benefit.
+If you find a case where it does have a benefit, please inform the CppAD
+developers of this.</p>
+</section>
+<section id="efficiency">
+<span id="optimize-efficiency"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Efficiency</a><a class="headerlink" href="#efficiency" title="Permalink to this headline"></a></h3>
+<p>If a <a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">zero order forward</span></a> calculation is done during
+the construction of <em>f</em> , it will require more memory
+and time than required after the optimization procedure.
+In addition, it will need to be redone.
+For this reason, it is more efficient to use</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em> ;</div>
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Dependent</span></code> ( <em>x</em> , <em>y</em> );</div>
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> ();</div>
+</div>
+<p>instead of</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em> ( <em>x</em> , <em>y</em> )</div>
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> ();</div>
+</div>
+<p>See the discussion about
+<a class="reference internal" href="fun_construct.html#fun-construct-sequence-constructor"><span class="std std-ref">sequence constructors</span></a> .</p>
+</section>
+<section id="taylor-coefficients">
+<span id="optimize-taylor-coefficients"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Taylor Coefficients</a><a class="headerlink" href="#taylor-coefficients" title="Permalink to this headline"></a></h3>
+<p>Any Taylor coefficients in the function object are lost; i.e.,
+<a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">f.size_order()</span></a> after the optimization is zero.
+(See the discussion about efficiency above.)</p>
+</section>
+<section id="speed-testing">
+<span id="optimize-speed-testing"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Speed Testing</a><a class="headerlink" href="#speed-testing" title="Permalink to this headline"></a></h3>
+<p>You can run the CppAD <a class="reference internal" href="speed_main.html#speed-main-name"><span class="std std-ref">speed</span></a> tests and see
+the corresponding changes in number of variables and execution time.
+Note that there is an interaction between using
+<a class="reference internal" href="speed_main.html#speed-main-global-options-optimize"><span class="std std-ref">optimize</span></a> and
+<a class="reference internal" href="speed_main.html#speed-main-global-options-onetape"><span class="std std-ref">onetape</span></a> .
+If <em>onetape</em> is true and <em>optimize</em> is true,
+the optimized tape will be reused many times.
+If <em>onetape</em> is false and <em>optimize</em> is true,
+the tape will be re-optimized for each test.</p>
+</section>
+<section id="atomic-functions">
+<span id="optimize-atomic-functions"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">Atomic Functions</a><a class="headerlink" href="#atomic-functions" title="Permalink to this headline"></a></h3>
+<p>There are some subtitle issue with optimized <a class="reference internal" href="atomic.html#atomic-name"><span class="std std-ref">atomic</span></a> functions
+<span class="math notranslate nohighlight">\(v = g(u)\)</span>:</p>
+<section id="rev-sparse-jac">
+<span id="optimize-atomic-functions-rev-sparse-jac"></span><span id="index-15"></span><h4><a class="toc-backref" href="#id15">rev_sparse_jac</a><a class="headerlink" href="#rev-sparse-jac" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-name"><span class="std std-ref">atomic_two_rev_sparse_jac</span></a> function is be used to determine
+which components of <em>u</em> affect the dependent variables of <em>f</em> .
+For each atomic operation, the current
+<a class="reference internal" href="atomic_two_option.html#atomic-two-option-atomic-sparsity"><span class="std std-ref">atomic_sparsity</span></a> setting is used
+to determine if <code class="docutils literal notranslate"><span class="pre">pack_sparsity_enum</span></code> , <code class="docutils literal notranslate"><span class="pre">bool_sparsity_enum</span></code> ,
+or <code class="docutils literal notranslate"><span class="pre">set_sparsity_enum</span></code> is used to determine dependency relations
+between argument and result variables.</p>
+</section>
+<section id="nan">
+<span id="optimize-atomic-functions-nan"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id16">nan</a><a class="headerlink" href="#nan" title="Permalink to this headline"></a></h4>
+<p>If <em>u</em> [ <em>i</em> ] does not affect the value of
+the dependent variables for <em>f</em> ,
+the value of <em>u</em> [ <em>i</em> ] is set to <a class="reference internal" href="nan.html#nan-name"><span class="std std-ref">nan</span></a> .</p>
+</section>
+</section>
+<section id="checking-optimization">
+<span id="optimize-checking-optimization"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">Checking Optimization</a><a class="headerlink" href="#checking-optimization" title="Permalink to this headline"></a></h3>
+<p>If <a class="reference internal" href="Faq.html#faq-speed-ndebug"><span class="std std-ref">NDEBUG</span></a> is not defined,
+and <a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">f.size_order()</span></a> is greater than zero,
+a <a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">forward_zero</span></a> calculation is done using the optimized version
+of <em>f</em> and the results are checked to see that they are
+the same as before.
+If they are not the same, the
+<a class="reference internal" href="ErrorHandler.html#errorhandler-name"><span class="std std-ref">ErrorHandler</span></a> is called with a known error message
+related to <em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> () .</p>
+</section>
+<section id="exceed-collision-limit">
+<span id="optimize-exceed-collision-limit"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">exceed_collision_limit</a><a class="headerlink" href="#exceed-collision-limit" title="Permalink to this headline"></a></h3>
+<p>If the return value <em>flag</em> is true (false),
+the previous call to <em>f</em> . <code class="docutils literal notranslate"><span class="pre">optimize</span></code> exceed the
+<a class="reference internal" href="#optimize-options-collision-limit-value"><span class="std std-ref">collision_limit</span></a> .</p>
+</section>
+<section id="examples">
+<span id="optimize-examples"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id19">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>optimize_twice.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_twice.cpp.html#optimize-twice-cpp-title"><span class="std std-ref">Optimizing Twice: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>optimize_forward_active.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_forward_active.cpp.html#optimize-forward-active-cpp-title"><span class="std std-ref">Optimize Forward Activity Analysis: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>optimize_reverse_active.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_reverse_active.cpp.html#optimize-reverse-active-cpp-title"><span class="std std-ref">Optimize Reverse Activity Analysis: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>optimize_compare_op.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_compare_op.cpp.html#optimize-compare-op-cpp-title"><span class="std std-ref">Optimize Comparison Operators: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>optimize_print_for.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_print_for.cpp.html#optimize-print-for-cpp-title"><span class="std std-ref">Optimize Print Forward Operators: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>optimize_conditional_skip.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_conditional_skip.cpp.html#optimize-conditional-skip-cpp-title"><span class="std std-ref">Optimize Conditional Expressions: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>optimize_nest_conditional.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_nest_conditional.cpp.html#optimize-nest-conditional-cpp-title"><span class="std std-ref">Optimize Nested Conditional Expressions: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>optimize_cumulative_sum.cpp</p></td>
+<td><p><a class="reference internal" href="optimize_cumulative_sum.cpp.html#optimize-cumulative-sum-cpp-title"><span class="std std-ref">Optimize Cumulative Sum Operations: Example and Test</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="subgraph_hes2jac.cpp.html" class="btn btn-neutral float-left" title="subgraph_hes2jac.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimize_twice.cpp.html" class="btn btn-neutral float-right" title="optimize_twice.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

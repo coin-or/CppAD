@@ -1,0 +1,48 @@
+lines 43-88 of file: include/cppad/core/graph/cpp_graph.hpp
+
+{xrst_begin cpp_graph_ctor}
+
+C++ AD Graph Constructor
+########################
+
+Syntax
+******
+
+| ``cpp_graph`` *graph_obj*
+| *graph_obj* . ``initialize`` ()
+
+function_name
+*************
+:ref:`cpp_ad_graph@function_name`
+is initialized to the empty string.
+
+n_dynamic_ind
+*************
+:ref:`cpp_ad_graph@n_dynamic_ind` is initialized as zero.
+
+n_variable_ind
+**************
+:ref:`cpp_ad_graph@n_variable_ind` is initialized as zero.
+
+constant_vec
+************
+:ref:`cpp_ad_graph@constant_vec` is initialized as empty.
+
+operator_vec
+************
+:ref:`cpp_ad_graph@operator_vec` is initialized as empty.
+
+operator_arg
+************
+:ref:`cpp_ad_graph@operator_arg` is initialized as empty.
+
+dependent_vec
+*************
+:ref:`cpp_ad_graph@dependent_vec` is initialized as empty.
+
+Parallel Mode
+*************
+The first use of the ``cpp_graph`` constructor
+cannot be in :ref:`parallel<ta_in_parallel-name>` execution mode.
+
+{xrst_end cpp_graph_ctor}

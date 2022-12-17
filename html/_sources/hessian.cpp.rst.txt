@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/hessian.cpp
+
+{xrst_begin hessian.cpp}
+
+Hessian: Example and Test
+#########################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end hessian.cpp}

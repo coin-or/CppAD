@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/forward.cpp
+
+{xrst_begin forward.cpp}
+
+Forward Mode: Example and Test
+##############################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end forward.cpp}

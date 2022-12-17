@@ -1,0 +1,14 @@
+lines 5-16 of file: example/abs_normal/simplex_method.xrst
+
+{xrst_begin simplex_method.hpp}
+
+simplex_method Source Code
+##########################
+
+{xrst_literal
+   example/abs_normal/simplex_method.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end simplex_method.hpp}

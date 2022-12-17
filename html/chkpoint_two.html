@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="chkpoint_two, checkpoint, functions:, second, generation" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="constructor" name="keywords" />
+<meta content="use, checkpoint, function" name="keywords" />
+<meta content="new_dynamic" name="keywords" />
+<meta content="reduce, memory" name="keywords" />
+<meta content="faster, recording" name="keywords" />
+<meta content="repeating, forward" name="keywords" />
+<meta content="operation, sequence" name="keywords" />
+<meta content="atomic_three" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="contents" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chkpoint_two &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="chkpoint_two_ctor" href="chkpoint_two_ctor.html" />
+    <link rel="prev" title="atomic_three_mat_mul.hpp" href="atomic_three_mat_mul.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atomic_four.html">atomic_four</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_three.html">atomic_three</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">chkpoint_two</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_ctor.html">chkpoint_two_ctor</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_chk_fun.html">chkpoint_two_chk_fun</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_dynamic.html">chkpoint_two_dynamic</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_get_started.cpp.html">chkpoint_two_get_started.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_compare.cpp.html">chkpoint_two_compare.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_base2ad.cpp.html">chkpoint_two_base2ad.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_dynamic.cpp.html">chkpoint_two_dynamic.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="chkpoint_two_ode.cpp.html">chkpoint_two_ode.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+      <li>chkpoint_two</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/chkpoint_two.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="chkpoint-two">
+<span id="chkpoint-two-name"></span><h1>chkpoint_two<a class="headerlink" href="#chkpoint-two" title="Permalink to this headline"></a></h1>
+<section id="checkpoint-functions-second-generation">
+<span id="chkpoint-two-title"></span><span id="index-0"></span><h2>Checkpoint Functions: Second Generation<a class="headerlink" href="#checkpoint-functions-second-generation" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p>
+<ul>
+<li><p><a class="reference internal" href="#constructor" id="id3">Constructor</a></p></li>
+<li><p><a class="reference internal" href="#use-checkpoint-function" id="id4">Use Checkpoint Function</a></p></li>
+<li><p><a class="reference internal" href="#new-dynamic" id="id5">new_dynamic</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reduce-memory" id="id6">Reduce Memory</a></p></li>
+<li><p><a class="reference internal" href="#faster-recording" id="id7">Faster Recording</a></p></li>
+<li><p><a class="reference internal" href="#repeating-forward" id="id8">Repeating Forward</a></p></li>
+<li><p><a class="reference internal" href="#operation-sequence" id="id9">Operation Sequence</a></p></li>
+<li><p><a class="reference internal" href="#atomic-three" id="id10">atomic_three</a></p></li>
+<li><p><a class="reference internal" href="#base" id="id11">Base</a></p></li>
+<li><p><a class="reference internal" href="#chkpoint-two-contents" id="id12">Contents</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="chkpoint-two-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<section id="constructor">
+<span id="chkpoint-two-syntax-constructor"></span><span id="index-2"></span><h4><a class="toc-backref" href="#id3">Constructor</a><a class="headerlink" href="#constructor" title="Permalink to this headline"></a></h4>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">chkpoint_two&lt;</span></code> <em>Base</em> &gt; <em>chk_fun</em> ( <em>fun</em> , <em>name</em> ,</div>
+<div class="line">      <em>internal_bool</em> , <em>use_hes_sparsity</em> , <em>use_base2ad</em> , <em>use_in_parallel</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="use-checkpoint-function">
+<span id="chkpoint-two-syntax-use-checkpoint-function"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id4">Use Checkpoint Function</a><a class="headerlink" href="#use-checkpoint-function" title="Permalink to this headline"></a></h4>
+<p><em>chk_fun</em> ( <em>ax</em> , <em>ay</em> )</p>
+</section>
+<section id="new-dynamic">
+<span id="chkpoint-two-syntax-new-dynamic"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id5">new_dynamic</a><a class="headerlink" href="#new-dynamic" title="Permalink to this headline"></a></h4>
+<p><em>chk_fun</em> . <code class="docutils literal notranslate"><span class="pre">new_dynamic</span></code> ( <em>dynamic</em> )</p>
+</section>
+</section>
+<section id="reduce-memory">
+<span id="chkpoint-two-reduce-memory"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id6">Reduce Memory</a><a class="headerlink" href="#reduce-memory" title="Permalink to this headline"></a></h3>
+<p>You can reduce the size of the tape and memory required for AD
+using a checkpoint representation of a function
+<span class="math notranslate nohighlight">\(g : \B{R}^n \rightarrow \B{R}^m\)</span>.</p>
+</section>
+<section id="faster-recording">
+<span id="chkpoint-two-faster-recording"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">Faster Recording</a><a class="headerlink" href="#faster-recording" title="Permalink to this headline"></a></h3>
+<p>It may also reduce the time to make a recording if the same <span class="math notranslate nohighlight">\(g(x)\)</span>
+is used many times (with different values) during the
+recording of an <code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; object.</p>
+</section>
+<section id="repeating-forward">
+<span id="chkpoint-two-repeating-forward"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id8">Repeating Forward</a><a class="headerlink" href="#repeating-forward" title="Permalink to this headline"></a></h3>
+<p>Normally, CppAD stores <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> mode results,
+until they freed using <a class="reference internal" href="capacity_order.html#capacity-order-name"><span class="std std-ref">capacity_order</span></a> ,
+or the corresponding <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object is deleted.
+This is not true for <code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code> functions
+because the same checkpoint function may be used repeatedly
+with different arguments during a single forward mode operation.
+Thus, forward mode results are computed for each use of <em>chk_fun</em>
+in a forward mode sweep.</p>
+</section>
+<section id="operation-sequence">
+<span id="chkpoint-two-operation-sequence"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id9">Operation Sequence</a><a class="headerlink" href="#operation-sequence" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a>
+representing <span class="math notranslate nohighlight">\(g(x)\)</span> is fixed; i.e.,
+it cannot depend on the value of <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</section>
+<section id="atomic-three">
+<span id="chkpoint-two-atomic-three"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id10">atomic_three</a><a class="headerlink" href="#atomic-three" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code> class is derived from <code class="docutils literal notranslate"><span class="pre">atomic_three</span></code> ,
+hence some of its error message will refer to atomic operations.
+The <code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code> class implements all the
+<a class="reference internal" href="atomic_three_define.html#atomic-three-define-virtual-functions"><span class="std std-ref">Virtual Functions</span></a>
+and hence its source code,</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">include/cppad/core/chkpoint_two/chkpoint_two.hpp</span></code></p>
+</div></blockquote>
+<p>provides an example for <a class="reference internal" href="atomic_three.html#atomic-three-name"><span class="std std-ref">atomic_three</span></a> operations.
+The difference is that <code class="docutils literal notranslate"><span class="pre">chkpoint_two.hpp</span></code> uses AD
+instead of user provided derivatives.</p>
+</section>
+<section id="base">
+<span id="chkpoint-two-base"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id11">Base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h3>
+<p>The type <em>Base</em> specifies the base type for AD operations;
+i.e., <em>chk_fun</em> can be used during the recording of
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; operations.</p>
+</section>
+<section id="chkpoint-two-contents">
+<span id="index-11"></span><span id="id1"></span><h3><a class="toc-backref" href="#id12">Contents</a><a class="headerlink" href="#chkpoint-two-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chkpoint_two_ctor</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_ctor.html#chkpoint-two-ctor-title"><span class="std std-ref">Checkpoint Function Constructor</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>chkpoint_two_chk_fun</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_chk_fun.html#chkpoint-two-chk-fun-title"><span class="std std-ref">Using Checkpoint Functions</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>chkpoint_two_dynamic</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_dynamic.html#chkpoint-two-dynamic-title"><span class="std std-ref">Dynamic Parameters in Checkpoint Functions</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>chkpoint_two_get_started.cpp</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_get_started.cpp.html#chkpoint-two-get-started-cpp-title"><span class="std std-ref">Get Started Checkpointing: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>chkpoint_two_compare.cpp</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_compare.cpp.html#chkpoint-two-compare-cpp-title"><span class="std std-ref">Compare With and Without Checkpointing: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>chkpoint_two_base2ad.cpp</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_base2ad.cpp.html#chkpoint-two-base2ad-cpp-title"><span class="std std-ref">Checkpointing With base2ad: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>chkpoint_two_dynamic.cpp</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_dynamic.cpp.html#chkpoint-two-dynamic-cpp-title"><span class="std std-ref">Checkpoint Functions with Dynamic Parameters: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>chkpoint_two_ode.cpp</p></td>
+<td><p><a class="reference internal" href="chkpoint_two_ode.cpp.html#chkpoint-two-ode-cpp-title"><span class="std std-ref">Checkpointing an ODE Solver: Example and Test</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_three_mat_mul.hpp.html" class="btn btn-neutral float-left" title="atomic_three_mat_mul.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="chkpoint_two_ctor.html" class="btn btn-neutral float-right" title="chkpoint_two_ctor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

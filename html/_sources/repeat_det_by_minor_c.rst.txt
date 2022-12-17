@@ -1,0 +1,48 @@
+lines 415-460 of file: test_more/compare_c/det_by_minor.c
+
+{xrst_begin repeat_det_by_minor_c}
+
+Repeat det_by_minor Routine A Specified Number of Times
+#######################################################
+
+Syntax
+******
+``repeat_det_by_minor`` ( *repeat* , *size* )
+
+repeat
+******
+The argument has prototype
+
+   ``size_t`` *repeat*
+
+It specifies the number of times to repeat the calculation.
+
+size
+****
+The argument has prototype
+
+   ``size_t`` *size*
+
+It specifies the number of rows (and columns) in the square
+matrix we are computing the determinant of.
+
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
+void repeat_det_by_minor(size_t repeat, size_t size)
+{  double *a;
+   a = (double*) malloc( (size * size) * sizeof(double) );
+
+   while(repeat--)
+   {  uniform_01(size * size, a);
+      det_by_minor(a, size);
+   }
+
+   free(a);
+   return;
+}
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end repeat_det_by_minor_c}

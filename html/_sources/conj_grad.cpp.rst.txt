@@ -1,0 +1,73 @@
+lines 7-77 of file: example/sparse/conj_grad.cpp
+
+{xrst_begin conj_grad.cpp}
+{xrst_spell
+   iterate
+}
+
+Differentiate Conjugate Gradient Algorithm: Example and Test
+############################################################
+
+Purpose
+*******
+The conjugate gradient algorithm is sparse linear solver and
+a good example where checkpointing can be applied (for each iteration).
+This example is a preliminary version of a new library routine
+for the conjugate gradient algorithm.
+
+Algorithm
+*********
+Given a positive definite matrix :math:`A \in \B{R}^{n \times n}`,
+a vector :math:`b \in \B{R}^n`,
+and tolerance :math:`\varepsilon`,
+the conjugate gradient algorithm finds an :math:`x \in \B{R}^n`
+such that :math:`\| A x - b \|^2 / n \leq \varepsilon^2`
+(or it terminates at a specified maximum number of iterations).
+
+#. Input:
+
+   The matrix :math:`A \in \B{R}^{n \times n}`,
+   the vector :math:`b \in \B{R}^n`,
+   a tolerance :math:`\varepsilon \geq 0`,
+   a maximum number of iterations :math:`m`,
+   and the initial approximate solution :math:`x^0 \in \B{R}^n`
+   (can use zero for :math:`x^0`).
+
+#. Initialize:
+
+   :math:`g^0 = A * x^0 - b`,
+   :math:`d^0 = - g^0`,
+   :math:`s_0 = ( g^0 )^\R{T} g^0`,
+   :math:`k = 0`.
+
+#. Convergence Check:
+
+   if :math:`k = m` or :math:`\sqrt{ s_k / n } < \varepsilon`,
+   return :math:`k` as the number of iterations and :math:`x^k`
+   as the approximate solution.
+
+#. Next :math:`x`:
+
+   :math:`\mu_{k+1} = s_k / [ ( d^k )^\R{T} A d^k ]`,
+   :math:`x^{k+1} = x^k + \mu_{k+1} d^k`.
+
+#. Next :math:`g`:
+
+   :math:`g^{k+1} = g^k + \mu_{k+1} A d^k`,
+   :math:`s_{k+1} = ( g^{k+1} )^\R{T} g^{k+1}`.
+
+#. Next :math:`d`:
+
+   :math:`d^{k+1} = - g^k + ( s_{k+1} / s_k ) d^k`.
+
+#. Iterate:
+
+   :math:`k = k + 1`,
+   goto Convergence Check.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end conj_grad.cpp}

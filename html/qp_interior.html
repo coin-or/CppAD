@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="qp_interior, solve, a, quadratic, program, using, interior, point, method" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="prototype" name="keywords" />
+<meta content="source" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="problem" name="keywords" />
+<meta content="vector" name="keywords" />
+<meta content="level" name="keywords" />
+<meta content="lower, c" name="keywords" />
+<meta content="upper, c" name="keywords" />
+<meta content="lower, g" name="keywords" />
+<meta content="upper, g" name="keywords" />
+<meta content="epsilon" name="keywords" />
+<meta content="maxitr" name="keywords" />
+<meta content="xin" name="keywords" />
+<meta content="xout" name="keywords" />
+<meta content="yout" name="keywords" />
+<meta content="sout" name="keywords" />
+<meta content="ok" name="keywords" />
+<meta content="kkt, conditions" name="keywords" />
+<meta content="newton, step" name="keywords" />
+<meta content="elementary, row, reduction" name="keywords" />
+<meta content="solution" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>qp_interior &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qp_interior.cpp" href="qp_interior.cpp.html" />
+    <link rel="prev" title="min_nso_linear.hpp" href="min_nso_linear.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="other_adfun.html">other_adfun</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base2ad.html">base2ad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_ad_graph.html">json_ad_graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_ad_graph.html">cpp_ad_graph</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="abs_normal_fun.html">abs_normal_fun</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="example_abs_normal.html">example_abs_normal</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="abs_get_started.cpp.html">abs_get_started.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_print_mat.html">abs_print_mat</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_eval.html">abs_eval</a></li>
+<li class="toctree-l6"><a class="reference internal" href="simplex_method.html">simplex_method</a></li>
+<li class="toctree-l6"><a class="reference internal" href="lp_box.html">lp_box</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_min_linear.html">abs_min_linear</a></li>
+<li class="toctree-l6"><a class="reference internal" href="min_nso_linear.html">min_nso_linear</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">qp_interior</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="qp_interior.cpp.html">qp_interior.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="qp_interior.hpp.html">qp_interior.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="qp_box.html">qp_box</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_min_quad.html">abs_min_quad</a></li>
+<li class="toctree-l6"><a class="reference internal" href="min_nso_quad.html">min_nso_quad</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="other_adfun.html">other_adfun</a> &raquo;</li>
+          <li><a href="abs_normal_fun.html">abs_normal_fun</a> &raquo;</li>
+          <li><a href="example_abs_normal.html">example_abs_normal</a> &raquo;</li>
+      <li>qp_interior</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/qp_interior.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="qp-interior">
+<span id="qp-interior-name"></span><h1>qp_interior<a class="headerlink" href="#qp-interior" title="Permalink to this headline"></a></h1>
+<section id="solve-a-quadratic-program-using-interior-point-method">
+<span id="qp-interior-title"></span><span id="index-0"></span><h2>Solve a Quadratic Program Using Interior Point Method<a class="headerlink" href="#solve-a-quadratic-program-using-interior-point-method" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#prototype" id="id2">Prototype</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id3">Source</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id4">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#problem" id="id5">Problem</a></p></li>
+<li><p><a class="reference internal" href="#vector" id="id6">Vector</a></p></li>
+<li><p><a class="reference internal" href="#level" id="id7">level</a></p></li>
+<li><p><a class="reference internal" href="#lower-c" id="id8">Lower c</a></p></li>
+<li><p><a class="reference internal" href="#upper-c" id="id9">Upper C</a></p></li>
+<li><p><a class="reference internal" href="#lower-g" id="id10">Lower g</a></p></li>
+<li><p><a class="reference internal" href="#upper-g" id="id11">Upper G</a></p></li>
+<li><p><a class="reference internal" href="#epsilon" id="id12">epsilon</a></p></li>
+<li><p><a class="reference internal" href="#maxitr" id="id13">maxitr</a></p></li>
+<li><p><a class="reference internal" href="#xin" id="id14">xin</a></p></li>
+<li><p><a class="reference internal" href="#xout" id="id15">xout</a></p></li>
+<li><p><a class="reference internal" href="#yout" id="id16">yout</a></p></li>
+<li><p><a class="reference internal" href="#sout" id="id17">sout</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id18">ok</a></p></li>
+<li><p><a class="reference internal" href="#kkt-conditions" id="id19">KKT Conditions</a></p></li>
+<li><p><a class="reference internal" href="#newton-step" id="id20">Newton Step</a></p>
+<ul>
+<li><p><a class="reference internal" href="#elementary-row-reduction" id="id21">Elementary Row Reduction</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#solution" id="id22">Solution</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id23">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="qp-interior-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>ok</em> = <code class="docutils literal notranslate"><span class="pre">qp_interior</span></code> (</div>
+<div class="line"><em>level</em> , <em>c</em> , <em>C</em> , <em>g</em> , <em>G</em> , <em>epsilon</em> , <em>maxitr</em> , <em>xin</em> , <em>xout</em> , <em>yout</em> , <em>sout</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="prototype">
+<span id="qp-interior-prototype"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Prototype</a><a class="headerlink" href="#prototype" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">qp_interior</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">        </span><span class="n">level</span><span class="w">   </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">g</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">G</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w">        </span><span class="n">epsilon</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">        </span><span class="n">maxitr</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">xin</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w">       </span><span class="n">xout</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w">       </span><span class="n">yout</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">Vector</span><span class="o">&amp;</span><span class="w">       </span><span class="n">sout</span><span class="w">    </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="source">
+<span id="qp-interior-source"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<p>This following is a link to the source code for this example:
+<a class="reference internal" href="qp_interior.hpp.html#qp-interior-hpp-name"><span class="std std-ref">qp_interior.hpp</span></a> .</p>
+</section>
+<section id="purpose">
+<span id="qp-interior-purpose"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This routine could be used to create a version of <a class="reference internal" href="abs_min_linear.html#abs-min-linear-name"><span class="std std-ref">abs_min_linear</span></a>
+that solved Quadratic programs (instead of linear programs).</p>
+</section>
+<section id="problem">
+<span id="qp-interior-problem"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Problem</a><a class="headerlink" href="#problem" title="Permalink to this headline"></a></h3>
+<p>We are given
+<span class="math notranslate nohighlight">\(C \in \B{R}^{m \times n}\)</span>,
+<span class="math notranslate nohighlight">\(c \in \B{R}^m\)</span>,
+<span class="math notranslate nohighlight">\(G \in \B{R}^{n \times n}\)</span>,
+<span class="math notranslate nohighlight">\(g \in \B{R}^n\)</span>,
+where <span class="math notranslate nohighlight">\(G\)</span> is positive semi-definite
+and <span class="math notranslate nohighlight">\(G + C^T C\)</span> is positive definite.
+This routine solves the problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rl}
+\R{minimize} &amp;
+\frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
+\\
+\R{subject \; to} &amp;
+C x + c \leq 0
+\end{array}\end{split}\]</div>
+</section>
+<section id="vector">
+<span id="qp-interior-vector"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Vector</a><a class="headerlink" href="#vector" title="Permalink to this headline"></a></h3>
+<p>The type <em>Vector</em> is a
+simple vector with elements of type <code class="docutils literal notranslate"><span class="pre">double</span></code> .</p>
+</section>
+<section id="level">
+<span id="qp-interior-level"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">level</a><a class="headerlink" href="#level" title="Permalink to this headline"></a></h3>
+<p>This value is zero or one.
+If <em>level</em>  == 0 ,
+no tracing is printed.
+If <em>level</em>  == 1 ,
+a trace of the <code class="docutils literal notranslate"><span class="pre">qp_interior</span></code> optimization is printed.</p>
+</section>
+<section id="lower-c">
+<span id="qp-interior-lower-c"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Lower c</a><a class="headerlink" href="#lower-c" title="Permalink to this headline"></a></h3>
+<p>This is the vector <span class="math notranslate nohighlight">\(c\)</span> in the problem.</p>
+</section>
+<section id="upper-c">
+<span id="qp-interior-upper-c"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Upper C</a><a class="headerlink" href="#upper-c" title="Permalink to this headline"></a></h3>
+<p>This is a <a class="reference internal" href="glossary.html#glossary-row-major-representation"><span class="std std-ref">row-major</span></a>
+of the matrix <span class="math notranslate nohighlight">\(C\)</span> in the problem.</p>
+</section>
+<section id="lower-g">
+<span id="qp-interior-lower-g"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Lower g</a><a class="headerlink" href="#lower-g" title="Permalink to this headline"></a></h3>
+<p>This is the vector <span class="math notranslate nohighlight">\(g\)</span> in the problem.</p>
+</section>
+<section id="upper-g">
+<span id="qp-interior-upper-g"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Upper G</a><a class="headerlink" href="#upper-g" title="Permalink to this headline"></a></h3>
+<p>This is a <a class="reference internal" href="glossary.html#glossary-row-major-representation"><span class="std std-ref">row-major</span></a>
+of the matrix <span class="math notranslate nohighlight">\(G\)</span> in the problem.</p>
+</section>
+<section id="epsilon">
+<span id="qp-interior-epsilon"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">epsilon</a><a class="headerlink" href="#epsilon" title="Permalink to this headline"></a></h3>
+<p>This argument is the convergence criteria;
+see <a class="reference internal" href="#qp-interior-kkt-conditions"><span class="std std-ref">KKT Conditions</span></a> below.
+It must be greater than zero.</p>
+</section>
+<section id="maxitr">
+<span id="qp-interior-maxitr"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">maxitr</a><a class="headerlink" href="#maxitr" title="Permalink to this headline"></a></h3>
+<p>This is the maximum number of newton iterations to try before giving up
+on convergence.</p>
+</section>
+<section id="xin">
+<span id="qp-interior-xin"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">xin</a><a class="headerlink" href="#xin" title="Permalink to this headline"></a></h3>
+<p>This argument has size <em>n</em> and is the initial point for the algorithm.
+It must strictly satisfy the constraints; i.e.,
+<span class="math notranslate nohighlight">\(C x - c &lt; 0\)</span>  for <em>x</em> = <em>xin</em> .</p>
+</section>
+<section id="xout">
+<span id="qp-interior-xout"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">xout</a><a class="headerlink" href="#xout" title="Permalink to this headline"></a></h3>
+<p>This argument has size is <em>n</em> and
+the input value of its elements does no matter.
+Upon return it is the primal variables corresponding to the problem solution.</p>
+</section>
+<section id="yout">
+<span id="qp-interior-yout"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">yout</a><a class="headerlink" href="#yout" title="Permalink to this headline"></a></h3>
+<p>This argument has size is <em>m</em> and
+the input value of its elements does no matter.
+Upon return it the components of <em>yout</em> are all positive
+and it is the dual variables corresponding to the program solution.</p>
+</section>
+<section id="sout">
+<span id="qp-interior-sout"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">sout</a><a class="headerlink" href="#sout" title="Permalink to this headline"></a></h3>
+<p>This argument has size is <em>m</em> and
+the input value of its elements does no matter.
+Upon return it the components of <em>sout</em> are all positive
+and it is the slack variables corresponding to the program solution.</p>
+</section>
+<section id="ok">
+<span id="qp-interior-ok"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>If the return value <em>ok</em> is true, convergence is obtained; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[| F_0 (xout , yout, sout) |_\infty \leq epsilon\]</div>
+<p>where <span class="math notranslate nohighlight">\(| v |_\infty\)</span> is the maximum absolute element
+for the vector <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(F_\mu (x, y, s)\)</span> is defined below.</p>
+</section>
+<section id="kkt-conditions">
+<span id="qp-interior-kkt-conditions"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id19">KKT Conditions</a><a class="headerlink" href="#kkt-conditions" title="Permalink to this headline"></a></h3>
+<p>Give a vector <span class="math notranslate nohighlight">\(v \in \B{R}^m\)</span> we define
+<span class="math notranslate nohighlight">\(D(v) \in \B{R}^{m \times m}\)</span> as the corresponding diagonal matrix.
+We also define <span class="math notranslate nohighlight">\(1_m \in \B{R}^m\)</span> as the vector of ones.
+We define
+<span class="math notranslate nohighlight">\(F_\mu : \B{R}^{n + m + m } \rightarrow \B{R}^{n + m + m}\)</span>
+by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\mu ( x , y , s )
+=
+\left(
+\begin{array}{c}
+g + G x + y^T C             \\
+C x + c + s                           \\
+D(s) D(y) 1_m - \mu 1_m
+\end{array}
+\right)\end{split}\]</div>
+<p>The KKT conditions for a solution of this problem is
+<span class="math notranslate nohighlight">\(0 \leq y\)</span>,
+<span class="math notranslate nohighlight">\(0 \leq s\)</span>, and
+<span class="math notranslate nohighlight">\(F_0 (x , y, s) = 0\)</span>.</p>
+</section>
+<section id="newton-step">
+<span id="qp-interior-newton-step"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id20">Newton Step</a><a class="headerlink" href="#newton-step" title="Permalink to this headline"></a></h3>
+<p>The derivative of <span class="math notranslate nohighlight">\(F_\mu\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\mu^{(1)} (x, y, s)  =
+\left( \begin{array}{ccc}
+G       &amp; C^T  &amp; 0_{n,m} \\
+C       &amp; 0    &amp; I_{m,m} \\
+0_{m,m} &amp; D(s) &amp; D(y)
+\end{array} \right)\end{split}\]</div>
+<p>The Newton step solves the following equation for
+<span class="math notranslate nohighlight">\(\Delta x\)</span>, <span class="math notranslate nohighlight">\(\Delta y\)</span>, and <span class="math notranslate nohighlight">\(\Delta z\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\mu^{(1)} (x, y, s)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+- F_\mu (x, y, s)\end{split}\]</div>
+<p>To simplify notation, we define</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+r_x (x, y, s) &amp; = &amp; g + G x + y^T C \\
+r_y (x, y, s) &amp; = &amp; C x + c + s          \\
+r_s (x, y, s) &amp; = &amp; D(s) D(y) 1_m - \mu 1_m
+\end{eqnarray}</div><p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left( \begin{array}{ccc}
+G       &amp; C^T  &amp; 0_{n,m} \\
+C       &amp; 0    &amp; I_{m,m} \\
+0_{m,m} &amp; D(s) &amp; D(y)
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+   r_x (x, y, s) \\
+   r_y (x, y, s) \\
+   r_s (x, y, s)
+\end{array} \right)\end{split}\]</div>
+<section id="elementary-row-reduction">
+<span id="qp-interior-newton-step-elementary-row-reduction"></span><span id="index-21"></span><h4><a class="toc-backref" href="#id21">Elementary Row Reduction</a><a class="headerlink" href="#elementary-row-reduction" title="Permalink to this headline"></a></h4>
+<p>Subtracting <span class="math notranslate nohighlight">\(D(y)\)</span> times the second row from the third row
+we obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left( \begin{array}{ccc}
+G        &amp; C^T  &amp; 0_{n,m} \\
+C        &amp; 0    &amp; I_{m,m} \\
+- D(y) C &amp; D(s) &amp; 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+   r_x (x, y, s) \\
+   r_y (x, y, s) \\
+   r_s (x, y, s) - D(y) r_y(x, y, s)
+\end{array} \right)\end{split}\]</div>
+<p>Multiplying the third row by <span class="math notranslate nohighlight">\(D(s)^{-1}\)</span> we obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left( \begin{array}{ccc}
+G          &amp; C^T     &amp; 0_{n,m} \\
+C          &amp; 0       &amp; I_{m,m} \\
+- D(y/s) C &amp; I_{m,m} &amp; 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+   r_x (x, y, s) \\
+   r_y (x, y, s) \\
+   D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+\end{array} \right)\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y/s\)</span> is the vector in <span class="math notranslate nohighlight">\(\B{R}^m\)</span> defined by
+<span class="math notranslate nohighlight">\((y/s)_i = y_i / s_i\)</span>.
+Subtracting <span class="math notranslate nohighlight">\(C^T\)</span> times the third row from the first row we obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left( \begin{array}{ccc}
+G + C^T D(y/s) C &amp; 0_{n,m} &amp; 0_{n,m} \\
+C                &amp; 0       &amp; I_{m,m} \\
+- D(y/s) C       &amp; I_{m,m} &amp; 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+   r_x (x, y, s)
+      - C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+   r_y (x, y, s) \\
+   D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+\end{array} \right)\end{split}\]</div>
+</section>
+</section>
+<section id="solution">
+<span id="qp-interior-solution"></span><span id="index-22"></span><h3><a class="toc-backref" href="#id22">Solution</a><a class="headerlink" href="#solution" title="Permalink to this headline"></a></h3>
+<p>It follows that <span class="math notranslate nohighlight">\(G + C^T D(y/s) C\)</span> is invertible and
+we can determine <span class="math notranslate nohighlight">\(\Delta x\)</span> by solving the equation</p>
+<div class="math notranslate nohighlight">
+\[[ G + C^T D(y/s) C ] \Delta x
+=
+C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)\]</div>
+<p>Given <span class="math notranslate nohighlight">\(\Delta x\)</span> we have that</p>
+<div class="math notranslate nohighlight">
+\[\Delta s = - r_y (x, y, s) - C \Delta x\]</div>
+<div class="math notranslate nohighlight">
+\[\Delta y =
+D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]\]</div>
+</section>
+<section id="example">
+<span id="qp-interior-example"></span><span id="index-23"></span><h3><a class="toc-backref" href="#id23">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="qp_interior.cpp.html#qp-interior-cpp-name"><span class="std std-ref">qp_interior.cpp</span></a> contains an example and test of
+<code class="docutils literal notranslate"><span class="pre">qp_interior</span></code> .</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="min_nso_linear.hpp.html" class="btn btn-neutral float-left" title="min_nso_linear.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="qp_interior.cpp.html" class="btn btn-neutral float-right" title="qp_interior.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

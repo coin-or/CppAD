@@ -1,0 +1,16 @@
+lines 104-117 of file: include/cppad/core/standard_math.hpp
+
+{xrst_begin binary_math}
+
+The Binary Math Functions
+#########################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atan2.hpp
+   include/cppad/core/pow.hpp
+   include/cppad/core/azmul.hpp
+}
+
+{xrst_end binary_math}

@@ -1,0 +1,139 @@
+lines 16-152 of file: include/cppad/core/to_csrc.hpp
+
+{xrst_begin to_csrc}
+{xrst_spell
+   cdecl
+   csrc
+   declspec
+   dllimport
+   multiplier
+   typedef
+   underbar
+}
+
+C Source Code Corresponding to an ADFun Object
+##############################################
+
+Syntax
+******
+
+   *fun* . ``to_csrc`` ( *os* , *c_type* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+fun
+***
+is the :ref:`adfun-name` object.
+
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
+
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+
+os
+**
+The C source code representation of the function *fun*
+is written to *os* .
+
+c_type
+******
+The possible values for this argument are:
+``float`` , ``double`` , or ``long_double`` .
+
+JIT Functions
+*************
+
+| *flag* = ``cppad_jit_`` *function_name* (
+| |tab| *nu* , *u* , *ny* , *y* , *compare_change*
+| )
+| ``typedef int`` (* ``jit_`` *c_type* )(
+| |tab| ``size_t`` , ``const`` *type* * , ``size_t`` , *type* * , ``size_t`` *
+| )
+
+Here *type* is the same as *c_type* except that the
+underbar in ``long_double`` is replaced by a space.
+The function type ``jit_`` *c_type* is defined in the CppAD namespace.
+In the case of the Visual C++ compiler (``_MSC_VER`` is defined),
+``__cdecl`` and ``__declspec(dllimport)`` are added to
+the function type definition.
+
+Atomic Callbacks
+****************
+
+| *flag* = ``cppad_atomic_`` *function_name* (
+| |tab| *call_id* , *nu* , *u* , *ny* , *y* , *compare_change*
+| )
+| ``typedef int`` (* ``jit_`` *c_type* )(
+| |tab| ``size_t`` , ``size_t`` , ``const`` *type* * , ``size_t`` , *type* * , ``size_t`` *
+| )
+
+The function type ``atomic_`` *c_type* is defined in the CppAD namespace.
+The corresponding function evaluates zero order forward mode for the
+atomic function with the specified *function_name* .
+
+call_id
+*******
+This argument is only used during atomic four function callbacks,
+in which case it is the corresponding
+:ref:`atomic_four_call@call_id` .
+
+nu
+**
+is the number of independent dynamic parameters
+plus number of independent variables for the function *fun* .
+
+u
+*
+is a C vector of size *nu* containing the independent dynamic parameters
+and independent variables
+The independent dynamic parameter come first as in the same order as
+:ref:`Independent@dynamic` in the call to ``Independent``
+for this function.
+The independent variables are in the same order as
+:ref:`Independent@x` in the call to ``Independent`` for this function.
+
+ny
+**
+is the number of dependent values for this function
+(a dependent value can be a variable, dynamic parameter, or constant parameter).
+
+y
+*
+is a C vector of size *ny* .
+This input values of its elements do not matter.
+Upon return, it contains the function value correspond to *u* .
+
+compare_change
+**************
+This argument is both an input and an output.
+The number of comparison operators that change their bool result value
+is added to *compare_change* . This way, *compare_change*
+can be used to accumulate the number of changes between multiplier calls.
+
+flag
+****
+If this is zero, no error was detected.
+If it is one (two), *nu* ( *ny* ) does not have its expected value.
+
+Restrictions
+************
+The ``to_csrc`` routine is not implemented for
+:ref:`vecad-name` operations.
+{xrst_toc_hidden
+   example/jit/jit.xrst
+}
+Example
+*******
+The section :ref:`example_jit-name` contains examples and tests
+that use ``to_csrc`` .
+
+{xrst_end to_csrc}

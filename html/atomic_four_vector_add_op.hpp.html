@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_four_vector_add_op.hpp, atomic, vector, add, operator:, example, implementation" name="keywords" />
+<meta content="forward, mode" name="keywords" />
+<meta content="reverse, mode" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_four_vector_add_op.hpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_four_vector_sub_op.hpp" href="atomic_four_vector_sub_op.hpp.html" />
+    <link rel="prev" title="atomic_four_vector_rev_depend.hpp" href="atomic_four_vector_rev_depend.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_four.html">atomic_four</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="atomic_four_define.html">atomic_four_define</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="atomic_four_example.html">atomic_four_example</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_get_started.cpp.html">atomic_four_get_started.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_norm_sq.cpp.html">atomic_four_norm_sq.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_forward.cpp.html">atomic_four_forward.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_dynamic.cpp.html">atomic_four_dynamic.cpp</a></li>
+<li class="toctree-l7 current"><a class="reference internal" href="atomic_four_vector.html">atomic_four_vector</a><ul class="current">
+<li class="toctree-l8 current"><a class="reference internal" href="atomic_four_vector_implement.html">atomic_four_vector_implement</a><ul class="current">
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector.hpp.html">atomic_four_vector.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_forward_op.hpp.html">atomic_four_vector_forward_op.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_reverse_op.hpp.html">atomic_four_vector_reverse_op.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_jac_sparsity.hpp.html">atomic_four_vector_jac_sparsity.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_hes_sparsity.hpp.html">atomic_four_vector_hes_sparsity.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_for_type.hpp.html">atomic_four_vector_for_type.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_rev_depend.hpp.html">atomic_four_vector_rev_depend.hpp</a></li>
+<li class="toctree-l9 current"><a class="current reference internal" href="#">atomic_four_vector_add_op.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_sub_op.hpp.html">atomic_four_vector_sub_op.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_mul_op.hpp.html">atomic_four_vector_mul_op.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_div_op.hpp.html">atomic_four_vector_div_op.hpp</a></li>
+<li class="toctree-l9"><a class="reference internal" href="atomic_four_vector_neg_op.hpp.html">atomic_four_vector_neg_op.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_add.cpp.html">atomic_four_vector_add.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_div.cpp.html">atomic_four_vector_div.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_hes_sparsity.cpp.html">atomic_four_vector_hes_sparsity.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_jac_sparsity.cpp.html">atomic_four_vector_jac_sparsity.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_mul.cpp.html">atomic_four_vector_mul.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_neg.cpp.html">atomic_four_vector_neg.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_rev_depend.cpp.html">atomic_four_vector_rev_depend.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_vector_sub.cpp.html">atomic_four_vector_sub.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_mat_mul.html">atomic_four_mat_mul</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_lin_ode.html">atomic_four_lin_ode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_three.html">atomic_three</a></li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_four.html">atomic_four</a> &raquo;</li>
+          <li><a href="atomic_four_example.html">atomic_four_example</a> &raquo;</li>
+          <li><a href="atomic_four_vector.html">atomic_four_vector</a> &raquo;</li>
+          <li><a href="atomic_four_vector_implement.html">atomic_four_vector_implement</a> &raquo;</li>
+      <li>atomic_four_vector_add_op.hpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_four_vector_add_op.hpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-four-vector-add-op-hpp">
+<span id="atomic-four-vector-add-op-hpp-name"></span><h1>atomic_four_vector_add_op.hpp<a class="headerlink" href="#atomic-four-vector-add-op-hpp" title="Permalink to this headline"></a></h1>
+<section id="atomic-vector-add-operator-example-implementation">
+<span id="atomic-four-vector-add-op-hpp-title"></span><span id="index-0"></span><h2>Atomic Vector Add Operator: Example Implementation<a class="headerlink" href="#atomic-vector-add-operator-example-implementation" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#forward-mode" id="id1">Forward Mode</a></p></li>
+<li><p><a class="reference internal" href="#reverse-mode" id="id2">Reverse Mode</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id3">Example</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id4">Source</a></p></li>
+</ul>
+</div>
+<section id="forward-mode">
+<span id="atomic-four-vector-add-op-hpp-forward-mode"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Forward Mode</a><a class="headerlink" href="#forward-mode" title="Permalink to this headline"></a></h3>
+<p>see theory for forward mode
+<a class="reference internal" href="forward_theory.html#forward-theory-binary-operators-addition"><span class="std std-ref">Addition</span></a> .</p>
+</section>
+<section id="reverse-mode">
+<span id="atomic-four-vector-add-op-hpp-reverse-mode"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Reverse Mode</a><a class="headerlink" href="#reverse-mode" title="Permalink to this headline"></a></h3>
+<p>see theory for reverse mode
+<a class="reference internal" href="reverse_theory.html#reverse-theory-binary-operators-addition"><span class="std std-ref">Addition</span></a> .</p>
+</section>
+<section id="example">
+<span id="atomic-four-vector-add-op-hpp-example"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="atomic_four_vector_add.cpp.html#atomic-four-vector-add-cpp-name"><span class="std std-ref">atomic_four_vector_add.cpp</span></a> contains an example
+and test for this operator.</p>
+</section>
+<section id="source">
+<span id="atomic-four-vector-add-op-hpp-source"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/example/atomic_four/vector/vector.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// BEGIN_CPPAD_NAMESPACE</span>
+<span class="c1">// ---------------------------------------------------------------------------</span>
+<span class="c1">// comment below is used by atomic_vector.omh</span>
+<span class="c1">// BEGIN forward_add</span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">atomic_vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">forward_add</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">m</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">p</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">q</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                       </span><span class="n">tx</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                             </span><span class="n">ty</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">u_index</span><span class="w">  </span><span class="o">=</span><span class="w">       </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">v_index</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">y_index</span><span class="w">  </span><span class="o">=</span><span class="w">       </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// y_i^k = u_i^k + v_i^k</span>
+<span class="w">         </span><span class="n">ty</span><span class="p">[</span><span class="n">y_index</span><span class="p">]</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="n">u_index</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="n">v_index</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">atomic_vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">forward_add</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">m</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">p</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">q</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">          </span><span class="n">atx</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">                </span><span class="n">aty</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">atx</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">aty</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// atu, atv</span>
+<span class="w">   </span><span class="n">ad_const_iterator</span><span class="w"> </span><span class="n">atu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atx</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">ad_const_iterator</span><span class="w"> </span><span class="n">atv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atu</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ad_difference_type</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// ax</span>
+<span class="w">   </span><span class="n">ad_vector</span><span class="w"> </span><span class="nf">ax</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ad_iterator</span><span class="w"> </span><span class="n">au</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ax</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">ad_iterator</span><span class="w"> </span><span class="n">av</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">au</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ad_difference_type</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// ay</span>
+<span class="w">   </span><span class="n">ad_vector</span><span class="w"> </span><span class="nf">ay</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// au = u^k</span>
+<span class="w">      </span><span class="n">copy_mat_to_vec</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">atu</span><span class="p">,</span><span class="w"> </span><span class="n">au</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// av = v^k</span>
+<span class="w">      </span><span class="n">copy_mat_to_vec</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">atv</span><span class="p">,</span><span class="w"> </span><span class="n">av</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// ay = au + av</span>
+<span class="w">      </span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">)(</span><span class="n">add_enum</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">ay</span><span class="p">);</span><span class="w"> </span><span class="c1">// atomic vector add</span>
+<span class="w">      </span><span class="c1">// y^k = ay</span>
+<span class="w">      </span><span class="n">copy_vec_to_mat</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">ay</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">aty</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">// END forward_add</span>
+<span class="c1">// comment above is used by atomic_vector.omh</span>
+<span class="c1">// ---------------------------------------------------------------------------</span>
+<span class="c1">// reverse_add</span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">atomic_vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">reverse_add</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">m</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">q</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                       </span><span class="n">tx</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                       </span><span class="n">ty</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                             </span><span class="n">px</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;&amp;</span><span class="w">                       </span><span class="n">py</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">u_index</span><span class="w">  </span><span class="o">=</span><span class="w">       </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">v_index</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">y_index</span><span class="w">  </span><span class="o">=</span><span class="w">       </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// y_i^k = u_i^k + v_i^k</span>
+<span class="w">         </span><span class="n">px</span><span class="p">[</span><span class="n">u_index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">py</span><span class="p">[</span><span class="n">y_index</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">px</span><span class="p">[</span><span class="n">v_index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">py</span><span class="p">[</span><span class="n">y_index</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">atomic_vector</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;::</span><span class="n">reverse_add</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">m</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                                           </span><span class="n">q</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">          </span><span class="n">atx</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">          </span><span class="n">aty</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">                </span><span class="n">apx</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w">          </span><span class="n">apy</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// just copying values does not add any operators to the tape.</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">u_index</span><span class="w">  </span><span class="o">=</span><span class="w">       </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">v_index</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">y_index</span><span class="w">  </span><span class="o">=</span><span class="w">       </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// y_i^k = u_i^k + v_i^k</span>
+<span class="w">         </span><span class="n">apx</span><span class="p">[</span><span class="n">u_index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apy</span><span class="p">[</span><span class="n">y_index</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">apx</span><span class="p">[</span><span class="n">v_index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apy</span><span class="p">[</span><span class="n">y_index</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// END_CPPAD_NAMESPACE</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_four_vector_rev_depend.hpp.html" class="btn btn-neutral float-left" title="atomic_four_vector_rev_depend.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_four_vector_sub_op.hpp.html" class="btn btn-neutral float-right" title="atomic_four_vector_sub_op.hpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

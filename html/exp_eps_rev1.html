@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="exp_eps_rev1, exp_eps:, first, order, reverse, sweep" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="mathematical, form" name="keywords" />
+<meta content="epsilon" name="keywords" />
+<meta content="f_7" name="keywords" />
+<meta content="index, 7:, f_6" name="keywords" />
+<meta content="index, 6:, f_5" name="keywords" />
+<meta content="index, 5:, f_4" name="keywords" />
+<meta content="index, 4:, f_3" name="keywords" />
+<meta content="index, 3:, f_2" name="keywords" />
+<meta content="index, 2:, f_1" name="keywords" />
+<meta content="verification" name="keywords" />
+<meta content="exercises" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>exp_eps_rev1 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exp_eps_rev1.cpp" href="exp_eps_rev1.cpp.html" />
+    <link rel="prev" title="exp_eps_for1.cpp" href="exp_eps_for1.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Theory.html">Theory</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Introduction.html">Introduction</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="exp_2.html">exp_2</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="exp_eps.html">exp_eps</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="exp_eps.hpp.html">exp_eps.hpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_eps.cpp.html">exp_eps.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_eps_for0.html">exp_eps_for0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_eps_for1.html">exp_eps_for1</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">exp_eps_rev1</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="exp_eps_rev1.cpp.html">exp_eps_rev1.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="exp_eps_for2.html">exp_eps_for2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_eps_rev2.html">exp_eps_rev2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_eps_cppad.html">exp_eps_cppad</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="exp_apx.cpp.html">exp_apx.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="forward_theory.html">forward_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_theory.html">reverse_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_identity.html">reverse_identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taylor_ode.html">taylor_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research.html">research</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Theory.html">Theory</a> &raquo;</li>
+          <li><a href="Introduction.html">Introduction</a> &raquo;</li>
+          <li><a href="exp_eps.html">exp_eps</a> &raquo;</li>
+      <li>exp_eps_rev1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/exp_eps_rev1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="exp-eps-rev1">
+<span id="exp-eps-rev1-name"></span><h1>exp_eps_rev1<a class="headerlink" href="#exp-eps-rev1" title="Permalink to this headline"></a></h1>
+<section id="exp-eps-first-order-reverse-sweep">
+<span id="exp-eps-rev1-title"></span><span id="index-0"></span><h2>exp_eps: First Order Reverse Sweep<a class="headerlink" href="#exp-eps-first-order-reverse-sweep" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#mathematical-form" id="id2">Mathematical Form</a></p></li>
+<li><p><a class="reference internal" href="#epsilon" id="id3">epsilon</a></p></li>
+<li><p><a class="reference internal" href="#f-7" id="id4">f_7</a></p></li>
+<li><p><a class="reference internal" href="#index-7-f-6" id="id5">Index 7: f_6</a></p></li>
+<li><p><a class="reference internal" href="#index-6-f-5" id="id6">Index 6: f_5</a></p></li>
+<li><p><a class="reference internal" href="#index-5-f-4" id="id7">Index 5: f_4</a></p></li>
+<li><p><a class="reference internal" href="#index-4-f-3" id="id8">Index 4: f_3</a></p></li>
+<li><p><a class="reference internal" href="#index-3-f-2" id="id9">Index 3: f_2</a></p></li>
+<li><p><a class="reference internal" href="#index-2-f-1" id="id10">Index 2: f_1</a></p></li>
+<li><p><a class="reference internal" href="#verification" id="id11">Verification</a></p></li>
+<li><p><a class="reference internal" href="#exercises" id="id12">Exercises</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="exp-eps-rev1-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>First order reverse mode uses the
+<a class="reference internal" href="exp_eps_for0.html#exp-eps-for0-operation-sequence"><span class="std std-ref">Operation Sequence</span></a> ,
+and zero order forward sweep values,
+to compute the first order derivative
+of one dependent variable with respect to all the independent variables.
+The computations are done in reverse
+of the order of the computations in the original algorithm.</p>
+</section>
+<section id="mathematical-form">
+<span id="exp-eps-rev1-mathematical-form"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Mathematical Form</a><a class="headerlink" href="#mathematical-form" title="Permalink to this headline"></a></h3>
+<p>Suppose that we use the algorithm <a class="reference internal" href="exp_eps.hpp.html#exp-eps-hpp-name"><span class="std std-ref">exp_eps.hpp</span></a>
+to compute <code class="docutils literal notranslate"><span class="pre">exp_eps</span></code> ( <em>x</em> , <em>epsilon</em> )
+with <em>x</em> is equal to .5
+and <em>epsilon</em> is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to <code class="docutils literal notranslate"><span class="pre">exp_eps</span></code> is</p>
+<div class="math notranslate nohighlight">
+\[f ( x , \varepsilon ) =   1 + x + x^2 / 2\]</div>
+<p>The corresponding partial derivatives,
+and the value of the derivatives, are</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\partial_x f ( x , \varepsilon ) &amp; = &amp;  1 + x  = 1.5
+\\
+\partial_\varepsilon f ( x , \varepsilon ) &amp; = &amp;  0
+\end{eqnarray}</div></section>
+<section id="epsilon">
+<span id="exp-eps-rev1-epsilon"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">epsilon</a><a class="headerlink" href="#epsilon" title="Permalink to this headline"></a></h3>
+<p>Since <span class="math notranslate nohighlight">\(\varepsilon\)</span> is an independent variable,
+it could included as an argument to all of the
+<span class="math notranslate nohighlight">\(f_j\)</span> functions below.
+The result would be that all the partials with respect to
+<span class="math notranslate nohighlight">\(\varepsilon\)</span> would be zero and hence we drop it to simplify
+the presentation.</p>
+</section>
+<section id="f-7">
+<span id="exp-eps-rev1-f-7"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">f_7</a><a class="headerlink" href="#f-7" title="Permalink to this headline"></a></h3>
+<p>In reverse mode we choose one dependent variable and
+compute its derivative with respect to all the independent variables.
+For our example, we chose the value returned by <a class="reference internal" href="exp_eps.hpp.html#exp-eps-hpp-name"><span class="std std-ref">exp_eps.hpp</span></a>
+which is <span class="math notranslate nohighlight">\(v_7\)</span>.
+We begin with the function <span class="math notranslate nohighlight">\(f_7\)</span> where <span class="math notranslate nohighlight">\(v_7\)</span>
+is both an argument and the value of the function; i.e.,</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+f_7 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 , v_7 ) &amp; = &amp; v_7
+\\
+\D{f_7}{v_7} &amp; = &amp; 1
+\end{eqnarray}</div><p>All the other partial derivatives of <span class="math notranslate nohighlight">\(f_7\)</span> are zero.</p>
+</section>
+<section id="index-7-f-6">
+<span id="exp-eps-rev1-index-7-f-6"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Index 7: f_6</a><a class="headerlink" href="#index-7-f-6" title="Permalink to this headline"></a></h3>
+<p>The last operation has index 7,</p>
+<div class="math notranslate nohighlight">
+\[v_7 =   v_4 + v_6\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(f_6 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 )\)</span>
+as equal to <span class="math notranslate nohighlight">\(f_7\)</span>
+except that <span class="math notranslate nohighlight">\(v_7\)</span> is eliminated using
+this operation; i.e.</p>
+<div class="math notranslate nohighlight">
+\[f_6  =
+f_7 [ v_1 , v_2 , v_3 , v_4 , v_5 , v_6 , v_7 ( v_4 , v_6 ) ]\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rcll}
+\D{f_6}{v_4}
+&amp; = &amp; \D{f_7}{v_4} +
+   \D{f_7}{v_7} * \D{v_7}{v_4}
+&amp; = 1
+\\
+\D{f_6}{v_6}
+&amp; = &amp; \D{f_7}{v_6} +
+   \D{f_7}{v_7} * \D{v_7}{v_6}
+&amp; = 1
+\end{array}\end{split}\]</div>
+<p>All the other partial derivatives of <span class="math notranslate nohighlight">\(f_6\)</span> are zero.</p>
+</section>
+<section id="index-6-f-5">
+<span id="exp-eps-rev1-index-6-f-5"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Index 6: f_5</a><a class="headerlink" href="#index-6-f-5" title="Permalink to this headline"></a></h3>
+<p>The previous operation has index 6,</p>
+<div class="math notranslate nohighlight">
+\[v_6 = v_5 / 2\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(f_5 (  v_1 , v_2 , v_3 , v_4 , v_5 )\)</span>
+as equal to <span class="math notranslate nohighlight">\(f_6\)</span>
+except that <span class="math notranslate nohighlight">\(v_6\)</span> is eliminated using this operation; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[f_5 =
+f_6 [  v_1 , v_2 , v_3 , v_4 , v_5 , v_6 ( v_5 ) ]\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rcll}
+\D{f_5}{v_4}
+&amp; = &amp; \D{f_6}{v_4}
+&amp; = 1
+\\
+\D{f_5}{v_5}
+&amp; = &amp; \D{f_6}{v_5} +
+   \D{f_6}{v_6} * \D{v_6}{v_5}
+&amp; = 0.5
+\end{array}\end{split}\]</div>
+<p>All the other partial derivatives of <span class="math notranslate nohighlight">\(f_5\)</span> are zero.</p>
+</section>
+<section id="index-5-f-4">
+<span id="exp-eps-rev1-index-5-f-4"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Index 5: f_4</a><a class="headerlink" href="#index-5-f-4" title="Permalink to this headline"></a></h3>
+<p>The previous operation has index 5,</p>
+<div class="math notranslate nohighlight">
+\[v_5 = v_3 * v_1\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(f_4 (  v_1 , v_2 , v_3 , v_4 )\)</span>
+as equal to <span class="math notranslate nohighlight">\(f_5\)</span>
+except that <span class="math notranslate nohighlight">\(v_5\)</span> is eliminated using this operation; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[f_4 =
+f_5 [  v_1 , v_2 , v_3 , v_4 , v_5 ( v_3 , v_1 )  ]\]</div>
+<p>Given the information from the forward sweep, we have
+<span class="math notranslate nohighlight">\(v_3 =  0.5\)</span> and <span class="math notranslate nohighlight">\(v_1 = 0.5\)</span>.
+It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rcll}
+\D{f_4}{v_1}
+&amp; = &amp; \D{f_5}{v_1} +
+   \D{f_5}{v_5} * \D{v_5}{v_1}
+&amp; =  0.25
+\\
+\D{f_4}{v_2} &amp; = &amp; \D{f_5}{v_2}  &amp; = 0
+\\
+\D{f_4}{v_3}
+&amp; = &amp; \D{f_5}{v_3} +
+   \D{f_5}{v_5} * \D{v_5}{v_3}
+&amp; =  0.25
+\\
+\D{f_4}{v_4}
+&amp; = &amp; \D{f_5}{v_4}
+&amp; = 1
+\end{array}\end{split}\]</div>
+</section>
+<section id="index-4-f-3">
+<span id="exp-eps-rev1-index-4-f-3"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Index 4: f_3</a><a class="headerlink" href="#index-4-f-3" title="Permalink to this headline"></a></h3>
+<p>The previous operation has index 4,</p>
+<div class="math notranslate nohighlight">
+\[v_4 = 1 + v_3\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(f_3 (  v_1 , v_2 , v_3 )\)</span>
+as equal to <span class="math notranslate nohighlight">\(f_4\)</span>
+except that <span class="math notranslate nohighlight">\(v_4\)</span> is eliminated using this operation; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[f_3 =
+f_4 [  v_1 , v_2 , v_3 , v_4 ( v_3 )  ]\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rcll}
+\D{f_3}{v_1}
+&amp; = &amp; \D{f_4}{v_1}
+&amp; =  0.25
+\\
+\D{f_3}{v_2} &amp; = &amp; \D{f_4}{v_2}  &amp; = 0
+\\
+\D{f_3}{v_3}
+&amp; = &amp; \D{f_4}{v_3} +
+   \D{f_4}{v_4} * \D{v_4}{v_3}
+&amp; =  1.25
+\end{array}\end{split}\]</div>
+</section>
+<section id="index-3-f-2">
+<span id="exp-eps-rev1-index-3-f-2"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Index 3: f_2</a><a class="headerlink" href="#index-3-f-2" title="Permalink to this headline"></a></h3>
+<p>The previous operation has index 3,</p>
+<div class="math notranslate nohighlight">
+\[v_3 = v_2 / 1\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(f_2 (  v_1 , v_2 )\)</span>
+as equal to <span class="math notranslate nohighlight">\(f_3\)</span>
+except that <span class="math notranslate nohighlight">\(v_3\)</span> is eliminated using this operation; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[f_2 =
+f_4 [  v_1 , v_2 , v_3 ( v_2 )  ]\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rcll}
+\D{f_2}{v_1}
+&amp; = &amp; \D{f_3}{v_1}
+&amp; =  0.25
+\\
+\D{f_2}{v_2} &amp; = &amp; \D{f_3}{v_2}  +
+   \D{f_3}{v_3} * \D{v_3}{v_2}
+&amp; = 1.25
+\end{array}\end{split}\]</div>
+</section>
+<section id="index-2-f-1">
+<span id="exp-eps-rev1-index-2-f-1"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Index 2: f_1</a><a class="headerlink" href="#index-2-f-1" title="Permalink to this headline"></a></h3>
+<p>The previous operation has index 1,</p>
+<div class="math notranslate nohighlight">
+\[v_2 = 1 * v_1\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(f_1 (  v_1 )\)</span>
+as equal to <span class="math notranslate nohighlight">\(f_2\)</span>
+except that <span class="math notranslate nohighlight">\(v_2\)</span> is eliminated using this operation; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[f_1 =
+f_2 [  v_1 , v_2 ( v_1 )  ]\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[\begin{array}{rcll}
+\D{f_1}{v_1} &amp; = &amp; \D{f_2}{v_1}  +
+   \D{f_2}{v_2} * \D{v_2}{v_1}
+&amp; = 1.5
+\end{array}\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(v_1\)</span> is equal to <span class="math notranslate nohighlight">\(x\)</span>,
+so the derivative of <code class="docutils literal notranslate"><span class="pre">exp_eps</span></code> ( <em>x</em> , <em>epsilon</em> )
+at <em>x</em> equal to .5 and <em>epsilon</em> equal .2 is
+1.5 in the <em>x</em> direction and zero in the <em>epsilon</em> direction.
+We also note that
+<a class="reference internal" href="exp_eps_for1.html#exp-eps-for1-name"><span class="std std-ref">forward</span></a> forward mode gave the
+same result for the partial in the <em>x</em> direction.</p>
+</section>
+<section id="verification">
+<span id="exp-eps-rev1-verification"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Verification</a><a class="headerlink" href="#verification" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="exp_eps_rev1.cpp.html#exp-eps-rev1-cpp-name"><span class="std std-ref">exp_eps_rev1.cpp</span></a> contains a routine
+that verifies the values computed above.
+It only tests the partial derivatives of
+<span class="math notranslate nohighlight">\(f_j\)</span> that might not be equal to the corresponding
+partials of <span class="math notranslate nohighlight">\(f_{j+1}\)</span>; i.e., the
+other partials of <span class="math notranslate nohighlight">\(f_j\)</span> must be equal to the corresponding
+partials of <span class="math notranslate nohighlight">\(f_{j+1}\)</span>.</p>
+</section>
+<section id="exercises">
+<span id="exp-eps-rev1-exercises"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Exercises</a><a class="headerlink" href="#exercises" title="Permalink to this headline"></a></h3>
+<ol class="arabic simple">
+<li><p>Consider the case where <span class="math notranslate nohighlight">\(x = .1\)</span>
+and we first preform a zero order forward mode sweep
+for the operation sequence used above (in reverse order).
+What are the results of a
+first order reverse mode sweep; i.e.,
+what are the corresponding values for
+<span class="math notranslate nohighlight">\(\D{f_j}{v_k}\)</span> for all <span class="math notranslate nohighlight">\(j, k\)</span> such that
+<span class="math notranslate nohighlight">\(\D{f_j}{v_k} \neq 0\)</span>.</p></li>
+<li><p>Create a modified version of
+<a class="reference internal" href="exp_eps_rev1.cpp.html#exp-eps-rev1-cpp-name"><span class="std std-ref">exp_eps_rev1.cpp</span></a>
+that verifies the values you obtained for the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+<a class="reference internal" href="exp_eps_rev1.cpp.html#exp-eps-rev1-cpp-name"><span class="std std-ref">exp_eps_rev1.cpp</span></a> .</p></li>
+</ol>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="exp_eps_for1.cpp.html" class="btn btn-neutral float-left" title="exp_eps_for1.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exp_eps_rev1.cpp.html" class="btn btn-neutral float-right" title="exp_eps_rev1.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

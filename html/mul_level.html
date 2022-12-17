@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="mul_level, using, multiple, levels, of, ad" name="keywords" />
+<meta content="alternative" name="keywords" />
+<meta content="background" name="keywords" />
+<meta content="motivation" name="keywords" />
+<meta content="procedure" name="keywords" />
+<meta content="first, start, ad&lt;double&gt;" name="keywords" />
+<meta content="start, ad&lt;, ad&lt;double&gt;, &gt;, recording" name="keywords" />
+<meta content="inner, function" name="keywords" />
+<meta content="second, start, ad&lt;, ad&lt;double&gt;, &gt;" name="keywords" />
+<meta content="outer, function" name="keywords" />
+<meta content="derivatives, of, outer, function" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mul_level &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mul_level.cpp" href="mul_level.cpp.html" />
+    <link rel="prev" title="jac_lu_det.cpp" href="jac_lu_det.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Example.html">Example</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="get_started.cpp.html">get_started.cpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_all_examples.html">list_all_examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="General.html">General</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ad_fun.cpp.html">ad_fun.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ad_in_c.cpp.html">ad_in_c.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conj_grad.cpp.html">conj_grad.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_eigen.hpp.html">cppad_eigen.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_minor_det.cpp.html">hes_minor_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_lu_det.cpp.html">hes_lu_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface2c.cpp.html">interface2c.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jac_minor_det.cpp.html">jac_minor_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jac_lu_det.cpp.html">jac_lu_det.cpp</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mul_level</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mul_level.cpp.html">mul_level.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="change_param.cpp.html">change_param.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ode_stiff.cpp.html">ode_stiff.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level_ode.cpp.html">mul_level_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level_adolc_ode.cpp.html">mul_level_adolc_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stack_machine.cpp.html">stack_machine.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.html">code_gen_fun</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.hpp.html">code_gen_fun.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.cpp.html">code_gen_fun.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_utility.html">example_utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testvector.html">testvector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wno_conversion.html">wno_conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Example.html">Example</a> &raquo;</li>
+          <li><a href="General.html">General</a> &raquo;</li>
+      <li>mul_level</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mul_level.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="mul-level">
+<span id="mul-level-name"></span><h1>mul_level<a class="headerlink" href="#mul-level" title="Permalink to this headline"></a></h1>
+<section id="using-multiple-levels-of-ad">
+<span id="mul-level-title"></span><span id="index-0"></span><h2>Using Multiple Levels of AD<a class="headerlink" href="#using-multiple-levels-of-ad" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#alternative" id="id1">Alternative</a></p></li>
+<li><p><a class="reference internal" href="#background" id="id2">Background</a></p></li>
+<li><p><a class="reference internal" href="#motivation" id="id3">Motivation</a></p></li>
+<li><p><a class="reference internal" href="#procedure" id="id4">Procedure</a></p>
+<ul>
+<li><p><a class="reference internal" href="#first-start-ad-double" id="id5">First Start AD&lt;double&gt;</a></p></li>
+<li><p><a class="reference internal" href="#start-ad-ad-double-recording" id="id6">Start AD&lt; AD&lt;double&gt; &gt; Recording</a></p></li>
+<li><p><a class="reference internal" href="#inner-function" id="id7">Inner Function</a></p></li>
+<li><p><a class="reference internal" href="#second-start-ad-ad-double" id="id8">Second Start AD&lt; AD&lt;double&gt; &gt;</a></p></li>
+<li><p><a class="reference internal" href="#outer-function" id="id9">Outer Function</a></p></li>
+<li><p><a class="reference internal" href="#derivatives-of-outer-function" id="id10">Derivatives of Outer Function</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#example" id="id11">Example</a></p></li>
+</ul>
+</div>
+<section id="alternative">
+<span id="mul-level-alternative"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Alternative</a><a class="headerlink" href="#alternative" title="Permalink to this headline"></a></h3>
+<p>Often it is easier to use
+<a class="reference internal" href="base2ad.html#base2ad-name"><span class="std std-ref">base2ad</span></a> and <a class="reference internal" href="new_dynamic.html#new-dynamic-name"><span class="std std-ref">dynamic</span></a> parameters
+to accomplish the objective below.</p>
+</section>
+<section id="background">
+<span id="mul-level-background"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Background</a><a class="headerlink" href="#background" title="Permalink to this headline"></a></h3>
+<p>If <em>f</em> is an <code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; object,
+the vectors returned by
+<a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">f.Forward</span></a> ,
+and
+<a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">f.Reverse</span></a> ,
+have values of type <em>Base</em> and not
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; .
+This reflects the fact that operations used to calculate
+these function values are not recorded by the tape corresponding to
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; operations.</p>
+</section>
+<section id="motivation">
+<span id="mul-level-motivation"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Motivation</a><a class="headerlink" href="#motivation" title="Permalink to this headline"></a></h3>
+<p>Suppose that you use derivatives of one or more inner functions
+as part of the operations
+needed to compute an outer function.
+For example,
+the derivatives returned by <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code>
+might be used as part of
+Taylor’s method for solving ordinary
+differential equations.
+In addition, we might want to differentiate the
+solution of a differential equation with respect to parameters
+in the equation.
+This can be accomplished in the following way:</p>
+<ol class="arabic simple">
+<li><p>The function defining the
+differential equation could be calculated using the class
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> .</p></li>
+<li><p>The operations during the calculation of Taylor’s method
+could be done using the <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> class.</p></li>
+<li><p>Derivatives of the solution of the differential equation
+could then be calculated using the <code class="docutils literal notranslate"><span class="pre">double</span></code> class.</p></li>
+</ol>
+</section>
+<section id="procedure">
+<span id="mul-level-procedure"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Procedure</a><a class="headerlink" href="#procedure" title="Permalink to this headline"></a></h3>
+<section id="first-start-ad-double">
+<span id="mul-level-procedure-first-start-ad-double"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">First Start AD&lt;double&gt;</a><a class="headerlink" href="#first-start-ad-double" title="Permalink to this headline"></a></h4>
+<p>If some of the <a class="reference internal" href="glossary.html#glossary-parameter"><span class="std std-ref">parameters</span></a>
+in the <code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> recording depend on the
+<a class="reference internal" href="glossary.html#glossary-variable"><span class="std std-ref">variables</span></a>
+in the <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> recording,
+we must first declaring these variables; i.e.,</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Independent</span></code> ( <em>a1x</em> )</p>
+</div></blockquote>
+<p>where <em>a1x</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements of type <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> .
+This will start recording a new tape of
+operations performed using <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> class objects.</p>
+</section>
+<section id="start-ad-ad-double-recording">
+<span id="mul-level-procedure-start-ad-ad-double-recording"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Start AD&lt; AD&lt;double&gt; &gt; Recording</a><a class="headerlink" href="#start-ad-ad-double-recording" title="Permalink to this headline"></a></h4>
+<p>The next step is to declare the independent variables using</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Independent</span></code> ( <em>a2x</em> )</p>
+</div></blockquote>
+<p>where <em>a2x</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements of type
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> .
+This will start recording a new tape of
+operations performed using <code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> class objects.</p>
+</section>
+<section id="inner-function">
+<span id="mul-level-procedure-inner-function"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">Inner Function</a><a class="headerlink" href="#inner-function" title="Permalink to this headline"></a></h4>
+<p>The next step is to calculate the inner function
+using <code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> class objects.
+We then stop the recording using</p>
+<blockquote>
+<div><p><em>a1f</em> . <code class="docutils literal notranslate"><span class="pre">Dependent</span></code> ( <em>a2x</em> , <em>a2y</em> )</p>
+</div></blockquote>
+<p>where <em>a2y</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements of type
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code>
+and <em>a1f</em> is an <code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> object.</p>
+</section>
+<section id="second-start-ad-ad-double">
+<span id="mul-level-procedure-second-start-ad-ad-double"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">Second Start AD&lt; AD&lt;double&gt; &gt;</a><a class="headerlink" href="#second-start-ad-ad-double" title="Permalink to this headline"></a></h4>
+<p>If none of the <a class="reference internal" href="glossary.html#glossary-parameter"><span class="std std-ref">parameters</span></a>
+in the <code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> recording depend on the
+<a class="reference internal" href="glossary.html#glossary-variable"><span class="std std-ref">variables</span></a>
+in the <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> recording,
+it is preferred to delay declaring these variables to this point; i.e.,</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Independent</span></code> ( <em>a1x</em> )</p>
+</div></blockquote>
+<p>where <em>a1x</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements of type <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> .
+This will start recording a new tape of
+operations performed using <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> class objects.</p>
+</section>
+<section id="outer-function">
+<span id="mul-level-procedure-outer-function"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">Outer Function</a><a class="headerlink" href="#outer-function" title="Permalink to this headline"></a></h4>
+<p>The next step is to calculate the outer function
+using <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> class objects.
+Note that derivatives of the inner function can be included
+in the calculation of the outer function using <em>a1f</em> .
+We then stop the recording of <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> operations using</p>
+<blockquote>
+<div><p><em>g</em> . <code class="docutils literal notranslate"><span class="pre">Dependent</span></code> ( <em>a1x</em> , <em>a1y</em> )</p>
+</div></blockquote>
+<p>where <em>a1y</em> is
+a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements of type
+<code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code>
+and <em>g</em> is an <code class="docutils literal notranslate"><span class="pre">ADFun&lt;double&gt;</span></code> object.</p>
+</section>
+<section id="derivatives-of-outer-function">
+<span id="mul-level-procedure-derivatives-of-outer-function"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">Derivatives of Outer Function</a><a class="headerlink" href="#derivatives-of-outer-function" title="Permalink to this headline"></a></h4>
+<p>The AD function object <em>g</em> can then be used to calculate
+the derivatives of the outer function.</p>
+</section>
+</section>
+<section id="example">
+<span id="mul-level-example"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The files
+<a class="reference internal" href="mul_level.cpp.html#mul-level-cpp-name"><span class="std std-ref">mul_level.cpp</span></a> and <a class="reference internal" href="change_param.cpp.html#change-param-cpp-name"><span class="std std-ref">change_param.cpp</span></a>
+contain an examples and tests of this procedure.
+They return true if they succeed and false otherwise.
+The file <a class="reference internal" href="mul_level_ode.cpp.html#mul-level-ode-cpp-name"><span class="std std-ref">mul_level_ode.cpp</span></a> is a more complex example
+use of multiple tapes.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jac_lu_det.cpp.html" class="btn btn-neutral float-left" title="jac_lu_det.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mul_level.cpp.html" class="btn btn-neutral float-right" title="mul_level.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

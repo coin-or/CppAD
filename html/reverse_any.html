@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="reverse_any, any, order, reverse, mode" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="notation" name="keywords" />
+<meta content="u^(k)" name="keywords" />
+<meta content="x(t,, u)" name="keywords" />
+<meta content="y(t,, u)" name="keywords" />
+<meta content="w^(k)" name="keywords" />
+<meta content="w(u)" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="q" name="keywords" />
+<meta content="w" name="keywords" />
+<meta content="dw" name="keywords" />
+<meta content="first, order" name="keywords" />
+<meta content="second, order" name="keywords" />
+<meta content="vector" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reverse_any &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="reverse_three.cpp" href="reverse_three.cpp.html" />
+    <link rel="prev" title="hes_times_dir.cpp" href="hes_times_dir.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="Reverse.html">Reverse</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="reverse_one.html">reverse_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reverse_two.html">reverse_two</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">reverse_any</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reverse_three.cpp.html">reverse_three.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="rev_checkpoint.cpp.html">rev_checkpoint.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_reverse.html">subgraph_reverse</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="Reverse.html">Reverse</a> &raquo;</li>
+      <li>reverse_any</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/reverse_any.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="reverse-any">
+<span id="reverse-any-name"></span><h1>reverse_any<a class="headerlink" href="#reverse-any" title="Permalink to this headline"></a></h1>
+<section id="any-order-reverse-mode">
+<span id="reverse-any-title"></span><span id="index-0"></span><h2>Any Order Reverse Mode<a class="headerlink" href="#any-order-reverse-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#notation" id="id3">Notation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#u-k" id="id4">u^(k)</a></p></li>
+<li><p><a class="reference internal" href="#x-t-u" id="id5">X(t, u)</a></p></li>
+<li><p><a class="reference internal" href="#y-t-u" id="id6">Y(t, u)</a></p></li>
+<li><p><a class="reference internal" href="#w-k" id="id7">w^(k)</a></p></li>
+<li><p><a class="reference internal" href="#w-u" id="id8">W(u)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#f" id="id9">f</a></p></li>
+<li><p><a class="reference internal" href="#q" id="id10">q</a></p></li>
+<li><p><a class="reference internal" href="#w" id="id11">w</a></p></li>
+<li><p><a class="reference internal" href="#dw" id="id12">dw</a></p></li>
+<li><p><a class="reference internal" href="#first-order" id="id13">First Order</a></p></li>
+<li><p><a class="reference internal" href="#second-order" id="id14">Second Order</a></p></li>
+<li><p><a class="reference internal" href="#vector" id="id15">Vector</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id16">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="reverse-any-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><em>dw</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Reverse</span></code> ( <em>q</em> , <em>w</em> )</p>
+</section>
+<section id="purpose">
+<span id="reverse-any-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a> corresponding to <em>f</em> .
+Reverse mode computes the derivative of the <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> mode
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a>
+with respect to the domain variable <span class="math notranslate nohighlight">\(x\)</span>.
+To be specific, it computes the derivative
+<span class="math notranslate nohighlight">\(W^{(1)} (u)\)</span> at <span class="math notranslate nohighlight">\(u = x\)</span>
+which is specified by the following notation:</p>
+</section>
+<section id="notation">
+<span id="reverse-any-notation"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Notation</a><a class="headerlink" href="#notation" title="Permalink to this headline"></a></h3>
+<section id="u-k">
+<span id="reverse-any-notation-u-k"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id4">u^(k)</a><a class="headerlink" href="#u-k" title="Permalink to this headline"></a></h4>
+<p>For <span class="math notranslate nohighlight">\(k = 0, \ldots , q-1\)</span>,
+the vector <span class="math notranslate nohighlight">\(u^{(k)} \in \B{R}^n\)</span> is defined as the value of
+<em>x_k</em> in the previous calls of the form</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>k</em> , <em>x_k</em> )</p>
+</div></blockquote>
+<p>If there is no previous call with <span class="math notranslate nohighlight">\(k = 0\)</span>,
+<span class="math notranslate nohighlight">\(u^{(0)}\)</span> is the value of the independent variables when the
+corresponding
+AD of <em>Base</em>
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a> was recorded.</p>
+</section>
+<section id="x-t-u">
+<span id="reverse-any-notation-x-t-u"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">X(t, u)</a><a class="headerlink" href="#x-t-u" title="Permalink to this headline"></a></h4>
+<p>The function
+<span class="math notranslate nohighlight">\(X : \B{R} \times \B{R}^{n \times q} \rightarrow \B{R}^n\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1}\]</div>
+<p>Note that for <span class="math notranslate nohighlight">\(k = 0 , \ldots , q-1\)</span>,
+<span class="math notranslate nohighlight">\(u^{(k)}\)</span> is related to the <em>k</em>-th partial of <span class="math notranslate nohighlight">\(X(t, u)\)</span>
+with respect to <span class="math notranslate nohighlight">\(t\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[u^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, u)\]</div>
+</section>
+<section id="y-t-u">
+<span id="reverse-any-notation-y-t-u"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Y(t, u)</a><a class="headerlink" href="#y-t-u" title="Permalink to this headline"></a></h4>
+<p>The function
+<span class="math notranslate nohighlight">\(Y : \B{R} \times \B{R}^{n \times q} \rightarrow \B{R}^m\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[Y(t, u) = F [ X(t,u) ]\]</div>
+</section>
+<section id="w-k">
+<span id="reverse-any-notation-w-k"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">w^(k)</a><a class="headerlink" href="#w-k" title="Permalink to this headline"></a></h4>
+<p>If the argument <em>w</em> has size <em>m</em> * <em>q</em> ,
+for <span class="math notranslate nohighlight">\(k = 0 , \ldots , q-1\)</span> and <span class="math notranslate nohighlight">\(i = 0, \ldots , m-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[w_i^{(k)} = w [ i * q + k ]\]</div>
+<p>If the argument <em>w</em> has size <em>m</em> ,
+for <span class="math notranslate nohighlight">\(k = 0 , \ldots , q-1\)</span> and <span class="math notranslate nohighlight">\(i = 0, \ldots , m-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}w_i^{(k)} = \left\{ \begin{array}{ll}
+   w [ i ] &amp; {\rm if} \; k = q-1
+   \\
+   0       &amp; {\rm otherwise}
+\end{array} \right.\end{split}\]</div>
+</section>
+<section id="w-u">
+<span id="reverse-any-notation-w-u"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">W(u)</a><a class="headerlink" href="#w-u" title="Permalink to this headline"></a></h4>
+<p>The function <span class="math notranslate nohighlight">\(W : \B{R}^{n \times q} \rightarrow \B{R}\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)\]</div>
+</section>
+</section>
+<section id="f">
+<span id="reverse-any-f"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Before this call to <code class="docutils literal notranslate"><span class="pre">Reverse</span></code> , the value returned by</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_order</span></code> ()</p>
+</div></blockquote>
+<p>must be greater than or equal <em>q</em>
+(see <a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">size_order</span></a> ).</p>
+</section>
+<section id="q">
+<span id="reverse-any-q"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">q</a><a class="headerlink" href="#q" title="Permalink to this headline"></a></h3>
+<p>The argument <em>q</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>q</em></p>
+</div></blockquote>
+<p>and specifies the number of Taylor coefficient orders to be differentiated
+(for each variable).</p>
+</section>
+<section id="w">
+<span id="reverse-any-w"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">w</a><a class="headerlink" href="#w" title="Permalink to this headline"></a></h3>
+<p>The argument <em>w</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Vector</em> &amp; <em>w</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#reverse-any-vector"><span class="std std-ref">Vector</span></a> below)
+and its size
+must be equal to <em>m</em> or <em>m</em> * <em>q</em> ,
+It specifies the weighting vector <em>w</em>
+in the definition of
+<a class="reference internal" href="#reverse-any-notation-w-u"><span class="std std-ref">W(u)</span></a> .</p>
+</section>
+<section id="dw">
+<span id="reverse-any-dw"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">dw</a><a class="headerlink" href="#dw" title="Permalink to this headline"></a></h3>
+<p>The return value <em>dw</em> has prototype</p>
+<blockquote>
+<div><p><em>Vector</em> <em>dw</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#reverse-any-vector"><span class="std std-ref">Vector</span></a> below).
+It is a vector with size <span class="math notranslate nohighlight">\(n \times q\)</span>.
+For <span class="math notranslate nohighlight">\(j = 0, \ldots, n-1\)</span> and <span class="math notranslate nohighlight">\(k = 0 , \ldots , q-1\)</span>
+If the argument <em>w</em> has size <em>m</em> * <em>q</em> ,</p>
+<div class="math notranslate nohighlight">
+\[dw[ j * q + k ] = W^{(1)} ( x )_{j,k}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u = x\)</span> is value of the Taylor coefficients where the
+derivative is evaluated.</p>
+<p>If the argument <em>w</em> has size <em>m</em> ,</p>
+<div class="math notranslate nohighlight">
+\[dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u = x\)</span> is value of the Taylor coefficients where the
+derivative is evaluated.
+Note the reverse order in which the order indices are stored.
+This is an unfortunate consequence of keeping <code class="docutils literal notranslate"><span class="pre">Reverse</span></code> backward
+compatible.</p>
+</section>
+<section id="first-order">
+<span id="reverse-any-first-order"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">First Order</a><a class="headerlink" href="#first-order" title="Permalink to this headline"></a></h3>
+<p>We consider the case where
+<em>q</em>  = 1 and <em>w</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>m</em> .
+In this case</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+W(u) &amp; = &amp; w_0 Y_0 (0, u) + \cdots + w_m Y_m (0, u)
+\\
+W(u) &amp; = &amp; w_0 F_0 [ X(0, u) ] + \cdots + w_m F_m [ X(0, u) ]
+\\
+W^{(1)} (x) &amp; = &amp;
+   w_0 F_0^{(1)} ( x^{(0)} ) + \cdots + w_m F_m^{(1)} ( x^{(0)} )
+\end{eqnarray}</div><p>This is the same as the result documented in <a class="reference internal" href="reverse_one.html#reverse-one-name"><span class="std std-ref">reverse_one</span></a> .</p>
+</section>
+<section id="second-order">
+<span id="reverse-any-second-order"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">Second Order</a><a class="headerlink" href="#second-order" title="Permalink to this headline"></a></h3>
+<p>We consider the case where
+<em>q</em>  = 2 and <em>w</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>m</em> .
+In this case</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+W(u) &amp; = &amp; w_0 \partial_t Y_0 (0, u) + \cdots + w_m \partial_t Y_m (0, u)
+\\
+W(u) &amp; = &amp;
+   w_0 \partial_t \{ F_0 [ X(t, u) ] \}_{t = 0}
+     + \cdots +
+   w_m \partial_t \{ F_m [ X(t, u) ] \}_{t = 0}
+\\
+W(u) &amp; = &amp;
+   w_0 F_0^{(1)} ( u^{(0)} ) u^{(1)}
+     + \cdots +
+   w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)}
+\\
+\partial_{u(0)} W(x) &amp; = &amp;
+   w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} )
+   + \cdots +
+   w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} )
+\\
+\partial_{u(1)} W(x) &amp; = &amp;
+   w_0 F_0^{(1)} ( x^{(0)} )
+   + \cdots +
+   w_m F_m^{(1)} ( x^{(0)} )
+\end{eqnarray}</div><p>where <span class="math notranslate nohighlight">\(\partial{u(0)}\)</span>
+denotes partial with respect to <span class="math notranslate nohighlight">\(u^{(0)}\)</span>.
+These are the same as the result documented in <a class="reference internal" href="reverse_two.html#reverse-two-name"><span class="std std-ref">reverse_two</span></a> .</p>
+</section>
+<section id="vector">
+<span id="reverse-any-vector"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">Vector</a><a class="headerlink" href="#vector" title="Permalink to this headline"></a></h3>
+<p>The type <em>Vector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="example">
+<span id="reverse-any-example"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<ol class="arabic simple">
+<li><p>The file <a class="reference internal" href="reverse_three.cpp.html#reverse-three-cpp-name"><span class="std std-ref">reverse_three.cpp</span></a>
+contains an example and test of using reverse mode
+to compute third order derivatives.</p></li>
+<li><p>The file <a class="reference internal" href="rev_checkpoint.cpp.html#rev-checkpoint-cpp-name"><span class="std std-ref">rev_checkpoint.cpp</span></a>
+contains an example and test of the general reverse mode case.</p></li>
+</ol>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hes_times_dir.cpp.html" class="btn btn-neutral float-left" title="hes_times_dir.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reverse_three.cpp.html" class="btn btn-neutral float-right" title="reverse_three.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

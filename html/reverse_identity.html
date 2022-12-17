@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="reverse_identity, an, important, reverse, mode, identity" name="keywords" />
+<meta content="notation" name="keywords" />
+<meta content="reverse, sweep" name="keywords" />
+<meta content="theorem" name="keywords" />
+<meta content="proof" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reverse_identity &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="taylor_ode" href="taylor_ode.html" />
+    <link rel="prev" title="pow_reverse" href="pow_reverse.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Theory.html">Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forward_theory.html">forward_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_theory.html">reverse_theory</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">reverse_identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taylor_ode.html">taylor_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research.html">research</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Theory.html">Theory</a> &raquo;</li>
+      <li>reverse_identity</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/reverse_identity.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="reverse-identity">
+<span id="reverse-identity-name"></span><h1>reverse_identity<a class="headerlink" href="#reverse-identity" title="Permalink to this headline"></a></h1>
+<section id="an-important-reverse-mode-identity">
+<span id="reverse-identity-title"></span><span id="index-0"></span><h2>An Important Reverse Mode Identity<a class="headerlink" href="#an-important-reverse-mode-identity" title="Permalink to this headline"></a></h2>
+<p>The theorem and the proof below is a restatement
+of the results on page 236 of
+<a class="reference internal" href="Bib.html#bib-evaluating-derivatives"><span class="std std-ref">Evaluating Derivatives</span></a> .</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#notation" id="id1">Notation</a></p></li>
+<li><p><a class="reference internal" href="#reverse-sweep" id="id2">Reverse Sweep</a></p></li>
+<li><p><a class="reference internal" href="#theorem" id="id3">Theorem</a></p></li>
+<li><p><a class="reference internal" href="#proof" id="id4">Proof</a></p></li>
+</ul>
+</div>
+<section id="notation">
+<span id="reverse-identity-notation"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Notation</a><a class="headerlink" href="#notation" title="Permalink to this headline"></a></h3>
+<p>Given a function <span class="math notranslate nohighlight">\(f(u, v)\)</span> where <span class="math notranslate nohighlight">\(u \in \B{R}^n\)</span>
+we use the notation</p>
+<div class="math notranslate nohighlight">
+\[\D{f}{u} (u, v) = \left[ \D{f}{u_1} (u, v) , \cdots , \D{f}{u_n} (u, v) \right]\]</div>
+</section>
+<section id="reverse-sweep">
+<span id="reverse-identity-reverse-sweep"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Reverse Sweep</a><a class="headerlink" href="#reverse-sweep" title="Permalink to this headline"></a></h3>
+<p>When using <a class="reference internal" href="reverse_any.html#reverse-any-name"><span class="std std-ref">reverse mode</span></a>
+we are given a function <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span>,
+a matrix of Taylor coefficients <span class="math notranslate nohighlight">\(x \in \B{R}^{n \times p}\)</span>,
+and a weight vector <span class="math notranslate nohighlight">\(w \in \B{R}^m\)</span>.
+We define the functions <span class="math notranslate nohighlight">\(X : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}^n\)</span>,
+<span class="math notranslate nohighlight">\(W : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}\)</span>, and
+<span class="math notranslate nohighlight">\(W_j : \B{R}^{n \times p} \rightarrow \B{R}\)</span> by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   X(t , x) &amp; = &amp; x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
+   \\
+   W(t, x)   &amp; = &amp;  w_0 F_0 [X(t, x)] + \cdots + w_{m-1} F_{m-1} [X(t, x)]
+   \\
+   W_j (x)   &amp; = &amp; \frac{1}{j!} \Dpow{j}{t} W(0, x)
+\end{eqnarray}</div><p>where <span class="math notranslate nohighlight">\(x^{(j)}\)</span> is the <em>j</em>-th column of <span class="math notranslate nohighlight">\(x \in \B{R}^{n \times p}\)</span>.
+The theorem below implies that</p>
+<div class="math notranslate nohighlight">
+\[\D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x)\]</div>
+<p>A <a class="reference internal" href="reverse_any.html#reverse-any-name"><span class="std std-ref">general reverse sweep</span></a> calculates the values</p>
+<div class="math notranslate nohighlight">
+\[\D{ W_{p-1} }{ x^{(i)} } (x)  \hspace{1cm} (i = 0 , \ldots , p-1)\]</div>
+<p>But the return values for a reverse sweep are specified
+in terms of the more useful values</p>
+<div class="math notranslate nohighlight">
+\[\D{ W_j }{ x^{(0)} } (x)  \hspace{1cm} (j = 0 , \ldots , p-1)\]</div>
+</section>
+<section id="theorem">
+<span id="reverse-identity-theorem"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Theorem</a><a class="headerlink" href="#theorem" title="Permalink to this headline"></a></h3>
+<p>Suppose that <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> is a <span class="math notranslate nohighlight">\(p\)</span> times
+continuously differentiable function.
+Define the functions
+<span class="math notranslate nohighlight">\(Z : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}^n\)</span>,
+<span class="math notranslate nohighlight">\(Y : \B{R} \times \B{R}^{n \times p }\rightarrow \B{R}^m\)</span>,
+and
+<span class="math notranslate nohighlight">\(y^{(j)} : \B{R}^{n \times p }\rightarrow \B{R}^m\)</span> by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   Z(t, x)  &amp; = &amp; x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
+   \\
+   Y(t, x)  &amp; = &amp; F [ Z(t, x) ]
+   \\
+   y^{(j)} (x) &amp; = &amp; \frac{1}{j !} \Dpow{j}{t} Y(0, x)
+\end{eqnarray}</div><p>where <span class="math notranslate nohighlight">\(x^{(j)}\)</span> denotes the <em>j</em>-th column of
+<span class="math notranslate nohighlight">\(x \in \B{R}^{n \times p}\)</span>.
+It follows that
+for all <span class="math notranslate nohighlight">\(i, j\)</span> such that <span class="math notranslate nohighlight">\(i \leq j &lt; p\)</span>,</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\D{ y^{(j)} }{ x^{(i)} } (x) &amp; = &amp; \D{ y^{(j-i)} }{ x^{(0)} } (x)
+\end{eqnarray}</div></section>
+<section id="proof">
+<span id="reverse-identity-proof"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Proof</a><a class="headerlink" href="#proof" title="Permalink to this headline"></a></h3>
+<p>If follows from the definitions that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rclr}
+\D{ y^{(j)} }{ x^{(i)} } (x)
+&amp; = &amp;
+\frac{1}{j ! } \D{ }{ x^{(i)} }
+   \left[ \Dpow{j}{t} (F \circ  Z) (t, x)  \right]_{t=0}
+\\
+&amp; = &amp;
+\frac{1}{j ! } \left[ \Dpow{j}{t}
+   \D{ }{ x^{(i)} } (F \circ  Z) (t, x)
+\right]_{t=0}
+\\
+&amp; = &amp;
+\frac{1}{j ! } \left\{
+   \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+\right\}_{t=0}
+\end{array}\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(k &gt; i\)</span>, the <em>k</em>-th
+partial of <span class="math notranslate nohighlight">\(t^i\)</span> with respect to <span class="math notranslate nohighlight">\(t\)</span> is zero.
+Thus, the partial with respect to <span class="math notranslate nohighlight">\(t\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+&amp; = &amp;
+\sum_{k=0}^i
+\left( \begin{array}{c} j \\ k \end{array} \right)
+\frac{ i ! }{ (i - k) ! } t^{i-k} \;
+\Dpow{j-k}{t} ( F^{(1)} \circ Z ) (t, x)
+\\
+\left\{
+   \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+\right\}_{t=0}
+&amp; = &amp;
+\left( \begin{array}{c} j \\ i \end{array} \right)
+i ! \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+\\
+&amp; = &amp;
+\frac{ j ! }{ (j - i) ! }
+\Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+\\
+\D{ y^{(j)} }{ x^{(i)} } (x)
+&amp; = &amp;
+\frac{ 1 }{ (j - i) ! }
+\Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+\end{eqnarray}</div><p>Applying this formula to the case where <span class="math notranslate nohighlight">\(j\)</span>
+is replaced by <span class="math notranslate nohighlight">\(j - i\)</span> and <span class="math notranslate nohighlight">\(i\)</span> is replaced by zero,
+we obtain</p>
+<div class="math notranslate nohighlight">
+\[\D{ y^{(j-i)} }{ x^{(0)} } (x)
+=
+\frac{ 1 }{ (j - i) ! }
+\Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+=
+\D{ y^{(j)} }{ x^{(i)} } (x)\]</div>
+<p>which completes the proof</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pow_reverse.html" class="btn btn-neutral float-left" title="pow_reverse" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="taylor_ode.html" class="btn btn-neutral float-right" title="taylor_ode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="for_jac_sparsity, forward, mode, jacobian, sparsity, patterns" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="sizevector" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="size_forward_bool" name="keywords" />
+<meta content="size_forward_set" name="keywords" />
+<meta content="pattern_in" name="keywords" />
+<meta content="transpose" name="keywords" />
+<meta content="dependency" name="keywords" />
+<meta content="internal_bool" name="keywords" />
+<meta content="pattern_out" name="keywords" />
+<meta content="sparsity, for, entire, jacobian" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>for_jac_sparsity &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="for_jac_sparsity.cpp" href="for_jac_sparsity.cpp.html" />
+    <link rel="prev" title="sparsity_pattern" href="sparsity_pattern.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">for_jac_sparsity</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="for_jac_sparsity.cpp.html">for_jac_sparsity.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="rev_jac_sparsity.html">rev_jac_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="for_hes_sparsity.html">for_hes_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rev_hes_sparsity.html">rev_hes_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_sparsity.html">subgraph_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dependency.cpp.html">dependency.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rc_sparsity.cpp.html">rc_sparsity.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ForSparseJac.html">ForSparseJac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RevSparseJac.html">RevSparseJac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RevSparseHes.html">RevSparseHes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ForSparseHes.html">ForSparseHes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparsity_pattern.html">sparsity_pattern</a> &raquo;</li>
+      <li>for_jac_sparsity</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/for_jac_sparsity.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="for-jac-sparsity">
+<span id="for-jac-sparsity-name"></span><h1>for_jac_sparsity<a class="headerlink" href="#for-jac-sparsity" title="Permalink to this headline"></a></h1>
+<section id="forward-mode-jacobian-sparsity-patterns">
+<span id="for-jac-sparsity-title"></span><span id="index-0"></span><h2>Forward Mode Jacobian Sparsity Patterns<a class="headerlink" href="#forward-mode-jacobian-sparsity-patterns" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id3">x</a></p></li>
+<li><p><a class="reference internal" href="#sizevector" id="id4">SizeVector</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id5">f</a></p>
+<ul>
+<li><p><a class="reference internal" href="#size-forward-bool" id="id6">size_forward_bool</a></p></li>
+<li><p><a class="reference internal" href="#size-forward-set" id="id7">size_forward_set</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#pattern-in" id="id8">pattern_in</a></p></li>
+<li><p><a class="reference internal" href="#transpose" id="id9">transpose</a></p></li>
+<li><p><a class="reference internal" href="#dependency" id="id10">dependency</a></p></li>
+<li><p><a class="reference internal" href="#internal-bool" id="id11">internal_bool</a></p></li>
+<li><p><a class="reference internal" href="#pattern-out" id="id12">pattern_out</a></p></li>
+<li><p><a class="reference internal" href="#sparsity-for-entire-jacobian" id="id13">Sparsity for Entire Jacobian</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id14">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="for-jac-sparsity-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>f</em> . <code class="docutils literal notranslate"><span class="pre">for_jac_sparsity</span></code> (</div>
+<div class="line">      <em>pattern_in</em> , <em>transpose</em> , <em>dependency</em> , <em>internal_bool</em> , <em>pattern_out</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="purpose">
+<span id="for-jac-sparsity-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a> corresponding to
+the operation sequence stored in <em>f</em> .
+Fix <span class="math notranslate nohighlight">\(R \in \B{R}^{n \times \ell}\)</span> and define the function</p>
+<div class="math notranslate nohighlight">
+\[J(x) = F^{(1)} ( x ) * R\]</div>
+<p>Given the <a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a> for <span class="math notranslate nohighlight">\(R\)</span>,
+<code class="docutils literal notranslate"><span class="pre">for_jac_sparsity</span></code> computes a sparsity pattern for <span class="math notranslate nohighlight">\(J(x)\)</span>.</p>
+</section>
+<section id="x">
+<span id="for-jac-sparsity-x"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>Note that the sparsity pattern <span class="math notranslate nohighlight">\(J(x)\)</span> corresponds to the
+operation sequence stored in <em>f</em> and does not depend on
+the argument <em>x</em> .
+(The operation sequence may contain
+<a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">CondExp</span></a> and  <a class="reference internal" href="VecAD.html#vecad-name"><span class="std std-ref">VecAD</span></a> operations.)</p>
+</section>
+<section id="sizevector">
+<span id="for-jac-sparsity-sizevector"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">SizeVector</a><a class="headerlink" href="#sizevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SizeVector</em> is a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">size_t</span></code> .</p>
+</section>
+<section id="f">
+<span id="for-jac-sparsity-f"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>The <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> is not <code class="docutils literal notranslate"><span class="pre">const</span></code> .
+After a call to <code class="docutils literal notranslate"><span class="pre">for_jac_sparsity</span></code> , a sparsity pattern
+for each of the variables in the operation sequence
+is held in <em>f</em> for possible later use during
+reverse Hessian sparsity calculations.</p>
+<section id="size-forward-bool">
+<span id="for-jac-sparsity-f-size-forward-bool"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">size_forward_bool</a><a class="headerlink" href="#size-forward-bool" title="Permalink to this headline"></a></h4>
+<p>After <code class="docutils literal notranslate"><span class="pre">for_jac_sparsity</span></code> , if <em>k</em> is a <code class="docutils literal notranslate"><span class="pre">size_t</span></code> object,</p>
+<blockquote>
+<div><p><em>k</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_forward_bool</span></code> ()</p>
+</div></blockquote>
+<p>sets <em>k</em> to the amount of memory (in unsigned character units)
+used to store the
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern-boolean-vector"><span class="std std-ref">Boolean Vector</span></a>
+sparsity patterns.
+If <em>internal_bool</em> if false, <em>k</em> will be zero.
+Otherwise it will be non-zero.
+If you do not need this information for <a class="reference internal" href="RevSparseHes.html#revsparsehes-name"><span class="std std-ref">RevSparseHes</span></a>
+calculations, it can be deleted
+(and the corresponding memory freed) using</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_forward_bool</span></code> (0)</p>
+</div></blockquote>
+<p>after which <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_forward_bool</span></code> () will return zero.</p>
+</section>
+<section id="size-forward-set">
+<span id="for-jac-sparsity-f-size-forward-set"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">size_forward_set</a><a class="headerlink" href="#size-forward-set" title="Permalink to this headline"></a></h4>
+<p>After <code class="docutils literal notranslate"><span class="pre">for_jac_sparsity</span></code> , if <em>k</em> is a <code class="docutils literal notranslate"><span class="pre">size_t</span></code> object,</p>
+<blockquote>
+<div><p><em>k</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_forward_set</span></code> ()</p>
+</div></blockquote>
+<p>sets <em>k</em> to the amount of memory (in unsigned character units)
+used to store the
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern-vector-of-sets"><span class="std std-ref">Vector of Sets</span></a>
+sparsity patterns.
+If <em>internal_bool</em> if true, <em>k</em> will be zero.
+Otherwise it will be non-zero.
+If you do not need this information for future <a class="reference internal" href="rev_hes_sparsity.html#rev-hes-sparsity-name"><span class="std std-ref">rev_hes_sparsity</span></a>
+calculations, it can be deleted
+(and the corresponding memory freed) using</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_forward_set</span></code> (0)</p>
+</div></blockquote>
+<p>after which <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_forward_set</span></code> () will return zero.</p>
+</section>
+</section>
+<section id="pattern-in">
+<span id="for-jac-sparsity-pattern-in"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">pattern_in</a><a class="headerlink" href="#pattern-in" title="Permalink to this headline"></a></h3>
+<p>The argument <em>pattern_in</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">sparse_rc&lt;</span></code> <em>SizeVector</em> &gt;&amp; <em>pattern_in</em></p>
+</div></blockquote>
+<p>see <a class="reference internal" href="sparse_rc.html#sparse-rc-name"><span class="std std-ref">sparse_rc</span></a> .
+If <em>transpose</em> it is false (true),
+<em>pattern_in</em> is a sparsity pattern for <span class="math notranslate nohighlight">\(R\)</span> (<span class="math notranslate nohighlight">\(R^\R{T}\)</span>).</p>
+</section>
+<section id="transpose">
+<span id="for-jac-sparsity-transpose"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">transpose</a><a class="headerlink" href="#transpose" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>transpose</em></p>
+</div></blockquote>
+<p>See <a class="reference internal" href="#for-jac-sparsity-pattern-in"><span class="std std-ref">pattern_in</span></a> above and
+<a class="reference internal" href="#for-jac-sparsity-pattern-out"><span class="std std-ref">pattern_out</span></a> below.</p>
+</section>
+<section id="dependency">
+<span id="for-jac-sparsity-dependency"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">dependency</a><a class="headerlink" href="#dependency" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>dependency</em></p>
+</div></blockquote>
+<p>see <a class="reference internal" href="#for-jac-sparsity-pattern-out"><span class="std std-ref">pattern_out</span></a> below.</p>
+</section>
+<section id="internal-bool">
+<span id="for-jac-sparsity-internal-bool"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">internal_bool</a><a class="headerlink" href="#internal-bool" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>internal_bool</em></p>
+</div></blockquote>
+<p>If this is true, calculations are done with sets represented by a vector
+of boolean values. Otherwise, a vector of sets of integers is used.</p>
+</section>
+<section id="pattern-out">
+<span id="for-jac-sparsity-pattern-out"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">pattern_out</a><a class="headerlink" href="#pattern-out" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">sparse_rc&lt;</span></code> <em>SizeVector</em> &gt;&amp; <em>pattern_out</em></p>
+</div></blockquote>
+<p>This input value of <em>pattern_out</em> does not matter.
+If <em>transpose</em> it is false (true),
+upon return <em>pattern_out</em> is a sparsity pattern for
+<span class="math notranslate nohighlight">\(J(x)\)</span> (<span class="math notranslate nohighlight">\(J(x)^\R{T}\)</span>).
+If <em>dependency</em> is true, <em>pattern_out</em> is a
+<a class="reference internal" href="dependency.cpp.html#dependency-cpp-dependency-pattern"><span class="std std-ref">Dependency Pattern</span></a>
+instead of sparsity pattern.</p>
+</section>
+<section id="sparsity-for-entire-jacobian">
+<span id="for-jac-sparsity-sparsity-for-entire-jacobian"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Sparsity for Entire Jacobian</a><a class="headerlink" href="#sparsity-for-entire-jacobian" title="Permalink to this headline"></a></h3>
+<p>Suppose that
+<span class="math notranslate nohighlight">\(R\)</span> is the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix.
+In this case, <em>pattern_out</em> is a sparsity pattern for
+<span class="math notranslate nohighlight">\(F^{(1)} ( x )\)</span>  ( <span class="math notranslate nohighlight">\(F^{(1)} (x)^\R{T}\)</span> )
+if <em>transpose</em> is false (true).</p>
+</section>
+<section id="example">
+<span id="for-jac-sparsity-example"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="for_jac_sparsity.cpp.html#for-jac-sparsity-cpp-name"><span class="std std-ref">for_jac_sparsity.cpp</span></a>
+contains an example and test of this operation.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparsity_pattern.html" class="btn btn-neutral float-left" title="sparsity_pattern" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="for_jac_sparsity.cpp.html" class="btn btn-neutral float-right" title="for_jac_sparsity.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

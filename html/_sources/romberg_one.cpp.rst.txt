@@ -1,0 +1,16 @@
+lines 7-20 of file: example/utility/romberg_one.cpp
+
+{xrst_begin romberg_one.cpp}
+{xrst_spell
+   romberg
+}
+
+One Dimensional Romberg Integration: Example and Test
+#####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end romberg_one.cpp}

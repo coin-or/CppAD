@@ -1,0 +1,25 @@
+lines 5-27 of file: example/multi_thread/multi_atomic_two.xrst
+
+{xrst_begin multi_atomic_two.cpp}
+
+Multi-Threading atomic_two Example / Test
+#########################################
+
+Deprecated 2019-08-05
+*********************
+This example is deprecated, use :ref:`multi_atomic_three.cpp-name` instead.
+
+Source File
+***********
+All of the routines below are located in the file
+::
+
+   example/multi_thread/multi_atomic_two.cpp
+
+Contents
+********
+{xrst_toc_table
+   example/multi_thread/multi_atomic_two.cpp
+}
+
+{xrst_end multi_atomic_two.cpp}

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="whats_new_16, changes, and, additions, to, cppad, during, 2016" name="keywords" />
+<meta content="mm-dd" name="keywords" />
+<meta content="12-23" name="keywords" />
+<meta content="12-20" name="keywords" />
+<meta content="12-18" name="keywords" />
+<meta content="12-13" name="keywords" />
+<meta content="12-11" name="keywords" />
+<meta content="12-09" name="keywords" />
+<meta content="11-18" name="keywords" />
+<meta content="11-14" name="keywords" />
+<meta content="11-13" name="keywords" />
+<meta content="10-27" name="keywords" />
+<meta content="10-12" name="keywords" />
+<meta content="09-29" name="keywords" />
+<meta content="09-27" name="keywords" />
+<meta content="09-26" name="keywords" />
+<meta content="09-16" name="keywords" />
+<meta content="09-13" name="keywords" />
+<meta content="08-30" name="keywords" />
+<meta content="08-25" name="keywords" />
+<meta content="07-17" name="keywords" />
+<meta content="07-14" name="keywords" />
+<meta content="06-30" name="keywords" />
+<meta content="06-29" name="keywords" />
+<meta content="06-27" name="keywords" />
+<meta content="06-25" name="keywords" />
+<meta content="06-10" name="keywords" />
+<meta content="05-05" name="keywords" />
+<meta content="04-17" name="keywords" />
+<meta content="03-27" name="keywords" />
+<meta content="03-26" name="keywords" />
+<meta content="03-25" name="keywords" />
+<meta content="03-24" name="keywords" />
+<meta content="03-23" name="keywords" />
+<meta content="03-22" name="keywords" />
+<meta content="03-21" name="keywords" />
+<meta content="03-20" name="keywords" />
+<meta content="03-19" name="keywords" />
+<meta content="03-17" name="keywords" />
+<meta content="03-12" name="keywords" />
+<meta content="03-05" name="keywords" />
+<meta content="03-01" name="keywords" />
+<meta content="02-29" name="keywords" />
+<meta content="02-28" name="keywords" />
+<meta content="02-27" name="keywords" />
+<meta content="02-26" name="keywords" />
+<meta content="02-25" name="keywords" />
+<meta content="02-23" name="keywords" />
+<meta content="01-21" name="keywords" />
+<meta content="01-20" name="keywords" />
+<meta content="01-18" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whats_new_16 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="whats_new_15" href="whats_new_15.html" />
+    <link rel="prev" title="whats_new_17" href="whats_new_17.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="whats_new.html">whats_new</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="whats_new_22.html">whats_new_22</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_21.html">whats_new_21</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_20.html">whats_new_20</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_19.html">whats_new_19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_18.html">whats_new_18</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_17.html">whats_new_17</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">whats_new_16</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_15.html">whats_new_15</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_14.html">whats_new_14</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_13.html">whats_new_13</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_12.html">whats_new_12</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_11.html">whats_new_11</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_10.html">whats_new_10</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_09.html">whats_new_09</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_08.html">whats_new_08</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_07.html">whats_new_07</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_06.html">whats_new_06</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_05.html">whats_new_05</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_04.html">whats_new_04</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_03.html">whats_new_03</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deprecated.html">deprecated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="whats_new.html">whats_new</a> &raquo;</li>
+      <li>whats_new_16</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/whats_new_16.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="whats-new-16">
+<span id="whats-new-16-name"></span><h1>whats_new_16<a class="headerlink" href="#whats-new-16" title="Permalink to this headline"></a></h1>
+<section id="changes-and-additions-to-cppad-during-2016">
+<span id="whats-new-16-title"></span><span id="index-0"></span><h2>Changes and Additions to CppAD During 2016<a class="headerlink" href="#changes-and-additions-to-cppad-during-2016" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#mm-dd" id="id50">mm-dd</a></p>
+<ul>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-12-23" id="id51">12-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-12-20" id="id52">12-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-12-18" id="id53">12-18</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-12-13" id="id54">12-13</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-12-11" id="id55">12-11</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-12-09" id="id56">12-09</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-11-18" id="id57">11-18</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-11-14" id="id58">11-14</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-11-13" id="id59">11-13</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-10-27" id="id60">10-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-10-12" id="id61">10-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-09-29" id="id62">09-29</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-09-27" id="id63">09-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-09-26" id="id64">09-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-09-16" id="id65">09-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-09-13" id="id66">09-13</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-08-30" id="id67">08-30</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-08-25" id="id68">08-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-07-17" id="id69">07-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-07-14" id="id70">07-14</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-06-30" id="id71">06-30</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-06-29" id="id72">06-29</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-06-27" id="id73">06-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-06-25" id="id74">06-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-06-10" id="id75">06-10</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-05-05" id="id76">05-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-04-17" id="id77">04-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-27" id="id78">03-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-26" id="id79">03-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-25" id="id80">03-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-24" id="id81">03-24</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-23" id="id82">03-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-22" id="id83">03-22</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-21" id="id84">03-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-20" id="id85">03-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-19" id="id86">03-19</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-17" id="id87">03-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-12" id="id88">03-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-05" id="id89">03-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-03-01" id="id90">03-01</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-02-29" id="id91">02-29</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-02-28" id="id92">02-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-02-27" id="id93">02-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-02-26" id="id94">02-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-02-25" id="id95">02-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-02-23" id="id96">02-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-01-21" id="id97">01-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-01-20" id="id98">01-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-16-mm-dd-01-18" id="id99">01-18</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mm-dd">
+<span id="whats-new-16-mm-dd"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id50">mm-dd</a><a class="headerlink" href="#mm-dd" title="Permalink to this headline"></a></h3>
+<section id="whats-new-16-mm-dd-12-23">
+<span id="index-2"></span><span id="id1"></span><h4><a class="toc-backref" href="#id51">12-23</a><a class="headerlink" href="#whats-new-16-mm-dd-12-23" title="Permalink to this headline"></a></h4>
+<p>Added a way for the user to determine what tests options are available; see
+<a class="reference internal" href="cmake.html#cmake-make-check"><span class="std std-ref">make check</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-12-20">
+<span id="index-3"></span><span id="id2"></span><h4><a class="toc-backref" href="#id52">12-20</a><a class="headerlink" href="#whats-new-16-mm-dd-12-20" title="Permalink to this headline"></a></h4>
+<p>Change the optimize <a class="reference internal" href="optimize.html#optimize-examples"><span class="std std-ref">Examples</span></a> to use
+<a class="reference internal" href="NearEqual.html#nearequal-name"><span class="std std-ref">NearEqual</span></a> for floating point tests (instead of exactly equal).
+There were some other exactly equal floating point tests that were
+failing on a <code class="docutils literal notranslate"><span class="pre">mingw</span></code> system. Theses have also been fixed.</p>
+</section>
+<section id="whats-new-16-mm-dd-12-18">
+<span id="index-4"></span><span id="id3"></span><h4><a class="toc-backref" href="#id53">12-18</a><a class="headerlink" href="#whats-new-16-mm-dd-12-18" title="Permalink to this headline"></a></h4>
+<p>Add the <a class="reference internal" href="optimize.html#optimize-options-no-print-for-op"><span class="std std-ref">no_print_for_op</span></a> to the
+optimize routine.</p>
+</section>
+<section id="whats-new-16-mm-dd-12-13">
+<span id="index-5"></span><span id="id4"></span><h4><a class="toc-backref" href="#id54">12-13</a><a class="headerlink" href="#whats-new-16-mm-dd-12-13" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix a bug in <a class="reference internal" href="ForSparseHes.html#forsparsehes-name"><span class="std std-ref">ForSparseHes</span></a> . To be more specific,
+there was a bug in handling the cumulative summations operator in this
+routine. This could only come up when used
+an <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimized</span></a> <a class="reference internal" href="ForSparseHes.html#forsparsehes-f"><span class="std std-ref">f</span></a> ,</p></li>
+<li><p>Add the
+<a class="reference internal" href="optimize_nest_conditional.cpp.html#optimize-nest-conditional-cpp-name"><span class="std std-ref">nest_conditional.cpp</span></a> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-12-11">
+<span id="index-6"></span><span id="id5"></span><h4><a class="toc-backref" href="#id55">12-11</a><a class="headerlink" href="#whats-new-16-mm-dd-12-11" title="Permalink to this headline"></a></h4>
+<p>Improve the <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimize</span></a> documentation.
+This includes making examples that demonstrate
+specific aspects of the optimization; see
+<a class="reference internal" href="optimize_forward_active.cpp.html#optimize-forward-active-cpp-name"><span class="std std-ref">forward_active.cpp</span></a> ,
+<a class="reference internal" href="optimize_reverse_active.cpp.html#optimize-reverse-active-cpp-name"><span class="std std-ref">reverse_active.cpp</span></a> ,
+<a class="reference internal" href="optimize_compare_op.cpp.html#optimize-compare-op-cpp-name"><span class="std std-ref">compare_op.cpp</span></a> ,
+<a class="reference internal" href="optimize_conditional_skip.cpp.html#optimize-conditional-skip-cpp-name"><span class="std std-ref">conditional_skip.cpp</span></a> ,
+<a class="reference internal" href="optimize_cumulative_sum.cpp.html#optimize-cumulative-sum-cpp-name"><span class="std std-ref">cumulative_sum.cpp</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-12-09">
+<span id="index-7"></span><span id="id6"></span><h4><a class="toc-backref" href="#id56">12-09</a><a class="headerlink" href="#whats-new-16-mm-dd-12-09" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="optimize.html#optimize-options"><span class="std std-ref">options</span></a> argument was added to the
+optimize routine.</p>
+</section>
+<section id="whats-new-16-mm-dd-11-18">
+<span id="index-8"></span><span id="id7"></span><h4><a class="toc-backref" href="#id57">11-18</a><a class="headerlink" href="#whats-new-16-mm-dd-11-18" title="Permalink to this headline"></a></h4>
+<p>Move classes and functions that are part of the user API from the
+<code class="docutils literal notranslate"><span class="pre">cppad/local</span></code> directory to the <code class="docutils literal notranslate"><span class="pre">cppad/core</span></code> directory.
+The remaining symbols, in the <code class="docutils literal notranslate"><span class="pre">cppad/local</span></code> directory, are now
+in the <code class="docutils literal notranslate"><span class="pre">CppAD::local</span></code> namespace.
+Note that a class in the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> name space, may have a member
+function that is not part of the user API.</p>
+</section>
+<section id="whats-new-16-mm-dd-11-14">
+<span id="index-9"></span><span id="id8"></span><h4><a class="toc-backref" href="#id58">11-14</a><a class="headerlink" href="#whats-new-16-mm-dd-11-14" title="Permalink to this headline"></a></h4>
+<p>Increase the speed of the <code class="docutils literal notranslate"><span class="pre">sparse_pack</span></code> class.
+This improves the speed for
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern-boolean-vector"><span class="std std-ref">vector of boolean</span></a>
+sparsity pattern calculations.</p>
+</section>
+<section id="whats-new-16-mm-dd-11-13">
+<span id="index-10"></span><span id="id9"></span><h4><a class="toc-backref" href="#id59">11-13</a><a class="headerlink" href="#whats-new-16-mm-dd-11-13" title="Permalink to this headline"></a></h4>
+<p>Merged in the <code class="docutils literal notranslate"><span class="pre">sparse</span></code> branch which has <code class="docutils literal notranslate"><span class="pre">const_iterator</span></code> ,
+instead of <code class="docutils literal notranslate"><span class="pre">next_element</span></code> for the
+<code class="docutils literal notranslate"><span class="pre">sparse_list</span></code> and <code class="docutils literal notranslate"><span class="pre">sparse_pack</span></code> classes.
+These classes are not part of the CppAD API and hence their specifications
+can change (as in this case).
+They can be used to get more efficient representations of
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">sparsity patterns</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-10-27">
+<span id="index-11"></span><span id="id10"></span><h4><a class="toc-backref" href="#id60">10-27</a><a class="headerlink" href="#whats-new-16-mm-dd-10-27" title="Permalink to this headline"></a></h4>
+<p>The optional <a class="reference internal" href="chkpoint_one.html#chkpoint-one-optimize"><span class="std std-ref">optimize</span></a> option
+was added to the checkpoint functions.</p>
+</section>
+<section id="whats-new-16-mm-dd-10-12">
+<span id="index-12"></span><span id="id11"></span><h4><a class="toc-backref" href="#id61">10-12</a><a class="headerlink" href="#whats-new-16-mm-dd-10-12" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Change <a class="reference internal" href="elapsed_seconds.html#elapsed-seconds-name"><span class="std std-ref">elapsed_seconds</span></a> to use
+<code class="docutils literal notranslate"><span class="pre">std::chrono::steady_clock</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">std::chrono::high_resolution_clock</span></code> .</p></li>
+<li><p>The test for C++11 features was failing on a Mac system
+because the elapsed time was returning as zero (between two events).
+This test has been made more robust by add a one millisecond sleep
+between the two clock accesses.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-09-29">
+<span id="index-13"></span><span id="id12"></span><h4><a class="toc-backref" href="#id62">09-29</a><a class="headerlink" href="#whats-new-16-mm-dd-09-29" title="Permalink to this headline"></a></h4>
+<p>The multiple directions version of
+<a class="reference internal" href="forward_dir.html#forward-dir-name"><span class="std std-ref">forward</span></a> was missing <a class="reference internal" href="erf.html#erf-name"><span class="std std-ref">erf</span></a> function
+in the case where C++ 2011 was supported; see
+<a class="reference external" href="https://github.com/coin-or/CppAD/issues/16">issue 16</a>.
+This has been fixed.</p>
+</section>
+<section id="whats-new-16-mm-dd-09-27">
+<span id="index-14"></span><span id="id13"></span><h4><a class="toc-backref" href="#id63">09-27</a><a class="headerlink" href="#whats-new-16-mm-dd-09-27" title="Permalink to this headline"></a></h4>
+<p>Change the implementation of <a class="reference internal" href="atomic_two_eigen_cholesky.hpp.html#atomic-two-eigen-cholesky-hpp-name"><span class="std std-ref">atomic_two_eigen_cholesky.hpp</span></a> so that
+the computation of <span class="math notranslate nohighlight">\(M_k\)</span> exactly agrees with the corresponding
+<a class="reference internal" href="cholesky_theory.html#cholesky-theory-name"><span class="std std-ref">theory</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-09-26">
+<span id="index-15"></span><span id="id14"></span><h4><a class="toc-backref" href="#id64">09-26</a><a class="headerlink" href="#whats-new-16-mm-dd-09-26" title="Permalink to this headline"></a></h4>
+<ol class="arabic">
+<li><p>A possible bug in the <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimize</span></a> command was fixed.
+To be specific, a warning of the form
+indentations;</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">warning:</span> <span class="pre">this</span></code> <code class="docutils literal notranslate"><span class="pre">'if'</span></code> <code class="docutils literal notranslate"><span class="pre">clause</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">guard...</span></code> [ <code class="docutils literal notranslate"><span class="pre">-Wmisleading-indentation</span></code> ]</p>
+</div></blockquote>
+<p>using the gcc-6.2.1 compiler, was fixed and it may have fixed a bug.</p>
+</li>
+<li><p>There was a problem with the
+<a class="reference internal" href="speed_sacado.html#speed-sacado-name"><span class="std std-ref">sacado</span></a> where the symbol
+<code class="docutils literal notranslate"><span class="pre">HAS_C99_TR1_CMATH</span></code> was being defined twice.
+This has been fixed by leaving it up to the sacado install to determine
+if this symbol should be defined.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-09-16">
+<span id="index-16"></span><span id="id15"></span><h4><a class="toc-backref" href="#id65">09-16</a><a class="headerlink" href="#whats-new-16-mm-dd-09-16" title="Permalink to this headline"></a></h4>
+<p>Fix a problem using the
+<a class="reference internal" href="speed_main.html#speed-main-sparsity-options-colpack"><span class="std std-ref">colpack</span></a> option to the
+<code class="docutils literal notranslate"><span class="pre">speed_cppad</span></code> program.
+(There was a problem whereby the <code class="docutils literal notranslate"><span class="pre">speed_cppad</span></code>
+program did not properly detect when <code class="docutils literal notranslate"><span class="pre">colpack</span></code> was available.)</p>
+</section>
+<section id="whats-new-16-mm-dd-09-13">
+<span id="index-17"></span><span id="id16"></span><h4><a class="toc-backref" href="#id66">09-13</a><a class="headerlink" href="#whats-new-16-mm-dd-09-13" title="Permalink to this headline"></a></h4>
+<p>Test third order and fix
+bug in <a class="reference internal" href="atomic_two_eigen_cholesky.hpp.html#atomic-two-eigen-cholesky-hpp-name"><span class="std std-ref">atomic_two_eigen_cholesky.hpp</span></a> for orders greater
+than or equal to three.</p>
+</section>
+<section id="whats-new-16-mm-dd-08-30">
+<span id="index-18"></span><span id="id17"></span><h4><a class="toc-backref" href="#id67">08-30</a><a class="headerlink" href="#whats-new-16-mm-dd-08-30" title="Permalink to this headline"></a></h4>
+<p>Add the <a class="reference internal" href="atomic_two_eigen_cholesky.cpp.html#atomic-two-eigen-cholesky-cpp-name"><span class="std std-ref">atomic_two_eigen_cholesky.cpp</span></a> example.</p>
+</section>
+<section id="whats-new-16-mm-dd-08-25">
+<span id="index-19"></span><span id="id18"></span><h4><a class="toc-backref" href="#id68">08-25</a><a class="headerlink" href="#whats-new-16-mm-dd-08-25" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix some missing include files in
+<code class="docutils literal notranslate"><span class="pre">optimize.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">set_union.hpp</span></code>
+(when compiling with MS Visual Studio 2015).</p></li>
+<li><p>Fix a warning in <code class="docutils literal notranslate"><span class="pre">atanh.hpp</span></code>
+(when compiling with MS Visual Studio 14).</p></li>
+<li><p>Fix a typo in the
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-theory-reverse"><span class="std std-ref">Reverse</span></a> section of the
+<code class="docutils literal notranslate"><span class="pre">eigen_mat_inv.hpp</span></code> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-07-17">
+<span id="index-20"></span><span id="id19"></span><h4><a class="toc-backref" href="#id69">07-17</a><a class="headerlink" href="#whats-new-16-mm-dd-07-17" title="Permalink to this headline"></a></h4>
+<p>Add documentation for only needing to compute a
+<a class="reference internal" href="sparse_hessian.html#sparse-hessian-p-column-subset"><span class="std std-ref">Column Subset</span></a> of the sparsity
+pattern when computing a subset of a sparse Hessians.
+In addition, improve the corresponding example
+<a class="reference internal" href="sparse_sub_hes.cpp.html#sparse-sub-hes-cpp-name"><span class="std std-ref">sparse_sub_hes.cpp</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-07-14">
+<span id="index-21"></span><span id="id20"></span><h4><a class="toc-backref" href="#id70">07-14</a><a class="headerlink" href="#whats-new-16-mm-dd-07-14" title="Permalink to this headline"></a></h4>
+<p>Correct title in <a class="reference internal" href="ForSparseHes.html#forsparsehes-name"><span class="std std-ref">ForSparseHes</span></a> (change Reverse to Forward).</p>
+</section>
+<section id="whats-new-16-mm-dd-06-30">
+<span id="index-22"></span><span id="id21"></span><h4><a class="toc-backref" href="#id71">06-30</a><a class="headerlink" href="#whats-new-16-mm-dd-06-30" title="Permalink to this headline"></a></h4>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">atomic_two_mat_mul.cpp</span></code> example so that on atomic object
+works for matrices of any size.
+(This has since been changed to the <a class="reference internal" href="atomic_three_mat_mul.cpp.html#atomic-three-mat-mul-cpp-name"><span class="std std-ref">atomic_three_mat_mul.cpp</span></a> example.)</p>
+</section>
+<section id="whats-new-16-mm-dd-06-29">
+<span id="index-23"></span><span id="id22"></span><h4><a class="toc-backref" href="#id72">06-29</a><a class="headerlink" href="#whats-new-16-mm-dd-06-29" title="Permalink to this headline"></a></h4>
+<p>Change the <a class="reference internal" href="atomic_two.html#atomic-two-name"><span class="std std-ref">atomic_two</span></a> examples so they do no longer use the
+deprecated interfaces to
+<code class="docutils literal notranslate"><span class="pre">for_sparse_jac</span></code> , <code class="docutils literal notranslate"><span class="pre">rev_sparse_jac</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">for_sparse_hes</span></code> , and <code class="docutils literal notranslate"><span class="pre">rev_sparse_hes</span></code> .</p>
+</section>
+<section id="whats-new-16-mm-dd-06-27">
+<span id="index-24"></span><span id="id23"></span><h4><a class="toc-backref" href="#id73">06-27</a><a class="headerlink" href="#whats-new-16-mm-dd-06-27" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Improve the <a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.hpp</span></a> and
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-name"><span class="std std-ref">atomic_two_eigen_mat_inv.hpp</span></a> examples.
+Most importantly, one atomic object now works for matrices of any size.</p></li>
+<li><p>Add the vector <em>x</em> ,
+that contains the parameters in an atomic function call
+to the user following atomic functions:
+<a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-implementation-x"><span class="std std-ref">for_sparse_jac</span></a> ,
+<a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-implementation-x"><span class="std std-ref">rev_sparse_jac</span></a> ,
+<a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-implementation-x"><span class="std std-ref">for_sparse_hes</span></a> ,
+<a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-implementation-x"><span class="std std-ref">rev_sparse_hes</span></a> .
+This enables one to pass parameter information to these functions; e.g.,
+the dimensions of matrices that the function operates on.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-06-25">
+<span id="index-25"></span><span id="id24"></span><h4><a class="toc-backref" href="#id74">06-25</a><a class="headerlink" href="#whats-new-16-mm-dd-06-25" title="Permalink to this headline"></a></h4>
+<p>Add more entries to the optimization
+<a class="reference internal" href="wish_list.html#wish-list-optimization"><span class="std std-ref">wish_list</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-06-10">
+<span id="index-26"></span><span id="id25"></span><h4><a class="toc-backref" href="#id75">06-10</a><a class="headerlink" href="#whats-new-16-mm-dd-06-10" title="Permalink to this headline"></a></h4>
+<p>Add a <a class="reference internal" href="wish_list.html#wish-list-check-finite"><span class="std std-ref">check_finite</span></a> wish list item.</p>
+</section>
+<section id="whats-new-16-mm-dd-05-05">
+<span id="index-27"></span><span id="id26"></span><h4><a class="toc-backref" href="#id76">05-05</a><a class="headerlink" href="#whats-new-16-mm-dd-05-05" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Add documentation for redirecting output using:ref:<cite>PrintFor&#64;s</cite>
+in the <code class="docutils literal notranslate"><span class="pre">PrintFor</span></code> function.</p></li>
+<li><p>Change distributed version to build examples as debug instead
+of release version.
+(Was changed to release version while checking for compiler warnings;
+see <code class="docutils literal notranslate"><span class="pre">04-17</span></code> below).</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-04-17">
+<span id="index-28"></span><span id="id27"></span><h4><a class="toc-backref" href="#id77">04-17</a><a class="headerlink" href="#whats-new-16-mm-dd-04-17" title="Permalink to this headline"></a></h4>
+<p>Fix all some compiler warnings that occurred when compiling the
+<a class="reference internal" href="Example.html#example-name"><span class="std std-ref">examples</span></a> with
+<a class="reference internal" href="Faq.html#faq-speed-ndebug"><span class="std std-ref">NDEBUG</span></a> defined.</p>
+</section>
+<section id="whats-new-16-mm-dd-03-27">
+<span id="index-29"></span><span id="id28"></span><h4><a class="toc-backref" href="#id78">03-27</a><a class="headerlink" href="#whats-new-16-mm-dd-03-27" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix a bug in the calculation of the <a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-name"><span class="std std-ref">atomic_two_eigen_mat_inv.hpp</span></a>
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-private-reverse"><span class="std std-ref">reverse</span></a> example.</p></li>
+<li><p>Use a very simple method (that over estimates variables) for calculating
+<a class="reference internal" href="atomic_two_forward.html#atomic-two-forward-vy"><span class="std std-ref">vy</span></a> in the <a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-name"><span class="std std-ref">atomic_two_eigen_mat_inv.hpp</span></a>
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-private-forward"><span class="std std-ref">forward</span></a> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-26">
+<span id="index-30"></span><span id="id29"></span><h4><a class="toc-backref" href="#id79">03-26</a><a class="headerlink" href="#whats-new-16-mm-dd-03-26" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Implement and test the <a class="reference internal" href="atomic_two_eigen_mat_inv.cpp.html#atomic-two-eigen-mat-inv-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_inv.cpp</span></a>
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-private-reverse"><span class="std std-ref">reverse</span></a> is implemented.</p></li>
+<li><p>Fix a bug in the calculation of
+<a class="reference internal" href="atomic_two_forward.html#atomic-two-forward-vy"><span class="std std-ref">vy</span></a> in the <a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-name"><span class="std std-ref">atomic_two_eigen_mat_inv.hpp</span></a>
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-private-forward"><span class="std std-ref">forward</span></a> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-25">
+<span id="index-31"></span><span id="id30"></span><h4><a class="toc-backref" href="#id80">03-25</a><a class="headerlink" href="#whats-new-16-mm-dd-03-25" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Start construction of the <a class="reference internal" href="atomic_two_eigen_mat_inv.cpp.html#atomic-two-eigen-mat-inv-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_inv.cpp</span></a> example,
+currently only
+<a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-private-forward"><span class="std std-ref">forward</span></a> is implemented
+and tested.</p></li>
+<li><p>More improvements to <a class="reference internal" href="atomic_two_eigen_mat_mul.cpp.html#atomic-two-eigen-mat-mul-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.cpp</span></a> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-24">
+<span id="index-32"></span><span id="id31"></span><h4><a class="toc-backref" href="#id81">03-24</a><a class="headerlink" href="#whats-new-16-mm-dd-03-24" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix build of <code class="docutils literal notranslate"><span class="pre">example/atomic.cpp</span></code> when
+<a class="reference internal" href="eigen.html#eigen-name"><span class="std std-ref">eigen</span></a> is not available
+(bug introduced when <a class="reference internal" href="atomic_two_eigen_mat_mul.cpp.html#atomic-two-eigen-mat-mul-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.cpp</span></a> was added).</p></li>
+<li><p>Extend <a class="reference internal" href="atomic_two_eigen_mat_mul.cpp.html#atomic-two-eigen-mat-mul-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.cpp</span></a> example to include
+<a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-private-for-sparse-jac"><span class="std std-ref">for_sparse_jac</span></a> ,
+<a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-private-rev-sparse-jac"><span class="std std-ref">rev_sparse_jac</span></a> ,
+<a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-private-for-sparse-hes"><span class="std std-ref">for_sparse_hes</span></a> ,
+<a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-private-rev-sparse-hes"><span class="std std-ref">rev_sparse_hes</span></a> .</p></li>
+<li><p>Fix a bug in the <a class="reference internal" href="ForSparseHes.html#forsparsehes-name"><span class="std std-ref">ForSparseHes</span></a> routine.</p></li>
+<li><p>Edit <a class="reference internal" href="atomic_two_rev_sparse_hes.html#atomic-two-rev-sparse-hes-name"><span class="std std-ref">atomic_two_rev_sparse_hes</span></a> documentation.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-23">
+<span id="index-33"></span><span id="id32"></span><h4><a class="toc-backref" href="#id82">03-23</a><a class="headerlink" href="#whats-new-16-mm-dd-03-23" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix bug in autotools file <code class="docutils literal notranslate"><span class="pre">example/atomic/makefile.am</span></code>
+(introduced on 03-22).</p></li>
+<li><p>Improve the <a class="reference internal" href="atomic_two_eigen_mat_mul.cpp.html#atomic-two-eigen-mat-mul-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.cpp</span></a> example
+and extend it to include reverse mode.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-22">
+<span id="index-34"></span><span id="id33"></span><h4><a class="toc-backref" href="#id83">03-22</a><a class="headerlink" href="#whats-new-16-mm-dd-03-22" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Start construction of the <a class="reference internal" href="atomic_two_eigen_mat_mul.cpp.html#atomic-two-eigen-mat-mul-cpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.cpp</span></a> example.</p></li>
+<li><p>change <code class="docutils literal notranslate"><span class="pre">atomic_ode.cpp</span></code> to <code class="docutils literal notranslate"><span class="pre">chkpoint_one_ode.cpp</span></code> and
+<code class="docutils literal notranslate"><span class="pre">atomic_extended_ode.cpp</span></code> to <code class="docutils literal notranslate"><span class="pre">chkpoint_one_extended_ode.cpp</span></code> .</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-21">
+<span id="index-35"></span><span id="id34"></span><h4><a class="toc-backref" href="#id84">03-21</a><a class="headerlink" href="#whats-new-16-mm-dd-03-21" title="Permalink to this headline"></a></h4>
+<p>Change the <a class="reference internal" href="atomic_three_mat_mul.hpp.html#atomic-three-mat-mul-hpp-name"><span class="std std-ref">atomic_three_mat_mul.hpp</span></a> class name from <code class="docutils literal notranslate"><span class="pre">mat_mul</span></code>
+to <code class="docutils literal notranslate"><span class="pre">atomic_mat_mul</span></code> . This example use of the name <code class="docutils literal notranslate"><span class="pre">mat_mul</span></code>
+in the <code class="docutils literal notranslate"><span class="pre">atomic_two_mat_mul.cpp</span></code> example / test.
+(This has since been changed to the <a class="reference internal" href="atomic_three_mat_mul.cpp.html#atomic-three-mat-mul-cpp-name"><span class="std std-ref">atomic_three_mat_mul.cpp</span></a> example.)</p>
+</section>
+<section id="whats-new-16-mm-dd-03-20">
+<span id="index-36"></span><span id="id35"></span><h4><a class="toc-backref" href="#id85">03-20</a><a class="headerlink" href="#whats-new-16-mm-dd-03-20" title="Permalink to this headline"></a></h4>
+<ol class="arabic">
+<li><p>Include the sub-directory name to the include guards
+in * . <code class="docutils literal notranslate"><span class="pre">hpp</span></code> files. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ifndef CPPAD_UTILITY_VECTOR_HPP</span>
+<span class="c1"># define CPPAD_UTILITY_VECTOR_HPP</span>
+</pre></div>
+</div>
+<p>appears in the file <code class="docutils literal notranslate"><span class="pre">cppad/utility/vector.hpp</span></code> . This makes it
+easier to avoid conflicts when choosing <a class="reference internal" href="addon.html#addon-name"><span class="std std-ref">addon</span></a> names.</p>
+</li>
+<li><p>Add the <a class="reference internal" href="set_union.html#set-union-name"><span class="std std-ref">set_union</span></a> utility and use it to simplify the
+<a class="reference internal" href="atomic.html#atomic-name"><span class="std std-ref">atomic</span></a> examples that use
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern-vector-of-sets"><span class="std std-ref">Vector of Sets</span></a>
+sparsity patterns.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-19">
+<span id="index-37"></span><span id="id36"></span><h4><a class="toc-backref" href="#id86">03-19</a><a class="headerlink" href="#whats-new-16-mm-dd-03-19" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">atomic_two_mat_mul.cpp</span></code> to <code class="docutils literal notranslate"><span class="pre">atomic_mat_mul_xam.cpp</span></code>
+(moved back on <a class="reference internal" href="#whats-new-16-mm-dd-03-21"><span class="std std-ref">03-21</span></a> .</p></li>
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">atomic_matrix_mul.hpp</span></code> to <a class="reference internal" href="atomic_three_mat_mul.hpp.html#atomic-three-mat-mul-hpp-name"><span class="std std-ref">atomic_three_mat_mul.hpp</span></a> .</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-17">
+<span id="index-38"></span><span id="id37"></span><h4><a class="toc-backref" href="#id87">03-17</a><a class="headerlink" href="#whats-new-16-mm-dd-03-17" title="Permalink to this headline"></a></h4>
+<p>Add the
+<code class="docutils literal notranslate"><span class="pre">atomic_ode.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">atomic_extended_ode.cpp</span></code> examples.</p>
+</section>
+<section id="whats-new-16-mm-dd-03-12">
+<span id="index-39"></span><span id="id38"></span><h4><a class="toc-backref" href="#id88">03-12</a><a class="headerlink" href="#whats-new-16-mm-dd-03-12" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Move the example <code class="docutils literal notranslate"><span class="pre">reverse_any.cpp</span></code> to <a class="reference internal" href="rev_checkpoint.cpp.html#rev-checkpoint-cpp-name"><span class="std std-ref">rev_checkpoint.cpp</span></a> .</p></li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">chkpoint_one_mul_level.cpp</span></code> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-03-05">
+<span id="index-40"></span><span id="id39"></span><h4><a class="toc-backref" href="#id89">03-05</a><a class="headerlink" href="#whats-new-16-mm-dd-03-05" title="Permalink to this headline"></a></h4>
+<p>The following atomic function examples were added
+These examples are for a specific atomic operation.
+In addition, the domain and range dimensions for these examples
+are not one and not equal to each other:
+<code class="docutils literal notranslate"><span class="pre">atomic_two_forward.cpp</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atomic_two_reverse.cpp</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atomic_two_for_sparse_jac.cpp</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atomic_two_rev_sparse_jac.cpp</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atomic_two_for_sparse_hes.cpp</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atomic_two_rev_sparse_hes.cpp</span></code> .</p>
+</section>
+<section id="whats-new-16-mm-dd-03-01">
+<span id="index-41"></span><span id="id40"></span><h4><a class="toc-backref" href="#id90">03-01</a><a class="headerlink" href="#whats-new-16-mm-dd-03-01" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Improve documentation of implementation requirements for the atomic
+<a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-implementation"><span class="std std-ref">rev_sparse_jac</span></a> .</p></li>
+<li><p>Make some corrections to the <a class="reference internal" href="atomic_two_for_sparse_hes.html#atomic-two-for-sparse-hes-name"><span class="std std-ref">atomic_two_for_sparse_hes</span></a> documentation.
+and fix a bug in how CppAD used these functions.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-02-29">
+<span id="index-42"></span><span id="id41"></span><h4><a class="toc-backref" href="#id91">02-29</a><a class="headerlink" href="#whats-new-16-mm-dd-02-29" title="Permalink to this headline"></a></h4>
+<ol class="arabic">
+<li><p>Merged sparse into master branch. This makes the
+<a class="reference internal" href="ForSparseHes.html#forsparsehes-name"><span class="std std-ref">ForSparseHes</span></a> routine available for use.</p></li>
+<li><p>Changed the
+<a class="reference internal" href="speed_main.html#speed-main-global-options"><span class="std std-ref">Global Options</span></a>
+in the speed test main program to use one global variable with prototype</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">      </span><span class="k">extern</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">global_option</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-02-28">
+<span id="index-43"></span><span id="id42"></span><h4><a class="toc-backref" href="#id92">02-28</a><a class="headerlink" href="#whats-new-16-mm-dd-02-28" title="Permalink to this headline"></a></h4>
+<p>Fix a mistake in the old atomic
+<code class="docutils literal notranslate"><span class="pre">example/sparsity/sparsity.cpp</span></code> example.
+This example has since been changed to
+<code class="docutils literal notranslate"><span class="pre">atomic_two_set_sparsity.cpp</span></code> .</p>
+</section>
+<section id="whats-new-16-mm-dd-02-27">
+<span id="index-44"></span><span id="id43"></span><h4><a class="toc-backref" href="#id93">02-27</a><a class="headerlink" href="#whats-new-16-mm-dd-02-27" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">--with-sparse_set</span></code> and <code class="docutils literal notranslate"><span class="pre">--with-sparse_set</span></code> options
+were removed from the <a class="reference internal" href="autotools.html#autotools-name"><span class="std std-ref">autotools</span></a> install procedure.</p>
+</section>
+<section id="whats-new-16-mm-dd-02-26">
+<span id="index-45"></span><span id="id44"></span><h4><a class="toc-backref" href="#id94">02-26</a><a class="headerlink" href="#whats-new-16-mm-dd-02-26" title="Permalink to this headline"></a></h4>
+<p>The condition that the operation sequence in <em>f</em> is
+<a class="reference internal" href="glossary.html#glossary-operation-independent"><span class="std std-ref">Independent</span></a> of
+the independent variables was added to the statement about
+the validity of the sparsity patterns; see <em>x</em> in
+<a class="reference internal" href="ForSparseJac.html#forsparsejac-x"><span class="std std-ref">ForSparseJac</span></a> ,
+<a class="reference internal" href="RevSparseJac.html#revsparsejac-x"><span class="std std-ref">RevSparseJac</span></a> , and
+<a class="reference internal" href="RevSparseHes.html#revsparsehes-x"><span class="std std-ref">RevSparseHes</span></a> .</p>
+</section>
+<section id="whats-new-16-mm-dd-02-25">
+<span id="index-46"></span><span id="id45"></span><h4><a class="toc-backref" href="#id95">02-25</a><a class="headerlink" href="#whats-new-16-mm-dd-02-25" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command line argument <code class="docutils literal notranslate"><span class="pre">cppad_sparse_list</span></code>
+has been removed (because it is so much better than the other option).</p>
+</section>
+<section id="whats-new-16-mm-dd-02-23">
+<span id="index-47"></span><span id="id46"></span><h4><a class="toc-backref" href="#id96">02-23</a><a class="headerlink" href="#whats-new-16-mm-dd-02-23" title="Permalink to this headline"></a></h4>
+<p>A new version of the
+<code class="docutils literal notranslate"><span class="pre">cppad_sparse_list</span></code> class (not part of user API) uses
+reference counters to reduce the number of copies of sets that are equal.
+This improved the speed of sparsity pattern computations that use
+the <a class="reference internal" href="glossary.html#glossary-sparsity-pattern-vector-of-sets"><span class="std std-ref">Vector of Sets</span></a>
+representation.
+For example, the results for the
+<a class="reference internal" href="cppad_sparse_hessian.cpp.html#cppad-sparse-hessian-cpp-name"><span class="std std-ref">cppad_sparse_hessian.cpp</span></a> test compare as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sparse_hessian_size</span>     <span class="o">=</span> <span class="p">[</span>  <span class="mi">100</span><span class="p">,</span>    <span class="mi">400</span><span class="p">,</span>   <span class="mi">900</span><span class="p">,</span>  <span class="mi">1600</span><span class="p">,</span> <span class="mi">2500</span> <span class="p">]</span>
+<span class="n">sparse_hessian_rate_old</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1480</span><span class="p">,</span> <span class="mf">265.21</span><span class="p">,</span> <span class="mf">93.33</span><span class="p">,</span> <span class="mf">41.93</span><span class="p">,</span> <span class="mf">0.86</span> <span class="p">]</span>
+<span class="n">sparse_hessian_rate_new</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1328</span><span class="p">,</span> <span class="mf">241.61</span><span class="p">,</span> <span class="mf">92.99</span><span class="p">,</span> <span class="mf">40.51</span><span class="p">,</span> <span class="mf">3.80</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that the improvement is only for large problems. In fact,
+for large problems, preliminary testing indicates that
+the new vector of sets representation preforms better than
+the <a class="reference internal" href="glossary.html#glossary-sparsity-pattern-boolean-vector"><span class="std std-ref">vector of boolean</span></a>
+representation.</p>
+</section>
+<section id="whats-new-16-mm-dd-01-21">
+<span id="index-48"></span><span id="id47"></span><h4><a class="toc-backref" href="#id97">01-21</a><a class="headerlink" href="#whats-new-16-mm-dd-01-21" title="Permalink to this headline"></a></h4>
+<p>Fix a <code class="docutils literal notranslate"><span class="pre">valgrind</span></code> warning about use of uninitialized memory
+in the test <code class="docutils literal notranslate"><span class="pre">test_more/chkpoint_one.cpp</span></code> (the problem was in the test).</p>
+</section>
+<section id="whats-new-16-mm-dd-01-20">
+<span id="index-49"></span><span id="id48"></span><h4><a class="toc-backref" href="#id98">01-20</a><a class="headerlink" href="#whats-new-16-mm-dd-01-20" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix a <code class="docutils literal notranslate"><span class="pre">valgrind</span></code> warning about use of uninitialized memory
+when using the <a class="reference internal" href="base_adolc.hpp.html#base-adolc-hpp-name"><span class="std std-ref">adouble</span></a> base type.
+This required an optional <a class="reference internal" href="base_hash.html#base-hash-name"><span class="std std-ref">base_hash</span></a> function and the special
+<a class="reference internal" href="base_adolc.hpp.html#base-adolc-hpp-hash-code"><span class="std std-ref">adouble hash_code</span></a> implementation.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">adouble</span></code> <a class="reference internal" href="to_string.html#to-string-name"><span class="std std-ref">to_string</span></a> functions
+required a special implementation; see
+<a class="reference internal" href="base_adolc.hpp.html#base-adolc-hpp-to-string"><span class="std std-ref">adouble to_string</span></a> .</p></li>
+<li><p>Add the <a class="reference internal" href="base_alloc.hpp.html#base-alloc-hpp-to-string"><span class="std std-ref">to_string</span></a> and
+<a class="reference internal" href="base_alloc.hpp.html#base-alloc-hpp-hash-code"><span class="std std-ref">hash_code</span></a> examples
+to the <code class="docutils literal notranslate"><span class="pre">base_alloc.hpp</span></code> example.</p></li>
+</ol>
+</section>
+<section id="whats-new-16-mm-dd-01-18">
+<span id="index-50"></span><span id="id49"></span><h4><a class="toc-backref" href="#id99">01-18</a><a class="headerlink" href="#whats-new-16-mm-dd-01-18" title="Permalink to this headline"></a></h4>
+<ol class="arabic">
+<li><p>Fix ambiguity between <code class="docutils literal notranslate"><span class="pre">CppAD::sin</span></code> and <code class="docutils literal notranslate"><span class="pre">std::sin</span></code> ,
+and other standard math functions,
+when using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="n">using</span> <span class="n">namespace</span> <span class="n">CppAD</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This is OK for simple programs, but not generally recommended.
+See <code class="docutils literal notranslate"><span class="pre">double</span></code> version of base class definitions for
+<a class="reference internal" href="base_double.hpp.html#base-double-hpp-unary-standard-math"><span class="std std-ref">Unary Standard Math</span></a>
+for more details.</p>
+</li>
+<li><p>Change Eigen array example
+<a class="reference internal" href="eigen_array.cpp.html#eigen-array-cpp-name"><span class="std std-ref">eigen_array.cpp</span></a>
+to use member function version of <code class="docutils literal notranslate"><span class="pre">sin</span></code> function
+(as per Eigen’s array class documentation).</p></li>
+</ol>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="whats_new_17.html" class="btn btn-neutral float-left" title="whats_new_17" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="whats_new_15.html" class="btn btn-neutral float-right" title="whats_new_15" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

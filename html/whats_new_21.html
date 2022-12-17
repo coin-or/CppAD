@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="whats_new_21, changes, and, additions, to, cppad, during, 2021" name="keywords" />
+<meta content="mm-dd" name="keywords" />
+<meta content="12-17" name="keywords" />
+<meta content="12-16" name="keywords" />
+<meta content="12-10" name="keywords" />
+<meta content="12-08" name="keywords" />
+<meta content="09-04" name="keywords" />
+<meta content="08-31" name="keywords" />
+<meta content="08-27" name="keywords" />
+<meta content="08-26" name="keywords" />
+<meta content="07-31" name="keywords" />
+<meta content="07-30" name="keywords" />
+<meta content="07-12" name="keywords" />
+<meta content="06-22" name="keywords" />
+<meta content="06-06" name="keywords" />
+<meta content="06-02" name="keywords" />
+<meta content="05-12" name="keywords" />
+<meta content="04-30" name="keywords" />
+<meta content="04-28" name="keywords" />
+<meta content="04-27" name="keywords" />
+<meta content="04-26" name="keywords" />
+<meta content="04-16" name="keywords" />
+<meta content="04-09" name="keywords" />
+<meta content="04-07" name="keywords" />
+<meta content="04-05" name="keywords" />
+<meta content="04-02" name="keywords" />
+<meta content="03-29" name="keywords" />
+<meta content="03-24" name="keywords" />
+<meta content="03-11" name="keywords" />
+<meta content="03-09" name="keywords" />
+<meta content="03-08" name="keywords" />
+<meta content="03-07" name="keywords" />
+<meta content="02-21" name="keywords" />
+<meta content="02-16" name="keywords" />
+<meta content="02-14" name="keywords" />
+<meta content="02-12" name="keywords" />
+<meta content="02-11" name="keywords" />
+<meta content="02-08" name="keywords" />
+<meta content="02-06" name="keywords" />
+<meta content="01-27" name="keywords" />
+<meta content="01-26" name="keywords" />
+<meta content="01-08" name="keywords" />
+<meta content="01-07" name="keywords" />
+<meta content="01-05" name="keywords" />
+<meta content="01-03" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whats_new_21 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="whats_new_20" href="whats_new_20.html" />
+    <link rel="prev" title="whats_new_22" href="whats_new_22.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="whats_new.html">whats_new</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="whats_new_22.html">whats_new_22</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">whats_new_21</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_20.html">whats_new_20</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_19.html">whats_new_19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_18.html">whats_new_18</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_17.html">whats_new_17</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_16.html">whats_new_16</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_15.html">whats_new_15</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_14.html">whats_new_14</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_13.html">whats_new_13</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_12.html">whats_new_12</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_11.html">whats_new_11</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_10.html">whats_new_10</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_09.html">whats_new_09</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_08.html">whats_new_08</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_07.html">whats_new_07</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_06.html">whats_new_06</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_05.html">whats_new_05</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_04.html">whats_new_04</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_03.html">whats_new_03</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deprecated.html">deprecated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="whats_new.html">whats_new</a> &raquo;</li>
+      <li>whats_new_21</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/whats_new_21.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="whats-new-21">
+<span id="whats-new-21-name"></span><h1>whats_new_21<a class="headerlink" href="#whats-new-21" title="Permalink to this headline"></a></h1>
+<section id="changes-and-additions-to-cppad-during-2021">
+<span id="whats-new-21-title"></span><span id="index-0"></span><h2>Changes and Additions to CppAD During 2021<a class="headerlink" href="#changes-and-additions-to-cppad-during-2021" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#mm-dd" id="id45">mm-dd</a></p>
+<ul>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-12-17" id="id46">12-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-12-16" id="id47">12-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-12-10" id="id48">12-10</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-12-08" id="id49">12-08</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-09-04" id="id50">09-04</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-08-31" id="id51">08-31</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-08-27" id="id52">08-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-08-26" id="id53">08-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-07-31" id="id54">07-31</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-07-30" id="id55">07-30</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-07-12" id="id56">07-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-06-22" id="id57">06-22</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-06-06" id="id58">06-06</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-06-02" id="id59">06-02</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-05-12" id="id60">05-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-30" id="id61">04-30</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-28" id="id62">04-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-27" id="id63">04-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-26" id="id64">04-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-16" id="id65">04-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-09" id="id66">04-09</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-07" id="id67">04-07</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-05" id="id68">04-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-04-02" id="id69">04-02</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-03-29" id="id70">03-29</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-03-24" id="id71">03-24</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-03-11" id="id72">03-11</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-03-09" id="id73">03-09</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-03-08" id="id74">03-08</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-03-07" id="id75">03-07</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-21" id="id76">02-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-16" id="id77">02-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-14" id="id78">02-14</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-12" id="id79">02-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-11" id="id80">02-11</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-08" id="id81">02-08</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-02-06" id="id82">02-06</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-01-27" id="id83">01-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-01-26" id="id84">01-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-01-08" id="id85">01-08</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-01-07" id="id86">01-07</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-01-05" id="id87">01-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-21-mm-dd-01-03" id="id88">01-03</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mm-dd">
+<span id="whats-new-21-mm-dd"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id45">mm-dd</a><a class="headerlink" href="#mm-dd" title="Permalink to this headline"></a></h3>
+<section id="whats-new-21-mm-dd-12-17">
+<span id="index-2"></span><span id="id1"></span><h4><a class="toc-backref" href="#id46">12-17</a><a class="headerlink" href="#whats-new-21-mm-dd-12-17" title="Permalink to this headline"></a></h4>
+<p>Add forward mode calculations using <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> to the
+<a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> example.</p>
+</section>
+<section id="whats-new-21-mm-dd-12-16">
+<span id="index-3"></span><span id="id2"></span><h4><a class="toc-backref" href="#id47">12-16</a><a class="headerlink" href="#whats-new-21-mm-dd-12-16" title="Permalink to this headline"></a></h4>
+<p>Change <code class="docutils literal notranslate"><span class="pre">virtual</span></code> to <code class="docutils literal notranslate"><span class="pre">override</span></code> in all the
+<a class="reference internal" href="atomic_three_example.html#atomic-three-example-name"><span class="std std-ref">atomic_three_example</span></a> files and
+<a class="reference internal" href="multi_atomic_three_user.html#multi-atomic-three-user-name"><span class="std std-ref">multi_atomic_three_user</span></a> .</p>
+</section>
+<section id="whats-new-21-mm-dd-12-10">
+<span id="index-4"></span><span id="id3"></span><h4><a class="toc-backref" href="#id48">12-10</a><a class="headerlink" href="#whats-new-21-mm-dd-12-10" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Added the example <a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> .</p></li>
+<li><p>Fix some compiler warnings when building with <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> defined.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-12-08">
+<span id="index-5"></span><span id="id4"></span><h4><a class="toc-backref" href="#id49">12-08</a><a class="headerlink" href="#whats-new-21-mm-dd-12-08" title="Permalink to this headline"></a></h4>
+<p>Update to a newer version of the <a class="reference internal" href="autotools.html#autotools-name"><span class="std std-ref">autotools</span></a> .</p>
+</section>
+<section id="whats-new-21-mm-dd-09-04">
+<span id="index-6"></span><span id="id5"></span><h4><a class="toc-backref" href="#id50">09-04</a><a class="headerlink" href="#whats-new-21-mm-dd-09-04" title="Permalink to this headline"></a></h4>
+<p>There was a bug in the <a class="reference internal" href="atan2.html#atan2-name"><span class="std std-ref">atan2</span></a> function.
+For example, the derivative of <code class="docutils literal notranslate"><span class="pre">atan2(0,1)</span></code> was incorrect; see
+<a class="reference external" href="https://github.com/coin-or/CppAD/issues/120">issue 120</a>.
+This has been fixed and the <a class="reference internal" href="atan2.cpp.html#atan2-cpp-name"><span class="std std-ref">atan2.cpp</span></a> example has been
+extended to do more testing.</p>
+</section>
+<section id="whats-new-21-mm-dd-08-31">
+<span id="index-7"></span><span id="id6"></span><h4><a class="toc-backref" href="#id51">08-31</a><a class="headerlink" href="#whats-new-21-mm-dd-08-31" title="Permalink to this headline"></a></h4>
+<p>There was a bug in the CMake configuration files such that
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_example_multi_thread</span></code> was not being constructed.
+Hence <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code> did not include the multi_thread tests.
+This has been fixed.</p>
+</section>
+<section id="whats-new-21-mm-dd-08-27">
+<span id="index-8"></span><span id="id7"></span><h4><a class="toc-backref" href="#id52">08-27</a><a class="headerlink" href="#whats-new-21-mm-dd-08-27" title="Permalink to this headline"></a></h4>
+<p>The following error occurred</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">compile_source_test:</span> <span class="pre">cplusplus_201100_ok</span> <span class="pre">is</span> <span class="pre">defined</span> <span class="pre">before</span> <span class="pre">expected</span></code></p>
+</div></blockquote>
+<p>if the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command was run twice,
+without first removing the <code class="docutils literal notranslate"><span class="pre">CMakeCache.txt</span></code> file.
+This has been fixed.</p>
+</section>
+<section id="whats-new-21-mm-dd-08-26">
+<span id="index-9"></span><span id="id8"></span><h4><a class="toc-backref" href="#id53">08-26</a><a class="headerlink" href="#whats-new-21-mm-dd-08-26" title="Permalink to this headline"></a></h4>
+<p>The cmake command was extended to allow for one to specify
+<a class="reference internal" href="cmake.html#cmake-cmake-build-type"><span class="std std-ref">cmake_build_type</span></a> .
+This forced changing the default for
+<a class="reference internal" href="cmake.html#cmake-cppad-debug-which"><span class="std std-ref">cppad_debug_which</span></a> from
+<code class="docutils literal notranslate"><span class="pre">debug_all</span></code> to the empty string.</p>
+</section>
+<section id="whats-new-21-mm-dd-07-31">
+<span id="index-10"></span><span id="id9"></span><h4><a class="toc-backref" href="#id54">07-31</a><a class="headerlink" href="#whats-new-21-mm-dd-07-31" title="Permalink to this headline"></a></h4>
+<p>Do more work on pkgconfig files:
+Remove duplicates and put <code class="docutils literal notranslate"><span class="pre">-L</span></code> entries
+before <code class="docutils literal notranslate"><span class="pre">-l</span></code> entries in <code class="docutils literal notranslate"><span class="pre">Libs</span></code> section.
+Furthermore, move all information from private to normal section.</p>
+</section>
+<section id="whats-new-21-mm-dd-07-30">
+<span id="index-11"></span><span id="id10"></span><h4><a class="toc-backref" href="#id55">07-30</a><a class="headerlink" href="#whats-new-21-mm-dd-07-30" title="Permalink to this headline"></a></h4>
+<p>Fix a bug in the <a class="reference internal" href="pkgconfig.html#pkgconfig-name"><span class="std std-ref">pkgconfig</span></a> files.
+To be specific, there was an extra <code class="docutils literal notranslate"><span class="pre">-l</span></code> at the front of the list
+of library flags; e.g.,
+<code class="docutils literal notranslate"><span class="pre">-l-lcppad_lib</span></code> was changed to <code class="docutils literal notranslate"><span class="pre">-lcppad_lib</span></code> .</p>
+</section>
+<section id="whats-new-21-mm-dd-07-12">
+<span id="index-12"></span><span id="id11"></span><h4><a class="toc-backref" href="#id56">07-12</a><a class="headerlink" href="#whats-new-21-mm-dd-07-12" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Change all the scripts called by <a class="reference internal" href="get_optional.sh.html#get-optional-sh-name"><span class="std std-ref">get_optional.sh</span></a> to use
+all the processing units available on the system when compiling
+and linking the optional packages.</p></li>
+<li><p>Fix <a class="reference internal" href="get_colpack.sh.html#get-colpack-sh-name"><span class="std std-ref">get_colpack.sh</span></a> so that it does not leave behind
+<code class="docutils literal notranslate"><span class="pre">ltmain.sh</span></code> and <code class="docutils literal notranslate"><span class="pre">test-driver</span></code> in the top source directory.</p></li>
+<li><p>Change the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> script use of <code class="docutils literal notranslate"><span class="pre">CHECK_CXX_SOURCE_RUNS</span></code>
+to <code class="docutils literal notranslate"><span class="pre">CHECK_CXX_SOURCE_COMPILES</span></code> .
+This makes it easier to use CppAD in a cross compiling context.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-06-22">
+<span id="index-13"></span><span id="id12"></span><h4><a class="toc-backref" href="#id57">06-22</a><a class="headerlink" href="#whats-new-21-mm-dd-06-22" title="Permalink to this headline"></a></h4>
+<p>Improve <a class="reference internal" href="Var2Par.html#var2par-name"><span class="std std-ref">Var2Par</span></a> documentation and <a class="reference internal" href="var2par.cpp.html#var2par-cpp-name"><span class="std std-ref">var2par.cpp</span></a> example
+by separating dynamic and constant parameters.</p>
+</section>
+<section id="whats-new-21-mm-dd-06-06">
+<span id="index-14"></span><span id="id13"></span><h4><a class="toc-backref" href="#id58">06-06</a><a class="headerlink" href="#whats-new-21-mm-dd-06-06" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">CppAD::vector</span></code> assignment statement no longer requires the
+size of the vectors to be the same; see
+<a class="reference internal" href="CppAD_vector.html#cppad-vector-assignment-check-size"><span class="std std-ref">Check Size</span></a> .</p>
+</section>
+<section id="whats-new-21-mm-dd-06-02">
+<span id="index-15"></span><span id="id14"></span><h4><a class="toc-backref" href="#id59">06-02</a><a class="headerlink" href="#whats-new-21-mm-dd-06-02" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">microsoft_timer</span></code> which is no longer needed by
+<a class="reference internal" href="elapsed_seconds.html#elapsed-seconds-name"><span class="std std-ref">elapsed_seconds</span></a> because c++11 required (starting this year).</p></li>
+<li><p>Remove any use of <code class="docutils literal notranslate"><span class="pre">CMAKE_SOURCE_DIR</span></code> .
+This allows CppAD’s top source directory
+to be used as a subdirectory of a larger CMake package.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-05-12">
+<span id="index-16"></span><span id="id15"></span><h4><a class="toc-backref" href="#id60">05-12</a><a class="headerlink" href="#whats-new-21-mm-dd-05-12" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The cmake
+<a class="reference internal" href="cmake.html#cmake-include-cppadcg"><span class="std std-ref">include_cppadcg</span></a> option was not working
+when cppadcg was the only optional package.
+This has been fixed.</p></li>
+<li><p>The smallest size
+for the <a class="reference internal" href="link_det_minor.html#link-det-minor-name"><span class="std std-ref">det_minor</span></a> speed test
+was changed from one to two (a 2 by 2 matrix).</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-04-30">
+<span id="index-17"></span><span id="id16"></span><h4><a class="toc-backref" href="#id61">04-30</a><a class="headerlink" href="#whats-new-21-mm-dd-04-30" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The conditional expression example <a class="reference internal" href="cond_exp.cpp.html#cond-exp-cpp-name"><span class="std std-ref">cond_exp.cpp</span></a> was improved.</p></li>
+<li><p>Restore the
+<a class="reference internal" href="sparse_rcv.html#sparse-rcv-other-assignment-and-constructor"><span class="std std-ref">sparse_rcv copy constructor</span></a>
+which was removed by mistake when the <code class="docutils literal notranslate"><span class="pre">sparse_rcv</span></code>
+move semantics constructor was added.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-04-28">
+<span id="index-18"></span><span id="id17"></span><h4><a class="toc-backref" href="#id62">04-28</a><a class="headerlink" href="#whats-new-21-mm-dd-04-28" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The change to the <a class="reference internal" href="pow.html#pow-name"><span class="std std-ref">pow(x,y)</span></a> function on
+<a class="reference internal" href="#whats-new-21-mm-dd-02-06"><span class="std std-ref">02-06</span></a> handled the case where <em>x</em> is zero.
+The <a class="reference internal" href="pow_nan.cpp.html#pow-nan-cpp-name"><span class="std std-ref">pow_nan.cpp</span></a> example was modified to show when the new
+version of this function generates nans.</p></li>
+<li><p>Remove some uses of the deprecated
+<a class="reference internal" href="nan.html#nan-nan-zero-deprecated-2015-10-04"><span class="std std-ref">nan(zero)</span></a> function.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-04-27">
+<span id="index-19"></span><span id="id18"></span><h4><a class="toc-backref" href="#id63">04-27</a><a class="headerlink" href="#whats-new-21-mm-dd-04-27" title="Permalink to this headline"></a></h4>
+<p>Fix the msys2 and cygwin system builds so that they use static
+(instead of dynamic) libraries.
+This is necessary so that static variables (in include files) can not have
+multiple instances in Windows.</p>
+</section>
+<section id="whats-new-21-mm-dd-04-26">
+<span id="index-20"></span><span id="id19"></span><h4><a class="toc-backref" href="#id64">04-26</a><a class="headerlink" href="#whats-new-21-mm-dd-04-26" title="Permalink to this headline"></a></h4>
+<p>There was a problem with the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command when
+<a class="reference internal" href="ipopt.html#ipopt-name"><span class="std std-ref">ipopt</span></a> was the only optional package installed.
+This was related to the ipopt
+<a class="reference internal" href="ipopt.html#ipopt-include-directories"><span class="std std-ref">Include Directories</span></a> problem.</p>
+</section>
+<section id="whats-new-21-mm-dd-04-16">
+<span id="index-21"></span><span id="id20"></span><h4><a class="toc-backref" href="#id65">04-16</a><a class="headerlink" href="#whats-new-21-mm-dd-04-16" title="Permalink to this headline"></a></h4>
+<p>Improve the instruction for adding a new speed test package; see
+<a class="reference internal" href="speed_xpackage.html#speed-xpackage-name"><span class="std std-ref">speed_xpackage</span></a> .</p>
+</section>
+<section id="whats-new-21-mm-dd-04-09">
+<span id="index-22"></span><span id="id21"></span><h4><a class="toc-backref" href="#id66">04-09</a><a class="headerlink" href="#whats-new-21-mm-dd-04-09" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="cpp_graph_print.html#cpp-graph-print-name"><span class="std std-ref">cpp_graph_print</span></a> operation was failing when there were
+atomic or discrete functions. This has been fixed.</p>
+</section>
+<section id="whats-new-21-mm-dd-04-07">
+<span id="index-23"></span><span id="id22"></span><h4><a class="toc-backref" href="#id67">04-07</a><a class="headerlink" href="#whats-new-21-mm-dd-04-07" title="Permalink to this headline"></a></h4>
+<p>Documentation was added for the
+<a class="reference internal" href="cpp_ad_graph.html#cpp-ad-graph-operator-arg-print-graph-op"><span class="std std-ref">print_graph_op</span></a> operator.
+This is different from the function
+<a class="reference internal" href="cpp_graph_print.html#cpp-graph-print-name"><span class="std std-ref">cpp_graph_print</span></a> which prints an entire graph.</p>
+</section>
+<section id="whats-new-21-mm-dd-04-05">
+<span id="index-24"></span><span id="id23"></span><h4><a class="toc-backref" href="#id68">04-05</a><a class="headerlink" href="#whats-new-21-mm-dd-04-05" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="cpp_graph_print.html#cpp-graph-print-name"><span class="std std-ref">cpp_graph_print</span></a> operation was modified so that it printed the
+text corresponding to atomic function names, discrete function names,
+and print operators.</p>
+</section>
+<section id="whats-new-21-mm-dd-04-02">
+<span id="index-25"></span><span id="id24"></span><h4><a class="toc-backref" href="#id69">04-02</a><a class="headerlink" href="#whats-new-21-mm-dd-04-02" title="Permalink to this headline"></a></h4>
+<p>The enum value <code class="docutils literal notranslate"><span class="pre">dis_graph_op</span></code> was corrected to <code class="docutils literal notranslate"><span class="pre">discrete_graph_op</span></code>
+in the documentation for
+<a class="reference internal" href="cpp_ad_graph.html#cpp-ad-graph-operator-arg-discrete-graph-op"><span class="std std-ref">discrete_graph_op</span></a> .</p>
+</section>
+<section id="whats-new-21-mm-dd-03-29">
+<span id="index-26"></span><span id="id25"></span><h4><a class="toc-backref" href="#id70">03-29</a><a class="headerlink" href="#whats-new-21-mm-dd-03-29" title="Permalink to this headline"></a></h4>
+<p>Include the <a class="reference internal" href="cpp_ad_graph.html#cpp-ad-graph-dependent-vec"><span class="std std-ref">dependent_vec</span></a>
+in the output of <a class="reference internal" href="cpp_graph_print.html#cpp-graph-print-name"><span class="std std-ref">cpp_graph_print</span></a> ; see <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">nodes</span></code> in
+<a class="reference internal" href="print_graph.cpp.html#print-graph-cpp-name"><span class="std std-ref">print_graph.cpp</span></a> example output.</p>
+</section>
+<section id="whats-new-21-mm-dd-03-24">
+<span id="index-27"></span><span id="id26"></span><h4><a class="toc-backref" href="#id71">03-24</a><a class="headerlink" href="#whats-new-21-mm-dd-03-24" title="Permalink to this headline"></a></h4>
+<p>The C++ AD graph constructor, <a class="reference internal" href="cpp_graph_ctor.html#cpp-graph-ctor-name"><span class="std std-ref">cpp_graph_ctor</span></a> ,
+cannot be called the first tile in parallel mode.
+This condition has been added to the documentation
+and assets were added to make sure it is true.</p>
+</section>
+<section id="whats-new-21-mm-dd-03-11">
+<span id="index-28"></span><span id="id27"></span><h4><a class="toc-backref" href="#id72">03-11</a><a class="headerlink" href="#whats-new-21-mm-dd-03-11" title="Permalink to this headline"></a></h4>
+<p>Improve the discussion of identically equal; see
+<a class="reference internal" href="base_identical.html#base-identical-equalopseq-more-complicated-case"><span class="std std-ref">More Complicated Case</span></a> .</p>
+</section>
+<section id="whats-new-21-mm-dd-03-09">
+<span id="index-29"></span><span id="id28"></span><h4><a class="toc-backref" href="#id73">03-09</a><a class="headerlink" href="#whats-new-21-mm-dd-03-09" title="Permalink to this headline"></a></h4>
+<p>Simplify the <a class="reference internal" href="fabs.cpp.html#fabs-cpp-name"><span class="std std-ref">fabs.cpp</span></a> example.</p>
+</section>
+<section id="whats-new-21-mm-dd-03-08">
+<span id="index-30"></span><span id="id29"></span><h4><a class="toc-backref" href="#id74">03-08</a><a class="headerlink" href="#whats-new-21-mm-dd-03-08" title="Permalink to this headline"></a></h4>
+<p>For years the following comment in reverse.hpp was forgotten:</p>
+<blockquote>
+<div><p>// ? <code class="docutils literal notranslate"><span class="pre">should</span> <span class="pre">use</span></code> += <code class="docutils literal notranslate"><span class="pre">here</span></code> , <code class="docutils literal notranslate"><span class="pre">first</span> <span class="pre">make</span> <span class="pre">test</span> <span class="pre">to</span> <span class="pre">demonstrate</span> <span class="pre">bug</span></code></p>
+</div></blockquote>
+<p>A test case was created to demonstrate this bug and it was fixed
+(see <code class="docutils literal notranslate"><span class="pre">duplicate_dependent_var</span></code> in <code class="docutils literal notranslate"><span class="pre">test_more/general/reverse.cpp</span></code> ).
+This only affects reverse mode when
+<a class="reference internal" href="reverse_any.html#reverse-any-w"><span class="std std-ref">w</span></a> has size <em>q</em> * <em>m</em> and
+two of the dependent variables in the range of <em>f</em>
+are identically equal (actually the same variable).</p>
+</section>
+<section id="whats-new-21-mm-dd-03-07">
+<span id="index-31"></span><span id="id30"></span><h4><a class="toc-backref" href="#id75">03-07</a><a class="headerlink" href="#whats-new-21-mm-dd-03-07" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix bug in <a class="reference internal" href="to_graph.html#to-graph-name"><span class="std std-ref">f.to_graph</span></a> that ocurred
+when <em>f</em> had <code class="docutils literal notranslate"><span class="pre">fabs</span></code> dynamic parameter operators.
+To be more specific, if <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> was not defined,
+an error from an unknown source would be detected in the file <code class="docutils literal notranslate"><span class="pre">to_graph.hpp</span></code> .</p></li>
+<li><p>Make <a class="reference internal" href="unary_minus.html#unary-minus-name"><span class="std std-ref">unary_minus</span></a> an atomic operation,
+instead of using binary subtraction of zero minus the value being negated.
+In addition, add it to the <a class="reference internal" href="json_graph_op.html#json-graph-op-unary-operators"><span class="std std-ref">json_graph unary operators</span></a> and
+the <a class="reference internal" href="graph_op_enum.html#graph-op-enum-enum-values"><span class="std std-ref">graph_op_enum values</span></a> values.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-02-21">
+<span id="index-32"></span><span id="id31"></span><h4><a class="toc-backref" href="#id76">02-21</a><a class="headerlink" href="#whats-new-21-mm-dd-02-21" title="Permalink to this headline"></a></h4>
+<p>Add specifications for what is conditionally installed by the
+<a class="reference internal" href="cmake.html#cmake-include-eigen"><span class="std std-ref">include_eigen</span></a> and
+<a class="reference internal" href="cmake.html#cmake-include-ipopt"><span class="std std-ref">include_ipopt</span></a> options.
+In addition, make it clearer that
+<a class="reference internal" href="cmake.html#cmake-include-cppadcg"><span class="std std-ref">include_cppadcg</span></a> should only be used for testing.</p>
+</section>
+<section id="whats-new-21-mm-dd-02-16">
+<span id="index-33"></span><span id="id32"></span><h4><a class="toc-backref" href="#id77">02-16</a><a class="headerlink" href="#whats-new-21-mm-dd-02-16" title="Permalink to this headline"></a></h4>
+<p>There was a problem with atomic functions, <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimize</span></a> , and reverse mode
+that would lead to unexpected nans.
+This has been fixed by changing values,
+that the optimizer determines are not used, from nan to zero.
+A discussion of this was added below
+<a class="reference internal" href="atomic_three_reverse.html#atomic-three-reverse-partial-x-azmul"><span class="std std-ref">azmul</span></a>
+in the atomic reverse documentation.</p>
+</section>
+<section id="whats-new-21-mm-dd-02-14">
+<span id="index-34"></span><span id="id33"></span><h4><a class="toc-backref" href="#id78">02-14</a><a class="headerlink" href="#whats-new-21-mm-dd-02-14" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Add the <a class="reference internal" href="cpp_graph_print.html#cpp-graph-print-name"><span class="std std-ref">print</span></a> command to the
+<code class="docutils literal notranslate"><span class="pre">cpp_graph</span></code> class.</p></li>
+<li><p>Change the name of a documentation section form <code class="docutils literal notranslate"><span class="pre">seq_property</span></code>
+to <a class="reference internal" href="fun_property.html#fun-property-name"><span class="std std-ref">fun_property</span></a> .</p></li>
+<li><p>Add setting and getting a <code class="docutils literal notranslate"><span class="pre">ADFun</span></code> function’s
+<a class="reference internal" href="function_name.html#function-name-name"><span class="std std-ref">name</span></a> .</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-02-12">
+<span id="index-35"></span><span id="id34"></span><h4><a class="toc-backref" href="#id79">02-12</a><a class="headerlink" href="#whats-new-21-mm-dd-02-12" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>In the case where
+<a class="reference internal" href="cmake.html#cmake-cppad-debug-which"><span class="std std-ref">cppad_debug_which</span></a> is
+<code class="docutils literal notranslate"><span class="pre">debug_all</span></code> (<code class="docutils literal notranslate"><span class="pre">debug_none</span></code> ) the corresponding
+<em>CMAKE_BUILD_TYPE</em> is now specified as
+<code class="docutils literal notranslate"><span class="pre">Debug</span></code> (<code class="docutils literal notranslate"><span class="pre">Release</span></code> ).</p></li>
+<li><p>Fix the <code class="docutils literal notranslate"><span class="pre">Policy</span> <span class="pre">CMP0054</span></code> warning during the
+<a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a> .</p></li>
+<li><p>Fix the <a class="reference internal" href="cmake.html#cmake-cmake-command-visual-studio"><span class="std std-ref">Visual Studio</span></a> build.
+This included commenting out part of the CppAD vector test
+because the MSC compiler is confused between the vector’s const_iterator and
+iterator; see <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">ifndef</span> <span class="pre">_MSC_VER</span></code> in <a class="reference internal" href="cppad_vector.cpp.html#cppad-vector-cpp-name"><span class="std std-ref">cppad_vector.cpp</span></a> .</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-02-11">
+<span id="index-36"></span><span id="id35"></span><h4><a class="toc-backref" href="#id80">02-11</a><a class="headerlink" href="#whats-new-21-mm-dd-02-11" title="Permalink to this headline"></a></h4>
+<p>Fix some problems with the linking of the <code class="docutils literal notranslate"><span class="pre">cppad_lib</span></code> library
+when using the Microsoft compiler.</p>
+</section>
+<section id="whats-new-21-mm-dd-02-08">
+<span id="index-37"></span><span id="id36"></span><h4><a class="toc-backref" href="#id81">02-08</a><a class="headerlink" href="#whats-new-21-mm-dd-02-08" title="Permalink to this headline"></a></h4>
+<p>Fix some problems in the
+<a class="reference internal" href="pkgconfig.html#pkgconfig-cppad-pc"><span class="std std-ref">cppad.pc</span></a> file; see pull request
+<a class="reference external" href="https://github.com/coin-or/CppAD/pull/95/files">95</a>.</p>
+</section>
+<section id="whats-new-21-mm-dd-02-06">
+<span id="index-38"></span><span id="id38"></span><h4><a class="toc-backref" href="#id82">02-06</a><a class="headerlink" href="#whats-new-21-mm-dd-02-06" title="Permalink to this headline"></a></h4>
+<p>A special version of the <a class="reference internal" href="pow.html#pow-name"><span class="std std-ref">pow(x, y)</span></a> function was added
+for the special case where <em>y</em> is a parameter.
+This properly handles the special case where <em>x</em> is zero
+and <em>y</em> is greater than the order of the derivative.
+In addition, it only requires one tape variable (instead of three)
+for each <code class="docutils literal notranslate"><span class="pre">pow</span></code> operation.</p>
+</section>
+<section id="whats-new-21-mm-dd-01-27">
+<span id="index-39"></span><span id="id39"></span><h4><a class="toc-backref" href="#id83">01-27</a><a class="headerlink" href="#whats-new-21-mm-dd-01-27" title="Permalink to this headline"></a></h4>
+<p>There was a bug in the converting to abs_normal form when
+the function <a class="reference internal" href="abs_normal_fun.html#abs-normal-fun-f"><span class="std std-ref">f</span></a> made use of the
+<a class="reference internal" href="pow.html#pow-name"><span class="std std-ref">pow</span></a> operator.
+To be specific, when compiling without <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> defined,
+an assert was generated even though the code was correct.
+This has been fixed.</p>
+</section>
+<section id="whats-new-21-mm-dd-01-26">
+<span id="index-40"></span><span id="id40"></span><h4><a class="toc-backref" href="#id84">01-26</a><a class="headerlink" href="#whats-new-21-mm-dd-01-26" title="Permalink to this headline"></a></h4>
+<p>Change the prototype for the cmake command
+<a class="reference internal" href="cmake.html#cmake-cmake-command-options"><span class="std std-ref">Options</span></a> to use <em>true_or_false</em> ,
+instead of <code class="docutils literal notranslate"><span class="pre">true</span></code> to highlight the fact that one can choose either
+true or false.</p>
+</section>
+<section id="whats-new-21-mm-dd-01-08">
+<span id="index-41"></span><span id="id41"></span><h4><a class="toc-backref" href="#id85">01-08</a><a class="headerlink" href="#whats-new-21-mm-dd-01-08" title="Permalink to this headline"></a></h4>
+<p>On some systems, the file <code class="docutils literal notranslate"><span class="pre">cppad_lib/json_lexer.cpp</span></code> would not compile
+because the <code class="docutils literal notranslate"><span class="pre">std::isdigit</span></code> function was not defined.
+This has been fixed.</p>
+</section>
+<section id="whats-new-21-mm-dd-01-07">
+<span id="index-42"></span><span id="id42"></span><h4><a class="toc-backref" href="#id86">01-07</a><a class="headerlink" href="#whats-new-21-mm-dd-01-07" title="Permalink to this headline"></a></h4>
+<p>The example <a class="reference internal" href="pow_nan.cpp.html#pow-nan-cpp-name"><span class="std std-ref">pow_nan.cpp</span></a> was added.</p>
+</section>
+<section id="whats-new-21-mm-dd-01-05">
+<span id="index-43"></span><span id="id43"></span><h4><a class="toc-backref" href="#id87">01-05</a><a class="headerlink" href="#whats-new-21-mm-dd-01-05" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Improve discussion of <a class="reference internal" href="cmake.html#cmake-cppad-cxx-flags"><span class="std std-ref">cppad_cxx</span></a>
+and make sure all uses are exactly as described.
+In addition, change mention of optional features from C++11 to C++17.</p></li>
+<li><p>The required version of <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> was advanced from 2.8.4 to 3.0.
+This fixes a policy CMP0042 warning on Mac systems.</p></li>
+<li><p>If the compiler, plus the flags in
+<a class="reference internal" href="cmake.html#cmake-cppad-cxx-flags"><span class="std std-ref">cppad_cxx_flags</span></a> ,
+does not by default support C++11, cmake is used
+to find and add the flags necessary for this support.</p></li>
+</ol>
+</section>
+<section id="whats-new-21-mm-dd-01-03">
+<span id="index-44"></span><span id="id44"></span><h4><a class="toc-backref" href="#id88">01-03</a><a class="headerlink" href="#whats-new-21-mm-dd-01-03" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix a bug in <a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">Reverse</span></a> mode for an
+<code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt; &gt; function that has
+<a class="reference internal" href="Independent.html#independent-dynamic"><span class="std std-ref">dynamic</span></a> parameters and
+value of one of these parameters was zero or one when the function
+was recorded.</p></li>
+<li><p>Fix a bug in the <a class="reference internal" href="autotools.html#autotools-name"><span class="std std-ref">autotools</span></a> building of <code class="docutils literal notranslate"><span class="pre">cppad_lib</span></code> .</p></li>
+</ol>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="whats_new_22.html" class="btn btn-neutral float-left" title="whats_new_22" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="whats_new_20.html" class="btn btn-neutral float-right" title="whats_new_20" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

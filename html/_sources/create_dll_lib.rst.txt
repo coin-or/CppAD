@@ -1,0 +1,86 @@
+lines 8-91 of file: include/cppad/utility/create_dll_lib.hpp
+
+{xrst_begin create_dll_lib}
+{xrst_spell
+   cl
+   csrc
+   dll
+   hc
+   hs
+   msg
+}
+
+Create a Dynamic Link Library
+#############################
+
+Syntax
+******
+
+| # ``include <cppad/utility/create_dll_lib.hpp>``
+| *err_msg* = ``create_dll_lib`` ( *dll_file* , *csrc_files* , *options* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CREATE_DLL_LIB
+   // END_CREATE_DLL_LIB
+}
+
+include
+*******
+As with all the CppAD utilities, ``create_dll_lib.hpp`` is included
+by ``<cppad/cppad.hpp>`` , and can also be included separately.
+
+dll_file
+********
+This is the file where the dynamic link library file named *dll_file* .
+This file name must have the proper extension for a dynamic link library
+(``.so`` on unix and ``.dll`` on windows).
+
+StringVector
+************
+The type *StringVector* is a simple vector with elements
+of type ``std::string`` .
+
+csrc_files
+**********
+The vector *csrc_files* contains the names of the C source
+files that are compiled and linked to the library.
+These files do not have to have a specific extension.
+
+options
+*******
+The possible keys in this map are documented below.
+The default value for each key is used when the key
+does not appear in *options* .
+
+compile
+=======
+This is an abbreviated version of the compile command.
+It does not include the output file flag or output file name.
+If ``_MSC_VER`` is defined, the default value for this option is
+``cl /EHs /EHc /c /LD /TC``
+If ``_MSC_VER`` is not defined, the default value for this option is
+``gcc -c -fPIC`` .
+
+link
+====
+This is an abbreviated version of the link command.
+It does not include the output file flag or output file name.
+If ``_MSC_VER`` is defined, the default value for this option is
+``link /DLL``
+If ``_MSC_VER`` is not defined, the default value for this option is
+``gcc -shared`` .
+
+err_msg
+*******
+If this string is empty, no error occurred.
+Otherwise the processing aborted and *err_msg* is the corresponding
+error message.
+
+Example
+*******
+The file :ref:`dll_lib.cpp-name` contains an example and test of
+``create_dll_lib`` .
+
+{xrst_end create_dll_lib}

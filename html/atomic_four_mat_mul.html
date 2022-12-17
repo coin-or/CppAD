@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_four_mat_mul, atomic, matrix, multiply, class:, example, implementation" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="n_left" name="keywords" />
+<meta content="n_middle" name="keywords" />
+<meta content="n_right" name="keywords" />
+<meta content="call_id" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="y" name="keywords" />
+<meta content="theory" name="keywords" />
+<meta content="forward" name="keywords" />
+<meta content="matrix, argument, scalar, valued, function" name="keywords" />
+<meta content="reverse" name="keywords" />
+<meta content="contents" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_four_mat_mul &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_four_mat_mul_implement" href="atomic_four_mat_mul_implement.html" />
+    <link rel="prev" title="atomic_four_vector_sub.cpp" href="atomic_four_vector_sub.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_four.html">atomic_four</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="atomic_four_define.html">atomic_four_define</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="atomic_four_example.html">atomic_four_example</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_get_started.cpp.html">atomic_four_get_started.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_norm_sq.cpp.html">atomic_four_norm_sq.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_forward.cpp.html">atomic_four_forward.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_dynamic.cpp.html">atomic_four_dynamic.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_vector.html">atomic_four_vector</a></li>
+<li class="toctree-l7 current"><a class="current reference internal" href="#">atomic_four_mat_mul</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_implement.html">atomic_four_mat_mul_implement</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_forward.cpp.html">atomic_four_mat_mul_forward.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_reverse.cpp.html">atomic_four_mat_mul_reverse.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_sparsity.cpp.html">atomic_four_mat_mul_sparsity.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_rev_depend.cpp.html">atomic_four_mat_mul_rev_depend.cpp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="atomic_four_mat_mul_identical_zero.cpp.html">atomic_four_mat_mul_identical_zero.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_four_lin_ode.html">atomic_four_lin_ode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_three.html">atomic_three</a></li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_four.html">atomic_four</a> &raquo;</li>
+          <li><a href="atomic_four_example.html">atomic_four_example</a> &raquo;</li>
+      <li>atomic_four_mat_mul</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_four_mat_mul.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-four-mat-mul">
+<span id="atomic-four-mat-mul-name"></span><h1>atomic_four_mat_mul<a class="headerlink" href="#atomic-four-mat-mul" title="Permalink to this headline"></a></h1>
+<section id="atomic-matrix-multiply-class-example-implementation">
+<span id="atomic-four-mat-mul-title"></span><span id="index-0"></span><h2>Atomic Matrix Multiply Class: Example Implementation<a class="headerlink" href="#atomic-matrix-multiply-class-example-implementation" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#n-left" id="id4">n_left</a></p></li>
+<li><p><a class="reference internal" href="#n-middle" id="id5">n_middle</a></p></li>
+<li><p><a class="reference internal" href="#n-right" id="id6">n_right</a></p></li>
+<li><p><a class="reference internal" href="#call-id" id="id7">call_id</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id8">x</a></p></li>
+<li><p><a class="reference internal" href="#y" id="id9">y</a></p></li>
+<li><p><a class="reference internal" href="#theory" id="id10">Theory</a></p>
+<ul>
+<li><p><a class="reference internal" href="#forward" id="id11">Forward</a></p></li>
+<li><p><a class="reference internal" href="#matrix-argument-scalar-valued-function" id="id12">Matrix Argument Scalar Valued Function</a></p></li>
+<li><p><a class="reference internal" href="#reverse" id="id13">Reverse</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#atomic-four-mat-mul-contents" id="id14">Contents</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="atomic-four-mat-mul-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">atomic_mat_mul</span></code> <em>mat_mul</em> ( <em>name</em> )</div>
+<div class="line"><em>call_id</em> = <em>mat_mul</em> . <code class="docutils literal notranslate"><span class="pre">set</span></code> ( <em>n_left</em> , <em>n_middle</em> , <em>n_right</em> )</div>
+<div class="line"><em>mat_mul</em> . <code class="docutils literal notranslate"><span class="pre">get</span></code> ( <em>call_id</em> , <em>n_left</em> , <em>n_middle</em> , <em>n_right</em> )</div>
+<div class="line"><em>mat_mul</em> ( <em>call_id</em> , <em>x</em> , <em>y</em> )</div>
+</div>
+</section>
+<section id="purpose">
+<span id="atomic-four-mat-mul-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Construct an atomic operation that computes the matrix product
+<em>C</em> = <em>A</em> * <em>B</em> .</p>
+</section>
+<section id="n-left">
+<span id="atomic-four-mat-mul-n-left"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id4">n_left</a><a class="headerlink" href="#n-left" title="Permalink to this headline"></a></h3>
+<p>This is the row dimension of the matrices <em>A</em> and <em>C</em> .
+This is an argument (return value) for the <code class="docutils literal notranslate"><span class="pre">set</span></code> (<code class="docutils literal notranslate"><span class="pre">get</span></code> ) routine.</p>
+</section>
+<section id="n-middle">
+<span id="atomic-four-mat-mul-n-middle"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id5">n_middle</a><a class="headerlink" href="#n-middle" title="Permalink to this headline"></a></h3>
+<p>This is the column dimension of the matrix <em>A</em>
+and row dimension of the matrix <em>B</em>
+This is an argument (return value) for the <code class="docutils literal notranslate"><span class="pre">set</span></code> (<code class="docutils literal notranslate"><span class="pre">get</span></code> ) routine.</p>
+</section>
+<section id="n-right">
+<span id="atomic-four-mat-mul-n-right"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id6">n_right</a><a class="headerlink" href="#n-right" title="Permalink to this headline"></a></h3>
+<p>This is the column dimension of the matrices <em>B</em> and <em>C</em> .
+This is an argument (return value) for the <code class="docutils literal notranslate"><span class="pre">set</span></code> (<code class="docutils literal notranslate"><span class="pre">get</span></code> ) routine.</p>
+</section>
+<section id="call-id">
+<span id="atomic-four-mat-mul-call-id"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">call_id</a><a class="headerlink" href="#call-id" title="Permalink to this headline"></a></h3>
+<p>This is a return value (argument) for the <code class="docutils literal notranslate"><span class="pre">set</span></code> (<code class="docutils literal notranslate"><span class="pre">get</span></code> ) routine.</p>
+</section>
+<section id="x">
+<span id="atomic-four-mat-mul-x"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id8">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>We use <em>x</em> to denote the argument to the atomic function.
+The size of this vector must be</p>
+<blockquote>
+<div><p><em>n</em> = <em>n_left</em> * <em>n_middle</em> + <em>n_middle</em> * <em>n_right</em></p>
+</div></blockquote>
+<p>The matrix <em>A</em> is stored in row major order at the beginning of
+<em>x</em> ; i.e. its ( <em>i</em> , <em>k</em> ) element is</p>
+<blockquote>
+<div><p><em>A</em> ( <em>i</em> , <em>k</em> ) = <em>x</em> [ <em>i</em> * <em>n_middle</em> + <em>k</em> ]</p>
+</div></blockquote>
+<p>The matrix <em>B</em> is stored in row major order at the end of
+<em>x</em> ; i.e. its ( <em>k</em> , <em>j</em> ) element is</p>
+<blockquote>
+<div><p><em>B</em> ( <em>k</em> , <em>j</em> ) = <em>x</em> [ <em>n_left</em> * <em>n_middle</em> + <em>k</em> * <em>n_right</em> + <em>j</em> ]</p>
+</div></blockquote>
+</section>
+<section id="y">
+<span id="atomic-four-mat-mul-y"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id9">y</a><a class="headerlink" href="#y" title="Permalink to this headline"></a></h3>
+<p>We use <em>y</em> to denote the result of the atomic function.
+The size of this vector must be
+<em>m</em> = <em>n_middle</em> * <em>n_right</em> .
+The matrix <em>C</em> is stored in row major order in <em>y</em> ;
+i.e. its ( <em>i</em> , <em>k</em> ) element is</p>
+<blockquote>
+<div><p><em>C</em> ( <em>i</em> , <em>j</em> ) = <em>y</em> [ <em>i</em> * <em>n_right</em> + <em>j</em> ]</p>
+</div></blockquote>
+</section>
+<section id="theory">
+<span id="atomic-four-mat-mul-theory"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id10">Theory</a><a class="headerlink" href="#theory" title="Permalink to this headline"></a></h3>
+<section id="forward">
+<span id="atomic-four-mat-mul-theory-forward"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id11">Forward</a><a class="headerlink" href="#forward" title="Permalink to this headline"></a></h4>
+<p>For <span class="math notranslate nohighlight">\(k = 0 , \ldots\)</span>, the <em>k</em>-th order Taylor coefficient
+<span class="math notranslate nohighlight">\(C^{(k)}\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[C^{(k)} = \sum_{\ell = 0}^{k} A^{(\ell)} B^{(k-\ell)}\]</div>
+</section>
+<section id="matrix-argument-scalar-valued-function">
+<span id="atomic-four-mat-mul-theory-matrix-argument-scalar-valued-function"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id12">Matrix Argument Scalar Valued Function</a><a class="headerlink" href="#matrix-argument-scalar-valued-function" title="Permalink to this headline"></a></h4>
+<p>Suppose <span class="math notranslate nohighlight">\(\bar{F}\)</span> is the derivative of the
+scalar value function <span class="math notranslate nohighlight">\(s(F)\)</span> with respect to the matrix <span class="math notranslate nohighlight">\(F\)</span>; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[\bar{F}_{i,j} = \frac{ \partial s } { \partial F_{i,j} }\]</div>
+<p>Also suppose that <span class="math notranslate nohighlight">\(t\)</span> is a scalar valued argument and</p>
+<div class="math notranslate nohighlight">
+\[F(t) = D(t) E(t)\]</div>
+<p>It follows that</p>
+<div class="math notranslate nohighlight">
+\[F'(t) = D'(t) E(t) +  D(t) E'(t)\]</div>
+<div class="math notranslate nohighlight">
+\[(s \circ F)'(t)
+=
+\R{tr} [ \bar{F}^\R{T} F'(t) ]\]</div>
+<div class="math notranslate nohighlight">
+\[=
+\R{tr} [ \bar{F}^\R{T} D'(t) E(t) ] +
+\R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]\]</div>
+<div class="math notranslate nohighlight">
+\[=
+\R{tr} [ E(t) \bar{F}^\R{T} D'(t) ] +
+\R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]\]</div>
+<p>Letting <span class="math notranslate nohighlight">\(E(t) = 0\)</span> and <span class="math notranslate nohighlight">\(D(t) = \Delta^{i,j} (t)\)</span>
+(where <span class="math notranslate nohighlight">\(\Delta^{i,j} (t)\)</span> is the matrix that is zero,
+except for <span class="math notranslate nohighlight">\(i = j\)</span> where it is <span class="math notranslate nohighlight">\(t\)</span>) we have</p>
+<div class="math notranslate nohighlight">
+\[\bar{D}_{i,j}
+= \frac{ \partial s } { \partial D_{i,j} }
+= (s \circ F)'(t)
+= \R{tr} [ E(t) \bar{F}^\R{T} \Delta^{i,j}(1) ]\]</div>
+<div class="math notranslate nohighlight">
+\[\bar{D}_{i,j}
+= \sum_k D_{j,k} \bar{F}^\R{T}_{k,i}
+= \sum_k \bar{F}_{i,k} E^\R{T}_{k,j}\]</div>
+<div class="math notranslate nohighlight">
+\[\bar{D} = \bar{F} E^\R{T}\]</div>
+<p>Letting <span class="math notranslate nohighlight">\(D(t) = 0\)</span> and <span class="math notranslate nohighlight">\(E(t) = \Delta^{i,j} (t)\)</span>
+we have</p>
+<div class="math notranslate nohighlight">
+\[\bar{E}_{i,j}
+= \frac{ \partial s } { \partial E_{i,j} }
+= (s \circ F)'(t)
+= \R{tr} [ \bar{F}^\R{T} D(t) \Delta^{i,j} ]\]</div>
+<div class="math notranslate nohighlight">
+\[\bar{E}_{i,j}
+= \sum_k \bar{F}^\R{T}_{j,k} C_{k,i}
+= \sum_k D^\R{T}_{i,k} \bar{F}_{k,j}\]</div>
+<div class="math notranslate nohighlight">
+\[\bar{E} = D^\R{T} \bar{F}\]</div>
+</section>
+<section id="reverse">
+<span id="atomic-four-mat-mul-theory-reverse"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id13">Reverse</a><a class="headerlink" href="#reverse" title="Permalink to this headline"></a></h4>
+<p>Reverse mode eliminates <span class="math notranslate nohighlight">\(C^{(k)}\)</span> as follows:
+for <span class="math notranslate nohighlight">\(\ell = 0, \ldots , k\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\bar{A}^{(\ell)}  = \bar{A}^{(\ell)} + \bar{C}^{(k)} [ B^{(k-\ell)} ] ^\R{T}\]</div>
+<div class="math notranslate nohighlight">
+\[\bar{B}^{(k-\ell)} =  \bar{B}^{(k-\ell)} + [ A^{(\ell)} ]^\R{T} \bar{C}^{(k)}\]</div>
+</section>
+</section>
+<section id="atomic-four-mat-mul-contents">
+<span id="index-13"></span><span id="id1"></span><h3><a class="toc-backref" href="#id14">Contents</a><a class="headerlink" href="#atomic-four-mat-mul-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>atomic_four_mat_mul_implement</p></td>
+<td><p><a class="reference internal" href="atomic_four_mat_mul_implement.html#atomic-four-mat-mul-implement-title"><span class="std std-ref">Implementing Atomic Matrix Multiply</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_four_mat_mul_forward.cpp</p></td>
+<td><p><a class="reference internal" href="atomic_four_mat_mul_forward.cpp.html#atomic-four-mat-mul-forward-cpp-title"><span class="std std-ref">Atomic Matrix Multiply Forward Mode: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>atomic_four_mat_mul_reverse.cpp</p></td>
+<td><p><a class="reference internal" href="atomic_four_mat_mul_reverse.cpp.html#atomic-four-mat-mul-reverse-cpp-title"><span class="std std-ref">Atomic Matrix Multiply Reverse Mode: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_four_mat_mul_sparsity.cpp</p></td>
+<td><p><a class="reference internal" href="atomic_four_mat_mul_sparsity.cpp.html#atomic-four-mat-mul-sparsity-cpp-title"><span class="std std-ref">Atomic Matrix Multiply Sparsity Patterns: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>atomic_four_mat_mul_rev_depend.cpp</p></td>
+<td><p><a class="reference internal" href="atomic_four_mat_mul_rev_depend.cpp.html#atomic-four-mat-mul-rev-depend-cpp-title"><span class="std std-ref">Atomic Matrix Multiply Reverse Dependency: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_four_mat_mul_identical_zero.cpp</p></td>
+<td><p><a class="reference internal" href="atomic_four_mat_mul_identical_zero.cpp.html#atomic-four-mat-mul-identical-zero-cpp-title"><span class="std std-ref">Atomic Matrix Multiply Identical Zero: Example and Test</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_four_vector_sub.cpp.html" class="btn btn-neutral float-left" title="atomic_four_vector_sub.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_four_mat_mul_implement.html" class="btn btn-neutral float-right" title="atomic_four_mat_mul_implement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

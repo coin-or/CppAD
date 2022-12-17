@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="RevSparseJac, jacobian, sparsity, pattern:, reverse, mode" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="q" name="keywords" />
+<meta content="transpose" name="keywords" />
+<meta content="dependency" name="keywords" />
+<meta content="r" name="keywords" />
+<meta content="transpose, false" name="keywords" />
+<meta content="transpose, true" name="keywords" />
+<meta content="s" name="keywords" />
+<meta content="transpose, false" name="keywords" />
+<meta content="transpose, true" name="keywords" />
+<meta content="setvector" name="keywords" />
+<meta content="entire, sparsity, pattern" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RevSparseJac &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="rev_sparse_jac.cpp" href="rev_sparse_jac.cpp.html" />
+    <link rel="prev" title="for_sparse_jac.cpp" href="for_sparse_jac.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="for_jac_sparsity.html">for_jac_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rev_jac_sparsity.html">rev_jac_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="for_hes_sparsity.html">for_hes_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rev_hes_sparsity.html">rev_hes_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_sparsity.html">subgraph_sparsity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dependency.cpp.html">dependency.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rc_sparsity.cpp.html">rc_sparsity.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ForSparseJac.html">ForSparseJac</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">RevSparseJac</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="rev_sparse_jac.cpp.html">rev_sparse_jac.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="RevSparseHes.html">RevSparseHes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ForSparseHes.html">ForSparseHes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparsity_pattern.html">sparsity_pattern</a> &raquo;</li>
+      <li>RevSparseJac</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/RevSparseJac.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="revsparsejac">
+<span id="revsparsejac-name"></span><h1>RevSparseJac<a class="headerlink" href="#revsparsejac" title="Permalink to this headline"></a></h1>
+<section id="jacobian-sparsity-pattern-reverse-mode">
+<span id="revsparsejac-title"></span><span id="index-0"></span><h2>Jacobian Sparsity Pattern: Reverse Mode<a class="headerlink" href="#jacobian-sparsity-pattern-reverse-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id3">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id4">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id5">f</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id6">x</a></p></li>
+<li><p><a class="reference internal" href="#q" id="id7">q</a></p></li>
+<li><p><a class="reference internal" href="#transpose" id="id8">transpose</a></p></li>
+<li><p><a class="reference internal" href="#dependency" id="id9">dependency</a></p></li>
+<li><p><a class="reference internal" href="#r" id="id10">r</a></p>
+<ul>
+<li><p><a class="reference internal" href="#transpose-false" id="id11">transpose false</a></p></li>
+<li><p><a class="reference internal" href="#transpose-true" id="id12">transpose true</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#s" id="id13">s</a></p>
+<ul>
+<li><p><a class="reference internal" href="#revsparsejac-s-transpose-false" id="id14">transpose false</a></p></li>
+<li><p><a class="reference internal" href="#revsparsejac-s-transpose-true" id="id15">transpose true</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#setvector" id="id16">SetVector</a></p></li>
+<li><p><a class="reference internal" href="#entire-sparsity-pattern" id="id17">Entire Sparsity Pattern</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id18">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="revsparsejac-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id3">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>s</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">RevSparseJac</span></code> ( <em>q</em> , <em>r</em> )</p>
+</div></blockquote>
+<p><em>s</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">RevSparseJac</span></code> ( <em>q</em> , <em>r</em> , <em>transpose</em> , <em>dependency</em> )</p>
+</section>
+<section id="purpose">
+<span id="revsparsejac-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id4">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a> corresponding to <em>f</em> .
+For a fixed matrix <span class="math notranslate nohighlight">\(R \in \B{R}^{q \times m}\)</span>,
+the Jacobian of <span class="math notranslate nohighlight">\(R * F( x )\)</span>
+with respect to <span class="math notranslate nohighlight">\(x\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[S(x) = R * F^{(1)} ( x )\]</div>
+<p>Given a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for <span class="math notranslate nohighlight">\(R\)</span>,
+<code class="docutils literal notranslate"><span class="pre">RevSparseJac</span></code> returns a sparsity pattern for the <span class="math notranslate nohighlight">\(S(x)\)</span>.</p>
+</section>
+<section id="f">
+<span id="revsparsejac-f"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id5">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+</section>
+<section id="x">
+<span id="revsparsejac-x"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id6">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>If the operation sequence in <em>f</em> is
+<a class="reference internal" href="glossary.html#glossary-operation-independent"><span class="std std-ref">Independent</span></a> of
+the independent variables in <span class="math notranslate nohighlight">\(x \in \B{R}^n\)</span>,
+the sparsity pattern is valid for all values of
+(even if it has <a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">CondExp</span></a> or <a class="reference internal" href="VecAD.html#vecad-name"><span class="std std-ref">VecAD</span></a> operations).</p>
+</section>
+<section id="q">
+<span id="revsparsejac-q"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id7">q</a><a class="headerlink" href="#q" title="Permalink to this headline"></a></h3>
+<p>The argument <em>q</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>q</em></p>
+</div></blockquote>
+<p>It specifies the number of rows in
+<span class="math notranslate nohighlight">\(R \in \B{R}^{q \times m}\)</span> and the
+Jacobian <span class="math notranslate nohighlight">\(S(x) \in \B{R}^{q \times n}\)</span>.</p>
+</section>
+<section id="transpose">
+<span id="revsparsejac-transpose"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id8">transpose</a><a class="headerlink" href="#transpose" title="Permalink to this headline"></a></h3>
+<p>The argument <em>transpose</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>transpose</em></p>
+</div></blockquote>
+<p>The default value <code class="docutils literal notranslate"><span class="pre">false</span></code> is used when <em>transpose</em> is not present.</p>
+</section>
+<section id="dependency">
+<span id="revsparsejac-dependency"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id9">dependency</a><a class="headerlink" href="#dependency" title="Permalink to this headline"></a></h3>
+<p>The argument <em>dependency</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>dependency</em></p>
+</div></blockquote>
+<p>If <em>dependency</em> is true,
+the <a class="reference internal" href="dependency.cpp.html#dependency-cpp-dependency-pattern"><span class="std std-ref">Dependency Pattern</span></a>
+(instead of sparsity pattern) is computed.</p>
+</section>
+<section id="r">
+<span id="revsparsejac-r"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id10">r</a><a class="headerlink" href="#r" title="Permalink to this headline"></a></h3>
+<p>The argument <em>s</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SetVector</em> &amp; <em>r</em></p>
+</div></blockquote>
+<p>see <a class="reference internal" href="#revsparsejac-setvector"><span class="std std-ref">SetVector</span></a> below.</p>
+<section id="transpose-false">
+<span id="revsparsejac-r-transpose-false"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id11">transpose false</a><a class="headerlink" href="#transpose-false" title="Permalink to this headline"></a></h4>
+<p>If <em>r</em> has elements of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+its size is <span class="math notranslate nohighlight">\(q * m\)</span>.
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+its size is <em>q</em> and all its set elements are between
+zero and <span class="math notranslate nohighlight">\(m - 1\)</span>.
+It specifies a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for the matrix <span class="math notranslate nohighlight">\(R \in \B{R}^{q \times m}\)</span>.</p>
+</section>
+<section id="transpose-true">
+<span id="revsparsejac-r-transpose-true"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id12">transpose true</a><a class="headerlink" href="#transpose-true" title="Permalink to this headline"></a></h4>
+<p>If <em>r</em> has elements of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+its size is <span class="math notranslate nohighlight">\(m * q\)</span>.
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+its size is <em>m</em> and all its set elements are between
+zero and <span class="math notranslate nohighlight">\(q - 1\)</span>.
+It specifies a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for the matrix <span class="math notranslate nohighlight">\(R^\R{T} \in \B{R}^{m \times q}\)</span>.</p>
+</section>
+</section>
+<section id="s">
+<span id="revsparsejac-s"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id13">s</a><a class="headerlink" href="#s" title="Permalink to this headline"></a></h3>
+<p>The return value <em>s</em> has prototype</p>
+<blockquote>
+<div><p><em>SetVector</em> <em>s</em></p>
+</div></blockquote>
+<p>see <a class="reference internal" href="#revsparsejac-setvector"><span class="std std-ref">SetVector</span></a> below.</p>
+<section id="revsparsejac-s-transpose-false">
+<span id="index-12"></span><span id="id1"></span><h4><a class="toc-backref" href="#id14">transpose false</a><a class="headerlink" href="#revsparsejac-s-transpose-false" title="Permalink to this headline"></a></h4>
+<p>If it has elements of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+its size is <span class="math notranslate nohighlight">\(q * n\)</span>.
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+its size is <em>q</em> and all its set elements are between
+zero and <span class="math notranslate nohighlight">\(n - 1\)</span>.
+It specifies a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for the matrix <span class="math notranslate nohighlight">\(S(x) \in {q \times n}\)</span>.</p>
+</section>
+<section id="revsparsejac-s-transpose-true">
+<span id="index-13"></span><span id="id2"></span><h4><a class="toc-backref" href="#id15">transpose true</a><a class="headerlink" href="#revsparsejac-s-transpose-true" title="Permalink to this headline"></a></h4>
+<p>If it has elements of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+its size is <span class="math notranslate nohighlight">\(n * q\)</span>.
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+its size is <em>n</em> and all its set elements are between
+zero and <span class="math notranslate nohighlight">\(q - 1\)</span>.
+It specifies a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for the matrix <span class="math notranslate nohighlight">\(S(x)^\R{T} \in {n \times q}\)</span>.</p>
+</section>
+</section>
+<section id="setvector">
+<span id="revsparsejac-setvector"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id16">SetVector</a><a class="headerlink" href="#setvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SetVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">bool</span></code> or <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ;
+see <a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a> for a discussion
+of the difference.</p>
+</section>
+<section id="entire-sparsity-pattern">
+<span id="revsparsejac-entire-sparsity-pattern"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id17">Entire Sparsity Pattern</a><a class="headerlink" href="#entire-sparsity-pattern" title="Permalink to this headline"></a></h3>
+<p>Suppose that <span class="math notranslate nohighlight">\(q = m\)</span> and
+<span class="math notranslate nohighlight">\(R\)</span> is the <span class="math notranslate nohighlight">\(m \times m\)</span> identity matrix.
+In this case,
+the corresponding value for <em>s</em> is a
+sparsity pattern for the Jacobian <span class="math notranslate nohighlight">\(S(x) = F^{(1)} ( x )\)</span>.</p>
+</section>
+<section id="example">
+<span id="revsparsejac-example"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id18">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="rev_sparse_jac.cpp.html#rev-sparse-jac-cpp-name"><span class="std std-ref">rev_sparse_jac.cpp</span></a>
+contains an example and test of this operation.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="for_sparse_jac.cpp.html" class="btn btn-neutral float-left" title="for_sparse_jac.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rev_sparse_jac.cpp.html" class="btn btn-neutral float-right" title="rev_sparse_jac.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

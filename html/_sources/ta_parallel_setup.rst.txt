@@ -1,0 +1,87 @@
+lines 403-487 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_parallel_setup}
+Setup thread_alloc For Use in Multi-Threading Environment
+#########################################################
+
+Syntax
+******
+
+   ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* )
+
+Purpose
+*******
+By default there is only one thread and all execution is in sequential mode,
+i.e., multiple threads are not sharing the same memory; i.e.
+not in parallel mode.
+
+Speed
+*****
+It should be faster, even when *num_thread* is equal to one,
+for ``thread_alloc`` to hold onto memory.
+This can be accomplished using the function call
+
+   ``thread_alloc::hold_memory`` ( ``true`` )
+
+see :ref:`hold_memory<ta_hold_memory-name>` .
+
+num_threads
+***********
+This argument has prototype
+
+   ``size_t`` *num_threads*
+
+and must be greater than zero.
+It specifies the number of threads that are sharing memory.
+The case *num_threads*  == 1 is a special case that is
+used to terminate a multi-threading environment.
+
+in_parallel
+***********
+This function has prototype
+
+   ``bool`` *in_parallel* ( ``void`` )
+
+It must return ``true`` if there is more than one thread
+currently executing.
+Otherwise it can return false.
+
+In the special case where *num_threads*  == 1 ,
+the routine *in_parallel* is not used.
+
+thread_num
+**********
+This function has prototype
+
+   ``size_t`` *thread_num* ( ``void`` )
+
+It must return a thread number that uniquely identifies the
+currently executing thread.
+Furthermore
+
+   0 <= *thread_num* () < *num_threads*
+
+.
+In the special case where *num_threads*  == 1 ,
+the routine *thread_num* is not used.
+
+Note that this function is called by other routines so,
+as soon as a new thread is executing,
+one must be certain that *thread_num* () will
+work for that thread.
+
+Restrictions
+************
+The function ``parallel_setup`` must be called before
+the program enters :ref:`parallel<ta_in_parallel-name>` execution mode.
+In addition, this function cannot be called while in parallel mode.
+
+Example
+*******
+The files
+:ref:`simple_ad_openmp.cpp-name` ,
+:ref:`simple_ad_bthread.cpp-name` , and
+:ref:`simple_ad_pthread.cpp-name` ,
+contain examples and tests that use this function.
+
+{xrst_end ta_parallel_setup}

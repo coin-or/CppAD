@@ -1,0 +1,35 @@
+lines 87-119 of file: include/cppad/utility/omp_alloc.hpp
+
+{xrst_begin omp_in_parallel}
+
+Is The Current Execution in OpenMP Parallel Mode
+################################################
+
+Deprecated 2011-08-31
+*********************
+Use the function :ref:`thread_alloc::in_parallel<ta_in_parallel-name>` instead.
+
+Syntax
+******
+
+   # ``include <cppad/utility/omp_alloc.hpp>``
+
+*flag* = ``omp_alloc::in_parallel`` ()
+
+Purpose
+*******
+Some of the :ref:`omp_alloc-name` allocation routines have different
+specifications for parallel (not sequential) execution mode.
+This routine enables you to determine if the current execution mode
+is sequential or parallel.
+
+flag
+****
+The return value has prototype
+
+   ``bool`` *flag*
+
+It is true if the current execution is in parallel mode
+(possibly multi-threaded) and false otherwise (sequential mode).
+
+{xrst_end omp_in_parallel}

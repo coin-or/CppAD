@@ -1,0 +1,76 @@
+lines 6-79 of file: example/atomic_four/lin_ode/forward.cpp
+
+{xrst_begin atomic_four_lin_ode_forward.cpp}
+{xrst_spell
+   cccc
+}
+
+Atomic Linear ODE Forward Mode: Example and Test
+################################################
+
+Purpose
+*******
+This example demonstrates using forward mode with
+the :ref:`atomic_four_lin_ode-name` class.
+
+f(u)
+****
+For this example, the function :math:`f(u) = z(r, u)` where
+:math:`z(t, u)` solves the following ODE
+
+.. math::
+
+   z_t (t, u) =
+   \left( \begin{array}{cccc}
+   0   & 0  & 0    & 0   \\
+   u_4 & 0  & 0    & 0   \\
+   0   & u_5 & 0   & 0   \\
+   0   & 0   & u_6 & 0   \\
+   \end{array} \right)
+   z(t, u)
+   \W{,}
+   z(0, u) =
+   \left( \begin{array}{c}
+   u_0 \\
+   u_1 \\
+   u_2 \\
+   u_3 \\
+   \end{array} \right)
+
+z(t, u)
+*******
+The actual solution to this ODE is
+
+.. math::
+
+   z(t, u) =
+   \left( \begin{array}{l}
+   u_0  \\
+   u_1 + u_4 u_0 t \\
+   u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2  \\
+   u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
+   \end{array} \right)
+
+g(u)
+****
+We define :math:`g(u) = \partial_{u0} f(u)`.
+It follows that
+
+.. math::
+
+   g (u) =
+   \left( \begin{array}{l}
+   1  \\
+   u_4 r \\
+   u_5 u_4 r^2 / 2  \\
+   u_6 u_5 u_4 r^3 / 6
+   \end{array} \right)
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_forward.cpp}

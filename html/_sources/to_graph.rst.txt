@@ -1,0 +1,47 @@
+lines 15-59 of file: include/cppad/core/graph/to_graph.hpp
+
+{xrst_begin to_graph}
+
+Create a C++ AD Graph Corresponding to an ADFun Object
+######################################################
+
+Syntax
+******
+
+| |tab| ``cpp_graph`` *graph_obj*
+| |tab| ``ADFun<`` *Base* > *fun*
+| |tab| *fun* . ``to_graph`` ( *graph_obj* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
+
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+
+graph_obj
+*********
+This is a ``cpp_graph`` object.
+The input value of the object does not matter.
+Upon return it is a :ref:`cpp_ad_graph-name` representation of this function.
+
+Restrictions
+************
+The ``to_graph`` routine is not yet implement for some
+possible :ref:`ADFun-name` operators; see
+:ref:`graph_op_enum@Missing Operators` .
+
+Examples
+********
+See :ref:`graph_op_enum examples<graph_op_enum@Examples>` .
+
+{xrst_end to_graph}

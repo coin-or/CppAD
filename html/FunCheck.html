@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="FunCheck, check, an, adfun, sequence, of, operations" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="g" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="y" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="r" name="keywords" />
+<meta content="a" name="keywords" />
+<meta content="ok" name="keywords" />
+<meta content="vector" name="keywords" />
+<meta content="funcheck, uses, forward" name="keywords" />
+<meta content="discussion" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FunCheck &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fun_check.cpp" href="fun_check.cpp.html" />
+    <link rel="prev" title="optimize_cumulative_sum.cpp" href="optimize_cumulative_sum.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">FunCheck</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fun_check.cpp.html">fun_check.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+      <li>FunCheck</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/FunCheck.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="funcheck">
+<span id="funcheck-name"></span><h1>FunCheck<a class="headerlink" href="#funcheck" title="Permalink to this headline"></a></h1>
+<section id="check-an-adfun-sequence-of-operations">
+<span id="funcheck-title"></span><span id="index-0"></span><h2>Check an ADFun Sequence of Operations<a class="headerlink" href="#check-an-adfun-sequence-of-operations" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id4">f</a></p></li>
+<li><p><a class="reference internal" href="#g" id="id5">g</a></p>
+<ul>
+<li><p><a class="reference internal" href="#x" id="id6">x</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#y" id="id7">y</a></p></li>
+<li><p><a class="reference internal" href="#funcheck-x" id="id8">x</a></p></li>
+<li><p><a class="reference internal" href="#r" id="id9">r</a></p></li>
+<li><p><a class="reference internal" href="#a" id="id10">a</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id11">ok</a></p></li>
+<li><p><a class="reference internal" href="#vector" id="id12">Vector</a></p></li>
+<li><p><a class="reference internal" href="#funcheck-uses-forward" id="id13">FunCheck Uses Forward</a></p></li>
+<li><p><a class="reference internal" href="#discussion" id="id14">Discussion</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id15">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="funcheck-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><em>ok</em> = <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> ( <em>f</em> , <em>g</em> , <em>x</em> , <em>r</em> , <em>a</em> )</p>
+<p><strong>See Also</strong>
+<a class="reference internal" href="CompareChange.html#comparechange-name"><span class="std std-ref">CompareChange</span></a></p>
+</section>
+<section id="purpose">
+<span id="funcheck-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a> corresponding to <em>f</em> .
+We use <span class="math notranslate nohighlight">\(G : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+function corresponding to the C++ function object <em>g</em> .
+This routine check if</p>
+<div class="math notranslate nohighlight">
+\[F(x) = G(x)\]</div>
+<p>If <span class="math notranslate nohighlight">\(F(x) \neq G(x)\)</span>, the
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a>
+corresponding to <em>f</em> does not represents the algorithm used
+by <em>g</em> to calculate values for <span class="math notranslate nohighlight">\(G\)</span>
+(see <a class="reference internal" href="#funcheck-discussion"><span class="std std-ref">Discussion</span></a> below).</p>
+</section>
+<section id="f">
+<span id="funcheck-f"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id4">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> argument <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Note that the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> is not <code class="docutils literal notranslate"><span class="pre">const</span></code>
+(see <a class="reference internal" href="#funcheck-funcheck-uses-forward"><span class="std std-ref">Forward</span></a> below).</p>
+</section>
+<section id="g">
+<span id="funcheck-g"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id5">g</a><a class="headerlink" href="#g" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> argument <em>g</em> has prototype</p>
+<blockquote>
+<div><p><em>Fun</em> &amp; <em>g</em></p>
+</div></blockquote>
+<p>( <em>Fun</em> is defined the properties of <em>g</em> ).
+The C++ function object <em>g</em> supports the syntax</p>
+<blockquote>
+<div><p><em>y</em> = <em>g</em> ( <em>x</em> )</p>
+</div></blockquote>
+<p>which computes <span class="math notranslate nohighlight">\(y = G(x)\)</span>.</p>
+<section id="x">
+<span id="funcheck-g-x"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id6">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h4>
+<p>The <em>g</em> argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Vector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#funcheck-vector"><span class="std std-ref">Vector</span></a> below)
+and its size
+must be equal to <em>n</em> , the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .</p>
+</section>
+</section>
+<section id="y">
+<span id="funcheck-y"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">y</a><a class="headerlink" href="#y" title="Permalink to this headline"></a></h3>
+<p>The <em>g</em> result <em>y</em> has prototype</p>
+<blockquote>
+<div><p><em>Vector</em> <em>y</em></p>
+</div></blockquote>
+<p>and its value is <span class="math notranslate nohighlight">\(G(x)\)</span>.
+The size of <em>y</em>
+is equal to <em>m</em> , the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-range"><span class="std std-ref">Range</span></a> space for <em>f</em> .</p>
+</section>
+<section id="funcheck-x">
+<span id="index-7"></span><span id="id1"></span><h3><a class="toc-backref" href="#id8">x</a><a class="headerlink" href="#funcheck-x" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Vector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>and its size
+must be equal to <em>n</em> , the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .
+This specifies that point at which to compare the values
+calculated by <em>f</em> and <em>G</em> .</p>
+</section>
+<section id="r">
+<span id="funcheck-r"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id9">r</a><a class="headerlink" href="#r" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> argument <em>r</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>r</em></p>
+</div></blockquote>
+<p>It specifies the relative error the element by element
+comparison of the value of <span class="math notranslate nohighlight">\(F(x)\)</span> and <span class="math notranslate nohighlight">\(G(x)\)</span>.</p>
+</section>
+<section id="a">
+<span id="funcheck-a"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id10">a</a><a class="headerlink" href="#a" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> argument <em>a</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>a</em></p>
+</div></blockquote>
+<p>It specifies the absolute error the element by element
+comparison of the value of <span class="math notranslate nohighlight">\(F(x)\)</span> and <span class="math notranslate nohighlight">\(G(x)\)</span>.</p>
+</section>
+<section id="ok">
+<span id="funcheck-ok"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id11">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> result <em>ok</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>ok</em></p>
+</div></blockquote>
+<p>It is true, if for <span class="math notranslate nohighlight">\(i = 0 , \ldots , m-1\)</span>
+either the relative error bound is satisfied</p>
+<div class="math notranslate nohighlight">
+\[| F_i (x) - G_i (x) |
+\leq
+r ( | F_i (x) | + | G_i (x) | )\]</div>
+<p>or the absolute error bound is satisfied</p>
+<div class="math notranslate nohighlight">
+\[| F_i (x) - G_i (x) | \leq a\]</div>
+<p>It is false if for some <span class="math notranslate nohighlight">\((i, j)\)</span> neither
+of these bounds is satisfied.</p>
+</section>
+<section id="vector">
+<span id="funcheck-vector"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id12">Vector</a><a class="headerlink" href="#vector" title="Permalink to this headline"></a></h3>
+<p>The type <em>Vector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="funcheck-uses-forward">
+<span id="funcheck-funcheck-uses-forward"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id13">FunCheck Uses Forward</a><a class="headerlink" href="#funcheck-uses-forward" title="Permalink to this headline"></a></h3>
+<p>After each call to <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> ,
+the object <em>f</em> contains the corresponding
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a> .
+After <code class="docutils literal notranslate"><span class="pre">FunCheck</span></code> ,
+the previous calls to <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> are undefined.</p>
+</section>
+<section id="discussion">
+<span id="funcheck-discussion"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id14">Discussion</a><a class="headerlink" href="#discussion" title="Permalink to this headline"></a></h3>
+<p>Suppose that the algorithm corresponding to <em>g</em> contains</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">if</span></code> ( <em>x</em>  &gt;= 0 )</div>
+<div class="line">            <em>y</em> = <code class="docutils literal notranslate"><span class="pre">exp</span></code> ( <em>x</em> )</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">else</span></code></div>
+<div class="line">            <em>y</em> = <code class="docutils literal notranslate"><span class="pre">exp</span></code> ( <code class="docutils literal notranslate"><span class="pre">-</span></code> <em>x</em> )</div>
+</div>
+<p>where <em>x</em> and <em>y</em> are <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> objects.
+It follows that the
+AD of <code class="docutils literal notranslate"><span class="pre">double</span></code> <a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a>
+depends on the value of <em>x</em> .
+If the sequence of operations stored in <em>f</em> corresponds to
+<em>g</em> with <span class="math notranslate nohighlight">\(x \geq 0\)</span>,
+the function values computed using <em>f</em> when <span class="math notranslate nohighlight">\(x &lt; 0\)</span>
+will not agree with the function values computed by <span class="math notranslate nohighlight">\(g\)</span>.
+This is because the operation sequence corresponding to <em>g</em> changed
+(and hence the object <em>f</em> does not represent the function
+<span class="math notranslate nohighlight">\(G\)</span> for this value of <em>x</em> ).
+In this case, you probably want to re-tape the calculations
+performed by <em>g</em> with the
+<a class="reference internal" href="glossary.html#glossary-tape-independent-variable"><span class="std std-ref">independent variables</span></a>
+equal to the values in <em>x</em>
+(so AD operation sequence properly represents the algorithm
+for this value of independent variables).</p>
+</section>
+<section id="example">
+<span id="funcheck-example"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id15">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="fun_check.cpp.html#fun-check-cpp-name"><span class="std std-ref">fun_check.cpp</span></a>
+contains an example and test of this function.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimize_cumulative_sum.cpp.html" class="btn btn-neutral float-left" title="optimize_cumulative_sum.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fun_check.cpp.html" class="btn btn-neutral float-right" title="fun_check.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

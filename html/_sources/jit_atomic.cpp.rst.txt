@@ -1,0 +1,15 @@
+lines 6-18 of file: example/jit/atomic.cpp
+
+{xrst_begin jit_atomic.cpp}
+
+Atomic Callbacks in JIT Function: Example and Test
+##################################################
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end jit_atomic.cpp}

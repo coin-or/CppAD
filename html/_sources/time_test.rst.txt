@@ -1,0 +1,133 @@
+lines 9-139 of file: include/cppad/utility/time_test.hpp
+
+{xrst_begin time_test}
+
+Determine Amount of Time to Execute a Test
+##########################################
+
+Syntax
+******
+
+| # ``include <cppad/utility/time_test.hpp>``
+| *time* = ``time_test`` ( *test_fun* , *time_min* )
+| *time* = ``time_test`` ( *test_fun* , *time_min* , *test_size* )
+| *time* = ``time_test`` ( *test_fun* , *time_min* , *test_size* , *repeat_out* )
+
+Purpose
+*******
+The ``time_test`` function executes a timing test
+and reports the amount of wall clock time for execution.
+
+Motivation
+**********
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution
+sequences is not possible.
+In addition,
+there may be set up and tear down time for a test that
+we do not really want included in the timing.
+For this reason ``time_test``
+automatically determines how many times to
+repeat the section of the test that we wish to time.
+
+Include
+*******
+The file ``cppad/utility/time_test.hpp`` defines the
+``time_test`` function.
+This file is included by ``cppad/cppad.hpp``
+and it can also be included separately with out the rest of
+the ``CppAD`` routines.
+
+test_fun
+********
+The ``time_test`` argument *test_fun* is a function,
+or function object.
+In the case where *test_size* is not present,
+*test_fun* supports the syntax
+
+   *test_fun* ( *repeat* )
+
+In the case where *test_size* is present,
+*test_fun* supports the syntax
+
+   *test_fun* ( *size* , *repeat* )
+
+In either case, the return value for *test_fun* is ``void`` .
+
+size
+====
+If the argument *size* is present,
+it has prototype
+
+   ``size_t`` *size*
+
+and is equal to the *test_size* argument to ``time_test`` .
+
+repeat
+======
+The *test_fun* argument *repeat* has prototype
+
+   ``size_t`` *repeat*
+
+It specifies the number of times to repeat the test.
+
+time_min
+********
+The argument *time_min* has prototype
+
+   ``double`` *time_min*
+
+It specifies the minimum amount of time in seconds
+that the repeats of *test_fun* routine should take.
+The *repeat* argument to *test_fun* is increased
+until this amount of execution time (or more) is reached.
+
+test_size
+*********
+If this argument is present, it argument has prototype
+
+   ``size_t`` *test_size*
+
+In this case *test_size* will be present, and have the same value,
+in each call to *test_fun* .
+
+repeat_out
+**********
+If this argument is present, it has prototype
+
+   ``size_t&`` *repeat_out*
+
+This input value of this argument does not matter.
+Upon return, it is the value of :ref:`time_test@test_fun@repeat`
+that corresponds to the return value *time* ; i.e.,
+the total time for the repeats of the test is
+
+   *total_time* = *repeat_out* * *time*
+
+time
+****
+The return value *time* has prototype
+
+   ``double`` *time*
+
+and is the number of wall clock seconds that it took
+to execute the repeats of *test_fun*
+divided by the value used for *repeat* .
+
+Timing
+******
+The routine :ref:`elapsed_seconds-name` will be used to determine the
+amount of time it took to execute the test.
+{xrst_toc_hidden
+   include/cppad/utility/elapsed_seconds.hpp
+   speed/example/time_test.cpp
+}
+Example
+*******
+The routine :ref:`time_test.cpp-name` is an example and test
+of ``time_test`` .
+
+{xrst_end time_test}

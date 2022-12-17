@@ -1,0 +1,132 @@
+lines 9-138 of file: include/cppad/core/for_sparse_hes.hpp
+
+{xrst_begin ForSparseHes}
+
+Hessian Sparsity Pattern: Forward Mode
+######################################
+
+Syntax
+******
+
+   *h* = *f* . ``ForSparseHes`` ( *r* , *s* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+we define
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   H(x)
+   & = & \partial_x \left[ \partial_u S \cdot F[ x + R \cdot u ] \right]_{u=0}
+   \\
+   & = & R^\R{T} \cdot (S \cdot F)^{(2)} ( x ) \cdot R
+   \end{eqnarray}
+
+Where :math:`R \in \B{R}^{n \times n}` is a diagonal matrix
+and :math:`S \in \B{R}^{1 \times m}` is a row vector.
+Given a
+:ref:`glossary@Sparsity Pattern`
+for the diagonal of :math:`R` and the vector :math:`S`,
+``ForSparseHes`` returns a sparsity pattern for the :math:`H(x)`.
+
+f
+*
+The object *f* has prototype
+
+   ``const ADFun<`` *Base* > *f*
+
+x
+*
+If the operation sequence in *f* is
+:ref:`glossary@Operation@Independent` of
+the independent variables in :math:`x \in \B{R}^n`,
+the sparsity pattern is valid for all values of
+(even if it has :ref:`CondExp-name` or :ref:`VecAD-name` operations).
+
+r
+*
+The argument *r* has prototype
+
+   ``const`` *SetVector* & *r*
+
+(see :ref:`ForSparseHes@SetVector` below)
+If it has elements of type ``bool`` ,
+its size is :math:`n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is one and all the elements of *s* [0]
+are between zero and :math:`n - 1`.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the diagonal of :math:`R`.
+The fewer non-zero elements in this sparsity pattern,
+the faster the calculation should be and the more sparse
+:math:`H(x)` should be.
+
+s
+*
+The argument *s* has prototype
+
+   ``const`` *SetVector* & *s*
+
+(see :ref:`ForSparseHes@SetVector` below)
+If it has elements of type ``bool`` ,
+its size is :math:`m`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is one and all the elements of *s* [0]
+are between zero and :math:`m - 1`.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the vector *S* .
+The fewer non-zero elements in this sparsity pattern,
+the faster the calculation should be and the more sparse
+:math:`H(x)` should be.
+
+h
+*
+The result *h* has prototype
+
+   *SetVector* & *h*
+
+(see :ref:`ForSparseHes@SetVector` below).
+If *h* has elements of type ``bool`` ,
+its size is :math:`n * n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`n` and all the set elements are between
+zero and *n* ``-1`` inclusive.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`H(x)`.
+
+SetVector
+*********
+The type *SetVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` or ``std::set<size_t>`` ;
+see :ref:`glossary@Sparsity Pattern` for a discussion
+of the difference.
+The type of the elements of
+:ref:`ForSparseHes@SetVector` must be the
+same as the type of the elements of *r* .
+
+Algorithm
+*********
+See Algorithm II in
+*Computing sparse Hessians with automatic differentiation*
+by Andrea Walther.
+Note that *s* provides the information so that
+'dead ends' are not included in the sparsity pattern.
+
+Example
+*******
+{xrst_toc_hidden
+   example/sparse/for_sparse_hes.cpp
+}
+The file
+:ref:`for_sparse_hes.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end ForSparseHes}

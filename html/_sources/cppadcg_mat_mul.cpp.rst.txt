@@ -1,0 +1,33 @@
+lines 6-36 of file: speed/cppadcg/mat_mul.cpp
+
+{xrst_begin cppadcg_mat_mul.cpp}
+
+Cppadcg Speed: Matrix Multiplication
+####################################
+
+Specifications
+**************
+:ref:`link_mat_mul-name`
+
+Implementation
+**************
+// a cppadcg version of this test is not yet implemented
+{xrst_spell_off}
+{xrst_code cpp} */
+# include <map>
+# include <cppad/utility/vector.hpp>
+
+// list of possible options
+extern std::map<std::string, bool> global_option;
+
+bool link_mat_mul(
+   size_t                           size     ,
+   size_t                           repeat   ,
+   CppAD::vector<double>&           x        ,
+   CppAD::vector<double>&           z        ,
+   CppAD::vector<double>&           dz       )
+{  return false; }
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppadcg_mat_mul.cpp}

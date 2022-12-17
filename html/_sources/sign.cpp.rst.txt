@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/sign.cpp
+
+{xrst_begin sign.cpp}
+
+Sign Function: Example and Test
+###############################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end sign.cpp}

@@ -1,0 +1,19 @@
+lines 7-23 of file: example/multi_thread/bthread/a11c_bthread.cpp
+
+{xrst_begin a11c_bthread.cpp}
+
+A Simple Boost Thread Example and Test
+######################################
+
+Purpose
+*******
+This example just demonstrates Boost threads and does not use CppAD at all.
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end a11c_bthread.cpp}

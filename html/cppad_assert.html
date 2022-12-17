@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="cppad_assert, cppad, assertions, during, execution" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="ndebug" name="keywords" />
+<meta content="restriction" name="keywords" />
+<meta content="known" name="keywords" />
+<meta content="unknown" name="keywords" />
+<meta content="exp" name="keywords" />
+<meta content="msg" name="keywords" />
+<meta content="error, handler" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cppad_assert &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="index_sort" href="index_sort.html" />
+    <link rel="prev" title="error_handler.cpp" href="error_handler.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="error_handler.cpp.html">error_handler.cpp</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">cppad_assert</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+          <li><a href="ErrorHandler.html">ErrorHandler</a> &raquo;</li>
+      <li>cppad_assert</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cppad_assert.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="cppad-assert">
+<span id="cppad-assert-name"></span><h1>cppad_assert<a class="headerlink" href="#cppad-assert" title="Permalink to this headline"></a></h1>
+<section id="cppad-assertions-during-execution">
+<span id="cppad-assert-title"></span><span id="index-0"></span><h2>CppAD Assertions During Execution<a class="headerlink" href="#cppad-assertions-during-execution" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#ndebug" id="id3">NDEBUG</a></p></li>
+<li><p><a class="reference internal" href="#restriction" id="id4">Restriction</a></p></li>
+<li><p><a class="reference internal" href="#known" id="id5">Known</a></p></li>
+<li><p><a class="reference internal" href="#unknown" id="id6">Unknown</a></p></li>
+<li><p><a class="reference internal" href="#exp" id="id7">Exp</a></p></li>
+<li><p><a class="reference internal" href="#msg" id="id8">Msg</a></p></li>
+<li><p><a class="reference internal" href="#error-handler" id="id9">Error Handler</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="cppad-assert-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CPPAD_ASSERT_KNOWN</span></code> ( <em>exp</em> , <em>msg</em> )</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">CPPAD_ASSERT_UNKNOWN</span></code> ( <em>exp</em> )</p>
+</section>
+<section id="purpose">
+<span id="cppad-assert-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>These CppAD macros are used to detect and report errors.
+They are documented here because they correspond to the C++
+source code that the error is reported at.</p>
+</section>
+<section id="ndebug">
+<span id="cppad-assert-ndebug"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">NDEBUG</a><a class="headerlink" href="#ndebug" title="Permalink to this headline"></a></h3>
+<p>If the preprocessor symbol
+<a class="reference internal" href="Faq.html#faq-speed-ndebug"><span class="std std-ref">NDEBUG</span></a> is defined,
+these macros do nothing; i.e., they are optimized out.</p>
+</section>
+<section id="restriction">
+<span id="cppad-assert-restriction"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Restriction</a><a class="headerlink" href="#restriction" title="Permalink to this headline"></a></h3>
+<p>The CppAD user should not uses these macros.
+You can however write your own macros that do not begin with <code class="docutils literal notranslate"><span class="pre">CPPAD</span></code>
+and that call the <a class="reference internal" href="ErrorHandler.html#errorhandler-name"><span class="std std-ref">CppAD error handler</span></a> .</p>
+</section>
+<section id="known">
+<span id="cppad-assert-known"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Known</a><a class="headerlink" href="#known" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">CPPAD_ASSERT_KNOWN</span></code> macro is used to check for an error
+with a known cause.
+For example, many CppAD routines uses these macros
+to make sure their arguments conform to their specifications.</p>
+</section>
+<section id="unknown">
+<span id="cppad-assert-unknown"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Unknown</a><a class="headerlink" href="#unknown" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">CPPAD_ASSERT_UNKNOWN</span></code> macro is used to check that the
+CppAD internal data structures conform as expected.
+If this is not the case, CppAD does not know why the error has
+occurred; for example, the user may have written past the end
+of an allocated array.</p>
+</section>
+<section id="exp">
+<span id="cppad-assert-exp"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Exp</a><a class="headerlink" href="#exp" title="Permalink to this headline"></a></h3>
+<p>The argument <em>exp</em> is a C++ source code expression
+that results in a <code class="docutils literal notranslate"><span class="pre">bool</span></code> value that should be true.
+If it is false, an error has occurred.
+This expression may be execute any number of times
+(including zero times) so it must have not side effects.</p>
+</section>
+<section id="msg">
+<span id="cppad-assert-msg"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Msg</a><a class="headerlink" href="#msg" title="Permalink to this headline"></a></h3>
+<p>The argument <em>msg</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span></code> * <em>msg</em></p>
+</div></blockquote>
+<p>and contains a <code class="docutils literal notranslate"><span class="pre">'\0'</span></code> terminated character string.
+This string is a description of the error
+corresponding to <em>exp</em> being false.</p>
+</section>
+<section id="error-handler">
+<span id="cppad-assert-error-handler"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Error Handler</a><a class="headerlink" href="#error-handler" title="Permalink to this headline"></a></h3>
+<p>These macros use the
+<a class="reference internal" href="ErrorHandler.html#errorhandler-name"><span class="std std-ref">CppAD error handler</span></a> to report errors.
+This error handler can be replaced by the user.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="error_handler.cpp.html" class="btn btn-neutral float-left" title="error_handler.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index_sort.html" class="btn btn-neutral float-right" title="index_sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

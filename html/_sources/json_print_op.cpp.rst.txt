@@ -1,0 +1,15 @@
+lines 6-18 of file: example/json/print_op.cpp
+
+{xrst_begin json_print_op.cpp}
+
+Json AD Graph print Operator: Example and Test
+##############################################
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end json_print_op.cpp}

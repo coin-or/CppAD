@@ -1,0 +1,14 @@
+lines 18-29 of file: introduction/exp_2.xrst
+
+{xrst_begin exp_2.cpp}
+
+exp_2: Test
+###########
+
+{xrst_literal
+   introduction/exp_2.cpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end exp_2.cpp}

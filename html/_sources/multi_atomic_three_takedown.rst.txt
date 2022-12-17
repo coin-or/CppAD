@@ -1,0 +1,49 @@
+lines 369-415 of file: example/multi_thread/multi_atomic_three.cpp
+
+{xrst_begin multi_atomic_three_takedown}
+
+Multi-Threaded atomic_three Take Down
+#####################################
+
+Syntax
+******
+*ok* = ``multi_atomic_three_takedown`` ( *square_root* )
+
+Purpose
+*******
+This routine gathers up the results for each thread and
+frees memory that was allocated by :ref:`multi_atomic_three_setup-name` .
+
+Thread
+******
+It is assumed that this function is called by thread zero
+and all the other threads are blocked (waiting).
+
+square_root
+***********
+This argument has prototype
+
+   ``vector<double>&`` *square_root*
+
+The input value of *square_root* does not matter.
+Upon return,
+it has the same size and is the element by element square root of
+:ref:`multi_atomic_three_setup@y_squared` .
+
+ok
+**
+This return value has prototype
+
+   ``bool`` *ok*
+
+If it is false,
+``multi_atomic_three_takedown`` detected an error.
+
+Source
+******
+{xrst_literal
+   // BEGIN TAKEDOWN C++
+   // END TAKEDOWN C++
+}
+
+{xrst_end multi_atomic_three_takedown}

@@ -1,0 +1,13 @@
+lines 8-18 of file: example/general/fun_check.cpp
+
+{xrst_begin fun_check.cpp}
+
+ADFun Check and Re-Tape: Example and Test
+#########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end fun_check.cpp}

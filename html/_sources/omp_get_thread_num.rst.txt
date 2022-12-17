@@ -1,0 +1,33 @@
+lines 133-163 of file: include/cppad/utility/omp_alloc.hpp
+
+{xrst_begin omp_get_thread_num}
+
+Get the Current OpenMP Thread Number
+####################################
+
+Deprecated 2011-08-31
+*********************
+Use the function :ref:`thread_alloc::thread_num<ta_thread_num-name>` instead.
+
+Syntax
+******
+
+   # ``include <cppad/utility/omp_alloc.hpp>``
+
+*thread* = ``omp_alloc::get_thread_num`` ()
+
+Purpose
+*******
+Some of the :ref:`omp_alloc-name` allocation routines have a thread number.
+This routine enables you to determine the current thread.
+
+thread
+******
+The return value *thread* has prototype
+
+   ``size_t`` *thread*
+
+and is the currently executing thread number.
+If ``_OPENMP`` is not defined, *thread* is zero.
+
+{xrst_end omp_get_thread_num}

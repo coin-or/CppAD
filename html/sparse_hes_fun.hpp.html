@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="sparse_hes_fun.hpp, source:, sparse_hes_fun" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sparse_hes_fun.hpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="uniform_01" href="uniform_01.html" />
+    <link rel="prev" title="sparse_hes_fun.cpp" href="sparse_hes_fun.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="speed.html">speed</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="speed_main.html">speed_main</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="speed_utility.html">speed_utility</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="det_by_lu.html">det_by_lu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="det_of_minor.html">det_of_minor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="det_by_minor.html">det_by_minor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="det_33.html">det_33</a></li>
+<li class="toctree-l4"><a class="reference internal" href="det_grad_33.html">det_grad_33</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mat_sum_sq.html">mat_sum_sq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ode_evaluate.html">ode_evaluate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_jac_fun.html">sparse_jac_fun</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="sparse_hes_fun.html">sparse_hes_fun</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="sparse_hes_fun.cpp.html">sparse_hes_fun.cpp</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">sparse_hes_fun.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="uniform_01.html">uniform_01</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="speed_double.html">speed_double</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_adolc.html">speed_adolc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppad.html">speed_cppad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_fadbad.html">speed_fadbad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppad_jit.html">speed_cppad_jit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_cppadcg.html">speed_cppadcg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_sacado.html">speed_sacado</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_xpackage.html">speed_xpackage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="speed.html">speed</a> &raquo;</li>
+          <li><a href="speed_utility.html">speed_utility</a> &raquo;</li>
+          <li><a href="sparse_hes_fun.html">sparse_hes_fun</a> &raquo;</li>
+      <li>sparse_hes_fun.hpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sparse_hes_fun.hpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="sparse-hes-fun-hpp">
+<span id="sparse-hes-fun-hpp-name"></span><h1>sparse_hes_fun.hpp<a class="headerlink" href="#sparse-hes-fun-hpp" title="Permalink to this headline"></a></h1>
+<section id="source-sparse-hes-fun">
+<span id="sparse-hes-fun-hpp-title"></span><span id="index-0"></span><h2>Source: sparse_hes_fun<a class="headerlink" href="#source-sparse-hes-fun" title="Permalink to this headline"></a></h2>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">ifndef</span> <span class="pre">CPPAD_SPARSE_HES_FUN_HPP</span></code></div>
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">CPPAD_SPARSE_HES_FUN_HPP</span></code></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/core/cppad_assert.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/utility/check_numeric_type.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/utility/vector.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// following needed by gcc under fedora 17 so that exp(double) is defined</span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/base_require.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Float</span><span class="p">,</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">FloatVector</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">void</span><span class="w"> </span><span class="n">sparse_hes_fun</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">                       </span><span class="n">n</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">FloatVector</span><span class="o">&amp;</span><span class="w">           </span><span class="n">x</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">row</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">col</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">                       </span><span class="n">p</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">FloatVector</span><span class="o">&amp;</span><span class="w">                </span><span class="n">fp</span><span class="w">    </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// check numeric type specifications</span>
+<span class="w">      </span><span class="n">CheckNumericType</span><span class="o">&lt;</span><span class="n">Float</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// check value of p</span>
+<span class="w">      </span><span class="n">CPPAD_ASSERT_KNOWN</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="s">&quot;sparse_hes_fun: p != 0 and p != 2&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">fp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">fp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// determine which diagonal entries are present in row[k], col[k]</span>
+<span class="w">      </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">diagonal</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">diagonal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w">   </span><span class="c1">// no diagonal entry for this row</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w">  </span><span class="n">CPPAD_ASSERT_UNKNOWN</span><span class="p">(</span><span class="w"> </span><span class="n">diagonal</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// index of the diagonal entry</span>
+<span class="w">            </span><span class="n">diagonal</span><span class="p">[</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// determine which entries must be multiplied by a factor of two</span>
+<span class="w">      </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">factor</span><span class="p">(</span><span class="n">K</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k1</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">reflected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">reflected</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">k1</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">reflected</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="n">reflected</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="n">k1</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="n">reflected</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k1</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">reflected</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">Float</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">i</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">j</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">col</span><span class="p">[</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">t</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">switch</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">fp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w">  </span><span class="c1">// second partial of t w.r.t. x[i], x[i]</span>
+<span class="w">               </span><span class="n">fp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="c1">// (i != j)</span>
+<span class="w">            </span><span class="p">{</span><span class="w">  </span><span class="c1">//</span>
+<span class="w">               </span><span class="c1">// second partial of t w.r.t x[i], x[j]</span>
+<span class="w">               </span><span class="n">fp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">diagonal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="p">{</span><span class="w">  </span><span class="c1">// second partial of t w.r.t x[i], x[i]</span>
+<span class="w">                  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagonal</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">                  </span><span class="n">fp</span><span class="p">[</span><span class="n">ki</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="p">}</span><span class="w"></span>
+<span class="w">               </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">diagonal</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="p">{</span><span class="w">  </span><span class="c1">// second partial of t w.r.t x[j], x[j]</span>
+<span class="w">                  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">kj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagonal</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">                  </span><span class="n">fp</span><span class="p">[</span><span class="n">kj</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">endif</span></code></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparse_hes_fun.cpp.html" class="btn btn-neutral float-left" title="sparse_hes_fun.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="uniform_01.html" class="btn btn-neutral float-right" title="uniform_01" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="multi_chkpoint_two_time, timing, test, for, multi-threaded, chkpoint_two, calculation" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="thread" name="keywords" />
+<meta content="time_out" name="keywords" />
+<meta content="test_time" name="keywords" />
+<meta content="num_threads" name="keywords" />
+<meta content="num_solve" name="keywords" />
+<meta content="ok" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multi_chkpoint_two_time &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="multi_newton.cpp" href="multi_newton.cpp.html" />
+    <link rel="prev" title="multi_chkpoint_two_run" href="multi_chkpoint_two_run.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="multi_thread.html">multi_thread</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="parallel_ad.html">parallel_ad</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="thread_test.cpp.html">thread_test.cpp</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="a11c_openmp.cpp.html">a11c_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_bthread.cpp.html">a11c_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_pthread.cpp.html">a11c_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_openmp.cpp.html">simple_ad_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_bthread.cpp.html">simple_ad_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_pthread.cpp.html">simple_ad_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_example.cpp.html">team_example.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="harmonic.cpp.html">harmonic.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_three.cpp.html">multi_atomic_three.cpp</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="multi_chkpoint_two.cpp.html">multi_chkpoint_two.cpp</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="multi_chkpoint_two_algo.html">multi_chkpoint_two_algo</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_chkpoint_two_common.html">multi_chkpoint_two_common</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_chkpoint_two_setup.html">multi_chkpoint_two_setup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_chkpoint_two_worker.html">multi_chkpoint_two_worker</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_chkpoint_two_takedown.html">multi_chkpoint_two_takedown</a></li>
+<li class="toctree-l5"><a class="reference internal" href="multi_chkpoint_two_run.html">multi_chkpoint_two_run</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">multi_chkpoint_two_time</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="multi_newton.cpp.html">multi_newton.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_thread.hpp.html">team_thread.hpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="multi_thread.html">multi_thread</a> &raquo;</li>
+          <li><a href="thread_test.cpp.html">thread_test.cpp</a> &raquo;</li>
+          <li><a href="multi_chkpoint_two.cpp.html">multi_chkpoint_two.cpp</a> &raquo;</li>
+      <li>multi_chkpoint_two_time</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/multi_chkpoint_two_time.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="multi-chkpoint-two-time">
+<span id="multi-chkpoint-two-time-name"></span><h1>multi_chkpoint_two_time<a class="headerlink" href="#multi-chkpoint-two-time" title="Permalink to this headline"></a></h1>
+<section id="timing-test-for-multi-threaded-chkpoint-two-calculation">
+<span id="multi-chkpoint-two-time-title"></span><span id="index-0"></span><h2>Timing Test for Multi-Threaded chkpoint_two Calculation<a class="headerlink" href="#timing-test-for-multi-threaded-chkpoint-two-calculation" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#thread" id="id2">Thread</a></p></li>
+<li><p><a class="reference internal" href="#time-out" id="id3">time_out</a></p></li>
+<li><p><a class="reference internal" href="#test-time" id="id4">test_time</a></p></li>
+<li><p><a class="reference internal" href="#num-threads" id="id5">num_threads</a></p></li>
+<li><p><a class="reference internal" href="#num-solve" id="id6">num_solve</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id7">ok</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="multi-chkpoint-two-time-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>ok</em> = <code class="docutils literal notranslate"><span class="pre">multi_chkpoint_two_time</span></code> (</div>
+<div class="line">      <em>time_out</em> , <em>test_time</em> , <em>num_threads</em> , <em>num_solve</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="thread">
+<span id="multi-chkpoint-two-time-thread"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Thread</a><a class="headerlink" href="#thread" title="Permalink to this headline"></a></h3>
+<p>It is assumed that this function is called by thread zero in sequential
+mode; i.e., not <a class="reference internal" href="ta_in_parallel.html#ta-in-parallel-name"><span class="std std-ref">in_parallel</span></a> .</p>
+</section>
+<section id="time-out">
+<span id="multi-chkpoint-two-time-time-out"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">time_out</a><a class="headerlink" href="#time-out" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">double&amp;</span></code> <em>time_out</em></p>
+</div></blockquote>
+<p>Its input value of the argument does not matter.
+Upon return it is the number of wall clock seconds
+used by <a class="reference internal" href="multi_chkpoint_two_run.html#multi-chkpoint-two-run-name"><span class="std std-ref">multi_chkpoint_two_run</span></a> .</p>
+</section>
+<section id="test-time">
+<span id="multi-chkpoint-two-time-test-time"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">test_time</a><a class="headerlink" href="#test-time" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">double</span></code> <em>test_time</em></p>
+</div></blockquote>
+<p>and is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached.
+The reported <em>time_out</em> is the total wall clock time divided by the
+number of repeats.</p>
+</section>
+<section id="num-threads">
+<span id="multi-chkpoint-two-time-num-threads"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">num_threads</a><a class="headerlink" href="#num-threads" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>num_threads</em></p>
+</div></blockquote>
+<p>It specifies the number of threads that are available for this test.
+If it is zero, the test is run without the multi-threading environment and</p>
+<blockquote>
+<div><p>1 == <code class="docutils literal notranslate"><span class="pre">thread_alloc::num_threads</span></code> ()</p>
+</div></blockquote>
+<p>If it is non-zero, the test is run with the multi-threading and</p>
+<blockquote>
+<div><p><em>num_threads</em> = <code class="docutils literal notranslate"><span class="pre">thread_alloc::num_threads</span></code> ()</p>
+</div></blockquote>
+</section>
+<section id="num-solve">
+<span id="multi-chkpoint-two-time-num-solve"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">num_solve</a><a class="headerlink" href="#num-solve" title="Permalink to this headline"></a></h3>
+<p>This specifies the number of square roots that will be solved for.</p>
+</section>
+<section id="ok">
+<span id="multi-chkpoint-two-time-ok"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>The return value has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>ok</em></p>
+</div></blockquote>
+<p>If it is true,
+<code class="docutils literal notranslate"><span class="pre">harmonic_time</span></code> passed the correctness test and
+<code class="docutils literal notranslate"><span class="pre">multi_chkpoint_two_time</span></code> did not detect an error.
+Otherwise it is false.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="multi_chkpoint_two_run.html" class="btn btn-neutral float-left" title="multi_chkpoint_two_run" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="multi_newton.cpp.html" class="btn btn-neutral float-right" title="multi_newton.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+lines 316-332 of file: example/multi_thread/multi_atomic_two.cpp
+
+{xrst_begin multi_atomic_two_worker}
+
+Multi-Threaded atomic_two Worker
+################################
+
+Purpose
+*******
+This routine does the computation for one thread.
+
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
+
+{xrst_end multi_atomic_two_worker}

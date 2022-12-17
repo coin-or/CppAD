@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="acos.cpp, the, ad, acos, function:, example, and, test" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>acos.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="acosh" href="acosh.html" />
+    <link rel="prev" title="acos" href="acos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="acos.html">acos</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">acos.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="acosh.html">acosh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="asin.html">asin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="asinh.html">asinh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atan.html">atan</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atanh.html">atanh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="cos.html">cos</a></li>
+<li class="toctree-l5"><a class="reference internal" href="cosh.html">cosh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="erf.html">erf</a></li>
+<li class="toctree-l5"><a class="reference internal" href="erfc.html">erfc</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp.html">exp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="expm1.html">expm1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="log.html">log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="log1p.html">log1p</a></li>
+<li class="toctree-l5"><a class="reference internal" href="log10.html">log10</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sin.html">sin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sinh.html">sinh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sqrt.html">sqrt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tan.html">tan</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tanh.html">tanh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="abs.html">abs</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sign.html">sign</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic.html">atomic</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="unary_standard_math.html">unary_standard_math</a> &raquo;</li>
+          <li><a href="acos.html">acos</a> &raquo;</li>
+      <li>acos.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/acos.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="acos-cpp">
+<span id="acos-cpp-name"></span><h1>acos.cpp<a class="headerlink" href="#acos-cpp" title="Permalink to this headline"></a></h1>
+<section id="the-ad-acos-function-example-and-test">
+<span id="acos-cpp-title"></span><span id="index-0"></span><h2>The AD acos Function: Example and Test<a class="headerlink" href="#the-ad-acos-function-example-and-test" title="Permalink to this headline"></a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">acos</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// 10 times machine epsilon</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// domain space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// declare independent variables and start tape recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// a temporary value</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cos_of_x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// range space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">acos</span><span class="p">(</span><span class="n">cos_of_x0</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// create f: x -&gt; y and stop tape recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// check value</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w">  </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// forward computation of first partial w.r.t. x[0]</span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">dy</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">dx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">dy</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">dx</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dy</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// reverse computation of derivative of y[0]</span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w">  </span><span class="n">w</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w"> </span><span class="n">dw</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">dw</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Reverse</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dw</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// use a VecAD&lt;Base&gt;::reference object with acos</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">VecAD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">v</span><span class="p">[</span><span class="n">zero</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos_of_x0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">acos</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">zero</span><span class="p">]);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="acos.html" class="btn btn-neutral float-left" title="acos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="acosh.html" class="btn btn-neutral float-right" title="acosh" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

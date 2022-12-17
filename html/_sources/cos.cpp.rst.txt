@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/cos.cpp
+
+{xrst_begin cos.cpp}
+
+The AD cos Function: Example and Test
+#####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end cos.cpp}

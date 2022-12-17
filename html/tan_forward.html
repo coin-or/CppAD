@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="tan_forward, tangent, and, hyperbolic, tangent, forward, taylor, polynomial, theory" name="keywords" />
+<meta content="derivatives" name="keywords" />
+<meta content="taylor, coefficients, recursion" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tan_forward &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="erf_forward" href="erf_forward.html" />
+    <link rel="prev" title="pow_forward" href="pow_forward.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Theory.html">Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="forward_theory.html">forward_theory</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="exp_forward.html">exp_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="log_forward.html">log_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sqrt_forward.html">sqrt_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sin_cos_forward.html">sin_cos_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan_forward.html">atan_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asin_forward.html">asin_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acos_forward.html">acos_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pow_forward.html">pow_forward</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">tan_forward</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erf_forward.html">erf_forward</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_theory.html">reverse_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_identity.html">reverse_identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taylor_ode.html">taylor_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research.html">research</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Theory.html">Theory</a> &raquo;</li>
+          <li><a href="forward_theory.html">forward_theory</a> &raquo;</li>
+      <li>tan_forward</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tan_forward.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="tan-forward">
+<span id="tan-forward-name"></span><h1>tan_forward<a class="headerlink" href="#tan-forward" title="Permalink to this headline"></a></h1>
+<section id="tangent-and-hyperbolic-tangent-forward-taylor-polynomial-theory">
+<span id="tan-forward-title"></span><span id="index-0"></span><h2>Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory<a class="headerlink" href="#tangent-and-hyperbolic-tangent-forward-taylor-polynomial-theory" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#derivatives" id="id1">Derivatives</a></p></li>
+<li><p><a class="reference internal" href="#taylor-coefficients-recursion" id="id2">Taylor Coefficients Recursion</a></p></li>
+</ul>
+</div>
+<section id="derivatives">
+<span id="tan-forward-derivatives"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Derivatives</a><a class="headerlink" href="#derivatives" title="Permalink to this headline"></a></h3>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\tan^{(1)} ( u ) &amp; = &amp; [ \cos (u)^2 + \sin (u)^2  ] / \cos (u)^2
+\\
+&amp; = &amp; 1 + \tan (u)^2
+\\
+\tanh^{(1)} ( u ) &amp; = &amp; [ \cosh (u)^2 - \sinh (u)^2 ] / \cosh (u)^2
+\\
+&amp; = &amp; 1 - \tanh (u)^2
+\end{eqnarray}</div><p>If <span class="math notranslate nohighlight">\(F(u)\)</span> is <span class="math notranslate nohighlight">\(\tan (u)\)</span> or <span class="math notranslate nohighlight">\(\tanh (u)\)</span>
+the corresponding derivative is given by</p>
+<div class="math notranslate nohighlight">
+\[F^{(1)} (u) = 1 \pm F(u)^2\]</div>
+<p>Given <span class="math notranslate nohighlight">\(X(t)\)</span>, we define the function <span class="math notranslate nohighlight">\(Z(t) = F[ X(t) ]\)</span>.
+It follows that</p>
+<div class="math notranslate nohighlight">
+\[Z^{(1)} (t) = F^{(1)} [ X(t) ] X^{(1)} (t) = [ 1 \pm Y(t) ] X^{(1)} (t)\]</div>
+<p>where we define the function <span class="math notranslate nohighlight">\(Y(t) = Z(t)^2\)</span>.</p>
+</section>
+<section id="taylor-coefficients-recursion">
+<span id="tan-forward-taylor-coefficients-recursion"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Taylor Coefficients Recursion</a><a class="headerlink" href="#taylor-coefficients-recursion" title="Permalink to this headline"></a></h3>
+<p>Suppose that we are given the Taylor coefficients
+up to order <span class="math notranslate nohighlight">\(j\)</span> for the function <span class="math notranslate nohighlight">\(X(t)\)</span> and
+up to order <span class="math notranslate nohighlight">\(j-1\)</span> for the functions <span class="math notranslate nohighlight">\(Y(t)\)</span> and <span class="math notranslate nohighlight">\(Z(t)\)</span>.
+We need a formula that computes the coefficient of order <span class="math notranslate nohighlight">\(j\)</span>
+for <span class="math notranslate nohighlight">\(Y(t)\)</span> and <span class="math notranslate nohighlight">\(Z(t)\)</span>.
+Using the equation above for <span class="math notranslate nohighlight">\(Z^{(1)} (t)\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\sum_{k=1}^j k z^{(k)} t^{k-1}
+&amp; = &amp;
+\sum_{k=1}^j k x^{(k)} t^{k-1}
+\pm
+\left[ \sum_{k=0}^{j-1} y^{(k)} t^k        \right]
+\left[ \sum_{k=1}^j k x^{(k)} t^{k-1}  \right]
++
+o( t^{j-1} )
+\end{eqnarray}</div><p>Setting the coefficients of <span class="math notranslate nohighlight">\(t^{j-1}\)</span> equal, we have</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+j z^{(j)}
+=
+j x^{(j)}
+\pm
+\sum_{k=1}^j k x^{(k)} y^{(j-k)}
+\\
+z^{(j)}
+=
+x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+\end{eqnarray}</div><p>Once we have computed <span class="math notranslate nohighlight">\(z^{(j)}\)</span>,
+we can compute <span class="math notranslate nohighlight">\(y^{(j)}\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[y^{(j)} = \sum_{k=0}^j z^{(k)} z^{(j-k)}\]</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pow_forward.html" class="btn btn-neutral float-left" title="pow_forward" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="erf_forward.html" class="btn btn-neutral float-right" title="erf_forward" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

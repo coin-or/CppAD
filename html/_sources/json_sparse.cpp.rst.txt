@@ -1,0 +1,29 @@
+lines 6-32 of file: example/json/sparse.cpp
+
+{xrst_begin json_sparse.cpp}
+
+Json Representation of a Sparse Matrix: Example and Test
+########################################################
+
+Discussion
+**********
+The example using a CppAD Json to represent the sparse matrix
+
+.. math::
+
+   \partial_x f(x, p) = \left( \begin{array}{ccc}
+      p_0 & 0    & 0 \\
+      0   & p_1  & 0 \\
+      0   & 0    & c_0
+   \end{array} \right)
+
+where :math:`c_0` is the constant 3.
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end json_sparse.cpp}

@@ -1,0 +1,161 @@
+lines 550-708 of file: introduction/exp_2.xrst
+
+{xrst_begin exp_2_for2}
+
+exp_2: Second Order Forward Mode
+################################
+
+Second Order Expansion
+**********************
+We define :math:`x(t)` near :math:`t = 0` by the second order expansion
+
+.. math::
+
+   x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
+
+It follows that for :math:`k = 0 , 1 , 2`,
+
+.. math::
+
+   x^{(k)} = \dpow{k}{t} x (0)
+
+Purpose
+*******
+In general, a second order forward sweep is given the
+:ref:`exp_2_for1@First Order Expansion`
+for all of the variables in an operation sequence,
+and the second order derivatives for the independent variables.
+It uses these to compute the second order derivative,
+and thereby obtain the second order expansion,
+for all the variables in the operation sequence.
+
+Mathematical Form
+*****************
+Suppose that we use the algorithm :ref:`exp_2.hpp-name` to compute
+
+.. math::
+
+   f(x) = 1 + x + x^2 / 2
+
+The corresponding second derivative function is
+
+.. math::
+
+   \Dpow{2}{x} f (x) =   1
+
+Operation Sequence
+******************
+We consider the case where :ref:`exp_2.hpp-name` is executed with
+:math:`x = .5`.
+The corresponding operation sequence,
+zero order forward sweep values,
+and first order forward sweep values
+are inputs and are used by a second order forward sweep.
+
+Index
+=====
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation.
+A Forward sweep starts with the first operation
+and ends with the last.
+
+Zero
+====
+The Zero column contains the zero order sweep results
+for the corresponding variable in the operation sequence
+(see :ref:`zero order sweep<exp_2_for0@Operation Sequence@Sweep>` ).
+
+Operation
+=========
+The Operation column contains the
+first order sweep operation for this variable.
+
+First
+=====
+The First column contains the first order sweep results
+for the corresponding variable in the operation sequence
+(see :ref:`first order sweep<exp_2_for1@Operation Sequence@Sweep>` ).
+
+Derivative
+==========
+The Derivative column contains the
+mathematical function corresponding to the second derivative
+with respect to :math:`t`,
+at :math:`t = 0`, for each variable in the sequence.
+
+Second
+======
+The Second column contains the second order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+the second order expansion for the *i*-th variable is given by
+
+.. math::
+
+   v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+
+We use :math:`x^{(0)} = 1`, and :math:`x^{(2)} = 0`
+so that second order differentiation
+with respect to :math:`t`, at :math:`t = 0`,
+is the same as the second partial differentiation
+with respect to :math:`x` at :math:`x = x^{(0)}`.
+
+Sweep
+=====
+
+.. csv-table::
+   :widths: auto
+
+   **Index**,,**Zero**,,**Operation**,,**First**,,**Derivative**,,**Second**
+   1,,0.5,,:math:`v_1^{(1)} = x^{(1)}`,,1,,:math:`v_1^{(2)} = x^{(2)}`,,:math:`v_1^{(2)} = 0`
+   2,,1.5,,:math:`v_2^{(1)} = v_1^{(1)}`,,1,,:math:`v_2^{(2)} = v_1^{(2)}`,,:math:`v_2^{(2)} = 0`
+   3,,0.25,,:math:`v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}`,,1,,:math:`v_3^{(2)} = 2 * (v_1^{(1)} * v_1^{(1)} + v_1^{(0)} * v_1^{(2)} )`,,:math:`v_3^{(2)} = 2`
+   4,,0.125,,:math:`v_4^{(1)} = v_3^{(1)} / 2`,,.5,,:math:`v_4^{(2)} = v_3^{(2)} / 2`,,:math:`v_4^{(2)} = 1`
+   5,,1.625,,:math:`v_5^{(1)} = v_2^{(1)} + v_4^{(1)}`,,1.5,,:math:`v_5^{(2)} = v_2^{(2)} + v_4^{(2)}`,,:math:`v_5^{(2)} = 1`
+
+Return Value
+************
+The second derivative of the return value for this case is
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      1
+      & = &
+      v_5^{(2)} =
+      \left[ \Dpow{2}{t} v_5 \right]_{t=0} =
+      \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
+      \\
+      & = &
+      x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
+      \Dpow{2}{x} f ( x^{(0)} )
+   \end{eqnarray}
+
+(We have used the fact that
+:math:`x^{(1)} = 1` and :math:`x^{(2)} = 0`.)
+{xrst_toc_hidden
+   introduction/exp_2_for2.cpp
+}
+Verification
+************
+The file :ref:`exp_2_for2.cpp-name` contains a routine
+which verifies the values computed above.
+
+Exercises
+*********
+
+#. Which statement in the routine defined by :ref:`exp_2_for2.cpp-name` uses
+   the values that are calculated by the routine
+   defined by :ref:`exp_2_for1.cpp-name` ?
+#. Suppose that :math:`x = .1`,
+   what are the results of a zero, first, and second order forward sweep for
+   the operation sequence above;
+   i.e., what are the corresponding values for
+   :math:`v_i^{(k)}` for :math:`i = 1, \ldots , 5` and :math:`k = 0, 1, 2`.
+#. Create a modified version of :ref:`exp_2_for2.cpp-name` that verifies
+   the derivative values from the previous exercise.
+   Also create and run a main program that reports the result
+   of calling the modified version of
+   :ref:`exp_2_for2.cpp-name` .
+
+{xrst_end exp_2_for2}

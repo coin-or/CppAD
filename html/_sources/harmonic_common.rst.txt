@@ -1,0 +1,25 @@
+lines 6-28 of file: example/multi_thread/harmonic.cpp
+
+{xrst_begin harmonic_common}
+
+Common Variables Used by Multi-threading Sum of 1/i
+###################################################
+
+Purpose
+*******
+This source code defines the common
+include files, defines, and variables that are used by
+the summation that defines the harmonic series
+
+.. math::
+
+   1 + 1/2 + 1/3 + ... + 1/n
+
+Source
+******
+{xrst_literal
+   // BEGIN COMMON C++
+   // END COMMON C++
+}
+
+{xrst_end harmonic_common}

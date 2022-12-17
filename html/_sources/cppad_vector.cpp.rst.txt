@@ -1,0 +1,19 @@
+lines 7-23 of file: example/utility/cppad_vector.cpp
+
+{xrst_begin cppad_vector.cpp}
+
+CppAD::vector Template Class: Example and Test
+##############################################
+
+Purpose
+*******
+This is an example and test of the features of the
+:ref:`CppAD_vector-name` class that are not included in the
+:ref:`SimpleVector-name` concept.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end cppad_vector.cpp}

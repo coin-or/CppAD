@@ -1,0 +1,19 @@
+lines 264-280 of file: example/multi_thread/multi_chkpoint_two.cpp
+
+{xrst_begin multi_chkpoint_two_worker}
+
+Multi-Threaded chkpoint_two Worker
+##################################
+
+Purpose
+*******
+This routine does the computation for one thread.
+
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
+
+{xrst_end multi_chkpoint_two_worker}

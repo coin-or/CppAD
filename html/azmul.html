@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="azmul, absolute, zero, multiplication" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="ad&lt;base&gt;" name="keywords" />
+<meta content="vecad&lt;base&gt;" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>azmul &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="azmul.cpp" href="azmul.cpp.html" />
+    <link rel="prev" title="pow_nan.cpp" href="pow_nan.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="binary_math.html">binary_math</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atan2.html">atan2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pow.html">pow</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">azmul</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="azmul.cpp.html">azmul.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic.html">atomic</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="binary_math.html">binary_math</a> &raquo;</li>
+      <li>azmul</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/azmul.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="azmul">
+<span id="azmul-name"></span><h1>azmul<a class="headerlink" href="#azmul" title="Permalink to this headline"></a></h1>
+<section id="absolute-zero-multiplication">
+<span id="azmul-title"></span><span id="index-0"></span><h2>Absolute Zero Multiplication<a class="headerlink" href="#absolute-zero-multiplication" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#base" id="id3">Base</a></p></li>
+<li><p><a class="reference internal" href="#ad-base" id="id4">AD&lt;Base&gt;</a></p></li>
+<li><p><a class="reference internal" href="#vecad-base" id="id5">VecAD&lt;Base&gt;</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id6">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="azmul-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><em>z</em> = <code class="docutils literal notranslate"><span class="pre">azmul</span></code> ( <em>x</em> , <em>y</em> )</p>
+</section>
+<section id="purpose">
+<span id="azmul-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Evaluates multiplication with an absolute zero
+for any of the possible types listed below.
+The result is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}z = \left\{ \begin{array}{ll}
+   0          &amp; {\rm if} \; x = 0 \\
+   x \cdot y  &amp; {\rm otherwise}
+\end{array} \right.\end{split}\]</div>
+<p>Note if <em>x</em> is zero and <em>y</em> is infinity,
+ieee multiplication would result in not a number whereas
+<em>z</em> would be zero.</p>
+</section>
+<section id="base">
+<span id="azmul-base"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h3>
+<p>If <em>Base</em> satisfies the
+<a class="reference internal" href="base_require.html#base-require-name"><span class="std std-ref">base type requirements</span></a>
+and arguments <em>x</em> , <em>y</em> have prototypes</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>x</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Base</em> &amp; <em>y</em></div>
+</div>
+<p>then the result <em>z</em> has prototype</p>
+<blockquote>
+<div><p><em>Base</em> <em>z</em></p>
+</div></blockquote>
+</section>
+<section id="ad-base">
+<span id="azmul-ad-base"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">AD&lt;Base&gt;</a><a class="headerlink" href="#ad-base" title="Permalink to this headline"></a></h3>
+<p>If the arguments <em>x</em> , <em>y</em> have prototype</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt;&amp; <em>x</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt;&amp; <em>y</em></div>
+</div>
+<p>then the result <em>z</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; <em>z</em></p>
+</div></blockquote>
+</section>
+<section id="vecad-base">
+<span id="azmul-vecad-base"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">VecAD&lt;Base&gt;</a><a class="headerlink" href="#vecad-base" title="Permalink to this headline"></a></h3>
+<p>If the arguments <em>x</em> , <em>y</em> have prototype</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt;:: <code class="docutils literal notranslate"><span class="pre">reference&amp;</span></code> <em>x</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">VecAD&lt;</span></code> <em>Base</em> &gt;:: <code class="docutils literal notranslate"><span class="pre">reference&amp;</span></code> <em>y</em></div>
+</div>
+<p>then the result <em>z</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; <em>z</em></p>
+</div></blockquote>
+</section>
+<section id="example">
+<span id="azmul-example"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="azmul.cpp.html#azmul-cpp-name"><span class="std std-ref">azmul.cpp</span></a>
+is an examples and tests of this function.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pow_nan.cpp.html" class="btn btn-neutral float-left" title="pow_nan.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="azmul.cpp.html" class="btn btn-neutral float-right" title="azmul.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+lines 7-24 of file: example/multi_thread/openmp/simple_ad_openmp.cpp
+
+{xrst_begin simple_ad_openmp.cpp}
+
+A Simple OpenMP AD: Example and Test
+####################################
+
+Purpose
+*******
+This example demonstrates how CppAD can be used in a
+OpenMP multi-threading environment.
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end simple_ad_openmp.cpp}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="simplex_method.cpp, abs_normal, simplex_method:, example, and, test" name="keywords" />
+<meta content="problem" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simplex_method.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="simplex_method.hpp" href="simplex_method.hpp.html" />
+    <link rel="prev" title="simplex_method" href="simplex_method.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="other_adfun.html">other_adfun</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base2ad.html">base2ad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_ad_graph.html">json_ad_graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_ad_graph.html">cpp_ad_graph</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="abs_normal_fun.html">abs_normal_fun</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="example_abs_normal.html">example_abs_normal</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="abs_get_started.cpp.html">abs_get_started.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_print_mat.html">abs_print_mat</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_eval.html">abs_eval</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="simplex_method.html">simplex_method</a><ul class="current">
+<li class="toctree-l7 current"><a class="current reference internal" href="#">simplex_method.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="simplex_method.hpp.html">simplex_method.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="lp_box.html">lp_box</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_min_linear.html">abs_min_linear</a></li>
+<li class="toctree-l6"><a class="reference internal" href="min_nso_linear.html">min_nso_linear</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qp_interior.html">qp_interior</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qp_box.html">qp_box</a></li>
+<li class="toctree-l6"><a class="reference internal" href="abs_min_quad.html">abs_min_quad</a></li>
+<li class="toctree-l6"><a class="reference internal" href="min_nso_quad.html">min_nso_quad</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="other_adfun.html">other_adfun</a> &raquo;</li>
+          <li><a href="abs_normal_fun.html">abs_normal_fun</a> &raquo;</li>
+          <li><a href="example_abs_normal.html">example_abs_normal</a> &raquo;</li>
+          <li><a href="simplex_method.html">simplex_method</a> &raquo;</li>
+      <li>simplex_method.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/simplex_method.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="simplex-method-cpp">
+<span id="simplex-method-cpp-name"></span><h1>simplex_method.cpp<a class="headerlink" href="#simplex-method-cpp" title="Permalink to this headline"></a></h1>
+<section id="abs-normal-simplex-method-example-and-test">
+<span id="simplex-method-cpp-title"></span><span id="index-0"></span><h2>abs_normal simplex_method: Example and Test<a class="headerlink" href="#abs-normal-simplex-method-example-and-test" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#problem" id="id1">Problem</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id2">Source</a></p></li>
+</ul>
+</div>
+<section id="problem">
+<span id="simplex-method-cpp-problem"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Problem</a><a class="headerlink" href="#problem" title="Permalink to this headline"></a></h3>
+<p>Our original problem is</p>
+<div class="math notranslate nohighlight">
+\[\R{minimize} \; | u - 1| \; \R{w.r.t} \; u \in \B{R}\]</div>
+<p>We reformulate this as the following problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rlr}
+   \R{minimize}      &amp; v             &amp; \R{w.r.t} \; (u,v) \in \B{R}^2 \\
+   \R{subject \; to} &amp;  u - 1 \leq v \\
+                      &amp;  1 - u \leq v
+\end{array}\end{split}\]</div>
+<p>We know that the value of <span class="math notranslate nohighlight">\(v\)</span> at the solution is greater than
+or equal zero. Hence we can reformulate this problem as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rlr}
+\R{minimize}      &amp; v             &amp; \R{w.r.t} \; ( u_- , u_+ , v) \in \B{R}_+^3 \\
+\R{subject \; to} &amp; u_+ - u_- - 1  \leq v \\
+                  &amp;  1 - u_+ + u_- \leq v
+\end{array}\end{split}\]</div>
+<p>This is equivalent to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rlr}
+   \R{minimize}
+   &amp; (0, 0, 1) \cdot ( u_+, u_- , v)^T  &amp; \R{w.r.t} \; (u,v) \in \B{R}_+^3 \\
+\R{subject \; to}
+   &amp;
+   \left( \begin{array}{ccc}
+      +1 &amp; -1 &amp; -1 \\
+      -1 &amp; +1 &amp; +1
+   \end{array} \right)
+   \left( \begin{array}{c} u_+ \\ u_- \\ v \end{array} \right)
+   +
+   \left( \begin{array}{c} -1 \\ 1 \end{array} \right)
+   \leq
+   0
+\end{array}\end{split}\]</div>
+<p>which is in the form expected by <a class="reference internal" href="simplex_method.html#simplex-method-name"><span class="std std-ref">simplex_method</span></a> .</p>
+</section>
+<section id="source">
+<span id="simplex-method-cpp-source"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;limits&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/utility/vector.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;simplex_method.hpp&quot;</span><span class="cp"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">simplex_method</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">eps99</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">99.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">vector</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">xout</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// A(0,0)</span>
+<span class="w">   </span><span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// A(0,1)</span>
+<span class="w">   </span><span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// A(0,2)</span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// A(1,0)</span>
+<span class="w">   </span><span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// A(1,1)</span>
+<span class="w">   </span><span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// A(1,2)</span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w">           </span><span class="o">=</span><span class="w">  </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">           </span><span class="o">=</span><span class="w">  </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w">           </span><span class="o">=</span><span class="w">  </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w">           </span><span class="o">=</span><span class="w">  </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">maxitr</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">level</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">simplex_method</span><span class="p">(</span><span class="n">level</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w">  </span><span class="n">maxitr</span><span class="p">,</span><span class="w"> </span><span class="n">xout</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// check optimal value for u</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span><span class="w"> </span><span class="n">xout</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">eps99</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// check optimal value for v</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span><span class="w"> </span><span class="n">xout</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">eps99</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simplex_method.html" class="btn btn-neutral float-left" title="simplex_method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simplex_method.hpp.html" class="btn btn-neutral float-right" title="simplex_method.hpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+lines 5-63 of file: xrst/install/cmake_check.xrst
+
+{xrst_begin cmake_check}
+{xrst_spell
+   grep
+}
+
+Checking the CppAD Examples and Tests
+#####################################
+
+Purpose
+*******
+After you configure your system with the
+:ref:`cmake@CMake Command` you
+can run the CppAD example and tests to make sure that
+CppAD functions properly on your system.
+
+Check All
+*********
+In the ``build`` subdirectory of the
+:ref:`download@Distribution Directory`
+execute the command
+::
+
+   make check
+
+This will build and run all of the tests that are support
+by your system and the :ref:`cmake-name` command options.
+
+Subsets of make check
+*********************
+In unix, you can determine which subsets of ``make check`` are available
+by putting the output of the :ref:`cmake@CMake Command`
+in a file (called *cmake.out* below) and executing:
+
+   ``grep`` ' ``make check.`` * ``available`` ' *cmake.out*
+
+First Level
+***********
+The first level of subsets of ``make check`` are described below:
+
+.. list-table::
+
+   * - Command
+     - Description
+   * - ``make check_introduction``
+     - the :ref:`Introduction-name` functions
+   * - ``make check_example``
+     - the normal :ref:`example<list_all_examples-name>` functions plus some deprecated
+       examples.
+   * - ``make check_test_more``
+     - correctness tests that are not examples
+   * - ``make check_speed``
+     - correctness for single thread :ref:`speed-name` tests
+   * - ``make check_cppad_ipopt``
+     - the deprecated :ref:`cppad_ipopt_nlp-name` speed and correctness tests
+
+Note that ``make check_example_multi_thread`` is used for the
+:ref:`multi-threading<multi_thread-name>` speed tests.
+
+{xrst_end cmake_check}

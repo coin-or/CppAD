@@ -1,0 +1,20 @@
+lines 7-24 of file: example/sparse/rc_sparsity.cpp
+
+{xrst_begin rc_sparsity.cpp}
+
+Preferred Sparsity Patterns: Row and Column Indices: Example and Test
+#####################################################################
+
+Purpose
+*******
+This example show how to use row and column index sparsity patterns
+:ref:`sparse_rc-name` to compute sparse Jacobians and Hessians.
+This became the preferred way to represent sparsity on
+:ref:`2017-02-09<whats_new_17@mm-dd@02-09>` .
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end rc_sparsity.cpp}

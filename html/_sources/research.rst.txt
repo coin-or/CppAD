@@ -1,0 +1,112 @@
+lines 6-115 of file: xrst/theory/research.xrst
+
+{xrst_begin research}
+{xrst_spell
+   approximations
+   distributive
+   kasper
+   kristensen
+   py
+   subgraphs
+   symmertic
+}
+
+Research and Software Engineering Projects Related to CppAD
+###########################################################
+
+See Also
+********
+:ref:`wish_list-name`
+
+Purpose
+*******
+This is a list of research topics,
+and software engineering projects, related to CppAD.
+If you know of published results for any of the research topics,
+please contact the project manage
+so a link to the answer can be added to the CppAD documentation.
+
+Abs-Normal Form
+***************
+`Abs-normal <https://arxiv.org/abs/1701.00753>`_ forms are
+recent advent in AD and algorithms related to it are an important
+research topic.
+The CppAD :ref:`abs_normal_fun-name` routine enables one to create approximations
+for non-smooth functions that have higher than first order accuracy.
+This opens the question of designing algorithms to take advantage of this.
+
+Atomic Functions
+****************
+Mathematical formulas for, and implementation of,
+:ref:`atomic functions<atomic_two-name>`
+that make AD faster and or conserve on memory for special cases; e.g.,
+special functions, sparse matrix operations.
+
+Dynamic Parameters
+******************
+CppAD provides for :ref:`dynamic parameters<new_dynamic-name>`
+in a unique way (they can depend on other dynamic parameters).
+This opens the question of techniques that take advantage of this.
+For example, see :ref:`base2ad.cpp-name` which uses this feature.
+
+Multi-Threading
+***************
+Interesting algorithms and implementations that take advantage of
+the CppAD :ref:`multi threading<multi_thread-name>` capability.
+
+Optimization
+************
+There is no paper describing
+the CppAD :ref:`optimization<optimize-name>` of a computational graph.
+In particular, the optimization of
+:ref:`conditional expressions<condexp-name>` is not well understood.
+In addition, possible improvements to the optimization would be welcome.
+For example, detecting places where the distributive law can be
+used to reduce two multiplies and one addition to one multiply and
+two additions.
+
+Scripting Language
+******************
+It would be useful to make :ref:`addon-name` packages that
+connect CppAD to a scripting languages.
+The package
+`cppad_swig <https://bradbell.github.io/cppad_py>`_
+demonstrate how one could use swig to do this and
+`cppad_py <https://bradbell.github.io/cppad_py>`_
+is a preliminary version of such a connection to Python.
+
+Sparsity
+********
+
+Sparsity Patterns
+=================
+There are forward, reverse and subgraph methods for computing a
+:ref:`sparsity_pattern-name` .
+It is unclear which is better for which cases.
+
+Coloring Problem
+================
+Given the
+:ref:`glossary@Sparsity Pattern` for a Jacobian or Hessian,
+a graph coloring algorithm is used to determine which row or columns
+can be evaluated at the same time; see
+`color_general.hpp <https://github.com/coin-or/CppAD/blob/master/cppad/local/color_general.hpp>`_
+and
+`color_symmertic.hpp <https://github.com/coin-or/CppAD/blob/master/cppad/local/color_symmetric.hpp>`_.
+
+Subgraphs
+=========
+The :ref:`subgraph_jac_rev-name` method use subgraphs to compute sparsity patterns
+and to evaluate sparse derivatives.
+This is a new technique that should be written up.
+It was invented by
+Kasper Kristensen, DTU Technical University of Denmark.
+See the :ref:`wish_list@Subgraph` wish list items.
+
+Speed
+*****
+CppAD provides for some :ref:`speed-name` comparisons between
+different AD packages.
+These comparisons could be improved, extended, and written up.
+
+{xrst_end research}

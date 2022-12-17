@@ -1,0 +1,48 @@
+lines 11-56 of file: include/cppad/core/var2par.hpp
+
+{xrst_begin Var2Par}
+
+Convert an AD Variable or Dynamic Parameter to a Constant
+#########################################################
+
+Syntax
+******
+*y* = ``Var2Par`` ( *x* )
+
+See Also
+********
+:ref:`value-name`
+
+Purpose
+*******
+Returns a
+:ref:`constant parameter<glossary@Parameter@Constant>` *y*
+with the same value as *x* .
+
+x
+*
+The argument *x* has prototype
+
+   ``const AD<`` *Base* > & ``x``
+
+The argument *x* may be a
+variable, dynamic parameter, or constant parameter.
+
+y
+*
+The result *y* has prototype
+
+   ``AD<`` *Base* > & ``y``
+
+and is a constant parameter.
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/var2par.cpp
+}
+The file
+:ref:`var2par.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end Var2Par}

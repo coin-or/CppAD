@@ -1,0 +1,583 @@
+lines 6-586 of file: xrst/appendix/whats_new/18.xrst
+
+{xrst_begin whats_new_18}
+{xrst_spell
+   enums
+   in in
+   iterated
+   kasper
+   kristensen
+   mingw
+   operands
+   specifiers
+   tmb
+   uninstalled
+   valgrind
+   wconversion
+   wfloat
+}
+
+Changes and Additions to CppAD During 2018
+##########################################
+
+mm-dd
+*****
+
+12-30
+=====
+On :ref:`whats_new_18@mm-dd@12-12` the directory
+``cppad`` was moved to ``include/cppad`` .
+The ``make install`` step of the
+:ref:`install-name` instructions did not work after that.
+This has been fixed.
+
+12-23
+=====
+The documentation for how to run
+``multi_atomic_two`` was missing.
+This has been fixed.
+
+12-17
+=====
+Keep the documentation for :ref:`deprecated-name` features,
+but remove their examples.
+The documentation is intended to help conversion
+to using features that have not been deprecated.
+
+12-16
+=====
+Add ``bin/check_tab.sh`` and remove some remaining tab characters
+that it found in the CppAD source code.
+
+12-15
+=====
+Fix name for special version of ``cmake`` required by
+:ref:`cmake@CMake Command@msys2` ,
+``mingw-w64-x86_64-cmake`` .
+
+12-12
+=====
+
+#. Change tabs to spaces in both the source code and the examples.
+#. The ``inline`` specifiers was removed from template functions
+   and class member functions in both the source code and examples; see
+   the ``inline`` entry in the
+   :ref:`wish_list<wish_list@cppad_lib@inline>` .
+#. In the documentation and examples change the ``Vector`` *Type*
+   to *Type* ``Vector`` for *Type* denoting various types; e.g.,
+   ``Bool`` , ``Size`` , ``Double`` , ...
+#. Change the :ref:`license-name` to be ``EPL-2.0``
+   with a ``GPL-2.0`` or later alternative
+   (so one version of the source code can be used for both EPL
+   and GPL licenses).
+#. Change :math:`B^n` to :math:`\B{R}^n` when referring to the vector
+   space that :ref:`ADFun-name` object refer to.
+   (Note that this may not be real vectors; e.g., :ref:`base_complex.hpp-name` .)
+#. Move the ``cppad`` sub-directory to ``include/cppad`` .
+#. Add a checkpoint constructor item to the wish list.
+   This has been completed; see the
+   :ref:`chkpoint_two_ctor@fun` argument to the
+   second generation checkpoint constructor.
+
+11-13
+=====
+
+#. There was a problem using
+   :ref:`elapsed_seconds-name` with the Microsoft Visual Studio compiler.
+   To be specific, ``microsoft_timer`` could be an undefined external.
+   This has been fixed.
+#. The ``# define NOMINMAX`` command was placed before
+   ``# include <windows.h>``
+   so that ``std::min`` and ``std::max`` work properly.
+   (This only matters when using the Visual Studio compiler.)
+#. For some unknown reason, the Microsoft Visual Studio compiler
+   was giving a senseless error at the variable name ``small`` .
+   This has been changed to ``eps`` in :ref:`interface2c.cpp-name` .
+#. The deprecated :ref:`cmake@CMake Command@autotools`
+   was fixed to work with the current version of CppAD.
+#. Fix a warning in ``test_more/cppad_for_tmb/multi_atomic_two.cpp``
+   when using boost vectors for testing.
+
+11-11
+=====
+Fix a warning in ``test_more/cppad_for_tmb/multi_chkpoint_one.cpp``
+when using boost vectors for testing.
+
+11-06
+=====
+The initial
+:ref:`size_order-name` is now zero for an :ref:`base2ad@af` created using
+the ``base2ad`` feature.
+
+11-04
+=====
+
+#. The :ref:`cmake@CMake Command@Simple` version of the cmake command
+   is now suggested as a starting point installing CppAD.
+#. The windows install procedure has been fixed; see
+   :ref:`cmake@CMake Command@msys2` and
+   :ref:`cmake@CMake Command@Visual Studio` .
+#. The Visual Studio compiler gave a warning because the
+   ``get_record_compare`` (not in use API)
+   was returning ``size_t`` when
+   it should have returned a ``bool`` .
+   It also gave a warning in ``test_more/general/erf.cpp``
+   about conversion from ``double`` to ``size_t`` .
+   These have been fixed.
+#. The Visual Studio compiler also gave an error because it requires
+   the :ref:`ADFun-name` copy constructor for assignment to
+   a :ref:`base2ad-name` result.
+   This copy constructor has been allowed (but only for this case).
+#. The Visual Studio compiler does not seem to be able to mix
+   debug and release code. One of the tests had to be modified
+   enable the user to avoid this; see
+   :ref:`cmake@CMake Command@Visual Studio` .
+
+11-01
+=====
+There was a bug in the
+:ref:`checkpoint<chkpoint_one-name>` functions with multiple threads
+(see :ref:`whats_new_18@mm-dd@10-29` below).
+This has been fixed.
+
+10-31
+=====
+
+#. The items in the :ref:`wish_list-name` were re-organized
+   so that the New Atomic API entries
+   were all under one heading.
+#. A credit to Kasper Kristensen was added to the
+   :ref:`subgraph<research@Sparsity@Subgraphs>` research item.
+
+10-29
+=====
+The following is a list of changes to the documentation:
+
+#. The :ref:`theory-name` section was moved
+   to a higher level in the documentation and the
+   :ref:`introduction-name` we put in that section.
+#. The :ref:`wish_list-name` section was brought up to date
+   and the :ref:`research-name` section was added.
+#. Some of the links to the CppAD :ref:`addons<addon-name>` section were broken.
+   This has been fixed.
+#. The wish list entries for the following items were removed
+   because they were completed:
+   :ref:`base2ad-name` ,
+   :ref:`checkpoint<chkpoint_one-name>` functions now work with
+   :ref:`multiple threads<multi_thread-name>` ,
+   the :ref:`optimize-name` memory usage has been reduced.
+#. The operations sequence wish list entry was changed to
+   the Constant entry which has since been completed; see
+   :ref:`con_dyn_var@Constant` .
+   The software guidelines entry was changed to just
+   Convert Tabs to Spaces.
+
+10-25
+=====
+
+#. There was bug in :ref:`f.optimize<optimize-name>`
+   when *f* has :ref:`dynamic parameters<new_dynamic-name>` .
+   This has been fixed.
+#. Fix warning, from old ``gcc`` compilers, that
+   ``-Wfloat-conversion`` and ``-Wfloat-conversion``
+   are not valid options.
+#. Instructions for obtaining GPL distribution were added near the
+   top of the :ref:`home page<CppAD-name>` .
+
+10-24
+=====
+The new :ref:`CppAD-name` home pages has been edited to be a better
+introduction to CppAD.
+In addition, more discussion was added to the :ref:`get_started.cpp-name`
+example.
+
+10-19
+=====
+The speed tests for the deprecated
+:ref:`cppad_ipopt_nlp-name` now use the
+:ref:`cmake@cppad_debug_which` flag
+in the same was as other test
+(not always true).
+
+10-18
+=====
+CppAD is now including the ``-Wconversion`` in its compilation.
+This results in warnings in more of the optional packages and so
+their include files are compiled like system files (without warnings);
+see :ref:`cmake@package_prefix` .
+
+09-25
+=====
+Functions *af* ,
+created by :ref:`af = f.base2ad<base2ad-name>` ,
+could not use :ref:`af.Jacobian<Jacobian-name>` .
+This has been fixed.
+
+09-23
+=====
+The :ref:`checkpoint<chkpoint_one-name>` functions did not work with functions that
+were created using :ref:`base2ad-name` .
+This has been fixed.
+
+09-22
+=====
+There was a bug in the :ref:`checkpoint<chkpoint_one-name>` function when they
+were used in :ref:`in parallel mode<ta_parallel_setup-name>` .
+The :ref:`multi_chkpoint_one.cpp-name` example was added
+to test this and demonstrate use of checkpoints in parallel mode.
+
+09-19
+=====
+Add the :ref:`base2ad-name` capability.
+This creates a function that computes using ``AD<`` *Base* >
+objects from one that computes using *Base* objects.
+This enables one to record any derivatives computations as part of another
+function and thereby removes the need for
+:ref:`multiple levels of AD<mul_level-name>` .
+For example, compare :ref:`base2ad.cpp-name`
+with :ref:`mul_level_ode.cpp-name` .
+
+09-17
+=====
+Create a section with just the
+:ref:`atomic_two-name` specifications
+and another with the :ref:`atomic examples<atomic_two_example-name>` .
+
+09-16
+=====
+The ``taylor_ode.cpp`` example was moved to :ref:`taylor_ode.cpp-name`
+and changed to use the same notation as :ref:`taylor_ode-name` .
+
+09-15
+=====
+
+#. Add a :ref:`fun_construct@Assignment Operator@Move Semantics`
+   version of the function assignment operator.
+#. Move AD theory for using Taylor's method to solve an ode to the separate
+   section :ref:`taylor_ode-name` .
+
+08-27
+=====
+
+#. Add a discussion about
+   :ref:`Independent@dynamic@Efficiency` for dynamic parameters.
+#. In a comment in the :ref:`new_dynamic.cpp-name` example,
+   change 'independent dynamic parameters' to 'dynamic parameter'.
+#. The :ref:`cppad_eigen.hpp@eigen_vector` class was moved
+   out of the global namespace to the CppAD namespace.
+   This class was recently introduced (:ref:`whats_new_18@mm-dd@08-12` )
+   and so this change to the API should be easy to fix in user code.
+
+08-19
+=====
+
+#. Fix dynamic parameter arguments to
+   :ref:`discrete-name` functions.
+#. Fix some detection of identically zero and one
+   for dynamic parameters.
+#. Fix an access of invalid memory during :ref:`new_dynamic-name` .
+#. Add optimization of dynamic parameters during :ref:`f.optimize<optimize-name>` .
+
+08-18
+=====
+
+#. Fix some remaining clang warnings.
+#. Fix :ref:`Integer-name` and :ref:`unary minus<unary_minus-name>` for
+   :ref:`glossary@Parameter@Dynamic` parameters.
+
+08-17
+=====
+Fix :ref:`compound assignment<compound_assign-name>` operators
+where left operand is a
+:ref:`glossary@Parameter@Constant` parameter
+and right operand is a
+:ref:`glossary@Parameter@Dynamic` parameter.
+
+08-16
+=====
+Fix :ref:`compound assignment<compound_assign-name>` operators
+where left operand is a
+:ref:`glossary@Parameter@Dynamic` parameter.
+and right operand is a
+:ref:`glossary@Variable` .
+
+08-14
+=====
+Fix :ref:`compound assignment<compound_assign-name>` operators
+where both operands are parameters and one is a
+:ref:`glossary@Parameter@Dynamic` parameter.
+
+08-13
+=====
+Fix conversion warnings generated by the
+version 6.0 of the ``clang++`` compiler.
+
+08-12
+=====
+Add the :ref:`cppad_eigen.hpp@eigen_vector`
+wrapper class so that an ``eigen_vector`` is a true
+:ref:`SimpleVector-name` ; i.e., it using ``size_t``
+instead of ``Eigen::Index`` for its sizes and indices.
+
+08-10
+=====
+Extend the CppAD vector class to enable
+:ref:`CppAD_vector@Element Access`
+using any index type that has a conversion to the type ``size_t`` .
+
+08-08
+=====
+
+#. Fix a bug in the ``CppAD::local::pod_vector`` template class
+   (not part of the user API) that wasted memory.
+   This bug was part of the :ref:`whats_new_18@mm-dd@06-04` change this year.
+#. Fix very recent bug in the optimization of dynamic parameters
+   in :ref:`PrintFor-name` statements.
+#. Fix some ``valgrind`` warnings about use of values that have
+   not be initialized or set.
+#. Suppress printing of :ref:`PrintFor-name` operations
+   during the :ref:`optimize-name` process.
+
+08-05
+=====
+The amount of memory in an operation sequence has changed; see
+:ref:`f.size_op_seq<fun_property@size_op_seq>` .
+
+08-04
+=====
+Remove the restrictions on dynamic parameters.
+They can now be used anywhere except as indices and values in
+VecAD vectors.
+(This was fixed on :ref:`2019-01-06<whats_new_20@mm-dd@01-06>` .)
+
+07-30
+=====
+
+#. The :ref:`con_dyn_var@Constant` function was added.
+#. :ref:`base_require@API Warning`
+   for uses who define there own *Base* type.
+   The function ``IdenticalPar`` was changed to
+   :ref:`base_identical@Identical@IdenticalCon`
+   and ``IdenticalEqualPar`` was change to
+   ``IdenticalEqualCon`` .
+   This was done because the value of
+   :ref:`glossary@Parameter@Dynamic` parameters can change.
+#. The some errors in the :ref:`pkgconfig-name` files
+   ``cppad.pc`` and ``cppad-uninstalled.pc`` were
+   corrected.
+
+07-27
+=====
+We are adding the dependent dynamic parameters; i.e.,
+parameters that depend on the independent
+:ref:`Independent@dynamic` parameters
+in a call to Independent.
+For this reason the function
+*f* . ``size_dynamic`` () has been replaced by
+:ref:`fun_property@size_dyn_ind` ,
+:ref:`fun_property@size_dyn_par` , and
+:ref:`fun_property@size_dyn_arg` .
+
+07-23
+=====
+Change the required version of :ref:`cmake-name` from greater than
+or equal 3.1 to greater than or equal 2.8.4.
+
+07-18
+=====
+Fix a bug (introduced on :ref:`whats_new_18@mm-dd@07-02` )
+in :ref:`optimize-name` routine when dynamic parameters are present.
+
+07-02
+=====
+Add a special type of parameter that can change value,
+see :ref:`new_dynamic@Purpose` for dynamic parameters.
+
+06-27
+=====
+Simplify the process in the :ref:`optimize-name` procedure
+where it recognizes identical expressions
+(and do more error checking of this process).
+This may speed up the optimization for large cases where
+multiple expressions have the same hash code.
+
+06-22
+=====
+Add an :ref:`wish_list@Abs-normal` wish list item.
+
+06-20
+=====
+Worked more on reducing memory and increasing the speed of the
+:ref:`optimization<optimize-name>` of ``ADFun<`` *Base* > objects.
+
+06-19
+=====
+Another (smaller) reduction in the amount of extra memory used during the
+:ref:`optimize-name` process.
+This time a vector of length
+:ref:`fun_property@size_op` was converted from the type
+used for C++ enums to a type that only used one byte.
+
+06-13
+=====
+Reduce the amount of extra memory used during the :ref:`optimize-name` process.
+To be more specific, two vectors that were separate now share the same memory.
+These vectors have size equal to
+:ref:`fun_property@size_op`
+for the old operation sequence, and element type
+:ref:`cmake@cppad_tape_addr_type` .
+
+06-12
+=====
+There was false sharing in the
+hash table used to detect identical parameter values during
+the recording of ``AD<`` *Base* > operations.
+This has been fixed and should result in a speed up when multiple
+threads are recording at the same time.
+
+06-04
+=====
+The memory used during
+:ref:`subgraph_reverse-name` , :ref:`subgraph_sparsity-name` , and
+:ref:`optimize-name` was changed to use the smallest addressing type possible
+for the tape in question.
+To be specific the smallest type from the set
+``unsigned short`` ,
+``unsigned int`` ,
+``size_t`` , in that order.
+
+05-29
+=====
+The :ref:`autotools-name` install procedure was not working since 05-26.
+This has been fixed.
+
+05-28
+=====
+
+#. The Coin download page is not longer supporting monthly version.
+   These versions are now supported by the
+   :ref:`download@Git`
+   download procedure.
+#. The windows install procedures have not been kept up to date
+   and so have been removed.
+   It has since been fixed; see
+   :ref:`cmake@CMake Command@msys2` and
+   :ref:`cmake@CMake Command@Visual Studio` .
+
+05-26
+=====
+Fix some warnings when testing with ``g++ -std=c++98`` .
+
+05-20
+=====
+
+#. The amount of memory used to store each operator was changed from
+   the size of an enum type to the size of an ``unsigned char`` ; i.e.,
+   one byte.
+   This changed ``CppAD::local::OpCode`` to
+   ``CPPAD_VEC_ENUM_TYPE`` in the expression used to compute
+   :ref:`size_op_arg<fun_property@size_op_seq>` .
+   Note ``CPPAD_VEC_ENUM_TYPE`` is not in CppAD API and may change.
+#. There was a bug in the call to ``optimize`` for the CppAD
+   :ref:`speed_cppad-name` tests.
+   To be specific ``no_print_for`` was corrected to
+   :ref:`no_prior_for_op<optimize@options@no_print_for_op>` .
+
+05-17
+=====
+The memory report for the CppAD matrix multiply speed test was changed
+to report the memory before clearing the atomic functions; see the end of
+:ref:`cppad_mat_mul.cpp-name` .
+
+05-04
+=====
+The comparison operations were changed on
+:ref:`2015-01-20<whats_new_15@mm-dd@01-20>` when the
+:ref:`Independent@abort_op_index` option was added.
+This change caused a slow down CppAD
+because the :ref:`compare-name` operators used to not be recorded when
+``NDEBUG`` was defined.
+The :ref:`Independent@record_compare` option has been
+added so that one can obtain this better performance
+(when one does not need  the :ref:`compare_change-name` function
+or the :ref:`Independent@abort_op_index` feature).
+
+05-03
+=====
+The following was merged in from the ``reduce_tape`` branch:
+A change was made in the way CppAD iterated over the operation sequence
+when subgraph operations were first added; see the heading
+:ref:`whats_new_17@mm-dd@11-20` in whats new for 2017.
+This caused CppAD to always use more memory for storing tapes.
+This has been fixed so this extra memory is only allocated when it is needed.
+In addition it can be freed; see
+:ref:`fun_property@size_random` and
+:ref:`subgraph_reverse@clear_subgraph` .
+In addition, this changed the amount of memory returned by
+:ref:`fun_property@size_op_seq` so that it
+no longer includes the part returned by ``size_random`` .
+
+04-29
+=====
+Change the :ref:`cppad_sparse_hessian.cpp-name` speed test to support the
+:ref:`speed_main@Sparsity Options@symmetric` option
+for sparsity calculations.
+This was added because, even though the symmetric sparsity patterns
+are more efficient, they seem to take longer to calculation
+and hence general sparsity patterns may be faster; see the sparse hessian
+:ref:`sparse_hessian@work@color_method` .
+
+04-13
+=====
+The :ref:`speed_cppad-name` tests were modified to report the
+amount of memory allocated at the end of each tests.
+This will aid in the reduction of CppAD memory usage.
+
+03-20
+=====
+Fix bug in :ref:`optimize-name` and :ref:`subgraph_sparsity-name`
+when using C++11 :ref:`erf-name` function.
+
+03-19
+=====
+Add more detail to the dynamic parameter whish list item.
+This item has been implemented and removed from the wish list; see
+:ref:`new_dynamic-name` .
+
+03-04
+=====
+The ``example/abs_normal`` directory was missing from the
+:ref:`example<directory@Example Directory>` sub-directory list.
+This has been fixed.
+
+03-02
+=====
+Add the :ref:`sparse_rcv@pat` member function to
+the ``sparse_rcv`` template class.
+
+02-27
+=====
+Documentation was added to state that the *work* structure for
+:ref:`sparse_jac<sparse_jac@work>` ( :ref:`sparse_hes<sparse_hes@work>` )
+can be used a different *f* and a different *subset*
+provided that Jacobian (Hessian) sparsity pattern for *f*
+and the sparsity pattern in *subset* are the same.
+
+02-26
+=====
+The routine :ref:`sparse2eigen-name` , added on 02-20, only worked
+when the values in the matrix were integers.
+This bug has been fixed.
+
+02-23
+=====
+The syntax for some of the :ref:`utility-name` files were missing the
+``# include`` command (or just the ``#`` in the include command);
+e.g., see the
+:ref:`set_union@Syntax` for the ``set_union`` utility.
+
+02-20
+=====
+Add the utility function :ref:`sparse2eigen-name` .
+
+{xrst_end whats_new_18}

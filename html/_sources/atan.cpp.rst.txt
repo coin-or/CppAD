@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/atan.cpp
+
+{xrst_begin atan.cpp}
+
+The AD atan Function: Example and Test
+######################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atan.cpp}

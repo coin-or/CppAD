@@ -1,0 +1,35 @@
+lines 1081-1113 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_hold_memory}
+
+Control When Thread Alloc Retains Memory For Future Use
+#######################################################
+
+Syntax
+******
+``thread_alloc::hold_memory`` ( *value* )
+
+Purpose
+*******
+It should be faster, even when *num_thread* is equal to one,
+for ``thread_alloc`` to hold onto memory.
+Calling *hold_memory* with *value* equal to true,
+instructs ``thread_alloc`` to hold onto memory,
+and put it in the :ref:`available<ta_available-name>` pool,
+after each call to :ref:`return_memory<ta_return_memory-name>` .
+
+value
+*****
+If *value* is true,
+``thread_alloc`` with hold onto memory for future quick use.
+If it is false, future calls to :ref:`return_memory<ta_return_memory-name>`
+will return the corresponding memory to the system.
+By default (when ``hold_memory`` has not been called)
+``thread_alloc`` does not hold onto memory.
+
+free_available
+**************
+Memory that is being held by ``thread_alloc`` can be returned
+to the system using :ref:`free_available<ta_free_available-name>` .
+
+{xrst_end ta_hold_memory}

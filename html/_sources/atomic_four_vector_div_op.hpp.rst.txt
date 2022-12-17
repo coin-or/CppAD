@@ -1,0 +1,30 @@
+lines 8-35 of file: include/cppad/example/atomic_four/vector/div_op.hpp
+
+{xrst_begin atomic_four_vector_div_op.hpp}
+
+Atomic Vector Divide Operator: Example Implementation
+#####################################################
+
+Forward Mode
+************
+see theory for forward mode
+:ref:`forward_theory@Binary Operators@Division` .
+
+Reverse Mode
+************
+see theory for reverse mode
+:ref:`reverse_theory@Binary Operators@Division` .
+
+Example
+*******
+The file :ref:`atomic_four_vector_div.cpp-name` contains an example
+and test for this operator.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_div_op.hpp}

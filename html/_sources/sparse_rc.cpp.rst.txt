@@ -1,0 +1,13 @@
+lines 7-17 of file: example/utility/sparse_rc.cpp
+
+{xrst_begin sparse_rc.cpp}
+
+sparse_rc: Example and Test
+###########################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end sparse_rc.cpp}

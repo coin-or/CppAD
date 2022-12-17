@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="whats_new_14, cppad, changes, and, additions, during, 2014" name="keywords" />
+<meta content="mm-dd" name="keywords" />
+<meta content="12-30" name="keywords" />
+<meta content="12-29" name="keywords" />
+<meta content="12-28" name="keywords" />
+<meta content="12-27" name="keywords" />
+<meta content="12-26" name="keywords" />
+<meta content="12-25" name="keywords" />
+<meta content="12-23" name="keywords" />
+<meta content="12-22" name="keywords" />
+<meta content="12-17" name="keywords" />
+<meta content="12-16" name="keywords" />
+<meta content="12-15" name="keywords" />
+<meta content="11-28" name="keywords" />
+<meta content="11-27" name="keywords" />
+<meta content="09-28" name="keywords" />
+<meta content="09-27" name="keywords" />
+<meta content="09-25" name="keywords" />
+<meta content="09-21" name="keywords" />
+<meta content="05-28" name="keywords" />
+<meta content="05-27" name="keywords" />
+<meta content="05-23" name="keywords" />
+<meta content="05-22" name="keywords" />
+<meta content="05-20" name="keywords" />
+<meta content="05-19" name="keywords" />
+<meta content="05-16" name="keywords" />
+<meta content="05-14" name="keywords" />
+<meta content="03-18" name="keywords" />
+<meta content="03-17" name="keywords" />
+<meta content="03-09" name="keywords" />
+<meta content="03-05" name="keywords" />
+<meta content="03-02" name="keywords" />
+<meta content="03-01" name="keywords" />
+<meta content="02-28" name="keywords" />
+<meta content="02-27" name="keywords" />
+<meta content="02-26" name="keywords" />
+<meta content="02-23" name="keywords" />
+<meta content="02-22" name="keywords" />
+<meta content="02-17" name="keywords" />
+<meta content="02-15" name="keywords" />
+<meta content="01-26" name="keywords" />
+<meta content="01-21" name="keywords" />
+<meta content="01-10" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whats_new_14 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="whats_new_13" href="whats_new_13.html" />
+    <link rel="prev" title="whats_new_15" href="whats_new_15.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="whats_new.html">whats_new</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="whats_new_22.html">whats_new_22</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_21.html">whats_new_21</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_20.html">whats_new_20</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_19.html">whats_new_19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_18.html">whats_new_18</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_17.html">whats_new_17</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_16.html">whats_new_16</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_15.html">whats_new_15</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">whats_new_14</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_13.html">whats_new_13</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_12.html">whats_new_12</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_11.html">whats_new_11</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_10.html">whats_new_10</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_09.html">whats_new_09</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_08.html">whats_new_08</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_07.html">whats_new_07</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_06.html">whats_new_06</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_05.html">whats_new_05</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_04.html">whats_new_04</a></li>
+<li class="toctree-l4"><a class="reference internal" href="whats_new_03.html">whats_new_03</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deprecated.html">deprecated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="whats_new.html">whats_new</a> &raquo;</li>
+      <li>whats_new_14</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/whats_new_14.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="whats-new-14">
+<span id="whats-new-14-name"></span><h1>whats_new_14<a class="headerlink" href="#whats-new-14" title="Permalink to this headline"></a></h1>
+<section id="cppad-changes-and-additions-during-2014">
+<span id="whats-new-14-title"></span><span id="index-0"></span><h2>CppAD Changes and Additions During 2014<a class="headerlink" href="#cppad-changes-and-additions-during-2014" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#mm-dd" id="id42">mm-dd</a></p>
+<ul>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-30" id="id43">12-30</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-29" id="id44">12-29</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-28" id="id45">12-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-27" id="id46">12-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-26" id="id47">12-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-25" id="id48">12-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-23" id="id49">12-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-22" id="id50">12-22</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-17" id="id51">12-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-16" id="id52">12-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-12-15" id="id53">12-15</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-11-28" id="id54">11-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-11-27" id="id55">11-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-09-28" id="id56">09-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-09-27" id="id57">09-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-09-25" id="id58">09-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-09-21" id="id59">09-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-28" id="id60">05-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-27" id="id61">05-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-23" id="id62">05-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-22" id="id63">05-22</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-20" id="id64">05-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-19" id="id65">05-19</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-16" id="id66">05-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-05-14" id="id67">05-14</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-03-18" id="id68">03-18</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-03-17" id="id69">03-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-03-09" id="id70">03-09</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-03-05" id="id71">03-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-03-02" id="id72">03-02</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-03-01" id="id73">03-01</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-28" id="id74">02-28</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-27" id="id75">02-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-26" id="id76">02-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-23" id="id77">02-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-22" id="id78">02-22</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-17" id="id79">02-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-02-15" id="id80">02-15</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-01-26" id="id81">01-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-01-21" id="id82">01-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-14-mm-dd-01-10" id="id83">01-10</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mm-dd">
+<span id="whats-new-14-mm-dd"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id42">mm-dd</a><a class="headerlink" href="#mm-dd" title="Permalink to this headline"></a></h3>
+<section id="whats-new-14-mm-dd-12-30">
+<span id="index-2"></span><span id="id1"></span><h4><a class="toc-backref" href="#id43">12-30</a><a class="headerlink" href="#whats-new-14-mm-dd-12-30" title="Permalink to this headline"></a></h4>
+<p>There was a bug in the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> whereby it would sometimes mistakenly
+exit with the error message</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cppad_max_num_threads</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">an</span> <span class="n">integer</span> <span class="n">greater</span> <span class="n">than</span> <span class="ow">or</span> <span class="n">equal</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>This has been fixed.</p>
+</section>
+<section id="whats-new-14-mm-dd-12-29">
+<span id="index-3"></span><span id="id2"></span><h4><a class="toc-backref" href="#id44">12-29</a><a class="headerlink" href="#whats-new-14-mm-dd-12-29" title="Permalink to this headline"></a></h4>
+<p>The example <code class="docutils literal notranslate"><span class="pre">not_complex_ad.cpp</span></code> was using the type</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::complex&lt;</span> <span class="pre">CppAD::AD&lt;double&gt;</span> <span class="pre">&gt;</span></code></p>
+</div></blockquote>
+<p>and was failing to compile with the <code class="docutils literal notranslate"><span class="pre">clang</span></code> complier.
+This example has been removed because it is not consistent with the
+C++ standard; see
+<a class="reference internal" href="Faq.html#faq-complex-types"><span class="std std-ref">complex FAQ</span></a> .</p>
+</section>
+<section id="whats-new-14-mm-dd-12-28">
+<span id="index-4"></span><span id="id3"></span><h4><a class="toc-backref" href="#id45">12-28</a><a class="headerlink" href="#whats-new-14-mm-dd-12-28" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Fix some warnings generated by clang 3.5 about local functions
+that were not being used; e.g., sub-tests that were not being executed.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">cmake</span></code> setting
+<code class="docutils literal notranslate"><span class="pre">cppad_implicit_ctor_from_any_type</span></code>
+Note that this cmake option has since been replaced by
+<code class="docutils literal notranslate"><span class="pre">cppad_deprecated</span></code> option.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">clang++</span></code> compiler was optimizing out the calculations
+in the <a class="reference internal" href="time_test.cpp.html#time-test-cpp-name"><span class="std std-ref">time_test.cpp</span></a> and <a class="reference internal" href="speed_test.cpp.html#speed-test-cpp-name"><span class="std std-ref">speed_test.cpp</span></a> examples.
+This caused these tests to hang while trying to determine how
+many times to repeat the test.
+This has been fixed.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-12-27">
+<span id="index-5"></span><span id="id4"></span><h4><a class="toc-backref" href="#id46">12-27</a><a class="headerlink" href="#whats-new-14-mm-dd-12-27" title="Permalink to this headline"></a></h4>
+<p>More work on the bug in
+<a class="reference internal" href="CondExp.html#condexp-optimize"><span class="std std-ref">optimizing</span></a>
+conditional expressions.</p>
+</section>
+<section id="whats-new-14-mm-dd-12-26">
+<span id="index-6"></span><span id="id5"></span><h4><a class="toc-backref" href="#id47">12-26</a><a class="headerlink" href="#whats-new-14-mm-dd-12-26" title="Permalink to this headline"></a></h4>
+<p>A minimal example for computing cross terms in atomic operation
+Hessian sparsity patterns <code class="docutils literal notranslate"><span class="pre">atomic_two_rev_sparse_hes.cpp</span></code> was added.</p>
+</section>
+<section id="whats-new-14-mm-dd-12-25">
+<span id="index-7"></span><span id="id6"></span><h4><a class="toc-backref" href="#id48">12-25</a><a class="headerlink" href="#whats-new-14-mm-dd-12-25" title="Permalink to this headline"></a></h4>
+<p>More work on the bug in
+<a class="reference internal" href="CondExp.html#condexp-optimize"><span class="std std-ref">optimizing</span></a>
+conditional expressions.</p>
+</section>
+<section id="whats-new-14-mm-dd-12-23">
+<span id="index-8"></span><span id="id7"></span><h4><a class="toc-backref" href="#id49">12-23</a><a class="headerlink" href="#whats-new-14-mm-dd-12-23" title="Permalink to this headline"></a></h4>
+<p>The c++11 standard includes the error function <a class="reference internal" href="erf.html#erf-name"><span class="std std-ref">erf</span></a> in
+<code class="docutils literal notranslate"><span class="pre">cmath</span></code> .
+If the c++ compiler has the error function defined in <code class="docutils literal notranslate"><span class="pre">cmath</span></code> ,
+the complier version of the error function is used and it corresponds to an
+atomic operation.</p>
+<p>Fix typo in tangent reverse mode theory for
+<a class="reference internal" href="tan_reverse.html#tan-reverse-positive-orders-z-t"><span class="std std-ref">Positive Orders</span></a> .</p>
+</section>
+<section id="whats-new-14-mm-dd-12-22">
+<span id="index-9"></span><span id="id8"></span><h4><a class="toc-backref" href="#id50">12-22</a><a class="headerlink" href="#whats-new-14-mm-dd-12-22" title="Permalink to this headline"></a></h4>
+<p>There was a bug related to
+<a class="reference internal" href="CondExp.html#condexp-optimize"><span class="std std-ref">optimizing</span></a>
+conditional expressions.
+This has been fixed.</p>
+</section>
+<section id="whats-new-14-mm-dd-12-17">
+<span id="index-10"></span><span id="id9"></span><h4><a class="toc-backref" href="#id51">12-17</a><a class="headerlink" href="#whats-new-14-mm-dd-12-17" title="Permalink to this headline"></a></h4>
+<p>Fix some compiler warnings and <a class="reference internal" href="speed.html#speed-name"><span class="std std-ref">speed</span></a> program names
+when using the deprecated <a class="reference internal" href="autotools.html#autotools-name"><span class="std std-ref">autotools</span></a> install procedure.</p>
+</section>
+<section id="whats-new-14-mm-dd-12-16">
+<span id="index-11"></span><span id="id10"></span><h4><a class="toc-backref" href="#id52">12-16</a><a class="headerlink" href="#whats-new-14-mm-dd-12-16" title="Permalink to this headline"></a></h4>
+<p>If the <code class="docutils literal notranslate"><span class="pre">c++11</span></code> include file <code class="docutils literal notranslate"><span class="pre">&lt;cstdint&gt;</span></code>
+defines all the standard types, they can be used by to specify
+<a class="reference internal" href="cmake.html#cmake-cppad-tape-addr-type-cstdint"><span class="std std-ref">cppad_tape_addr_type</span></a> and
+<a class="reference internal" href="cmake.html#cmake-cppad-tape-id-type-cstdint"><span class="std std-ref">cppad_tape_id_type</span></a> .</p>
+</section>
+<section id="whats-new-14-mm-dd-12-15">
+<span id="index-12"></span><span id="id11"></span><h4><a class="toc-backref" href="#id53">12-15</a><a class="headerlink" href="#whats-new-14-mm-dd-12-15" title="Permalink to this headline"></a></h4>
+<p>Correct the title and index entries for <a class="reference internal" href="forward_two.html#forward-two-name"><span class="std std-ref">forward_two</span></a>
+from first to second order.</p>
+</section>
+<section id="whats-new-14-mm-dd-11-28">
+<span id="index-13"></span><span id="id12"></span><h4><a class="toc-backref" href="#id54">11-28</a><a class="headerlink" href="#whats-new-14-mm-dd-11-28" title="Permalink to this headline"></a></h4>
+<p>Improve the index and <code class="docutils literal notranslate"><span class="pre">search</span></code> using
+a new version of the <code class="docutils literal notranslate"><span class="pre">omhelp</span></code> documentation tool.</p>
+</section>
+<section id="whats-new-14-mm-dd-11-27">
+<span id="index-14"></span><span id="id13"></span><h4><a class="toc-backref" href="#id55">11-27</a><a class="headerlink" href="#whats-new-14-mm-dd-11-27" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Add alignment to the
+<a class="reference internal" href="ta_get_memory.html#ta-get-memory-alignment"><span class="std std-ref">get_memory</span></a> and
+<a class="reference internal" href="ta_create_array.html#ta-create-array-alignment"><span class="std std-ref">create_array</span></a> specifications
+and
+<a class="reference internal" href="thread_alloc.cpp.html#thread-alloc-cpp-name"><span class="std std-ref">thread_alloc example</span></a> .</p></li>
+<li><p>Advance the deprecated <a class="reference internal" href="autotools.html#autotools-name"><span class="std std-ref">unix install</span></a> utilities to
+autoconf-2.69 and automake-1.13.4.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-09-28">
+<span id="index-15"></span><span id="id14"></span><h4><a class="toc-backref" href="#id56">09-28</a><a class="headerlink" href="#whats-new-14-mm-dd-09-28" title="Permalink to this headline"></a></h4>
+<p>Fix more bugs related to optimizing condition conditional expressions.</p>
+<ol class="arabic simple">
+<li><p>Using old instead of new operator indices.</p></li>
+<li><p>Not properly following dependence back through atomic operations.</p></li>
+<li><p>Aborting during forward order zero, when skipping computation for a variable
+that was already completed (the skip is still useful for higher orders
+and for reverse mode).</p></li>
+<li><p>Reverse mode not properly handling the variable number of arguments in the
+conditional skip operation.</p></li>
+<li><p>Reverse mode tracing not properly handling the variable number
+of argument operations; i.e., conditional skip and cumulative summation.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-09-27">
+<span id="index-16"></span><span id="id15"></span><h4><a class="toc-backref" href="#id57">09-27</a><a class="headerlink" href="#whats-new-14-mm-dd-09-27" title="Permalink to this headline"></a></h4>
+<p>Fix a bug that occurred when
+<a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">f.optimize</span></a> was used with a function <em>f</em>
+that contained calls to user defined <a class="reference internal" href="atomic.html#atomic-name"><span class="std std-ref">atomic</span></a> operations
+and <a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">conditional expressions</span></a> .</p>
+</section>
+<section id="whats-new-14-mm-dd-09-25">
+<span id="index-17"></span><span id="id16"></span><h4><a class="toc-backref" href="#id58">09-25</a><a class="headerlink" href="#whats-new-14-mm-dd-09-25" title="Permalink to this headline"></a></h4>
+<p>Fix a bug that occurred when
+<a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">f.optimize</span></a> was used with a function <em>f</em>
+that contained <a class="reference internal" href="Discrete.html#discrete-name"><span class="std std-ref">Discrete</span></a> functions.</p>
+</section>
+<section id="whats-new-14-mm-dd-09-21">
+<span id="index-18"></span><span id="id17"></span><h4><a class="toc-backref" href="#id59">09-21</a><a class="headerlink" href="#whats-new-14-mm-dd-09-21" title="Permalink to this headline"></a></h4>
+<p>Fix a typo in documentation for
+<a class="reference internal" href="reverse_any.html#reverse-any-name"><span class="std std-ref">any order reverse</span></a> .
+To be specific, <span class="math notranslate nohighlight">\(x^{(k)}\)</span> was changed to be <span class="math notranslate nohighlight">\(u^{(k)}\)</span>.</p>
+</section>
+<section id="whats-new-14-mm-dd-05-28">
+<span id="index-19"></span><span id="id18"></span><h4><a class="toc-backref" href="#id60">05-28</a><a class="headerlink" href="#whats-new-14-mm-dd-05-28" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Change the <a class="reference internal" href="speed_main.html#speed-main-sparsity-options-boolsparsity"><span class="std std-ref">boolsparsity</span></a>
+so that it only affects the sparsity speed tests
+<a class="reference internal" href="link_sparse_jacobian.html#link-sparse-jacobian-name"><span class="std std-ref">sparse_jacobian</span></a> and
+<a class="reference internal" href="link_sparse_hessian.html#link-sparse-hessian-name"><span class="std std-ref">sparse_hessian</span></a> ;
+i.e., it is now ignored by the other tests.</p></li>
+<li><p>Improve the <a class="reference internal" href="speed.html#speed-name"><span class="std std-ref">speed</span></a> documentation page.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-05-27">
+<span id="index-20"></span><span id="id19"></span><h4><a class="toc-backref" href="#id61">05-27</a><a class="headerlink" href="#whats-new-14-mm-dd-05-27" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">cppad_colpack.cpp</span></code>
+file was not being copied to the specified directory.
+In addition, the specified directory was changed from an include
+directory to data directory because
+<code class="docutils literal notranslate"><span class="pre">cppad_colpack.cpp</span></code> is not an include file.</p></li>
+<li><p>If <a class="reference internal" href="colpack_prefix.html#colpack-prefix-name"><span class="std std-ref">colpack_prefix</span></a>  was specified, the CppAD
+<a class="reference internal" href="pkgconfig.html#pkgconfig-name"><span class="std std-ref">pkgconfig</span></a> file was missing some information.
+This has been fixed.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-05-23">
+<span id="index-21"></span><span id="id20"></span><h4><a class="toc-backref" href="#id62">05-23</a><a class="headerlink" href="#whats-new-14-mm-dd-05-23" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="speed.html#speed-name"><span class="std std-ref">speed</span></a> test instructions were converted from using
+the old autotools <a class="reference internal" href="autotools.html#autotools-name"><span class="std std-ref">unix install</span></a> instructions
+to use the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> install instructions.
+These instructions should work on any system, not just unix.</p>
+</section>
+<section id="whats-new-14-mm-dd-05-22">
+<span id="index-22"></span><span id="id21"></span><h4><a class="toc-backref" href="#id63">05-22</a><a class="headerlink" href="#whats-new-14-mm-dd-05-22" title="Permalink to this headline"></a></h4>
+<ol class="arabic">
+<li><p>Add multiple direction for mode
+<a class="reference internal" href="forward_dir.html#forward-dir-name"><span class="std std-ref">forward_dir</span></a> and use it to speed up the forward
+version of <a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-name"><span class="std std-ref">sparse_jacobian</span></a> .
+Below is an example run of <a class="reference internal" href="cppad_sparse_jacobian.cpp.html#cppad-sparse-jacobian-cpp-name"><span class="std std-ref">cppad_sparse_jacobian.cpp</span></a> results
+before this change:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cppad_sparse_jacobian_size</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1600</span><span class="p">,</span> <span class="mi">2500</span> <span class="p">]</span>
+<span class="n">cppad_sparse_jacobian_rate</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">2973</span><span class="p">,</span> <span class="mf">431.94</span><span class="p">,</span> <span class="mf">142.25</span><span class="p">,</span> <span class="mf">78.64</span><span class="p">,</span> <span class="mf">26.87</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>and after this change:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cppad_sparse_jacobian_size</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1600</span><span class="p">,</span> <span class="mi">2500</span> <span class="p">]</span>
+<span class="n">cppad_sparse_jacobian_rate</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">6389</span><span class="p">,</span> <span class="mf">954.26</span><span class="p">,</span> <span class="mf">314.04</span><span class="p">,</span> <span class="mf">180.06</span><span class="p">,</span> <span class="mf">56.95</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Due to the success of this change,
+<code class="docutils literal notranslate"><span class="pre">multiple</span> <span class="pre">direction</span></code> items were added to the wish list
+(they were later removed).</p>
+</li>
+<li><p>Improve the  forward mode tracing of arguments to,
+and results from, user defined <a class="reference internal" href="atomic.html#atomic-name"><span class="std std-ref">atomic</span></a> operations.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-05-20">
+<span id="index-23"></span><span id="id22"></span><h4><a class="toc-backref" href="#id64">05-20</a><a class="headerlink" href="#whats-new-14-mm-dd-05-20" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">speed/adolc/alloc_mat.hpp</span></code> to
+<code class="docutils literal notranslate"><span class="pre">speed/adolc/adolc_alloc_mat.hpp</span></code> so it has the
+same name is its <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">ifndef</span></code> command.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">ifndef</span></code> command in
+<code class="docutils literal notranslate"><span class="pre">cppad/ipopt/solve_callback.hpp</span></code> .</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">ifndef</span></code> command to <code class="docutils literal notranslate"><span class="pre">test_more/extern_value.hpp</span></code> .</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-05-19">
+<span id="index-24"></span><span id="id23"></span><h4><a class="toc-backref" href="#id65">05-19</a><a class="headerlink" href="#whats-new-14-mm-dd-05-19" title="Permalink to this headline"></a></h4>
+<p>In the files
+<code class="docutils literal notranslate"><span class="pre">cppad/local/asin_op.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">cppad/local/acos_op.hpp</span></code>
+there were assignments of the form <code class="docutils literal notranslate"><span class="pre">uj</span> <span class="pre">=</span> <span class="pre">0.</span></code> where <code class="docutils literal notranslate"><span class="pre">u_j</span></code>
+has type <a class="reference internal" href="glossary.html#glossary-base-type"><span class="std std-ref">Base</span></a> .
+These may have not be defined operations in certain cases and
+have been converted to <code class="docutils literal notranslate"><span class="pre">uj</span> <span class="pre">=</span> <span class="pre">Base(0)</span></code> .</p>
+</section>
+<section id="whats-new-14-mm-dd-05-16">
+<span id="index-25"></span><span id="id24"></span><h4><a class="toc-backref" href="#id66">05-16</a><a class="headerlink" href="#whats-new-14-mm-dd-05-16" title="Permalink to this headline"></a></h4>
+<p>There was a mistake in printing the arguments for
+<code class="docutils literal notranslate"><span class="pre">CSumOp</span></code> and <code class="docutils literal notranslate"><span class="pre">CSkipOp</span></code> when using the undocumented
+<code class="docutils literal notranslate"><span class="pre">TRACE</span></code> option during forward mode (available in files of the form
+<code class="docutils literal notranslate"><span class="pre">include/cppad/local/</span></code> * <code class="docutils literal notranslate"><span class="pre">sweep.hpp/</span></code> ).
+This has been fixed.</p>
+</section>
+<section id="whats-new-14-mm-dd-05-14">
+<span id="index-26"></span><span id="id25"></span><h4><a class="toc-backref" href="#id67">05-14</a><a class="headerlink" href="#whats-new-14-mm-dd-05-14" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>There were some global variables in the file
+<code class="docutils literal notranslate"><span class="pre">cppad/local/op_code.hpp</span></code> that might have caused multiple definitions
+during link time for CppAD applications.
+These variables have been changed to be local so that this cannot happen.</p></li>
+<li><p>There was a mistaken assert that the number of arguments for the
+<code class="docutils literal notranslate"><span class="pre">BeginOp</span></code> was zero that caused an abort when using the undocumented
+<code class="docutils literal notranslate"><span class="pre">TRACE</span></code> option available in files of the form
+<code class="docutils literal notranslate"><span class="pre">include/cppad/local/</span></code> * <code class="docutils literal notranslate"><span class="pre">sweep.hpp/</span></code> .
+This has been fixed.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-03-18">
+<span id="index-27"></span><span id="id26"></span><h4><a class="toc-backref" href="#id68">03-18</a><a class="headerlink" href="#whats-new-14-mm-dd-03-18" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The
+<a class="reference internal" href="fun_deprecated.html#fun-deprecated-size-taylor"><span class="std std-ref">size_taylor</span></a>
+and
+<a class="reference internal" href="fun_deprecated.html#fun-deprecated-capacity-taylor"><span class="std std-ref">capacity_taylor</span></a>
+functions were deprecated;
+use <a class="reference internal" href="size_order.html#size-order-name"><span class="std std-ref">size_order</span></a> and <a class="reference internal" href="capacity_order.html#capacity-order-name"><span class="std std-ref">capacity_order</span></a> instead.</p></li>
+<li><p>The documentation for <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> and the examples
+<a class="reference internal" href="forward.cpp.html#forward-cpp-name"><span class="std std-ref">forward.cpp</span></a> , <a class="reference internal" href="forward_order.cpp.html#forward-order-cpp-name"><span class="std std-ref">forward_order.cpp</span></a> , have been improved.
+To be more specific, <a class="reference internal" href="forward_order.html#forward-order-name"><span class="std std-ref">forward_order</span></a> now references the special
+cases <a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">forward_zero</span></a> , <a class="reference internal" href="forward_one.html#forward-one-name"><span class="std std-ref">forward_one</span></a> and the new case
+<a class="reference internal" href="forward_two.html#forward-two-name"><span class="std std-ref">forward_two</span></a> .</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-03-17">
+<span id="index-28"></span><span id="id27"></span><h4><a class="toc-backref" href="#id69">03-17</a><a class="headerlink" href="#whats-new-14-mm-dd-03-17" title="Permalink to this headline"></a></h4>
+<p>The
+<a class="reference internal" href="CppAD_vector.html#cppad-vector-assignment-move-semantics"><span class="std std-ref">Move Semantics</span></a>
+version of the <code class="docutils literal notranslate"><span class="pre">CppAD::vector</span></code> assignment statement
+was not checking vector sizes.
+This has been fixed so that things work the same with compilers
+that do not have move semantics.
+(Note that with move semantics, no extra memory allocation is done
+even if the target vector has a different size.)</p>
+</section>
+<section id="whats-new-14-mm-dd-03-09">
+<span id="index-29"></span><span id="id28"></span><h4><a class="toc-backref" href="#id70">03-09</a><a class="headerlink" href="#whats-new-14-mm-dd-03-09" title="Permalink to this headline"></a></h4>
+<p>The documentation links
+<code class="docutils literal notranslate"><span class="pre">forwardzero</span></code> , <code class="docutils literal notranslate"><span class="pre">forwardone</span></code> , and <code class="docutils literal notranslate"><span class="pre">forwardany</span></code>
+have been changed to
+<a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">forward_zero</span></a> , <a class="reference internal" href="forward_one.html#forward-one-name"><span class="std std-ref">forward_one</span></a> ,
+and <a class="reference internal" href="forward_order.html#forward-order-name"><span class="std std-ref">forward_order</span></a> respectively.
+This may affect links from other web pages to the CppAD documentation.</p>
+</section>
+<section id="whats-new-14-mm-dd-03-05">
+<span id="index-30"></span><span id="id29"></span><h4><a class="toc-backref" href="#id71">03-05</a><a class="headerlink" href="#whats-new-14-mm-dd-03-05" title="Permalink to this headline"></a></h4>
+<p>The names <em>p</em> and <em>q</em> in the
+<a class="reference internal" href="forward_order.html#forward-order-name"><span class="std std-ref">forward</span></a> ,
+<a class="reference internal" href="reverse_any.html#reverse-any-name"><span class="std std-ref">reverse</span></a> ,
+<a class="reference internal" href="atomic_two_forward.html#atomic-two-forward-name"><span class="std std-ref">atomic_two_forward</span></a> , and
+<a class="reference internal" href="atomic_two_reverse.html#atomic-two-reverse-name"><span class="std std-ref">atomic_two_reverse</span></a> functions
+were reverse so that <em>p</em> &lt;= <em>q</em> .
+This is only a notational change to make the arguments easier to remember.</p>
+</section>
+<section id="whats-new-14-mm-dd-03-02">
+<span id="index-31"></span><span id="id30"></span><h4><a class="toc-backref" href="#id72">03-02</a><a class="headerlink" href="#whats-new-14-mm-dd-03-02" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>In the output for the speed
+<a class="reference internal" href="speed_main.html#speed-main-test-correct"><span class="std std-ref">correct</span></a> test,
+mention which tests are not available.
+Note that the set of available tests can depend on the
+<a class="reference internal" href="speed_main.html#speed-main-global-options"><span class="std std-ref">list of options</span></a> .</p></li>
+<li><p>In the documentation for
+<a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-n-sweep"><span class="std std-ref">n_sweep</span></a> ,
+mention that it is equal to the number of colors determined by the
+<a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-work-color-method"><span class="std std-ref">color_method</span></a> .</p></li>
+<li><p>The <a class="reference internal" href="speed_cppad.html#speed-cppad-name"><span class="std std-ref">speed_cppad</span></a> tests were simplified by removing the printing
+of auxillary information related to the
+<a class="reference internal" href="speed_main.html#speed-main-global-options-optimize"><span class="std std-ref">optimize</span></a> option.
+Future auxillary information will be passed back in a manner similar to
+<a class="reference internal" href="link_sparse_jacobian.html#link-sparse-jacobian-n-color"><span class="std std-ref">n_color</span></a> for the sparse jacobian test.</p></li>
+<li><p><a class="reference internal" href="CppAD_vector.html#cppad-vector-assignment-move-semantics"><span class="std std-ref">Move Semantics</span></a>
+were added to the <code class="docutils literal notranslate"><span class="pre">CppAD::vector</span></code> assignment operator.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-03-01">
+<span id="index-32"></span><span id="id31"></span><h4><a class="toc-backref" href="#id73">03-01</a><a class="headerlink" href="#whats-new-14-mm-dd-03-01" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Change the prototype for <em>row</em> and <em>col</em> in the
+<a class="reference internal" href="link_sparse_jacobian.html#link-sparse-jacobian-name"><span class="std std-ref">link_sparse_jacobian</span></a> speed test to be <code class="docutils literal notranslate"><span class="pre">const</span></code> ; i.e.,
+they are not changed.</p></li>
+<li><p>Move <em>x</em> near end of <a class="reference internal" href="link_sparse_hessian.html#link-sparse-hessian-name"><span class="std std-ref">link_sparse_hessian</span></a> speed test
+parameter list,
+(as is the case for <a class="reference internal" href="link_sparse_jacobian.html#link-sparse-jacobian-name"><span class="std std-ref">link_sparse_jacobian</span></a> ).</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-02-28">
+<span id="index-33"></span><span id="id32"></span><h4><a class="toc-backref" href="#id74">02-28</a><a class="headerlink" href="#whats-new-14-mm-dd-02-28" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="CppAD_vector.html#cppad-vector-data"><span class="std std-ref">data</span></a> function was added to the
+<code class="docutils literal notranslate"><span class="pre">CppAD::vector</span></code> template class.</p>
+</section>
+<section id="whats-new-14-mm-dd-02-27">
+<span id="index-34"></span><span id="id33"></span><h4><a class="toc-backref" href="#id75">02-27</a><a class="headerlink" href="#whats-new-14-mm-dd-02-27" title="Permalink to this headline"></a></h4>
+<p>The CppAD developer documentation for the subdirectory
+<code class="docutils literal notranslate"><span class="pre">cppad/ipopt</span></code> was not being built by the command
+<code class="docutils literal notranslate"><span class="pre">bin/run_doxygen.sh</span></code> .
+This has been fixed.</p>
+</section>
+<section id="whats-new-14-mm-dd-02-26">
+<span id="index-35"></span><span id="id34"></span><h4><a class="toc-backref" href="#id76">02-26</a><a class="headerlink" href="#whats-new-14-mm-dd-02-26" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The
+<a class="reference internal" href="speed_adolc.html#speed-adolc-name"><span class="std std-ref">adolc</span></a> and
+<a class="reference internal" href="speed_cppad.html#speed-cppad-name"><span class="std std-ref">cppad</span></a> sparse jacobian speed tests now print out
+<a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-n-sweep"><span class="std std-ref">n_sweep</span></a> .</p></li>
+<li><p>The size of some of the <a class="reference internal" href="speed.html#speed-name"><span class="std std-ref">speed</span></a> test cases has been increased
+to test behavior for larger problems.</p></li>
+<li><p>A link to <a class="reference internal" href="ode_evaluate.html#ode-evaluate-name"><span class="std std-ref">ode_evaluate</span></a> was missing in the
+<a class="reference internal" href="speed_utility.html#speed-utility-speed-utility-routines"><span class="std std-ref">Speed Utility Routines</span></a> table.
+This has been fixed.</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-02-23">
+<span id="index-36"></span><span id="id35"></span><h4><a class="toc-backref" href="#id77">02-23</a><a class="headerlink" href="#whats-new-14-mm-dd-02-23" title="Permalink to this headline"></a></h4>
+<p>The <a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-work-color-method"><span class="std std-ref">color_method</span></a>
+option was added to the sparse Jacobian calculations.
+This enables one to use <a class="reference internal" href="colpack_prefix.html#colpack-prefix-name"><span class="std std-ref">ColPack</span></a>
+do color the rows or columns.
+The speed test <a class="reference internal" href="speed_main.html#speed-main-sparsity-options-colpack"><span class="std std-ref">colpack</span></a> option
+was also added (but not yet implemented for
+<a class="reference internal" href="link_sparse_hessian.html#link-sparse-hessian-name"><span class="std std-ref">sparse_hessian</span></a> speed tests).</p>
+</section>
+<section id="whats-new-14-mm-dd-02-22">
+<span id="index-37"></span><span id="id36"></span><h4><a class="toc-backref" href="#id78">02-22</a><a class="headerlink" href="#whats-new-14-mm-dd-02-22" title="Permalink to this headline"></a></h4>
+<p>The program names in
+<a class="reference internal" href="thread_test.cpp.html#thread-test-cpp-name"><span class="std std-ref">thread_test.cpp</span></a> where changes from
+<em>threading</em> _ <code class="docutils literal notranslate"><span class="pre">test</span></code> to <code class="docutils literal notranslate"><span class="pre">multi_thread_</span></code> <em>threading</em>
+where <em>threading</em> is <code class="docutils literal notranslate"><span class="pre">openmp</span></code> , <code class="docutils literal notranslate"><span class="pre">pthread</span></code> or <code class="docutils literal notranslate"><span class="pre">bthread</span></code> .</p>
+</section>
+<section id="whats-new-14-mm-dd-02-17">
+<span id="index-38"></span><span id="id37"></span><h4><a class="toc-backref" href="#id79">02-17</a><a class="headerlink" href="#whats-new-14-mm-dd-02-17" title="Permalink to this headline"></a></h4>
+<p>Fix ambiguous call to <a class="reference internal" href="nan.html#nan-isnan"><span class="std std-ref">isnan</span></a>
+during MS Visual Studio 2012 compilation.</p>
+</section>
+<section id="whats-new-14-mm-dd-02-15">
+<span id="index-39"></span><span id="id38"></span><h4><a class="toc-backref" href="#id80">02-15</a><a class="headerlink" href="#whats-new-14-mm-dd-02-15" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The <a class="reference internal" href="speed_main.html#speed-main-sparsity-options-boolsparsity"><span class="std std-ref">boolsparsity</span></a> option
+was added to the <a class="reference internal" href="speed_main.html#speed-main-name"><span class="std std-ref">speed_main</span></a> program.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">retape</span></code> option what changed to
+<a class="reference internal" href="speed_main.html#speed-main-global-options-onetape"><span class="std std-ref">onetape</span></a> so that the default
+is to retape (option not present).
+This was done because
+<a class="reference internal" href="fadbad_prefix.html#fadbad-prefix-name"><span class="std std-ref">fadbad</span></a> and
+<a class="reference internal" href="sacado_prefix.html#sacado-prefix-name"><span class="std std-ref">sacado</span></a> always retape.</p></li>
+<li><p>The documentation, and example source code, for all the speed
+<a class="reference internal" href="speed_main.html#speed-main-global-options"><span class="std std-ref">options</span></a> was improved
+(made clearer).</p></li>
+<li><p>Improve the success rate for
+<a class="reference internal" href="speed_test.cpp.html#speed-test-cpp-name"><span class="std std-ref">speed_test.cpp</span></a> and <a class="reference internal" href="time_test.cpp.html#time-test-cpp-name"><span class="std std-ref">time_test.cpp</span></a> .</p></li>
+</ol>
+</section>
+<section id="whats-new-14-mm-dd-01-26">
+<span id="index-40"></span><span id="id39"></span><h4><a class="toc-backref" href="#id81">01-26</a><a class="headerlink" href="#whats-new-14-mm-dd-01-26" title="Permalink to this headline"></a></h4>
+<p>The destination directory for the
+<a class="reference internal" href="cmake.html#cmake-cmake-install-docdir"><span class="std std-ref">cppad documentation</span></a>
+is now set separately from the data directory
+using the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> option</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">cmake_install_docdir</span></code> = <em>cmake_install_docdir</em></p>
+</div></blockquote>
+<p>This has increased the flexibility of the documentation installation
+and removed the need for the option</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">cppad_documentation</span></code> = <em>yes_or_no</em></p>
+</div></blockquote>
+<p>which has been removed.</p>
+</section>
+<section id="whats-new-14-mm-dd-01-21">
+<span id="index-41"></span><span id="id40"></span><h4><a class="toc-backref" href="#id82">01-21</a><a class="headerlink" href="#whats-new-14-mm-dd-01-21" title="Permalink to this headline"></a></h4>
+<p>The destination directory for the
+cppad documentation
+used to be one of the following:</p>
+<div class="line-block">
+<div class="line">      <em>prefix</em> / <em>datadir</em> / <code class="docutils literal notranslate"><span class="pre">doc/cppad-</span></code> <em>version</em></div>
+<div class="line">      <em>prefix</em> / <em>datadir</em> / <code class="docutils literal notranslate"><span class="pre">doc/</span></code> <em>postfix</em> <code class="docutils literal notranslate"><span class="pre">cppad-</span></code> <em>version</em></div>
+</div>
+<p>This has been changed by dropping the <em>version</em> number
+at the end of the directory name.</p>
+</section>
+<section id="whats-new-14-mm-dd-01-10">
+<span id="index-42"></span><span id="id41"></span><h4><a class="toc-backref" href="#id83">01-10</a><a class="headerlink" href="#whats-new-14-mm-dd-01-10" title="Permalink to this headline"></a></h4>
+<p>The change on <a class="reference internal" href="whats_new_13.html#whats-new-13-mm-dd-12-27"><span class="std std-ref">2013-12-27</span></a>
+caused a conversion error in <a class="reference internal" href="atan2.html#atan2-name"><span class="std std-ref">atan2</span></a> when it was used with
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> arguments (and other similar cases).
+This has been fixed.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="whats_new_15.html" class="btn btn-neutral float-left" title="whats_new_15" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="whats_new_13.html" class="btn btn-neutral float-right" title="whats_new_13" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

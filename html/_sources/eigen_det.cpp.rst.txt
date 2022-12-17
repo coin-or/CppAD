@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/eigen_det.cpp
+
+{xrst_begin eigen_det.cpp}
+
+Using Eigen To Compute Determinant: Example and Test
+####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end eigen_det.cpp}

@@ -1,0 +1,173 @@
+lines 5-175 of file: xrst/appendix/deprecated/fun_deprecated.xrst
+
+{xrst_begin fun_deprecated}
+{xrst_spell
+   operands
+}
+
+ADFun Object Deprecated Member Functions
+########################################
+
+Syntax
+******
+
+| *f* . ``Dependent`` ( *y* )
+| *o* = *f* . ``Order`` ()
+| *m* = *f* . ``Memory`` ()
+| *s* = *f* . ``Size`` ()
+| *t* = *f* . ``taylor_size`` ()
+| *u* = *f* . ``use_VecAD`` ()
+| *v* = *f* . ``size_taylor`` ()
+| *w* = *f* . ``capacity_taylor`` ()
+
+Purpose
+*******
+The ``ADFun<`` *Base* > functions documented here have been deprecated;
+i.e., they are no longer approved of and may be removed from some future
+version of CppAD.
+
+Dependent
+*********
+A recording of and AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>`
+is started by a call of the form
+
+   ``Independent`` ( *x* )
+
+If there is only one such recording at the current time,
+you can use *f* . ``Dependent`` ( *y* ) in place of
+
+   *f* . ``Dependent`` ( *x* , *y* )
+
+See :ref:`Dependent-name` for a description of this operation.
+
+Deprecated 2007-08-07
+=====================
+This syntax was deprecated when CppAD was extended to allow
+for more than one ``AD<`` *Base* > recording to be
+active at one time.
+This was necessary to allow for multiple threading applications.
+
+Order
+*****
+The result *o* has prototype
+
+   ``size_t`` *o*
+
+and is the order of the previous forward operation
+using the function *f* .
+This is the highest order of the
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>`
+that are currently stored in *f* .
+
+Deprecated 2006-03-31
+=====================
+Zero order corresponds to function values being stored in *f* .
+In the future, we would like to be able to erase the function
+values so that *f* uses less memory.
+In this case, the return value of ``Order`` would not make sense.
+Use :ref:`size_order-name` to obtain
+the number of Taylor coefficients currently stored
+in the ADFun object *f*
+(which is equal to the order plus one).
+
+Memory
+******
+The result
+
+   ``size_t`` *m*
+
+and is the number of memory units (``sizeof`` ) required for the
+information currently stored in *f* .
+This memory is returned to the system when the destructor for
+*f* is called.
+
+Deprecated 2006-03-31
+=====================
+It used to be the case that an ADFun object just kept increasing its
+buffers to the maximum size necessary during its lifetime.
+It would then return the buffers to the system when its destructor
+was called.
+This is no longer the case, an ADFun object now returns memory
+when it no longer needs the values stored in that memory.
+Thus the ``Memory`` function is no longer well defined.
+
+Size
+****
+The result *s* has prototype
+
+   ``size_t`` *s*
+
+and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using *f* is roughly proportional to *s* .
+
+Deprecated 2006-04-03
+=====================
+There are other sizes attached to an ADFun object, for example,
+the number of operations in the sequence.
+In order to avoid confusion with these other sizes,
+use :ref:`fun_property@size_var` to obtain
+the number of variables in the operation sequence.
+
+taylor_size
+***********
+The result *t* has prototype
+
+   ``size_t`` *t*
+
+and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object *f* .
+
+Deprecated 2006-06-17
+=====================
+This function has been replaced by :ref:`size_order-name` .
+
+use_VecAD
+*********
+The result *u* has prototype
+
+   ``bool`` *u*
+
+If it is true, the
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>`
+stored in *f* contains
+:ref:`VecAD<VecAD@VecAD<Base\>::reference>` operands.
+Otherwise *u* is false.
+
+Deprecated 2006-04-08
+=====================
+You can instead use
+
+   *u* = *f* . ``size_VecAD`` () > 0
+
+size_taylor
+***********
+The result *v* has prototype
+
+   ``size_t`` *v*
+
+and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object *f* .
+
+Deprecated 2014-03-18
+=====================
+This function has been replaced by :ref:`size_order-name` .
+
+capacity_taylor
+***************
+The result *w* has prototype
+
+   ``size_t`` *w*
+
+and is the number of Taylor coefficient orders currently allocated
+in the ADFun object *f* .
+
+Deprecated 2014-03-18
+=====================
+This function has been replaced by :ref:`capacity_order-name` .
+
+{xrst_end fun_deprecated}

@@ -1,0 +1,66 @@
+lines 7-70 of file: example/chkpoint_two/get_started.cpp
+
+{xrst_begin chkpoint_two_get_started.cpp}
+
+Get Started Checkpointing: Example and Test
+###########################################
+
+Purpose
+*******
+Break a large computation into pieces and only store values at the
+interface of the pieces.
+In actual applications, there may many uses of each function
+and many more functions.
+
+f
+*
+The function :math:`f : \B{R}^2 \rightarrow \B{R}^2`
+is defined by
+
+.. math::
+
+   f(y) = \left( \begin{array}{c}
+      y_0 + y_0 + y_0
+      \\
+      y_1 + y_1 + y_1
+   \end{array} \right)
+
+g
+*
+The function :math:`g : \B{R}^2 \rightarrow \B{R}^2`
+defined by
+
+.. math::
+
+   g(x) = \left( \begin{array}{c}
+      x_0 \cdot x_0 \cdot x_0
+      \\
+      x_1 \cdot x_1 \cdot x_1
+   \end{array} \right)
+
+f[g(x)]
+*******
+The function :math:`f[g(x)]` is given by
+
+.. math::
+
+   f[g(x)]
+   =
+   f \left[ \begin{array}{c}
+      x_0^3 \\
+      x_1^3
+   \end{array} \right]
+   =
+   \left[ \begin{array}{c}
+      3 x_0^3 \\
+      3 x_1^3
+   \end{array} \right]
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end chkpoint_two_get_started.cpp}

@@ -1,0 +1,138 @@
+lines 7-142 of file: include/cppad/core/discrete/user.xrst
+
+{xrst_begin Discrete}
+{xrst_spell
+   retaping
+}
+
+Discrete AD Functions
+#####################
+
+Syntax
+******
+
+| ``CPPAD_DISCRETE_FUNCTION`` ( *Base* , *name* )
+| *y* = *name* ( *x* )
+| *ay* = *name* ( *ax* )
+
+Purpose
+*******
+Record the evaluation of a discrete function as part
+of an ``AD<`` *Base* >
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+The value of a discrete function can depend on the
+:ref:`independent variables<glossary@Tape@Independent Variable>` ,
+but its derivative is identically zero.
+For example, suppose that the integer part of
+a :ref:`glossary@Variable` *x* is the
+index into an array of values.
+
+Base
+****
+This is the
+:ref:`base type<base_require-name>`
+corresponding to the operations sequence;
+i.e., use of the *name* with arguments of type
+``AD<`` *Base* > can be recorded in an operation sequence.
+
+name
+****
+This is the name of the function (as it is used in the source code).
+The user must provide a version of *name*
+where the argument has type *Base* .
+CppAD uses this to create a version of *name*
+where the argument has type ``AD<`` *Base* > .
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *Base* & *x*
+
+It is the value at which the user provided version of *name*
+is to be evaluated.
+
+y
+*
+The result *y* has prototype
+
+   *Base* *y*
+
+It is the return value for the user provided version of *name* .
+
+ax
+**
+The argument *ax* has prototype
+
+   ``const AD<`` *Base* >& *ax*
+
+It is the value at which the CppAD provided version of *name*
+is to be evaluated.
+
+ay
+**
+The result *ay* has prototype
+
+   ``AD<`` *Base* > *ay*
+
+It is the return value for the CppAD provided version of *name* .
+
+Create AD Version
+*****************
+The preprocessor macro invocation
+
+   ``CPPAD_DISCRETE_FUNCTION`` ( *Base* , *name* )
+
+defines the ``AD<`` *Base* > version of *name* .
+This can be with in a namespace (not the ``CppAD`` namespace)
+but must be outside of any routine.
+
+Operation Sequence
+******************
+This is an AD of *Base*
+:ref:`atomic operation<glossary@Operation@Atomic>`
+and hence is part of the current
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+
+Derivatives
+***********
+During a zero order :ref:`Forward-name` operation,
+an :ref:`ADFun-name` object will compute the value of *name*
+using the user provided *Base* version of this routine.
+All the derivatives of *name* will be evaluated as zero.
+
+Parallel Mode
+*************
+The first call to
+
+   *name* ( *ax* )
+
+must not be in :ref:`parallel<ta_in_parallel-name>` execution mode.
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/tape_index.cpp
+   example/general/interp_onetape.cpp
+   example/general/interp_retape.cpp
+}
+The file
+:ref:`tape_index.cpp-name`
+contains an example and test that uses a discrete function
+to vary an array index during :ref:`Forward-name` mode calculations.
+The file
+:ref:`interp_onetape.cpp-name`
+contains an example and test that uses discrete
+functions to avoid retaping a calculation that requires interpolation.
+(The file
+:ref:`interp_retape.cpp-name`
+shows how interpolation can be done with retaping.)
+
+CppADCreateDiscrete Deprecated 2007-07-28
+*****************************************
+The preprocessor symbol ``CppADCreateDiscrete``
+is defined to be the same as ``CPPAD_DISCRETE_FUNCTION``
+but its use is deprecated.
+
+{xrst_end Discrete}

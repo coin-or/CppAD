@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/reverse_two.cpp
+
+{xrst_begin reverse_two.cpp}
+
+Second Order Reverse ModeExample and Test
+#########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end reverse_two.cpp}

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="cpp_ad_graph, c++, representation, of, an, ad, graph" name="keywords" />
+<meta content="see, also" name="keywords" />
+<meta content="function" name="keywords" />
+<meta content="node, indices" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="c" name="keywords" />
+<meta content="r" name="keywords" />
+<meta content="function_name" name="keywords" />
+<meta content="discrete_name_vec" name="keywords" />
+<meta content="atomic_name_vec" name="keywords" />
+<meta content="print_text_vec" name="keywords" />
+<meta content="n_dynamic_ind" name="keywords" />
+<meta content="n_variable_ind" name="keywords" />
+<meta content="constant_vec" name="keywords" />
+<meta content="operator_vec" name="keywords" />
+<meta content="operator_arg" name="keywords" />
+<meta content="print_graph_op" name="keywords" />
+<meta content="discrete_graph_op" name="keywords" />
+<meta content="atom_graph_op" name="keywords" />
+<meta content="sum_graph_op" name="keywords" />
+<meta content="dependent_vec" name="keywords" />
+<meta content="cpp_graph" name="keywords" />
+<meta content="contents" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cpp_ad_graph &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="graph_op_enum" href="graph_op_enum.html" />
+    <link rel="prev" title="json_sparse.cpp" href="json_sparse.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="other_adfun.html">other_adfun</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base2ad.html">base2ad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_ad_graph.html">json_ad_graph</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">cpp_ad_graph</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="graph_op_enum.html">graph_op_enum</a></li>
+<li class="toctree-l5"><a class="reference internal" href="cpp_graph.html">cpp_graph</a></li>
+<li class="toctree-l5"><a class="reference internal" href="from_graph.html">from_graph</a></li>
+<li class="toctree-l5"><a class="reference internal" href="to_graph.html">to_graph</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="abs_normal_fun.html">abs_normal_fun</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="other_adfun.html">other_adfun</a> &raquo;</li>
+      <li>cpp_ad_graph</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cpp_ad_graph.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="cpp-ad-graph">
+<span id="cpp-ad-graph-name"></span><h1>cpp_ad_graph<a class="headerlink" href="#cpp-ad-graph" title="Permalink to this headline"></a></h1>
+<section id="c-representation-of-an-ad-graph">
+<span id="cpp-ad-graph-title"></span><span id="index-0"></span><h2>C++ Representation of an AD Graph<a class="headerlink" href="#c-representation-of-an-ad-graph" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#see-also" id="id2">See Also</a></p></li>
+<li><p><a class="reference internal" href="#function" id="id3">function</a></p></li>
+<li><p><a class="reference internal" href="#node-indices" id="id4">Node Indices</a></p>
+<ul>
+<li><p><a class="reference internal" href="#p" id="id5">p</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id6">x</a></p></li>
+<li><p><a class="reference internal" href="#c" id="id7">c</a></p></li>
+<li><p><a class="reference internal" href="#r" id="id8">r</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#function-name" id="id9">function_name</a></p></li>
+<li><p><a class="reference internal" href="#discrete-name-vec" id="id10">discrete_name_vec</a></p></li>
+<li><p><a class="reference internal" href="#atomic-name-vec" id="id11">atomic_name_vec</a></p></li>
+<li><p><a class="reference internal" href="#print-text-vec" id="id12">print_text_vec</a></p></li>
+<li><p><a class="reference internal" href="#n-dynamic-ind" id="id13">n_dynamic_ind</a></p></li>
+<li><p><a class="reference internal" href="#n-variable-ind" id="id14">n_variable_ind</a></p></li>
+<li><p><a class="reference internal" href="#constant-vec" id="id15">constant_vec</a></p></li>
+<li><p><a class="reference internal" href="#operator-vec" id="id16">operator_vec</a></p></li>
+<li><p><a class="reference internal" href="#operator-arg" id="id17">operator_arg</a></p>
+<ul>
+<li><p><a class="reference internal" href="#print-graph-op" id="id18">print_graph_op</a></p></li>
+<li><p><a class="reference internal" href="#discrete-graph-op" id="id19">discrete_graph_op</a></p></li>
+<li><p><a class="reference internal" href="#atom-graph-op" id="id20">atom_graph_op</a></p></li>
+<li><p><a class="reference internal" href="#sum-graph-op" id="id21">sum_graph_op</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dependent-vec" id="id22">dependent_vec</a></p></li>
+<li><p><a class="reference internal" href="#cpp-graph" id="id23">cpp_graph</a></p></li>
+<li><p><a class="reference internal" href="#cpp-ad-graph-contents" id="id24">Contents</a></p></li>
+</ul>
+</div>
+<section id="see-also">
+<span id="cpp-ad-graph-see-also"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="json_ad_graph.html#json-ad-graph-title"><span class="std std-ref">Json Representation of an AD Graph</span></a></p>
+</section>
+<section id="function">
+<span id="cpp-ad-graph-function"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">function</a><a class="headerlink" href="#function" title="Permalink to this headline"></a></h3>
+<p>This section defines a computational graph representation of a function
+<span class="math notranslate nohighlight">\(y = f(x, p)\)</span>.
+The vector <em>x</em> is called the independent variable vector,
+<em>p</em> is called the independent dynamic parameter vector,
+and <em>y</em> is called the dependent variable vector.</p>
+</section>
+<section id="node-indices">
+<span id="cpp-ad-graph-node-indices"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id4">Node Indices</a><a class="headerlink" href="#node-indices" title="Permalink to this headline"></a></h3>
+<p>The nodes in an AD graph have the following order:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p_0</span> <span class="p">,</span> <span class="o">...</span> <span class="p">,</span>  <span class="n">p_</span><span class="p">{</span><span class="n">np</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span> <span class="p">,</span>
+<span class="n">x_0</span> <span class="p">,</span> <span class="o">...</span> <span class="p">,</span>  <span class="n">x_</span><span class="p">{</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span> <span class="p">,</span>
+<span class="n">c_0</span> <span class="p">,</span> <span class="o">...</span> <span class="p">,</span>  <span class="n">c_</span><span class="p">{</span><span class="n">nc</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span> <span class="p">,</span>
+<span class="n">r_0</span> <span class="p">,</span> <span class="o">...</span> <span class="p">,</span>  <span class="n">r_</span><span class="p">{</span><span class="n">no</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+<section id="p">
+<span id="cpp-ad-graph-node-indices-p"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id5">p</a><a class="headerlink" href="#p" title="Permalink to this headline"></a></h4>
+<p>The sub-vector</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p_0</span><span class="p">,</span> <span class="o">...</span> <span class="p">,</span> <span class="n">p_</span><span class="p">{</span><span class="n">np</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>is the independent dynamic parameter vector;
+see <a class="reference internal" href="#cpp-ad-graph-n-dynamic-ind"><span class="std std-ref">n_dynamic_ind</span></a> .
+The node index corresponding to <em>p_0</em> is <code class="docutils literal notranslate"><span class="pre">1</span></code> .</p>
+</section>
+<section id="x">
+<span id="cpp-ad-graph-node-indices-x"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id6">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h4>
+<p>The sub-vector</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_1</span><span class="p">,</span> <span class="o">...</span> <span class="p">,</span> <span class="n">x_nx</span>
+</pre></div>
+</div>
+<p>is the independent variable vector;
+see <a class="reference internal" href="#cpp-ad-graph-n-variable-ind"><span class="std std-ref">n_variable_ind</span></a> .
+The node index corresponding to <em>x_0</em> is
+the index corresponding to <em>p_0</em> plus <em>np</em> .</p>
+</section>
+<section id="c">
+<span id="cpp-ad-graph-node-indices-c"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id7">c</a><a class="headerlink" href="#c" title="Permalink to this headline"></a></h4>
+<p>The sub-vector</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c_1</span><span class="p">,</span> <span class="o">...</span> <span class="p">,</span> <span class="n">c_nc</span>
+</pre></div>
+</div>
+<p>is the constant parameter vector;
+see <a class="reference internal" href="#cpp-ad-graph-constant-vec"><span class="std std-ref">constant_vec</span></a> .
+The node index corresponding to <em>c_0</em> is
+the index corresponding to <em>x_0</em> plus <em>nx</em> .</p>
+</section>
+<section id="r">
+<span id="cpp-ad-graph-node-indices-r"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id8">r</a><a class="headerlink" href="#r" title="Permalink to this headline"></a></h4>
+<p>The sub-vector
+<em>r_i</em> for <em>i</em> =0,…, <em>no</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> is the result vector
+for the <em>i</em>-th operator;
+see <a class="reference internal" href="#cpp-ad-graph-operator-vec"><span class="std std-ref">operator_vec</span></a> .
+All of the node arguments for an the <em>i</em>-th operator are nodes
+that come before the first element of <em>r_i</em> .
+The node index corresponding to the first element of <em>r_0</em> is
+the index corresponding to <em>c_0</em> plus <em>nc</em> .
+For <em>i</em>  &gt; 0 ,
+The node index corresponding to the first element of <em>r_i</em> is
+the index corresponding to the first element of <em>r_</em> { <em>i-1</em> } plus
+the number of results for the <em>i-1</em>-th operator.</p>
+</section>
+</section>
+<section id="function-name">
+<span id="cpp-ad-graph-function-name"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id9">function_name</a><a class="headerlink" href="#function-name" title="Permalink to this headline"></a></h3>
+<p>is a <code class="docutils literal notranslate"><span class="pre">std::string</span></code> containing the name for the function
+corresponding to this graph.</p>
+</section>
+<section id="discrete-name-vec">
+<span id="cpp-ad-graph-discrete-name-vec"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id10">discrete_name_vec</a><a class="headerlink" href="#discrete-name-vec" title="Permalink to this headline"></a></h3>
+<p>is a vector with elements of type <code class="docutils literal notranslate"><span class="pre">std::string</span></code> .
+A discrete function has one argument, one result, and it derivative
+is always zero; e.g., the Heaviside function.
+Calls by this function to discrete functions use the index in this
+vector to identify the discrete functions; see
+<a class="reference internal" href="#cpp-ad-graph-operator-arg-discrete-graph-op"><span class="std std-ref">discrete_graph_op</span></a> below.
+If there are no calls to discrete functions, this vector can be empty.</p>
+</section>
+<section id="atomic-name-vec">
+<span id="cpp-ad-graph-atomic-name-vec"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id11">atomic_name_vec</a><a class="headerlink" href="#atomic-name-vec" title="Permalink to this headline"></a></h3>
+<p>is a vector with elements of type <code class="docutils literal notranslate"><span class="pre">std::string</span></code> .
+An atomic function can have any number of arguments and results
+and non-zero derivatives.
+Calls by this function to other functions use the index in this
+vector to identify the other functions; see
+<a class="reference internal" href="#cpp-ad-graph-operator-arg-atom-graph-op"><span class="std std-ref">atom_graph_op</span></a> below.
+If there are no calls to other functions, this vector can be empty.
+Discrete functions are faster, and simpler to create and use
+than atomic functions.</p>
+</section>
+<section id="print-text-vec">
+<span id="cpp-ad-graph-print-text-vec"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id12">print_text_vec</a><a class="headerlink" href="#print-text-vec" title="Permalink to this headline"></a></h3>
+<p>is a vector with elements of type <code class="docutils literal notranslate"><span class="pre">std::string</span></code> .
+The <a class="reference internal" href="graph_op_enum.html#graph-op-enum-print"><span class="std std-ref">Print</span></a> operators uses indices
+in this vector for the corresponding
+<a class="reference internal" href="PrintFor.html#printfor-before"><span class="std std-ref">before</span></a> and <a class="reference internal" href="PrintFor.html#printfor-after"><span class="std std-ref">after</span></a> values.
+If there are no print operators, this vector can be empty.</p>
+</section>
+<section id="n-dynamic-ind">
+<span id="cpp-ad-graph-n-dynamic-ind"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id13">n_dynamic_ind</a><a class="headerlink" href="#n-dynamic-ind" title="Permalink to this headline"></a></h3>
+<p>is the number of independent dynamic parameters in the function
+(called <em>np</em> above); see
+<a class="reference internal" href="Independent.html#independent-dynamic"><span class="std std-ref">dynamic</span></a> .</p>
+</section>
+<section id="n-variable-ind">
+<span id="cpp-ad-graph-n-variable-ind"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id14">n_variable_ind</a><a class="headerlink" href="#n-variable-ind" title="Permalink to this headline"></a></h3>
+<p>is the number of independent variables in the function
+(called <em>nx</em> above); see
+<a class="reference internal" href="Independent.html#independent-x"><span class="std std-ref">x</span></a> .</p>
+</section>
+<section id="constant-vec">
+<span id="cpp-ad-graph-constant-vec"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id15">constant_vec</a><a class="headerlink" href="#constant-vec" title="Permalink to this headline"></a></h3>
+<p>is a vector of with elements of type
+<code class="docutils literal notranslate"><span class="pre">double</span></code> and size <em>nc</em> that can be used to define this function.</p>
+</section>
+<section id="operator-vec">
+<span id="cpp-ad-graph-operator-vec"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id16">operator_vec</a><a class="headerlink" href="#operator-vec" title="Permalink to this headline"></a></h3>
+<p>is a vector with elements of type <code class="docutils literal notranslate"><span class="pre">graph_op_enum</span></code>
+and size <em>no</em> (the number of operators in the graph).
+For <em>i</em> = 0, …, <em>no</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+<em>operator_vec</em> [ <em>i</em> ] contains the instructions
+for computing the result vector <em>r_i</em> .</p>
+</section>
+<section id="operator-arg">
+<span id="cpp-ad-graph-operator-arg"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id17">operator_arg</a><a class="headerlink" href="#operator-arg" title="Permalink to this headline"></a></h3>
+<p>is a vector with size equal to the sum of the size of each
+of its sub-vectors (which are described below).
+For <em>i</em> = 0, …, <em>no</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> , we use
+<em>first_node</em> [ <em>i</em> ] to denote the index in <em>operator_arg</em>
+of the first node argument to the <em>i</em>-th operator.
+We use <em>n_node_arg</em> [ <em>i</em> ] to denote the number of node arguments
+for the <em>i</em>-th operator.
+For <em>j</em> = 0 , …, <em>n_node_arg</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-1</span></code> ,
+the <em>j</em>-th node argument for the <em>i</em>-th operator has node index</p>
+<blockquote>
+<div><p><em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] + <em>j</em>  ]</p>
+</div></blockquote>
+<p>The <em>operator_arg</em> sub-vector for the <em>i</em>-th operator starts are
+<em>first_node</em> [ <em>i</em> ] and has <em>n_node_arg</em> [ <em>i</em> ] elements
+except for the following operators:
+<code class="docutils literal notranslate"><span class="pre">sum_graph_op</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">discrete_graph_op</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atom_graph_op</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">print_graph_op</span></code> .</p>
+<section id="print-graph-op">
+<span id="cpp-ad-graph-operator-arg-print-graph-op"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id18">print_graph_op</a><a class="headerlink" href="#print-graph-op" title="Permalink to this headline"></a></h4>
+<p>In the case where <em>operator_vec</em> [ <em>i</em> ]. <code class="docutils literal notranslate"><span class="pre">op_enum</span></code> is
+<code class="docutils literal notranslate"><span class="pre">print_graph_op</span></code> :</p>
+<blockquote>
+<div><p><em>before</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">2</span></code> ]</p>
+</div></blockquote>
+<p>is the index in <a class="reference internal" href="#cpp-ad-graph-print-text-vec"><span class="std std-ref">print_text_vec</span></a>
+of the text that is printed before the value and</p>
+<blockquote>
+<div><p><em>after</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">1</span></code> ]</p>
+</div></blockquote>
+<p>is the index in <a class="reference internal" href="#cpp-ad-graph-print-text-vec"><span class="std std-ref">print_text_vec</span></a>
+of the text that is printed after the value.
+The <em>operator_arg</em> sub-vector for the <em>i</em>-th operator
+starts at index <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-2</span></code>
+and has 4 = <em>n_node_arg</em> [ <em>i</em> ]+2 elements.
+The node with index</p>
+<blockquote>
+<div><p><em>notpos</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] ]</p>
+</div></blockquote>
+<p>is checked and if it is positive, nothing is printed by this operator.
+Otherwise, the value corresponding to the following node is printed:</p>
+<blockquote>
+<div><p><em>value</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] + 1 ]</p>
+</div></blockquote>
+</section>
+<section id="discrete-graph-op">
+<span id="cpp-ad-graph-operator-arg-discrete-graph-op"></span><span id="index-18"></span><h4><a class="toc-backref" href="#id19">discrete_graph_op</a><a class="headerlink" href="#discrete-graph-op" title="Permalink to this headline"></a></h4>
+<p>In the case where <em>operator_vec</em> [ <em>i</em> ]. <code class="docutils literal notranslate"><span class="pre">op_enum</span></code> is
+<code class="docutils literal notranslate"><span class="pre">discrete_graph_op</span></code> :</p>
+<blockquote>
+<div><p><em>name_index</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">1</span></code> ]</p>
+</div></blockquote>
+<p>is the index in <a class="reference internal" href="#cpp-ad-graph-discrete-name-vec"><span class="std std-ref">discrete_name_vec</span></a>
+of the function being called by this operator.
+For this operator,
+the <em>operator_arg</em> sub-vector for the <em>i</em>-th operator
+starts at index <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+and has 2 = <em>n_node_arg</em> [ <em>i</em> ]+1 elements.</p>
+</section>
+<section id="atom-graph-op">
+<span id="cpp-ad-graph-operator-arg-atom-graph-op"></span><span id="index-19"></span><h4><a class="toc-backref" href="#id20">atom_graph_op</a><a class="headerlink" href="#atom-graph-op" title="Permalink to this headline"></a></h4>
+<p>In the case where <em>operator_vec</em> [ <em>i</em> ]. <code class="docutils literal notranslate"><span class="pre">op_enum</span></code> is
+<code class="docutils literal notranslate"><span class="pre">atom_graph_op</span></code> :</p>
+<blockquote>
+<div><p><em>name_index</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">3</span></code> ]</p>
+</div></blockquote>
+<p>is the index in <a class="reference internal" href="#cpp-ad-graph-atomic-name-vec"><span class="std std-ref">atomic_name_vec</span></a>
+of the function being called by this operator.</p>
+<blockquote>
+<div><p><em>n_result</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">2</span></code> ]</p>
+</div></blockquote>
+<p>is the number of result nodes for this operator.</p>
+<blockquote>
+<div><p><em>n_node_arg</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">1</span></code> ]</p>
+</div></blockquote>
+<p>is the number of node arguments for this operator.
+For this operator,
+the <em>operator_arg</em> sub-vector for the <em>i</em>-th operator
+starts at index <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-3</span></code>
+and has <em>n_node_arg</em> [ <em>i</em> ]+3 elements.</p>
+</section>
+<section id="sum-graph-op">
+<span id="cpp-ad-graph-operator-arg-sum-graph-op"></span><span id="index-20"></span><h4><a class="toc-backref" href="#id21">sum_graph_op</a><a class="headerlink" href="#sum-graph-op" title="Permalink to this headline"></a></h4>
+<p>In the case where <em>operator_vec</em> [ <em>i</em> ]. <code class="docutils literal notranslate"><span class="pre">op_enum</span></code> is
+<code class="docutils literal notranslate"><span class="pre">sum_graph_op</span></code> :</p>
+<blockquote>
+<div><p><em>n_node_arg</em> [ <em>i</em> ] = <em>operator_arg</em> [ <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">1</span></code> ]</p>
+</div></blockquote>
+<p>is the number of node arguments for this operator.
+For this operator,
+the <em>operator_arg</em> sub-vector for the <em>i</em>-th operator
+starts at index <em>first_node</em> [ <em>i</em> ] <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+and has <em>n_node_arg</em> [ <em>i</em> ]+1 elements.</p>
+</section>
+</section>
+<section id="dependent-vec">
+<span id="cpp-ad-graph-dependent-vec"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id22">dependent_vec</a><a class="headerlink" href="#dependent-vec" title="Permalink to this headline"></a></h3>
+<p>is a vector with size equal to the number element in <em>y</em> .
+The <em>i</em>-th element of <em>y</em> corresponds to the node index
+<em>dependent_vec</em> [ <em>i</em> ] .</p>
+</section>
+<section id="cpp-graph">
+<span id="cpp-ad-graph-cpp-graph"></span><span id="index-22"></span><h3><a class="toc-backref" href="#id23">cpp_graph</a><a class="headerlink" href="#cpp-graph" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">cpp_graph</span></code> class implements the data structure above.
+It is defined by the documentation sections under Contents below:</p>
+</section>
+<section id="cpp-ad-graph-contents">
+<span id="index-23"></span><span id="id1"></span><h3><a class="toc-backref" href="#id24">Contents</a><a class="headerlink" href="#cpp-ad-graph-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>graph_op_enum</p></td>
+<td><p><a class="reference internal" href="graph_op_enum.html#graph-op-enum-title"><span class="std std-ref">C++ AD Graph Operator Enum Type</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>cpp_graph</p></td>
+<td><p><a class="reference internal" href="cpp_graph.html#cpp-graph-title"><span class="std std-ref">A C++ AD Graph Class</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>from_graph</p></td>
+<td><p><a class="reference internal" href="from_graph.html#from-graph-title"><span class="std std-ref">ADFun Object Corresponding to a CppAD Graph</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>to_graph</p></td>
+<td><p><a class="reference internal" href="to_graph.html#to-graph-title"><span class="std std-ref">Create a C++ AD Graph Corresponding to an ADFun Object</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="json_sparse.cpp.html" class="btn btn-neutral float-left" title="json_sparse.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="graph_op_enum.html" class="btn btn-neutral float-right" title="graph_op_enum" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

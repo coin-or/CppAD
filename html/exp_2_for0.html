@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="exp_2_for0, exp_2:, operation, sequence, and, zero, order, forward, mode" name="keywords" />
+<meta content="mathematical, form" name="keywords" />
+<meta content="zero, order, expansion" name="keywords" />
+<meta content="operation, sequence" name="keywords" />
+<meta content="index" name="keywords" />
+<meta content="code" name="keywords" />
+<meta content="operation" name="keywords" />
+<meta content="zero, order" name="keywords" />
+<meta content="sweep" name="keywords" />
+<meta content="return, value" name="keywords" />
+<meta content="verification" name="keywords" />
+<meta content="exercises" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>exp_2_for0 &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exp_2_for0.cpp" href="exp_2_for0.cpp.html" />
+    <link rel="prev" title="exp_2.cpp" href="exp_2.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Theory.html">Theory</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Introduction.html">Introduction</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="exp_2.html">exp_2</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="exp_2.hpp.html">exp_2.hpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_2.cpp.html">exp_2.cpp</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">exp_2_for0</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="exp_2_for0.cpp.html">exp_2_for0.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="exp_2_for1.html">exp_2_for1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_2_rev1.html">exp_2_rev1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_2_for2.html">exp_2_for2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_2_rev2.html">exp_2_rev2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="exp_2_cppad.html">exp_2_cppad</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="exp_eps.html">exp_eps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exp_apx.cpp.html">exp_apx.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="forward_theory.html">forward_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_theory.html">reverse_theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_identity.html">reverse_identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taylor_ode.html">taylor_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research.html">research</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Theory.html">Theory</a> &raquo;</li>
+          <li><a href="Introduction.html">Introduction</a> &raquo;</li>
+          <li><a href="exp_2.html">exp_2</a> &raquo;</li>
+      <li>exp_2_for0</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/exp_2_for0.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="exp-2-for0">
+<span id="exp-2-for0-name"></span><h1>exp_2_for0<a class="headerlink" href="#exp-2-for0" title="Permalink to this headline"></a></h1>
+<section id="exp-2-operation-sequence-and-zero-order-forward-mode">
+<span id="exp-2-for0-title"></span><span id="index-0"></span><h2>exp_2: Operation Sequence and Zero Order Forward Mode<a class="headerlink" href="#exp-2-operation-sequence-and-zero-order-forward-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#mathematical-form" id="id1">Mathematical Form</a></p></li>
+<li><p><a class="reference internal" href="#zero-order-expansion" id="id2">Zero Order Expansion</a></p></li>
+<li><p><a class="reference internal" href="#operation-sequence" id="id3">Operation Sequence</a></p>
+<ul>
+<li><p><a class="reference internal" href="#index" id="id4">Index</a></p></li>
+<li><p><a class="reference internal" href="#code" id="id5">Code</a></p></li>
+<li><p><a class="reference internal" href="#operation" id="id6">Operation</a></p></li>
+<li><p><a class="reference internal" href="#zero-order" id="id7">Zero Order</a></p></li>
+<li><p><a class="reference internal" href="#sweep" id="id8">Sweep</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#return-value" id="id9">Return Value</a></p></li>
+<li><p><a class="reference internal" href="#verification" id="id10">Verification</a></p></li>
+<li><p><a class="reference internal" href="#exercises" id="id11">Exercises</a></p></li>
+</ul>
+</div>
+<section id="mathematical-form">
+<span id="exp-2-for0-mathematical-form"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Mathematical Form</a><a class="headerlink" href="#mathematical-form" title="Permalink to this headline"></a></h3>
+<p>The operation sequence (see below) corresponding to
+the algorithm <a class="reference internal" href="exp_2.hpp.html#exp-2-hpp-name"><span class="std std-ref">exp_2.hpp</span></a> is the same for all values of <em>x</em> .
+The mathematical form for the corresponding function is</p>
+<div class="math notranslate nohighlight">
+\[f(x) = 1 + x + x^2 / 2\]</div>
+<p>An algorithmic differentiation package
+does not operate on the mathematical function <span class="math notranslate nohighlight">\(f(x)\)</span>
+but rather on the particular algorithm used to compute the function
+(in this case <a class="reference internal" href="exp_2.hpp.html#exp-2-hpp-name"><span class="std std-ref">exp_2.hpp</span></a> ).</p>
+</section>
+<section id="zero-order-expansion">
+<span id="exp-2-for0-zero-order-expansion"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Zero Order Expansion</a><a class="headerlink" href="#zero-order-expansion" title="Permalink to this headline"></a></h3>
+<p>In general, a zero order forward sweep is given a vector
+<span class="math notranslate nohighlight">\(x^{(0)} \in \B{R}^n\)</span> and it returns the corresponding vector
+<span class="math notranslate nohighlight">\(y^{(0)} \in \B{R}^m\)</span> given by</p>
+<div class="math notranslate nohighlight">
+\[y^{(0)} = f( x^{(0)} )\]</div>
+<p>The superscript <span class="math notranslate nohighlight">\((0)\)</span> denotes zero order derivative;
+i.e., it is equal to the value
+of the corresponding variable.
+For the example we are considering here,
+both <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(m\)</span> are equal to one.</p>
+</section>
+<section id="operation-sequence">
+<span id="exp-2-for0-operation-sequence"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Operation Sequence</a><a class="headerlink" href="#operation-sequence" title="Permalink to this headline"></a></h3>
+<p>An atomic <em>Type</em> operation is an operation
+that has a <em>Type</em> result and is not made up of
+other more basic operations.
+A sequence of atomic <em>Type</em> operations is called a
+<em>Type</em> operation sequence.
+Given an C++ algorithm and its inputs,
+there is a corresponding <em>Type</em> operation sequence for each type.
+If <em>Type</em> is clear from the context,
+we drop it and just refer to the operation sequence.</p>
+<p>We consider the case where <a class="reference internal" href="exp_2.hpp.html#exp-2-hpp-name"><span class="std std-ref">exp_2.hpp</span></a> is executed with
+<span class="math notranslate nohighlight">\(x^{(0)} = .5\)</span>.
+The table below contains the corresponding operation sequence
+and the results of a zero order sweep.</p>
+<section id="index">
+<span id="exp-2-for0-operation-sequence-index"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id4">Index</a><a class="headerlink" href="#index" title="Permalink to this headline"></a></h4>
+<p>The Index column contains the index in the operation sequence
+of the corresponding atomic operation and variable.
+A Forward sweep starts with the first operation
+and ends with the last.</p>
+</section>
+<section id="code">
+<span id="exp-2-for0-operation-sequence-code"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">Code</a><a class="headerlink" href="#code" title="Permalink to this headline"></a></h4>
+<p>The Code column contains the C++ source code corresponding
+to the corresponding atomic operation in the sequence.</p>
+</section>
+<section id="operation">
+<span id="exp-2-for0-operation-sequence-operation"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Operation</a><a class="headerlink" href="#operation" title="Permalink to this headline"></a></h4>
+<p>The Operation column contains the
+mathematical function corresponding to each atomic operation in the sequence.</p>
+</section>
+<section id="zero-order">
+<span id="exp-2-for0-operation-sequence-zero-order"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">Zero Order</a><a class="headerlink" href="#zero-order" title="Permalink to this headline"></a></h4>
+<p>The Zero Order column contains the zero order derivative for
+the corresponding variable in the operation sequence.
+Forward mode refers to the fact that
+these coefficients are computed in the same order as the original algorithm;
+i.e, in order of increasing index in the operation sequence.</p>
+</section>
+<section id="sweep">
+<span id="exp-2-for0-operation-sequence-sweep"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">Sweep</a><a class="headerlink" href="#sweep" title="Permalink to this headline"></a></h4>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>Index</strong></p></td>
+<td></td>
+<td><p><strong>Code</strong></p></td>
+<td></td>
+<td><p><strong>Operation</strong></p></td>
+<td></td>
+<td><p><strong>Zero Order</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">v1</span>&#160; <span class="pre">=</span> <span class="pre">x;</span></code></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_1 = x\)</span></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_1^{(0)} = 0.5\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">v2</span>&#160; <span class="pre">=</span> <span class="pre">Type(1)</span> <span class="pre">+</span> <span class="pre">v1;</span></code></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_2 = 1 + v_1\)</span></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_2^{(0)} = 1.5\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">v3</span>&#160; <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">*</span> <span class="pre">v1;</span></code></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_3 = v_1 * v_1\)</span></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_3^{(0)} = 0.25\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">v4</span>&#160; <span class="pre">=</span> <span class="pre">v3</span> <span class="pre">/</span> <span class="pre">Type(2);</span></code></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_4 = v_3 / 2\)</span></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_4^{(0)} = 0.125\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">v5</span>&#160; <span class="pre">=</span> <span class="pre">v2</span> <span class="pre">+</span> <span class="pre">v4;</span></code></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_5 = v_2 + v_4\)</span></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(v_5^{(0)} = 1.625\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="return-value">
+<span id="exp-2-for0-return-value"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Return Value</a><a class="headerlink" href="#return-value" title="Permalink to this headline"></a></h3>
+<p>The return value for this case is</p>
+<div class="math notranslate nohighlight">
+\[1.625 =
+v_5^{(0)} =
+f( x^{(0)} )\]</div>
+</section>
+<section id="verification">
+<span id="exp-2-for0-verification"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Verification</a><a class="headerlink" href="#verification" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="exp_2_for0.cpp.html#exp-2-for0-cpp-name"><span class="std std-ref">exp_2_for0.cpp</span></a> contains a routine
+that verifies the values computed above.</p>
+</section>
+<section id="exercises">
+<span id="exp-2-for0-exercises"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Exercises</a><a class="headerlink" href="#exercises" title="Permalink to this headline"></a></h3>
+<ol class="arabic">
+<li><p>Suppose that <span class="math notranslate nohighlight">\(x^{(0)} = .2\)</span>,
+what is the result of a zero order forward sweep for
+the operation sequence above;
+i.e., what are the corresponding values for</p>
+<div class="math notranslate nohighlight">
+\[v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}\]</div>
+</li>
+<li><p>Create a modified version of
+<a class="reference internal" href="exp_2_for0.cpp.html#exp-2-for0-cpp-name"><span class="std std-ref">exp_2_for0.cpp</span></a> that verifies the values you obtained
+for the previous exercise.</p></li>
+<li><p>Create and run a main program that reports the result of calling
+the modified version
+of <a class="reference internal" href="exp_2_for0.cpp.html#exp-2-for0-cpp-name"><span class="std std-ref">exp_2_for0.cpp</span></a> in the previous exercise.</p></li>
+</ol>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="exp_2.cpp.html" class="btn btn-neutral float-left" title="exp_2.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exp_2_for0.cpp.html" class="btn btn-neutral float-right" title="exp_2_for0.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+lines 7-59 of file: example/general/taylor_ode.cpp
+
+{xrst_begin taylor_ode.cpp}
+
+Taylor's Ode Solver: An Example and Test
+########################################
+
+Purpose
+*******
+This example uses the method described in :ref:`taylor_ode-name`
+to solve an ODE.
+
+ODE
+***
+The ODE is defined by
+:math:`y(0) = 0` and :math:`y^1 (t) = g[ y(t) ]`
+where the function
+:math:`g : \B{R}^n \rightarrow \B{R}^n` is defined by
+
+.. math::
+
+   g(y)
+   =
+   \left( \begin{array}{c}
+         1                       \\
+         y_1                     \\
+         \vdots                  \\
+         y_{n-1}
+   \end{array} \right)
+
+and the initial condition is :math:`z(0) = 0`.
+
+ODE Solution
+************
+The solution for this example can be calculated by
+starting with the first row and then using the solution
+for the first row to solve the second and so on.
+Doing this we obtain
+
+.. math::
+
+   y(t) =
+   \left( \begin{array}{c}
+      t           \\
+      t^2 / 2     \\
+      \vdots      \\
+      t^n / n !
+   \end{array} \right)
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end taylor_ode.cpp}

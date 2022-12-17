@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/sub_eq.cpp
+
+{xrst_begin sub_eq.cpp}
+
+AD Compound Assignment Subtraction: Example and Test
+####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end sub_eq.cpp}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/sqrt.cpp
+
+{xrst_begin sqrt.cpp}
+
+The AD sqrt Function: Example and Test
+######################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end sqrt.cpp}

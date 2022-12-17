@@ -1,0 +1,44 @@
+lines 219-260 of file: example/multi_thread/multi_newton.cpp
+
+{xrst_begin multi_newton_worker}
+{xrst_spell
+   xlow
+   xup
+}
+
+Do One Thread's Work for Multi-Threaded Newton Method
+#####################################################
+
+Syntax
+******
+``multi_newton_worker`` ()
+
+Purpose
+*******
+This function finds all the zeros in the interval [ *low* , *up*  ] .
+
+low
+***
+This is the value of the :ref:`multi_newton_common-name` information
+
+   *low* = ``work_all_`` [ *thread_num* ] ``->xlow``
+
+up
+**
+This is the value of the :ref:`multi_newton_common-name` information
+
+   *up* = ``work_all_`` [ *thread_num* ] ``->xup``
+
+thread_num
+**********
+This is the number for the current thread; see
+:ref:`thread_num<ta_thread_num-name>` .
+
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
+
+{xrst_end multi_newton_worker}

@@ -1,0 +1,176 @@
+lines 5-178 of file: include/cppad/example/atomic_four/lin_ode/lin_ode.xrst
+
+{xrst_begin atomic_four_lin_ode}
+{xrst_spell
+   approximations
+   nnz
+   vk
+}
+
+Atomic First Order Linear ODE Method: Example Implementation
+############################################################
+
+Syntax
+******
+
+| ``atomic_lin_ode`` *ode* ( *name* )
+| *call_id* = *lin_ode* . ``set`` ( *r* , *step* , *pattern* , *transpose* )
+| *lin_ode* . ``get`` ( *call_id* , *r* , *step* , *pattern* , *transpose* )
+| *lin_ode* . ``base_solver`` ( *r* , *step* , *pattern* , *transpose* , *x* , *y* )
+| *lin_ode* ( *call_id* , *ax* , *ay* )
+
+z(t, x)
+*******
+Construct an atomic operation that computes an
+approximate solution of the first order linear initial value ODE
+
+.. math::
+
+   z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+
+where
+:math:`z : \B{R} \times \B{R}^n \rightarrow \B{R}^m`,
+:math:`A : \B{R}^n \rightarrow \B{R}^{m \times m}`,
+:math:`b : \B{R}^n \rightarrow  \B{R}^m`,
+and the subscript :math:`t` denotes partial differentiation w.r.t :math:`t`.
+
+call_id
+*******
+This is a return value (argument) for the ``set`` (``get`` ) routine.
+
+r
+*
+This is the value of *t* at which we are approximating :math:`z(t, x)`.
+This is a argument (return value) for the ``set`` (``get`` ) routine.
+
+step
+****
+This is a positive maximum step size to use when solving the ODE.
+
+pattern
+*******
+This is a sparsity pattern.
+This is a argument (return value) for the ``set`` (``get`` ) routine.
+
+nnz
+===
+We use *nnz* to denote *pattern* . ``nnz`` () .
+
+row
+===
+We use *row* to denote *pattern* . ``row`` () .
+
+col
+===
+We use *col* to denote *pattern* . ``col`` () .
+
+transpose
+*********
+If *transpose* is true (false) the sparsity pattern is for
+:math:`A(x)^\R{T}` (:math:`A(x)`).
+This is a argument (return value) for the ``set`` (``get`` ) routine.
+
+x
+*
+We use *x* to denote the argument to the atomic function.
+In the call to ``base_solver`` it is a CppAD vector with elements
+of type *Base* .
+
+n
+=
+The size of the vector *x* is
+:math:`n = nnz + m`.
+
+A(x)
+====
+This matrix stored in the same order as *pattern*
+at the beginning of the vector *x* .
+To be specific,
+if *transpose* is true (false),
+for *k* = 0, ..., *nnz* ``-1`` ,
+:math:`A_{j,i} (x)` ( :math:`A_{i,j} (x)` ) is equal to
+:math:`x[k]` where *i* = *row* [ *k* ] and  *j* = *col* [ *k* ] .
+
+b(x)
+====
+This vector is stored at the end of
+*x* ; i.e. its *j*-th element is
+:math:`b_j (x) = x[ nnz + j ]`
+
+y(x)
+****
+We use :math:`y(x)` to denote the final value of the ODE; i.e.,
+:math:`y(x) = z(r, x)`.
+
+m
+=
+We use *m* to denote the size of the vector *y* ( *x* ) .
+This is the number of equations in the ODE.
+
+y
+=
+In the call to ``base_solver`` ,
+*y* is a CppAD vector with elements of type *Base* .
+The input value of its elements does not matter.
+Upon return it contains the value :math:`y(x)`.
+
+ax
+**
+In the call to *lin_ode* , *ax*
+is a simple vector with elements of type ``AD<`` *Base* > .
+The elements of *ax* have the same meaning as *x* .
+
+ay
+**
+In the call to *lin_ode* , *ay*
+is a simple vector with elements of type ``AD<`` *Base* > .
+The input value of its elements does not matter.
+Upon return it represents the solution *y* ( *ax* ) .
+
+vk(x)
+*****
+We sometimes use the following representation for :math:`y(x)`:
+
+.. math::
+
+   y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+
+Define :math:`v^0 (x) = b(x)` and for :math:`k = 1, 2, \ldots`,
+:math:`v^k (x) = (r / k) A(x) v^{k-1} (x)`.
+Using this notation,
+
+.. math::
+
+   y(x) = \sum_{k=0}^\infty v^k (x)
+
+Approximations
+**************
+
+Rosen34
+=======
+The :ref:`atomic_four_lin_ode_base_solver.hpp@Rosen34` routine
+is used to approximate the solution of the ODE.
+Any initial value ODE solver can be used for this purpose.
+
+Simpson's Rule
+==============
+:ref:`atomic_four_lin_ode_reverse.hpp@Simpson's Rule`
+is used to approximate the integral
+
+.. math::
+
+   \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+
+Any other approximation for this integral can be used.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/example/atomic_four/lin_ode/implement.xrst
+   example/atomic_four/lin_ode/forward.cpp
+   example/atomic_four/lin_ode/reverse.cpp
+   example/atomic_four/lin_ode/sparsity.cpp
+   example/atomic_four/lin_ode/rev_depend.cpp
+}
+
+{xrst_end atomic_four_lin_ode}

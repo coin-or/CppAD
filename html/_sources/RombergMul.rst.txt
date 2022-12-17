@@ -1,0 +1,158 @@
+lines 8-163 of file: include/cppad/utility/romberg_mul.hpp
+
+{xrst_begin RombergMul}
+{xrst_spell
+   romberg
+   test test
+}
+
+Multi-dimensional Romberg Integration
+#####################################
+
+Syntax
+******
+
+   # ``include <cppad/utility/romberg_mul.hpp>``
+
+``RombergMul<`` *Fun* , *SizeVector* , *FloatVector* , *m* > *R*
+
+*r* = *R* ( *F* , *a* , *b* , *n* , *p* , *e* )
+
+Description
+***********
+Returns the Romberg integration estimate
+:math:`r` for the multi-dimensional integral
+
+.. math::
+
+   r =
+   \int_{a[0]}^{b[0]} \cdots \int_{a[m-1]}^{b[m-1]}
+   \; F(x) \;
+   {\bf d} x_0 \cdots {\bf d} x_{m-1}
+   \; + \;
+   \sum_{i=0}^{m-1}
+   O \left[ ( b[i] - a[i] ) / 2^{n[i]-1} \right]^{2(p[i]+1)}
+
+Include
+*******
+The file ``cppad/utility/romberg_mul.hpp``
+is included by ``cppad/cppad.hpp``
+but it can also be included separately with out the rest of
+the ``CppAD`` routines.
+
+m
+*
+The template parameter *m* must be convertible to a ``size_t``
+object with a value that can be determined at compile time; for example
+``2`` .
+It determines the dimension of the domain space for the integration.
+
+r
+*
+The return value *r* has prototype
+
+   *Float* *r*
+
+It is the estimate computed by ``RombergMul`` for the integral above
+(see description of :ref:`RombergMul@Float` below).
+
+F
+*
+The object *F* has the prototype
+
+   *Fun* & *F*
+
+It must support the operation
+
+   *F* ( *x* )
+
+The argument *x* to *F* has prototype
+
+   ``const`` *Float* & *x*
+
+The return value of *F* is a *Float* object
+
+a
+*
+The argument *a* has prototype
+
+   ``const`` *FloatVector* & *a*
+
+It specifies the lower limit for the integration
+(see description of :ref:`RombergMul@FloatVector` below).
+
+b
+*
+The argument *b* has prototype
+
+   ``const`` *FloatVector* & *b*
+
+It specifies the upper limit for the integration.
+
+n
+*
+The argument *n* has prototype
+
+   ``const`` *SizeVector* & *n*
+
+A total number of :math:`2^{n[i]-1} + 1`
+evaluations of *F* ( *x* ) are used to estimate the integral
+with respect to :math:`{\bf d} x_i`.
+
+p
+*
+The argument *p* has prototype
+
+   ``const`` *SizeVector* & *p*
+
+For :math:`i = 0 , \ldots , m-1`,
+:math:`n[i]` determines the accuracy order in the
+approximation for the integral
+that is returned by ``RombergMul`` .
+The values in *p* must be less than or equal *n* ; i.e.,
+*p* [ *i* ] <= *n* [ *i* ] .
+
+e
+*
+The argument *e* has prototype
+
+   *Float* & *e*
+
+The input value of *e* does not matter
+and its output value is an approximation for the absolute error in
+the integral estimate.
+
+Float
+*****
+The type *Float* is defined as the type of the elements of
+:ref:`RombergMul@FloatVector` .
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
+if this is not the case.
+In addition, if *x* and *y* are *Float* objects,
+
+   *x* < *y*
+
+returns the ``bool`` value true if *x* is less than
+*y* and false otherwise.
+
+FloatVector
+***********
+The type *FloatVector* must be a :ref:`SimpleVector-name` class.
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+{xrst_toc_hidden
+   example/utility/romberg_mul.cpp
+}
+Example
+*******
+The file :ref:`romberg_mul.cpp-name`
+contains an example and test a test of using this routine.
+
+Source Code
+***********
+The source code for this routine is in the file
+``cppad/romberg_mul.hpp`` .
+
+{xrst_end RombergMul}

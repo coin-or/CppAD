@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="mul_level_ode.cpp, taylor's, ode, solver:, a, multi-level, ad, example, and, test" name="keywords" />
+<meta content="see, also" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="ode" name="keywords" />
+<meta content="ode, solution" name="keywords" />
+<meta content="derivative, of, ode, solution" name="keywords" />
+<meta content="taylor's, method, using, ad" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mul_level_ode.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mul_level_adolc_ode.cpp" href="mul_level_adolc_ode.cpp.html" />
+    <link rel="prev" title="ode_stiff.cpp" href="ode_stiff.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Example.html">Example</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="get_started.cpp.html">get_started.cpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_all_examples.html">list_all_examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="General.html">General</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ad_fun.cpp.html">ad_fun.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ad_in_c.cpp.html">ad_in_c.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conj_grad.cpp.html">conj_grad.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_eigen.hpp.html">cppad_eigen.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_minor_det.cpp.html">hes_minor_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_lu_det.cpp.html">hes_lu_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface2c.cpp.html">interface2c.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jac_minor_det.cpp.html">jac_minor_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jac_lu_det.cpp.html">jac_lu_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level.html">mul_level</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ode_stiff.cpp.html">ode_stiff.cpp</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mul_level_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level_adolc_ode.cpp.html">mul_level_adolc_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stack_machine.cpp.html">stack_machine.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.html">code_gen_fun</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.hpp.html">code_gen_fun.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.cpp.html">code_gen_fun.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_utility.html">example_utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testvector.html">testvector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wno_conversion.html">wno_conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Example.html">Example</a> &raquo;</li>
+          <li><a href="General.html">General</a> &raquo;</li>
+      <li>mul_level_ode.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mul_level_ode.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="mul-level-ode-cpp">
+<span id="mul-level-ode-cpp-name"></span><h1>mul_level_ode.cpp<a class="headerlink" href="#mul-level-ode-cpp" title="Permalink to this headline"></a></h1>
+<section id="taylor-s-ode-solver-a-multi-level-ad-example-and-test">
+<span id="mul-level-ode-cpp-title"></span><span id="index-0"></span><h2>Taylor’s Ode Solver: A Multi-Level AD Example and Test<a class="headerlink" href="#taylor-s-ode-solver-a-multi-level-ad-example-and-test" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#see-also" id="id1">See Also</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#ode" id="id3">ODE</a></p></li>
+<li><p><a class="reference internal" href="#ode-solution" id="id4">ODE Solution</a></p></li>
+<li><p><a class="reference internal" href="#derivative-of-ode-solution" id="id5">Derivative of ODE Solution</a></p></li>
+<li><p><a class="reference internal" href="#taylor-s-method-using-ad" id="id6">Taylor’s Method Using AD</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id7">Source</a></p></li>
+</ul>
+</div>
+<section id="see-also">
+<span id="mul-level-ode-cpp-see-also"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="taylor_ode.cpp.html#taylor-ode-cpp-name"><span class="std std-ref">taylor_ode.cpp</span></a> , <a class="reference internal" href="base2ad.cpp.html#base2ad-cpp-name"><span class="std std-ref">base2ad.cpp</span></a> , <a class="reference internal" href="mul_level_adolc_ode.cpp.html#mul-level-adolc-ode-cpp-name"><span class="std std-ref">mul_level_adolc_ode.cpp</span></a></p>
+</section>
+<section id="purpose">
+<span id="mul-level-ode-cpp-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This is a realistic example using
+two levels of AD; see <a class="reference internal" href="mul_level.html#mul-level-name"><span class="std std-ref">mul_level</span></a> .
+The first level uses <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> to tape the solution of an
+ordinary differential equation.
+This solution is then differentiated with respect to a parameter vector.
+The second level uses <code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code>
+to take derivatives during the solution of the differential equation.
+These derivatives are used in the application
+of Taylor’s method to the solution of the ODE.</p>
+</section>
+<section id="ode">
+<span id="mul-level-ode-cpp-ode"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">ODE</a><a class="headerlink" href="#ode" title="Permalink to this headline"></a></h3>
+<p>For this example the function
+<span class="math notranslate nohighlight">\(y : \B{R} \times \B{R}^n \rightarrow \B{R}^n\)</span> is defined by
+<span class="math notranslate nohighlight">\(y(0, x) = 0\)</span> and
+<span class="math notranslate nohighlight">\(\partial_t y(t, x) = g(y, x)\)</span> where
+<span class="math notranslate nohighlight">\(g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}g(y, x) =
+\left( \begin{array}{c}
+      x_0     \\
+      x_1 y_0 \\
+      \vdots  \\
+      x_{n-1} y_{n-2}
+\end{array} \right)\end{split}\]</div>
+</section>
+<section id="ode-solution">
+<span id="mul-level-ode-cpp-ode-solution"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">ODE Solution</a><a class="headerlink" href="#ode-solution" title="Permalink to this headline"></a></h3>
+<p>The solution for this example can be calculated by
+starting with the first row and then using the solution
+for the first row to solve the second and so on.
+Doing this we obtain</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y(t, x ) =
+\left( \begin{array}{c}
+   x_0 t                  \\
+   x_1 x_0 t^2 / 2        \\
+   \vdots                 \\
+   x_{n-1} x_{n-2} \ldots x_0 t^n / n !
+\end{array} \right)\end{split}\]</div>
+</section>
+<section id="derivative-of-ode-solution">
+<span id="mul-level-ode-cpp-derivative-of-ode-solution"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Derivative of ODE Solution</a><a class="headerlink" href="#derivative-of-ode-solution" title="Permalink to this headline"></a></h3>
+<p>Differentiating the solution above,
+with respect to the parameter vector <span class="math notranslate nohighlight">\(x\)</span>,
+we notice that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\partial_x y(t, x ) =
+\left( \begin{array}{cccc}
+y_0 (t,x) / x_0      &amp; 0                   &amp; \cdots &amp; 0      \\
+y_1 (t,x) / x_0      &amp; y_1 (t,x) / x_1     &amp; 0      &amp; \vdots \\
+\vdots               &amp; \vdots              &amp; \ddots &amp; 0      \\
+y_{n-1} (t,x) / x_0  &amp; y_{n-1} (t,x) / x_1 &amp; \cdots &amp; y_{n-1} (t,x) / x_{n-1}
+\end{array} \right)\end{split}\]</div>
+</section>
+<section id="taylor-s-method-using-ad">
+<span id="mul-level-ode-cpp-taylor-s-method-using-ad"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Taylor’s Method Using AD</a><a class="headerlink" href="#taylor-s-method-using-ad" title="Permalink to this headline"></a></h3>
+<p>We define the function <span class="math notranslate nohighlight">\(z(t, x)\)</span> by the equation</p>
+<div class="math notranslate nohighlight">
+\[z ( t , x ) = g[ y ( t , x ) ] = h [ x , y( t , x ) ]\]</div>
+<p>see <a class="reference internal" href="taylor_ode.html#taylor-ode-name"><span class="std std-ref">taylor_ode</span></a> for the method used to compute the
+Taylor coefficients w.r.t <span class="math notranslate nohighlight">\(t\)</span> of <span class="math notranslate nohighlight">\(y(t, x)\)</span>.</p>
+</section>
+<section id="source">
+<span id="mul-level-ode-cpp-source"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// =========================================================================</span>
+<span class="c1">// define types for each level</span>
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// BEGIN empty namespace</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w">          </span><span class="n">a1double</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="o">&lt;</span><span class="n">a1double</span><span class="o">&gt;</span><span class="w">        </span><span class="n">a2double</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="w">    </span><span class="n">d_vector</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="n">a1double</span><span class="p">)</span><span class="w">  </span><span class="n">a1vector</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="n">a2double</span><span class="p">)</span><span class="w">  </span><span class="n">a2vector</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// -------------------------------------------------------------------------</span>
+<span class="c1">// class definition for C++ function object that defines ODE</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Ode</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// copy of a that is set by constructor and used by g(y)</span>
+<span class="w">   </span><span class="n">a1vector</span><span class="w"> </span><span class="n">a1x_</span><span class="p">;</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// constructor</span>
+<span class="w">   </span><span class="n">Ode</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">a1vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a1x</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a1x_</span><span class="p">(</span><span class="n">a1x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// the function g(y) is evaluated with two levels of taping</span>
+<span class="w">   </span><span class="n">a2vector</span><span class="w"> </span><span class="k">operator</span><span class="p">()</span><span class="w"></span>
+<span class="w">   </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">a2vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a2y</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a2y</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">a2vector</span><span class="w"> </span><span class="nf">a2g</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">a2g</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1x_</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">a2g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1x_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a2y</span><span class="p">[</span><span class="n">i</span><span class="mi">-1</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">a2g</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="c1">// -------------------------------------------------------------------------</span>
+<span class="c1">// Routine that uses Taylor&#39;s method to solve ordinary differential equaitons</span>
+<span class="c1">// and allows for algorithmic differentiation of the solution.</span>
+<span class="n">a1vector</span><span class="w"> </span><span class="n">taylor_ode</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">Ode</span><span class="w">                            </span><span class="n">G</span><span class="w">       </span><span class="p">,</span><span class="w">  </span><span class="c1">// function that defines the ODE</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                         </span><span class="n">order</span><span class="w">   </span><span class="p">,</span><span class="w">  </span><span class="c1">// order of Taylor&#39;s method used</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">                         </span><span class="n">nstep</span><span class="w">   </span><span class="p">,</span><span class="w">  </span><span class="c1">// number of steps to take</span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">a1double</span><span class="o">&amp;</span><span class="w">                </span><span class="n">a1dt</span><span class="w">    </span><span class="p">,</span><span class="w">  </span><span class="c1">// Delta t for each step</span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">a1vector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a1y_ini</span><span class="p">)</span><span class="w">  </span><span class="c1">// y(t) at the initial time</span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// some temporary indices</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">ell</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// number of variables in the ODE</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1y_ini</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// copies of x and g(y) with two levels of taping</span>
+<span class="w">   </span><span class="n">a2vector</span><span class="w">   </span><span class="nf">a2y</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">a2z</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// y, y^{(k)} , z^{(k)}, and y^{(k+1)}</span>
+<span class="w">   </span><span class="n">a1vector</span><span class="w">  </span><span class="nf">a1y</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">a1y_k</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">a1z_k</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">a1y_kp</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// initialize x</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a1y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1y_ini</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// loop with respect to each step of Taylors method</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">ell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ell</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nstep</span><span class="p">;</span><span class="w"> </span><span class="n">ell</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// prepare to compute derivatives using a1double</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">a2y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1y</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">a2y</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// evaluate ODE in a2double</span>
+<span class="w">      </span><span class="n">a2z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="p">(</span><span class="n">a2y</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// define differentiable version of a1g: y -&gt; z</span>
+<span class="w">      </span><span class="c1">// that computes its derivatives using a1double objects</span>
+<span class="w">      </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="n">a1double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a1g</span><span class="p">(</span><span class="n">a2y</span><span class="p">,</span><span class="w"> </span><span class="n">a2z</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// Use Taylor&#39;s method to take a step</span>
+<span class="w">      </span><span class="n">a1y_k</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">a1y</span><span class="p">;</span><span class="w">     </span><span class="c1">// initialize y^{(k)}</span>
+<span class="w">      </span><span class="n">a1double</span><span class="w"> </span><span class="n">a1dt_kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1dt</span><span class="p">;</span><span class="w">  </span><span class="c1">// initialize dt^(k+1)</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">order</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="c1">// evaluate k-th order Taylor coefficient of y</span>
+<span class="w">         </span><span class="n">a1z_k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1g</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">a1y_k</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w">  </span><span class="c1">// convert to (k+1)-Taylor coefficient for x</span>
+<span class="w">            </span><span class="n">a1y_kp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1z_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">a1double</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">            </span><span class="c1">// add term for to this Taylor coefficient</span>
+<span class="w">            </span><span class="c1">// to solution for y(t, x)</span>
+<span class="w">            </span><span class="n">a1y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w">    </span><span class="o">+=</span><span class="w"> </span><span class="n">a1y_kp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a1dt_kp</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// next power of t</span>
+<span class="w">         </span><span class="n">a1dt_kp</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">a1dt</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// next Taylor coefficient</span>
+<span class="w">         </span><span class="n">a1y_k</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">a1y_kp</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">a1y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// END empty namespace</span>
+<span class="c1">// ==========================================================================</span>
+<span class="c1">// Routine that tests alogirhtmic differentiation of solutions computed</span>
+<span class="c1">// by the routine taylor_ode.</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">mul_level_ode</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// number of components in differential equation</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// some temporary indices</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// parameter vector in both double and a1double</span>
+<span class="w">   </span><span class="n">d_vector</span><span class="w">  </span><span class="nf">x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">a1vector</span><span class="w">  </span><span class="nf">a1x</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a1x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// declare the parameters as the independent variable</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">a1x</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// arguments to taylor_ode</span>
+<span class="w">   </span><span class="n">Ode</span><span class="w"> </span><span class="nf">G</span><span class="p">(</span><span class="n">a1x</span><span class="p">);</span><span class="w">                </span><span class="c1">// function that defines the ODE</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">   </span><span class="n">order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w">      </span><span class="c1">// order of Taylor&#39;s method used</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w">   </span><span class="n">nstep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">      </span><span class="c1">// number of steps to take</span>
+<span class="w">   </span><span class="n">a1double</span><span class="w"> </span><span class="n">a1dt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="mf">1.</span><span class="p">);</span><span class="w">     </span><span class="c1">// Delta t for each step</span>
+<span class="w">   </span><span class="c1">// value of y(t, x) at the initial time</span>
+<span class="w">   </span><span class="n">a1vector</span><span class="w"> </span><span class="nf">a1y_ini</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">a1y_ini</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// integrate the differential equation</span>
+<span class="w">   </span><span class="n">a1vector</span><span class="w"> </span><span class="nf">a1y_final</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">a1y_final</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taylor_ode</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">nstep</span><span class="p">,</span><span class="w"> </span><span class="n">a1dt</span><span class="p">,</span><span class="w"> </span><span class="n">a1y_ini</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// define differentiable fucntion object f : x -&gt; y_final</span>
+<span class="w">   </span><span class="c1">// that computes its derivatives in double</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">a1x</span><span class="p">,</span><span class="w"> </span><span class="n">a1y_final</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// check function values</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">t</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">nstep</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Value</span><span class="p">(</span><span class="n">a1dt</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">check</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">(</span><span class="n">Value</span><span class="p">(</span><span class="n">a1y_final</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="w"> </span><span class="n">check</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// evaluate the Jacobian of h at a</span>
+<span class="w">   </span><span class="n">d_vector</span><span class="w"> </span><span class="n">jac</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// There appears to be a bug in g++ version 4.4.2 because it generates</span>
+<span class="w">   </span><span class="c1">// a warning for the equivalent form</span>
+<span class="w">   </span><span class="c1">// d_vector jac = f.Jacobian(x);</span>
+
+<span class="w">   </span><span class="c1">// check Jacobian</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">jac_ij</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jac</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Value</span><span class="p">(</span><span class="w"> </span><span class="n">a1y_final</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">(</span><span class="n">jac_ij</span><span class="p">,</span><span class="w"> </span><span class="n">check</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ode_stiff.cpp.html" class="btn btn-neutral float-left" title="ode_stiff.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mul_level_adolc_ode.cpp.html" class="btn btn-neutral float-right" title="mul_level_adolc_ode.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

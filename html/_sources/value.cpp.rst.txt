@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/value.cpp
+
+{xrst_begin value.cpp}
+
+Convert From AD to its Base Type: Example and Test
+##################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end value.cpp}

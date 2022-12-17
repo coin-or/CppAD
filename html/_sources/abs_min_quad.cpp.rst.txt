@@ -1,0 +1,36 @@
+lines 7-40 of file: example/abs_normal/abs_min_quad.cpp
+
+{xrst_begin abs_min_quad.cpp}
+{xrst_spell
+   minimizer
+}
+
+abs_min_quad: Example and Test
+##############################
+
+Purpose
+*******
+The function
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+
+   f( x_0, x_1  )
+   =
+   ( x_0^2 + x_1^2 ) / 2 +  | x_0 - 5 | + | x_1 + 5 |
+
+For this case, the :ref:`abs_min_quad-name` object should be equal
+to the function itself.
+In addition, the function is convex and
+:ref:`abs_min_quad-name` should find its global minimizer.
+The minimizer of this function is
+:math:`x_0 = 1`, :math:`x_1 = -1`.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_min_quad.cpp}

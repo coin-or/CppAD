@@ -1,0 +1,17 @@
+lines 6-20 of file: example/optimize/conditional_skip.cpp
+
+{xrst_begin optimize_conditional_skip.cpp}
+
+Optimize Conditional Expressions: Example and Test
+##################################################
+
+See Also
+********
+:ref:`cond_exp.cpp-name`
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end optimize_conditional_skip.cpp}

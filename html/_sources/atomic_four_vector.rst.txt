@@ -1,0 +1,115 @@
+lines 5-117 of file: include/cppad/example/atomic_four/vector/vector.xrst
+
+{xrst_begin atomic_four_vector}
+
+Atomic Vector Element-wise Operators: Example and Test
+######################################################
+
+Syntax
+******
+
+| ``atomic_vector_op`` *vec_op* ( *name* )
+| *vec_op* ( *op* , *x* , *y* )
+
+op
+**
+The value *op* has the following possible values:
+{xrst_literal
+   include/cppad/example/atomic_four/vector/vector.hpp
+   // BEGIN op_enum_t
+   // END op_enum_t
+}
+
+Purpose
+*******
+This atomic function class can be used as a general purpose utility.
+It is unclear how much benefit there is do doing so.
+This is because the number of operations internal to an element-wise
+atomic function is not much more than the work required to pass the
+arguments to the atomic function.
+
+Vector Operations
+=================
+This atomic function unary operations
+
+   *y* = *op* ( ``u`` )
+
+and binary operations
+
+   *y* = *u* *op* *v*
+
+where *op* , *u* and *v* are defined below.
+
+atomic_four
+===========
+This example demonstrates all the callbacks for an
+:ref:`atomic_four-name` function.
+
+base2ad
+=======
+It include examples for how one can
+define ``AD<`` *Base* > atomic operations using atomic operators.
+This avoids expanding the atomic operator to an operator for each element
+when recording derivative calculations.
+For example, notice the difference between ``forward_add``
+for the ``double`` and the ``AD<double>`` cases
+(note that copying an AD variable does not create a new variable):
+{xrst_literal
+   include/cppad/example/atomic_four/vector/add_op.hpp
+   // BEGIN forward_add
+   // END forward_add
+}
+
+x
+*
+We use *x* to denote the argument to the atomic function.
+The length of *x* is denoted by *n* .
+
+m
+*
+This is the length of the vectors in the operations.
+In the case of unary (binary) operators
+*m* = *n*  ( *m* = *n*  / 2 ).
+
+u
+*
+We use *u* to denote the following sub-vector of *x* :
+
+   *u* = ( *x* [1] , ... , *x* [ *m* ] )
+
+v
+*
+For binary operators,
+we use *v* to denote the following sub-vector of *x* :
+
+   *v* = ( *x* [ *m* + 1] , ... , *x* [2 * *m* ] )
+
+y
+*
+We use *y* to denote the atomic function return value.
+The length of *y* is equal to *m* .
+
+AD<double>
+**********
+During ``AD<double>`` operations, copying variables
+from one vector to another does not add any operations to the
+resulting tape.
+
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/example/atomic_four/vector/implement.xrst
+   example/atomic_four/vector/add.cpp
+   example/atomic_four/vector/div.cpp
+   example/atomic_four/vector/hes_sparsity.cpp
+   example/atomic_four/vector/jac_sparsity.cpp
+   example/atomic_four/vector/mul.cpp
+   example/atomic_four/vector/neg.cpp
+   example/atomic_four/vector/rev_depend.cpp
+   example/atomic_four/vector/sub.cpp
+}
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
+
+{xrst_end atomic_four_vector}

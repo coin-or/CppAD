@@ -1,0 +1,15 @@
+lines 7-19 of file: example/jit/dynamic.cpp
+
+{xrst_begin jit_dynamic.cpp}
+
+JIT With Dynamic Parameters: Example and Test
+#############################################
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end jit_dynamic.cpp}

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="sparse_hessian, sparse, hessian" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="w" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="work" name="keywords" />
+<meta content="column, subset" name="keywords" />
+<meta content="row,, col" name="keywords" />
+<meta content="hes" name="keywords" />
+<meta content="work" name="keywords" />
+<meta content="color_method" name="keywords" />
+<meta content="colpack.star, deprecated, 2017-06-01" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="n_sweep" name="keywords" />
+<meta content="basevector" name="keywords" />
+<meta content="setvector" name="keywords" />
+<meta content="restrictions" name="keywords" />
+<meta content="sizevector" name="keywords" />
+<meta content="uses, forward" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="subset, hessian" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sparse_hessian &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sparse_hessian.cpp" href="sparse_hessian.cpp.html" />
+    <link rel="prev" title="sparse_hes.cpp" href="sparse_hes.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sparse_jac.html">sparse_jac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_jacobian.html">sparse_jacobian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hes.html">sparse_hes</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">sparse_hessian</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="sparse_hessian.cpp.html">sparse_hessian.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sub_sparse_hes.cpp.html">sub_sparse_hes.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sparse_sub_hes.cpp.html">sparse_sub_hes.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="subgraph_jac_rev.html">subgraph_jac_rev</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparse_derivative.html">sparse_derivative</a> &raquo;</li>
+      <li>sparse_hessian</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sparse_hessian.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="sparse-hessian">
+<span id="sparse-hessian-name"></span><h1>sparse_hessian<a class="headerlink" href="#sparse-hessian" title="Permalink to this headline"></a></h1>
+<section id="sparse-hessian-title">
+<span id="index-0"></span><span id="id1"></span><h2>Sparse Hessian<a class="headerlink" href="#sparse-hessian-title" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id5">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id6">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id7">f</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id8">x</a></p></li>
+<li><p><a class="reference internal" href="#w" id="id9">w</a></p></li>
+<li><p><a class="reference internal" href="#p" id="id10">p</a></p>
+<ul>
+<li><p><a class="reference internal" href="#sparse-hessian-p-purpose" id="id11">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#work" id="id12">work</a></p></li>
+<li><p><a class="reference internal" href="#column-subset" id="id13">Column Subset</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#row-col" id="id14">row, col</a></p></li>
+<li><p><a class="reference internal" href="#hes" id="id15">hes</a></p></li>
+<li><p><a class="reference internal" href="#sparse-hessian-work" id="id16">work</a></p>
+<ul>
+<li><p><a class="reference internal" href="#color-method" id="id17">color_method</a></p></li>
+<li><p><a class="reference internal" href="#colpack-star-deprecated-2017-06-01" id="id18">colpack.star Deprecated 2017-06-01</a></p></li>
+<li><p><a class="reference internal" href="#sparse-hessian-work-p" id="id19">p</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#n-sweep" id="id20">n_sweep</a></p></li>
+<li><p><a class="reference internal" href="#basevector" id="id21">BaseVector</a></p></li>
+<li><p><a class="reference internal" href="#setvector" id="id22">SetVector</a></p>
+<ul>
+<li><p><a class="reference internal" href="#restrictions" id="id23">Restrictions</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#sizevector" id="id24">SizeVector</a></p></li>
+<li><p><a class="reference internal" href="#uses-forward" id="id25">Uses Forward</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id26">Example</a></p></li>
+<li><p><a class="reference internal" href="#subset-hessian" id="id27">Subset Hessian</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="sparse-hessian-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id5">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>hes</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> ( <em>x</em> , <em>w</em> )</div>
+<div class="line"><em>hes</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> ( <em>x</em> , <em>w</em> , <em>p</em> )</div>
+<div class="line"><em>n_sweep</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> ( <em>x</em> , <em>w</em> , <em>p</em> , <em>row</em> , <em>col</em> , <em>hes</em> , <em>work</em> )</div>
+</div>
+</section>
+<section id="purpose">
+<span id="sparse-hessian-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id6">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(n\)</span> for the <a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> size,
+and <span class="math notranslate nohighlight">\(m\)</span> for the <a class="reference internal" href="fun_property.html#fun-property-range"><span class="std std-ref">Range</span></a> size of <em>f</em> .
+We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> do denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a>
+corresponding to <em>f</em> .
+The syntax above sets <em>hes</em> to the Hessian</p>
+<div class="math notranslate nohighlight">
+\[H(x) = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x)\]</div>
+<p>This routine takes advantage of the sparsity of the Hessian
+in order to reduce the amount of computation necessary.
+If <em>row</em> and <em>col</em> are present, it also takes
+advantage of the reduced set of elements of the Hessian that
+need to be computed.
+One can use speed tests (e.g. <a class="reference internal" href="speed_test.html#speed-test-name"><span class="std std-ref">speed_test</span></a> )
+to verify that results are computed faster
+than when using the routine <a class="reference internal" href="Hessian.html#hessian-name"><span class="std std-ref">Hessian</span></a> .</p>
+</section>
+<section id="f">
+<span id="sparse-hessian-f"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id7">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Note that the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> is not <code class="docutils literal notranslate"><span class="pre">const</span></code>
+(see <a class="reference internal" href="#sparse-hessian-uses-forward"><span class="std std-ref">Uses Forward</span></a> below).</p>
+</section>
+<section id="x">
+<span id="sparse-hessian-x"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id8">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>The argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BaseVector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#sparse-hessian-basevector"><span class="std std-ref">BaseVector</span></a> below)
+and its size
+must be equal to <em>n</em> , the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .
+It specifies
+that point at which to evaluate the Hessian.</p>
+</section>
+<section id="w">
+<span id="sparse-hessian-w"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id9">w</a><a class="headerlink" href="#w" title="Permalink to this headline"></a></h3>
+<p>The argument <em>w</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BaseVector</em> &amp; <em>w</em></p>
+</div></blockquote>
+<p>and size <span class="math notranslate nohighlight">\(m\)</span>.
+It specifies the value of <span class="math notranslate nohighlight">\(w_i\)</span> in the expression
+for <em>hes</em> .
+The more components of <span class="math notranslate nohighlight">\(w\)</span> that are identically zero,
+the more sparse the resulting Hessian may be (and hence the more efficient
+the calculation of <em>hes</em> may be).</p>
+</section>
+<section id="p">
+<span id="sparse-hessian-p"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id10">p</a><a class="headerlink" href="#p" title="Permalink to this headline"></a></h3>
+<p>The argument <em>p</em> is optional and has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SetVector</em> &amp; <em>p</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#sparse-hessian-setvector"><span class="std std-ref">SetVector</span></a> below)
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+its size is <span class="math notranslate nohighlight">\(n * n\)</span>.
+If it has elements of type <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+its size is <span class="math notranslate nohighlight">\(n\)</span> and all its set elements are between
+zero and <span class="math notranslate nohighlight">\(n - 1\)</span>.
+It specifies a
+<a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a>
+for the Hessian <span class="math notranslate nohighlight">\(H(x)\)</span>.</p>
+<section id="sparse-hessian-p-purpose">
+<span id="index-7"></span><span id="id2"></span><h4><a class="toc-backref" href="#id11">Purpose</a><a class="headerlink" href="#sparse-hessian-p-purpose" title="Permalink to this headline"></a></h4>
+<p>If this sparsity pattern does not change between calls to
+<code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> , it should be faster to calculate <em>p</em> once and
+pass this argument to <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> .
+If you specify <em>p</em> , CppAD will use the same
+type of sparsity representation
+(vectors of <code class="docutils literal notranslate"><span class="pre">bool</span></code> or vectors of <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> )
+for its internal calculations.
+Otherwise, the representation
+for the internal calculations is unspecified.</p>
+</section>
+<section id="work">
+<span id="sparse-hessian-p-work"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id12">work</a><a class="headerlink" href="#work" title="Permalink to this headline"></a></h4>
+<p>If you specify <em>work</em> in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+<a class="reference internal" href="#sparse-hessian-work-p"><span class="std std-ref">p</span></a> under the <em>work</em> description.</p>
+</section>
+<section id="column-subset">
+<span id="sparse-hessian-p-column-subset"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id13">Column Subset</a><a class="headerlink" href="#column-subset" title="Permalink to this headline"></a></h4>
+<p>If the arguments <em>row</em> and <em>col</em> are present,
+and <a class="reference internal" href="#sparse-hessian-work-color-method"><span class="std std-ref">color_method</span></a> is
+<code class="docutils literal notranslate"><span class="pre">cppad.general</span></code> or <code class="docutils literal notranslate"><span class="pre">cppad.symmetric</span></code> ,
+it is not necessary to compute the entire sparsity pattern.
+Only the following subset of column values will matter:</p>
+<blockquote>
+<div><p>{ <em>col</em> [ <em>k</em> ] : <em>k</em> = 0 , … , <em>K</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> }</p>
+</div></blockquote>
+<p>.</p>
+</section>
+</section>
+<section id="row-col">
+<span id="sparse-hessian-row-col"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id14">row, col</a><a class="headerlink" href="#row-col" title="Permalink to this headline"></a></h3>
+<p>The arguments <em>row</em> and <em>col</em> are optional and have prototype</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SizeVector</em> &amp; <em>row</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>SizeVector</em> &amp; <em>col</em></div>
+</div>
+<p>(see <a class="reference internal" href="#sparse-hessian-sizevector"><span class="std std-ref">SizeVector</span></a> below).
+They specify which rows and columns of <span class="math notranslate nohighlight">\(H (x)\)</span> are
+returned and in what order.
+We use <span class="math notranslate nohighlight">\(K\)</span> to denote the value <em>hes</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> ()
+which must also equal the size of <em>row</em> and <em>col</em> .
+Furthermore,
+for <span class="math notranslate nohighlight">\(k = 0 , \ldots , K-1\)</span>, it must hold that
+<span class="math notranslate nohighlight">\(row[k] &lt; n\)</span> and <span class="math notranslate nohighlight">\(col[k] &lt; n\)</span>.
+In addition,
+all of the <span class="math notranslate nohighlight">\((row[k], col[k])\)</span> pairs must correspond to a true value
+in the sparsity pattern <em>p</em> .</p>
+</section>
+<section id="hes">
+<span id="sparse-hessian-hes"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id15">hes</a><a class="headerlink" href="#hes" title="Permalink to this headline"></a></h3>
+<p>The result <em>hes</em> has prototype</p>
+<blockquote>
+<div><p><em>BaseVector</em> <em>hes</em></p>
+</div></blockquote>
+<p>In the case where <em>row</em> and <em>col</em> are not present,
+the size of <em>hes</em> is <span class="math notranslate nohighlight">\(n * n\)</span> and
+its size is <span class="math notranslate nohighlight">\(n * n\)</span>.
+In this case, for <span class="math notranslate nohighlight">\(i = 0 , \ldots , n - 1\)</span>
+and <span class="math notranslate nohighlight">\(ell = 0 , \ldots , n - 1\)</span></p>
+<div class="math notranslate nohighlight">
+\[hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )\]</div>
+<p>In the case where the arguments <em>row</em> and <em>col</em> are present,
+we use <span class="math notranslate nohighlight">\(K\)</span> to denote the size of <em>hes</em> .
+The input value of its elements does not matter.
+Upon return, for <span class="math notranslate nohighlight">\(k = 0 , \ldots , K - 1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[hes [ k ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } (x)
+\; , \;
+\; {\rm where} \;
+j = row[k]
+\; {\rm and } \;
+\ell = col[k]\]</div>
+</section>
+<section id="sparse-hessian-work">
+<span id="index-12"></span><span id="id3"></span><h3><a class="toc-backref" href="#id16">work</a><a class="headerlink" href="#sparse-hessian-work" title="Permalink to this headline"></a></h3>
+<p>If this argument is present, it has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">sparse_hessian_work&amp;</span></code> <em>work</em></p>
+</div></blockquote>
+<p>This object can only be used with the routines <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> .
+During its the first use, information is stored in <em>work</em> .
+This is used to reduce the work done by future calls to <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code>
+with the same <em>f</em> , <em>p</em> , <em>row</em> , and <em>col</em> .
+If a future call is made where any of these values have changed,
+you must first call <em>work</em> . <code class="docutils literal notranslate"><span class="pre">clear</span></code> ()
+to inform CppAD that this information needs to be recomputed.</p>
+<section id="color-method">
+<span id="sparse-hessian-work-color-method"></span><span id="index-13"></span><h4><a class="toc-backref" href="#id17">color_method</a><a class="headerlink" href="#color-method" title="Permalink to this headline"></a></h4>
+<p>The coloring algorithm determines which rows and columns
+can be computed during the same sweep.
+This field has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::string</span></code> <em>work</em> . <code class="docutils literal notranslate"><span class="pre">color_method</span></code></p>
+</div></blockquote>
+<p>This value only matters on the first call to <code class="docutils literal notranslate"><span class="pre">sparse_hessian</span></code> that
+follows the <em>work</em> constructor or a call to
+<em>work</em> . <code class="docutils literal notranslate"><span class="pre">clear</span></code> () .</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&quot;cppad.symmetric&quot;</span></code></p>
+</div></blockquote>
+<p>This is the default coloring method (after a constructor or <code class="docutils literal notranslate"><span class="pre">clear()</span></code> ).
+It takes advantage of the fact that the Hessian matrix
+is symmetric to find a coloring that requires fewer
+<a class="reference internal" href="#sparse-hessian-n-sweep"><span class="std std-ref">sweeps</span></a> .</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&quot;cppad.general&quot;</span></code></p>
+</div></blockquote>
+<p>This is the same as the <code class="docutils literal notranslate"><span class="pre">&quot;cppad&quot;</span></code> method for the
+<a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-work-color-method"><span class="std std-ref">sparse_jacobian</span></a> calculation.</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&quot;colpack.symmetric&quot;</span></code></p>
+</div></blockquote>
+<p>This method requires that
+<a class="reference internal" href="colpack_prefix.html#colpack-prefix-name"><span class="std std-ref">colpack_prefix</span></a> was specified on the
+<a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a> line.
+It also takes advantage of the fact that the Hessian matrix is symmetric.</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&quot;colpack.general&quot;</span></code></p>
+</div></blockquote>
+<p>This is the same as the <code class="docutils literal notranslate"><span class="pre">&quot;colpack&quot;</span></code> method for the
+<a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-work-color-method"><span class="std std-ref">sparse_jacobian</span></a> calculation.</p>
+</section>
+<section id="colpack-star-deprecated-2017-06-01">
+<span id="sparse-hessian-work-colpack-star-deprecated-2017-06-01"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id18">colpack.star Deprecated 2017-06-01</a><a class="headerlink" href="#colpack-star-deprecated-2017-06-01" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">colpack.star</span></code> method is deprecated.
+It is the same as the <code class="docutils literal notranslate"><span class="pre">colpack.symmetric</span></code>
+which should be used instead.</p>
+</section>
+<section id="sparse-hessian-work-p">
+<span id="index-15"></span><span id="id4"></span><h4><a class="toc-backref" href="#id19">p</a><a class="headerlink" href="#sparse-hessian-work-p" title="Permalink to this headline"></a></h4>
+<p>If <em>work</em> is present, and it is not the first call after
+its construction or a clear,
+the sparsity pattern <em>p</em> is not used.
+This enables one to free the sparsity pattern
+and still compute corresponding sparse Hessians.</p>
+</section>
+</section>
+<section id="n-sweep">
+<span id="sparse-hessian-n-sweep"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id20">n_sweep</a><a class="headerlink" href="#n-sweep" title="Permalink to this headline"></a></h3>
+<p>The return value <em>n_sweep</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>n_sweep</em></p>
+</div></blockquote>
+<p>It is the number of first order forward sweeps
+used to compute the requested Hessian values.
+Each first forward sweep is followed by a second order reverse sweep
+so it is also the number of reverse sweeps.
+This is proportional to the total work that <code class="docutils literal notranslate"><span class="pre">SparseHessian</span></code> does,
+not counting the zero order forward sweep,
+or the work to combine multiple columns into a single
+forward-reverse sweep pair.</p>
+</section>
+<section id="basevector">
+<span id="sparse-hessian-basevector"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id21">BaseVector</a><a class="headerlink" href="#basevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>BaseVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="setvector">
+<span id="sparse-hessian-setvector"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id22">SetVector</a><a class="headerlink" href="#setvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SetVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">bool</span></code> or <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ;
+see <a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a> for a discussion
+of the difference.
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+<section id="restrictions">
+<span id="sparse-hessian-setvector-restrictions"></span><span id="index-19"></span><h4><a class="toc-backref" href="#id23">Restrictions</a><a class="headerlink" href="#restrictions" title="Permalink to this headline"></a></h4>
+<p>If <em>SetVector</em> has elements of <code class="docutils literal notranslate"><span class="pre">std::set&lt;size_t&gt;</span></code> ,
+then <em>p</em> [ <em>i</em> ] must return a reference (not a copy) to the
+corresponding set.
+According to section 26.3.2.3 of the 1998 C++ standard,
+<code class="docutils literal notranslate"><span class="pre">std::valarray&lt;</span> <span class="pre">std::set&lt;size_t&gt;</span> <span class="pre">&gt;</span></code> does not satisfy
+this condition.</p>
+</section>
+</section>
+<section id="sizevector">
+<span id="sparse-hessian-sizevector"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id24">SizeVector</a><a class="headerlink" href="#sizevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SizeVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">size_t</span></code> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="uses-forward">
+<span id="sparse-hessian-uses-forward"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id25">Uses Forward</a><a class="headerlink" href="#uses-forward" title="Permalink to this headline"></a></h3>
+<p>After each call to <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> ,
+the object <em>f</em> contains the corresponding
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a> .
+After a call to any of the sparse Hessian routines,
+the zero order Taylor coefficients correspond to
+<em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> (0, <em>x</em> )
+and the other coefficients are unspecified.</p>
+</section>
+<section id="example">
+<span id="sparse-hessian-example"></span><span id="index-22"></span><h3><a class="toc-backref" href="#id26">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The routine
+<a class="reference internal" href="sparse_hessian.cpp.html#sparse-hessian-cpp-name"><span class="std std-ref">sparse_hessian.cpp</span></a>
+is examples and tests of <code class="docutils literal notranslate"><span class="pre">sparse_hessian</span></code> .
+It return <code class="docutils literal notranslate"><span class="pre">true</span></code> , if it succeeds and <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise.</p>
+</section>
+<section id="subset-hessian">
+<span id="sparse-hessian-subset-hessian"></span><span id="index-23"></span><h3><a class="toc-backref" href="#id27">Subset Hessian</a><a class="headerlink" href="#subset-hessian" title="Permalink to this headline"></a></h3>
+<p>The routine
+<a class="reference internal" href="sub_sparse_hes.cpp.html#sub-sparse-hes-cpp-name"><span class="std std-ref">sub_sparse_hes.cpp</span></a>
+is an example and test that compute a sparse Hessian
+for a subset of the variables.
+It returns <code class="docutils literal notranslate"><span class="pre">true</span></code> , for success, and <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparse_hes.cpp.html" class="btn btn-neutral float-left" title="sparse_hes.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sparse_hessian.cpp.html" class="btn btn-neutral float-right" title="sparse_hessian.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+lines 6-16 of file: example/optimize/forward_active.cpp
+
+{xrst_begin optimize_forward_active.cpp}
+
+Optimize Forward Activity Analysis: Example and Test
+####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end optimize_forward_active.cpp}

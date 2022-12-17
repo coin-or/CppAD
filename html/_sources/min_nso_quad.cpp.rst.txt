@@ -1,0 +1,38 @@
+lines 7-42 of file: example/abs_normal/min_nso_quad.cpp
+
+{xrst_begin min_nso_quad.cpp}
+{xrst_spell
+   nso
+}
+
+abs_normal min_nso_quad: Example and Test
+#########################################
+
+Purpose
+*******
+We minimize the function
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f( x_0, x_1, x_2  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
+   \end{eqnarray}
+
+Discussion
+**********
+This routine uses :ref:`abs_min_quad-name` which uses :ref:`qp_box-name` ,
+a quadratic programming algorithm.
+It is mean to be compared with :ref:`min_nso_linear.cpp-name` which uses
+a linear programing algorithm for the same problem.
+To see this comparison, set *level*  = 1 is both examples.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end min_nso_quad.cpp}

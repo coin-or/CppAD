@@ -1,0 +1,15 @@
+lines 6-18 of file: example/json/pow_op.cpp
+
+{xrst_begin json_pow_op.cpp}
+
+Json pow Operator: Example and Test
+###################################
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end json_pow_op.cpp}

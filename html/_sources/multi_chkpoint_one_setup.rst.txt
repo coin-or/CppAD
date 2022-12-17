@@ -1,0 +1,46 @@
+lines 158-201 of file: example/multi_thread/multi_chkpoint_one.cpp
+
+{xrst_begin multi_chkpoint_one_setup}
+
+Multi-Threaded chkpoint_one Set Up
+##################################
+
+Syntax
+******
+*ok* = ``multi_chkpoint_one_setup`` ( *y_squared* )
+
+Purpose
+*******
+This routine splits up the computation into the individual threads.
+
+Thread
+******
+It is assumed that this function is called by thread zero
+and all the other threads are blocked (waiting).
+
+y_squared
+*********
+This argument has prototype
+
+   ``const vector<double>&`` *y_squared*
+
+and its size is equal to the number of equations to solve.
+It is the values that we are computing the square root of.
+
+ok
+**
+This return value has prototype
+
+   ``bool`` *ok*
+
+If it is false,
+``multi_chkpoint_one_setup`` detected an error.
+
+Source
+******
+{xrst_literal
+   // BEGIN SETUP C++
+   // END SETUP C++
+}
+
+{xrst_end multi_chkpoint_one_setup}

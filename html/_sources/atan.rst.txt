@@ -1,0 +1,37 @@
+lines 147-181 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin atan}
+
+Inverse Tangent Function: atan
+##############################
+
+Syntax
+******
+*y* = ``atan`` ( *x* )
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Derivative
+**********
+
+.. math::
+
+   \R{atan}^{(1)} (x) = \frac{1}{1 + x^2}
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/atan.cpp
+}
+The file
+:ref:`atan.cpp-name`
+contains an example and test of this function.
+
+{xrst_end atan}

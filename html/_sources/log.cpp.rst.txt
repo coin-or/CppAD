@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/log.cpp
+
+{xrst_begin log.cpp}
+
+The AD log Function: Example and Test
+#####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end log.cpp}

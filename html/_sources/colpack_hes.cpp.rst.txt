@@ -1,0 +1,13 @@
+lines 7-17 of file: example/sparse/colpack_hes.cpp
+
+{xrst_begin colpack_hes.cpp}
+
+ColPack: Sparse Hessian Example and Test
+########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end colpack_hes.cpp}

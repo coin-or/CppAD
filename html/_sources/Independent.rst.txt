@@ -1,0 +1,149 @@
+lines 5-151 of file: include/cppad/core/independent/user.xrst
+
+{xrst_begin Independent}
+{xrst_spell
+   specifier
+}
+
+Declare Independent Variables and Start Recording
+#################################################
+
+Syntax
+******
+
+| ``Independent`` ( *x* )
+| ``Independent`` ( *x* , *dynamic* )
+| ``Independent`` ( *x* , *abort_op_index* )
+| ``Independent`` ( *x* , *abort_op_index* , *record_compare* )
+| ``Independent`` ( *x* , *abort_op_index* , *record_compare* , *dynamic* )
+
+Start Recording
+***************
+The syntax above starts recording
+:ref:`glossary@AD of Base` operations
+with *x* as the independent variable vector.
+Once the
+:ref:`operation sequence<glossary@Operation@Sequence>` is completed,
+it must be transferred to a function object or aborted; see below.
+
+Stop Recording
+**************
+The recording is stopped,
+and the operation sequence is transferred to the AD function object *f* ,
+using either the :ref:`function constructor<fun_construct-name>`
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+or the :ref:`dependent variable specifier<Dependent-name>`
+
+   *f* . ``Dependent`` ( *x* , *y* )
+
+The only other way to stop a recording is using
+:ref:`abort_recording-name` .
+Between when the recording is started and when it stopped,
+we refer to the elements of *x* ,
+and the values that depend on the elements of *x* ,
+as ``AD<`` *Base* > variables.
+
+x
+*
+The vector *x* has prototype
+
+   *ADVector* & *x*
+
+(see *ADVector* below).
+The size of the vector *x* , must be greater than zero,
+and is the number of independent variables for this
+AD operation sequence.
+
+abort_op_index
+**************
+If this argument has prototype
+
+   ``size_t`` *abort_op_index*
+
+If it is present,
+it specifies the operator index at which the execution will aborted
+by calling the CppAD :ref:`error handler<ErrorHandler-name>` .
+When this error handler leads to an assert, the user
+can inspect the call stack to see the source code corresponding to
+this operator index; see
+:ref:`compare_change@op_index@Purpose` for *op_index*
+and :ref:`Faq@Speed@NDEBUG` .
+No abort will occur if *abort_op_index* is zero.
+If this argument is not present, the default value zero is used
+for *abort_index* .
+
+record_compare
+**************
+This argument has prototype
+
+   ``bool`` *record_compare*
+
+If it is present,
+it specifies if AD :ref:`compare-name`  operations are recorded.
+It takes extra time and memory to record these operations.
+On the other hand, they can be useful for detecting when and why
+a functions recording would change; see *abort_op_index* above and
+:ref:`compare_change-name` .
+If this argument is not present, the default value ``true`` is used
+for *record_compare* .
+If this argument is false, *abort_op_index* must be zero.
+
+dynamic
+*******
+If this argument is present, it has prototype
+
+   ``const`` *ADVector* & *dynamic*
+
+(see *Vector* below).
+It specifies the independent
+:ref:`glossary@Parameter@Dynamic` parameters.
+The value of these parameters,
+in the :ref:`ADFun-name` object *f* ,
+that can be changed using :ref:`new_dynamic-name` .
+
+Efficiency
+==========
+Any operations that use dynamic parameters will be recorded.
+We use other dynamic parameters to denote parameters that depend on
+the independent dynamic parameters *dynamic* ,
+and do not depend on *x* .
+It is more efficient to compute other dynamic parameters before calling
+``Independent`` and include them in the
+independent dynamic parameter vector *dynamic* .
+
+ADVector
+********
+The type *ADVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``AD<`` *Base* > .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Parallel Mode
+*************
+Each thread can have one, and only one, active recording.
+A call to ``Independent`` starts the recording for the current thread.
+The recording must be stopped by a corresponding call to
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+or
+
+   *f* . ``Dependent`` ( *x* , *y* )
+
+or :ref:`abort_recording-name`
+preformed by the same thread; i.e.,
+:ref:`thread_alloc::thread_num<ta_thread_num-name>` must be the same.
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/independent.cpp
+}
+The file
+:ref:`independent.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end Independent}

@@ -1,0 +1,61 @@
+lines 7-65 of file: example/general/opt_val_hes.cpp
+
+{xrst_begin opt_val_hes.cpp}
+
+opt_val_hes: Example and Test
+#############################
+
+Fix :math:`z \in \B{R}^\ell` and define the functions
+:math:`S_k : \B{R} \times \B{R} \rightarrow \B{R}^\ell` by and
+:math:`F : \B{R} \times \B{R} \rightarrow \B{R}` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   S_k (x, y) & = & \frac{1}{2} [ y * \sin ( x * t_k ) - z_k ]^2
+   \\
+   F(x, y)    & = &  \sum_{k=0}^{\ell-1} S_k (x, y)
+   \end{eqnarray}
+
+It follows that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \partial_y F(x, y)
+   & = &
+   \sum_{k=0}^{\ell-1} [ y * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
+   \\
+   \partial_y \partial_y F(x, y)
+   & = &
+   \sum_{k=0}^{\ell-1} \sin ( x t_k )^2
+   \end{eqnarray}
+
+Furthermore if we define :math:`Y(x)`
+as solving the equation :math:`\partial F[ x, Y(x) ] = 0` we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   0 & = &
+   \sum_{k=0}^{\ell-1} [ Y(x) * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
+   \\
+   Y(x) \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
+   - \sum_{k=0}^{\ell-1} \sin ( x * t_k ) z_k
+   \\
+   Y(x) & = & \frac{
+      \sum_{k=0}^{\ell-1} \sin( x * t_k ) z_k
+      }{
+      \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
+   }
+   \end{eqnarray}
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end opt_val_hes.cpp}

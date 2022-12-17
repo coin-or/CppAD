@@ -1,0 +1,81 @@
+lines 19-97 of file: speed/src/link_mat_mul.cpp
+
+{xrst_begin link_mat_mul}
+{xrst_spell
+   dz
+}
+
+Speed Testing Derivative of Matrix Multiply
+###########################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Purpose
+*******
+Each :ref:`speed_main@package`
+must define a version of this routine as specified below.
+This is used by the :ref:`speed_main-name` program
+to run the corresponding speed and correctness tests.
+
+Return Value
+************
+If this speed test is not yet
+supported by a particular *package* ,
+the corresponding return value for ``link_mat_mul``
+should be ``false`` .
+
+n
+*
+The argument *n* is the number of rows and columns
+in the square matrix *x* .
+
+repeat
+******
+The argument *repeat* is the number of different argument values
+that the derivative of *z* (or just the value of *z* )
+will be computed.
+
+x
+*
+The argument *x* is a vector with
+*x* . ``size`` () = *size* * *size* elements.
+The input value of its elements does not matter.
+The output value of its elements is the last random matrix
+that is multiplied and then summed to form *z* ;
+
+.. math::
+
+   x_{i,j} = x[ i * s + j ]
+
+where *s* = *size* .
+
+z
+*
+The argument *z* is a vector with one element.
+The input value of the element does not matter.
+The output of its element the sum of the elements of
+*y* = *x* * *x* ; i.e.,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      y_{i,j} & = & \sum_{k=0}^{s-1} x_{i,k} x_{k, j}
+      \\
+      z       & = & \sum_{i=0}^{s-1} \sum_{j=0}^{s-1} y_{i,j}
+   \end{eqnarray}
+
+dz
+**
+The argument *dz* is a vector with
+*dz* . ``size`` () = *size* * *size* .
+The input values of its elements do not matter.
+The output value of its elements form the
+derivative of *z* with respect to *x* .
+
+{xrst_end link_mat_mul}

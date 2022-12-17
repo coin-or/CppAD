@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_two_rev_sparse_jac, atomic, reverse, jacobian, sparsity, patterns" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="deprecated, 2016-06-27" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="implementation" name="keywords" />
+<meta content="q" name="keywords" />
+<meta content="rt" name="keywords" />
+<meta content="st" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="ok" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_two_rev_sparse_jac &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_two_for_sparse_hes" href="atomic_two_for_sparse_hes.html" />
+    <link rel="prev" title="atomic_two_for_sparse_jac" href="atomic_two_for_sparse_jac.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="deprecated.html">deprecated</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="include_deprecated.html">include_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fun_deprecated.html">fun_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CompareChange.html">CompareChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_max_thread.html">omp_max_thread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="track_new_del.html">track_new_del</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_alloc.html">omp_alloc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory_leak.html">memory_leak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epsilon.html">epsilon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_ipopt_nlp.html">cppad_ipopt_nlp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_one.html">atomic_one</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic_two.html">atomic_two</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_ctor.html">atomic_two_ctor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_option.html">atomic_two_option</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_afun.html">atomic_two_afun</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_forward.html">atomic_two_forward</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_reverse.html">atomic_two_reverse</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_for_sparse_jac.html">atomic_two_for_sparse_jac</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">atomic_two_rev_sparse_jac</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_for_sparse_hes.html">atomic_two_for_sparse_hes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_rev_sparse_hes.html">atomic_two_rev_sparse_hes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_clear.html">atomic_two_clear</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two_example.html">atomic_two_example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_two.cpp.html">multi_atomic_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chkpoint_one.html">chkpoint_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_one.cpp.html">multi_chkpoint_one.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zdouble.html">zdouble</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autotools.html">autotools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="deprecated.html">deprecated</a> &raquo;</li>
+          <li><a href="atomic_two.html">atomic_two</a> &raquo;</li>
+      <li>atomic_two_rev_sparse_jac</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_two_rev_sparse_jac.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-two-rev-sparse-jac">
+<span id="atomic-two-rev-sparse-jac-name"></span><h1>atomic_two_rev_sparse_jac<a class="headerlink" href="#atomic-two-rev-sparse-jac" title="Permalink to this headline"></a></h1>
+<section id="atomic-reverse-jacobian-sparsity-patterns">
+<span id="atomic-two-rev-sparse-jac-title"></span><span id="index-0"></span><h2>Atomic Reverse Jacobian Sparsity Patterns<a class="headerlink" href="#atomic-reverse-jacobian-sparsity-patterns" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#deprecated-2016-06-27" id="id2">Deprecated 2016-06-27</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id4">Implementation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#q" id="id5">q</a></p></li>
+<li><p><a class="reference internal" href="#rt" id="id6">rt</a></p></li>
+<li><p><a class="reference internal" href="#st" id="id7">st</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id8">x</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ok" id="id9">ok</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="atomic-two-rev-sparse-jac-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">rev_sparse_jac</span></code> ( <em>q</em> , <em>rt</em> , <em>st</em> , <em>x</em> )</p>
+</div></blockquote>
+</section>
+<section id="deprecated-2016-06-27">
+<span id="atomic-two-rev-sparse-jac-deprecated-2016-06-27"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Deprecated 2016-06-27</a><a class="headerlink" href="#deprecated-2016-06-27" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">rev_sparse_jac</span></code> ( <em>q</em> , <em>rt</em> , <em>st</em> )</p>
+</div></blockquote>
+</section>
+<section id="purpose">
+<span id="atomic-two-rev-sparse-jac-purpose"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This function is used by
+<a class="reference internal" href="RevSparseJac.html#revsparsejac-name"><span class="std std-ref">RevSparseJac</span></a> to compute
+Jacobian sparsity patterns.
+If you are using <a class="reference internal" href="RevSparseJac.html#revsparsejac-name"><span class="std std-ref">RevSparseJac</span></a> ,
+one of the versions of this
+virtual function must be defined by the
+<a class="reference internal" href="atomic_two_ctor.html#atomic-two-ctor-atomic-user"><span class="std std-ref">atomic_user</span></a> class.</p>
+<p>For a fixed matrix <span class="math notranslate nohighlight">\(R \in \B{R}^{q \times m}\)</span>,
+the Jacobian of <span class="math notranslate nohighlight">\(R * f( x )\)</span> with respect to <span class="math notranslate nohighlight">\(x \in \B{R}^n\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[S(x) = R * f^{(1)} (x)\]</div>
+<p>Given a <a class="reference internal" href="glossary.html#glossary-sparsity-pattern"><span class="std std-ref">Sparsity Pattern</span></a> for <span class="math notranslate nohighlight">\(R\)</span>,
+<code class="docutils literal notranslate"><span class="pre">rev_sparse_jac</span></code> computes a sparsity pattern for <span class="math notranslate nohighlight">\(S(x)\)</span>.</p>
+</section>
+<section id="implementation">
+<span id="atomic-two-rev-sparse-jac-implementation"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h3>
+<p>If you are using
+<a class="reference internal" href="RevSparseJac.html#revsparsejac-name"><span class="std std-ref">RevSparseJac</span></a> or <a class="reference internal" href="ForSparseHes.html#forsparsehes-name"><span class="std std-ref">ForSparseHes</span></a> ,
+this virtual function must be defined by the
+<a class="reference internal" href="atomic_two_ctor.html#atomic-two-ctor-atomic-user"><span class="std std-ref">atomic_user</span></a> class.</p>
+<section id="q">
+<span id="atomic-two-rev-sparse-jac-implementation-q"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">q</a><a class="headerlink" href="#q" title="Permalink to this headline"></a></h4>
+<p>The argument <em>q</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>q</em></p>
+</div></blockquote>
+<p>It specifies the number of rows in
+<span class="math notranslate nohighlight">\(R \in \B{R}^{q \times m}\)</span> and the Jacobian
+<span class="math notranslate nohighlight">\(S(x) \in \B{R}^{q \times n}\)</span>.</p>
+</section>
+<section id="rt">
+<span id="atomic-two-rev-sparse-jac-implementation-rt"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">rt</a><a class="headerlink" href="#rt" title="Permalink to this headline"></a></h4>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>atomic_sparsity</em> &amp; <em>rt</em></p>
+</div></blockquote>
+<p>and is a
+<a class="reference internal" href="atomic_two_option.html#atomic-two-option-atomic-sparsity"><span class="std std-ref">atomic_sparsity</span></a> pattern for
+<span class="math notranslate nohighlight">\(R^\R{T} \in \B{R}^{m \times q}\)</span>.</p>
+</section>
+<section id="st">
+<span id="atomic-two-rev-sparse-jac-implementation-st"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">st</a><a class="headerlink" href="#st" title="Permalink to this headline"></a></h4>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><em>atomic_sparsity</em> &amp; <em>st</em></p>
+</div></blockquote>
+<p>The input value of its elements
+are not specified (must not matter).
+Upon return, <em>s</em> is a
+<a class="reference internal" href="atomic_two_option.html#atomic-two-option-atomic-sparsity"><span class="std std-ref">atomic_sparsity</span></a> pattern for
+<span class="math notranslate nohighlight">\(S(x)^\R{T} \in \B{R}^{n \times q}\)</span>.</p>
+</section>
+<section id="x">
+<span id="atomic-two-rev-sparse-jac-implementation-x"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h4>
+<p>The argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span></code> <em>Base</em> &gt;&amp; <em>x</em></p>
+</div></blockquote>
+<p>and size is equal to the <em>n</em> .
+This is the <a class="reference internal" href="Value.html#value-name"><span class="std std-ref">Value</span></a> corresponding to the parameters in the
+vector <a class="reference internal" href="atomic_two_afun.html#atomic-two-afun-ax"><span class="std std-ref">ax</span></a> (when the atomic function was called).
+To be specific, if</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">if</span></code> ( <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> ( <em>ax</em> [ <em>i</em> ]) == <code class="docutils literal notranslate"><span class="pre">true</span></code> )</div>
+<div class="line">            <em>x</em> [ <em>i</em> ] = <code class="docutils literal notranslate"><span class="pre">Value</span></code> ( <em>ax</em> [ <em>i</em> ] );</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">else</span></code></div>
+<div class="line">            <em>x</em> [ <em>i</em> ] = <code class="docutils literal notranslate"><span class="pre">CppAD::numeric_limits&lt;</span></code> <em>Base</em> &gt;:: <code class="docutils literal notranslate"><span class="pre">quiet_NaN</span></code> ();</div>
+</div>
+<p>The version of this function with out the <em>x</em> argument is deprecated;
+i.e., you should include the argument even if you do not use it.</p>
+</section>
+</section>
+<section id="ok">
+<span id="atomic-two-rev-sparse-jac-ok"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>The return value <em>ok</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>ok</em></p>
+</div></blockquote>
+<p>If it is <code class="docutils literal notranslate"><span class="pre">true</span></code> , the corresponding evaluation succeeded,
+otherwise it failed.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_two_for_sparse_jac.html" class="btn btn-neutral float-left" title="atomic_two_for_sparse_jac" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_two_for_sparse_hes.html" class="btn btn-neutral float-right" title="atomic_two_for_sparse_hes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

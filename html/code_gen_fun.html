@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="code_gen_fun, generate, source, code, and, compile, an, ad, function" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="constructors" name="keywords" />
+<meta content="swap" name="keywords" />
+<meta content="function" name="keywords" />
+<meta content="jacobian" name="keywords" />
+<meta content="sparse_jacobian" name="keywords" />
+<meta content="prototype" name="keywords" />
+<meta content="constructors" name="keywords" />
+<meta content="operations" name="keywords" />
+<meta content="cppad::cg::cg&lt;double&gt;" name="keywords" />
+<meta content="speed" name="keywords" />
+<meta content="fun_name" name="keywords" />
+<meta content="other_fun" name="keywords" />
+<meta content="file_name" name="keywords" />
+<meta content="cg_fun" name="keywords" />
+<meta content="eval_jac" name="keywords" />
+<meta content="swap" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="y" name="keywords" />
+<meta content="jacobian" name="keywords" />
+<meta content="j" name="keywords" />
+<meta content="speed" name="keywords" />
+<meta content="sparse_jacobian" name="keywords" />
+<meta content="jrcv" name="keywords" />
+<meta content="speed" name="keywords" />
+<meta content="examples" name="keywords" />
+<meta content="implementation" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>code_gen_fun &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="code_gen_fun_function.cpp" href="code_gen_fun_function.cpp.html" />
+    <link rel="prev" title="stack_machine.cpp" href="stack_machine.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Example.html">Example</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="get_started.cpp.html">get_started.cpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_all_examples.html">list_all_examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="General.html">General</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ad_fun.cpp.html">ad_fun.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ad_in_c.cpp.html">ad_in_c.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conj_grad.cpp.html">conj_grad.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_eigen.hpp.html">cppad_eigen.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_minor_det.cpp.html">hes_minor_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_lu_det.cpp.html">hes_lu_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface2c.cpp.html">interface2c.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jac_minor_det.cpp.html">jac_minor_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jac_lu_det.cpp.html">jac_lu_det.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level.html">mul_level</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ode_stiff.cpp.html">ode_stiff.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level_ode.cpp.html">mul_level_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul_level_adolc_ode.cpp.html">mul_level_adolc_ode.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stack_machine.cpp.html">stack_machine.cpp</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">code_gen_fun</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="code_gen_fun_function.cpp.html">code_gen_fun_function.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="code_gen_fun_file.cpp.html">code_gen_fun_file.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="code_gen_fun_jacobian.cpp.html">code_gen_fun_jacobian.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="code_gen_fun_jac_as_fun.cpp.html">code_gen_fun_jac_as_fun.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="code_gen_fun_sparse_jacobian.cpp.html">code_gen_fun_sparse_jacobian.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="code_gen_fun_sparse_jac_as_fun.cpp.html">code_gen_fun_sparse_jac_as_fun.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.hpp.html">code_gen_fun.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_gen_fun.cpp.html">code_gen_fun.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_utility.html">example_utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testvector.html">testvector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wno_conversion.html">wno_conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Example.html">Example</a> &raquo;</li>
+          <li><a href="General.html">General</a> &raquo;</li>
+      <li>code_gen_fun</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/code_gen_fun.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="code-gen-fun">
+<span id="code-gen-fun-name"></span><h1>code_gen_fun<a class="headerlink" href="#code-gen-fun" title="Permalink to this headline"></a></h1>
+<section id="generate-source-code-and-compile-an-ad-function">
+<span id="code-gen-fun-title"></span><span id="index-0"></span><h2>Generate Source Code and Compile an AD Function<a class="headerlink" href="#generate-source-code-and-compile-an-ad-function" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id7">Syntax</a></p>
+<ul>
+<li><p><a class="reference internal" href="#constructors" id="id8">Constructors</a></p></li>
+<li><p><a class="reference internal" href="#swap" id="id9">swap</a></p></li>
+<li><p><a class="reference internal" href="#function" id="id10">function</a></p></li>
+<li><p><a class="reference internal" href="#jacobian" id="id11">jacobian</a></p></li>
+<li><p><a class="reference internal" href="#sparse-jacobian" id="id12">sparse_jacobian</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#prototype" id="id13">Prototype</a></p>
+<ul>
+<li><p><a class="reference internal" href="#code-gen-fun-prototype-constructors" id="id14">Constructors</a></p></li>
+<li><p><a class="reference internal" href="#operations" id="id15">Operations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cppad-cg-cg-double" id="id16">CppAD::cg::CG&lt;double&gt;</a></p></li>
+<li><p><a class="reference internal" href="#speed" id="id17">Speed</a></p></li>
+<li><p><a class="reference internal" href="#fun-name" id="id18">fun_name</a></p></li>
+<li><p><a class="reference internal" href="#other-fun" id="id19">other_fun</a></p></li>
+<li><p><a class="reference internal" href="#file-name" id="id20">file_name</a></p></li>
+<li><p><a class="reference internal" href="#cg-fun" id="id21">cg_fun</a></p></li>
+<li><p><a class="reference internal" href="#eval-jac" id="id22">eval_jac</a></p></li>
+<li><p><a class="reference internal" href="#code-gen-fun-swap" id="id23">swap</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id24">x</a></p></li>
+<li><p><a class="reference internal" href="#y" id="id25">y</a></p></li>
+<li><p><a class="reference internal" href="#code-gen-fun-jacobian" id="id26">jacobian</a></p>
+<ul>
+<li><p><a class="reference internal" href="#j" id="id27">J</a></p></li>
+<li><p><a class="reference internal" href="#code-gen-fun-jacobian-speed" id="id28">Speed</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#code-gen-fun-sparse-jacobian" id="id29">sparse_jacobian</a></p></li>
+<li><p><a class="reference internal" href="#jrcv" id="id30">Jrcv</a></p>
+<ul>
+<li><p><a class="reference internal" href="#code-gen-fun-jrcv-speed" id="id31">Speed</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#examples" id="id32">Examples</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id33">Implementation</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="code-gen-fun-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id7">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/example/code_gen_fun.hpp&gt;</span></code></p>
+</div></blockquote>
+<section id="constructors">
+<span id="code-gen-fun-syntax-constructors"></span><span id="index-2"></span><h4><a class="toc-backref" href="#id8">Constructors</a><a class="headerlink" href="#constructors" title="Permalink to this headline"></a></h4>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">code_gen_fun</span></code> <em>fun_name</em> ()</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">code_gen_fun</span></code> <em>fun_name</em> ( <em>file_name</em> )</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">code_gen_fun</span></code> <em>fun_name</em> ( <em>file_name</em> , <em>cg_fun</em> )</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">code_gen_fun</span></code> <em>fun_name</em> ( <em>file_name</em> , <em>cg_fun</em> , <em>eval_jac</em> )</div>
+</div>
+</section>
+<section id="swap">
+<span id="code-gen-fun-syntax-swap"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id9">swap</a><a class="headerlink" href="#swap" title="Permalink to this headline"></a></h4>
+<p><em>fun_name</em> . <code class="docutils literal notranslate"><span class="pre">swap</span></code> ( <em>other_fun</em> )</p>
+</section>
+<section id="function">
+<span id="code-gen-fun-syntax-function"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id10">function</a><a class="headerlink" href="#function" title="Permalink to this headline"></a></h4>
+<p><em>y</em> = <em>fun_name</em> ( <em>x</em> )</p>
+</section>
+<section id="jacobian">
+<span id="code-gen-fun-syntax-jacobian"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id11">jacobian</a><a class="headerlink" href="#jacobian" title="Permalink to this headline"></a></h4>
+<p><em>J</em> = <em>fun_name</em> . <code class="docutils literal notranslate"><span class="pre">jacobian</span></code> ( <em>x</em> )</p>
+</section>
+<section id="sparse-jacobian">
+<span id="code-gen-fun-syntax-sparse-jacobian"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id12">sparse_jacobian</a><a class="headerlink" href="#sparse-jacobian" title="Permalink to this headline"></a></h4>
+<p><em>Jrcv</em> = <em>fun_name</em> . <code class="docutils literal notranslate"><span class="pre">sparse_jacobian</span></code> ( <em>x</em> )</p>
+</section>
+</section>
+<section id="prototype">
+<span id="code-gen-fun-prototype"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id13">Prototype</a><a class="headerlink" href="#prototype" title="Permalink to this headline"></a></h3>
+<section id="code-gen-fun-prototype-constructors">
+<span id="index-8"></span><span id="id1"></span><h4><a class="toc-backref" href="#id14">Constructors</a><a class="headerlink" href="#code-gen-fun-prototype-constructors" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">code_gen_fun</span><span class="o">::</span><span class="n">code_gen_fun</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">code_gen_fun</span><span class="o">::</span><span class="n">code_gen_fun</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w">  </span><span class="n">file_name</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">code_gen_fun</span><span class="o">::</span><span class="n">code_gen_fun</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w">                     </span><span class="n">file_name</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">cg</span><span class="o">::</span><span class="n">CG</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">cg_fun</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">evaluation_enum</span><span class="w">                        </span><span class="n">eval_jac</span><span class="w">   </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="operations">
+<span id="code-gen-fun-prototype-operations"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id15">Operations</a><a class="headerlink" href="#operations" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">code_gen_fun</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">code_gen_fun</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other_fun</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">code_gen_fun</span><span class="o">::</span><span class="k">operator</span><span class="p">()(</span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">code_gen_fun</span><span class="o">::</span><span class="n">jacobian</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_rcv</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">code_gen_fun</span><span class="o">::</span><span class="n">sparse_jacobian</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cppad-cg-cg-double">
+<span id="code-gen-fun-cppad-cg-cg-double"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id16">CppAD::cg::CG&lt;double&gt;</a><a class="headerlink" href="#cppad-cg-cg-double" title="Permalink to this headline"></a></h3>
+<p>This is the CppAD <em>Base</em> type for the function
+<em>cg_fun</em> .
+It is defined by
+<a class="reference external" href="https://github.com/joaoleal/CppADCodeGen">CppADCodeGen</a>.
+and used to convert the <em>cg_fun</em> function object to source code,
+compile the source code, and then link the corresponding function evaluation</p>
+<blockquote>
+<div><p><em>y</em> = <code class="docutils literal notranslate"><span class="pre">cg_fun.Forward</span></code> (0, <em>x</em> )</p>
+</div></blockquote>
+</section>
+<section id="speed">
+<span id="code-gen-fun-speed"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id17">Speed</a><a class="headerlink" href="#speed" title="Permalink to this headline"></a></h3>
+<p>The conversion to source and linking is expected to take a significant
+amount of time and the evaluation of the function is expected to be
+much faster; see the following speed tests:</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>cppadcg_det_minor.cpp</p></td>
+<td><p><a class="reference internal" href="cppadcg_det_minor.cpp.html#cppadcg-det-minor-cpp-title"><span class="std std-ref">cppadcg Speed: Gradient of Determinant by Minor Expansion</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>cppadcg_sparse_jacobian.cpp</p></td>
+<td><p><a class="reference internal" href="cppadcg_sparse_jacobian.cpp.html#cppadcg-sparse-jacobian-cpp-title"><span class="std std-ref">Cppadcg Speed: Sparse Jacobian</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fun-name">
+<span id="code-gen-fun-fun-name"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id18">fun_name</a><a class="headerlink" href="#fun-name" title="Permalink to this headline"></a></h3>
+<p>This is the name of the <code class="docutils literal notranslate"><span class="pre">code_gen_fun</span></code> object.</p>
+</section>
+<section id="other-fun">
+<span id="code-gen-fun-other-fun"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id19">other_fun</a><a class="headerlink" href="#other-fun" title="Permalink to this headline"></a></h3>
+<p>This is the name of another <code class="docutils literal notranslate"><span class="pre">code_gen_fun</span></code> object.</p>
+</section>
+<section id="file-name">
+<span id="code-gen-fun-file-name"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id20">file_name</a><a class="headerlink" href="#file-name" title="Permalink to this headline"></a></h3>
+<p>This is the absolute or relative path for the
+file that contains the dynamic library.
+It does not include the files extension at the end that is used
+for dynamic libraries on this system.
+If <em>cg_fun</em> is not present in the constructor,
+it must have been present in a previous constructor with the same
+<em>file_name</em> .</p>
+</section>
+<section id="cg-fun">
+<span id="code-gen-fun-cg-fun"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id21">cg_fun</a><a class="headerlink" href="#cg-fun" title="Permalink to this headline"></a></h3>
+<p>This is a CppAD function object that corresponds to a function
+<span class="math notranslate nohighlight">\(f : \B{R}^n \rightarrow \B{R}^m\)</span>.
+If this arguments is present in the constructor,
+a new dynamic library is created.</p>
+</section>
+<section id="eval-jac">
+<span id="code-gen-fun-eval-jac"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id22">eval_jac</a><a class="headerlink" href="#eval-jac" title="Permalink to this headline"></a></h3>
+<p>If this argument is present in the constructor,
+it determines which type of Jacobian <span class="math notranslate nohighlight">\(f'(x)\)</span> will be enabled.
+The possible choices for <em>eval_jac</em> are:</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>eval_jac</em></p></td>
+<td><p>Available Jacobian</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">code_gen_fun::none_enum</span></code></p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">code_gen_fun::dense_enum</span></code></p></td>
+<td><p><em>fun_name</em> . <code class="docutils literal notranslate"><span class="pre">jacobian</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>The default value for <em>eval_jac</em> is none.</p>
+</section>
+<section id="code-gen-fun-swap">
+<span id="index-17"></span><span id="id2"></span><h3><a class="toc-backref" href="#id23">swap</a><a class="headerlink" href="#code-gen-fun-swap" title="Permalink to this headline"></a></h3>
+<p>This exchanges the library in <em>fun_name</em> with the library in
+<em>other_fun</em> .</p>
+</section>
+<section id="x">
+<span id="code-gen-fun-x"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id24">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>is a vector of size <em>n</em> specifying the argument value
+at which the function will be evaluated.</p>
+</section>
+<section id="y">
+<span id="code-gen-fun-y"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id25">y</a><a class="headerlink" href="#y" title="Permalink to this headline"></a></h3>
+<p>This return value has size <em>m</em> and is the value of <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
+</section>
+<section id="code-gen-fun-jacobian">
+<span id="index-20"></span><span id="id3"></span><h3><a class="toc-backref" href="#id26">jacobian</a><a class="headerlink" href="#code-gen-fun-jacobian" title="Permalink to this headline"></a></h3>
+<section id="j">
+<span id="code-gen-fun-jacobian-j"></span><span id="index-21"></span><h4><a class="toc-backref" href="#id27">J</a><a class="headerlink" href="#j" title="Permalink to this headline"></a></h4>
+<p>This return value has size <em>m</em> * <em>n</em> and is the value of
+the Jacobian <span class="math notranslate nohighlight">\(f'(x)\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)\]</div>
+</section>
+<section id="code-gen-fun-jacobian-speed">
+<span id="index-22"></span><span id="id4"></span><h4><a class="toc-backref" href="#id28">Speed</a><a class="headerlink" href="#code-gen-fun-jacobian-speed" title="Permalink to this headline"></a></h4>
+<p>The speed test <a class="reference internal" href="cppadcg_det_minor.cpp.html#cppadcg-det-minor-cpp-name"><span class="std std-ref">cppadcg_det_minor.cpp</span></a> has the option to pass
+the determinant function, or the Jacobian of the determinant function,
+to CppADCodeGen (for the same eventual calculation); see
+<a class="reference internal" href="cppadcg_det_minor.cpp.html#cppadcg-det-minor-cpp-pass-jacobian-to-code-gen"><span class="std std-ref">PASS_JACOBIAN_TO_CODE_GEN</span></a> .
+This test indicates that both methods have similar setup
+and derivative calculation times.</p>
+</section>
+</section>
+<section id="code-gen-fun-sparse-jacobian">
+<span id="index-23"></span><span id="id5"></span><h3><a class="toc-backref" href="#id29">sparse_jacobian</a><a class="headerlink" href="#code-gen-fun-sparse-jacobian" title="Permalink to this headline"></a></h3>
+</section>
+<section id="jrcv">
+<span id="code-gen-fun-jrcv"></span><span id="index-24"></span><h3><a class="toc-backref" href="#id30">Jrcv</a><a class="headerlink" href="#jrcv" title="Permalink to this headline"></a></h3>
+<p>This return value is a <a class="reference internal" href="sparse_rcv.html#sparse-rcv-name"><span class="std std-ref">sparse_rcv</span></a> sparse matrix representation
+of the Jacobian.</p>
+<section id="code-gen-fun-jrcv-speed">
+<span id="index-25"></span><span id="id6"></span><h4><a class="toc-backref" href="#id31">Speed</a><a class="headerlink" href="#code-gen-fun-jrcv-speed" title="Permalink to this headline"></a></h4>
+<p>The speed test <a class="reference internal" href="cppadcg_sparse_jacobian.cpp.html#cppadcg-sparse-jacobian-cpp-name"><span class="std std-ref">cppadcg_sparse_jacobian.cpp</span></a> has the option to pass
+a function (<a class="reference internal" href="sparse_jac_fun.html#sparse-jac-fun-name"><span class="std std-ref">sparse_jac_fun</span></a> ) or it’s Jacobian to CppADCodeGen
+(for the same eventual calculation); see
+<a class="reference internal" href="cppadcg_sparse_jacobian.cpp.html#cppadcg-sparse-jacobian-cpp-pass-sparse-jacobian-to-code-gen"><span class="std std-ref">PASS_SPARSE_JACOBIAN_TO_CODE_GEN</span></a> .
+THis test indicates that both methods have similar setup
+and derivative calculation times.</p>
+</section>
+</section>
+<section id="examples">
+<span id="code-gen-fun-examples"></span><span id="index-26"></span><h3><a class="toc-backref" href="#id32">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>code_gen_fun_function.cpp</p></td>
+<td><p><a class="reference internal" href="code_gen_fun_function.cpp.html#code-gen-fun-function-cpp-title"><span class="std std-ref">Evaluate a Code Gen Function: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>code_gen_fun_file.cpp</p></td>
+<td><p><a class="reference internal" href="code_gen_fun_file.cpp.html#code-gen-fun-file-cpp-title"><span class="std std-ref">File Store and Retrieve a Code Gen Function: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>code_gen_fun_jacobian.cpp</p></td>
+<td><p><a class="reference internal" href="code_gen_fun_jacobian.cpp.html#code-gen-fun-jacobian-cpp-title"><span class="std std-ref">Evaluate Jacobian of a Code Gen Function: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>code_gen_fun_jac_as_fun.cpp</p></td>
+<td><p><a class="reference internal" href="code_gen_fun_jac_as_fun.cpp.html#code-gen-fun-jac-as-fun-cpp-title"><span class="std std-ref">Pass Jacobian as Code Gen Function: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>code_gen_fun_sparse_jacobian.cpp</p></td>
+<td><p><a class="reference internal" href="code_gen_fun_sparse_jacobian.cpp.html#code-gen-fun-sparse-jacobian-cpp-title"><span class="std std-ref">Evaluate Sparse Jacobian of a Code Gen Function: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>code_gen_fun_sparse_jac_as_fun.cpp</p></td>
+<td><p><a class="reference internal" href="code_gen_fun_sparse_jac_as_fun.cpp.html#code-gen-fun-sparse-jac-as-fun-cpp-title"><span class="std std-ref">Pass Sparse Jacobian as Code Gen Function: Example and Test</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implementation">
+<span id="code-gen-fun-implementation"></span><span id="index-27"></span><h3><a class="toc-backref" href="#id33">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h3>
+<p>see <a class="reference internal" href="code_gen_fun.hpp.html#code-gen-fun-hpp-name"><span class="std std-ref">code_gen_fun.hpp</span></a> and <a class="reference internal" href="code_gen_fun.cpp.html#code-gen-fun-cpp-name"><span class="std std-ref">code_gen_fun.cpp</span></a></p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="stack_machine.cpp.html" class="btn btn-neutral float-left" title="stack_machine.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="code_gen_fun_function.cpp.html" class="btn btn-neutral float-right" title="code_gen_fun_function.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

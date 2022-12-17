@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="LuSolve, compute, determinant, and, solve, linear, equations" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="description" name="keywords" />
+<meta content="include" name="keywords" />
+<meta content="factor, and, invert" name="keywords" />
+<meta content="matrix, storage" name="keywords" />
+<meta content="signdet" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="m" name="keywords" />
+<meta content="a" name="keywords" />
+<meta content="b" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="logdet" name="keywords" />
+<meta content="float" name="keywords" />
+<meta content="floatvector" name="keywords" />
+<meta content="leqzero" name="keywords" />
+<meta content="absgeq" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuSolve &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lu_solve.cpp" href="lu_solve.cpp.html" />
+    <link rel="prev" title="lu_det_and_solve" href="lu_det_and_solve.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">LuSolve</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="lu_solve.cpp.html">lu_solve.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lu_solve.hpp.html">lu_solve.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="LuFactor.html">LuFactor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LuInvert.html">LuInvert</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+          <li><a href="lu_det_and_solve.html">lu_det_and_solve</a> &raquo;</li>
+      <li>LuSolve</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/LuSolve.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="lusolve">
+<span id="lusolve-name"></span><h1>LuSolve<a class="headerlink" href="#lusolve" title="Permalink to this headline"></a></h1>
+<section id="compute-determinant-and-solve-linear-equations">
+<span id="lusolve-title"></span><span id="index-0"></span><h2>Compute Determinant and Solve Linear Equations<a class="headerlink" href="#compute-determinant-and-solve-linear-equations" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#description" id="id2">Description</a></p></li>
+<li><p><a class="reference internal" href="#include" id="id3">Include</a></p></li>
+<li><p><a class="reference internal" href="#factor-and-invert" id="id4">Factor and Invert</a></p></li>
+<li><p><a class="reference internal" href="#matrix-storage" id="id5">Matrix Storage</a></p></li>
+<li><p><a class="reference internal" href="#signdet" id="id6">signdet</a></p></li>
+<li><p><a class="reference internal" href="#n" id="id7">n</a></p></li>
+<li><p><a class="reference internal" href="#m" id="id8">m</a></p></li>
+<li><p><a class="reference internal" href="#a" id="id9">A</a></p></li>
+<li><p><a class="reference internal" href="#b" id="id10">B</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id11">X</a></p></li>
+<li><p><a class="reference internal" href="#logdet" id="id12">logdet</a></p></li>
+<li><p><a class="reference internal" href="#float" id="id13">Float</a></p></li>
+<li><p><a class="reference internal" href="#floatvector" id="id14">FloatVector</a></p></li>
+<li><p><a class="reference internal" href="#leqzero" id="id15">LeqZero</a></p></li>
+<li><p><a class="reference internal" href="#absgeq" id="id16">AbsGeq</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id17">Example</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id18">Source</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="lusolve-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/lu_solve.hpp&gt;</span></code></p>
+</div></blockquote>
+<p><em>signdet</em> = <code class="docutils literal notranslate"><span class="pre">LuSolve</span></code> ( <em>n</em> , <em>m</em> , <em>A</em> , <em>B</em> , <em>X</em> , <em>logdet</em> )</p>
+</section>
+<section id="description">
+<span id="lusolve-description"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Description</a><a class="headerlink" href="#description" title="Permalink to this headline"></a></h3>
+<p>Use an LU factorization of the matrix <em>A</em> to
+compute its determinant
+and solve for <em>X</em> in the linear of equation</p>
+<div class="math notranslate nohighlight">
+\[A * X = B\]</div>
+<p>where <em>A</em> is an
+<em>n</em> by <em>n</em> matrix,
+<em>X</em> is an
+<em>n</em> by <em>m</em> matrix, and
+<em>B</em> is an <span class="math notranslate nohighlight">\(n x m\)</span> matrix.</p>
+</section>
+<section id="include">
+<span id="lusolve-include"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Include</a><a class="headerlink" href="#include" title="Permalink to this headline"></a></h3>
+<p>The file <code class="docutils literal notranslate"><span class="pre">cppad/utility/lu_solve.hpp</span></code>
+is included by <code class="docutils literal notranslate"><span class="pre">cppad/cppad.hpp</span></code>
+but it can also be included separately with out the rest of
+the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> routines.</p>
+</section>
+<section id="factor-and-invert">
+<span id="lusolve-factor-and-invert"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Factor and Invert</a><a class="headerlink" href="#factor-and-invert" title="Permalink to this headline"></a></h3>
+<p>This routine is an easy to user interface to
+<a class="reference internal" href="LuFactor.html#lufactor-name"><span class="std std-ref">LuFactor</span></a> and <a class="reference internal" href="LuInvert.html#luinvert-name"><span class="std std-ref">LuInvert</span></a> for computing determinants and
+solutions of linear equations.
+These separate routines should be used if
+one right hand side <em>B</em>
+depends on the solution corresponding to another
+right hand side (with the same value of <em>A</em> ).
+In this case only one call to <code class="docutils literal notranslate"><span class="pre">LuFactor</span></code> is required
+but there will be multiple calls to <code class="docutils literal notranslate"><span class="pre">LuInvert</span></code> .</p>
+</section>
+<section id="matrix-storage">
+<span id="lusolve-matrix-storage"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Matrix Storage</a><a class="headerlink" href="#matrix-storage" title="Permalink to this headline"></a></h3>
+<p>All matrices are stored in row major order.
+To be specific, if <span class="math notranslate nohighlight">\(Y\)</span> is a vector
+that contains a <span class="math notranslate nohighlight">\(p\)</span> by <span class="math notranslate nohighlight">\(q\)</span> matrix,
+the size of <span class="math notranslate nohighlight">\(Y\)</span> must be equal to <span class="math notranslate nohighlight">\(p * q\)</span> and for
+<span class="math notranslate nohighlight">\(i = 0 , \ldots , p-1\)</span>,
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , q-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[Y_{i,j} = Y[ i * q + j ]\]</div>
+</section>
+<section id="signdet">
+<span id="lusolve-signdet"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">signdet</a><a class="headerlink" href="#signdet" title="Permalink to this headline"></a></h3>
+<p>The return value <em>signdet</em> is a <code class="docutils literal notranslate"><span class="pre">int</span></code> value
+that specifies the sign factor for the determinant of <em>A</em> .
+This determinant of <em>A</em> is zero if and only if <em>signdet</em>
+is zero.</p>
+</section>
+<section id="n">
+<span id="lusolve-n"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h3>
+<p>The argument <em>n</em> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code>
+and specifies the number of rows in the matrices
+<em>A</em> ,
+<em>X</em> ,
+and <em>B</em> .
+The number of columns in <em>A</em> is also equal to <em>n</em> .</p>
+</section>
+<section id="m">
+<span id="lusolve-m"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">m</a><a class="headerlink" href="#m" title="Permalink to this headline"></a></h3>
+<p>The argument <em>m</em> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code>
+and specifies the number of columns in the matrices
+<em>X</em>
+and <em>B</em> .
+If <em>m</em> is zero,
+only the determinant of <em>A</em> is computed and
+the matrices <em>X</em> and <em>B</em> are not used.</p>
+</section>
+<section id="a">
+<span id="lusolve-a"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">A</a><a class="headerlink" href="#a" title="Permalink to this headline"></a></h3>
+<p>The argument <em>A</em> has the prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>FloatVector</em> &amp; <em>A</em></p>
+</div></blockquote>
+<p>and the size of <em>A</em> must equal <span class="math notranslate nohighlight">\(n * n\)</span>
+(see description of <a class="reference internal" href="#lusolve-floatvector"><span class="std std-ref">FloatVector</span></a> below).
+This is the <span class="math notranslate nohighlight">\(n\)</span> by <em>n</em> matrix that
+we are computing the determinant of
+and that defines the linear equation.</p>
+</section>
+<section id="b">
+<span id="lusolve-b"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">B</a><a class="headerlink" href="#b" title="Permalink to this headline"></a></h3>
+<p>The argument <em>B</em> has the prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>FloatVector</em> &amp; <em>B</em></p>
+</div></blockquote>
+<p>and the size of <em>B</em> must equal <span class="math notranslate nohighlight">\(n * m\)</span>
+(see description of <a class="reference internal" href="#lusolve-floatvector"><span class="std std-ref">FloatVector</span></a> below).
+This is the <span class="math notranslate nohighlight">\(n\)</span> by <em>m</em> matrix that
+defines the right hand side of the linear equations.
+If <em>m</em> is zero, <em>B</em> is not used.</p>
+</section>
+<section id="x">
+<span id="lusolve-x"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">X</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>The argument <em>X</em> has the prototype</p>
+<blockquote>
+<div><p><em>FloatVector</em> &amp; <em>X</em></p>
+</div></blockquote>
+<p>and the size of <em>X</em> must equal <span class="math notranslate nohighlight">\(n * m\)</span>
+(see description of <a class="reference internal" href="#lusolve-floatvector"><span class="std std-ref">FloatVector</span></a> below).
+The input value of <em>X</em> does not matter.
+On output, the elements of <em>X</em> contain the solution
+of the equation we wish to solve
+(unless <em>signdet</em> is equal to zero).
+If <em>m</em> is zero, <em>X</em> is not used.</p>
+</section>
+<section id="logdet">
+<span id="lusolve-logdet"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">logdet</a><a class="headerlink" href="#logdet" title="Permalink to this headline"></a></h3>
+<p>The argument <em>logdet</em> has prototype</p>
+<blockquote>
+<div><p><em>Float</em> &amp; <em>logdet</em></p>
+</div></blockquote>
+<p>On input, the value of <em>logdet</em> does not matter.
+On output, it has been set to the
+log of the determinant of <em>A</em>
+(but not quite).
+To be more specific,
+the determinant of <em>A</em> is given by the formula</p>
+<blockquote>
+<div><p><em>det</em> = <em>signdet</em> * <code class="docutils literal notranslate"><span class="pre">exp</span></code> ( <em>logdet</em>  )</p>
+</div></blockquote>
+<p>This enables <code class="docutils literal notranslate"><span class="pre">LuSolve</span></code> to use logs of absolute values
+in the case where <em>Float</em> corresponds to a real number.</p>
+</section>
+<section id="float">
+<span id="lusolve-float"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Float</a><a class="headerlink" href="#float" title="Permalink to this headline"></a></h3>
+<p>The type <em>Float</em> must satisfy the conditions
+for a <a class="reference internal" href="NumericType.html#numerictype-name"><span class="std std-ref">NumericType</span></a> type.
+The routine <a class="reference internal" href="CheckNumericType.html#checknumerictype-name"><span class="std std-ref">CheckNumericType</span></a> will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
+of <em>Float</em> objects <em>x</em> and <em>y</em> :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Operation</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">log</span></code> ( <em>x</em> )</p></td>
+<td><p>returns the logarithm of <em>x</em> as a <em>Float</em> object</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="floatvector">
+<span id="lusolve-floatvector"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">FloatVector</a><a class="headerlink" href="#floatvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>FloatVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type Float</span></a> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="leqzero">
+<span id="lusolve-leqzero"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">LeqZero</a><a class="headerlink" href="#leqzero" title="Permalink to this headline"></a></h3>
+<p>Including the file <code class="docutils literal notranslate"><span class="pre">lu_solve.hpp</span></code> defines the template function</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">template</span> <span class="pre">&lt;class</span></code> <em>Float</em> &gt;</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">LeqZero&lt;</span></code> <em>Float</em> &gt;( <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>x</em> )</div>
+</div>
+<p>in the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> namespace.
+This function returns true if <em>x</em> is less than or equal to zero
+and false otherwise.
+It is used by <code class="docutils literal notranslate"><span class="pre">LuSolve</span></code> to avoid taking the log of
+zero (or a negative number if <em>Float</em> corresponds to real numbers).
+This template function definition assumes that the operator
+<code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> is defined for <em>Float</em> objects.
+If this operator is not defined for your use of <em>Float</em> ,
+you will need to specialize this template so that it works for your
+use of <code class="docutils literal notranslate"><span class="pre">LuSolve</span></code> .</p>
+<p>Complex numbers do not have the operation or <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> defined.
+In addition, in the complex case,
+one can take the log of a negative number.
+The specializations</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">LeqZero&lt;</span> <span class="pre">std::complex&lt;float&gt;</span> <span class="pre">&gt;</span></code> ( <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::complex&lt;float&gt;</span> <span class="pre">&amp;</span></code> <em>x</em> )</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">LeqZero&lt;</span> <span class="pre">std::complex&lt;double&gt;</span> <span class="pre">&gt;</span></code> ( <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::complex&lt;double&gt;</span> <span class="pre">&amp;</span></code> <em>x</em> )</div>
+</div>
+<p>are defined by including <code class="docutils literal notranslate"><span class="pre">lu_solve.hpp</span></code> .
+These return true if <em>x</em> is zero and false otherwise.</p>
+</section>
+<section id="absgeq">
+<span id="lusolve-absgeq"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">AbsGeq</a><a class="headerlink" href="#absgeq" title="Permalink to this headline"></a></h3>
+<p>Including the file <code class="docutils literal notranslate"><span class="pre">lu_solve.hpp</span></code> defines the template function</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">template</span> <span class="pre">&lt;class</span></code> <em>Float</em> &gt;</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">AbsGeq&lt;</span></code> <em>Float</em> &gt;( <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>x</em> , <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>y</em> )</div>
+</div>
+<p>If the type <em>Float</em> does not support the <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> operation
+and it is not <code class="docutils literal notranslate"><span class="pre">std::complex&lt;float&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">std::complex&lt;double&gt;</span></code> ,
+see the documentation for <code class="docutils literal notranslate"><span class="pre">AbsGeq</span></code> in <a class="reference internal" href="LuFactor.html#lufactor-absgeq"><span class="std std-ref">LuFactor</span></a> .</p>
+</section>
+<section id="example">
+<span id="lusolve-example"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="lu_solve.cpp.html#lu-solve-cpp-name"><span class="std std-ref">lu_solve.cpp</span></a>
+contains an example and test of using this routine.</p>
+</section>
+<section id="source">
+<span id="lusolve-source"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="lu_solve.hpp.html#lu-solve-hpp-name"><span class="std std-ref">lu_solve.hpp</span></a> contains the
+current source code that implements these specifications.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lu_det_and_solve.html" class="btn btn-neutral float-left" title="lu_det_and_solve" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lu_solve.cpp.html" class="btn btn-neutral float-right" title="lu_solve.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

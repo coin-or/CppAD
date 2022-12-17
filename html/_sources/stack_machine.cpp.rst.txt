@@ -1,0 +1,13 @@
+lines 6-16 of file: example/general/stack_machine.cpp
+
+{xrst_begin stack_machine.cpp}
+
+Example Differentiating a Stack Machine Interpreter
+###################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end stack_machine.cpp}

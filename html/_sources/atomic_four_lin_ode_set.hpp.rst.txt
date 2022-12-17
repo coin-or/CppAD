@@ -1,0 +1,61 @@
+lines 8-66 of file: include/cppad/example/atomic_four/lin_ode/set.hpp
+
+{xrst_begin atomic_four_lin_ode_set.hpp}
+{xrst_spell
+   auxillary
+}
+
+atomic_lin_ode Set Routine: Example Implementation
+##################################################
+
+Syntax
+******
+*call_id* = *lin_ode* . ``set`` ( *r* , *step* , *pattern* , *transpose* )
+
+Prototype
+*********
+{xrst_literal
+   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+   // BEGIN sparse_rc_type
+   // END sparse_rc_type
+}
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Purpose
+*******
+Stores the auxillary information for a an atomic operation that computes
+the solution of a linear ODE.
+
+r
+*
+This argument is the final value for the variable that the ODE is with
+respect to.
+
+step
+****
+This is a positive maximum step size to use when solving the ODE.
+
+pattern
+*******
+This argument is a sparsity pattern.
+It would be ``const`` except for the fact that
+*pattern.set_row_major* () is called so that checking for
+equality is faster; see
+:ref:`sparse_rc@set_row_major` .
+
+transpose
+*********
+If this argument is true (false) the sparsity pattern is for
+:math:`A(x)\R{T}` (:math:`A(x)`).
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_set.hpp}

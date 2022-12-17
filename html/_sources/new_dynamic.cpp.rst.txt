@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/new_dynamic.cpp
+
+{xrst_begin new_dynamic.cpp}
+
+Dynamic Parameters: Example and Test
+####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end new_dynamic.cpp}

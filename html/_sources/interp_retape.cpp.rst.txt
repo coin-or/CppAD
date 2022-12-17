@@ -1,0 +1,20 @@
+lines 7-24 of file: example/general/interp_retape.cpp
+
+{xrst_begin interp_retape.cpp}
+{xrst_spell
+   retaping
+}
+
+Interpolation With Retaping: Example and Test
+#############################################
+
+See Also
+********
+:ref:`interp_onetape.cpp-name`
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end interp_retape.cpp}

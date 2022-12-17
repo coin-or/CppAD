@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="to_csrc, c, source, code, corresponding, to, an, adfun, object" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="prototype" name="keywords" />
+<meta content="fun" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="recbase" name="keywords" />
+<meta content="os" name="keywords" />
+<meta content="c_type" name="keywords" />
+<meta content="jit, functions" name="keywords" />
+<meta content="atomic, callbacks" name="keywords" />
+<meta content="call_id" name="keywords" />
+<meta content="nu" name="keywords" />
+<meta content="u" name="keywords" />
+<meta content="ny" name="keywords" />
+<meta content="y" name="keywords" />
+<meta content="compare_change" name="keywords" />
+<meta content="flag" name="keywords" />
+<meta content="restrictions" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>to_csrc &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="example_jit" href="example_jit.html" />
+    <link rel="prev" title="check_for_nan.cpp" href="check_for_nan.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">to_csrc</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_jit.html">example_jit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+      <li>to_csrc</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/to_csrc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="to-csrc">
+<span id="to-csrc-name"></span><h1>to_csrc<a class="headerlink" href="#to-csrc" title="Permalink to this headline"></a></h1>
+<section id="c-source-code-corresponding-to-an-adfun-object">
+<span id="to-csrc-title"></span><span id="index-0"></span><h2>C Source Code Corresponding to an ADFun Object<a class="headerlink" href="#c-source-code-corresponding-to-an-adfun-object" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#prototype" id="id2">Prototype</a></p></li>
+<li><p><a class="reference internal" href="#fun" id="id3">fun</a></p></li>
+<li><p><a class="reference internal" href="#base" id="id4">Base</a></p></li>
+<li><p><a class="reference internal" href="#recbase" id="id5">RecBase</a></p></li>
+<li><p><a class="reference internal" href="#os" id="id6">os</a></p></li>
+<li><p><a class="reference internal" href="#c-type" id="id7">c_type</a></p></li>
+<li><p><a class="reference internal" href="#jit-functions" id="id8">JIT Functions</a></p></li>
+<li><p><a class="reference internal" href="#atomic-callbacks" id="id9">Atomic Callbacks</a></p></li>
+<li><p><a class="reference internal" href="#call-id" id="id10">call_id</a></p></li>
+<li><p><a class="reference internal" href="#nu" id="id11">nu</a></p></li>
+<li><p><a class="reference internal" href="#u" id="id12">u</a></p></li>
+<li><p><a class="reference internal" href="#ny" id="id13">ny</a></p></li>
+<li><p><a class="reference internal" href="#y" id="id14">y</a></p></li>
+<li><p><a class="reference internal" href="#compare-change" id="id15">compare_change</a></p></li>
+<li><p><a class="reference internal" href="#flag" id="id16">flag</a></p></li>
+<li><p><a class="reference internal" href="#restrictions" id="id17">Restrictions</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id18">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="to-csrc-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><em>fun</em> . <code class="docutils literal notranslate"><span class="pre">to_csrc</span></code> ( <em>os</em> , <em>c_type</em> )</p>
+</div></blockquote>
+</section>
+<section id="prototype">
+<span id="to-csrc-prototype"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Prototype</a><a class="headerlink" href="#prototype" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">,</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">RecBase</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="n">Base</span><span class="p">,</span><span class="n">RecBase</span><span class="o">&gt;::</span><span class="n">to_csrc</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w">      </span><span class="n">os</span><span class="w">     </span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c_type</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="fun">
+<span id="to-csrc-fun"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">fun</a><a class="headerlink" href="#fun" title="Permalink to this headline"></a></h3>
+<p>is the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object.</p>
+</section>
+<section id="base">
+<span id="to-csrc-base"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h3>
+<p>is the type corresponding to this <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object;
+i.e., its calculations are done using the type <em>Base</em> .</p>
+</section>
+<section id="recbase">
+<span id="to-csrc-recbase"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">RecBase</a><a class="headerlink" href="#recbase" title="Permalink to this headline"></a></h3>
+<p>in the prototype above, <em>RecBase</em> is the same type as <em>Base</em> .</p>
+</section>
+<section id="os">
+<span id="to-csrc-os"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">os</a><a class="headerlink" href="#os" title="Permalink to this headline"></a></h3>
+<p>The C source code representation of the function <em>fun</em>
+is written to <em>os</em> .</p>
+</section>
+<section id="c-type">
+<span id="to-csrc-c-type"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">c_type</a><a class="headerlink" href="#c-type" title="Permalink to this headline"></a></h3>
+<p>The possible values for this argument are:
+<code class="docutils literal notranslate"><span class="pre">float</span></code> , <code class="docutils literal notranslate"><span class="pre">double</span></code> , or <code class="docutils literal notranslate"><span class="pre">long_double</span></code> .</p>
+</section>
+<section id="jit-functions">
+<span id="to-csrc-jit-functions"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">JIT Functions</a><a class="headerlink" href="#jit-functions" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>flag</em> = <code class="docutils literal notranslate"><span class="pre">cppad_jit_</span></code> <em>function_name</em> (</div>
+<div class="line">      <em>nu</em> , <em>u</em> , <em>ny</em> , <em>y</em> , <em>compare_change</em></div>
+<div class="line">)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">int</span></code> (* <code class="docutils literal notranslate"><span class="pre">jit_</span></code> <em>c_type</em> )(</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>type</em> * , <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , <em>type</em> * , <code class="docutils literal notranslate"><span class="pre">size_t</span></code> *</div>
+<div class="line">)</div>
+</div>
+<p>Here <em>type</em> is the same as <em>c_type</em> except that the
+underbar in <code class="docutils literal notranslate"><span class="pre">long_double</span></code> is replaced by a space.
+The function type <code class="docutils literal notranslate"><span class="pre">jit_</span></code> <em>c_type</em> is defined in the CppAD namespace.
+In the case of the Visual C++ compiler (<code class="docutils literal notranslate"><span class="pre">_MSC_VER</span></code> is defined),
+<code class="docutils literal notranslate"><span class="pre">__cdecl</span></code> and <code class="docutils literal notranslate"><span class="pre">__declspec(dllimport)</span></code> are added to
+the function type definition.</p>
+</section>
+<section id="atomic-callbacks">
+<span id="to-csrc-atomic-callbacks"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Atomic Callbacks</a><a class="headerlink" href="#atomic-callbacks" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>flag</em> = <code class="docutils literal notranslate"><span class="pre">cppad_atomic_</span></code> <em>function_name</em> (</div>
+<div class="line">      <em>call_id</em> , <em>nu</em> , <em>u</em> , <em>ny</em> , <em>y</em> , <em>compare_change</em></div>
+<div class="line">)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">int</span></code> (* <code class="docutils literal notranslate"><span class="pre">jit_</span></code> <em>c_type</em> )(</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>type</em> * , <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , <em>type</em> * , <code class="docutils literal notranslate"><span class="pre">size_t</span></code> *</div>
+<div class="line">)</div>
+</div>
+<p>The function type <code class="docutils literal notranslate"><span class="pre">atomic_</span></code> <em>c_type</em> is defined in the CppAD namespace.
+The corresponding function evaluates zero order forward mode for the
+atomic function with the specified <em>function_name</em> .</p>
+</section>
+<section id="call-id">
+<span id="to-csrc-call-id"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">call_id</a><a class="headerlink" href="#call-id" title="Permalink to this headline"></a></h3>
+<p>This argument is only used during atomic four function callbacks,
+in which case it is the corresponding
+<a class="reference internal" href="atomic_four_call.html#atomic-four-call-call-id"><span class="std std-ref">call_id</span></a> .</p>
+</section>
+<section id="nu">
+<span id="to-csrc-nu"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">nu</a><a class="headerlink" href="#nu" title="Permalink to this headline"></a></h3>
+<p>is the number of independent dynamic parameters
+plus number of independent variables for the function <em>fun</em> .</p>
+</section>
+<section id="u">
+<span id="to-csrc-u"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">u</a><a class="headerlink" href="#u" title="Permalink to this headline"></a></h3>
+<p>is a C vector of size <em>nu</em> containing the independent dynamic parameters
+and independent variables
+The independent dynamic parameter come first as in the same order as
+<a class="reference internal" href="Independent.html#independent-dynamic"><span class="std std-ref">dynamic</span></a> in the call to <code class="docutils literal notranslate"><span class="pre">Independent</span></code>
+for this function.
+The independent variables are in the same order as
+<a class="reference internal" href="Independent.html#independent-x"><span class="std std-ref">x</span></a> in the call to <code class="docutils literal notranslate"><span class="pre">Independent</span></code> for this function.</p>
+</section>
+<section id="ny">
+<span id="to-csrc-ny"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">ny</a><a class="headerlink" href="#ny" title="Permalink to this headline"></a></h3>
+<p>is the number of dependent values for this function
+(a dependent value can be a variable, dynamic parameter, or constant parameter).</p>
+</section>
+<section id="y">
+<span id="to-csrc-y"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">y</a><a class="headerlink" href="#y" title="Permalink to this headline"></a></h3>
+<p>is a C vector of size <em>ny</em> .
+This input values of its elements do not matter.
+Upon return, it contains the function value correspond to <em>u</em> .</p>
+</section>
+<section id="compare-change">
+<span id="to-csrc-compare-change"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">compare_change</a><a class="headerlink" href="#compare-change" title="Permalink to this headline"></a></h3>
+<p>This argument is both an input and an output.
+The number of comparison operators that change their bool result value
+is added to <em>compare_change</em> . This way, <em>compare_change</em>
+can be used to accumulate the number of changes between multiplier calls.</p>
+</section>
+<section id="flag">
+<span id="to-csrc-flag"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">flag</a><a class="headerlink" href="#flag" title="Permalink to this headline"></a></h3>
+<p>If this is zero, no error was detected.
+If it is one (two), <em>nu</em> ( <em>ny</em> ) does not have its expected value.</p>
+</section>
+<section id="restrictions">
+<span id="to-csrc-restrictions"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">Restrictions</a><a class="headerlink" href="#restrictions" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">to_csrc</span></code> routine is not implemented for
+<a class="reference internal" href="VecAD.html#vecad-name"><span class="std std-ref">VecAD</span></a> operations.</p>
+</section>
+<section id="example">
+<span id="to-csrc-example"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The section <a class="reference internal" href="example_jit.html#example-jit-name"><span class="std std-ref">example_jit</span></a> contains examples and tests
+that use <code class="docutils literal notranslate"><span class="pre">to_csrc</span></code> .</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="check_for_nan.cpp.html" class="btn btn-neutral float-left" title="check_for_nan.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_jit.html" class="btn btn-neutral float-right" title="example_jit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

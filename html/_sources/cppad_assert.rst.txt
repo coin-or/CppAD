@@ -1,0 +1,76 @@
+lines 15-88 of file: include/cppad/core/cppad_assert.hpp
+
+{xrst_begin cppad_assert}
+{xrst_spell
+   macros
+   msg
+}
+
+CppAD Assertions During Execution
+#################################
+
+Syntax
+******
+
+   ``CPPAD_ASSERT_KNOWN`` ( *exp* , *msg* )
+
+``CPPAD_ASSERT_UNKNOWN`` ( *exp* )
+
+Purpose
+*******
+These CppAD macros are used to detect and report errors.
+They are documented here because they correspond to the C++
+source code that the error is reported at.
+
+NDEBUG
+******
+If the preprocessor symbol
+:ref:`Faq@Speed@NDEBUG` is defined,
+these macros do nothing; i.e., they are optimized out.
+
+Restriction
+***********
+The CppAD user should not uses these macros.
+You can however write your own macros that do not begin with ``CPPAD``
+and that call the :ref:`CppAD error handler<ErrorHandler-name>` .
+
+Known
+*****
+The ``CPPAD_ASSERT_KNOWN`` macro is used to check for an error
+with a known cause.
+For example, many CppAD routines uses these macros
+to make sure their arguments conform to their specifications.
+
+Unknown
+*******
+The ``CPPAD_ASSERT_UNKNOWN`` macro is used to check that the
+CppAD internal data structures conform as expected.
+If this is not the case, CppAD does not know why the error has
+occurred; for example, the user may have written past the end
+of an allocated array.
+
+Exp
+***
+The argument *exp* is a C++ source code expression
+that results in a ``bool`` value that should be true.
+If it is false, an error has occurred.
+This expression may be execute any number of times
+(including zero times) so it must have not side effects.
+
+Msg
+***
+The argument *msg* has prototype
+
+   ``const char`` * *msg*
+
+and contains a ``'\0'`` terminated character string.
+This string is a description of the error
+corresponding to *exp* being false.
+
+Error Handler
+*************
+These macros use the
+:ref:`CppAD error handler<ErrorHandler-name>` to report errors.
+This error handler can be replaced by the user.
+
+{xrst_end cppad_assert}

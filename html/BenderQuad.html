@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="BenderQuad, computing, jacobian, and, hessian, of, bender's, reduced, objective" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="see, also" name="keywords" />
+<meta content="problem" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="y" name="keywords" />
+<meta content="fun" name="keywords" />
+<meta content="fun.f" name="keywords" />
+<meta content="fun.h" name="keywords" />
+<meta content="fun.dy" name="keywords" />
+<meta content="g" name="keywords" />
+<meta content="gx" name="keywords" />
+<meta content="gxx" name="keywords" />
+<meta content="bavector" name="keywords" />
+<meta content="advector" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BenderQuad &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="bender_quad.cpp" href="bender_quad.cpp.html" />
+    <link rel="prev" title="numeric_ad" href="numeric_ad.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deprecated.html">deprecated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="numeric_ad.html">numeric_ad</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">BenderQuad</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="bender_quad.cpp.html">bender_quad.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="opt_val_hes.html">opt_val_hes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LuRatio.html">LuRatio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="numeric_ad.html">numeric_ad</a> &raquo;</li>
+      <li>BenderQuad</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/BenderQuad.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="benderquad">
+<span id="benderquad-name"></span><h1>BenderQuad<a class="headerlink" href="#benderquad" title="Permalink to this headline"></a></h1>
+<section id="computing-jacobian-and-hessian-of-bender-s-reduced-objective">
+<span id="benderquad-title"></span><span id="index-0"></span><h2>Computing Jacobian and Hessian of Bender’s Reduced Objective<a class="headerlink" href="#computing-jacobian-and-hessian-of-bender-s-reduced-objective" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id2">See Also</a></p></li>
+<li><p><a class="reference internal" href="#problem" id="id3">Problem</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id4">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id5">x</a></p></li>
+<li><p><a class="reference internal" href="#y" id="id6">y</a></p></li>
+<li><p><a class="reference internal" href="#fun" id="id7">fun</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fun-f" id="id8">fun.f</a></p></li>
+<li><p><a class="reference internal" href="#fun-h" id="id9">fun.h</a></p></li>
+<li><p><a class="reference internal" href="#fun-dy" id="id10">fun.dy</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#g" id="id11">g</a></p></li>
+<li><p><a class="reference internal" href="#gx" id="id12">gx</a></p></li>
+<li><p><a class="reference internal" href="#gxx" id="id13">gxx</a></p></li>
+<li><p><a class="reference internal" href="#bavector" id="id14">BAvector</a></p></li>
+<li><p><a class="reference internal" href="#advector" id="id15">ADvector</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id16">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="benderquad-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/cppad.hpp&gt;</span></code></div>
+<div class="line"><em>BenderQuad</em> ( <code class="docutils literal notranslate"><span class="pre">x</span></code> , <code class="docutils literal notranslate"><span class="pre">y</span></code> , <code class="docutils literal notranslate"><span class="pre">fun</span></code> , <code class="docutils literal notranslate"><span class="pre">g</span></code> , <code class="docutils literal notranslate"><span class="pre">gx</span></code> , <code class="docutils literal notranslate"><span class="pre">gxx</span></code> )</div>
+</div>
+</section>
+<section id="see-also">
+<span id="benderquad-see-also"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="opt_val_hes.html#opt-val-hes-name"><span class="std std-ref">opt_val_hes</span></a></p>
+</section>
+<section id="problem">
+<span id="benderquad-problem"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Problem</a><a class="headerlink" href="#problem" title="Permalink to this headline"></a></h3>
+<p>The type <a class="reference internal" href="#benderquad-advector"><span class="std std-ref">ADvector</span></a> cannot be determined
+form the arguments above
+(currently the type <em>ADvector</em> must be
+<code class="docutils literal notranslate"><span class="pre">CPPAD_TESTVECTOR</span></code> ( <em>Base</em> ) .)
+This will be corrected in the future by requiring <em>Fun</em>
+to define <em>Fun</em> :: <code class="docutils literal notranslate"><span class="pre">vector_type</span></code> which will specify the
+type <em>ADvector</em> .</p>
+</section>
+<section id="purpose">
+<span id="benderquad-purpose"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We are given the optimization problem</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+{\rm minimize} &amp; F(x, y) &amp; {\rm w.r.t.} \; (x, y) \in \B{R}^n \times \B{R}^m
+\end{eqnarray}</div><p>that is convex with respect to <span class="math notranslate nohighlight">\(y\)</span>.
+In addition, we are given a set of equations <span class="math notranslate nohighlight">\(H(x, y)\)</span>
+such that</p>
+<div class="math notranslate nohighlight">
+\[H[ x , Y(x) ] = 0 \;\; \Rightarrow \;\; F_y [ x , Y(x) ] = 0\]</div>
+<p>(In fact, it is often the case that <span class="math notranslate nohighlight">\(H(x, y) = F_y (x, y)\)</span>.)
+Furthermore, it is easy to calculate a Newton step for these equations; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[dy = - [ \partial_y H(x, y)]^{-1} H(x, y)\]</div>
+<p>The purpose of this routine is to compute the
+value, Jacobian, and Hessian of the reduced objective function</p>
+<div class="math notranslate nohighlight">
+\[G(x) = F[ x , Y(x) ]\]</div>
+<p>Note that if only the value and Jacobian are needed, they can be
+computed more quickly using the relations</p>
+<div class="math notranslate nohighlight">
+\[G^{(1)} (x) = \partial_x F [x, Y(x) ]\]</div>
+</section>
+<section id="x">
+<span id="benderquad-x"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BAvector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#benderquad-bavector"><span class="std std-ref">BAvector</span></a> below)
+and its size must be equal to <em>n</em> .
+It specifies the point at which we evaluating
+the reduced objective function and its derivatives.</p>
+</section>
+<section id="y">
+<span id="benderquad-y"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">y</a><a class="headerlink" href="#y" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument <em>y</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BAvector</em> &amp; <em>y</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .
+It must be equal to <span class="math notranslate nohighlight">\(Y(x)\)</span>; i.e.,
+it must solve the problem in <span class="math notranslate nohighlight">\(y\)</span> for this given value of <span class="math notranslate nohighlight">\(x\)</span></p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   {\rm minimize} &amp; F(x, y) &amp; {\rm w.r.t.} \; y \in \B{R}^m
+\end{eqnarray}</div></section>
+<section id="fun">
+<span id="benderquad-fun"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">fun</a><a class="headerlink" href="#fun" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> object <em>fun</em>
+must support the member functions listed below.
+The <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; arguments will be variables for
+a tape created by a call to <a class="reference internal" href="Independent.html#independent-name"><span class="std std-ref">Independent</span></a> from <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code>
+(hence they can not be combined with variables corresponding to a
+different tape).</p>
+<section id="fun-f">
+<span id="benderquad-fun-fun-f"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">fun.f</a><a class="headerlink" href="#fun-f" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument <em>fun</em> supports the syntax</p>
+<blockquote>
+<div><p><em>f</em> = <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">f</span></code> ( <em>x</em> , <em>y</em> )</p>
+</div></blockquote>
+<p>The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">f</span></code> argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>ADvector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#benderquad-advector"><span class="std std-ref">ADvector</span></a> below)
+and its size must be equal to <em>n</em> .
+The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">f</span></code> argument <em>y</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>ADvector</em> &amp; <em>y</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .
+The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">f</span></code> result <em>f</em> has prototype</p>
+<blockquote>
+<div><p><em>ADvector</em> <em>f</em></p>
+</div></blockquote>
+<p>and its size must be equal to one.
+The value of <em>f</em> is</p>
+<div class="math notranslate nohighlight">
+\[f = F(x, y)\]</div>
+</section>
+<section id="fun-h">
+<span id="benderquad-fun-fun-h"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">fun.h</a><a class="headerlink" href="#fun-h" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument <em>fun</em> supports the syntax</p>
+<blockquote>
+<div><p><em>h</em> = <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">h</span></code> ( <em>x</em> , <em>y</em> )</p>
+</div></blockquote>
+<p>The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">h</span></code> argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>ADvector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>n</em> .
+The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">h</span></code> argument <em>y</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BAvector</em> &amp; <em>y</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .
+The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">h</span></code> result <em>h</em> has prototype</p>
+<blockquote>
+<div><p><em>ADvector</em> <em>h</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .
+The value of <em>h</em> is</p>
+<div class="math notranslate nohighlight">
+\[h = H(x, y)\]</div>
+</section>
+<section id="fun-dy">
+<span id="benderquad-fun-fun-dy"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">fun.dy</a><a class="headerlink" href="#fun-dy" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument <em>fun</em> supports the syntax</p>
+<div class="line-block">
+<div class="line">      <em>dy</em> = <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">dy</span></code> ( <em>x</em> , <em>y</em> , <em>h</em> )</div>
+<div class="line"><br /></div>
+<div class="line"><em>x</em></div>
+</div>
+<p>The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">dy</span></code> argument <em>x</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BAvector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>n</em> .
+Its value will be exactly equal to the <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument
+<em>x</em> and values depending on it can be stored as private objects
+in <em>f</em> and need not be recalculated.</p>
+<blockquote>
+<div><p><em>y</em></p>
+</div></blockquote>
+<p>The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">dy</span></code> argument <em>y</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BAvector</em> &amp; <em>y</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .
+Its value will be exactly equal to the <code class="docutils literal notranslate"><span class="pre">BenderQuad</span></code> argument
+<em>y</em> and values depending on it can be stored as private objects
+in <em>f</em> and need not be recalculated.</p>
+<blockquote>
+<div><p><em>h</em></p>
+</div></blockquote>
+<p>The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">dy</span></code> argument <em>h</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>ADvector</em> &amp; <em>h</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .</p>
+<blockquote>
+<div><p><em>dy</em></p>
+</div></blockquote>
+<p>The <em>fun</em> . <code class="docutils literal notranslate"><span class="pre">dy</span></code> result <em>dy</em> has prototype</p>
+<blockquote>
+<div><p><em>ADvector</em> <em>dy</em></p>
+</div></blockquote>
+<p>and its size must be equal to <em>m</em> .
+The return value <em>dy</em> is given by</p>
+<div class="math notranslate nohighlight">
+\[dy = - [ \partial_y H (x , y) ]^{-1} h\]</div>
+<p>Note that if <em>h</em> is equal to <span class="math notranslate nohighlight">\(H(x, y)\)</span>,
+<span class="math notranslate nohighlight">\(dy\)</span> is the Newton step for finding a zero
+of <span class="math notranslate nohighlight">\(H(x, y)\)</span> with respect to <span class="math notranslate nohighlight">\(y\)</span>;
+i.e.,
+<span class="math notranslate nohighlight">\(y + dy\)</span> is an approximate solution for the equation
+<span class="math notranslate nohighlight">\(H (x, y + dy) = 0\)</span>.</p>
+</section>
+</section>
+<section id="g">
+<span id="benderquad-g"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">g</a><a class="headerlink" href="#g" title="Permalink to this headline"></a></h3>
+<p>The argument <em>g</em> has prototype</p>
+<blockquote>
+<div><p><em>BAvector</em> &amp; <em>g</em></p>
+</div></blockquote>
+<p>and has size one.
+The input value of its element does not matter.
+On output,
+it contains the value of <span class="math notranslate nohighlight">\(G (x)\)</span>; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[g[0] = G (x)\]</div>
+</section>
+<section id="gx">
+<span id="benderquad-gx"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">gx</a><a class="headerlink" href="#gx" title="Permalink to this headline"></a></h3>
+<p>The argument <em>gx</em> has prototype</p>
+<blockquote>
+<div><p><em>BAvector</em> &amp; <em>gx</em></p>
+</div></blockquote>
+<p>and has size <span class="math notranslate nohighlight">\(n\)</span>.
+The input values of its elements do not matter.
+On output,
+it contains the Jacobian of <span class="math notranslate nohighlight">\(G (x)\)</span>; i.e.,
+for <span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[gx[ j ] = G^{(1)} (x)_j\]</div>
+</section>
+<section id="gxx">
+<span id="benderquad-gxx"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">gxx</a><a class="headerlink" href="#gxx" title="Permalink to this headline"></a></h3>
+<p>The argument <em>gx</em> has prototype</p>
+<blockquote>
+<div><p><em>BAvector</em> &amp; <em>gxx</em></p>
+</div></blockquote>
+<p>and has size <span class="math notranslate nohighlight">\(n \times n\)</span>.
+The input values of its elements do not matter.
+On output,
+it contains the Hessian of <span class="math notranslate nohighlight">\(G (x)\)</span>; i.e.,
+for <span class="math notranslate nohighlight">\(i = 0 , \ldots , n-1\)</span>, and
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[gxx[ i * n + j ] = G^{(2)} (x)_{i,j}\]</div>
+</section>
+<section id="bavector">
+<span id="benderquad-bavector"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">BAvector</a><a class="headerlink" href="#bavector" title="Permalink to this headline"></a></h3>
+<p>The type <em>BAvector</em> must be a
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class.
+We use <em>Base</em> to refer to the type of the elements of
+<em>BAvector</em> ; i.e.,</p>
+<blockquote>
+<div><p><em>BAvector</em> :: <code class="docutils literal notranslate"><span class="pre">value_type</span></code></p>
+</div></blockquote>
+</section>
+<section id="advector">
+<span id="benderquad-advector"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">ADvector</a><a class="headerlink" href="#advector" title="Permalink to this headline"></a></h3>
+<p>The type <em>ADvector</em> must be a
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with elements of type
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; ; i.e.,</p>
+<blockquote>
+<div><p><em>ADvector</em> :: <code class="docutils literal notranslate"><span class="pre">value_type</span></code></p>
+</div></blockquote>
+<p>must be the same type as</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>BAvector</em> :: <code class="docutils literal notranslate"><span class="pre">value_type</span> <span class="pre">&gt;</span></code></p>
+</div></blockquote>
+<p>.</p>
+</section>
+<section id="example">
+<span id="benderquad-example"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="bender_quad.cpp.html#bender-quad-cpp-name"><span class="std std-ref">bender_quad.cpp</span></a>
+contains an example and test of this operation.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="numeric_ad.html" class="btn btn-neutral float-left" title="numeric_ad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bender_quad.cpp.html" class="btn btn-neutral float-right" title="bender_quad.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

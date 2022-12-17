@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/forward_order.cpp
+
+{xrst_begin forward_order.cpp}
+
+Forward Mode: Example and Test of Multiple Orders
+#################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end forward_order.cpp}

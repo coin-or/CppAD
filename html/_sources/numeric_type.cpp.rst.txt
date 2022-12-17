@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/numeric_type.cpp
+
+{xrst_begin numeric_type.cpp}
+
+The NumericType: Example and Test
+#################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end numeric_type.cpp}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/add.cpp
+
+{xrst_begin add.cpp}
+
+AD Binary Addition: Example and Test
+####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end add.cpp}

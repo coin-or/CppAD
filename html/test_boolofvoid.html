@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="test_boolofvoid, object, that, runs, a, group, of, tests" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="group" name="keywords" />
+<meta content="width" name="keywords" />
+<meta content="test" name="keywords" />
+<meta content="name" name="keywords" />
+<meta content="memory_ok" name="keywords" />
+<meta content="ok" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>test_boolofvoid &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="time_test" href="time_test.html" />
+    <link rel="prev" title="speed_program.cpp" href="speed_program.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>test_boolofvoid</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/test_boolofvoid.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="test-boolofvoid">
+<span id="test-boolofvoid-name"></span><h1>test_boolofvoid<a class="headerlink" href="#test-boolofvoid" title="Permalink to this headline"></a></h1>
+<section id="object-that-runs-a-group-of-tests">
+<span id="test-boolofvoid-title"></span><span id="index-0"></span><h2>Object that Runs a Group of Tests<a class="headerlink" href="#object-that-runs-a-group-of-tests" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#group" id="id4">group</a></p></li>
+<li><p><a class="reference internal" href="#width" id="id5">width</a></p></li>
+<li><p><a class="reference internal" href="#test" id="id6">test</a></p></li>
+<li><p><a class="reference internal" href="#name" id="id7">name</a></p></li>
+<li><p><a class="reference internal" href="#memory-ok" id="id8">memory_ok</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id9">ok</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id10">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="test-boolofvoid-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/test_boolofvoid.hpp&gt;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">test_boolofvoid</span></code> <em>Run</em> ( <em>group</em> , <em>width</em> )</div>
+<div class="line"><em>Run</em> ( <em>test</em> , <em>name</em> )</div>
+</div>
+<p><em>ok</em> = <em>Run</em> . <code class="docutils literal notranslate"><span class="pre">summary</span></code> ( <em>memory_ok</em> )</p>
+</section>
+<section id="purpose">
+<span id="test-boolofvoid-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>The object <em>Run</em> is used to run a group of tests functions
+and report the results on standard output.</p>
+</section>
+<section id="group">
+<span id="test-boolofvoid-group"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id4">group</a><a class="headerlink" href="#group" title="Permalink to this headline"></a></h3>
+<p>The argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code> <em>group</em></p>
+</div></blockquote>
+<p>It is the name for this group of tests.</p>
+</section>
+<section id="width">
+<span id="test-boolofvoid-width"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id5">width</a><a class="headerlink" href="#width" title="Permalink to this headline"></a></h3>
+<p>The argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>width</em></p>
+</div></blockquote>
+<p>It is the number of columns used to display the name of each test.
+It must be greater than the maximum number of characters in a test name.</p>
+</section>
+<section id="test">
+<span id="test-boolofvoid-test"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id6">test</a><a class="headerlink" href="#test" title="Permalink to this headline"></a></h3>
+<p>The argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>test</em> ( <code class="docutils literal notranslate"><span class="pre">void</span></code> )</p>
+</div></blockquote>
+<p>It is a function that returns true (when the test passes) and false
+otherwise.</p>
+</section>
+<section id="name">
+<span id="id1"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">name</a><a class="headerlink" href="#name" title="Permalink to this headline"></a></h3>
+<p>The argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code> <em>name</em></p>
+</div></blockquote>
+<p>It is the name for the corresponding <em>test</em> .</p>
+</section>
+<section id="memory-ok">
+<span id="test-boolofvoid-memory-ok"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id8">memory_ok</a><a class="headerlink" href="#memory-ok" title="Permalink to this headline"></a></h3>
+<p>The argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>memory_ok</em></p>
+</div></blockquote>
+<p>It is false if a memory leak is detected (and true otherwise).</p>
+</section>
+<section id="ok">
+<span id="test-boolofvoid-ok"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id9">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>This is true if all of the tests pass (including the memory leak test),
+otherwise it is false.</p>
+</section>
+<section id="example">
+<span id="test-boolofvoid-example"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id10">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>See any of the main programs in the example directory; e.g.,
+<code class="docutils literal notranslate"><span class="pre">example/ipopt_solve.cpp</span></code> .</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="speed_program.cpp.html" class="btn btn-neutral float-left" title="speed_program.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="time_test.html" class="btn btn-neutral float-right" title="time_test" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

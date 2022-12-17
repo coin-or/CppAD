@@ -1,0 +1,13 @@
+lines 7-17 of file: example/sparse/subgraph_sparsity.cpp
+
+{xrst_begin subgraph_sparsity.cpp}
+
+Subgraph Dependency Sparsity Patterns: Example and Test
+#######################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end subgraph_sparsity.cpp}

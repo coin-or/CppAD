@@ -1,0 +1,13 @@
+lines 7-17 of file: example/utility/index_sort.cpp
+
+{xrst_begin index_sort.cpp}
+
+Index Sort: Example and Test
+############################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end index_sort.cpp}

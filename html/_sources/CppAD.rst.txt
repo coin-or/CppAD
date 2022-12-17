@@ -1,0 +1,222 @@
+lines 5-224 of file: cppad.xrst
+
+{xrst_begin CppAD}
+{xrst_spell
+   github
+   appveyor
+   autodiff
+   templated
+   posix
+}
+
+cppad-20221216: C++ Algorithmic Differentiation Package User Documentation
+##########################################################################
+
+.. image:: {xrst_dir coin.png}
+
+.. list-table::
+
+   * - `release <https://github.com/coin-or/CppAD/tags>`_,
+     - `20220000.4 <https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz>`_,
+     - `github <https://github.com/coin-or/CppAD>`_,
+     - `travis <https://travis-ci.org/coin-or/CppAD>`_,
+     - `appveyor <https://ci.appveyor.com/project/bradbell/cppad>`_,
+     - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec>`_
+
+.. list-table::
+
+   * - :ref:`install-name` ,
+     - :ref:`get_started<get_started.cpp-name>` ,
+     - :ref:`whats_new-name` ,
+     - :ref:`addon-name` ,
+     - :ref:`research-name` ,
+     - `project manager <http://www.seanet.com/~bradbell>`_
+
+CppAD is distributed by
+`COIN-OR <http://www.coin-or.org>`_
+with the Eclipse Public License
+`EPL-2.0 <http://www.opensource.org/licenses/EPL-2.0>`_
+or the GNU General Public License
+`GPL-2.0 <http://www.opensource.org/licenses/GPL-2.0>`_ or later.
+
+Algorithmic Differentiation
+***************************
+We refer to the automatic creation of an algorithm that
+computes derivative values from an algorithm that computes function values
+as *Algorithmic Differentiation* ,
+also referred to as *Automatic Differentiation* or just AD.
+A brief introduction to AD can be found in
+`wikipedia <http://en.wikipedia.org/wiki/Automatic_differentiation>`_.
+The web site
+`autodiff.org <http://www.autodiff.org>`_
+is dedicated to research about, and promoting the use of, AD.
+
+Features
+********
+
+Operator Overloading
+====================
+CppAD uses operator overloading of the C++ template class :ref:`AD-name`
+to compute derivatives of algorithms defined using AD objects; see
+the :ref:`introduction-name` for a description of how this is accomplished.
+
+Base Type
+=========
+The operator overloading uses a templated base type that
+can be user defined; see :ref:`base_require-name` .
+The required definitions for ``AD<float>`` and
+``AD<double>`` are included as part of CppAD.
+
+Recording Operations
+====================
+A sequence of ``AD<`` *Base* >
+:ref:`operations<glossary@Operation@Sequence>`
+can be recorded and stored in an
+:ref:`AD function object<ADFun-name>` .
+This object can then be used to evaluate
+function values and arbitrary order derivatives,
+and sparsity patterns of derivative values using the *Base* type.
+
+Multi-Threading
+===============
+CppAD supports an arbitrary :ref:`multi threading<multi_thread-name>` environment.
+Examples are provided using Boost threads, Posix threads, and Openmp threads.
+
+Optimizing Operations Sequences
+===============================
+During the recording of a function,
+the :ref:`Independent-name` variables are know and a forward dependency
+analysis is used to determine which operations should be recorded.
+Once the :ref:`Dependent-name` variables are determined,
+a reverse dependency analysis can be preformed.
+This :ref:`optimize-name` routine uses a reverse dependency analysis,
+and other techniques,
+to remove unnecessary operations.
+
+Dynamic Parameters
+==================
+CppAD enables one to specify a vector of
+:ref:`glossary@Parameter@Dynamic` parameters.
+The value of the function and derivatives can depend on these parameters,
+but no derivatives are taken with respect to these parameters.
+This enables CppAD to reduce the derivative calculations; e.g.,
+the derivative of variable times a variable has two terms
+while a variable times a parameter only has one.
+
+Derivative Calculations
+=======================
+Arbitrary order
+:ref:`Forward-name` and :ref:`Reverse-name`
+mode derivative calculations
+can be preformed using an ``ADFun`` object.
+Easy to user drivers that compute the
+entire :ref:`Jacobian-name` and a specific :ref:`Hessian-name` are included.
+
+Sparsity
+========
+Both forward and reverse mode can be used to calculation the sparsity
+pattern for Jacobians and Hessians; see :ref:`sparsity_pattern-name` .
+Where a Jacobian or Hessian is sparse,
+both forward and reverse mode can be combined with the sparsity pattern
+to speed up the calculation of
+:ref:`sparse derivatives<sparse_derivative-name>` .
+In addition, a :ref:`subgraph<subgraph_jac_rev-name>` method,
+that does not require a sparsity pattern, can be used
+to speed up these derivative calculations.
+
+Recording Derivative Operations
+===============================
+A ``ADFun`` object can be converted into an object that
+evaluates derivatives using the type ``AD<`` *Base* > ; see :ref:`base2ad-name` .
+This enables one to record new functions that
+are expressed using derivatives of other functions.
+
+Atomic Functions
+================
+User defined derivative calculations for arbitrary functions
+can also be included in
+a recording using :ref:`atomic functions<atomic_two-name>` .
+A special :ref:`checkpoint<chkpoint_one-name>` class is included
+which allows one to record a function and reuse it as
+an atomic operation in other functions.
+There also is a special interface for user defined unary
+:ref:`discrete functions<Discrete-name>` ; i.e.,
+functions that depend on the
+:ref:`independent variables<glossary@Tape@Independent Variable>`
+but which have identically zero derivatives (e.g., a step function).
+
+Logical Comparisons
+===================
+Logical comparisons can be included in an operation sequence
+using AD :ref:`conditional expressions<CondExp-name>` .
+
+Vectors
+=======
+The CppAD API allows one to use any
+:ref:`SimpleVector-name` class.
+The preprocessor symbol :ref:`CPPAD_TESTVECTOR<testvector-name>`
+is template vector class which is used for correctness testing.
+Many of the correctness tests use this template vector class
+which you can choose during the :ref:`cmake-name` configuration command.
+
+Software Engineering
+********************
+CppAD is developed using the software engineering procedures described
+on the project manager's
+`software <https://www.seanet.com/~bradbell/software.htm>`_
+web page.
+
+Testing
+*******
+
+Correctness
+===========
+There is an extensive set of correctness tests; see :ref:`cmake_check-name` .
+
+Speed
+=====
+A set of programs for doing :ref:`speed-name` comparisons between
+`Adolc <https://projects.coin-or.org/ADOL-C>`_,
+CppAD,
+`Fadbad <http://www.fadbad.com/>`_,
+and
+`Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
+are included.
+
+Utilities
+*********
+CppAD includes a set of C++ :ref:`utilities<utility-name>` that are useful
+for general operator overloaded numerical methods.
+
+Release Notes
+*************
+This :ref:`whats_new-name` for a list of recent extensions and bug fixes.
+
+Example
+*******
+The file :ref:`get_started.cpp-name`
+contains an example and test of using CppAD to compute
+the derivative of a polynomial.
+There are many other
+:ref:`examples<Example-name>` .
+All of the examples are also correctness tests,
+which ensures that they work properly.
+
+Contents
+********
+{xrst_toc_table
+   xrst/install/install.xrst
+   xrst/theory/theory.xrst
+   include/cppad/core/user_ad.hpp
+   include/cppad/core/ad_fun.hpp
+   xrst/preprocessor.xrst
+   xrst/multi_thread.xrst
+   include/cppad/utility/xrst/utility.xrst
+   include/cppad/ipopt/solve.hpp
+   xrst/example.xrst
+   speed/speed.xrst
+   xrst/appendix/appendix.xrst
+}
+
+
+{xrst_end CppAD}

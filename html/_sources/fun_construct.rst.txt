@@ -1,0 +1,215 @@
+lines 8-220 of file: include/cppad/core/fun_construct.hpp
+
+{xrst_begin fun_construct}
+{xrst_spell
+   of of
+}
+
+Construct an ADFun Object and Stop Recording
+############################################
+
+Syntax
+******
+
+| ``ADFun<`` *Base* > *f* ( *x* , *y* );
+| ``ADFun<`` *Base* > *f*
+| *f* . ``swap`` ( *g* )
+| ``f`` = ``g``
+
+Purpose
+*******
+The ``ADFun<`` *Base* > object *f*
+stores an AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+It can then be used to calculate derivatives of the corresponding
+:ref:`glossary@AD Function`
+
+.. math::
+
+   F : \B{R}^n \rightarrow \B{R}^m
+
+where :math:`B` is the space corresponding to objects of type *Base* .
+
+x
+*
+If the argument *x* is present, it has prototype
+
+   ``const`` *ADVector* & *x*
+
+It must be the vector argument in the previous call to
+:ref:`Independent-name` .
+Neither its size, or any of its values, are allowed to change
+between calling
+
+   ``Independent`` ( *x* )
+
+and
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+y
+*
+If the argument *y* is present, it has prototype
+
+   ``const`` *ADVector* & *y*
+
+The sequence of operations that map *x*
+to *y* are stored in the ADFun object *f* .
+
+ADVector
+********
+The type *ADVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``AD<`` *Base* > .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Default Constructor
+*******************
+The default constructor
+
+   ``ADFun<`` *Base* > *g*
+
+creates an
+``AD<`` *Base* > object with no corresponding operation sequence; i.e.,
+
+   *g* . ``size_var`` ()
+
+returns the value zero (see :ref:`fun_property@size_var` ).
+
+Sequence Constructor
+********************
+The sequence constructor
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+creates the ``AD<`` *Base* > object *f* ,
+stops the recording of AD of *Base* operations
+corresponding to the call
+
+   ``Independent`` ( *x* )
+
+and stores the corresponding operation sequence in the object *f* .
+It then stores the zero order Taylor coefficients
+(corresponding to the value of *x* ) in *f* .
+This is equivalent to the following steps using the default constructor:
+
+#. Create *f* with the default constructor
+
+      ``ADFun<`` *Base* > *f* ;
+
+#. Stop the tape and storing the operation sequence using
+
+      *f* . ``Dependent`` ( *x* , *y* );
+
+   (see :ref:`Dependent-name` ).
+#. Calculate the zero order Taylor coefficients for all
+   the variables in the operation sequence using
+
+      *f* . ``Forward`` ( *p* , *x_p* )
+
+   with *p* equal to zero and the elements of *x_p*
+   equal to the corresponding elements of *x*
+   (see :ref:`Forward-name` ).
+
+Copy Constructor
+****************
+It is an error to attempt to use the ``ADFun<`` *Base* > copy constructor;
+i.e., the following syntax is not allowed:
+
+   ``ADFun<`` *Base* > *g* ( *f* )
+
+where *f* is an ``ADFun<`` *Base* > object.
+Use its :ref:`fun_construct@Default Constructor` instead
+and its assignment operator.
+
+swap
+****
+The swap operation *f* . ``swap`` ( *g* ) exchanges the contents of
+the two ``ADFun<`` *Base* > functions; i.e.,
+*f* ( *g* ) before the swap is identical to
+*g* ( *f* ) after the swap.
+
+Assignment Operator
+*******************
+The ``ADFun<`` *Base* > assignment operation
+
+   *g* = *f*
+
+makes a copy of the operation sequence currently stored in *f*
+in the object *g* .
+The object *f* is not affected by this operation and
+can be ``const`` .
+All of information (state) stored in *f* is copied to *g*
+and any information originally in *g* is lost.
+
+Move Semantics
+==============
+In the special case where *f* is a temporary object
+(and enough C++11 features are supported by the compiler)
+this assignment will use move semantics.
+This avoids the overhead of the copying all the information from
+*f* to *g* .
+
+Taylor Coefficients
+===================
+The Taylor coefficient information currently stored in *f*
+(computed by :ref:`f.Forward<Forward-name>` ) is
+copied to *g* .
+Hence, directly after this operation
+
+   *g* . ``size_order`` () == *f* . ``size_order`` ()
+
+Sparsity Patterns
+=================
+The forward Jacobian sparsity pattern currently stored in *f*
+(computed by :ref:`f.ForSparseJac<ForSparseJac-name>` ) is
+copied to *g* .
+Hence, directly after this operation
+
+| |tab| *g* . ``size_forward_bool`` () == *f* . ``size_forward_bool`` ()
+| |tab| *g* . ``size_forward_set`` ()  == *f* . ``size_forward_set`` ()
+
+Parallel Mode
+*************
+The call to ``Independent`` ,
+and the corresponding call to
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+or
+
+   *f* . ``Dependent`` ( *x* , *y* )
+
+or :ref:`abort_recording-name` ,
+must be preformed by the same thread; i.e.,
+:ref:`thread_alloc::thread_num<ta_thread_num-name>` must be the same.
+
+Example
+*******
+
+Sequence Constructor
+====================
+The file
+:ref:`independent.cpp-name`
+contains an example and test of the sequence constructor.
+
+Default Constructor
+===================
+The files
+:ref:`fun_check.cpp-name`
+and
+:ref:`hes_lagrangian.cpp-name`
+contain an examples and tests using the default constructor.
+They return true if they succeed and false otherwise.
+{xrst_toc_hidden
+   example/general/fun_assign.cpp
+}
+Assignment Operator
+===================
+The file
+:ref:`fun_assign.cpp-name`
+contains an example and test of the ``ADFun<`` *Base* >
+assignment operator.
+
+{xrst_end fun_construct}

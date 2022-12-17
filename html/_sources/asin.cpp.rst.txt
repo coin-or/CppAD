@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/asin.cpp
+
+{xrst_begin asin.cpp}
+
+The AD asin Function: Example and Test
+######################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end asin.cpp}

@@ -1,0 +1,30 @@
+lines 6-33 of file: example/abs_normal/qp_box.cpp
+
+{xrst_begin qp_box.cpp}
+{xrst_spell
+   qp
+   rl
+}
+
+abs_normal qp_box: Example and Test
+###################################
+
+Problem
+*******
+Our original problem is
+
+.. math::
+
+   \begin{array}{rl}
+   \R{minimize}      & x_0 - x_1 \; \R{w.r.t} \; x \in \B{R}^2 \\
+   \R{subject \; to} & -2 \leq x_0 \leq +2 \; \R{and} \; -2 \leq x_1 \leq +2
+   \end{array}
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end qp_box.cpp}

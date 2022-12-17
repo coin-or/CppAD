@@ -1,0 +1,64 @@
+lines 11-72 of file: include/cppad/core/ad_ctor.hpp
+
+{xrst_begin ad_ctor}
+{xrst_spell
+   initializes
+}
+
+AD Constructors
+###############
+
+Syntax
+******
+
+| ``AD<`` *Base* > *ay* ()
+| ``AD<`` *Base* > *ay* ( *x* )
+
+Purpose
+*******
+creates a new ``AD<`` *Base* > object *ay*
+and initializes it as a
+equal to *x* .
+
+x
+*
+
+implicit
+========
+There is an implicit constructor where *x* has prototype
+
+   ``const VecAD<`` *Base* >& *x*
+
+There also is an implicit constructor where *x* has prototype
+
+   ``const`` *Base* & *x*
+
+In this case, *ay* is a
+:ref:`constant parameter<glossary@Parameter@Constant>`
+
+explicit
+========
+There is an explicit constructor where *x* has prototype
+
+   ``const`` *Type* & *x*
+
+for any type that has an explicit constructor of the form
+*Base* ( *x* ) .
+In this case, *ay* is a
+:ref:`constant parameter<glossary@Parameter@Constant>`
+
+ay
+**
+The target *ay* has prototype
+
+   ``AD<`` *Base* > *ay*
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/ad_ctor.cpp
+}
+The files :ref:`ad_ctor.cpp-name` contain examples and tests of these operations.
+It test returns true if it succeeds and false otherwise.
+
+{xrst_end ad_ctor}

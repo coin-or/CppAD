@@ -1,0 +1,99 @@
+lines 8-104 of file: include/cppad/core/atomic/three/hes_sparsity.hpp
+
+{xrst_begin atomic_three_hes_sparsity}
+
+Atomic Function Hessian Sparsity Patterns
+#########################################
+
+Syntax
+******
+
+| *ok* = *afun* . ``hes_sparsity`` (
+| |tab| *parameter_x* , *type_x* , *select_x* , *select_y* , *pattern_out*
+| )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Implementation
+**************
+This function must be defined if
+:ref:`atomic_three_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and Hessian sparsity patterns are computed for *f* .
+
+Base
+****
+See :ref:`atomic_three_afun@Base` .
+
+parameter_x
+***********
+See :ref:`atomic_three_define@parameter_x` .
+
+type_x
+******
+See :ref:`atomic_three_define@type_x` .
+
+select_x
+********
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of *ax* .
+It specifies which domain components are included in
+the calculation of *pattern_out* .
+If *select_x* [ *j* ] is false, then there will be no indices
+*k* such that either of the following hold:
+
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *j*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *j*
+
+.
+
+select_y
+********
+This argument has size equal to the number of results to this
+atomic function; i.e. the size of *ay* .
+It specifies which range component functions :math:`g_i (x)` are included in
+of *pattern_out* .
+
+pattern_out
+***********
+This input value of *pattern_out* does not matter.
+Upon return it is the union,
+with respect to *i* such that *select_y* [ *i* ] is true,
+of the sparsity pattern for Hessian of :math:`g_i (x)`.
+To be specific, there are non-negative indices
+*i* , *r* , *c* , and *k* such that
+
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *r*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *c*
+
+if and only if
+*select_y* [ *i* ] is true,
+*select_x* [ *r* ] is true,
+*select_x* [ *c* ] is true,
+and
+
+.. math::
+
+   \partial_{x(r)} \partial_{x(c)} g_i(x)
+
+is possibly non-zero.
+Note that the sparsity pattern should be symmetric.
+
+ok
+**
+If this calculation succeeded, *ok* is true.
+Otherwise it is false.
+{xrst_toc_hidden
+   example/atomic_three/hes_sparsity.cpp
+}
+Examples
+********
+The file :ref:`atomic_three_hes_sparsity.cpp-name` contains an example and test
+that uses this routine.
+
+{xrst_end atomic_three_hes_sparsity}

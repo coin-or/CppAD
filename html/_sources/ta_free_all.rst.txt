@@ -1,0 +1,41 @@
+lines 1455-1493 of file: include/cppad/utility/thread_alloc.hpp
+
+{xrst_begin ta_free_all}
+{xrst_spell
+   inuse
+}
+
+Free All Memory That Was Allocated for Use by thread_alloc
+##########################################################
+
+Syntax
+******
+*ok* = ``thread_alloc::free_all`` () .
+
+Purpose
+*******
+Returns all memory that was used by ``thread_alloc`` to the system.
+
+ok
+**
+The return value *ok* has prototype
+
+   ``bool`` *ok*
+
+Its value will be ``true`` if all the memory can be freed.
+This requires that for all *thread* indices, there is no memory
+:ref:`inuse<ta_inuse-name>` ; i.e.,
+
+   0 == ``thread_alloc::inuse`` ( *thread* )
+
+Otherwise, the return value will be false.
+
+Restrictions
+************
+This function cannot be called while in parallel mode.
+
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_free_all}

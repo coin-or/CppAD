@@ -1,0 +1,390 @@
+lines 6-393 of file: xrst/appendix/whats_new/13.xrst
+
+{xrst_begin whats_new_13}
+{xrst_spell
+   alg
+   autotools
+   cout
+   decimals
+   deprecate
+   impl
+   sb
+   segmentation
+   sq
+   src
+   struct
+   usages
+   usead
+}
+
+CppAD Changes and Additions During 2013
+#######################################
+
+mm-dd
+*****
+
+12-29
+=====
+
+#. The include file
+   :ref:`cppad_eigen.hpp-name` now automatically includes ``cppad.hpp`` .
+#. There was a problem with this automation
+   when ``eigen`` was used for the cppad :ref:`testvector-name` .
+   This has been fixed.
+#. There was a problem with deprecated :ref:`autotools-name`
+   (created when optional implicit constructor from any type was added).
+   This has been fixed by adding the
+   ``--with-implicit_ctor`` option
+   (later removed on :ref:`2017-02-10<whats_new_17@mm-dd@02-10>` .)
+
+12-27
+=====
+The constructor from an arbitrary type to ``AD<`` *Base* > was
+implicit, but there was no specification to this effect.
+The caused problems when using CppAD with
+:ref:`eigen 3.2<eigen-name>` (scheduled to be fixed in 3.3).
+The default for this constructor has been changed to be
+:ref:`ad_ctor@x@explicit` .
+In addition, other
+:ref:`ad_ctor@x@implicit` constructors
+are now listed in the documentation.
+
+If you get a compiler error on an constructor / assignment of the form
+
+   ``AD<`` *Base* > ``x`` = *y*
+
+(that used to work) try changing the constructor call to
+
+   ``AD<`` *Base* >( *y*  )
+
+A deprecated alternative is to make this constructor implicit using the
+cmake ``cppad_deprecated``
+option during the install procedure.
+
+12-26
+=====
+Document fact that monthly versions
+of the CppAD compressed tar file last till the end of the year.
+This is no longer the case; see
+:ref:`whats_new_18@mm-dd@05-20` in whats new for 2018.
+
+12-24
+=====
+The interface to :ref:`eigen<cppad_eigen.hpp-name>` defined a function
+
+   ``NumTraits< CppAD::AD<`` *Base* > >:: ``dummy_epsilon`` ()
+
+that should have been named ``dummy_precision()`` .
+This has been fixed.
+
+11-27
+=====
+
+#. Fix bug when using :ref:`optimize-name` with an :ref:`ADFun-name` object containing
+   the :ref:`sign-name` function.
+#. Add ``atomic_two_norm_sq.cpp`` , an atomic function example
+   with domain dimension two and range dimension one.
+
+11-13
+=====
+It used to be that one had to define the ``std::set`` version of
+:ref:`atomic_two_rev_sparse_jac-name` for each atomic function that was
+part of an :ref:`ADFun-name` object that was :ref:`optimized<optimize-name>` .
+Now the current
+:ref:`atomic_two_option@atomic_sparsity` setting is used
+to determine if the ``bool`` or ``std::set`` version of
+``rev_sparse_jac`` is used by the optimization process.
+
+11-12
+=====
+Error detection and reporting (when ``NDEBUG`` is not defined)
+has been added for the following case:
+Using :ref:`optimize-name`
+with :ref:`atomic_two-name` functions that have not defined
+:ref:`optimize@Atomic Functions@rev_sparse_jac` .
+
+10-29
+=====
+The :ref:`optimization<CondExp@Optimize>`
+now handles nested conditional expressions.
+For example, give the code
+::
+
+   x = CondExpLt(left_x, right_x, true_x, false_x)
+   y = CondExpGt(left_y, right_y, true_y, false_y)
+   z = CondExpEq(left_z, right_z, x, y)
+
+only two of the conditional expressions will be evaluated
+(one will be skipped depending on the result of ``left_z == right_z`` ).
+For more details, see :ref:`optimize_nest_conditional.cpp-name` .
+
+10-23
+=====
+
+#. Fix a bug in the optimization of calls to :ref:`atomic-name` functions.
+   This bug existed before recent change to optimizing conditional expressions.
+   This required adding the
+   :ref:`RevSparseJac@dependency` argument to the
+   reverse Jacobian sparsity pattern calculation.
+#. Fix the deprecated autotools install (see :ref:`autotools-name` )
+   which was broken by the changes on 10-22.
+   To be specific, the
+   example for :ref:`number_skip-name` was not being included.
+
+10-22
+=====
+
+#. Add :ref:`optimization<optimize-name>` of conditional expressions; see
+   :ref:`CondExp<CondExp@Optimize>` .
+#. Add a phantom argument at the beginning of the operations sequence;
+   :ref:`fun_property@size_op_arg` and :ref:`fun_property.cpp-name` .
+   (This helps with the optimization mentioned above.)
+#. Add the function :ref:`number_skip-name` to measure how much optimization
+   of the conditional expressions there is.
+
+10-16
+=====
+Fix bug in :ref:`wish_list@Tracing` :ref:`atomic-name` functions.
+
+10-15
+=====
+The documentation for the class
+:ref:`CppAD_vector@vectorBool` was improved.
+
+10-14
+=====
+The script :ref:`get_adolc.sh-name` was added
+(for downloading and installing
+`ADOL-C <https://projects.coin-or.org/ADOL-C>`_) in the
+``build`` directory.
+Note that this local install of Adolc requires ColPack; see
+:ref:`get_colpack.sh-name` .
+In addition, the requirement that ColPack and Adolc are installed
+with the same prefix was added.
+
+10-13
+=====
+Make sure that all of the
+:ref:`preprocessor-name` symbols
+that are not part of the CppAD API, are undefined when the
+``<cppad/cppad.hpp>`` file concludes.
+
+10-12
+=====
+
+#. Change :ref:`get_eigen.sh-name` so that it will reuse install information
+   when it is present.
+   In addition document reuse for
+   :ref:`get_eigen.sh-name` ,
+   :ref:`get_ipopt.sh-name` , and
+   :ref:`get_sacado.sh-name` .
+#. Fix following ``g++`` error on OSX system:
+   ::
+
+      error: no match for 'operator|=' (operand types are
+      'std::vector<bool>::reference {aka std::_Bit_reference}' and 'bool')
+      Check[i * n + j] |= F2[i * n + k] & r[ k * n + j];
+      ^
+
+09-20
+=====
+
+#. Add lines for :ref:`atomic_two-name` function documentation
+   to both the definition and use of each operation.
+   This required adding sub-headings in the example usages
+   corresponding to the function documentation sections.
+   For example; see
+   atomic forward examples.
+#. Improve the documentation for :ref:`atomic_two_clear-name`
+   and remove its use from the
+   :ref:`atomic_base examples<atomic_two@Examples>`
+   (because it is not needed).
+
+09-19
+=====
+Add links from the :ref:`atomic_two-name` functions documentation
+to the corresponding examples.
+This required adding headings in the examples that
+correspond to the function documentation sections.
+For example; see
+atomic forward examples.
+
+09-18
+=====
+
+#. A segmentation fault would occur if
+   an :ref:`ADFun-name` object used an :ref:`atomic-name`
+   function that had been deleted.
+   This has been fixed so that when ``NDEBUG`` is not defined,
+   an error message is generated.
+#. A mistake in the documentation for
+   :ref:`CppAD_vector@Memory and Parallel Mode`
+   has been fixed.
+   This corresponds to the change in the specifications for
+   :ref:`CppAD::vector::resize<CppAD_vector@resize>` made on
+   :ref:`2012-07-30<whats_new_12@mm-dd@07-30>`
+#. There was a bug during the
+   :ref:`checking for nan<check_for_nan-name>` during
+   :ref:`reverse-name` mode.
+   This has been fixed.
+#. It appears, from inspecting the Ipopt source file
+   ``Ipopt/src/Algorithm/IpIpoptAlg.cpp`` that the option ``sb``
+   to ``yes`` suppress the printing of the Ipopt banner.
+   The Ipopt examples and tests have been changed to use this option
+   (although it is not in the ipopt documentation).
+#. Fix the a typo in the documentation for ``ipopt_solve``
+   :ref:`ipopt_solve@options@Integer` options
+   (``Numeric`` was changed to ``Integer`` ).
+
+09-07
+=====
+There was a bug in the cumulative sum operator
+(which is used by :ref:`optimize-name` )
+for :ref:`Forward-name` orders greater than zero.
+This was detected by the :ref:`checkpoint<chkpoint_one-name>` tests
+when ``optimize`` was used to make the
+checkpoint functions faster.
+The bug has been fixed and the checkpoint functions now use
+optimize (and hence should be faster).
+
+08-12
+=====
+
+#. The ability to turn on and off checking for :ref:`nan-name` in
+   :ref:`Forward-name` mode results has been added; see :ref:`check_for_nan-name` .
+#. Use this option to remove the need to handel ``nan`` as a special
+   case in :ref:`checkpoint<chkpoint_one-name>` functions that
+   :ref:`optimize@Atomic Functions` in within
+   another function is optimized.
+#. Check :ref:`reverse<reverse_any-name>`  mode results when
+   :ref:`check_for_nan-name` is true.
+   (It used to be the case that only :ref:`forward<forward_order-name>` results
+   were checked for ``nan`` .)
+
+08-11
+=====
+If an :ref:`atomic-name` function had arguments that did not affect
+the final dependent variables in *f* ,
+:ref:`f.optimize()<optimize-name>` would fail.
+This has been fixed.
+In addition, documentation about using ``optimize``
+with :ref:`optimize@Atomic Functions` has been added.
+
+08-06
+=====
+Fix a case where the test ``test_more/num_limits.cpp`` failed because
+::
+
+   double inf   = std::numeric_limits<double>::infinity();
+   double check = std::complex<double>(inf) / std::complex<float>(1.)
+
+can result in the imaginary part of ``check`` being ``- nan`` .
+
+07-26
+=====
+Allow for use of ``const::string&`` as a possible type for
+:ref:`atomic_two_ctor@atomic_base@name` in the ``atomic_base``
+constructor.
+
+05-28
+=====
+Remove *ok* return flag from
+:ref:`checkpoint algo<chkpoint_one@algo>`
+and
+:ref:`checkpoint atom_fun<chkpoint_one@atom_fun>` .
+
+05-21
+=====
+
+#. Deprecate the :ref:`atomic_one-name` interface and replace it by the
+   :ref:`atomic_two-name` and :ref:`checkpoint<chkpoint_one-name>` interfaces.
+#. There was a problem with the :ref:`cmake-name` command
+   if the :ref:`cmake@cppad_cxx_flags` was not specified.
+   This has been fixed.
+
+05-17
+=====
+
+#. Add the :ref:`ForSparseJac@transpose` option to
+   :ref:`ForSparseJac-name` .
+#. Add the :ref:`RevSparseHes@transpose` option to
+   :ref:`RevSparseHes-name` .
+
+05-15
+=====
+Change :ref:`RevSparseJac-name` parameter names to be closer to the
+:ref:`ForSparseJac-name` names so the difference is clearer.
+
+05-14
+=====
+
+#. The :ref:`checkpoint<chkpoint_one-name>` class has been added.
+   This is a much easier way to do checkpointing than the
+   old checkpoint example.
+   The old checkpointing example is now the :ref:`rev_checkpoint.cpp-name` example.
+#. Fix bug in :ref:`RevSparseJac-name` for case when :ref:`RevSparseJac@q`
+   was not equal to *m* (range dimension) and sparsity pattern was a
+   vector of ``bool`` .
+#. Add the :ref:`RevSparseJac@transpose` option to
+   :ref:`RevSparseJac-name` .
+
+05-12
+=====
+The sparse hessian example in old_reciprocal.cpp was not
+being run. This has been fixed.
+
+05-11
+=====
+The :ref:`atomic_one-name` examples
+names were all changed to begin with ``user`` .
+
+05-04
+=====
+The option to compute
+:ref:`forward_order@xq@Multiple Orders` was added.
+The old_usead_2.cpp example shows the need for this.
+The problem is that a new atomic function interface needs to be designed
+with checkpointing as a particular application.
+Multiple order forward mode is the first step in this direction.
+
+04-28
+=====
+
+#. The scripts :ref:`get_eigen.sh-name` and :ref:`get_sacado.sh-name` were added.
+   If you are using Unix, and you do not have
+   `Eigen <http://eigen.tuxfamily.org>`_ or
+   `Sacado <http://trilinos.sandia.gov/packages/sacado>`_
+   installed on your system, you can use the corresponding script
+   to download and install a local copy for use when testing CppAD.
+#. The code ``std::cout <<`` *X* ,
+   would generate a compile error when *X* was an Eigen matrix
+   with ``CppAD::AD<`` *Base* > elements.
+   This has been fixed.
+
+04-27
+=====
+There was a problem using the output operator ``<<`` with
+and :ref:`eigen<cppad_eigen.hpp-name>` matrix of ``AD`` elements.
+This has been fixed using a template partial specialization of
+::
+
+   template <class Scalar, bool IsInteger>
+   struct significant_decimals_default_impl
+
+because the original template requires definition of a implicit conversion
+from the scalar type to an ``int`` and this is dangerous for AD types
+(note that :ref:`Integer-name` is used for explicit conversions).
+
+04-26
+=====
+
+#. The example old_usead_2.cpp was completed.
+   This is a more realistic, but also more complicated, example of
+   using AD to computed derivatives inside an atomic function.
+#. The script :ref:`get_fadbad.sh-name` has been added.
+   If you are using Unix, and you do not have
+   `FADBAD <http://www.fadbad.com>`_
+   installed on your system, you can use this script
+   to download and install a local copy for use when testing CppAD.
+
+{xrst_end whats_new_13}

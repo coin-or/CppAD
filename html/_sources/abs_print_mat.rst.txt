@@ -1,0 +1,53 @@
+lines 8-58 of file: example/abs_normal/abs_print_mat.hpp
+
+{xrst_begin abs_print_mat}
+{xrst_spell
+   cout
+   nr
+}
+abs_normal: Print a Vector or Matrix
+####################################
+
+Syntax
+******
+``abs_print_mat`` ( *name* , *nr* , *nc* , *mat* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Purpose
+*******
+This routine is used by the :ref:`abs_normal<example_abs_normal-name>` examples to print
+vectors and matrices.
+A new-line is printed at the end of this output.
+
+name
+****
+This is a name that is printed before the vector or matrix.
+
+nr
+**
+This is the number of rows in the matrix. Use *nr*  = 1 for
+row vectors.
+
+nc
+**
+This is the number of columns in the matrix. Use *nc*  = 1 for
+column vectors.
+
+mat
+***
+This is a
+:ref:`row-major<glossary@Row-major Representation>` representation
+of the matrix (hence a :ref:`SimpleVector-name` ).
+The syntax
+
+   *std::cout <<* ``mat`` [ ``i`` ]
+
+must output the *i*-th element of the simple vector *mat* .
+
+{xrst_end abs_print_mat}

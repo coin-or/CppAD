@@ -1,0 +1,75 @@
+lines 20-92 of file: speed/src/link_poly.cpp
+
+{xrst_begin link_poly}
+{xrst_spell
+   ddp
+}
+
+Speed Testing Second Derivative of a Polynomial
+###############################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Purpose
+*******
+Each :ref:`speed_main@package`
+must define a version of this routine as specified below.
+This is used by the :ref:`speed_main-name` program
+to run the corresponding speed and correctness tests.
+
+Method
+******
+The same template routine :ref:`Poly-name` is used
+by the different AD packages.
+
+Return Value
+************
+If this speed test is not yet
+supported by a particular *package* ,
+the corresponding return value for ``link_poly``
+should be ``false`` .
+
+size
+****
+The argument *size* is the order of the polynomial
+(the number of coefficients in the polynomial).
+
+repeat
+******
+The argument *repeat* is the number of different argument values
+that the second derivative (or just the polynomial) will be computed at.
+
+a
+*
+The argument *a* is a vector with *size* elements.
+The input value of its elements does not matter.
+The output value of its elements is the coefficients of the
+polynomial that is differentiated
+(*i*-th element is coefficient of order *i* ).
+
+z
+*
+The argument *z* is a vector with one element.
+The input value of the element does not matter.
+The output of its element is the polynomial argument value
+were the last second derivative (or polynomial value) was computed.
+
+ddp
+***
+The argument *ddp* is a vector with one element.
+The input value of its element does not matter.
+The output value of its element is the
+second derivative of the polynomial with respect to it's argument value.
+
+double
+======
+In the case where *package* is ``double`` ,
+the output value of the element of *ddp*
+is the polynomial value (the second derivative is not computed).
+
+{xrst_end link_poly}

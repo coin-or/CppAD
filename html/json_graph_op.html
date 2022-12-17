@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="json_graph_op, json, ad, graph, operator, definitions" name="keywords" />
+<meta content="notation" name="keywords" />
+<meta content="op_code" name="keywords" />
+<meta content="arguments" name="keywords" />
+<meta content="unary, operators" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="binary, operators" name="keywords" />
+<meta content="add" name="keywords" />
+<meta content="azmul" name="keywords" />
+<meta content="div" name="keywords" />
+<meta content="mul" name="keywords" />
+<meta content="pow" name="keywords" />
+<meta content="sub" name="keywords" />
+<meta content="sum" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="conditional, expressions" name="keywords" />
+<meta content="cexp_eq" name="keywords" />
+<meta content="cexp_le" name="keywords" />
+<meta content="cexp_lt" name="keywords" />
+<meta content="other, comparisons" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="compare, operators" name="keywords" />
+<meta content="n_result" name="keywords" />
+<meta content="n_arg" name="keywords" />
+<meta content="left,, right" name="keywords" />
+<meta content="comp_eq" name="keywords" />
+<meta content="comp_le" name="keywords" />
+<meta content="comp_lt" name="keywords" />
+<meta content="comp_ne" name="keywords" />
+<meta content="other, comparisons" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="discrete, functions" name="keywords" />
+<meta content="name" name="keywords" />
+<meta content="n_result" name="keywords" />
+<meta content="n_arg" name="keywords" />
+<meta content="arg" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="atomic, functions" name="keywords" />
+<meta content="atomic, three" name="keywords" />
+<meta content="atomic, four" name="keywords" />
+<meta content="name" name="keywords" />
+<meta content="call_id" name="keywords" />
+<meta content="n_result" name="keywords" />
+<meta content="n_arg" name="keywords" />
+<meta content="first_arg,, ...,, last_arg" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="print" name="keywords" />
+<meta content="before" name="keywords" />
+<meta content="after" name="keywords" />
+<meta content="n_result" name="keywords" />
+<meta content="n_arg" name="keywords" />
+<meta content="notpos" name="keywords" />
+<meta content="value" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="contents" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>json_graph_op &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="json_unary_op.cpp" href="json_unary_op.cpp.html" />
+    <link rel="prev" title="json_ad_graph" href="json_ad_graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="other_adfun.html">other_adfun</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base2ad.html">base2ad</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="json_ad_graph.html">json_ad_graph</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">json_graph_op</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="json_unary_op.cpp.html">json_unary_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_add_op.cpp.html">json_add_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_azmul_op.cpp.html">json_azmul_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_div_op.cpp.html">json_div_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_mul_op.cpp.html">json_mul_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_pow_op.cpp.html">json_pow_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_sub_op.cpp.html">json_sub_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_sum_op.cpp.html">json_sum_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_cexp_op.cpp.html">json_cexp_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_comp_op.cpp.html">json_comp_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_discrete_op.cpp.html">json_discrete_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_atom_op.cpp.html">json_atom_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_atom4_op.cpp.html">json_atom4_op.cpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="json_print_op.cpp.html">json_print_op.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="from_json.html">from_json</a></li>
+<li class="toctree-l5"><a class="reference internal" href="to_json.html">to_json</a></li>
+<li class="toctree-l5"><a class="reference internal" href="json_get_started.cpp.html">json_get_started.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="json_sparse.cpp.html">json_sparse.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_ad_graph.html">cpp_ad_graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abs_normal_fun.html">abs_normal_fun</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="other_adfun.html">other_adfun</a> &raquo;</li>
+          <li><a href="json_ad_graph.html">json_ad_graph</a> &raquo;</li>
+      <li>json_graph_op</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/json_graph_op.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="json-graph-op">
+<span id="json-graph-op-name"></span><h1>json_graph_op<a class="headerlink" href="#json-graph-op" title="Permalink to this headline"></a></h1>
+<section id="json-ad-graph-operator-definitions">
+<span id="json-graph-op-title"></span><span id="index-0"></span><h2>Json AD Graph Operator Definitions<a class="headerlink" href="#json-ad-graph-operator-definitions" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#notation" id="id16">Notation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#op-code" id="id17">op_code</a></p></li>
+<li><p><a class="reference internal" href="#arguments" id="id18">Arguments</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#unary-operators" id="id19">Unary Operators</a></p>
+<ul>
+<li><p><a class="reference internal" href="#example" id="id20">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#binary-operators" id="id21">Binary Operators</a></p>
+<ul>
+<li><p><a class="reference internal" href="#add" id="id22">add</a></p></li>
+<li><p><a class="reference internal" href="#azmul" id="id23">azmul</a></p></li>
+<li><p><a class="reference internal" href="#div" id="id24">div</a></p></li>
+<li><p><a class="reference internal" href="#mul" id="id25">mul</a></p></li>
+<li><p><a class="reference internal" href="#pow" id="id26">pow</a></p></li>
+<li><p><a class="reference internal" href="#sub" id="id27">sub</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#sum" id="id28">sum</a></p>
+<ul>
+<li><p><a class="reference internal" href="#json-graph-op-sum-example" id="id29">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conditional-expressions" id="id30">Conditional Expressions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cexp-eq" id="id31">cexp_eq</a></p></li>
+<li><p><a class="reference internal" href="#cexp-le" id="id32">cexp_le</a></p></li>
+<li><p><a class="reference internal" href="#cexp-lt" id="id33">cexp_lt</a></p></li>
+<li><p><a class="reference internal" href="#other-comparisons" id="id34">Other Comparisons</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-conditional-expressions-example" id="id35">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#compare-operators" id="id36">Compare Operators</a></p>
+<ul>
+<li><p><a class="reference internal" href="#n-result" id="id37">n_result</a></p></li>
+<li><p><a class="reference internal" href="#n-arg" id="id38">n_arg</a></p></li>
+<li><p><a class="reference internal" href="#left-right" id="id39">left, right</a></p></li>
+<li><p><a class="reference internal" href="#comp-eq" id="id40">comp_eq</a></p></li>
+<li><p><a class="reference internal" href="#comp-le" id="id41">comp_le</a></p></li>
+<li><p><a class="reference internal" href="#comp-lt" id="id42">comp_lt</a></p></li>
+<li><p><a class="reference internal" href="#comp-ne" id="id43">comp_ne</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-compare-operators-other-comparisons" id="id44">Other Comparisons</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-compare-operators-example" id="id45">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#discrete-functions" id="id46">Discrete Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#name" id="id47">name</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-discrete-functions-n-result" id="id48">n_result</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-discrete-functions-n-arg" id="id49">n_arg</a></p></li>
+<li><p><a class="reference internal" href="#arg" id="id50">arg</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-discrete-functions-example" id="id51">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#atomic-functions" id="id52">Atomic Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#atomic-three" id="id53">Atomic Three</a></p></li>
+<li><p><a class="reference internal" href="#atomic-four" id="id54">Atomic Four</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-atomic-functions-name" id="id55">name</a></p></li>
+<li><p><a class="reference internal" href="#call-id" id="id56">call_id</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-atomic-functions-n-result" id="id57">n_result</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-atomic-functions-n-arg" id="id58">n_arg</a></p></li>
+<li><p><a class="reference internal" href="#first-arg-last-arg" id="id59">first_arg, …, last_arg</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-atomic-functions-example" id="id60">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#print" id="id61">Print</a></p>
+<ul>
+<li><p><a class="reference internal" href="#before" id="id62">before</a></p></li>
+<li><p><a class="reference internal" href="#after" id="id63">after</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-print-n-result" id="id64">n_result</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-print-n-arg" id="id65">n_arg</a></p></li>
+<li><p><a class="reference internal" href="#notpos" id="id66">notpos</a></p></li>
+<li><p><a class="reference internal" href="#value" id="id67">value</a></p></li>
+<li><p><a class="reference internal" href="#json-graph-op-print-example" id="id68">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#json-graph-op-contents" id="id69">Contents</a></p></li>
+</ul>
+</div>
+<section id="notation">
+<span id="json-graph-op-notation"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id16">Notation</a><a class="headerlink" href="#notation" title="Permalink to this headline"></a></h3>
+<section id="op-code">
+<span id="json-graph-op-notation-op-code"></span><span id="index-2"></span><h4><a class="toc-backref" href="#id17">op_code</a><a class="headerlink" href="#op-code" title="Permalink to this headline"></a></h4>
+<p>Each operator definition has a <em>op_code</em> value that
+is used to identify it for a particular <em>json_ad_graph</em> .</p>
+</section>
+<section id="arguments">
+<span id="json-graph-op-notation-arguments"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id18">Arguments</a><a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h4>
+<p>The values <em>first_arg</em> , … ,
+<a class="reference internal" href="json_ad_graph.html#json-ad-graph-op-usage-first-arg-last-arg"><span class="std std-ref">last_arg</span></a>
+are the node indices for arguments to an operator.</p>
+</section>
+</section>
+<section id="unary-operators">
+<span id="json-graph-op-unary-operators"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id19">Unary Operators</a><a class="headerlink" href="#unary-operators" title="Permalink to this headline"></a></h3>
+<p>All these operations create one result node and
+have the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <em>name</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;n_arg&quot;</span></code> :        1</div>
+<div class="line">}</div>
+</div>
+<p>where <em>name</em> is a <a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-string"><span class="std std-ref">String</span></a> .
+A corresponding <em>op_usage</em> has the form</p>
+<blockquote>
+<div><p>[ <em>op_code</em> , <em>arg</em>  ]</p>
+</div></blockquote>
+<p>The possible values for the string <em>name</em> are listed
+in the table below.
+The corresponding result is the node value as a function of the argument value.</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>name</em></p></td>
+<td><p>result</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">abs</span></code></p></td>
+<td><p>absolute value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">acos</span></code></p></td>
+<td><p>inverse cosine</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">acosh</span></code></p></td>
+<td><p>inverse hyperbolic cosine</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">asin</span></code></p></td>
+<td><p>inverse sine</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asinh</span></code></p></td>
+<td><p>inverse hyperbolic sine</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atan</span></code></p></td>
+<td><p>inverse tangent</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atanh</span></code></p></td>
+<td><p>inverse hyperbolic sine</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cos</span></code></p></td>
+<td><p>cosine</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cosh</span></code></p></td>
+<td><p>hyperbolic cosine</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">erf</span></code></p></td>
+<td><p>error functions</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">erfc</span></code></p></td>
+<td><p>complementary error function</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">exp</span></code></p></td>
+<td><p>exponential</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">expm1</span></code></p></td>
+<td><p>minus one plus the exponential</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">log</span></code></p></td>
+<td><p>logarithm</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">log1p</span></code></p></td>
+<td><p>log  plus one</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">neg</span></code></p></td>
+<td><p>negative</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sign</span></code></p></td>
+<td><p>sign function</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sin</span></code></p></td>
+<td><p>sine</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sinh</span></code></p></td>
+<td><p>hyperbolic sine</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sqrt</span></code></p></td>
+<td><p>square root</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tan</span></code></p></td>
+<td><p>tangent</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tanh</span></code></p></td>
+<td><p>hyperbolic tangent</p></td>
+</tr>
+</tbody>
+</table>
+<section id="example">
+<span id="json-graph-op-unary-operators-example"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id20">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h4>
+<p>The file <a class="reference internal" href="json_unary_op.cpp.html#json-unary-op-cpp-name"><span class="std std-ref">json_unary_op.cpp</span></a> is an example and test
+for one of these operators.</p>
+</section>
+</section>
+<section id="binary-operators">
+<span id="json-graph-op-binary-operators"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id21">Binary Operators</a><a class="headerlink" href="#binary-operators" title="Permalink to this headline"></a></h3>
+<p>All these operations create one result node and
+have the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <em>name</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;n_arg&quot;</span></code> :        2</div>
+<div class="line">}</div>
+</div>
+<p>where <em>name</em> is a <a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-string"><span class="std std-ref">String</span></a> .
+A corresponding <em>op_usage</em> has the form</p>
+<blockquote>
+<div><p>[ <em>op_code</em> , <em>first_arg</em> , <em>second_arg</em>  ]</p>
+</div></blockquote>
+<p>The possible values for the string <em>name</em> are listed below:</p>
+<section id="add">
+<span id="json-graph-op-binary-operators-add"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id22">add</a><a class="headerlink" href="#add" title="Permalink to this headline"></a></h4>
+<p>The result is
+the first argument value plus the second argument value; see
+the example and test <a class="reference internal" href="json_add_op.cpp.html#json-add-op-cpp-name"><span class="std std-ref">json_add_op.cpp</span></a> .</p>
+</section>
+<section id="azmul">
+<span id="json-graph-op-binary-operators-azmul"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id23">azmul</a><a class="headerlink" href="#azmul" title="Permalink to this headline"></a></h4>
+<p>If the first argument value is zero, the result is zero
+(even if the second argument value is nan).
+Otherwise the result is
+the first argument value times the second argument value; see
+the example and test <a class="reference internal" href="json_azmul_op.cpp.html#json-azmul-op-cpp-name"><span class="std std-ref">json_azmul_op.cpp</span></a> .</p>
+</section>
+<section id="div">
+<span id="json-graph-op-binary-operators-div"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id24">div</a><a class="headerlink" href="#div" title="Permalink to this headline"></a></h4>
+<p>The result is
+the first argument value divided by the second argument value; see
+the example and test <a class="reference internal" href="json_div_op.cpp.html#json-div-op-cpp-name"><span class="std std-ref">json_div_op.cpp</span></a> .</p>
+</section>
+<section id="mul">
+<span id="json-graph-op-binary-operators-mul"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id25">mul</a><a class="headerlink" href="#mul" title="Permalink to this headline"></a></h4>
+<p>The result is
+the first argument value times the second argument value; see
+the example and test <a class="reference internal" href="json_mul_op.cpp.html#json-mul-op-cpp-name"><span class="std std-ref">json_mul_op.cpp</span></a> .</p>
+</section>
+<section id="pow">
+<span id="json-graph-op-binary-operators-pow"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id26">pow</a><a class="headerlink" href="#pow" title="Permalink to this headline"></a></h4>
+<p>The result is
+the first argument value raised to the second argument value; see
+the example and test <a class="reference internal" href="json_pow_op.cpp.html#json-pow-op-cpp-name"><span class="std std-ref">json_pow_op.cpp</span></a> .</p>
+</section>
+<section id="sub">
+<span id="json-graph-op-binary-operators-sub"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id27">sub</a><a class="headerlink" href="#sub" title="Permalink to this headline"></a></h4>
+<p>The result is
+the first argument value minus the second argument value; see
+the example and test <a class="reference internal" href="json_sub_op.cpp.html#json-sub-op-cpp-name"><span class="std std-ref">json_sub_op.cpp</span></a> .</p>
+</section>
+</section>
+<section id="sum">
+<span id="json-graph-op-sum"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id28">sum</a><a class="headerlink" href="#sum" title="Permalink to this headline"></a></h3>
+<p>This operator has the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <code class="docutils literal notranslate"><span class="pre">&quot;sum&quot;</span></code></div>
+<div class="line">}</div>
+</div>
+<p>A corresponding <em>op_usage</em> has the form</p>
+<blockquote>
+<div><p>[ <em>op_code</em> , <em>n_result</em> , <em>n_arg</em> , [ <em>first_arg</em> , …, <em>last_arg</em>  ] ]</p>
+</div></blockquote>
+<p>where <em>n_result</em> is always <code class="docutils literal notranslate"><span class="pre">1</span></code> .
+This operation creates one node with value equal to
+the sum of values corresponding to all of its argument nodes.</p>
+<section id="json-graph-op-sum-example">
+<span id="index-14"></span><span id="id1"></span><h4><a class="toc-backref" href="#id29">Example</a><a class="headerlink" href="#json-graph-op-sum-example" title="Permalink to this headline"></a></h4>
+<p>The file <a class="reference internal" href="json_sum_op.cpp.html#json-sum-op-cpp-name"><span class="std std-ref">json_sum_op.cpp</span></a> is an example and test
+of this operation.</p>
+</section>
+</section>
+<section id="conditional-expressions">
+<span id="json-graph-op-conditional-expressions"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id30">Conditional Expressions</a><a class="headerlink" href="#conditional-expressions" title="Permalink to this headline"></a></h3>
+<p>These operators are <a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">conditional expressions</span></a>
+and have the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> :         ” <code class="docutils literal notranslate"><span class="pre">cexp_</span></code> <em>rel</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;n_arg&quot;</span></code> :        4</div>
+<div class="line">}</div>
+</div>
+<p>where <em>rel</em> is <code class="docutils literal notranslate"><span class="pre">eq</span></code> (equal),
+<code class="docutils literal notranslate"><span class="pre">le</span></code> (less than or equal), or
+<code class="docutils literal notranslate"><span class="pre">lt</span></code> (less than).
+The first argument is <a class="reference internal" href="CondExp.html#condexp-left"><span class="std std-ref">left</span></a> ,
+the second is <a class="reference internal" href="CondExp.html#condexp-right"><span class="std std-ref">right</span></a> ,
+the third is <a class="reference internal" href="CondExp.html#condexp-if-true"><span class="std std-ref">if_true</span></a> ,
+the fourth is <a class="reference internal" href="CondExp.html#condexp-if-false"><span class="std std-ref">if_false</span></a> ,
+the result is given by</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">if</span></code> ( <em>left</em> <em>cop</em> <em>right</em> )</div>
+<div class="line">            <em>result</em> = <em>if_true</em> ;</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">else</span></code></div>
+<div class="line">            <em>result</em> = <em>if_false</em> ;</div>
+</div>
+<p>where the comparison <em>cop</em> is define by the cases below:</p>
+<section id="cexp-eq">
+<span id="json-graph-op-conditional-expressions-cexp-eq"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id31">cexp_eq</a><a class="headerlink" href="#cexp-eq" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">==</span></code></p>
+</section>
+<section id="cexp-le">
+<span id="json-graph-op-conditional-expressions-cexp-le"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id32">cexp_le</a><a class="headerlink" href="#cexp-le" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code></p>
+</section>
+<section id="cexp-lt">
+<span id="json-graph-op-conditional-expressions-cexp-lt"></span><span id="index-18"></span><h4><a class="toc-backref" href="#id33">cexp_lt</a><a class="headerlink" href="#cexp-lt" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p>
+</section>
+<section id="other-comparisons">
+<span id="json-graph-op-conditional-expressions-other-comparisons"></span><span id="index-19"></span><h4><a class="toc-backref" href="#id34">Other Comparisons</a><a class="headerlink" href="#other-comparisons" title="Permalink to this headline"></a></h4>
+<p>Note that</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CondExpGt</span></code> ( <em>left</em> , <em>right</em> , <em>if_true</em> , <em>if_false</em> )</p>
+</div></blockquote>
+<p>is equivalent to</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CondExpLe</span></code> ( <em>left</em> , <em>right</em> , <em>if_false</em> , <em>if_true</em> )</p>
+</div></blockquote>
+<p>Similar conversions can be used for all the possible
+<a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">conditional expressions</span></a> .</p>
+</section>
+<section id="json-graph-op-conditional-expressions-example">
+<span id="index-20"></span><span id="id2"></span><h4><a class="toc-backref" href="#id35">Example</a><a class="headerlink" href="#json-graph-op-conditional-expressions-example" title="Permalink to this headline"></a></h4>
+<p>The file <a class="reference internal" href="json_cexp_op.cpp.html#json-cexp-op-cpp-name"><span class="std std-ref">json_cexp_op.cpp</span></a> is an example and test
+for one of these operators.</p>
+</section>
+</section>
+<section id="compare-operators">
+<span id="json-graph-op-compare-operators"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id36">Compare Operators</a><a class="headerlink" href="#compare-operators" title="Permalink to this headline"></a></h3>
+<p>These are <a class="reference internal" href="Compare.html#compare-name"><span class="std std-ref">comparison</span></a> operators
+and have the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> :         ” <code class="docutils literal notranslate"><span class="pre">comp_</span></code> <em>rel</em> “</div>
+<div class="line">}</div>
+</div>
+<p>where <em>rel</em> is <code class="docutils literal notranslate"><span class="pre">eq</span></code> (equal),
+<code class="docutils literal notranslate"><span class="pre">ne</span></code> (not equal),
+<code class="docutils literal notranslate"><span class="pre">le</span></code> (less than or equal), or
+<code class="docutils literal notranslate"><span class="pre">lt</span></code> (less than).
+A corresponding <em>op_usage</em> has the form</p>
+<blockquote>
+<div><p>[ <em>op_code</em> , <em>n_result</em> , <em>n_arg</em> , [ <em>left</em> , <em>right</em>  ] ]</p>
+</div></blockquote>
+<section id="n-result">
+<span id="json-graph-op-compare-operators-n-result"></span><span id="index-22"></span><h4><a class="toc-backref" href="#id37">n_result</a><a class="headerlink" href="#n-result" title="Permalink to this headline"></a></h4>
+<p>This is always zero because a comparison operator does not create
+any new nodes.</p>
+</section>
+<section id="n-arg">
+<span id="json-graph-op-compare-operators-n-arg"></span><span id="index-23"></span><h4><a class="toc-backref" href="#id38">n_arg</a><a class="headerlink" href="#n-arg" title="Permalink to this headline"></a></h4>
+<p>This is always two because a comparison operator has two argument nodes
+corresponding to the left and right operands.</p>
+</section>
+<section id="left-right">
+<span id="json-graph-op-compare-operators-left-right"></span><span id="index-24"></span><h4><a class="toc-backref" href="#id39">left, right</a><a class="headerlink" href="#left-right" title="Permalink to this headline"></a></h4>
+<p>The logical comparison is defined as the logical expression</p>
+<blockquote>
+<div><p><em>left</em> <em>cop</em> <em>right</em></p>
+</div></blockquote>
+<p>The comparison <em>cop</em> is define by the cases below.
+The Json graph corresponds to the comparison being true.
+If, for a value of the independent parameters and variables,
+the comparison is false,
+the Json graph may no longer be valid.
+For example, the Json graph may only contain the code for the true case below:</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">if</span></code> ( <em>left</em> <em>cop</em> <em>right</em>  )</div>
+<div class="line">      { <em>source code when result is true</em>  }</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">else</span></code></div>
+<div class="line">      { <em>source code when result is false</em>  }</div>
+</div>
+<p>Including this operator enables CppAD to detect when the graph
+may no longer be a valid representation of the intended function.</p>
+</section>
+<section id="comp-eq">
+<span id="json-graph-op-compare-operators-comp-eq"></span><span id="index-25"></span><h4><a class="toc-backref" href="#id40">comp_eq</a><a class="headerlink" href="#comp-eq" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">==</span></code></p>
+</section>
+<section id="comp-le">
+<span id="json-graph-op-compare-operators-comp-le"></span><span id="index-26"></span><h4><a class="toc-backref" href="#id41">comp_le</a><a class="headerlink" href="#comp-le" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code></p>
+</section>
+<section id="comp-lt">
+<span id="json-graph-op-compare-operators-comp-lt"></span><span id="index-27"></span><h4><a class="toc-backref" href="#id42">comp_lt</a><a class="headerlink" href="#comp-lt" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p>
+</section>
+<section id="comp-ne">
+<span id="json-graph-op-compare-operators-comp-ne"></span><span id="index-28"></span><h4><a class="toc-backref" href="#id43">comp_ne</a><a class="headerlink" href="#comp-ne" title="Permalink to this headline"></a></h4>
+<p>For this operator <em>cop</em> is <code class="docutils literal notranslate"><span class="pre">!=</span></code></p>
+</section>
+<section id="json-graph-op-compare-operators-other-comparisons">
+<span id="index-29"></span><span id="id3"></span><h4><a class="toc-backref" href="#id44">Other Comparisons</a><a class="headerlink" href="#json-graph-op-compare-operators-other-comparisons" title="Permalink to this headline"></a></h4>
+<p>The comparison result true for <em>left</em> &gt; <em>right</em>
+is equivalent to the comparison result true for <em>right</em> &lt; <em>left</em> .
+The comparison result false for <em>left</em> &gt; <em>right</em>
+is equivalent to the comparison result true for <em>left</em> &lt;= <em>right</em> .
+In a similar fashion, all the possible comparisons results
+can be converted to a true result for one of the comparisons above.</p>
+</section>
+<section id="json-graph-op-compare-operators-example">
+<span id="index-30"></span><span id="id4"></span><h4><a class="toc-backref" href="#id45">Example</a><a class="headerlink" href="#json-graph-op-compare-operators-example" title="Permalink to this headline"></a></h4>
+<p>The file <a class="reference internal" href="json_comp_op.cpp.html#json-comp-op-cpp-name"><span class="std std-ref">json_comp_op.cpp</span></a> is an example and test
+for one of these operators.</p>
+</section>
+</section>
+<section id="discrete-functions">
+<span id="json-graph-op-discrete-functions"></span><span id="index-31"></span><h3><a class="toc-backref" href="#id46">Discrete Functions</a><a class="headerlink" href="#discrete-functions" title="Permalink to this headline"></a></h3>
+<p>This operator has the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <code class="docutils literal notranslate"><span class="pre">&quot;discrete&quot;</span></code></div>
+<div class="line">}</div>
+</div>
+<p>A corresponding op_usage has the form</p>
+<blockquote>
+<div><p>[ <em>op_code</em> , <em>name</em> , <em>n_result</em> , <em>n_arg</em> , [ <em>arg</em>  ]  ]</p>
+</div></blockquote>
+<section id="name">
+<span id="json-graph-op-discrete-functions-name"></span><span id="index-32"></span><h4><a class="toc-backref" href="#id47">name</a><a class="headerlink" href="#name" title="Permalink to this headline"></a></h4>
+<p>The value <em>name</em> is a
+<a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-string"><span class="std std-ref">String</span></a> specifying the
+<a class="reference internal" href="Discrete.html#id1"><span class="std std-ref">name</span></a> of the discrete function that is called.</p>
+</section>
+<section id="json-graph-op-discrete-functions-n-result">
+<span id="index-33"></span><span id="id5"></span><h4><a class="toc-backref" href="#id48">n_result</a><a class="headerlink" href="#json-graph-op-discrete-functions-n-result" title="Permalink to this headline"></a></h4>
+<p>This is always <code class="docutils literal notranslate"><span class="pre">1</span></code> because a discrete function
+creates one new node.
+The result node value is the specified discrete function of the argument value.</p>
+</section>
+<section id="json-graph-op-discrete-functions-n-arg">
+<span id="index-34"></span><span id="id6"></span><h4><a class="toc-backref" href="#id49">n_arg</a><a class="headerlink" href="#json-graph-op-discrete-functions-n-arg" title="Permalink to this headline"></a></h4>
+<p>This is always <code class="docutils literal notranslate"><span class="pre">1</span></code> because a discrete function has
+one argument node.</p>
+</section>
+<section id="arg">
+<span id="json-graph-op-discrete-functions-arg"></span><span id="index-35"></span><h4><a class="toc-backref" href="#id50">arg</a><a class="headerlink" href="#arg" title="Permalink to this headline"></a></h4>
+<p>is the node index for the argument to the discrete function.</p>
+</section>
+<section id="json-graph-op-discrete-functions-example">
+<span id="index-36"></span><span id="id7"></span><h4><a class="toc-backref" href="#id51">Example</a><a class="headerlink" href="#json-graph-op-discrete-functions-example" title="Permalink to this headline"></a></h4>
+<p>the example and test <a class="reference internal" href="json_discrete_op.cpp.html#json-discrete-op-cpp-name"><span class="std std-ref">json_discrete_op.cpp</span></a> .</p>
+</section>
+</section>
+<section id="atomic-functions">
+<span id="json-graph-op-atomic-functions"></span><span id="index-37"></span><h3><a class="toc-backref" href="#id52">Atomic Functions</a><a class="headerlink" href="#atomic-functions" title="Permalink to this headline"></a></h3>
+<p>These operators create <em>n_result</em> nodes with values determined by
+an evaluation of the an <a class="reference internal" href="atomic_three.html#atomic-three-name"><span class="std std-ref">atomic_three</span></a> or <a class="reference internal" href="atomic_four.html#atomic-four-name"><span class="std std-ref">atomic_four</span></a> function.</p>
+<section id="atomic-three">
+<span id="json-graph-op-atomic-functions-atomic-three"></span><span id="index-38"></span><h4><a class="toc-backref" href="#id53">Atomic Three</a><a class="headerlink" href="#atomic-three" title="Permalink to this headline"></a></h4>
+<p>This operator has the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <code class="docutils literal notranslate"><span class="pre">&quot;atom&quot;</span></code></div>
+<div class="line">}</div>
+</div>
+<p>A corresponding <em>op_usage</em> has the form</p>
+<div class="line-block">
+<div class="line">      [ <em>op_code</em> , <em>name</em> , <em>n_result</em> , <em>n_arg</em> ,</div>
+<div class="line">            [ <em>first_arg</em> , …, <em>last_arg</em>  ]</div>
+<div class="line">      ]</div>
+</div>
+</section>
+<section id="atomic-four">
+<span id="json-graph-op-atomic-functions-atomic-four"></span><span id="index-39"></span><h4><a class="toc-backref" href="#id54">Atomic Four</a><a class="headerlink" href="#atomic-four" title="Permalink to this headline"></a></h4>
+<p>This operator has the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <code class="docutils literal notranslate"><span class="pre">&quot;atom4&quot;</span></code></div>
+<div class="line">}</div>
+</div>
+<p>A corresponding <em>op_usage</em> has the form</p>
+<div class="line-block">
+<div class="line">      [ <em>op_code</em> , <em>name</em> , <em>call_id</em> , <em>n_result</em> , <em>n_arg</em> ,</div>
+<div class="line">            [ <em>first_arg</em> , …, <em>last_arg</em>  ]</div>
+<div class="line">      ]</div>
+</div>
+</section>
+<section id="json-graph-op-atomic-functions-name">
+<span id="index-40"></span><span id="id8"></span><h4><a class="toc-backref" href="#id55">name</a><a class="headerlink" href="#json-graph-op-atomic-functions-name" title="Permalink to this headline"></a></h4>
+<p>The value <em>name</em> is a
+<a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-string"><span class="std std-ref">String</span></a> specifying the
+<a class="reference internal" href="atomic_three_ctor.html#atomic-three-ctor-atomic-three-name"><span class="std std-ref">name</span></a>
+of the <code class="docutils literal notranslate"><span class="pre">atomic_three</span></code> function that is called.</p>
+</section>
+<section id="call-id">
+<span id="json-graph-op-atomic-functions-call-id"></span><span id="index-41"></span><h4><a class="toc-backref" href="#id56">call_id</a><a class="headerlink" href="#call-id" title="Permalink to this headline"></a></h4>
+<p>is a <a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-non-negative-integer"><span class="std std-ref">Non-Negative Integer</span></a>
+specifying the <a class="reference internal" href="atomic_four_call.html#atomic-four-call-call-id"><span class="std std-ref">call_id</span></a> for an
+atomic four function.</p>
+</section>
+<section id="json-graph-op-atomic-functions-n-result">
+<span id="index-42"></span><span id="id9"></span><h4><a class="toc-backref" href="#id57">n_result</a><a class="headerlink" href="#json-graph-op-atomic-functions-n-result" title="Permalink to this headline"></a></h4>
+<p>is the number of results for this function; i.e.,
+its range space dimension.</p>
+</section>
+<section id="json-graph-op-atomic-functions-n-arg">
+<span id="index-43"></span><span id="id10"></span><h4><a class="toc-backref" href="#id58">n_arg</a><a class="headerlink" href="#json-graph-op-atomic-functions-n-arg" title="Permalink to this headline"></a></h4>
+<p>is the number of arguments to this function; i.e.,
+its domain space dimension.</p>
+</section>
+<section id="first-arg-last-arg">
+<span id="json-graph-op-atomic-functions-first-arg-last-arg"></span><span id="index-44"></span><h4><a class="toc-backref" href="#id59">first_arg, …, last_arg</a><a class="headerlink" href="#first-arg-last-arg" title="Permalink to this headline"></a></h4>
+<p>The values corresponding to the node indices
+<em>first_arg</em> , …, <em>last_arg</em> are the
+arguments (independent variables) for the atomic function evaluation.
+In the case where the atomic function is a <code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code> function,
+the independent dynamic parameters are specified by calling its
+<a class="reference internal" href="chkpoint_two.html#chkpoint-two-syntax-new-dynamic"><span class="std std-ref">new_dynamic</span></a> routine.</p>
+</section>
+<section id="json-graph-op-atomic-functions-example">
+<span id="index-45"></span><span id="id11"></span><h4><a class="toc-backref" href="#id60">Example</a><a class="headerlink" href="#json-graph-op-atomic-functions-example" title="Permalink to this headline"></a></h4>
+<p>the example and test <a class="reference internal" href="json_atom_op.cpp.html#json-atom-op-cpp-name"><span class="std std-ref">json_atom_op.cpp</span></a> .</p>
+</section>
+</section>
+<section id="print">
+<span id="json-graph-op-print"></span><span id="index-46"></span><h3><a class="toc-backref" href="#id61">Print</a><a class="headerlink" href="#print" title="Permalink to this headline"></a></h3>
+<p>This operator has the following Json definition:</p>
+<div class="line-block">
+<div class="line">{</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;op_code&quot;</span></code> : <em>op_code</em> ,</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;</span></code> : <code class="docutils literal notranslate"><span class="pre">&quot;print&quot;</span></code></div>
+<div class="line">}</div>
+</div>
+<p>A corresponding <em>op_usage</em> has the form</p>
+<blockquote>
+<div><p>[ <em>op_code</em> , <em>before</em> , <em>after</em> , <em>n_result</em> , <em>n_arg</em> , [ <em>notpos</em> , <em>value</em>  ] ]</p>
+</div></blockquote>
+<section id="before">
+<span id="json-graph-op-print-before"></span><span id="index-47"></span><h4><a class="toc-backref" href="#id62">before</a><a class="headerlink" href="#before" title="Permalink to this headline"></a></h4>
+<p>is a <a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-string"><span class="std std-ref">String</span></a> that is printed
+<a class="reference internal" href="PrintFor.html#printfor-before"><span class="std std-ref">before</span></a> the value for this operator.</p>
+</section>
+<section id="after">
+<span id="json-graph-op-print-after"></span><span id="index-48"></span><h4><a class="toc-backref" href="#id63">after</a><a class="headerlink" href="#after" title="Permalink to this headline"></a></h4>
+<p>is a <a class="reference internal" href="json_ad_graph.html#json-ad-graph-token-string"><span class="std std-ref">String</span></a> that is printed
+<a class="reference internal" href="PrintFor.html#printfor-after"><span class="std std-ref">after</span></a> the value for this operator.</p>
+</section>
+<section id="json-graph-op-print-n-result">
+<span id="index-49"></span><span id="id12"></span><h4><a class="toc-backref" href="#id64">n_result</a><a class="headerlink" href="#json-graph-op-print-n-result" title="Permalink to this headline"></a></h4>
+<p>This is always zero because a print operator does not create
+any new nodes.</p>
+</section>
+<section id="json-graph-op-print-n-arg">
+<span id="index-50"></span><span id="id13"></span><h4><a class="toc-backref" href="#id65">n_arg</a><a class="headerlink" href="#json-graph-op-print-n-arg" title="Permalink to this headline"></a></h4>
+<p>This is always two because a print operator has two argument nodes.</p>
+</section>
+<section id="notpos">
+<span id="json-graph-op-print-notpos"></span><span id="index-51"></span><h4><a class="toc-backref" href="#id66">notpos</a><a class="headerlink" href="#notpos" title="Permalink to this headline"></a></h4>
+<p>This is <a class="reference internal" href="PrintFor.html#printfor-notpos"><span class="std std-ref">notpos</span></a>
+which determines if the value is printed.</p>
+</section>
+<section id="value">
+<span id="json-graph-op-print-value"></span><span id="index-52"></span><h4><a class="toc-backref" href="#id67">value</a><a class="headerlink" href="#value" title="Permalink to this headline"></a></h4>
+<p>This is the <a class="reference internal" href="PrintFor.html#printfor-value"><span class="std std-ref">value</span></a> that is printed.</p>
+</section>
+<section id="json-graph-op-print-example">
+<span id="index-53"></span><span id="id14"></span><h4><a class="toc-backref" href="#id68">Example</a><a class="headerlink" href="#json-graph-op-print-example" title="Permalink to this headline"></a></h4>
+<p>The file <a class="reference internal" href="json_print_op.cpp.html#json-print-op-cpp-name"><span class="std std-ref">json_print_op.cpp</span></a> is an example and test
+of this operator.</p>
+</section>
+</section>
+<section id="json-graph-op-contents">
+<span id="index-54"></span><span id="id15"></span><h3><a class="toc-backref" href="#id69">Contents</a><a class="headerlink" href="#json-graph-op-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>json_unary_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_unary_op.cpp.html#json-unary-op-cpp-title"><span class="std std-ref">Json Unary Operators: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_add_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_add_op.cpp.html#json-add-op-cpp-title"><span class="std std-ref">Json add Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>json_azmul_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_azmul_op.cpp.html#json-azmul-op-cpp-title"><span class="std std-ref">Json azmul Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_div_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_div_op.cpp.html#json-div-op-cpp-title"><span class="std std-ref">Json div Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>json_mul_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_mul_op.cpp.html#json-mul-op-cpp-title"><span class="std std-ref">Json mul Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_pow_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_pow_op.cpp.html#json-pow-op-cpp-title"><span class="std std-ref">Json pow Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>json_sub_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_sub_op.cpp.html#json-sub-op-cpp-title"><span class="std std-ref">Json sub Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_sum_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_sum_op.cpp.html#json-sum-op-cpp-title"><span class="std std-ref">Json sum Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>json_cexp_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_cexp_op.cpp.html#json-cexp-op-cpp-title"><span class="std std-ref">Json Conditional Expressions: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_comp_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_comp_op.cpp.html#json-comp-op-cpp-title"><span class="std std-ref">Json Comparison Operators: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>json_discrete_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_discrete_op.cpp.html#json-discrete-op-cpp-title"><span class="std std-ref">Json add Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_atom_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_atom_op.cpp.html#json-atom-op-cpp-title"><span class="std std-ref">Json Atomic Function Three Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>json_atom4_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_atom4_op.cpp.html#json-atom4-op-cpp-title"><span class="std std-ref">Json Atomic Function Operator: Example and Test</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>json_print_op.cpp</p></td>
+<td><p><a class="reference internal" href="json_print_op.cpp.html#json-print-op-cpp-title"><span class="std std-ref">Json AD Graph print Operator: Example and Test</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="json_ad_graph.html" class="btn btn-neutral float-left" title="json_ad_graph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="json_unary_op.cpp.html" class="btn btn-neutral float-right" title="json_unary_op.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+lines 329-345 of file: example/multi_thread/multi_atomic_three.cpp
+
+{xrst_begin multi_atomic_three_worker}
+
+Multi-Threaded atomic_three Worker
+##################################
+
+Purpose
+*******
+This routine does the computation for one thread.
+
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
+
+{xrst_end multi_atomic_three_worker}

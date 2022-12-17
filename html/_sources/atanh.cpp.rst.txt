@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/atanh.cpp
+
+{xrst_begin atanh.cpp}
+
+The AD atanh Function: Example and Test
+#######################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atanh.cpp}

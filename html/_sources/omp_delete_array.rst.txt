@@ -1,0 +1,53 @@
+lines 579-629 of file: include/cppad/utility/omp_alloc.hpp
+
+{xrst_begin omp_delete_array}
+
+Return A Raw Array to The Available Memory for a Thread
+#######################################################
+
+Deprecated 2011-08-31
+*********************
+Use the function :ref:`thread_alloc::delete_array<ta_delete_array-name>` instead.
+
+Syntax
+******
+
+   # ``include <cppad/utility/omp_alloc.hpp>``
+
+``omp_alloc::delete_array`` ( *array* ) .
+
+Purpose
+*******
+Returns memory corresponding to a raw array
+(create by :ref:`omp_create_array-name` ) to the
+:ref:`omp_available-name` memory pool for the current thread.
+
+Type
+****
+The type of the elements of the array.
+
+array
+*****
+The argument *array* has prototype
+
+   *Type* * *array*
+
+It is a value returned by :ref:`omp_create_array-name` and not yet deleted.
+The *Type* destructor is called for each element in the array.
+
+Thread
+******
+The :ref:`current thread<omp_get_thread_num-name>` must be the
+same as when :ref:`omp_create_array-name` returned the value *array* .
+There is an exception to this rule:
+when the current execution mode is sequential
+(not :ref:`parallel<omp_in_parallel-name>` ) the current thread number does not matter.
+
+Delta
+*****
+The amount of memory :ref:`omp_inuse-name` will decrease by *delta* ,
+and the :ref:`omp_available-name` memory will increase by *delta* ,
+where :ref:`omp_create_array@Delta`
+is the same as for the corresponding call to ``create_array`` .
+
+{xrst_end omp_delete_array}

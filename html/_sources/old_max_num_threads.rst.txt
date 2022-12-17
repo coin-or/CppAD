@@ -1,0 +1,39 @@
+lines 722-758 of file: include/cppad/utility/omp_alloc.hpp
+
+{xrst_begin old_max_num_threads}
+Set Maximum Number of Threads for omp_alloc Allocator
+#####################################################
+
+Removed
+*******
+This function has been removed from the CppAD API.
+Use the function :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
+in its place.
+
+Syntax
+******
+
+   # ``include <cppad/utility/omp_alloc.hpp>``
+
+``omp_alloc::max_num_threads`` ( *number* )
+
+Purpose
+*******
+By default there is only one thread and all execution is in sequential mode
+(not :ref:`parallel<omp_in_parallel-name>` ).
+
+number
+******
+The argument *number* has prototype
+
+   ``size_t`` *number*
+
+It must be greater than zero and specifies the maximum number of
+OpenMP threads that will be active at one time.
+
+Restrictions
+************
+This function must be called before the program enters
+:ref:`parallel<omp_in_parallel-name>` execution mode.
+
+{xrst_end old_max_num_threads}

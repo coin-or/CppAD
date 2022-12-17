@@ -1,0 +1,213 @@
+lines 9-219 of file: include/cppad/core/for_sparse_jac.hpp
+
+{xrst_begin ForSparseJac}
+
+Jacobian Sparsity Pattern: Forward Mode
+#######################################
+
+Syntax
+******
+
+   *s* = *f* . ``ForSparseJac`` ( *q* , *r* )
+
+*s* = *f* . ``ForSparseJac`` ( *q* , *r* , *transpose* , *dependency* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+For a fixed :math:`n \times q` matrix :math:`R`,
+the Jacobian of :math:`F[ x + R * u ]`
+with respect to :math:`u` at :math:`u = 0` is
+
+.. math::
+
+   S(x) = F^{(1)} ( x ) * R
+
+Given a
+:ref:`glossary@Sparsity Pattern`
+for :math:`R`,
+``ForSparseJac`` returns a sparsity pattern for the :math:`S(x)`.
+
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const`` .
+After a call to ``ForSparseJac`` , the sparsity pattern
+for each of the variables in the operation sequence
+is held in *f* (for possible later use by :ref:`RevSparseHes-name` ).
+These sparsity patterns are stored with elements of type ``bool``
+or elements of type ``std::set<size_t>``
+(see :ref:`ForSparseJac@SetVector` below).
+
+size_forward_bool
+=================
+After ``ForSparseJac`` , if *k* is a ``size_t`` object,
+
+   *k* = *f* . ``size_forward_bool`` ()
+
+sets *k* to the amount of memory (in unsigned character units)
+used to store the sparsity pattern with elements of type ``bool``
+in the function object *f* .
+If the sparsity patterns for the previous ``ForSparseJac`` used
+elements of type ``bool`` ,
+the return value for ``size_forward_bool`` will be non-zero.
+Otherwise, its return value will be zero.
+This sparsity pattern is stored for use by :ref:`RevSparseHes-name` and
+when it is not longer needed, it can be deleted
+(and the corresponding memory freed) using
+
+   *f* . ``size_forward_bool`` (0)
+
+After this call, *f* . ``size_forward_bool`` () will return zero.
+
+size_forward_set
+================
+After ``ForSparseJac`` , if *k* is a ``size_t`` object,
+
+   *k* = *f* . ``size_forward_set`` ()
+
+sets *k* to the amount of memory (in unsigned character units)
+used to store the
+:ref:`glossary@Sparsity Pattern@Vector of Sets`
+sparsity patterns.
+If the sparsity patterns for this operation use elements of type ``bool`` ,
+the return value for ``size_forward_set`` will be zero.
+Otherwise, its return value will be non-zero.
+This sparsity pattern is stored for use by :ref:`RevSparseHes-name` and
+when it is not longer needed, it can be deleted
+(and the corresponding memory freed) using
+
+   *f* . ``size_forward_set`` (0)
+
+After this call, *f* . ``size_forward_set`` () will return zero.
+
+x
+*
+If the operation sequence in *f* is
+:ref:`glossary@Operation@Independent` of
+the independent variables in :math:`x \in \B{R}^n`,
+the sparsity pattern is valid for all values of
+(even if it has :ref:`CondExp-name` or :ref:`VecAD-name` operations).
+
+q
+*
+The argument *q* has prototype
+
+   ``size_t`` *q*
+
+It specifies the number of columns in
+:math:`R \in \B{R}^{n \times q}` and the Jacobian
+:math:`S(x) \in \B{R}^{m \times q}`.
+
+transpose
+*********
+The argument *transpose* has prototype
+
+   ``bool`` *transpose*
+
+The default value ``false`` is used when *transpose* is not present.
+
+dependency
+**********
+The argument *dependency* has prototype
+
+   ``bool`` *dependency*
+
+If *dependency* is true,
+the :ref:`dependency.cpp@Dependency Pattern`
+(instead of sparsity pattern) is computed.
+
+r
+*
+The argument *r* has prototype
+
+   ``const`` *SetVector* & *r*
+
+see :ref:`ForSparseJac@SetVector` below.
+
+transpose false
+===============
+If *r* has elements of type ``bool`` ,
+its size is :math:`n * q`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`n` and all the set elements must be between
+zero and *q* ``-1`` inclusive.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`R \in \B{R}^{n \times q}`.
+
+transpose true
+==============
+If *r* has elements of type ``bool`` ,
+its size is :math:`q * n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`q` and all the set elements must be between
+zero and *n* ``-1`` inclusive.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`R^\R{T} \in \B{R}^{q \times n}`.
+
+s
+*
+The return value *s* has prototype
+
+   *SetVector* *s*
+
+see :ref:`ForSparseJac@SetVector` below.
+
+transpose false
+===============
+If *s* has elements of type ``bool`` ,
+its size is :math:`m * q`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`m` and all its set elements are between
+zero and *q* ``-1`` inclusive.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`S(x) \in \B{R}^{m \times q}`.
+
+transpose true
+==============
+If *s* has elements of type ``bool`` ,
+its size is :math:`q * m`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`q` and all its set elements are between
+zero and *m* ``-1`` inclusive.
+It specifies a
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`S(x)^\R{T} \in \B{R}^{q \times m}`.
+
+SetVector
+*********
+The type *SetVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` or ``std::set<size_t>`` ;
+see :ref:`glossary@Sparsity Pattern` for a discussion
+of the difference.
+
+Entire Sparsity Pattern
+***********************
+Suppose that :math:`q = n` and
+:math:`R` is the :math:`n \times n` identity matrix.
+In this case,
+the corresponding value for *s* is a
+sparsity pattern for the Jacobian :math:`S(x) = F^{(1)} ( x )`.
+
+Example
+*******
+{xrst_toc_hidden
+   example/sparse/for_sparse_jac.cpp
+}
+The file
+:ref:`for_sparse_jac.cpp-name`
+contains an example and test of this operation.
+The file
+:ref:`sparsity_sub.cpp<sparsity_sub.cpp@ForSparseJac>`
+contains an example and test of using ``ForSparseJac``
+to compute the sparsity pattern for a subset of the Jacobian.
+
+{xrst_end ForSparseJac}

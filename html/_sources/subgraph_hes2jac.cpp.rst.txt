@@ -1,0 +1,16 @@
+lines 7-20 of file: example/sparse/subgraph_hes2jac.cpp
+
+{xrst_begin subgraph_hes2jac.cpp}
+{xrst_spell
+   subgraphs
+}
+
+Sparse Hessian Using Subgraphs and Jacobian: Example and Test
+#############################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end subgraph_hes2jac.cpp}

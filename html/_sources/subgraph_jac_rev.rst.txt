@@ -1,0 +1,168 @@
+lines 8-173 of file: include/cppad/core/subgraph_jac_rev.hpp
+
+{xrst_begin subgraph_jac_rev}
+{xrst_spell
+   nnz
+   nr
+   subgraphs
+}
+
+Compute Sparse Jacobians Using Subgraphs
+########################################
+
+Syntax
+******
+
+| *f* . ``subgraph_jac_rev`` ( *x* , *subset* )
+| *f* . ``subgraph_jac_rev`` (
+| |tab| *select_domain* , *select_range* , *x* , *matrix_out*
+| )
+
+See Also
+********
+:ref:`subgraph_reverse@clear_subgraph` .
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+function corresponding to *f* .
+Here *n* is the :ref:`fun_property@Domain` size,
+and *m* is the :ref:`fun_property@Range` size, or *f* .
+The syntax above takes advantage of sparsity when computing the Jacobian
+
+.. math::
+
+   J(x) = F^{(1)} (x)
+
+The  first syntax requires one to know what which elements of the Jacobian
+they want to compute.
+The second syntax computes the sparsity pattern and the value
+of the Jacobian at the same time.
+If one only wants the sparsity pattern,
+it should be faster to use :ref:`subgraph_sparsity-name` .
+
+Method
+******
+This routine uses a subgraph technique. To be specific,
+for each dependent variable,
+it creates a subgraph of the operation sequence
+containing the variables that affect the dependent variable.
+This avoids the overhead of performing set operations
+that is inherent in other methods for computing sparsity patterns.
+
+BaseVector
+**********
+The type *BaseVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
+
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
+
+f
+*
+This object has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the Taylor coefficients stored in *f* are affected
+by this operation; see
+:ref:`sparse_jac@Uses Forward` below.
+
+x
+*
+This argument has prototype
+
+   ``const`` *BaseVector* & *x*
+
+It is the value of *x* at which we are computing the Jacobian.
+
+Uses Forward
+************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``sparse_jac_forward`` or ``sparse_jac_rev`` ,
+the zero order coefficients correspond to
+
+   *f* . ``Forward`` (0, *x* )
+
+All the other forward mode coefficients are unspecified.
+
+subset
+******
+This argument has prototype
+
+   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+
+Its row size is *subset* . ``nr`` () == *m* ,
+and its column size is *subset* . ``nc`` () == *n* .
+It specifies which elements of the Jacobian are computed.
+The input elements in its value vector
+*subset* . ``val`` () do not matter.
+Upon return it contains the value of the corresponding elements
+of the Jacobian.
+
+select_domain
+*************
+The argument *select_domain* has prototype
+
+   ``const`` *BoolVector* & *select_domain*
+
+It has size :math:`n` and specifies which independent variables
+to include.
+
+select_range
+************
+The argument *select_range* has prototype
+
+   ``const`` *BoolVector* & *select_range*
+
+It has size :math:`m` and specifies which components of the range
+to include in the calculation.
+A subgraph is built for each dependent variable and the selected set
+of independent variables.
+
+matrix_out
+**********
+This argument has prototype
+
+   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *matrix_out*
+
+This input value of *matrix_out* does not matter.
+Upon return *matrix_out* is
+:ref:`sparse matrix<sparse_rcv-name>` representation of :math:`F^{(1)} (x)`.
+The matrix has :math:`m` rows, :math:`n` columns.
+If *select_domain* [ *j* ] is true,
+*select_range* [ *i* ] is true, and
+:math:`F_i (x)` depends on :math:`x_j`,
+then the pair :math:`(i, j)` is in *matrix_out* .
+For each *k* = 0 , ..., *matrix_out* . ``nnz`` () , let
+
+| |tab| *i* = *matrix_out* . ``row`` ()[ *k* ]
+| |tab| *j* = *matrix_out* . ``col`` ()[ *k* ]
+| |tab| *v* = *matrix_out* . ``val`` ()[ *k* ]
+
+It follows that the partial of :math:`F_i (x)` with respect to
+:math:`x_j` is equal to :math:`v`.
+
+Example
+*******
+{xrst_toc_hidden
+   example/sparse/subgraph_jac_rev.cpp
+   example/sparse/subgraph_hes2jac.cpp
+}
+The files :ref:`subgraph_jac_rev.cpp-name` and :ref:`subgraph_hes2jac.cpp-name`
+are examples and tests using ``subgraph_jac_rev`` .
+They returns ``true`` for success and ``false`` for failure.
+
+{xrst_end subgraph_jac_rev}

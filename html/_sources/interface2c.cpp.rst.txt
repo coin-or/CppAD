@@ -1,0 +1,13 @@
+lines 6-16 of file: example/general/interface2c.cpp
+
+{xrst_begin interface2c.cpp}
+
+Interfacing to C: Example and Test
+##################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end interface2c.cpp}

@@ -1,0 +1,309 @@
+lines 8-314 of file: example/abs_normal/qp_interior.hpp
+
+{xrst_begin qp_interior}
+{xrst_spell
+   maxitr
+   qp
+   rl
+   sout
+   xout
+   yout
+}
+
+Solve a Quadratic Program Using Interior Point Method
+#####################################################
+
+Syntax
+******
+
+| *ok* = ``qp_interior`` (
+| *level* , *c* , *C* , *g* , *G* , *epsilon* , *maxitr* , *xin* , *xout* , *yout* , *sout*
+| )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
+This following is a link to the source code for this example:
+:ref:`qp_interior.hpp-name` .
+
+Purpose
+*******
+This routine could be used to create a version of :ref:`abs_min_linear-name`
+that solved Quadratic programs (instead of linear programs).
+
+Problem
+*******
+We are given
+:math:`C \in \B{R}^{m \times n}`,
+:math:`c \in \B{R}^m`,
+:math:`G \in \B{R}^{n \times n}`,
+:math:`g \in \B{R}^n`,
+where :math:`G` is positive semi-definite
+and :math:`G + C^T C` is positive definite.
+This routine solves the problem
+
+.. math::
+
+   \begin{array}{rl}
+   \R{minimize} &
+   \frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
+   \\
+   \R{subject \; to} &
+   C x + c \leq 0
+   \end{array}
+
+Vector
+******
+The type *Vector* is a
+simple vector with elements of type ``double`` .
+
+level
+*****
+This value is zero or one.
+If *level*  == 0 ,
+no tracing is printed.
+If *level*  == 1 ,
+a trace of the ``qp_interior`` optimization is printed.
+
+Lower c
+*******
+This is the vector :math:`c` in the problem.
+
+Upper C
+*******
+This is a :ref:`row-major<glossary@Row-major Representation>`
+of the matrix :math:`C` in the problem.
+
+Lower g
+*******
+This is the vector :math:`g` in the problem.
+
+Upper G
+*******
+This is a :ref:`row-major<glossary@Row-major Representation>`
+of the matrix :math:`G` in the problem.
+
+epsilon
+*******
+This argument is the convergence criteria;
+see :ref:`qp_interior@KKT Conditions` below.
+It must be greater than zero.
+
+maxitr
+******
+This is the maximum number of newton iterations to try before giving up
+on convergence.
+
+xin
+***
+This argument has size *n* and is the initial point for the algorithm.
+It must strictly satisfy the constraints; i.e.,
+:math:`C x - c < 0`  for *x* = *xin* .
+
+xout
+****
+This argument has size is *n* and
+the input value of its elements does no matter.
+Upon return it is the primal variables corresponding to the problem solution.
+
+yout
+****
+This argument has size is *m* and
+the input value of its elements does no matter.
+Upon return it the components of *yout* are all positive
+and it is the dual variables corresponding to the program solution.
+
+sout
+****
+This argument has size is *m* and
+the input value of its elements does no matter.
+Upon return it the components of *sout* are all positive
+and it is the slack variables corresponding to the program solution.
+
+ok
+**
+If the return value *ok* is true, convergence is obtained; i.e.,
+
+.. math::
+
+   | F_0 (xout , yout, sout) |_\infty \leq epsilon
+
+where :math:`| v |_\infty` is the maximum absolute element
+for the vector :math:`v` and :math:`F_\mu (x, y, s)` is defined below.
+
+KKT Conditions
+**************
+Give a vector :math:`v \in \B{R}^m` we define
+:math:`D(v) \in \B{R}^{m \times m}` as the corresponding diagonal matrix.
+We also define :math:`1_m \in \B{R}^m` as the vector of ones.
+We define
+:math:`F_\mu : \B{R}^{n + m + m } \rightarrow \B{R}^{n + m + m}`
+by
+
+.. math::
+
+   F_\mu ( x , y , s )
+   =
+   \left(
+   \begin{array}{c}
+   g + G x + y^T C             \\
+   C x + c + s                           \\
+   D(s) D(y) 1_m - \mu 1_m
+   \end{array}
+   \right)
+
+The KKT conditions for a solution of this problem is
+:math:`0 \leq y`,
+:math:`0 \leq s`, and
+:math:`F_0 (x , y, s) = 0`.
+
+Newton Step
+***********
+The derivative of :math:`F_\mu` is given by
+
+.. math::
+
+   F_\mu^{(1)} (x, y, s)  =
+   \left( \begin{array}{ccc}
+   G       & C^T  & 0_{n,m} \\
+   C       & 0    & I_{m,m} \\
+   0_{m,m} & D(s) & D(y)
+   \end{array} \right)
+
+The Newton step solves the following equation for
+:math:`\Delta x`, :math:`\Delta y`, and :math:`\Delta z`
+
+.. math::
+
+   F_\mu^{(1)} (x, y, s)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   - F_\mu (x, y, s)
+
+To simplify notation, we define
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   r_x (x, y, s) & = & g + G x + y^T C \\
+   r_y (x, y, s) & = & C x + c + s          \\
+   r_s (x, y, s) & = & D(s) D(y) 1_m - \mu 1_m
+   \end{eqnarray}
+
+It follows that
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   G       & C^T  & 0_{n,m} \\
+   C       & 0    & I_{m,m} \\
+   0_{m,m} & D(s) & D(y)
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s) \\
+      r_y (x, y, s) \\
+      r_s (x, y, s)
+   \end{array} \right)
+
+Elementary Row Reduction
+========================
+Subtracting :math:`D(y)` times the second row from the third row
+we obtain:
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   G        & C^T  & 0_{n,m} \\
+   C        & 0    & I_{m,m} \\
+   - D(y) C & D(s) & 0_{m,m}
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s) \\
+      r_y (x, y, s) \\
+      r_s (x, y, s) - D(y) r_y(x, y, s)
+   \end{array} \right)
+
+Multiplying the third row by :math:`D(s)^{-1}` we obtain:
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   G          & C^T     & 0_{n,m} \\
+   C          & 0       & I_{m,m} \\
+   - D(y/s) C & I_{m,m} & 0_{m,m}
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s) \\
+      r_y (x, y, s) \\
+      D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+   \end{array} \right)
+
+where :math:`y/s` is the vector in :math:`\B{R}^m` defined by
+:math:`(y/s)_i = y_i / s_i`.
+Subtracting :math:`C^T` times the third row from the first row we obtain:
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   G + C^T D(y/s) C & 0_{n,m} & 0_{n,m} \\
+   C                & 0       & I_{m,m} \\
+   - D(y/s) C       & I_{m,m} & 0_{m,m}
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s)
+         - C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+      r_y (x, y, s) \\
+      D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+   \end{array} \right)
+
+Solution
+********
+It follows that :math:`G + C^T D(y/s) C` is invertible and
+we can determine :math:`\Delta x` by solving the equation
+
+.. math::
+
+   [ G + C^T D(y/s) C ] \Delta x
+   =
+   C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
+
+Given :math:`\Delta x` we have that
+
+.. math::
+
+   \Delta s = - r_y (x, y, s) - C \Delta x
+
+.. math::
+
+   \Delta y =
+   D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
+
+{xrst_toc_hidden
+   example/abs_normal/qp_interior.cpp
+   example/abs_normal/qp_interior.xrst
+}
+Example
+*******
+The file :ref:`qp_interior.cpp-name` contains an example and test of
+``qp_interior`` .
+
+{xrst_end qp_interior}

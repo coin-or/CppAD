@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="tan_reverse, tangent, and, hyperbolic, tangent, reverse, mode, theory" name="keywords" />
+<meta content="notation" name="keywords" />
+<meta content="eliminating, y(t)" name="keywords" />
+<meta content="positive, orders, z(t)" name="keywords" />
+<meta content="order, zero, z(t)" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tan_reverse &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="erf_reverse" href="erf_reverse.html" />
+    <link rel="prev" title="acos_reverse" href="acos_reverse.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Theory.html">Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forward_theory.html">forward_theory</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="reverse_theory.html">reverse_theory</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="exp_reverse.html">exp_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="log_reverse.html">log_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sqrt_reverse.html">sqrt_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sin_cos_reverse.html">sin_cos_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan_reverse.html">atan_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asin_reverse.html">asin_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acos_reverse.html">acos_reverse</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">tan_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erf_reverse.html">erf_reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pow_reverse.html">pow_reverse</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reverse_identity.html">reverse_identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taylor_ode.html">taylor_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research.html">research</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Theory.html">Theory</a> &raquo;</li>
+          <li><a href="reverse_theory.html">reverse_theory</a> &raquo;</li>
+      <li>tan_reverse</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tan_reverse.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="tan-reverse">
+<span id="tan-reverse-name"></span><h1>tan_reverse<a class="headerlink" href="#tan-reverse" title="Permalink to this headline"></a></h1>
+<section id="tangent-and-hyperbolic-tangent-reverse-mode-theory">
+<span id="tan-reverse-title"></span><span id="index-0"></span><h2>Tangent and Hyperbolic Tangent Reverse Mode Theory<a class="headerlink" href="#tangent-and-hyperbolic-tangent-reverse-mode-theory" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#notation" id="id1">Notation</a></p></li>
+<li><p><a class="reference internal" href="#eliminating-y-t" id="id2">Eliminating Y(t)</a></p></li>
+<li><p><a class="reference internal" href="#positive-orders-z-t" id="id3">Positive Orders Z(t)</a></p></li>
+<li><p><a class="reference internal" href="#order-zero-z-t" id="id4">Order Zero Z(t)</a></p></li>
+</ul>
+</div>
+<section id="notation">
+<span id="tan-reverse-notation"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Notation</a><a class="headerlink" href="#notation" title="Permalink to this headline"></a></h3>
+<p>We use the reverse theory
+<a class="reference internal" href="reverse_theory.html#reverse-theory-standard-math-functions"><span class="std std-ref">standard math function</span></a>
+definition for the functions <span class="math notranslate nohighlight">\(H\)</span> and <span class="math notranslate nohighlight">\(G\)</span>.
+In addition, we use the forward mode notation in <a class="reference internal" href="tan_forward.html#tan-forward-name"><span class="std std-ref">tan_forward</span></a> for
+<span class="math notranslate nohighlight">\(X(t)\)</span>, <span class="math notranslate nohighlight">\(Y(t)\)</span> and <span class="math notranslate nohighlight">\(Z(t)\)</span>.</p>
+</section>
+<section id="eliminating-y-t">
+<span id="tan-reverse-eliminating-y-t"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Eliminating Y(t)</a><a class="headerlink" href="#eliminating-y-t" title="Permalink to this headline"></a></h3>
+<p>For <span class="math notranslate nohighlight">\(j &gt; 0\)</span>, the forward mode coefficients are given by</p>
+<div class="math notranslate nohighlight">
+\[y^{(j-1)} = \sum_{k=0}^{j-1} z^{(k)} z^{(j-k-1)}\]</div>
+<p>Fix <span class="math notranslate nohighlight">\(j &gt; 0\)</span> and suppose that <span class="math notranslate nohighlight">\(H\)</span> is the same as <span class="math notranslate nohighlight">\(G\)</span>
+except that <span class="math notranslate nohighlight">\(y^{(j-1)}\)</span> is replaced as a function of the Taylor
+coefficients for <span class="math notranslate nohighlight">\(Z(t)\)</span>.
+To be specific, for <span class="math notranslate nohighlight">\(k = 0 , \ldots , j-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\D{H}{ z^{(k)} }
+&amp; = &amp;
+\D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } \D{ y^{(j-1)} }{ z^{(k)} }
+\\
+&amp; = &amp;
+\D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } 2 z^{(j-k-1)}
+\end{eqnarray}</div></section>
+<section id="positive-orders-z-t">
+<span id="tan-reverse-positive-orders-z-t"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Positive Orders Z(t)</a><a class="headerlink" href="#positive-orders-z-t" title="Permalink to this headline"></a></h3>
+<p>For order <span class="math notranslate nohighlight">\(j &gt; 0\)</span>,
+suppose that <span class="math notranslate nohighlight">\(H\)</span> is the same as <span class="math notranslate nohighlight">\(G\)</span> except that
+<span class="math notranslate nohighlight">\(z^{(j)}\)</span> is expressed as a function of
+the coefficients for <span class="math notranslate nohighlight">\(X(t)\)</span>, and the
+lower order Taylor coefficients for <span class="math notranslate nohighlight">\(Y(t)\)</span>, <span class="math notranslate nohighlight">\(Z(t)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[z^{(j)}
+=
+x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}\]</div>
+<p>For <span class="math notranslate nohighlight">\(k = 1 , \ldots , j\)</span>,
+the partial of <span class="math notranslate nohighlight">\(H\)</span> with respect to <span class="math notranslate nohighlight">\(x^{(k)}\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\D{H}{ x^{(k)} } &amp; = &amp;
+\D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+\\
+&amp; = &amp;
+\D{G}{ x^{(k)} } +
+\D{G}{ z^{(j)} }
+\left[ \delta ( j - k ) \pm \frac{k}{j} y^{(j-k)} \right]
+\end{eqnarray}</div><p>where <span class="math notranslate nohighlight">\(\delta ( j - k )\)</span> is one if <span class="math notranslate nohighlight">\(j = k\)</span> and zero
+otherwise.
+For <span class="math notranslate nohighlight">\(k = 1 , \ldots ,  j\)</span>
+The partial of <span class="math notranslate nohighlight">\(H\)</span> with respect to <span class="math notranslate nohighlight">\(y^{j-k}\)</span>,
+is given by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\D{H}{ y^{(j-k)} } &amp; = &amp;
+\D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
+\\
+&amp; = &amp;
+\D{G}{ y^{(j-k)} } \pm \D{G}{ z^{(j)} }\frac{k}{j} x^{k}
+\end{eqnarray}</div></section>
+<section id="order-zero-z-t">
+<span id="tan-reverse-order-zero-z-t"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Order Zero Z(t)</a><a class="headerlink" href="#order-zero-z-t" title="Permalink to this headline"></a></h3>
+<p>The order zero coefficients for the tangent and hyperbolic tangent are</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+z^{(0)} &amp; = &amp; \left\{
+   \begin{array}{c} \tan ( x^{(0)} ) \\ \tanh (  x^{(0)} ) \end{array}
+\right.
+\end{eqnarray}</div><p>Suppose that <span class="math notranslate nohighlight">\(H\)</span> is the same as <span class="math notranslate nohighlight">\(G\)</span> except that
+<span class="math notranslate nohighlight">\(z^{(0)}\)</span> is expressed as a function of the Taylor coefficients
+for <span class="math notranslate nohighlight">\(X(t)\)</span>.
+In this case,</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+\D{H}{ x^{(0)} }
+&amp; = &amp;
+\D{G}{ x^{(0)} }
++ \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+\\
+&amp; = &amp;
+\D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } ( 1 \pm y^{(0)} )
+\end{eqnarray}</div></section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="acos_reverse.html" class="btn btn-neutral float-left" title="acos_reverse" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="erf_reverse.html" class="btn btn-neutral float-right" title="erf_reverse" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

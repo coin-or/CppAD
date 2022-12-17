@@ -1,0 +1,29 @@
+lines 6-32 of file: example/sparse/sparsity_sub.cpp
+
+{xrst_begin sparsity_sub.cpp}
+
+Sparsity Patterns For a Subset of Variables: Example and Test
+#############################################################
+
+See Also
+********
+:ref:`sparse_sub_hes.cpp-name` , :ref:`sub_sparse_hes.cpp-name` .
+
+ForSparseJac
+************
+The routine :ref:`ForSparseJac-name` is used to compute the
+sparsity for both the full Jacobian (see *s* )
+and a subset of the Jacobian (see *s2* ).
+
+RevSparseHes
+************
+The routine :ref:`RevSparseHes-name` is used to compute both
+sparsity for both the full Hessian (see *h* )
+and a subset of the Hessian (see *h2* ).
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end sparsity_sub.cpp}

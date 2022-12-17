@@ -1,0 +1,16 @@
+lines 7-20 of file: example/general/tanh.cpp
+
+{xrst_begin tanh.cpp}
+{xrst_spell
+   tanh
+}
+
+The AD tanh Function: Example and Test
+######################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end tanh.cpp}

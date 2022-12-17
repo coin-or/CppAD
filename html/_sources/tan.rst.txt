@@ -1,0 +1,37 @@
+lines 646-680 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin tan}
+
+The Tangent Function: tan
+#########################
+
+Syntax
+******
+*y* = ``tan`` ( *x* )
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Derivative
+**********
+
+.. math::
+
+   \R{tan}^{(1)} (x) = 1 + \tan (x)^2
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/tan.cpp
+}
+The file
+:ref:`tan.cpp-name`
+contains an example and test of this function.
+
+{xrst_end tan}

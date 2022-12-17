@@ -1,0 +1,56 @@
+lines 21-74 of file: speed/src/link_det_minor.cpp
+
+{xrst_begin link_det_minor}
+
+Speed Testing Gradient of Determinant by Minor Expansion
+########################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Method
+******
+The same template class :ref:`det_by_minor-name`
+is used by the different AD packages.
+
+job
+***
+See the standard link specifications for :ref:`link_routines@job` .
+
+size
+****
+See the standard link specifications for :ref:`link_routines@size`
+In addition, *size* is the number of rows and columns in
+*matrix* .
+
+repeat
+******
+See the standard link specifications for :ref:`link_routines@repeat` .
+
+matrix
+******
+The argument *matrix* is a vector with
+*size* * *size* elements.
+The input value of its elements does not matter.
+The output value of its elements is the last matrix that the
+gradient (or determinant) is computed for.
+
+gradient
+********
+The argument *gradient* is a vector with
+*size* * *size* elements.
+The input value of its elements does not matter.
+The output value of its elements is the gradient of the
+determinant of *matrix* with respect to its elements.
+
+double
+======
+In the case where *package* is ``double`` ,
+only the first element of *gradient* is used and it is actually
+the determinant value (the gradient value is not computed).
+
+{xrst_end link_det_minor}

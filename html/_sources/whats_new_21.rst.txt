@@ -1,0 +1,358 @@
+lines 6-361 of file: xrst/appendix/whats_new/21.xrst
+
+{xrst_begin whats_new_21}
+{xrst_spell
+   conditionally
+   cplusplus
+   cxx
+   isdigit
+   lcppad
+   libs
+   ltmain
+   msys
+   nans
+   ocurred
+   pkgconfig
+   txt
+   values values
+}
+
+Changes and Additions to CppAD During 2021
+##########################################
+
+mm-dd
+*****
+
+12-17
+=====
+Add forward mode calculations using ``AD<double>`` to the
+:ref:`atomic_four_vector-name` example.
+
+12-16
+=====
+Change ``virtual`` to ``override`` in all the
+:ref:`atomic_three_example-name` files and
+:ref:`multi_atomic_three_user-name` .
+
+12-10
+=====
+
+#. Added the example :ref:`atomic_four_vector-name` .
+#. Fix some compiler warnings when building with ``NDEBUG`` defined.
+
+12-08
+=====
+Update to a newer version of the :ref:`autotools-name` .
+
+09-04
+=====
+There was a bug in the :ref:`atan2-name` function.
+For example, the derivative of ``atan2(0,1)`` was incorrect; see
+`issue 120 <https://github.com/coin-or/CppAD/issues/120>`_.
+This has been fixed and the :ref:`atan2.cpp-name` example has been
+extended to do more testing.
+
+08-31
+=====
+There was a bug in the CMake configuration files such that
+``make check_example_multi_thread`` was not being constructed.
+Hence ``make check`` did not include the multi_thread tests.
+This has been fixed.
+
+08-27
+=====
+The following error occurred
+
+   ``compile_source_test: cplusplus_201100_ok is defined before expected``
+
+if the :ref:`cmake-name` command was run twice,
+without first removing the ``CMakeCache.txt`` file.
+This has been fixed.
+
+08-26
+=====
+The cmake command was extended to allow for one to specify
+:ref:`cmake@cmake_build_type` .
+This forced changing the default for
+:ref:`cmake@cppad_debug_which` from
+``debug_all`` to the empty string.
+
+07-31
+=====
+Do more work on pkgconfig files:
+Remove duplicates and put ``-L`` entries
+before ``-l`` entries in ``Libs`` section.
+Furthermore, move all information from private to normal section.
+
+07-30
+=====
+Fix a bug in the :ref:`pkgconfig-name` files.
+To be specific, there was an extra ``-l`` at the front of the list
+of library flags; e.g.,
+``-l-lcppad_lib`` was changed to ``-lcppad_lib`` .
+
+07-12
+=====
+
+#. Change all the scripts called by :ref:`get_optional.sh-name` to use
+   all the processing units available on the system when compiling
+   and linking the optional packages.
+#. Fix :ref:`get_colpack.sh-name` so that it does not leave behind
+   ``ltmain.sh`` and ``test-driver`` in the top source directory.
+#. Change the :ref:`cmake-name` script use of ``CHECK_CXX_SOURCE_RUNS``
+   to ``CHECK_CXX_SOURCE_COMPILES`` .
+   This makes it easier to use CppAD in a cross compiling context.
+
+06-22
+=====
+Improve :ref:`Var2Par-name` documentation and :ref:`var2par.cpp-name` example
+by separating dynamic and constant parameters.
+
+06-06
+=====
+The ``CppAD::vector`` assignment statement no longer requires the
+size of the vectors to be the same; see
+:ref:`CppAD_vector@Assignment@Check Size` .
+
+06-02
+=====
+
+#. Remove ``microsoft_timer`` which is no longer needed by
+   :ref:`elapsed_seconds-name` because c++11 required (starting this year).
+#. Remove any use of ``CMAKE_SOURCE_DIR`` .
+   This allows CppAD's top source directory
+   to be used as a subdirectory of a larger CMake package.
+
+05-12
+=====
+
+#. The cmake
+   :ref:`cmake@include_cppadcg` option was not working
+   when cppadcg was the only optional package.
+   This has been fixed.
+#. The smallest size
+   for the :ref:`det_minor<link_det_minor-name>` speed test
+   was changed from one to two (a 2 by 2 matrix).
+
+04-30
+=====
+
+#. The conditional expression example :ref:`cond_exp.cpp-name` was improved.
+#. Restore the
+   :ref:`sparse_rcv copy constructor<sparse_rcv@other@Assignment and Constructor>`
+   which was removed by mistake when the ``sparse_rcv``
+   move semantics constructor was added.
+
+04-28
+=====
+
+#. The change to the :ref:`pow(x,y)<pow-name>` function on
+   :ref:`whats_new_21@mm-dd@02-06` handled the case where *x* is zero.
+   The :ref:`pow_nan.cpp-name` example was modified to show when the new
+   version of this function generates nans.
+#. Remove some uses of the deprecated
+   :ref:`nan(zero)<nan@nan(zero)@Deprecated 2015-10-04>` function.
+
+04-27
+=====
+Fix the msys2 and cygwin system builds so that they use static
+(instead of dynamic) libraries.
+This is necessary so that static variables (in include files) can not have
+multiple instances in Windows.
+
+04-26
+=====
+There was a problem with the :ref:`cmake-name` command when
+:ref:`ipopt-name` was the only optional package installed.
+This was related to the ipopt
+:ref:`ipopt@Include Directories` problem.
+
+04-16
+=====
+Improve the instruction for adding a new speed test package; see
+:ref:`speed_xpackage-name` .
+
+04-09
+=====
+The :ref:`cpp_graph_print-name` operation was failing when there were
+atomic or discrete functions. This has been fixed.
+
+04-07
+=====
+Documentation was added for the
+:ref:`cpp_ad_graph@operator_arg@print_graph_op` operator.
+This is different from the function
+:ref:`cpp_graph_print-name` which prints an entire graph.
+
+04-05
+=====
+The :ref:`cpp_graph_print-name` operation was modified so that it printed the
+text corresponding to atomic function names, discrete function names,
+and print operators.
+
+04-02
+=====
+The enum value ``dis_graph_op`` was corrected to ``discrete_graph_op``
+in the documentation for
+:ref:`cpp_ad_graph@operator_arg@discrete_graph_op` .
+
+03-29
+=====
+Include the :ref:`cpp_ad_graph@dependent_vec`
+in the output of :ref:`cpp_graph_print-name` ; see ``y nodes`` in
+:ref:`print_graph.cpp-name` example output.
+
+03-24
+=====
+The C++ AD graph constructor, :ref:`cpp_graph_ctor-name` ,
+cannot be called the first tile in parallel mode.
+This condition has been added to the documentation
+and assets were added to make sure it is true.
+
+03-11
+=====
+Improve the discussion of identically equal; see
+:ref:`base_identical@EqualOpSeq@More Complicated Case` .
+
+03-09
+=====
+Simplify the :ref:`fabs.cpp-name` example.
+
+03-08
+=====
+For years the following comment in reverse.hpp was forgotten:
+
+   // ? ``should use`` += ``here`` , ``first make test to demonstrate bug``
+
+A test case was created to demonstrate this bug and it was fixed
+(see ``duplicate_dependent_var`` in ``test_more/general/reverse.cpp`` ).
+This only affects reverse mode when
+:ref:`reverse_any@w` has size *q* * *m* and
+two of the dependent variables in the range of *f*
+are identically equal (actually the same variable).
+
+03-07
+=====
+
+#. Fix bug in :ref:`f.to_graph<to_graph-name>` that ocurred
+   when *f* had ``fabs`` dynamic parameter operators.
+   To be more specific, if ``NDEBUG`` was not defined,
+   an error from an unknown source would be detected in the file ``to_graph.hpp`` .
+#. Make :ref:`unary_minus-name` an atomic operation,
+   instead of using binary subtraction of zero minus the value being negated.
+   In addition, add it to the :ref:`json_graph unary operators<json_graph_op@Unary Operators>` and
+   the :ref:`graph_op_enum values<graph_op_enum@Enum Values>` values.
+
+02-21
+=====
+Add specifications for what is conditionally installed by the
+:ref:`cmake@include_eigen` and
+:ref:`cmake@include_ipopt` options.
+In addition, make it clearer that
+:ref:`cmake@include_cppadcg` should only be used for testing.
+
+02-16
+=====
+There was a problem with atomic functions, :ref:`optimize-name` , and reverse mode
+that would lead to unexpected nans.
+This has been fixed by changing values,
+that the optimizer determines are not used, from nan to zero.
+A discussion of this was added below
+:ref:`atomic_three_reverse@partial_x@azmul`
+in the atomic reverse documentation.
+
+02-14
+=====
+
+#. Add the :ref:`print<cpp_graph_print-name>` command to the
+   ``cpp_graph`` class.
+#. Change the name of a documentation section form ``seq_property``
+   to :ref:`fun_property-name` .
+#. Add setting and getting a ``ADFun`` function's
+   :ref:`name<function_name-name>` .
+
+02-12
+=====
+
+#. In the case where
+   :ref:`cmake@cppad_debug_which` is
+   ``debug_all`` (``debug_none`` ) the corresponding
+   *CMAKE_BUILD_TYPE* is now specified as
+   ``Debug`` (``Release`` ).
+#. Fix the ``Policy CMP0054`` warning during the
+   :ref:`cmake@CMake Command` .
+#. Fix the :ref:`cmake@CMake Command@Visual Studio` build.
+   This included commenting out part of the CppAD vector test
+   because the MSC compiler is confused between the vector's const_iterator and
+   iterator; see ``# ifndef _MSC_VER`` in :ref:`cppad_vector.cpp-name` .
+
+02-11
+=====
+Fix some problems with the linking of the ``cppad_lib`` library
+when using the Microsoft compiler.
+
+02-08
+=====
+Fix some problems in the
+:ref:`pkgconfig@cppad.pc` file; see pull request
+`95 <https://github.com/coin-or/CppAD/pull/95/files>`_.
+
+02-06
+=====
+A special version of the :ref:`pow(x, y)<pow-name>` function was added
+for the special case where *y* is a parameter.
+This properly handles the special case where *x* is zero
+and *y* is greater than the order of the derivative.
+In addition, it only requires one tape variable (instead of three)
+for each ``pow`` operation.
+
+01-27
+=====
+There was a bug in the converting to abs_normal form when
+the function :ref:`abs_normal_fun@f` made use of the
+:ref:`pow-name` operator.
+To be specific, when compiling without ``NDEBUG`` defined,
+an assert was generated even though the code was correct.
+This has been fixed.
+
+01-26
+=====
+Change the prototype for the cmake command
+:ref:`cmake@CMake Command@Options` to use *true_or_false* ,
+instead of ``true`` to highlight the fact that one can choose either
+true or false.
+
+01-08
+=====
+On some systems, the file ``cppad_lib/json_lexer.cpp`` would not compile
+because the ``std::isdigit`` function was not defined.
+This has been fixed.
+
+01-07
+=====
+The example :ref:`pow_nan.cpp-name` was added.
+
+01-05
+=====
+
+#. Improve discussion of :ref:`cppad_cxx<cmake@cppad_cxx_flags>`
+   and make sure all uses are exactly as described.
+   In addition, change mention of optional features from C++11 to C++17.
+#. The required version of :ref:`cmake-name` was advanced from 2.8.4 to 3.0.
+   This fixes a policy CMP0042 warning on Mac systems.
+#. If the compiler, plus the flags in
+   :ref:`cmake@cppad_cxx_flags` ,
+   does not by default support C++11, cmake is used
+   to find and add the flags necessary for this support.
+
+01-03
+=====
+
+#. Fix a bug in :ref:`reverse-name` mode for an
+   ``ADFun< AD<`` *Base* > > function that has
+   :ref:`Independent@dynamic` parameters and
+   value of one of these parameters was zero or one when the function
+   was recorded.
+#. Fix a bug in the :ref:`autotools-name` building of ``cppad_lib`` .
+
+{xrst_end whats_new_21}

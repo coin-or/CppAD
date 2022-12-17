@@ -1,0 +1,228 @@
+lines 8-233 of file: include/cppad/core/opt_val_hes.hpp
+
+{xrst_begin opt_val_hes}
+{xrst_spell
+   signdet
+   yy
+}
+
+Jacobian and Hessian of Optimal Values
+######################################
+
+Syntax
+******
+*signdet* = ``opt_val_hes`` ( *x* , *y* , *fun* , *jac* , *hes* )
+
+See Also
+********
+:ref:`BenderQuad-name`
+
+Reference
+*********
+Algorithmic differentiation of implicit functions and optimal values,
+Bradley M. Bell and James V. Burke, Advances in Automatic Differentiation,
+2008, Springer.
+
+Purpose
+*******
+We are given a function
+:math:`S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell`
+and we define :math:`F : \B{R}^n \times \B{R}^m \rightarrow \B{R}`
+and :math:`V : \B{R}^n \rightarrow \B{R}` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
+      \\
+      V(x)    & = & F [ x , Y(x) ]
+      \\
+      0       & = & \partial_y F [x , Y(x) ]
+   \end{eqnarray}
+
+We wish to compute the Jacobian
+and possibly also the Hessian, of :math:`V (x)`.
+
+BaseVector
+**********
+The type *BaseVector* must be a
+:ref:`SimpleVector-name` class.
+We use *Base* to refer to the type of the elements of
+*BaseVector* ; i.e.,
+
+   *BaseVector* :: ``value_type``
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *BaseVector* & *x*
+
+and its size must be equal to *n* .
+It specifies the point at which we evaluating
+the Jacobian :math:`V^{(1)} (x)`
+(and possibly the Hessian :math:`V^{(2)} (x)`).
+
+y
+*
+The argument *y* has prototype
+
+   ``const`` *BaseVector* & *y*
+
+and its size must be equal to *m* .
+It must be equal to :math:`Y(x)`; i.e.,
+it must solve the implicit equation
+
+.. math::
+
+   0 = \partial_y F ( x , y)
+
+Fun
+***
+The argument *fun* is an object of type *Fun*
+which must support the member functions listed below.
+CppAD will may be recording operations of the type ``AD<`` *Base* >
+when these member functions are called.
+These member functions must not stop such a recording; e.g.,
+they must not call :ref:`AD\<Base>::abort_recording<abort_recording-name>` .
+
+Fun::ad_vector
+==============
+The type *Fun* :: ``ad_vector`` must be a
+:ref:`SimpleVector-name` class with elements of type ``AD<`` *Base* > ; i.e.
+
+   *Fun* :: ``ad_vector::value_type``
+
+is equal to ``AD<`` *Base* > .
+
+fun.ell
+=======
+The type *Fun* must support the syntax
+
+   *ell* = *fun* . ``ell`` ()
+
+where *ell* has prototype
+
+   ``size_t`` *ell*
+
+and is the value of :math:`\ell`; i.e.,
+the number of terms in the summation.
+
+One can choose *ell* equal to one, and have
+:math:`S(x,y)` the same as :math:`F(x, y)`.
+Each of the functions :math:`S_k (x , y)`,
+(in the summation defining :math:`F(x, y)`)
+is differentiated separately using AD.
+For very large problems, breaking :math:`F(x, y)` into the sum
+of separate simpler functions may reduce the amount of memory necessary for
+algorithmic differentiation and there by speed up the process.
+
+fun.s
+=====
+The type *Fun* must support the syntax
+
+   *s_k* = *fun* . ``s`` ( *k* , *x* , *y* )
+
+The *fun* . ``s`` argument *k* has prototype
+
+   ``size_t`` *k*
+
+and is between zero and *ell* ``- 1`` .
+The argument *x* to *fun* . ``s`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *x*
+
+and its size must be equal to *n* .
+The argument *y* to *fun* . ``s`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *y*
+
+and its size must be equal to *m* .
+The *fun* . ``s`` result *s_k* has prototype
+
+   ``AD<`` *Base* > *s_k*
+
+and its value must be given by :math:`s_k = S_k ( x , y )`.
+
+fun.sy
+======
+The type *Fun* must support the syntax
+
+   *sy_k* = *fun* . ``sy`` ( *k* , *x* , *y* )
+
+The  argument *k* to *fun* . ``sy`` has prototype
+
+   ``size_t`` *k*
+
+The  argument *x* to *fun* . ``sy`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *x*
+
+and its size must be equal to *n* .
+The  argument *y* to *fun* . ``sy`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *y*
+
+and its size must be equal to *m* .
+The *fun* . ``sy`` result *sy_k* has prototype
+
+   *Fun* :: ``ad_vector`` *sy_k*
+
+its size must be equal to *m* ,
+and its value must be given by :math:`sy_k = \partial_y S_k ( x , y )`.
+
+jac
+***
+The argument *jac* has prototype
+
+   *BaseVector* & *jac*
+
+and has size *n* or zero.
+The input values of its elements do not matter.
+If it has size zero, it is not affected. Otherwise, on output
+it contains the Jacobian of :math:`V (x)`; i.e.,
+for :math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
+   jac[ j ] = V^{(1)} (x)_j
+
+where *x* is the first argument to ``opt_val_hes`` .
+
+hes
+***
+The argument *hes* has prototype
+
+   *BaseVector* & *hes*
+
+and has size *n* * *n* or zero.
+The input values of its elements do not matter.
+If it has size zero, it is not affected. Otherwise, on output
+it contains the Hessian of :math:`V (x)`; i.e.,
+for :math:`i = 0 , \ldots , n-1`, and
+:math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
+   hes[ i * n + j ] = V^{(2)} (x)_{i,j}
+
+signdet
+*******
+If *hes* has size zero, *signdet* is not defined.
+Otherwise
+the return value *signdet* is the sign of the determinant for
+:math:`\partial_{yy}^2 F(x , y)`.
+If it is zero, then the matrix is singular and
+the Hessian is not computed ( *hes* is not changed).
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/opt_val_hes.cpp
+}
+The file
+:ref:`opt_val_hes.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end opt_val_hes}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/for_two.cpp
+
+{xrst_begin for_two.cpp}
+
+Subset of Second Order Partials: Example and Test
+#################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end for_two.cpp}

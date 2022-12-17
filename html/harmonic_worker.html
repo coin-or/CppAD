@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="harmonic_worker, do, one, thread's, work, for, sum, of, 1/i" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="start" name="keywords" />
+<meta content="end" name="keywords" />
+<meta content="thread_num" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>harmonic_worker &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="harmonic_takedown" href="harmonic_takedown.html" />
+    <link rel="prev" title="harmonic_setup" href="harmonic_setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="multi_thread.html">multi_thread</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="parallel_ad.html">parallel_ad</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="thread_test.cpp.html">thread_test.cpp</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="a11c_openmp.cpp.html">a11c_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_bthread.cpp.html">a11c_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_pthread.cpp.html">a11c_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_openmp.cpp.html">simple_ad_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_bthread.cpp.html">simple_ad_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_pthread.cpp.html">simple_ad_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_example.cpp.html">team_example.cpp</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="harmonic.cpp.html">harmonic.cpp</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="harmonic_common.html">harmonic_common</a></li>
+<li class="toctree-l5"><a class="reference internal" href="harmonic_setup.html">harmonic_setup</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">harmonic_worker</a></li>
+<li class="toctree-l5"><a class="reference internal" href="harmonic_takedown.html">harmonic_takedown</a></li>
+<li class="toctree-l5"><a class="reference internal" href="harmonic_sum.html">harmonic_sum</a></li>
+<li class="toctree-l5"><a class="reference internal" href="harmonic_time.html">harmonic_time</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_three.cpp.html">multi_atomic_three.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_two.cpp.html">multi_chkpoint_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_newton.cpp.html">multi_newton.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_thread.hpp.html">team_thread.hpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="multi_thread.html">multi_thread</a> &raquo;</li>
+          <li><a href="thread_test.cpp.html">thread_test.cpp</a> &raquo;</li>
+          <li><a href="harmonic.cpp.html">harmonic.cpp</a> &raquo;</li>
+      <li>harmonic_worker</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/harmonic_worker.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="harmonic-worker">
+<span id="harmonic-worker-name"></span><h1>harmonic_worker<a class="headerlink" href="#harmonic-worker" title="Permalink to this headline"></a></h1>
+<section id="do-one-thread-s-work-for-sum-of-1-i">
+<span id="harmonic-worker-title"></span><span id="index-0"></span><h2>Do One Thread’s Work for Sum of 1/i<a class="headerlink" href="#do-one-thread-s-work-for-sum-of-1-i" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#start" id="id3">start</a></p></li>
+<li><p><a class="reference internal" href="#end" id="id4">end</a></p></li>
+<li><p><a class="reference internal" href="#thread-num" id="id5">thread_num</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id6">Source</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="harmonic-worker-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">harmonic_worker</span></code> ()</p>
+</div></blockquote>
+</section>
+<section id="purpose">
+<span id="harmonic-worker-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This routines computes the sum
+the summation that defines the harmonic series</p>
+<blockquote>
+<div><p>1/ <em>start</em> + 1/( <em>start</em> +1) + … + 1/( <em>end</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> )</p>
+</div></blockquote>
+</section>
+<section id="start">
+<span id="harmonic-worker-start"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">start</a><a class="headerlink" href="#start" title="Permalink to this headline"></a></h3>
+<p>This is the value of the <a class="reference internal" href="harmonic_common.html#harmonic-common-name"><span class="std std-ref">harmonic_common</span></a> information</p>
+<blockquote>
+<div><p><em>start</em> = <code class="docutils literal notranslate"><span class="pre">work_all_</span></code> [ <em>thread_num</em> ] <code class="docutils literal notranslate"><span class="pre">-&gt;start</span></code></p>
+</div></blockquote>
+</section>
+<section id="end">
+<span id="harmonic-worker-end"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">end</a><a class="headerlink" href="#end" title="Permalink to this headline"></a></h3>
+<p>This is the value of the <a class="reference internal" href="harmonic_common.html#harmonic-common-name"><span class="std std-ref">harmonic_common</span></a> information</p>
+<blockquote>
+<div><p><em>end</em> = <code class="docutils literal notranslate"><span class="pre">work_all_</span></code> [ <em>thread_num</em> ] <code class="docutils literal notranslate"><span class="pre">-&gt;end</span></code></p>
+</div></blockquote>
+</section>
+<section id="thread-num">
+<span id="harmonic-worker-thread-num"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">thread_num</a><a class="headerlink" href="#thread-num" title="Permalink to this headline"></a></h3>
+<p>This is the number for the current thread; see
+<a class="reference internal" href="ta_thread_num.html#ta-thread-num-name"><span class="std std-ref">thread_num</span></a> .</p>
+</section>
+<section id="source">
+<span id="harmonic-worker-source"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">harmonic_worker</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="c1">// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">thread_num</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">thread_num</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">num_threads_</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w">   </span><span class="n">ok</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">start</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">stop</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">stop</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">sum</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stop</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">while</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">i</span><span class="o">--</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1.</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">work_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ok</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="harmonic_setup.html" class="btn btn-neutral float-left" title="harmonic_setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="harmonic_takedown.html" class="btn btn-neutral float-right" title="harmonic_takedown" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

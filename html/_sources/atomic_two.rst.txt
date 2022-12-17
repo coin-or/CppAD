@@ -1,0 +1,99 @@
+lines 8-104 of file: include/cppad/core/atomic/two/atomic.hpp
+
+{xrst_begin atomic_two}
+{xrst_spell
+   px
+   py
+   tx
+   vx
+}
+
+Defining Atomic Functions: Second Generation
+############################################
+
+Deprecated 2019-01-01
+*********************
+Using the ``atomic_base`` class has been deprecated.
+Use :ref:`atomic_three-name` instead.
+
+Syntax
+******
+
+| *atomic_user* *afun* ( *ctor_arg_list* )
+| *afun* ( *ax* , *ay* )
+| *ok* = *afun* . ``forward`` ( *p* , *q* , *vx* , *vy* , *tx* , *ty* )
+| *ok* = *afun* . ``reverse`` ( *q* , *tx* , *ty* , *px* , *py* )
+| *ok* = *afun* . ``for_sparse_jac`` ( *q* , *r* , *s* , *x* )
+| *ok* = *afun* . ``rev_sparse_jac`` ( *q* , *r* , *s* , *x* )
+| *ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* , *x* )
+| *ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* , *x* )
+| *atomic_base<* ``Base`` >:: *clear* ()
+
+See Also
+********
+:ref:`checkpoint<chkpoint_one-name>`
+
+Purpose
+*******
+
+Speed
+=====
+In some cases, the user knows how to compute derivatives of a function
+
+.. math::
+
+   y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
+
+more efficiently than by coding it using ``AD<`` *Base* >
+:ref:`atomic_base<glossary@Operation@Atomic>` operations
+and letting CppAD do the rest.
+In this case ``atomic_base`` < ``Base`` > can use
+the user code for :math:`f(x)`, and its derivatives,
+as ``AD<`` *Base* > atomic operations.
+
+Reduce Memory
+=============
+If the function :math:`f(x)` is used often,
+using an atomic version of :math:`f(x)` remove the need for repeated
+copies of the corresponding ``AD<`` *Base* > operations.
+
+Virtual Functions
+*****************
+User defined derivatives are implemented by defining the
+following virtual functions in the *atomic_base* class:
+:ref:`forward<atomic_two_forward-name>` ,
+:ref:`reverse<atomic_two_reverse-name>` ,
+:ref:`for_sparse_jac<atomic_two_for_sparse_jac-name>` ,
+:ref:`rev_sparse_jac<atomic_two_rev_sparse_jac-name>` , and
+:ref:`rev_sparse_hes<atomic_two_rev_sparse_hes-name>` .
+These virtual functions have a default implementation
+that returns *ok* == ``false`` .
+The ``forward`` function,
+for the case *q*  == 0 , must be implemented.
+Otherwise, only those functions
+required by the your calculations need to be implemented.
+For example,
+*forward* for the case *q*  == 2 can just return
+*ok* == ``false`` unless you require
+forward mode calculation of second derivatives.
+
+Examples
+********
+See :ref:`atomic_two_example-name` .
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atomic/two/ctor.hpp
+   include/cppad/core/atomic/two/option.hpp
+   include/cppad/core/atomic/two/afun.hpp
+   include/cppad/core/atomic/two/forward.hpp
+   include/cppad/core/atomic/two/reverse.hpp
+   include/cppad/core/atomic/two/for_sparse_jac.hpp
+   include/cppad/core/atomic/two/rev_sparse_jac.hpp
+   include/cppad/core/atomic/two/for_sparse_hes.hpp
+   include/cppad/core/atomic/two/rev_sparse_hes.hpp
+   include/cppad/core/atomic/two/clear.hpp
+}
+
+{xrst_end atomic_two}

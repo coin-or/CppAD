@@ -1,0 +1,138 @@
+lines 9-144 of file: include/cppad/speed/ode_evaluate.hpp
+
+{xrst_begin ode_evaluate}
+{xrst_spell
+   fp
+   retaped
+}
+
+Evaluate a Function Defined in Terms of an ODE
+##############################################
+
+Syntax
+******
+
+   # ``include <cppad/speed/ode_evaluate.hpp>``
+
+``ode_evaluate`` ( *x* , *p* , *fp* )
+
+Purpose
+*******
+This routine evaluates a function :math:`f : \B{R}^n \rightarrow \B{R}^n`
+defined by
+
+.. math::
+
+   f(x) = y(x, 1)
+
+where :math:`y(x, t)` solves the ordinary differential equation
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      y(x, 0)              & = & x
+      \\
+      \partial_t y (x, t ) & = & g[ y(x,t) , t ]
+   \end{eqnarray}
+
+where :math:`g : \B{R}^n \times \B{R} \rightarrow \B{R}^n`
+is an unspecified function.
+
+Inclusion
+*********
+The template function ``ode_evaluate``
+is defined in the ``CppAD`` namespace by including
+the file ``cppad/speed/ode_evaluate.hpp``
+(relative to the CppAD distribution directory).
+
+Float
+*****
+
+Operation Sequence
+==================
+The type *Float* must be a :ref:`NumericType-name` .
+The *Float*
+:ref:`operation sequence<glossary@Operation@Sequence>`
+for this routine does not depend on the value of the argument *x* ,
+hence it does not need to be retaped for each value of :math:`x`.
+
+fabs
+====
+If *y* and *z* are *Float* objects, the syntax
+
+   *y* = ``fabs`` ( *z* )
+
+must be supported. Note that it does not matter if the operation
+sequence for ``fabs`` depends on *z* because the
+corresponding results are not actually used by ``ode_evaluate`` ;
+see ``fabs`` in :ref:`Runge45<Runge45@Scalar@fabs>` .
+
+x
+*
+The argument *x* has prototype
+
+   ``const CppAD::vector<`` *Float* >& *x*
+
+It contains he argument value for which the function,
+or its derivative, is being evaluated.
+The value :math:`n` is determined by the size of the vector *x* .
+
+p
+*
+The argument *p* has prototype
+
+   ``size_t`` *p*
+
+p == 0
+======
+In this case a numerical method is used to solve the ode
+and obtain an accurate approximation for :math:`y(x, 1)`.
+This numerical method has a fixed
+that does not depend on *x* .
+
+p = 1
+=====
+In this case an analytic solution for the partial derivative
+:math:`\partial_x y(x, 1)` is returned.
+
+fp
+**
+The argument *fp* has prototype
+
+   ``CppAD::vector<`` *Float* >& *fp*
+
+The input value of the elements of *fp* does not matter.
+
+Function
+========
+If *p* is zero, *fp* has size equal to :math:`n`
+and contains the value of :math:`y(x, 1)`.
+
+Gradient
+========
+If *p* is one, *fp* has size equal to *n^2*
+and for :math:`i = 0 , \ldots 1`, :math:`j = 0 , \ldots , n-1`
+
+.. math::
+
+   \D{y[i]}{x[j]} (x, 1) = fp [ i \cdot n + j ]
+
+{xrst_toc_hidden
+   speed/example/ode_evaluate.cpp
+   xrst/ode_evaluate.xrst
+}
+
+Example
+*******
+The file
+:ref:`ode_evaluate.cpp-name`
+contains an example and test  of ``ode_evaluate.hpp`` .
+
+Source Code
+***********
+The file
+:ref:`ode_evaluate.hpp-name`
+contains the source code for this template function.
+
+{xrst_end ode_evaluate}

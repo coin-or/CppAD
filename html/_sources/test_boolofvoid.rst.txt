@@ -1,0 +1,77 @@
+lines 8-82 of file: include/cppad/utility/test_boolofvoid.hpp
+
+{xrst_begin test_boolofvoid}
+{xrst_spell
+   boolofvoid
+}
+
+Object that Runs a Group of Tests
+#################################
+
+Syntax
+******
+
+| # ``include <cppad/utility/test_boolofvoid.hpp>``
+| ``test_boolofvoid`` *Run* ( *group* , *width* )
+| *Run* ( *test* , *name* )
+
+*ok* = *Run* . ``summary`` ( *memory_ok* )
+
+Purpose
+*******
+The object *Run* is used to run a group of tests functions
+and report the results on standard output.
+
+group
+*****
+The argument has prototype
+
+   ``const std::string&`` *group*
+
+It is the name for this group of tests.
+
+width
+*****
+The argument has prototype
+
+   ``size_t`` *width*
+
+It is the number of columns used to display the name of each test.
+It must be greater than the maximum number of characters in a test name.
+
+test
+****
+The argument has prototype
+
+   ``bool`` *test* ( ``void`` )
+
+It is a function that returns true (when the test passes) and false
+otherwise.
+
+name
+****
+The argument has prototype
+
+   ``const std::string&`` *name*
+
+It is the name for the corresponding *test* .
+
+memory_ok
+*********
+The argument has prototype
+
+   ``bool`` *memory_ok*
+
+It is false if a memory leak is detected (and true otherwise).
+
+ok
+**
+This is true if all of the tests pass (including the memory leak test),
+otherwise it is false.
+
+Example
+*******
+See any of the main programs in the example directory; e.g.,
+``example/ipopt_solve.cpp`` .
+
+{xrst_end test_boolofvoid}

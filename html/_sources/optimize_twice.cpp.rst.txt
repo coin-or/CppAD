@@ -1,0 +1,21 @@
+lines 6-24 of file: example/optimize/optimize_twice.cpp
+
+{xrst_begin optimize_twice.cpp}
+
+Optimizing Twice: Example and Test
+##################################
+
+Discussion
+**********
+Before 2019-06-28, optimizing twice was not supported and would fail
+if cumulative sum operators were present after the first optimization.
+This is now supported but it is not expected to have much benefit.
+If you find a case where it does have a benefit, please inform the CppAD
+developers of this.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end optimize_twice.cpp}

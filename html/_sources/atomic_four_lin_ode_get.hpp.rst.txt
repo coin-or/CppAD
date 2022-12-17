@@ -1,0 +1,61 @@
+lines 8-66 of file: include/cppad/example/atomic_four/lin_ode/get.hpp
+
+{xrst_begin atomic_four_lin_ode_get.hpp}
+{xrst_spell
+   auxillary
+}
+
+atomic_lin_ode Get Routine: Example Implementation
+##################################################
+
+Syntax
+******
+*lin_ode* . ``get`` ( *call_id* , *r* , *step* , *pattern* , *transpose* )
+
+Prototype
+*********
+{xrst_literal
+   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+   // BEGIN sparse_rc_type
+   // END sparse_rc_type
+}
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Purpose
+*******
+Retrieves the auxillary information for a an atomic operation that computes
+the solution of a linear ODE.
+
+call_id
+*******
+This input argument identifies the auxillary information for this ODE.
+
+r
+*
+This output argument is the final value for the variable that the ODE is with
+respect to.
+
+step
+****
+This is a positive maximum step size to use when solving the ODE.
+
+pattern
+*******
+This output argument is a sparsity pattern.
+
+transpose
+*********
+If this output argument is true (false) the sparsity pattern is for
+:math:`A(x)^\R{T}` (:math:`A(x)`).
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_get.hpp}

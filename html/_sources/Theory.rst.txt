@@ -1,0 +1,19 @@
+lines 6-22 of file: xrst/theory/theory.xrst
+
+{xrst_begin Theory}
+
+The Theory of Derivative Calculations
+#####################################
+
+Contents
+********
+{xrst_toc_list
+   xrst/introduction.xrst
+   xrst/theory/forward_theory.xrst
+   xrst/theory/reverse_theory.xrst
+   xrst/theory/reverse_identity.xrst
+   xrst/theory/taylor_ode.xrst
+   xrst/theory/research.xrst
+}
+
+{xrst_end Theory}

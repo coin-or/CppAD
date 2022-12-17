@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_three_tangent.cpp, tan, and, tanh, as, user, atomic, operations:, example, and, test" name="keywords" />
+<meta content="discussion" name="keywords" />
+<meta content="start, class, definition" name="keywords" />
+<meta content="constructor" name="keywords" />
+<meta content="for_type" name="keywords" />
+<meta content="forward" name="keywords" />
+<meta content="reverse" name="keywords" />
+<meta content="jac_sparsity" name="keywords" />
+<meta content="hes_sparsity" name="keywords" />
+<meta content="end, class, definition" name="keywords" />
+<meta content="use, atomic, function" name="keywords" />
+<meta content="constructor" name="keywords" />
+<meta content="recording" name="keywords" />
+<meta content="forward" name="keywords" />
+<meta content="reverse" name="keywords" />
+<meta content="for_jac_sparsity" name="keywords" />
+<meta content="rev_sparse_hes" name="keywords" />
+<meta content="large, x, values" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_three_tangent.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_three_base2ad.cpp" href="atomic_three_base2ad.cpp.html" />
+    <link rel="prev" title="atomic_three_norm_sq.cpp" href="atomic_three_norm_sq.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atomic_four.html">atomic_four</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_three.html">atomic_three</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="atomic_three_define.html">atomic_three_define</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="atomic_three_example.html">atomic_three_example</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_get_started.cpp.html">atomic_three_get_started.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_norm_sq.cpp.html">atomic_three_norm_sq.cpp</a></li>
+<li class="toctree-l7 current"><a class="current reference internal" href="#">atomic_three_tangent.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_base2ad.cpp.html">atomic_three_base2ad.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_reciprocal.cpp.html">atomic_three_reciprocal.cpp</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_mat_mul.cpp.html">atomic_three_mat_mul.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_three.html">atomic_three</a> &raquo;</li>
+          <li><a href="atomic_three_example.html">atomic_three_example</a> &raquo;</li>
+      <li>atomic_three_tangent.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_three_tangent.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-three-tangent-cpp">
+<span id="atomic-three-tangent-cpp-name"></span><h1>atomic_three_tangent.cpp<a class="headerlink" href="#atomic-three-tangent-cpp" title="Permalink to this headline"></a></h1>
+<section id="tan-and-tanh-as-user-atomic-operations-example-and-test">
+<span id="atomic-three-tangent-cpp-title"></span><span id="index-0"></span><h2>Tan and Tanh as User Atomic Operations: Example and Test<a class="headerlink" href="#tan-and-tanh-as-user-atomic-operations-example-and-test" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#discussion" id="id4">Discussion</a></p></li>
+<li><p><a class="reference internal" href="#start-class-definition" id="id5">Start Class Definition</a></p></li>
+<li><p><a class="reference internal" href="#constructor" id="id6">Constructor</a></p></li>
+<li><p><a class="reference internal" href="#for-type" id="id7">for_type</a></p></li>
+<li><p><a class="reference internal" href="#forward" id="id8">forward</a></p></li>
+<li><p><a class="reference internal" href="#reverse" id="id9">reverse</a></p></li>
+<li><p><a class="reference internal" href="#jac-sparsity" id="id10">jac_sparsity</a></p></li>
+<li><p><a class="reference internal" href="#hes-sparsity" id="id11">hes_sparsity</a></p></li>
+<li><p><a class="reference internal" href="#end-class-definition" id="id12">End Class Definition</a></p></li>
+<li><p><a class="reference internal" href="#use-atomic-function" id="id13">Use Atomic Function</a></p>
+<ul>
+<li><p><a class="reference internal" href="#atomic-three-tangent-cpp-use-atomic-function-constructor" id="id14">Constructor</a></p></li>
+<li><p><a class="reference internal" href="#recording" id="id15">Recording</a></p></li>
+<li><p><a class="reference internal" href="#atomic-three-tangent-cpp-use-atomic-function-forward" id="id16">forward</a></p></li>
+<li><p><a class="reference internal" href="#atomic-three-tangent-cpp-use-atomic-function-reverse" id="id17">reverse</a></p></li>
+<li><p><a class="reference internal" href="#for-jac-sparsity" id="id18">for_jac_sparsity</a></p></li>
+<li><p><a class="reference internal" href="#rev-sparse-hes" id="id19">rev_sparse_hes</a></p></li>
+<li><p><a class="reference internal" href="#large-x-values" id="id20">Large x Values</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="discussion">
+<span id="atomic-three-tangent-cpp-discussion"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id4">Discussion</a><a class="headerlink" href="#discussion" title="Permalink to this headline"></a></h3>
+<p>The code below uses the <a class="reference internal" href="tan_forward.html#tan-forward-name"><span class="std std-ref">tan_forward</span></a> and <a class="reference internal" href="tan_reverse.html#tan-reverse-name"><span class="std std-ref">tan_reverse</span></a>
+to implement the tangent and hyperbolic tangent
+functions as atomic function operations.
+It also uses <code class="docutils literal notranslate"><span class="pre">AD&lt;float&gt;</span></code> ,
+while most atomic examples use <code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> .</p>
+</section>
+<section id="start-class-definition">
+<span id="atomic-three-tangent-cpp-start-class-definition"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id5">Start Class Definition</a><a class="headerlink" href="#start-class-definition" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Begin empty namespace</span>
+<span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span><span class="w"></span>
+<span class="c1">//</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">atomic_tangent</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">atomic_three</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="constructor">
+<span id="atomic-three-tangent-cpp-constructor"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id6">Constructor</a><a class="headerlink" href="#constructor" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">hyperbolic_</span><span class="p">;</span><span class="w"> </span><span class="c1">// is this hyperbolic tangent</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// constructor</span>
+<span class="w">   </span><span class="n">atomic_tangent</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">hyperbolic</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">atomic_three</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"></span>
+<span class="w">   </span><span class="n">hyperbolic_</span><span class="p">(</span><span class="n">hyperbolic</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="for-type">
+<span id="atomic-three-tangent-cpp-for-type"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id7">for_type</a><a class="headerlink" href="#for-type" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// calculate type_y</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="nf">for_type</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">                </span><span class="n">parameter_x</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CppAD</span><span class="o">::</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w">  </span><span class="n">type_x</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CppAD</span><span class="o">::</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w">        </span><span class="n">type_y</span><span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">parameter_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">type_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">type_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// n</span>
+<span class="w">      </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">type_y</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c1">// m</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">type_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">type_x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">type_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">type_x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="forward">
+<span id="atomic-three-tangent-cpp-forward"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id8">forward</a><a class="headerlink" href="#forward" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// forward mode routine called by CppAD</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">               </span><span class="n">parameter_x</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CppAD</span><span class="o">::</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">type_x</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">                             </span><span class="n">need_y</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">                             </span><span class="n">p</span><span class="w">           </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">                             </span><span class="n">q</span><span class="w">           </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">               </span><span class="n">tx</span><span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">                     </span><span class="n">tzy</span><span class="w">         </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">q1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="cp"># ifndef NDEBUG</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w">  </span><span class="o">/</span><span class="w"> </span><span class="n">q1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tzy</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">q1</span><span class="p">;</span><span class="w"></span>
+<span class="cp"># endif</span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">type_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="c1">// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">hyperbolic_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">tzy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="n">tzy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="w"> </span><span class="n">tan</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// y^{(0)} = z^{(0)} * z^{(0)}</span>
+<span class="w">         </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">         </span><span class="n">p</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">j_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.f</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">j</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">hyperbolic_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">j_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j_inv</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j</span>
+<span class="w">         </span><span class="n">tzy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">tzy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j_inv</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}</span>
+<span class="w">         </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// All orders are implemented and there are no possible errors</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="reverse">
+<span id="atomic-three-tangent-cpp-reverse"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id9">reverse</a><a class="headerlink" href="#reverse" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// reverse mode routine called by CppAD</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">               </span><span class="n">parameter_x</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CppAD</span><span class="o">::</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">type_x</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">                             </span><span class="n">q</span><span class="w">           </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">               </span><span class="n">tx</span><span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">               </span><span class="n">tzy</span><span class="w">         </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">                     </span><span class="n">px</span><span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">               </span><span class="n">pzy</span><span class="w">         </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">q1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="cp"># ifndef NDEBUG</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w">  </span><span class="o">/</span><span class="w"> </span><span class="n">q1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tzy</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">q1</span><span class="p">;</span><span class="w"></span>
+<span class="cp"># endif</span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">px</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w">  </span><span class="o">==</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">pzy</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// copy because partials w.r.t. y and z need to change</span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">qzy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pzy</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// initialize accumultion of reverse mode partials</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">q1</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">px</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// eliminate positive orders</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">--</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">j_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.f</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">j</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">hyperbolic_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">j_inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j_inv</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j</span>
+<span class="w">         </span><span class="n">px</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">qzy</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">px</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">qzy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j_inv</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">qzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">qzy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">j_inv</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2.</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">qzy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">qzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2.f</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// eliminate order zero</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">hyperbolic_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">px</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">qzy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mf">1.f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">px</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">qzy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mf">1.f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tzy</span><span class="p">[</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="jac-sparsity">
+<span id="atomic-three-tangent-cpp-jac-sparsity"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id10">jac_sparsity</a><a class="headerlink" href="#jac-sparsity" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// Jacobian sparsity routine called by CppAD</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="nf">jac_sparsity</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">                </span><span class="n">parameter_x</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CppAD</span><span class="o">::</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w">  </span><span class="n">type_x</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w">                                </span><span class="n">dependency</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">select_x</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">select_y</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">pattern_out</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select_x</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select_y</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">parameter_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// number of non-zeros in sparsity pattern</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nnz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">++</span><span class="n">nnz</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">++</span><span class="n">nnz</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// sparsity pattern</span>
+<span class="w">      </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">nnz</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">k</span><span class="o">++</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">k</span><span class="o">++</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">nnz</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="hes-sparsity">
+<span id="atomic-three-tangent-cpp-hes-sparsity"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id11">hes_sparsity</a><a class="headerlink" href="#hes-sparsity" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// Hessian sparsity routine called by CppAD</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="nf">hes_sparsity</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span><span class="w">                </span><span class="n">parameter_x</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CppAD</span><span class="o">::</span><span class="n">ad_type_enum</span><span class="o">&gt;&amp;</span><span class="w">  </span><span class="n">type_x</span><span class="w">      </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">select_x</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span><span class="w">                 </span><span class="n">select_y</span><span class="w">    </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">pattern_out</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">parameter_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">select_x</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">select_y</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select_x</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// number of non-zeros in sparsity pattern</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nnz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">select_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">select_y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">nnz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// sparsity pattern</span>
+<span class="w">      </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">nnz</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">select_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">select_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">select_y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="end-class-definition">
+<span id="atomic-three-tangent-cpp-end-class-definition"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id12">End Class Definition</a><a class="headerlink" href="#end-class-definition" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">};</span><span class="w"> </span><span class="c1">// End of atomic_tangent class</span>
+<span class="p">}</span><span class="w">  </span><span class="c1">// End empty namespace</span>
+</pre></div>
+</div>
+</section>
+<section id="use-atomic-function">
+<span id="atomic-three-tangent-cpp-use-atomic-function"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id13">Use Atomic Function</a><a class="headerlink" href="#use-atomic-function" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">tangent</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="atomic-three-tangent-cpp-use-atomic-function-constructor">
+<span id="index-11"></span><span id="id1"></span><h4><a class="toc-backref" href="#id14">Constructor</a><a class="headerlink" href="#atomic-three-tangent-cpp-use-atomic-function-constructor" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// --------------------------------------------------------------------</span>
+<span class="w">   </span><span class="c1">// Creater a tan and tanh object</span>
+<span class="w">   </span><span class="n">atomic_tangent</span><span class="w"> </span><span class="n">my_tan</span><span class="p">(</span><span class="s">&quot;my_tan&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">),</span><span class="w"> </span><span class="n">my_tanh</span><span class="p">(</span><span class="s">&quot;my_tanh&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="recording">
+<span id="atomic-three-tangent-cpp-use-atomic-function-recording"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id15">Recording</a><a class="headerlink" href="#recording" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// domain space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">float</span><span class="w">  </span><span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ax</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// declare independent variables and start tape recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">Independent</span><span class="p">(</span><span class="n">ax</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// range space vector</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">av</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// temporary vector for computations</span>
+<span class="w">   </span><span class="c1">// (my_tan and my_tanh computes tan or tanh and its square)</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">au</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// call atomic tan function and store tan(x) in f[0], ignore tan(x)^2</span>
+<span class="w">   </span><span class="n">my_tan</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">au</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">av</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">au</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// call atomic tanh function and store tanh(x) in f[1], ignore tanh(x)^2</span>
+<span class="w">   </span><span class="n">my_tanh</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">au</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">av</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">au</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// put a constant in f[2] = tanh(1.),  for sparsity pattern testing</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">one</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">one</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">my_tanh</span><span class="p">(</span><span class="n">one</span><span class="p">,</span><span class="w"> </span><span class="n">au</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">av</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">au</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// create f: x -&gt; v and stop tape recording</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ADFun</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">f</span><span class="p">.</span><span class="n">Dependent</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">av</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="atomic-three-tangent-cpp-use-atomic-function-forward">
+<span id="index-13"></span><span id="id2"></span><h4><a class="toc-backref" href="#id16">forward</a><a class="headerlink" href="#atomic-three-tangent-cpp-use-atomic-function-forward" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// check function value</span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">tan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">tan</span><span class="p">(</span><span class="n">x0</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">av</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tan</span><span class="p">,</span><span class="w">  </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">tanh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">tanh</span><span class="p">(</span><span class="n">x0</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">av</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tanh</span><span class="p">,</span><span class="w">  </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// check zero order forward</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">v</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tan</span><span class="p">,</span><span class="w">  </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tanh</span><span class="p">,</span><span class="w">  </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// tan&#39;(x)   = 1 + tan(x)  * tan(x)</span>
+<span class="w">   </span><span class="c1">// tanh&#39;(x)  = 1 - tanh(x) * tanh(x)</span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">tanp</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1.f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tan</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tan</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">tanhp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tanh</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// compute first partial of f w.r.t. x[0] using forward mode</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dx</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">dv</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">dx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">dv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">dx</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tanp</span><span class="p">,</span><span class="w">   </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tanhp</span><span class="p">,</span><span class="w">  </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.f</span><span class="p">,</span><span class="w">    </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// tan&#39;&#39;(x)   = 2 *  tan(x) * tan&#39;(x)</span>
+<span class="w">   </span><span class="c1">// tanh&#39;&#39;(x)  = - 2 * tanh(x) * tanh&#39;(x)</span>
+<span class="w">   </span><span class="c1">// Note that second order Taylor coefficient for u half the</span>
+<span class="w">   </span><span class="c1">// corresponding second derivative.</span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">two</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">tanpp</span><span class="w">  </span><span class="o">=</span><span class="w">   </span><span class="n">two</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tan</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanp</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">float</span><span class="w"> </span><span class="n">tanhpp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanhp</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// compute second partial of f w.r.t. x[0] using forward mode</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ddx</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">ddv</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ddx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ddv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ddx</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">two</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">tanpp</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">two</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">tanhpp</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">two</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mf">0.f</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="atomic-three-tangent-cpp-use-atomic-function-reverse">
+<span id="index-14"></span><span id="id3"></span><h4><a class="toc-backref" href="#id17">reverse</a><a class="headerlink" href="#atomic-three-tangent-cpp-use-atomic-function-reverse" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// compute derivative of tan - tanh using reverse mode</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="w"> </span><span class="n">dw</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">dw</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Reverse</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dw</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">tanp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">tanhp</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// compute second derivative of tan - tanh using reverse mode</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ddw</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ddw</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Reverse</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">ddw</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">tanp</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">tanhp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">ddw</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">tanpp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">tanhpp</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="for-jac-sparsity">
+<span id="atomic-three-tangent-cpp-use-atomic-function-for-jac-sparsity"></span><span id="index-15"></span><h4><a class="toc-backref" href="#id18">for_jac_sparsity</a><a class="headerlink" href="#for-jac-sparsity" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// forward mode Jacobian sparstiy pattern</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">sparse_rc</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">pattern_in</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">pattern_in</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">pattern_in</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">transpose</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">dependency</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">internal_bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">f</span><span class="p">.</span><span class="n">for_jac_sparsity</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">pattern_in</span><span class="p">,</span><span class="w"> </span><span class="n">transpose</span><span class="p">,</span><span class="w"> </span><span class="n">dependency</span><span class="p">,</span><span class="w"> </span><span class="n">internal_bool</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_out</span><span class="w"></span>
+<span class="w">   </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// (0, 0) and (1, 0) are in sparsity pattern</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">nnz</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">row</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">col</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">row</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">col</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="rev-sparse-hes">
+<span id="atomic-three-tangent-cpp-use-atomic-function-rev-sparse-hes"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id19">rev_sparse_hes</a><a class="headerlink" href="#rev-sparse-hes" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// Hesian sparsity (using previous for_jac_sparsity call)</span>
+<span class="w">   </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="n">select_y</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">select_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">select_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">select_y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">f</span><span class="p">.</span><span class="n">rev_hes_sparsity</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">select_y</span><span class="p">,</span><span class="w"> </span><span class="n">transpose</span><span class="p">,</span><span class="w"> </span><span class="n">internal_bool</span><span class="p">,</span><span class="w"> </span><span class="n">pattern_out</span><span class="w"></span>
+<span class="w">   </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">nnz</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">row</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">pattern_out</span><span class="p">.</span><span class="n">col</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="large-x-values">
+<span id="atomic-three-tangent-cpp-use-atomic-function-large-x-values"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id20">Large x Values</a><a class="headerlink" href="#large-x-values" title="Permalink to this headline"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1">// check tanh results for a large value of x</span>
+<span class="w">   </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">two</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">v</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">tanh</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">tanh</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">dv</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">dx</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">tanhp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">   </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">NearEqual</span><span class="p">(</span><span class="n">dv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">tanhp</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_three_norm_sq.cpp.html" class="btn btn-neutral float-left" title="atomic_three_norm_sq.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_three_base2ad.cpp.html" class="btn btn-neutral float-right" title="atomic_three_base2ad.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

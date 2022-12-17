@@ -1,0 +1,91 @@
+lines 15-103 of file: include/cppad/core/chkpoint_two/chkpoint_two.hpp
+
+{xrst_begin chkpoint_two}
+{xrst_spell
+   chk
+}
+
+Checkpoint Functions: Second Generation
+#######################################
+
+Syntax
+******
+
+Constructor
+===========
+
+| ``chkpoint_two<`` *Base* > *chk_fun* ( *fun* , *name* ,
+| |tab| *internal_bool* , *use_hes_sparsity* , *use_base2ad* , *use_in_parallel*
+| )
+
+Use Checkpoint Function
+=======================
+*chk_fun* ( *ax* , *ay* )
+
+new_dynamic
+===========
+*chk_fun* . ``new_dynamic`` ( *dynamic* )
+
+Reduce Memory
+*************
+You can reduce the size of the tape and memory required for AD
+using a checkpoint representation of a function
+:math:`g : \B{R}^n \rightarrow \B{R}^m`.
+
+Faster Recording
+****************
+It may also reduce the time to make a recording if the same :math:`g(x)`
+is used many times (with different values) during the
+recording of an ``ADFun<`` *Base* > object.
+
+Repeating Forward
+*****************
+Normally, CppAD stores :ref:`forward-name` mode results,
+until they freed using :ref:`capacity_order-name` ,
+or the corresponding :ref:`ADFun-name` object is deleted.
+This is not true for ``chkpoint_two`` functions
+because the same checkpoint function may be used repeatedly
+with different arguments during a single forward mode operation.
+Thus, forward mode results are computed for each use of *chk_fun*
+in a forward mode sweep.
+
+Operation Sequence
+******************
+The :ref:`operation sequence<glossary@Operation@Sequence>`
+representing :math:`g(x)` is fixed; i.e.,
+it cannot depend on the value of :math:`x`.
+
+atomic_three
+************
+The ``chkpoint_two`` class is derived from ``atomic_three`` ,
+hence some of its error message will refer to atomic operations.
+The ``chkpoint_two`` class implements all the
+:ref:`atomic_three_define@Virtual Functions`
+and hence its source code,
+
+   ``include/cppad/core/chkpoint_two/chkpoint_two.hpp``
+
+provides an example for :ref:`atomic_three-name` operations.
+The difference is that ``chkpoint_two.hpp`` uses AD
+instead of user provided derivatives.
+
+Base
+****
+The type *Base* specifies the base type for AD operations;
+i.e., *chk_fun* can be used during the recording of
+``AD<`` *Base* > operations.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/chkpoint_two/ctor.hpp
+   include/cppad/core/chkpoint_two/chk_fun.xrst
+   include/cppad/core/chkpoint_two/dynamic.hpp
+   example/chkpoint_two/get_started.cpp
+   example/chkpoint_two/compare.cpp
+   example/chkpoint_two/base2ad.cpp
+   example/chkpoint_two/dynamic.cpp
+   example/chkpoint_two/ode.cpp
+}
+
+{xrst_end chkpoint_two}

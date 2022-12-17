@@ -1,0 +1,70 @@
+lines 5-72 of file: xrst/appendix/deprecated/include_deprecated.xrst
+
+{xrst_begin include_deprecated}
+{xrst_spell
+   romberg
+}
+
+Deprecated Include Files
+########################
+
+Deprecated 2015-11-30
+*********************
+The :ref:`utility-name` individual include files have been deprecated; e.g.,
+::
+
+   # include <cppad/runge_45.hpp>
+
+You must instead use
+::
+
+   # include <cppad/utility.hpp>
+
+or you can include individual utility files; e.g.,
+::
+
+   # include <cppad/utility/runge_45.hpp>
+
+Deprecated 2006-12-17
+*********************
+The following is a list of deprecated include file names
+and the corresponding names that should be used.
+For example, if your program uses the deprecated preprocessor command
+::
+
+   # include <CppAD/CppAD.h>
+
+you must change it to the command
+::
+
+   # include <cppad/cppad.hpp>
+
+The before 2015-11-30 column contains name used for the include file
+between 2006-12-17 and 2015-11-30 (see discussion above).
+
+.. csv-table::
+   :widths: auto
+
+   **Deprecated**,**Before 2015-11-30**,**Documentation**
+   CppAD/CheckNumericType.h,cppad/check_numeric_type.hpp,:ref:`CheckNumericType-name`
+   CppAD/CheckSimpleVector.h,cppad/check_simple_vector.hpp,:ref:`CheckSimpleVector-name`
+   CppAD/CppAD.h,cppad/cppad.hpp,:ref:`CppAD-name`
+   CppAD/CppAD_vector.h,cppad/vector.hpp,:ref:`CppAD_vector-name`
+   CppAD/ErrorHandler.h,cppad/error_handler.hpp,:ref:`ErrorHandler-name`
+   CppAD/LuFactor.h,cppad/lu_factor.hpp,:ref:`LuFactor-name`
+   CppAD/LuInvert.h,cppad/lu_invert.hpp,:ref:`LuInvert-name`
+   CppAD/LuSolve.h,cppad/lu_solve.hpp,:ref:`LuSolve-name`
+   CppAD/NearEqual.h,cppad/near_equal.hpp,:ref:`NearEqual-name`
+   CppAD/OdeErrControl.h,cppad/ode_err_control.hpp,:ref:`OdeErrControl-name`
+   CppAD/OdeGear.h,cppad/ode_gear.hpp,:ref:`OdeGear-name`
+   CppAD/OdeGearControl.h,cppad/ode_gear_control.hpp,:ref:`OdeGearControl-name`
+   CppAD/Poly.h,cppad/poly.hpp,:ref:`Poly-name`
+   CppAD/PowInt.h,cppad/pow_int.hpp,:ref:`pow_int-name`
+   CppAD/RombergMul.h,cppad/romberg_mul.hpp,:ref:`RombergMul-name`
+   CppAD/RombergOne.h,cppad/romberg_one.hpp,:ref:`RombergOne-name`
+   CppAD/Rosen34.h,cppad/rosen_34.hpp,:ref:`Rosen34-name`
+   CppAD/Runge45.h,cppad/runge_45.hpp,:ref:`Runge45-name`
+   CppAD/SpeedTest.h,cppad/speed_test.hpp,:ref:`SpeedTest-name`
+   CppAD/TrackNewDel.h,cppad/track_new_del.hpp,:ref:`track_new_del-name`
+
+{xrst_end include_deprecated}

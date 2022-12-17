@@ -1,0 +1,27 @@
+lines 7-31 of file: example/jit/to_csrc.cpp
+
+{xrst_begin jit_to_csrc.cpp}
+{xrst_spell
+   csrc
+}
+
+C Source Code Corresponding to a Function: Example and Test
+###########################################################
+
+to_csrc
+*******
+The actual call to ``to_csrc`` is in the following section of the
+example below:
+{xrst_literal
+   // BEGIN_TO_CSRC
+   // END_TO_CSRC
+}
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end jit_to_csrc.cpp}

@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table of Contents &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CppAD" href="CppAD.html" />
+    <link rel="prev" title="cppad" href="xrst_root_doc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CppAD.html">CppAD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Table of Contents</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/xrst_table_of_contents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="table-of-contents">
+<span id="xrst-table-of-contents-title"></span><h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline"></a></h1>
+<p><a class="reference internal" href="CppAD.html#cppad-title"><span class="std std-ref">cppad-20221216: C++ Algorithmic Differentiation Package User Documentation</span></a></p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Install.html#install-title"><span class="std std-ref">1</span></a> CppAD Download, Test, and Install Instructions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="download.html#download-title"><span class="std std-ref">1.1</span></a> Download The CppAD Source Code</div>
+<div class="line"><a class="reference internal" href="cmake.html#cmake-title"><span class="std std-ref">1.2</span></a> Using CMake to Configure CppAD</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="get_optional.sh.html#get-optional-sh-title"><span class="std std-ref">1.2.1</span></a> Download and Install The CppAD Optional Packages</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="get_adolc.sh.html#get-adolc-sh-title"><span class="std std-ref">1.2.1.1</span></a> Download and Install Adolc in Build Directory</div>
+<div class="line"><a class="reference internal" href="get_cppadcg.sh.html#get-cppadcg-sh-title"><span class="std std-ref">1.2.1.2</span></a> Download and Install CppADCodeGen in Build Directory</div>
+<div class="line"><a class="reference internal" href="get_colpack.sh.html#get-colpack-sh-title"><span class="std std-ref">1.2.1.3</span></a> Download and Install ColPack in Build Directory</div>
+<div class="line"><a class="reference internal" href="get_eigen.sh.html#get-eigen-sh-title"><span class="std std-ref">1.2.1.4</span></a> Download and Install Eigen in Build Directory</div>
+<div class="line"><a class="reference internal" href="get_fadbad.sh.html#get-fadbad-sh-title"><span class="std std-ref">1.2.1.5</span></a> Download and Install Fadbad in Build Directory</div>
+<div class="line"><a class="reference internal" href="get_ipopt.sh.html#get-ipopt-sh-title"><span class="std std-ref">1.2.1.6</span></a> Download and Install Ipopt in Build Directory</div>
+<div class="line"><a class="reference internal" href="get_sacado.sh.html#get-sacado-sh-title"><span class="std std-ref">1.2.1.7</span></a> Download and Install Sacado in Build Directory</div>
+</div>
+<div class="line"><a class="reference internal" href="adolc.html#adolc-title"><span class="std std-ref">1.2.2</span></a> Including Adolc Examples and Tests</div>
+<div class="line"><a class="reference internal" href="eigen.html#eigen-title"><span class="std std-ref">1.2.3</span></a> Including Eigen Examples, Tests, and sparse2eigen</div>
+<div class="line"><a class="reference internal" href="cppadcg.html#cppadcg-title"><span class="std std-ref">1.2.4</span></a> Including CppADCodeGen Examples and Tests</div>
+<div class="line"><a class="reference internal" href="ipopt.html#ipopt-title"><span class="std std-ref">1.2.5</span></a> Including Ipopt Library Examples, Tests, and pkg-config</div>
+<div class="line"><a class="reference internal" href="fadbad_prefix.html#fadbad-prefix-title"><span class="std std-ref">1.2.6</span></a> Including Fadbad Speed Tests</div>
+<div class="line"><a class="reference internal" href="sacado_prefix.html#sacado-prefix-title"><span class="std std-ref">1.2.7</span></a> Including Sacado Speed Tests</div>
+<div class="line"><a class="reference internal" href="colpack_prefix.html#colpack-prefix-title"><span class="std std-ref">1.2.8</span></a> Enabling Colpack Sparsity Calculations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="colpack_jac.cpp.html#colpack-jac-cpp-title"><span class="std std-ref">1.2.8.1</span></a> ColPack: Sparse Jacobian Example and Test</div>
+<div class="line"><a class="reference internal" href="colpack_jacobian.cpp.html#colpack-jacobian-cpp-title"><span class="std std-ref">1.2.8.2</span></a> ColPack: Sparse Jacobian Example and Test</div>
+<div class="line"><a class="reference internal" href="colpack_hes.cpp.html#colpack-hes-cpp-title"><span class="std std-ref">1.2.8.3</span></a> ColPack: Sparse Hessian Example and Test</div>
+<div class="line"><a class="reference internal" href="colpack_hessian.cpp.html#colpack-hessian-cpp-title"><span class="std std-ref">1.2.8.4</span></a> ColPack: Sparse Hessian Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="cppad_testvector.html#cppad-testvector-title"><span class="std std-ref">1.2.9</span></a> Choosing the CppAD Test Vector Template Class</div>
+</div>
+<div class="line"><a class="reference internal" href="cmake_check.html#cmake-check-title"><span class="std std-ref">1.3</span></a> Checking the CppAD Examples and Tests</div>
+<div class="line"><a class="reference internal" href="pkgconfig.html#pkgconfig-title"><span class="std std-ref">1.4</span></a> CppAD pkg-config Files</div>
+</div>
+<div class="line"><a class="reference internal" href="Theory.html#theory-title"><span class="std std-ref">2</span></a> The Theory of Derivative Calculations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Introduction.html#introduction-title"><span class="std std-ref">2.1</span></a> An Introduction by Example to Algorithmic Differentiation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2.html#exp-2-title"><span class="std std-ref">2.1.1</span></a> Second Order Exponential Approximation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2.hpp.html#exp-2-hpp-title"><span class="std std-ref">2.1.1.1</span></a> exp_2: Implementation</div>
+<div class="line"><a class="reference internal" href="exp_2.cpp.html#exp-2-cpp-title"><span class="std std-ref">2.1.1.2</span></a> exp_2: Test</div>
+<div class="line"><a class="reference internal" href="exp_2_for0.html#exp-2-for0-title"><span class="std std-ref">2.1.1.3</span></a> exp_2: Operation Sequence and Zero Order Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2_for0.cpp.html#exp-2-for0-cpp-title"><span class="std std-ref">2.1.1.3.1</span></a> exp_2: Verify Zero Order Forward Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_2_for1.html#exp-2-for1-title"><span class="std std-ref">2.1.1.4</span></a> exp_2: First Order Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2_for1.cpp.html#exp-2-for1-cpp-title"><span class="std std-ref">2.1.1.4.1</span></a> exp_2: Verify First Order Forward Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_2_rev1.html#exp-2-rev1-title"><span class="std std-ref">2.1.1.5</span></a> exp_2: First Order Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2_rev1.cpp.html#exp-2-rev1-cpp-title"><span class="std std-ref">2.1.1.5.1</span></a> exp_2: Verify First Order Reverse Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_2_for2.html#exp-2-for2-title"><span class="std std-ref">2.1.1.6</span></a> exp_2: Second Order Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2_for2.cpp.html#exp-2-for2-cpp-title"><span class="std std-ref">2.1.1.6.1</span></a> exp_2: Verify Second Order Forward Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_2_rev2.html#exp-2-rev2-title"><span class="std std-ref">2.1.1.7</span></a> exp_2: Second Order Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_2_rev2.cpp.html#exp-2-rev2-cpp-title"><span class="std std-ref">2.1.1.7.1</span></a> exp_2: Verify Second Order Reverse Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_2_cppad.html#exp-2-cppad-title"><span class="std std-ref">2.1.1.8</span></a> exp_2: CppAD Forward and Reverse Sweeps</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_eps.html#exp-eps-title"><span class="std std-ref">2.1.2</span></a> An Epsilon Accurate Exponential Approximation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_eps.hpp.html#exp-eps-hpp-title"><span class="std std-ref">2.1.2.1</span></a> exp_eps: Implementation</div>
+<div class="line"><a class="reference internal" href="exp_eps.cpp.html#exp-eps-cpp-title"><span class="std std-ref">2.1.2.2</span></a> exp_eps: Test of exp_eps</div>
+<div class="line"><a class="reference internal" href="exp_eps_for0.html#exp-eps-for0-title"><span class="std std-ref">2.1.2.3</span></a> exp_eps: Operation Sequence and Zero Order Forward Sweep</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_eps_for0.cpp.html#exp-eps-for0-cpp-title"><span class="std std-ref">2.1.2.3.1</span></a> exp_eps: Verify Zero Order Forward Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_eps_for1.html#exp-eps-for1-title"><span class="std std-ref">2.1.2.4</span></a> exp_eps: First Order Forward Sweep</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_eps_for1.cpp.html#exp-eps-for1-cpp-title"><span class="std std-ref">2.1.2.4.1</span></a> exp_eps: Verify First Order Forward Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_eps_rev1.html#exp-eps-rev1-title"><span class="std std-ref">2.1.2.5</span></a> exp_eps: First Order Reverse Sweep</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_eps_rev1.cpp.html#exp-eps-rev1-cpp-title"><span class="std std-ref">2.1.2.5.1</span></a> exp_eps: Verify First Order Reverse Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_eps_for2.html#exp-eps-for2-title"><span class="std std-ref">2.1.2.6</span></a> exp_eps: Second Order Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_eps_for2.cpp.html#exp-eps-for2-cpp-title"><span class="std std-ref">2.1.2.6.1</span></a> exp_eps: Verify Second Order Forward Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_eps_rev2.html#exp-eps-rev2-title"><span class="std std-ref">2.1.2.7</span></a> exp_eps: Second Order Reverse Sweep</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_eps_rev2.cpp.html#exp-eps-rev2-cpp-title"><span class="std std-ref">2.1.2.7.1</span></a> exp_eps: Verify Second Order Reverse Sweep</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_eps_cppad.html#exp-eps-cppad-title"><span class="std std-ref">2.1.2.8</span></a> exp_eps: CppAD Forward and Reverse Sweeps</div>
+</div>
+<div class="line"><a class="reference internal" href="exp_apx.cpp.html#exp-apx-cpp-title"><span class="std std-ref">2.1.3</span></a> Correctness Tests For Exponential Approximation in Introduction</div>
+</div>
+<div class="line"><a class="reference internal" href="forward_theory.html#forward-theory-title"><span class="std std-ref">2.2</span></a> The Theory of Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_forward.html#exp-forward-title"><span class="std std-ref">2.2.1</span></a> Exponential Function Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="log_forward.html#log-forward-title"><span class="std std-ref">2.2.2</span></a> Logarithm Function Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="sqrt_forward.html#sqrt-forward-title"><span class="std std-ref">2.2.3</span></a> Square Root Function Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="sin_cos_forward.html#sin-cos-forward-title"><span class="std std-ref">2.2.4</span></a> Trigonometric and Hyperbolic Sine and Cosine Forward Theory</div>
+<div class="line"><a class="reference internal" href="atan_forward.html#atan-forward-title"><span class="std std-ref">2.2.5</span></a> Inverse Tangent and Hyperbolic Tangent Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="asin_forward.html#asin-forward-title"><span class="std std-ref">2.2.6</span></a> Inverse Sine and Hyperbolic Sine Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="acos_forward.html#acos-forward-title"><span class="std std-ref">2.2.7</span></a> Inverse Cosine and Hyperbolic Cosine Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="pow_forward.html#pow-forward-title"><span class="std std-ref">2.2.8</span></a> Power Function Forward Mode Theory</div>
+<div class="line"><a class="reference internal" href="tan_forward.html#tan-forward-title"><span class="std std-ref">2.2.9</span></a> Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory</div>
+<div class="line"><a class="reference internal" href="erf_forward.html#erf-forward-title"><span class="std std-ref">2.2.10</span></a> Error Function Forward Taylor Polynomial Theory</div>
+</div>
+<div class="line"><a class="reference internal" href="reverse_theory.html#reverse-theory-title"><span class="std std-ref">2.3</span></a> The Theory of Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp_reverse.html#exp-reverse-title"><span class="std std-ref">2.3.1</span></a> Exponential Function Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="log_reverse.html#log-reverse-title"><span class="std std-ref">2.3.2</span></a> Logarithm Function Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="sqrt_reverse.html#sqrt-reverse-title"><span class="std std-ref">2.3.3</span></a> Square Root Function Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="sin_cos_reverse.html#sin-cos-reverse-title"><span class="std std-ref">2.3.4</span></a> Trigonometric and Hyperbolic Sine and Cosine Reverse Theory</div>
+<div class="line"><a class="reference internal" href="atan_reverse.html#atan-reverse-title"><span class="std std-ref">2.3.5</span></a> Inverse Tangent and Hyperbolic Tangent Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="asin_reverse.html#asin-reverse-title"><span class="std std-ref">2.3.6</span></a> Inverse Sine and Hyperbolic Sine Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="acos_reverse.html#acos-reverse-title"><span class="std std-ref">2.3.7</span></a> Inverse Cosine and Hyperbolic Cosine Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="tan_reverse.html#tan-reverse-title"><span class="std std-ref">2.3.8</span></a> Tangent and Hyperbolic Tangent Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="erf_reverse.html#erf-reverse-title"><span class="std std-ref">2.3.9</span></a> Error Function Reverse Mode Theory</div>
+<div class="line"><a class="reference internal" href="pow_reverse.html#pow-reverse-title"><span class="std std-ref">2.3.10</span></a> Power Function Reverse Mode Theory</div>
+</div>
+<div class="line"><a class="reference internal" href="reverse_identity.html#reverse-identity-title"><span class="std std-ref">2.4</span></a> An Important Reverse Mode Identity</div>
+<div class="line"><a class="reference internal" href="taylor_ode.html#taylor-ode-title"><span class="std std-ref">2.5</span></a> AD Theory for Solving ODE’s Using Taylor’s Method</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="taylor_ode.cpp.html#taylor-ode-cpp-title"><span class="std std-ref">2.5.1</span></a> Taylor’s Ode Solver: An Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="research.html#research-title"><span class="std std-ref">2.6</span></a> Research and Software Engineering Projects Related to CppAD</div>
+</div>
+<div class="line"><a class="reference internal" href="AD.html#ad-title"><span class="std std-ref">3</span></a> AD Objects</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ad_ctor.html#ad-ctor-title"><span class="std std-ref">3.1</span></a> AD Constructors</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ad_ctor.cpp.html#ad-ctor-cpp-title"><span class="std std-ref">3.1.1</span></a> AD Constructors: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ad_assign.html#ad-assign-title"><span class="std std-ref">3.2</span></a> AD Assignment Operator</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ad_assign.cpp.html#ad-assign-cpp-title"><span class="std std-ref">3.2.1</span></a> AD Assignment: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Convert.html#convert-title"><span class="std std-ref">3.3</span></a> Conversion and I/O of AD Objects</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Value.html#value-title"><span class="std std-ref">3.3.1</span></a> Convert From an AD Type to its Base Type</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="value.cpp.html#value-cpp-title"><span class="std std-ref">3.3.1.1</span></a> Convert From AD to its Base Type: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Integer.html#integer-title"><span class="std std-ref">3.3.2</span></a> Convert From AD to Integer</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="integer.cpp.html#integer-cpp-title"><span class="std std-ref">3.3.2.1</span></a> Convert From AD to Integer: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ad_to_string.html#ad-to-string-title"><span class="std std-ref">3.3.3</span></a> Convert An AD or Base Type to String</div>
+<div class="line"><a class="reference internal" href="ad_input.html#ad-input-title"><span class="std std-ref">3.3.4</span></a> AD Input Stream Operator</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ad_input.cpp.html#ad-input-cpp-title"><span class="std std-ref">3.3.4.1</span></a> AD Output Operator: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ad_output.html#ad-output-title"><span class="std std-ref">3.3.5</span></a> AD Output Stream Operator</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ad_output.cpp.html#ad-output-cpp-title"><span class="std std-ref">3.3.5.1</span></a> AD Output Operator: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="PrintFor.html#printfor-title"><span class="std std-ref">3.3.6</span></a> Printing AD Values During Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="print_for_cout.cpp.html#print-for-cout-cpp-title"><span class="std std-ref">3.3.6.1</span></a> Printing During Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="print_for_string.cpp.html#print-for-string-cpp-title"><span class="std std-ref">3.3.6.2</span></a> Print During Zero Order Forward Mode: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Var2Par.html#var2par-title"><span class="std std-ref">3.3.7</span></a> Convert an AD Variable or Dynamic Parameter to a Constant</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="var2par.cpp.html#var2par-cpp-title"><span class="std std-ref">3.3.7.1</span></a> Convert a Variable or Dynamic Parameter a Constant: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="ADValued.html#advalued-title"><span class="std std-ref">3.4</span></a> AD Valued Operations and Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Arithmetic.html#arithmetic-title"><span class="std std-ref">3.4.1</span></a> AD Arithmetic Operators and Compound Assignments</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="unary_plus.html#unary-plus-title"><span class="std std-ref">3.4.1.1</span></a> AD Unary Plus Operator</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="unary_plus.cpp.html#unary-plus-cpp-title"><span class="std std-ref">3.4.1.1.1</span></a> AD Unary Plus Operator: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="unary_minus.html#unary-minus-title"><span class="std std-ref">3.4.1.2</span></a> AD Unary Minus Operator</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="unary_minus.cpp.html#unary-minus-cpp-title"><span class="std std-ref">3.4.1.2.1</span></a> AD Unary Minus Operator: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ad_binary.html#ad-binary-title"><span class="std std-ref">3.4.1.3</span></a> AD Binary Arithmetic Operators</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="add.cpp.html#add-cpp-title"><span class="std std-ref">3.4.1.3.1</span></a> AD Binary Addition: Example and Test</div>
+<div class="line"><a class="reference internal" href="sub.cpp.html#sub-cpp-title"><span class="std std-ref">3.4.1.3.2</span></a> AD Binary Subtraction: Example and Test</div>
+<div class="line"><a class="reference internal" href="mul.cpp.html#mul-cpp-title"><span class="std std-ref">3.4.1.3.3</span></a> AD Binary Multiplication: Example and Test</div>
+<div class="line"><a class="reference internal" href="div.cpp.html#div-cpp-title"><span class="std std-ref">3.4.1.3.4</span></a> AD Binary Division: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="compound_assign.html#compound-assign-title"><span class="std std-ref">3.4.1.4</span></a> AD Compound Assignment Operators</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="add_eq.cpp.html#add-eq-cpp-title"><span class="std std-ref">3.4.1.4.1</span></a> AD Compound Assignment Addition: Example and Test</div>
+<div class="line"><a class="reference internal" href="sub_eq.cpp.html#sub-eq-cpp-title"><span class="std std-ref">3.4.1.4.2</span></a> AD Compound Assignment Subtraction: Example and Test</div>
+<div class="line"><a class="reference internal" href="mul_eq.cpp.html#mul-eq-cpp-title"><span class="std std-ref">3.4.1.4.3</span></a> AD Compound Assignment Multiplication: Example and Test</div>
+<div class="line"><a class="reference internal" href="div_eq.cpp.html#div-eq-cpp-title"><span class="std std-ref">3.4.1.4.4</span></a> AD Compound Assignment Division: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="unary_standard_math.html#unary-standard-math-title"><span class="std std-ref">3.4.2</span></a> The Unary Standard Math Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="acos.html#acos-title"><span class="std std-ref">3.4.2.1</span></a> Inverse Cosine Function: acos</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="acos.cpp.html#acos-cpp-title"><span class="std std-ref">3.4.2.1.1</span></a> The AD acos Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="acosh.html#acosh-title"><span class="std std-ref">3.4.2.2</span></a> The Inverse Hyperbolic Cosine Function: acosh</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="acosh.cpp.html#acosh-cpp-title"><span class="std std-ref">3.4.2.2.1</span></a> The AD acosh Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="asin.html#asin-title"><span class="std std-ref">3.4.2.3</span></a> Inverse Sine Function: asin</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="asin.cpp.html#asin-cpp-title"><span class="std std-ref">3.4.2.3.1</span></a> The AD asin Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="asinh.html#asinh-title"><span class="std std-ref">3.4.2.4</span></a> The Inverse Hyperbolic Sine Function: asinh</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="asinh.cpp.html#asinh-cpp-title"><span class="std std-ref">3.4.2.4.1</span></a> The AD asinh Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atan.html#atan-title"><span class="std std-ref">3.4.2.5</span></a> Inverse Tangent Function: atan</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atan.cpp.html#atan-cpp-title"><span class="std std-ref">3.4.2.5.1</span></a> The AD atan Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atanh.html#atanh-title"><span class="std std-ref">3.4.2.6</span></a> The Inverse Hyperbolic Tangent Function: atanh</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atanh.cpp.html#atanh-cpp-title"><span class="std std-ref">3.4.2.6.1</span></a> The AD atanh Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="cos.html#cos-title"><span class="std std-ref">3.4.2.7</span></a> The Cosine Function: cos</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cos.cpp.html#cos-cpp-title"><span class="std std-ref">3.4.2.7.1</span></a> The AD cos Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="cosh.html#cosh-title"><span class="std std-ref">3.4.2.8</span></a> The Hyperbolic Cosine Function: cosh</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cosh.cpp.html#cosh-cpp-title"><span class="std std-ref">3.4.2.8.1</span></a> The AD cosh Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="erf.html#erf-title"><span class="std std-ref">3.4.2.9</span></a> The Error Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="erf.cpp.html#erf-cpp-title"><span class="std std-ref">3.4.2.9.1</span></a> The AD erf Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="erfc.html#erfc-title"><span class="std std-ref">3.4.2.10</span></a> The Complementary Error Function: erfc</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="erfc.cpp.html#erfc-cpp-title"><span class="std std-ref">3.4.2.10.1</span></a> The AD erfc Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="exp.html#exp-title"><span class="std std-ref">3.4.2.11</span></a> The Exponential Function: exp</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="exp.cpp.html#exp-cpp-title"><span class="std std-ref">3.4.2.11.1</span></a> The AD exp Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="expm1.html#expm1-title"><span class="std std-ref">3.4.2.12</span></a> The Exponential Function Minus One: expm1</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="expm1.cpp.html#expm1-cpp-title"><span class="std std-ref">3.4.2.12.1</span></a> The AD exp Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="log.html#log-title"><span class="std std-ref">3.4.2.13</span></a> The Exponential Function: log</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="log.cpp.html#log-cpp-title"><span class="std std-ref">3.4.2.13.1</span></a> The AD log Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="log1p.html#log1p-title"><span class="std std-ref">3.4.2.14</span></a> The Logarithm of One Plus Argument: log1p</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="log1p.cpp.html#log1p-cpp-title"><span class="std std-ref">3.4.2.14.1</span></a> The AD log1p Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="log10.html#log10-title"><span class="std std-ref">3.4.2.15</span></a> The Base 10 Logarithm Function: log10</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="log10.cpp.html#log10-cpp-title"><span class="std std-ref">3.4.2.15.1</span></a> The AD log10 Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sin.html#sin-title"><span class="std std-ref">3.4.2.16</span></a> The Sine Function: sin</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sin.cpp.html#sin-cpp-title"><span class="std std-ref">3.4.2.16.1</span></a> The AD sin Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sinh.html#sinh-title"><span class="std std-ref">3.4.2.17</span></a> The Hyperbolic Sine Function: sinh</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sinh.cpp.html#sinh-cpp-title"><span class="std std-ref">3.4.2.17.1</span></a> The AD sinh Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sqrt.html#sqrt-title"><span class="std std-ref">3.4.2.18</span></a> The Square Root Function: sqrt</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sqrt.cpp.html#sqrt-cpp-title"><span class="std std-ref">3.4.2.18.1</span></a> The AD sqrt Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="tan.html#tan-title"><span class="std std-ref">3.4.2.19</span></a> The Tangent Function: tan</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="tan.cpp.html#tan-cpp-title"><span class="std std-ref">3.4.2.19.1</span></a> The AD tan Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="tanh.html#tanh-title"><span class="std std-ref">3.4.2.20</span></a> The Hyperbolic Tangent Function: tanh</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="tanh.cpp.html#tanh-cpp-title"><span class="std std-ref">3.4.2.20.1</span></a> The AD tanh Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="abs.html#abs-title"><span class="std std-ref">3.4.2.21</span></a> AD Absolute Value Functions: abs, fabs</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="fabs.cpp.html#fabs-cpp-title"><span class="std std-ref">3.4.2.21.1</span></a> AD Absolute Value Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sign.html#sign-title"><span class="std std-ref">3.4.2.22</span></a> The Sign: sign</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sign.cpp.html#sign-cpp-title"><span class="std std-ref">3.4.2.22.1</span></a> Sign Function: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="binary_math.html#binary-math-title"><span class="std std-ref">3.4.3</span></a> The Binary Math Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atan2.html#atan2-title"><span class="std std-ref">3.4.3.1</span></a> AD Two Argument Inverse Tangent Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atan2.cpp.html#atan2-cpp-title"><span class="std std-ref">3.4.3.1.1</span></a> The AD atan2 Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="pow.html#pow-title"><span class="std std-ref">3.4.3.2</span></a> The AD Power Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="pow.cpp.html#pow-cpp-title"><span class="std std-ref">3.4.3.2.1</span></a> The AD Power Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="pow_nan.cpp.html#pow-nan-cpp-title"><span class="std std-ref">3.4.3.2.2</span></a> pow: Nan in Result of Pow Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="azmul.html#azmul-title"><span class="std std-ref">3.4.3.3</span></a> Absolute Zero Multiplication</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="azmul.cpp.html#azmul-cpp-title"><span class="std std-ref">3.4.3.3.1</span></a> AD Absolute Zero Multiplication: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="CondExp.html#condexp-title"><span class="std std-ref">3.4.4</span></a> AD Conditional Expressions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cond_exp.cpp.html#cond-exp-cpp-title"><span class="std std-ref">3.4.4.1</span></a> Conditional Expressions: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Discrete.html#discrete-title"><span class="std std-ref">3.4.5</span></a> Discrete AD Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="tape_index.cpp.html#tape-index-cpp-title"><span class="std std-ref">3.4.5.1</span></a> Taping Array Index Operation: Example and Test</div>
+<div class="line"><a class="reference internal" href="interp_onetape.cpp.html#interp-onetape-cpp-title"><span class="std std-ref">3.4.5.2</span></a> Interpolation With Out Retaping: Example and Test</div>
+<div class="line"><a class="reference internal" href="interp_retape.cpp.html#interp-retape-cpp-title"><span class="std std-ref">3.4.5.3</span></a> Interpolation With Retaping: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="numeric_limits.html#numeric-limits-title"><span class="std std-ref">3.4.6</span></a> Numeric Limits For an AD and Base Types</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="num_limits.cpp.html#num-limits-cpp-title"><span class="std std-ref">3.4.6.1</span></a> Numeric Limits: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic.html#atomic-title"><span class="std std-ref">3.4.7</span></a> Atomic AD Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four.html#atomic-four-title"><span class="std std-ref">3.4.7.1</span></a> Atomic AD Functions: Fourth Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_define.html#atomic-four-define-title"><span class="std std-ref">3.4.7.1.1</span></a> Defining Atomic Functions: Fourth Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_ctor.html#atomic-four-ctor-title"><span class="std std-ref">3.4.7.1.1.1</span></a> Atomic Function Constructor</div>
+<div class="line"><a class="reference internal" href="atomic_four_call.html#atomic-four-call-title"><span class="std std-ref">3.4.7.1.1.2</span></a> Calling an Atomic Function</div>
+<div class="line"><a class="reference internal" href="atomic_four_for_type.html#atomic-four-for-type-title"><span class="std std-ref">3.4.7.1.1.3</span></a> Atomic Function Forward Type Calculation</div>
+<div class="line"><a class="reference internal" href="atomic_four_forward.html#atomic-four-forward-title"><span class="std std-ref">3.4.7.1.1.4</span></a> Atomic Function Forward Mode</div>
+<div class="line"><a class="reference internal" href="atomic_four_reverse.html#atomic-four-reverse-title"><span class="std std-ref">3.4.7.1.1.5</span></a> Atomic Function Reverse Mode</div>
+<div class="line"><a class="reference internal" href="atomic_four_jac_sparsity.html#atomic-four-jac-sparsity-title"><span class="std std-ref">3.4.7.1.1.6</span></a> Atomic Function Jacobian Sparsity Patterns</div>
+<div class="line"><a class="reference internal" href="atomic_four_hes_sparsity.html#atomic-four-hes-sparsity-title"><span class="std std-ref">3.4.7.1.1.7</span></a> Atomic Function Hessian Sparsity Patterns</div>
+<div class="line"><a class="reference internal" href="atomic_four_rev_depend.html#atomic-four-rev-depend-title"><span class="std std-ref">3.4.7.1.1.8</span></a> Atomic Function Reverse Dependency</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_example.html#atomic-four-example-title"><span class="std std-ref">3.4.7.1.2</span></a> Examples Defining Atomic Functions: Fourth Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_get_started.cpp.html#atomic-four-get-started-cpp-title"><span class="std std-ref">3.4.7.1.2.1</span></a> Getting Started with Atomic Functions: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_norm_sq.cpp.html#atomic-four-norm-sq-cpp-title"><span class="std std-ref">3.4.7.1.2.2</span></a> Atomic Euclidean Norm Squared: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_forward.cpp.html#atomic-four-forward-cpp-title"><span class="std std-ref">3.4.7.1.2.3</span></a> Atomic Functions and Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_dynamic.cpp.html#atomic-four-dynamic-cpp-title"><span class="std std-ref">3.4.7.1.2.4</span></a> Atomic Functions with Dynamic Parameters: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-title"><span class="std std-ref">3.4.7.1.2.5</span></a> Atomic Vector Element-wise Operators: Example and Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_vector_implement.html#atomic-four-vector-implement-title"><span class="std std-ref">3.4.7.1.2.5.1</span></a> Implementing Atomic Vector Operations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_vector.hpp.html#atomic-four-vector-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.1</span></a> Atomic Vector Class: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_forward_op.hpp.html#atomic-four-vector-forward-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.2</span></a> Atomic Vector Forward Mode: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_reverse_op.hpp.html#atomic-four-vector-reverse-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.3</span></a> Atomic Vector Forward Mode: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_jac_sparsity.hpp.html#atomic-four-vector-jac-sparsity-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.4</span></a> Atomic Vector Jacobian Sparsity Pattern: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_hes_sparsity.hpp.html#atomic-four-vector-hes-sparsity-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.5</span></a> Atomic Vector Hessian Sparsity Pattern: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_for_type.hpp.html#atomic-four-vector-for-type-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.6</span></a> Atomic Vector Forward Type Calculation: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_rev_depend.hpp.html#atomic-four-vector-rev-depend-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.7</span></a> Atomic Vector Forward Type Calculation: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_add_op.hpp.html#atomic-four-vector-add-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.8</span></a> Atomic Vector Add Operator: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_sub_op.hpp.html#atomic-four-vector-sub-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.9</span></a> Atomic Vector Subtract Operator: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_mul_op.hpp.html#atomic-four-vector-mul-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.10</span></a> Atomic Vector Multiply Operator: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_div_op.hpp.html#atomic-four-vector-div-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.11</span></a> Atomic Vector Divide Operator: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_neg_op.hpp.html#atomic-four-vector-neg-op-hpp-title"><span class="std std-ref">3.4.7.1.2.5.1.12</span></a> Atomic Vector Negative Operator: Example Implementation</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_add.cpp.html#atomic-four-vector-add-cpp-title"><span class="std std-ref">3.4.7.1.2.5.2</span></a> Atomic Vector Addition Example</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_div.cpp.html#atomic-four-vector-div-cpp-title"><span class="std std-ref">3.4.7.1.2.5.3</span></a> Atomic Vector Division Example</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_hes_sparsity.cpp.html#atomic-four-vector-hes-sparsity-cpp-title"><span class="std std-ref">3.4.7.1.2.5.4</span></a> Atomic Vector Sparsity Patterns Example</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_jac_sparsity.cpp.html#atomic-four-vector-jac-sparsity-cpp-title"><span class="std std-ref">3.4.7.1.2.5.5</span></a> Atomic Vector Sparsity Patterns Example</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_mul.cpp.html#atomic-four-vector-mul-cpp-title"><span class="std std-ref">3.4.7.1.2.5.6</span></a> Atomic Vector Multiplication Example</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_neg.cpp.html#atomic-four-vector-neg-cpp-title"><span class="std std-ref">3.4.7.1.2.5.7</span></a> Atomic Vector Negation Example</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_rev_depend.cpp.html#atomic-four-vector-rev-depend-cpp-title"><span class="std std-ref">3.4.7.1.2.5.8</span></a> Example Optimizing Atomic Vector Usage</div>
+<div class="line"><a class="reference internal" href="atomic_four_vector_sub.cpp.html#atomic-four-vector-sub-cpp-title"><span class="std std-ref">3.4.7.1.2.5.9</span></a> Atomic Vector Subtraction Example</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul.html#atomic-four-mat-mul-title"><span class="std std-ref">3.4.7.1.2.6</span></a> Atomic Matrix Multiply Class: Example Implementation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_implement.html#atomic-four-mat-mul-implement-title"><span class="std std-ref">3.4.7.1.2.6.1</span></a> Implementing Atomic Matrix Multiply</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul.hpp.html#atomic-four-mat-mul-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.1</span></a> Atomic Matrix Multiply Class: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_set.hpp.html#atomic-four-mat-mul-set-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.2</span></a> atomic_mat_mul Set Routine: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_get.hpp.html#atomic-four-mat-mul-get-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.3</span></a> atomic_mat_mul Get Routine: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_base_mat_mul.hpp.html#atomic-four-mat-mul-base-mat-mul-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.4</span></a> Atomic Multiply Base Matrices: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_for_type.hpp.html#atomic-four-mat-mul-for-type-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.5</span></a> Atomic Matrix Multiply Forward Type Calculation: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_forward.hpp.html#atomic-four-mat-mul-forward-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.6</span></a> Atomic Matrix Multiply Forward Mode: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_reverse.hpp.html#atomic-four-mat-mul-reverse-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.7</span></a> Atomic Matrix Multiply Reverse Mode: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_jac_sparsity.hpp.html#atomic-four-mat-mul-jac-sparsity-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.8</span></a> Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_hes_sparsity.hpp.html#atomic-four-mat-mul-hes-sparsity-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.9</span></a> Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_rev_depend.hpp.html#atomic-four-mat-mul-rev-depend-hpp-title"><span class="std std-ref">3.4.7.1.2.6.1.10</span></a> Atomic Matrix Multiply Reverse Dependency Analysis: Example Implementation</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_forward.cpp.html#atomic-four-mat-mul-forward-cpp-title"><span class="std std-ref">3.4.7.1.2.6.2</span></a> Atomic Matrix Multiply Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_reverse.cpp.html#atomic-four-mat-mul-reverse-cpp-title"><span class="std std-ref">3.4.7.1.2.6.3</span></a> Atomic Matrix Multiply Reverse Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_sparsity.cpp.html#atomic-four-mat-mul-sparsity-cpp-title"><span class="std std-ref">3.4.7.1.2.6.4</span></a> Atomic Matrix Multiply Sparsity Patterns: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_rev_depend.cpp.html#atomic-four-mat-mul-rev-depend-cpp-title"><span class="std std-ref">3.4.7.1.2.6.5</span></a> Atomic Matrix Multiply Reverse Dependency: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_mat_mul_identical_zero.cpp.html#atomic-four-mat-mul-identical-zero-cpp-title"><span class="std std-ref">3.4.7.1.2.6.6</span></a> Atomic Matrix Multiply Identical Zero: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode.html#atomic-four-lin-ode-title"><span class="std std-ref">3.4.7.1.2.7</span></a> Atomic First Order Linear ODE Method: Example Implementation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_implement.html#atomic-four-lin-ode-implement-title"><span class="std std-ref">3.4.7.1.2.7.1</span></a> Implementing Atomic Linear ODE</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode.hpp.html#atomic-four-lin-ode-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.1</span></a> Atomic Linear ODE Class: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_set.hpp.html#atomic-four-lin-ode-set-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.2</span></a> atomic_lin_ode Set Routine: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_get.hpp.html#atomic-four-lin-ode-get-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.3</span></a> atomic_lin_ode Get Routine: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_base_solver.hpp.html#atomic-four-lin-ode-base-solver-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.4</span></a> Atomic Multiply Base Matrices: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_for_type.hpp.html#atomic-four-lin-ode-for-type-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.5</span></a> Atomic Linear ODE Forward Type Calculation: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_forward.hpp.html#atomic-four-lin-ode-forward-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.6</span></a> Atomic Linear ODE Forward Mode: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_reverse.hpp.html#atomic-four-lin-ode-reverse-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.7</span></a> Atomic Linear ODE Reverse Mode: Example Implementation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_reverse_2.html#atomic-four-lin-ode-reverse-2-title"><span class="std std-ref">3.4.7.1.2.7.1.7.1</span></a> Atomic Linear ODE Second Order Reverse</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_jac_sparsity.hpp.html#atomic-four-lin-ode-jac-sparsity-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.8</span></a> Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_hes_sparsity.hpp.html#atomic-four-lin-ode-hes-sparsity-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.9</span></a> Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_rev_depend.hpp.html#atomic-four-lin-ode-rev-depend-hpp-title"><span class="std std-ref">3.4.7.1.2.7.1.10</span></a> Atomic Linear ODE Forward Type Calculation: Example Implementation</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_forward.cpp.html#atomic-four-lin-ode-forward-cpp-title"><span class="std std-ref">3.4.7.1.2.7.2</span></a> Atomic Linear ODE Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_reverse.cpp.html#atomic-four-lin-ode-reverse-cpp-title"><span class="std std-ref">3.4.7.1.2.7.3</span></a> Atomic Linear ODE Reverse Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_sparsity.cpp.html#atomic-four-lin-ode-sparsity-cpp-title"><span class="std std-ref">3.4.7.1.2.7.4</span></a> Atomic Linear ODE Sparsity Calculations: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_four_lin_ode_rev_depend.cpp.html#atomic-four-lin-ode-rev-depend-cpp-title"><span class="std std-ref">3.4.7.1.2.7.5</span></a> Atomic Linear ODE Reverse Dependency Analysis: Example and Test</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_three.html#atomic-three-title"><span class="std std-ref">3.4.7.2</span></a> Atomic AD Functions: Third Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_define.html#atomic-three-define-title"><span class="std std-ref">3.4.7.2.1</span></a> Defining Atomic Functions: Third Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_ctor.html#atomic-three-ctor-title"><span class="std std-ref">3.4.7.2.1.1</span></a> Atomic Function Constructor</div>
+<div class="line"><a class="reference internal" href="atomic_three_afun.html#atomic-three-afun-title"><span class="std std-ref">3.4.7.2.1.2</span></a> Using AD Version of an Atomic Function</div>
+<div class="line"><a class="reference internal" href="atomic_three_for_type.html#atomic-three-for-type-title"><span class="std std-ref">3.4.7.2.1.3</span></a> Atomic Function Forward Type Calculation</div>
+<div class="line"><a class="reference internal" href="atomic_three_forward.html#atomic-three-forward-title"><span class="std std-ref">3.4.7.2.1.4</span></a> Atomic Function Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_forward.cpp.html#atomic-three-forward-cpp-title"><span class="std std-ref">3.4.7.2.1.4.1</span></a> Atomic Functions and Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_three_dynamic.cpp.html#atomic-three-dynamic-cpp-title"><span class="std std-ref">3.4.7.2.1.4.2</span></a> Atomic Functions with Dynamic Parameters: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_three_reverse.html#atomic-three-reverse-title"><span class="std std-ref">3.4.7.2.1.5</span></a> Atomic Function Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_reverse.cpp.html#atomic-three-reverse-cpp-title"><span class="std std-ref">3.4.7.2.1.5.1</span></a> Atomic Functions and Reverse Mode: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_three_jac_sparsity.html#atomic-three-jac-sparsity-title"><span class="std std-ref">3.4.7.2.1.6</span></a> Atomic Function Jacobian Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_jac_sparsity.cpp.html#atomic-three-jac-sparsity-cpp-title"><span class="std std-ref">3.4.7.2.1.6.1</span></a> Atomic Function Jacobian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_three_hes_sparsity.html#atomic-three-hes-sparsity-title"><span class="std std-ref">3.4.7.2.1.7</span></a> Atomic Function Hessian Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_hes_sparsity.cpp.html#atomic-three-hes-sparsity-cpp-title"><span class="std std-ref">3.4.7.2.1.7.1</span></a> Atomic Forward Hessian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_three_rev_depend.html#atomic-three-rev-depend-title"><span class="std std-ref">3.4.7.2.1.8</span></a> Atomic Function Reverse Dependency Calculation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_rev_depend.cpp.html#atomic-three-rev-depend-cpp-title"><span class="std std-ref">3.4.7.2.1.8.1</span></a> Atomic Functions Reverse Dependency Analysis: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_three_example.html#atomic-three-example-title"><span class="std std-ref">3.4.7.2.2</span></a> Example Defining Atomic Functions: Third Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_get_started.cpp.html#atomic-three-get-started-cpp-title"><span class="std std-ref">3.4.7.2.2.1</span></a> Getting Started with Atomic Functions: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_three_norm_sq.cpp.html#atomic-three-norm-sq-cpp-title"><span class="std std-ref">3.4.7.2.2.2</span></a> Atomic Euclidean Norm Squared: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_three_tangent.cpp.html#atomic-three-tangent-cpp-title"><span class="std std-ref">3.4.7.2.2.3</span></a> Tan and Tanh as User Atomic Operations: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_three_base2ad.cpp.html#atomic-three-base2ad-cpp-title"><span class="std std-ref">3.4.7.2.2.4</span></a> base2ad with Atomic Operations: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_three_reciprocal.cpp.html#atomic-three-reciprocal-cpp-title"><span class="std std-ref">3.4.7.2.2.5</span></a> Reciprocal as an Atomic Operation: Example and Test</div>
+<div class="line"><a class="reference internal" href="atomic_three_mat_mul.cpp.html#atomic-three-mat-mul-cpp-title"><span class="std std-ref">3.4.7.2.2.6</span></a> User Atomic Matrix Multiply: Example and Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_three_mat_mul.hpp.html#atomic-three-mat-mul-hpp-title"><span class="std std-ref">3.4.7.2.2.6.1</span></a> Matrix Multiply as an Atomic Operation</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="chkpoint_two.html#chkpoint-two-title"><span class="std std-ref">3.4.7.3</span></a> Checkpoint Functions: Second Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="chkpoint_two_ctor.html#chkpoint-two-ctor-title"><span class="std std-ref">3.4.7.3.1</span></a> Checkpoint Function Constructor</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_chk_fun.html#chkpoint-two-chk-fun-title"><span class="std std-ref">3.4.7.3.2</span></a> Using Checkpoint Functions</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_dynamic.html#chkpoint-two-dynamic-title"><span class="std std-ref">3.4.7.3.3</span></a> Dynamic Parameters in Checkpoint Functions</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_get_started.cpp.html#chkpoint-two-get-started-cpp-title"><span class="std std-ref">3.4.7.3.4</span></a> Get Started Checkpointing: Example and Test</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_compare.cpp.html#chkpoint-two-compare-cpp-title"><span class="std std-ref">3.4.7.3.5</span></a> Compare With and Without Checkpointing: Example and Test</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_base2ad.cpp.html#chkpoint-two-base2ad-cpp-title"><span class="std std-ref">3.4.7.3.6</span></a> Checkpointing With base2ad: Example and Test</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_dynamic.cpp.html#chkpoint-two-dynamic-cpp-title"><span class="std std-ref">3.4.7.3.7</span></a> Checkpoint Functions with Dynamic Parameters: Example and Test</div>
+<div class="line"><a class="reference internal" href="chkpoint_two_ode.cpp.html#chkpoint-two-ode-cpp-title"><span class="std std-ref">3.4.7.3.8</span></a> Checkpointing an ODE Solver: Example and Test</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="bool_valued.html#bool-valued-title"><span class="std std-ref">3.5</span></a> Bool Valued Operations and Functions with AD Arguments</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Compare.html#compare-title"><span class="std std-ref">3.5.1</span></a> AD Binary Comparison Operators</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="compare.cpp.html#compare-cpp-title"><span class="std std-ref">3.5.1.1</span></a> AD Binary Comparison Operators: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="near_equal_ext.html#near-equal-ext-title"><span class="std std-ref">3.5.2</span></a> Compare AD and Base Objects for Nearly Equal</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="near_equal_ext.cpp.html#near-equal-ext-cpp-title"><span class="std std-ref">3.5.2.1</span></a> Compare AD with Base Objects: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="bool_fun.html#bool-fun-title"><span class="std std-ref">3.5.3</span></a> AD Boolean Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="bool_fun.cpp.html#bool-fun-cpp-title"><span class="std std-ref">3.5.3.1</span></a> AD Boolean Functions: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="con_dyn_var.html#con-dyn-var-title"><span class="std std-ref">3.5.4</span></a> Constant, Dynamic, Parameter, and Variable</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="con_dyn_var.cpp.html#con-dyn-var-cpp-title"><span class="std std-ref">3.5.4.1</span></a> AD Parameter and Variable Functions: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="EqualOpSeq.html#equalopseq-title"><span class="std std-ref">3.5.5</span></a> Check if Two Value are Identically Equal</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="equal_op_seq.cpp.html#equal-op-seq-cpp-title"><span class="std std-ref">3.5.5.1</span></a> EqualOpSeq: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="VecAD.html#vecad-title"><span class="std std-ref">3.6</span></a> AD Vectors that Record Index Operations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="vec_ad.cpp.html#vec-ad-cpp-title"><span class="std std-ref">3.6.1</span></a> AD Vectors that Record Index Operations: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="base_require.html#base-require-title"><span class="std std-ref">3.7</span></a> AD&lt;Base&gt; Requirements for a CppAD Base Type</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="base_member.html#base-member-title"><span class="std std-ref">3.7.1</span></a> Required Base Class Member Functions</div>
+<div class="line"><a class="reference internal" href="base_cond_exp.html#base-cond-exp-title"><span class="std std-ref">3.7.2</span></a> Base Type Requirements for Conditional Expressions</div>
+<div class="line"><a class="reference internal" href="base_identical.html#base-identical-title"><span class="std std-ref">3.7.3</span></a> Base Type Requirements for Identically Equal Comparisons</div>
+<div class="line"><a class="reference internal" href="base_ordered.html#base-ordered-title"><span class="std std-ref">3.7.4</span></a> Base Type Requirements for Ordered Comparisons</div>
+<div class="line"><a class="reference internal" href="base_std_math.html#base-std-math-title"><span class="std std-ref">3.7.5</span></a> Base Type Requirements for Standard Math Functions</div>
+<div class="line"><a class="reference internal" href="base_limits.html#base-limits-title"><span class="std std-ref">3.7.6</span></a> Base Type Requirements for Numeric Limits</div>
+<div class="line"><a class="reference internal" href="base_to_string.html#base-to-string-title"><span class="std std-ref">3.7.7</span></a> Extending to_string To Another Floating Point Type</div>
+<div class="line"><a class="reference internal" href="base_hash.html#base-hash-title"><span class="std std-ref">3.7.8</span></a> Base Type Requirements for Hash Coding Values</div>
+<div class="line"><a class="reference internal" href="base_example.html#base-example-title"><span class="std std-ref">3.7.9</span></a> Example AD Base Types That are not AD&lt;OtherBase&gt;</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="base_alloc.hpp.html#base-alloc-hpp-title"><span class="std std-ref">3.7.9.1</span></a> Example AD&lt;Base&gt; Where Base Constructor Allocates Memory</div>
+<div class="line"><a class="reference internal" href="base_require.cpp.html#base-require-cpp-title"><span class="std std-ref">3.7.9.2</span></a> Using a User Defined AD Base Type: Example and Test</div>
+<div class="line"><a class="reference internal" href="base_adolc.hpp.html#base-adolc-hpp-title"><span class="std std-ref">3.7.9.3</span></a> Enable use of AD&lt;Base&gt; where Base is Adolc’s adouble Type</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="mul_level_adolc.cpp.html#mul-level-adolc-cpp-title"><span class="std std-ref">3.7.9.3.1</span></a> Using Adolc with Multiple Levels of Taping: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="base_float.hpp.html#base-float-hpp-title"><span class="std std-ref">3.7.9.4</span></a> Enable use of AD&lt;Base&gt; where Base is float</div>
+<div class="line"><a class="reference internal" href="base_double.hpp.html#base-double-hpp-title"><span class="std std-ref">3.7.9.5</span></a> Enable use of AD&lt;Base&gt; where Base is double</div>
+<div class="line"><a class="reference internal" href="base_complex.hpp.html#base-complex-hpp-title"><span class="std std-ref">3.7.9.6</span></a> Enable use of AD&lt;Base&gt; where Base is std::complex&lt;double&gt;</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="complex_poly.cpp.html#complex-poly-cpp-title"><span class="std std-ref">3.7.9.6.1</span></a> Complex Polynomial: Example and Test</div>
+</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="ADFun.html#adfun-title"><span class="std std-ref">4</span></a> ADFun Objects</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="record_adfun.html#record-adfun-title"><span class="std std-ref">4.1</span></a> Create an ADFun Object by Recording an Operation Sequence</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Independent.html#independent-title"><span class="std std-ref">4.1.1</span></a> Declare Independent Variables and Start Recording</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="independent.cpp.html#independent-cpp-title"><span class="std std-ref">4.1.1.1</span></a> Independent and ADFun Constructor: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="fun_construct.html#fun-construct-title"><span class="std std-ref">4.1.2</span></a> Construct an ADFun Object and Stop Recording</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="fun_assign.cpp.html#fun-assign-cpp-title"><span class="std std-ref">4.1.2.1</span></a> ADFun Assignment: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Dependent.html#dependent-title"><span class="std std-ref">4.1.3</span></a> Stop Recording and Store Operation Sequence</div>
+<div class="line"><a class="reference internal" href="abort_recording.html#abort-recording-title"><span class="std std-ref">4.1.4</span></a> Abort Recording of an Operation Sequence</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="abort_recording.cpp.html#abort-recording-cpp-title"><span class="std std-ref">4.1.4.1</span></a> Abort Current Recording: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="fun_property.html#fun-property-title"><span class="std std-ref">4.1.5</span></a> ADFun Function Properties</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="fun_property.cpp.html#fun-property-cpp-title"><span class="std std-ref">4.1.5.1</span></a> ADFun Function Properties: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="function_name.html#function-name-title"><span class="std std-ref">4.1.6</span></a> Setting and Getting a Function’s Name</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="function_name.cpp.html#function-name-cpp-title"><span class="std std-ref">4.1.6.1</span></a> ADFun Function Name: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="other_adfun.html#other-adfun-title"><span class="std std-ref">4.2</span></a> Other Ways to Create an ADFun Object</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="base2ad.html#base2ad-title"><span class="std std-ref">4.2.1</span></a> Create an AD&lt;Base&gt; Function From a Base Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="base2ad.cpp.html#base2ad-cpp-title"><span class="std std-ref">4.2.1.1</span></a> Taylor’s Ode Solver: base2ad Example and Test</div>
+<div class="line"><a class="reference internal" href="base2vec_ad.cpp.html#base2vec-ad-cpp-title"><span class="std std-ref">4.2.1.2</span></a> Using base2ad and VecAD together: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="json_ad_graph.html#json-ad-graph-title"><span class="std std-ref">4.2.2</span></a> Json Representation of an AD Graph</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="json_graph_op.html#json-graph-op-title"><span class="std std-ref">4.2.2.1</span></a> Json AD Graph Operator Definitions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="json_unary_op.cpp.html#json-unary-op-cpp-title"><span class="std std-ref">4.2.2.1.1</span></a> Json Unary Operators: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_add_op.cpp.html#json-add-op-cpp-title"><span class="std std-ref">4.2.2.1.2</span></a> Json add Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_azmul_op.cpp.html#json-azmul-op-cpp-title"><span class="std std-ref">4.2.2.1.3</span></a> Json azmul Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_div_op.cpp.html#json-div-op-cpp-title"><span class="std std-ref">4.2.2.1.4</span></a> Json div Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_mul_op.cpp.html#json-mul-op-cpp-title"><span class="std std-ref">4.2.2.1.5</span></a> Json mul Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_pow_op.cpp.html#json-pow-op-cpp-title"><span class="std std-ref">4.2.2.1.6</span></a> Json pow Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_sub_op.cpp.html#json-sub-op-cpp-title"><span class="std std-ref">4.2.2.1.7</span></a> Json sub Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_sum_op.cpp.html#json-sum-op-cpp-title"><span class="std std-ref">4.2.2.1.8</span></a> Json sum Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_cexp_op.cpp.html#json-cexp-op-cpp-title"><span class="std std-ref">4.2.2.1.9</span></a> Json Conditional Expressions: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_comp_op.cpp.html#json-comp-op-cpp-title"><span class="std std-ref">4.2.2.1.10</span></a> Json Comparison Operators: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_discrete_op.cpp.html#json-discrete-op-cpp-title"><span class="std std-ref">4.2.2.1.11</span></a> Json add Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_atom_op.cpp.html#json-atom-op-cpp-title"><span class="std std-ref">4.2.2.1.12</span></a> Json Atomic Function Three Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_atom4_op.cpp.html#json-atom4-op-cpp-title"><span class="std std-ref">4.2.2.1.13</span></a> Json Atomic Function Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_print_op.cpp.html#json-print-op-cpp-title"><span class="std std-ref">4.2.2.1.14</span></a> Json AD Graph print Operator: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="from_json.html#from-json-title"><span class="std std-ref">4.2.2.2</span></a> ADFun Object Corresponding to a Json AD Graph</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="from_json.cpp.html#from-json-cpp-title"><span class="std std-ref">4.2.2.2.1</span></a> Convert Jason Graph to an ADFun Object: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="to_json.html#to-json-title"><span class="std std-ref">4.2.2.3</span></a> Json AD Graph Corresponding to an ADFun Object</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="to_json.cpp.html#to-json-cpp-title"><span class="std std-ref">4.2.2.3.1</span></a> Convert an ADFun Object to a Json AD Graph: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="json_get_started.cpp.html#json-get-started-cpp-title"><span class="std std-ref">4.2.2.4</span></a> Json Get Started: Example and Test</div>
+<div class="line"><a class="reference internal" href="json_sparse.cpp.html#json-sparse-cpp-title"><span class="std std-ref">4.2.2.5</span></a> Json Representation of a Sparse Matrix: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="cpp_ad_graph.html#cpp-ad-graph-title"><span class="std std-ref">4.2.3</span></a> C++ Representation of an AD Graph</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="graph_op_enum.html#graph-op-enum-title"><span class="std std-ref">4.2.3.1</span></a> C++ AD Graph Operator Enum Type</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="graph_azmul_op.cpp.html#graph-azmul-op-cpp-title"><span class="std std-ref">4.2.3.1.1</span></a> C++ AD Graph add Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_add_op.cpp.html#graph-add-op-cpp-title"><span class="std std-ref">4.2.3.1.2</span></a> C++ AD Graph add Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_div_op.cpp.html#graph-div-op-cpp-title"><span class="std std-ref">4.2.3.1.3</span></a> C++ AD Graph div Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_mul_op.cpp.html#graph-mul-op-cpp-title"><span class="std std-ref">4.2.3.1.4</span></a> C++ AD Graph mul Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_pow_op.cpp.html#graph-pow-op-cpp-title"><span class="std std-ref">4.2.3.1.5</span></a> C++ AD Graph pow Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_sub_op.cpp.html#graph-sub-op-cpp-title"><span class="std std-ref">4.2.3.1.6</span></a> C++ AD Graph sub Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_unary_op.cpp.html#graph-unary-op-cpp-title"><span class="std std-ref">4.2.3.1.7</span></a> Graph Unary Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_sum_op.cpp.html#graph-sum-op-cpp-title"><span class="std std-ref">4.2.3.1.8</span></a> C++ AD Graph sum Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_comp_op.cpp.html#graph-comp-op-cpp-title"><span class="std std-ref">4.2.3.1.9</span></a> C++ AD Graph Comparison Operators: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_cexp_op.cpp.html#graph-cexp-op-cpp-title"><span class="std std-ref">4.2.3.1.10</span></a> C++ AD Graph Conditional Expressions: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_discrete_op.cpp.html#graph-discrete-op-cpp-title"><span class="std std-ref">4.2.3.1.11</span></a> C++ AD Graph add Operator: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_atom_op.cpp.html#graph-atom-op-cpp-title"><span class="std std-ref">4.2.3.1.12</span></a> C++ AD Graph Atomic Three Functions: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_atom4_op.cpp.html#graph-atom4-op-cpp-title"><span class="std std-ref">4.2.3.1.13</span></a> C++ AD Graph Atomic Four Functions: Example and Test</div>
+<div class="line"><a class="reference internal" href="graph_print_op.cpp.html#graph-print-op-cpp-title"><span class="std std-ref">4.2.3.1.14</span></a> C++ AD Graph print Operator: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="cpp_graph.html#cpp-graph-title"><span class="std std-ref">4.2.3.2</span></a> A C++ AD Graph Class</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cpp_graph_ctor.html#cpp-graph-ctor-title"><span class="std std-ref">4.2.3.2.1</span></a> C++ AD Graph Constructor</div>
+<div class="line"><a class="reference internal" href="cpp_graph_scalar.html#cpp-graph-scalar-title"><span class="std std-ref">4.2.3.2.2</span></a> C++ AD Graph Scalar Values</div>
+<div class="line"><a class="reference internal" href="cpp_graph_vector.html#cpp-graph-vector-title"><span class="std std-ref">4.2.3.2.3</span></a> C++ AD Graph Vector Values</div>
+<div class="line"><a class="reference internal" href="cpp_graph_print.html#cpp-graph-print-title"><span class="std std-ref">4.2.3.2.4</span></a> Print A C++ AD Graph</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="print_graph.cpp.html#print-graph-cpp-title"><span class="std std-ref">4.2.3.2.4.1</span></a> Print a C++ AD Graph: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="from_graph.html#from-graph-title"><span class="std std-ref">4.2.3.3</span></a> ADFun Object Corresponding to a CppAD Graph</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="switch_var_dyn.cpp.html#switch-var-dyn-cpp-title"><span class="std std-ref">4.2.3.3.1</span></a> Switching Between Variables and Dynamic Parameters: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="to_graph.html#to-graph-title"><span class="std std-ref">4.2.3.4</span></a> Create a C++ AD Graph Corresponding to an ADFun Object</div>
+</div>
+<div class="line"><a class="reference internal" href="abs_normal_fun.html#abs-normal-fun-title"><span class="std std-ref">4.2.4</span></a> Create An Abs-normal Representation of a Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="example_abs_normal.html#example-abs-normal-title"><span class="std std-ref">4.2.4.1</span></a> Examples and Tests: Abs-normal Representation of Non-Smooth Functions</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="abs_get_started.cpp.html#abs-get-started-cpp-title"><span class="std std-ref">4.2.4.1.1</span></a> abs_normal Getting Started: Example and Test</div>
+<div class="line"><a class="reference internal" href="abs_print_mat.html#abs-print-mat-title"><span class="std std-ref">4.2.4.1.2</span></a> abs_normal: Print a Vector or Matrix</div>
+<div class="line"><a class="reference internal" href="abs_eval.html#abs-eval-title"><span class="std std-ref">4.2.4.1.3</span></a> abs_normal: Evaluate First Order Approximation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="abs_eval.cpp.html#abs-eval-cpp-title"><span class="std std-ref">4.2.4.1.3.1</span></a> abs_eval: Example and Test</div>
+<div class="line"><a class="reference internal" href="abs_eval.hpp.html#abs-eval-hpp-title"><span class="std std-ref">4.2.4.1.3.2</span></a> abs_eval Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="simplex_method.html#simplex-method-title"><span class="std std-ref">4.2.4.1.4</span></a> abs_normal: Solve a Linear Program Using Simplex Method</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="simplex_method.cpp.html#simplex-method-cpp-title"><span class="std std-ref">4.2.4.1.4.1</span></a> abs_normal simplex_method: Example and Test</div>
+<div class="line"><a class="reference internal" href="simplex_method.hpp.html#simplex-method-hpp-title"><span class="std std-ref">4.2.4.1.4.2</span></a> simplex_method Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="lp_box.html#lp-box-title"><span class="std std-ref">4.2.4.1.5</span></a> abs_normal: Solve a Linear Program With Box Constraints</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="lp_box.cpp.html#lp-box-cpp-title"><span class="std std-ref">4.2.4.1.5.1</span></a> abs_normal lp_box: Example and Test</div>
+<div class="line"><a class="reference internal" href="lp_box.hpp.html#lp-box-hpp-title"><span class="std std-ref">4.2.4.1.5.2</span></a> lp_box Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="abs_min_linear.html#abs-min-linear-title"><span class="std std-ref">4.2.4.1.6</span></a> abs_normal: Minimize a Linear Abs-normal Approximation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="abs_min_linear.cpp.html#abs-min-linear-cpp-title"><span class="std std-ref">4.2.4.1.6.1</span></a> abs_min_linear: Example and Test</div>
+<div class="line"><a class="reference internal" href="abs_min_linear.hpp.html#abs-min-linear-hpp-title"><span class="std std-ref">4.2.4.1.6.2</span></a> abs_min_linear Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="min_nso_linear.html#min-nso-linear-title"><span class="std std-ref">4.2.4.1.7</span></a> Non-Smooth Optimization Using Abs-normal Linear Approximations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="min_nso_linear.cpp.html#min-nso-linear-cpp-title"><span class="std std-ref">4.2.4.1.7.1</span></a> abs_normal min_nso_linear: Example and Test</div>
+<div class="line"><a class="reference internal" href="min_nso_linear.hpp.html#min-nso-linear-hpp-title"><span class="std std-ref">4.2.4.1.7.2</span></a> min_nso_linear Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="qp_interior.html#qp-interior-title"><span class="std std-ref">4.2.4.1.8</span></a> Solve a Quadratic Program Using Interior Point Method</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="qp_interior.cpp.html#qp-interior-cpp-title"><span class="std std-ref">4.2.4.1.8.1</span></a> abs_normal qp_interior: Example and Test</div>
+<div class="line"><a class="reference internal" href="qp_interior.hpp.html#qp-interior-hpp-title"><span class="std std-ref">4.2.4.1.8.2</span></a> qp_interior Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="qp_box.html#qp-box-title"><span class="std std-ref">4.2.4.1.9</span></a> abs_normal: Solve a Quadratic Program With Box Constraints</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="qp_box.cpp.html#qp-box-cpp-title"><span class="std std-ref">4.2.4.1.9.1</span></a> abs_normal qp_box: Example and Test</div>
+<div class="line"><a class="reference internal" href="qp_box.hpp.html#qp-box-hpp-title"><span class="std std-ref">4.2.4.1.9.2</span></a> qp_box Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="abs_min_quad.html#abs-min-quad-title"><span class="std std-ref">4.2.4.1.10</span></a> abs_normal: Minimize a Linear Abs-normal Approximation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="abs_min_quad.cpp.html#abs-min-quad-cpp-title"><span class="std std-ref">4.2.4.1.10.1</span></a> abs_min_quad: Example and Test</div>
+<div class="line"><a class="reference internal" href="abs_min_quad.hpp.html#abs-min-quad-hpp-title"><span class="std std-ref">4.2.4.1.10.2</span></a> abs_min_quad Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="min_nso_quad.html#min-nso-quad-title"><span class="std std-ref">4.2.4.1.11</span></a> Non-Smooth Optimization Using Abs-normal Quadratic Approximations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="min_nso_quad.cpp.html#min-nso-quad-cpp-title"><span class="std std-ref">4.2.4.1.11.1</span></a> abs_normal min_nso_quad: Example and Test</div>
+<div class="line"><a class="reference internal" href="min_nso_quad.hpp.html#min-nso-quad-hpp-title"><span class="std std-ref">4.2.4.1.11.2</span></a> min_nso_quad Source Code</div>
+</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="drivers.html#drivers-title"><span class="std std-ref">4.3</span></a> First and Second Order Derivatives: Easy Drivers</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Jacobian.html#jacobian-title"><span class="std std-ref">4.3.1</span></a> Jacobian: Driver Routine</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="jacobian.cpp.html#jacobian-cpp-title"><span class="std std-ref">4.3.1.1</span></a> Jacobian: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Hessian.html#hessian-title"><span class="std std-ref">4.3.2</span></a> Hessian: Easy Driver</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="hessian.cpp.html#hessian-cpp-title"><span class="std std-ref">4.3.2.1</span></a> Hessian: Example and Test</div>
+<div class="line"><a class="reference internal" href="hes_lagrangian.cpp.html#hes-lagrangian-cpp-title"><span class="std std-ref">4.3.2.2</span></a> Hessian of Lagrangian and ADFun Default Constructor: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ForOne.html#forone-title"><span class="std std-ref">4.3.3</span></a> First Order Partial Derivative: Driver Routine</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_one.cpp.html#for-one-cpp-title"><span class="std std-ref">4.3.3.1</span></a> First Order Partial Driver: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="RevOne.html#revone-title"><span class="std std-ref">4.3.4</span></a> First Order Derivative: Driver Routine</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rev_one.cpp.html#rev-one-cpp-title"><span class="std std-ref">4.3.4.1</span></a> First Order Derivative Driver: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ForTwo.html#fortwo-title"><span class="std std-ref">4.3.5</span></a> Forward Mode Second Partial Derivative Driver</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_two.cpp.html#for-two-cpp-title"><span class="std std-ref">4.3.5.1</span></a> Subset of Second Order Partials: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="RevTwo.html#revtwo-title"><span class="std std-ref">4.3.6</span></a> Reverse Mode Second Partial Derivative Driver</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rev_two.cpp.html#rev-two-cpp-title"><span class="std std-ref">4.3.6.1</span></a> Second Partials Reverse Driver: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="Forward.html#forward-title"><span class="std std-ref">4.4</span></a> Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="new_dynamic.html#new-dynamic-title"><span class="std std-ref">4.4.1</span></a> Change the Dynamic Parameters</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="new_dynamic.cpp.html#new-dynamic-cpp-title"><span class="std std-ref">4.4.1.1</span></a> Dynamic Parameters: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="forward_zero.html#forward-zero-title"><span class="std std-ref">4.4.2</span></a> Zero Order Forward Mode: Function Values</div>
+<div class="line"><a class="reference internal" href="forward_one.html#forward-one-title"><span class="std std-ref">4.4.3</span></a> First Order Forward Mode: Derivative Values</div>
+<div class="line"><a class="reference internal" href="forward_two.html#forward-two-title"><span class="std std-ref">4.4.4</span></a> Second Order Forward Mode: Derivative Values</div>
+<div class="line"><a class="reference internal" href="forward_order.html#forward-order-title"><span class="std std-ref">4.4.5</span></a> Multiple Order Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="forward.cpp.html#forward-cpp-title"><span class="std std-ref">4.4.5.1</span></a> Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="forward_order.cpp.html#forward-order-cpp-title"><span class="std std-ref">4.4.5.2</span></a> Forward Mode: Example and Test of Multiple Orders</div>
+</div>
+<div class="line"><a class="reference internal" href="forward_dir.html#forward-dir-title"><span class="std std-ref">4.4.6</span></a> Multiple Directions Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="forward_dir.cpp.html#forward-dir-cpp-title"><span class="std std-ref">4.4.6.1</span></a> Forward Mode: Example and Test of Multiple Directions</div>
+</div>
+<div class="line"><a class="reference internal" href="size_order.html#size-order-title"><span class="std std-ref">4.4.7</span></a> Number Taylor Coefficient Orders Currently Stored</div>
+<div class="line"><a class="reference internal" href="compare_change.html#compare-change-title"><span class="std std-ref">4.4.8</span></a> Comparison Changes Between Taping and Zero Order Forward</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="compare_change.cpp.html#compare-change-cpp-title"><span class="std std-ref">4.4.8.1</span></a> CompareChange and Re-Tape: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="capacity_order.html#capacity-order-title"><span class="std std-ref">4.4.9</span></a> Controlling Taylor Coefficients Memory Allocation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="capacity_order.cpp.html#capacity-order-cpp-title"><span class="std std-ref">4.4.9.1</span></a> Controlling Taylor Coefficient Memory Allocation: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="number_skip.html#number-skip-title"><span class="std std-ref">4.4.10</span></a> Number of Variables that Can be Skipped</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="number_skip.cpp.html#number-skip-cpp-title"><span class="std std-ref">4.4.10.1</span></a> Number of Variables That Can be Skipped: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="Reverse.html#reverse-title"><span class="std std-ref">4.5</span></a> Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="reverse_one.html#reverse-one-title"><span class="std std-ref">4.5.1</span></a> First Order Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="reverse_one.cpp.html#reverse-one-cpp-title"><span class="std std-ref">4.5.1.1</span></a> First Order Reverse Mode: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="reverse_two.html#reverse-two-title"><span class="std std-ref">4.5.2</span></a> Second Order Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="reverse_two.cpp.html#reverse-two-cpp-title"><span class="std std-ref">4.5.2.1</span></a> Second Order Reverse ModeExample and Test</div>
+<div class="line"><a class="reference internal" href="hes_times_dir.cpp.html#hes-times-dir-cpp-title"><span class="std std-ref">4.5.2.2</span></a> Hessian Times Direction: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="reverse_any.html#reverse-any-title"><span class="std std-ref">4.5.3</span></a> Any Order Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="reverse_three.cpp.html#reverse-three-cpp-title"><span class="std std-ref">4.5.3.1</span></a> Third Order Reverse Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="rev_checkpoint.cpp.html#rev-checkpoint-cpp-title"><span class="std std-ref">4.5.3.2</span></a> Reverse Mode General Case (Checkpointing): Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="subgraph_reverse.html#subgraph-reverse-title"><span class="std std-ref">4.5.4</span></a> Reverse Mode Using Subgraphs</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="subgraph_reverse.cpp.html#subgraph-reverse-cpp-title"><span class="std std-ref">4.5.4.1</span></a> Computing Reverse Mode on Subgraphs: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="sparsity_pattern.html#sparsity-pattern-title"><span class="std std-ref">4.6</span></a> Calculating Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_jac_sparsity.html#for-jac-sparsity-title"><span class="std std-ref">4.6.1</span></a> Forward Mode Jacobian Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_jac_sparsity.cpp.html#for-jac-sparsity-cpp-title"><span class="std std-ref">4.6.1.1</span></a> Forward Mode Jacobian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="rev_jac_sparsity.html#rev-jac-sparsity-title"><span class="std std-ref">4.6.2</span></a> Reverse Mode Jacobian Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rev_jac_sparsity.cpp.html#rev-jac-sparsity-cpp-title"><span class="std std-ref">4.6.2.1</span></a> Reverse Mode Jacobian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="for_hes_sparsity.html#for-hes-sparsity-title"><span class="std std-ref">4.6.3</span></a> Forward Mode Hessian Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_hes_sparsity.cpp.html#for-hes-sparsity-cpp-title"><span class="std std-ref">4.6.3.1</span></a> Forward Mode Hessian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="rev_hes_sparsity.html#rev-hes-sparsity-title"><span class="std std-ref">4.6.4</span></a> Reverse Mode Hessian Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rev_hes_sparsity.cpp.html#rev-hes-sparsity-cpp-title"><span class="std std-ref">4.6.4.1</span></a> Reverse Mode Hessian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="subgraph_sparsity.html#subgraph-sparsity-title"><span class="std std-ref">4.6.5</span></a> Subgraph Dependency Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="subgraph_sparsity.cpp.html#subgraph-sparsity-cpp-title"><span class="std std-ref">4.6.5.1</span></a> Subgraph Dependency Sparsity Patterns: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="dependency.cpp.html#dependency-cpp-title"><span class="std std-ref">4.6.6</span></a> Computing Dependency: Example and Test</div>
+<div class="line"><a class="reference internal" href="rc_sparsity.cpp.html#rc-sparsity-cpp-title"><span class="std std-ref">4.6.7</span></a> Preferred Sparsity Patterns: Row and Column Indices: Example and Test</div>
+<div class="line"><a class="reference internal" href="ForSparseJac.html#forsparsejac-title"><span class="std std-ref">4.6.8</span></a> Jacobian Sparsity Pattern: Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_sparse_jac.cpp.html#for-sparse-jac-cpp-title"><span class="std std-ref">4.6.8.1</span></a> Forward Mode Jacobian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="RevSparseJac.html#revsparsejac-title"><span class="std std-ref">4.6.9</span></a> Jacobian Sparsity Pattern: Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rev_sparse_jac.cpp.html#rev-sparse-jac-cpp-title"><span class="std std-ref">4.6.9.1</span></a> Reverse Mode Jacobian Sparsity: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="RevSparseHes.html#revsparsehes-title"><span class="std std-ref">4.6.10</span></a> Hessian Sparsity Pattern: Reverse Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rev_sparse_hes.cpp.html#rev-sparse-hes-cpp-title"><span class="std std-ref">4.6.10.1</span></a> Reverse Mode Hessian Sparsity: Example and Test</div>
+<div class="line"><a class="reference internal" href="sparsity_sub.cpp.html#sparsity-sub-cpp-title"><span class="std std-ref">4.6.10.2</span></a> Sparsity Patterns For a Subset of Variables: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="ForSparseHes.html#forsparsehes-title"><span class="std std-ref">4.6.11</span></a> Hessian Sparsity Pattern: Forward Mode</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="for_sparse_hes.cpp.html#for-sparse-hes-cpp-title"><span class="std std-ref">4.6.11.1</span></a> Forward Mode Hessian Sparsity: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_derivative.html#sparse-derivative-title"><span class="std std-ref">4.7</span></a> Calculating Sparse Derivatives</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_jac.html#sparse-jac-title"><span class="std std-ref">4.7.1</span></a> Computing Sparse Jacobians</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_jac_for.cpp.html#sparse-jac-for-cpp-title"><span class="std std-ref">4.7.1.1</span></a> Computing Sparse Jacobian Using Forward Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="sparse_jac_rev.cpp.html#sparse-jac-rev-cpp-title"><span class="std std-ref">4.7.1.2</span></a> Computing Sparse Jacobian Using Reverse Mode: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-title"><span class="std std-ref">4.7.2</span></a> Sparse Jacobian</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_jacobian.cpp.html#sparse-jacobian-cpp-title"><span class="std std-ref">4.7.2.1</span></a> Sparse Jacobian: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_hes.html#sparse-hes-title"><span class="std std-ref">4.7.3</span></a> Computing Sparse Hessians</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_hes.cpp.html#sparse-hes-cpp-title"><span class="std std-ref">4.7.3.1</span></a> Computing Sparse Hessian: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_hessian.html#sparse-hessian-title"><span class="std std-ref">4.7.4</span></a> Sparse Hessian</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_hessian.cpp.html#sparse-hessian-cpp-title"><span class="std std-ref">4.7.4.1</span></a> Sparse Hessian: Example and Test</div>
+<div class="line"><a class="reference internal" href="sub_sparse_hes.cpp.html#sub-sparse-hes-cpp-title"><span class="std std-ref">4.7.4.2</span></a> Computing Sparse Hessian for a Subset of Variables</div>
+<div class="line"><a class="reference internal" href="sparse_sub_hes.cpp.html#sparse-sub-hes-cpp-title"><span class="std std-ref">4.7.4.3</span></a> Subset of a Sparse Hessian: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="subgraph_jac_rev.html#subgraph-jac-rev-title"><span class="std std-ref">4.7.5</span></a> Compute Sparse Jacobians Using Subgraphs</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="subgraph_jac_rev.cpp.html#subgraph-jac-rev-cpp-title"><span class="std std-ref">4.7.5.1</span></a> Computing Sparse Jacobian Using Reverse Mode: Example and Test</div>
+<div class="line"><a class="reference internal" href="subgraph_hes2jac.cpp.html#subgraph-hes2jac-cpp-title"><span class="std std-ref">4.7.5.2</span></a> Sparse Hessian Using Subgraphs and Jacobian: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="optimize.html#optimize-title"><span class="std std-ref">4.8</span></a> Optimize an ADFun Object Tape</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="optimize_twice.cpp.html#optimize-twice-cpp-title"><span class="std std-ref">4.8.1</span></a> Optimizing Twice: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_forward_active.cpp.html#optimize-forward-active-cpp-title"><span class="std std-ref">4.8.2</span></a> Optimize Forward Activity Analysis: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_reverse_active.cpp.html#optimize-reverse-active-cpp-title"><span class="std std-ref">4.8.3</span></a> Optimize Reverse Activity Analysis: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_compare_op.cpp.html#optimize-compare-op-cpp-title"><span class="std std-ref">4.8.4</span></a> Optimize Comparison Operators: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_print_for.cpp.html#optimize-print-for-cpp-title"><span class="std std-ref">4.8.5</span></a> Optimize Print Forward Operators: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_conditional_skip.cpp.html#optimize-conditional-skip-cpp-title"><span class="std std-ref">4.8.6</span></a> Optimize Conditional Expressions: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_nest_conditional.cpp.html#optimize-nest-conditional-cpp-title"><span class="std std-ref">4.8.7</span></a> Optimize Nested Conditional Expressions: Example and Test</div>
+<div class="line"><a class="reference internal" href="optimize_cumulative_sum.cpp.html#optimize-cumulative-sum-cpp-title"><span class="std std-ref">4.8.8</span></a> Optimize Cumulative Sum Operations: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="FunCheck.html#funcheck-title"><span class="std std-ref">4.9</span></a> Check an ADFun Sequence of Operations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="fun_check.cpp.html#fun-check-cpp-title"><span class="std std-ref">4.9.1</span></a> ADFun Check and Re-Tape: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="check_for_nan.html#check-for-nan-title"><span class="std std-ref">4.10</span></a> Check an ADFun Object For Nan Results</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="check_for_nan.cpp.html#check-for-nan-cpp-title"><span class="std std-ref">4.10.1</span></a> ADFun Checking For Nan: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="to_csrc.html#to-csrc-title"><span class="std std-ref">4.11</span></a> C Source Code Corresponding to an ADFun Object</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="example_jit.html#example-jit-title"><span class="std std-ref">4.11.1</span></a> JIT Creation, Compilation, and Linking of C Source Code</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="jit_get_started.cpp.html#jit-get-started-cpp-title"><span class="std std-ref">4.11.1.1</span></a> JIT Computation of Derivatives: Example and Test</div>
+<div class="line"><a class="reference internal" href="jit_to_csrc.cpp.html#jit-to-csrc-cpp-title"><span class="std std-ref">4.11.1.2</span></a> C Source Code Corresponding to a Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="jit_compile.cpp.html#jit-compile-cpp-title"><span class="std std-ref">4.11.1.3</span></a> JIT Compiler Options: Example and Test</div>
+<div class="line"><a class="reference internal" href="jit_atomic.cpp.html#jit-atomic-cpp-title"><span class="std std-ref">4.11.1.4</span></a> Atomic Callbacks in JIT Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="jit_dynamic.cpp.html#jit-dynamic-cpp-title"><span class="std std-ref">4.11.1.5</span></a> JIT With Dynamic Parameters: Example and Test</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="preprocessor.html#preprocessor-title"><span class="std std-ref">5</span></a> CppAD API Preprocessor Symbols</div>
+<div class="line"><a class="reference internal" href="multi_thread.html#multi-thread-title"><span class="std std-ref">6</span></a> Using CppAD in a Multi-Threading Environment</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="parallel_ad.html#parallel-ad-title"><span class="std std-ref">6.1</span></a> Enable AD Calculations During Parallel Mode</div>
+<div class="line"><a class="reference internal" href="thread_test.cpp.html#thread-test-cpp-title"><span class="std std-ref">6.2</span></a> Run Multi-Threading Examples and Speed Tests</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="a11c_openmp.cpp.html#a11c-openmp-cpp-title"><span class="std std-ref">6.2.1</span></a> A Simple OpenMP Example and Test</div>
+<div class="line"><a class="reference internal" href="a11c_bthread.cpp.html#a11c-bthread-cpp-title"><span class="std std-ref">6.2.2</span></a> A Simple Boost Thread Example and Test</div>
+<div class="line"><a class="reference internal" href="a11c_pthread.cpp.html#a11c-pthread-cpp-title"><span class="std std-ref">6.2.3</span></a> A Simple Parallel Pthread Example and Test</div>
+<div class="line"><a class="reference internal" href="simple_ad_openmp.cpp.html#simple-ad-openmp-cpp-title"><span class="std std-ref">6.2.4</span></a> A Simple OpenMP AD: Example and Test</div>
+<div class="line"><a class="reference internal" href="simple_ad_bthread.cpp.html#simple-ad-bthread-cpp-title"><span class="std std-ref">6.2.5</span></a> A Simple Boost Threading AD: Example and Test</div>
+<div class="line"><a class="reference internal" href="simple_ad_pthread.cpp.html#simple-ad-pthread-cpp-title"><span class="std std-ref">6.2.6</span></a> A Simple pthread AD: Example and Test</div>
+<div class="line"><a class="reference internal" href="team_example.cpp.html#team-example-cpp-title"><span class="std std-ref">6.2.7</span></a> Using a Team of AD Threads: Example and Test</div>
+<div class="line"><a class="reference internal" href="harmonic.cpp.html#harmonic-cpp-title"><span class="std std-ref">6.2.8</span></a> Multi-Threading Harmonic Summation Example / Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="harmonic_common.html#harmonic-common-title"><span class="std std-ref">6.2.8.1</span></a> Common Variables Used by Multi-threading Sum of 1/i</div>
+<div class="line"><a class="reference internal" href="harmonic_setup.html#harmonic-setup-title"><span class="std std-ref">6.2.8.2</span></a> Set Up Multi-threading Sum of 1/i</div>
+<div class="line"><a class="reference internal" href="harmonic_worker.html#harmonic-worker-title"><span class="std std-ref">6.2.8.3</span></a> Do One Thread’s Work for Sum of 1/i</div>
+<div class="line"><a class="reference internal" href="harmonic_takedown.html#harmonic-takedown-title"><span class="std std-ref">6.2.8.4</span></a> Take Down Multi-threading Sum of 1/i</div>
+<div class="line"><a class="reference internal" href="harmonic_sum.html#harmonic-sum-title"><span class="std std-ref">6.2.8.5</span></a> Multi-Threaded Implementation of Summation of 1/i</div>
+<div class="line"><a class="reference internal" href="harmonic_time.html#harmonic-time-title"><span class="std std-ref">6.2.8.6</span></a> Timing Test of Multi-Threaded Summation of 1/i</div>
+</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three.cpp.html#multi-atomic-three-cpp-title"><span class="std std-ref">6.2.9</span></a> Multi-Threading atomic_three Example / Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="multi_atomic_three_user.html#multi-atomic-three-user-title"><span class="std std-ref">6.2.9.1</span></a> Defines a atomic_three Operation that Computes Square Root</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three_common.html#multi-atomic-three-common-title"><span class="std std-ref">6.2.9.2</span></a> Multi-Threaded atomic_three Common Information</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three_setup.html#multi-atomic-three-setup-title"><span class="std std-ref">6.2.9.3</span></a> Multi-Threaded atomic_three Set Up</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three_worker.html#multi-atomic-three-worker-title"><span class="std std-ref">6.2.9.4</span></a> Multi-Threaded atomic_three Worker</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three_takedown.html#multi-atomic-three-takedown-title"><span class="std std-ref">6.2.9.5</span></a> Multi-Threaded atomic_three Take Down</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three_run.html#multi-atomic-three-run-title"><span class="std std-ref">6.2.9.6</span></a> Run Multi-Threaded atomic_three Calculation</div>
+<div class="line"><a class="reference internal" href="multi_atomic_three_time.html#multi-atomic-three-time-title"><span class="std std-ref">6.2.9.7</span></a> Timing Test for Multi-Threaded atomic_three Calculation</div>
+</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two.cpp.html#multi-chkpoint-two-cpp-title"><span class="std std-ref">6.2.10</span></a> Multi-Threading chkpoint_two Example / Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_algo.html#multi-chkpoint-two-algo-title"><span class="std std-ref">6.2.10.1</span></a> chkpoint_two Algorithm that Computes Square Root</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_common.html#multi-chkpoint-two-common-title"><span class="std std-ref">6.2.10.2</span></a> Multi-Threaded chkpoint_two Common Information</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_setup.html#multi-chkpoint-two-setup-title"><span class="std std-ref">6.2.10.3</span></a> Multi-Threaded chkpoint_two Set Up</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_worker.html#multi-chkpoint-two-worker-title"><span class="std std-ref">6.2.10.4</span></a> Multi-Threaded chkpoint_two Worker</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_takedown.html#multi-chkpoint-two-takedown-title"><span class="std std-ref">6.2.10.5</span></a> Multi-Threaded chkpoint_two Take Down</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_run.html#multi-chkpoint-two-run-title"><span class="std std-ref">6.2.10.6</span></a> Run Multi-Threaded chkpoint_two Calculation</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_two_time.html#multi-chkpoint-two-time-title"><span class="std std-ref">6.2.10.7</span></a> Timing Test for Multi-Threaded chkpoint_two Calculation</div>
+</div>
+<div class="line"><a class="reference internal" href="multi_newton.cpp.html#multi-newton-cpp-title"><span class="std std-ref">6.2.11</span></a> Multi-Threaded Newton Method Example / Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="multi_newton_common.html#multi-newton-common-title"><span class="std std-ref">6.2.11.1</span></a> Common Variables use by Multi-Threaded Newton Method</div>
+<div class="line"><a class="reference internal" href="multi_newton_setup.html#multi-newton-setup-title"><span class="std std-ref">6.2.11.2</span></a> Set Up Multi-Threaded Newton Method</div>
+<div class="line"><a class="reference internal" href="multi_newton_worker.html#multi-newton-worker-title"><span class="std std-ref">6.2.11.3</span></a> Do One Thread’s Work for Multi-Threaded Newton Method</div>
+<div class="line"><a class="reference internal" href="multi_newton_takedown.html#multi-newton-takedown-title"><span class="std std-ref">6.2.11.4</span></a> Take Down Multi-threaded Newton Method</div>
+<div class="line"><a class="reference internal" href="multi_newton_run.html#multi-newton-run-title"><span class="std std-ref">6.2.11.5</span></a> A Multi-Threaded Newton’s Method</div>
+<div class="line"><a class="reference internal" href="multi_newton_time.html#multi-newton-time-title"><span class="std std-ref">6.2.11.6</span></a> Timing Test of Multi-Threaded Newton Method</div>
+</div>
+<div class="line"><a class="reference internal" href="team_thread.hpp.html#team-thread-hpp-title"><span class="std std-ref">6.2.12</span></a> Specifications for A Team of AD Threads</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="team_openmp.cpp.html#team-openmp-cpp-title"><span class="std std-ref">6.2.12.1</span></a> OpenMP Implementation of a Team of AD Threads</div>
+<div class="line"><a class="reference internal" href="team_bthread.cpp.html#team-bthread-cpp-title"><span class="std std-ref">6.2.12.2</span></a> Boost Thread Implementation of a Team of AD Threads</div>
+<div class="line"><a class="reference internal" href="team_pthread.cpp.html#team-pthread-cpp-title"><span class="std std-ref">6.2.12.3</span></a> Pthread Implementation of a Team of AD Threads</div>
+</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="utility.html#utility-title"><span class="std std-ref">7</span></a> Some General Purpose Utilities</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="CheckNumericType.html#checknumerictype-title"><span class="std std-ref">7.1</span></a> Check NumericType Class Concept</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="check_numeric_type.cpp.html#check-numeric-type-cpp-title"><span class="std std-ref">7.1.1</span></a> The CheckNumericType Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="CheckSimpleVector.html#checksimplevector-title"><span class="std std-ref">7.2</span></a> Check Simple Vector Concept</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="check_simple_vector.cpp.html#check-simple-vector-cpp-title"><span class="std std-ref">7.2.1</span></a> The CheckSimpleVector Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="create_dll_lib.html#create-dll-lib-title"><span class="std std-ref">7.3</span></a> Create a Dynamic Link Library</div>
+<div class="line"><a class="reference internal" href="ErrorHandler.html#errorhandler-title"><span class="std std-ref">7.4</span></a> Replacing the CppAD Error Handler</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="error_handler.cpp.html#error-handler-cpp-title"><span class="std std-ref">7.4.1</span></a> Replacing The CppAD Error Handler: Example and Test</div>
+<div class="line"><a class="reference internal" href="cppad_assert.html#cppad-assert-title"><span class="std std-ref">7.4.2</span></a> CppAD Assertions During Execution</div>
+</div>
+<div class="line"><a class="reference internal" href="index_sort.html#index-sort-title"><span class="std std-ref">7.5</span></a> Returns Indices that Sort a Vector</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="index_sort.cpp.html#index-sort-cpp-title"><span class="std std-ref">7.5.1</span></a> Index Sort: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="link_dll_lib.html#link-dll-lib-title"><span class="std std-ref">7.6</span></a> Link a Dynamic Link Library</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="dll_lib.cpp.html#dll-lib-cpp-title"><span class="std std-ref">7.6.1</span></a> dll_lib: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="nan.html#nan-title"><span class="std std-ref">7.7</span></a> Obtain Nan or Determine if a Value is Nan</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="nan.cpp.html#nan-cpp-title"><span class="std std-ref">7.7.1</span></a> nan: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="NearEqual.html#nearequal-title"><span class="std std-ref">7.8</span></a> Determine if Two Values Are Nearly Equal</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="near_equal.cpp.html#near-equal-cpp-title"><span class="std std-ref">7.8.1</span></a> NearEqual Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="OdeErrControl.html#odeerrcontrol-title"><span class="std std-ref">7.9</span></a> An Error Controller for ODE Solvers</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ode_err_control.cpp.html#ode-err-control-cpp-title"><span class="std std-ref">7.9.1</span></a> OdeErrControl: Example and Test</div>
+<div class="line"><a class="reference internal" href="ode_err_maxabs.cpp.html#ode-err-maxabs-cpp-title"><span class="std std-ref">7.9.2</span></a> OdeErrControl: Example and Test Using Maxabs Argument</div>
+</div>
+<div class="line"><a class="reference internal" href="OdeGear.html#odegear-title"><span class="std std-ref">7.10</span></a> An Arbitrary Order Gear Method</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ode_gear.cpp.html#ode-gear-cpp-title"><span class="std std-ref">7.10.1</span></a> OdeGear: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="OdeGearControl.html#odegearcontrol-title"><span class="std std-ref">7.11</span></a> An Error Controller for Gear’s Ode Solvers</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ode_gear_control.cpp.html#ode-gear-control-cpp-title"><span class="std std-ref">7.11.1</span></a> OdeGearControl: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="CppAD_vector.html#cppad-vector-title"><span class="std std-ref">7.12</span></a> The CppAD::vector Template Class</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cppad_vector.cpp.html#cppad-vector-cpp-title"><span class="std std-ref">7.12.1</span></a> CppAD::vector Template Class: Example and Test</div>
+<div class="line"><a class="reference internal" href="vector_bool.cpp.html#vector-bool-cpp-title"><span class="std std-ref">7.12.2</span></a> CppAD::vectorBool Class: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Poly.html#poly-title"><span class="std std-ref">7.13</span></a> Evaluate a Polynomial or its Derivative</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="poly.cpp.html#poly-cpp-title"><span class="std std-ref">7.13.1</span></a> Polynomial Evaluation: Example and Test</div>
+<div class="line"><a class="reference internal" href="poly.hpp.html#poly-hpp-title"><span class="std std-ref">7.13.2</span></a> Source: Poly</div>
+</div>
+<div class="line"><a class="reference internal" href="pow_int.html#pow-int-title"><span class="std std-ref">7.14</span></a> The Integer Power Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="pow_int.cpp.html#pow-int-cpp-title"><span class="std std-ref">7.14.1</span></a> The Pow Integer Exponent: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="RombergMul.html#rombergmul-title"><span class="std std-ref">7.15</span></a> Multi-dimensional Romberg Integration</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="romberg_mul.cpp.html#romberg-mul-cpp-title"><span class="std std-ref">7.15.1</span></a> Multi-Dimensional Romberg Integration: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="RombergOne.html#rombergone-title"><span class="std std-ref">7.16</span></a> One DimensionalRomberg Integration</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="romberg_one.cpp.html#romberg-one-cpp-title"><span class="std std-ref">7.16.1</span></a> One Dimensional Romberg Integration: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Rosen34.html#rosen34-title"><span class="std std-ref">7.17</span></a> A 3rd and 4th Order Rosenbrock ODE Solver</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="rosen_34.cpp.html#rosen-34-cpp-title"><span class="std std-ref">7.17.1</span></a> rosen_34: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="Runge45.html#runge45-title"><span class="std std-ref">7.18</span></a> An Embedded 4th and 5th Order Runge-Kutta ODE Solver</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="runge45_1.cpp.html#runge45-1-cpp-title"><span class="std std-ref">7.18.1</span></a> Runge45: Example and Test</div>
+<div class="line"><a class="reference internal" href="runge_45.cpp.html#runge-45-cpp-title"><span class="std std-ref">7.18.2</span></a> Runge45: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="set_union.html#set-union-title"><span class="std std-ref">7.19</span></a> Union of Standard Sets</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="set_union.cpp.html#set-union-cpp-title"><span class="std std-ref">7.19.1</span></a> Set Union: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse2eigen.html#sparse2eigen-title"><span class="std std-ref">7.20</span></a> Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse2eigen.cpp.html#sparse2eigen-cpp-title"><span class="std std-ref">7.20.1</span></a> Converting CppAD Sparse Matrix to Eigen Format: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_rc.html#sparse-rc-title"><span class="std std-ref">7.21</span></a> Row and Column Index Sparsity Patterns</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_rc.cpp.html#sparse-rc-cpp-title"><span class="std std-ref">7.21.1</span></a> sparse_rc: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_rcv.html#sparse-rcv-title"><span class="std std-ref">7.22</span></a> Sparse Matrix Row, Column, Value Representation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_rcv.cpp.html#sparse-rcv-cpp-title"><span class="std std-ref">7.22.1</span></a> sparse_rcv: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_test.html#speed-test-title"><span class="std std-ref">7.23</span></a> Run One Speed Test and Return Results</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="speed_test.cpp.html#speed-test-cpp-title"><span class="std std-ref">7.23.1</span></a> speed_test: Example and test</div>
+</div>
+<div class="line"><a class="reference internal" href="SpeedTest.html#speedtest-title"><span class="std std-ref">7.24</span></a> Run One Speed Test and Print Results</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="speed_program.cpp.html#speed-program-cpp-title"><span class="std std-ref">7.24.1</span></a> Example Use of SpeedTest</div>
+</div>
+<div class="line"><a class="reference internal" href="test_boolofvoid.html#test-boolofvoid-title"><span class="std std-ref">7.25</span></a> Object that Runs a Group of Tests</div>
+<div class="line"><a class="reference internal" href="time_test.html#time-test-title"><span class="std std-ref">7.26</span></a> Determine Amount of Time to Execute a Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="elapsed_seconds.html#elapsed-seconds-title"><span class="std std-ref">7.26.1</span></a> Returns Elapsed Number of Seconds</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="elapsed_seconds.cpp.html#elapsed-seconds-cpp-title"><span class="std std-ref">7.26.1.1</span></a> Elapsed Seconds: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="time_test.cpp.html#time-test-cpp-title"><span class="std std-ref">7.26.2</span></a> time_test: Example and test</div>
+</div>
+<div class="line"><a class="reference internal" href="to_string.html#to-string-title"><span class="std std-ref">7.27</span></a> Convert Certain Types to a String</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="to_string.cpp.html#to-string-cpp-title"><span class="std std-ref">7.27.1</span></a> to_string: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="lu_det_and_solve.html#lu-det-and-solve-title"><span class="std std-ref">7.28</span></a> Compute Determinants and Solve Equations by LU Factorization</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="LuSolve.html#lusolve-title"><span class="std std-ref">7.28.1</span></a> Compute Determinant and Solve Linear Equations</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="lu_solve.cpp.html#lu-solve-cpp-title"><span class="std std-ref">7.28.1.1</span></a> LuSolve With Complex Arguments: Example and Test</div>
+<div class="line"><a class="reference internal" href="lu_solve.hpp.html#lu-solve-hpp-title"><span class="std std-ref">7.28.1.2</span></a> Source: LuSolve</div>
+</div>
+<div class="line"><a class="reference internal" href="LuFactor.html#lufactor-title"><span class="std std-ref">7.28.2</span></a> LU Factorization of A Square Matrix</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="lu_factor.cpp.html#lu-factor-cpp-title"><span class="std std-ref">7.28.2.1</span></a> LuFactor: Example and Test</div>
+<div class="line"><a class="reference internal" href="lu_factor.hpp.html#lu-factor-hpp-title"><span class="std std-ref">7.28.2.2</span></a> Source: LuFactor</div>
+</div>
+<div class="line"><a class="reference internal" href="LuInvert.html#luinvert-title"><span class="std std-ref">7.28.3</span></a> Invert an LU Factored Equation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="lu_invert.cpp.html#lu-invert-cpp-title"><span class="std std-ref">7.28.3.1</span></a> LuInvert: Example and Test</div>
+<div class="line"><a class="reference internal" href="lu_invert.hpp.html#lu-invert-hpp-title"><span class="std std-ref">7.28.3.2</span></a> Source: LuInvert</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="NumericType.html#numerictype-title"><span class="std std-ref">7.29</span></a> Definition of a Numeric Type</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="numeric_type.cpp.html#numeric-type-cpp-title"><span class="std std-ref">7.29.1</span></a> The NumericType: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="SimpleVector.html#simplevector-title"><span class="std std-ref">7.30</span></a> C++ Concept: A Simple Vector</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="simple_vector.cpp.html#simple-vector-cpp-title"><span class="std std-ref">7.30.1</span></a> Simple Vector Template Class: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="thread_alloc.html#thread-alloc-title"><span class="std std-ref">7.31</span></a> A Fast Multi-Threading Memory Allocator</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="thread_alloc.cpp.html#thread-alloc-cpp-title"><span class="std std-ref">7.31.1</span></a> Fast Multi-Threading Memory Allocator: Example and Test</div>
+<div class="line"><a class="reference internal" href="ta_parallel_setup.html#ta-parallel-setup-title"><span class="std std-ref">7.31.2</span></a> Setup thread_alloc For Use in Multi-Threading Environment</div>
+<div class="line"><a class="reference internal" href="ta_num_threads.html#ta-num-threads-title"><span class="std std-ref">7.31.3</span></a> Get Number of Threads</div>
+<div class="line"><a class="reference internal" href="ta_in_parallel.html#ta-in-parallel-title"><span class="std std-ref">7.31.4</span></a> Is The Current Execution in Parallel Mode</div>
+<div class="line"><a class="reference internal" href="ta_thread_num.html#ta-thread-num-title"><span class="std std-ref">7.31.5</span></a> Get the Current Thread Number</div>
+<div class="line"><a class="reference internal" href="ta_get_memory.html#ta-get-memory-title"><span class="std std-ref">7.31.6</span></a> Get At Least A Specified Amount of Memory</div>
+<div class="line"><a class="reference internal" href="ta_return_memory.html#ta-return-memory-title"><span class="std std-ref">7.31.7</span></a> Return Memory to thread_alloc</div>
+<div class="line"><a class="reference internal" href="ta_free_available.html#ta-free-available-title"><span class="std std-ref">7.31.8</span></a> Free Memory Currently Available for Quick Use by a Thread</div>
+<div class="line"><a class="reference internal" href="ta_hold_memory.html#ta-hold-memory-title"><span class="std std-ref">7.31.9</span></a> Control When Thread Alloc Retains Memory For Future Use</div>
+<div class="line"><a class="reference internal" href="ta_inuse.html#ta-inuse-title"><span class="std std-ref">7.31.10</span></a> Amount of Memory a Thread is Currently Using</div>
+<div class="line"><a class="reference internal" href="ta_available.html#ta-available-title"><span class="std std-ref">7.31.11</span></a> Amount of Memory Available for Quick Use by a Thread</div>
+<div class="line"><a class="reference internal" href="ta_create_array.html#ta-create-array-title"><span class="std std-ref">7.31.12</span></a> Allocate An Array and Call Default Constructor for its Elements</div>
+<div class="line"><a class="reference internal" href="ta_delete_array.html#ta-delete-array-title"><span class="std std-ref">7.31.13</span></a> Deallocate An Array and Call Destructor for its Elements</div>
+<div class="line"><a class="reference internal" href="ta_free_all.html#ta-free-all-title"><span class="std std-ref">7.31.14</span></a> Free All Memory That Was Allocated for Use by thread_alloc</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="ipopt_solve.html#ipopt-solve-title"><span class="std std-ref">8</span></a> Use Ipopt to Solve a Nonlinear Programming Problem</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ipopt_solve_get_started.cpp.html#ipopt-solve-get-started-cpp-title"><span class="std std-ref">8.1</span></a> Nonlinear Programming Using CppAD and Ipopt: Example and Test</div>
+<div class="line"><a class="reference internal" href="ipopt_solve_retape.cpp.html#ipopt-solve-retape-cpp-title"><span class="std std-ref">8.2</span></a> Nonlinear Programming Retaping: Example and Test</div>
+<div class="line"><a class="reference internal" href="ipopt_solve_ode_inverse.cpp.html#ipopt-solve-ode-inverse-cpp-title"><span class="std std-ref">8.3</span></a> ODE Inverse Problem Definitions: Source Code</div>
+</div>
+<div class="line"><a class="reference internal" href="Example.html#example-title"><span class="std std-ref">9</span></a> Examples</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="get_started.cpp.html#get-started-cpp-title"><span class="std std-ref">9.1</span></a> Getting Started Using CppAD to Compute Derivatives</div>
+<div class="line"><a class="reference internal" href="list_all_examples.html#list-all-examples-title"><span class="std std-ref">9.2</span></a> List All (Except Deprecated) CppAD Examples</div>
+<div class="line"><a class="reference internal" href="General.html#general-title"><span class="std std-ref">9.3</span></a> General Examples</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ad_fun.cpp.html#ad-fun-cpp-title"><span class="std std-ref">9.3.1</span></a> Creating Your Own Interface to an ADFun Object</div>
+<div class="line"><a class="reference internal" href="ad_in_c.cpp.html#ad-in-c-cpp-title"><span class="std std-ref">9.3.2</span></a> Example and Test Linking CppAD to Languages Other than C++</div>
+<div class="line"><a class="reference internal" href="conj_grad.cpp.html#conj-grad-cpp-title"><span class="std std-ref">9.3.3</span></a> Differentiate Conjugate Gradient Algorithm: Example and Test</div>
+<div class="line"><a class="reference internal" href="cppad_eigen.hpp.html#cppad-eigen-hpp-title"><span class="std std-ref">9.3.4</span></a> Enable Use of Eigen Linear Algebra Package with CppAD</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="eigen_plugin.hpp.html#eigen-plugin-hpp-title"><span class="std std-ref">9.3.4.1</span></a> Source Code for eigen_plugin.hpp</div>
+<div class="line"><a class="reference internal" href="eigen_array.cpp.html#eigen-array-cpp-title"><span class="std std-ref">9.3.4.2</span></a> Using Eigen Arrays: Example and Test</div>
+<div class="line"><a class="reference internal" href="eigen_det.cpp.html#eigen-det-cpp-title"><span class="std std-ref">9.3.4.3</span></a> Using Eigen To Compute Determinant: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="hes_minor_det.cpp.html#hes-minor-det-cpp-title"><span class="std std-ref">9.3.5</span></a> Gradient of Determinant Using Expansion by Minors: Example and Test</div>
+<div class="line"><a class="reference internal" href="hes_lu_det.cpp.html#hes-lu-det-cpp-title"><span class="std std-ref">9.3.6</span></a> Gradient of Determinant Using LU Factorization: Example and Test</div>
+<div class="line"><a class="reference internal" href="interface2c.cpp.html#interface2c-cpp-title"><span class="std std-ref">9.3.7</span></a> Interfacing to C: Example and Test</div>
+<div class="line"><a class="reference internal" href="jac_minor_det.cpp.html#jac-minor-det-cpp-title"><span class="std std-ref">9.3.8</span></a> Gradient of Determinant Using Expansion by Minors: Example and Test</div>
+<div class="line"><a class="reference internal" href="jac_lu_det.cpp.html#jac-lu-det-cpp-title"><span class="std std-ref">9.3.9</span></a> Gradient of Determinant Using Lu Factorization: Example and Test</div>
+<div class="line"><a class="reference internal" href="mul_level.html#mul-level-title"><span class="std std-ref">9.3.10</span></a> Using Multiple Levels of AD</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="mul_level.cpp.html#mul-level-cpp-title"><span class="std std-ref">9.3.10.1</span></a> Multiple Level of AD: Example and Test</div>
+<div class="line"><a class="reference internal" href="change_param.cpp.html#change-param-cpp-title"><span class="std std-ref">9.3.10.2</span></a> Computing a Jacobian With Constants that Change</div>
+</div>
+<div class="line"><a class="reference internal" href="ode_stiff.cpp.html#ode-stiff-cpp-title"><span class="std std-ref">9.3.11</span></a> A Stiff Ode: Example and Test</div>
+<div class="line"><a class="reference internal" href="mul_level_ode.cpp.html#mul-level-ode-cpp-title"><span class="std std-ref">9.3.12</span></a> Taylor’s Ode Solver: A Multi-Level AD Example and Test</div>
+<div class="line"><a class="reference internal" href="mul_level_adolc_ode.cpp.html#mul-level-adolc-ode-cpp-title"><span class="std std-ref">9.3.13</span></a> Taylor’s Ode Solver: A Multi-Level Adolc Example and Test</div>
+<div class="line"><a class="reference internal" href="stack_machine.cpp.html#stack-machine-cpp-title"><span class="std std-ref">9.3.14</span></a> Example Differentiating a Stack Machine Interpreter</div>
+<div class="line"><a class="reference internal" href="code_gen_fun.html#code-gen-fun-title"><span class="std std-ref">9.3.15</span></a> Generate Source Code and Compile an AD Function</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="code_gen_fun_function.cpp.html#code-gen-fun-function-cpp-title"><span class="std std-ref">9.3.15.1</span></a> Evaluate a Code Gen Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="code_gen_fun_file.cpp.html#code-gen-fun-file-cpp-title"><span class="std std-ref">9.3.15.2</span></a> File Store and Retrieve a Code Gen Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="code_gen_fun_jacobian.cpp.html#code-gen-fun-jacobian-cpp-title"><span class="std std-ref">9.3.15.3</span></a> Evaluate Jacobian of a Code Gen Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="code_gen_fun_jac_as_fun.cpp.html#code-gen-fun-jac-as-fun-cpp-title"><span class="std std-ref">9.3.15.4</span></a> Pass Jacobian as Code Gen Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="code_gen_fun_sparse_jacobian.cpp.html#code-gen-fun-sparse-jacobian-cpp-title"><span class="std std-ref">9.3.15.5</span></a> Evaluate Sparse Jacobian of a Code Gen Function: Example and Test</div>
+<div class="line"><a class="reference internal" href="code_gen_fun_sparse_jac_as_fun.cpp.html#code-gen-fun-sparse-jac-as-fun-cpp-title"><span class="std std-ref">9.3.15.6</span></a> Pass Sparse Jacobian as Code Gen Function: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="code_gen_fun.hpp.html#code-gen-fun-hpp-title"><span class="std std-ref">9.3.16</span></a> code_gen_fun Class Include File</div>
+<div class="line"><a class="reference internal" href="code_gen_fun.cpp.html#code-gen-fun-cpp-title"><span class="std std-ref">9.3.17</span></a> code_gen_fun Class Member Implementation</div>
+</div>
+<div class="line"><a class="reference internal" href="example_utility.html#example-utility-title"><span class="std std-ref">9.4</span></a> Utility Routines used by CppAD Examples</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="general.cpp.html#general-cpp-title"><span class="std std-ref">9.4.1</span></a> CppAD Examples and Tests</div>
+<div class="line"><a class="reference internal" href="speed_example.cpp.html#speed-example-cpp-title"><span class="std std-ref">9.4.2</span></a> Run the Speed Examples</div>
+<div class="line"><a class="reference internal" href="lu_vec_ad.cpp.html#lu-vec-ad-cpp-title"><span class="std std-ref">9.4.3</span></a> Lu Factor and Solve with Recorded Pivoting</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="lu_vec_ad_ok.cpp.html#lu-vec-ad-ok-cpp-title"><span class="std std-ref">9.4.3.1</span></a> Lu Factor and Solve With Recorded Pivoting: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="testvector.html#testvector-title"><span class="std std-ref">9.5</span></a> Using The CppAD Test Vector Template Class</div>
+<div class="line"><a class="reference internal" href="wno_conversion.html#wno-conversion-title"><span class="std std-ref">9.6</span></a> Suppress Suspect Implicit Conversion Warnings</div>
+</div>
+<div class="line"><a class="reference internal" href="speed.html#speed-title"><span class="std std-ref">10</span></a> Speed Test an Operator Overloading AD Package</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="speed_main.html#speed-main-title"><span class="std std-ref">10.1</span></a> Running the Speed Test Program</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="link_routines.html#link-routines-title"><span class="std std-ref">10.1.1</span></a> Package Specific Speed Test Linking Routines</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="link_det_lu.html#link-det-lu-title"><span class="std std-ref">10.1.1.1</span></a> Speed Testing Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="link_det_minor.html#link-det-minor-title"><span class="std std-ref">10.1.1.2</span></a> Speed Testing Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="link_mat_mul.html#link-mat-mul-title"><span class="std std-ref">10.1.1.3</span></a> Speed Testing Derivative of Matrix Multiply</div>
+<div class="line"><a class="reference internal" href="link_ode.html#link-ode-title"><span class="std std-ref">10.1.1.4</span></a> Speed Testing the Jacobian of Ode Solution</div>
+<div class="line"><a class="reference internal" href="link_poly.html#link-poly-title"><span class="std std-ref">10.1.1.5</span></a> Speed Testing Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="link_sparse_hessian.html#link-sparse-hessian-title"><span class="std std-ref">10.1.1.6</span></a> Link to Speed Test Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="link_sparse_jacobian.html#link-sparse-jacobian-title"><span class="std std-ref">10.1.1.7</span></a> Speed Testing Sparse Jacobians</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_utility.html#speed-utility-title"><span class="std std-ref">10.2</span></a> Speed Testing Utilities</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_by_lu.html#det-by-lu-title"><span class="std std-ref">10.2.1</span></a> Determinant Using Expansion by Lu Factorization</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_by_lu.cpp.html#det-by-lu-cpp-title"><span class="std std-ref">10.2.1.1</span></a> Determinant Using Lu Factorization: Example and Test</div>
+<div class="line"><a class="reference internal" href="det_by_lu.hpp.html#det-by-lu-hpp-title"><span class="std std-ref">10.2.1.2</span></a> Source: det_by_lu</div>
+</div>
+<div class="line"><a class="reference internal" href="det_of_minor.html#det-of-minor-title"><span class="std std-ref">10.2.2</span></a> Determinant of a Minor</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_of_minor.cpp.html#det-of-minor-cpp-title"><span class="std std-ref">10.2.2.1</span></a> Determinant of a Minor: Example and Test</div>
+<div class="line"><a class="reference internal" href="det_of_minor.hpp.html#det-of-minor-hpp-title"><span class="std std-ref">10.2.2.2</span></a> Source: det_of_minor</div>
+</div>
+<div class="line"><a class="reference internal" href="det_by_minor.html#det-by-minor-title"><span class="std std-ref">10.2.3</span></a> Determinant Using Expansion by Minors</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_by_minor.cpp.html#det-by-minor-cpp-title"><span class="std std-ref">10.2.3.1</span></a> Determinant Using Expansion by Minors: Example and Test</div>
+<div class="line"><a class="reference internal" href="det_by_minor.hpp.html#det-by-minor-hpp-title"><span class="std std-ref">10.2.3.2</span></a> Source: det_by_minor</div>
+</div>
+<div class="line"><a class="reference internal" href="det_33.html#det-33-title"><span class="std std-ref">10.2.4</span></a> Check Determinant of 3 by 3 matrix</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_33.hpp.html#det-33-hpp-title"><span class="std std-ref">10.2.4.1</span></a> Source: det_33</div>
+</div>
+<div class="line"><a class="reference internal" href="det_grad_33.html#det-grad-33-title"><span class="std std-ref">10.2.5</span></a> Check Gradient of Determinant of 3 by 3 matrix</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_grad_33.hpp.html#det-grad-33-hpp-title"><span class="std std-ref">10.2.5.1</span></a> Source: det_grad_33</div>
+</div>
+<div class="line"><a class="reference internal" href="mat_sum_sq.html#mat-sum-sq-title"><span class="std std-ref">10.2.6</span></a> Sum Elements of a Matrix Times Itself</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="mat_sum_sq.cpp.html#mat-sum-sq-cpp-title"><span class="std std-ref">10.2.6.1</span></a> Sum of the Elements of the Square of a Matrix: Example and Test</div>
+<div class="line"><a class="reference internal" href="mat_sum_sq.hpp.html#mat-sum-sq-hpp-title"><span class="std std-ref">10.2.6.2</span></a> Source: mat_sum_sq</div>
+</div>
+<div class="line"><a class="reference internal" href="ode_evaluate.html#ode-evaluate-title"><span class="std std-ref">10.2.7</span></a> Evaluate a Function Defined in Terms of an ODE</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="ode_evaluate.cpp.html#ode-evaluate-cpp-title"><span class="std std-ref">10.2.7.1</span></a> ode_evaluate: Example and test</div>
+<div class="line"><a class="reference internal" href="ode_evaluate.hpp.html#ode-evaluate-hpp-title"><span class="std std-ref">10.2.7.2</span></a> Source: ode_evaluate</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_jac_fun.html#sparse-jac-fun-title"><span class="std std-ref">10.2.8</span></a> Evaluate a Function That Has a Sparse Jacobian</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_jac_fun.cpp.html#sparse-jac-fun-cpp-title"><span class="std std-ref">10.2.8.1</span></a> sparse_jac_fun: Example and test</div>
+<div class="line"><a class="reference internal" href="sparse_jac_fun.hpp.html#sparse-jac-fun-hpp-title"><span class="std std-ref">10.2.8.2</span></a> Source: sparse_jac_fun</div>
+</div>
+<div class="line"><a class="reference internal" href="sparse_hes_fun.html#sparse-hes-fun-title"><span class="std std-ref">10.2.9</span></a> Evaluate a Function That Has a Sparse Hessian</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sparse_hes_fun.cpp.html#sparse-hes-fun-cpp-title"><span class="std std-ref">10.2.9.1</span></a> sparse_hes_fun: Example and test</div>
+<div class="line"><a class="reference internal" href="sparse_hes_fun.hpp.html#sparse-hes-fun-hpp-title"><span class="std std-ref">10.2.9.2</span></a> Source: sparse_hes_fun</div>
+</div>
+<div class="line"><a class="reference internal" href="uniform_01.html#uniform-01-title"><span class="std std-ref">10.2.10</span></a> Simulate a [0,1] Uniform Random Variate</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="uniform_01.hpp.html#uniform-01-hpp-title"><span class="std std-ref">10.2.10.1</span></a> Source: uniform_01</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_double.html#speed-double-title"><span class="std std-ref">10.3</span></a> Speed Test of Functions in Double</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="double_det_minor.cpp.html#double-det-minor-cpp-title"><span class="std std-ref">10.3.1</span></a> Double Speed: Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="double_det_lu.cpp.html#double-det-lu-cpp-title"><span class="std std-ref">10.3.2</span></a> Double Speed: Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="double_mat_mul.cpp.html#double-mat-mul-cpp-title"><span class="std std-ref">10.3.3</span></a> Double Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="double_ode.cpp.html#double-ode-cpp-title"><span class="std std-ref">10.3.4</span></a> Double Speed: Ode Solution</div>
+<div class="line"><a class="reference internal" href="double_poly.cpp.html#double-poly-cpp-title"><span class="std std-ref">10.3.5</span></a> Double Speed: Evaluate a Polynomial</div>
+<div class="line"><a class="reference internal" href="double_sparse_hessian.cpp.html#double-sparse-hessian-cpp-title"><span class="std std-ref">10.3.6</span></a> Double Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="double_sparse_jacobian.cpp.html#double-sparse-jacobian-cpp-title"><span class="std std-ref">10.3.7</span></a> Double Speed: Sparse Jacobian</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_adolc.html#speed-adolc-title"><span class="std std-ref">10.4</span></a> Speed Test of Derivatives Using Adolc</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="adolc_det_minor.cpp.html#adolc-det-minor-cpp-title"><span class="std std-ref">10.4.1</span></a> Adolc Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="adolc_det_lu.cpp.html#adolc-det-lu-cpp-title"><span class="std std-ref">10.4.2</span></a> Adolc Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="adolc_mat_mul.cpp.html#adolc-mat-mul-cpp-title"><span class="std std-ref">10.4.3</span></a> Adolc Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="adolc_ode.cpp.html#adolc-ode-cpp-title"><span class="std std-ref">10.4.4</span></a> Adolc Speed: Ode</div>
+<div class="line"><a class="reference internal" href="adolc_poly.cpp.html#adolc-poly-cpp-title"><span class="std std-ref">10.4.5</span></a> Adolc Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="adolc_sparse_hessian.cpp.html#adolc-sparse-hessian-cpp-title"><span class="std std-ref">10.4.6</span></a> Adolc Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="adolc_sparse_jacobian.cpp.html#adolc-sparse-jacobian-cpp-title"><span class="std std-ref">10.4.7</span></a> Adolc Speed: Sparse Jacobian</div>
+<div class="line"><a class="reference internal" href="adolc_alloc_mat.html#adolc-alloc-mat-title"><span class="std std-ref">10.4.8</span></a> Adolc Test Utility: Allocate and Free Memory For a Matrix</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_cppad.html#speed-cppad-title"><span class="std std-ref">10.5</span></a> Speed Test Derivatives Using CppAD</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cppad_det_minor.cpp.html#cppad-det-minor-cpp-title"><span class="std std-ref">10.5.1</span></a> Cppad Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="cppad_det_lu.cpp.html#cppad-det-lu-cpp-title"><span class="std std-ref">10.5.2</span></a> Cppad Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="cppad_mat_mul.cpp.html#cppad-mat-mul-cpp-title"><span class="std std-ref">10.5.3</span></a> CppAD Speed, Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="cppad_ode.cpp.html#cppad-ode-cpp-title"><span class="std std-ref">10.5.4</span></a> Cppad Speed: Gradient of Ode Solution</div>
+<div class="line"><a class="reference internal" href="cppad_poly.cpp.html#cppad-poly-cpp-title"><span class="std std-ref">10.5.5</span></a> Cppad Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="cppad_sparse_hessian.cpp.html#cppad-sparse-hessian-cpp-title"><span class="std std-ref">10.5.6</span></a> Cppad Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="cppad_sparse_jacobian.cpp.html#cppad-sparse-jacobian-cpp-title"><span class="std std-ref">10.5.7</span></a> Cppad Speed: Sparse Jacobian</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_fadbad.html#speed-fadbad-title"><span class="std std-ref">10.6</span></a> Speed Test Derivatives Using Fadbad</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="fadbad_det_minor.cpp.html#fadbad-det-minor-cpp-title"><span class="std std-ref">10.6.1</span></a> Fadbad Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="fadbad_det_lu.cpp.html#fadbad-det-lu-cpp-title"><span class="std std-ref">10.6.2</span></a> Fadbad Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="fadbad_mat_mul.cpp.html#fadbad-mat-mul-cpp-title"><span class="std std-ref">10.6.3</span></a> Fadbad Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="fadbad_ode.cpp.html#fadbad-ode-cpp-title"><span class="std std-ref">10.6.4</span></a> Fadbad Speed: Ode</div>
+<div class="line"><a class="reference internal" href="fadbad_poly.cpp.html#fadbad-poly-cpp-title"><span class="std std-ref">10.6.5</span></a> Fadbad Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="fadbad_sparse_hessian.cpp.html#fadbad-sparse-hessian-cpp-title"><span class="std std-ref">10.6.6</span></a> Fadbad Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="fadbad_sparse_jacobian.cpp.html#fadbad-sparse-jacobian-cpp-title"><span class="std std-ref">10.6.7</span></a> Fadbad Speed: sparse_jacobian</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_cppad_jit.html#speed-cppad-jit-title"><span class="std std-ref">10.7</span></a> Speed Test Derivatives Using cppad_jit</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cppad_jit_det_minor.cpp.html#cppad-jit-det-minor-cpp-title"><span class="std std-ref">10.7.1</span></a> cppad_jit Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="cppad_jit_det_lu.cpp.html#cppad-jit-det-lu-cpp-title"><span class="std std-ref">10.7.2</span></a> cppad_jit Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="cppad_jit_mat_mul.cpp.html#cppad-jit-mat-mul-cpp-title"><span class="std std-ref">10.7.3</span></a> cppad_jit Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="cppad_jit_ode.cpp.html#cppad-jit-ode-cpp-title"><span class="std std-ref">10.7.4</span></a> cppad_jit Speed: Ode</div>
+<div class="line"><a class="reference internal" href="cppad_jit_poly.cpp.html#cppad-jit-poly-cpp-title"><span class="std std-ref">10.7.5</span></a> cppad_jit Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="cppad_jit_sparse_hessian.cpp.html#cppad-jit-sparse-hessian-cpp-title"><span class="std std-ref">10.7.6</span></a> cppad_jit Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="cppad_jit_sparse_jacobian.cpp.html#cppad-jit-sparse-jacobian-cpp-title"><span class="std std-ref">10.7.7</span></a> cppad_jit Speed: sparse_jacobian</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_cppadcg.html#speed-cppadcg-title"><span class="std std-ref">10.8</span></a> Speed Test Derivatives Using Cppadcg</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cppadcg_det_minor.cpp.html#cppadcg-det-minor-cpp-title"><span class="std std-ref">10.8.1</span></a> cppadcg Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="cppadcg_det_lu.cpp.html#cppadcg-det-lu-cpp-title"><span class="std std-ref">10.8.2</span></a> Cppadcg Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="cppadcg_mat_mul.cpp.html#cppadcg-mat-mul-cpp-title"><span class="std std-ref">10.8.3</span></a> Cppadcg Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="cppadcg_ode.cpp.html#cppadcg-ode-cpp-title"><span class="std std-ref">10.8.4</span></a> Cppadcg Speed: Ode</div>
+<div class="line"><a class="reference internal" href="cppadcg_poly.cpp.html#cppadcg-poly-cpp-title"><span class="std std-ref">10.8.5</span></a> Cppadcg Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="cppadcg_sparse_hessian.cpp.html#cppadcg-sparse-hessian-cpp-title"><span class="std std-ref">10.8.6</span></a> Cppadcg Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="cppadcg_sparse_jacobian.cpp.html#cppadcg-sparse-jacobian-cpp-title"><span class="std std-ref">10.8.7</span></a> Cppadcg Speed: Sparse Jacobian</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_sacado.html#speed-sacado-title"><span class="std std-ref">10.9</span></a> Speed Test Derivatives Using Sacado</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="sacado_det_minor.cpp.html#sacado-det-minor-cpp-title"><span class="std std-ref">10.9.1</span></a> Sacado Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="sacado_det_lu.cpp.html#sacado-det-lu-cpp-title"><span class="std std-ref">10.9.2</span></a> Sacado Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="sacado_mat_mul.cpp.html#sacado-mat-mul-cpp-title"><span class="std std-ref">10.9.3</span></a> Sacado Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="sacado_ode.cpp.html#sacado-ode-cpp-title"><span class="std std-ref">10.9.4</span></a> Sacado Speed: Gradient of Ode Solution</div>
+<div class="line"><a class="reference internal" href="sacado_poly.cpp.html#sacado-poly-cpp-title"><span class="std std-ref">10.9.5</span></a> Sacado Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="sacado_sparse_hessian.cpp.html#sacado-sparse-hessian-cpp-title"><span class="std std-ref">10.9.6</span></a> Sacado Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="sacado_sparse_jacobian.cpp.html#sacado-sparse-jacobian-cpp-title"><span class="std std-ref">10.9.7</span></a> Sacado Speed: sparse_jacobian</div>
+</div>
+<div class="line"><a class="reference internal" href="speed_xpackage.html#speed-xpackage-title"><span class="std std-ref">10.10</span></a> Speed Test Example and Template for a New Package</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="xpackage_det_minor.cpp.html#xpackage-det-minor-cpp-title"><span class="std std-ref">10.10.1</span></a> Xpackage Speed: Gradient of Determinant by Minor Expansion</div>
+<div class="line"><a class="reference internal" href="xpackage_det_lu.cpp.html#xpackage-det-lu-cpp-title"><span class="std std-ref">10.10.2</span></a> Xpackage Speed: Gradient of Determinant Using Lu Factorization</div>
+<div class="line"><a class="reference internal" href="xpackage_mat_mul.cpp.html#xpackage-mat-mul-cpp-title"><span class="std std-ref">10.10.3</span></a> Xpackage Speed: Matrix Multiplication</div>
+<div class="line"><a class="reference internal" href="xpackage_ode.cpp.html#xpackage-ode-cpp-title"><span class="std std-ref">10.10.4</span></a> Xpackage Speed: Ode</div>
+<div class="line"><a class="reference internal" href="xpackage_poly.cpp.html#xpackage-poly-cpp-title"><span class="std std-ref">10.10.5</span></a> Xpackage Speed: Second Derivative of a Polynomial</div>
+<div class="line"><a class="reference internal" href="xpackage_sparse_hessian.cpp.html#xpackage-sparse-hessian-cpp-title"><span class="std std-ref">10.10.6</span></a> Xpackage Speed: Sparse Hessian</div>
+<div class="line"><a class="reference internal" href="xpackage_sparse_jacobian.cpp.html#xpackage-sparse-jacobian-cpp-title"><span class="std std-ref">10.10.7</span></a> Xpackage Speed: sparse_jacobian</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="Appendix.html#appendix-title"><span class="std std-ref">11</span></a> Appendix</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="Faq.html#faq-title"><span class="std std-ref">11.1</span></a> Frequently Asked Questions and Answers</div>
+<div class="line"><a class="reference internal" href="directory.html#directory-title"><span class="std std-ref">11.2</span></a> Directory Structure</div>
+<div class="line"><a class="reference internal" href="glossary.html#glossary-title"><span class="std std-ref">11.3</span></a> Glossary</div>
+<div class="line"><a class="reference internal" href="Bib.html#bib-title"><span class="std std-ref">11.4</span></a> Bibliography</div>
+<div class="line"><a class="reference internal" href="wish_list.html#wish-list-title"><span class="std std-ref">11.5</span></a> The CppAD Wish List</div>
+<div class="line"><a class="reference internal" href="whats_new.html#whats-new-title"><span class="std std-ref">11.6</span></a> Changes and Additions to CppAD</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="whats_new_22.html#whats-new-22-title"><span class="std std-ref">11.6.1</span></a> Changes and Additions to CppAD During 2022</div>
+<div class="line"><a class="reference internal" href="whats_new_21.html#whats-new-21-title"><span class="std std-ref">11.6.2</span></a> Changes and Additions to CppAD During 2021</div>
+<div class="line"><a class="reference internal" href="whats_new_20.html#whats-new-20-title"><span class="std std-ref">11.6.3</span></a> Changes and Additions to CppAD During 2020</div>
+<div class="line"><a class="reference internal" href="whats_new_19.html#whats-new-19-title"><span class="std std-ref">11.6.4</span></a> Changes and Additions to CppAD During 2019</div>
+<div class="line"><a class="reference internal" href="whats_new_18.html#whats-new-18-title"><span class="std std-ref">11.6.5</span></a> Changes and Additions to CppAD During 2018</div>
+<div class="line"><a class="reference internal" href="whats_new_17.html#whats-new-17-title"><span class="std std-ref">11.6.6</span></a> Changes and Additions to CppAD During 2017</div>
+<div class="line"><a class="reference internal" href="whats_new_16.html#whats-new-16-title"><span class="std std-ref">11.6.7</span></a> Changes and Additions to CppAD During 2016</div>
+<div class="line"><a class="reference internal" href="whats_new_15.html#whats-new-15-title"><span class="std std-ref">11.6.8</span></a> CppAD Changes and Additions During 2015</div>
+<div class="line"><a class="reference internal" href="whats_new_14.html#whats-new-14-title"><span class="std std-ref">11.6.9</span></a> CppAD Changes and Additions During 2014</div>
+<div class="line"><a class="reference internal" href="whats_new_13.html#whats-new-13-title"><span class="std std-ref">11.6.10</span></a> CppAD Changes and Additions During 2013</div>
+<div class="line"><a class="reference internal" href="whats_new_12.html#whats-new-12-title"><span class="std std-ref">11.6.11</span></a> CppAD Changes and Additions During 2012</div>
+<div class="line"><a class="reference internal" href="whats_new_11.html#whats-new-11-title"><span class="std std-ref">11.6.12</span></a> Changes and Additions to CppAD During 2011</div>
+<div class="line"><a class="reference internal" href="whats_new_10.html#whats-new-10-title"><span class="std std-ref">11.6.13</span></a> Changes and Additions to CppAD During 2010</div>
+<div class="line"><a class="reference internal" href="whats_new_09.html#whats-new-09-title"><span class="std std-ref">11.6.14</span></a> Changes and Additions to CppAD During 2009</div>
+<div class="line"><a class="reference internal" href="whats_new_08.html#whats-new-08-title"><span class="std std-ref">11.6.15</span></a> Changes and Additions to CppAD During 2008</div>
+<div class="line"><a class="reference internal" href="whats_new_07.html#whats-new-07-title"><span class="std std-ref">11.6.16</span></a> Changes and Additions to CppAD During 2007</div>
+<div class="line"><a class="reference internal" href="whats_new_06.html#whats-new-06-title"><span class="std std-ref">11.6.17</span></a> Changes and Additions to CppAD During 2006</div>
+<div class="line"><a class="reference internal" href="whats_new_05.html#whats-new-05-title"><span class="std std-ref">11.6.18</span></a> Changes and Additions to CppAD During 2005</div>
+<div class="line"><a class="reference internal" href="whats_new_04.html#whats-new-04-title"><span class="std std-ref">11.6.19</span></a> Changes and Additions to CppAD During 2004</div>
+<div class="line"><a class="reference internal" href="whats_new_03.html#whats-new-03-title"><span class="std std-ref">11.6.20</span></a> Changes and Additions to CppAD During 2003</div>
+</div>
+<div class="line"><a class="reference internal" href="deprecated.html#deprecated-title"><span class="std std-ref">11.7</span></a> CppAD Deprecated API Features</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="include_deprecated.html#include-deprecated-title"><span class="std std-ref">11.7.1</span></a> Deprecated Include Files</div>
+<div class="line"><a class="reference internal" href="fun_deprecated.html#fun-deprecated-title"><span class="std std-ref">11.7.2</span></a> ADFun Object Deprecated Member Functions</div>
+<div class="line"><a class="reference internal" href="CompareChange.html#comparechange-title"><span class="std std-ref">11.7.3</span></a> Comparison Changes During Zero Order Forward Mode</div>
+<div class="line"><a class="reference internal" href="omp_max_thread.html#omp-max-thread-title"><span class="std std-ref">11.7.4</span></a> OpenMP Parallel Setup</div>
+<div class="line"><a class="reference internal" href="track_new_del.html#track-new-del-title"><span class="std std-ref">11.7.5</span></a> Routines That Track Use of New and Delete</div>
+<div class="line"><a class="reference internal" href="omp_alloc.html#omp-alloc-title"><span class="std std-ref">11.7.6</span></a> A Quick OpenMP Memory Allocator Used by CppAD</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="omp_max_num_threads.html#omp-max-num-threads-title"><span class="std std-ref">11.7.6.1</span></a> Set and Get Maximum Number of Threads for omp_alloc Allocator</div>
+<div class="line"><a class="reference internal" href="omp_in_parallel.html#omp-in-parallel-title"><span class="std std-ref">11.7.6.2</span></a> Is The Current Execution in OpenMP Parallel Mode</div>
+<div class="line"><a class="reference internal" href="omp_get_thread_num.html#omp-get-thread-num-title"><span class="std std-ref">11.7.6.3</span></a> Get the Current OpenMP Thread Number</div>
+<div class="line"><a class="reference internal" href="omp_get_memory.html#omp-get-memory-title"><span class="std std-ref">11.7.6.4</span></a> Get At Least A Specified Amount of Memory</div>
+<div class="line"><a class="reference internal" href="omp_return_memory.html#omp-return-memory-title"><span class="std std-ref">11.7.6.5</span></a> Return Memory to omp_alloc</div>
+<div class="line"><a class="reference internal" href="omp_free_available.html#omp-free-available-title"><span class="std std-ref">11.7.6.6</span></a> Free Memory Currently Available for Quick Use by a Thread</div>
+<div class="line"><a class="reference internal" href="omp_inuse.html#omp-inuse-title"><span class="std std-ref">11.7.6.7</span></a> Amount of Memory a Thread is Currently Using</div>
+<div class="line"><a class="reference internal" href="omp_available.html#omp-available-title"><span class="std std-ref">11.7.6.8</span></a> Amount of Memory Available for Quick Use by a Thread</div>
+<div class="line"><a class="reference internal" href="omp_create_array.html#omp-create-array-title"><span class="std std-ref">11.7.6.9</span></a> Allocate Memory and Create A Raw Array</div>
+<div class="line"><a class="reference internal" href="omp_delete_array.html#omp-delete-array-title"><span class="std std-ref">11.7.6.10</span></a> Return A Raw Array to The Available Memory for a Thread</div>
+<div class="line"><a class="reference internal" href="omp_efficient.html#omp-efficient-title"><span class="std std-ref">11.7.6.11</span></a> Check If A Memory Allocation is Efficient for Another Use</div>
+<div class="line"><a class="reference internal" href="old_max_num_threads.html#old-max-num-threads-title"><span class="std std-ref">11.7.6.12</span></a> Set Maximum Number of Threads for omp_alloc Allocator</div>
+</div>
+<div class="line"><a class="reference internal" href="memory_leak.html#memory-leak-title"><span class="std std-ref">11.7.7</span></a> Memory Leak Detection</div>
+<div class="line"><a class="reference internal" href="epsilon.html#epsilon-title"><span class="std std-ref">11.7.8</span></a> Machine Epsilon For AD Types</div>
+<div class="line"><a class="reference internal" href="cppad_ipopt_nlp.html#cppad-ipopt-nlp-title"><span class="std std-ref">11.7.9</span></a> Nonlinear Programming Using the CppAD Interface to Ipopt</div>
+<div class="line"><a class="reference internal" href="atomic_one.html#atomic-one-title"><span class="std std-ref">11.7.10</span></a> Defining Atomic Functions: First Generation</div>
+<div class="line"><a class="reference internal" href="atomic_two.html#atomic-two-title"><span class="std std-ref">11.7.11</span></a> Defining Atomic Functions: Second Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_two_ctor.html#atomic-two-ctor-title"><span class="std std-ref">11.7.11.1</span></a> Atomic Function Constructor</div>
+<div class="line"><a class="reference internal" href="atomic_two_option.html#atomic-two-option-title"><span class="std std-ref">11.7.11.2</span></a> Set Atomic Function Options</div>
+<div class="line"><a class="reference internal" href="atomic_two_afun.html#atomic-two-afun-title"><span class="std std-ref">11.7.11.3</span></a> Using AD Version of Atomic Function</div>
+<div class="line"><a class="reference internal" href="atomic_two_forward.html#atomic-two-forward-title"><span class="std std-ref">11.7.11.4</span></a> Atomic Forward Mode</div>
+<div class="line"><a class="reference internal" href="atomic_two_reverse.html#atomic-two-reverse-title"><span class="std std-ref">11.7.11.5</span></a> Atomic Reverse Mode</div>
+<div class="line"><a class="reference internal" href="atomic_two_for_sparse_jac.html#atomic-two-for-sparse-jac-title"><span class="std std-ref">11.7.11.6</span></a> Atomic Forward Jacobian Sparsity Patterns</div>
+<div class="line"><a class="reference internal" href="atomic_two_rev_sparse_jac.html#atomic-two-rev-sparse-jac-title"><span class="std std-ref">11.7.11.7</span></a> Atomic Reverse Jacobian Sparsity Patterns</div>
+<div class="line"><a class="reference internal" href="atomic_two_for_sparse_hes.html#atomic-two-for-sparse-hes-title"><span class="std std-ref">11.7.11.8</span></a> Atomic Forward Hessian Sparsity Patterns</div>
+<div class="line"><a class="reference internal" href="atomic_two_rev_sparse_hes.html#atomic-two-rev-sparse-hes-title"><span class="std std-ref">11.7.11.9</span></a> Atomic Reverse Hessian Sparsity Patterns</div>
+<div class="line"><a class="reference internal" href="atomic_two_clear.html#atomic-two-clear-title"><span class="std std-ref">11.7.11.10</span></a> Free Static Variables</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_two_example.html#atomic-two-example-title"><span class="std std-ref">11.7.12</span></a> Example Defining Atomic Functions: Second Generation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_two_eigen_mat_mul.cpp.html#atomic-two-eigen-mat-mul-cpp-title"><span class="std std-ref">11.7.12.1</span></a> Atomic Eigen Matrix Multiply: Example and Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-title"><span class="std std-ref">11.7.12.1.1</span></a> atomic_two Eigen Matrix Multiply Class</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_two_eigen_mat_inv.cpp.html#atomic-two-eigen-mat-inv-cpp-title"><span class="std std-ref">11.7.12.2</span></a> Atomic Eigen Matrix Inverse: Example and Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="atomic_two_eigen_mat_inv.hpp.html#atomic-two-eigen-mat-inv-hpp-title"><span class="std std-ref">11.7.12.2.1</span></a> atomic_two Eigen Matrix Inversion Class</div>
+</div>
+<div class="line"><a class="reference internal" href="atomic_two_eigen_cholesky.cpp.html#atomic-two-eigen-cholesky-cpp-title"><span class="std std-ref">11.7.12.3</span></a> Atomic Eigen Cholesky Factorization: Example and Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="cholesky_theory.html#cholesky-theory-title"><span class="std std-ref">11.7.12.3.1</span></a> AD Theory for Cholesky Factorization</div>
+<div class="line"><a class="reference internal" href="atomic_two_eigen_cholesky.hpp.html#atomic-two-eigen-cholesky-hpp-title"><span class="std std-ref">11.7.12.3.2</span></a> atomic_two Eigen Cholesky Factorization Class</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two.cpp.html#multi-atomic-two-cpp-title"><span class="std std-ref">11.7.13</span></a> Multi-Threading atomic_two Example / Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="multi_atomic_two_user.html#multi-atomic-two-user-title"><span class="std std-ref">11.7.13.1</span></a> Defines a atomic_two Operation that Computes Square Root</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two_common.html#multi-atomic-two-common-title"><span class="std std-ref">11.7.13.2</span></a> Multi-Threaded atomic_two Common Information</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two_setup.html#multi-atomic-two-setup-title"><span class="std std-ref">11.7.13.3</span></a> Multi-Threaded atomic_two Set Up</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two_worker.html#multi-atomic-two-worker-title"><span class="std std-ref">11.7.13.4</span></a> Multi-Threaded atomic_two Worker</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two_takedown.html#multi-atomic-two-takedown-title"><span class="std std-ref">11.7.13.5</span></a> Multi-Threaded atomic_two Take Down</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two_run.html#multi-atomic-two-run-title"><span class="std std-ref">11.7.13.6</span></a> Run Multi-Threaded atomic_two Calculation</div>
+<div class="line"><a class="reference internal" href="multi_atomic_two_time.html#multi-atomic-two-time-title"><span class="std std-ref">11.7.13.7</span></a> Timing Test for Multi-Threaded atomic_two Calculation</div>
+</div>
+<div class="line"><a class="reference internal" href="chkpoint_one.html#chkpoint-one-title"><span class="std std-ref">11.7.14</span></a> Checkpoint Functions: First Generation</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one.cpp.html#multi-chkpoint-one-cpp-title"><span class="std std-ref">11.7.15</span></a> Multi-Threading chkpoint_one Example / Test</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_algo.html#multi-chkpoint-one-algo-title"><span class="std std-ref">11.7.15.1</span></a> chkpoint_one Algorithm that Computes Square Root</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_common.html#multi-chkpoint-one-common-title"><span class="std std-ref">11.7.15.2</span></a> Multi-Threaded chkpoint_one Common Information</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_setup.html#multi-chkpoint-one-setup-title"><span class="std std-ref">11.7.15.3</span></a> Multi-Threaded chkpoint_one Set Up</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_worker.html#multi-chkpoint-one-worker-title"><span class="std std-ref">11.7.15.4</span></a> Multi-Threaded chkpoint_one Worker</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_takedown.html#multi-chkpoint-one-takedown-title"><span class="std std-ref">11.7.15.5</span></a> Multi-Threaded chkpoint_one Take Down</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_run.html#multi-chkpoint-one-run-title"><span class="std std-ref">11.7.15.6</span></a> Run Multi-Threaded chkpoint_one Calculation</div>
+<div class="line"><a class="reference internal" href="multi_chkpoint_one_time.html#multi-chkpoint-one-time-title"><span class="std std-ref">11.7.15.7</span></a> Timing Test for Multi-Threaded chkpoint_one Calculation</div>
+</div>
+<div class="line"><a class="reference internal" href="zdouble.html#zdouble-title"><span class="std std-ref">11.7.16</span></a> zdouble: An AD Base Type With Absolute Zero</div>
+<div class="line"><a class="reference internal" href="autotools.html#autotools-title"><span class="std std-ref">11.7.17</span></a> Autotools Unix Test and Installation</div>
+</div>
+<div class="line"><a class="reference internal" href="compare_c.html#compare-c-title"><span class="std std-ref">11.8</span></a> Compare Speed of C and C++</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="det_of_minor_c.html#det-of-minor-c-title"><span class="std std-ref">11.8.1</span></a> Determinant of a Minor</div>
+<div class="line"><a class="reference internal" href="det_by_minor_c.html#det-by-minor-c-title"><span class="std std-ref">11.8.2</span></a> Compute Determinant using Expansion by Minors</div>
+<div class="line"><a class="reference internal" href="uniform_01_c.html#uniform-01-c-title"><span class="std std-ref">11.8.3</span></a> Simulate a [0,1] Uniform Random Variate</div>
+<div class="line"><a class="reference internal" href="correct_det_by_minor_c.html#correct-det-by-minor-c-title"><span class="std std-ref">11.8.4</span></a> Correctness Test of det_by_minor Routine</div>
+<div class="line"><a class="reference internal" href="repeat_det_by_minor_c.html#repeat-det-by-minor-c-title"><span class="std std-ref">11.8.5</span></a> Repeat det_by_minor Routine A Specified Number of Times</div>
+<div class="line"><a class="reference internal" href="elapsed_seconds_c.html#elapsed-seconds-c-title"><span class="std std-ref">11.8.6</span></a> Returns Elapsed Number of Seconds</div>
+<div class="line"><a class="reference internal" href="time_det_by_minor_c.html#time-det-by-minor-c-title"><span class="std std-ref">11.8.7</span></a> Determine Amount of Time to Execute det_by_minor</div>
+<div class="line"><a class="reference internal" href="main_compare_c.html#main-compare-c-title"><span class="std std-ref">11.8.8</span></a> Main Program For Comparing C and C++ Speed</div>
+</div>
+<div class="line"><a class="reference internal" href="numeric_ad.html#numeric-ad-title"><span class="std std-ref">11.9</span></a> Some Numerical AD Utilities</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="BenderQuad.html#benderquad-title"><span class="std std-ref">11.9.1</span></a> Computing Jacobian and Hessian of Bender’s Reduced Objective</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="bender_quad.cpp.html#bender-quad-cpp-title"><span class="std std-ref">11.9.1.1</span></a> BenderQuad: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="opt_val_hes.html#opt-val-hes-title"><span class="std std-ref">11.9.2</span></a> Jacobian and Hessian of Optimal Values</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="opt_val_hes.cpp.html#opt-val-hes-cpp-title"><span class="std std-ref">11.9.2.1</span></a> opt_val_hes: Example and Test</div>
+</div>
+<div class="line"><a class="reference internal" href="LuRatio.html#luratio-title"><span class="std std-ref">11.9.3</span></a> LU Factorization of A Square Matrix and Stability Calculation</div>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="lu_ratio.cpp.html#lu-ratio-cpp-title"><span class="std std-ref">11.9.3.1</span></a> LuRatio: Example and Test</div>
+</div>
+</div>
+<div class="line"><a class="reference internal" href="addon.html#addon-title"><span class="std std-ref">11.10</span></a> CppAD Addons</div>
+<div class="line"><a class="reference internal" href="License.html#license-title"><span class="std std-ref">11.11</span></a> Your License for the CppAD Software</div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="xrst_root_doc.html" class="btn btn-neutral float-left" title="cppad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CppAD.html" class="btn btn-neutral float-right" title="CppAD" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

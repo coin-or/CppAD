@@ -1,0 +1,20 @@
+lines 222-239 of file: cppad_lib/code_gen_fun.cpp
+
+{xrst_begin code_gen_fun.hpp}
+
+code_gen_fun Class Include File
+###############################
+
+See Also
+********
+:ref:`code_gen_fun-name` , :ref:`code_gen_fun.cpp-name`
+
+Source
+******
+{xrst_literal
+   include/cppad/example/code_gen_fun.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end code_gen_fun.hpp}

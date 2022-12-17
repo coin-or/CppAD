@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="cppad_ipopt_nlp, nonlinear, programming, using, the, cppad, interface, to, ipopt" name="keywords" />
+<meta content="deprecated, 2012-11-28" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="cppad_ipopt, namespace" name="keywords" />
+<meta content="ipopt_library_paths" name="keywords" />
+<meta content="fg(x)" name="keywords" />
+<meta content="index, vector" name="keywords" />
+<meta content="projection" name="keywords" />
+<meta content="injection" name="keywords" />
+<meta content="representation" name="keywords" />
+<meta content="simple, representation" name="keywords" />
+<meta content="sizevector" name="keywords" />
+<meta content="numbervector" name="keywords" />
+<meta content="adnumber" name="keywords" />
+<meta content="advector" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="m" name="keywords" />
+<meta content="x_i" name="keywords" />
+<meta content="x_l" name="keywords" />
+<meta content="x_u" name="keywords" />
+<meta content="g_l" name="keywords" />
+<meta content="g_u" name="keywords" />
+<meta content="fg_info" name="keywords" />
+<meta content="fg_info.number_functions" name="keywords" />
+<meta content="fg_info.eval_r" name="keywords" />
+<meta content="fg_info.retape" name="keywords" />
+<meta content="fg_info.domain_size" name="keywords" />
+<meta content="fg_info.range_size" name="keywords" />
+<meta content="fg_info.number_terms" name="keywords" />
+<meta content="fg_info.index" name="keywords" />
+<meta content="solution" name="keywords" />
+<meta content="status" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="z_l" name="keywords" />
+<meta content="z_u" name="keywords" />
+<meta content="g" name="keywords" />
+<meta content="lambda" name="keywords" />
+<meta content="obj_value" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cppad_ipopt_nlp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_one" href="atomic_one.html" />
+    <link rel="prev" title="epsilon" href="epsilon.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="deprecated.html">deprecated</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="include_deprecated.html">include_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fun_deprecated.html">fun_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CompareChange.html">CompareChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_max_thread.html">omp_max_thread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="track_new_del.html">track_new_del</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_alloc.html">omp_alloc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory_leak.html">memory_leak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epsilon.html">epsilon</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">cppad_ipopt_nlp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_one.html">atomic_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two.html">atomic_two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two_example.html">atomic_two_example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_two.cpp.html">multi_atomic_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chkpoint_one.html">chkpoint_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_one.cpp.html">multi_chkpoint_one.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zdouble.html">zdouble</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autotools.html">autotools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="deprecated.html">deprecated</a> &raquo;</li>
+      <li>cppad_ipopt_nlp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cppad_ipopt_nlp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="cppad-ipopt-nlp">
+<span id="cppad-ipopt-nlp-name"></span><h1>cppad_ipopt_nlp<a class="headerlink" href="#cppad-ipopt-nlp" title="Permalink to this headline"></a></h1>
+<section id="nonlinear-programming-using-the-cppad-interface-to-ipopt">
+<span id="cppad-ipopt-nlp-title"></span><span id="index-0"></span><h2>Nonlinear Programming Using the CppAD Interface to Ipopt<a class="headerlink" href="#nonlinear-programming-using-the-cppad-interface-to-ipopt" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#deprecated-2012-11-28" id="id1">Deprecated 2012-11-28</a></p></li>
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#cppad-ipopt-namespace" id="id4">cppad_ipopt namespace</a></p></li>
+<li><p><a class="reference internal" href="#ipopt-library-paths" id="id5">ipopt_library_paths</a></p></li>
+<li><p><a class="reference internal" href="#fg-x" id="id6">fg(x)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#index-vector" id="id7">Index Vector</a></p></li>
+<li><p><a class="reference internal" href="#projection" id="id8">Projection</a></p></li>
+<li><p><a class="reference internal" href="#injection" id="id9">Injection</a></p></li>
+<li><p><a class="reference internal" href="#representation" id="id10">Representation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#simple-representation" id="id11">Simple Representation</a></p></li>
+<li><p><a class="reference internal" href="#sizevector" id="id12">SizeVector</a></p></li>
+<li><p><a class="reference internal" href="#numbervector" id="id13">NumberVector</a></p></li>
+<li><p><a class="reference internal" href="#adnumber" id="id14">ADNumber</a></p></li>
+<li><p><a class="reference internal" href="#advector" id="id15">ADVector</a></p></li>
+<li><p><a class="reference internal" href="#n" id="id16">n</a></p></li>
+<li><p><a class="reference internal" href="#m" id="id17">m</a></p></li>
+<li><p><a class="reference internal" href="#x-i" id="id18">x_i</a></p></li>
+<li><p><a class="reference internal" href="#x-l" id="id19">x_l</a></p></li>
+<li><p><a class="reference internal" href="#x-u" id="id20">x_u</a></p></li>
+<li><p><a class="reference internal" href="#g-l" id="id21">g_l</a></p></li>
+<li><p><a class="reference internal" href="#g-u" id="id22">g_u</a></p></li>
+<li><p><a class="reference internal" href="#fg-info" id="id23">fg_info</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fg-info-number-functions" id="id24">fg_info.number_functions</a></p></li>
+<li><p><a class="reference internal" href="#fg-info-eval-r" id="id25">fg_info.eval_r</a></p></li>
+<li><p><a class="reference internal" href="#fg-info-retape" id="id26">fg_info.retape</a></p></li>
+<li><p><a class="reference internal" href="#fg-info-domain-size" id="id27">fg_info.domain_size</a></p></li>
+<li><p><a class="reference internal" href="#fg-info-range-size" id="id28">fg_info.range_size</a></p></li>
+<li><p><a class="reference internal" href="#fg-info-number-terms" id="id29">fg_info.number_terms</a></p></li>
+<li><p><a class="reference internal" href="#fg-info-index" id="id30">fg_info.index</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#solution" id="id31">solution</a></p>
+<ul>
+<li><p><a class="reference internal" href="#status" id="id32">status</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id33">x</a></p></li>
+<li><p><a class="reference internal" href="#z-l" id="id34">z_l</a></p></li>
+<li><p><a class="reference internal" href="#z-u" id="id35">z_u</a></p></li>
+<li><p><a class="reference internal" href="#g" id="id36">g</a></p></li>
+<li><p><a class="reference internal" href="#lambda" id="id37">lambda</a></p></li>
+<li><p><a class="reference internal" href="#obj-value" id="id38">obj_value</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="deprecated-2012-11-28">
+<span id="cppad-ipopt-nlp-deprecated-2012-11-28"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Deprecated 2012-11-28</a><a class="headerlink" href="#deprecated-2012-11-28" title="Permalink to this headline"></a></h3>
+<p>This interface to Ipopt is deprecated, use <a class="reference internal" href="ipopt_solve.html#ipopt-solve-name"><span class="std std-ref">ipopt_solve</span></a> instead.</p>
+</section>
+<section id="syntax">
+<span id="cppad-ipopt-nlp-syntax"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"># <code class="docutils literal notranslate"><span class="pre">include</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;cppad_ipopt_nlp.hpp&quot;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">cppad_ipopt_solution</span></code> <em>solution</em> ;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp</span></code> <em>cppad_nlp</em> (</div>
+<div class="line">      <em>n</em> , <em>m</em> , <em>x_i</em> , <em>x_l</em> , <em>x_u</em> , <em>g_l</em> , <em>g_u</em> , &amp; <em>fg_info</em> , &amp; <em>solution</em></div>
+<div class="line">)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">LD_LIBRARY_PATH</span></code> = <code class="docutils literal notranslate"><span class="pre">$LD_LIBRARY_PATH:</span></code> <em>ipopt_library_paths</em></div>
+</div>
+</section>
+<section id="purpose">
+<span id="cppad-ipopt-nlp-purpose"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>The class <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp</span></code> is used to solve nonlinear programming
+problems of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{rll}
+{\rm minimize}      &amp; f(x)
+\\
+{\rm subject \; to} &amp; g^l \leq g(x) \leq g^u
+\\
+               &amp; x^l  \leq x   \leq x^u
+\end{array}\end{split}\]</div>
+<p>This is done using
+<a class="reference external" href="http://www.coin-or.org/projects/Ipopt.xml">Ipopt</a>
+optimizer and
+<a class="reference external" href="http://www.coin-or.org/CppAD/">CppAD</a>
+Algorithmic Differentiation package.</p>
+</section>
+<section id="cppad-ipopt-namespace">
+<span id="cppad-ipopt-nlp-cppad-ipopt-namespace"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">cppad_ipopt namespace</a><a class="headerlink" href="#cppad-ipopt-namespace" title="Permalink to this headline"></a></h3>
+<p>All of the declarations for these routines
+are in the <code class="docutils literal notranslate"><span class="pre">cppad_ipopt</span></code> namespace
+(not the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> namespace).
+For example; <a class="reference internal" href="#cppad-ipopt-nlp-sizevector"><span class="std std-ref">SizeVector</span></a> below
+actually denotes the type <code class="docutils literal notranslate"><span class="pre">cppad_ipopt::SizeVector</span></code> .</p>
+</section>
+<section id="ipopt-library-paths">
+<span id="cppad-ipopt-nlp-ipopt-library-paths"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">ipopt_library_paths</a><a class="headerlink" href="#ipopt-library-paths" title="Permalink to this headline"></a></h3>
+<p>If you are linking to a shared version of the Ipopt library,
+you may have to add a path to the <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> .
+You can determine the directory you need to add using the command</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">pkg-config</span> <span class="pre">ipopt</span> <span class="pre">--libs</span></code></p>
+</div></blockquote>
+<p>The output will have the following form</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">-L</span></code> <em>dir</em> <code class="docutils literal notranslate"><span class="pre">-lipopt</span></code></p>
+</div></blockquote>
+<p>You may need to add the directory %dir% to <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH%</span></code> ; e.g.,</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">LD_LIBRARY_PATH</span></code> =” <em>dir</em> : <code class="docutils literal notranslate"><span class="pre">$LD_LIBRARY_PATH</span></code> “</p>
+</div></blockquote>
+</section>
+<section id="fg-x">
+<span id="cppad-ipopt-nlp-fg-x"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">fg(x)</a><a class="headerlink" href="#fg-x" title="Permalink to this headline"></a></h3>
+<p>The function <span class="math notranslate nohighlight">\(fg : \B{R}^n \rightarrow \B{R}^{m+1}\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   fg_0 (x)     &amp; = &amp; f(x)         \\
+   fg_1 (x)     &amp; = &amp; g_0 (x)      \\
+                 &amp; \vdots &amp;         \\
+   fg_m (x)     &amp; = &amp; g_{m-1} (x)
+   \end{eqnarray}</div><section id="index-vector">
+<span id="cppad-ipopt-nlp-fg-x-index-vector"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id7">Index Vector</a><a class="headerlink" href="#index-vector" title="Permalink to this headline"></a></h4>
+<p>We define an <em>index vector</em> as a vector of non-negative integers
+for which none of the values are equal; i.e.,
+it is both a vector and a set.
+If <span class="math notranslate nohighlight">\(I\)</span> is an index vector <span class="math notranslate nohighlight">\(|I|\)</span> is used to denote the
+number of elements in <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(\| I \|\)</span> is used
+to denote the value of the maximum element in <span class="math notranslate nohighlight">\(I\)</span>.</p>
+</section>
+<section id="projection">
+<span id="cppad-ipopt-nlp-fg-x-projection"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id8">Projection</a><a class="headerlink" href="#projection" title="Permalink to this headline"></a></h4>
+<p>Given an index vector <span class="math notranslate nohighlight">\(J\)</span> and a positive integer <span class="math notranslate nohighlight">\(n\)</span>
+where <span class="math notranslate nohighlight">\(n &gt; \| J \|\)</span>, we use <span class="math notranslate nohighlight">\(J \otimes n\)</span> for
+the mapping <span class="math notranslate nohighlight">\(( J \otimes n ) : \B{R}^n \rightarrow \B{R}^{|J|}\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[[ J \otimes n ] (x)_j = x_{J(j)}\]</div>
+<p>for <span class="math notranslate nohighlight">\(j = 0 , \ldots |J| - 1\)</span>.</p>
+</section>
+<section id="injection">
+<span id="cppad-ipopt-nlp-fg-x-injection"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">Injection</a><a class="headerlink" href="#injection" title="Permalink to this headline"></a></h4>
+<p>Given an index vector <span class="math notranslate nohighlight">\(I\)</span> and a positive integer <span class="math notranslate nohighlight">\(m\)</span>
+where <span class="math notranslate nohighlight">\(m &gt; \| I \|\)</span>, we use <span class="math notranslate nohighlight">\(m \otimes I\)</span> for
+the mapping <span class="math notranslate nohighlight">\(( m \otimes I ): \B{R}^{|I|} \rightarrow \B{R}^m\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}[ m \otimes I ] (y)_i = \left\{ \begin{array}{ll}
+y_k &amp; {\rm if} \; i = I(k) \; {\rm for \; some} \;
+   k \in \{ 0 , \cdots, |I|-1 \}
+\\
+0   &amp; {\rm otherwise}
+\end{array} \right.\end{split}\]</div>
+</section>
+<section id="representation">
+<span id="cppad-ipopt-nlp-fg-x-representation"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">Representation</a><a class="headerlink" href="#representation" title="Permalink to this headline"></a></h4>
+<p>In many applications, each of the component functions of <span class="math notranslate nohighlight">\(fg(x)\)</span>
+only depend on a few of the components of <span class="math notranslate nohighlight">\(x\)</span>.
+In this case, expressing <span class="math notranslate nohighlight">\(fg(x)\)</span> in terms of simpler functions
+with fewer arguments can greatly reduce the amount of work required
+to compute its derivatives.</p>
+<p>We use the functions
+<span class="math notranslate nohighlight">\(r_k : \B{R}^{q(k)} \rightarrow \B{R}^{p(k)}\)</span>
+for <span class="math notranslate nohighlight">\(k = 0 , \ldots , K\)</span> to express our
+representation of <span class="math notranslate nohighlight">\(fg(x)\)</span> in terms of simpler functions
+as follows</p>
+<div class="math notranslate nohighlight">
+\[fg(x) = \sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1}
+[ (m+1) \otimes I_{k,\ell} ] \; \circ
+     \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\circ\)</span> represents function composition,
+for <span class="math notranslate nohighlight">\(k = 0 , \ldots , K - 1\)</span>, and <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , L(k)\)</span>,
+<span class="math notranslate nohighlight">\(I_{k,\ell}\)</span> and  <span class="math notranslate nohighlight">\(J_{k,\ell}\)</span> are index vectors with
+<span class="math notranslate nohighlight">\(| J_{k,\ell} | = q(k)\)</span>,
+<span class="math notranslate nohighlight">\(\| J_{k,\ell} \| &lt; n\)</span>,
+<span class="math notranslate nohighlight">\(| I_{k,\ell} | = p(k)\)</span>, and
+<span class="math notranslate nohighlight">\(\| I_{k,\ell} \| \leq m\)</span>.</p>
+</section>
+</section>
+<section id="simple-representation">
+<span id="cppad-ipopt-nlp-simple-representation"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Simple Representation</a><a class="headerlink" href="#simple-representation" title="Permalink to this headline"></a></h3>
+<p>In the simple representation,
+<span class="math notranslate nohighlight">\(r_0 (x) = fg(x)\)</span>,
+<span class="math notranslate nohighlight">\(K = 1\)</span>,
+<span class="math notranslate nohighlight">\(q(0) = n\)</span>,
+<span class="math notranslate nohighlight">\(p(0) = m+1\)</span>,
+<span class="math notranslate nohighlight">\(L(0) = 1\)</span>,
+<span class="math notranslate nohighlight">\(I_{0,0} = (0 , \ldots , m)\)</span>,
+and <span class="math notranslate nohighlight">\(J_{0,0} = (0 , \ldots , n-1)\)</span>.</p>
+</section>
+<section id="sizevector">
+<span id="cppad-ipopt-nlp-sizevector"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">SizeVector</a><a class="headerlink" href="#sizevector" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">SizeVector</span></code> is defined by the
+<code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp.hpp</span></code> include file to be a
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with elements of type
+<code class="docutils literal notranslate"><span class="pre">size_t</span></code> .</p>
+</section>
+<section id="numbervector">
+<span id="cppad-ipopt-nlp-numbervector"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">NumberVector</a><a class="headerlink" href="#numbervector" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">NumberVector</span></code> is defined by the
+<code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp.hpp</span></code> include file to be a
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with elements of type
+<code class="docutils literal notranslate"><span class="pre">Ipopt::Number</span></code> .</p>
+</section>
+<section id="adnumber">
+<span id="cppad-ipopt-nlp-adnumber"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">ADNumber</a><a class="headerlink" href="#adnumber" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">ADNumber</span></code> is defined by the
+<code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp.hpp</span></code> include file to be a
+an AD type that can be used to compute derivatives.</p>
+</section>
+<section id="advector">
+<span id="cppad-ipopt-nlp-advector"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">ADVector</a><a class="headerlink" href="#advector" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">ADVector</span></code> is defined by the
+<code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp.hpp</span></code> include file to be a
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with elements of type
+<code class="docutils literal notranslate"><span class="pre">ADNumber</span></code> .</p>
+</section>
+<section id="n">
+<span id="cppad-ipopt-nlp-n"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h3>
+<p>The argument <em>n</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>n</em></p>
+</div></blockquote>
+<p>It specifies the dimension of the argument space;
+i.e., <span class="math notranslate nohighlight">\(x \in \B{R}^n\)</span>.</p>
+</section>
+<section id="m">
+<span id="cppad-ipopt-nlp-m"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">m</a><a class="headerlink" href="#m" title="Permalink to this headline"></a></h3>
+<p>The argument <em>m</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>m</em></p>
+</div></blockquote>
+<p>It specifies the dimension of the range space for <span class="math notranslate nohighlight">\(g\)</span>;
+i.e., <span class="math notranslate nohighlight">\(g : \B{R}^n \rightarrow \B{R}^m\)</span>.</p>
+</section>
+<section id="x-i">
+<span id="cppad-ipopt-nlp-x-i"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">x_i</a><a class="headerlink" href="#x-i" title="Permalink to this headline"></a></h3>
+<p>The argument <em>x_i</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">NumberVector&amp;</span></code> <em>x_i</em></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It specifies the initial point where Ipopt starts the optimization process.</p>
+</section>
+<section id="x-l">
+<span id="cppad-ipopt-nlp-x-l"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id19">x_l</a><a class="headerlink" href="#x-l" title="Permalink to this headline"></a></h3>
+<p>The argument <em>x_l</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">NumberVector&amp;</span></code> <em>x_l</em></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It specifies the lower limits for the argument in the optimization problem;
+i.e., <span class="math notranslate nohighlight">\(x^l\)</span>.</p>
+</section>
+<section id="x-u">
+<span id="cppad-ipopt-nlp-x-u"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id20">x_u</a><a class="headerlink" href="#x-u" title="Permalink to this headline"></a></h3>
+<p>The argument <em>x_u</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">NumberVector&amp;</span></code> <em>x_u</em></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It specifies the upper limits for the argument in the optimization problem;
+i.e., <span class="math notranslate nohighlight">\(x^u\)</span>.</p>
+</section>
+<section id="g-l">
+<span id="cppad-ipopt-nlp-g-l"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id21">g_l</a><a class="headerlink" href="#g-l" title="Permalink to this headline"></a></h3>
+<p>The argument <em>g_l</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">NumberVector&amp;</span></code> <em>g_l</em></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(m\)</span>.
+It specifies the lower limits for the constraints in the optimization problem;
+i.e., <span class="math notranslate nohighlight">\(g^l\)</span>.</p>
+</section>
+<section id="g-u">
+<span id="cppad-ipopt-nlp-g-u"></span><span id="index-22"></span><h3><a class="toc-backref" href="#id22">g_u</a><a class="headerlink" href="#g-u" title="Permalink to this headline"></a></h3>
+<p>The argument <em>g_u</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">NumberVector&amp;</span></code> <em>g_u</em></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It specifies the upper limits for the constraints in the optimization problem;
+i.e., <span class="math notranslate nohighlight">\(g^u\)</span>.</p>
+</section>
+<section id="fg-info">
+<span id="cppad-ipopt-nlp-fg-info"></span><span id="index-23"></span><h3><a class="toc-backref" href="#id23">fg_info</a><a class="headerlink" href="#fg-info" title="Permalink to this headline"></a></h3>
+<p>The argument <em>fg_info</em> has prototype</p>
+<blockquote>
+<div><p><em>FG_info fg_info</em></p>
+</div></blockquote>
+<p>where the class <em>FG_info</em> is derived from the
+base class <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_fg_info</span></code> .
+Certain virtual member functions of <em>fg_info</em> are used to
+compute the value of <span class="math notranslate nohighlight">\(fg(x)\)</span>.
+The specifications for these member functions are given below:</p>
+<section id="fg-info-number-functions">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-number-functions"></span><span id="index-24"></span><h4><a class="toc-backref" href="#id24">fg_info.number_functions</a><a class="headerlink" href="#fg-info-number-functions" title="Permalink to this headline"></a></h4>
+<p>This member function has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">size_t</span> <span class="pre">cppad_ipopt_fg_info::number_functions</span></code> ( <code class="docutils literal notranslate"><span class="pre">void</span></code> )</p>
+</div></blockquote>
+<p>If <em>K</em> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , the syntax</p>
+<blockquote>
+<div><p><em>K</em> = <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">number_functions</span></code> ()</p>
+</div></blockquote>
+<p>sets <em>K</em> to the number of functions used in the
+representation of <span class="math notranslate nohighlight">\(fg(x)\)</span>; i.e., <span class="math notranslate nohighlight">\(K\)</span> in
+the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a> above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_fg_info</span></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.
+<em>K</em>  = 1 .</p>
+</section>
+<section id="fg-info-eval-r">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-eval-r"></span><span id="index-25"></span><h4><a class="toc-backref" href="#id25">fg_info.eval_r</a><a class="headerlink" href="#fg-info-eval-r" title="Permalink to this headline"></a></h4>
+<p>This member function has the prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">ADVector</span> <span class="pre">cppad_ipopt_fg_info::eval_r</span></code> ( <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>k</em> , <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">ADVector&amp;</span></code> <em>u</em> ) = 0;</p>
+</div></blockquote>
+<p>Thus it is a pure virtual function and must be defined in the
+derived class <em>FG_info</em> .</p>
+<p>This function computes the value of <span class="math notranslate nohighlight">\(r_k (u)\)</span>
+used in the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a>
+for <span class="math notranslate nohighlight">\(fg(x)\)</span>.
+If <em>k</em> in <span class="math notranslate nohighlight">\(\{0 , \ldots , K-1 \}\)</span> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> ,
+<em>u</em> is an <code class="docutils literal notranslate"><span class="pre">ADVector</span></code> of size <em>q</em> ( <em>k</em> )
+and <em>r</em> is an <code class="docutils literal notranslate"><span class="pre">ADVector</span></code> of size <em>p</em> ( <em>k</em> )
+the syntax</p>
+<blockquote>
+<div><p><em>r</em> = <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">eval_r</span></code> ( <em>k</em> , <em>u</em> )</p>
+</div></blockquote>
+<p>set <em>r</em> to the vector <span class="math notranslate nohighlight">\(r_k (u)\)</span>.</p>
+</section>
+<section id="fg-info-retape">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-retape"></span><span id="index-26"></span><h4><a class="toc-backref" href="#id26">fg_info.retape</a><a class="headerlink" href="#fg-info-retape" title="Permalink to this headline"></a></h4>
+<p>This member function has the prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">bool</span> <span class="pre">cppad_ipopt_fg_info::retape</span></code> ( <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>k</em> )</p>
+</div></blockquote>
+<p>If <em>k</em> in <span class="math notranslate nohighlight">\(\{0 , \ldots , K-1 \}\)</span> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> ,
+and <em>retape</em> has type <code class="docutils literal notranslate"><span class="pre">bool</span></code> ,
+the syntax</p>
+<blockquote>
+<div><p><em>retape</em> = <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">retape</span></code> ( <em>k</em> )</p>
+</div></blockquote>
+<p>sets <em>retape</em> to true or false.
+If <em>retape</em> is true,
+<code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp</span></code> will retape the operation sequence
+corresponding to <span class="math notranslate nohighlight">\(r_k (u)\)</span> for
+every value of <em>u</em> .
+An <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp</span></code> object
+should use much less memory and run faster if <em>retape</em> is false.
+You can test both the true and false cases to make sure
+the operation sequence does not depend on <em>u</em> .</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_fg_info</span></code> implementation of this function
+sets <em>retape</em> to true
+(while slower it is also safer to always retape).</p>
+</section>
+<section id="fg-info-domain-size">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-domain-size"></span><span id="index-27"></span><h4><a class="toc-backref" href="#id27">fg_info.domain_size</a><a class="headerlink" href="#fg-info-domain-size" title="Permalink to this headline"></a></h4>
+<p>This member function has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">size_t</span> <span class="pre">cppad_ipopt_fg_info::domain_size</span></code> ( <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>k</em> )</p>
+</div></blockquote>
+<p>If <em>k</em> in <span class="math notranslate nohighlight">\(\{0 , \ldots , K-1 \}\)</span> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> ,
+and <em>q</em> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , the syntax</p>
+<blockquote>
+<div><p><em>q</em> = <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">domain_size</span></code> ( <em>k</em> )</p>
+</div></blockquote>
+<p>sets <em>q</em> to the dimension of the domain space for <span class="math notranslate nohighlight">\(r_k (u)\)</span>;
+i.e., <span class="math notranslate nohighlight">\(q(k)\)</span> in
+the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a> above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_h_base</span></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+<span class="math notranslate nohighlight">\(q = n\)</span>.</p>
+</section>
+<section id="fg-info-range-size">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-range-size"></span><span id="index-28"></span><h4><a class="toc-backref" href="#id28">fg_info.range_size</a><a class="headerlink" href="#fg-info-range-size" title="Permalink to this headline"></a></h4>
+<p>This member function has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">size_t</span> <span class="pre">cppad_ipopt_fg_info::range_size</span></code> ( <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>k</em> )</p>
+</div></blockquote>
+<p>If <em>k</em> in <span class="math notranslate nohighlight">\(\{0 , \ldots , K-1 \}\)</span> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> ,
+and <em>p</em> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , the syntax</p>
+<blockquote>
+<div><p><em>p</em> = <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">range_size</span></code> ( <em>k</em> )</p>
+</div></blockquote>
+<p>sets <em>p</em> to the dimension of the range space for <span class="math notranslate nohighlight">\(r_k (u)\)</span>;
+i.e., <span class="math notranslate nohighlight">\(p(k)\)</span> in
+the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a> above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_h_base</span></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+<span class="math notranslate nohighlight">\(p = m+1\)</span>.</p>
+</section>
+<section id="fg-info-number-terms">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-number-terms"></span><span id="index-29"></span><h4><a class="toc-backref" href="#id29">fg_info.number_terms</a><a class="headerlink" href="#fg-info-number-terms" title="Permalink to this headline"></a></h4>
+<p>This member function has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">size_t</span> <span class="pre">cppad_ipopt_fg_info::number_terms</span></code> ( <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>k</em> )</p>
+</div></blockquote>
+<p>If <em>k</em> in <span class="math notranslate nohighlight">\(\{0 , \ldots , K-1 \}\)</span> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> ,
+and <em>L</em> has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> , the syntax</p>
+<blockquote>
+<div><p><em>L</em> = <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">number_terms</span></code> ( <em>k</em> )</p>
+</div></blockquote>
+<p>sets <em>L</em> to the number of terms in representation
+for this value of <em>k</em> ;
+i.e., <span class="math notranslate nohighlight">\(L(k)\)</span> in
+the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a> above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_h_base</span></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+<span class="math notranslate nohighlight">\(L = 1\)</span>.</p>
+</section>
+<section id="fg-info-index">
+<span id="cppad-ipopt-nlp-fg-info-fg-info-index"></span><span id="index-30"></span><h4><a class="toc-backref" href="#id30">fg_info.index</a><a class="headerlink" href="#fg-info-index" title="Permalink to this headline"></a></h4>
+<p>This member function has prototype</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">virtual</span> <span class="pre">void</span> <span class="pre">cppad_ipopt_fg_info::index</span></code> (</div>
+<div class="line">            <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>k</em> , <code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>ell</em> , <code class="docutils literal notranslate"><span class="pre">SizeVector&amp;</span></code> <em>I</em> , <code class="docutils literal notranslate"><span class="pre">SizeVector&amp;</span></code> <em>J</em></div>
+<div class="line">      )</div>
+</div>
+<p>The argument</p>
+<blockquote>
+<div><p><em>k</em></p>
+</div></blockquote>
+<p>has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code>
+and is a value between zero and <span class="math notranslate nohighlight">\(K-1\)</span> inclusive.
+The argument</p>
+<blockquote>
+<div><p><em>ell</em></p>
+</div></blockquote>
+<p>has type <code class="docutils literal notranslate"><span class="pre">size_t</span></code>
+and is a value between zero and <span class="math notranslate nohighlight">\(L(k)-1\)</span> inclusive.
+The argument</p>
+<blockquote>
+<div><p><em>I</em></p>
+</div></blockquote>
+<p>is a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements
+of type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> and size greater than or equal to <span class="math notranslate nohighlight">\(p(k)\)</span>.
+The input value of the elements of <em>I</em> does not matter.
+The output value of
+the first <span class="math notranslate nohighlight">\(p(k)\)</span> elements of <em>I</em>
+must be the corresponding elements of <span class="math notranslate nohighlight">\(I_{k,ell}\)</span>
+in the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a> above.
+The argument</p>
+<blockquote>
+<div><p><em>J</em></p>
+</div></blockquote>
+<p>is a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> with elements
+of type <code class="docutils literal notranslate"><span class="pre">size_t</span></code> and size greater than or equal to <span class="math notranslate nohighlight">\(q(k)\)</span>.
+The input value of the elements of <em>J</em> does not matter.
+The output value of
+the first <span class="math notranslate nohighlight">\(q(k)\)</span> elements of <em>J</em>
+must be the corresponding elements of <span class="math notranslate nohighlight">\(J_{k,ell}\)</span>
+in the <a class="reference internal" href="#cppad-ipopt-nlp-fg-x-representation"><span class="std std-ref">Representation</span></a> above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_h_base</span></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+for <span class="math notranslate nohighlight">\(i = 0 , \ldots , m\)</span>,
+<em>I</em> [ <em>i</em> ] = <em>i</em> ,
+and  for <span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,
+<em>J</em> [ <em>j</em> ] = <em>j</em> .</p>
+</section>
+</section>
+<section id="solution">
+<span id="cppad-ipopt-nlp-solution"></span><span id="index-31"></span><h3><a class="toc-backref" href="#id31">solution</a><a class="headerlink" href="#solution" title="Permalink to this headline"></a></h3>
+<p>After the optimization process is completed, <em>solution</em> contains
+the following information:</p>
+<section id="status">
+<span id="cppad-ipopt-nlp-solution-status"></span><span id="index-32"></span><h4><a class="toc-backref" href="#id32">status</a><a class="headerlink" href="#status" title="Permalink to this headline"></a></h4>
+<p>The <em>status</em> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">cppad_ipopt_solution::solution_status</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">status</span></code></p>
+</div></blockquote>
+<p>It is the final Ipopt status for the optimizer.
+Here is a list of the possible values for the status:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>status</em></p></td>
+<td><p>Meaning</p></td>
+</tr>
+<tr class="row-even"><td><p>not_defined</p></td>
+<td><p>The optimizer did not return a final status to this <code class="docutils literal notranslate"><span class="pre">cppad_ipopt_nlp</span></code>
+object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>unknown</p></td>
+<td><p>The status returned by the optimizer is not defined in the Ipopt
+documentation for <code class="docutils literal notranslate"><span class="pre">finalize_solution</span></code> .</p></td>
+</tr>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>Algorithm terminated successfully at a point satisfying the convergence
+tolerances (see Ipopt options).</p></td>
+</tr>
+<tr class="row-odd"><td><p>maxiter_exceeded</p></td>
+<td><p>The maximum number of iterations was exceeded (see Ipopt options).</p></td>
+</tr>
+<tr class="row-even"><td><p>stop_at_tiny_step</p></td>
+<td><p>Algorithm terminated because progress was very slow.</p></td>
+</tr>
+<tr class="row-odd"><td><p>stop_at_acceptable_point</p></td>
+<td><p>Algorithm stopped at a point that was converged,
+not to the ‘desired’ tolerances, but to ‘acceptable’ tolerances
+(see Ipopt options).</p></td>
+</tr>
+<tr class="row-even"><td><p>local_infeasibility</p></td>
+<td><p>Algorithm converged to a non-feasible point
+(problem may have no solution).</p></td>
+</tr>
+<tr class="row-odd"><td><p>user_requested_stop</p></td>
+<td><p>This return value should not happen.</p></td>
+</tr>
+<tr class="row-even"><td><p>diverging_iterates</p></td>
+<td><p>It the iterates are diverging.</p></td>
+</tr>
+<tr class="row-odd"><td><p>restoration_failure</p></td>
+<td><p>Restoration phase failed, algorithm doesn’t know how to proceed.</p></td>
+</tr>
+<tr class="row-even"><td><p>error_in_step_computation</p></td>
+<td><p>An unrecoverable error occurred while Ipopt tried to
+compute the search direction.</p></td>
+</tr>
+<tr class="row-odd"><td><p>invalid_number_detected</p></td>
+<td><p>Algorithm received an invalid number (such as <code class="docutils literal notranslate"><span class="pre">nan</span></code> or <code class="docutils literal notranslate"><span class="pre">inf</span></code> )
+from the users function <em>fg_info</em> . <code class="docutils literal notranslate"><span class="pre">eval</span></code> or from the CppAD evaluations
+of its derivatives
+(see the Ipopt option <code class="docutils literal notranslate"><span class="pre">check_derivatives_for_naninf</span></code> ).</p></td>
+</tr>
+<tr class="row-even"><td><p>internal_error</p></td>
+<td><p>An unknown Ipopt internal error occurred.
+Contact the Ipopt authors through the mailing list.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="x">
+<span id="cppad-ipopt-nlp-solution-x"></span><span id="index-33"></span><h4><a class="toc-backref" href="#id33">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">x</span></code> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">NumberVector</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">x</span></code></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It is the final <span class="math notranslate nohighlight">\(x\)</span> value for the optimizer.</p>
+</section>
+<section id="z-l">
+<span id="cppad-ipopt-nlp-solution-z-l"></span><span id="index-34"></span><h4><a class="toc-backref" href="#id34">z_l</a><a class="headerlink" href="#z-l" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">z_l</span></code> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">NumberVector</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">z_l</span></code></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It is the final Lagrange multipliers for the
+lower bounds on <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</section>
+<section id="z-u">
+<span id="cppad-ipopt-nlp-solution-z-u"></span><span id="index-35"></span><h4><a class="toc-backref" href="#id35">z_u</a><a class="headerlink" href="#z-u" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">z_u</span></code> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">NumberVector</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">z_u</span></code></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(n\)</span>.
+It is the final Lagrange multipliers for the
+upper bounds on <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</section>
+<section id="g">
+<span id="cppad-ipopt-nlp-solution-g"></span><span id="index-36"></span><h4><a class="toc-backref" href="#id36">g</a><a class="headerlink" href="#g" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">g</span></code> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">NumberVector</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">g</span></code></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(m\)</span>.
+It is the final value for the constraint function <span class="math notranslate nohighlight">\(g(x)\)</span>.</p>
+</section>
+<section id="lambda">
+<span id="cppad-ipopt-nlp-solution-lambda"></span><span id="index-37"></span><h4><a class="toc-backref" href="#id37">lambda</a><a class="headerlink" href="#lambda" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">lambda</span></code> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">NumberVector</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">lambda</span></code></p>
+</div></blockquote>
+<p>and its size is equal to <span class="math notranslate nohighlight">\(m\)</span>.
+It is the final value for the
+Lagrange multipliers corresponding to the constraint function.</p>
+</section>
+<section id="obj-value">
+<span id="cppad-ipopt-nlp-solution-obj-value"></span><span id="index-38"></span><h4><a class="toc-backref" href="#id38">obj_value</a><a class="headerlink" href="#obj-value" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">obj_value</span></code> field of <em>solution</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Number</span></code> <em>solution</em> . <code class="docutils literal notranslate"><span class="pre">obj_value</span></code></p>
+</div></blockquote>
+<p>It is the final value of the objective function <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="epsilon.html" class="btn btn-neutral float-left" title="epsilon" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_one.html" class="btn btn-neutral float-right" title="atomic_one" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

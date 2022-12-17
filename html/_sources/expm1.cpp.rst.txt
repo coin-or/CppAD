@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/expm1.cpp
+
+{xrst_begin expm1.cpp}
+
+The AD exp Function: Example and Test
+#####################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end expm1.cpp}

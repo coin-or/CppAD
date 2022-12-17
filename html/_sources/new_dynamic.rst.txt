@@ -1,0 +1,71 @@
+lines 9-77 of file: include/cppad/core/new_dynamic.hpp
+
+{xrst_begin new_dynamic}
+
+Change the Dynamic Parameters
+#############################
+
+Syntax
+******
+*f* . ``new_dynamic`` ( *dynamic* )
+
+Purpose
+*******
+Often one is only interested in computing derivatives with respect
+to a subset of arguments to a function.
+In this case, it is easier to make all the arguments to the function
+:ref:`independent variables<glossary@Tape@Independent Variable>` .
+It is more efficient,
+will use less memory and be faster,
+if the only the argument were are computing derivatives with respect to
+are independent variables and the other arguments are
+:ref:`glossary@Parameter@Dynamic` parameters.
+The ``new_dynamic`` method is used to change the value
+of the dynamic parameters in *f* .
+
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const`` .
+
+dynamic
+*******
+This argument has prototype
+
+   ``const`` *BaseVector* & *dynamic*
+
+(see *BaseVector* below).
+It specifies a new value for the independent
+:ref:`glossary@Parameter@Dynamic` parameters.
+It size must be the same as the size of the independent
+:ref:`Independent@dynamic` parameter vector
+in the call to ``Independent`` that started
+the recording for *f* ; see
+:ref:`fun_property@size_dyn_ind` .
+
+BaseVector
+**********
+The type *BaseVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+
+Taylor Coefficients
+*******************
+The Taylor coefficients computed by previous calls to
+:ref:`f.Forward<Forward-name>` are lost after this operation; including the
+order zero coefficients (because they may depend on the dynamic parameters).
+In order words;
+:ref:`f.size_order<size_order-name>` returns zero directly after
+*f* . ``new_dynamic`` is called.
+{xrst_toc_hidden
+   example/general/new_dynamic.cpp
+}
+Example
+*******
+The file :ref:`new_dynamic.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end new_dynamic}

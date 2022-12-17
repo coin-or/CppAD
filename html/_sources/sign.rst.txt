@@ -1,0 +1,59 @@
+lines 9-65 of file: include/cppad/core/sign.hpp
+
+{xrst_begin sign}
+{xrst_spell
+   dirac
+   rl
+}
+The Sign: sign
+##############
+
+Syntax
+******
+*y* = ``sign`` ( *x* )
+
+Description
+***********
+Evaluates the ``sign`` function which is defined by
+
+.. math::
+
+   {\rm sign} (x) =
+   \left\{ \begin{array}{rl}
+      +1 & {\rm if} \; x > 0 \\
+      0  & {\rm if} \; x = 0 \\
+      -1 & {\rm if} \; x < 0
+   \end{array} \right.
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
+
+Derivative
+**********
+CppAD computes the derivative of the ``sign`` function as zero for all
+argument values *x* .
+The correct mathematical derivative is different and
+is given by
+
+.. math::
+
+   {\rm sign}^{(1)} (x) =  2 \delta (x)
+
+where :math:`\delta (x)` is the Dirac Delta function.
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/sign.cpp
+}
+The file
+:ref:`sign.cpp-name`
+contains an example and test of this function.
+
+{xrst_end sign}

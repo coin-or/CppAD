@@ -1,0 +1,34 @@
+lines 505-536 of file: include/cppad/core/std_math_11.hpp
+
+{xrst_begin log10}
+
+The Base 10 Logarithm Function: log10
+#####################################
+
+Syntax
+******
+*y* = ``log10`` ( *x* )
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
+for a unary standard math function.
+
+Method
+******
+CppAD uses the representation
+
+.. math::
+
+   {\rm log10} (x) = \log(x) / \log(10)
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/log10.cpp
+}
+The file
+:ref:`log10.cpp-name`
+contains an example and test of this function.
+
+{xrst_end log10}

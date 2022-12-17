@@ -1,0 +1,187 @@
+lines 6-190 of file: include/cppad/utility/xrst/utility.xrst
+
+{xrst_begin utility}
+{xrst_spell
+   boolofvoid
+   debugger
+   dll
+   romberg
+}
+
+Some General Purpose Utilities
+##############################
+These routines can be included individually; for example,
+::
+
+   # include <cppad/utility/vector.hpp>
+
+only includes the definitions necessary for the ``CppAD::vector`` class.
+They can also be included as a group, separate from the rest of CppAD, using
+::
+
+   # include <cppad/utility.hpp>
+
+They will also be included, along with the rest of CppAD, using
+::
+
+   # include <cppad/cppad.hpp>
+
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
+{xrst_toc_hidden
+   include/cppad/utility/check_numeric_type.hpp
+   include/cppad/utility/check_simple_vector.hpp
+   include/cppad/utility/create_dll_lib.hpp
+   include/cppad/utility/error_handler.hpp
+   include/cppad/utility/index_sort.hpp
+   include/cppad/utility/link_dll_lib.hpp
+   include/cppad/utility/nan.hpp
+   include/cppad/utility/near_equal.hpp
+   include/cppad/utility/ode_err_control.hpp
+   include/cppad/utility/ode_gear.hpp
+   include/cppad/utility/ode_gear_control.hpp
+   include/cppad/utility/xrst/cppad_vector.xrst
+   include/cppad/utility/poly.hpp
+   include/cppad/utility/pow_int.hpp
+   include/cppad/utility/romberg_mul.hpp
+   include/cppad/utility/romberg_one.hpp
+   include/cppad/utility/rosen_34.hpp
+   include/cppad/utility/runge_45.hpp
+   include/cppad/utility/set_union.hpp
+   include/cppad/utility/sparse2eigen.hpp
+   include/cppad/utility/sparse_rc.hpp
+   include/cppad/utility/sparse_rcv.hpp
+   include/cppad/utility/speed_test.hpp
+   include/cppad/utility/test_boolofvoid.hpp
+   include/cppad/utility/time_test.hpp
+   include/cppad/utility/to_string.hpp
+   xrst/lu_det_and_solve.xrst
+   xrst/numeric_type.xrst
+   xrst/simple_vector.xrst
+   xrst/thread_alloc.xrst
+}
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
+
+Testing
+*******
+The routines listed below support numerical correctness and speed testing:
+
+.. csv-table::
+   :widths: auto
+
+   NearEqual,:ref:`NearEqual-title`
+   time_test,:ref:`time_test-title`
+   speed_test,:ref:`speed_test-title`
+   SpeedTest,:ref:`SpeedTest-title`
+   test_boolofvoid,:ref:`test_boolofvoid-title`
+
+C++ Concepts
+************
+We refer to a the set of classes that satisfy certain conditions
+as a C++ concept.
+The following concepts are used by the CppAD Template library:
+
+.. csv-table::
+   :widths: auto
+
+   NumericType,:ref:`NumericType-title`
+   CheckNumericType,:ref:`CheckNumericType-title`
+   SimpleVector,:ref:`SimpleVector-title`
+   CheckSimpleVector,:ref:`CheckSimpleVector-title`
+
+General Numerical Routines
+**************************
+The routines listed below are general purpose numerical routines
+written with the floating point type a C++ template parameter.
+This enables them to be used with algorithmic differentiation types,
+as well as for other purposes.
+
+.. csv-table::
+   :widths: auto
+
+   nan,:ref:`nan-title`
+   pow_int,:ref:`pow_int-title`
+   Poly,:ref:`Poly-title`
+   lu_det_and_solve,:ref:`lu_det_and_solve-title`
+   RombergOne,:ref:`RombergOne-title`
+   RombergMul,:ref:`RombergMul-title`
+   Runge45,:ref:`Runge45-title`
+   Rosen34,:ref:`Rosen34-title`
+   OdeErrControl,:ref:`OdeErrControl-title`
+   OdeGear,:ref:`OdeGear-title`
+   OdeGearControl,:ref:`OdeGearControl-title`
+
+Miscellaneous
+*************
+
+Error Handler
+=============
+All of the routines in the CppAD namespace use the following
+general purpose error handler:
+
+.. csv-table::
+   :widths: auto
+
+   ErrorHandler,:ref:`ErrorHandler-title`
+
+The CppAD Vector Template Class
+===============================
+This is a simple implementation of a template vector class
+(that is easy to view in a C++ debugger):
+
+.. csv-table::
+   :widths: auto
+
+   CppAD_vector,:ref:`CppAD_vector-title`
+
+Multi-Threading Memory Allocation
+=================================
+
+.. csv-table::
+   :widths: auto
+
+   thread_alloc,:ref:`thread_alloc-title`
+
+Sorting Indices
+===============
+
+.. csv-table::
+   :widths: auto
+
+   index_sort,:ref:`index_sort-title`
+
+to_string
+=========
+
+.. csv-table::
+   :widths: auto
+
+   to_string,:ref:`to_string-title`
+
+set_union
+=========
+
+.. csv-table::
+   :widths: auto
+
+   set_union,:ref:`set_union-title`
+
+Sparse Matrices
+===============
+
+.. csv-table::
+   :widths: auto
+
+   sparse_rc,:ref:`sparse_rc-title`
+   sparse_rcv,:ref:`sparse_rcv-title`
+   sparse2eigen,:ref:`sparse2eigen-title`
+
+Dynamic Libraries
+=================
+
+.. csv-table::
+   :widths: auto
+
+   create_dll_lib,:ref:`create_dll_lib-title`
+   link_dll_lib,:ref:`link_dll_lib-title`
+
+{xrst_end utility}

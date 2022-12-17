@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="LuFactor, lu, factorization, of, a, square, matrix" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="description" name="keywords" />
+<meta content="include" name="keywords" />
+<meta content="matrix, storage" name="keywords" />
+<meta content="sign" name="keywords" />
+<meta content="ip" name="keywords" />
+<meta content="jp" name="keywords" />
+<meta content="lu" name="keywords" />
+<meta content="a" name="keywords" />
+<meta content="p" name="keywords" />
+<meta content="l" name="keywords" />
+<meta content="u" name="keywords" />
+<meta content="factor" name="keywords" />
+<meta content="determinant" name="keywords" />
+<meta content="sizevector" name="keywords" />
+<meta content="floatvector" name="keywords" />
+<meta content="float" name="keywords" />
+<meta content="absgeq" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuFactor &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lu_factor.cpp" href="lu_factor.cpp.html" />
+    <link rel="prev" title="lu_solve.hpp" href="lu_solve.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="LuSolve.html">LuSolve</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">LuFactor</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="lu_factor.cpp.html">lu_factor.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lu_factor.hpp.html">lu_factor.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="LuInvert.html">LuInvert</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NumericType.html">NumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+          <li><a href="lu_det_and_solve.html">lu_det_and_solve</a> &raquo;</li>
+      <li>LuFactor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/LuFactor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="lufactor">
+<span id="lufactor-name"></span><h1>LuFactor<a class="headerlink" href="#lufactor" title="Permalink to this headline"></a></h1>
+<section id="lu-factorization-of-a-square-matrix">
+<span id="lufactor-title"></span><span id="index-0"></span><h2>LU Factorization of A Square Matrix<a class="headerlink" href="#lu-factorization-of-a-square-matrix" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#description" id="id2">Description</a></p></li>
+<li><p><a class="reference internal" href="#include" id="id3">Include</a></p></li>
+<li><p><a class="reference internal" href="#matrix-storage" id="id4">Matrix Storage</a></p></li>
+<li><p><a class="reference internal" href="#sign" id="id5">sign</a></p></li>
+<li><p><a class="reference internal" href="#ip" id="id6">ip</a></p></li>
+<li><p><a class="reference internal" href="#jp" id="id7">jp</a></p></li>
+<li><p><a class="reference internal" href="#lu" id="id8">LU</a></p>
+<ul>
+<li><p><a class="reference internal" href="#a" id="id9">A</a></p></li>
+<li><p><a class="reference internal" href="#p" id="id10">P</a></p></li>
+<li><p><a class="reference internal" href="#l" id="id11">L</a></p></li>
+<li><p><a class="reference internal" href="#u" id="id12">U</a></p></li>
+<li><p><a class="reference internal" href="#factor" id="id13">Factor</a></p></li>
+<li><p><a class="reference internal" href="#determinant" id="id14">Determinant</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#sizevector" id="id15">SizeVector</a></p></li>
+<li><p><a class="reference internal" href="#floatvector" id="id16">FloatVector</a></p></li>
+<li><p><a class="reference internal" href="#float" id="id17">Float</a></p></li>
+<li><p><a class="reference internal" href="#absgeq" id="id18">AbsGeq</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id19">Example</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id20">Source</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="lufactor-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p># <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">&lt;cppad/utility/lu_factor.hpp&gt;</span></code></p>
+</div></blockquote>
+<p><em>sign</em> = <code class="docutils literal notranslate"><span class="pre">LuFactor</span></code> ( <em>ip</em> , <em>jp</em> , <em>LU</em> )</p>
+</section>
+<section id="description">
+<span id="lufactor-description"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Description</a><a class="headerlink" href="#description" title="Permalink to this headline"></a></h3>
+<p>Computes an LU factorization of the matrix <em>A</em>
+where <em>A</em> is a square matrix.</p>
+</section>
+<section id="include">
+<span id="lufactor-include"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Include</a><a class="headerlink" href="#include" title="Permalink to this headline"></a></h3>
+<p>The file <code class="docutils literal notranslate"><span class="pre">cppad/utility/lu_factor.hpp</span></code>
+is included by <code class="docutils literal notranslate"><span class="pre">cppad/cppad.hpp</span></code>
+but it can also be included separately with out the rest of
+the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> routines.</p>
+</section>
+<section id="matrix-storage">
+<span id="lufactor-matrix-storage"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Matrix Storage</a><a class="headerlink" href="#matrix-storage" title="Permalink to this headline"></a></h3>
+<p>All matrices are stored in row major order.
+To be specific, if <span class="math notranslate nohighlight">\(Y\)</span> is a vector
+that contains a <span class="math notranslate nohighlight">\(p\)</span> by <span class="math notranslate nohighlight">\(q\)</span> matrix,
+the size of <span class="math notranslate nohighlight">\(Y\)</span> must be equal to <span class="math notranslate nohighlight">\(p * q\)</span> and for
+<span class="math notranslate nohighlight">\(i = 0 , \ldots , p-1\)</span>,
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , q-1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[Y_{i,j} = Y[ i * q + j ]\]</div>
+</section>
+<section id="sign">
+<span id="lufactor-sign"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">sign</a><a class="headerlink" href="#sign" title="Permalink to this headline"></a></h3>
+<p>The return value <em>sign</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <em>sign</em></p>
+</div></blockquote>
+<p>If <em>A</em> is invertible, <em>sign</em> is plus or minus one
+and is the sign of the permutation corresponding to the row ordering
+<em>ip</em> and column ordering <em>jp</em> .
+If <em>A</em> is not invertible, <em>sign</em> is zero.</p>
+</section>
+<section id="ip">
+<span id="lufactor-ip"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">ip</a><a class="headerlink" href="#ip" title="Permalink to this headline"></a></h3>
+<p>The argument <em>ip</em> has prototype</p>
+<blockquote>
+<div><p><em>SizeVector</em> &amp; <em>ip</em></p>
+</div></blockquote>
+<p>(see description of <a class="reference internal" href="#lufactor-sizevector"><span class="std std-ref">SizeVector</span></a> below).
+The size of <em>ip</em> is referred to as <em>n</em> in the
+specifications below.
+The input value of the elements of <em>ip</em> does not matter.
+The output value of the elements of <em>ip</em> determine
+the order of the rows in the permuted matrix.</p>
+</section>
+<section id="jp">
+<span id="lufactor-jp"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">jp</a><a class="headerlink" href="#jp" title="Permalink to this headline"></a></h3>
+<p>The argument <em>jp</em> has prototype</p>
+<blockquote>
+<div><p><em>SizeVector</em> &amp; <em>jp</em></p>
+</div></blockquote>
+<p>(see description of <a class="reference internal" href="#lufactor-sizevector"><span class="std std-ref">SizeVector</span></a> below).
+The size of <em>jp</em> must be equal to <em>n</em> .
+The input value of the elements of <em>jp</em> does not matter.
+The output value of the elements of <em>jp</em> determine
+the order of the columns in the permuted matrix.</p>
+</section>
+<section id="lu">
+<span id="lufactor-lu"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">LU</a><a class="headerlink" href="#lu" title="Permalink to this headline"></a></h3>
+<p>The argument <em>LU</em> has the prototype</p>
+<blockquote>
+<div><p><em>FloatVector</em> &amp; <em>LU</em></p>
+</div></blockquote>
+<p>and the size of <em>LU</em> must equal <span class="math notranslate nohighlight">\(n * n\)</span>
+(see description of <a class="reference internal" href="#lufactor-floatvector"><span class="std std-ref">FloatVector</span></a> below).</p>
+<section id="a">
+<span id="lufactor-lu-a"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id9">A</a><a class="headerlink" href="#a" title="Permalink to this headline"></a></h4>
+<p>We define <em>A</em> as the matrix corresponding to the input
+value of <em>LU</em> .</p>
+</section>
+<section id="p">
+<span id="lufactor-lu-p"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">P</a><a class="headerlink" href="#p" title="Permalink to this headline"></a></h4>
+<p>We define the permuted matrix <em>P</em> in terms of <em>A</em> by</p>
+<blockquote>
+<div><p><em>P</em> ( <em>i</em> , <em>j</em> ) = <em>A</em> [ <em>ip</em> [ <em>i</em> ] * <em>n</em> + <em>jp</em> [ <em>j</em> ] ]</p>
+</div></blockquote>
+</section>
+<section id="l">
+<span id="lufactor-lu-l"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id11">L</a><a class="headerlink" href="#l" title="Permalink to this headline"></a></h4>
+<p>We define the lower triangular matrix <em>L</em> in terms of the
+output value of <em>LU</em> .
+The matrix <em>L</em> is zero above the diagonal
+and the rest of the elements are defined by</p>
+<blockquote>
+<div><p><em>L</em> ( <em>i</em> , <em>j</em> ) = <em>LU</em> [ <em>ip</em> [ <em>i</em> ] * <em>n</em> + <em>jp</em> [ <em>j</em> ] ]</p>
+</div></blockquote>
+<p>for <span class="math notranslate nohighlight">\(i = 0 , \ldots , n-1\)</span> and <span class="math notranslate nohighlight">\(j = 0 , \ldots , i\)</span>.</p>
+</section>
+<section id="u">
+<span id="lufactor-lu-u"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id12">U</a><a class="headerlink" href="#u" title="Permalink to this headline"></a></h4>
+<p>We define the upper triangular matrix <em>U</em> in terms of the
+output value of <em>LU</em> .
+The matrix <em>U</em> is zero below the diagonal,
+one on the diagonal,
+and the rest of the elements are defined by</p>
+<blockquote>
+<div><p><em>U</em> ( <em>i</em> , <em>j</em> ) = <em>LU</em> [ <em>ip</em> [ <em>i</em> ] * <em>n</em> + <em>jp</em> [ <em>j</em> ] ]</p>
+</div></blockquote>
+<p>for <span class="math notranslate nohighlight">\(i = 0 , \ldots , n-2\)</span> and <span class="math notranslate nohighlight">\(j = i+1 , \ldots , n-1\)</span>.</p>
+</section>
+<section id="factor">
+<span id="lufactor-lu-factor"></span><span id="index-13"></span><h4><a class="toc-backref" href="#id13">Factor</a><a class="headerlink" href="#factor" title="Permalink to this headline"></a></h4>
+<p>If the return value <em>sign</em> is non-zero,</p>
+<blockquote>
+<div><p><em>L</em> * <em>U</em> = <em>P</em></p>
+</div></blockquote>
+<p>If the return value of <em>sign</em> is zero,
+the contents of <em>L</em> and <em>U</em> are not defined.</p>
+</section>
+<section id="determinant">
+<span id="lufactor-lu-determinant"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id14">Determinant</a><a class="headerlink" href="#determinant" title="Permalink to this headline"></a></h4>
+<p>If the return value <em>sign</em> is zero,
+the determinant of <em>A</em> is zero.
+If <em>sign</em> is non-zero,
+using the output value of <em>LU</em>
+the determinant of the matrix <em>A</em> is equal to</p>
+<blockquote>
+<div><p><em>sign</em> * <em>LU</em> [ <em>ip</em> [0], <em>jp</em> [0]] * … * <em>LU</em> [ <em>ip</em> [ <em>n</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> ], <em>jp</em> [ <em>n</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> ]]</p>
+</div></blockquote>
+</section>
+</section>
+<section id="sizevector">
+<span id="lufactor-sizevector"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">SizeVector</a><a class="headerlink" href="#sizevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SizeVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type size_t</span></a> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="floatvector">
+<span id="lufactor-floatvector"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">FloatVector</a><a class="headerlink" href="#floatvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>FloatVector</em> must be a
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">simple vector class</span></a> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="float">
+<span id="lufactor-float"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">Float</a><a class="headerlink" href="#float" title="Permalink to this headline"></a></h3>
+<p>This notation is used to denote the type corresponding
+to the elements of a <em>FloatVector</em> .
+The type <em>Float</em> must satisfy the conditions
+for a <a class="reference internal" href="NumericType.html#numerictype-name"><span class="std std-ref">NumericType</span></a> type.
+The routine <a class="reference internal" href="CheckNumericType.html#checknumerictype-name"><span class="std std-ref">CheckNumericType</span></a> will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
+of <em>Float</em> objects <em>x</em> and <em>y</em> :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Operation</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">log</span></code> ( <em>x</em> )</p></td>
+<td><p>returns the logarithm of <em>x</em> as a <em>Float</em> object</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="absgeq">
+<span id="lufactor-absgeq"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id18">AbsGeq</a><a class="headerlink" href="#absgeq" title="Permalink to this headline"></a></h3>
+<p>Including the file <code class="docutils literal notranslate"><span class="pre">lu_factor.hpp</span></code> defines the template function</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">template</span> <span class="pre">&lt;class</span></code> <em>Float</em> &gt;</div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">AbsGeq&lt;</span></code> <em>Float</em> &gt;( <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>x</em> , <code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Float</em> &amp; <em>y</em> )</div>
+</div>
+<p>in the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> namespace.
+This function returns true if the absolute value of
+<em>x</em> is greater than or equal the absolute value of <em>y</em> .
+It is used by <code class="docutils literal notranslate"><span class="pre">LuFactor</span></code> to choose the pivot elements.
+This template function definition uses the operator
+<code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> to obtain the absolute value for <em>Float</em> objects.
+If this operator is not defined for your use of <em>Float</em> ,
+you will need to specialize this template so that it works for your
+use of <code class="docutils literal notranslate"><span class="pre">LuFactor</span></code> .</p>
+<p>Complex numbers do not have the operation <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> defined.
+The specializations</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">AbsGeq&lt;</span> <span class="pre">std::complex&lt;float&gt;</span> <span class="pre">&gt;</span></code></div>
+<div class="line">      ( <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::complex&lt;float&gt;</span> <span class="pre">&amp;</span></code> <em>x</em> , <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::complex&lt;float&gt;</span> <span class="pre">&amp;</span></code> <em>y</em> )</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">AbsGeq&lt;</span> <span class="pre">std::complex&lt;double&gt;</span> <span class="pre">&gt;</span></code></div>
+<div class="line">      ( <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::complex&lt;double&gt;</span> <span class="pre">&amp;</span></code> <em>x</em> , <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::complex&lt;double&gt;</span> <span class="pre">&amp;</span></code> <em>y</em> )</div>
+</div>
+<p>are define by including <code class="docutils literal notranslate"><span class="pre">lu_factor.hpp</span></code>
+These return true if the sum of the square of the real and imaginary parts
+of <em>x</em> is greater than or equal the
+sum of the square of the real and imaginary parts of <em>y</em> .</p>
+</section>
+<section id="example">
+<span id="lufactor-example"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id19">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="lu_factor.cpp.html#lu-factor-cpp-name"><span class="std std-ref">lu_factor.cpp</span></a>
+contains an example and test of using <code class="docutils literal notranslate"><span class="pre">LuFactor</span></code> by itself.</p>
+<p>The file <a class="reference internal" href="lu_solve.hpp.html#lu-solve-hpp-name"><span class="std std-ref">lu_solve.hpp</span></a> provides a useful example usage of
+<code class="docutils literal notranslate"><span class="pre">LuFactor</span></code> with <code class="docutils literal notranslate"><span class="pre">LuInvert</span></code> .</p>
+</section>
+<section id="source">
+<span id="lufactor-source"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id20">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="lu_factor.hpp.html#lu-factor-hpp-name"><span class="std std-ref">lu_factor.hpp</span></a> contains the
+current source code that implements these specifications.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lu_solve.hpp.html" class="btn btn-neutral float-left" title="lu_solve.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lu_factor.cpp.html" class="btn btn-neutral float-right" title="lu_factor.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

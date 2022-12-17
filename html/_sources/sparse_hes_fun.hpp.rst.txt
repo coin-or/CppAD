@@ -1,0 +1,19 @@
+lines 6-22 of file: xrst/sparse_hes_fun.xrst
+
+{xrst_begin sparse_hes_fun.hpp}
+
+Source: sparse_hes_fun
+######################
+
+| # ``ifndef CPPAD_SPARSE_HES_FUN_HPP``
+| # ``define CPPAD_SPARSE_HES_FUN_HPP``
+
+{xrst_literal
+   include/cppad/speed/sparse_hes_fun.hpp
+   // BEGIN C++
+   // END C++
+}
+
+``# endif``
+
+{xrst_end sparse_hes_fun.hpp}

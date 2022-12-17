@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="get_cppadcg.sh, download, and, install, cppadcodegen, in, build, directory" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="requirements" name="keywords" />
+<meta content="distribution, directory" name="keywords" />
+<meta content="source, directory" name="keywords" />
+<meta content="prefix" name="keywords" />
+<meta content="git, hash" name="keywords" />
+<meta content="configuration" name="keywords" />
+<meta content="documentation" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>get_cppadcg.sh &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="get_colpack.sh" href="get_colpack.sh.html" />
+    <link rel="prev" title="get_adolc.sh" href="get_adolc.sh.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Install.html">Install</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="download.html">download</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="cmake.html">cmake</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="get_optional.sh.html">get_optional.sh</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="get_adolc.sh.html">get_adolc.sh</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">get_cppadcg.sh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="get_colpack.sh.html">get_colpack.sh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="get_eigen.sh.html">get_eigen.sh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="get_fadbad.sh.html">get_fadbad.sh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="get_ipopt.sh.html">get_ipopt.sh</a></li>
+<li class="toctree-l5"><a class="reference internal" href="get_sacado.sh.html">get_sacado.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="adolc.html">adolc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="eigen.html">eigen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppadcg.html">cppadcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ipopt.html">ipopt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fadbad_prefix.html">fadbad_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sacado_prefix.html">sacado_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="colpack_prefix.html">colpack_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_testvector.html">cppad_testvector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_check.html">cmake_check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgconfig.html">pkgconfig</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Install.html">Install</a> &raquo;</li>
+          <li><a href="cmake.html">cmake</a> &raquo;</li>
+          <li><a href="get_optional.sh.html">get_optional.sh</a> &raquo;</li>
+      <li>get_cppadcg.sh</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/get_cppadcg.sh.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="get-cppadcg-sh">
+<span id="get-cppadcg-sh-name"></span><h1>get_cppadcg.sh<a class="headerlink" href="#get-cppadcg-sh" title="Permalink to this headline"></a></h1>
+<section id="download-and-install-cppadcodegen-in-build-directory">
+<span id="get-cppadcg-sh-title"></span><span id="index-0"></span><h2>Download and Install CppADCodeGen in Build Directory<a class="headerlink" href="#download-and-install-cppadcodegen-in-build-directory" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#requirements" id="id3">Requirements</a></p></li>
+<li><p><a class="reference internal" href="#distribution-directory" id="id4">Distribution Directory</a></p></li>
+<li><p><a class="reference internal" href="#source-directory" id="id5">Source Directory</a></p></li>
+<li><p><a class="reference internal" href="#prefix" id="id6">Prefix</a></p></li>
+<li><p><a class="reference internal" href="#git-hash" id="id7">Git Hash</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id8">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#documentation" id="id9">Documentation</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="get-cppadcg-sh-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">bin/get_cppadcg.sh</span></code></p>
+</section>
+<section id="purpose">
+<span id="get-cppadcg-sh-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>If you are using Unix, this command will download and install
+<a class="reference external" href="https://github.com/joaoleal/CppADCodeGen">cppadcg</a>
+in the CppAD <code class="docutils literal notranslate"><span class="pre">build</span></code> directory.</p>
+</section>
+<section id="requirements">
+<span id="get-cppadcg-sh-requirements"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h3>
+<p>You must first use <a class="reference internal" href="get_eigen.sh.html#get-eigen-sh-name"><span class="std std-ref">get_eigen.sh</span></a> to download and install Eigen.</p>
+</section>
+<section id="distribution-directory">
+<span id="get-cppadcg-sh-distribution-directory"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Distribution Directory</a><a class="headerlink" href="#distribution-directory" title="Permalink to this headline"></a></h3>
+<p>This command must be executed in the
+<a class="reference internal" href="download.html#download-distribution-directory"><span class="std std-ref">Distribution Directory</span></a> .</p>
+</section>
+<section id="source-directory">
+<span id="get-cppadcg-sh-source-directory"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Source Directory</a><a class="headerlink" href="#source-directory" title="Permalink to this headline"></a></h3>
+<p>The Cppadcg source code is downloaded into the sub-directory
+<code class="docutils literal notranslate"><span class="pre">external/cppadcg.git</span></code> below the distribution directory.</p>
+</section>
+<section id="prefix">
+<span id="get-cppadcg-sh-prefix"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Prefix</a><a class="headerlink" href="#prefix" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="get_optional.sh.html#get-optional-sh-prefix"><span class="std std-ref">prefix</span></a>
+in the file <code class="docutils literal notranslate"><span class="pre">bin/get_optional.sh</span></code> is used for this install.</p>
+</section>
+<section id="git-hash">
+<span id="get-cppadcg-sh-git-hash"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Git Hash</a><a class="headerlink" href="#git-hash" title="Permalink to this headline"></a></h3>
+<p>This will install the commit of Cppadcg with the following git hash</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">git_hash</span><span class="o">=</span><span class="s1">&#39;b5307ad&#39;</span>
+</pre></div>
+</div>
+<p>The date corresponding to this commit was 20201009.</p>
+</section>
+<section id="configuration">
+<span id="get-cppadcg-sh-configuration"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h3>
+<p>If the file</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">external/cppadcg-</span></code> <em>git_hash</em> . <code class="docutils literal notranslate"><span class="pre">configured</span></code></p>
+</div></blockquote>
+<p>exists, the configuration will be skipped.
+Delete this file if you want to re-run the configuration.</p>
+</section>
+<section id="documentation">
+<span id="get-cppadcg-sh-documentation"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Documentation</a><a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h3>
+<p>If you change the setting for <code class="docutils literal notranslate"><span class="pre">CREATE_DOXYGEN_DOC</span></code> to <code class="docutils literal notranslate"><span class="pre">ON</span></code> ,
+the doxygen documentation for CppADCodeGen will be installed in the directory</p>
+<blockquote>
+<div><p><em>prefix</em> / <code class="docutils literal notranslate"><span class="pre">share/doc/cppadcg/html</span></code></p>
+</div></blockquote>
+<p>where <em>prefix</em> has the value specified in the
+<a class="reference internal" href="get_optional.sh.html#get-optional-sh-prefix"><span class="std std-ref">get_optional.sh</span></a> file.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_adolc.sh.html" class="btn btn-neutral float-left" title="get_adolc.sh" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="get_colpack.sh.html" class="btn btn-neutral float-right" title="get_colpack.sh" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="colpack_prefix, enabling, colpack, sparsity, calculations" name="keywords" />
+<meta content="colpack, home, page" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="colpack_prefix" name="keywords" />
+<meta content="cppad_lib" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="get_colpack" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>colpack_prefix &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="colpack_jac.cpp" href="colpack_jac.cpp.html" />
+    <link rel="prev" title="sacado_prefix" href="sacado_prefix.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Install.html">Install</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="download.html">download</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="cmake.html">cmake</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="get_optional.sh.html">get_optional.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="adolc.html">adolc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="eigen.html">eigen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppadcg.html">cppadcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ipopt.html">ipopt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fadbad_prefix.html">fadbad_prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sacado_prefix.html">sacado_prefix</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">colpack_prefix</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="colpack_jac.cpp.html">colpack_jac.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="colpack_jacobian.cpp.html">colpack_jacobian.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="colpack_hes.cpp.html">colpack_hes.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="colpack_hessian.cpp.html">colpack_hessian.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_testvector.html">cppad_testvector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_check.html">cmake_check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgconfig.html">pkgconfig</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Install.html">Install</a> &raquo;</li>
+          <li><a href="cmake.html">cmake</a> &raquo;</li>
+      <li>colpack_prefix</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/colpack_prefix.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="colpack-prefix">
+<span id="colpack-prefix-name"></span><h1>colpack_prefix<a class="headerlink" href="#colpack-prefix" title="Permalink to this headline"></a></h1>
+<section id="enabling-colpack-sparsity-calculations">
+<span id="colpack-prefix-title"></span><span id="index-0"></span><h2>Enabling Colpack Sparsity Calculations<a class="headerlink" href="#enabling-colpack-sparsity-calculations" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#colpack-home-page" id="id2">Colpack Home Page</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#colpack-prefix-colpack-prefix" id="id4">colpack_prefix</a></p></li>
+<li><p><a class="reference internal" href="#cppad-lib" id="id5">cppad_lib</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id6">Example</a></p></li>
+<li><p><a class="reference internal" href="#get-colpack" id="id7">get_colpack</a></p></li>
+</ul>
+</div>
+<section id="colpack-home-page">
+<span id="colpack-prefix-colpack-home-page"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Colpack Home Page</a><a class="headerlink" href="#colpack-home-page" title="Permalink to this headline"></a></h3>
+<p><a class="reference external" href="https://github.com/CSCsw/ColPack">https://github.com/CSCsw/ColPack</a></p>
+</section>
+<section id="purpose">
+<span id="colpack-prefix-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>If you specify a <em>colpack_prefix</em> on the
+<a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a> line,
+the CppAD <a class="reference internal" href="sparse_jacobian.html#sparse-jacobian-name"><span class="std std-ref">sparse_jacobian</span></a> and <a class="reference internal" href="sparse_hessian.html#sparse-hessian-name"><span class="std std-ref">sparse_hessian</span></a>
+calculations can use this package.</p>
+</section>
+<section id="colpack-prefix-colpack-prefix">
+<span id="index-3"></span><span id="id1"></span><h3><a class="toc-backref" href="#id4">colpack_prefix</a><a class="headerlink" href="#colpack-prefix-colpack-prefix" title="Permalink to this headline"></a></h3>
+<p>If Colpack is installed on your system, you can
+specify a value for its install <em>colpack_prefix</em> on the
+<a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command line.
+The value of <em>colpack_prefix</em> must be such that,
+for one of the directories <em>dir</em> in
+<a class="reference internal" href="cmake.html#cmake-cmake-install-includedirs"><span class="std std-ref">cmake_install_includedirs</span></a> ,</p>
+<blockquote>
+<div><p><em>colpack_prefix</em> / <em>dir</em> / <code class="docutils literal notranslate"><span class="pre">ColPack/ColPackHeaders.h</span></code></p>
+</div></blockquote>
+<p>is a valid way to reference to the include file <code class="docutils literal notranslate"><span class="pre">ColPackHeaders.h</span></code> .</p>
+</section>
+<section id="cppad-lib">
+<span id="colpack-prefix-cppad-lib"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id5">cppad_lib</a><a class="headerlink" href="#cppad-lib" title="Permalink to this headline"></a></h3>
+<p>The Colpack header files has a</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code></p>
+</div></blockquote>
+<p>at the global level.
+For this reason, CppAD does not include these files.
+It is therefore necessary to link the object library <code class="docutils literal notranslate"><span class="pre">cppad_lib</span></code>
+when using Colpack.</p>
+</section>
+<section id="example">
+<span id="colpack-prefix-example"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id6">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="colpack_jac.cpp.html#colpack-jac-cpp-name"><span class="std std-ref">colpack_jac.cpp</span></a> (<a class="reference internal" href="colpack_hes.cpp.html#colpack-hes-cpp-name"><span class="std std-ref">colpack_hes.cpp</span></a> )
+contains an example and test of using Colpack to compute the coloring for
+sparse Jacobians (Hessians).</p>
+</section>
+<section id="get-colpack">
+<span id="colpack-prefix-get-colpack"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">get_colpack</a><a class="headerlink" href="#get-colpack" title="Permalink to this headline"></a></h3>
+<p>If you are using Unix, you can download and install
+a copy of Colpack using <a class="reference internal" href="get_colpack.sh.html#get-colpack-sh-name"><span class="std std-ref">get_colpack.sh</span></a> .
+The corresponding <em>colpack_prefix</em> would be
+<code class="docutils literal notranslate"><span class="pre">build/prefix</span></code> .</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sacado_prefix.html" class="btn btn-neutral float-left" title="sacado_prefix" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="colpack_jac.cpp.html" class="btn btn-neutral float-right" title="colpack_jac.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

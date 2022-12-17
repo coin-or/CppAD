@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="base_float.hpp, enable, use, of, ad&lt;base&gt;, where, base, is, float" name="keywords" />
+<meta content="condexpop" name="keywords" />
+<meta content="condexprel" name="keywords" />
+<meta content="equalopseq" name="keywords" />
+<meta content="identical" name="keywords" />
+<meta content="integer" name="keywords" />
+<meta content="azmul" name="keywords" />
+<meta content="ordered" name="keywords" />
+<meta content="unary, standard, math" name="keywords" />
+<meta content="sign" name="keywords" />
+<meta content="pow" name="keywords" />
+<meta content="numeric_limits" name="keywords" />
+<meta content="to_string" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>base_float.hpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="base_double.hpp" href="base_double.hpp.html" />
+    <link rel="prev" title="mul_level_adolc.cpp" href="mul_level_adolc.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ADValued.html">ADValued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="base_require.html">base_require</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="base_member.html">base_member</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_cond_exp.html">base_cond_exp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_identical.html">base_identical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_ordered.html">base_ordered</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_std_math.html">base_std_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_limits.html">base_limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_to_string.html">base_to_string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base_hash.html">base_hash</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="base_example.html">base_example</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="base_alloc.hpp.html">base_alloc.hpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="base_require.cpp.html">base_require.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="base_adolc.hpp.html">base_adolc.hpp</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">base_float.hpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="base_double.hpp.html">base_double.hpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="base_complex.hpp.html">base_complex.hpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="base_require.html">base_require</a> &raquo;</li>
+          <li><a href="base_example.html">base_example</a> &raquo;</li>
+      <li>base_float.hpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/base_float.hpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="base-float-hpp">
+<span id="base-float-hpp-name"></span><h1>base_float.hpp<a class="headerlink" href="#base-float-hpp" title="Permalink to this headline"></a></h1>
+<section id="enable-use-of-ad-base-where-base-is-float">
+<span id="base-float-hpp-title"></span><span id="index-0"></span><h2>Enable use of AD&lt;Base&gt; where Base is float<a class="headerlink" href="#enable-use-of-ad-base-where-base-is-float" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#condexpop" id="id1">CondExpOp</a></p></li>
+<li><p><a class="reference internal" href="#condexprel" id="id2">CondExpRel</a></p></li>
+<li><p><a class="reference internal" href="#equalopseq" id="id3">EqualOpSeq</a></p></li>
+<li><p><a class="reference internal" href="#base-float-hpp-identical" id="id4">Identical</a></p></li>
+<li><p><a class="reference internal" href="#integer" id="id5">Integer</a></p></li>
+<li><p><a class="reference internal" href="#azmul" id="id6">azmul</a></p></li>
+<li><p><a class="reference internal" href="#ordered" id="id7">Ordered</a></p></li>
+<li><p><a class="reference internal" href="#unary-standard-math" id="id8">Unary Standard Math</a></p></li>
+<li><p><a class="reference internal" href="#sign" id="id9">sign</a></p></li>
+<li><p><a class="reference internal" href="#pow" id="id10">pow</a></p></li>
+<li><p><a class="reference internal" href="#numeric-limits" id="id11">numeric_limits</a></p></li>
+<li><p><a class="reference internal" href="#to-string" id="id12">to_string</a></p></li>
+</ul>
+</div>
+<section id="condexpop">
+<span id="base-float-hpp-condexpop"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">CondExpOp</a><a class="headerlink" href="#condexpop" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">float</span></code> is a relatively simple type that supports
+<code class="docutils literal notranslate"><span class="pre">&lt;</span></code> , <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> , <code class="docutils literal notranslate"><span class="pre">==</span></code> , <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> , and <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> operators; see
+<a class="reference internal" href="base_cond_exp.html#base-cond-exp-condexptemplate-ordered-type"><span class="std std-ref">Ordered Type</span></a> .
+Hence its <code class="docutils literal notranslate"><span class="pre">CondExpOp</span></code> function is defined by</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">CondExpOp</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">enum</span><span class="w"> </span><span class="nc">CompareOp</span><span class="w">     </span><span class="n">cop</span><span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w">       </span><span class="n">left</span><span class="w">         </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w">       </span><span class="n">right</span><span class="w">        </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w">       </span><span class="n">exp_if_true</span><span class="w">  </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w">       </span><span class="n">exp_if_false</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">CondExpTemplate</span><span class="p">(</span><span class="n">cop</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">exp_if_true</span><span class="p">,</span><span class="w"> </span><span class="n">exp_if_false</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="condexprel">
+<span id="base-float-hpp-condexprel"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">CondExpRel</a><a class="headerlink" href="#condexprel" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="base_cond_exp.html#base-cond-exp-condexprel"><span class="std std-ref">CPPAD_COND_EXP_REL</span></a> macro invocation</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_COND_EXP_REL</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>uses <code class="docutils literal notranslate"><span class="pre">CondExpOp</span></code> above to
+define <code class="docutils literal notranslate"><span class="pre">CondExp</span></code> <em>Rel</em> for <code class="docutils literal notranslate"><span class="pre">float</span></code> arguments
+and <em>Rel</em> equal to
+<code class="docutils literal notranslate"><span class="pre">Lt</span></code> , <code class="docutils literal notranslate"><span class="pre">Le</span></code> , <code class="docutils literal notranslate"><span class="pre">Eq</span></code> , <code class="docutils literal notranslate"><span class="pre">Ge</span></code> , and <code class="docutils literal notranslate"><span class="pre">Gt</span></code> .</p>
+</section>
+<section id="equalopseq">
+<span id="base-float-hpp-equalopseq"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">EqualOpSeq</a><a class="headerlink" href="#equalopseq" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">float</span></code> is simple (in this respect) and so we define</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">EqualOpSeq</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="base-float-hpp-identical">
+<span id="index-4"></span><span id="identical"></span><h3><a class="toc-backref" href="#id4">Identical</a><a class="headerlink" href="#base-float-hpp-identical" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">float</span></code> is simple (in this respect) and so we define</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IdenticalCon</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IdenticalZero</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.f</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IdenticalOne</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">1.f</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IdenticalEqualCon</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="integer">
+<span id="base-float-hpp-integer"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Integer</a><a class="headerlink" href="#integer" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">Integer</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="azmul">
+<span id="base-float-hpp-azmul"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">azmul</a><a class="headerlink" href="#azmul" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_AZMUL</span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="ordered">
+<span id="base-float-hpp-ordered"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Ordered</a><a class="headerlink" href="#ordered" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">float</span></code> type supports ordered comparisons</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">GreaterThanZero</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.f</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">GreaterThanOrZero</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.f</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">LessThanZero</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.f</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">LessThanOrZero</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.f</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">abs_geq</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="unary-standard-math">
+<span id="base-float-hpp-unary-standard-math"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Unary Standard Math</a><a class="headerlink" href="#unary-standard-math" title="Permalink to this headline"></a></h3>
+<p>The following macro invocations import the <code class="docutils literal notranslate"><span class="pre">float</span></code> versions of
+the unary standard math functions into the <code class="docutils literal notranslate"><span class="pre">CppAD</span></code> namespace.
+Importing avoids ambiguity errors when using both the
+<code class="docutils literal notranslate"><span class="pre">CppAD</span></code> and <code class="docutils literal notranslate"><span class="pre">std</span></code> namespaces.
+Note this also defines the <a class="reference internal" href="base_double.hpp.html#base-double-hpp-unary-standard-math"><span class="std std-ref">double</span></a>
+versions of these functions.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">acos</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">asin</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">atan</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cos</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cosh</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exp</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">log</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">log10</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">sin</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">sinh</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">tan</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">tanh</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">asinh</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">acosh</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">atanh</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">erf</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">erfc</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">expm1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">log1p</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The absolute value function is special because its <code class="docutils literal notranslate"><span class="pre">std</span></code> name is
+<code class="docutils literal notranslate"><span class="pre">fabs</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="sign">
+<span id="base-float-hpp-sign"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">sign</a><a class="headerlink" href="#sign" title="Permalink to this headline"></a></h3>
+<p>The following defines the <code class="docutils literal notranslate"><span class="pre">CppAD::sign</span></code> function that
+is required to use <code class="docutils literal notranslate"><span class="pre">AD&lt;float&gt;</span></code> :</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kr">inline</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">sign</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.f</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="mf">1.f</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.f</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="mf">0.f</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mf">-1.f</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="pow">
+<span id="base-float-hpp-pow"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">pow</a><a class="headerlink" href="#pow" title="Permalink to this headline"></a></h3>
+<p>The following defines a <code class="docutils literal notranslate"><span class="pre">CppAD::pow</span></code> function that
+is required to use <code class="docutils literal notranslate"><span class="pre">AD&lt;float&gt;</span></code> .
+As with the unary standard math functions,
+this has the exact same signature as <code class="docutils literal notranslate"><span class="pre">std::pow</span></code> ,
+so use it instead of defining another function.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="numeric-limits">
+<span id="base-float-hpp-numeric-limits"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">numeric_limits</a><a class="headerlink" href="#numeric-limits" title="Permalink to this headline"></a></h3>
+<p>The following defines the CppAD <a class="reference internal" href="numeric_limits.html#numeric-limits-name"><span class="std std-ref">numeric_limits</span></a>
+for the type <code class="docutils literal notranslate"><span class="pre">float</span></code> :</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">CppAD</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">CPPAD_NUMERIC_LIMITS</span><span class="p">(</span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="to-string">
+<span id="base-float-hpp-to-string"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">to_string</a><a class="headerlink" href="#to-string" title="Permalink to this headline"></a></h3>
+<p>There is no need to define <code class="docutils literal notranslate"><span class="pre">to_string</span></code> for <code class="docutils literal notranslate"><span class="pre">float</span></code>
+because it is defined by including <code class="docutils literal notranslate"><span class="pre">cppad/utility/to_string.hpp</span></code> ;
+see <a class="reference internal" href="to_string.html#to-string-name"><span class="std std-ref">to_string</span></a> .
+See <a class="reference internal" href="base_complex.hpp.html#base-complex-hpp-to-string"><span class="std std-ref">base_complex.hpp</span></a> for an example where
+it is necessary to define <code class="docutils literal notranslate"><span class="pre">to_string</span></code> for a <em>Base</em> type.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mul_level_adolc.cpp.html" class="btn btn-neutral float-left" title="mul_level_adolc.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="base_double.hpp.html" class="btn btn-neutral float-right" title="base_double.hpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

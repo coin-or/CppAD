@@ -1,0 +1,43 @@
+lines 7-47 of file: example/atomic_four/norm_sq.cpp
+
+{xrst_begin atomic_four_norm_sq.cpp}
+{xrst_spell
+   euclidean
+}
+
+Atomic Euclidean Norm Squared: Example and Test
+###############################################
+
+Function
+********
+This example demonstrates using :ref:`atomic_four-name`
+to define the operation
+:math:`g : \B{R}^n \rightarrow \B{R}` where
+
+.. math::
+
+   g(x) =  x_0^2 + \cdots + x_{n-1}^2
+
+Purpose
+*******
+This atomic function demonstrates the following cases:
+
+#. an arbitrary number of arguments *n*
+#. zero and first order forward mode.
+#. first order derivatives using reverse mode.
+
+Define Atomic Function
+**********************
+{xrst_literal
+   // BEGIN_DEFINE_ATOMIC_FUNCTION
+   // END_DEFINE_ATOMIC_FUNCTION
+}
+
+Use Atomic Function
+*******************
+{xrst_literal
+   // BEGIN_USE_ATOMIC_FUNCTION
+   // END_USE_ATOMIC_FUNCTION
+}
+
+{xrst_end atomic_four_norm_sq.cpp}

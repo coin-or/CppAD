@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="subgraph_jac_rev, compute, sparse, jacobians, using, subgraphs" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="see, also" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="method" name="keywords" />
+<meta content="basevector" name="keywords" />
+<meta content="sizevector" name="keywords" />
+<meta content="boolvector" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="x" name="keywords" />
+<meta content="uses, forward" name="keywords" />
+<meta content="subset" name="keywords" />
+<meta content="select_domain" name="keywords" />
+<meta content="select_range" name="keywords" />
+<meta content="matrix_out" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>subgraph_jac_rev &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="subgraph_jac_rev.cpp" href="subgraph_jac_rev.cpp.html" />
+    <link rel="prev" title="sparse_sub_hes.cpp" href="sparse_sub_hes.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Forward.html">Forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sparse_jac.html">sparse_jac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_jacobian.html">sparse_jacobian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hes.html">sparse_hes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sparse_hessian.html">sparse_hessian</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">subgraph_jac_rev</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="subgraph_jac_rev.cpp.html">subgraph_jac_rev.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="subgraph_hes2jac.cpp.html">subgraph_hes2jac.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="sparse_derivative.html">sparse_derivative</a> &raquo;</li>
+      <li>subgraph_jac_rev</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/subgraph_jac_rev.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="subgraph-jac-rev">
+<span id="subgraph-jac-rev-name"></span><h1>subgraph_jac_rev<a class="headerlink" href="#subgraph-jac-rev" title="Permalink to this headline"></a></h1>
+<section id="compute-sparse-jacobians-using-subgraphs">
+<span id="subgraph-jac-rev-title"></span><span id="index-0"></span><h2>Compute Sparse Jacobians Using Subgraphs<a class="headerlink" href="#compute-sparse-jacobians-using-subgraphs" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id2">See Also</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id3">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#method" id="id4">Method</a></p></li>
+<li><p><a class="reference internal" href="#basevector" id="id5">BaseVector</a></p></li>
+<li><p><a class="reference internal" href="#sizevector" id="id6">SizeVector</a></p></li>
+<li><p><a class="reference internal" href="#boolvector" id="id7">BoolVector</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id8">f</a></p></li>
+<li><p><a class="reference internal" href="#x" id="id9">x</a></p></li>
+<li><p><a class="reference internal" href="#uses-forward" id="id10">Uses Forward</a></p></li>
+<li><p><a class="reference internal" href="#subset" id="id11">subset</a></p></li>
+<li><p><a class="reference internal" href="#select-domain" id="id12">select_domain</a></p></li>
+<li><p><a class="reference internal" href="#select-range" id="id13">select_range</a></p></li>
+<li><p><a class="reference internal" href="#matrix-out" id="id14">matrix_out</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id15">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="subgraph-jac-rev-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>f</em> . <code class="docutils literal notranslate"><span class="pre">subgraph_jac_rev</span></code> ( <em>x</em> , <em>subset</em> )</div>
+<div class="line"><em>f</em> . <code class="docutils literal notranslate"><span class="pre">subgraph_jac_rev</span></code> (</div>
+<div class="line">      <em>select_domain</em> , <em>select_range</em> , <em>x</em> , <em>matrix_out</em></div>
+<div class="line">)</div>
+</div>
+</section>
+<section id="see-also">
+<span id="subgraph-jac-rev-see-also"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="subgraph_reverse.html#subgraph-reverse-clear-subgraph"><span class="std std-ref">clear_subgraph</span></a> .</p>
+</section>
+<section id="purpose">
+<span id="subgraph-jac-rev-purpose"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+function corresponding to <em>f</em> .
+Here <em>n</em> is the <a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> size,
+and <em>m</em> is the <a class="reference internal" href="fun_property.html#fun-property-range"><span class="std std-ref">Range</span></a> size, or <em>f</em> .
+The syntax above takes advantage of sparsity when computing the Jacobian</p>
+<div class="math notranslate nohighlight">
+\[J(x) = F^{(1)} (x)\]</div>
+<p>The  first syntax requires one to know what which elements of the Jacobian
+they want to compute.
+The second syntax computes the sparsity pattern and the value
+of the Jacobian at the same time.
+If one only wants the sparsity pattern,
+it should be faster to use <a class="reference internal" href="subgraph_sparsity.html#subgraph-sparsity-name"><span class="std std-ref">subgraph_sparsity</span></a> .</p>
+</section>
+<section id="method">
+<span id="subgraph-jac-rev-method"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Method</a><a class="headerlink" href="#method" title="Permalink to this headline"></a></h3>
+<p>This routine uses a subgraph technique. To be specific,
+for each dependent variable,
+it creates a subgraph of the operation sequence
+containing the variables that affect the dependent variable.
+This avoids the overhead of performing set operations
+that is inherent in other methods for computing sparsity patterns.</p>
+</section>
+<section id="basevector">
+<span id="subgraph-jac-rev-basevector"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">BaseVector</a><a class="headerlink" href="#basevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>BaseVector</em> is a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .</p>
+</section>
+<section id="sizevector">
+<span id="subgraph-jac-rev-sizevector"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">SizeVector</a><a class="headerlink" href="#sizevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>SizeVector</em> is a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">size_t</span></code> .</p>
+</section>
+<section id="boolvector">
+<span id="subgraph-jac-rev-boolvector"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">BoolVector</a><a class="headerlink" href="#boolvector" title="Permalink to this headline"></a></h3>
+<p>The type <em>BoolVector</em> is a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<code class="docutils literal notranslate"><span class="pre">bool</span></code> .</p>
+</section>
+<section id="f">
+<span id="subgraph-jac-rev-f"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>This object has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Note that the Taylor coefficients stored in <em>f</em> are affected
+by this operation; see
+<a class="reference internal" href="sparse_jac.html#sparse-jac-uses-forward"><span class="std std-ref">Uses Forward</span></a> below.</p>
+</section>
+<section id="x">
+<span id="subgraph-jac-rev-x"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">x</a><a class="headerlink" href="#x" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BaseVector</em> &amp; <em>x</em></p>
+</div></blockquote>
+<p>It is the value of <em>x</em> at which we are computing the Jacobian.</p>
+</section>
+<section id="uses-forward">
+<span id="subgraph-jac-rev-uses-forward"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Uses Forward</a><a class="headerlink" href="#uses-forward" title="Permalink to this headline"></a></h3>
+<p>After each call to <a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> ,
+the object <em>f</em> contains the corresponding
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a> .
+After a call to <code class="docutils literal notranslate"><span class="pre">sparse_jac_forward</span></code> or <code class="docutils literal notranslate"><span class="pre">sparse_jac_rev</span></code> ,
+the zero order coefficients correspond to</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> (0, <em>x</em> )</p>
+</div></blockquote>
+<p>All the other forward mode coefficients are unspecified.</p>
+</section>
+<section id="subset">
+<span id="subgraph-jac-rev-subset"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">subset</a><a class="headerlink" href="#subset" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">sparse_rcv&lt;</span></code> <em>SizeVector</em> , <em>BaseVector</em> &gt;&amp; <em>subset</em></p>
+</div></blockquote>
+<p>Its row size is <em>subset</em> . <code class="docutils literal notranslate"><span class="pre">nr</span></code> () == <em>m</em> ,
+and its column size is <em>subset</em> . <code class="docutils literal notranslate"><span class="pre">nc</span></code> () == <em>n</em> .
+It specifies which elements of the Jacobian are computed.
+The input elements in its value vector
+<em>subset</em> . <code class="docutils literal notranslate"><span class="pre">val</span></code> () do not matter.
+Upon return it contains the value of the corresponding elements
+of the Jacobian.</p>
+</section>
+<section id="select-domain">
+<span id="subgraph-jac-rev-select-domain"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">select_domain</a><a class="headerlink" href="#select-domain" title="Permalink to this headline"></a></h3>
+<p>The argument <em>select_domain</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BoolVector</em> &amp; <em>select_domain</em></p>
+</div></blockquote>
+<p>It has size <span class="math notranslate nohighlight">\(n\)</span> and specifies which independent variables
+to include.</p>
+</section>
+<section id="select-range">
+<span id="subgraph-jac-rev-select-range"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">select_range</a><a class="headerlink" href="#select-range" title="Permalink to this headline"></a></h3>
+<p>The argument <em>select_range</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BoolVector</em> &amp; <em>select_range</em></p>
+</div></blockquote>
+<p>It has size <span class="math notranslate nohighlight">\(m\)</span> and specifies which components of the range
+to include in the calculation.
+A subgraph is built for each dependent variable and the selected set
+of independent variables.</p>
+</section>
+<section id="matrix-out">
+<span id="subgraph-jac-rev-matrix-out"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">matrix_out</a><a class="headerlink" href="#matrix-out" title="Permalink to this headline"></a></h3>
+<p>This argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">sparse_rcv&lt;</span></code> <em>SizeVector</em> , <em>BaseVector</em> &gt;&amp; <em>matrix_out</em></p>
+</div></blockquote>
+<p>This input value of <em>matrix_out</em> does not matter.
+Upon return <em>matrix_out</em> is
+<a class="reference internal" href="sparse_rcv.html#sparse-rcv-name"><span class="std std-ref">sparse matrix</span></a> representation of <span class="math notranslate nohighlight">\(F^{(1)} (x)\)</span>.
+The matrix has <span class="math notranslate nohighlight">\(m\)</span> rows, <span class="math notranslate nohighlight">\(n\)</span> columns.
+If <em>select_domain</em> [ <em>j</em> ] is true,
+<em>select_range</em> [ <em>i</em> ] is true, and
+<span class="math notranslate nohighlight">\(F_i (x)\)</span> depends on <span class="math notranslate nohighlight">\(x_j\)</span>,
+then the pair <span class="math notranslate nohighlight">\((i, j)\)</span> is in <em>matrix_out</em> .
+For each <em>k</em> = 0 , …, <em>matrix_out</em> . <code class="docutils literal notranslate"><span class="pre">nnz</span></code> () , let</p>
+<div class="line-block">
+<div class="line">      <em>i</em> = <em>matrix_out</em> . <code class="docutils literal notranslate"><span class="pre">row</span></code> ()[ <em>k</em> ]</div>
+<div class="line">      <em>j</em> = <em>matrix_out</em> . <code class="docutils literal notranslate"><span class="pre">col</span></code> ()[ <em>k</em> ]</div>
+<div class="line">      <em>v</em> = <em>matrix_out</em> . <code class="docutils literal notranslate"><span class="pre">val</span></code> ()[ <em>k</em> ]</div>
+</div>
+<p>It follows that the partial of <span class="math notranslate nohighlight">\(F_i (x)\)</span> with respect to
+<span class="math notranslate nohighlight">\(x_j\)</span> is equal to <span class="math notranslate nohighlight">\(v\)</span>.</p>
+</section>
+<section id="example">
+<span id="subgraph-jac-rev-example"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The files <a class="reference internal" href="subgraph_jac_rev.cpp.html#subgraph-jac-rev-cpp-name"><span class="std std-ref">subgraph_jac_rev.cpp</span></a> and <a class="reference internal" href="subgraph_hes2jac.cpp.html#subgraph-hes2jac-cpp-name"><span class="std std-ref">subgraph_hes2jac.cpp</span></a>
+are examples and tests using <code class="docutils literal notranslate"><span class="pre">subgraph_jac_rev</span></code> .
+They returns <code class="docutils literal notranslate"><span class="pre">true</span></code> for success and <code class="docutils literal notranslate"><span class="pre">false</span></code> for failure.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sparse_sub_hes.cpp.html" class="btn btn-neutral float-left" title="sparse_sub_hes.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="subgraph_jac_rev.cpp.html" class="btn btn-neutral float-right" title="subgraph_jac_rev.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

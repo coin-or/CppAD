@@ -1,0 +1,47 @@
+lines 371-415 of file: include/cppad/utility/omp_alloc.hpp
+
+{xrst_begin omp_inuse}
+{xrst_spell
+   inuse
+}
+
+Amount of Memory a Thread is Currently Using
+############################################
+
+Deprecated 2011-08-31
+*********************
+
+Syntax
+******
+
+   # ``include <cppad/utility/omp_alloc.hpp>``
+
+*num_bytes* = ``omp_alloc::inuse`` ( *thread* )
+Use the function :ref:`thread_alloc::inuse<ta_inuse-name>` instead.
+
+Purpose
+*******
+Memory being managed by :ref:`omp_alloc-name` has two states,
+currently in use by the specified thread,
+and quickly available for future use by the specified thread.
+This function informs the program how much memory is in use.
+
+thread
+******
+This argument has prototype
+
+   ``size_t`` *thread*
+
+Either :ref:`omp_get_thread_num-name` must be the same as *thread* ,
+or the current execution mode must be sequential
+(not :ref:`parallel<omp_in_parallel-name>` ).
+
+num_bytes
+*********
+The return value has prototype
+
+   ``size_t`` *num_bytes*
+
+It is the number of bytes currently in use by the specified thread.
+
+{xrst_end omp_inuse}

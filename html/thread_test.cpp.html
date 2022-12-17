@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="thread_test.cpp, run, multi-threading, examples, and, speed, tests" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="build" name="keywords" />
+<meta content="threading" name="keywords" />
+<meta content="program" name="keywords" />
+<meta content="running, tests" name="keywords" />
+<meta content="a11c" name="keywords" />
+<meta content="simple_ad" name="keywords" />
+<meta content="team_example" name="keywords" />
+<meta content="test_time" name="keywords" />
+<meta content="max_threads" name="keywords" />
+<meta content="harmonic" name="keywords" />
+<meta content="mega_sum" name="keywords" />
+<meta content="atomic, and, checkpoint" name="keywords" />
+<meta content="num_solve" name="keywords" />
+<meta content="multi_newton" name="keywords" />
+<meta content="num_zero" name="keywords" />
+<meta content="num_sub" name="keywords" />
+<meta content="num_sum" name="keywords" />
+<meta content="use_ad" name="keywords" />
+<meta content="team, implementations" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>thread_test.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="a11c_openmp.cpp" href="a11c_openmp.cpp.html" />
+    <link rel="prev" title="parallel_ad" href="parallel_ad.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="multi_thread.html">multi_thread</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="parallel_ad.html">parallel_ad</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">thread_test.cpp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="a11c_openmp.cpp.html">a11c_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_bthread.cpp.html">a11c_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_pthread.cpp.html">a11c_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_openmp.cpp.html">simple_ad_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_bthread.cpp.html">simple_ad_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_pthread.cpp.html">simple_ad_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_example.cpp.html">team_example.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="harmonic.cpp.html">harmonic.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_three.cpp.html">multi_atomic_three.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_two.cpp.html">multi_chkpoint_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_newton.cpp.html">multi_newton.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_thread.hpp.html">team_thread.hpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="multi_thread.html">multi_thread</a> &raquo;</li>
+      <li>thread_test.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/thread_test.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="thread-test-cpp">
+<span id="thread-test-cpp-name"></span><h1>thread_test.cpp<a class="headerlink" href="#thread-test-cpp" title="Permalink to this headline"></a></h1>
+<section id="run-multi-threading-examples-and-speed-tests">
+<span id="thread-test-cpp-title"></span><span id="index-0"></span><h2>Run Multi-Threading Examples and Speed Tests<a class="headerlink" href="#run-multi-threading-examples-and-speed-tests" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#build" id="id2">build</a></p></li>
+<li><p><a class="reference internal" href="#threading" id="id3">threading</a></p></li>
+<li><p><a class="reference internal" href="#program" id="id4">program</a></p></li>
+<li><p><a class="reference internal" href="#running-tests" id="id5">Running Tests</a></p></li>
+<li><p><a class="reference internal" href="#a11c" id="id6">a11c</a></p></li>
+<li><p><a class="reference internal" href="#simple-ad" id="id7">simple_ad</a></p></li>
+<li><p><a class="reference internal" href="#team-example" id="id8">team_example</a></p></li>
+<li><p><a class="reference internal" href="#test-time" id="id9">test_time</a></p>
+<ul>
+<li><p><a class="reference internal" href="#max-threads" id="id10">max_threads</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#harmonic" id="id11">harmonic</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mega-sum" id="id12">mega_sum</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#atomic-and-checkpoint" id="id13">Atomic and Checkpoint</a></p>
+<ul>
+<li><p><a class="reference internal" href="#num-solve" id="id14">num_solve</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#multi-newton" id="id15">multi_newton</a></p>
+<ul>
+<li><p><a class="reference internal" href="#num-zero" id="id16">num_zero</a></p></li>
+<li><p><a class="reference internal" href="#num-sub" id="id17">num_sub</a></p></li>
+<li><p><a class="reference internal" href="#num-sum" id="id18">num_sum</a></p></li>
+<li><p><a class="reference internal" href="#use-ad" id="id19">use_ad</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#team-implementations" id="id20">Team Implementations</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id21">Source</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="thread-test-cpp-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Runs the CppAD multi-threading examples and timing tests:</p>
+</section>
+<section id="build">
+<span id="thread-test-cpp-build"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">build</a><a class="headerlink" href="#build" title="Permalink to this headline"></a></h3>
+<p>We use <em>build</em> for the directory where you run the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a>
+command.</p>
+</section>
+<section id="threading">
+<span id="thread-test-cpp-threading"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">threading</a><a class="headerlink" href="#threading" title="Permalink to this headline"></a></h3>
+<p>If the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command output indicates that
+<code class="docutils literal notranslate"><span class="pre">bthread</span></code> , <code class="docutils literal notranslate"><span class="pre">pthread</span></code> , or <code class="docutils literal notranslate"><span class="pre">openmp</span></code> is available,
+you can run the program below with <em>threading</em> equal to
+<code class="docutils literal notranslate"><span class="pre">bthread</span></code> , <code class="docutils literal notranslate"><span class="pre">pthread</span></code> , or <code class="docutils literal notranslate"><span class="pre">openmp</span></code> respectively.</p>
+</section>
+<section id="program">
+<span id="thread-test-cpp-program"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">program</a><a class="headerlink" href="#program" title="Permalink to this headline"></a></h3>
+<p>We use the notation <em>program</em> for</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">example_multi_thread_</span></code> <em>threading</em></p>
+</div></blockquote>
+</section>
+<section id="running-tests">
+<span id="thread-test-cpp-running-tests"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Running Tests</a><a class="headerlink" href="#running-tests" title="Permalink to this headline"></a></h3>
+<p>You can build this program and run the default version of its test
+parameters by executing the following commands:</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">cd</span></code> <em>build</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_</span></code> <em>program</em></div>
+</div>
+<p>After this operation, in the directory</p>
+<blockquote>
+<div><p><em>build</em> / <code class="docutils literal notranslate"><span class="pre">example/multi_thread/</span></code> <em>threading</em></p>
+</div></blockquote>
+<p>you can execute the following commands:</p>
+<div class="line-block">
+<div class="line">.</div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">a11c</span></code></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">simple_ad</span></code></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">team_example</span></code></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">harmonic</span></code> <em>test_time</em> <em>max_threads</em> <em>mega_sum</em></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">atomic_two</span></code> <em>test_time</em> <em>max_threads</em> <em>num_solve</em></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">atomic_three</span></code> <em>test_time</em> <em>max_threads</em> <em>num_solve</em></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">chkpoint_one</span></code> <em>test_time</em> <em>max_threads</em> <em>num_solve</em></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code> <em>test_time</em> <em>max_threads</em> <em>num_solve</em></div>
+<div class="line">./ <em>program</em> <code class="docutils literal notranslate"><span class="pre">multi_newton</span></code> <em>test_time</em> <em>max_threads</em>  \</div>
+<div class="line">      <em>num_zero</em> <em>num_sub</em> <em>num_sum</em> <em>use_ad</em></div>
+</div>
+<p>We refer to the values <code class="docutils literal notranslate"><span class="pre">a11c</span></code> , … , <code class="docutils literal notranslate"><span class="pre">multi_newton</span></code>
+as the <em>test_case</em> below.</p>
+</section>
+<section id="a11c">
+<span id="thread-test-cpp-a11c"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">a11c</a><a class="headerlink" href="#a11c" title="Permalink to this headline"></a></h3>
+<p>The <em>test_case</em> <code class="docutils literal notranslate"><span class="pre">a11c</span></code> runs the examples
+<a class="reference internal" href="a11c_openmp.cpp.html#a11c-openmp-cpp-name"><span class="std std-ref">a11c_openmp.cpp</span></a> ,
+<a class="reference internal" href="a11c_bthread.cpp.html#a11c-bthread-cpp-name"><span class="std std-ref">a11c_bthread.cpp</span></a> , and
+<a class="reference internal" href="a11c_pthread.cpp.html#a11c-pthread-cpp-name"><span class="std std-ref">a11c_pthread.cpp</span></a> .
+These cases demonstrate simple multi-threading,
+without algorithmic differentiation, using
+OpenMP, boost threads and pthreads respectively.</p>
+</section>
+<section id="simple-ad">
+<span id="thread-test-cpp-simple-ad"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">simple_ad</a><a class="headerlink" href="#simple-ad" title="Permalink to this headline"></a></h3>
+<p>The <em>test_case</em> <code class="docutils literal notranslate"><span class="pre">simple_ad</span></code> runs the examples
+<a class="reference internal" href="simple_ad_openmp.cpp.html#simple-ad-openmp-cpp-name"><span class="std std-ref">simple_ad_openmp.cpp</span></a> ,
+<a class="reference internal" href="simple_ad_bthread.cpp.html#simple-ad-bthread-cpp-name"><span class="std std-ref">simple_ad_bthread.cpp</span></a> ,
+and
+<a class="reference internal" href="simple_ad_pthread.cpp.html#simple-ad-pthread-cpp-name"><span class="std std-ref">simple_ad_pthread.cpp</span></a> .
+These cases demonstrate simple multi-threading,
+with algorithmic differentiation, using
+OpenMP, boost threads and pthreads respectively.</p>
+</section>
+<section id="team-example">
+<span id="thread-test-cpp-team-example"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">team_example</a><a class="headerlink" href="#team-example" title="Permalink to this headline"></a></h3>
+<p>The <em>test_case</em> <code class="docutils literal notranslate"><span class="pre">team_example</span></code> runs the
+<a class="reference internal" href="team_example.cpp.html#team-example-cpp-name"><span class="std std-ref">team_example.cpp</span></a> example.
+This case demonstrates simple multi-threading with algorithmic differentiation
+and using a <a class="reference internal" href="team_thread.hpp.html#team-thread-hpp-name"><span class="std std-ref">team of threads</span></a> .</p>
+</section>
+<section id="test-time">
+<span id="thread-test-cpp-test-time"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">test_time</a><a class="headerlink" href="#test-time" title="Permalink to this headline"></a></h3>
+<p>All of the other cases include the <em>test_time</em> argument.
+This is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached.
+The reported time is the total wall clock time divided by the
+number of repeats.</p>
+<section id="max-threads">
+<span id="thread-test-cpp-test-time-max-threads"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id10">max_threads</a><a class="headerlink" href="#max-threads" title="Permalink to this headline"></a></h4>
+<p>All of the other cases include the <em>max_threads</em> argument.
+This is a non-negative integer specifying
+the maximum number of threads to use for the test.
+The specified test is run with the following number of threads:</p>
+<blockquote>
+<div><p><em>num_threads</em> = 0 , … , <em>max_threads</em></p>
+</div></blockquote>
+<p>The value of zero corresponds to not using the multi-threading system.</p>
+</section>
+</section>
+<section id="harmonic">
+<span id="thread-test-cpp-harmonic"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">harmonic</a><a class="headerlink" href="#harmonic" title="Permalink to this headline"></a></h3>
+<p>The <em>test_case</em> <code class="docutils literal notranslate"><span class="pre">harmonic</span></code> runs the
+<a class="reference internal" href="harmonic_time.html#harmonic-time-name"><span class="std std-ref">harmonic_time</span></a> example.
+This is a timing test for a multi-threading
+example without algorithmic differentiation using a team of threads.</p>
+<section id="mega-sum">
+<span id="thread-test-cpp-harmonic-mega-sum"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id12">mega_sum</a><a class="headerlink" href="#mega-sum" title="Permalink to this headline"></a></h4>
+<p>The command line argument <em>mega_sum</em>
+is an integer greater than or equal one and has the same meaning as in
+<a class="reference internal" href="harmonic_time.html#harmonic-time-mega-sum"><span class="std std-ref">harmonic_time</span></a> .</p>
+</section>
+</section>
+<section id="atomic-and-checkpoint">
+<span id="thread-test-cpp-atomic-and-checkpoint"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Atomic and Checkpoint</a><a class="headerlink" href="#atomic-and-checkpoint" title="Permalink to this headline"></a></h3>
+<p>The <em>test_case</em> values
+<code class="docutils literal notranslate"><span class="pre">atomic_two</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">atomic_three</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">chkpoint_one</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code> ,
+all run the same problem.
+These cases preforms a timing test for a multi-threading
+example without algorithmic differentiation using a team of threads.</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>test_case</em></p></td>
+<td><p>Documentation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atomic_two</span></code></p></td>
+<td><p><a class="reference internal" href="multi_atomic_two.cpp.html#multi-atomic-two-cpp-name"><span class="std std-ref">multi_atomic_two.cpp</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atomic_three</span></code></p></td>
+<td><p><a class="reference internal" href="multi_atomic_three.cpp.html#multi-atomic-three-cpp-name"><span class="std std-ref">multi_atomic_three.cpp</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">chkpoint_one</span></code></p></td>
+<td><p><a class="reference internal" href="multi_chkpoint_one.cpp.html#multi-chkpoint-one-cpp-name"><span class="std std-ref">multi_chkpoint_one.cpp</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">chkpoint_two</span></code></p></td>
+<td><p><a class="reference internal" href="multi_chkpoint_two.cpp.html#multi-chkpoint-two-cpp-name"><span class="std std-ref">multi_chkpoint_two.cpp</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="num-solve">
+<span id="thread-test-cpp-atomic-and-checkpoint-num-solve"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id14">num_solve</a><a class="headerlink" href="#num-solve" title="Permalink to this headline"></a></h4>
+<p>The command line argument <em>num_solve</em>
+is an integer specifying the number of solves; see
+<a class="reference internal" href="multi_atomic_two_time.html#multi-atomic-two-time-num-solve"><span class="std std-ref">num_solve</span></a> in <code class="docutils literal notranslate"><span class="pre">multi_atomic_two_time</span></code> .</p>
+</section>
+</section>
+<section id="multi-newton">
+<span id="thread-test-cpp-multi-newton"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">multi_newton</a><a class="headerlink" href="#multi-newton" title="Permalink to this headline"></a></h3>
+<p>The <em>test_case</em> <code class="docutils literal notranslate"><span class="pre">multi_newton</span></code>  runs the
+<a class="reference internal" href="multi_newton.cpp.html#multi-newton-cpp-name"><span class="std std-ref">multi_newton.cpp</span></a> example.
+This preforms a timing test for a multi-threading
+example with algorithmic differentiation using a team of threads.</p>
+<section id="num-zero">
+<span id="thread-test-cpp-multi-newton-num-zero"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id16">num_zero</a><a class="headerlink" href="#num-zero" title="Permalink to this headline"></a></h4>
+<p>The command line argument <em>num_zero</em>
+is an integer greater than or equal two and has the same meaning as in
+<a class="reference internal" href="multi_newton_time.html#multi-newton-time-num-zero"><span class="std std-ref">multi_newton_time</span></a> .</p>
+</section>
+<section id="num-sub">
+<span id="thread-test-cpp-multi-newton-num-sub"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id17">num_sub</a><a class="headerlink" href="#num-sub" title="Permalink to this headline"></a></h4>
+<p>The command line argument <em>num_sub</em>
+is an integer greater than or equal one and has the same meaning as in
+<a class="reference internal" href="multi_newton_time.html#multi-newton-time-num-sub"><span class="std std-ref">multi_newton_time</span></a> .</p>
+</section>
+<section id="num-sum">
+<span id="thread-test-cpp-multi-newton-num-sum"></span><span id="index-18"></span><h4><a class="toc-backref" href="#id18">num_sum</a><a class="headerlink" href="#num-sum" title="Permalink to this headline"></a></h4>
+<p>The command line argument <em>num_sum</em>
+is an integer greater than or equal one and has the same meaning as in
+<a class="reference internal" href="multi_newton_time.html#multi-newton-time-num-sum"><span class="std std-ref">multi_newton_time</span></a> .</p>
+</section>
+<section id="use-ad">
+<span id="thread-test-cpp-multi-newton-use-ad"></span><span id="index-19"></span><h4><a class="toc-backref" href="#id19">use_ad</a><a class="headerlink" href="#use-ad" title="Permalink to this headline"></a></h4>
+<p>The command line argument <em>use_ad</em> is either
+<code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code> and has the same meaning as in
+<a class="reference internal" href="multi_newton_time.html#multi-newton-time-use-ad"><span class="std std-ref">multi_newton_time</span></a> .</p>
+</section>
+</section>
+<section id="team-implementations">
+<span id="thread-test-cpp-team-implementations"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id20">Team Implementations</a><a class="headerlink" href="#team-implementations" title="Permalink to this headline"></a></h3>
+<p>The following routines are used to implement the specific threading
+systems through the common interface <a class="reference internal" href="team_thread.hpp.html#team-thread-hpp-name"><span class="std std-ref">team_thread.hpp</span></a> :</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>team_openmp.cpp</p></td>
+<td><p><a class="reference internal" href="team_openmp.cpp.html#team-openmp-cpp-title"><span class="std std-ref">OpenMP Implementation of a Team of AD Threads</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>team_bthread.cpp</p></td>
+<td><p><a class="reference internal" href="team_bthread.cpp.html#team-bthread-cpp-title"><span class="std std-ref">Boost Thread Implementation of a Team of AD Threads</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>team_pthread.cpp</p></td>
+<td><p><a class="reference internal" href="team_pthread.cpp.html#team-pthread-cpp-title"><span class="std std-ref">Pthread Implementation of a Team of AD Threads</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="source">
+<span id="thread-test-cpp-source"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id21">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cstring&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;ctime&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;team_thread.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;team_example.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;harmonic.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;multi_atomic_two.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;multi_atomic_three.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;multi_chkpoint_one.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;multi_chkpoint_two.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;multi_newton.hpp&quot;</span><span class="cp"></span>
+
+<span class="k">extern</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">a11c</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">simple_ad</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">arg2size_t</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">arg</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">limit</span><span class="w">             </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">error_msg</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">atoi</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;value = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">error_msg</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="nf">arg2double</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">arg</span><span class="w">       </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">double</span><span class="w"> </span><span class="n">limit</span><span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">error_msg</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">atof</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;value = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">error_msg</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">thread_alloc</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// commnd line usage message</span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">usage</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; a11c</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; simple_ad</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; team_example</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; harmonic     test_time max_threads mega_sum</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; atomic_two   test_time max_threads num_solve</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; atomic_three test_time max_threads num_solve</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; chkpoint_one test_time max_threads num_solve</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; chkpoint_two test_time max_threads num_solve</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;./&lt;program&gt; multi_newton test_time max_threads </span><span class="se">\\\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;   num_zero num_sub num_sum use_ad</span><span class="se">\\\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;where &lt;program&gt; is example_multi_thread_&lt;threading&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;and &lt;threading&gt; is bthread, openmp, or pthread&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// command line argument values (assign values to avoid compiler warnings)</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_zero</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">num_sub</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">num_sum</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">use_ad</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// put the date and time in the output file</span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="kt">time_t</span><span class="w"> </span><span class="n">rawtime</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">time</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rawtime</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">gmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">asctime</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">gmtime</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rawtime</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span><span class="n">gmt</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;gmtime        = &#39;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">gmt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">gmt</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;&#39;;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// CppAD version number</span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;cppad_version = &#39;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CPPAD_PACKAGE_STRING</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;&#39;;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// put the team name in the output file</span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;team_name     = &#39;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">team_name</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;&#39;;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// print command line as valid matlab/octave</span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;command       = &#39;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">argc</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;&#39;;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">test_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">argc</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">test_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_a11c</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a11c&quot;</span><span class="p">)</span><span class="w">             </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_simple_ad</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;simple_ad&quot;</span><span class="p">)</span><span class="w">        </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_team_example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;team_example&quot;</span><span class="p">)</span><span class="w">     </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_harmonic</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;harmonic&quot;</span><span class="p">)</span><span class="w">         </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_atomic_two</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atomic_two&quot;</span><span class="p">)</span><span class="w">       </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_atomic_three</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atomic_three&quot;</span><span class="p">)</span><span class="w">     </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_chkpoint_one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;chkpoint_one&quot;</span><span class="p">)</span><span class="w">     </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_chkpoint_two</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;chkpoint_two&quot;</span><span class="p">)</span><span class="w">     </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">run_multi_newton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;multi_newton&quot;</span><span class="p">)</span><span class="w">     </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_a11c</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">run_simple_ad</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">run_team_example</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_harmonic</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_atomic_two</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_atomic_three</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_chkpoint_one</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_chkpoint_two</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_multi_newton</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;test_name     = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">test_name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;argc          = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">argc</span><span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">usage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_a11c</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">run_simple_ad</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">run_team_example</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_a11c</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">ok</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">a11c</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_simple_ad</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">ok</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">simple_ad</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">ok</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">team_example</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">free_all</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;free_all      = true;&quot;</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;free_all      = false;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;OK            = true;&quot;</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;OK            = false;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// test_time</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">test_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2double</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mf">0.</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;run: test_time is less than zero&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// max_threads</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">max_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2size_t</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;run: max_threads is less than zero&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">mega_sum</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// assignment to avoid compiler warning</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_solve</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_harmonic</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// mega_sum</span>
+<span class="w">      </span><span class="n">mega_sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2size_t</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="s">&quot;run: mega_sum is less than one&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_atomic_two</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_atomic_three</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_chkpoint_one</span><span class="w"></span>
+<span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="n">run_chkpoint_two</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// num_solve</span>
+<span class="w">      </span><span class="n">num_solve</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2size_t</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="s">&quot;run: num_solve is less than one&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">run_multi_newton</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;thread_test: program error</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// num_zero</span>
+<span class="w">      </span><span class="n">num_zero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2size_t</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="s">&quot;run: num_zero is less than two&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// num_sub</span>
+<span class="w">      </span><span class="n">num_sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2size_t</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="s">&quot;run: num_sub is less than one&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// num_sum</span>
+<span class="w">      </span><span class="n">num_sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg2size_t</span><span class="p">(</span><span class="w"> </span><span class="o">*++</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="s">&quot;run: num_sum is less than one&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// use_ad</span>
+<span class="w">      </span><span class="o">++</span><span class="n">argv</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">use_ad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strcmp</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">use_ad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;run: use_ad = &#39;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;&#39; is not true or false&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// run the test for each number of threads</span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;time_all  = [&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">max_threads</span><span class="p">;</span><span class="w"> </span><span class="n">num_threads</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">time_out</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">this_ok</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// run the requested test</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_harmonic</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">this_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">harmonic_time</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">time_out</span><span class="p">,</span><span class="w"> </span><span class="n">test_time</span><span class="p">,</span><span class="w"> </span><span class="n">num_threads</span><span class="p">,</span><span class="w"> </span><span class="n">mega_sum</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_atomic_two</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">this_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multi_atomic_two_time</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">time_out</span><span class="p">,</span><span class="w"> </span><span class="n">test_time</span><span class="p">,</span><span class="w"> </span><span class="n">num_threads</span><span class="p">,</span><span class="w"> </span><span class="n">num_solve</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_atomic_three</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">this_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multi_atomic_three_time</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">time_out</span><span class="p">,</span><span class="w"> </span><span class="n">test_time</span><span class="p">,</span><span class="w"> </span><span class="n">num_threads</span><span class="p">,</span><span class="w"> </span><span class="n">num_solve</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_chkpoint_one</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">this_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multi_chkpoint_one_time</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">time_out</span><span class="p">,</span><span class="w"> </span><span class="n">test_time</span><span class="p">,</span><span class="w"> </span><span class="n">num_threads</span><span class="p">,</span><span class="w"> </span><span class="n">num_solve</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">run_chkpoint_two</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">this_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multi_chkpoint_two_time</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">time_out</span><span class="p">,</span><span class="w"> </span><span class="n">test_time</span><span class="p">,</span><span class="w"> </span><span class="n">num_threads</span><span class="p">,</span><span class="w"> </span><span class="n">num_solve</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="n">run_multi_newton</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="n">this_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multi_newton_time</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">time_out</span><span class="w">                </span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">test_time</span><span class="w">               </span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">num_threads</span><span class="w">             </span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">num_zero</span><span class="w">                </span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">num_sub</span><span class="w">                 </span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">num_sum</span><span class="w">                 </span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">use_ad</span><span class="w"></span>
+<span class="w">         </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// time_out</span>
+<span class="w">      </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">time_out</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; % &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// num_threads</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;no threading&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; threads&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">this_ok</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; ok&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; error&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//</span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">this_ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;];&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">free_all</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;free_all      = true;&quot;</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;free_all      = false;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;OK            = true;&quot;</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;OK            = false;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="o">!</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parallel_ad.html" class="btn btn-neutral float-left" title="parallel_ad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="a11c_openmp.cpp.html" class="btn btn-neutral float-right" title="a11c_openmp.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

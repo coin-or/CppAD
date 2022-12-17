@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="forward_order, multiple, order, forward, mode" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="function, values" name="keywords" />
+<meta content="derivative, values" name="keywords" />
+<meta content="notation" name="keywords" />
+<meta content="n" name="keywords" />
+<meta content="m" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="one, order" name="keywords" />
+<meta content="q" name="keywords" />
+<meta content="xq" name="keywords" />
+<meta content="one, order" name="keywords" />
+<meta content="multiple, orders" name="keywords" />
+<meta content="restrictions" name="keywords" />
+<meta content="s" name="keywords" />
+<meta content="x(t)" name="keywords" />
+<meta content="y(t)" name="keywords" />
+<meta content="yq" name="keywords" />
+<meta content="one, order" name="keywords" />
+<meta content="multiple, orders" name="keywords" />
+<meta content="basevector" name="keywords" />
+<meta content="zero, order" name="keywords" />
+<meta content="first, order" name="keywords" />
+<meta content="second, order" name="keywords" />
+<meta content="example" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>forward_order &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="forward.cpp" href="forward.cpp.html" />
+    <link rel="prev" title="forward_two" href="forward_two.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ADFun.html">ADFun</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="record_adfun.html">record_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_adfun.html">other_adfun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">drivers</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="Forward.html">Forward</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="new_dynamic.html">new_dynamic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_zero.html">forward_zero</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_one.html">forward_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forward_two.html">forward_two</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">forward_order</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="forward.cpp.html">forward.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="forward_order.cpp.html">forward_order.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="forward_dir.html">forward_dir</a></li>
+<li class="toctree-l4"><a class="reference internal" href="size_order.html">size_order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="compare_change.html">compare_change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="capacity_order.html">capacity_order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="number_skip.html">number_skip</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Reverse.html">Reverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparsity_pattern.html">sparsity_pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_derivative.html">sparse_derivative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimize.html">optimize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FunCheck.html">FunCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_for_nan.html">check_for_nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_csrc.html">to_csrc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ADFun.html">ADFun</a> &raquo;</li>
+          <li><a href="Forward.html">Forward</a> &raquo;</li>
+      <li>forward_order</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/forward_order.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="forward-order">
+<span id="forward-order-name"></span><h1>forward_order<a class="headerlink" href="#forward-order" title="Permalink to this headline"></a></h1>
+<section id="multiple-order-forward-mode">
+<span id="forward-order-title"></span><span id="index-0"></span><h2>Multiple Order Forward Mode<a class="headerlink" href="#multiple-order-forward-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id4">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id5">Purpose</a></p>
+<ul>
+<li><p><a class="reference internal" href="#function-values" id="id6">Function Values</a></p></li>
+<li><p><a class="reference internal" href="#derivative-values" id="id7">Derivative Values</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#notation" id="id8">Notation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#n" id="id9">n</a></p></li>
+<li><p><a class="reference internal" href="#m" id="id10">m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#f" id="id11">f</a></p></li>
+<li><p><a class="reference internal" href="#one-order" id="id12">One Order</a></p></li>
+<li><p><a class="reference internal" href="#q" id="id13">q</a></p></li>
+<li><p><a class="reference internal" href="#xq" id="id14">xq</a></p>
+<ul>
+<li><p><a class="reference internal" href="#forward-order-xq-one-order" id="id15">One Order</a></p></li>
+<li><p><a class="reference internal" href="#multiple-orders" id="id16">Multiple Orders</a></p></li>
+<li><p><a class="reference internal" href="#restrictions" id="id17">Restrictions</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#s" id="id18">s</a></p></li>
+<li><p><a class="reference internal" href="#x-t" id="id19">X(t)</a></p></li>
+<li><p><a class="reference internal" href="#y-t" id="id20">Y(t)</a></p></li>
+<li><p><a class="reference internal" href="#yq" id="id21">yq</a></p>
+<ul>
+<li><p><a class="reference internal" href="#forward-order-yq-one-order" id="id22">One Order</a></p></li>
+<li><p><a class="reference internal" href="#forward-order-yq-multiple-orders" id="id23">Multiple Orders</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#basevector" id="id24">BaseVector</a></p></li>
+<li><p><a class="reference internal" href="#zero-order" id="id25">Zero Order</a></p></li>
+<li><p><a class="reference internal" href="#first-order" id="id26">First Order</a></p></li>
+<li><p><a class="reference internal" href="#second-order" id="id27">Second Order</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id28">Example</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="forward-order-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id4">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<div class="line-block">
+<div class="line"><em>yq</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>q</em> , <em>xq</em>  )</div>
+<div class="line"><em>yq</em> = <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>q</em> , <em>xq</em> , <em>s</em> )</div>
+</div>
+</section>
+<section id="purpose">
+<span id="forward-order-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id5">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(F : \B{R}^n \rightarrow \B{R}^m\)</span> to denote the
+<a class="reference internal" href="glossary.html#glossary-ad-function"><span class="std std-ref">AD Function</span></a> corresponding to <em>f</em> .
+Given a function <span class="math notranslate nohighlight">\(X : \B{R} \rightarrow \B{R}^n\)</span>,
+defined by its
+<a class="reference internal" href="glossary.html#glossary-taylor-coefficient"><span class="std std-ref">Taylor coefficients</span></a> ,
+forward mode computes the Taylor coefficients for the function</p>
+<div class="math notranslate nohighlight">
+\[Y (t) = F [ X(t) ]\]</div>
+<section id="function-values">
+<span id="forward-order-purpose-function-values"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id6">Function Values</a><a class="headerlink" href="#function-values" title="Permalink to this headline"></a></h4>
+<p>If you are using forward mode to compute values for <span class="math notranslate nohighlight">\(F(x)\)</span>,
+<a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">forward_zero</span></a> is simpler to understand
+than this explanation of the general case.</p>
+</section>
+<section id="derivative-values">
+<span id="forward-order-purpose-derivative-values"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id7">Derivative Values</a><a class="headerlink" href="#derivative-values" title="Permalink to this headline"></a></h4>
+<p>If you are using forward mode to compute values for <span class="math notranslate nohighlight">\(F^{(1)} (x) * dx\)</span>,
+<a class="reference internal" href="forward_one.html#forward-one-name"><span class="std std-ref">forward_one</span></a> is simpler to understand
+than this explanation of the general case.</p>
+</section>
+</section>
+<section id="notation">
+<span id="forward-order-notation"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id8">Notation</a><a class="headerlink" href="#notation" title="Permalink to this headline"></a></h3>
+<section id="n">
+<span id="forward-order-notation-n"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id9">n</a><a class="headerlink" href="#n" title="Permalink to this headline"></a></h4>
+<p>We use <em>n</em> to denote the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .</p>
+</section>
+<section id="m">
+<span id="forward-order-notation-m"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id10">m</a><a class="headerlink" href="#m" title="Permalink to this headline"></a></h4>
+<p>We use <em>m</em> to denote the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-range"><span class="std std-ref">Range</span></a> space for <em>f</em> .</p>
+</section>
+</section>
+<section id="f">
+<span id="forward-order-f"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id11">f</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>Note that the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object <em>f</em> is not <code class="docutils literal notranslate"><span class="pre">const</span></code> .
+After this call we will have</p>
+<div class="line-block">
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_order</span></code> ()     == <em>q</em>  + 1</div>
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_direction</span></code> () == 1</div>
+</div>
+</section>
+<section id="one-order">
+<span id="forward-order-one-order"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id12">One Order</a><a class="headerlink" href="#one-order" title="Permalink to this headline"></a></h3>
+<p>If <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> ,
+then we are only computing one order.
+In this case, before this call we must have</p>
+<div class="line-block">
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_order</span></code> ()     &gt;= <em>q</em></div>
+<div class="line">      <em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_direction</span></code> () == 1</div>
+</div>
+</section>
+<section id="q">
+<span id="forward-order-q"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id13">q</a><a class="headerlink" href="#q" title="Permalink to this headline"></a></h3>
+<p>The argument <em>q</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>q</em></p>
+</div></blockquote>
+<p>and specifies the highest order of the Taylor coefficients to be calculated.</p>
+</section>
+<section id="xq">
+<span id="forward-order-xq"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id14">xq</a><a class="headerlink" href="#xq" title="Permalink to this headline"></a></h3>
+<p>The argument <em>xq</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>BaseVector</em> &amp; <em>xq</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#forward-order-basevector"><span class="std std-ref">BaseVector</span></a> below).
+As above, we use <em>n</em> to denote the dimension of the
+<a class="reference internal" href="fun_property.html#fun-property-domain"><span class="std std-ref">Domain</span></a> space for <em>f</em> .
+The size of <em>xq</em> must be either <em>n</em> or
+<em>n</em> * ( <em>q</em> +1) .
+After this call we will have</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">size_order</span></code> ()     == <em>q</em>  + 1</p>
+</div></blockquote>
+<section id="forward-order-xq-one-order">
+<span id="index-12"></span><span id="id1"></span><h4><a class="toc-backref" href="#id15">One Order</a><a class="headerlink" href="#forward-order-xq-one-order" title="Permalink to this headline"></a></h4>
+<p>If <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> ,
+the <em>q</em>-th order Taylor coefficient for <span class="math notranslate nohighlight">\(X(t)\)</span>
+is defined by</p>
+<p>      <span class="math notranslate nohighlight">\(x^{(q)} =\)</span> <em>xq</em> .
+For <span class="math notranslate nohighlight">\(k = 0 , \ldots , q-1\)</span>,
+the Taylor coefficient <span class="math notranslate nohighlight">\(x^{(k)}\)</span>
+is defined by <em>xk</em> in the previous call to</p>
+<blockquote>
+<div><p><em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> ( <em>k</em> , <em>xk</em> )</p>
+</div></blockquote>
+</section>
+<section id="multiple-orders">
+<span id="forward-order-xq-multiple-orders"></span><span id="index-13"></span><h4><a class="toc-backref" href="#id16">Multiple Orders</a><a class="headerlink" href="#multiple-orders" title="Permalink to this headline"></a></h4>
+<p>If <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> * ( <em>q</em> +1) ,
+For <span class="math notranslate nohighlight">\(k = 0 , \ldots , q\)</span>,
+<span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span>,
+the <em>j</em>-th component of the <em>k</em>-th order Taylor coefficient
+for <span class="math notranslate nohighlight">\(X(t)\)</span> is defined by</p>
+<p>      <span class="math notranslate nohighlight">\(x_j^{(k)} =\)</span> <em>xq</em> [ ( <em>q</em> +1) * <em>j</em> + <em>k</em>  ]</p>
+</section>
+<section id="restrictions">
+<span id="forward-order-xq-restrictions"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id17">Restrictions</a><a class="headerlink" href="#restrictions" title="Permalink to this headline"></a></h4>
+<p>Note if <em>f</em> uses <a class="reference internal" href="atomic_one.html#atomic-one-name"><span class="std std-ref">atomic_one</span></a> functions,
+the size of <em>xq</em> must be <em>n</em> .</p>
+</section>
+</section>
+<section id="s">
+<span id="forward-order-s"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id18">s</a><a class="headerlink" href="#s" title="Permalink to this headline"></a></h3>
+<p>If the argument <em>s</em> is not present, <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>
+is used in its place.
+Otherwise, this argument has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::ostream&amp;</span></code> <em>s</em></p>
+</div></blockquote>
+<p>If order zero is begin calculated,
+<em>s</em> specifies where the output corresponding to <a class="reference internal" href="PrintFor.html#printfor-name"><span class="std std-ref">PrintFor</span></a>
+will be written.
+If order zero is not being calculated,
+<em>s</em> is not used</p>
+</section>
+<section id="x-t">
+<span id="forward-order-x-t"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id19">X(t)</a><a class="headerlink" href="#x-t" title="Permalink to this headline"></a></h3>
+<p>The function
+<span class="math notranslate nohighlight">\(X : \B{R} \rightarrow \B{R}^n\)</span> is defined using
+the Taylor coefficients <span class="math notranslate nohighlight">\(x^{(k)} \in \B{R}^n\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q\]</div>
+<p>Note that for <span class="math notranslate nohighlight">\(k = 0 , \ldots , q\)</span>,
+the <em>k</em>-th derivative of <span class="math notranslate nohighlight">\(X(t)\)</span> is related to the
+Taylor coefficients by the equation</p>
+<div class="math notranslate nohighlight">
+\[x^{(k)} = \frac{1}{k !} X^{(k)} (0)\]</div>
+</section>
+<section id="y-t">
+<span id="forward-order-y-t"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id20">Y(t)</a><a class="headerlink" href="#y-t" title="Permalink to this headline"></a></h3>
+<p>The function
+<span class="math notranslate nohighlight">\(Y : \B{R} \rightarrow \B{R}^m\)</span> is defined by
+<span class="math notranslate nohighlight">\(Y(t) = F[ X(t) ]\)</span>.
+We use <span class="math notranslate nohighlight">\(y^{(k)} \in \B{R}^m\)</span>
+to denote the <em>k</em>-th order Taylor coefficient of <span class="math notranslate nohighlight">\(Y(t)\)</span>; i.e.,</p>
+<div class="math notranslate nohighlight">
+\[Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )\]</div>
+<p>where <span class="math notranslate nohighlight">\(o( t^q ) * t^{-q} \rightarrow 0\)</span> as <span class="math notranslate nohighlight">\(t \rightarrow 0\)</span>.
+Note that <span class="math notranslate nohighlight">\(y^{(k)}\)</span> is related to
+the <em>k</em>-th derivative of <span class="math notranslate nohighlight">\(Y(t)\)</span> by the equation</p>
+<div class="math notranslate nohighlight">
+\[y^{(k)} = \frac{1}{k !} Y^{(k)} (0)\]</div>
+</section>
+<section id="yq">
+<span id="forward-order-yq"></span><span id="index-18"></span><h3><a class="toc-backref" href="#id21">yq</a><a class="headerlink" href="#yq" title="Permalink to this headline"></a></h3>
+<p>The return value <em>yq</em> has prototype</p>
+<blockquote>
+<div><p><em>BaseVector</em> <em>yq</em></p>
+</div></blockquote>
+<p>(see <a class="reference internal" href="#forward-order-basevector"><span class="std std-ref">BaseVector</span></a> below).</p>
+<section id="forward-order-yq-one-order">
+<span id="index-19"></span><span id="id2"></span><h4><a class="toc-backref" href="#id22">One Order</a><a class="headerlink" href="#forward-order-yq-one-order" title="Permalink to this headline"></a></h4>
+<p>If <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> ,
+the vector <em>yq</em> has size <em>m</em> .
+The <em>q</em>-th order Taylor coefficient for <span class="math notranslate nohighlight">\(Y(t)\)</span>
+is returned as</p>
+<blockquote>
+<div><p><em>yq</em></p>
+</div></blockquote>
+<p><span class="math notranslate nohighlight">\(= y^{(q)}\)</span>.</p>
+</section>
+<section id="forward-order-yq-multiple-orders">
+<span id="index-20"></span><span id="id3"></span><h4><a class="toc-backref" href="#id23">Multiple Orders</a><a class="headerlink" href="#forward-order-yq-multiple-orders" title="Permalink to this headline"></a></h4>
+<p>If <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> * ( <em>q</em> +1) ,
+the vector <em>yq</em> has size <em>m</em> * ( <em>q</em> +1) .
+For <span class="math notranslate nohighlight">\(k = 0 , \ldots , q\)</span>,
+for <span class="math notranslate nohighlight">\(i = 0 , \ldots , m-1\)</span>,
+the <em>i</em>-th component of the <em>k</em>-th order Taylor coefficient
+for <span class="math notranslate nohighlight">\(Y(t)\)</span> is returned as</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">yq</span></code> [ ( <code class="docutils literal notranslate"><span class="pre">q</span></code> +1) * <code class="docutils literal notranslate"><span class="pre">i</span></code> + <code class="docutils literal notranslate"><span class="pre">k</span></code>  ]</p>
+</div></blockquote>
+<p><span class="math notranslate nohighlight">\(= y_i^{(k)}\)</span></p>
+</section>
+</section>
+<section id="basevector">
+<span id="forward-order-basevector"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id24">BaseVector</a><a class="headerlink" href="#basevector" title="Permalink to this headline"></a></h3>
+<p>The type <em>BaseVector</em> must be a <a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class with
+<a class="reference internal" href="SimpleVector.html#simplevector-elements-of-specified-type"><span class="std std-ref">elements of type</span></a>
+<em>Base</em> .
+The routine <a class="reference internal" href="CheckSimpleVector.html#checksimplevector-name"><span class="std std-ref">CheckSimpleVector</span></a> will generate an error message
+if this is not the case.</p>
+</section>
+<section id="zero-order">
+<span id="forward-order-zero-order"></span><span id="index-22"></span><h3><a class="toc-backref" href="#id25">Zero Order</a><a class="headerlink" href="#zero-order" title="Permalink to this headline"></a></h3>
+<p>The case where
+<span class="math notranslate nohighlight">\(q = 0\)</span> and <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> ,
+corresponds to the zero order
+<a class="reference internal" href="forward_zero.html#forward-zero-special-case"><span class="std std-ref">Special Case</span></a> .</p>
+</section>
+<section id="first-order">
+<span id="forward-order-first-order"></span><span id="index-23"></span><h3><a class="toc-backref" href="#id26">First Order</a><a class="headerlink" href="#first-order" title="Permalink to this headline"></a></h3>
+<p>The case where
+<span class="math notranslate nohighlight">\(q = 1\)</span> and <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> ,
+corresponds to the first order
+<a class="reference internal" href="forward_one.html#forward-one-special-case"><span class="std std-ref">Special Case</span></a> .</p>
+</section>
+<section id="second-order">
+<span id="forward-order-second-order"></span><span id="index-24"></span><h3><a class="toc-backref" href="#id27">Second Order</a><a class="headerlink" href="#second-order" title="Permalink to this headline"></a></h3>
+<p>The case where
+<span class="math notranslate nohighlight">\(q = 2\)</span> and <em>xq</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <em>n</em> ,
+corresponds to the second order
+<a class="reference internal" href="forward_two.html#forward-two-special-case"><span class="std std-ref">Special Case</span></a> .</p>
+</section>
+<section id="example">
+<span id="forward-order-example"></span><span id="index-25"></span><h3><a class="toc-backref" href="#id28">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The files
+<a class="reference internal" href="forward.cpp.html#forward-cpp-name"><span class="std std-ref">forward.cpp</span></a> and <a class="reference internal" href="forward_order.cpp.html#forward-order-cpp-name"><span class="std std-ref">forward_order.cpp</span></a>
+contain examples and tests of using forward mode with
+one order and multiple orders respectively.
+They return true if they succeed and false otherwise.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="forward_two.html" class="btn btn-neutral float-left" title="forward_two" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="forward.cpp.html" class="btn btn-neutral float-right" title="forward.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

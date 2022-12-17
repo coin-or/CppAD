@@ -1,0 +1,34 @@
+lines 158-189 of file: include/cppad/core/ad_fun.xrst
+
+{xrst_begin sparse_derivative}
+
+Calculating Sparse Derivatives
+##############################
+{xrst_toc_hidden
+   include/cppad/core/sparse_jac.hpp
+   include/cppad/core/sparse_jacobian.hpp
+   include/cppad/core/sparse_hes.hpp
+   include/cppad/core/sparse_hessian.hpp
+   include/cppad/core/subgraph_jac_rev.hpp
+}
+
+Preferred Sparsity Patterns
+***************************
+
+.. csv-table::
+   :widths: auto
+
+   sparse_jac,:ref:`sparse_jac-title`
+   sparse_hes,:ref:`sparse_hes-title`
+   subgraph_jac_rev,:ref:`subgraph_jac_rev-title`
+
+Old Sparsity Patterns
+*********************
+
+.. csv-table::
+   :widths: auto
+
+   sparse_jacobian,:ref:`sparse_jacobian-title`
+   sparse_hessian,:ref:`sparse_hessian-title`
+
+{xrst_end sparse_derivative}

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="NumericType, definition, of, a, numeric, type" name="keywords" />
+<meta content="type, requirements" name="keywords" />
+<meta content="default, constructor" name="keywords" />
+<meta content="constructor, from, integer" name="keywords" />
+<meta content="copy, constructor" name="keywords" />
+<meta content="assignment" name="keywords" />
+<meta content="operators" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="exercise" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NumericType &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="numeric_type.cpp" href="numeric_type.cpp.html" />
+    <link rel="prev" title="lu_invert.hpp" href="lu_invert.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utility.html">utility</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CheckNumericType.html">CheckNumericType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CheckSimpleVector.html">CheckSimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_dll_lib.html">create_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ErrorHandler.html">ErrorHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index_sort.html">index_sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link_dll_lib.html">link_dll_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nan.html">nan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NearEqual.html">NearEqual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeErrControl.html">OdeErrControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGear.html">OdeGear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OdeGearControl.html">OdeGearControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CppAD_vector.html">CppAD_vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Poly.html">Poly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pow_int.html">pow_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergMul.html">RombergMul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RombergOne.html">RombergOne</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rosen34.html">Rosen34</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Runge45.html">Runge45</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_union.html">set_union</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse2eigen.html">sparse2eigen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rc.html">sparse_rc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sparse_rcv.html">sparse_rcv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speed_test.html">speed_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SpeedTest.html">SpeedTest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test_boolofvoid.html">test_boolofvoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_test.html">time_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="to_string.html">to_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lu_det_and_solve.html">lu_det_and_solve</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">NumericType</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="numeric_type.cpp.html">numeric_type.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="SimpleVector.html">SimpleVector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="thread_alloc.html">thread_alloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="utility.html">utility</a> &raquo;</li>
+      <li>NumericType</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/NumericType.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="numerictype">
+<span id="numerictype-name"></span><h1>NumericType<a class="headerlink" href="#numerictype" title="Permalink to this headline"></a></h1>
+<section id="definition-of-a-numeric-type">
+<span id="numerictype-title"></span><span id="index-0"></span><h2>Definition of a Numeric Type<a class="headerlink" href="#definition-of-a-numeric-type" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#type-requirements" id="id1">Type Requirements</a></p></li>
+<li><p><a class="reference internal" href="#default-constructor" id="id2">Default Constructor</a></p></li>
+<li><p><a class="reference internal" href="#constructor-from-integer" id="id3">Constructor From Integer</a></p></li>
+<li><p><a class="reference internal" href="#copy-constructor" id="id4">Copy Constructor</a></p></li>
+<li><p><a class="reference internal" href="#assignment" id="id5">Assignment</a></p></li>
+<li><p><a class="reference internal" href="#operators" id="id6">Operators</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id7">Example</a></p></li>
+<li><p><a class="reference internal" href="#exercise" id="id8">Exercise</a></p></li>
+</ul>
+</div>
+<section id="type-requirements">
+<span id="numerictype-type-requirements"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Type Requirements</a><a class="headerlink" href="#type-requirements" title="Permalink to this headline"></a></h3>
+<p>A <em>NumericType</em> is any type
+that satisfies the requirements below.
+The following is a list of some numeric types:
+<code class="docutils literal notranslate"><span class="pre">int</span></code> , <code class="docutils literal notranslate"><span class="pre">float</span></code> , <code class="docutils literal notranslate"><span class="pre">double</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> , <code class="docutils literal notranslate"><span class="pre">AD&lt;</span> <span class="pre">AD&lt;double&gt;</span> <span class="pre">&gt;</span></code> .
+The routine <a class="reference internal" href="CheckNumericType.html#checknumerictype-name"><span class="std std-ref">CheckNumericType</span></a> can be used to check
+that a type satisfies these conditions.</p>
+</section>
+<section id="default-constructor">
+<span id="numerictype-default-constructor"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Default Constructor</a><a class="headerlink" href="#default-constructor" title="Permalink to this headline"></a></h3>
+<p>The syntax</p>
+<blockquote>
+<div><p><em>NumericType</em> <em>x</em> ;</p>
+</div></blockquote>
+<p>creates a <em>NumericType</em> object
+with an unspecified value.</p>
+</section>
+<section id="constructor-from-integer">
+<span id="numerictype-constructor-from-integer"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Constructor From Integer</a><a class="headerlink" href="#constructor-from-integer" title="Permalink to this headline"></a></h3>
+<p>If <em>i</em> is an <code class="docutils literal notranslate"><span class="pre">int</span></code> ,
+the syntax</p>
+<blockquote>
+<div><p><em>NumericType</em> <em>x</em> ( <em>i</em> );</p>
+</div></blockquote>
+<p>creates a <em>NumericType</em> object with a value
+equal to <em>i</em> where <em>i</em> can be <code class="docutils literal notranslate"><span class="pre">const</span></code> .</p>
+</section>
+<section id="copy-constructor">
+<span id="numerictype-copy-constructor"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Copy Constructor</a><a class="headerlink" href="#copy-constructor" title="Permalink to this headline"></a></h3>
+<p>If <em>x</em> is a <em>NumericType</em> object
+the syntax</p>
+<blockquote>
+<div><p><em>NumericType</em> <em>y</em> ( <em>x</em> );</p>
+</div></blockquote>
+<p>creates a <em>NumericType</em> object <em>y</em>
+with the same value as <em>x</em>
+where <em>x</em> can be <code class="docutils literal notranslate"><span class="pre">const</span></code> .</p>
+</section>
+<section id="assignment">
+<span id="numerictype-assignment"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Assignment</a><a class="headerlink" href="#assignment" title="Permalink to this headline"></a></h3>
+<p>If <em>x</em> and <em>y</em> are <em>NumericType</em> objects,
+the syntax</p>
+<blockquote>
+<div><p><em>x</em> = <em>y</em></p>
+</div></blockquote>
+<p>sets the value of <em>x</em> equal to the value of <em>y</em>
+where <em>y</em> can be <code class="docutils literal notranslate"><span class="pre">const</span></code> .
+The expression corresponding to this operation is unspecified; i.e.,
+it could be <code class="docutils literal notranslate"><span class="pre">void</span></code> and hence</p>
+<blockquote>
+<div><p><em>x</em> = <em>y</em> = <em>z</em></p>
+</div></blockquote>
+<p>may not be legal.</p>
+</section>
+<section id="operators">
+<span id="numerictype-operators"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">Operators</a><a class="headerlink" href="#operators" title="Permalink to this headline"></a></h3>
+<p>Suppose <em>x</em> , <em>y</em> and <em>z</em>
+<em>NumericType</em> objects where
+<em>x</em> and <em>y</em> may be <code class="docutils literal notranslate"><span class="pre">const</span></code> .
+In the result type column,
+<em>NumericType</em> can be replaced by any type that can
+be used just like a <em>NumericType</em> object.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Operation</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Result Type</strong></p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><em>x</em></p></li>
+</ul>
+</td>
+<td><p>unary plus</p></td>
+<td><p><em>NumericType</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-</span></code> <em>x</em></p></td>
+<td><p>unary minus</p></td>
+<td><p><em>NumericType</em></p></td>
+</tr>
+<tr class="row-even"><td><p><em>x</em> + <em>y</em></p></td>
+<td><p>binary addition</p></td>
+<td><p><em>NumericType</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>x</em> <code class="docutils literal notranslate"><span class="pre">-</span></code> <em>y</em></p></td>
+<td><p>binary subtraction</p></td>
+<td><p><em>NumericType</em></p></td>
+</tr>
+<tr class="row-even"><td><p><em>x</em> * <em>y</em></p></td>
+<td><p>binary multiplication</p></td>
+<td><p><em>NumericType</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>x</em> / <em>y</em></p></td>
+<td><p>binary division</p></td>
+<td><p><em>NumericType</em></p></td>
+</tr>
+<tr class="row-even"><td><p><em>z</em> += <em>y</em></p></td>
+<td><p>compound assignment addition</p></td>
+<td><p>unspecified</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>z</em> <code class="docutils literal notranslate"><span class="pre">-</span></code> = <em>y</em></p></td>
+<td><p>compound assignment subtraction</p></td>
+<td><p>unspecified</p></td>
+</tr>
+<tr class="row-even"><td><p><em>z</em> \* = <em>y</em></p></td>
+<td><p>compound assignment multiplication</p></td>
+<td><p>unspecified</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>z</em> /= <em>y</em></p></td>
+<td><p>compound assignment division</p></td>
+<td><p>unspecified</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example">
+<span id="numerictype-example"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="numeric_type.cpp.html#numeric-type-cpp-name"><span class="std std-ref">numeric_type.cpp</span></a>
+contains an example and test of using numeric types.
+(It is easy to modify to test additional numeric types.)</p>
+</section>
+<section id="exercise">
+<span id="numerictype-exercise"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Exercise</a><a class="headerlink" href="#exercise" title="Permalink to this headline"></a></h3>
+<ol class="arabic simple">
+<li><p>List three operators that are not supported by every
+numeric type but that are supported by the numeric types
+<code class="docutils literal notranslate"><span class="pre">int</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">float</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">double</span></code> .</p></li>
+<li><p>Which of the following are numeric types:
+<code class="docutils literal notranslate"><span class="pre">std::complex&lt;double&gt;</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">std::valarray&lt;double&gt;</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">std::vector&lt;double&gt;</span></code> ?</p></li>
+</ol>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lu_invert.hpp.html" class="btn btn-neutral float-left" title="lu_invert.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="numeric_type.cpp.html" class="btn btn-neutral float-right" title="numeric_type.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

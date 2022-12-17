@@ -1,0 +1,474 @@
+lines 5-476 of file: include/cppad/core/graph/json_graph_op.xrst
+
+{xrst_begin json_graph_op}
+{xrst_spell
+   cexp
+   erfc
+   expm
+   notpos
+   operands
+   tanh
+}
+
+Json AD Graph Operator Definitions
+##################################
+
+Notation
+********
+
+op_code
+=======
+Each operator definition has a *op_code* value that
+is used to identify it for a particular *json_ad_graph* .
+
+Arguments
+=========
+The values *first_arg* , ... ,
+:ref:`last_arg<json_ad_graph@op_usage@first_arg, ..., last_arg>`
+are the node indices for arguments to an operator.
+
+Unary Operators
+***************
+All these operations create one result node and
+have the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : *name* ,
+| |tab| ``"n_arg"`` :        1
+| }
+
+where *name* is a :ref:`json_ad_graph@Token@String` .
+A corresponding *op_usage* has the form
+
+   [ *op_code* , *arg*  ]
+
+The possible values for the string *name* are listed
+in the table below.
+The corresponding result is the node value as a function of the argument value.
+
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
+
+.. csv-table::
+   :widths: auto
+
+   *name*,result
+   ``abs``,absolute value
+   ``acos``,inverse cosine
+   ``acosh``,inverse hyperbolic cosine
+   ``asin``,inverse sine
+   ``asinh``,inverse hyperbolic sine
+   ``atan``,inverse tangent
+   ``atanh``,inverse hyperbolic sine
+   ``cos``,cosine
+   ``cosh``,hyperbolic cosine
+   ``erf``,error functions
+   ``erfc``,complementary error function
+   ``exp``,exponential
+   ``expm1``,minus one plus the exponential
+   ``log``,logarithm
+   ``log1p``,log  plus one
+   ``neg``,negative
+   ``sign``,sign function
+   ``sin``,sine
+   ``sinh``,hyperbolic sine
+   ``sqrt``,square root
+   ``tan``,tangent
+   ``tanh``,hyperbolic tangent
+
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
+
+Example
+=======
+The file :ref:`json_unary_op.cpp-name` is an example and test
+for one of these operators.
+
+Binary Operators
+****************
+All these operations create one result node and
+have the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : *name* ,
+| |tab| ``"n_arg"`` :        2
+| }
+
+where *name* is a :ref:`json_ad_graph@Token@String` .
+A corresponding *op_usage* has the form
+
+   [ *op_code* , *first_arg* , *second_arg*  ]
+
+The possible values for the string *name* are listed below:
+
+add
+===
+The result is
+the first argument value plus the second argument value; see
+the example and test :ref:`json_add_op.cpp-name` .
+
+azmul
+=====
+If the first argument value is zero, the result is zero
+(even if the second argument value is nan).
+Otherwise the result is
+the first argument value times the second argument value; see
+the example and test :ref:`json_azmul_op.cpp-name` .
+
+div
+===
+The result is
+the first argument value divided by the second argument value; see
+the example and test :ref:`json_div_op.cpp-name` .
+
+mul
+===
+The result is
+the first argument value times the second argument value; see
+the example and test :ref:`json_mul_op.cpp-name` .
+
+pow
+===
+The result is
+the first argument value raised to the second argument value; see
+the example and test :ref:`json_pow_op.cpp-name` .
+
+sub
+===
+The result is
+the first argument value minus the second argument value; see
+the example and test :ref:`json_sub_op.cpp-name` .
+
+sum
+***
+This operator has the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : ``"sum"``
+| }
+
+A corresponding *op_usage* has the form
+
+   [ *op_code* , *n_result* , *n_arg* , [ *first_arg* , ..., *last_arg*  ] ]
+
+where *n_result* is always ``1`` .
+This operation creates one node with value equal to
+the sum of values corresponding to all of its argument nodes.
+
+Example
+=======
+The file :ref:`json_sum_op.cpp-name` is an example and test
+of this operation.
+
+Conditional Expressions
+***********************
+These operators are :ref:`conditional expressions<CondExp-name>`
+and have the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` :         " ``cexp_`` *rel* ,
+| |tab| ``"n_arg"`` :        4
+| }
+
+where *rel* is ``eq`` (equal),
+``le`` (less than or equal), or
+``lt`` (less than).
+The first argument is :ref:`CondExp@left` ,
+the second is :ref:`CondExp@right` ,
+the third is :ref:`CondExp@if_true` ,
+the fourth is :ref:`CondExp@if_false` ,
+the result is given by
+
+| |tab| ``if`` ( *left* *cop* *right* )
+| |tab| |tab| *result* = *if_true* ;
+| |tab| ``else``
+| |tab| |tab| *result* = *if_false* ;
+
+where the comparison *cop* is define by the cases below:
+
+cexp_eq
+=======
+For this operator *cop* is ``==``
+
+cexp_le
+=======
+For this operator *cop* is ``<=``
+
+cexp_lt
+=======
+For this operator *cop* is ``<``
+
+Other Comparisons
+=================
+Note that
+
+   ``CondExpGt`` ( *left* , *right* , *if_true* , *if_false* )
+
+is equivalent to
+
+   ``CondExpLe`` ( *left* , *right* , *if_false* , *if_true* )
+
+Similar conversions can be used for all the possible
+:ref:`conditional expressions<CondExp-name>` .
+
+Example
+=======
+The file :ref:`json_cexp_op.cpp-name` is an example and test
+for one of these operators.
+
+Compare Operators
+*****************
+These are :ref:`comparison<Compare-name>` operators
+and have the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` :         " ``comp_`` *rel* "
+| }
+
+where *rel* is ``eq`` (equal),
+``ne`` (not equal),
+``le`` (less than or equal), or
+``lt`` (less than).
+A corresponding *op_usage* has the form
+
+   [ *op_code* , *n_result* , *n_arg* , [ *left* , *right*  ] ]
+
+n_result
+========
+This is always zero because a comparison operator does not create
+any new nodes.
+
+n_arg
+=====
+This is always two because a comparison operator has two argument nodes
+corresponding to the left and right operands.
+
+left, right
+===========
+The logical comparison is defined as the logical expression
+
+   *left* *cop* *right*
+
+The comparison *cop* is define by the cases below.
+The Json graph corresponds to the comparison being true.
+If, for a value of the independent parameters and variables,
+the comparison is false,
+the Json graph may no longer be valid.
+For example, the Json graph may only contain the code for the true case below:
+
+| |tab| ``if`` ( *left* *cop* *right*  )
+| |tab| { *source code when result is true*  }
+| |tab| ``else``
+| |tab| { *source code when result is false*  }
+
+Including this operator enables CppAD to detect when the graph
+may no longer be a valid representation of the intended function.
+
+comp_eq
+=======
+For this operator *cop* is ``==``
+
+comp_le
+=======
+For this operator *cop* is ``<=``
+
+comp_lt
+=======
+For this operator *cop* is ``<``
+
+comp_ne
+=======
+For this operator *cop* is ``!=``
+
+Other Comparisons
+=================
+The comparison result true for *left* > *right*
+is equivalent to the comparison result true for *right* < *left* .
+The comparison result false for *left* > *right*
+is equivalent to the comparison result true for *left* <= *right* .
+In a similar fashion, all the possible comparisons results
+can be converted to a true result for one of the comparisons above.
+
+Example
+=======
+The file :ref:`json_comp_op.cpp-name` is an example and test
+for one of these operators.
+
+Discrete Functions
+******************
+This operator has the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : ``"discrete"``
+| }
+
+A corresponding op_usage has the form
+
+   [ *op_code* , *name* , *n_result* , *n_arg* , [ *arg*  ]  ]
+
+name
+====
+The value *name* is a
+:ref:`json_ad_graph@Token@String` specifying the
+:ref:`discrete@name` of the discrete function that is called.
+
+n_result
+========
+This is always ``1`` because a discrete function
+creates one new node.
+The result node value is the specified discrete function of the argument value.
+
+n_arg
+=====
+This is always ``1`` because a discrete function has
+one argument node.
+
+arg
+===
+is the node index for the argument to the discrete function.
+
+Example
+=======
+the example and test :ref:`json_discrete_op.cpp-name` .
+
+Atomic Functions
+****************
+These operators create *n_result* nodes with values determined by
+an evaluation of the an :ref:`atomic_three-name` or :ref:`atomic_four-name` function.
+
+Atomic Three
+============
+This operator has the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : ``"atom"``
+| }
+
+A corresponding *op_usage* has the form
+
+| |tab| [ *op_code* , *name* , *n_result* , *n_arg* ,
+| |tab| |tab| [ *first_arg* , ..., *last_arg*  ]
+| |tab| ]
+
+Atomic Four
+===========
+This operator has the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : ``"atom4"``
+| }
+
+A corresponding *op_usage* has the form
+
+| |tab| [ *op_code* , *name* , *call_id* , *n_result* , *n_arg* ,
+| |tab| |tab| [ *first_arg* , ..., *last_arg*  ]
+| |tab| ]
+
+name
+====
+The value *name* is a
+:ref:`json_ad_graph@Token@String` specifying the
+:ref:`atomic_three_ctor@atomic_three@name`
+of the ``atomic_three`` function that is called.
+
+call_id
+=======
+is a :ref:`json_ad_graph@Token@Non-Negative Integer`
+specifying the :ref:`atomic_four_call@call_id` for an
+atomic four function.
+
+n_result
+========
+is the number of results for this function; i.e.,
+its range space dimension.
+
+n_arg
+=====
+is the number of arguments to this function; i.e.,
+its domain space dimension.
+
+first_arg, ..., last_arg
+========================
+The values corresponding to the node indices
+*first_arg* , ..., *last_arg* are the
+arguments (independent variables) for the atomic function evaluation.
+In the case where the atomic function is a ``chkpoint_two`` function,
+the independent dynamic parameters are specified by calling its
+:ref:`chkpoint_two@Syntax@new_dynamic` routine.
+
+Example
+=======
+the example and test :ref:`json_atom_op.cpp-name` .
+
+Print
+*****
+This operator has the following Json definition:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : ``"print"``
+| }
+
+A corresponding *op_usage* has the form
+
+   [ *op_code* , *before* , *after* , *n_result* , *n_arg* , [ *notpos* , *value*  ] ]
+
+before
+======
+is a :ref:`json_ad_graph@Token@String` that is printed
+:ref:`PrintFor@before` the value for this operator.
+
+after
+=====
+is a :ref:`json_ad_graph@Token@String` that is printed
+:ref:`PrintFor@after` the value for this operator.
+
+n_result
+========
+This is always zero because a print operator does not create
+any new nodes.
+
+n_arg
+=====
+This is always two because a print operator has two argument nodes.
+
+notpos
+======
+This is :ref:`PrintFor@notpos`
+which determines if the value is printed.
+
+value
+=====
+This is the :ref:`PrintFor@value` that is printed.
+
+Example
+=======
+The file :ref:`json_print_op.cpp-name` is an example and test
+of this operator.
+
+Contents
+********
+{xrst_toc_table
+   example/json/unary_op.cpp
+   example/json/add_op.cpp
+   example/json/azmul_op.cpp
+   example/json/div_op.cpp
+   example/json/mul_op.cpp
+   example/json/pow_op.cpp
+   example/json/sub_op.cpp
+   example/json/sum_op.cpp
+   example/json/cexp_op.cpp
+   example/json/comp_op.cpp
+   example/json/discrete_op.cpp
+   example/json/atom_op.cpp
+   example/json/atom4_op.cpp
+   example/json/print_op.cpp
+}
+
+{xrst_end json_graph_op}

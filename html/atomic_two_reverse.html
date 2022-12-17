@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_two_reverse, atomic, reverse, mode" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="ad&lt;base&gt;" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="implementation" name="keywords" />
+<meta content="q" name="keywords" />
+<meta content="tx" name="keywords" />
+<meta content="atx" name="keywords" />
+<meta content="ty" name="keywords" />
+<meta content="aty" name="keywords" />
+<meta content="f" name="keywords" />
+<meta content="g,, h" name="keywords" />
+<meta content="py" name="keywords" />
+<meta content="apy" name="keywords" />
+<meta content="px" name="keywords" />
+<meta content="apx" name="keywords" />
+<meta content="ok" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_two_reverse &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_two_for_sparse_jac" href="atomic_two_for_sparse_jac.html" />
+    <link rel="prev" title="atomic_two_forward" href="atomic_two_forward.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Appendix.html">Appendix</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Faq.html">Faq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="directory.html">directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glossary.html">glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Bib.html">Bib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new.html">whats_new</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="deprecated.html">deprecated</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="include_deprecated.html">include_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fun_deprecated.html">fun_deprecated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CompareChange.html">CompareChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_max_thread.html">omp_max_thread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="track_new_del.html">track_new_del</a></li>
+<li class="toctree-l4"><a class="reference internal" href="omp_alloc.html">omp_alloc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory_leak.html">memory_leak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epsilon.html">epsilon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cppad_ipopt_nlp.html">cppad_ipopt_nlp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_one.html">atomic_one</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic_two.html">atomic_two</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_ctor.html">atomic_two_ctor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_option.html">atomic_two_option</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_afun.html">atomic_two_afun</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_forward.html">atomic_two_forward</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">atomic_two_reverse</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_for_sparse_jac.html">atomic_two_for_sparse_jac</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_rev_sparse_jac.html">atomic_two_rev_sparse_jac</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_for_sparse_hes.html">atomic_two_for_sparse_hes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_rev_sparse_hes.html">atomic_two_rev_sparse_hes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="atomic_two_clear.html">atomic_two_clear</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="atomic_two_example.html">atomic_two_example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_two.cpp.html">multi_atomic_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chkpoint_one.html">chkpoint_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_one.cpp.html">multi_chkpoint_one.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zdouble.html">zdouble</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autotools.html">autotools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compare_c.html">compare_c</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_ad.html">numeric_ad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addon.html">addon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="License.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Appendix.html">Appendix</a> &raquo;</li>
+          <li><a href="deprecated.html">deprecated</a> &raquo;</li>
+          <li><a href="atomic_two.html">atomic_two</a> &raquo;</li>
+      <li>atomic_two_reverse</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_two_reverse.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-two-reverse">
+<span id="atomic-two-reverse-name"></span><h1>atomic_two_reverse<a class="headerlink" href="#atomic-two-reverse" title="Permalink to this headline"></a></h1>
+<section id="atomic-reverse-mode">
+<span id="atomic-two-reverse-title"></span><span id="index-0"></span><h2>Atomic Reverse Mode<a class="headerlink" href="#atomic-reverse-mode" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p>
+<ul>
+<li><p><a class="reference internal" href="#base" id="id2">Base</a></p></li>
+<li><p><a class="reference internal" href="#ad-base" id="id3">AD&lt;Base&gt;</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#purpose" id="id4">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id5">Implementation</a></p></li>
+<li><p><a class="reference internal" href="#q" id="id6">q</a></p></li>
+<li><p><a class="reference internal" href="#tx" id="id7">tx</a></p></li>
+<li><p><a class="reference internal" href="#atx" id="id8">atx</a></p></li>
+<li><p><a class="reference internal" href="#ty" id="id9">ty</a></p></li>
+<li><p><a class="reference internal" href="#aty" id="id10">aty</a></p></li>
+<li><p><a class="reference internal" href="#f" id="id11">F</a></p></li>
+<li><p><a class="reference internal" href="#g-h" id="id12">G, H</a></p></li>
+<li><p><a class="reference internal" href="#py" id="id13">py</a></p></li>
+<li><p><a class="reference internal" href="#apy" id="id14">apy</a></p>
+<ul>
+<li><p><a class="reference internal" href="#px" id="id15">px</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#apx" id="id16">apx</a></p></li>
+<li><p><a class="reference internal" href="#ok" id="id17">ok</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="atomic-two-reverse-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<section id="base">
+<span id="atomic-two-reverse-syntax-base"></span><span id="index-2"></span><h4><a class="toc-backref" href="#id2">Base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h4>
+<blockquote>
+<div><p><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">reverse</span></code> ( <em>q</em> , <em>tx</em> , <em>ty</em> , <em>px</em> , <em>py</em> )</p>
+</div></blockquote>
+<p>This syntax is used by <em>f</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> where <em>f</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span></code> <em>Base</em> &gt; <em>f</em></p>
+</div></blockquote>
+<p>and <em>afun</em> is used in <em>f</em> .</p>
+</section>
+<section id="ad-base">
+<span id="atomic-two-reverse-syntax-ad-base"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id3">AD&lt;Base&gt;</a><a class="headerlink" href="#ad-base" title="Permalink to this headline"></a></h4>
+<blockquote>
+<div><p><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">reverse</span></code> ( <em>q</em> , <em>atx</em> , <em>aty</em> , <em>apx</em> , <em>apy</em> )</p>
+</div></blockquote>
+<p>This syntax is used by <em>af</em> . <code class="docutils literal notranslate"><span class="pre">Forward</span></code> where <em>af</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">ADFun&lt;</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt; , <em>Base</em> &gt; <em>af</em></p>
+</div></blockquote>
+<p>and <em>afun</em> is used in <em>af</em> (see <a class="reference internal" href="base2ad.html#base2ad-name"><span class="std std-ref">base2ad</span></a> ).</p>
+</section>
+</section>
+<section id="purpose">
+<span id="atomic-two-reverse-purpose"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This function is used by <a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">Reverse</span></a>
+to compute derivatives.</p>
+</section>
+<section id="implementation">
+<span id="atomic-two-reverse-implementation"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h3>
+<p>If you are using
+<a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">Reverse</span></a> mode,
+this virtual function must be defined by the
+<a class="reference internal" href="atomic_two_ctor.html#atomic-two-ctor-atomic-user"><span class="std std-ref">atomic_user</span></a> class.
+It can just return <em>ok</em> == <code class="docutils literal notranslate"><span class="pre">false</span></code>
+(and not compute anything) for values
+of <em>q</em> that are greater than those used by your
+<a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">Reverse</span></a> mode calculations.</p>
+</section>
+<section id="q">
+<span id="atomic-two-reverse-q"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">q</a><a class="headerlink" href="#q" title="Permalink to this headline"></a></h3>
+<p>The argument <em>q</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">size_t</span></code> <em>q</em></p>
+</div></blockquote>
+<p>It specifies the highest order Taylor coefficient that
+computing the derivative of.</p>
+</section>
+<section id="tx">
+<span id="atomic-two-reverse-tx"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">tx</a><a class="headerlink" href="#tx" title="Permalink to this headline"></a></h3>
+<p>The argument <em>tx</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span></code> <em>Base</em> &gt;&amp; <em>tx</em></p>
+</div></blockquote>
+<p>and <em>tx</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == ( <em>q</em> +1)* <em>n</em> .
+For <span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span> and <span class="math notranslate nohighlight">\(k = 0 , \ldots , q\)</span>,
+we use the Taylor coefficient notation</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   x_j^k    &amp; = &amp; tx [ j * ( q + 1 ) + k ]
+   \\
+   X_j (t)  &amp; = &amp; x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+\end{eqnarray}</div><p>Note that superscripts represent an index for <span class="math notranslate nohighlight">\(x_j^k\)</span>
+and an exponent for <span class="math notranslate nohighlight">\(t^k\)</span>.
+Also note that the Taylor coefficients for <span class="math notranslate nohighlight">\(X(t)\)</span> correspond
+to the derivatives of <span class="math notranslate nohighlight">\(X(t)\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span> in the following way:</p>
+<div class="math notranslate nohighlight">
+\[x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)\]</div>
+</section>
+<section id="atx">
+<span id="atomic-two-reverse-atx"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">atx</a><a class="headerlink" href="#atx" title="Permalink to this headline"></a></h3>
+<p>The argument <em>atx</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt; &gt;&amp; <em>atx</em></p>
+</div></blockquote>
+<p>Otherwise, <em>atx</em> specifications are the same as for <em>tx</em> .</p>
+</section>
+<section id="ty">
+<span id="atomic-two-reverse-ty"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">ty</a><a class="headerlink" href="#ty" title="Permalink to this headline"></a></h3>
+<p>The argument <em>ty</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span></code> <em>Base</em> &gt;&amp; <em>ty</em></p>
+</div></blockquote>
+<p>and <em>tx</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == ( <em>q</em> +1)* <em>m</em> .
+For <span class="math notranslate nohighlight">\(i = 0 , \ldots , m-1\)</span> and <span class="math notranslate nohighlight">\(k = 0 , \ldots , q\)</span>,
+we use the Taylor coefficient notation</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   Y_i (t)  &amp; = &amp; f_i [ X(t) ]
+   \\
+   Y_i (t)  &amp; = &amp; y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+   \\
+   y_i^k    &amp; = &amp; ty [ i * ( q + 1 ) + k ]
+\end{eqnarray}</div><p>where <span class="math notranslate nohighlight">\(o( t^q ) / t^q \rightarrow 0\)</span> as <span class="math notranslate nohighlight">\(t \rightarrow 0\)</span>.
+Note that superscripts represent an index for <span class="math notranslate nohighlight">\(y_j^k\)</span>
+and an exponent for <span class="math notranslate nohighlight">\(t^k\)</span>.
+Also note that the Taylor coefficients for <span class="math notranslate nohighlight">\(Y(t)\)</span> correspond
+to the derivatives of <span class="math notranslate nohighlight">\(Y(t)\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span> in the following way:</p>
+<div class="math notranslate nohighlight">
+\[y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)\]</div>
+</section>
+<section id="aty">
+<span id="atomic-two-reverse-aty"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">aty</a><a class="headerlink" href="#aty" title="Permalink to this headline"></a></h3>
+<p>The argument <em>aty</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt; &gt;&amp; <em>aty</em></p>
+</div></blockquote>
+<p>Otherwise, <em>aty</em> specifications are the same as for <em>ty</em> .</p>
+</section>
+<section id="f">
+<span id="atomic-two-reverse-f"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">F</a><a class="headerlink" href="#f" title="Permalink to this headline"></a></h3>
+<p>We use the notation <span class="math notranslate nohighlight">\(\{ x_j^k \} \in \B{R}^{n \times (q+1)}\)</span> for</p>
+<div class="math notranslate nohighlight">
+\[\{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}\]</div>
+<p>We use the notation <span class="math notranslate nohighlight">\(\{ y_i^k \} \in \B{R}^{m \times (q+1)}\)</span> for</p>
+<div class="math notranslate nohighlight">
+\[\{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}\]</div>
+<p>We define the function
+<span class="math notranslate nohighlight">\(F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[y_i^k = F_i^k [ \{ x_j^k \} ]\]</div>
+<p>Note that</p>
+<div class="math notranslate nohighlight">
+\[F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )\]</div>
+<p>We also note that
+<span class="math notranslate nohighlight">\(F_i^\ell ( \{ x_j^k \} )\)</span> is a function of
+<span class="math notranslate nohighlight">\(x^0 , \ldots , x^\ell\)</span>
+and is determined by the derivatives of <span class="math notranslate nohighlight">\(f_i (x)\)</span>
+up to order <span class="math notranslate nohighlight">\(\ell\)</span>.</p>
+</section>
+<section id="g-h">
+<span id="atomic-two-reverse-g-h"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">G, H</a><a class="headerlink" href="#g-h" title="Permalink to this headline"></a></h3>
+<p>We use <span class="math notranslate nohighlight">\(G : \B{R}^{m \times (q+1)} \rightarrow \B{R}\)</span>
+to denote an arbitrary scalar valued function of <span class="math notranslate nohighlight">\(\{ y_i^k \}\)</span>.
+We use <span class="math notranslate nohighlight">\(H : \B{R}^{n \times (q+1)} \rightarrow \B{R}\)</span>
+defined by</p>
+<div class="math notranslate nohighlight">
+\[H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]\]</div>
+</section>
+<section id="py">
+<span id="atomic-two-reverse-py"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">py</a><a class="headerlink" href="#py" title="Permalink to this headline"></a></h3>
+<p>The argument <em>py</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span></code> <em>Base</em> &gt;&amp; <em>py</em></p>
+</div></blockquote>
+<p>and <em>py</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <code class="docutils literal notranslate"><span class="pre">m</span></code> * ( <em>q</em> +1) .
+For <span class="math notranslate nohighlight">\(i = 0 , \ldots , m-1\)</span>, <span class="math notranslate nohighlight">\(k = 0 , \ldots , q\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k\]</div>
+</section>
+<section id="apy">
+<span id="atomic-two-reverse-apy"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">apy</a><a class="headerlink" href="#apy" title="Permalink to this headline"></a></h3>
+<p>The argument <em>apy</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt; &gt;&amp; <em>apy</em></p>
+</div></blockquote>
+<p>Otherwise, <em>apy</em> specifications are the same as for <em>py</em> .</p>
+<section id="px">
+<span id="atomic-two-reverse-apy-px"></span><span id="index-15"></span><h4><a class="toc-backref" href="#id15">px</a><a class="headerlink" href="#px" title="Permalink to this headline"></a></h4>
+<p>The <em>px</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CppAD::vector&lt;</span></code> <em>Base</em> &gt;&amp; <em>px</em></p>
+</div></blockquote>
+<p>and <em>px</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> () == <code class="docutils literal notranslate"><span class="pre">n</span></code> * ( <em>q</em> +1) .
+The input values of the elements of <em>px</em>
+are not specified (must not matter).
+Upon return,
+for <span class="math notranslate nohighlight">\(j = 0 , \ldots , n-1\)</span> and <span class="math notranslate nohighlight">\(\ell = 0 , \ldots , q\)</span>,</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+px [ j * (q + 1) + \ell ] &amp; = &amp; \partial H / \partial x_j^\ell
+\\
+&amp; = &amp;
+( \partial G / \partial \{ y_i^k \} ) \cdot
+   ( \partial \{ y_i^k \} / \partial x_j^\ell )
+\\
+&amp; = &amp;
+\sum_{k=0}^q
+\sum_{i=0}^{m-1}
+( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
+\\
+&amp; = &amp;
+\sum_{k=\ell}^q
+\sum_{i=0}^{m-1}
+py[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
+\end{eqnarray}</div><p>Note that we have used the fact that for <span class="math notranslate nohighlight">\(k &lt; \ell\)</span>,
+<span class="math notranslate nohighlight">\(\partial F_i^k / \partial x_j^\ell = 0\)</span>.</p>
+</section>
+</section>
+<section id="apx">
+<span id="atomic-two-reverse-apx"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id16">apx</a><a class="headerlink" href="#apx" title="Permalink to this headline"></a></h3>
+<p>The argument <em>apx</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CppAD::vector&lt;</span> <span class="pre">AD&lt;</span></code> <em>Base</em> &gt; &gt;&amp; <em>apx</em></p>
+</div></blockquote>
+<p>Otherwise, <em>apx</em> specifications are the same as for <em>px</em> .</p>
+</section>
+<section id="ok">
+<span id="atomic-two-reverse-ok"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id17">ok</a><a class="headerlink" href="#ok" title="Permalink to this headline"></a></h3>
+<p>The return value <em>ok</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <em>ok</em></p>
+</div></blockquote>
+<p>If it is <code class="docutils literal notranslate"><span class="pre">true</span></code> , the corresponding evaluation succeeded,
+otherwise it failed.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_two_forward.html" class="btn btn-neutral float-left" title="atomic_two_forward" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_two_for_sparse_jac.html" class="btn btn-neutral float-right" title="atomic_two_for_sparse_jac" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

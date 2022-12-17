@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="atomic_three_define, defining, atomic, functions:, third, generation" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="define, class" name="keywords" />
+<meta content="construct, atomic, function" name="keywords" />
+<meta content="use, atomic, function" name="keywords" />
+<meta content="class, member, callbacks" name="keywords" />
+<meta content="see, also" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="speed" name="keywords" />
+<meta content="reduce, memory" name="keywords" />
+<meta content="ad_type" name="keywords" />
+<meta content="virtual, functions" name="keywords" />
+<meta content="base" name="keywords" />
+<meta content="parameter_x" name="keywords" />
+<meta content="constant" name="keywords" />
+<meta content="dynamic" name="keywords" />
+<meta content="variable" name="keywords" />
+<meta content="type_x" name="keywords" />
+<meta content="contents" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>atomic_three_define &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="atomic_three_ctor" href="atomic_three_ctor.html" />
+    <link rel="prev" title="atomic_three" href="atomic_three.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CondExp.html">CondExp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="atomic.html">atomic</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="atomic_four.html">atomic_four</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="atomic_three.html">atomic_three</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">atomic_three_define</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_ctor.html">atomic_three_ctor</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_afun.html">atomic_three_afun</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_for_type.html">atomic_three_for_type</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_forward.html">atomic_three_forward</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_reverse.html">atomic_three_reverse</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_jac_sparsity.html">atomic_three_jac_sparsity</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_hes_sparsity.html">atomic_three_hes_sparsity</a></li>
+<li class="toctree-l7"><a class="reference internal" href="atomic_three_rev_depend.html">atomic_three_rev_depend</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="atomic_three_example.html">atomic_three_example</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="chkpoint_two.html">chkpoint_two</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+          <li><a href="atomic.html">atomic</a> &raquo;</li>
+          <li><a href="atomic_three.html">atomic_three</a> &raquo;</li>
+      <li>atomic_three_define</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomic_three_define.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="atomic-three-define">
+<span id="atomic-three-define-name"></span><h1>atomic_three_define<a class="headerlink" href="#atomic-three-define" title="Permalink to this headline"></a></h1>
+<section id="defining-atomic-functions-third-generation">
+<span id="atomic-three-define-title"></span><span id="index-0"></span><h2>Defining Atomic Functions: Third Generation<a class="headerlink" href="#defining-atomic-functions-third-generation" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p>
+<ul>
+<li><p><a class="reference internal" href="#define-class" id="id3">Define Class</a></p></li>
+<li><p><a class="reference internal" href="#construct-atomic-function" id="id4">Construct Atomic Function</a></p></li>
+<li><p><a class="reference internal" href="#use-atomic-function" id="id5">Use Atomic Function</a></p></li>
+<li><p><a class="reference internal" href="#class-member-callbacks" id="id6">Class Member Callbacks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#see-also" id="id7">See Also</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id8">Purpose</a></p>
+<ul>
+<li><p><a class="reference internal" href="#speed" id="id9">Speed</a></p></li>
+<li><p><a class="reference internal" href="#reduce-memory" id="id10">Reduce Memory</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ad-type" id="id11">ad_type</a></p></li>
+<li><p><a class="reference internal" href="#virtual-functions" id="id12">Virtual Functions</a></p></li>
+<li><p><a class="reference internal" href="#base" id="id13">Base</a></p></li>
+<li><p><a class="reference internal" href="#parameter-x" id="id14">parameter_x</a></p>
+<ul>
+<li><p><a class="reference internal" href="#constant" id="id15">Constant</a></p></li>
+<li><p><a class="reference internal" href="#dynamic" id="id16">Dynamic</a></p></li>
+<li><p><a class="reference internal" href="#variable" id="id17">Variable</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#type-x" id="id18">type_x</a></p></li>
+<li><p><a class="reference internal" href="#atomic-three-define-contents" id="id19">Contents</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="atomic-three-define-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<section id="define-class">
+<span id="atomic-three-define-syntax-define-class"></span><span id="index-2"></span><h4><a class="toc-backref" href="#id3">Define Class</a><a class="headerlink" href="#define-class" title="Permalink to this headline"></a></h4>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">class</span></code> <em>atomic_user</em> : <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">CppAD::atomic_three&lt;</span></code> <em>Base</em> &gt; {</div>
+<div class="line">      …</div>
+<div class="line">};</div>
+</div>
+</section>
+<section id="construct-atomic-function">
+<span id="atomic-three-define-syntax-construct-atomic-function"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id4">Construct Atomic Function</a><a class="headerlink" href="#construct-atomic-function" title="Permalink to this headline"></a></h4>
+<p><em>atomic_user</em> <em>afun</em> ( <em>ctor_arg_list</em> )</p>
+</section>
+<section id="use-atomic-function">
+<span id="atomic-three-define-syntax-use-atomic-function"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id5">Use Atomic Function</a><a class="headerlink" href="#use-atomic-function" title="Permalink to this headline"></a></h4>
+<p><em>afun</em> ( <em>ax</em> , <em>ay</em> )</p>
+</section>
+<section id="class-member-callbacks">
+<span id="atomic-three-define-syntax-class-member-callbacks"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id6">Class Member Callbacks</a><a class="headerlink" href="#class-member-callbacks" title="Permalink to this headline"></a></h4>
+<div class="line-block">
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">for_type</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> , <em>type_y</em></div>
+<div class="line">)</div>
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">forward</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> ,</div>
+<div class="line">      <em>need_y</em> , <em>order_low</em> , <em>order_up</em> , <em>taylor_x</em> , <em>taylor_y</em></div>
+<div class="line">)</div>
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">reverse</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> ,</div>
+<div class="line">      <em>order_up</em> , <em>taylor_x</em> , <em>taylor_y</em> , <em>partial_x</em> , <em>partial_y</em></div>
+<div class="line">)</div>
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">jac_sparsity</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> , <em>dependency</em> , <em>select_x</em> <em>select_y</em> , <em>pattern_out</em></div>
+<div class="line">)</div>
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">hes_sparsity</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> , <em>select_x</em> <em>select_y</em> , <em>pattern_out</em></div>
+<div class="line">)</div>
+<div class="line"><em>ok</em> = <em>afun</em> . <code class="docutils literal notranslate"><span class="pre">rev_depend</span></code> (</div>
+<div class="line">      <em>parameter_x</em> , <em>type_x</em> , <em>depend_x</em> , <em>depend_y</em></div>
+<div class="line">)</div>
+</div>
+</section>
+</section>
+<section id="see-also">
+<span id="atomic-three-define-see-also"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id7">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="chkpoint_two.html#chkpoint-two-name"><span class="std std-ref">chkpoint_two</span></a> , <a class="reference internal" href="atomic_two.html#atomic-two-name"><span class="std std-ref">atomic_two</span></a></p>
+</section>
+<section id="purpose">
+<span id="atomic-three-define-purpose"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id8">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<section id="speed">
+<span id="atomic-three-define-purpose-speed"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id9">Speed</a><a class="headerlink" href="#speed" title="Permalink to this headline"></a></h4>
+<p>In some cases, it is possible to compute derivatives of a function</p>
+<div class="math notranslate nohighlight">
+\[y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m\]</div>
+<p>more efficiently than by coding it using <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt;
+<a class="reference internal" href="glossary.html#glossary-operation-atomic"><span class="std std-ref">Atomic</span></a> operations
+and letting CppAD do the rest.
+The class <code class="docutils literal notranslate"><span class="pre">atomic_three</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">Base</span></code> &gt; is used to
+create a new atomic operation corresponding to a function <span class="math notranslate nohighlight">\(g(x)\)</span>
+where the user specifies how to compute the derivatives
+and sparsity patterns for <span class="math notranslate nohighlight">\(g(x)\)</span>.</p>
+</section>
+<section id="reduce-memory">
+<span id="atomic-three-define-purpose-reduce-memory"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id10">Reduce Memory</a><a class="headerlink" href="#reduce-memory" title="Permalink to this headline"></a></h4>
+<p>If the function <span class="math notranslate nohighlight">\(g(x)\)</span> is used many times during the recording
+of an <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object,
+using an atomic version of <span class="math notranslate nohighlight">\(g(x)\)</span> removes the need for repeated
+copies of the corresponding <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; operations and variables
+in the recording.</p>
+</section>
+</section>
+<section id="ad-type">
+<span id="atomic-three-define-ad-type"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id11">ad_type</a><a class="headerlink" href="#ad-type" title="Permalink to this headline"></a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">CppAD::ad_type_enum</span></code>
+is used to specify if an AD object is a
+<a class="reference internal" href="glossary.html#glossary-parameter-constant"><span class="std std-ref">constant parameter</span></a>
+<a class="reference internal" href="glossary.html#glossary-parameter-dynamic"><span class="std std-ref">dynamic parameter</span></a>
+or <a class="reference internal" href="glossary.html#glossary-variable"><span class="std std-ref">Variable</span></a> .
+It has the following possible values:</p>
+<table class="colwidths-auto docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>ad_type_enum</em></p></td>
+<td><p>Meaning</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">constant_enum</span></code></p></td>
+<td><p>constant parameter</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dynamic_enum</span></code></p></td>
+<td><p>dynamic parameter</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">variable_enum</span></code></p></td>
+<td><p>variable</p></td>
+</tr>
+</tbody>
+</table>
+<p>In addition,
+<code class="docutils literal notranslate"><span class="pre">constant_enum</span> <span class="pre">&lt;</span> <span class="pre">dynamic_enum</span> <span class="pre">&lt;</span> <span class="pre">variable_enum</span></code> .</p>
+</section>
+<section id="virtual-functions">
+<span id="atomic-three-define-virtual-functions"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id12">Virtual Functions</a><a class="headerlink" href="#virtual-functions" title="Permalink to this headline"></a></h3>
+<p>The
+<a class="reference internal" href="#atomic-three-define-syntax-class-member-callbacks"><span class="std std-ref">callback functions</span></a>
+are implemented by defining the virtual functions in the
+<em>atomic_user</em> class.
+These functions compute derivatives,
+sparsity patterns, and dependency relations.
+Each virtual function has a default implementation
+that returns <em>ok</em> == <code class="docutils literal notranslate"><span class="pre">false</span></code> .
+The <a class="reference internal" href="atomic_three_for_type.html#atomic-three-for-type-name"><span class="std std-ref">for_type</span></a>
+and <a class="reference internal" href="atomic_three_forward.html#atomic-three-forward-name"><span class="std std-ref">forward</span></a> function
+(for the case <em>order_up</em>  == 0 ) must be implemented.
+Otherwise, only those functions and orders
+required by the your calculations need to be implemented.
+For example,
+<em>forward</em> for the case <em>order_up</em>  == 2 can just return
+<em>ok</em> == <code class="docutils literal notranslate"><span class="pre">false</span></code> unless you require
+forward mode calculation of second derivatives.</p>
+</section>
+<section id="base">
+<span id="atomic-three-define-base"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id13">Base</a><a class="headerlink" href="#base" title="Permalink to this headline"></a></h3>
+<p>This is the base type of the elements of
+<a class="reference internal" href="atomic_three_afun.html#atomic-three-afun-ax"><span class="std std-ref">ax</span></a> and <a class="reference internal" href="atomic_three_afun.html#atomic-three-afun-ay"><span class="std std-ref">ay</span></a>
+in the corresponding <em>afun</em> ( <em>ax</em> , <em>ay</em> ) call; i.e.,
+the elements of <em>ax</em> and <em>ay</em> have type
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; .</p>
+</section>
+<section id="parameter-x">
+<span id="atomic-three-define-parameter-x"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id14">parameter_x</a><a class="headerlink" href="#parameter-x" title="Permalink to this headline"></a></h3>
+<p>All the virtual functions include this argument which has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">CppAD::vector&lt;</span></code> <em>Base</em> &gt; <em>parameter_x</em></p>
+</div></blockquote>
+<p>Its size is equal to <em>n</em> = <em>ax</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> ()
+in corresponding <em>afun</em> ( <em>ax</em> , <em>ay</em> ) call.</p>
+<section id="constant">
+<span id="atomic-three-define-parameter-x-constant"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id15">Constant</a><a class="headerlink" href="#constant" title="Permalink to this headline"></a></h4>
+<p>For <em>j</em> =0,…, <em>n</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> ,
+if <em>ax</em> [ <em>j</em> ] is a <a class="reference internal" href="con_dyn_var.html#con-dyn-var-constant"><span class="std std-ref">Constant</span></a> parameter,</p>
+<blockquote>
+<div><p><em>parameter_x</em> [ <em>j</em> ] == <em>ax</em> [ <em>j</em> ]</p>
+</div></blockquote>
+</section>
+<section id="dynamic">
+<span id="atomic-three-define-parameter-x-dynamic"></span><span id="index-15"></span><h4><a class="toc-backref" href="#id16">Dynamic</a><a class="headerlink" href="#dynamic" title="Permalink to this headline"></a></h4>
+<p>If <em>ax</em> [ <em>j</em> ] is a <a class="reference internal" href="con_dyn_var.html#con-dyn-var-dynamic"><span class="std std-ref">Dynamic</span></a> parameter,
+<em>parameter_x</em> [ <em>j</em> ] value of <em>ax</em> [ <em>j</em> ] corresponding to the
+previous call to <a class="reference internal" href="new_dynamic.html#new-dynamic-name"><span class="std std-ref">new_dynamic</span></a> for the corresponding function object.</p>
+</section>
+<section id="variable">
+<span id="atomic-three-define-parameter-x-variable"></span><span id="index-16"></span><h4><a class="toc-backref" href="#id17">Variable</a><a class="headerlink" href="#variable" title="Permalink to this headline"></a></h4>
+<p>If <em>ax</em> [ <em>j</em> ] is a variable,
+the value of <em>parameter_x</em> [ <em>j</em> ] is not specified.
+See the
+<a class="reference internal" href="atomic_three_mat_mul.hpp.html#atomic-three-mat-mul-hpp-purpose-parameter-x"><span class="std std-ref">atomic_three_mat_mul.hpp</span></a>
+for an example using <em>parameter_x</em> .</p>
+</section>
+</section>
+<section id="type-x">
+<span id="atomic-three-define-type-x"></span><span id="index-17"></span><h3><a class="toc-backref" href="#id18">type_x</a><a class="headerlink" href="#type-x" title="Permalink to this headline"></a></h3>
+<p>All the virtual functions include this argument.
+Its size is equal to <em>n</em> = <em>ax</em> . <code class="docutils literal notranslate"><span class="pre">size</span></code> ()
+in corresponding <em>afun</em> ( <em>ax</em> , <em>ay</em> ) call.
+For <em>j</em> =0,…, <em>n</em> <code class="docutils literal notranslate"><span class="pre">-1</span></code> ,
+if <em>ax</em> [ <em>j</em> ] is a constant parameter,</p>
+<blockquote>
+<div><p><em>type_x</em> [ <em>j</em> ] == <code class="docutils literal notranslate"><span class="pre">CppAD::constant_enum</span></code></p>
+</div></blockquote>
+<p>if <em>ax</em> [ <em>j</em> ] is a dynamic parameter,</p>
+<blockquote>
+<div><p><em>type_x</em> [ <em>j</em> ] == <code class="docutils literal notranslate"><span class="pre">CppAD::dynamic_enum</span></code></p>
+</div></blockquote>
+<p>if <em>ax</em> [ <em>j</em> ] is a variable,</p>
+<blockquote>
+<div><p><em>type_x</em> [ <em>j</em> ] == <code class="docutils literal notranslate"><span class="pre">CppAD::variable_enum</span></code></p>
+</div></blockquote>
+<p>See the
+<a class="reference internal" href="atomic_three_mat_mul.hpp.html#atomic-three-mat-mul-hpp-purpose-type-x"><span class="std std-ref">atomic_three_mat_mul.hpp</span></a>
+for an example using <em>type_x</em> .</p>
+</section>
+<section id="atomic-three-define-contents">
+<span id="index-18"></span><span id="id1"></span><h3><a class="toc-backref" href="#id19">Contents</a><a class="headerlink" href="#atomic-three-define-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>atomic_three_ctor</p></td>
+<td><p><a class="reference internal" href="atomic_three_ctor.html#atomic-three-ctor-title"><span class="std std-ref">Atomic Function Constructor</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_three_afun</p></td>
+<td><p><a class="reference internal" href="atomic_three_afun.html#atomic-three-afun-title"><span class="std std-ref">Using AD Version of an Atomic Function</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>atomic_three_for_type</p></td>
+<td><p><a class="reference internal" href="atomic_three_for_type.html#atomic-three-for-type-title"><span class="std std-ref">Atomic Function Forward Type Calculation</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_three_forward</p></td>
+<td><p><a class="reference internal" href="atomic_three_forward.html#atomic-three-forward-title"><span class="std std-ref">Atomic Function Forward Mode</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>atomic_three_reverse</p></td>
+<td><p><a class="reference internal" href="atomic_three_reverse.html#atomic-three-reverse-title"><span class="std std-ref">Atomic Function Reverse Mode</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_three_jac_sparsity</p></td>
+<td><p><a class="reference internal" href="atomic_three_jac_sparsity.html#atomic-three-jac-sparsity-title"><span class="std std-ref">Atomic Function Jacobian Sparsity Patterns</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>atomic_three_hes_sparsity</p></td>
+<td><p><a class="reference internal" href="atomic_three_hes_sparsity.html#atomic-three-hes-sparsity-title"><span class="std std-ref">Atomic Function Hessian Sparsity Patterns</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>atomic_three_rev_depend</p></td>
+<td><p><a class="reference internal" href="atomic_three_rev_depend.html#atomic-three-rev-depend-title"><span class="std std-ref">Atomic Function Reverse Dependency Calculation</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atomic_three.html" class="btn btn-neutral float-left" title="atomic_three" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomic_three_ctor.html" class="btn btn-neutral float-right" title="atomic_three_ctor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

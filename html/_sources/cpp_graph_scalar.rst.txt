@@ -1,0 +1,47 @@
+lines 118-162 of file: include/cppad/core/graph/cpp_graph.hpp
+
+{xrst_begin cpp_graph_scalar}
+
+C++ AD Graph Scalar Values
+##########################
+
+Syntax
+******
+
+Get
+===
+
+| *function_name* = *graph_obj* . ``function_name_get`` ()
+| *n_dynamic_ind* = *graph_obj* . ``n_dynamic_ind_get`` ()
+| *n_variable_ind* = *graph_obj* . ``n_variable_ind_get`` ()
+
+Set
+===
+
+| *graph_obj* . ``function_name_set`` ( *function_name* )
+| *graph_obj* . ``n_dynamic_ind_set`` ( *n_dynamic_ind* )
+| *graph_obj* . ``n_variable_ind_set`` ( *n_variable_ind* )
+
+Set
+***
+The argument for all the set operations is const.
+
+graph_obj
+*********
+is an ``cpp_graph`` object.
+It is const for all the get functions.
+
+function_name
+*************
+is a ``std::string&`` specifying the name of the function
+for this graph.
+
+n_dynamic_ind
+*************
+is a ``size_t`` specifying the number of independent dynamic parameters.
+
+n_variable_ind
+**************
+is a ``size_t`` specifying the number of independent variables.
+
+{xrst_end cpp_graph_scalar}

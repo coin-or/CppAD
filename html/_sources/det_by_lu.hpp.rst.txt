@@ -1,0 +1,19 @@
+lines 6-22 of file: xrst/det_by_lu_hpp.xrst
+
+{xrst_begin det_by_lu.hpp}
+
+Source: det_by_lu
+#################
+
+| # ``ifndef CPPAD_DET_BY_LU_HPP``
+| # ``define CPPAD_DET_BY_LU_HPP``
+
+{xrst_literal
+   include/cppad/speed/det_by_lu.hpp
+   // BEGIN C++
+   // END C++
+}
+
+``# endif``
+
+{xrst_end det_by_lu.hpp}

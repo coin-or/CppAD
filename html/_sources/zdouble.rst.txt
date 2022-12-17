@@ -1,0 +1,119 @@
+lines 8-124 of file: include/cppad/core/zdouble.hpp
+
+{xrst_begin zdouble}
+{xrst_spell
+   zdouble
+}
+zdouble: An AD Base Type With Absolute Zero
+###########################################
+
+Deprecated 2015-09-26
+*********************
+Use the function :ref:`azmul-name` instead.
+
+Absolute Zero
+*************
+The ``zdouble`` class acts like the ``double`` type
+with the added property that zero times any value is zero.
+This includes zero time :ref:`nan-name` and zero times infinity.
+In addition, zero divided by any value and any value times zero
+are also zero.
+
+Syntax
+******
+
+Constructor and Assignment
+==========================
+
+| ``zdouble z``
+| ``zdouble z`` ( ``x`` )
+| ``zdouble z`` ( ``i`` )
+| *z1* *op* *x*
+
+were *i* is a ``size_t`` or *long* or ``int`` ,
+*x* is a ``double`` or ``zdouble`` ,
+and *op* is ``=`` or ``+=`` or ``-=`` or ``*=``
+or ``/=-`` .
+
+Comparison Operators
+====================
+
+| *b* = *z* *op* *x*
+| *b* = *x* *op* *z*
+
+where *b* is a ``bool`` object,
+*z* is a ``zdouble`` object,
+*x* is a ``double`` or ``zdouble`` object, and
+*op* is ``==`` , ``!=`` , ``<=`` , ``>=`` ,
+``<`` or ``>`` .
+
+Arithmetic Operators
+====================
+
+| *z2* = *z1* *op* *x*
+| *z2* = *x* *op* *z1*
+
+where *z1* , *z2* are ``zdouble`` objects,
+*x* is a ``double`` or ``zdouble`` object, and
+*op* is ``+`` , ``-`` , ``*`` or ``/`` .
+
+Standard Math
+=============
+
+| *z2* = *fun* ( *z1* )
+| *z3* = ``pow`` ( *z1* , *z2* )
+
+where *z1* , *z2* , *z3* are ``zdouble`` objects and
+*fun* is a :ref:`unary_standard_math-name` function.
+
+Nan
+===
+There is a specialization of :ref:`nan-name` so that
+
+   ``z2`` = *nan* ( ``z1`` )
+
+returns 'not a number' when *z1* has type ``zdouble`` .
+Note that this template function needs to be specialized because
+
+   ``zdouble`` (0.0) == ``zdouble`` (0.0) / ``zdouble`` (0.0)
+
+Motivation
+**********
+
+General
+=======
+Often during computing (and more so in parallel computing) alternative
+values for an expression are computed and one of the alternatives
+is chosen using some boolean variable.
+This is often represented by
+
+   *result* = *flag* * *value_if_true* + (1 ``-`` *flag* ) * *value_if_false*
+
+where *flag* is one for true and zero for false.
+This representation does not work for ``double`` when the value
+being multiplied by zero is ``+inf`` , ``-inf`` , or ``nan`` .
+
+CppAD
+=====
+In CppAD one can use
+:ref:`conditional expressions<CondExp-name>` to achieve the representation
+
+   *result* = *flag* * *value_if_true* + (1 ``-`` *flag* ) * *value_if_false*
+
+This works fine except when there are
+:ref:`multiple levels of AD<mul_level-name>` ; e.g.,
+when using ``AD< AD<double> >`` .
+In this case the corresponding AD function objects have type
+:ref:`ADFun\< AD\<double> ><fun_construct-name>` .
+When these AD function objects compute derivatives using
+:ref:`reverse-name` mode, the conditional expressions are represented use
+zeros to multiply the expression that is not used.
+Using ``AD< AD<zdouble> >`` instead of ``AD< AD<double> >``
+makes this representation work and fixes the problem.
+
+Base Type Requirements
+**********************
+The type ``zdouble`` satisfies all of the CppAD
+:ref:`base type requirements<base_require-name>` .
+
+{xrst_end zdouble}

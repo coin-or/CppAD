@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="CondExp, ad, conditional, expressions" name="keywords" />
+<meta content="syntax" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="rel" name="keywords" />
+<meta content="type" name="keywords" />
+<meta content="left" name="keywords" />
+<meta content="right" name="keywords" />
+<meta content="if_true" name="keywords" />
+<meta content="if_false" name="keywords" />
+<meta content="result" name="keywords" />
+<meta content="optimize" name="keywords" />
+<meta content="deprecate, 2005-08-07" name="keywords" />
+<meta content="operation, sequence" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="test" name="keywords" />
+<meta content="atan2" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CondExp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cond_exp.cpp" href="cond_exp.cpp.html" />
+    <link rel="prev" title="azmul.cpp" href="azmul.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AD.html">AD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad_ctor.html">ad_ctor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ad_assign.html">ad_assign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Convert.html">Convert</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ADValued.html">ADValued</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_standard_math.html">unary_standard_math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary_math.html">binary_math</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">CondExp</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="cond_exp.cpp.html">cond_exp.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Discrete.html">Discrete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="numeric_limits.html">numeric_limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomic.html">atomic</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bool_valued.html">bool_valued</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VecAD.html">VecAD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_require.html">base_require</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="AD.html">AD</a> &raquo;</li>
+          <li><a href="ADValued.html">ADValued</a> &raquo;</li>
+      <li>CondExp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CondExp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="condexp">
+<span id="condexp-name"></span><h1>CondExp<a class="headerlink" href="#condexp" title="Permalink to this headline"></a></h1>
+<section id="ad-conditional-expressions">
+<span id="condexp-title"></span><span id="index-0"></span><h2>AD Conditional Expressions<a class="headerlink" href="#ad-conditional-expressions" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id1">Syntax</a></p></li>
+<li><p><a class="reference internal" href="#purpose" id="id2">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#rel" id="id3">Rel</a></p></li>
+<li><p><a class="reference internal" href="#type" id="id4">Type</a></p></li>
+<li><p><a class="reference internal" href="#left" id="id5">left</a></p></li>
+<li><p><a class="reference internal" href="#right" id="id6">right</a></p></li>
+<li><p><a class="reference internal" href="#if-true" id="id7">if_true</a></p></li>
+<li><p><a class="reference internal" href="#if-false" id="id8">if_false</a></p></li>
+<li><p><a class="reference internal" href="#result" id="id9">result</a></p></li>
+<li><p><a class="reference internal" href="#optimize" id="id10">Optimize</a></p></li>
+<li><p><a class="reference internal" href="#deprecate-2005-08-07" id="id11">Deprecate 2005-08-07</a></p></li>
+<li><p><a class="reference internal" href="#operation-sequence" id="id12">Operation Sequence</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id13">Example</a></p></li>
+<li><p><a class="reference internal" href="#test" id="id14">Test</a></p></li>
+<li><p><a class="reference internal" href="#atan2" id="id15">Atan2</a></p></li>
+</ul>
+</div>
+<section id="syntax">
+<span id="condexp-syntax"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h3>
+<p><em>result</em> = <code class="docutils literal notranslate"><span class="pre">CondExp</span></code> <em>Rel</em> ( <em>left</em> , <em>right</em> , <em>if_true</em> , <em>if_false</em> )</p>
+</section>
+<section id="purpose">
+<span id="condexp-purpose"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>Record,
+as part of an AD of <em>Base</em>
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a> ,
+the conditional result</p>
+<div class="line-block">
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">if</span></code> ( <em>left</em> <em>Cop</em> <em>right</em>  )</div>
+<div class="line">            <em>result</em> = <em>if_true</em></div>
+<div class="line">      <code class="docutils literal notranslate"><span class="pre">else</span></code></div>
+<div class="line">            <em>result</em> = <em>if_false</em></div>
+</div>
+<p>The relational <em>Rel</em> and comparison operator <em>Cop</em>
+above have the following correspondence:</p>
+<div class="line-block">
+<div class="line">      <em>Rel</em> <code class="docutils literal notranslate"><span class="pre">Lt</span>&#160;&#160; <span class="pre">Le</span>&#160;&#160; <span class="pre">Eq</span>&#160;&#160; <span class="pre">Ge</span>&#160;&#160; <span class="pre">Gt</span></code></div>
+<div class="line">      <em>Cop</em>     &lt;   &lt;=   ==   &gt;=   &gt;</div>
+</div>
+<p>If <em>f</em> is the <a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">ADFun</span></a> object corresponding to the
+AD operation sequence,
+the assignment choice for <em>result</em>
+in an AD conditional expression is made each time
+<a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">f.Forward</span></a> is used to evaluate the zero order Taylor
+coefficients with new values for the
+<a class="reference internal" href="glossary.html#glossary-tape-independent-variable"><span class="std std-ref">independent variables</span></a> .
+This is in contrast to the <a class="reference internal" href="Compare.html#compare-name"><span class="std std-ref">AD comparison operators</span></a>
+which are boolean valued and not included in the AD operation sequence.</p>
+</section>
+<section id="rel">
+<span id="condexp-rel"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Rel</a><a class="headerlink" href="#rel" title="Permalink to this headline"></a></h3>
+<p>In the syntax above, the relation <em>Rel</em> represents one of the following
+two characters: <code class="docutils literal notranslate"><span class="pre">Lt</span></code> , <code class="docutils literal notranslate"><span class="pre">Le</span></code> , <code class="docutils literal notranslate"><span class="pre">Eq</span></code> , <code class="docutils literal notranslate"><span class="pre">Ge</span></code> , <code class="docutils literal notranslate"><span class="pre">Gt</span></code> .
+As in the table above,
+<em>Rel</em> determines which comparison operator <em>Cop</em> is used
+when comparing <em>left</em> and <em>right</em> .</p>
+</section>
+<section id="type">
+<span id="condexp-type"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">Type</a><a class="headerlink" href="#type" title="Permalink to this headline"></a></h3>
+<p>These functions are defined in the CppAD namespace for arguments of
+<em>Type</em> is <code class="docutils literal notranslate"><span class="pre">float</span></code> , <code class="docutils literal notranslate"><span class="pre">double</span></code> , or any type of the form
+<code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; .
+(Note that all four arguments must have the same type.)</p>
+</section>
+<section id="left">
+<span id="condexp-left"></span><span id="index-5"></span><h3><a class="toc-backref" href="#id5">left</a><a class="headerlink" href="#left" title="Permalink to this headline"></a></h3>
+<p>The argument <em>left</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Type</em> &amp; <em>left</em></p>
+</div></blockquote>
+<p>It specifies the value for the left side of the comparison operator.</p>
+</section>
+<section id="right">
+<span id="condexp-right"></span><span id="index-6"></span><h3><a class="toc-backref" href="#id6">right</a><a class="headerlink" href="#right" title="Permalink to this headline"></a></h3>
+<p>The argument <em>right</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Type</em> &amp; <em>right</em></p>
+</div></blockquote>
+<p>It specifies the value for the right side of the comparison operator.</p>
+</section>
+<section id="if-true">
+<span id="condexp-if-true"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">if_true</a><a class="headerlink" href="#if-true" title="Permalink to this headline"></a></h3>
+<p>The argument <em>if_true</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Type</em> &amp; <em>if_true</em></p>
+</div></blockquote>
+<p>It specifies the return value if the result of the comparison is true.</p>
+</section>
+<section id="if-false">
+<span id="condexp-if-false"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">if_false</a><a class="headerlink" href="#if-false" title="Permalink to this headline"></a></h3>
+<p>The argument <em>if_false</em> has prototype</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">const</span></code> <em>Type</em> &amp; <em>if_false</em></p>
+</div></blockquote>
+<p>It specifies the return value if the result of the comparison is false.</p>
+</section>
+<section id="result">
+<span id="condexp-result"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">result</a><a class="headerlink" href="#result" title="Permalink to this headline"></a></h3>
+<p>The <em>result</em> has prototype</p>
+<blockquote>
+<div><p><em>Type</em> &amp; <em>if_false</em></p>
+</div></blockquote>
+</section>
+<section id="optimize">
+<span id="condexp-optimize"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Optimize</a><a class="headerlink" href="#optimize" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimize</span></a> method will optimize conditional expressions
+in the following way:
+During <a class="reference internal" href="forward_zero.html#forward-zero-name"><span class="std std-ref">zero order forward mode</span></a> ,
+once the value of the <em>left</em> and <em>right</em> have been determined,
+it is known if the true or false case is required.
+From this point on, values corresponding to the case that is not required
+are not computed.
+This optimization is done for the rest of zero order forward mode
+as well as forward and reverse derivatives calculations.</p>
+</section>
+<section id="deprecate-2005-08-07">
+<span id="condexp-deprecate-2005-08-07"></span><span id="index-11"></span><h3><a class="toc-backref" href="#id11">Deprecate 2005-08-07</a><a class="headerlink" href="#deprecate-2005-08-07" title="Permalink to this headline"></a></h3>
+<p>Previous versions of CppAD used</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CondExp</span></code> ( <em>flag</em> , <em>if_true</em> , <em>if_false</em> )</p>
+</div></blockquote>
+<p>for the same meaning as</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">CondExpGt</span></code> ( <em>flag</em> , <em>Type</em> (0), <em>if_true</em> , <em>if_false</em> )</p>
+</div></blockquote>
+<p>Use of <code class="docutils literal notranslate"><span class="pre">CondExp</span></code> is deprecated, but continues to be supported.</p>
+</section>
+<section id="operation-sequence">
+<span id="condexp-operation-sequence"></span><span id="index-12"></span><h3><a class="toc-backref" href="#id12">Operation Sequence</a><a class="headerlink" href="#operation-sequence" title="Permalink to this headline"></a></h3>
+<p>This is an AD of <em>Base</em>
+<a class="reference internal" href="glossary.html#glossary-operation-atomic"><span class="std std-ref">atomic operation</span></a>
+and hence is part of the current
+AD of <em>Base</em>
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operation sequence</span></a> .</p>
+</section>
+<section id="example">
+<span id="condexp-example"></span><span id="index-13"></span><h3><a class="toc-backref" href="#id13">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+</section>
+<section id="test">
+<span id="condexp-test"></span><span id="index-14"></span><h3><a class="toc-backref" href="#id14">Test</a><a class="headerlink" href="#test" title="Permalink to this headline"></a></h3>
+<p>The file
+<a class="reference internal" href="cond_exp.cpp.html#cond-exp-cpp-name"><span class="std std-ref">cond_exp.cpp</span></a>
+contains an example and test of this function.</p>
+</section>
+<section id="atan2">
+<span id="condexp-atan2"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id15">Atan2</a><a class="headerlink" href="#atan2" title="Permalink to this headline"></a></h3>
+<p>The following implementation of the
+AD <a class="reference internal" href="atan2.html#atan2-name"><span class="std std-ref">atan2</span></a> function is a more complex
+example of using conditional expressions:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">atan2</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// zero, pi2, pi</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="mf">0.</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pi2</span><span class="p">(</span><span class="mf">2.</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">atan</span><span class="p">(</span><span class="mf">1.</span><span class="p">));</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pi</span><span class="p">(</span><span class="mf">2.</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi2</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// abs_x, abs_y</span>
+<span class="w">   </span><span class="c1">// Not using fabs because its derivative is zero at zero</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">abs_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CondExpGe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">abs_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CondExpGe</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// first</span>
+<span class="w">   </span><span class="c1">// This is the result for first quadrant: x &gt;= 0 , y &gt;= 0</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atan</span><span class="p">(</span><span class="n">abs_y</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">abs_x</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">beta</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">pi2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">atan</span><span class="p">(</span><span class="n">abs_x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">abs_y</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CondExpGt</span><span class="p">(</span><span class="n">abs_x</span><span class="p">,</span><span class="w"> </span><span class="n">abs_y</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">beta</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// second</span>
+<span class="w">   </span><span class="c1">// This is the result for second quadrant: x &lt;= 0 , y &gt;= 0</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">first</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// third</span>
+<span class="w">   </span><span class="c1">// This is the result for third quadrant: x &lt;= 0 , y &lt;= 0</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">third</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">first</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// fourth</span>
+<span class="w">   </span><span class="c1">// This is the result for fourth quadrant: x &gt;= 0 , y &lt;= 0</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fourth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">first</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// alpha</span>
+<span class="w">   </span><span class="c1">// This is the result for x &gt;= 0</span>
+<span class="w">   </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CondExpGe</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">fourth</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// beta</span>
+<span class="w">   </span><span class="c1">// This is the result for x &lt;= 0</span>
+<span class="w">   </span><span class="n">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CondExpGe</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">second</span><span class="p">,</span><span class="w"> </span><span class="n">third</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">AD</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CondExpGe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">beta</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="azmul.cpp.html" class="btn btn-neutral float-left" title="azmul.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cond_exp.cpp.html" class="btn btn-neutral float-right" title="cond_exp.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

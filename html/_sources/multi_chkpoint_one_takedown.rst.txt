@@ -1,0 +1,49 @@
+lines 304-350 of file: example/multi_thread/multi_chkpoint_one.cpp
+
+{xrst_begin multi_chkpoint_one_takedown}
+
+Multi-Threaded chkpoint_one Take Down
+#####################################
+
+Syntax
+******
+*ok* = ``multi_chkpoint_one_takedown`` ( *square_root* )
+
+Purpose
+*******
+This routine gathers up the results for each thread and
+frees memory that was allocated by :ref:`multi_chkpoint_one_setup-name` .
+
+Thread
+******
+It is assumed that this function is called by thread zero
+and all the other threads are blocked (waiting).
+
+square_root
+***********
+This argument has prototype
+
+   ``vector<double>&`` *square_root*
+
+The input value of *square_root* does not matter.
+Upon return,
+it has the same size and is the element by element square root of
+:ref:`multi_chkpoint_one_setup@y_squared` .
+
+ok
+**
+This return value has prototype
+
+   ``bool`` *ok*
+
+If it is false,
+``multi_chkpoint_one_takedown`` detected an error.
+
+Source
+******
+{xrst_literal
+   // BEGIN TAKEDOWN C++
+   // END TAKEDOWN C++
+}
+
+{xrst_end multi_chkpoint_one_takedown}

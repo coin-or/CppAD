@@ -1,0 +1,13 @@
+lines 7-17 of file: speed/example/det_by_lu.cpp
+
+{xrst_begin det_by_lu.cpp}
+
+Determinant Using Lu Factorization: Example and Test
+####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end det_by_lu.cpp}

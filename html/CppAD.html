@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="CppAD, cppad-20221216:, c++, algorithmic, differentiation, package, user, documentation" name="keywords" />
+<meta content="algorithmic, differentiation" name="keywords" />
+<meta content="features" name="keywords" />
+<meta content="operator, overloading" name="keywords" />
+<meta content="base, type" name="keywords" />
+<meta content="recording, operations" name="keywords" />
+<meta content="multi-threading" name="keywords" />
+<meta content="optimizing, operations, sequences" name="keywords" />
+<meta content="dynamic, parameters" name="keywords" />
+<meta content="derivative, calculations" name="keywords" />
+<meta content="sparsity" name="keywords" />
+<meta content="recording, derivative, operations" name="keywords" />
+<meta content="atomic, functions" name="keywords" />
+<meta content="logical, comparisons" name="keywords" />
+<meta content="vectors" name="keywords" />
+<meta content="software, engineering" name="keywords" />
+<meta content="testing" name="keywords" />
+<meta content="correctness" name="keywords" />
+<meta content="speed" name="keywords" />
+<meta content="utilities" name="keywords" />
+<meta content="release, notes" name="keywords" />
+<meta content="example" name="keywords" />
+<meta content="contents" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CppAD &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Install" href="Install.html" />
+    <link rel="prev" title="Table of Contents" href="xrst_table_of_contents.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CppAD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+      <li>CppAD</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CppAD.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="cppad">
+<span id="cppad-name"></span><h1>CppAD<a class="headerlink" href="#cppad" title="Permalink to this headline"></a></h1>
+<section id="cppad-20221216-c-algorithmic-differentiation-package-user-documentation">
+<span id="cppad-title"></span><span id="index-0"></span><h2>cppad-20221216: C++ Algorithmic Differentiation Package User Documentation<a class="headerlink" href="#cppad-20221216-c-algorithmic-differentiation-package-user-documentation" title="Permalink to this headline"></a></h2>
+<img alt="_images/coin.png" src="_images/coin.png" />
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/coin-or/CppAD/tags">release</a>,</p></td>
+<td><p><a class="reference external" href="https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz">20220000.4</a>,</p></td>
+<td><p><a class="reference external" href="https://github.com/coin-or/CppAD">github</a>,</p></td>
+<td><p><a class="reference external" href="https://travis-ci.org/coin-or/CppAD">travis</a>,</p></td>
+<td><p><a class="reference external" href="https://ci.appveyor.com/project/bradbell/cppad">appveyor</a>,</p></td>
+<td><p><a class="reference external" href="https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec">cppad.spec</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="Install.html#install-name"><span class="std std-ref">Install</span></a> ,</p></td>
+<td><p><a class="reference internal" href="get_started.cpp.html#get-started-cpp-name"><span class="std std-ref">get_started</span></a> ,</p></td>
+<td><p><a class="reference internal" href="whats_new.html#whats-new-name"><span class="std std-ref">whats_new</span></a> ,</p></td>
+<td><p><a class="reference internal" href="addon.html#addon-name"><span class="std std-ref">addon</span></a> ,</p></td>
+<td><p><a class="reference internal" href="research.html#research-name"><span class="std std-ref">research</span></a> ,</p></td>
+<td><p><a class="reference external" href="http://www.seanet.com/~bradbell">project manager</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>CppAD is distributed by
+<a class="reference external" href="http://www.coin-or.org">COIN-OR</a>
+with the Eclipse Public License
+<a class="reference external" href="http://www.opensource.org/licenses/EPL-2.0">EPL-2.0</a>
+or the GNU General Public License
+<a class="reference external" href="http://www.opensource.org/licenses/GPL-2.0">GPL-2.0</a> or later.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#algorithmic-differentiation" id="id3">Algorithmic Differentiation</a></p></li>
+<li><p><a class="reference internal" href="#features" id="id4">Features</a></p>
+<ul>
+<li><p><a class="reference internal" href="#operator-overloading" id="id5">Operator Overloading</a></p></li>
+<li><p><a class="reference internal" href="#base-type" id="id6">Base Type</a></p></li>
+<li><p><a class="reference internal" href="#recording-operations" id="id7">Recording Operations</a></p></li>
+<li><p><a class="reference internal" href="#multi-threading" id="id8">Multi-Threading</a></p></li>
+<li><p><a class="reference internal" href="#optimizing-operations-sequences" id="id9">Optimizing Operations Sequences</a></p></li>
+<li><p><a class="reference internal" href="#dynamic-parameters" id="id10">Dynamic Parameters</a></p></li>
+<li><p><a class="reference internal" href="#derivative-calculations" id="id11">Derivative Calculations</a></p></li>
+<li><p><a class="reference internal" href="#sparsity" id="id12">Sparsity</a></p></li>
+<li><p><a class="reference internal" href="#recording-derivative-operations" id="id13">Recording Derivative Operations</a></p></li>
+<li><p><a class="reference internal" href="#atomic-functions" id="id14">Atomic Functions</a></p></li>
+<li><p><a class="reference internal" href="#logical-comparisons" id="id15">Logical Comparisons</a></p></li>
+<li><p><a class="reference internal" href="#vectors" id="id16">Vectors</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#software-engineering" id="id17">Software Engineering</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id18">Testing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#correctness" id="id19">Correctness</a></p></li>
+<li><p><a class="reference internal" href="#speed" id="id20">Speed</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#utilities" id="id21">Utilities</a></p></li>
+<li><p><a class="reference internal" href="#release-notes" id="id22">Release Notes</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id23">Example</a></p></li>
+<li><p><a class="reference internal" href="#cppad-contents" id="id24">Contents</a></p></li>
+</ul>
+</div>
+<section id="algorithmic-differentiation">
+<span id="cppad-algorithmic-differentiation"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id3">Algorithmic Differentiation</a><a class="headerlink" href="#algorithmic-differentiation" title="Permalink to this headline"></a></h3>
+<p>We refer to the automatic creation of an algorithm that
+computes derivative values from an algorithm that computes function values
+as <em>Algorithmic Differentiation</em> ,
+also referred to as <em>Automatic Differentiation</em> or just AD.
+A brief introduction to AD can be found in
+<a class="reference external" href="http://en.wikipedia.org/wiki/Automatic_differentiation">wikipedia</a>.
+The web site
+<a class="reference external" href="http://www.autodiff.org">autodiff.org</a>
+is dedicated to research about, and promoting the use of, AD.</p>
+</section>
+<section id="features">
+<span id="cppad-features"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id4">Features</a><a class="headerlink" href="#features" title="Permalink to this headline"></a></h3>
+<section id="operator-overloading">
+<span id="cppad-features-operator-overloading"></span><span id="index-3"></span><h4><a class="toc-backref" href="#id5">Operator Overloading</a><a class="headerlink" href="#operator-overloading" title="Permalink to this headline"></a></h4>
+<p>CppAD uses operator overloading of the C++ template class <a class="reference internal" href="AD.html#ad-name"><span class="std std-ref">AD</span></a>
+to compute derivatives of algorithms defined using AD objects; see
+the <a class="reference internal" href="Introduction.html#introduction-name"><span class="std std-ref">Introduction</span></a> for a description of how this is accomplished.</p>
+</section>
+<section id="base-type">
+<span id="cppad-features-base-type"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id6">Base Type</a><a class="headerlink" href="#base-type" title="Permalink to this headline"></a></h4>
+<p>The operator overloading uses a templated base type that
+can be user defined; see <a class="reference internal" href="base_require.html#base-require-name"><span class="std std-ref">base_require</span></a> .
+The required definitions for <code class="docutils literal notranslate"><span class="pre">AD&lt;float&gt;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">AD&lt;double&gt;</span></code> are included as part of CppAD.</p>
+</section>
+<section id="recording-operations">
+<span id="cppad-features-recording-operations"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id7">Recording Operations</a><a class="headerlink" href="#recording-operations" title="Permalink to this headline"></a></h4>
+<p>A sequence of <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt;
+<a class="reference internal" href="glossary.html#glossary-operation-sequence"><span class="std std-ref">operations</span></a>
+can be recorded and stored in an
+<a class="reference internal" href="ADFun.html#adfun-name"><span class="std std-ref">AD function object</span></a> .
+This object can then be used to evaluate
+function values and arbitrary order derivatives,
+and sparsity patterns of derivative values using the <em>Base</em> type.</p>
+</section>
+<section id="multi-threading">
+<span id="cppad-features-multi-threading"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id8">Multi-Threading</a><a class="headerlink" href="#multi-threading" title="Permalink to this headline"></a></h4>
+<p>CppAD supports an arbitrary <a class="reference internal" href="multi_thread.html#multi-thread-name"><span class="std std-ref">multi threading</span></a> environment.
+Examples are provided using Boost threads, Posix threads, and Openmp threads.</p>
+</section>
+<section id="optimizing-operations-sequences">
+<span id="cppad-features-optimizing-operations-sequences"></span><span id="index-7"></span><h4><a class="toc-backref" href="#id9">Optimizing Operations Sequences</a><a class="headerlink" href="#optimizing-operations-sequences" title="Permalink to this headline"></a></h4>
+<p>During the recording of a function,
+the <a class="reference internal" href="Independent.html#independent-name"><span class="std std-ref">Independent</span></a> variables are know and a forward dependency
+analysis is used to determine which operations should be recorded.
+Once the <a class="reference internal" href="Dependent.html#dependent-name"><span class="std std-ref">Dependent</span></a> variables are determined,
+a reverse dependency analysis can be preformed.
+This <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimize</span></a> routine uses a reverse dependency analysis,
+and other techniques,
+to remove unnecessary operations.</p>
+</section>
+<section id="dynamic-parameters">
+<span id="cppad-features-dynamic-parameters"></span><span id="index-8"></span><h4><a class="toc-backref" href="#id10">Dynamic Parameters</a><a class="headerlink" href="#dynamic-parameters" title="Permalink to this headline"></a></h4>
+<p>CppAD enables one to specify a vector of
+<a class="reference internal" href="glossary.html#glossary-parameter-dynamic"><span class="std std-ref">Dynamic</span></a> parameters.
+The value of the function and derivatives can depend on these parameters,
+but no derivatives are taken with respect to these parameters.
+This enables CppAD to reduce the derivative calculations; e.g.,
+the derivative of variable times a variable has two terms
+while a variable times a parameter only has one.</p>
+</section>
+<section id="derivative-calculations">
+<span id="cppad-features-derivative-calculations"></span><span id="index-9"></span><h4><a class="toc-backref" href="#id11">Derivative Calculations</a><a class="headerlink" href="#derivative-calculations" title="Permalink to this headline"></a></h4>
+<p>Arbitrary order
+<a class="reference internal" href="Forward.html#forward-name"><span class="std std-ref">Forward</span></a> and <a class="reference internal" href="Reverse.html#reverse-name"><span class="std std-ref">Reverse</span></a>
+mode derivative calculations
+can be preformed using an <code class="docutils literal notranslate"><span class="pre">ADFun</span></code> object.
+Easy to user drivers that compute the
+entire <a class="reference internal" href="Jacobian.html#jacobian-name"><span class="std std-ref">Jacobian</span></a> and a specific <a class="reference internal" href="Hessian.html#hessian-name"><span class="std std-ref">Hessian</span></a> are included.</p>
+</section>
+<section id="sparsity">
+<span id="cppad-features-sparsity"></span><span id="index-10"></span><h4><a class="toc-backref" href="#id12">Sparsity</a><a class="headerlink" href="#sparsity" title="Permalink to this headline"></a></h4>
+<p>Both forward and reverse mode can be used to calculation the sparsity
+pattern for Jacobians and Hessians; see <a class="reference internal" href="sparsity_pattern.html#sparsity-pattern-name"><span class="std std-ref">sparsity_pattern</span></a> .
+Where a Jacobian or Hessian is sparse,
+both forward and reverse mode can be combined with the sparsity pattern
+to speed up the calculation of
+<a class="reference internal" href="sparse_derivative.html#sparse-derivative-name"><span class="std std-ref">sparse derivatives</span></a> .
+In addition, a <a class="reference internal" href="subgraph_jac_rev.html#subgraph-jac-rev-name"><span class="std std-ref">subgraph</span></a> method,
+that does not require a sparsity pattern, can be used
+to speed up these derivative calculations.</p>
+</section>
+<section id="recording-derivative-operations">
+<span id="cppad-features-recording-derivative-operations"></span><span id="index-11"></span><h4><a class="toc-backref" href="#id13">Recording Derivative Operations</a><a class="headerlink" href="#recording-derivative-operations" title="Permalink to this headline"></a></h4>
+<p>A <code class="docutils literal notranslate"><span class="pre">ADFun</span></code> object can be converted into an object that
+evaluates derivatives using the type <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; ; see <a class="reference internal" href="base2ad.html#base2ad-name"><span class="std std-ref">base2ad</span></a> .
+This enables one to record new functions that
+are expressed using derivatives of other functions.</p>
+</section>
+<section id="atomic-functions">
+<span id="cppad-features-atomic-functions"></span><span id="index-12"></span><h4><a class="toc-backref" href="#id14">Atomic Functions</a><a class="headerlink" href="#atomic-functions" title="Permalink to this headline"></a></h4>
+<p>User defined derivative calculations for arbitrary functions
+can also be included in
+a recording using <a class="reference internal" href="atomic_two.html#atomic-two-name"><span class="std std-ref">atomic functions</span></a> .
+A special <a class="reference internal" href="chkpoint_one.html#chkpoint-one-name"><span class="std std-ref">checkpoint</span></a> class is included
+which allows one to record a function and reuse it as
+an atomic operation in other functions.
+There also is a special interface for user defined unary
+<a class="reference internal" href="Discrete.html#discrete-name"><span class="std std-ref">discrete functions</span></a> ; i.e.,
+functions that depend on the
+<a class="reference internal" href="glossary.html#glossary-tape-independent-variable"><span class="std std-ref">independent variables</span></a>
+but which have identically zero derivatives (e.g., a step function).</p>
+</section>
+<section id="logical-comparisons">
+<span id="cppad-features-logical-comparisons"></span><span id="index-13"></span><h4><a class="toc-backref" href="#id15">Logical Comparisons</a><a class="headerlink" href="#logical-comparisons" title="Permalink to this headline"></a></h4>
+<p>Logical comparisons can be included in an operation sequence
+using AD <a class="reference internal" href="CondExp.html#condexp-name"><span class="std std-ref">conditional expressions</span></a> .</p>
+</section>
+<section id="vectors">
+<span id="cppad-features-vectors"></span><span id="index-14"></span><h4><a class="toc-backref" href="#id16">Vectors</a><a class="headerlink" href="#vectors" title="Permalink to this headline"></a></h4>
+<p>The CppAD API allows one to use any
+<a class="reference internal" href="SimpleVector.html#simplevector-name"><span class="std std-ref">SimpleVector</span></a> class.
+The preprocessor symbol <a class="reference internal" href="testvector.html#testvector-name"><span class="std std-ref">CPPAD_TESTVECTOR</span></a>
+is template vector class which is used for correctness testing.
+Many of the correctness tests use this template vector class
+which you can choose during the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> configuration command.</p>
+</section>
+</section>
+<section id="software-engineering">
+<span id="cppad-software-engineering"></span><span id="index-15"></span><h3><a class="toc-backref" href="#id17">Software Engineering</a><a class="headerlink" href="#software-engineering" title="Permalink to this headline"></a></h3>
+<p>CppAD is developed using the software engineering procedures described
+on the project manager’s
+<a class="reference external" href="https://www.seanet.com/~bradbell/software.htm">software</a>
+web page.</p>
+</section>
+<section id="testing">
+<span id="cppad-testing"></span><span id="index-16"></span><h3><a class="toc-backref" href="#id18">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<section id="correctness">
+<span id="cppad-testing-correctness"></span><span id="index-17"></span><h4><a class="toc-backref" href="#id19">Correctness</a><a class="headerlink" href="#correctness" title="Permalink to this headline"></a></h4>
+<p>There is an extensive set of correctness tests; see <a class="reference internal" href="cmake_check.html#cmake-check-name"><span class="std std-ref">cmake_check</span></a> .</p>
+</section>
+<section id="speed">
+<span id="cppad-testing-speed"></span><span id="index-18"></span><h4><a class="toc-backref" href="#id20">Speed</a><a class="headerlink" href="#speed" title="Permalink to this headline"></a></h4>
+<p>A set of programs for doing <a class="reference internal" href="speed.html#speed-name"><span class="std std-ref">speed</span></a> comparisons between
+<a class="reference external" href="https://projects.coin-or.org/ADOL-C">Adolc</a>,
+CppAD,
+<a class="reference external" href="http://www.fadbad.com/">Fadbad</a>,
+and
+<a class="reference external" href="http://trilinos.sandia.gov/packages/sacado/">Sacado</a>
+are included.</p>
+</section>
+</section>
+<section id="utilities">
+<span id="cppad-utilities"></span><span id="index-19"></span><h3><a class="toc-backref" href="#id21">Utilities</a><a class="headerlink" href="#utilities" title="Permalink to this headline"></a></h3>
+<p>CppAD includes a set of C++ <a class="reference internal" href="utility.html#utility-name"><span class="std std-ref">utilities</span></a> that are useful
+for general operator overloaded numerical methods.</p>
+</section>
+<section id="release-notes">
+<span id="cppad-release-notes"></span><span id="index-20"></span><h3><a class="toc-backref" href="#id22">Release Notes</a><a class="headerlink" href="#release-notes" title="Permalink to this headline"></a></h3>
+<p>This <a class="reference internal" href="whats_new.html#whats-new-name"><span class="std std-ref">whats_new</span></a> for a list of recent extensions and bug fixes.</p>
+</section>
+<section id="example">
+<span id="cppad-example"></span><span id="index-21"></span><h3><a class="toc-backref" href="#id23">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The file <a class="reference internal" href="get_started.cpp.html#get-started-cpp-name"><span class="std std-ref">get_started.cpp</span></a>
+contains an example and test of using CppAD to compute
+the derivative of a polynomial.
+There are many other
+<a class="reference internal" href="Example.html#example-name"><span class="std std-ref">examples</span></a> .
+All of the examples are also correctness tests,
+which ensures that they work properly.</p>
+</section>
+<section id="cppad-contents">
+<span id="index-22"></span><span id="id2"></span><h3><a class="toc-backref" href="#id24">Contents</a><a class="headerlink" href="#cppad-contents" title="Permalink to this headline"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Child</p></th>
+<th class="head"><p>Title</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Install</p></td>
+<td><p><a class="reference internal" href="Install.html#install-title"><span class="std std-ref">CppAD Download, Test, and Install Instructions</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Theory</p></td>
+<td><p><a class="reference internal" href="Theory.html#theory-title"><span class="std std-ref">The Theory of Derivative Calculations</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>AD</p></td>
+<td><p><a class="reference internal" href="AD.html#ad-title"><span class="std std-ref">AD Objects</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>ADFun</p></td>
+<td><p><a class="reference internal" href="ADFun.html#adfun-title"><span class="std std-ref">ADFun Objects</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>preprocessor</p></td>
+<td><p><a class="reference internal" href="preprocessor.html#preprocessor-title"><span class="std std-ref">CppAD API Preprocessor Symbols</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>multi_thread</p></td>
+<td><p><a class="reference internal" href="multi_thread.html#multi-thread-title"><span class="std std-ref">Using CppAD in a Multi-Threading Environment</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>utility</p></td>
+<td><p><a class="reference internal" href="utility.html#utility-title"><span class="std std-ref">Some General Purpose Utilities</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>ipopt_solve</p></td>
+<td><p><a class="reference internal" href="ipopt_solve.html#ipopt-solve-title"><span class="std std-ref">Use Ipopt to Solve a Nonlinear Programming Problem</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Example</p></td>
+<td><p><a class="reference internal" href="Example.html#example-title"><span class="std std-ref">Examples</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>speed</p></td>
+<td><p><a class="reference internal" href="speed.html#speed-title"><span class="std std-ref">Speed Test an Operator Overloading AD Package</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Appendix</p></td>
+<td><p><a class="reference internal" href="Appendix.html#appendix-title"><span class="std std-ref">Appendix</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="xrst_table_of_contents.html" class="btn btn-neutral float-left" title="Table of Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Install.html" class="btn btn-neutral float-right" title="Install" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

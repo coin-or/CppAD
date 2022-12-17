@@ -1,0 +1,135 @@
+lines 9-141 of file: include/cppad/utility/speed_test.hpp
+
+{xrst_begin speed_test}
+{xrst_spell
+   ctime
+   gettimeofday
+}
+
+Run One Speed Test and Return Results
+#####################################
+
+Syntax
+******
+
+   # ``include <cppad/utility/speed_test.hpp>``
+
+*rate_vec* = ``speed_test`` ( *test* , *size_vec* , *time_min* )
+
+See Also
+********
+:ref:`time_test-name`
+
+Purpose
+*******
+The ``speed_test`` function executes a speed test
+for various sized problems
+and reports the rate of execution.
+
+Motivation
+**********
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution
+sequences is not possible.
+In addition,
+there may be set up and tear down time for a test that
+we do not really want included in the timing.
+For this reason ``speed_test``
+automatically determines how many times to
+repeat the section of the test that we wish to time.
+
+Include
+*******
+The file ``cppad/utility/speed_test.hpp`` defines the
+``speed_test`` function.
+This file is included by ``cppad/cppad.hpp``
+and it can also be included separately with out the rest of
+the ``CppAD`` routines.
+
+Vector
+******
+We use *Vector* to denote a
+:ref:`simple vector class<SimpleVector-name>` with elements
+of type ``size_t`` .
+
+test
+****
+The ``speed_test`` argument *test* is a function with the syntax
+
+   *test* ( *size* , *repeat* )
+
+and its return value is ``void`` .
+
+size
+====
+The *test* argument *size* has prototype
+
+   ``size_t`` *size*
+
+It specifies the size for this test.
+
+repeat
+======
+The *test* argument *repeat* has prototype
+
+   ``size_t`` *repeat*
+
+It specifies the number of times to repeat the test.
+
+size_vec
+********
+The ``speed_test`` argument *size_vec* has prototype
+
+   ``const`` *Vector* & *size_vec*
+
+This vector determines the size for each of the tests problems.
+
+time_min
+********
+The argument *time_min* has prototype
+
+   ``double`` *time_min*
+
+It specifies the minimum amount of time in seconds
+that the *test* routine should take.
+The *repeat* argument to *test* is increased
+until this amount of execution time is reached.
+
+rate_vec
+********
+The return value *rate_vec* has prototype
+
+   *Vector* & *rate_vec*
+
+We use :math:`n` to denote its size which is the same as
+the vector *size_vec* .
+For :math:`i = 0 , \ldots , n-1`,
+
+   *rate_vec* [ *i* ]
+
+is the ratio of *repeat* divided by time in seconds
+for the problem with size *size_vec* [ *i* ] .
+
+Timing
+******
+If your system supports the unix ``gettimeofday`` function,
+it will be used to measure time.
+Otherwise,
+time is measured by the difference in
+::
+
+   (double) clock() / (double) CLOCKS_PER_SEC
+
+in the context of the standard ``<ctime>`` definitions.
+{xrst_toc_hidden
+   speed/example/speed_test.cpp
+}
+Example
+*******
+The routine :ref:`speed_test.cpp-name` is an example and test
+of ``speed_test`` .
+
+{xrst_end speed_test}

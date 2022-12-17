@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="cmake_check, checking, the, cppad, examples, and, tests" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="check, all" name="keywords" />
+<meta content="subsets, of, make, check" name="keywords" />
+<meta content="first, level" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cmake_check &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pkgconfig" href="pkgconfig.html" />
+    <link rel="prev" title="cppad_testvector" href="cppad_testvector.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Install.html">Install</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="download.html">download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake.html">cmake</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">cmake_check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgconfig.html">pkgconfig</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="Install.html">Install</a> &raquo;</li>
+      <li>cmake_check</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cmake_check.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="cmake-check">
+<span id="cmake-check-name"></span><h1>cmake_check<a class="headerlink" href="#cmake-check" title="Permalink to this headline"></a></h1>
+<section id="checking-the-cppad-examples-and-tests">
+<span id="cmake-check-title"></span><span id="index-0"></span><h2>Checking the CppAD Examples and Tests<a class="headerlink" href="#checking-the-cppad-examples-and-tests" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#check-all" id="id2">Check All</a></p></li>
+<li><p><a class="reference internal" href="#subsets-of-make-check" id="id3">Subsets of make check</a></p></li>
+<li><p><a class="reference internal" href="#first-level" id="id4">First Level</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="cmake-check-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>After you configure your system with the
+<a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a> you
+can run the CppAD example and tests to make sure that
+CppAD functions properly on your system.</p>
+</section>
+<section id="check-all">
+<span id="cmake-check-check-all"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Check All</a><a class="headerlink" href="#check-all" title="Permalink to this headline"></a></h3>
+<p>In the <code class="docutils literal notranslate"><span class="pre">build</span></code> subdirectory of the
+<a class="reference internal" href="download.html#download-distribution-directory"><span class="std std-ref">Distribution Directory</span></a>
+execute the command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">check</span>
+</pre></div>
+</div>
+<p>This will build and run all of the tests that are support
+by your system and the <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> command options.</p>
+</section>
+<section id="subsets-of-make-check">
+<span id="cmake-check-subsets-of-make-check"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Subsets of make check</a><a class="headerlink" href="#subsets-of-make-check" title="Permalink to this headline"></a></h3>
+<p>In unix, you can determine which subsets of <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code> are available
+by putting the output of the <a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a>
+in a file (called <em>cmake.out</em> below) and executing:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">grep</span></code> ‘ <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check.</span></code> * <code class="docutils literal notranslate"><span class="pre">available</span></code> ‘ <em>cmake.out</em></p>
+</div></blockquote>
+</section>
+<section id="first-level">
+<span id="cmake-check-first-level"></span><span id="index-4"></span><h3><a class="toc-backref" href="#id4">First Level</a><a class="headerlink" href="#first-level" title="Permalink to this headline"></a></h3>
+<p>The first level of subsets of <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code> are described below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Command</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_introduction</span></code></p></td>
+<td><p>the <a class="reference internal" href="Introduction.html#introduction-name"><span class="std std-ref">Introduction</span></a> functions</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_example</span></code></p></td>
+<td><p>the normal <a class="reference internal" href="list_all_examples.html#list-all-examples-name"><span class="std std-ref">example</span></a> functions plus some deprecated
+examples.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_test_more</span></code></p></td>
+<td><p>correctness tests that are not examples</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_speed</span></code></p></td>
+<td><p>correctness for single thread <a class="reference internal" href="speed.html#speed-name"><span class="std std-ref">speed</span></a> tests</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_cppad_ipopt</span></code></p></td>
+<td><p>the deprecated <a class="reference internal" href="cppad_ipopt_nlp.html#cppad-ipopt-nlp-name"><span class="std std-ref">cppad_ipopt_nlp</span></a> speed and correctness tests</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check_example_multi_thread</span></code> is used for the
+<a class="reference internal" href="multi_thread.html#multi-thread-name"><span class="std std-ref">multi-threading</span></a> speed tests.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cppad_testvector.html" class="btn btn-neutral float-left" title="cppad_testvector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pkgconfig.html" class="btn btn-neutral float-right" title="pkgconfig" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

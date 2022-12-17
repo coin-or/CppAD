@@ -1,0 +1,558 @@
+lines 8-563 of file: cppad_ipopt/src/cppad_ipopt_nlp.hpp
+
+{xrst_begin cppad_ipopt_nlp}
+{xrst_spell
+   fg
+   infeasibility
+   iterates
+   lagrange
+   libs
+   lipopt
+   maxiter
+   naninf
+   rll
+   unrecoverable
+}
+Nonlinear Programming Using the CppAD Interface to Ipopt
+########################################################
+
+Deprecated 2012-11-28
+*********************
+This interface to Ipopt is deprecated, use :ref:`ipopt_solve-name` instead.
+
+Syntax
+******
+
+| # ``include`` ``"cppad_ipopt_nlp.hpp"``
+| ``cppad_ipopt_solution`` *solution* ;
+| ``cppad_ipopt_nlp`` *cppad_nlp* (
+| |tab| *n* , *m* , *x_i* , *x_l* , *x_u* , *g_l* , *g_u* , & *fg_info* , & *solution*
+| )
+| ``export LD_LIBRARY_PATH`` = ``$LD_LIBRARY_PATH:`` *ipopt_library_paths*
+
+Purpose
+*******
+The class ``cppad_ipopt_nlp`` is used to solve nonlinear programming
+problems of the form
+
+.. math::
+
+   \begin{array}{rll}
+   {\rm minimize}      & f(x)
+   \\
+   {\rm subject \; to} & g^l \leq g(x) \leq g^u
+   \\
+                  & x^l  \leq x   \leq x^u
+   \end{array}
+
+This is done using
+`Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_
+optimizer and
+`CppAD <http://www.coin-or.org/CppAD/>`_
+Algorithmic Differentiation package.
+
+cppad_ipopt namespace
+*********************
+All of the declarations for these routines
+are in the ``cppad_ipopt`` namespace
+(not the ``CppAD`` namespace).
+For example; :ref:`cppad_ipopt_nlp@SizeVector` below
+actually denotes the type ``cppad_ipopt::SizeVector`` .
+
+ipopt_library_paths
+*******************
+If you are linking to a shared version of the Ipopt library,
+you may have to add a path to the ``LD_LIBRARY_PATH`` .
+You can determine the directory you need to add using the command
+
+   ``pkg-config ipopt --libs``
+
+The output will have the following form
+
+   ``-L`` *dir* ``-lipopt``
+
+You may need to add the directory %dir% to ``LD_LIBRARY_PATH%`` ; e.g.,
+
+   ``export LD_LIBRARY_PATH`` =" *dir* : ``$LD_LIBRARY_PATH`` "
+
+fg(x)
+*****
+The function :math:`fg : \B{R}^n \rightarrow \B{R}^{m+1}` is defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      fg_0 (x)     & = & f(x)         \\
+      fg_1 (x)     & = & g_0 (x)      \\
+                    & \vdots &         \\
+      fg_m (x)     & = & g_{m-1} (x)
+      \end{eqnarray}
+
+Index Vector
+============
+We define an *index vector* as a vector of non-negative integers
+for which none of the values are equal; i.e.,
+it is both a vector and a set.
+If :math:`I` is an index vector :math:`|I|` is used to denote the
+number of elements in :math:`I` and :math:`\| I \|` is used
+to denote the value of the maximum element in :math:`I`.
+
+Projection
+==========
+Given an index vector :math:`J` and a positive integer :math:`n`
+where :math:`n > \| J \|`, we use :math:`J \otimes n` for
+the mapping :math:`( J \otimes n ) : \B{R}^n \rightarrow \B{R}^{|J|}` defined by
+
+.. math::
+
+   [ J \otimes n ] (x)_j = x_{J(j)}
+
+for :math:`j = 0 , \ldots |J| - 1`.
+
+Injection
+=========
+Given an index vector :math:`I` and a positive integer :math:`m`
+where :math:`m > \| I \|`, we use :math:`m \otimes I` for
+the mapping :math:`( m \otimes I ): \B{R}^{|I|} \rightarrow \B{R}^m` defined by
+
+.. math::
+
+   [ m \otimes I ] (y)_i = \left\{ \begin{array}{ll}
+   y_k & {\rm if} \; i = I(k) \; {\rm for \; some} \;
+      k \in \{ 0 , \cdots, |I|-1 \}
+   \\
+   0   & {\rm otherwise}
+   \end{array} \right.
+
+Representation
+==============
+In many applications, each of the component functions of :math:`fg(x)`
+only depend on a few of the components of :math:`x`.
+In this case, expressing :math:`fg(x)` in terms of simpler functions
+with fewer arguments can greatly reduce the amount of work required
+to compute its derivatives.
+
+We use the functions
+:math:`r_k : \B{R}^{q(k)} \rightarrow \B{R}^{p(k)}`
+for :math:`k = 0 , \ldots , K` to express our
+representation of :math:`fg(x)` in terms of simpler functions
+as follows
+
+.. math::
+
+   fg(x) = \sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1}
+   [ (m+1) \otimes I_{k,\ell} ] \; \circ
+        \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
+
+where :math:`\circ` represents function composition,
+for :math:`k = 0 , \ldots , K - 1`, and :math:`\ell = 0 , \ldots , L(k)`,
+:math:`I_{k,\ell}` and  :math:`J_{k,\ell}` are index vectors with
+:math:`| J_{k,\ell} | = q(k)`,
+:math:`\| J_{k,\ell} \| < n`,
+:math:`| I_{k,\ell} | = p(k)`, and
+:math:`\| I_{k,\ell} \| \leq m`.
+
+Simple Representation
+*********************
+In the simple representation,
+:math:`r_0 (x) = fg(x)`,
+:math:`K = 1`,
+:math:`q(0) = n`,
+:math:`p(0) = m+1`,
+:math:`L(0) = 1`,
+:math:`I_{0,0} = (0 , \ldots , m)`,
+and :math:`J_{0,0} = (0 , \ldots , n-1)`.
+
+SizeVector
+**********
+The type ``SizeVector`` is defined by the
+``cppad_ipopt_nlp.hpp`` include file to be a
+:ref:`SimpleVector-name` class with elements of type
+``size_t`` .
+
+NumberVector
+************
+The type ``NumberVector`` is defined by the
+``cppad_ipopt_nlp.hpp`` include file to be a
+:ref:`SimpleVector-name` class with elements of type
+``Ipopt::Number`` .
+
+ADNumber
+********
+The type ``ADNumber`` is defined by the
+``cppad_ipopt_nlp.hpp`` include file to be a
+an AD type that can be used to compute derivatives.
+
+ADVector
+********
+The type ``ADVector`` is defined by the
+``cppad_ipopt_nlp.hpp`` include file to be a
+:ref:`SimpleVector-name` class with elements of type
+``ADNumber`` .
+
+n
+*
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+It specifies the dimension of the argument space;
+i.e., :math:`x \in \B{R}^n`.
+
+m
+*
+The argument *m* has prototype
+
+   ``size_t`` *m*
+
+It specifies the dimension of the range space for :math:`g`;
+i.e., :math:`g : \B{R}^n \rightarrow \B{R}^m`.
+
+x_i
+***
+The argument *x_i* has prototype
+
+   ``const NumberVector&`` *x_i*
+
+and its size is equal to :math:`n`.
+It specifies the initial point where Ipopt starts the optimization process.
+
+x_l
+***
+The argument *x_l* has prototype
+
+   ``const NumberVector&`` *x_l*
+
+and its size is equal to :math:`n`.
+It specifies the lower limits for the argument in the optimization problem;
+i.e., :math:`x^l`.
+
+x_u
+***
+The argument *x_u* has prototype
+
+   ``const NumberVector&`` *x_u*
+
+and its size is equal to :math:`n`.
+It specifies the upper limits for the argument in the optimization problem;
+i.e., :math:`x^u`.
+
+g_l
+***
+The argument *g_l* has prototype
+
+   ``const NumberVector&`` *g_l*
+
+and its size is equal to :math:`m`.
+It specifies the lower limits for the constraints in the optimization problem;
+i.e., :math:`g^l`.
+
+g_u
+***
+The argument *g_u* has prototype
+
+   ``const NumberVector&`` *g_u*
+
+and its size is equal to :math:`n`.
+It specifies the upper limits for the constraints in the optimization problem;
+i.e., :math:`g^u`.
+
+fg_info
+*******
+The argument *fg_info* has prototype
+
+   *FG_info fg_info*
+
+where the class *FG_info* is derived from the
+base class ``cppad_ipopt_fg_info`` .
+Certain virtual member functions of *fg_info* are used to
+compute the value of :math:`fg(x)`.
+The specifications for these member functions are given below:
+
+fg_info.number_functions
+========================
+This member function has prototype
+
+   ``virtual size_t cppad_ipopt_fg_info::number_functions`` ( ``void`` )
+
+If *K* has type ``size_t`` , the syntax
+
+   *K* = *fg_info* . ``number_functions`` ()
+
+sets *K* to the number of functions used in the
+representation of :math:`fg(x)`; i.e., :math:`K` in
+the :ref:`cppad_ipopt_nlp@fg(x)@Representation` above.
+
+The ``cppad_ipopt_fg_info`` implementation of this function
+corresponds to the simple representation mentioned above; i.e.
+*K*  = 1 .
+
+fg_info.eval_r
+==============
+This member function has the prototype
+
+   ``virtual ADVector cppad_ipopt_fg_info::eval_r`` ( ``size_t`` *k* , ``const ADVector&`` *u* ) = 0;
+
+Thus it is a pure virtual function and must be defined in the
+derived class *FG_info* .
+
+This function computes the value of :math:`r_k (u)`
+used in the :ref:`cppad_ipopt_nlp@fg(x)@Representation`
+for :math:`fg(x)`.
+If *k* in :math:`\{0 , \ldots , K-1 \}` has type ``size_t`` ,
+*u* is an ``ADVector`` of size *q* ( *k* )
+and *r* is an ``ADVector`` of size *p* ( *k* )
+the syntax
+
+   *r* = *fg_info* . ``eval_r`` ( *k* , *u* )
+
+set *r* to the vector :math:`r_k (u)`.
+
+fg_info.retape
+==============
+This member function has the prototype
+
+   ``virtual bool cppad_ipopt_fg_info::retape`` ( ``size_t`` *k* )
+
+If *k* in :math:`\{0 , \ldots , K-1 \}` has type ``size_t`` ,
+and *retape* has type ``bool`` ,
+the syntax
+
+   *retape* = *fg_info* . ``retape`` ( *k* )
+
+sets *retape* to true or false.
+If *retape* is true,
+``cppad_ipopt_nlp`` will retape the operation sequence
+corresponding to :math:`r_k (u)` for
+every value of *u* .
+An ``cppad_ipopt_nlp`` object
+should use much less memory and run faster if *retape* is false.
+You can test both the true and false cases to make sure
+the operation sequence does not depend on *u* .
+
+The ``cppad_ipopt_fg_info`` implementation of this function
+sets *retape* to true
+(while slower it is also safer to always retape).
+
+fg_info.domain_size
+===================
+This member function has prototype
+
+   ``virtual size_t cppad_ipopt_fg_info::domain_size`` ( ``size_t`` *k* )
+
+If *k* in :math:`\{0 , \ldots , K-1 \}` has type ``size_t`` ,
+and *q* has type ``size_t`` , the syntax
+
+   *q* = *fg_info* . ``domain_size`` ( *k* )
+
+sets *q* to the dimension of the domain space for :math:`r_k (u)`;
+i.e., :math:`q(k)` in
+the :ref:`cppad_ipopt_nlp@fg(x)@Representation` above.
+
+The ``cppad_ipopt_h_base`` implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+:math:`q = n`.
+
+fg_info.range_size
+==================
+This member function has prototype
+
+   ``virtual size_t cppad_ipopt_fg_info::range_size`` ( ``size_t`` *k* )
+
+If *k* in :math:`\{0 , \ldots , K-1 \}` has type ``size_t`` ,
+and *p* has type ``size_t`` , the syntax
+
+   *p* = *fg_info* . ``range_size`` ( *k* )
+
+sets *p* to the dimension of the range space for :math:`r_k (u)`;
+i.e., :math:`p(k)` in
+the :ref:`cppad_ipopt_nlp@fg(x)@Representation` above.
+
+The ``cppad_ipopt_h_base`` implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+:math:`p = m+1`.
+
+fg_info.number_terms
+====================
+This member function has prototype
+
+   ``virtual size_t cppad_ipopt_fg_info::number_terms`` ( ``size_t`` *k* )
+
+If *k* in :math:`\{0 , \ldots , K-1 \}` has type ``size_t`` ,
+and *L* has type ``size_t`` , the syntax
+
+   *L* = *fg_info* . ``number_terms`` ( *k* )
+
+sets *L* to the number of terms in representation
+for this value of *k* ;
+i.e., :math:`L(k)` in
+the :ref:`cppad_ipopt_nlp@fg(x)@Representation` above.
+
+The ``cppad_ipopt_h_base`` implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+:math:`L = 1`.
+
+fg_info.index
+=============
+This member function has prototype
+
+| |tab| ``virtual void cppad_ipopt_fg_info::index`` (
+| |tab| |tab| ``size_t`` *k* , ``size_t`` *ell* , ``SizeVector&`` *I* , ``SizeVector&`` *J*
+| |tab| )
+
+The argument
+
+   *k*
+
+has type ``size_t``
+and is a value between zero and :math:`K-1` inclusive.
+The argument
+
+   *ell*
+
+has type ``size_t``
+and is a value between zero and :math:`L(k)-1` inclusive.
+The argument
+
+   *I*
+
+is a :ref:`SimpleVector-name` with elements
+of type ``size_t`` and size greater than or equal to :math:`p(k)`.
+The input value of the elements of *I* does not matter.
+The output value of
+the first :math:`p(k)` elements of *I*
+must be the corresponding elements of :math:`I_{k,ell}`
+in the :ref:`cppad_ipopt_nlp@fg(x)@Representation` above.
+The argument
+
+   *J*
+
+is a :ref:`SimpleVector-name` with elements
+of type ``size_t`` and size greater than or equal to :math:`q(k)`.
+The input value of the elements of *J* does not matter.
+The output value of
+the first :math:`q(k)` elements of *J*
+must be the corresponding elements of :math:`J_{k,ell}`
+in the :ref:`cppad_ipopt_nlp@fg(x)@Representation` above.
+
+The ``cppad_ipopt_h_base`` implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+for :math:`i = 0 , \ldots , m`,
+*I* [ *i* ] = *i* ,
+and  for :math:`j = 0 , \ldots , n-1`,
+*J* [ *j* ] = *j* .
+
+solution
+********
+After the optimization process is completed, *solution* contains
+the following information:
+
+status
+======
+The *status* field of *solution* has prototype
+
+   ``cppad_ipopt_solution::solution_status`` *solution* . ``status``
+
+It is the final Ipopt status for the optimizer.
+Here is a list of the possible values for the status:
+
+.. list-table::
+
+   * - *status*
+     - Meaning
+   * - not_defined
+     - The optimizer did not return a final status to this ``cppad_ipopt_nlp``
+       object.
+   * - unknown
+     - The status returned by the optimizer is not defined in the Ipopt
+       documentation for ``finalize_solution`` .
+   * - success
+     - Algorithm terminated successfully at a point satisfying the convergence
+       tolerances (see Ipopt options).
+   * - maxiter_exceeded
+     - The maximum number of iterations was exceeded (see Ipopt options).
+   * - stop_at_tiny_step
+     - Algorithm terminated because progress was very slow.
+   * - stop_at_acceptable_point
+     - Algorithm stopped at a point that was converged,
+       not to the 'desired' tolerances, but to 'acceptable' tolerances
+       (see Ipopt options).
+   * - local_infeasibility
+     - Algorithm converged to a non-feasible point
+       (problem may have no solution).
+   * - user_requested_stop
+     - This return value should not happen.
+   * - diverging_iterates
+     - It the iterates are diverging.
+   * - restoration_failure
+     - Restoration phase failed, algorithm doesn't know how to proceed.
+   * - error_in_step_computation
+     - An unrecoverable error occurred while Ipopt tried to
+       compute the search direction.
+   * - invalid_number_detected
+     - Algorithm received an invalid number (such as ``nan`` or ``inf`` )
+       from the users function *fg_info* . ``eval`` or from the CppAD evaluations
+       of its derivatives
+       (see the Ipopt option ``check_derivatives_for_naninf`` ).
+   * - internal_error
+     - An unknown Ipopt internal error occurred.
+       Contact the Ipopt authors through the mailing list.
+
+x
+=
+The ``x`` field of *solution* has prototype
+
+   ``NumberVector`` *solution* . ``x``
+
+and its size is equal to :math:`n`.
+It is the final :math:`x` value for the optimizer.
+
+z_l
+===
+The ``z_l`` field of *solution* has prototype
+
+   ``NumberVector`` *solution* . ``z_l``
+
+and its size is equal to :math:`n`.
+It is the final Lagrange multipliers for the
+lower bounds on :math:`x`.
+
+z_u
+===
+The ``z_u`` field of *solution* has prototype
+
+   ``NumberVector`` *solution* . ``z_u``
+
+and its size is equal to :math:`n`.
+It is the final Lagrange multipliers for the
+upper bounds on :math:`x`.
+
+g
+=
+The ``g`` field of *solution* has prototype
+
+   ``NumberVector`` *solution* . ``g``
+
+and its size is equal to :math:`m`.
+It is the final value for the constraint function :math:`g(x)`.
+
+lambda
+======
+The ``lambda`` field of *solution* has prototype
+
+   ``NumberVector`` *solution* . ``lambda``
+
+and its size is equal to :math:`m`.
+It is the final value for the
+Lagrange multipliers corresponding to the constraint function.
+
+obj_value
+=========
+The ``obj_value`` field of *solution* has prototype
+
+   ``Number`` *solution* . ``obj_value``
+
+It is the final value of the objective function :math:`f(x)`.
+
+{xrst_end cppad_ipopt_nlp}

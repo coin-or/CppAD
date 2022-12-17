@@ -1,0 +1,201 @@
+lines 9-207 of file: include/cppad/core/lu_ratio.hpp
+
+{xrst_begin LuRatio}
+{xrst_spell
+   jp
+   permuted
+   revaluate
+   xk
+}
+
+LU Factorization of A Square Matrix and Stability Calculation
+#############################################################
+
+Syntax
+******
+``# include <cppad/cppad.hpp>``
+
+*sign* = ``LuRatio`` ( *ip* , *jp* , *LU* , *ratio* )
+
+Description
+***********
+Computes an LU factorization of the matrix *A*
+where *A* is a square matrix.
+A measure of the numerical stability called *ratio* is calculated.
+This ratio is useful when the results of ``LuRatio`` are
+used as part of an :ref:`ADFun-name` object.
+
+Include
+*******
+This routine is designed to be used with AD objects and
+requires the ``cppad/cppad.hpp`` file to be included.
+
+Matrix Storage
+**************
+All matrices are stored in row major order.
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
+
+.. math::
+
+   Y_{i,j} = Y[ i * q + j ]
+
+sign
+****
+The return value *sign* has prototype
+
+   ``int`` *sign*
+
+If *A* is invertible, *sign* is plus or minus one
+and is the sign of the permutation corresponding to the row ordering
+*ip* and column ordering *jp* .
+If *A* is not invertible, *sign* is zero.
+
+ip
+**
+The argument *ip* has prototype
+
+   *SizeVector* & *ip*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *ip* is referred to as *n* in the
+specifications below.
+The input value of the elements of *ip* does not matter.
+The output value of the elements of *ip* determine
+the order of the rows in the permuted matrix.
+
+jp
+**
+The argument *jp* has prototype
+
+   *SizeVector* & *jp*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *jp* must be equal to *n* .
+The input value of the elements of *jp* does not matter.
+The output value of the elements of *jp* determine
+the order of the columns in the permuted matrix.
+
+LU
+**
+The argument *LU* has the prototype
+
+   *ADvector* & *LU*
+
+and the size of *LU* must equal :math:`n * n`
+(see description of :ref:`LuRatio@ADvector` below).
+
+A
+=
+We define *A* as the matrix corresponding to the input
+value of *LU* .
+
+P
+=
+We define the permuted matrix *P* in terms of *A* by
+
+   *P* ( *i* , *j* ) = *A* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+L
+=
+We define the lower triangular matrix *L* in terms of the
+output value of *LU* .
+The matrix *L* is zero above the diagonal
+and the rest of the elements are defined by
+
+   *L* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , i`.
+
+U
+=
+We define the upper triangular matrix *U* in terms of the
+output value of *LU* .
+The matrix *U* is zero below the diagonal,
+one on the diagonal,
+and the rest of the elements are defined by
+
+   *U* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-2` and :math:`j = i+1 , \ldots , n-1`.
+
+Factor
+======
+If the return value *sign* is non-zero,
+
+   *L* * *U* = *P*
+
+If the return value of *sign* is zero,
+the contents of *L* and *U* are not defined.
+
+Determinant
+===========
+If the return value *sign* is zero,
+the determinant of *A* is zero.
+If *sign* is non-zero,
+using the output value of *LU*
+the determinant of the matrix *A* is equal to
+
+   *sign* * *LU* [ *ip* [0], *jp* [0]] * ... * *LU* [ *ip* [ *n* ``-1`` ], *jp* [ *n* ``-1`` ]]
+
+ratio
+*****
+The argument *ratio* has prototype
+
+   ``AD<`` *Base* > & *ratio*
+
+On input, the value of *ratio* does not matter.
+On output it is a measure of how good the choice of pivots is.
+For :math:`p = 0 , \ldots , n-1`,
+the *p*-th pivot element is the element of maximum absolute value of a
+:math:`(n-p) \times (n-p)` sub-matrix.
+The ratio of each element of sub-matrix divided by the pivot element
+is computed.
+The return value of *ratio* is the maximum absolute value of
+such ratios over with respect to all elements and all the pivots.
+
+Purpose
+=======
+Suppose that the execution of a call to ``LuRatio``
+is recorded in the ``ADFun<`` *Base* > object *F* .
+Then a call to :ref:`Forward-name` of the form
+
+   *F* . ``Forward`` ( *k* , *xk* )
+
+with *k* equal to zero will revaluate this Lu factorization
+with the same pivots and a new value for *A* .
+In this case, the resulting *ratio* may not be one.
+If *ratio* is too large (the meaning of too large is up to you),
+the current pivots do not yield a stable LU factorization of *A* .
+A better choice for the pivots (for this value of *A* )
+will be made if you recreate the ``ADFun`` object
+starting with the :ref:`Independent-name` variable values
+that correspond to the vector *xk* .
+
+SizeVector
+**********
+The type *SizeVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type size_t<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+ADvector
+********
+The type *ADvector* must be a
+:ref:`simple vector class<SimpleVector-name>` with elements of type
+``AD<`` *Base* > .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/lu_ratio.cpp
+}
+The file :ref:`lu_ratio.cpp-name`
+contains an example and test of using ``LuRatio`` .
+
+{xrst_end LuRatio}

@@ -1,0 +1,17 @@
+lines 5-19 of file: example/abs_normal/min_nso_linear.xrst
+
+{xrst_begin min_nso_linear.hpp}
+{xrst_spell
+   nso
+}
+
+min_nso_linear Source Code
+##########################
+
+{xrst_literal
+   example/abs_normal/min_nso_linear.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end min_nso_linear.hpp}

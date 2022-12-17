@@ -1,0 +1,27 @@
+lines 5-29 of file: test_more/compare_c/CMakeLists.txt
+
+# {xrst_begin compare_c} 
+# {xrst_comment_ch #}
+#
+# Compare Speed of C and C++
+# ##########################
+#
+# Syntax
+# ******
+#
+#     ``test_more/compare_c/det_by_minor_c``
+#
+# ``test_more/compare_c/det_by_minor_cpp``
+#
+# Purpose
+# *******
+# Compares the speed of the exact same source code compiled
+# using C versus C++.
+#
+# Contents
+# ********
+# {xrst_toc_table
+#    test_more/compare_c/det_by_minor.c
+# }
+#
+# {xrst_end compare_c}

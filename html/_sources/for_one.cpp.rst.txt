@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/for_one.cpp
+
+{xrst_begin for_one.cpp}
+
+First Order Partial Driver: Example and Test
+############################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end for_one.cpp}

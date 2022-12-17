@@ -1,0 +1,156 @@
+lines 195-348 of file: include/cppad/utility/speed_test.hpp
+
+{xrst_begin SpeedTest}
+{xrst_spell
+   cout
+   ctime
+}
+
+Run One Speed Test and Print Results
+####################################
+
+Syntax
+******
+
+   # ``include <cppad/utility/speed_test.hpp>``
+
+``SpeedTest`` ( *Test* , *first* , *inc* , *last* )
+
+See Also
+********
+:ref:`time_test-name`
+
+Purpose
+*******
+The ``SpeedTest`` function executes a speed test
+for various sized problems
+and reports the results on standard output; i.e. ``std::cout`` .
+The size of each test problem is included in its report
+(unless *first* is equal to *last* ).
+
+Motivation
+**********
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution
+sequences is not possible.
+In addition,
+there may be set up time for a test that
+we do not really want included in the timing.
+For this reason ``SpeedTest``
+automatically determines how many times to
+repeat the section of the test that we wish to time.
+
+Include
+*******
+The file ``speed_test.hpp`` contains the
+``SpeedTest`` function.
+This file is included by ``cppad/utility/cppad.hpp``
+but it can also be included separately with out the rest of
+the ``CppAD`` routines.
+
+Test
+****
+The ``SpeedTest`` argument *Test* is a function with the syntax
+
+   *name* = *Test* ( *size* , *repeat* )
+
+size
+====
+The *Test* argument *size* has prototype
+
+   ``size_t`` *size*
+
+It specifies the size for this test.
+
+repeat
+======
+The *Test* argument *repeat* has prototype
+
+   ``size_t`` *repeat*
+
+It specifies the number of times to repeat the test.
+
+name
+====
+The *Test* result *name* has prototype
+
+   ``std::string`` *name*
+
+The results for this test are reported on ``std::cout``
+with *name* as an identifier for the test.
+It is assumed that,
+for the duration of this call to ``SpeedTest`` ,
+*Test* will always return
+the same value for *name* .
+If *name* is the empty string,
+no test name is reported by ``SpeedTest`` .
+
+first
+*****
+The ``SpeedTest`` argument *first* has prototype
+
+   ``size_t`` *first*
+
+It specifies the size of the first test problem reported by this call to
+``SpeedTest`` .
+
+last
+****
+The ``SpeedTest`` argument *last* has prototype
+
+   ``size_t`` *last*
+
+It specifies the size of the last test problem reported by this call to
+``SpeedTest`` .
+
+inc
+***
+The ``SpeedTest`` argument *inc* has prototype
+
+   ``int`` *inc*
+
+It specifies the increment between problem sizes; i.e.,
+all values of *size* in calls to *Test* are given by
+
+   *size* = *first* + *j* * *inc*
+
+where *j* is a positive integer.
+The increment can be positive or negative but it cannot be zero.
+The values *first* , *last* and *inc* must
+satisfy the relation
+
+.. math::
+
+   inc * ( last - first ) \geq 0
+
+rate
+****
+The value displayed in the ``rate`` column on ``std::cout``
+is defined as the value of *repeat* divided by the
+corresponding elapsed execution time in seconds.
+The elapsed execution time is measured by the difference in
+::
+
+   (double) clock() / (double) CLOCKS_PER_SEC
+
+in the context of the standard ``<ctime>`` definitions.
+
+Errors
+******
+If one of the restrictions above is violated,
+the CppAD error handler is used to report the error.
+You can redefine this action using the instructions in
+:ref:`ErrorHandler-name`
+
+Example
+*******
+{xrst_toc_hidden
+   speed/example/speed_program.cpp
+}
+The program :ref:`speed_program.cpp-name` is an example usage
+of ``SpeedTest`` .
+
+{xrst_end SpeedTest}

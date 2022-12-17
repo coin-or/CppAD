@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="ipopt_solve_ode_inverse.cpp, ode, inverse, problem, definitions:, source, code" name="keywords" />
+<meta content="purpose" name="keywords" />
+<meta content="forward, problem" name="keywords" />
+<meta content="measurements" name="keywords" />
+<meta content="simulation, analytic, solution" name="keywords" />
+<meta content="simulation, parameter, values" name="keywords" />
+<meta content="simulated, measurement, values" name="keywords" />
+<meta content="inverse, problem" name="keywords" />
+<meta content="trapezoidal, approximation" name="keywords" />
+<meta content="solution, method" name="keywords" />
+<meta content="source" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ipopt_solve_ode_inverse.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example" href="Example.html" />
+    <link rel="prev" title="ipopt_solve_retape.cpp" href="ipopt_solve_retape.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_thread.html">multi_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ipopt_solve_get_started.cpp.html">ipopt_solve_get_started.cpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipopt_solve_retape.cpp.html">ipopt_solve_retape.cpp</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ipopt_solve_ode_inverse.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="ipopt_solve.html">ipopt_solve</a> &raquo;</li>
+      <li>ipopt_solve_ode_inverse.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ipopt_solve_ode_inverse.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="ipopt-solve-ode-inverse-cpp">
+<span id="ipopt-solve-ode-inverse-cpp-name"></span><h1>ipopt_solve_ode_inverse.cpp<a class="headerlink" href="#ipopt-solve-ode-inverse-cpp" title="Permalink to this headline"></a></h1>
+<section id="ode-inverse-problem-definitions-source-code">
+<span id="ipopt-solve-ode-inverse-cpp-title"></span><span id="index-0"></span><h2>ODE Inverse Problem Definitions: Source Code<a class="headerlink" href="#ode-inverse-problem-definitions-source-code" title="Permalink to this headline"></a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
+<li><p><a class="reference internal" href="#forward-problem" id="id2">Forward Problem</a></p></li>
+<li><p><a class="reference internal" href="#measurements" id="id3">Measurements</a></p>
+<ul>
+<li><p><a class="reference internal" href="#simulation-analytic-solution" id="id4">Simulation Analytic Solution</a></p></li>
+<li><p><a class="reference internal" href="#simulation-parameter-values" id="id5">Simulation Parameter Values</a></p></li>
+<li><p><a class="reference internal" href="#simulated-measurement-values" id="id6">Simulated Measurement Values</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#inverse-problem" id="id7">Inverse Problem</a></p></li>
+<li><p><a class="reference internal" href="#trapezoidal-approximation" id="id8">Trapezoidal Approximation</a></p></li>
+<li><p><a class="reference internal" href="#solution-method" id="id9">Solution Method</a></p></li>
+<li><p><a class="reference internal" href="#source" id="id10">Source</a></p></li>
+</ul>
+</div>
+<section id="purpose">
+<span id="ipopt-solve-ode-inverse-cpp-purpose"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h3>
+<p>This example demonstrates how to invert for parameters
+in a ODE where the solution of the ODE is numerically approximated.</p>
+</section>
+<section id="forward-problem">
+<span id="ipopt-solve-ode-inverse-cpp-forward-problem"></span><span id="index-2"></span><h3><a class="toc-backref" href="#id2">Forward Problem</a><a class="headerlink" href="#forward-problem" title="Permalink to this headline"></a></h3>
+<p>We consider the following ordinary differential equation:</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   \partial_t y_0 ( t , a ) &amp; = &amp; - a_1 * y_0 (t, a )
+   \\
+   \partial_t y_1 (t , a )  &amp; = &amp; + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+\end{eqnarray}</div><p>with the initial conditions</p>
+<div class="math notranslate nohighlight">
+\[y_0 (0 , a) = ( a_0 , 0 )^\R{T}\]</div>
+<p>Our forward problem is stated as follows:
+Given <span class="math notranslate nohighlight">\(a \in \B{R}^3\)</span>
+determine the value of <span class="math notranslate nohighlight">\(y ( t , a )\)</span>,
+for <span class="math notranslate nohighlight">\(t \in R\)</span>, that solves the initial value problem above.</p>
+</section>
+<section id="measurements">
+<span id="ipopt-solve-ode-inverse-cpp-measurements"></span><span id="index-3"></span><h3><a class="toc-backref" href="#id3">Measurements</a><a class="headerlink" href="#measurements" title="Permalink to this headline"></a></h3>
+<p>Suppose we are also given measurement times <span class="math notranslate nohighlight">\(s \in \B{R}^5\)</span>
+and  a measurement vector <span class="math notranslate nohighlight">\(z \in \B{R}^4\)</span>
+and for <span class="math notranslate nohighlight">\(i = 0, \ldots, 3\)</span>, we model <span class="math notranslate nohighlight">\(z_i\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[z_i = y_1 ( s_{i+1} , a) + e_i\]</div>
+<p>where <span class="math notranslate nohighlight">\(e_{i-1} \sim {\bf N} (0 , \sigma^2 )\)</span>
+is the measurement noise,
+and <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span> is the standard deviation of the noise.</p>
+<section id="simulation-analytic-solution">
+<span id="ipopt-solve-ode-inverse-cpp-measurements-simulation-analytic-solution"></span><span id="index-4"></span><h4><a class="toc-backref" href="#id4">Simulation Analytic Solution</a><a class="headerlink" href="#simulation-analytic-solution" title="Permalink to this headline"></a></h4>
+<p>The following analytic solution to the forward problem is used
+to simulate a data set:</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   y_0 (t , a) &amp; = &amp; a_0 * \exp( - a_1 * t )
+   \\
+   y_1 (t , a) &amp; = &amp;
+   a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+\end{eqnarray}</div></section>
+<section id="simulation-parameter-values">
+<span id="ipopt-solve-ode-inverse-cpp-measurements-simulation-parameter-values"></span><span id="index-5"></span><h4><a class="toc-backref" href="#id5">Simulation Parameter Values</a><a class="headerlink" href="#simulation-parameter-values" title="Permalink to this headline"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\bar{a}_0 = 1\)</span></p></td>
+<td><p>initial value of <span class="math notranslate nohighlight">\(y_0 (t, a)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\bar{a}_1 = 2\)</span></p></td>
+<td><p>transfer rate from compartment zero to compartment one</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\bar{a}_2 = 1\)</span></p></td>
+<td><p>transfer rate from compartment one to outside world</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\sigma = 0\)</span></p></td>
+<td><p>standard deviation of measurement noise</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(e_i = 0\)</span></p></td>
+<td><p>simulated measurement noise, <span class="math notranslate nohighlight">\(i = 1 , \ldots , Nz\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(s_i = i * .5\)</span></p></td>
+<td><p>time corresponding to the <em>i</em>-th measurement,
+<span class="math notranslate nohighlight">\(i = 0 , \ldots , 3\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulated-measurement-values">
+<span id="ipopt-solve-ode-inverse-cpp-measurements-simulated-measurement-values"></span><span id="index-6"></span><h4><a class="toc-backref" href="#id6">Simulated Measurement Values</a><a class="headerlink" href="#simulated-measurement-values" title="Permalink to this headline"></a></h4>
+<p>The simulated measurement values are given by the equation</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+z_i
+&amp; = &amp;  e_i + y_1 ( s_{i+1} , \bar{a} )
+\\
+&amp; = &amp;
+\bar{a}_0 * \bar{a}_1 *
+   \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
+      { \bar{a}_1 - \bar{a}_2 }
+\end{eqnarray}</div><p>for <span class="math notranslate nohighlight">\(i = 0, \ldots , 3\)</span>.</p>
+</section>
+</section>
+<section id="inverse-problem">
+<span id="ipopt-solve-ode-inverse-cpp-inverse-problem"></span><span id="index-7"></span><h3><a class="toc-backref" href="#id7">Inverse Problem</a><a class="headerlink" href="#inverse-problem" title="Permalink to this headline"></a></h3>
+<p>The maximum likelihood estimate for <span class="math notranslate nohighlight">\(a\)</span> given <span class="math notranslate nohighlight">\(z\)</span>
+solves the following optimization problem</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+{\rm minimize} \;
+   &amp; \sum_{i=0}^3 ( z_i - y_1 ( s_{i+1} , a ) )^2
+   &amp; \;{\rm w.r.t} \; a \in \B{R}^3
+\end{eqnarray}</div></section>
+<section id="trapezoidal-approximation">
+<span id="ipopt-solve-ode-inverse-cpp-trapezoidal-approximation"></span><span id="index-8"></span><h3><a class="toc-backref" href="#id8">Trapezoidal Approximation</a><a class="headerlink" href="#trapezoidal-approximation" title="Permalink to this headline"></a></h3>
+<p>We are given a number of approximation points per measurement interval
+<span class="math notranslate nohighlight">\(np\)</span> and define the time grid <span class="math notranslate nohighlight">\(t \in \B{R}^{4 \cdot np + 1}\)</span>
+as follows:
+<span class="math notranslate nohighlight">\(t_0 = s_0\)</span> and
+for <span class="math notranslate nohighlight">\(i = 0 , 1 , 2, 3\)</span>, <span class="math notranslate nohighlight">\(j = 1 , \ldots , np\)</span></p>
+<div class="math notranslate nohighlight">
+\[t_{i \cdot np + j} = s_i + (s_{i+1} - s{i}) \frac{i}{np}\]</div>
+<p>We note that for <span class="math notranslate nohighlight">\(i = 1 , \ldots , 4\)</span>,
+<span class="math notranslate nohighlight">\(t_{i \cdot np} = s_i\)</span>.
+This example uses a trapezoidal approximation to solve the ODE.
+Given <span class="math notranslate nohighlight">\(a \in \B{R}^3\)</span> and <span class="math notranslate nohighlight">\(y^{k-1} \approx y( t_{k-1} , a )\)</span>,
+the a trapezoidal method approximates <span class="math notranslate nohighlight">\(y ( t_j , a )\)</span>
+by the value <span class="math notranslate nohighlight">\(y^k \in \B{R}^2\)</span> ) that solves the equation</p>
+<div class="math notranslate nohighlight">
+\[y^k  =  y^{k-1} + \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2} * (t_k - t_{k-1})\]</div>
+<p>where <span class="math notranslate nohighlight">\(G : \B{R}^2 \times \B{R}^3 \rightarrow \B{R}^2\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   G_0 ( y , a ) &amp; = &amp; - a_1 * y_0
+   \\
+   G_1 ( y , a ) &amp; = &amp; + a_1 * y_0  - a_2 * y_1
+\end{eqnarray}</div></section>
+<section id="solution-method">
+<span id="ipopt-solve-ode-inverse-cpp-solution-method"></span><span id="index-9"></span><h3><a class="toc-backref" href="#id9">Solution Method</a><a class="headerlink" href="#solution-method" title="Permalink to this headline"></a></h3>
+<p>We use constraints to embed the
+forward problem in the inverse problem.
+To be specific, we solve the optimization problem</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+{\rm minimize}
+&amp; \sum_{i=0}^3 ( z_i - y_1^{(i+1) \cdot np} )^2
+&amp; \; {\rm w.r.t} \; a \in \B{R}^3
+   \; y^0 \in \B{R}^2 , \ldots , y^{3 \cdot np -1} \in \B{R}^2
+\\
+{\rm subject \; to}
+   0 = y^0 - ( a_0 , 0 )^\R{T}
+   \\
+   &amp; 0 = y^k  -  y^{k-1} -
+   \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2}  (t_k - t_{k-1})
+   &amp; \; {\rm for} \; k = 1 , \ldots , 4 \cdot np
+\end{eqnarray}</div><p>The code below we using the notation
+<span class="math notranslate nohighlight">\(x \in \B{3 + (4 \cdot np + 1) \cdot 2}\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[x = \left(
+   a_0, a_1, a_2 ,
+   y_0^0, y_1^0,
+   \ldots ,
+   y_0^{4 \cdot np}, y_1^{4 \cdots np}
+\right)\]</div>
+</section>
+<section id="source">
+<span id="ipopt-solve-ode-inverse-cpp-source"></span><span id="index-10"></span><h3><a class="toc-backref" href="#id10">Source</a><a class="headerlink" href="#source" title="Permalink to this headline"></a></h3>
+<p>The following source code
+implements the ODE inversion method proposed above:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/ipopt/solve.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">AD</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// value of a during simulation a[0], a[1], a[2]</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">a_</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w">                   </span><span class="p">{</span><span class="mf">2.0</span><span class="p">,</span><span class="w">  </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">};</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// number of components in a</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">na_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">a_</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">a_</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// function used to simulate data</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="nf">yone</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"></span>
+<span class="w">         </span><span class="n">a_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">a_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">t</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">a_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// time points were we have data (no data at first point)</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">s_</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5</span><span class="p">,</span><span class="w">        </span><span class="mf">1.0</span><span class="p">,</span><span class="w">          </span><span class="mf">1.5</span><span class="p">,</span><span class="w">         </span><span class="mf">2.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Simulated data for case with no noise (first point is not used)</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">z_</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">yone</span><span class="p">(</span><span class="n">s_</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="w"> </span><span class="n">yone</span><span class="p">(</span><span class="n">s_</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span><span class="w"> </span><span class="n">yone</span><span class="p">(</span><span class="n">s_</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="w"> </span><span class="n">yone</span><span class="p">(</span><span class="n">s_</span><span class="p">[</span><span class="mi">4</span><span class="p">])};</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nz_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">z_</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">z_</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// number of trapozoidal approximation points per measurement interval</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">np_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">40</span><span class="p">;</span><span class="w"></span>
+
+
+<span class="w">   </span><span class="k">class</span><span class="w"> </span><span class="nc">FG_eval</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// derived class part of constructor</span>
+<span class="w">      </span><span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ADvector</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// Evaluation of the objective f(x), and constraints g(x)</span>
+<span class="w">      </span><span class="kt">void</span><span class="w"> </span><span class="nf">operator</span><span class="p">()(</span><span class="n">ADvector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">fg</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ADvector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w">  </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="w"> </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="n">na_</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// extract the vector a</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">na_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// compute the object f(x)</span>
+<span class="w">         </span><span class="n">fg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nz_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np_</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">y_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_1</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">fg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">         </span><span class="o">+=</span><span class="w"> </span><span class="n">dif</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dif</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// constraint corresponding to initial value y(0, a)</span>
+<span class="w">         </span><span class="c1">// Note that this constraint is invariant with size of dt</span>
+<span class="w">         </span><span class="n">fg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">fg</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// constraints corresponding to trapozoidal approximation</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nz_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w">  </span><span class="c1">// spacing between grid point</span>
+<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">s_</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">np_</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">np_</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// compute derivative at y^k</span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">y_0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">y_1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">G_0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_0</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">G_1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">               </span><span class="c1">// compute derivative at y^{k-1}</span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ym_0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ym_1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">na_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Gm_0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ym_0</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="n">AD</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Gm_1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ym_0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ym_1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">               </span><span class="c1">// constraint should be zero</span>
+<span class="w">               </span><span class="n">fg</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y_0</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">ym_0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">G_0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Gm_0</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="n">fg</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y_1</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">ym_1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">G_1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Gm_1</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">               </span><span class="c1">// scale g(x) so it has similar size as f(x)</span>
+<span class="w">               </span><span class="n">fg</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">dt</span><span class="p">;</span><span class="w"></span>
+<span class="w">               </span><span class="n">fg</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">dt</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">ode_inverse</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="n">CPPAD_TESTVECTOR</span><span class="p">(</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">Dvector</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// number of components in the function g</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">ng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">np_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nz_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// number of independent variables</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">na_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ng</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// initial vlaue for the variables we are optimizing w.r.t</span>
+<span class="w">   </span><span class="n">Dvector</span><span class="w"> </span><span class="nf">xi</span><span class="p">(</span><span class="n">nx</span><span class="p">),</span><span class="w"> </span><span class="n">xl</span><span class="p">(</span><span class="n">nx</span><span class="p">),</span><span class="w"> </span><span class="n">xu</span><span class="p">(</span><span class="n">nx</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nx</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w">   </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// initial value</span>
+<span class="w">      </span><span class="n">xl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1e19</span><span class="p">;</span><span class="w"> </span><span class="c1">// no lower limit</span>
+<span class="w">      </span><span class="n">xu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mf">1e19</span><span class="p">;</span><span class="w"> </span><span class="c1">// no upper limit</span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">na_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">xi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="p">;</span><span class="w">   </span><span class="c1">// initial value for a</span>
+
+<span class="w">   </span><span class="c1">// all the difference equations are constrainted to be zero</span>
+<span class="w">   </span><span class="n">Dvector</span><span class="w"> </span><span class="nf">gl</span><span class="p">(</span><span class="n">ng</span><span class="p">),</span><span class="w"> </span><span class="n">gu</span><span class="p">(</span><span class="n">ng</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ng</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">gl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">gu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// object defining both f(x) and g(x)</span>
+<span class="w">   </span><span class="n">FG_eval</span><span class="w"> </span><span class="n">fg_eval</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// options</span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">options</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Use sparse matrices for calculation of Jacobians and Hessians</span>
+<span class="w">   </span><span class="c1">// with forward mode for Jacobian (seems to be faster for this case).</span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;Sparse  true        forward</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// turn off any printing</span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;Integer print_level 0</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;String  sb        yes</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// maximum number of iterations</span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;Integer max_iter    30</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// approximate accuracy in first order necessary conditions;</span>
+<span class="w">   </span><span class="c1">// see Mathematical Programming, Volume 106, Number 1,</span>
+<span class="w">   </span><span class="c1">// Pages 25-57, Equation (6)</span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;Numeric tol         1e-6</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// place to return solution</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ipopt</span><span class="o">::</span><span class="n">solve_result</span><span class="o">&lt;</span><span class="n">Dvector</span><span class="o">&gt;</span><span class="w"> </span><span class="n">solution</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// solve the problem</span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ipopt</span><span class="o">::</span><span class="n">solve</span><span class="o">&lt;</span><span class="n">Dvector</span><span class="p">,</span><span class="w"> </span><span class="n">FG_eval</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="n">xi</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">xu</span><span class="p">,</span><span class="w"> </span><span class="n">gl</span><span class="p">,</span><span class="w"> </span><span class="n">gu</span><span class="p">,</span><span class="w"> </span><span class="n">fg_eval</span><span class="p">,</span><span class="w"> </span><span class="n">solution</span><span class="w"></span>
+<span class="w">   </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="c1">// Check some of the solution values</span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">solution</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">ipopt</span><span class="o">::</span><span class="n">solve_result</span><span class="o">&lt;</span><span class="n">Dvector</span><span class="o">&gt;::</span><span class="n">success</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">rel_tol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">;</span><span class="w">  </span><span class="c1">// relative tolerance</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">abs_tol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">;</span><span class="w">  </span><span class="c1">// absolute tolerance</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">na_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">NearEqual</span><span class="p">(</span><span class="w"> </span><span class="n">a_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w">  </span><span class="n">solution</span><span class="p">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w">   </span><span class="n">rel_tol</span><span class="p">,</span><span class="w"> </span><span class="n">abs_tol</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ipopt_solve_retape.cpp.html" class="btn btn-neutral float-left" title="ipopt_solve_retape.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Example.html" class="btn btn-neutral float-right" title="Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

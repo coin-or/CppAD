@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/abort_recording.cpp
+
+{xrst_begin abort_recording.cpp}
+
+Abort Current Recording: Example and Test
+#########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abort_recording.cpp}

@@ -1,0 +1,17 @@
+lines 5-19 of file: example/abs_normal/min_nso_quad.xrst
+
+{xrst_begin min_nso_quad.hpp}
+{xrst_spell
+   nso
+}
+
+min_nso_quad Source Code
+########################
+
+{xrst_literal
+   example/abs_normal/min_nso_quad.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end min_nso_quad.hpp}

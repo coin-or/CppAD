@@ -1,0 +1,13 @@
+lines 7-17 of file: example/general/number_skip.cpp
+
+{xrst_begin number_skip.cpp}
+
+Number of Variables That Can be Skipped: Example and Test
+#########################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end number_skip.cpp}

@@ -1,0 +1,13 @@
+lines 7-17 of file: example/utility/pow_int.cpp
+
+{xrst_begin pow_int.cpp}
+
+The Pow Integer Exponent: Example and Test
+##########################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end pow_int.cpp}

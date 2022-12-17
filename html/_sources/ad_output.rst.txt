@@ -1,0 +1,76 @@
+lines 77-150 of file: include/cppad/core/ad_io.hpp
+
+{xrst_begin ad_output}
+{xrst_spell
+   ostream
+}
+
+AD Output Stream Operator
+#########################
+
+Syntax
+******
+*os* << *x*
+
+See Also
+********
+:ref:`PrintFor-name`
+
+Purpose
+*******
+Writes the *Base* value, corresponding to *x* ,
+to the output stream *os* .
+
+Assumption
+**********
+If *b* is a *Base* object,
+
+   *os* << *b*
+
+returns a reference to *os* .
+
+os
+**
+The operand *os* has prototype
+
+   ``std::ostream&`` *os*
+
+x
+*
+The operand *x* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >& *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+
+Result
+******
+The result of this operation can be used as a reference to *os* .
+For example, if the operand *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
+then the syntax
+
+   *os* << *x* << *y*
+
+will output the value corresponding to *x*
+followed by the value corresponding to *y* .
+
+Operation Sequence
+******************
+The result of this operation is not an
+:ref:`glossary@AD of Base` object.
+Thus it will not be recorded as part of an
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/ad_output.cpp
+}
+The file
+:ref:`ad_output.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end ad_output}

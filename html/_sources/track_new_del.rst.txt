@@ -1,0 +1,224 @@
+lines 8-229 of file: include/cppad/utility/track_new_del.hpp
+
+{xrst_begin track_new_del}
+{xrst_spell
+   ncopy
+   newlen
+   newptr
+   oldptr
+}
+
+Routines That Track Use of New and Delete
+#########################################
+
+Deprecated 2007-07-23
+*********************
+All these routines have been deprecated.
+You should use the :ref:`thread_alloc-name` memory allocator instead
+(which works better in both a single thread and
+properly in multi-threading environment).
+
+Syntax
+******
+
+| # ``include <cppad/utility/track_new_del.hpp>``
+| *newptr* = ``TrackNewVec`` ( *file* , *line* , *newlen* , *oldptr* )
+| ``TrackDelVec`` ( *file* , *line* , *oldptr* )
+| *newptr* = ``TrackExtend`` ( *file* , *line* , *newlen* , *ncopy* , *oldptr* )
+
+*count* = ``TrackCount`` ( *file* , *line* )
+
+Purpose
+*******
+These routines
+aid in the use of ``new[]`` and  ``delete[]``
+during the execution of a C++ program.
+
+Include
+*******
+The file ``cppad/utility/track_new_del.hpp`` is included by
+``cppad/cppad.hpp``
+but it can also be included separately with out the rest of the
+CppAD include files.
+
+file
+****
+The argument *file* has prototype
+
+   ``const char`` * *file*
+
+It should be the source code file name
+where the call to ``TrackNew`` is located.
+The best way to accomplish this is the use the preprocessor symbol
+``__FILE__`` for this argument.
+
+line
+****
+The argument *line* has prototype
+
+   ``int`` *line*
+
+It should be the source code file line number
+where the call to ``TrackNew`` is located.
+The best way to accomplish this is the use the preprocessor symbol
+``__LINE__`` for this argument.
+
+oldptr
+******
+The argument *oldptr* has prototype
+
+   *Type* * *oldptr*
+
+This argument is used to identify the type *Type* .
+
+newlen
+******
+The argument *newlen* has prototype
+
+   ``size_t`` *newlen*
+
+head newptr
+***********
+The return value *newptr* has prototype
+
+   *Type* * *newptr*
+
+It points to the newly allocated vector of objects
+that were allocated using
+
+   ``new Type`` [ *newlen* ]
+
+ncopy
+*****
+The argument *ncopy* has prototype
+
+   ``size_t`` *ncopy*
+
+This specifies the number of elements that are copied from
+the old array to the new array.
+The value of *ncopy*
+must be less than or equal *newlen* .
+
+TrackNewVec
+***********
+If ``NDEBUG`` is defined, this routine only sets
+
+   *newptr* = *Type* ``new`` [ *newlen* ]
+
+The value of *oldptr* does not matter
+(except that it is used to identify *Type* ).
+If ``NDEBUG`` is not defined, ``TrackNewVec`` also
+tracks the this memory allocation.
+In this case, if memory cannot be allocated
+:ref:`ErrorHandler-name` is used to generate a message
+stating that there was not sufficient memory.
+
+Macro
+=====
+The preprocessor macro call
+
+   ``CPPAD_TRACK_NEW_VEC`` ( *newlen* , *oldptr* )
+
+expands to
+
+   ``CppAD::TrackNewVec`` (__ ``FILE__`` , __ ``LINE__`` , *newlen* , *oldptr* )
+
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackNewVec`` is the
+same as ``CPPAD_TRACK_NEW_VEC`` and was previously deprecated.
+
+TrackDelVec
+***********
+This routine is used to a vector of objects
+that have been allocated using ``TrackNew`` or ``TrackExtend`` .
+If ``NDEBUG`` is defined, this routine only frees memory with
+
+   ``delete`` [] *oldptr*
+
+If ``NDEBUG`` is not defined, ``TrackDelete`` also checks that
+*oldptr* was allocated by ``TrackNew`` or ``TrackExtend``
+and has not yet been freed.
+If this is not the case,
+:ref:`ErrorHandler-name` is used to generate an error message.
+
+Macro
+=====
+The preprocessor macro call
+
+   ``CPPAD_TRACK_DEL_VEC`` ( *oldptr* )
+
+expands to
+
+   ``CppAD::TrackDelVec`` (__ ``FILE__`` , __ ``LINE__`` , *oldptr* )
+
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackDelVec`` is the
+same as ``CPPAD_TRACK_DEL_VEC`` was previously deprecated.
+
+TrackExtend
+***********
+This routine is used to
+allocate a new vector (using ``TrackNewVec`` ),
+copy *ncopy* elements from the old vector to the new vector.
+If *ncopy* is greater than zero, *oldptr*
+must have been allocated using ``TrackNewVec`` or ``TrackExtend`` .
+In this case, the vector pointed to by *oldptr*
+must be have at least *ncopy* elements
+and it will be deleted (using ``TrackDelVec`` ).
+Note that the dependence of ``TrackExtend`` on ``NDEBUG``
+is indirectly through the routines ``TrackNewVec`` and
+``TrackDelVec`` .
+
+Macro
+=====
+The preprocessor macro call
+
+   ``CPPAD_TRACK_EXTEND`` ( *newlen* , *ncopy* , *oldptr* )
+
+expands to
+
+   ``CppAD::TrackExtend`` (__ ``FILE__`` , __ ``LINE__`` , *newlen* , *ncopy* , *oldptr* )
+
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackExtend`` is the
+same as ``CPPAD_TRACK_EXTEND`` and was previously deprecated.
+
+TrackCount
+**********
+The return value *count* has prototype
+
+   ``size_t`` *count*
+
+If ``NDEBUG`` is defined, *count* will be zero.
+Otherwise, it will be
+the number of vectors that
+have been allocated
+(by ``TrackNewVec`` or ``TrackExtend`` )
+and not yet freed
+(by ``TrackDelete`` ).
+
+Macro
+=====
+The preprocessor macro call
+
+   ``CPPAD_TRACK_COUNT`` ()
+
+expands to
+
+   ``CppAD::TrackCount`` (__ ``FILE__`` , __ ``LINE__`` )
+
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackCount`` is the
+same as ``CPPAD_TRACK_COUNT`` and was previously deprecated.
+
+Multi-Threading
+***************
+These routines cannot be used :ref:`in_parallel<ta_in_parallel-name>`
+execution mode.
+Use the :ref:`thread_alloc-name` routines instead.
+
+{xrst_end track_new_del}

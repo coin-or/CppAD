@@ -1,0 +1,301 @@
+lines 50-348 of file: speed/main.cpp
+
+{xrst_begin speed_main}
+{xrst_spell
+   boolsparsity
+   onetape
+   optionlist
+   retaped
+   revsparsity
+   subgraphs
+   subsparsity
+   underbar
+}
+
+Running the Speed Test Program
+##############################
+
+Syntax
+******
+``speed/`` *package* / ``speed_`` *package* *test* *seed* *option_list*
+
+Purpose
+*******
+A version of this program runs the correctness tests
+or the speed tests for one AD package identified by *package* .
+
+package
+*******
+
+AD Package
+==========
+The command line argument
+*package* specifies one of the AD package.
+The CppAD distribution comes with support for the following packages:
+:ref:`adolc<speed_adolc-name>` ,
+:ref:`cppad<speed_cppad-name>` ,
+:ref:`fadbad<speed_fadbad-name>` ,
+:ref:`sacado<speed_sacado-name>` ,
+:ref:`cppadcg<speed_cppadcg-name>` .
+You can extend this program to include other package;
+see :ref:`speed_xpackage-name` .
+
+double
+======
+The value
+*package* can be ``double`` in which case
+the function values (instead of derivatives) are computed
+using double precision operations.
+This enables one to compare the speed of computing function
+values in ``double`` to the speed of the derivative computations.
+(It is often useful to divide the speed of the derivative computation by
+the speed of the function evaluation in ``double`` .)
+
+profile
+=======
+In the special case where *package* is ``profile`` ,
+the CppAD package is compiled and run with profiling to aid in determining
+where it is spending most of its time.
+
+test
+****
+The argument *test* specifies which test to run
+and has the following possible values:
+:ref:`speed_main@test@correct` ,
+:ref:`speed_main@test@speed` ,
+:ref:`det_minor<link_det_minor-name>` ,
+:ref:`det_lu<link_det_lu-name>` ,
+:ref:`mat_mul<link_mat_mul-name>` ,
+:ref:`ode<link_ode-name>` ,
+:ref:`poly<link_poly-name>` ,
+:ref:`sparse_hessian<link_sparse_hessian-name>` ,
+:ref:`sparse_jacobian<link_sparse_jacobian-name>` .
+You can experiment with changing the implementation of a
+particular test for a particular package.
+
+correct
+=======
+If *test* is equal to ``correct`` ,
+all of the correctness tests are run.
+
+speed
+=====
+If *test* is equal to ``speed`` ,
+all of the speed tests are run.
+
+seed
+****
+The command line argument *seed* is an unsigned integer
+(all its characters are between 0 and 9).
+The random number simulator :ref:`uniform_01-name` is initialized with
+the call
+
+   ``uniform_01`` ( *seed* )
+
+before any of the testing routines (listed above) are called.
+
+Global Options
+**************
+This global variable has prototype
+{xrst_spell_off}
+{xrst_code cpp}
+   extern std::map<std::string, bool> global_option;
+{xrst_code}
+{xrst_spell_on}
+The syntax
+
+   ``global_option`` [" *option* "]
+
+has the value true, if *option* is present,
+and false otherwise.
+This is true for each option that follows *seed* .
+The order of the options does not matter and the list can be empty.
+Each option, is be a separate command line argument to the main program.
+The documentation below specifics how the
+:ref:`speed_cppad-name` program uses these options.
+It is the intention that other packages use each option in a similar
+way or make it invalid.
+The implementation of each test should check that the option
+setting are valid for that test and if not it should return false;
+for example, see the source code for :ref:`adolc_sparse_hessian.cpp-name` .
+
+onetape
+=======
+If this option is present,
+:ref:`speed_cppad-name` will use one taping of the operation
+sequence for all the repetitions of that speed test.
+Otherwise, the
+:ref:`operation sequence<glossary@Operation@Sequence>`
+will be retaped for each test repetition.
+
+All of the tests, except :ref:`det_lu<link_det_lu-name>` ,
+have the same operation sequence for each repetition.
+The operation sequence for ``det_lu``
+may be different because it depends on the matrix for which the determinant
+is being calculated.
+For this reason, :ref:`cppad_det_lu.cpp-name` returns false,
+to indicate that the test not implemented,
+when ``global_onetape`` is true.
+
+memory
+======
+This option is special because individual CppAD speed tests need not do
+anything different if this option is true or false.
+If the ``memory`` option is present, the CppAD
+:ref:`hold_memory<ta_hold_memory-name>` routine will be called by
+the speed test main program before any of the tests are executed
+This should make the CppAD ``thread_alloc`` allocator faster.
+If it is not present, CppAD will used standard memory allocation.
+Another package might use this option for a different
+memory allocation method.
+
+optimize
+========
+If this option is present,
+CppAD will :ref:`optimize-name`
+the operation sequence before doing computations.
+If it is false, this optimization will not be done.
+Note that this option is usually slower unless it is combined with the
+``onetape`` option.
+
+atomic
+======
+If this option is present,
+CppAD will use a user defined
+:ref:`atomic<atomic_two-name>` operation is used for the test.
+So far, CppAD has only implemented
+the :ref:`mat_mul<link_mat_mul-name>` test as an atomic operation.
+
+hes2jac
+=======
+If this option is present,
+:ref:`speed_cppad-name` will compute hessians as the Jacobian
+of the gradient.
+This is accomplished using
+:ref:`multiple levels<mul_level-name>` of AD.
+So far, CppAD has only implemented
+the :ref:`sparse_hessian<link_sparse_hessian-name>`
+test in this manner.
+
+subgraph
+========
+If this option is present,
+:ref:`speed_cppad-name` will compute sparse Jacobians using subgraphs.
+The CppAD :ref:`sparse_jacobian<link_sparse_jacobian-name>`
+test is implemented for this option.
+In addition, the CppAD :ref:`sparse_hessian<link_sparse_hessian-name>`
+test is implemented for this option when ``hes2jac`` is present.
+
+Sparsity Options
+****************
+The following options only apply to the
+:ref:`sparse_jacobian<link_sparse_jacobian-name>` and
+:ref:`sparse_hessian<link_sparse_hessian-name>` tests.
+The other tests return false when any of these options
+are present.
+
+boolsparsity
+============
+If this option is present, CppAD will use a
+:ref:`vectors of bool<glossary@Sparsity Pattern@Boolean Vector>`
+to compute sparsity patterns.
+Otherwise CppAD will use
+:ref:`vectors of sets<glossary@Sparsity Pattern@Vector of Sets>` .
+
+revsparsity
+===========
+If this option is present,
+CppAD will use reverse mode for to compute sparsity patterns.
+Otherwise CppAD will use forward mode.
+
+subsparsity
+===========
+If this option is present,
+CppAD will use subgraphs to compute sparsity patterns.
+If
+``boolsparsity`` , ``revsparsity`` , or ``colpack`` is also present,
+the CppAD speed tests will return false; i.e., these options are not
+supported by :ref:`subgraph_sparsity-name` .
+
+colpack
+=======
+If this option is present,
+CppAD will use :ref:`colpack<colpack_prefix-name>` to do the coloring.
+Otherwise, it will use it's own coloring algorithm.
+
+symmetric
+=========
+If this option is present, CppAD will use a symmetric
+:ref:`coloring method<sparse_hessian@work@color_method>`
+for computing Hessian sparsity patterns.
+Otherwise, it will use a general coloring method.
+The CppAD
+:ref:`sparse_hessian<link_sparse_hessian-name>` test
+is implemented for this option.
+
+Correctness Results
+*******************
+One, but not both, of the following two output lines
+
+| |tab| *package* _ *test* _ *optionlist* _ ``available`` = ``false``
+| |tab| *package* _ *test* _ *optionlist* _ ``ok`` = *flag*
+
+is generated for each correctness test where
+*package* and *test* are as above,
+*optionlist* are the options (in *option_list* )
+separated by the underbar ``_`` character
+(whereas they are separated by spaces in *option_list* ),
+and *flag* is ``true`` or ``false`` .
+
+Speed Results
+*************
+For each speed test, corresponds to three lines of the
+following form are generated:
+
+| |tab| *package* _ *test* _ *optionlist* _ ``ok`` = *flag*
+| |tab| *test* _ ``size`` = [ *size_1* , ..., *size_n*  ]
+| |tab| *package* _ *test* _ ``rate`` = [ *rate_1* , ..., *rate_n*  ]
+
+The values *package* , *test* , *optionlist* ,
+and *flag* are as in the correctness results above.
+The values *size_1* , ..., *size_n* are the
+size arguments used for the corresponding tests.
+The values *rate_1* , ..., *rate_n* are the number of times
+per second that the corresponding size problem executed.
+
+n_color
+=======
+The :ref:`sparse_jacobian<link_sparse_jacobian-name>`
+and :ref:`sparse_hessian<link_sparse_hessian-name>` tests has an extra output
+line with the following form
+
+   *package* _ ``sparse_`` *test* _ ``n_color`` = [ *n_color_1* , ..., *n_color_n*  ]
+
+were *test* is ``jacobian`` (``hessian`` ).
+The values *n_color_1* , ..., *n_color_n* are the number of
+colors used for each sparse Jacobian (Hessian) calculation; see
+*n_color* for
+:ref:`sparse_jac<sparse_jac@n_color>` and *n_sweep* for
+:ref:`sparse_hessian<sparse_hessian@n_sweep>` .
+{xrst_toc_hidden
+   speed/src/link.xrst
+}
+Link Routines
+*************
+Each :ref:`speed_main@package`
+defines it's own version of one of the
+:ref:`link_routines-name` listed below.
+Each of these routines links this main program to the corresponding test:
+
+.. csv-table::
+   :widths: auto
+
+   link_det_lu,:ref:`link_det_lu-title`
+   link_det_minor,:ref:`link_det_minor-title`
+   link_mat_mul,:ref:`link_mat_mul-title`
+   link_ode,:ref:`link_ode-title`
+   link_poly,:ref:`link_poly-title`
+   link_sparse_hessian,:ref:`link_sparse_hessian-title`
+   link_sparse_jacobian,:ref:`link_sparse_jacobian-title`
+
+{xrst_end speed_main}

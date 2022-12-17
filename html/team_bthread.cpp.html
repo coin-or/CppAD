@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="team_bthread.cpp, boost, thread, implementation, of, a, team, of, ad, threads" name="keywords" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>team_bthread.cpp &mdash; cppad  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="team_pthread.cpp" href="team_pthread.cpp.html" />
+    <link rel="prev" title="team_openmp.cpp" href="team_openmp.cpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="xrst_root_doc.html" class="icon icon-home"> cppad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="CppAD.html">CppAD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Theory.html">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AD.html">AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ADFun.html">ADFun</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html">preprocessor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="multi_thread.html">multi_thread</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="parallel_ad.html">parallel_ad</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="thread_test.cpp.html">thread_test.cpp</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="a11c_openmp.cpp.html">a11c_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_bthread.cpp.html">a11c_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="a11c_pthread.cpp.html">a11c_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_openmp.cpp.html">simple_ad_openmp.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_bthread.cpp.html">simple_ad_bthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple_ad_pthread.cpp.html">simple_ad_pthread.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="team_example.cpp.html">team_example.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="harmonic.cpp.html">harmonic.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_atomic_three.cpp.html">multi_atomic_three.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_chkpoint_two.cpp.html">multi_chkpoint_two.cpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multi_newton.cpp.html">multi_newton.cpp</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="team_thread.hpp.html">team_thread.hpp</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="team_openmp.cpp.html">team_openmp.cpp</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">team_bthread.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="team_pthread.cpp.html">team_pthread.cpp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipopt_solve.html">ipopt_solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Example.html">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speed.html">speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Appendix.html">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="xrst_root_doc.html">cppad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="xrst_root_doc.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="CppAD.html">CppAD</a> &raquo;</li>
+          <li><a href="multi_thread.html">multi_thread</a> &raquo;</li>
+          <li><a href="thread_test.cpp.html">thread_test.cpp</a> &raquo;</li>
+          <li><a href="team_thread.hpp.html">team_thread.hpp</a> &raquo;</li>
+      <li>team_bthread.cpp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/team_bthread.cpp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }\)</span></p>
+<section id="team-bthread-cpp">
+<span id="team-bthread-cpp-name"></span><h1>team_bthread.cpp<a class="headerlink" href="#team-bthread-cpp" title="Permalink to this headline"></a></h1>
+<section id="boost-thread-implementation-of-a-team-of-ad-threads">
+<span id="team-bthread-cpp-title"></span><span id="index-0"></span><h2>Boost Thread Implementation of a Team of AD Threads<a class="headerlink" href="#boost-thread-implementation-of-a-team-of-ad-threads" title="Permalink to this headline"></a></h2>
+<p>See <a class="reference internal" href="team_thread.hpp.html#team-thread-hpp-name"><span class="std std-ref">team_thread.hpp</span></a> for this routines specifications.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;boost/thread.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;cppad/cppad.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;../team_thread.hpp&quot;</span><span class="cp"></span>
+<span class="cp"># define MAX_NUMBER_THREADS 48</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">using</span><span class="w"> </span><span class="n">CppAD</span><span class="o">::</span><span class="n">thread_alloc</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// number of threads in the team</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_threads_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// no need to cleanup up thread specific data</span>
+<span class="w">   </span><span class="kt">void</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">(</span><span class="kt">size_t</span><span class="o">*</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// thread specific pointer the thread number (initialize as null)</span>
+<span class="w">   </span><span class="n">boost</span><span class="o">::</span><span class="n">thread_specific_ptr</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">thread_num_ptr_</span><span class="p">(</span><span class="n">cleanup</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// type of the job currently being done by each thread</span>
+<span class="w">   </span><span class="k">enum</span><span class="w"> </span><span class="nc">thread_job_t</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">init_enum</span><span class="p">,</span><span class="w"> </span><span class="n">work_enum</span><span class="p">,</span><span class="w"> </span><span class="n">join_enum</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">thread_job_</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// barrier used to wait for other threads to finish work</span>
+<span class="w">   </span><span class="n">boost</span><span class="o">::</span><span class="n">barrier</span><span class="o">*</span><span class="w"> </span><span class="n">wait_for_work_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// barrier used to wait for master thread to set next job</span>
+<span class="w">   </span><span class="n">boost</span><span class="o">::</span><span class="n">barrier</span><span class="o">*</span><span class="w"> </span><span class="n">wait_for_job_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Are we in sequential mode; i.e., other threads are waiting for</span>
+<span class="w">   </span><span class="c1">// master thread to set up next job ?</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// structure with information for one thread</span>
+<span class="w">   </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// The thread</span>
+<span class="w">      </span><span class="n">boost</span><span class="o">::</span><span class="kr">thread</span><span class="o">*</span><span class="w">       </span><span class="n">bthread</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// CppAD thread number as global (pointed to by thread_num_ptr_)</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w">               </span><span class="n">thread_num</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// true if no error for this thread, false otherwise.</span>
+<span class="w">      </span><span class="kt">bool</span><span class="w">                 </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="n">thread_one_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// vector with information for all threads</span>
+<span class="w">   </span><span class="n">thread_one_t</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">MAX_NUMBER_THREADS</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// pointer to function that does the work for one thread</span>
+<span class="w">   </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">worker_</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// ---------------------------------------------------------------------</span>
+<span class="w">   </span><span class="c1">// in_parallel()</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="nf">in_parallel</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">sequential_execution_</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// ---------------------------------------------------------------------</span>
+<span class="w">   </span><span class="c1">// thread_number()</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">thread_number</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// return thread_all_[thread_num].thread_num</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="n">thread_num_ptr_</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// --------------------------------------------------------------------</span>
+<span class="w">   </span><span class="c1">// function that gets called by boost thread constructor</span>
+<span class="w">   </span><span class="kt">void</span><span class="w"> </span><span class="nf">thread_work</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">thread_num</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wait_for_work_</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_job_</span><span class="w">  </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_num</span><span class="w">     </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// thread specific storage of thread number for this thread</span>
+<span class="w">      </span><span class="n">thread_num_ptr_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="o">&amp;</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">thread_num</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">while</span><span class="p">(</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Use wait_for_jog_ to give master time in sequential mode</span>
+<span class="w">         </span><span class="c1">// (so it can change global information like thread_job_)</span>
+<span class="w">         </span><span class="n">wait_for_job_</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// case where we are terminating this thread (no more work)</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">thread_job_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">join_enum</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// only other case once wait_for_job_ has been completed (so far)</span>
+<span class="w">         </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_job_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">work_enum</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="n">worker_</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">         </span><span class="c1">// Use wait_for_work_ to inform master that our work is done and</span>
+<span class="w">         </span><span class="c1">// that this thread will not use global infromation until</span>
+<span class="w">         </span><span class="c1">// passing its barrier wait_for_job_ above.</span>
+<span class="w">         </span><span class="n">wait_for_work_</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">team_create</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_threads</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;;</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MAX_NUMBER_THREADS</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;team_create: num_threads greater than &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">MAX_NUMBER_THREADS</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// check that we currently do not have multiple threads running</span>
+<span class="w">   </span><span class="n">ok</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">num_threads_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_work_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_job_</span><span class="w">  </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">sequential_execution_</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">thread_num</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// Each thread gets a pointer to its version of this thread_num</span>
+<span class="w">      </span><span class="c1">// so it knows which section of thread_all it is working with</span>
+<span class="w">      </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">thread_num</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// initialize</span>
+<span class="w">      </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">thread_all_</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">bthread</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Finish setup of thread_all_ for this thread</span>
+<span class="w">   </span><span class="n">thread_num_ptr_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="o">&amp;</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">thread_num</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Now that thread_number() has necessary information for the case</span>
+<span class="w">   </span><span class="c1">// num_threads_ == 1, and while still in sequential mode,</span>
+<span class="w">   </span><span class="c1">// call setup for using CppAD::AD&lt;double&gt; in parallel mode.</span>
+<span class="w">   </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">parallel_setup</span><span class="p">(</span><span class="n">num_threads</span><span class="p">,</span><span class="w"> </span><span class="n">in_parallel</span><span class="p">,</span><span class="w"> </span><span class="n">thread_number</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">hold_memory</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">parallel_ad</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// now change num_threads_ to its final value.</span>
+<span class="w">   </span><span class="n">num_threads_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// initialize two barriers, one for work done, one for new job ready</span>
+<span class="w">   </span><span class="n">wait_for_work_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">barrier</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">wait_for_job_</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">barrier</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// initial job for the threads</span>
+<span class="w">   </span><span class="n">thread_job_</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">init_enum</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// This master thread is already running, we need to create</span>
+<span class="w">   </span><span class="c1">// num_threads - 1 more threads</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="c1">// Create the thread with thread number equal to thread_num</span>
+<span class="w">      </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">bthread</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">         </span><span class="k">new</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="kr">thread</span><span class="p">(</span><span class="n">thread_work</span><span class="p">,</span><span class="w"> </span><span class="n">thread_num</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Current state is other threads are at wait_for_job_.</span>
+<span class="w">   </span><span class="c1">// This master thread (thread zero) has not completed wait_for_job_</span>
+<span class="w">   </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">team_work</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="n">worker</span><span class="p">(</span><span class="kt">void</span><span class="p">))</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Current state is other threads are at wait_for_job_.</span>
+<span class="w">   </span><span class="c1">// This master thread (thread zero) has not completed wait_for_job_</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sequential_execution_</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_number</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_work_</span><span class="w">  </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_job_</span><span class="w">   </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// set global version of this work routine</span>
+<span class="w">   </span><span class="n">worker_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">worker</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// set the new job that other threads are waiting for</span>
+<span class="w">   </span><span class="n">thread_job_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">work_enum</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Enter parallel exectuion when master thread calls wait_for_job_</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">num_threads_</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">wait_for_job_</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Now do the work in this thread and then wait</span>
+<span class="w">   </span><span class="c1">// until all threads have completed wait_for_work_</span>
+<span class="w">   </span><span class="n">worker</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="n">wait_for_work_</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Current state is other threads are at wait_for_job_.</span>
+<span class="w">   </span><span class="c1">// This master thread (thread zero) has not completed wait_for_job_</span>
+<span class="w">   </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">thread_num</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads_</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">team_destroy</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="c1">// Current state is other threads are at wait_for_job_.</span>
+<span class="w">   </span><span class="c1">// This master thread (thread zero) has not completed wait_for_job_</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sequential_execution_</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_number</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_work_</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w">     </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">wait_for_job_</span><span class="w">  </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// set the new job that other threads are waiting for</span>
+<span class="w">   </span><span class="n">thread_job_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">join_enum</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// enter parallel exectuion soon as master thread completes wait_for_job_</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">num_threads_</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">wait_for_job_</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// now wait for the other threads to be destroyed</span>
+<span class="w">   </span><span class="kt">size_t</span><span class="w"> </span><span class="n">thread_num</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">bthread</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads_</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w">  </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">bthread</span><span class="o">-&gt;</span><span class="n">join</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">delete</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">bthread</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">bthread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// now we are down to just the master thread (thread zero)</span>
+<span class="w">   </span><span class="n">sequential_execution_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// destroy wait_for_work_</span>
+<span class="w">   </span><span class="k">delete</span><span class="w"> </span><span class="n">wait_for_work_</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">wait_for_work_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// destroy wait_for_job_</span>
+<span class="w">   </span><span class="k">delete</span><span class="w"> </span><span class="n">wait_for_job_</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">wait_for_job_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// check ok before changing num_threads_</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">thread_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_threads_</span><span class="p">;</span><span class="w"> </span><span class="n">thread_num</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="n">thread_all_</span><span class="p">[</span><span class="n">thread_num</span><span class="p">].</span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// now inform CppAD that there is only one thread</span>
+<span class="w">   </span><span class="n">num_threads_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">parallel_setup</span><span class="p">(</span><span class="n">num_threads_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">thread_alloc</span><span class="o">::</span><span class="n">hold_memory</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">CppAD</span><span class="o">::</span><span class="n">parallel_ad</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">team_name</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;bthread&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="team_openmp.cpp.html" class="btn btn-neutral float-left" title="team_openmp.cpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="team_pthread.cpp.html" class="btn btn-neutral float-right" title="team_pthread.cpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

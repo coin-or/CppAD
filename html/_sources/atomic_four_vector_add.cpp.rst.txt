@@ -1,0 +1,27 @@
+lines 6-30 of file: example/atomic_four/vector/add.cpp
+
+{xrst_begin atomic_four_vector_add.cpp}
+
+Atomic Vector Addition Example
+##############################
+
+f(u, v, w)
+**********
+For this example,
+:math:`f : \B{R}^{3m} \rightarrow \B{R}^m`
+is defined by :math:`f(u, v, w) = u + v + w`.
+where *u* , *v* , and *w* are in :math:`\B{R}^m`.
+
+g(u, v, w)
+**********
+For this example :math:`g : \B{R}^{3m} \rightarrow \B{R}^m`
+is defined by :math:`g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)`
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_add.cpp}
