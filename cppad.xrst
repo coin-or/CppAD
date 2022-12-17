@@ -18,20 +18,20 @@ cppad-20221216: C++ Algorithmic Differentiation Package User Documentation
 
 .. list-table::
 
-   * - `release <https://github.com/coin-or/CppAD/tags>`_,
-     - `20220000.4 <https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz>`_,
-     - `github <https://github.com/coin-or/CppAD>`_,
-     - `travis <https://travis-ci.org/coin-or/CppAD>`_,
-     - `appveyor <https://ci.appveyor.com/project/bradbell/cppad>`_,
+   * - `release <https://github.com/coin-or/CppAD/tags>`_
+     - `20220000.4 <https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz>`_
+     - `github <https://github.com/coin-or/CppAD>`_
+     - `travis <https://travis-ci.org/coin-or/CppAD>`_
+     - `appveyor <https://ci.appveyor.com/project/bradbell/cppad>`_
      - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec>`_
 
 .. list-table::
 
-   * - :ref:`install-name` ,
-     - :ref:`get_started<get_started.cpp-name>` ,
-     - :ref:`whats_new-name` ,
-     - :ref:`addon-name` ,
-     - :ref:`research-name` ,
+   * - :ref:`install-name`
+     - :ref:`get_started<get_started.cpp-name>`
+     - :ref:`whats_new-name`
+     - :ref:`addon-name`
+     - :ref:`research-name`
      - `project manager <http://www.seanet.com/~bradbell>`_
 
 CppAD is distributed by
