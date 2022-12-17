@@ -38,7 +38,7 @@ Finish conversion of CppAD documentation from
 to the sphinx
 `xrst <http://bradbell.github.io/xrst/html/purpose.html>`_  wrapper.
 The following is a link to the
-`old documentation <http://bradbell.github.io/cppad/doc/cppad.htm>`_ .
+`old documentation <http://coin-or.github.io/CppAD/doc/cppad.htm>`_ .
 
 11-05
 =====

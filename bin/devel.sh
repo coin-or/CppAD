@@ -8,7 +8,7 @@ copyright_owner='Bradley M. Bell'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-   xrst/cppad.omh
+   cppad.xrst
    configure.ac
 '
 #
