@@ -3,16 +3,11 @@ CppAD: A Package for Differentiation of C++ Algorithms
 
 # Links
 
-- [Documentation](https://coin-or.github.io/CppAD/doc)
+- [Documentation](https://coin-or.github.io/CppAD)
 
-- [News](https://coin-or.github.io/CppAD/doc/whats_new.htm)
+- [News](https://coin-or.github.io/CppAD/html/whats_new.html)
 
-- [Install](https://coin-or.github.io/CppAD/doc/install.htm)
-
-- [Directories](https://coin-or.github.io/CppAD/doc/directory.htm)
-
-- [Downloads Before 2019](https://www.coin-or.org/download/source/CppAD/)
-
+- [Install](https://coin-or.github.io/CppAD/html/install.html)
 
 # License
 <pre>
