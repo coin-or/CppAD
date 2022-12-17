@@ -39,6 +39,10 @@ $spell
     underbar
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C Source Code Corresponding to an ADFun Object$$
 
 $head Syntax$$

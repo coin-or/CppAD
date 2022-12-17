@@ -26,6 +26,10 @@ $spell
     arg
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Evaluate a Function That Has a Sparse Hessian$$
 
 

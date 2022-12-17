@@ -18,6 +18,10 @@ $spell
     typedef
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Source Code for eigen_plugin.hpp$$
 $srccode%cpp% */
 // Declaration needed, before eigen-3.3.3, so Eigen vector is a simple vector

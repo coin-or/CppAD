@@ -23,6 +23,10 @@ $spell
     ident
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Link from Forward Jacobian Sparsity Sweep to atomic_four Callback$$
 
 $head Prototype$$
@@ -144,6 +148,10 @@ $spell
     ident
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Link from Reverse Jacobian Sparsity Sweep to atomic_four Callback$$
 
 $head Prototype$$

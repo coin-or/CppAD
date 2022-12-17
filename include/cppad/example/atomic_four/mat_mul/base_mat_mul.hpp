@@ -16,6 +16,10 @@ $begin atomic_four_mat_mul_base_mat_mul.hpp$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section
 Atomic Multiply Base Matrices: Example Implementation
 $$

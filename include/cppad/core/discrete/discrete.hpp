@@ -23,6 +23,10 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 $begin discrete_create$$
 $spell
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Create a Discrete AD Function$$
 
 $head Syntax$$
@@ -59,6 +63,10 @@ $end
 -----------------------------------------------------------------------------
 $begin discrete_class$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Declare discrete Class and Member Data$$
 
 $head parallel_ad$$
@@ -96,6 +104,10 @@ $spell
     std
     CppAD
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section List of all objects in the discrete class$$
 
 $head Syntax$$
@@ -129,6 +141,10 @@ $end
 $begin discrete_list_size$$
 $spell
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Size of the Discrete Function List$$
 
 $head Syntax$$
@@ -151,6 +167,10 @@ $end
  ------------------------------------------------------------------------------
 $begin discrete_ctor$$
 $spell
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section Constructor Called by each Use of CPPAD_DISCRETE_FUNCTION$$
 
@@ -198,6 +218,10 @@ public:
  ------------------------------------------------------------------------------
 $begin discrete_ad$$
 $spell
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section Implement AD Version of a Discrete Function$$
 
@@ -278,6 +302,10 @@ $end
 ------------------------------------------------------------------------------
 $begin discrete_name$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Name Corresponding to a discrete Function$$
 
 $head Syntax$$
@@ -300,6 +328,10 @@ $end
 $begin discrete_eval$$
 $spell
     eval
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section Link From Forward Mode Sweep to Users Routine$$
 
@@ -331,6 +363,10 @@ $end
 $begin discrete_ad_eval$$
 $spell
     eval
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section Link From Forward Mode Sweep to AD Version of Discrete Function$$
 

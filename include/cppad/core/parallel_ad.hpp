@@ -19,6 +19,10 @@ $spell
     std
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Enable AD Calculations During Parallel Mode$$
 
 $head Syntax$$

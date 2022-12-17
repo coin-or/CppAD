@@ -21,6 +21,10 @@ $spell
     adouble
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Taylor's Ode Solver: A Multi-Level AD Example and Test$$
 
 $head See Also$$

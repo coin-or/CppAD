@@ -22,6 +22,10 @@ $spell
     algo
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section chkpoint_one Algorithm that Computes Square Root$$
 
 $head Syntax$$
@@ -108,6 +112,10 @@ $spell
     chkpoint
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded chkpoint_one Common Information$$
 
 $head Purpose$$
@@ -166,6 +174,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded chkpoint_one Set Up$$.
 
 $head Syntax$$
@@ -267,6 +279,10 @@ $spell
     chkpoint
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded chkpoint_one Worker$$
 
 $head Purpose$$
@@ -308,6 +324,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded chkpoint_one Take Down$$
 
 $head Syntax$$
@@ -402,6 +422,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Run Multi-Threaded chkpoint_one Calculation$$
 
 $head Syntax$$
@@ -481,6 +505,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Timing Test for Multi-Threaded chkpoint_one Calculation$$
 
 $head Syntax$$

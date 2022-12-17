@@ -29,6 +29,10 @@ $spell
     num
     omp_alloc
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Set and Get Maximum Number of Threads for omp_alloc Allocator$$
 
 $head Deprecated 2011-08-31$$
@@ -94,6 +98,10 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_in_parallel$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Is The Current Execution in OpenMP Parallel Mode$$
 $spell
     cppad.hpp
@@ -146,6 +154,10 @@ $spell
     cppad.hpp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get the Current OpenMP Thread Number$$
 
 $head Deprecated 2011-08-31$$
@@ -189,6 +201,10 @@ $spell
     omp_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get At Least A Specified Amount of Memory$$
 
 $head Deprecated 2011-08-31$$
@@ -271,6 +287,10 @@ $spell
     omp_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Return Memory to omp_alloc$$
 
 $head Deprecated 2011-08-31$$
@@ -333,6 +353,10 @@ $spell
     omp_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Free Memory Currently Available for Quick Use by a Thread$$
 
 $head Deprecated 2011-08-31$$
@@ -378,6 +402,10 @@ $spell
     omp_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Amount of Memory a Thread is Currently Using$$
 
 $head Deprecated 2011-08-31$$
@@ -434,6 +462,10 @@ $spell
     omp_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Amount of Memory Available for Quick Use by a Thread$$
 
 $head Deprecated 2011-08-31$$
@@ -483,6 +515,10 @@ $spell
     sizeof
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Allocate Memory and Create A Raw Array$$
 
 $head Deprecated 2011-08-31$$
@@ -574,6 +610,10 @@ $spell
     sizeof
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Return A Raw Array to The Available Memory for a Thread$$
 
 $head Deprecated 2011-08-31$$
@@ -645,6 +685,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Check If A Memory Allocation is Efficient for Another Use$$
 
 $head Removed$$
@@ -710,6 +754,10 @@ $spell
     CppAD
     num
     omp_alloc
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
 

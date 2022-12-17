@@ -27,6 +27,10 @@ $spell
     hpp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Preprocessor Definitions$$
 
 $head Syntax$$
@@ -83,6 +87,10 @@ $spell
     Iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Traits and Friends$$
 
 $srccode%hpp% */
@@ -110,6 +118,10 @@ $spell
     itr
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Member Data and Constructors$$
 
 $head Constructors$$
@@ -222,6 +234,10 @@ $spell
     itr
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Increment Operators$$
 
 $head Syntax$$
@@ -264,6 +280,10 @@ $spell
     Iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Equality Operators$$
 $spell
     iterators
@@ -299,6 +319,10 @@ $spell
     Iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Access Elements$$
 
 $head Syntax$$
@@ -348,6 +372,10 @@ $spell
     iterators
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class Iterator Random Access$$
 
 $head Syntax$$

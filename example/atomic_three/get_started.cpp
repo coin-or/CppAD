@@ -13,6 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_three_get_started.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Getting Started with Atomic Functions: Example and Test$$
 
 $head Purpose$$

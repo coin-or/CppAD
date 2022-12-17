@@ -1,6 +1,3 @@
-# Plan for batch Edit:
-# 2. Fix following spelling errors:
-#    comparision->comparison
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space or a dollar sign in an entry.
 #
@@ -14,15 +11,14 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#     doc.omh
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   cmake/optional_package.cmake
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|optional_package|prefix_info|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,5 +29,10 @@
 # extra_seds='
 # '
 # ----------------------------------------------------------------------------
-# Put other sed commands below here and without # at start of linei
-s|optional_package|prefix_info|
+# Put other sed commands below here and without # at start of line
+s|$section|$nospell\
+$bold This is old CppAD documentation:$$ Here is a link to its\
+$href%http://coin-or.github.io/CppAD%current documentation%$$.\
+$$\
+&|
+#

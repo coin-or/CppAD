@@ -33,6 +33,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: Member Data$$
 
 $head Syntax$$
@@ -100,6 +104,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool Type Definitions$$
 
 $head value_type$$
@@ -119,6 +127,10 @@ $spell
     Bool
     vec
     alloc
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section vectorBool: Constructors and Destructor$$
 
@@ -178,6 +190,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: Change Size$$
 
 $head Syntax$$
@@ -253,6 +269,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: Assignment Operators$$
 
 $head Syntax$$
@@ -338,6 +358,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: Subscript Operator$$
 
 $head Syntax$$
@@ -385,6 +409,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: push_back$$
 
 $head Syntax$$
@@ -440,6 +468,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: push_vector$$
 
 $head Syntax$$
@@ -501,6 +533,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section vectorBool: Output$$
 
 $head Syntax$$

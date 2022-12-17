@@ -17,6 +17,10 @@ $spell
     af
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Using base2ad and VecAD together: Example and Test$$
 
 $head Purpose$$

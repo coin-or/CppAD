@@ -13,6 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin to_string.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section to_string: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

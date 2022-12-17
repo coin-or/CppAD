@@ -13,6 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin abs_min_linear.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section abs_min_linear: Example and Test$$
 
 $head Purpose$$

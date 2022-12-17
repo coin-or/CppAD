@@ -28,6 +28,10 @@ $spell
     cassert
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Cppad Speed: Gradient of Ode Solution$$
 
 

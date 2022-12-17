@@ -16,6 +16,10 @@ $spell
     num
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Common Variables Used by Multi-threading Sum of 1/i$$
 
 $head Purpose$$
@@ -81,6 +85,10 @@ $spell
     num
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Set Up Multi-threading Sum of 1/i$$
 
 $head Syntax$$
@@ -152,6 +160,10 @@ $spell
     num
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Do One Thread's Work for Sum of 1/i$$
 
 
@@ -220,6 +232,10 @@ $spell
     num
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Take Down Multi-threading Sum of 1/i$$
 
 $head Syntax$$
@@ -296,6 +312,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded Implementation of Summation of 1/i$$
 
 $head Syntax$$
@@ -379,6 +399,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Timing Test of Multi-Threaded Summation of 1/i$$
 
 $head Syntax$$

@@ -29,6 +29,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Dynamic Parameter Op Codes$$
 
 $head Namespace$$
@@ -205,6 +209,10 @@ $spell
     enum
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Number of Arguments to a Dynamic Parameter Operator$$
 
 $head Syntax$$
@@ -302,6 +310,10 @@ $spell
     cond_exp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Number of Arguments to a Dynamic Parameter Operator$$
 
 $head Syntax$$
@@ -391,6 +403,10 @@ $spell
     num
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Number Non-Parameter Arguments to a Dynamic Parameters Operator$$
 
 $head Syntax$$

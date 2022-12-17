@@ -37,6 +37,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Member Data$$
 
 $head Syntax$$
@@ -84,6 +88,10 @@ $spell
     const_iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Type Definitions$$
 
 $head value_type$$
@@ -109,6 +117,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Constructors and Destructor$$
 
 $head Default$$
@@ -181,6 +193,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Change Size$$
 
 $head Syntax$$
@@ -259,6 +275,10 @@ $spell
     cppad
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Assignment Operators$$
 
 $head Syntax$$
@@ -333,6 +353,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Subscript Operator$$
 
 $head Syntax$$
@@ -367,6 +391,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: push_back$$
 
 $head Syntax$$
@@ -414,6 +442,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: push_vector$$
 
 $head Syntax$$
@@ -469,6 +501,10 @@ $spell
     iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Iterator Functions$$
 
 $head Syntax$$
@@ -508,6 +544,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Vector Class: Output$$
 
 $head Syntax$$

@@ -63,6 +63,10 @@ $$
 $head Namespace$$
 All of these definitions are in the $code CppAD::local$$ namespace.
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Variable Op Codes$$
 
 $head opcode_t$$

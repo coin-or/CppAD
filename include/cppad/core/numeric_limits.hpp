@@ -25,6 +25,10 @@ $spell
     isnan
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Numeric Limits For an AD and Base Types$$
 
 $head Syntax$$

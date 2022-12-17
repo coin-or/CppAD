@@ -12,6 +12,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_forward_active.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Optimize Forward Activity Analysis: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

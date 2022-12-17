@@ -28,7 +28,11 @@
 #   libdirs
 # $$
 #
-# $section CppAD pkg-config Files$$
+# $nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
+$section CppAD pkg-config Files$$
 #
 # $head Purpose$$
 # The $code pkg-config$$ program helps with the used if installed libraries

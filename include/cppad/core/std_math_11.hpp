@@ -18,6 +18,10 @@ $spell
     acos
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Inverse Cosine Function: acos$$
 
 $head Syntax$$
@@ -56,6 +60,10 @@ $spell
     cmath
     CppAD
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Inverse Hyperbolic Cosine Function: acosh$$
 
 $head Syntax$$
@@ -87,6 +95,10 @@ $spell
     asin
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Inverse Sine Function: asin$$
 
 $head Syntax$$
@@ -125,6 +137,10 @@ $spell
     cmath
     CppAD
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Inverse Hyperbolic Sine Function: asinh$$
 
 $head Syntax$$
@@ -156,6 +172,10 @@ $spell
     atan
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Inverse Tangent Function: atan$$
 
 $head Syntax$$
@@ -195,6 +215,10 @@ $spell
     CppAD
     tanh
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Inverse Hyperbolic Tangent Function: atanh$$
 
 $head Syntax$$
@@ -226,6 +250,10 @@ $spell
     cos
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Cosine Function: cos$$
 
 $head Syntax$$
@@ -260,6 +288,10 @@ $spell
     cosh
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Hyperbolic Cosine Function: cosh$$
 
 $head Syntax$$
@@ -299,6 +331,10 @@ $spell
     CppAD
     Vedder
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Error Function$$
 
 $head Syntax$$
@@ -334,6 +370,10 @@ $spell
     Vec
     CppAD
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Complementary Error Function: erfc$$
 
 $head Syntax$$
@@ -365,6 +405,10 @@ $spell
     exp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Exponential Function: exp$$
 
 $head Syntax$$
@@ -400,6 +444,10 @@ $spell
     expm1
     CppAD
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Exponential Function Minus One: expm1$$
 
 $head Syntax$$
@@ -430,6 +478,10 @@ $begin log$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Exponential Function: log$$
 
 $head Syntax$$
@@ -464,6 +516,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Logarithm of One Plus Argument: log1p$$
 
 $head Syntax$$
@@ -495,6 +551,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Base 10 Logarithm Function: log10$$
 
 $head Syntax$$
@@ -527,6 +587,10 @@ $spell
     sin
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Sine Function: sin$$
 
 $head Syntax$$
@@ -561,6 +625,10 @@ $spell
     sinh
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Hyperbolic Sine Function: sinh$$
 
 $head Syntax$$
@@ -595,6 +663,10 @@ $spell
     sqrt
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Square Root Function: sqrt$$
 
 $head Syntax$$
@@ -629,6 +701,10 @@ $spell
     tan
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Tangent Function: tan$$
 
 $head Syntax$$
@@ -663,6 +739,10 @@ $spell
     tanh
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Hyperbolic Tangent Function: tanh$$
 
 $head Syntax$$

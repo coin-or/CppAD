@@ -13,6 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin index_sort.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Index Sort: Example and Test$$
 
 

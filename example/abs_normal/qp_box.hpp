@@ -26,6 +26,10 @@ $spell
     xin
     qp
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section abs_normal: Solve a Quadratic Program With Box Constraints$$
 
 $head Syntax$$

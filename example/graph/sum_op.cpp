@@ -15,6 +15,10 @@ $spell
     sum
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph sum Operator: Example and Test$$
 
 $head Source Code$$

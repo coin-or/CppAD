@@ -31,6 +31,10 @@ $spell
     dyn_ind
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multiple orders, one direction, forward mode Taylor coefficients$$
 
 $head Syntax$$
@@ -300,6 +304,10 @@ $spell
     num_var
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section One order, multiple directions, forward mode Taylor coefficients$$
 
 $head Syntax$$

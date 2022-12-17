@@ -12,6 +12,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_four_vector_rev_depend.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Example Optimizing Atomic Vector Usage$$
 
 $head f(u, v)$$

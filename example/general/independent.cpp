@@ -15,6 +15,10 @@ WARNING: This file is used an an example by omh/FunConstruct.omh.
 $begin independent.cpp$$
 
 $comment ! NOTE the title states that this example is used two places !$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Independent and ADFun Constructor: Example and Test$$
 
 

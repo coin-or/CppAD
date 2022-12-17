@@ -20,6 +20,10 @@ $spell
     Vec
     op
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section VecAD: Prints Error Message If A Compound Assignment Is Used$$
 
 $head Syntax$$
@@ -77,6 +81,10 @@ $spell
     Vec
     ind
     const
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section VecAD Element Reference Class$$
 
@@ -270,6 +278,10 @@ $spell
     ind
     enum
     taddr
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section VecAD Class Objects$$
 

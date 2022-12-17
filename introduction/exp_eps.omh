@@ -14,6 +14,10 @@ $spell
     exp_eps
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: Implementation$$
 
 $srcfile%introduction/exp_eps.hpp%0%// BEGIN C++%// END C++%$$
@@ -25,6 +29,10 @@ $spell
     exp_eps
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: Test of exp_eps$$
 
 $srcfile%introduction/exp_eps.cpp%0%// BEGIN C++%// END C++%$$
@@ -38,6 +46,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: Operation Sequence and Zero Order Forward Sweep$$
 
 
@@ -200,6 +212,10 @@ $spell
     exp_eps_for
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: First Order Forward Sweep$$
 
 
@@ -388,6 +404,10 @@ $spell
     exp_eps_rev
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: First Order Reverse Sweep$$
 
 
@@ -665,6 +685,10 @@ $spell
     exp_eps_for
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: Second Order Forward Mode$$
 
 
@@ -887,6 +911,10 @@ $spell
     exp_eps_rev
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section exp_eps: Second Order Reverse Sweep$$
 
 

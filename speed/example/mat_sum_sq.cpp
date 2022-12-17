@@ -16,6 +16,10 @@ $spell
     sq
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Sum of the Elements of the Square of a Matrix: Example and Test$$
 
 

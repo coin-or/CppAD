@@ -50,6 +50,10 @@ $spell
     optimizer
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section
 Increase Argument Usage and Propagate cexp_set From Result to Argument
 $$
@@ -165,6 +169,10 @@ $spell
     Vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section
 Use Reverse Activity Analysis to Get Usage Information for Each Operator
 $$

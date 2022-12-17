@@ -14,6 +14,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_four_vector_sub_op.hpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Atomic Vector Subtract Operator: Example Implementation$$
 
 $head Forward Mode$$

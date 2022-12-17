@@ -12,6 +12,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 /*
 $begin old_reciprocal.cpp$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Old Atomic Operation Reciprocal: Example and Test$$
 
 $head Deprecated 2013-05-27$$

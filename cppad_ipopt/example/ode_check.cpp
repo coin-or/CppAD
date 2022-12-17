@@ -12,6 +12,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin ipopt_nlp_ode_check.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Correctness Check for Both Simple and Fast Representations$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

@@ -56,6 +56,10 @@ $spell
     arg
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Constructor$$
 
 $head Syntax$$
@@ -129,6 +133,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Scalar Values$$
 
 $head Syntax$$
@@ -199,6 +207,10 @@ $spell
     op_enum
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Vector Values$$
 
 $head Syntax$$
@@ -419,6 +431,10 @@ $spell
     cpp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Print A C++ AD Graph$$
 
 $head Syntax$$

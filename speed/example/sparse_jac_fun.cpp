@@ -16,6 +16,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section sparse_jac_fun: Example and test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

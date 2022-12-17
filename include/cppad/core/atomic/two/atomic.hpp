@@ -29,6 +29,10 @@ $spell
     checkpointing
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Defining Atomic Functions: Second Generation$$
 
 $head Deprecated 2019-01-01$$
@@ -110,6 +114,10 @@ $end
 -------------------------------------------------------------------------------
 $begin atomic_two_example$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Example Defining Atomic Functions: Second Generation$$
 
 $head Getting Started$$

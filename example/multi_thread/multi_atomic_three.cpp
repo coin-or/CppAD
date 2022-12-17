@@ -20,6 +20,10 @@ $spell
     itr
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Defines a atomic_three Operation that Computes Square Root$$
 
 $head Syntax$$
@@ -164,6 +168,10 @@ $begin multi_atomic_three_common$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded atomic_three Common Information$$
 
 $head Purpose$$
@@ -223,6 +231,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded atomic_three Set Up$$.
 
 $head Syntax$$
@@ -324,6 +336,10 @@ $begin multi_atomic_three_worker$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded atomic_three Worker$$
 
 $head Purpose$$
@@ -364,6 +380,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multi-Threaded atomic_three Take Down$$
 
 $head Syntax$$
@@ -455,6 +475,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Run Multi-Threaded atomic_three Calculation$$
 
 $head Syntax$$
@@ -533,6 +557,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Timing Test for Multi-Threaded atomic_three Calculation$$
 
 $head Syntax$$

@@ -24,6 +24,10 @@ $spell
     str
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Extending to_string To Another Floating Point Type$$
 
 $head Base Requirement$$

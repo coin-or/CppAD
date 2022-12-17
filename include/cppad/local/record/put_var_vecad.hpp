@@ -25,6 +25,10 @@ $spell
     taddr
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Add One Index to End of Combined Variable VecAD Vector$$
 
 $head Syntax$$
@@ -72,6 +76,10 @@ $spell
     var
     vecad
     taddr
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section Tape Initialization for a Variable VecAD Object$$
 

@@ -12,6 +12,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin multi_newton_common$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Common Variables use by Multi-Threaded Newton Method$$
 
 $head Purpose$$
@@ -83,6 +87,10 @@ namespace {
 -------------------------------------------------------------------------------
 $begin multi_newton_setup$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Set Up Multi-Threaded Newton Method$$
 $spell
     num
@@ -220,6 +228,10 @@ $spell
     xout
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Do One Thread's Work for Multi-Threaded Newton Method$$
 
 $head Syntax$$
@@ -344,6 +356,10 @@ $spell
     xout
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Take Down Multi-threaded Newton Method$$
 
 $head Syntax$$
@@ -451,6 +467,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section A Multi-Threaded Newton's Method$$
 
 $head Syntax$$
@@ -625,6 +645,10 @@ $spell
 $$
 .
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Timing Test of Multi-Threaded Newton Method$$
 
 $head Syntax$$

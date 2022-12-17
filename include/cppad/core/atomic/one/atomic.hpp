@@ -33,6 +33,10 @@ $spell
     py
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Defining Atomic Functions: First Generation$$
 
 $head Deprecated 2013-05-27$$

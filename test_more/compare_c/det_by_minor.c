@@ -34,6 +34,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Determinant of a Minor$$
 
 $head Syntax$$
@@ -229,6 +233,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Compute Determinant using Expansion by Minors$$
 
 $head Syntax$$
@@ -300,6 +308,10 @@ $end
 --------------------------------------------------------------------------
 $begin uniform_01_c$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Simulate a [0,1] Uniform Random Variate$$
 
 $head Syntax$$
@@ -361,6 +373,10 @@ $spell
     bool
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Correctness Test of det_by_minor Routine$$
 
 $head Syntax$$
@@ -411,6 +427,10 @@ $spell
     det
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Repeat det_by_minor Routine A Specified Number of Times$$
 
 $head Syntax$$
@@ -462,6 +482,10 @@ $spell
     gettimeofday
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Returns Elapsed Number of Seconds$$
 
 
@@ -556,6 +580,10 @@ $spell
     det
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Determine Amount of Time to Execute det_by_minor$$
 
 $head Syntax$$
@@ -624,6 +652,10 @@ $end
 ------------------------------------------------------------------------------
 $begin main_compare_c$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Main Program For Comparing C and C++ Speed$$
 
 $hilitecmd%codep%$$

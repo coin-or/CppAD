@@ -19,6 +19,10 @@ $spell
     abs
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Multiple Level of AD: Example and Test$$
 
 $head See Also$$

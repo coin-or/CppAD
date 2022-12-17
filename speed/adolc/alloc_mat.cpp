@@ -16,6 +16,10 @@ $spell
     alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Adolc Test Utility: Allocate and Free Memory For a Matrix$$
 
 $head Syntax$$

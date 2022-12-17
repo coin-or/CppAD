@@ -23,6 +23,10 @@ $spell
     mat_mul.cpp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Using AD Version of an Atomic Function$$
 
 $head Syntax$$

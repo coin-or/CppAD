@@ -14,6 +14,10 @@ $begin atomic_four_lin_ode_sparsity.cpp$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Atomic Linear ODE Sparsity Calculations: Example and Test$$
 
 $head Purpose$$

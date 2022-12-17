@@ -49,6 +49,10 @@ $spell
     erfc
     endif
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Example AD<Base> Where Base Constructor Allocates Memory$$
 
 $head Purpose$$

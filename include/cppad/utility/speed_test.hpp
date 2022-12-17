@@ -31,6 +31,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Run One Speed Test and Return Results$$
 
 $head Syntax$$
@@ -212,6 +216,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Run One Speed Test and Print Results$$
 
 $head Syntax$$

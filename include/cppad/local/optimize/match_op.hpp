@@ -17,6 +17,10 @@ namespace CppAD { namespace local { namespace optimize  {
 /*
 $begin optimize_match_op$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Search for a Previous Operator that Matches Current Operator$$
 $spell
     op

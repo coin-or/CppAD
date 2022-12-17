@@ -15,6 +15,10 @@ $begin hes_times_dir.cpp$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Hessian Times Direction: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

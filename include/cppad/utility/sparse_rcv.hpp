@@ -28,6 +28,10 @@ $spell
     rc
     Eigen
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Sparse Matrix Row, Column, Value Representation$$
 
 $head Syntax$$

@@ -18,7 +18,11 @@
 #   CppAD
 # $$
 #
-# $section Download and Install Sacado in Build Directory$$
+# $nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
+$section Download and Install Sacado in Build Directory$$
 #
 # $head Syntax$$
 # $code bin/get_sacado.sh$$

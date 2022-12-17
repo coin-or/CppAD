@@ -13,6 +13,10 @@ $begin record_adfun$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Create an ADFun Object by Recording an Operation Sequence$$
 
 $childtable%
@@ -30,6 +34,10 @@ $begin other_adfun$$
 $spell
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Other Ways to Create an ADFun Object$$
 
 
@@ -52,6 +60,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section First and Second Order Derivatives: Easy Drivers$$
 
 
@@ -68,6 +80,10 @@ $end
 -------------------------------------------------------------------------------
 $begin Forward$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Forward Mode$$
 
 $childtable%
@@ -90,6 +106,10 @@ $spell
     xq
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Reverse Mode$$
 
 $head Multiple Directions$$
@@ -114,6 +134,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Calculating Sparsity Patterns$$
 
 $children%
@@ -158,6 +182,10 @@ $spell
 $$
 
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Calculating Sparse Derivatives$$
 
 $children%

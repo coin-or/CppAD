@@ -21,6 +21,10 @@ $spell
     op
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Independent: All Arguments Present$$
 
 $head Purpose$$
@@ -85,6 +89,10 @@ $spell
     op
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Independent: Default For dynamic$$
 
 $head Purpose$$
@@ -131,6 +139,10 @@ $spell
     op
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Independent: Default For record_compare, dynamic$$
 
 $head Purpose$$
@@ -175,6 +187,10 @@ $spell
     op
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Independent: Default For abort_op_index, record_compare$$
 
 $head Purpose$$
@@ -218,6 +234,10 @@ $spell
     op
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Independent: Default For abort_op_index, record_compare, dynamic$$
 
 $head Purpose$$

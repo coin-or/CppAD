@@ -23,6 +23,10 @@ $spell
     Jrcv
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Generate Source Code and Compile an AD Function$$
 
 $head Syntax$$
@@ -209,6 +213,10 @@ $end
 -----------------------------------------------------------------------------
 $begin code_gen_fun.hpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section code_gen_fun Class Include File$$
 
 $head See Also$$
@@ -221,6 +229,10 @@ $end
 -----------------------------------------------------------------------------
 $begin code_gen_fun.cpp$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section code_gen_fun Class Member  Implementation$$
 
 $head See Also$$

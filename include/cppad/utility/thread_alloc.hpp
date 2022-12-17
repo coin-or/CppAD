@@ -413,6 +413,10 @@ $spell
     num
     bool
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Setup thread_alloc For Use in Multi-Threading Environment$$
 
 
@@ -571,6 +575,10 @@ $spell
     num
     alloc
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get Number of Threads$$
 
 
@@ -603,6 +611,10 @@ $end
 /* -----------------------------------------------------------------------
 $begin ta_in_parallel$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Is The Current Execution in Parallel Mode$$
 $spell
     thread_alloc
@@ -647,6 +659,10 @@ $spell
     cppad.hpp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get the Current Thread Number$$
 
 
@@ -681,6 +697,10 @@ $spell
     thread_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get At Least A Specified Amount of Memory$$
 
 
@@ -877,6 +897,10 @@ $spell
     thread_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Return Memory to thread_alloc$$
 
 
@@ -1007,6 +1031,10 @@ $spell
     thread_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Free Memory Currently Available for Quick Use by a Thread$$
 $spell
     inuse
@@ -1095,6 +1123,10 @@ $spell
     num
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Control When Thread Alloc Retains Memory For Future Use$$
 
 $head Syntax$$
@@ -1141,6 +1173,10 @@ $spell
     thread_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Amount of Memory a Thread is Currently Using$$
 
 
@@ -1202,6 +1238,10 @@ $spell
     thread_alloc
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Amount of Memory Available for Quick Use by a Thread$$
 
 
@@ -1257,6 +1297,10 @@ $spell
     sizeof
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Allocate An Array and Call Default Constructor for its Elements$$
 
 
@@ -1375,6 +1419,10 @@ $spell
     deallocate
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Deallocate An Array and Call Destructor for its Elements$$
 
 
@@ -1453,6 +1501,10 @@ $spell
     inuse
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Free All Memory That Was Allocated for Use by thread_alloc$$
 
 

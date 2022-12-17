@@ -32,6 +32,10 @@ $spell
     Jacobian
     CppAD
 $$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Randomly Choose Row and Column Indices for Sparse Jacobian$$
 
 $head Prototype$$
@@ -137,6 +141,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Sparse Jacobian Speed Test Information$$
 
 $head Namespace$$

@@ -15,6 +15,10 @@ $spell
     Json
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Convert Jason Graph to an ADFun Object: Example and Test$$
 
 $head Source Code$$

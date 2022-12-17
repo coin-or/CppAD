@@ -24,6 +24,10 @@ $spell
     Iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Iterator Private Member Data$$
 $srccode%hpp% */
 private:
@@ -57,6 +61,10 @@ $spell
     str
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Iterator set_value()$$
 
 $head Syntax$$
@@ -263,6 +271,10 @@ $spell
     Iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Iterator Types$$
 
 $srccode%hpp% */
@@ -288,6 +300,10 @@ $spell
     cpp
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Iterator Constructors$$
 
 $head Syntax$$
@@ -354,6 +370,10 @@ $spell
     Iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section C++ AD Graph Iterator Input Operations$$
 
 $srccode%hpp% */

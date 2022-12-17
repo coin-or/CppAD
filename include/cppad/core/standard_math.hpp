@@ -20,6 +20,10 @@ $spell
     fabs
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Unary Standard Math Functions$$
 
 $head Syntax$$
@@ -103,6 +107,10 @@ $end
 /*
 $begin binary_math$$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section The Binary Math Functions$$
 
 $childtable%include/cppad/core/atan2.hpp

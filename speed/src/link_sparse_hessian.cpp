@@ -28,6 +28,10 @@ $spell
     Namespace
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Randomly choose Hessian row and column indices$$
 
 $head Namespace$$
@@ -119,6 +123,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Sparse Hessian Speed Test Information$$
 
 $head Namespace$$

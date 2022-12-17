@@ -30,6 +30,10 @@ $spell
     lexer
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section json lexer: Private Data$$
 
 $head graph_$$
@@ -93,6 +97,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section json lexer: Report an Error$$
 
 $head Syntax$$
@@ -126,6 +134,10 @@ $spell
     lexer
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section json lexer: Advance Index by One$$
 
 $head Syntax$$
@@ -163,6 +175,10 @@ $spell
     lexer
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section json lexer: Skip White Space That Separates Tokens$$
 
 $head Syntax$$
@@ -194,6 +210,10 @@ $spell
     arg
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section json lexer: Constructor$$
 
 $head Syntax$$
@@ -226,6 +246,10 @@ $spell
     ch
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
@@ -264,6 +288,10 @@ $spell
     lexer
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
@@ -301,6 +329,10 @@ $spell
     neg
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get Next Non-Negative Integer$$
 
 $head Syntax$$
@@ -337,6 +369,10 @@ $spell
     lexer
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Get Next Floating Point Number$$
 
 $head Syntax$$

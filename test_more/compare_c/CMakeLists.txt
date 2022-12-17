@@ -15,7 +15,11 @@
 #   cpp
 # $$
 #
-# $section Compare Speed of C and C++$$
+# $nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
+$section Compare Speed of C and C++$$
 # $index compare, speed C and C++$$
 # $index speed, compare C and C++$$
 # $index C, compare speed with C++$$

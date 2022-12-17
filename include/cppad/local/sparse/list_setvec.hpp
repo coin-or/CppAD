@@ -32,6 +32,10 @@ $spell
     struct
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Private Member Data$$
 
 $head pair_size_t$$
@@ -139,6 +143,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec private: Number of References to a Set$$
 
 $head Syntax$$
@@ -175,6 +183,10 @@ $spell
     setvec
     vec
     decremented
+$$
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
 $$
 $section class list_setvec private: Drop a Set No Longer Being Used$$
 
@@ -282,6 +294,10 @@ $spell
     vec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec private: Get a New List Pair$$
 
 $head Syntax$$
@@ -336,6 +352,10 @@ $spell
     const
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec private: Check Data Structure$$
 
 $head Syntax$$
@@ -456,6 +476,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Approximate Memory Used by Vector$$
 
 $head Public$$
@@ -475,6 +499,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Print a Vector of Sets$$
 
 
@@ -497,6 +525,10 @@ $spell
     const_iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Iterators$$
 
 $head SetVector Concept$$
@@ -515,6 +547,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Default Constructor$$
 
 $head SetVector Concept$$
@@ -541,6 +577,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Destructor$$
 
 $head Implementation$$
@@ -559,6 +599,10 @@ $spell
     CppAD
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Copy Constructor$$
 
 $head v$$
@@ -581,6 +625,10 @@ $spell
     resize
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Vector resize$$
 
 $head SetVector Concept$$
@@ -634,6 +682,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Number of Sets$$
 
 $head SetVector Concept$$
@@ -652,6 +704,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: End Value$$
 
 $head SetVector Concept$$
@@ -670,6 +726,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Vector Assignment$$
 
 $head SetVector Concept$$
@@ -696,6 +756,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Vector Swap$$
 
 $head SetVector Concept$$
@@ -726,6 +790,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Number of Elements in a Set$$
 
 $head SetVector Concept$$
@@ -765,6 +833,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Add an Elements to a Set$$
 
 $head SetVector Concept$$
@@ -888,6 +960,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Post an Elements for Addition to a Set$$
 
 $head SetVector Concept$$
@@ -923,6 +999,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Add Posted Elements to a Set$$
 
 $head SetVector Concept$$
@@ -1059,6 +1139,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Is an Element in a Set$$
 
 $head SetVector Concept$$
@@ -1093,6 +1177,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Assign a Set to be Empty$$
 
 $head SetVector Concept$$
@@ -1120,6 +1208,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Assign a Set To Equal Another Set$$
 
 $head SetVector Concept$$
@@ -1198,6 +1290,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Assign a Set To Union of Two Sets$$
 
 $head SetVector Concept$$
@@ -1342,6 +1438,10 @@ $spell
     setvec
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec: Assign a Set To Equal Another Set$$
 
 $head SetVector Concept$$
@@ -1478,6 +1578,10 @@ $spell
     const_iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec_const_iterator private: Member Data$$
 
 $head pair_size_t$$
@@ -1514,6 +1618,10 @@ $spell
     const_iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec_const_iterator: Constructor$$
 
 $head SetVector Concept$$
@@ -1556,6 +1664,10 @@ $spell
     Dereference
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec_const_iterator: Dereference$$
 
 $head SetVector Concept$$
@@ -1575,6 +1687,10 @@ $spell
     const_iterator
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section class list_setvec_const_iterator: Increment$$
 
 $head SetVector Concept$$
@@ -1616,6 +1732,10 @@ $spell
     std
 $$
 
+$nospell
+$bold This is old CppAD documentation:$$ Here is a link to its
+$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$$
 $section Copy A Vector of Standard Sets To A list_setvec Object$$
 
 $head SetVector$$
