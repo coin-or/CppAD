@@ -12,6 +12,17 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 $begin CppAD$$
 $comment Top level User documentaion$$
 
+$head Old Documentation$$
+This is an old version of the documentation built using
+$href%http://bradbell.github.io/omhelp%omhelp%$$.
+
+$head Current Documentation$$
+The current version of the documentation is built using the sphinx
+$href%http://bradbell.github.io/xrst/html/purpose.html%xrst%$$ wrapper.
+Use this link to get the
+$href%http://coin-or.github.io/cppad%current documentation%$$.
+
+
 $include omh/cppad.omh$$
 
 $children%
