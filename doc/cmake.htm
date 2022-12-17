@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type cmake_needs_dot_slash generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg eigen_prefix package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type cmake_needs_dot_slash generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg eigen_prefix package_prefix cppad_cxx_flags c++17 debug release clang cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -94,6 +94,7 @@ A:active { color : purple }
 <option>cppad_cxx_flags</option>
 <option>---..C++17</option>
 <option>---..debug and release</option>
+<option>---..clang</option>
 <option>cppad_profile_flag</option>
 <option>cppad_testvector</option>
 <option>cppad_max_num_threads</option>
@@ -707,6 +708,18 @@ See also the
 compiler flag (which should not be included in 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_cxx_flags</span></font></i></code>
 ).
+
+<br>
+<br>
+<big><a name="cppad_cxx_flags.clang" id="cppad_cxx_flags.clang">clang</a></big>
+<br>
+Clang is giving warnings for bitwise operations with logical operands.
+These operations are used by CppAD for speed because they do not require
+branching which can slow down some processors. You can suppress these
+warnings by including <code><font color="blue">-Wno-bitwise-instead-of-logical</font></code>
+in 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_cxx_flags</span></font></i></code>
+.
 
 <br>
 <br>

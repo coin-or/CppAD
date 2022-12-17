@@ -9,6 +9,8 @@ var list_up0 = [
 'cppad.htm'
 ];
 var list_current0 = [
+'cppad.htm#Old Documentation',
+'cppad.htm#Current Documentation',
 'cppad.htm#Algorithmic Differentiation',
 'cppad.htm#Features',
 'cppad.htm#Features.Operator Overloading',

@@ -42,6 +42,7 @@ var list_current0 = [
 'cmake.htm#cppad_cxx_flags',
 'cmake.htm#cppad_cxx_flags.C++17',
 'cmake.htm#cppad_cxx_flags.debug and release',
+'cmake.htm#cppad_cxx_flags.clang',
 'cmake.htm#cppad_profile_flag',
 'cmake.htm#cppad_testvector',
 'cmake.htm#cppad_max_num_threads',
