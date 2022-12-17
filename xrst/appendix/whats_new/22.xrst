@@ -17,6 +17,7 @@
    libs
    nullptr
    nx
+   omhelp
    posix
    tc
    tmpnam
@@ -29,6 +30,15 @@ Changes and Additions to CppAD During 2022
 
 mm-dd
 *****
+
+12-16
+=====
+Finish conversion of CppAD documentation from
+`omhelp <http://bradbell.github.io/omhelp/doc/omhelp.htm>`_
+to the sphinx
+`xrst <http://bradbell.github.io/xrst/html/purpose.html>`_  wrapper.
+The following is a link to the
+`old documentation <http://bradbell.github.io/cppad/doc/cppad.htm>`_ .
 
 11-05
 =====

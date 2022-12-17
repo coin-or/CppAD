@@ -20,9 +20,8 @@ AD Absolute Value Functions: abs, fabs
 Syntax
 ******
 
-   *y* = ``abs`` ( *x* )
-
-*y* = ``fabs`` ( *x* )
+| *y* = ``abs`` ( *x* )
+| *y* = ``fabs`` ( *x* )
 
 x, y
 ****

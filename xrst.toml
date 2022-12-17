@@ -8,7 +8,7 @@ html_directory    = 'build/html'
 tex_directory     = 'build/tex'
 
 [root_file]
-default = 'doc.xrst'
+default = 'cppad.xrst'
 dev     = 'xrst/devel/devel.xrst'
 
 [include_all]
