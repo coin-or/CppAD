@@ -18,7 +18,7 @@ ELSE( cppad_has_eigen )
    SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
-# BEGIN_SORT_THIS_LINE_PLUS_3
+# BEGIN_SORT_THIS_LINE_PLUS_4
 SET(source_list
    ${adolc_sources}
    ${eigen_sources}
