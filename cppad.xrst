@@ -19,7 +19,7 @@ cppad-20221223: C++ Algorithmic Differentiation Package User Documentation
 .. list-table::
 
    * - `release <https://github.com/coin-or/CppAD/tags>`_
-     - `20220000.4 <https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz>`_
+     - `20220000.5 <https://github.com/coin-or/CppAD/archive/20220000.5.tar.gz>`_
      - `github <https://github.com/coin-or/CppAD>`_
      - `travis <https://travis-ci.org/coin-or/CppAD>`_
      - `appveyor <https://ci.appveyor.com/project/bradbell/cppad>`_
