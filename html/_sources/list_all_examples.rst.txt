@@ -1,4 +1,4 @@
-lines 5-376 of file: xrst/example_list.xrst
+lines 5-375 of file: xrst/example_list.xrst
 
 {xrst_begin list_all_examples}
 {xrst_spell
@@ -30,11 +30,11 @@ List All (Except Deprecated) CppAD Examples
    omit:   TestOne.cpp OneCase.cpp lu_vec_ad.cpp
 }
 
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 
 .. csv-table::
    :widths: auto
 
+   {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
    a11c_bthread.cpp,:ref:`a11c_bthread.cpp-title`
    a11c_openmp.cpp,:ref:`a11c_openmp.cpp-title`
    a11c_pthread.cpp,:ref:`a11c_pthread.cpp-title`
@@ -368,7 +368,6 @@ List All (Except Deprecated) CppAD Examples
    var2par.cpp,:ref:`var2par.cpp-title`
    vec_ad.cpp,:ref:`vec_ad.cpp-title`
    vector_bool.cpp,:ref:`vector_bool.cpp-title`
-
-{xrst_comment END_SORT_THIS_LINE_MINUS_2}
+   {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end list_all_examples}

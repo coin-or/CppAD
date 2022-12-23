@@ -1,4 +1,4 @@
-lines 10-138 of file: include/cppad/core/ad_binary.hpp
+lines 10-149 of file: include/cppad/core/ad_binary.hpp
 
 {xrst_begin ad_binary}
 
@@ -80,6 +80,17 @@ AD of *Base*
    example/general/mul.cpp
    example/general/div.cpp
 }
+
+Zero Special Cases
+******************
+Suppose that an AD *value* is
+:ref:`identically zero <base_identical@Identical@Identical Functions>` .
+Then the following results will be identically zero no matter
+what *other* is:
+value * other, other * value, value / other.
+This may be unexpected when *other* is nan
+(or when it is zero in the division case).
+This is closely related to the :ref:`azmul-name` function.
 
 Example
 *******

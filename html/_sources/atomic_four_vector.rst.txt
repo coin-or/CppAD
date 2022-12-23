@@ -95,12 +95,11 @@ During ``AD<double>`` operations, copying variables
 from one vector to another does not add any operations to the
 resulting tape.
 
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
 
 Contents
 ********
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
-   include/cppad/example/atomic_four/vector/implement.xrst
    example/atomic_four/vector/add.cpp
    example/atomic_four/vector/div.cpp
    example/atomic_four/vector/hes_sparsity.cpp
@@ -109,6 +108,7 @@ Contents
    example/atomic_four/vector/neg.cpp
    example/atomic_four/vector/rev_depend.cpp
    example/atomic_four/vector/sub.cpp
+   include/cppad/example/atomic_four/vector/implement.xrst
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 

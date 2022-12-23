@@ -1,4 +1,4 @@
-lines 5-476 of file: include/cppad/core/graph/json_graph_op.xrst
+lines 5-475 of file: include/cppad/core/graph/json_graph_op.xrst
 
 {xrst_begin json_graph_op}
 {xrst_spell
@@ -47,11 +47,11 @@ The possible values for the string *name* are listed
 in the table below.
 The corresponding result is the node value as a function of the argument value.
 
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
 
 .. csv-table::
    :widths: auto
 
+   {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
    *name*,result
    ``abs``,absolute value
    ``acos``,inverse cosine
@@ -66,8 +66,8 @@ The corresponding result is the node value as a function of the argument value.
    ``erfc``,complementary error function
    ``exp``,exponential
    ``expm1``,minus one plus the exponential
-   ``log``,logarithm
    ``log1p``,log  plus one
+   ``log``,logarithm
    ``neg``,negative
    ``sign``,sign function
    ``sin``,sine
@@ -75,8 +75,7 @@ The corresponding result is the node value as a function of the argument value.
    ``sqrt``,square root
    ``tan``,tangent
    ``tanh``,hyperbolic tangent
-
-{xrst_comment END_SORT_THIS_LINE_MINUS_2}
+   {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 Example
 =======

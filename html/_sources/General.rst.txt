@@ -1,4 +1,4 @@
-lines 378-410 of file: xrst/example_list.xrst
+lines 377-409 of file: xrst/example_list.xrst
 
 {xrst_begin General}
 
