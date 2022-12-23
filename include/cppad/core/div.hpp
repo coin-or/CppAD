@@ -85,6 +85,7 @@ AD<Base> operator / (const AD<Base> &left , const AD<Base> &right)
     else if( var_right )
     {   if( (! dyn_left) & IdenticalZero(left.value_) )
         {   // result = 0 / variable
+            result.value_ = Base(0.0); // in case right.value_ is 0 or nan
         }
         else
         {   // result = parameter / variable
