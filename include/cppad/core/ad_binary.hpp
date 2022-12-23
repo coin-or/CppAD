@@ -97,6 +97,7 @@ what *other* is:
 value * other, other * value, value / other.
 This may be unexpected when *other* is nan
 (or when it is zero in the division case).
+This is closely related to the :ref:`azmul-name` function.
 
 Example
 *******
