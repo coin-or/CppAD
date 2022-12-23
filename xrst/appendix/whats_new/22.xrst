@@ -31,6 +31,13 @@ Changes and Additions to CppAD During 2022
 mm-dd
 *****
 
+12-23
+=====
+Add documentation for the binary operation
+:ref:`ad_binary@Zero Special Cases` .
+In addition fix a bug in these special cases
+when zero was multiplied by or divided by nan.
+
 12-16
 =====
 Finish conversion of CppAD documentation from

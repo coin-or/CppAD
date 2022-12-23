@@ -10,6 +10,33 @@ Two old Mul examples now used just for valiadation testing
 
 namespace { // BEGIN empty namespace
 
+bool zero_times_nan(void)
+{  bool ok = true;
+
+   CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(2), ay(3);
+   ax[0] = 0.0;
+   ax[1] = 0.0;
+   CppAD::Independent(ax);
+   CppAD::AD<double> adiv = ax[0] / ax[1];
+   //
+   // the result for each of these cases should be identically zero
+   ay[0] = 0.0 * adiv;
+   ay[1] = adiv * 0.0;
+   ay[2] = 0.0 / adiv;
+   //
+   CppAD::ADFun<double> f(ax, ay);
+   //
+   CPPAD_TESTVECTOR(double) x(2), y(3);
+   x[0] = 1.0;
+   x[1] = 1.0;
+   y    = f.Forward(0, x);
+   ok  &= y[0] == 0.0;
+   ok  &= y[1] == 0.0;
+   ok  &= y[2] == 0.0;
+
+   return ok;
+}
+
 bool MulTestOne(void)
 {  bool ok = true;
 
@@ -161,5 +188,6 @@ bool Mul(void)
 {  bool ok = true;
    ok &= MulTestOne();
    ok &= MulTestTwo();
+   ok &= zero_times_nan();
    return ok;
 }

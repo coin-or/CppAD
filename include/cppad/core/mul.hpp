@@ -56,6 +56,7 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
       }
       else if( (! dyn_right) & IdenticalZero(right.value_) )
       {  // result = variable * 0
+         result.value_ = Base(0.0); // incase left.value_ is nan
       }
       else if( (! dyn_right) & IdenticalOne(right.value_) )
       {  // result = variable * 1
@@ -81,6 +82,7 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
    else if( var_right )
    {  if( (! dyn_left) & IdenticalZero(left.value_) )
       {  // result = 0 * variable
+         result.value_ = Base(0.0); // incase right.value_ is nan
       }
       else if( (! dyn_left) & IdenticalOne(left.value_) )
       {  // result = 1 * variable

@@ -88,6 +88,16 @@ AD of *Base*
    example/general/div.cpp
 }
 
+Zero Special Cases
+******************
+Suppose that an AD *value* is
+:ref:`identically zero <base_identical@Identical@Identical Functions>` .
+Then the following results will be identically zero no matter
+what *other* is:
+value * other, other * value, value / other.
+This may be unexpected when *other* is nan
+(or when it is zero in the division case).
+
 Example
 *******
 The following files contain examples and tests of these functions.
