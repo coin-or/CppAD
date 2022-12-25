@@ -52,12 +52,10 @@ These dimensions are:
    * - *ax* [0]
      - *nr_left*
      - number of rows in the left matrix and result matrix
-       $rend
-       *ax* [1]
+   * - *ax* [1]
      - *n_middle*
      - columns in the left matrix and rows in right matrix
-       $rend
-       *ax* [2]
+   * - *ax* [2]
      - *nc_right*
      - number of columns in the right matrix and result matrix
 

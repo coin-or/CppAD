@@ -38,10 +38,10 @@ These dimensions are:
    :widths: auto
 
    * - *nr_left*
-     - number of rows in the left matrix; i.e, :math:`r` $rend
-       *n_middle*
-     - rows in the left matrix and columns in right; i.e, :math:`m` $rend
-       *nc_right*
+     - number of rows in the left matrix; i.e, :math:`r`
+   * - *n_middle*
+     - rows in the left matrix and columns in right; i.e, :math:`m`
+   * - *nc_right*
      - number of columns in the right matrix; i.e., :math:`c`
 
 Theory
