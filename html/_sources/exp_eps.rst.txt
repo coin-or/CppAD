@@ -1,4 +1,4 @@
-lines 8-175 of file: introduction/exp_eps.hpp
+lines 8-176 of file: introduction/exp_eps.hpp
 
 {xrst_begin exp_eps}
 {xrst_spell
@@ -101,6 +101,7 @@ If *u* and *v* are *Type* objects and *i*
 is an ``int`` :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Result Type**

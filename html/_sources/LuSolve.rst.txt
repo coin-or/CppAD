@@ -1,4 +1,4 @@
-lines 9-236 of file: include/cppad/utility/lu_solve.hpp
+lines 9-237 of file: include/cppad/utility/lu_solve.hpp
 
 {xrst_begin LuSolve}
 {xrst_spell
@@ -160,6 +160,7 @@ In addition, the following operations must be defined for any pair
 of *Float* objects *x* and *y* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

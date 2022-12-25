@@ -1,4 +1,4 @@
-lines 5-63 of file: xrst/install/cmake_check.xrst
+lines 5-64 of file: xrst/install/cmake_check.xrst
 
 {xrst_begin cmake_check}
 {xrst_spell
@@ -40,6 +40,7 @@ First Level
 The first level of subsets of ``make check`` are described below:
 
 .. list-table::
+   :widths: auto
 
    * - Command
      - Description

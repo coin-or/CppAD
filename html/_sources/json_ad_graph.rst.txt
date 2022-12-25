@@ -1,4 +1,4 @@
-lines 5-370 of file: include/cppad/core/graph/json_ad_graph.xrst
+lines 5-371 of file: include/cppad/core/graph/json_ad_graph.xrst
 
 {xrst_begin json_ad_graph}
 {xrst_spell
@@ -118,6 +118,7 @@ Single Character
 The following is a list of the single character tokens:
 
 .. list-table::
+   :widths: auto
 
    * - Token
      - Usage

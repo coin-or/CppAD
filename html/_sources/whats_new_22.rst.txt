@@ -1,4 +1,4 @@
-lines 6-506 of file: xrst/appendix/whats_new/22.xrst
+lines 6-516 of file: xrst/appendix/whats_new/22.xrst
 
 {xrst_begin whats_new_22}
 {xrst_spell
@@ -27,6 +27,16 @@ Changes and Additions to CppAD During 2022
 
 mm-dd
 *****
+
+12-25
+=====
+#. The column widths of some of the documentation tables were set to be equal
+   instead of adjusting to best fit the columns.
+   This has been fixed.
+#. Fix two tables that were not converted to sphinx correctly. To be specific,
+   the table below Matrix Dimension in
+   :ref:`atomic_three_mat_mul.hpp-name` and
+   :ref:`atomic_two_eigen_mat_mul.hpp-name` .
 
 12-23
 =====

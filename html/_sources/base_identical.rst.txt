@@ -1,4 +1,4 @@
-lines 6-110 of file: xrst/base_require/base_identical.xrst
+lines 6-111 of file: xrst/base_require/base_identical.xrst
 
 {xrst_begin base_identical}
 
@@ -85,6 +85,7 @@ The type *Base* must support the following functions
 (in the CppAD namespace):
 
 .. list-table::
+   :widths: auto
 
    * - **Syntax**
      - **Result**

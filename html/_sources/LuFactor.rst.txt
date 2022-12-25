@@ -1,4 +1,4 @@
-lines 9-229 of file: include/cppad/utility/lu_factor.hpp
+lines 9-230 of file: include/cppad/utility/lu_factor.hpp
 
 {xrst_begin LuFactor}
 {xrst_spell
@@ -167,6 +167,7 @@ In addition, the following operations must be defined for any pair
 of *Float* objects *x* and *y* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

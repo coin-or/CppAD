@@ -1,4 +1,4 @@
-lines 6-750 of file: xrst/appendix/whats_new/03.xrst
+lines 6-755 of file: xrst/appendix/whats_new/03.xrst
 
 {xrst_begin whats_new_03}
 {xrst_spell
@@ -427,6 +427,7 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 
 .. list-table::
+   :widths: auto
 
    * - **Version**
      - **double Rate**
@@ -476,6 +477,7 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 
 .. list-table::
+   :widths: auto
 
    * - **Version**
      - **double Rate**
@@ -526,6 +528,7 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 
 .. list-table::
+   :widths: auto
 
    * - **Version**
      - **double Rate**
@@ -580,6 +583,7 @@ for the calculation of the gradient and Hessian for
 the Lu determinant test of a 5 by 5 matrix as follows:
 
 .. list-table::
+   :widths: auto
 
    * - **Version**
      - **Tape Length**
@@ -682,6 +686,7 @@ for the calculation of the gradient and Hessian for
 the determinant of a 5 by 5 matrix as follows:
 
 .. list-table::
+   :widths: auto
 
    * - **Version**
      - **Tape Length**

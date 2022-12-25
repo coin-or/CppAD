@@ -1,4 +1,4 @@
-lines 7-225 of file: xrst/simple_vector.xrst
+lines 7-226 of file: xrst/simple_vector.xrst
 
 {xrst_begin SimpleVector}
 {xrst_spell
@@ -16,6 +16,7 @@ that satisfies the requirements below.
 The following is a list of some simple vector template classes:
 
 .. list-table::
+   :widths: auto
 
    * - **Name**
      - **Documentation**

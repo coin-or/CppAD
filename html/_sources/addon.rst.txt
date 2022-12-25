@@ -1,4 +1,4 @@
-lines 5-93 of file: xrst/appendix/addon.xrst
+lines 5-94 of file: xrst/appendix/addon.xrst
 
 {xrst_begin addon}
 {xrst_spell
@@ -24,6 +24,7 @@ Each CppAD addon has a short name which we denote by *name* below,
 a longer name *longer* and a *description* :
 
 .. list-table::
+   :widths: auto
 
    * - *name*
      - *longer*

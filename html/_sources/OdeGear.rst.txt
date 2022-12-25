@@ -1,4 +1,4 @@
-lines 9-395 of file: include/cppad/utility/ode_gear.hpp
+lines 9-396 of file: include/cppad/utility/ode_gear.hpp
 
 {xrst_begin OdeGear}
 {xrst_spell
@@ -202,6 +202,7 @@ In addition, the following operations must be defined for
 *Scalar* objects *a* and *b* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

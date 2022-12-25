@@ -1,4 +1,4 @@
-lines 8-115 of file: include/cppad/core/near_equal_ext.hpp
+lines 8-116 of file: include/cppad/core/near_equal_ext.hpp
 
 {xrst_begin near_equal_ext}
 
@@ -84,6 +84,7 @@ If *a* and *b* have type *Type* ,
 the following operation must be defined
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

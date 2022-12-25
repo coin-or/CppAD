@@ -1,4 +1,4 @@
-lines 7-140 of file: xrst/numeric_type.xrst
+lines 7-141 of file: xrst/numeric_type.xrst
 
 {xrst_begin NumericType}
 {xrst_spell
@@ -74,6 +74,7 @@ In the result type column,
 be used just like a *NumericType* object.
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

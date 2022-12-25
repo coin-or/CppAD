@@ -1,4 +1,4 @@
-lines 5-48 of file: xrst/appendix/deprecated/deprecated.xrst
+lines 5-49 of file: xrst/appendix/deprecated/deprecated.xrst
 
 {xrst_begin deprecated}
 
@@ -30,6 +30,7 @@ Name Changes
 ************
 
 .. list-table::
+   :widths: auto
 
    * - ``CppADCreateUnaryBool``
      - see Deprecated 2007-07-31 in :ref:`bool_fun-title`

@@ -1,4 +1,4 @@
-lines 9-420 of file: include/cppad/utility/ode_err_control.hpp
+lines 9-421 of file: include/cppad/utility/ode_err_control.hpp
 
 {xrst_begin OdeErrControl}
 {xrst_spell
@@ -350,6 +350,7 @@ In addition, the following operations must be defined for
 *Scalar* objects *a* and *b* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

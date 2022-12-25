@@ -1,0 +1,6 @@
+g++ -I/home/bradbell/repo/cppad.git/build/cppad-20221225/build/prefix/include -I/home/bradbell/repo/cppad.git/build/prefix/include/coin-or -I/home/bradbell/repo/cppad.git/build/prefix/include/coin-or/mumps -L/home/bradbell/repo/cppad.git/build/cppad-20221225/build/prefix/lib64 -lcppad_lib -lColPack -lcppad_ipopt -L/home/bradbell/repo/cppad.git/build/prefix/lib -lipopt get_started.cpp -o get_started
+CppAD: ./get_started
+f'(3) computed by CppAD = 142
+g++ -I/home/bradbell/repo/cppad.git/build/cppad-20221225/build/prefix/include -I/home/bradbell/repo/cppad.git/build/prefix/include/coin-or -I/home/bradbell/repo/cppad.git/build/prefix/include/coin-or/mumps -L/home/bradbell/repo/cppad.git/build/cppad-20221225/build/prefix/lib64 -lcppad_lib -lColPack -lcppad_ipopt -L/home/bradbell/repo/cppad.git/build/prefix/lib -lipopt get_started.cpp -o get_started
+ipopt_solve: ./get_started
+check_install.sh: OK

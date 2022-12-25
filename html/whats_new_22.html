@@ -4,6 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <meta content="whats_new_22, changes, and, additions, to, cppad, during, 2022" name="keywords" />
 <meta content="mm-dd" name="keywords" />
+<meta content="12-25" name="keywords" />
 <meta content="12-23" name="keywords" />
 <meta content="12-16" name="keywords" />
 <meta content="11-05" name="keywords" />
@@ -185,77 +186,90 @@
 <span id="whats-new-22-title"></span><span id="index-0"></span><h2>Changes and Additions to CppAD During 2022<a class="headerlink" href="#changes-and-additions-to-cppad-during-2022" title="Permalink to this headline"></a></h2>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#mm-dd" id="id55">mm-dd</a></p>
+<li><p><a class="reference internal" href="#mm-dd" id="id56">mm-dd</a></p>
 <ul>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-12-23" id="id56">12-23</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-12-16" id="id57">12-16</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-11-05" id="id58">11-05</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-08-30" id="id59">08-30</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-16" id="id60">07-16</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-14" id="id61">07-14</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-12" id="id62">07-12</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-10" id="id63">07-10</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-08" id="id64">07-08</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-05" id="id65">07-05</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-23" id="id66">06-23</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-22" id="id67">06-22</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-21" id="id68">06-21</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-20" id="id69">06-20</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-27" id="id70">05-27</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-26" id="id71">05-26</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-20" id="id72">05-20</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-19" id="id73">05-19</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-17" id="id74">05-17</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-16" id="id75">05-16</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-15" id="id76">05-15</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-13" id="id77">05-13</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-12" id="id78">05-12</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-11" id="id79">05-11</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-10" id="id80">05-10</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-09" id="id81">05-09</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-07" id="id82">05-07</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-06" id="id83">05-06</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-21" id="id84">04-21</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-20" id="id85">04-20</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-19" id="id86">04-19</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-15" id="id87">04-15</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-29" id="id88">03-29</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-26" id="id89">03-26</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-25" id="id90">03-25</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-24" id="id91">03-24</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-23" id="id92">03-23</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-21" id="id93">02-21</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-19" id="id94">02-19</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-18" id="id95">02-18</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-17" id="id96">02-17</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-16" id="id97">02-16</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-13" id="id98">02-13</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-12" id="id99">02-12</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-11" id="id100">02-11</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-01" id="id101">02-01</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-27" id="id102">01-27</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-25" id="id103">01-25</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-23" id="id104">01-23</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-19" id="id105">01-19</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-15" id="id106">01-15</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-06" id="id107">01-06</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-04" id="id108">01-04</a></p></li>
-<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-01" id="id109">01-01</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-12-25" id="id57">12-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-12-23" id="id58">12-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-12-16" id="id59">12-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-11-05" id="id60">11-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-08-30" id="id61">08-30</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-16" id="id62">07-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-14" id="id63">07-14</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-12" id="id64">07-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-10" id="id65">07-10</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-08" id="id66">07-08</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-07-05" id="id67">07-05</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-23" id="id68">06-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-22" id="id69">06-22</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-21" id="id70">06-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-06-20" id="id71">06-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-27" id="id72">05-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-26" id="id73">05-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-20" id="id74">05-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-19" id="id75">05-19</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-17" id="id76">05-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-16" id="id77">05-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-15" id="id78">05-15</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-13" id="id79">05-13</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-12" id="id80">05-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-11" id="id81">05-11</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-10" id="id82">05-10</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-09" id="id83">05-09</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-07" id="id84">05-07</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-05-06" id="id85">05-06</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-21" id="id86">04-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-20" id="id87">04-20</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-19" id="id88">04-19</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-04-15" id="id89">04-15</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-29" id="id90">03-29</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-26" id="id91">03-26</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-25" id="id92">03-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-24" id="id93">03-24</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-03-23" id="id94">03-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-21" id="id95">02-21</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-19" id="id96">02-19</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-18" id="id97">02-18</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-17" id="id98">02-17</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-16" id="id99">02-16</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-13" id="id100">02-13</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-12" id="id101">02-12</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-11" id="id102">02-11</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-02-01" id="id103">02-01</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-27" id="id104">01-27</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-25" id="id105">01-25</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-23" id="id106">01-23</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-19" id="id107">01-19</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-15" id="id108">01-15</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-06" id="id109">01-06</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-04" id="id110">01-04</a></p></li>
+<li><p><a class="reference internal" href="#whats-new-22-mm-dd-01-01" id="id111">01-01</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="mm-dd">
-<span id="whats-new-22-mm-dd"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id55">mm-dd</a><a class="headerlink" href="#mm-dd" title="Permalink to this headline"></a></h3>
+<span id="whats-new-22-mm-dd"></span><span id="index-1"></span><h3><a class="toc-backref" href="#id56">mm-dd</a><a class="headerlink" href="#mm-dd" title="Permalink to this headline"></a></h3>
+<section id="whats-new-22-mm-dd-12-25">
+<span id="index-2"></span><span id="id1"></span><h4><a class="toc-backref" href="#id57">12-25</a><a class="headerlink" href="#whats-new-22-mm-dd-12-25" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>The column widths of some of the documentation tables were set to be equal
+instead of adjusting to best fit the columns.
+This has been fixed.</p></li>
+<li><p>Fix two tables that were not converted to sphinx correctly. To be specific,
+the table below Matrix Dimension in
+<a class="reference internal" href="atomic_three_mat_mul.hpp.html#atomic-three-mat-mul-hpp-name"><span class="std std-ref">atomic_three_mat_mul.hpp</span></a> and
+<a class="reference internal" href="atomic_two_eigen_mat_mul.hpp.html#atomic-two-eigen-mat-mul-hpp-name"><span class="std std-ref">atomic_two_eigen_mat_mul.hpp</span></a> .</p></li>
+</ol>
+</section>
 <section id="whats-new-22-mm-dd-12-23">
-<span id="index-2"></span><span id="id1"></span><h4><a class="toc-backref" href="#id56">12-23</a><a class="headerlink" href="#whats-new-22-mm-dd-12-23" title="Permalink to this headline"></a></h4>
+<span id="index-3"></span><span id="id2"></span><h4><a class="toc-backref" href="#id58">12-23</a><a class="headerlink" href="#whats-new-22-mm-dd-12-23" title="Permalink to this headline"></a></h4>
 <p>Add documentation for the binary operation
 <a class="reference internal" href="ad_binary.html#ad-binary-zero-special-cases"><span class="std std-ref">Zero Special Cases</span></a> .
 In addition fix a bug in these special cases
 when zero was multiplied by or divided by nan.</p>
 </section>
 <section id="whats-new-22-mm-dd-12-16">
-<span id="index-3"></span><span id="id2"></span><h4><a class="toc-backref" href="#id57">12-16</a><a class="headerlink" href="#whats-new-22-mm-dd-12-16" title="Permalink to this headline"></a></h4>
+<span id="index-4"></span><span id="id3"></span><h4><a class="toc-backref" href="#id59">12-16</a><a class="headerlink" href="#whats-new-22-mm-dd-12-16" title="Permalink to this headline"></a></h4>
 <p>Finish conversion of CppAD documentation from
 <a class="reference external" href="http://bradbell.github.io/omhelp/doc/omhelp.htm">omhelp</a>
 to the sphinx
@@ -264,27 +278,27 @@ The following is a link to the
 <a class="reference external" href="http://coin-or.github.io/CppAD/doc/cppad.htm">old documentation</a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-11-05">
-<span id="index-4"></span><span id="id3"></span><h4><a class="toc-backref" href="#id58">11-05</a><a class="headerlink" href="#whats-new-22-mm-dd-11-05" title="Permalink to this headline"></a></h4>
+<span id="index-5"></span><span id="id4"></span><h4><a class="toc-backref" href="#id60">11-05</a><a class="headerlink" href="#whats-new-22-mm-dd-11-05" title="Permalink to this headline"></a></h4>
 <p>Fix a conversion error during the tests by extending the zdouble
 <a class="reference internal" href="zdouble.html#zdouble-syntax-constructor-and-assignment"><span class="std std-ref">constructor</span></a>
 to <code class="docutils literal notranslate"><span class="pre">zdouble</span></code> ( <em>i</em> ) where <em>i</em> is <code class="docutils literal notranslate"><span class="pre">long</span></code> .</p>
 </section>
 <section id="whats-new-22-mm-dd-08-30">
-<span id="index-5"></span><span id="id4"></span><h4><a class="toc-backref" href="#id59">08-30</a><a class="headerlink" href="#whats-new-22-mm-dd-08-30" title="Permalink to this headline"></a></h4>
+<span id="index-6"></span><span id="id5"></span><h4><a class="toc-backref" href="#id61">08-30</a><a class="headerlink" href="#whats-new-22-mm-dd-08-30" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference internal" href="optimize.html#optimize-name"><span class="std std-ref">optimize</span></a> operations was not handeling
 comparison operators that only had parameters,
 with at least one dynamic parameter.
 This has been fixed.</p>
 </section>
 <section id="whats-new-22-mm-dd-07-16">
-<span id="index-6"></span><span id="id5"></span><h4><a class="toc-backref" href="#id60">07-16</a><a class="headerlink" href="#whats-new-22-mm-dd-07-16" title="Permalink to this headline"></a></h4>
+<span id="index-7"></span><span id="id6"></span><h4><a class="toc-backref" href="#id62">07-16</a><a class="headerlink" href="#whats-new-22-mm-dd-07-16" title="Permalink to this headline"></a></h4>
 <p>Add the option to configure eigen using
 <a class="reference internal" href="cmake.html#cmake-eigen-prefix"><span class="std std-ref">eigen_prefix</span></a> ,
 as well as with
 <a class="reference internal" href="cmake.html#cmake-include-eigen"><span class="std std-ref">include_eigen</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-07-14">
-<span id="index-7"></span><span id="id6"></span><h4><a class="toc-backref" href="#id61">07-14</a><a class="headerlink" href="#whats-new-22-mm-dd-07-14" title="Permalink to this headline"></a></h4>
+<span id="index-8"></span><span id="id7"></span><h4><a class="toc-backref" href="#id63">07-14</a><a class="headerlink" href="#whats-new-22-mm-dd-07-14" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>There was a mistake in the implementation of the
 <a class="reference internal" href="ad_ctor.html#ad-ctor-x-explicit"><span class="std std-ref">explicit</span></a> <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; constructor.
@@ -301,14 +315,14 @@ It was necessary (due to the fix above) to add the
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-07-12">
-<span id="index-8"></span><span id="id7"></span><h4><a class="toc-backref" href="#id62">07-12</a><a class="headerlink" href="#whats-new-22-mm-dd-07-12" title="Permalink to this headline"></a></h4>
+<span id="index-9"></span><span id="id8"></span><h4><a class="toc-backref" href="#id64">07-12</a><a class="headerlink" href="#whats-new-22-mm-dd-07-12" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference internal" href="cmake.html#cmake-cmake-command"><span class="std std-ref">CMake Command</span></a> was not properly determining
 when posix threads could be used (when using a C compiler other than gcc).
 This suppressed the running of the corresponding examples; e.g.,
 <a class="reference internal" href="a11c_pthread.cpp.html#a11c-pthread-cpp-name"><span class="std std-ref">a11c_pthread.cpp</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-07-10">
-<span id="index-9"></span><span id="id8"></span><h4><a class="toc-backref" href="#id63">07-10</a><a class="headerlink" href="#whats-new-22-mm-dd-07-10" title="Permalink to this headline"></a></h4>
+<span id="index-10"></span><span id="id9"></span><h4><a class="toc-backref" href="#id65">07-10</a><a class="headerlink" href="#whats-new-22-mm-dd-07-10" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Add the <a class="reference internal" href="cmake.html#cmake-cmake-needs-dot-slash"><span class="std std-ref">cmake_needs_dot_slash</span></a> symbol
 to the cmake command line.</p></li>
@@ -322,13 +336,13 @@ an overflow of the repeat counter and abort.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-07-08">
-<span id="index-10"></span><span id="id9"></span><h4><a class="toc-backref" href="#id64">07-08</a><a class="headerlink" href="#whats-new-22-mm-dd-07-08" title="Permalink to this headline"></a></h4>
+<span id="index-11"></span><span id="id10"></span><h4><a class="toc-backref" href="#id66">07-08</a><a class="headerlink" href="#whats-new-22-mm-dd-07-08" title="Permalink to this headline"></a></h4>
 <p>Change <a class="reference external" href="https://github.com/coin-or/CppAD/actions">github actions</a>:
 run on pushes to the master and stable branches, and
 run on all pull requests.</p>
 </section>
 <section id="whats-new-22-mm-dd-07-05">
-<span id="index-11"></span><span id="id10"></span><h4><a class="toc-backref" href="#id65">07-05</a><a class="headerlink" href="#whats-new-22-mm-dd-07-05" title="Permalink to this headline"></a></h4>
+<span id="index-12"></span><span id="id11"></span><h4><a class="toc-backref" href="#id67">07-05</a><a class="headerlink" href="#whats-new-22-mm-dd-07-05" title="Permalink to this headline"></a></h4>
 <p>Merge in pull_155 branch.
 This enabled the use of binary operators with Eigen matrices of
 type <code class="docutils literal notranslate"><span class="pre">AD&lt;</span></code> <em>Base</em> &gt; and type <em>Base</em> ;
@@ -336,7 +350,7 @@ see <a class="reference internal" href="cppad_eigen.hpp.html#cppad-eigen-hpp-eig
 in <code class="docutils literal notranslate"><span class="pre">cppad_eigen.hpp</span></code> .</p>
 </section>
 <section id="whats-new-22-mm-dd-06-23">
-<span id="index-12"></span><span id="id11"></span><h4><a class="toc-backref" href="#id66">06-23</a><a class="headerlink" href="#whats-new-22-mm-dd-06-23" title="Permalink to this headline"></a></h4>
+<span id="index-13"></span><span id="id12"></span><h4><a class="toc-backref" href="#id68">06-23</a><a class="headerlink" href="#whats-new-22-mm-dd-06-23" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Change <em>x</em> to <a class="reference internal" href="to_csrc.html#to-csrc-u"><span class="std std-ref">u</span></a> in the <code class="docutils literal notranslate"><span class="pre">to_csrc</span></code> operation
 and add specifications as the position of the independent dynamic
@@ -352,7 +366,7 @@ This enables one to run cmake with a <code class="docutils literal notranslate">
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-06-22">
-<span id="index-13"></span><span id="id12"></span><h4><a class="toc-backref" href="#id67">06-22</a><a class="headerlink" href="#whats-new-22-mm-dd-06-22" title="Permalink to this headline"></a></h4>
+<span id="index-14"></span><span id="id13"></span><h4><a class="toc-backref" href="#id69">06-22</a><a class="headerlink" href="#whats-new-22-mm-dd-06-22" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Modify the <a class="reference internal" href="cmake.html#cmake-cmake-command-msys2"><span class="std std-ref">msys2</span></a>
 and <a class="reference internal" href="cmake.html#cmake-cmake-command-visual-studio"><span class="std std-ref">Visual Studio</span></a>
@@ -370,13 +384,13 @@ install suggestions.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-06-21">
-<span id="index-14"></span><span id="id13"></span><h4><a class="toc-backref" href="#id68">06-21</a><a class="headerlink" href="#whats-new-22-mm-dd-06-21" title="Permalink to this headline"></a></h4>
+<span id="index-15"></span><span id="id14"></span><h4><a class="toc-backref" href="#id70">06-21</a><a class="headerlink" href="#whats-new-22-mm-dd-06-21" title="Permalink to this headline"></a></h4>
 <p>Change the visual C++ JIT compile flag <code class="docutils literal notranslate"><span class="pre">/Tc</span></code> to the flag <code class="docutils literal notranslate"><span class="pre">/TC</span></code> ,
 so that the C source file need not follow directly after in the compile
 command. This fixed a test failure when using that compiler.</p>
 </section>
 <section id="whats-new-22-mm-dd-06-20">
-<span id="index-15"></span><span id="id14"></span><h4><a class="toc-backref" href="#id69">06-20</a><a class="headerlink" href="#whats-new-22-mm-dd-06-20" title="Permalink to this headline"></a></h4>
+<span id="index-16"></span><span id="id15"></span><h4><a class="toc-backref" href="#id71">06-20</a><a class="headerlink" href="#whats-new-22-mm-dd-06-20" title="Permalink to this headline"></a></h4>
 <p>JIT C source code generation, compilation, and linking were added using
 the following new features, examples, and speed tests:</p>
 <table class="colwidths-auto docutils align-default">
@@ -404,13 +418,13 @@ the following new features, examples, and speed tests:</p>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-05-27">
-<span id="index-16"></span><span id="id15"></span><h4><a class="toc-backref" href="#id70">05-27</a><a class="headerlink" href="#whats-new-22-mm-dd-05-27" title="Permalink to this headline"></a></h4>
+<span id="index-17"></span><span id="id16"></span><h4><a class="toc-backref" href="#id72">05-27</a><a class="headerlink" href="#whats-new-22-mm-dd-05-27" title="Permalink to this headline"></a></h4>
 <p>Add the theory, but not implementation, for the atomic linear ODE
 second order reverse mode; see
 <a class="reference internal" href="atomic_four_lin_ode_reverse_2.html#atomic-four-lin-ode-reverse-2-name"><span class="std std-ref">atomic_four_lin_ode_reverse_2</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-05-26">
-<span id="index-17"></span><span id="id16"></span><h4><a class="toc-backref" href="#id71">05-26</a><a class="headerlink" href="#whats-new-22-mm-dd-05-26" title="Permalink to this headline"></a></h4>
+<span id="index-18"></span><span id="id17"></span><h4><a class="toc-backref" href="#id73">05-26</a><a class="headerlink" href="#whats-new-22-mm-dd-05-26" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>The atomic linear ODE maximum <a class="reference internal" href="atomic_four_lin_ode.html#atomic-four-lin-ode-step"><span class="std std-ref">step</span></a> size
 was not being enforced during the reverse mode
@@ -422,13 +436,13 @@ a separate function in the atomic linear ODE example.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-05-20">
-<span id="index-18"></span><span id="id17"></span><h4><a class="toc-backref" href="#id72">05-20</a><a class="headerlink" href="#whats-new-22-mm-dd-05-20" title="Permalink to this headline"></a></h4>
+<span id="index-19"></span><span id="id18"></span><h4><a class="toc-backref" href="#id74">05-20</a><a class="headerlink" href="#whats-new-22-mm-dd-05-20" title="Permalink to this headline"></a></h4>
 <p>Merge in the pull_144 branch.
 This fixed some problems with the windows visual studio build; see
 the corresponding pull request.</p>
 </section>
 <section id="whats-new-22-mm-dd-05-19">
-<span id="index-19"></span><span id="id18"></span><h4><a class="toc-backref" href="#id73">05-19</a><a class="headerlink" href="#whats-new-22-mm-dd-05-19" title="Permalink to this headline"></a></h4>
+<span id="index-20"></span><span id="id19"></span><h4><a class="toc-backref" href="#id75">05-19</a><a class="headerlink" href="#whats-new-22-mm-dd-05-19" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>The atomic four <code class="docutils literal notranslate"><span class="pre">base_lin_ode</span></code> function was changed to
 <a class="reference internal" href="atomic_four_lin_ode_base_solver.hpp.html#atomic-four-lin-ode-base-solver-hpp-name"><span class="std std-ref">base_solver</span></a> .
@@ -439,13 +453,13 @@ size was added to this atomic linear ODE solver.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-05-17">
-<span id="index-20"></span><span id="id19"></span><h4><a class="toc-backref" href="#id74">05-17</a><a class="headerlink" href="#whats-new-22-mm-dd-05-17" title="Permalink to this headline"></a></h4>
+<span id="index-21"></span><span id="id20"></span><h4><a class="toc-backref" href="#id76">05-17</a><a class="headerlink" href="#whats-new-22-mm-dd-05-17" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference internal" href="atomic_four_lin_ode_rev_depend.hpp.html#atomic-four-lin-ode-rev-depend-hpp-name"><span class="std std-ref">atomic_four_lin_ode_rev_depend.hpp</span></a> example was added.
 In addition, remove the Under Construction headings from the
 <a class="reference internal" href="atomic_four_lin_ode.html#atomic-four-lin-ode-name"><span class="std std-ref">atomic_four_lin_ode</span></a> sections (it is ready for use).</p>
 </section>
 <section id="whats-new-22-mm-dd-05-16">
-<span id="index-21"></span><span id="id20"></span><h4><a class="toc-backref" href="#id75">05-16</a><a class="headerlink" href="#whats-new-22-mm-dd-05-16" title="Permalink to this headline"></a></h4>
+<span id="index-22"></span><span id="id21"></span><h4><a class="toc-backref" href="#id77">05-16</a><a class="headerlink" href="#whats-new-22-mm-dd-05-16" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>The <a class="reference internal" href="atomic_four_hes_sparsity.html#atomic-four-hes-sparsity-ident-zero-x"><span class="std std-ref">ident_zero_x</span></a> argument
 was added to the atomic four Hessian sparsity callback.
@@ -461,7 +475,7 @@ of the callback is deprecated.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-05-15">
-<span id="index-22"></span><span id="id21"></span><h4><a class="toc-backref" href="#id76">05-15</a><a class="headerlink" href="#whats-new-22-mm-dd-05-15" title="Permalink to this headline"></a></h4>
+<span id="index-23"></span><span id="id22"></span><h4><a class="toc-backref" href="#id78">05-15</a><a class="headerlink" href="#whats-new-22-mm-dd-05-15" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Merge in the pull_140 branch.
 This extended CppAD <a class="reference internal" href="base_limits.html#base-limits-name"><span class="std std-ref">base_limits</span></a> and <a class="reference internal" href="numeric_limits.html#numeric-limits-name"><span class="std std-ref">numeric_limits</span></a>
@@ -478,7 +492,7 @@ where this bug occurred.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-05-13">
-<span id="index-23"></span><span id="id22"></span><h4><a class="toc-backref" href="#id77">05-13</a><a class="headerlink" href="#whats-new-22-mm-dd-05-13" title="Permalink to this headline"></a></h4>
+<span id="index-24"></span><span id="id23"></span><h4><a class="toc-backref" href="#id79">05-13</a><a class="headerlink" href="#whats-new-22-mm-dd-05-13" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference internal" href="code_gen_fun.html#code-gen-fun-examples"><span class="std std-ref">code_gen_fun examples</span></a> were
 not being built even when
 <a class="reference internal" href="cmake.html#cmake-include-cppadcg"><span class="std std-ref">include_cppadcg</span></a>
@@ -486,7 +500,7 @@ was specified on the cmake command line.
 This has been fixed.</p>
 </section>
 <section id="whats-new-22-mm-dd-05-12">
-<span id="index-24"></span><span id="id23"></span><h4><a class="toc-backref" href="#id78">05-12</a><a class="headerlink" href="#whats-new-22-mm-dd-05-12" title="Permalink to this headline"></a></h4>
+<span id="index-25"></span><span id="id24"></span><h4><a class="toc-backref" href="#id80">05-12</a><a class="headerlink" href="#whats-new-22-mm-dd-05-12" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference internal" href="cmake.html#cmake-name"><span class="std std-ref">cmake</span></a> script <code class="docutils literal notranslate"><span class="pre">cmake/compile_source_test.cmake</span></code> was not
 working properly on Darwin systems which resulted in the following warning:</p>
 <div class="line-block">
@@ -496,7 +510,7 @@ working properly on Darwin systems which resulted in the following warning:</p>
 <p>This has been fixed.</p>
 </section>
 <section id="whats-new-22-mm-dd-05-11">
-<span id="index-25"></span><span id="id24"></span><h4><a class="toc-backref" href="#id79">05-11</a><a class="headerlink" href="#whats-new-22-mm-dd-05-11" title="Permalink to this headline"></a></h4>
+<span id="index-26"></span><span id="id25"></span><h4><a class="toc-backref" href="#id81">05-11</a><a class="headerlink" href="#whats-new-22-mm-dd-05-11" title="Permalink to this headline"></a></h4>
 <p>A mathematical <a class="reference internal" href="atomic_four_lin_ode_jac_sparsity.hpp.html#atomic-four-lin-ode-jac-sparsity-hpp-theory"><span class="std std-ref">Theory</span></a>
 was added to the linear ODE Jacobian sparsity pattern example.
 In addition, the corresponding code was changed to match the theory.
@@ -504,13 +518,13 @@ This may, or may not, have fixed some bugs in the previous version
 of this routine.</p>
 </section>
 <section id="whats-new-22-mm-dd-05-10">
-<span id="index-26"></span><span id="id25"></span><h4><a class="toc-backref" href="#id80">05-10</a><a class="headerlink" href="#whats-new-22-mm-dd-05-10" title="Permalink to this headline"></a></h4>
+<span id="index-27"></span><span id="id26"></span><h4><a class="toc-backref" href="#id82">05-10</a><a class="headerlink" href="#whats-new-22-mm-dd-05-10" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference internal" href="atomic_four_jac_sparsity.html#atomic-four-jac-sparsity-ident-zero-x"><span class="std std-ref">ident_zero_x</span></a> argument
 was added to the atomic four Jacobian sparsity callback.
 The previous version of this callback still works but is deprecated.</p>
 </section>
 <section id="whats-new-22-mm-dd-05-09">
-<span id="index-27"></span><span id="id26"></span><h4><a class="toc-backref" href="#id81">05-09</a><a class="headerlink" href="#whats-new-22-mm-dd-05-09" title="Permalink to this headline"></a></h4>
+<span id="index-28"></span><span id="id27"></span><h4><a class="toc-backref" href="#id83">05-09</a><a class="headerlink" href="#whats-new-22-mm-dd-05-09" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Add a theory section to the linear ODE
 <a class="reference internal" href="atomic_four_lin_ode_for_type.hpp.html#atomic-four-lin-ode-for-type-hpp-theory"><span class="std std-ref">for_type</span></a> section.
@@ -529,14 +543,14 @@ of the callbacks for the atomic function call.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-05-07">
-<span id="index-28"></span><span id="id27"></span><h4><a class="toc-backref" href="#id82">05-07</a><a class="headerlink" href="#whats-new-22-mm-dd-05-07" title="Permalink to this headline"></a></h4>
+<span id="index-29"></span><span id="id28"></span><h4><a class="toc-backref" href="#id84">05-07</a><a class="headerlink" href="#whats-new-22-mm-dd-05-07" title="Permalink to this headline"></a></h4>
 <p>Add the <a class="reference internal" href="base2vec_ad.cpp.html#base2vec-ad-cpp-name"><span class="std std-ref">base2vec_ad.cpp</span></a> example demonstrating that <a class="reference internal" href="base2ad.html#base2ad-name"><span class="std std-ref">base2ad</span></a>
 does not convert <a class="reference internal" href="VecAD.html#vecad-name"><span class="std std-ref">VecAD</span></a> operations as might be expected.
 Add a link to this example in both the base2ad and VecAD documentation
 and a <a class="reference internal" href="wish_list.html#wish-list-base2ad"><span class="std std-ref">base2ad wish_list</span></a> item about this.</p>
 </section>
 <section id="whats-new-22-mm-dd-05-06">
-<span id="index-29"></span><span id="id28"></span><h4><a class="toc-backref" href="#id83">05-06</a><a class="headerlink" href="#whats-new-22-mm-dd-05-06" title="Permalink to this headline"></a></h4>
+<span id="index-30"></span><span id="id29"></span><h4><a class="toc-backref" href="#id85">05-06</a><a class="headerlink" href="#whats-new-22-mm-dd-05-06" title="Permalink to this headline"></a></h4>
 <p>There was a bug in combining the <a class="reference internal" href="Discrete.html#discrete-name"><span class="std std-ref">Discrete</span></a> functions with the
 <a class="reference internal" href="base2ad.html#base2ad-name"><span class="std std-ref">base2ad</span></a> operation.
 To be specific, if a discrete function was used during the recording of
@@ -552,7 +566,7 @@ would happen during forward mode calculations using the <em>af</em> function:</p
 <p>This bug has been fixed.</p>
 </section>
 <section id="whats-new-22-mm-dd-04-21">
-<span id="index-30"></span><span id="id29"></span><h4><a class="toc-backref" href="#id84">04-21</a><a class="headerlink" href="#whats-new-22-mm-dd-04-21" title="Permalink to this headline"></a></h4>
+<span id="index-31"></span><span id="id30"></span><h4><a class="toc-backref" href="#id86">04-21</a><a class="headerlink" href="#whats-new-22-mm-dd-04-21" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Modify <a class="reference internal" href="atomic_four_lin_ode_set.hpp.html#atomic-four-lin-ode-set-hpp-name"><span class="std std-ref">atomic_four_lin_ode_set.hpp</span></a> and
 <a class="reference internal" href="atomic_four_lin_ode_get.hpp.html#atomic-four-lin-ode-get-hpp-name"><span class="std std-ref">atomic_four_lin_ode_get.hpp</span></a> to re-use sparsity patterns
@@ -565,7 +579,7 @@ for equality of sparsity patterns.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-04-20">
-<span id="index-31"></span><span id="id30"></span><h4><a class="toc-backref" href="#id85">04-20</a><a class="headerlink" href="#whats-new-22-mm-dd-04-20" title="Permalink to this headline"></a></h4>
+<span id="index-32"></span><span id="id31"></span><h4><a class="toc-backref" href="#id87">04-20</a><a class="headerlink" href="#whats-new-22-mm-dd-04-20" title="Permalink to this headline"></a></h4>
 <p>Add the
 <a class="reference internal" href="sparse_rc.html#sparse-rc-set-row-major"><span class="std std-ref">set_row_major</span></a> ,
 <a class="reference internal" href="sparse_rc.html#sparse-rc-get-row-major"><span class="std std-ref">get_row_major</span></a> ,
@@ -574,12 +588,12 @@ for equality of sparsity patterns.</p></li>
 functions to the <code class="docutils literal notranslate"><span class="pre">sparse_rc</span></code> template class.</p>
 </section>
 <section id="whats-new-22-mm-dd-04-19">
-<span id="index-32"></span><span id="id31"></span><h4><a class="toc-backref" href="#id86">04-19</a><a class="headerlink" href="#whats-new-22-mm-dd-04-19" title="Permalink to this headline"></a></h4>
+<span id="index-33"></span><span id="id32"></span><h4><a class="toc-backref" href="#id88">04-19</a><a class="headerlink" href="#whats-new-22-mm-dd-04-19" title="Permalink to this headline"></a></h4>
 <p>Change the ODE solver in <a class="reference internal" href="atomic_four_lin_ode.html#atomic-four-lin-ode-name"><span class="std std-ref">atomic_four_lin_ode</span></a> from
 <a class="reference internal" href="Runge45.html#runge45-name"><span class="std std-ref">Runge45</span></a> to <a class="reference internal" href="Rosen34.html#rosen34-name"><span class="std std-ref">Rosen34</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-04-15">
-<span id="index-33"></span><span id="id32"></span><h4><a class="toc-backref" href="#id87">04-15</a><a class="headerlink" href="#whats-new-22-mm-dd-04-15" title="Permalink to this headline"></a></h4>
+<span id="index-34"></span><span id="id33"></span><h4><a class="toc-backref" href="#id89">04-15</a><a class="headerlink" href="#whats-new-22-mm-dd-04-15" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Add <a class="reference internal" href="atomic_four_lin_ode.html#atomic-four-lin-ode-name"><span class="std std-ref">atomic_four_lin_ode</span></a> an example of making the solution
 of an ODE an atomic operation.
@@ -590,17 +604,17 @@ to the sparsity pattern template class.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-03-29">
-<span id="index-34"></span><span id="id33"></span><h4><a class="toc-backref" href="#id88">03-29</a><a class="headerlink" href="#whats-new-22-mm-dd-03-29" title="Permalink to this headline"></a></h4>
+<span id="index-35"></span><span id="id34"></span><h4><a class="toc-backref" href="#id90">03-29</a><a class="headerlink" href="#whats-new-22-mm-dd-03-29" title="Permalink to this headline"></a></h4>
 <p>Add the <a class="reference internal" href="atomic_four_lin_ode.html#atomic-four-lin-ode-name"><span class="std std-ref">atomic_four_lin_ode</span></a> example
 which is not yet complete.</p>
 </section>
 <section id="whats-new-22-mm-dd-03-26">
-<span id="index-35"></span><span id="id34"></span><h4><a class="toc-backref" href="#id89">03-26</a><a class="headerlink" href="#whats-new-22-mm-dd-03-26" title="Permalink to this headline"></a></h4>
+<span id="index-36"></span><span id="id35"></span><h4><a class="toc-backref" href="#id91">03-26</a><a class="headerlink" href="#whats-new-22-mm-dd-03-26" title="Permalink to this headline"></a></h4>
 <p>Change <code class="docutils literal notranslate"><span class="pre">y(nx)</span></code> to <code class="docutils literal notranslate"><span class="pre">y(ny)</span></code> in
 <a class="reference internal" href="atomic_four_mat_mul_forward.cpp.html#atomic-four-mat-mul-forward-cpp-name"><span class="std std-ref">atomic_four_mat_mul_forward.cpp</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-03-25">
-<span id="index-36"></span><span id="id35"></span><h4><a class="toc-backref" href="#id90">03-25</a><a class="headerlink" href="#whats-new-22-mm-dd-03-25" title="Permalink to this headline"></a></h4>
+<span id="index-37"></span><span id="id36"></span><h4><a class="toc-backref" href="#id92">03-25</a><a class="headerlink" href="#whats-new-22-mm-dd-03-25" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Fix <a class="reference internal" href="atomic_four_mat_mul.html#atomic-four-mat-mul-name"><span class="std std-ref">atomic_four_mat_mul</span></a> by changing it’s base class
 from <code class="docutils literal notranslate"><span class="pre">atomic_four&lt;double&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">atomic_four&lt;</span></code> <em>Base</em> &gt; ;
@@ -610,38 +624,38 @@ see <a class="reference internal" href="atomic_four_mat_mul.hpp.html#atomic-four
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-03-24">
-<span id="index-37"></span><span id="id36"></span><h4><a class="toc-backref" href="#id91">03-24</a><a class="headerlink" href="#whats-new-22-mm-dd-03-24" title="Permalink to this headline"></a></h4>
+<span id="index-38"></span><span id="id37"></span><h4><a class="toc-backref" href="#id93">03-24</a><a class="headerlink" href="#whats-new-22-mm-dd-03-24" title="Permalink to this headline"></a></h4>
 <p>Fix <a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> by changing it’s base class
 from <code class="docutils literal notranslate"><span class="pre">atomic_four&lt;double&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">atomic_four&lt;</span></code> <em>Base</em> &gt; .
 Make some other similar corrections in <a class="reference internal" href="atomic_four_vector.hpp.html#atomic-four-vector-hpp-name"><span class="std std-ref">atomic_four_vector.hpp</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-03-23">
-<span id="index-38"></span><span id="id37"></span><h4><a class="toc-backref" href="#id92">03-23</a><a class="headerlink" href="#whats-new-22-mm-dd-03-23" title="Permalink to this headline"></a></h4>
+<span id="index-39"></span><span id="id38"></span><h4><a class="toc-backref" href="#id94">03-23</a><a class="headerlink" href="#whats-new-22-mm-dd-03-23" title="Permalink to this headline"></a></h4>
 <p>Improve error detection and message when both
 <a class="reference internal" href="cmake.html#cmake-cmake-build-type"><span class="std std-ref">cmake_build_type</span></a> and
 <a class="reference internal" href="cmake.html#cmake-cppad-debug-which"><span class="std std-ref">cppad_debug_which</span></a> are chosen
 during the install procedure.</p>
 </section>
 <section id="whats-new-22-mm-dd-02-21">
-<span id="index-39"></span><span id="id38"></span><h4><a class="toc-backref" href="#id93">02-21</a><a class="headerlink" href="#whats-new-22-mm-dd-02-21" title="Permalink to this headline"></a></h4>
+<span id="index-40"></span><span id="id39"></span><h4><a class="toc-backref" href="#id95">02-21</a><a class="headerlink" href="#whats-new-22-mm-dd-02-21" title="Permalink to this headline"></a></h4>
 <p>Extend the json graph representation to include
 <a class="reference internal" href="json_graph_op.html#json-graph-op-atomic-functions-atomic-four"><span class="std std-ref">Atomic Four</span></a> functions.
 For example, see <a class="reference internal" href="json_atom4_op.cpp.html#json-atom4-op-cpp-name"><span class="std std-ref">json_atom4_op.cpp</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-02-19">
-<span id="index-40"></span><span id="id39"></span><h4><a class="toc-backref" href="#id94">02-19</a><a class="headerlink" href="#whats-new-22-mm-dd-02-19" title="Permalink to this headline"></a></h4>
+<span id="index-41"></span><span id="id40"></span><h4><a class="toc-backref" href="#id96">02-19</a><a class="headerlink" href="#whats-new-22-mm-dd-02-19" title="Permalink to this headline"></a></h4>
 <p>Extend the C++ graph representation to include atomic four
 <a class="reference internal" href="graph_op_enum.html#graph-op-enum-atomic-function"><span class="std std-ref">atomic functions</span></a> .
 For example, see <a class="reference internal" href="graph_atom4_op.cpp.html#graph-atom4-op-cpp-name"><span class="std std-ref">graph_atom4_op.cpp</span></a> .</p>
 </section>
 <section id="whats-new-22-mm-dd-02-18">
-<span id="index-41"></span><span id="id40"></span><h4><a class="toc-backref" href="#id95">02-18</a><a class="headerlink" href="#whats-new-22-mm-dd-02-18" title="Permalink to this headline"></a></h4>
+<span id="index-42"></span><span id="id41"></span><h4><a class="toc-backref" href="#id97">02-18</a><a class="headerlink" href="#whats-new-22-mm-dd-02-18" title="Permalink to this headline"></a></h4>
 <p>Fixed the value of <em>after</em> [ <em>i</em> ] in the
 <a class="reference internal" href="cpp_ad_graph.html#cpp-ad-graph-operator-arg-print-graph-op"><span class="std std-ref">print_graph_op</span></a> documentation.
 To be specific, <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">2</span></code> was changed to <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">1</span></code> .</p>
 </section>
 <section id="whats-new-22-mm-dd-02-17">
-<span id="index-42"></span><span id="id41"></span><h4><a class="toc-backref" href="#id96">02-17</a><a class="headerlink" href="#whats-new-22-mm-dd-02-17" title="Permalink to this headline"></a></h4>
+<span id="index-43"></span><span id="id42"></span><h4><a class="toc-backref" href="#id98">02-17</a><a class="headerlink" href="#whats-new-22-mm-dd-02-17" title="Permalink to this headline"></a></h4>
 <p>Add <code class="docutils literal notranslate"><span class="pre">identical_zero</span></code> to the possible
 <a class="reference internal" href="atomic_four_for_type.html#atomic-four-for-type-ad-type"><span class="std std-ref">ad_type</span></a> values in
 the atomic four <code class="docutils literal notranslate"><span class="pre">for_type</span></code> function.
@@ -651,13 +665,13 @@ See <a class="reference internal" href="atomic_four_vector_for_type.hpp.html#ato
 for an examples using this feature.</p>
 </section>
 <section id="whats-new-22-mm-dd-02-16">
-<span id="index-43"></span><span id="id42"></span><h4><a class="toc-backref" href="#id97">02-16</a><a class="headerlink" href="#whats-new-22-mm-dd-02-16" title="Permalink to this headline"></a></h4>
+<span id="index-44"></span><span id="id43"></span><h4><a class="toc-backref" href="#id99">02-16</a><a class="headerlink" href="#whats-new-22-mm-dd-02-16" title="Permalink to this headline"></a></h4>
 <p>Use the <a class="reference internal" href="atomic_four_norm_sq.cpp.html#atomic-four-norm-sq-cpp-name"><span class="std std-ref">atomic_four_norm_sq.cpp</span></a> overrides
 as examples for the virtual functions in the <a class="reference internal" href="atomic_four.html#atomic-four-name"><span class="std std-ref">atomic_four</span></a>
 base class.</p>
 </section>
 <section id="whats-new-22-mm-dd-02-13">
-<span id="index-44"></span><span id="id43"></span><h4><a class="toc-backref" href="#id98">02-13</a><a class="headerlink" href="#whats-new-22-mm-dd-02-13" title="Permalink to this headline"></a></h4>
+<span id="index-45"></span><span id="id44"></span><h4><a class="toc-backref" href="#id100">02-13</a><a class="headerlink" href="#whats-new-22-mm-dd-02-13" title="Permalink to this headline"></a></h4>
 <ol class="arabic">
 <li><p>The <a class="reference internal" href="atomic_four_mat_mul.html#atomic-four-mat-mul-name"><span class="std std-ref">atomic_four_mat_mul</span></a> example class was added.</p></li>
 <li><p>The <a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> include path has changed to</p>
@@ -668,33 +682,33 @@ base class.</p>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-02-12">
-<span id="index-45"></span><span id="id44"></span><h4><a class="toc-backref" href="#id99">02-12</a><a class="headerlink" href="#whats-new-22-mm-dd-02-12" title="Permalink to this headline"></a></h4>
+<span id="index-46"></span><span id="id45"></span><h4><a class="toc-backref" href="#id101">02-12</a><a class="headerlink" href="#whats-new-22-mm-dd-02-12" title="Permalink to this headline"></a></h4>
 <p>Add the <a class="reference internal" href="sparse_rc.html#sparse-rc-push-back"><span class="std std-ref">push_back</span></a> and
 output stream (see <a class="reference internal" href="sparse_rc.html#sparse-rc-os"><span class="std std-ref">os</span></a> ) operations
 to the <code class="docutils literal notranslate"><span class="pre">sparse_rc</span></code> template class.</p>
 </section>
 <section id="whats-new-22-mm-dd-02-11">
-<span id="index-46"></span><span id="id45"></span><h4><a class="toc-backref" href="#id100">02-11</a><a class="headerlink" href="#whats-new-22-mm-dd-02-11" title="Permalink to this headline"></a></h4>
+<span id="index-47"></span><span id="id46"></span><h4><a class="toc-backref" href="#id102">02-11</a><a class="headerlink" href="#whats-new-22-mm-dd-02-11" title="Permalink to this headline"></a></h4>
 <p>The value of <code class="docutils literal notranslate"><span class="pre">Libs:</span></code> in the <code class="docutils literal notranslate"><span class="pre">cppad.pc</span></code> <a class="reference internal" href="pkgconfig.html#pkgconfig-name"><span class="std std-ref">pkgconfig</span></a> file
 was not being set correctly for some cases. This has been fixed.</p>
 </section>
 <section id="whats-new-22-mm-dd-02-01">
-<span id="index-47"></span><span id="id46"></span><h4><a class="toc-backref" href="#id101">02-01</a><a class="headerlink" href="#whats-new-22-mm-dd-02-01" title="Permalink to this headline"></a></h4>
+<span id="index-48"></span><span id="id47"></span><h4><a class="toc-backref" href="#id103">02-01</a><a class="headerlink" href="#whats-new-22-mm-dd-02-01" title="Permalink to this headline"></a></h4>
 <p>Fix a possible integer overflow in the <a class="reference internal" href="to_string.cpp.html#to-string-cpp-name"><span class="std std-ref">to_string.cpp</span></a> example
 (might cause the test to fail).</p>
 </section>
 <section id="whats-new-22-mm-dd-01-27">
-<span id="index-48"></span><span id="id47"></span><h4><a class="toc-backref" href="#id102">01-27</a><a class="headerlink" href="#whats-new-22-mm-dd-01-27" title="Permalink to this headline"></a></h4>
+<span id="index-49"></span><span id="id48"></span><h4><a class="toc-backref" href="#id104">01-27</a><a class="headerlink" href="#whats-new-22-mm-dd-01-27" title="Permalink to this headline"></a></h4>
 <p>Convert <a class="reference internal" href="atomic_four_forward.cpp.html#atomic-four-forward-cpp-name"><span class="std std-ref">atomic_four_forward.cpp</span></a> from an atomic_three
 to an atomic_four example.</p>
 </section>
 <section id="whats-new-22-mm-dd-01-25">
-<span id="index-49"></span><span id="id48"></span><h4><a class="toc-backref" href="#id103">01-25</a><a class="headerlink" href="#whats-new-22-mm-dd-01-25" title="Permalink to this headline"></a></h4>
+<span id="index-50"></span><span id="id49"></span><h4><a class="toc-backref" href="#id105">01-25</a><a class="headerlink" href="#whats-new-22-mm-dd-01-25" title="Permalink to this headline"></a></h4>
 <p>Convert <a class="reference internal" href="atomic_four_dynamic.cpp.html#atomic-four-dynamic-cpp-name"><span class="std std-ref">atomic_four_dynamic.cpp</span></a> from an atomic_three
 to an atomic_four example.</p>
 </section>
 <section id="whats-new-22-mm-dd-01-23">
-<span id="index-50"></span><span id="id49"></span><h4><a class="toc-backref" href="#id104">01-23</a><a class="headerlink" href="#whats-new-22-mm-dd-01-23" title="Permalink to this headline"></a></h4>
+<span id="index-51"></span><span id="id50"></span><h4><a class="toc-backref" href="#id106">01-23</a><a class="headerlink" href="#whats-new-22-mm-dd-01-23" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Add <a class="reference internal" href="atomic_four.html#atomic-four-name"><span class="std std-ref">atomic_four</span></a> , a simpler interface to atomic functions.
 This has the optional <a class="reference internal" href="atomic_four_call.html#atomic-four-call-call-id"><span class="std std-ref">call_id</span></a> argument
@@ -708,14 +722,14 @@ element by element operator is being called; see
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-01-19">
-<span id="index-51"></span><span id="id50"></span><h4><a class="toc-backref" href="#id105">01-19</a><a class="headerlink" href="#whats-new-22-mm-dd-01-19" title="Permalink to this headline"></a></h4>
+<span id="index-52"></span><span id="id51"></span><h4><a class="toc-backref" href="#id107">01-19</a><a class="headerlink" href="#whats-new-22-mm-dd-01-19" title="Permalink to this headline"></a></h4>
 <p>Edit wish_list cppad_lib
 <a class="reference internal" href="wish_list.html#wish-list-cppad-lib-requirement"><span class="std std-ref">Requirement</span></a> item.
 Add an <a class="reference internal" href="wish_list.html#wish-list-optimization-atomic-functions"><span class="std std-ref">Atomic Functions</span></a>
 item to the optimization wish list.</p>
 </section>
 <section id="whats-new-22-mm-dd-01-15">
-<span id="index-52"></span><span id="id51"></span><h4><a class="toc-backref" href="#id106">01-15</a><a class="headerlink" href="#whats-new-22-mm-dd-01-15" title="Permalink to this headline"></a></h4>
+<span id="index-53"></span><span id="id52"></span><h4><a class="toc-backref" href="#id108">01-15</a><a class="headerlink" href="#whats-new-22-mm-dd-01-15" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Fix some conversion warnings generated by the clang compiler
 for the <a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> example.</p></li>
@@ -724,7 +738,7 @@ for the <a class="reference internal" href="atomic_four_vector.html#atomic-four-
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-01-06">
-<span id="index-53"></span><span id="id52"></span><h4><a class="toc-backref" href="#id107">01-06</a><a class="headerlink" href="#whats-new-22-mm-dd-01-06" title="Permalink to this headline"></a></h4>
+<span id="index-54"></span><span id="id53"></span><h4><a class="toc-backref" href="#id109">01-06</a><a class="headerlink" href="#whats-new-22-mm-dd-01-06" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Fix the <code class="docutils literal notranslate"><span class="pre">[]</span></code> operator using CppAD vector
 <a class="reference internal" href="CppAD_vector.html#cppad-vector-iterators-operator"><span class="std std-ref">iterators</span></a> .
@@ -734,14 +748,14 @@ and fix some warning used <code class="docutils literal notranslate"><span class
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-01-04">
-<span id="index-54"></span><span id="id53"></span><h4><a class="toc-backref" href="#id108">01-04</a><a class="headerlink" href="#whats-new-22-mm-dd-01-04" title="Permalink to this headline"></a></h4>
+<span id="index-55"></span><span id="id54"></span><h4><a class="toc-backref" href="#id110">01-04</a><a class="headerlink" href="#whats-new-22-mm-dd-01-04" title="Permalink to this headline"></a></h4>
 <ol class="arabic simple">
 <li><p>Add the neg operator to <a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> .</p></li>
 <li><p>Add reverse mode to the atomic_vector,  add, sub, and neg operators.</p></li>
 </ol>
 </section>
 <section id="whats-new-22-mm-dd-01-01">
-<span id="index-55"></span><span id="id54"></span><h4><a class="toc-backref" href="#id109">01-01</a><a class="headerlink" href="#whats-new-22-mm-dd-01-01" title="Permalink to this headline"></a></h4>
+<span id="index-56"></span><span id="id55"></span><h4><a class="toc-backref" href="#id111">01-01</a><a class="headerlink" href="#whats-new-22-mm-dd-01-01" title="Permalink to this headline"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">example/atomic_three/vector_op.cpp</span></code> example
 (see <a class="reference internal" href="atomic_four_vector.html#atomic-four-vector-name"><span class="std std-ref">atomic_four_vector</span></a> ) was split into multiple files and moved into the
 <code class="docutils literal notranslate"><span class="pre">example/atomic_vector</span></code> directory.</p>

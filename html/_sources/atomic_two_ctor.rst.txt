@@ -1,4 +1,4 @@
-lines 8-100 of file: include/cppad/core/atomic/two/ctor.hpp
+lines 8-101 of file: include/cppad/core/atomic/two/ctor.hpp
 
 {xrst_begin atomic_two_ctor}
 
@@ -79,6 +79,7 @@ determines which type of sparsity patterns it uses
 and its value is one of the following:
 
 .. list-table::
+   :widths: auto
 
    * - *sparsity*
      - sparsity patterns

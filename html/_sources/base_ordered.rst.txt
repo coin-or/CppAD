@@ -1,4 +1,4 @@
-lines 6-93 of file: xrst/base_require/base_ordered.xrst
+lines 6-94 of file: xrst/base_require/base_ordered.xrst
 
 {xrst_begin base_ordered}
 {xrst_spell
@@ -15,6 +15,7 @@ The following operations
 ``AD<`` *Base* > :
 
 .. list-table::
+   :widths: auto
 
    * - **Syntax**
      - **Result**

@@ -1,4 +1,4 @@
-lines 9-286 of file: include/cppad/utility/rosen_34.hpp
+lines 9-287 of file: include/cppad/utility/rosen_34.hpp
 
 {xrst_begin Rosen34}
 {xrst_spell
@@ -241,6 +241,7 @@ In addition, the following operations must be defined for
 *Scalar* objects *a* and *b* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

@@ -1,4 +1,4 @@
-lines 9-699 of file: include/cppad/example/atomic_two/eigen_mat_mul.hpp
+lines 9-700 of file: include/cppad/example/atomic_two/eigen_mat_mul.hpp
 
 {xrst_begin atomic_two_eigen_mat_mul.hpp}
 {xrst_spell
@@ -29,12 +29,13 @@ be different for different calls to the atomic function.
 These dimensions are:
 
 .. list-table::
+   :widths: auto
 
    * - *nr_left*
-     - number of rows in the left matrix; i.e, :math:`r` $rend
-       *n_middle*
-     - rows in the left matrix and columns in right; i.e, :math:`m` $rend
-       *nc_right*
+     - number of rows in the left matrix; i.e, :math:`r`
+   * - *n_middle*
+     - rows in the left matrix and columns in right; i.e, :math:`m`
+   * - *nc_right*
      - number of columns in the right matrix; i.e., :math:`c`
 
 Theory

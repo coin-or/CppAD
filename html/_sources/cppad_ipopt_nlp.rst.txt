@@ -1,4 +1,4 @@
-lines 8-563 of file: cppad_ipopt/src/cppad_ipopt_nlp.hpp
+lines 8-564 of file: cppad_ipopt/src/cppad_ipopt_nlp.hpp
 
 {xrst_begin cppad_ipopt_nlp}
 {xrst_spell
@@ -458,6 +458,7 @@ It is the final Ipopt status for the optimizer.
 Here is a list of the possible values for the status:
 
 .. list-table::
+   :widths: auto
 
    * - *status*
      - Meaning

@@ -1,4 +1,4 @@
-lines 6-204 of file: example/ipopt_solve/ode_inverse.cpp
+lines 6-205 of file: example/ipopt_solve/ode_inverse.cpp
 
 {xrst_begin ipopt_solve_ode_inverse.cpp}
 {xrst_spell
@@ -72,6 +72,7 @@ Simulation Parameter Values
 ===========================
 
 .. list-table::
+   :widths: auto
 
    * - :math:`\bar{a}_0 = 1`
      - initial value of :math:`y_0 (t, a)`

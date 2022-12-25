@@ -1,4 +1,4 @@
-lines 9-694 of file: include/cppad/example/atomic_three/mat_mul.hpp
+lines 9-693 of file: include/cppad/example/atomic_three/mat_mul.hpp
 
 {xrst_begin atomic_three_mat_mul.hpp}
 {xrst_spell
@@ -41,16 +41,15 @@ function *afun* .
 These dimensions are:
 
 .. list-table::
+   :widths: auto
 
    * - *ax* [0]
      - *nr_left*
      - number of rows in the left matrix and result matrix
-       $rend
-       *ax* [1]
+   * - *ax* [1]
      - *n_middle*
      - columns in the left matrix and rows in right matrix
-       $rend
-       *ax* [2]
+   * - *ax* [2]
      - *nc_right*
      - number of columns in the right matrix and result matrix
 

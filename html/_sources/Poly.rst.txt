@@ -1,4 +1,4 @@
-lines 8-140 of file: include/cppad/utility/poly.hpp
+lines 8-141 of file: include/cppad/utility/poly.hpp
 
 {xrst_begin Poly}
 {xrst_spell
@@ -92,6 +92,7 @@ The following operations must be supported where
 and *i* is an ``int`` :
 
 .. list-table::
+   :widths: auto
 
    * - *x* = *i*
      - assignment

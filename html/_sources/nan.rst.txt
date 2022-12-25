@@ -1,4 +1,4 @@
-lines 8-148 of file: include/cppad/utility/nan.hpp
+lines 8-149 of file: include/cppad/utility/nan.hpp
 
 {xrst_begin nan}
 {xrst_spell
@@ -114,6 +114,7 @@ Scalar
 The type *Scalar* must support the following operations;
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**
