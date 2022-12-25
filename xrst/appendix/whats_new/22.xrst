@@ -31,6 +31,12 @@ Changes and Additions to CppAD During 2022
 mm-dd
 *****
 
+12-25
+=====
+The column widths of some of the documentation tables were set to be equal
+instead of adjusting to best fit the columns.
+This has been fixed.
+
 12-23
 =====
 Add documentation for the binary operation
