@@ -119,6 +119,7 @@ Scalar
 The type *Scalar* must support the following operations;
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

@@ -42,6 +42,7 @@ First Level
 The first level of subsets of ``make check`` are described below:
 
 .. list-table::
+   :widths: auto
 
    * - Command
      - Description

@@ -120,6 +120,7 @@ Single Character
 The following is a list of the single character tokens:
 
 .. list-table::
+   :widths: auto
 
    * - Token
      - Usage

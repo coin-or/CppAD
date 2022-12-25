@@ -85,6 +85,7 @@ Documented Elsewhere
 ********************
 
 .. list-table::
+   :widths: auto
 
    * - :ref:`CPPAD_BOOL_BINARY<bool_fun@Create Binary>`
    * - :ref:`CPPAD_BOOL_UNARY<bool_fun@Create Unary>`
@@ -114,6 +115,7 @@ Deprecated
 ==========
 
 .. list-table::
+   :widths: auto
 
    * - :ref:`CppADCreateDiscrete<Discrete@CppADCreateDiscrete Deprecated 2007-07-28>`
    * - :ref:`CPPAD_TRACK_NEW_VEC<track_new_del@TrackNewVec@Macro>`

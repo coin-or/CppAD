@@ -14,7 +14,7 @@ then
    echo "bin/run_xrst.sh: must be executed from its parent directory"
    exit 1
 fi
-echo_eval xrst --local_toc --html_theme sphinx_rtd_theme
+echo_eval xrst --local_toc --html_theme sphinx_rtd_theme --group_list default dev
 #
 echo 'run_xrst.sh: OK'
 exit 0

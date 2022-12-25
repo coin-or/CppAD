@@ -92,6 +92,7 @@ In addition, the following operations must be defined objects
 *a* and *b* of type *Type* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**
@@ -122,7 +123,7 @@ Create and run a program that contains the following code:
    using std::complex;
    using std::cout;
    using std::endl;
-   
+
    complex<double> one(1., 0), i(0., 1);
    complex<double> x = one / i;
    complex<double> y = - i;

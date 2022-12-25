@@ -89,6 +89,7 @@ If *a* and *b* have type *Type* ,
 the following operation must be defined
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

@@ -78,6 +78,7 @@ In the result type column,
 be used just like a *NumericType* object.
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

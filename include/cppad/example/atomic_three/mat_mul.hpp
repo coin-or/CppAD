@@ -47,6 +47,7 @@ function *afun* .
 These dimensions are:
 
 .. list-table::
+   :widths: auto
 
    * - *ax* [0]
      - *nr_left*

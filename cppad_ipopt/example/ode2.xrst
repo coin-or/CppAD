@@ -95,6 +95,7 @@ Simulation Parameter Values
 ===========================
 
 .. list-table::
+   :widths: auto
 
    * - :math:`\bar{a}_0 = 1`
      - initial value of :math:`y_0 (t, a)`

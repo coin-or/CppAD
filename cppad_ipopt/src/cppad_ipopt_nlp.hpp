@@ -463,6 +463,7 @@ It is the final Ipopt status for the optimizer.
 Here is a list of the possible values for the status:
 
 .. list-table::
+   :widths: auto
 
    * - *status*
      - Meaning

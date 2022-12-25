@@ -97,6 +97,7 @@ The following operations must be supported where
 and *i* is an ``int`` :
 
 .. list-table::
+   :widths: auto
 
    * - *x* = *i*
      - assignment

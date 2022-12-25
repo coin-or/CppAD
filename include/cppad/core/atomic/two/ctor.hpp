@@ -84,6 +84,7 @@ determines which type of sparsity patterns it uses
 and its value is one of the following:
 
 .. list-table::
+   :widths: auto
 
    * - *sparsity*
      - sparsity patterns

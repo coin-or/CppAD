@@ -850,6 +850,7 @@ In addition, the :ref:`ADFun-name` member functions
 because it is easier to use the uniform syntax below:
 
 .. list-table::
+   :widths: auto
 
    * - **Old Syntax**
      - **Uniform Syntax**
@@ -857,7 +858,7 @@ because it is easier to use the uniform syntax below:
      - *r1* = *f* . ``Reverse`` (1, *v* )
    * - *q1* = *f* . ``RevTwo`` ( *v* )
      - *r2* = *f* . ``Reverse`` (2, *v* )
-   * - 
+   * -
      - *q1* [ *i* ] == *r2* [2 * *i*  + 1]
 
 The :ref:`Theory-name` section has been completely changed so that
@@ -906,6 +907,7 @@ In addition, the :ref:`ADFun-name` member functions
 because it is easier to use the uniform syntax below:
 
 .. list-table::
+   :widths: auto
 
    * - **Old Syntax**
      - **Uniform Syntax**

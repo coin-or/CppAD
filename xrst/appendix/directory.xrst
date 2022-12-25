@@ -18,6 +18,7 @@ The following table lists the sub-directories of the
 :ref:`download@Distribution Directory` :
 
 .. list-table::
+   :widths: auto
 
    * - ``bin``
      - Scripts used for CppAD development.
@@ -54,6 +55,7 @@ The following table lists the sub-directories of the ``example``
 directory.
 
 .. list-table::
+   :widths: auto
 
    * - ``abs_normal``
      - examples using :ref:`abs_normal<example_abs_normal-name>` representation of non-smooth functions.

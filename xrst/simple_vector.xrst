@@ -20,6 +20,7 @@ that satisfies the requirements below.
 The following is a list of some simple vector template classes:
 
 .. list-table::
+   :widths: auto
 
    * - **Name**
      - **Documentation**

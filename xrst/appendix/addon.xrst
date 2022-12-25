@@ -26,6 +26,7 @@ Each CppAD addon has a short name which we denote by *name* below,
 a longer name *longer* and a *description* :
 
 .. list-table::
+   :widths: auto
 
    * - *name*
      - *longer*

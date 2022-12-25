@@ -356,6 +356,7 @@ In addition, the following operations must be defined for
 *Scalar* objects *a* and *b* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

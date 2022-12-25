@@ -106,6 +106,7 @@ If *u* and *v* are *Type* objects and *i*
 is an ``int`` :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Result Type**

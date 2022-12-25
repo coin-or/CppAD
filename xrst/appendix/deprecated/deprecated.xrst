@@ -32,6 +32,7 @@ Name Changes
 ************
 
 .. list-table::
+   :widths: auto
 
    * - ``CppADCreateUnaryBool``
      - see Deprecated 2007-07-31 in :ref:`bool_fun-title`

@@ -1,6 +1,3 @@
-# Plan for batch Edit:
-# 2. Fix following spelling errors:
-#    comparision->comparison
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space or a dollar sign in an entry.
 #
@@ -14,7 +11,6 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
-#     include/cppad/local/utility/cppad_vector_itr.hpp
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -33,21 +29,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-/$code$/! b one
-N
-N
-N
-N
-/\n[$]pre\n[$][$]/! b end
-s|\n[$]pre\n[$][$]||
-s|$code|$codei%|
-s|$|\n%$$|
-b end
-#
-: one
-/^# endif$/! b end
-N
-/^# endif\n[$][$]$/! b end
-s|.*|$code # endif $$|
-#
-: end
+s|^[.][.] list-table::|&\
+   :widths: auto|

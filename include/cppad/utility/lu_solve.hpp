@@ -166,6 +166,7 @@ In addition, the following operations must be defined for any pair
 of *Float* objects *x* and *y* :
 
 .. list-table::
+   :widths: auto
 
    * - **Operation**
      - **Description**

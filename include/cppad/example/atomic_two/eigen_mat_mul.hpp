@@ -35,6 +35,7 @@ be different for different calls to the atomic function.
 These dimensions are:
 
 .. list-table::
+   :widths: auto
 
    * - *nr_left*
      - number of rows in the left matrix; i.e, :math:`r` $rend
