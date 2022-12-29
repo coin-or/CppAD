@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_two}
+{xrst_begin atomic_two app}
 {xrst_spell
    px
    py
@@ -103,7 +103,7 @@ Contents
 
 {xrst_end atomic_two}
 -------------------------------------------------------------------------------
-{xrst_begin atomic_two_example}
+{xrst_begin atomic_two_example app}
 {xrst_spell
    scalars
 }

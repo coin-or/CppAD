@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin deprecated}
+{xrst_begin deprecated app}
 
 CppAD Deprecated API Features
 #############################

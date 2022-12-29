@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin cppad_ipopt_nlp}
+{xrst_begin cppad_ipopt_nlp app}
 {xrst_spell
    fg
    infeasibility

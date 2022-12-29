@@ -9,6 +9,7 @@ tex_directory     = 'build/tex'
 
 [root_file]
 default = 'cppad.xrst'
+app     = 'appendix/appendix.xrst'
 dev     = 'xrst/devel/devel.xrst'
 
 [include_all]

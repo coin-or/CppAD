@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin atomic_two_eigen_cholesky.hpp}
+{xrst_begin atomic_two_eigen_cholesky.hpp app}
 {xrst_spell
    cholesky
 }

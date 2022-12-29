@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin omp_max_thread}
+{xrst_begin omp_max_thread app}
 {xrst_spell
    mp
 }

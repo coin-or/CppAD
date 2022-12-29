@@ -7,7 +7,7 @@
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin epsilon}
+{xrst_begin epsilon app}
 
 Machine Epsilon For AD Types
 ############################

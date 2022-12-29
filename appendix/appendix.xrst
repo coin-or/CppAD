@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin Appendix}
+{xrst_begin appendix app}
 
 Appendix
 ########
@@ -24,4 +24,4 @@ Contents
    appendix/license.xrst
 }
 
-{xrst_end Appendix}
+{xrst_end appendix}

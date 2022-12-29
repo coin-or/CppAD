@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin opt_val_hes}
+{xrst_begin opt_val_hes app}
 {xrst_spell
    signdet
    yy

@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_two_rev_sparse_jac}
+{xrst_begin atomic_two_rev_sparse_jac app}
 {xrst_spell
    rt
    st

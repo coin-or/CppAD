@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin bender_quad.cpp}
+{xrst_begin bender_quad.cpp app}
 {xrst_spell
    argmin
 }

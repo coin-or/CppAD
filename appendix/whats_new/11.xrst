@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_11}
+{xrst_begin whats_new_11 app}
 {xrst_spell
    automake
    boostvector

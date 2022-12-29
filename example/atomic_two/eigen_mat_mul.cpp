@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin atomic_two_eigen_mat_mul.cpp}
+{xrst_begin atomic_two_eigen_mat_mul.cpp app}
 
 Atomic Eigen Matrix Multiply: Example and Test
 ##############################################

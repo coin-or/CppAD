@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin lu_ratio.cpp}
+{xrst_begin lu_ratio.cpp app}
 
 LuRatio: Example and Test
 #########################

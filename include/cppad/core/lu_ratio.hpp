@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin LuRatio}
+{xrst_begin LuRatio app}
 {xrst_spell
    jp
    permuted

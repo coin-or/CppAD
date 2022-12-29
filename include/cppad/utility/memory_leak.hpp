@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin memory_leak}
+{xrst_begin memory_leak app}
 {xrst_spell
    inuse
    statics

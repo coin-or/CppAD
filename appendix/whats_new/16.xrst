@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_16}
+{xrst_begin whats_new_16 app}
 {xrst_spell
    adouble
    autotools

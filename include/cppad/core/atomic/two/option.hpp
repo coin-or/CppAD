@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_two_option}
+{xrst_begin atomic_two_option app}
 {xrst_spell
    typedef
 }

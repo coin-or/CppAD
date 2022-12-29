@@ -14,7 +14,7 @@ class omp_alloc{
 // ============================================================================
 public:
 /*
-{xrst_begin omp_max_num_threads}
+{xrst_begin omp_max_num_threads app}
 Set and Get Maximum Number of Threads for omp_alloc Allocator
 #############################################################
 
@@ -84,7 +84,7 @@ In addition, this function cannot be called while in parallel mode.
    {  return thread_alloc::num_threads(); }
 
 /* -----------------------------------------------------------------------
-{xrst_begin omp_in_parallel}
+{xrst_begin omp_in_parallel app}
 
 Is The Current Execution in OpenMP Parallel Mode
 ################################################
@@ -130,7 +130,7 @@ It is true if the current execution is in parallel mode
    }
 
 /* -----------------------------------------------------------------------
-{xrst_begin omp_get_thread_num}
+{xrst_begin omp_get_thread_num app}
 
 Get the Current OpenMP Thread Number
 ####################################
@@ -173,7 +173,7 @@ If ``_OPENMP`` is not defined, *thread* is zero.
 # endif
    }
 /* -----------------------------------------------------------------------
-{xrst_begin omp_get_memory}
+{xrst_begin omp_get_memory app}
 
 Get At Least A Specified Amount of Memory
 #########################################
@@ -256,7 +256,7 @@ This allocation should be faster if the following conditions hold:
    {  return thread_alloc::get_memory(min_bytes, cap_bytes); }
 
 /* -----------------------------------------------------------------------
-{xrst_begin omp_return_memory}
+{xrst_begin omp_return_memory app}
 
 Return Memory to omp_alloc
 ##########################
@@ -323,7 +323,7 @@ that *v_ptr* is in the list.
    static void return_memory(void* v_ptr)
    {  thread_alloc::return_memory(v_ptr); }
 /* -----------------------------------------------------------------------
-{xrst_begin omp_free_available}
+{xrst_begin omp_free_available app}
 
 Free Memory Currently Available for Quick Use by a Thread
 #########################################################
@@ -368,7 +368,7 @@ or the current execution mode must be sequential
    static void free_available(size_t thread)
    {  thread_alloc::free_available(thread); }
 /* -----------------------------------------------------------------------
-{xrst_begin omp_inuse}
+{xrst_begin omp_inuse app}
 {xrst_spell
    inuse
 }
@@ -429,7 +429,7 @@ It is the number of bytes currently in use by the specified thread.
    static size_t inuse(size_t thread)
    {  return thread_alloc::inuse(thread); }
 /* -----------------------------------------------------------------------
-{xrst_begin omp_available}
+{xrst_begin omp_available app}
 
 Amount of Memory Available for Quick Use by a Thread
 ####################################################
@@ -480,7 +480,7 @@ It is the number of bytes currently available for use by the specified thread.
    static size_t available(size_t thread)
    {  return thread_alloc::available(thread); }
 /* -----------------------------------------------------------------------
-{xrst_begin omp_create_array}
+{xrst_begin omp_create_array app}
 
 Allocate Memory and Create A Raw Array
 ######################################
@@ -576,7 +576,7 @@ and *size_out* is available.
    static Type* create_array(size_t size_min, size_t& size_out)
    {  return thread_alloc::create_array<Type>(size_min, size_out); }
 /* -----------------------------------------------------------------------
-{xrst_begin omp_delete_array}
+{xrst_begin omp_delete_array app}
 
 Return A Raw Array to The Available Memory for a Thread
 #######################################################
@@ -648,7 +648,7 @@ is the same as for the corresponding call to ``create_array`` .
    {  thread_alloc::delete_array(array); }
 };
 /* --------------------------------------------------------------------------
-{xrst_begin omp_efficient}
+{xrst_begin omp_efficient app}
 
 Check If A Memory Allocation is Efficient for Another Use
 #########################################################
@@ -719,7 +719,7 @@ that *v_ptr* is in the list.
 
 {xrst_end omp_efficient}
 ---------------------------------------------------------------------------
-{xrst_begin old_max_num_threads}
+{xrst_begin old_max_num_threads app}
 Set Maximum Number of Threads for omp_alloc Allocator
 #####################################################
 

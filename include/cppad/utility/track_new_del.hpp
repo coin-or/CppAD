@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin track_new_del}
+{xrst_begin track_new_del app}
 {xrst_spell
    ncopy
    newlen

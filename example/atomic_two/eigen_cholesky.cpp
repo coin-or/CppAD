@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin atomic_two_eigen_cholesky.cpp}
+{xrst_begin atomic_two_eigen_cholesky.cpp app}
 {xrst_spell
    chol
    cholesky

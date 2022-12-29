@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_one}
+{xrst_begin atomic_one app}
 {xrst_spell
    px
    py

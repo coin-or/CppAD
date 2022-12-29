@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin atomic_two_eigen_mat_inv.hpp}
+{xrst_begin atomic_two_eigen_mat_inv.hpp app}
 {xrst_spell
    tr
 }

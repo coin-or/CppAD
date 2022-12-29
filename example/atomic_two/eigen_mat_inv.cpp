@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin atomic_two_eigen_mat_inv.cpp}
+{xrst_begin atomic_two_eigen_mat_inv.cpp app}
 
 Atomic Eigen Matrix Inverse: Example and Test
 #############################################

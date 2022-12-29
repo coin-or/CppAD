@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin zdouble}
+{xrst_begin zdouble app}
 {xrst_spell
    zdouble
 }

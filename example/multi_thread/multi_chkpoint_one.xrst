@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin multi_chkpoint_one.cpp}
+{xrst_begin multi_chkpoint_one.cpp app}
 
 Multi-Threading chkpoint_one Example / Test
 ###########################################

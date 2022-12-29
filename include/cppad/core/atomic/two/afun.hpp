@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_two_afun}
+{xrst_begin atomic_two_afun app}
 
 Using AD Version of Atomic Function
 ###################################

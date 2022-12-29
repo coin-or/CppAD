@@ -21,7 +21,7 @@
 
 /*
 -------------------------------------------------------------------------------
-{xrst_begin det_of_minor_c}
+{xrst_begin det_of_minor_c app}
 {xrst_spell
    factorial
 }
@@ -229,7 +229,7 @@ double det_of_minor(
 
 {xrst_end det_of_minor_c}
 -------------------------------------------------------------------------------
-{xrst_begin det_by_minor_c}
+{xrst_begin det_by_minor_c app}
 
 Compute Determinant using Expansion by Minors
 #############################################
@@ -302,7 +302,7 @@ double det_by_minor(double* a, size_t m)
 
 {xrst_end det_by_minor_c}
 --------------------------------------------------------------------------
-{xrst_begin uniform_01_c}
+{xrst_begin uniform_01_c app}
 {xrst_spell
    variate
 }
@@ -366,7 +366,7 @@ void uniform_01(size_t n, double* a)
 
 {xrst_end uniform_01_c}
 ------------------------------------------------------------------------------
-{xrst_begin correct_det_by_minor_c}
+{xrst_begin correct_det_by_minor_c app}
 
 Correctness Test of det_by_minor Routine
 ########################################
@@ -412,7 +412,7 @@ bool correct_det_by_minor(void)
 
 {xrst_end correct_det_by_minor_c}
 ------------------------------------------------------------------------------
-{xrst_begin repeat_det_by_minor_c}
+{xrst_begin repeat_det_by_minor_c app}
 
 Repeat det_by_minor Routine A Specified Number of Times
 #######################################################
@@ -459,7 +459,7 @@ void repeat_det_by_minor(size_t repeat, size_t size)
 
 {xrst_end repeat_det_by_minor_c}
 ------------------------------------------------------------------------------
-{xrst_begin elapsed_seconds_c}
+{xrst_begin elapsed_seconds_c app}
 
 Returns Elapsed Number of Seconds
 #################################
@@ -545,7 +545,7 @@ double elapsed_seconds(void)
 
 {xrst_end elapsed_seconds_c}
 -----------------------------------------------------------------------------
-{xrst_begin time_det_by_minor_c}
+{xrst_begin time_det_by_minor_c app}
 
 Determine Amount of Time to Execute det_by_minor
 ################################################
@@ -614,7 +614,7 @@ double time_det_by_minor(size_t size, double time_min)
 
 {xrst_end time_det_by_minor_c}
 ------------------------------------------------------------------------------
-{xrst_begin main_compare_c}
+{xrst_begin main_compare_c app}
 
 Main Program For Comparing C and C++ Speed
 ##########################################

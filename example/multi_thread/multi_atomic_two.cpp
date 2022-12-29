@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin multi_atomic_two_user}
+{xrst_begin multi_atomic_two_user app}
 {xrst_spell
    iterate
 }
@@ -148,7 +148,7 @@ private:
 }
 // END USER C++
 /*
-{xrst_begin multi_atomic_two_common}
+{xrst_begin multi_atomic_two_common app}
 
 Multi-Threaded atomic_two Common Information
 ############################################
@@ -206,7 +206,7 @@ namespace {
 // END COMMON C++
 /*
 -------------------------------------------------------------------------------
-{xrst_begin multi_atomic_two_setup}
+{xrst_begin multi_atomic_two_setup app}
 
 Multi-Threaded atomic_two Set Up
 ################################
@@ -313,7 +313,7 @@ bool multi_atomic_two_setup(const vector<double>& y_squared)
 // END SETUP C++
 /*
 ------------------------------------------------------------------------------
-{xrst_begin multi_atomic_two_worker}
+{xrst_begin multi_atomic_two_worker app}
 
 Multi-Threaded atomic_two Worker
 ################################
@@ -353,7 +353,7 @@ void multi_atomic_two_worker(void)
 // END WORKER C++
 /*
 ------------------------------------------------------------------------------
-{xrst_begin multi_atomic_two_takedown}
+{xrst_begin multi_atomic_two_takedown app}
 
 Multi-Threaded atomic_two Take Down
 ###################################
@@ -447,7 +447,7 @@ bool multi_atomic_two_takedown(vector<double>& square_root)
 }
 // END TAKEDOWN C++
 /*
-{xrst_begin multi_atomic_two_run}
+{xrst_begin multi_atomic_two_run app}
 
 Run Multi-Threaded atomic_two Calculation
 #########################################
@@ -527,7 +527,7 @@ bool multi_atomic_two_run(
 // END RUN C++
 /*
 ------------------------------------------------------------------------------
-{xrst_begin multi_atomic_two_time}
+{xrst_begin multi_atomic_two_time app}
 
 Timing Test for Multi-Threaded atomic_two Calculation
 #####################################################

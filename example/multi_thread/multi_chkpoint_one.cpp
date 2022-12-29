@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin multi_chkpoint_one_algo}
+{xrst_begin multi_chkpoint_one_algo app}
 {xrst_spell
    iterate
 }
@@ -99,7 +99,7 @@ namespace {
 // END ALGO C++
 
 /*
-{xrst_begin multi_chkpoint_one_common}
+{xrst_begin multi_chkpoint_one_common app}
 
 Multi-Threaded chkpoint_one Common Information
 ##############################################
@@ -155,7 +155,7 @@ namespace {
 // END COMMON C++
 /*
 -------------------------------------------------------------------------------
-{xrst_begin multi_chkpoint_one_setup}
+{xrst_begin multi_chkpoint_one_setup app}
 
 Multi-Threaded chkpoint_one Set Up
 ##################################
@@ -261,7 +261,7 @@ bool multi_chkpoint_one_setup(const vector<double>& y_squared)
 // END SETUP C++
 /*
 ------------------------------------------------------------------------------
-{xrst_begin multi_chkpoint_one_worker}
+{xrst_begin multi_chkpoint_one_worker app}
 
 Multi-Threaded chkpoint_one Worker
 ##################################
@@ -301,7 +301,7 @@ void multi_chkpoint_one_worker(void)
 // END WORKER C++
 /*
 ------------------------------------------------------------------------------
-{xrst_begin multi_chkpoint_one_takedown}
+{xrst_begin multi_chkpoint_one_takedown app}
 
 Multi-Threaded chkpoint_one Take Down
 #####################################
@@ -397,7 +397,7 @@ bool multi_chkpoint_one_takedown(vector<double>& square_root)
 }
 // END TAKEDOWN C++
 /*
-{xrst_begin multi_chkpoint_one_run}
+{xrst_begin multi_chkpoint_one_run app}
 
 Run Multi-Threaded chkpoint_one Calculation
 ###########################################
@@ -477,7 +477,7 @@ bool multi_chkpoint_one_run(
 // END RUN C++
 /*
 ------------------------------------------------------------------------------
-{xrst_begin multi_chkpoint_one_time}
+{xrst_begin multi_chkpoint_one_time app}
 
 Timing Test for Multi-Threaded chkpoint_one Calculation
 #######################################################

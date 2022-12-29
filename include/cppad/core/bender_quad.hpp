@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin BenderQuad}
+{xrst_begin BenderQuad app}
 {xrst_spell
    avector
    gx
@@ -172,7 +172,7 @@ fun.dy
 The ``BenderQuad`` argument *fun* supports the syntax
 
 | |tab| *dy* = *fun* . ``dy`` ( *x* , *y* , *h* )
-| 
+|
 | *x*
 
 The *fun* . ``dy`` argument *x* has prototype

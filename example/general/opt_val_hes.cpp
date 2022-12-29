@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin opt_val_hes.cpp}
+{xrst_begin opt_val_hes.cpp app}
 
 opt_val_hes: Example and Test
 #############################

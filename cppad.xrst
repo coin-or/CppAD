@@ -219,7 +219,6 @@ Contents
    include/cppad/ipopt/solve.hpp
    xrst/example.xrst
    speed/speed.xrst
-   appendix/appendix.xrst
 }
 
 
