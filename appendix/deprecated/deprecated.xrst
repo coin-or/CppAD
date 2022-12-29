@@ -10,12 +10,12 @@ CppAD Deprecated API Features
 Contents
 ********
 {xrst_toc_table
-   xrst/appendix/deprecated/include_deprecated.xrst
-   xrst/appendix/deprecated/fun_deprecated.xrst
-   xrst/appendix/deprecated/compare_change.xrst
+   appendix/deprecated/include_deprecated.xrst
+   appendix/deprecated/fun_deprecated.xrst
+   appendix/deprecated/compare_change.xrst
    include/cppad/core/omp_max_thread.hpp
    include/cppad/utility/track_new_del.hpp
-   xrst/appendix/deprecated/omp_alloc.xrst
+   appendix/deprecated/omp_alloc.xrst
    include/cppad/utility/memory_leak.hpp
    include/cppad/core/epsilon.hpp
    cppad_ipopt/src/cppad_ipopt_nlp.hpp
