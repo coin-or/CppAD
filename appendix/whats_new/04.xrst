@@ -40,7 +40,7 @@ mm-dd
 12-11
 =====
 The documentation for the CppAD error macros was improved.
-The package title in :ref:`cppad-name` was changed.
+The package title in :ref:`user_guide-name` was changed.
 The documentation for :ref:`CppAD::vector<CppAD_vector-name>`
 was improved and the corresponding source code
 ``cppad/vector.hpp`` was included.

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin CppAD}
+{xrst_begin user_guide}
 {xrst_spell
    github
    appveyor
@@ -11,8 +11,8 @@
    posix
 }
 
-cppad-20221229: C++ Algorithmic Differentiation Package User Documentation
-##########################################################################
+cppad-20221229: CppAD User's Manual
+###################################
 
 .. image:: {xrst_dir coin.png}
 
@@ -222,4 +222,4 @@ Contents
 }
 
 
-{xrst_end CppAD}
+{xrst_end user_guide}

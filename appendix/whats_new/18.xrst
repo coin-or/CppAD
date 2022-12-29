@@ -185,11 +185,11 @@ The following is a list of changes to the documentation:
    ``-Wfloat-conversion`` and ``-Wfloat-conversion``
    are not valid options.
 #. Instructions for obtaining GPL distribution were added near the
-   top of the :ref:`home page<CppAD-name>` .
+   top of the :ref:`home page<user_guide-name>` .
 
 10-24
 =====
-The new :ref:`CppAD-name` home pages has been edited to be a better
+The new :ref:`user_guide-name` home pages has been edited to be a better
 introduction to CppAD.
 In addition, more discussion was added to the :ref:`get_started.cpp-name`
 example.

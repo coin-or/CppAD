@@ -538,7 +538,7 @@ This also reduced the time required by the
 06-02
 =====
 The version number in the title of the top level for the
-:ref:`CppAD-name` documentation was not being updated.
+:ref:`user_guide-name` documentation was not being updated.
 This started on ``20190521`` and has been fixed.
 
 05-31

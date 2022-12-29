@@ -86,7 +86,7 @@ The :ref:`get_started.cpp-name` section has been moved
 into the :ref:`Introduction-name` and
 :ref:`get_started.cpp@Exercises` were added to that section.
 In addition some sections has switched position between
-the top level :ref:`CppAD-name` and the :ref:`Appendix-name` .
+the top level :ref:`user_guide-name` and the :ref:`appendix-name` .
 
 12-19
 =====
@@ -301,7 +301,7 @@ in preparation for
 more formal speed comparisons with other packages.
 To be specific, its documentation was improved,
 its dependence on the rest of CppAD was removed
-(it no longer includes :ref:`CppAD.h<cppad-name>` ).
+(it no longer includes CppAD.h ).
 
 11-12
 =====
@@ -911,7 +911,7 @@ in the CppAD namespace for the
 
 03-15
 =====
-Improve the introduction to :ref:`CppAD-name` on the top level page
+Improve the introduction to CppAD on the top level page
 of the documentation.
 
 03-11

@@ -50,7 +50,7 @@ between 2006-12-17 and 2015-11-30 (see discussion above).
    **Deprecated**,**Before 2015-11-30**,**Documentation**
    CppAD/CheckNumericType.h,cppad/check_numeric_type.hpp,:ref:`CheckNumericType-name`
    CppAD/CheckSimpleVector.h,cppad/check_simple_vector.hpp,:ref:`CheckSimpleVector-name`
-   CppAD/CppAD.h,cppad/cppad.hpp,:ref:`CppAD-name`
+   CppAD/CppAD.h,cppad/cppad.hpp,:ref:`user_guide-name`
    CppAD/CppAD_vector.h,cppad/vector.hpp,:ref:`CppAD_vector-name`
    CppAD/ErrorHandler.h,cppad/error_handler.hpp,:ref:`ErrorHandler-name`
    CppAD/LuFactor.h,cppad/lu_factor.hpp,:ref:`LuFactor-name`

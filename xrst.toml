@@ -8,7 +8,7 @@ html_directory    = 'build/html'
 tex_directory     = 'build/tex'
 
 [root_file]
-default = 'cppad.xrst'
+default = 'user_guide.xrst'
 app     = 'appendix/appendix.xrst'
 dev     = 'xrst/devel/devel.xrst'
 
