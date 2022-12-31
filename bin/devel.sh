@@ -8,7 +8,7 @@ copyright_owner='Bradley M. Bell'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-   cppad.xrst
+   user_guide.xrst
    configure.ac
 '
 #
@@ -24,6 +24,7 @@ ignore_files='
    /.coin-or/projDesc.xml
    /.github/workflows/
    /.gitignore
+   /.readthedocs.yaml
    /COPYING
    /ar-lib
    /authors
