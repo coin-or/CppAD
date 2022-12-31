@@ -25,8 +25,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section C++ AD Graph Iterator Private Member Data$$
 $srccode%hpp% */
@@ -62,8 +62,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section C++ AD Graph Iterator set_value()$$
 
@@ -272,8 +272,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section C++ AD Graph Iterator Types$$
 
@@ -301,8 +301,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section C++ AD Graph Iterator Constructors$$
 
@@ -371,8 +371,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section C++ AD Graph Iterator Input Operations$$
 

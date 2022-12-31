@@ -24,8 +24,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Link from Forward Jacobian Sparsity Sweep to atomic_four Callback$$
 
@@ -149,8 +149,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Link from Reverse Jacobian Sparsity Sweep to atomic_four Callback$$
 

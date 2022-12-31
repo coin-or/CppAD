@@ -30,8 +30,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Defining Atomic Functions: Second Generation$$
 
@@ -115,8 +115,8 @@ $end
 $begin atomic_two_example$$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Example Defining Atomic Functions: Second Generation$$
 

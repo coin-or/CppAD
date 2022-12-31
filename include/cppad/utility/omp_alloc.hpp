@@ -30,8 +30,8 @@ $spell
     omp_alloc
 $$
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Set and Get Maximum Number of Threads for omp_alloc Allocator$$
 
@@ -99,8 +99,8 @@ $end
 $begin omp_in_parallel$$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Is The Current Execution in OpenMP Parallel Mode$$
 $spell
@@ -155,8 +155,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Get the Current OpenMP Thread Number$$
 
@@ -202,8 +202,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Get At Least A Specified Amount of Memory$$
 
@@ -288,8 +288,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Return Memory to omp_alloc$$
 
@@ -354,8 +354,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Free Memory Currently Available for Quick Use by a Thread$$
 
@@ -403,8 +403,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Amount of Memory a Thread is Currently Using$$
 
@@ -463,8 +463,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Amount of Memory Available for Quick Use by a Thread$$
 
@@ -516,8 +516,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Allocate Memory and Create A Raw Array$$
 
@@ -611,8 +611,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Return A Raw Array to The Available Memory for a Thread$$
 
@@ -686,8 +686,8 @@ $spell
 $$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Check If A Memory Allocation is Efficient for Another Use$$
 
@@ -756,8 +756,8 @@ $spell
     omp_alloc
 $$
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
 

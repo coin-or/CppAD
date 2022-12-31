@@ -14,8 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin check_simple_vector.cpp$$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section The CheckSimpleVector Function: Example and Test$$
 

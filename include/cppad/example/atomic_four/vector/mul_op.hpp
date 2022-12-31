@@ -15,8 +15,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin atomic_four_vector_mul_op.hpp$$
 
 $nospell
-$bold This is old CppAD documentation:$$ Here is a link to its
-$href%http://coin-or.github.io/CppAD%current documentation%$$.
+$bold This is cppad-20221105 documentation$$. Here is a link to its
+$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
 $$
 $section Atomic Vector Multiply Operator: Example Implementation$$
 

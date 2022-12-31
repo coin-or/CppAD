@@ -30,9 +30,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$section|$nospell\
-$bold This is old CppAD documentation:$$ Here is a link to its\
-$href%http://coin-or.github.io/CppAD%current documentation%$$.\
-$$\
-&|
-#
+s|$bold This is old CppAD documentation:$[$]|$bold This is cppad-20221105 documentation$$.|
+s|$href%http://coin-or.github.io/CppAD%|$href%https://cppad.readthedocs.io/en/latest/user_guide.html%|
