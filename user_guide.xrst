@@ -11,7 +11,7 @@
    posix
 }
 
-cppad-20221229: CppAD User's Manual
+cppad-20221231: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}
