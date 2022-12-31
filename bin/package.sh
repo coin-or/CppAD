@@ -82,7 +82,7 @@ then
       echo_eval xrst \
          --local_toc \
          --html_theme sphinx_rtd_theme \
-         --group_list default
+         --group_list default app
    else
 cat << EOF
 Cannot find gh-pages documentation for this version: $version

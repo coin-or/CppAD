@@ -1,14 +1,3 @@
-# {xrst_begin .readthedocs.yaml}
-# {xrst_comment_ch #}
-#
-# Example Read the Docs Configuration
-# ###################################
-#
-# This Example File
-# *****************
-# {xrst_literal}
-#
-# {xrst_end .readthedocs.yaml}
 version: 2
 
 build:
