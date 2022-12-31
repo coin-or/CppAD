@@ -44,6 +44,7 @@ ignore_files='
    /epl-2.0.txt
    /install-sh
    /missing
+   /readme.md
    /sphinx/preamble.rst
    /uw_copy_040507.html
    /xrst.toml
