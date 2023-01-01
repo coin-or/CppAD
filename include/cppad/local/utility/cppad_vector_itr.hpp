@@ -29,7 +29,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Preprocessor Definitions$$
 
@@ -89,7 +89,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Traits and Friends$$
 
@@ -120,7 +120,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Member Data and Constructors$$
 
@@ -236,7 +236,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Increment Operators$$
 
@@ -282,7 +282,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Equality Operators$$
 $spell
@@ -321,7 +321,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Access Elements$$
 
@@ -374,7 +374,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Vector Class Iterator Random Access$$
 

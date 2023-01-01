@@ -32,7 +32,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section json lexer: Private Data$$
 
@@ -99,7 +99,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section json lexer: Report an Error$$
 
@@ -136,7 +136,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section json lexer: Advance Index by One$$
 
@@ -177,7 +177,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section json lexer: Skip White Space That Separates Tokens$$
 
@@ -212,7 +212,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section json lexer: Constructor$$
 
@@ -248,7 +248,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Get and Check Next Single Character Token$$
 
@@ -290,7 +290,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Get and Check Next Single Character Token$$
 
@@ -331,7 +331,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Get Next Non-Negative Integer$$
 
@@ -371,7 +371,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Get Next Floating Point Number$$
 

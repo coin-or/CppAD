@@ -33,7 +33,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Multiple orders, one direction, forward mode Taylor coefficients$$
 
@@ -306,7 +306,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section One order, multiple directions, forward mode Taylor coefficients$$
 

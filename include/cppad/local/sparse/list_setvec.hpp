@@ -34,7 +34,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Private Member Data$$
 
@@ -145,7 +145,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec private: Number of References to a Set$$
 
@@ -186,7 +186,7 @@ $spell
 $$
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec private: Drop a Set No Longer Being Used$$
 
@@ -296,7 +296,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec private: Get a New List Pair$$
 
@@ -354,7 +354,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec private: Check Data Structure$$
 
@@ -478,7 +478,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Approximate Memory Used by Vector$$
 
@@ -501,7 +501,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Print a Vector of Sets$$
 
@@ -527,7 +527,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Iterators$$
 
@@ -549,7 +549,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Default Constructor$$
 
@@ -579,7 +579,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Destructor$$
 
@@ -601,7 +601,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Copy Constructor$$
 
@@ -627,7 +627,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Vector resize$$
 
@@ -684,7 +684,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Number of Sets$$
 
@@ -706,7 +706,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: End Value$$
 
@@ -728,7 +728,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Vector Assignment$$
 
@@ -758,7 +758,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Vector Swap$$
 
@@ -792,7 +792,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Number of Elements in a Set$$
 
@@ -835,7 +835,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Add an Elements to a Set$$
 
@@ -962,7 +962,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Post an Elements for Addition to a Set$$
 
@@ -1001,7 +1001,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Add Posted Elements to a Set$$
 
@@ -1141,7 +1141,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Is an Element in a Set$$
 
@@ -1179,7 +1179,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Assign a Set to be Empty$$
 
@@ -1210,7 +1210,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Assign a Set To Equal Another Set$$
 
@@ -1292,7 +1292,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Assign a Set To Union of Two Sets$$
 
@@ -1440,7 +1440,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec: Assign a Set To Equal Another Set$$
 
@@ -1580,7 +1580,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec_const_iterator private: Member Data$$
 
@@ -1620,7 +1620,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec_const_iterator: Constructor$$
 
@@ -1666,7 +1666,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec_const_iterator: Dereference$$
 
@@ -1689,7 +1689,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section class list_setvec_const_iterator: Increment$$
 
@@ -1734,7 +1734,7 @@ $$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Copy A Vector of Standard Sets To A list_setvec Object$$
 

@@ -19,7 +19,7 @@ $begin atomic_four_for_hes_sparsity$$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Link from Forward Hesswian Sparsity Sweep to atomic_four Callback$$
 
@@ -205,7 +205,7 @@ $begin atomic_four_rev_hes_sparsity$$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Link from Reverse Hessian Sparsity Sweep to atomic_four Callback$$
 

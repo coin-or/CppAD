@@ -15,7 +15,7 @@ $begin abs_get_started.cpp$$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section abs_normal Getting Started: Example and Test$$
 

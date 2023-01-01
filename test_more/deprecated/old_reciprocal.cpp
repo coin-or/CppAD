@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin old_reciprocal.cpp$$
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Old Atomic Operation Reciprocal: Example and Test$$
 

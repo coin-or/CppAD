@@ -16,7 +16,7 @@ $begin atomic_four_vector_div_op.hpp$$
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Atomic Vector Divide Operator: Example Implementation$$
 

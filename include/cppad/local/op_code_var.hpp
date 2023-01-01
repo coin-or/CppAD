@@ -65,7 +65,7 @@ All of these definitions are in the $code CppAD::local$$ namespace.
 
 $nospell
 $bold This is cppad-20221105 documentation$$. Here is a link to its
-$href%https://cppad.readthedocs.io/en/latest/user_guide.html%current documentation%$$.
+$href%https://cppad.readthedocs.io%current documentation%$$.
 $$
 $section Variable Op Codes$$
 
