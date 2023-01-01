@@ -12,7 +12,11 @@ build:
       # build/html
       # The xsrst html_directory for this configuration is build/html.
       # Build the default (user_guide) and app (appendix) groups.
-      - xrst --page_source --html_theme furo --group_list default app
+      - xrst 
+         --page_source 
+         --html_theme furo 
+         --group_list default app
+         --index_page_name user_guide
       #
       # _readthedocs/html
       # The directory that Read the Docs uploads when commands is used.
