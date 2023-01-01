@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin user_guide}
 {xrst_spell
@@ -11,7 +11,7 @@
    posix
 }
 
-cppad-20221231: CppAD User's Manual
+cppad-20230101: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}
