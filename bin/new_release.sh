@@ -1,10 +1,10 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-stable_version='20220000' # date at which this stable branch started
-release='5'               # first release for each stable version is 0
+stable_version='20230000' # date at which this stable branch started
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -25,7 +25,7 @@ then
    exit 1
 fi
 #
-# check that .coin-or/projDesc.xml and xrst/cppad.xrst are correct
+# check that .coin-or/projDesc.xml and xrst/user_guide.xrst are correct
 key='stableVersionNumber'
 sed -i .coin-or/projDesc.xml \
    -e "s|<$key>[0-9]*</$key>|<$key>$stable_version</$key>|"
@@ -35,8 +35,7 @@ sed -i .coin-or/projDesc.xml \
    -e "s|<$key>[0-9.]*</$key>|<$key>$stable_version.$release</$key>|"
 #
 # check stable version number
-sed -i cppad.xrst \
-   -e "/\/archive\//N" \
+sed -i user_guide.xrst \
    -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g"
 #
 list=`git status -s`
