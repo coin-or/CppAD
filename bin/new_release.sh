@@ -79,37 +79,6 @@ else
    fi
 fi
 # =============================================================================
-# gh-pages
-# =============================================================================
-cat << EOF > new_release.$$
-/^commit/! b end
-N
-N
-N
-N
-/version $stable_version/! b end
-s|\\nAuthor:.*||
-s|commit *||
-p
-: end
-EOF
-# use gh-pages if they exist for this version
-doc_hash=`git log origin/gh-pages | sed -n -f new_release.$$ | head -1`
-if [ "$doc_hash" == '' ]
-then
-cat << EOF
-Cannot find commit message for $stable_version in output of
-git log origin/gh-pages. Use the following comands to fix this ?
-   gh_pages.sh
-   git commit -m 'update gh-pages to stable version $stable_version'
-   git push
-   git checkout master
-EOF
-   rm new_release.$$
-   exit 1
-fi
-rm new_release.$$
-# =============================================================================
 # stable branch
 # =============================================================================
 stable_branch=stable/$stable_version
@@ -227,16 +196,6 @@ echo_eval git tag -a -m \"created by bin/new_release.sh\" \
    $stable_version.$release $stable_remote_hash
 #
 echo_eval git push origin $stable_version.$release
-#
-# tag the documentation
-#
-if [ "$release" == '0' ]
-then
-   echo_eval git tag -a -m \"created by bin/new_release.sh\" \
-      $stable_version.doc  $doc_hash
-   #
-   echo_eval git push origin $stable_version.doc
-fi
 # =============================================================================
 # master branch
 # =============================================================================
