@@ -526,7 +526,15 @@ INSTALL(
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
 IF ( cmake_install_docdir )
-   INSTALL( DIRECTORY "html/" DESTINATION ${cppad_abs_docdir}/cppad )
+   # ADD_CUSTOM_TARGET(docdir COMMAND
+   #    xrst
+   #    --group_list default app
+   #    --config_file "${CMAKE_CURRENT_SOURCE_DIR}/xrst.toml"
+   # )
+   INSTALL(
+      DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/html/"
+      DESTINATION ${cppad_abs_docdir}/cppad
+   )
 ENDIF ( cmake_install_docdir )
 
 # =============================================================================

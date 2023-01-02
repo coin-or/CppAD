@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/check_all.sh' ]
 then
@@ -34,7 +34,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 echo_log_eval() {
    echo "$* >& check_all.tmp"
-   echo "$*" >& $top_srcdir/check_all.tmp
+   echo "$*" > $top_srcdir/check_all.tmp
    if ! $* >& $top_srcdir/check_all.tmp
    then
       tail $top_srcdir/check_all.tmp
@@ -46,7 +46,7 @@ echo_log_eval() {
       echo 'Warning: see check_all.tmp'
       exit 1
    fi
-   echo 'cat check_all.tmp >> check_all.log'
+   echo '        cat check_all.tmp >> check_all.log'
    cat $top_srcdir/check_all.tmp >> $top_srcdir/check_all.log
 }
 echo_log() {
@@ -78,7 +78,6 @@ then
 fi
 # ---------------------------------------------------------------------------
 version=`version.sh get`
-tarball="cppad-$version.tgz"
 # ---------------------------------------------------------------------------
 random_01 compiler
 if [ "$random_01_compiler" == '0' ]
@@ -134,14 +133,14 @@ else
    fi
 fi
 cat << EOF
-tarball         = $tarball
+tarball         = $cppad-$version.tgz
 compiler        = $compiler
 standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
 EOF
 cat << EOF >> $top_srcdir/check_all.log
-tarball         = $tarball
+tarball         = $cppad-$version.tgz
 compiler        = $compiler
 standard        = $standard
 debug_which     = $debug_which
@@ -183,17 +182,21 @@ do
    echo_log_eval $check
 done
 # ---------------------------------------------------------------------------
-# Create package to run test in
+# build/cppad-$version.tgz
 echo_log_eval bin/package.sh
-# -----------------------------------------------------------------------------
-# choose which tarball to use for testing
+#
+# build/cppad-$version
 echo_log_eval cd build
-echo_log_eval rm -rf cppad-$version
-echo_log_eval tar -xzf $tarball
+echo_log_eval tar -xzf cppad-$version.tgz
 echo_log_eval cd cppad-$version
-mkdir build
+#
+# build/cppad-$version/build/prefix
+if [ ! -e build ]
+then
+   mkdir build
+fi
 echo_log_eval cp -r ../prefix build/prefix
-# -----------------------------------------------------------------------------
+#
 # run_cmake.sh
 # prefix is extracted from bin/get_optional
 echo_log_eval bin/run_cmake.sh \
@@ -207,7 +210,15 @@ echo_log_eval cd build
 # -----------------------------------------------------------------------------
 # can comment out this make check to if only running tests below it
 n_job=`nproc`
-echo_log_eval make -j $n_job check
+cmd="make -j $n_job check"
+echo "$cmd >& check_all.tmp"
+echo "$cmd" > $top_srcdir/check_all.tmp
+if ! $cmd >& $top_srcdir/check_all.tmp
+then
+   echo 'Command Failed:'
+fi
+echo 'Re-running Command'
+echo_log_eval $cmd
 # -----------------------------------------------------------------------------
 for package in adolc cppadcg eigen ipopt fadbad sacado
 do
