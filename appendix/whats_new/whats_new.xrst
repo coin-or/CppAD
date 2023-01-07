@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new app}
@@ -15,6 +15,7 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 {xrst_toc_hidden
+   appendix/whats_new/23.xrst
    appendix/whats_new/22.xrst
    appendix/whats_new/21.xrst
    appendix/whats_new/20.xrst
@@ -39,10 +40,11 @@ assist you in learning about changes between various versions of CppAD.
 
 This Year
 *********
-:ref:`2022<whats_new_22-name>`
+:ref:`2022<whats_new_23-name>`
 
 Previous Years
 **************
+:ref:`2022<whats_new_22-name>`
 :ref:`2021<whats_new_21-name>` ,
 :ref:`2020<whats_new_20-name>` ,
 :ref:`2019<whats_new_19-name>` ,
