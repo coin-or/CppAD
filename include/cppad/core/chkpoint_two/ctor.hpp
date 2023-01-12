@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHKPOINT_TWO_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin chkpoint_two_ctor}
@@ -17,7 +17,7 @@ Checkpoint Function Constructor
 Syntax
 ******
 
-| ``chkpoint_two<`` *Base* > *chk_fun* ( *fun* , *name* ,
+| ``chkpoint_two`` < *Base* > *chk_fun* ( *fun* , *name* ,
 | |tab| *internal_bool* , *use_hes_sparsity* , *use_base2ad* , *use_in_parallel*
 | )
 
@@ -33,7 +33,7 @@ Parallel
 This constructor, and its corresponding destructor, must not be called in
 :ref:`parallel<ta_in_parallel-name>` mode.
 The object *chk_fun* should not be destructed for as long as there is
-an ``ADFun<`` *Base* > object the has *chk_fun* in its recording.
+an ``ADFun`` < *Base* > object the has *chk_fun* in its recording.
 
 Base
 ****
@@ -60,14 +60,14 @@ Otherwise, vectors of sets are used for sparsity patterns.
 use_hes_sparsity
 ****************
 If true, Hessian sparsity patterns can be calculated for
-``ADFun<`` *Base* > objects that have uses of *chk_fun*
+``ADFun`` < *Base* > objects that have uses of *chk_fun*
 in their recording.
 This requires some extra memory and extra computation during the constructor.
 
 use_base2ad
 ***********
 If this is true, *chk_fun* can be used during the recording
-of ``ADFun<`` *Base* > objects that get converted to
+of ``ADFun`` < *Base* > objects that get converted to
 ``ADFun< AD<`` *Base* > > objects using :ref:`base2ad-name` .
 This requires some extra memory and extra computation during the constructor.
 
@@ -81,7 +81,7 @@ information and a separate copy (that changes) for each thread.
 chk_fun
 *******
 This is a checkpoint function representation of :math:`g(x)`
-that can be used during the recording of ``AD<`` *Base* > operations.
+that can be used during the recording of ``AD`` < *Base* > operations.
 
 {xrst_end chkpoint_two_ctor}
 */

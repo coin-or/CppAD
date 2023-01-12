@@ -2,7 +2,7 @@
 # define CPPAD_CORE_COMPOUND_ASSIGN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -20,7 +20,7 @@ Purpose
 *******
 Performs compound assignment operations
 where either *x* has type
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 
 Op
 **
@@ -43,7 +43,7 @@ x
 *
 The operand *x* has the following prototype
 
-   ``AD<`` *Base* > & *x*
+   ``AD`` < *Base* > & *x*
 
 y
 *
@@ -52,8 +52,8 @@ The operand *y* has the following prototype
    ``const`` *Type* & *y*
 
 where *Type* is
-``VecAD<`` *Base* >:: ``reference`` ,
-``AD<`` *Base* > ,
+``VecAD`` < *Base* >:: ``reference`` ,
+``AD`` < *Base* > ,
 *Base* , or
 ``double`` .
 
@@ -63,7 +63,7 @@ The result of this assignment
 can be used as a reference to *x* .
 For example, if *z* has the following type
 
-   ``AD<`` *Base* > *z*
+   ``AD`` < *Base* > *z*
 
 then the syntax
 

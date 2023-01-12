@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/sparse/list_setvec.hpp>
 # include <cppad/local/sparse/pack_setvec.hpp>
@@ -34,14 +34,14 @@ Use :ref:`chkpoint_two-name` instead.
 Syntax
 ******
 
-| ``checkpoint<`` *Base* > *atom_fun* (
+| ``checkpoint`` < *Base* > *atom_fun* (
 | |tab| *name* , *algo* , *ax* , *ay* , *sparsity* , *optimize*
 | )
 | *sv* = *atom_fun* . ``size_var`` ()
 | *atom_fun* . ``option`` ( *option_value* )
 | *algo* ( *ax* , *ay* )
 | *atom_fun* ( *ax* , *ay* )
-| *checkpoint<* ``Base`` >:: *clear* ()
+| *checkpoint* < ``Base`` >:: *clear* ()
 
 See Also
 ********
@@ -103,13 +103,13 @@ constructor
 ***********
 The syntax for the checkpoint constructor is
 
-   ``checkpoint<`` *Base* > *atom_fun* ( *name* , *algo* , *ax* , *ay* )
+   ``checkpoint`` < *Base* > *atom_fun* ( *name* , *algo* , *ax* , *ay* )
 
 #. This constructor cannot be called in :ref:`parallel<ta_in_parallel-name>` mode.
 #. You cannot currently be recording
-   ``AD<`` *Base* > operations when the constructor is called.
+   ``AD`` < *Base* > operations when the constructor is called.
 #. This object *atom_fun* must not be destructed for as long
-   as any ``ADFun<`` *Base* > object uses its atomic operation.
+   as any ``ADFun`` < *Base* > object uses its atomic operation.
 #. This class is implemented as a derived class of
    :ref:`atomic<atomic_two_ctor@atomic_base>` and hence
    some of its error message will refer to ``atomic_base`` .
@@ -122,7 +122,7 @@ ADVector
 ********
 The type *ADVector* must be a
 :ref:`simple vector class<SimpleVector-name>` with elements of type
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 
 name
 ****
@@ -142,7 +142,7 @@ This argument has prototype
 
 and size must be equal to *n* .
 It specifies vector :math:`x \in \B{R}^n`
-at which an ``AD<`` *Base* > version of
+at which an ``AD`` < *Base* > version of
 :math:`y = f(x)` is to be evaluated.
 
 ay
@@ -153,20 +153,20 @@ This argument has prototype
 
 Its input size must be equal to *m* and does not change.
 The input values of its elements do not matter.
-Upon return, it is an ``AD<`` *Base* > version of
+Upon return, it is an ``AD`` < *Base* > version of
 :math:`y = f(x)`.
 
 sparsity
 ********
 This argument has prototype
 
-   ``atomic_base<`` *Base* >:: ``option_enum`` *sparsity*
+   ``atomic_base`` < *Base* >:: ``option_enum`` *sparsity*
 
 It specifies :ref:`atomic_two_ctor@atomic_base@sparsity`
 in the ``atomic_base`` constructor and must be either
-``atomic_base<`` *Base* >:: ``pack_sparsity_enum`` ,
-``atomic_base<`` *Base* >:: ``bool_sparsity_enum`` , or
-``atomic_base<`` *Base* >:: ``set_sparsity_enum`` .
+``atomic_base`` < *Base* >:: ``pack_sparsity_enum`` ,
+``atomic_base`` < *Base* >:: ``bool_sparsity_enum`` , or
+``atomic_base`` < *Base* >:: ``set_sparsity_enum`` .
 This argument is optional and its default value is unspecified.
 
 optimize
@@ -191,14 +191,14 @@ This ``size_var`` member function return value has prototype
    ``size_t`` *sv*
 
 It is the :ref:`fun_property@size_var` for the
-``ADFun<`` *Base* > object is used to store the operation sequence
+``ADFun`` < *Base* > object is used to store the operation sequence
 corresponding to *algo* .
 
 option
 ******
 The ``option`` syntax can be used to set the type of sparsity
 pattern used by *atom_fun* .
-This is an ``atomic_base<`` *Base* > function and its documentation
+This is an ``atomic_base`` < *Base* > function and its documentation
 can be found at :ref:`atomic_two_option-name` .
 
 algo
@@ -209,7 +209,7 @@ the syntax
    *algo* ( *ax* , *ay* )
 
 must evaluate the function :math:`y = f(x)` using
-``AD<`` *Base* > operations.
+``AD`` < *Base* > operations.
 In addition, we assume that the
 :ref:`operation sequence<glossary@Operation@Sequence>`
 does not depend on the value of *ax* .
@@ -218,7 +218,7 @@ atom_fun
 ********
 Given *ax* it computes the corresponding value of *ay*
 using the operation sequence corresponding to *algo* .
-If ``AD<`` *Base* > operations are being recorded,
+If ``AD`` < *Base* > operations are being recorded,
 it enters the computation as single operation in the recording
 see :ref:`Independent@Start Recording` .
 (Currently each use of *atom_fun* actually corresponds to

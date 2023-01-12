@@ -18,6 +18,17 @@ if [ -e build/html ]
 then
    rm -r build/html
 fi
+if [ "$1" != '+dev' ] && [ "$1" != '-dev' ]
+then
+   echo 'usage: bin/check_xrst.sh (+dev|-dev)'
+   exit 1
+fi
+if [ "$1" == '+dev' ]
+then
+   group_list='default app dev'
+else
+   group_list='default app'
+fi
 # -----------------------------------------------------------------------------
 # index_page_name
 index_page_name=$(\
@@ -31,7 +42,7 @@ cmd="xrst \
 --target html \
 --html_theme sphinx_rtd_theme \
 --index_page_name $index_page_name \
---group_list default app dev \
+--group_list $group_list \
 "
 echo "$cmd"
 if ! $cmd >& >( tee check_xrst.$$ )

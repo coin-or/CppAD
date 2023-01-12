@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -97,6 +97,14 @@ bool vectorBool(void)
    ok &= (x.size() == 100);
    for(i = 0; i < 100; i++)
       ok &= ( x[i] == ((i % 3) != 0) );
+
+   // initializer list constructor
+   vectorBool w = { true, false, false, true };
+   ok &= w.size() == 4;
+   ok &= w[0] == true;
+   ok &= w[1] == false;
+   ok &= w[2] == false;
+   ok &= w[3] == true;
 
    return ok;
 }

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_COMPARE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -23,7 +23,7 @@ Syntax
 Purpose
 *******
 Compares two operands where one of the operands is an
-``AD<`` *Base* > object.
+``AD`` < *Base* > object.
 The comparison has the same interpretation as for
 the *Base* type.
 
@@ -48,7 +48,7 @@ The operand *x* has prototype
 
    ``const`` *Type* & *x*
 
-where *Type* is ``AD<`` *Base* > , *Base* , or ``int`` .
+where *Type* is ``AD`` < *Base* > , *Base* , or ``int`` .
 
 y
 *
@@ -56,7 +56,7 @@ The operand *y* has prototype
 
    ``const`` *Type* & *y*
 
-where *Type* is ``AD<`` *Base* > , *Base* , or ``int`` .
+where *Type* is ``AD`` < *Base* > , *Base* , or ``int`` .
 
 b
 *
@@ -73,8 +73,8 @@ AD of *Base*
 :ref:`operation sequence<glossary@Operation@Sequence>` .
 
 For example, suppose
-*x* and *y* are ``AD<`` *Base* > objects,
-the tape corresponding to ``AD<`` *Base* > is recording,
+*x* and *y* are ``AD`` < *Base* > objects,
+the tape corresponding to ``AD`` < *Base* > is recording,
 *b* is true,
 and the subsequent code is
 
@@ -96,7 +96,7 @@ values with out re-taping the AD sequence of operations.
 Assumptions
 ***********
 If one of the *Op* operators listed above
-is used with an ``AD<`` *Base* > object,
+is used with an ``AD`` < *Base* > object,
 it is assumed that the same operator is supported by the base type
 *Base* .
 

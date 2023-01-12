@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_LU_SOLVE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -185,7 +185,7 @@ LeqZero
 Including the file ``lu_solve.hpp`` defines the template function
 
 | |tab| ``template <class`` *Float* >
-| |tab| ``bool LeqZero<`` *Float* >( ``const`` *Float* & *x* )
+| |tab| ``bool LeqZero`` < *Float* >( ``const`` *Float* & *x* )
 
 in the ``CppAD`` namespace.
 This function returns true if *x* is less than or equal to zero
@@ -214,7 +214,7 @@ AbsGeq
 Including the file ``lu_solve.hpp`` defines the template function
 
 | |tab| ``template <class`` *Float* >
-| |tab| ``bool AbsGeq<`` *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
+| |tab| ``bool AbsGeq`` < *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
 
 If the type *Float* does not support the ``<=`` operation
 and it is not ``std::complex<float>`` or ``std::complex<double>`` ,

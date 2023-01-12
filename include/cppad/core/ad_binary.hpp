@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_BINARY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -20,7 +20,7 @@ Purpose
 *******
 Performs arithmetic operations where either *x* or *y*
 has type
-``AD<`` *Base* > or
+``AD`` < *Base* > or
 :ref:`VecAD@VecAD\<Base>::reference` .
 
 Op
@@ -39,7 +39,7 @@ The operator *Op* is one of the following
 Base
 ****
 The type *Base* is determined by the operand that
-has type ``AD<`` *Base* > or ``VecAD<`` *Base* >:: ``reference`` .
+has type ``AD`` < *Base* > or ``VecAD`` < *Base* >:: ``reference`` .
 
 x
 *
@@ -48,8 +48,8 @@ The operand *x* has the following prototype
    ``const`` *Type* & *x*
 
 where *Type* is
-``VecAD<`` *Base* >:: ``reference`` ,
-``AD<`` *Base* > ,
+``VecAD`` < *Base* >:: ``reference`` ,
+``AD`` < *Base* > ,
 *Base* , or
 ``double`` .
 
@@ -60,8 +60,8 @@ The operand *y* has the following prototype
    ``const`` *Type* & *y*
 
 where *Type* is
-``VecAD<`` *Base* >:: ``reference`` ,
-``AD<`` *Base* > ,
+``VecAD`` < *Base* >:: ``reference`` ,
+``AD`` < *Base* > ,
 *Base* , or
 ``double`` .
 
@@ -72,7 +72,7 @@ The result *z* has the following prototype
    *Type* *z*
 
 where *Type* is
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 
 Operation Sequence
 ******************

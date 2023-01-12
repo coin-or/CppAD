@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_DET_BY_MINOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin det_by_minor}
@@ -14,7 +14,7 @@ Syntax
 ******
 
 | # ``include <cppad/speed/det_by_minor.hpp>``
-| ``det_by_minor<`` *Scalar* > *det* ( *n* )
+| ``det_by_minor`` < *Scalar* > *det* ( *n* )
 | *d* = *det* ( *a* )
 
 Inclusion
@@ -28,7 +28,7 @@ Constructor
 ***********
 The syntax
 
-   ``det_by_minor<`` *Scalar* > *det* ( *n* )
+   ``det_by_minor`` < *Scalar* > *det* ( *n* )
 
 constructs the object *det* which can be used for
 evaluating the determinant of *n* by *n* matrices

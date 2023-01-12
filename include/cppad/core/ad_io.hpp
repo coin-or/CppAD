@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_IO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -39,14 +39,14 @@ x
 *
 The operand *x* has one of the following prototypes
 
-   ``AD<`` *Base* >& *x*
+   ``AD`` < *Base* >& *x*
 
 Result
 ******
 The result of this operation can be used as a reference to *is* .
 For example, if the operand *y* has prototype
 
-   ``AD<`` *Base* > *y*
+   ``AD`` < *Base* > *y*
 
 then the syntax
 
@@ -113,15 +113,15 @@ x
 *
 The operand *x* has one of the following prototypes
 
-| |tab| ``const AD<`` *Base* >& *x*
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+| |tab| ``const AD`` < *Base* >& *x*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *x*
 
 Result
 ******
 The result of this operation can be used as a reference to *os* .
 For example, if the operand *y* has prototype
 
-   ``AD<`` *Base* > *y*
+   ``AD`` < *Base* > *y*
 
 then the syntax
 

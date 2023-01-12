@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_07 app}
@@ -310,7 +310,7 @@ function that is not complex differentiable ``not_complex_ad.cpp`` .
 10-02
 =====
 Extend the :ref:`pow-name` function to work for any case where one argument
-is ``AD<`` *Base* > and the other is ``double``
+is ``AD`` < *Base* > and the other is ``double``
 (as do the binary operators).
 
 09-06
@@ -814,7 +814,7 @@ were made in the openmp branch and transferred to the trunk on 03-09.
    :ref:`old Dependent syntax<fun_deprecated@Dependent>` .
 
 #. 02-16:
-   Added ``VecAD<`` *Base* > as a valid argument type for the
+   Added ``VecAD`` < *Base* > as a valid argument type for the
    :ref:`con_dyn_var@Parameter`
    and :ref:`con_dyn_var@Variable` functions.
    In addition, :ref:`VecAD@Base Indexing`

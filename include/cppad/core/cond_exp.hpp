@@ -2,7 +2,7 @@
 # define CPPAD_CORE_COND_EXP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -59,7 +59,7 @@ Type
 ****
 These functions are defined in the CppAD namespace for arguments of
 *Type* is ``float`` , ``double`` , or any type of the form
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 (Note that all four arguments must have the same type.)
 
 left

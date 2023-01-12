@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_THREE_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_three_ctor}
@@ -45,12 +45,12 @@ has this *atomic_user* operation in its
 Implementation
 ==============
 The user defined *atomic_user* class is a publicly derived class of
-``atomic_three<`` *Base* > .
+``atomic_three`` < *Base* > .
 It should be declared as follows:
 
 | |tab| ``class`` *atomic_user* : ``public CppAD::atomic_three<`` *Base* > {
 | |tab| ``public:``
-| |tab| |tab| *atomic_user* ( *ctor_arg_list* ) : ``atomic_three<`` *Base* >( *name* )
+| |tab| |tab| *atomic_user* ( *ctor_arg_list* ) : ``atomic_three`` < *Base* >( *name* )
 | |tab| ...
 | |tab| };
 
@@ -73,7 +73,7 @@ Base
 ====
 The template parameter determines the
 :ref:`atomic_three_afun@Base`
-type for this ``AD<`` *Base* > atomic operation.
+type for this ``AD`` < *Base* > atomic operation.
 
 name
 ====

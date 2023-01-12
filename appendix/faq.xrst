@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin Faq app}
@@ -188,7 +188,7 @@ Tape Storage: Disk or Memory
 Does CppAD store the tape on disk or in memory ?
 
 CppAD uses memory to store a different tape for recording operations
-for each ``AD<`` *Base* > type that is used.
+for each ``AD`` < *Base* > type that is used.
 If you have a very large number calculations that are recorded
 on a tape, the tape will keep growing to hold the necessary information.
 Eventually, virtual memory may be used to store the tape

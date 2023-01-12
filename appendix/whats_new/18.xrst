@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_18 app}
@@ -232,7 +232,7 @@ to test this and demonstrate use of checkpoints in parallel mode.
 09-19
 =====
 Add the :ref:`base2ad-name` capability.
-This creates a function that computes using ``AD<`` *Base* >
+This creates a function that computes using ``AD`` < *Base* >
 objects from one that computes using *Base* objects.
 This enables one to record any derivatives computations as part of another
 function and thereby removes the need for
@@ -411,7 +411,7 @@ Add an :ref:`wish_list@Abs-normal` wish list item.
 06-20
 =====
 Worked more on reducing memory and increasing the speed of the
-:ref:`optimization<optimize-name>` of ``ADFun<`` *Base* > objects.
+:ref:`optimization<optimize-name>` of ``ADFun`` < *Base* > objects.
 
 06-19
 =====
@@ -434,7 +434,7 @@ for the old operation sequence, and element type
 =====
 There was false sharing in the
 hash table used to detect identical parameter values during
-the recording of ``AD<`` *Base* > operations.
+the recording of ``AD`` < *Base* > operations.
 This has been fixed and should result in a speed up when multiple
 threads are recording at the same time.
 

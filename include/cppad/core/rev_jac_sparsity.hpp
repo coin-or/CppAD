@@ -2,7 +2,7 @@
 # define CPPAD_CORE_REV_JAC_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin rev_jac_sparsity}
@@ -49,13 +49,13 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 pattern_in
 **********
 The argument *pattern_in* has prototype
 
-   ``const sparse_rc<`` *SizeVector* >& *pattern_in*
+   ``const sparse_rc`` < *SizeVector* >& *pattern_in*
 
 see :ref:`sparse_rc-name` .
 If *transpose* it is false (true),
@@ -87,7 +87,7 @@ pattern_out
 ***********
 This argument has prototype
 
-   ``sparse_rc<`` *SizeVector* >& *pattern_out*
+   ``sparse_rc`` < *SizeVector* >& *pattern_out*
 
 This input value of *pattern_out* does not matter.
 If *transpose* it is false (true),

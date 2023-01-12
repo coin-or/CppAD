@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_ASSIGN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -29,8 +29,8 @@ The argument *x* has prototype
    ``const`` *Type* & *x*
 
 where *Type* is
-``VecAD<`` *Base* >:: ``reference`` ,
-``AD<`` *Base* > ,
+``VecAD`` < *Base* >:: ``reference`` ,
+``AD`` < *Base* > ,
 *Base* ,
 or any type that has an implicit constructor of the form
 *Base* ( *x* ) .
@@ -39,7 +39,7 @@ y
 *
 The target *y* has prototype
 
-   ``AD<`` *Base* > *y*
+   ``AD`` < *Base* > *y*
 
 Example
 *******

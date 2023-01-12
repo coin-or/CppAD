@@ -2,7 +2,7 @@
 # define CPPAD_CORE_VEC_AD_VEC_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
@@ -96,20 +96,20 @@ This private data is a copy of *ind* in the constructor.
 Base
 ****
 Elements of this reference class act like an
-``AD<`` *Base* > object (in a restricted sense),
+``AD`` < *Base* > object (in a restricted sense),
 in addition they track (on the tape) the index *ind* they correspond to.
 
 vec
 ***
 is the vector containing the element being referenced and has prototype
 
-   ``VecAD<`` *Base* > *vec*
+   ``VecAD`` < *Base* > *vec*
 
 ind
 ***
 is the index of the element being referenced and has prototype
 
-   ``const AD<`` *Base* >& ``ind``
+   ``const AD`` < *Base* >& ``ind``
 
 If *ind* . ``tape_id_`` matches a current recording,
 so does *vec* . ``tape_id_`` and
@@ -124,8 +124,8 @@ of the following prototypes:
 
 | |tab| ``int`` *right*
 | |tab| ``const`` *Base* & *right*
-| |tab| ``const AD<`` *Base* >& *right*
-| |tab| ``const VecAD_reverence<`` *Base* >& *right*
+| |tab| ``const AD`` < *Base* >& *right*
+| |tab| ``const VecAD_reverence`` < *Base* >& *right*
 
 cop
 ***
@@ -138,7 +138,7 @@ element
 Is a copy of the element corresponding to the reference *ref*
 and has prototype:
 
-   ``AD<`` *Base* > *element*
+   ``AD`` < *Base* > *element*
 
 {xrst_end vec_ad_reference}
 */
@@ -338,13 +338,13 @@ for the *i*-th element of the vector.
 
 ind
 ***
-is a ``AD<`` *Base* > value less than *length* .
+is a ``AD`` < *Base* > value less than *length* .
 This form of indexing gets recorded and the value of the index
 can change.
 
 ref
 ***
-is a reference to the ``AD<`` *Base* > value
+is a reference to the ``AD`` < *Base* > value
 for the *x*-th element of the vector.
 If the vector is a parameter and the index is a variable,
 the vector is changed to be a variable.

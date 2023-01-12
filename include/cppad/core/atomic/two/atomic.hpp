@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two app}
@@ -32,7 +32,7 @@ Syntax
 | *ok* = *afun* . ``rev_sparse_jac`` ( *q* , *r* , *s* , *x* )
 | *ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* , *x* )
 | *ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* , *x* )
-| *atomic_base<* ``Base`` >:: *clear* ()
+| *atomic_base* < ``Base`` >:: *clear* ()
 
 See Also
 ********
@@ -49,18 +49,18 @@ In some cases, the user knows how to compute derivatives of a function
 
    y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 
-more efficiently than by coding it using ``AD<`` *Base* >
+more efficiently than by coding it using ``AD`` < *Base* >
 :ref:`atomic_base<glossary@Operation@Atomic>` operations
 and letting CppAD do the rest.
 In this case ``atomic_base`` < ``Base`` > can use
 the user code for :math:`f(x)`, and its derivatives,
-as ``AD<`` *Base* > atomic operations.
+as ``AD`` < *Base* > atomic operations.
 
 Reduce Memory
 =============
 If the function :math:`f(x)` is used often,
 using an atomic version of :math:`f(x)` remove the need for repeated
-copies of the corresponding ``AD<`` *Base* > operations.
+copies of the corresponding ``AD`` < *Base* > operations.
 
 Virtual Functions
 *****************

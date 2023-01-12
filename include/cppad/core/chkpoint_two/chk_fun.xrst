@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin chkpoint_two_chk_fun}
 {xrst_spell
@@ -18,7 +18,7 @@ Purpose
 *******
 Given *ax* ,
 this call computes the corresponding value of *ay* .
-If ``AD<`` *Base* > operations are being recorded,
+If ``AD`` < *Base* > operations are being recorded,
 it enters the computation as an :ref:`atomic_three-name`
 operation in the recording;
 see :ref:`Independent@Start Recording` .
@@ -32,7 +32,7 @@ ADVector
 ********
 The type *ADVector* must be a
 :ref:`simple vector class<SimpleVector-name>` with elements of type
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 
 ax
 **
@@ -41,10 +41,10 @@ This argument has prototype
    ``const`` *ADVector* & ``ax``
 
 and its size equal to *n* = *fun* . ``Domain`` ()
-where :ref:`chkpoint_two_ctor@fun` is the ``ADFun<`` *Base* >
+where :ref:`chkpoint_two_ctor@fun` is the ``ADFun`` < *Base* >
 function in used the constructor for *chk_fun* .
 It specifies vector :math:`x \in \B{R}^n`
-at which we are computing an ``AD<`` *Base* > version of
+at which we are computing an ``AD`` < *Base* > version of
 :math:`y = g(x)`.
 
 ay
@@ -55,7 +55,7 @@ This argument has prototype
 
 and its size must be equal to *m* = *fun* . ``Range`` () .
 The input values of its elements do not matter.
-Upon return, it is an ``AD<`` *Base* > version of
+Upon return, it is an ``AD`` < *Base* > version of
 :math:`y = g(x)`.
 
 {xrst_end chkpoint_two_chk_fun}

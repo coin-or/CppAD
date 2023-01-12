@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_05 app}
@@ -62,7 +62,7 @@ This reduces the memory requirements attached to an :ref:`ADFun-name` object.
 12-20
 =====
 Buffers that are used to store the tape information corresponding to
-the ``AD<`` *Base* > type are now freed when the corresponding
+the ``AD`` < *Base* > type are now freed when the corresponding
 :ref:`ADFun-name` object is constructed.
 This reduces memory requirements and actually had better results
 with the :ref:`speed_cppad-name` tests.
@@ -243,7 +243,7 @@ The speed test of :ref:`lu_vec_ad.cpp-name` has been commented out
 because it sometimes generates a segmentation fault.
 Here is an explanation:
 
-If *X* is a ``AD<`` *Base* > object,
+If *X* is a ``AD`` < *Base* > object,
 *y* is a *Base* object,
 *X* [ *y* ] uses pointer from the element
 back to the original vector.

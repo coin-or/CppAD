@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_FOUR_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_define}
@@ -67,7 +67,7 @@ In some cases, it is possible to compute derivatives of a function
 
    y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m
 
-more efficiently than by coding it using ``AD<`` *Base* >
+more efficiently than by coding it using ``AD`` < *Base* >
 :ref:`glossary@Operation@Atomic` operations
 and letting CppAD do the rest.
 The class ``atomic_four`` < ``Base`` > is used to
@@ -80,7 +80,7 @@ Reduce Memory
 If the function :math:`g(x)` is used many times during the recording
 of an :ref:`ADFun-name` object,
 an atomic version of :math:`g(x)` removes the need for repeated
-copies of the corresponding ``AD<`` *Base* > operations and variables
+copies of the corresponding ``AD`` < *Base* > operations and variables
 in the recording.
 
 Virtual Functions

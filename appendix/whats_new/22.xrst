@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_22 app}
@@ -81,9 +81,9 @@ as well as with
 =====
 
 #. There was a mistake in the implementation of the
-   :ref:`ad_ctor@x@explicit` ``AD<`` *Base* > constructor.
+   :ref:`ad_ctor@x@explicit` ``AD`` < *Base* > constructor.
    To be specific, the value was converted to ``double`` before being
-   converted to ``AD<`` *Base* > .
+   converted to ``AD`` < *Base* > .
    This has been fixed and the :ref:`ad_ctor-name` documentation has been
    improved to note which result are always constant parameters.
 #. **API Change** :
@@ -123,7 +123,7 @@ run on all pull requests.
 =====
 Merge in pull_155 branch.
 This enabled the use of binary operators with Eigen matrices of
-type ``AD<`` *Base* > and type *Base* ;
+type ``AD`` < *Base* > and type *Base* ;
 see :ref:`ScalarBinaryOpTraits<cppad_eigen.hpp@Eigen ScalarBinaryOpTraits>`
 in ``cppad_eigen.hpp`` .
 
@@ -359,7 +359,7 @@ Change the ODE solver in :ref:`atomic_four_lin_ode-name` from
 
 #. Add :ref:`atomic_four_lin_ode-name` an example of making the solution
    of an ODE an atomic operation.
-   As with the other atomic four examples, the ``AD<`` *Base* >
+   As with the other atomic four examples, the ``AD`` < *Base* >
    version of the derivative calculations a done using atomic operations.
 #. Add the :ref:`sparse_rc@other@Equality` operator
    to the sparsity pattern template class.
@@ -378,7 +378,7 @@ Change ``y(nx)`` to ``y(ny)`` in
 =====
 
 #. Fix :ref:`atomic_four_mat_mul-name` by changing it's base class
-   from ``atomic_four<double>`` to ``atomic_four<`` *Base* > ;
+   from ``atomic_four<double>`` to ``atomic_four`` < *Base* > ;
    see :ref:`atomic_four_mat_mul.hpp-name` .
 #. Remove under construction warning from :ref:`atomic_four_mat_mul-name` .
 #. Change ``atomic_vector`` to :ref:`atomic_four_vector-name` .
@@ -386,7 +386,7 @@ Change ``y(nx)`` to ``y(ny)`` in
 03-24
 =====
 Fix :ref:`atomic_four_vector-name` by changing it's base class
-from ``atomic_four<double>`` to ``atomic_four<`` *Base* > .
+from ``atomic_four<double>`` to ``atomic_four`` < *Base* > .
 Make some other similar corrections in :ref:`atomic_four_vector.hpp-name` .
 
 03-23

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_three_reverse}
@@ -20,7 +20,7 @@ Base
 ****
 This syntax is used by *f* . ``Reverse`` where *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 and *afun* is used in *f* ;
 see :ref:`atomic_three_afun@Base` .

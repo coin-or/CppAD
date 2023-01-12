@@ -11,7 +11,7 @@
    posix
 }
 
-cppad-20230107: CppAD User's Manual
+cppad-20230112: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}
@@ -73,7 +73,7 @@ The required definitions for ``AD<float>`` and
 
 Recording Operations
 ====================
-A sequence of ``AD<`` *Base* >
+A sequence of ``AD`` < *Base* >
 :ref:`operations<glossary@Operation@Sequence>`
 can be recorded and stored in an
 :ref:`AD function object<ADFun-name>` .
@@ -131,7 +131,7 @@ to speed up these derivative calculations.
 Recording Derivative Operations
 ===============================
 A ``ADFun`` object can be converted into an object that
-evaluates derivatives using the type ``AD<`` *Base* > ; see :ref:`base2ad-name` .
+evaluates derivatives using the type ``AD`` < *Base* > ; see :ref:`base2ad-name` .
 This enables one to record new functions that
 are expressed using derivatives of other functions.
 

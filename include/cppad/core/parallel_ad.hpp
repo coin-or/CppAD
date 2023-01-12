@@ -2,7 +2,7 @@
 # define CPPAD_CORE_PARALLEL_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin parallel_ad}
@@ -15,21 +15,21 @@ Enable AD Calculations During Parallel Mode
 
 Syntax
 ******
-``parallel_ad<`` *Base* >()
+``parallel_ad`` < *Base* >()
 
 Purpose
 *******
 The function
-``parallel_ad<`` *Base* >()
-must be called before any ``AD<`` *Base>* objects are used
+``parallel_ad`` < *Base* >()
+must be called before any ``AD`` < *Base>* objects are used
 in :ref:`parallel<ta_in_parallel-name>` mode.
 In addition, if this routine is called after one is done using
 parallel mode, it will free extra memory used to keep track of
-the multiple ``AD<`` *Base* > tapes required for parallel execution.
+the multiple ``AD`` < *Base* > tapes required for parallel execution.
 
 Discussion
 **********
-By default, for each ``AD<`` *Base* > class there is only one
+By default, for each ``AD`` < *Base* > class there is only one
 tape that records :ref:`glossary@AD of Base` operations.
 This tape is a global variable and hence it cannot be used
 by multiple threads at the same time.
@@ -42,9 +42,9 @@ CheckSimpleVector
 *****************
 This routine has the side effect of calling the routines
 
-   ``CheckSimpleVector<`` *Type* , ``CppAD::vector<`` *Type* > >()
+   ``CheckSimpleVector`` < *Type* , ``CppAD::vector<`` *Type* > >()
 
-where *Type* is *Base* and ``AD<`` *Base* > .
+where *Type* is *Base* and ``AD`` < *Base* > .
 
 Example
 *******
@@ -57,7 +57,7 @@ contain examples and tests that implement this function.
 Restriction
 ***********
 This routine cannot be called in parallel mode or while
-there is a tape recording ``AD<`` *Base* > operations.
+there is a tape recording ``AD`` < *Base* > operations.
 
 {xrst_end parallel_ad}
 -----------------------------------------------------------------------------

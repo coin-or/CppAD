@@ -29,4 +29,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|CppAD-name|user_guide-name|g
+s|``\([a-zA-Z0-9_ ]*[a-zA-Z0-9_]\)<`` *[*]|``\1`` < *|g
+s|``\([a-zA-Z0-9_ ]*\) <`` *[*]|``\1`` < *|g
+#
+s|[*]\([a-zA-Z0-9_]*\)<[*] *``|*\1* < ``|g

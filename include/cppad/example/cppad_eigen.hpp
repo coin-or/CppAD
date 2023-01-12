@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -29,7 +29,7 @@ Syntax
 Purpose
 *******
 Enables the use of the :ref:`eigen-name`
-linear algebra package with the type *AD<* ``Base`` > ; see
+linear algebra package with the type *AD* < ``Base`` > ; see
 `custom scalar types <https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html>`_.
 
 Example
@@ -79,7 +79,7 @@ Next define the eigen plugin and then include Eigen/Core:
 Eigen NumTraits
 ***************
 Eigen needs the following definitions, in the Eigen namespace,
-to work properly with ``AD<`` *Base* > scalars:
+to work properly with ``AD`` < *Base* > scalars:
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace Eigen {
@@ -167,7 +167,7 @@ namespace Eigen {
 CppAD Namespace
 ***************
 Eigen needs the following definitions, in the CppAD namespace,
-to work properly with ``AD<`` *Base* > scalars:
+to work properly with ``AD`` < *Base* > scalars:
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {

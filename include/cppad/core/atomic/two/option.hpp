@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_OPTION_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_option app}
@@ -31,7 +31,7 @@ argument and result variables.
 
 pack_sparsity_enum
 ==================
-If *option_value* is ``atomic_base<`` *Base* >:: ``pack_sparsity_enum`` ,
+If *option_value* is ``atomic_base`` < *Base* >:: ``pack_sparsity_enum`` ,
 then the type used by *afun* for
 :ref:`sparsity patterns<glossary@Sparsity Pattern>` ,
 (after the option is set) will be
@@ -44,7 +44,7 @@ for a matrix :math:`R \in \B{R}^{p \times q}`:
 
 bool_sparsity_enum
 ==================
-If *option_value* is ``atomic_base<`` *Base* >:: ``bool_sparsity_enum`` ,
+If *option_value* is ``atomic_base`` < *Base* >:: ``bool_sparsity_enum`` ,
 then the type used by *afun* for
 :ref:`sparsity patterns<glossary@Sparsity Pattern>` ,
 (after the option is set) will be
@@ -57,7 +57,7 @@ for a matrix :math:`R \in \B{R}^{p \times q}`:
 
 set_sparsity_enum
 =================
-If *option_value* is *atomic_base<* ``Base`` >:: *set_sparsity_enum* ,
+If *option_value* is *atomic_base* < ``Base`` >:: *set_sparsity_enum* ,
 then the type used by *afun* for
 :ref:`sparsity patterns<glossary@Sparsity Pattern>` ,
 (after the option is set) will be

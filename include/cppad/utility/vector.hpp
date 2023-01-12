@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_VECTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -107,6 +107,9 @@ public:
 {xrst_end cppad_vector_typedef}
 -----------------------------------------------------------------------------
 {xrst_begin cppad_vector_ctor dev}
+{xrst_spell
+   initializer
+}
 
 Vector Class: Constructors and Destructor
 #########################################
@@ -114,25 +117,30 @@ Vector Class: Constructors and Destructor
 Default
 *******
 
-   ``vector<`` *Type* > *vec*
+   ``vector`` < *Type* > *vec*
 
 creates an empty vector no elements and capacity zero.
 
 Sizing
 ******
 
-   ``vector<`` *Type* > *vec* ( *n* )
+   ``vector`` < *Type* > *vec* ( *n* )
 
 where *n* is a ``size_t`` or ``int`` ,
 creates the vector *vec* with *n* elements and capacity
 greater than or equal *n* .
 
+Initializer List
+****************
+
+   ``vector`` < *Type > *vec* ( { *e_1* , ... , *e_n* } )
+
 Copy
 ****
 
-   ``vector<`` *Type* > *vec* ( *other* )
+   ``vector`` < *Type* > *vec* ( *other* )
 
-where *other* is a ``vector<`` *Type* > ,
+where *other* is a ``vector`` < *Type* > ,
 creates the vector *vec*
 with *n* = *other* . ``size`` () elements and capacity
 greater than or equal *n* .
@@ -168,6 +176,11 @@ public:
          "CppAD::vector: attempt to create a vector with a negative size."
       );
       resize( size_t(n) );
+   }
+   vector(std::initializer_list<Type> list) :
+   capacity_(0), length_(0), data_(nullptr)
+   {  for(auto itr = list.begin(); itr != list.end(); ++itr)
+         this->push_back(*itr);
    }
    vector(const vector& other) : capacity_(0), length_(0), data_(nullptr)
    {  resize(other.length_);

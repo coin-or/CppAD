@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_ATOMIC_INDEX_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 {xrst_begin atomic_index dev}
@@ -34,7 +34,7 @@ Get Number Case
 The get number case is defined by
 *set_null* is true and *index_in* is zero.
 For this case, *index_out* is set to
-the number of atomic functions stored in ``atomic_index<`` *Base* >
+the number of atomic functions stored in ``atomic_index`` < *Base* >
 and no information is stored or changed.
 In this case, the atomic functions correspond to *index_in* from
 one to *index_out* inclusive.

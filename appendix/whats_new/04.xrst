@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_04 app}
@@ -94,7 +94,7 @@ just :ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
 11-12
 =====
 If ``NDEBUG`` is not defined during compile time,
-all ``AD<`` *Base* >
+all ``AD`` < *Base* >
 :ref:`comparison<Compare-name>` operations are checked during
 :ref:`zero order<forward_zero-name>` forward mode calculations.
 The
@@ -415,7 +415,7 @@ and
 :ref:`glossary@Variable`
 were changed to reflect that fact that
 these are time dependent (current) properties
-of an ``AD<`` *Base* > object.
+of an ``AD`` < *Base* > object.
 
 06-12
 =====
@@ -505,7 +505,7 @@ Change all of the include syntax
 
 to the syntax
 
-   # ``include <`` *filename* >
+   # ``include`` < *filename* >
 
 so that examples and other use better reflect how one would use CppAD after
 it was installed in a standard include directory; for example
@@ -689,7 +689,7 @@ Fixed a bug connected to the :ref:`VecAD-name` class and erasing the tape.
 Some memory savings is done with regard to equal parameter values
 being stored in the tape. There was a bug in this logic when parameter
 in an ``AD< AD<`` *Base* > > class had values that were variables in the
-``AD<`` *Base* > class.
+``AD`` < *Base* > class.
 This has been fixed.
 
 04-01
@@ -876,7 +876,7 @@ There was a bug in the way CppAD handled the parameters zero and one
 when they were variables on a lower level tape; i.e. x might be a
 parameter on an ``AD< AD<`` *Base* > > tape and a its value
 might be a variable on the
-``AD<`` *Base* > tape.
+``AD`` < *Base* > tape.
 This bug in the multiply and divide routines has been fixed.
 
 There was a bug that is some cases reported a divide by zero error

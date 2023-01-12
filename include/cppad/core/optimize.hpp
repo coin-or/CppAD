@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OPTIMIZE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # define CPPAD_CORE_OPTIMIZE_PRINT_RESULT 0
@@ -37,7 +37,7 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 options
 *******
@@ -112,13 +112,13 @@ and time than required after the optimization procedure.
 In addition, it will need to be redone.
 For this reason, it is more efficient to use
 
-| |tab| ``ADFun<`` *Base* > *f* ;
+| |tab| ``ADFun`` < *Base* > *f* ;
 | |tab| *f* . ``Dependent`` ( *x* , *y* );
 | |tab| *f* . ``optimize`` ();
 
 instead of
 
-| |tab| ``ADFun<`` *Base* > *f* ( *x* , *y* )
+| |tab| ``ADFun`` < *Base* > *f* ( *x* , *y* )
 | |tab| *f* . ``optimize`` ();
 
 See the discussion about

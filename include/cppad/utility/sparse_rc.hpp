@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_SPARSE_RC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -27,9 +27,9 @@ include
 Constructor
 ===========
 
-| ``sparse_rc<`` *SizeVector* > *empty*
-| ``sparse_rc<`` *SizeVector* > *pattern* ( *nr* , *nc* , *nnz* )
-| ``sparse_rc<`` *SizeVector* > *pattern* ( *other* )
+| ``sparse_rc`` < *SizeVector* > *empty*
+| ``sparse_rc`` < *SizeVector* > *pattern* ( *nr* , *nc* , *nnz* )
+| ``sparse_rc`` < *SizeVector* > *pattern* ( *other* )
 
 Assignment
 ==========
@@ -104,7 +104,7 @@ Assignment and Constructor
 ==========================
 In the assignment and constructor, *other* has prototype
 
-   ``const sparse_rc<`` *SizeVector* >& *other*
+   ``const sparse_rc`` < *SizeVector* >& *other*
 
 After the assignment and constructor, *pattern* is an independent copy
 of *other* ; i.e. it has all the same values as *other*
@@ -114,7 +114,7 @@ Move Semantics Assignment and Constructor
 =========================================
 In the assignment and constructor, if *other* has prototype
 
-   ``sparse_rc<`` *SizeVector* >&& *other*
+   ``sparse_rc`` < *SizeVector* >&& *other*
 
 A move semantics version of the assignment or constructor is used; e.g.,
 when *other* is a function return value.
@@ -123,7 +123,7 @@ swap
 ====
 In the swap operation, *other* has prototype
 
-   ``sparse_rc<`` *SizeVector* >& *other*
+   ``sparse_rc`` < *SizeVector* >& *other*
 
 After the swap operation *other* ( *pattern* ) is equivalent
 to *pattern* ( *other* ) before the operation.
@@ -132,7 +132,7 @@ Equality
 ========
 In the equality operation, *other* has prototype
 
-   ``const sparse_rc<`` *SizeVector* >& *other*
+   ``const sparse_rc`` < *SizeVector* >& *other*
 
 The two sparsity patterns are equal if the following conditions hold:
 

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ABORT_RECORDING_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin abort_recording}
@@ -12,7 +12,7 @@ Abort Recording of an Operation Sequence
 
 Syntax
 ******
-``AD<`` *Base* >:: ``abort_recording`` ()
+``AD`` < *Base* >:: ``abort_recording`` ()
 
 Purpose
 *******

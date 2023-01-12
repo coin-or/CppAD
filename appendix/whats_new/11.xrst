@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_11 app}
@@ -52,7 +52,7 @@ mm-dd
    depended on the value of the argument to the ``abs`` function.
 #. Change the specifications for the derivative of the :ref:`abs-name`
    function to be the :ref:`sign-name` function instead of a directional derivative.
-#. Add the :ref:`sign-name` function to the ``AD<`` *Base* > list of
+#. Add the :ref:`sign-name` function to the ``AD`` < *Base* > list of
    available functions.
    In addition, add the
    :ref:`base_std_math@sign` function to the list of
@@ -416,7 +416,7 @@ These changes are described below.
    Add the :ref:`base_cond_exp@CondExpRel` paragraph to the
    base requirements documentation.
    This was missing and are required for
-   :ref:`CondExp-name` to work with ``AD<`` *Base* > arguments
+   :ref:`CondExp-name` to work with ``AD`` < *Base* > arguments
    and a non-standard *Base* type.
 
 #. 08-04:
@@ -523,7 +523,7 @@ This has been fixed in :ref:`tan_reverse-name` .
 =====
 
 #. static hash code data that was begin used by multiple threads
-   when recording ``AD<`` *Base* > operations
+   when recording ``AD`` < *Base* > operations
    :ref:`omp_in_parallel-name` execution mode. This has been fixed.
 #. Make the sparse calculations safe
    for use during :ref:`omp_in_parallel-name` execution mode.
@@ -577,7 +577,7 @@ have been grouped in the section :ref:`multi_thread-name` .
 07-07
 =====
 Add the routine :ref:`parallel_ad-name` to fix bug when using
-``AD<`` *Base* > in :ref:`parallel<omp_in_parallel-name>` execution mode.
+``AD`` < *Base* > in :ref:`parallel<omp_in_parallel-name>` execution mode.
 
 06-23
 =====

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SUBGRAPH_JAC_REV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin subgraph_jac_rev}
@@ -77,7 +77,7 @@ f
 *
 This object has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 Note that the Taylor coefficients stored in *f* are affected
 by this operation; see
@@ -107,7 +107,7 @@ subset
 ******
 This argument has prototype
 
-   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+   ``sparse_rcv`` < *SizeVector* , *BaseVector* >& *subset*
 
 Its row size is *subset* . ``nr`` () == *m* ,
 and its column size is *subset* . ``nc`` () == *n* .
@@ -141,7 +141,7 @@ matrix_out
 **********
 This argument has prototype
 
-   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *matrix_out*
+   ``sparse_rcv`` < *SizeVector* , *BaseVector* >& *matrix_out*
 
 This input value of *matrix_out* does not matter.
 Upon return *matrix_out* is

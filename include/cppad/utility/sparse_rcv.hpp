@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_SPARSE_RCV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -19,8 +19,8 @@ Syntax
 ******
 
 | # ``include <cppad/utility/sparse_rcv.hpp>``
-| ``sparse_rcv<`` *SizeVector* , *ValueVector* > *empty*
-| ``sparse_rcv<`` *SizeVector* , *ValueVector* > *matrix* ( *pattern* )
+| ``sparse_rcv`` < *SizeVector* , *ValueVector* > *empty*
+| ``sparse_rcv`` < *SizeVector* , *ValueVector* > *matrix* ( *pattern* )
 | *matrix* = *other*
 | *matrix* . ``swap`` ( *other*  )
 | *matrix* . ``set`` ( *k* , *v* )
@@ -30,7 +30,7 @@ Syntax
 | ``const`` *SizeVector* & *row* ( *matrix* . ``row`` () )
 | ``const`` *SizeVector* & *col* ( *matrix* . ``col`` () )
 | ``const`` *ValueVector* & *val* ( *matrix* . ``val`` () )
-| ``const sparse_rc<`` *SizeVector* >& *pat* ( *matrix* . ``pat`` () )
+| ``const sparse_rc`` < *SizeVector* >& *pat* ( *matrix* . ``pat`` () )
 | *row_major* = *matrix* . ``row_major`` ()
 | *col_major* = *matrix* . ``col_major`` ()
 
@@ -56,7 +56,7 @@ pattern
 *******
 This constructor argument has prototype
 
-   ``const sparse_rc<`` *SizeVector* >& *pattern*
+   ``const sparse_rc`` < *SizeVector* >& *pattern*
 
 It specifies the number of rows, number of columns and
 the possibly non-zero entries in the *matrix* .
@@ -78,7 +78,7 @@ Assignment and Constructor
 ==========================
 In the assignment and constructor, *other* has prototype
 
-   ``const sparse_rcv<`` *SizeVector* , *ValueVector* >& *other*
+   ``const sparse_rcv`` < *SizeVector* , *ValueVector* >& *other*
 
 After this assignment and constructor, *other* is an independent copy
 of *matrix* ; i.e. it has all the same values as *matrix*
@@ -88,7 +88,7 @@ Move Semantics Assignment and Constructor
 =========================================
 In the assignment and constructor, if *other* has prototype
 
-   ``sparse_rcv<`` *SizeVector* , *ValueVector* >&& *other*
+   ``sparse_rcv`` < *SizeVector* , *ValueVector* >&& *other*
 
 A move semantics version of the assignment operator is used; e.g.,
 when *other* is a function return value;

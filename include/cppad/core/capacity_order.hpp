@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CAPACITY_ORDER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -44,7 +44,7 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 c
 *
@@ -87,7 +87,7 @@ Original State
 **************
 If *f* is :ref:`constructed<fun_construct-name>` with the syntax
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 ,
 there is an implicit call to :ref:`forward_zero-name` with *xq* equal to

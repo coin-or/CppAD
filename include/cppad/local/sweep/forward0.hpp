@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -58,7 +58,7 @@ If it is one, a trace of every zero order forward mode computation is printed.
 Base
 ****
 The type used during the forward mode computations; i.e., the corresponding
-recording of operations used the type ``AD<`` *Base* > .
+recording of operations used the type ``AD`` < *Base* > .
 
 s_out
 *****

@@ -13,6 +13,19 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+01-12
+=====
+Fix a problem with the documentation conversion on
+:ref:`whats_new_22@mm-dd@12-16` of 2022.
+To be specific:
+``name_1<`` *name_2* > was converted to ``name_1`` < *name_2* >
+
+
+01-11
+=====
+The :ref:`CppAD_vector@Initializer Constructor` was added to the
+``CppAD::vector`` template class.
+
 01-07
 =====
 Print an error message and exit from the cmake command when a

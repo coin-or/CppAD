@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AZMUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin azmul}
@@ -51,23 +51,23 @@ AD<Base>
 ********
 If the arguments *x* , *y* have prototype
 
-| |tab| ``const AD<`` *Base* >& *x*
-| |tab| ``const AD<`` *Base* >& *y*
+| |tab| ``const AD`` < *Base* >& *x*
+| |tab| ``const AD`` < *Base* >& *y*
 
 then the result *z* has prototype
 
-   ``AD<`` *Base* > *z*
+   ``AD`` < *Base* > *z*
 
 VecAD<Base>
 ***********
 If the arguments *x* , *y* have prototype
 
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *y*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *x*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *y*
 
 then the result *z* has prototype
 
-   ``AD<`` *Base* > *z*
+   ``AD`` < *Base* > *z*
 
 Example
 *******

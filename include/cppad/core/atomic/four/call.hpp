@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_FOUR_CALL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_call}
@@ -26,7 +26,7 @@ Prototype
 Purpose
 *******
 Given *ax* , this call computes the corresponding value of *ay* .
-If ``AD<`` *Base* > operations are being recorded,
+If ``AD`` < *Base* > operations are being recorded,
 it enters the computation as an atomic operation in the recording;
 see :ref:`Independent@Start Recording` .
 
@@ -43,7 +43,7 @@ ADVector
 ********
 The type *ADVector* must be a
 :ref:`simple vector class<SimpleVector-name>` with elements of type
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 
 afun
 ****
@@ -55,7 +55,7 @@ ax
 **
 The size of this vector determines *n* .
 It specifies vector :math:`x \in \B{R}^n`
-at which an ``AD<`` *Base* > version of
+at which an ``AD`` < *Base* > version of
 :math:`y = g(x)` is to be evaluated.
 
 ay
@@ -63,7 +63,7 @@ ay
 The size of this vector determines *m* .
 The input values of its elements
 are not specified (must not matter).
-Upon return, it is an ``AD<`` *Base* > version of
+Upon return, it is an ``AD`` < *Base* > version of
 :math:`y = g(x)`.
 
 call_id

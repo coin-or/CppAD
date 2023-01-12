@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHECK_FOR_NAN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin check_for_nan}
@@ -31,13 +31,13 @@ f
 For the syntax where *b* is an argument,
 *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
-(see ``ADFun<`` *Base* > :ref:`constructor<fun_construct-name>` ).
+(see ``ADFun`` < *Base* > :ref:`constructor<fun_construct-name>` ).
 For the syntax where *b* is the result,
 *f* has prototype
 
-   ``const ADFun<`` *Base* > *f*
+   ``const ADFun`` < *Base* > *f*
 
 b
 *
@@ -104,7 +104,7 @@ Upon return, it will contain the values for the independent variables,
 in the corresponding call to :ref:`Independent-name` ,
 that resulted in the ``nan`` .
 (Note that the call to ``Independent`` uses an vector with elements
-of type ``AD<`` *Base* > and *vec* has elements of type
+of type ``AD`` < *Base* > and *vec* has elements of type
 *Base* .)
 
 file

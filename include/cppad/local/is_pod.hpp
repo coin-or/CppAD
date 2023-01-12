@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_IS_POD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin is_pod dev}
@@ -17,13 +17,13 @@ Default Definition
 ******************
 The default template definition is that
 
-   ``is_pod<`` *Type* >()
+   ``is_pod`` < *Type* >()
 
 is false for all types.
 
 Fundamental Types
 *****************
-This file specializes ``is_pod<`` *Type* > to be true where *Type*
+This file specializes ``is_pod`` < *Type* > to be true where *Type*
 is any of the c++11 fundamental types that hold data; i.e.,
 ``void`` and ``nullptr_t`` are excluded.
 

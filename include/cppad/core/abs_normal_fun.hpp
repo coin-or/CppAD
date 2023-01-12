@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ABS_NORMAL_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin abs_normal_fun}
@@ -22,7 +22,7 @@ f
 *
 The object *f* has prototype
 
-   ``const ADFun<`` *Base* >& *f*
+   ``const ADFun`` < *Base* >& *f*
 
 It represents a function :math:`f : \B{R}^n \rightarrow \B{R}^m`.
 We assume that the only non-smooth terms in the representation are
@@ -45,7 +45,7 @@ a
 *
 The object *a* has prototype
 
-   ``ADFun<`` *Base* > *a*
+   ``ADFun`` < *Base* > *a*
 
 The initial function representation in *a* is lost.
 Upon return it represents the result of the absolute terms
@@ -82,7 +82,7 @@ g
 *
 The object *g* has prototype
 
-   ``ADFun<`` *Base* > *g*
+   ``ADFun`` < *Base* > *g*
 
 The initial function representation in *g* is lost.
 Upon return it represents the smooth function

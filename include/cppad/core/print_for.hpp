@@ -2,7 +2,7 @@
 # define CPPAD_CORE_PRINT_FOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -52,8 +52,8 @@ notpos
 ******
 If present, the argument *notpos* has one of the following prototypes
 
-| |tab| ``const AD<`` *Base* >& *notpos*
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *notpos*
+| |tab| ``const AD`` < *Base* >& *notpos*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *notpos*
 
 In this case
 the text and *value* will be printed if and only if
@@ -71,8 +71,8 @@ value
 *****
 The argument *value* has one of the following prototypes
 
-| |tab| ``const AD<`` *Base* >& *value*
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *value*
+| |tab| ``const AD`` < *Base* >& *value*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *value*
 
 The *value* , that corresponds to *x* ,
 is written to ``std::cout`` during the execution of

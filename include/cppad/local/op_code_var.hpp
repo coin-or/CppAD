@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <string>
 # include <sstream>
@@ -58,7 +58,7 @@ typedef CPPAD_VEC_ENUM_TYPE opcode_t;
 
 OpCode
 ******
-This enum type is used to distinguish different ``AD<`` *Base* >
+This enum type is used to distinguish different ``AD`` < *Base* >
 atomic operations.
 Each value in the enum type ends with the characters ``Op`` .
 Ignoring the ``Op`` at the end,
@@ -328,7 +328,7 @@ Load
 ****
 The load operators create a new variable corresponding to
 *vec* [ *ind* ] where *vec* is a :ref:`VecAD-name` vector
-and *ind* is an ``AD<`` *Base* > .
+and *ind* is an ``AD`` < *Base* > .
 For these operators either *vec* or *ind* is a variable
 and there is one variable result.
 
@@ -367,7 +367,7 @@ Store
 *****
 The store operators store information corresponding to
 *vec* [ *ind* ] = ``right`` where *vec* is a :ref:`VecAD-name` vector
-and *ind* is an ``AD<`` *Base* > .
+and *ind* is an ``AD`` < *Base* > .
 For these operators either *vec* , *ind* , or *right*
 is a variable and there is no result.
 

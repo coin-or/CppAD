@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BENDER_QUAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin BenderQuad app}
@@ -107,7 +107,7 @@ fun
 ***
 The ``BenderQuad`` object *fun*
 must support the member functions listed below.
-The ``AD<`` *Base* > arguments will be variables for
+The ``AD`` < *Base* > arguments will be variables for
 a tape created by a call to :ref:`Independent-name` from ``BenderQuad``
 (hence they can not be combined with variables corresponding to a
 different tape).
@@ -284,13 +284,13 @@ ADvector
 ********
 The type *ADvector* must be a
 :ref:`SimpleVector-name` class with elements of type
-``AD<`` *Base* > ; i.e.,
+``AD`` < *Base* > ; i.e.,
 
    *ADvector* :: ``value_type``
 
 must be the same type as
 
-   ``AD<`` *BAvector* :: ``value_type >``
+   ``AD`` < *BAvector* :: ``value_type >``
 
 .
 

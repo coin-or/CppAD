@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_CLEAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_clear app}
@@ -12,7 +12,7 @@ Free Static Variables
 
 Syntax
 ******
-``atomic_base<`` *Base* >:: ``clear`` ()
+``atomic_base`` < *Base* >:: ``clear`` ()
 
 Purpose
 *******
@@ -26,7 +26,7 @@ This is a problem when using
 to check that all allocated memory has been freed.
 Calling this ``clear`` function will free all the
 memory currently being held onto by the
-``atomic_base<`` *Base* > class.
+``atomic_base`` < *Base* > class.
 
 Future Use
 **********

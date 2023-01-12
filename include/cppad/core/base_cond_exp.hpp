@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BASE_COND_EXP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -14,7 +14,7 @@ Base Type Requirements for Conditional Expressions
 Purpose
 *******
 These definitions are required by the user's code to support the
-``AD<`` *Base* > type for :ref:`CondExp-name` operations:
+``AD`` < *Base* > type for :ref:`CondExp-name` operations:
 
 CompareOp
 *********
