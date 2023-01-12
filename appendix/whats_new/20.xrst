@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_20 app}
@@ -280,7 +280,7 @@ if :ref:`cmake@include_eigen` is not specified on the cmake command line.
 03-11
 =====
 The ``CppAD::vector`` constructor was extended to allow its
-:ref:`size<CppAD_vector@Integer Size>` to be a ``int``
+:ref:`size<CppAD_vector@Size Constructor>` to be a ``int``
 (this used to generate a warning when using the ``clang`` compiler).
 
 02-02

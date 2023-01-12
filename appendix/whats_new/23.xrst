@@ -13,6 +13,11 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+01-11
+=====
+The :ref:`CppAD_vector@Initializer Constructor` was added to the
+``CppAD::vector`` template class.
+
 01-07
 =====
 Print an error message and exit from the cmake command when a

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -64,6 +64,11 @@ bool CppAD_vector(void)
    {  ok &= vec[i] == other[i];
       ok &= vec[i] == another[i];
    }
+
+   // initializer constructor
+   vector<Scalar> yet_another = { 1.0, 2.0};
+   for(size_t i = 0; i < 2; ++i)
+      ok &= vec[i] == yet_another[i];
 
    // test of output
    std::string        correct= "{ 1, 2 }";
