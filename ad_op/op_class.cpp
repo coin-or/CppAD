@@ -13,101 +13,109 @@ typedef size_t addr_t;
 // Vector
 template <class Base> using Vector = CppAD::vector<Base>;
 
+// op_enum_t
+enum op_enum_t { add_op_enum, sub_op_enum, number_op_enum };
 
 // op_t
 template <class Base>
 class op_t {
 public:
-   typedef void (*op_fun_t)(
-      addr_t  arg_index               ,
-      addr_t  res_index               ,
-      addr_t& n_arg                   ,
-      addr_t& n_res                   ,
-      const Vector<addr_t>& arg_vec   ,
-      Vector<Base>&         value_vec
-   );
-   //
-   addr_t   arg_index_; // index of first argument in arg_vec
-   addr_t   res_index_; // index of first result in value_vec
-   op_fun_t op_fun_;    // funciton attached to this opertor
+   // op_enum_, arg_index_
+   addr_t    arg_index_;
+   addr_t    res_index_;
    //
    // ctor(void)
    op_t(void)
-   {  arg_index_ = std::numeric_limits<addr_t>::max();
+   {
+      arg_index_ = std::numeric_limits<addr_t>::max();
       res_index_ = std::numeric_limits<addr_t>::max();
-      op_fun_    = nullptr;
    }
    //
-   // ctor(arg_index, res_index, op_fun)
-   op_t(addr_t arg_index, addr_t res_index, op_fun_t op_fun) :
+   // ctor(op_enum, arg_index, res_index)
+   op_t(addr_t arg_index, addr_t res_index) :
    arg_index_( arg_index ),
-   res_index_( res_index ),
-   op_fun_( op_fun )
+   res_index_( res_index )
    { }
    //
    // arg_index
-   addr_t arg_index() const
+   // index of first argument in arg_vec
+   addr_t arg_index(void) const
    {  return arg_index_; }
    //
    // res_index
-   addr_t res_index() const
+   // index of first resut in value_vec
+   addr_t res_index(void) const
    {  return res_index_; }
    //
+   // op_enum
+   // type of this operator
+   virtual op_enum_t op_enum(void) const = 0;
+   //
+   // n_arg
+   // number of arguments
+   virtual addr_t n_arg(void) const = 0;
+   //
+   // n_res
+   // number of results
+   virtual addr_t n_res(void) const = 0;
+   //
    // eval
-   void eval(
+   // computes the results
+   virtual void eval(
       const Vector<addr_t>& arg_vec      ,
-      Vector<Base>&         value_vec    ) const
-   {  assert( arg_vec.size() > 0 );
-      assert( value_vec.size() > 0 );
-      addr_t n_arg, n_res;
-      op_fun_(
-         arg_index_,  res_index_,
-         n_arg,       n_res,
-         arg_vec,     value_vec
-      );
-   }
+      Vector<Base>&         value_vec    ) const = 0;
 };
 
 // add_op_t
 template <class Base>
-class add_op_t {
+class add_op_t : public op_t<Base> {
 public:
-   // op_fun
-   static void op_fun(
-      addr_t                arg_index    ,
-      addr_t                res_index    ,
-      addr_t&               n_arg        ,
-      addr_t&               n_res        ,
+   // ctor(op_enum, arg_index, res_index)
+   add_op_t(addr_t arg_index, addr_t res_index) :
+   op_t<Base>(arg_index, res_index)
+   { }
+   // op_enum
+   op_enum_t op_enum(void) const override
+   {  return add_op_enum; }
+   // n_arg
+   addr_t n_arg(void) const override
+   {  return 2; }
+   addr_t n_res(void) const override
+   {  return 1; }
+   // eval
+   void eval(
       const Vector<addr_t>& arg_vec      ,
-      Vector<Base>&         value_vec    )
-   {  n_arg = 2;
-      n_res = 1;
-      if( arg_vec.size() == 0 )
-         return;
-      const Base& left  = value_vec[ arg_vec[0] ];
-      const Base& right = value_vec[ arg_vec[1] ];
+      Vector<Base>&         value_vec    ) const override
+   {  addr_t      res_index = op_t<Base>::res_index_;
+      const Base& left      = value_vec[ arg_vec[0] ];
+      const Base& right     = value_vec[ arg_vec[1] ];
       value_vec[res_index]  = left + right;
    }
 };
 
 // sub_op_t
 template <class Base>
-class sub_op_t {
+class sub_op_t : public op_t<Base> {
 public:
-   // op_fun
-   static void op_fun(
-      addr_t                arg_index    ,
-      addr_t                res_index    ,
-      addr_t&               n_arg        ,
-      addr_t&               n_res        ,
+   // ctor(op_enum, arg_index, res_index)
+   sub_op_t(addr_t arg_index, addr_t res_index) :
+   op_t<Base>(arg_index, res_index)
+   { }
+   // op_enum
+   op_enum_t op_enum(void) const override
+   {  return sub_op_enum; }
+   // n_arg
+   addr_t n_arg(void) const override
+   {  return 2; }
+   addr_t n_res(void) const override
+   {  return 1; }
+   // eval
+   void eval(
       const Vector<addr_t>& arg_vec      ,
-      Vector<Base>&         value_vec    )
-   {  n_arg = 2;
-      n_res = 1;
-      if( arg_vec.size() == 0 )
-         return;
-      const Base& left  = value_vec[ arg_vec[0] ];
-      const Base& right = value_vec[ arg_vec[1] ];
+      Vector<Base>&         value_vec    ) const override
+   {  addr_t      res_index = op_t<Base>::res_index_;
+      const Base& left      = value_vec[ arg_vec[0] ];
+      const Base& right     = value_vec[ arg_vec[1] ];
       value_vec[res_index]  = left - right;
    }
 };
@@ -117,46 +125,63 @@ public:
 template <class Base>
 class tape_t {
 private :
-   typedef typename op_t<Base>::op_fun_t op_fun_t;
-   //
-   addr_t               n_ind_;     // number of independent values
-   addr_t               res_index_; // index in value_vec of next result
-   Vector<addr_t>       arg_vec_;   // index of operator arguments in value_vec
-   Vector< op_t<Base> > op_vec_;    // operators that define this function
-   Vector<addr_t>       not_used1_;
-   Vector<Base>         not_used2_;
+   addr_t                n_ind_;     // number of independent values
+   addr_t                res_index_; // index in value_vec of next result
+   Vector<addr_t>        arg_vec_;   // index of operator arguments in value_vec
+   Vector< op_t<Base>* > op_vec_;    // operators that define this function
+   Vector<addr_t>        not_used1_;
+   Vector<Base>          not_used2_;
 public :
+   //
+   // destructor
+   ~tape_t(void)
+   {  for(size_t i = 0; i < op_vec_.size(); ++i)
+         delete op_vec_[ op_vec_.size() - i - 1];
+   }
    // set_ind
    void set_ind(addr_t n_ind)
    {  n_ind_     = n_ind;
       res_index_ = n_ind;
+      for(size_t i = 0; i < op_vec_.size(); ++i)
+         delete op_vec_[ op_vec_.size() - i - 1];
       op_vec_.resize(0);
    }
    //
    // next_op
-   addr_t next_op(op_fun_t op_fun, const Vector<addr_t>& op_arg)
+   addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    {  //
       // res_index
       addr_t res_index = res_index_;
       //
-      // op
+      // arg_index
       addr_t arg_index = arg_vec_.size();
-      op_t op(arg_index, res_index, op_fun);
       //
-      // n_arg, n_res
-      addr_t n_arg, n_res;
-      op_fun(arg_index, res_index, n_arg, n_res, not_used1_, not_used2_);
-      assert( op_arg.size() == n_arg );
+      // op
+      op_t<Base>* op_ptr = nullptr;
+      switch(op_enum)
+      {
+         case add_op_enum:
+         op_ptr = new add_op_t<Base>(arg_index, res_index);
+         break;
+
+         case sub_op_enum:
+         op_ptr = new sub_op_t<Base>(arg_index, res_index);
+         break;
+
+         default:
+         assert( false );
+      }
       //
       // op_vec_
-      op_vec_.push_back(op);
+      op_vec_.push_back(op_ptr);
       //
       // arg_vec_
-      for(size_t i = 0; i < n_arg; ++i)
+      addr_t n_arg = op_ptr->n_arg();
+      for(addr_t i = 0; i < n_arg; ++i)
          arg_vec_.push_back( op_arg[i] );
       //
       // res_index_
-      res_index_ = res_index + n_res;
+      res_index_ = res_index + op_ptr->n_res();
       //
       return res_index;
    }
@@ -170,7 +195,7 @@ public :
    {  assert( value_vec.size() == res_index_ );
       addr_t n_op = op_vec_.size();
       for(addr_t i = 0; i < n_op; ++i)
-      {  op_vec_[i].eval(arg_vec_, value_vec);
+      {  op_vec_[i]->eval(arg_vec_, value_vec);
       }
    }
 };
@@ -195,8 +220,8 @@ int main()
    Vector<addr_t> res_index(2);
    //
    // tape
-   res_index[0] = tape.next_op(add_op_t<double>::op_fun, op_arg);
-   res_index[1] = tape.next_op(sub_op_t<double>::op_fun, op_arg);
+   res_index[0] = tape.next_op(add_op_enum, op_arg);
+   res_index[1] = tape.next_op(sub_op_enum, op_arg);
    //
    // x
    Vector<double> x(2);
@@ -221,6 +246,8 @@ int main()
    ok &= y[0] == x[0] + x[1];
    ok &= y[1] == x[0] - x[1];
    //
+   std::cout << "x = " << x << "\n";
+   std::cout << "y = " << y << "\n";
    if( ok )
    {  std::cout << "op_class: OK\n";
       return 0;

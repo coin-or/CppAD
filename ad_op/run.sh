@@ -11,5 +11,4 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 echo_eval g++ -g -I ../include op_class.cpp -o op_class
 echo_eval ./op_class
-echo_eval rm ./op_class
 echo 'ru.sh: OK'
