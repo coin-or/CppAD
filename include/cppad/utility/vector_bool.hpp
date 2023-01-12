@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_VECTOR_BOOL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -117,6 +117,9 @@ public:
 {xrst_end vector_bool_typedef}
 ----------------------------------------------------------------------------
 {xrst_begin vector_bool_ctor dev}
+{xrst_spell
+   initializer
+}
 vectorBool: Constructors and Destructor
 #######################################
 
@@ -135,6 +138,12 @@ Sizing
 where *n* is a ``size_t`` ,
 creates the vector *vec* with *n* elements and ``n_unit_``
 greater than or equal ``unit_min()`` .
+
+Initializer
+***********
+
+   ``vectorBool`` *vec* ( { *b_1* , ... , *b_n* } )
+
 
 Copy
 ****
@@ -167,6 +176,11 @@ Source
       CPPAD_ASSERT_UNKNOWN( n_used <= n_unit_ );
       for(size_t i = 0; i < n_used; ++i)
          data_[i] = other.data_[i];
+   }
+   vectorBool(std::initializer_list<bool> list)
+   : n_unit_(0), length_(0), data_(nullptr)
+   {  for(auto itr = list.begin(); itr != list.end(); ++itr)
+         this->push_back(*itr);
    }
    // n_unit_ is the only value necessary to make destructor work
    // for other after this move semantics constructor
