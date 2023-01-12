@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BOOL_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -24,7 +24,7 @@ Syntax
 
 Purpose
 *******
-Create a ``bool`` valued function that has ``AD<`` *Base* > arguments.
+Create a ``bool`` valued function that has ``AD`` < *Base* > arguments.
 
 unary_name
 **********
@@ -33,7 +33,7 @@ This is the name of the ``bool`` valued function with one argument
 The user must provide a version of *unary_name* where
 the argument has type *Base* .
 CppAD uses this to create a version of *unary_name* where the
-argument has type ``AD<`` *Base* > .
+argument has type ``AD`` < *Base* > .
 
 u
 *
@@ -50,7 +50,7 @@ x
 *
 The argument *x* has prototype
 
-   ``const AD<`` *Base* > & *x*
+   ``const AD`` < *Base* > & *x*
 
 It is the value at which the CppAD provided version of *unary_name*
 is to be evaluated.
@@ -69,7 +69,7 @@ The preprocessor macro invocation
 
    ``CPPAD_BOOL_UNARY`` ( *Base* , *unary_name* )
 
-defines the version of *unary_name* with a ``AD<`` *Base* >
+defines the version of *unary_name* with a ``AD`` < *Base* >
 argument.
 This can with in a namespace
 (not the ``CppAD`` namespace)
@@ -82,7 +82,7 @@ This is the name of the ``bool`` valued function with two arguments
 The user must provide a version of *binary_name* where
 the arguments have type *Base* .
 CppAD uses this to create a version of *binary_name* where the
-arguments have type ``AD<`` *Base* > .
+arguments have type ``AD`` < *Base* > .
 
 v
 *
@@ -97,7 +97,7 @@ y
 *
 The argument *x* has prototype
 
-   ``const AD<`` *Base* > & *y*
+   ``const AD`` < *Base* > & *y*
 
 It is the second argument to
 the CppAD provided version of *binary_name* .
@@ -108,7 +108,7 @@ The preprocessor macro invocation
 
    ``CPPAD_BOOL_BINARY`` ( *Base* , *binary_name* )
 
-defines the version of *binary_name* with ``AD<`` *Base* >
+defines the version of *binary_name* with ``AD`` < *Base* >
 arguments.
 This can with in a namespace
 (not the ``CppAD`` namespace)

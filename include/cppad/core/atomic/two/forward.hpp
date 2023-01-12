@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_FORWARD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_forward app}
@@ -27,7 +27,7 @@ Base
 
 This syntax is used by *f* . ``Forward`` where *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 and *afun* is used in *f* .
 
@@ -125,7 +125,7 @@ The argument *tx* has prototype
 
 and *tx* . ``size`` () == ( *q* +1)* *n* .
 It is used by *f* . ``Forward`` where *f* has type
-``ADFun<`` *Base* > *f* and *afun* is used in *f* .
+``ADFun`` < *Base* > *f* and *afun* is used in *f* .
 For :math:`j = 0 , \ldots , n-1` and :math:`k = 0 , \ldots , q`,
 we use the Taylor coefficient notation
 
@@ -163,7 +163,7 @@ The argument *ty* has prototype
 
 and *tx* . ``size`` () == ( *q* +1)* *m* .
 It is set by *f* . ``Forward`` where *f* has type
-``ADFun<`` *Base* > *f* and *afun* is used in *f* .
+``ADFun`` < *Base* > *f* and *afun* is used in *f* .
 Upon return,
 For :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , q`,
 

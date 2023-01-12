@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin atomic_four_vector}
 
@@ -50,7 +50,7 @@ This example demonstrates all the callbacks for an
 base2ad
 =======
 It include examples for how one can
-define ``AD<`` *Base* > atomic operations using atomic operators.
+define ``AD`` < *Base* > atomic operations using atomic operators.
 This avoids expanding the atomic operator to an operator for each element
 when recording derivative calculations.
 For example, notice the difference between ``forward_add``

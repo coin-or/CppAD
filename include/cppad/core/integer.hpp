@@ -2,7 +2,7 @@
 # define CPPAD_CORE_INTEGER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -58,8 +58,8 @@ AD Types
 ========
 If the argument *x* has either of the following prototypes:
 
-| |tab| ``const AD<`` *Base* >               & *x*
-| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *x*
+| |tab| ``const AD`` < *Base* >               & *x*
+| |tab| ``const VecAD`` < *Base* >:: ``reference &`` *x*
 
 *Base* must support the ``Integer`` function and
 the conversion has the same meaning as for *Base* .

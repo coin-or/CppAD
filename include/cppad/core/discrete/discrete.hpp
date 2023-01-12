@@ -2,7 +2,7 @@
 # define CPPAD_CORE_DISCRETE_DISCRETE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <vector>
 # include <cppad/core/cppad_assert.hpp>
@@ -33,11 +33,11 @@ is the name of the user defined function that corresponding to this operation.
 
 ax
 **
-Is a ``AD<`` *Base* > corresponding to the argument for the function.
+Is a ``AD`` < *Base* > corresponding to the argument for the function.
 
 ay
 **
-Is a ``AD<`` *Base* > corresponding to the result for the function.
+Is a ``AD`` < *Base* > corresponding to the result for the function.
 
 fun
 ***
@@ -107,7 +107,7 @@ List of all objects in the discrete class
 
 Syntax
 ******
-*list* = ``discrete<`` *Base* >:: ``List`` ()
+*list* = ``discrete`` < *Base* >:: ``List`` ()
 
 Base
 ****
@@ -147,7 +147,7 @@ Size of the Discrete Function List
 
 Syntax
 ******
-*size* = ``discrete<`` *Base* >:: ``list_size`` ()
+*size* = ``discrete`` < *Base* >:: ``list_size`` ()
 
 Base
 ****
@@ -176,7 +176,7 @@ Constructor Called by each Use of CPPAD_DISCRETE_FUNCTION
 
 Syntax
 ******
-``discrete<`` *Base* > *fun* ( *name* , *f* )
+``discrete`` < *Base* > *fun* ( *name* , *f* )
 
 name
 ****
@@ -317,7 +317,7 @@ Name Corresponding to a discrete Function
 
 Syntax
 ******
-``discrete<`` *Base* >:: ``name`` ( *index* )
+``discrete`` < *Base* >:: ``name`` ( *index* )
 
 Base
 ****
@@ -345,7 +345,7 @@ Link From Forward Mode Sweep to Users Routine
 
 Syntax
 ******
-*y* = ``discrete<`` *Base* >:: ``eval`` ( *index* , *x* )
+*y* = ``discrete`` < *Base* >:: ``eval`` ( *index* , *x* )
 
 Base
 ****
@@ -383,7 +383,7 @@ Link From Forward Mode Sweep to AD Version of Discrete Function
 
 Syntax
 ******
-*ay* = ``discrete<`` *Base* >:: ``eval`` ( *index* , *ax* )
+*ay* = ``discrete`` < *Base* >:: ``eval`` ( *index* , *ax* )
 
 Base
 ****
@@ -396,11 +396,11 @@ index for this function in :ref:`discrete_list-name` .
 
 ax
 **
-argument at which to evaluate ``AD<`` *Base* > version of this function.
+argument at which to evaluate ``AD`` < *Base* > version of this function.
 
 ay
 **
-result for the ``AD<`` *Base* > version of this function.
+result for the ``AD`` < *Base* > version of this function.
 
 Source Code
 ***********

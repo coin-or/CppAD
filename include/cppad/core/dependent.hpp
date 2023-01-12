@@ -2,7 +2,7 @@
 # define CPPAD_CORE_DEPENDENT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin Dependent}
@@ -41,7 +41,7 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 The AD of *Base* operation sequence is stored in *f* ; i.e.,
 it becomes the operation sequence corresponding to *f* .
@@ -78,7 +78,7 @@ ADvector
 ********
 The type *ADvector* must be a :ref:`SimpleVector-name` class with
 :ref:`elements of type<SimpleVector@Elements of Specified Type>`
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
@@ -104,7 +104,7 @@ Parallel Mode
 The call to ``Independent`` ,
 and the corresponding call to
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 or
 

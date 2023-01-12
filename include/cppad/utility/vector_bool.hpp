@@ -148,9 +148,9 @@ Initializer
 Copy
 ****
 
-   ``vector<`` *Type* > *vec* ( *other* )
+   ``vector`` < *Type* > *vec* ( *other* )
 
-where *other* is a ``vector<`` *Type* > ,
+where *other* is a ``vector`` < *Type* > ,
 creates the vector *vec*
 with *n* = *other* . ``size`` () elements and ``n_unit_``
 greater than or equal ``unit_min()`` .

@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_LU_FACTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -185,7 +185,7 @@ AbsGeq
 Including the file ``lu_factor.hpp`` defines the template function
 
 | |tab| ``template <class`` *Float* >
-| |tab| ``bool AbsGeq<`` *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
+| |tab| ``bool AbsGeq`` < *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
 
 in the ``CppAD`` namespace.
 This function returns true if the absolute value of

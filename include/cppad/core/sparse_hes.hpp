@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SPARSE_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -54,7 +54,7 @@ f
 *
 This object has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 Note that the Taylor coefficients stored in *f* are affected
 by this operation; see
@@ -84,7 +84,7 @@ subset
 ******
 This argument has prototype
 
-   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+   ``sparse_rcv`` < *SizeVector* , *BaseVector* >& *subset*
 
 Its row size and column size is *n* ; i.e.,
 *subset* . ``nr`` () == *n* and *subset* . ``nc`` () == *n* .
@@ -106,7 +106,7 @@ pattern
 *******
 This argument has prototype
 
-   ``const sparse_rc<`` *SizeVector* >& *pattern*
+   ``const sparse_rc`` < *SizeVector* >& *pattern*
 
 Its row size and column size is *n* ; i.e.,
 *pattern* . ``nr`` () == *n* and *pattern* . ``nc`` () == *n* .

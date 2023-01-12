@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin fun_construct}
@@ -16,14 +16,14 @@ Construct an ADFun Object and Stop Recording
 Syntax
 ******
 
-| ``ADFun<`` *Base* > *f* ( *x* , *y* );
-| ``ADFun<`` *Base* > *f*
+| ``ADFun`` < *Base* > *f* ( *x* , *y* );
+| ``ADFun`` < *Base* > *f*
 | *f* . ``swap`` ( *g* )
 | ``f`` = ``g``
 
 Purpose
 *******
-The ``ADFun<`` *Base* > object *f*
+The ``ADFun`` < *Base* > object *f*
 stores an AD of *Base*
 :ref:`operation sequence<glossary@Operation@Sequence>` .
 It can then be used to calculate derivatives of the corresponding
@@ -50,7 +50,7 @@ between calling
 
 and
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 y
 *
@@ -65,7 +65,7 @@ ADVector
 ********
 The type *ADVector* must be a :ref:`SimpleVector-name` class with
 :ref:`elements of type<SimpleVector@Elements of Specified Type>`
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
@@ -73,10 +73,10 @@ Default Constructor
 *******************
 The default constructor
 
-   ``ADFun<`` *Base* > *g*
+   ``ADFun`` < *Base* > *g*
 
 creates an
-``AD<`` *Base* > object with no corresponding operation sequence; i.e.,
+``AD`` < *Base* > object with no corresponding operation sequence; i.e.,
 
    *g* . ``size_var`` ()
 
@@ -86,9 +86,9 @@ Sequence Constructor
 ********************
 The sequence constructor
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
-creates the ``AD<`` *Base* > object *f* ,
+creates the ``AD`` < *Base* > object *f* ,
 stops the recording of AD of *Base* operations
 corresponding to the call
 
@@ -101,7 +101,7 @@ This is equivalent to the following steps using the default constructor:
 
 #. Create *f* with the default constructor
 
-      ``ADFun<`` *Base* > *f* ;
+      ``ADFun`` < *Base* > *f* ;
 
 #. Stop the tape and storing the operation sequence using
 
@@ -119,25 +119,25 @@ This is equivalent to the following steps using the default constructor:
 
 Copy Constructor
 ****************
-It is an error to attempt to use the ``ADFun<`` *Base* > copy constructor;
+It is an error to attempt to use the ``ADFun`` < *Base* > copy constructor;
 i.e., the following syntax is not allowed:
 
-   ``ADFun<`` *Base* > *g* ( *f* )
+   ``ADFun`` < *Base* > *g* ( *f* )
 
-where *f* is an ``ADFun<`` *Base* > object.
+where *f* is an ``ADFun`` < *Base* > object.
 Use its :ref:`fun_construct@Default Constructor` instead
 and its assignment operator.
 
 swap
 ****
 The swap operation *f* . ``swap`` ( *g* ) exchanges the contents of
-the two ``ADFun<`` *Base* > functions; i.e.,
+the two ``ADFun`` < *Base* > functions; i.e.,
 *f* ( *g* ) before the swap is identical to
 *g* ( *f* ) after the swap.
 
 Assignment Operator
 *******************
-The ``ADFun<`` *Base* > assignment operation
+The ``ADFun`` < *Base* > assignment operation
 
    *g* = *f*
 
@@ -180,7 +180,7 @@ Parallel Mode
 The call to ``Independent`` ,
 and the corresponding call to
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 or
 
@@ -214,7 +214,7 @@ Assignment Operator
 ===================
 The file
 :ref:`fun_assign.cpp-name`
-contains an example and test of the ``ADFun<`` *Base* >
+contains an example and test of the ``ADFun`` < *Base* >
 assignment operator.
 
 {xrst_end fun_construct}

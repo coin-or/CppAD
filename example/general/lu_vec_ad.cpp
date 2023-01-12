@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -20,10 +20,10 @@ Syntax
 | ``int lu_vec_ad`` (
 | |tab| ``size_t`` *n* ,
 | |tab| ``size_t`` *m* ,
-| |tab| ``VecAD<`` *double* > & *Matrix* ,
-| |tab| ``VecAD<`` *double* > & *Rhs* ,
-| |tab| ``VecAD<`` *double* > & *Result* ,
-| |tab| *AD<* ``double`` > & ``logdet`` )
+| |tab| ``VecAD`` < *double* > & *Matrix* ,
+| |tab| ``VecAD`` < *double* > & *Rhs* ,
+| |tab| ``VecAD`` < *double* > & *Result* ,
+| |tab| *AD* < ``double`` > & ``logdet`` )
 
 Purpose
 *******

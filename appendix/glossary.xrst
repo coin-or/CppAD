@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin glossary app}
@@ -33,9 +33,9 @@ the operation sequence.)
 AD of Base
 **********
 An object is called an AD of *Base* object its type is
-either ``AD<`` *Base* >
+either ``AD`` < *Base* >
 (see the default and copy :ref:`constructors<ad_ctor-name>`
-or ``VecAD<`` *Base* >:: ``reference`` (see :ref:`VecAD-name` )
+or ``VecAD`` < *Base* >:: ``reference`` (see :ref:`VecAD-name` )
 for some *Base* type.
 
 AD Type Above Base
@@ -44,7 +44,7 @@ If *Base* is a type,
 an AD type above *Base*
 is the following sequence of types:
 
-   ``AD<`` *Base* > , ``AD< AD<`` *Base* > > , ``AD< AD< AD<`` *Base* > > > , ...
+   ``AD`` < *Base* > , ``AD< AD<`` *Base* > > , ``AD< AD< AD<`` *Base* > > > , ...
 
 Base Function
 *************
@@ -55,7 +55,7 @@ the domain and range space of *f* .
 
 Base Type
 *********
-If *x* is an ``AD<`` *Base* > object,
+If *x* is an ``AD`` < *Base* > object,
 *Base* is referred to as the base type for *x* .
 
 Elementary Vector
@@ -127,7 +127,7 @@ Parameter
 
 Constant
 ========
-An ``AD<`` *Base* > object *u* is a constant parameter if
+An ``AD`` < *Base* > object *u* is a constant parameter if
 its value does not depend on the value of
 the :ref:`Independent-name` variable vector
 or the :ref:`Independent@dynamic` parameter vector
@@ -140,7 +140,7 @@ If *u* is a constant parameter,
 
 Dynamic
 =======
-An ``AD<`` *Base* > object *u* is a dynamic parameter if
+An ``AD`` < *Base* > object *u* is a dynamic parameter if
 its value does not depend on the value of
 the :ref:`Independent-name` variable vector, but its value does depend
 on the :ref:`Independent@dynamic` parameter vector,
@@ -207,7 +207,7 @@ Inactive
 The :ref:`operation sequence<glossary@Operation@Sequence>`
 stored in a tape can be transferred to a function object using the syntax
 
-| |tab| ``ADFun<`` *Base* > *f* ( *x* , *y* )
+| |tab| ``ADFun`` < *Base* > *f* ( *x* , *y* )
 | |tab| *f* . ``Dependent`` ( *x* , *y* )
 
 see :ref:`fun_construct-name` .
@@ -256,7 +256,7 @@ converges to zero and :math:`t` goes to zero.
 
 Variable
 ********
-An ``AD<`` *Base* > object *u* is a variable if
+An ``AD`` < *Base* > object *u* is a variable if
 its value depends on an independent variable vector for
 a currently :ref:`active tape<glossary@Tape@Active>` .
 If *u* is a variable,
@@ -282,7 +282,7 @@ Directly after the code sequence
 not a dynamic parameter or a variable.
 
 Note that we often drop the word currently and
-just refer to an ``AD<`` *Base* > object as a variable
+just refer to an ``AD`` < *Base* > object as a variable
 or parameter.
 
 {xrst_end glossary}

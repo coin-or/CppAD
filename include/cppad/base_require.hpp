@@ -2,7 +2,7 @@
 # define CPPAD_BASE_REQUIRE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -22,7 +22,7 @@ Syntax
 Purpose
 *******
 This section lists the requirements for the type
-*Base* so that the type ``AD<`` *Base* > can be used.
+*Base* so that the type ``AD`` < *Base* > can be used.
 
 API Warning
 ***********
@@ -39,7 +39,7 @@ In the case where *Base* is
 ``double`` ,
 ``std::complex<float>`` ,
 ``std::complex<double>`` ,
-or ``AD<`` *Other* > ,
+or ``AD`` < *Other* > ,
 these requirements are provided by including the file
 ``cppad/cppad.hpp`` .
 In the documentation, The notation :math:`\B{R}` denotes

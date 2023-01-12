@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHKPOINT_TWO_CHKPOINT_TWO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -26,7 +26,7 @@ Syntax
 Constructor
 ===========
 
-| ``chkpoint_two<`` *Base* > *chk_fun* ( *fun* , *name* ,
+| ``chkpoint_two`` < *Base* > *chk_fun* ( *fun* , *name* ,
 | |tab| *internal_bool* , *use_hes_sparsity* , *use_base2ad* , *use_in_parallel*
 | )
 
@@ -48,7 +48,7 @@ Faster Recording
 ****************
 It may also reduce the time to make a recording if the same :math:`g(x)`
 is used many times (with different values) during the
-recording of an ``ADFun<`` *Base* > object.
+recording of an ``ADFun`` < *Base* > object.
 
 Repeating Forward
 *****************
@@ -85,7 +85,7 @@ Base
 ****
 The type *Base* specifies the base type for AD operations;
 i.e., *chk_fun* can be used during the recording of
-``AD<`` *Base* > operations.
+``AD`` < *Base* > operations.
 
 Contents
 ********

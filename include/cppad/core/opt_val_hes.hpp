@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OPT_VAL_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin opt_val_hes app}
@@ -87,7 +87,7 @@ Fun
 ***
 The argument *fun* is an object of type *Fun*
 which must support the member functions listed below.
-CppAD will may be recording operations of the type ``AD<`` *Base* >
+CppAD will may be recording operations of the type ``AD`` < *Base* >
 when these member functions are called.
 These member functions must not stop such a recording; e.g.,
 they must not call :ref:`AD\<Base>::abort_recording<abort_recording-name>` .
@@ -95,11 +95,11 @@ they must not call :ref:`AD\<Base>::abort_recording<abort_recording-name>` .
 Fun::ad_vector
 ==============
 The type *Fun* :: ``ad_vector`` must be a
-:ref:`SimpleVector-name` class with elements of type ``AD<`` *Base* > ; i.e.
+:ref:`SimpleVector-name` class with elements of type ``AD`` < *Base* > ; i.e.
 
    *Fun* :: ``ad_vector::value_type``
 
-is equal to ``AD<`` *Base* > .
+is equal to ``AD`` < *Base* > .
 
 fun.ell
 =======
@@ -146,7 +146,7 @@ The argument *y* to *fun* . ``s`` has prototype
 and its size must be equal to *m* .
 The *fun* . ``s`` result *s_k* has prototype
 
-   ``AD<`` *Base* > *s_k*
+   ``AD`` < *Base* > *s_k*
 
 and its value must be given by :math:`s_k = S_k ( x , y )`.
 

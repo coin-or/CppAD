@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base_require.cpp}
@@ -17,7 +17,7 @@ Purpose
 *******
 The type ``base_alloc`` , defined in :ref:`base_alloc.hpp-name` ,
 meets the requirements specified by :ref:`base_require-name`
-for *Base* in ``AD<`` *Base* > .
+for *Base* in ``AD`` < *Base* > .
 The program below is an example use of ``AD<base_alloc>`` .
 
 {xrst_end base_require.cpp}

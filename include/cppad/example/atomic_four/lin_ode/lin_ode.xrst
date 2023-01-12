@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin atomic_four_lin_ode}
 {xrst_spell
@@ -119,13 +119,13 @@ Upon return it contains the value :math:`y(x)`.
 ax
 **
 In the call to *lin_ode* , *ax*
-is a simple vector with elements of type ``AD<`` *Base* > .
+is a simple vector with elements of type ``AD`` < *Base* > .
 The elements of *ax* have the same meaning as *x* .
 
 ay
 **
 In the call to *lin_ode* , *ay*
-is a simple vector with elements of type ``AD<`` *Base* > .
+is a simple vector with elements of type ``AD`` < *Base* > .
 The input value of its elements does not matter.
 Upon return it represents the solution *y* ( *ax* ) .
 

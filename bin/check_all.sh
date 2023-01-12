@@ -181,7 +181,7 @@ for check in $list
 do
    if [ "$check" == 'bin/check_xrst.sh' ]
    then
-      echo_log_eval bin/check_xsrt.h +dev
+      echo_log_eval $check +dev
    else
       echo_log_eval $check
    fi

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_INDEPENDENT_INDEPENDENT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/independent.hpp>
 
@@ -35,7 +35,7 @@ The base type the recording started by this operation.
 
 ADVector
 ********
-is simple vector type with elements of type ``AD<`` *Base* > .
+is simple vector type with elements of type ``AD`` < *Base* > .
 
 x
 *
@@ -108,7 +108,7 @@ The base type the recording started by this operation.
 
 ADVector
 ********
-is simple vector type with elements of type ``AD<`` *Base* > .
+is simple vector type with elements of type ``AD`` < *Base* > .
 
 x
 *
@@ -161,7 +161,7 @@ The base type the recording started by this operation.
 
 ADVector
 ********
-is simple vector type with elements of type ``AD<`` *Base* > .
+is simple vector type with elements of type ``AD`` < *Base* > .
 
 x
 *
@@ -211,7 +211,7 @@ The base type the recording started by this operation.
 
 ADVector
 ********
-is simple vector type with elements of type ``AD<`` *Base* > .
+is simple vector type with elements of type ``AD`` < *Base* > .
 
 x
 *
@@ -260,7 +260,7 @@ The base type the recording started by this operation.
 
 ADVector
 ********
-is simple vector type with elements of type ``AD<`` *Base* > .
+is simple vector type with elements of type ``AD`` < *Base* > .
 
 x
 *

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_06 app}
@@ -188,7 +188,7 @@ A new :ref:`speed_test-name` routine was added to the library.
 
 12-10
 =====
-The :ref:`pow-name` function was changed to be a an ``AD<`` *Base* >
+The :ref:`pow-name` function was changed to be a an ``AD`` < *Base* >
 :ref:`atomic_base<glossary@Operation@Atomic>` operation.
 This function used to return a ``nan`` if
 *x* is negative because it was implemented as
@@ -402,7 +402,7 @@ to avoid re-taping operation sequence.
 =====
 Change :ref:`hes_lagrangian.cpp-name` example so that it modifies
 the independent variable vector between the call to
-:ref:`Independent-name` and the ``ADFun<`` *Base* >
+:ref:`Independent-name` and the ``ADFun`` < *Base* >
 :ref:`constructor<fun_construct-name>` .
 
 10-25
@@ -544,7 +544,7 @@ it corresponds to a vector of *Base* objects.
 06-15
 =====
 Change :ref:`BenderQuad-name` to use *Base* instead of
-``AD<`` *Base* > where every possible.
+``AD`` < *Base* > where every possible.
 This allows for more calculations to be done in the base type; i.e.,
 is more efficient.
 
@@ -712,7 +712,7 @@ The :ref:`ForSparseJac-name` , :ref:`RevSparseJac-name` , :ref:`RevSparseHes-nam
 sparsity results are now valid for
 all independent variable values
 (if the AD operation sequence does no use any
-``VecAD<`` *Base* > operands).
+``VecAD`` < *Base* > operands).
 In addition, the
 ``ForSparseJac`` , :ref:`RevSparseJac-name` and :ref:`RevSparseHes-name`
 documentation and examples were improved.
@@ -831,7 +831,7 @@ Fix a bug using non-zero AD indices for :ref:`VecAD-name` vectors
 while the tape is in the empty state.
 
 Extend :ref:`erf-name` to include ``float`` , ``double`` ,
-and ``VecAD<`` *Base* >:: ``reference`` .
+and ``VecAD`` < *Base* >:: ``reference`` .
 
 03-28
 =====
@@ -857,7 +857,7 @@ and generally improve
 =====
 Improve documentation and examples for :ref:`VecAD-name` and change
 its element type from
-``VecADelem<`` *Base* > to ``VecAD_reference<`` *Base* >
+``VecADelem`` < *Base* > to ``VecAD_reference`` < *Base* >
 (so that it looks more like
 :ref:`VecAD@VecAD\<Base>::reference` ).
 

@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base_alloc.hpp}
@@ -17,7 +17,7 @@ Example AD<Base> Where Base Constructor Allocates Memory
 
 Purpose
 *******
-Demonstrate use of ``AD<`` *Base* >
+Demonstrate use of ``AD`` < *Base* >
 where memory is allocated for each element of the type *Base* .
 In addition, this is a complete example where all the
 :ref:`required Base<base_require-name>` type

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_ctor app}
@@ -14,7 +14,7 @@ Syntax
 ******
 
 | *atomic_user afun* ( *ctor_arg_list* )
-| ``atomic_base<`` *Base* >( *name* , *sparsity* )
+| ``atomic_base`` < *Base* >( *name* , *sparsity* )
 
 atomic_user
 ***********
@@ -34,12 +34,12 @@ has this *atomic_user* operation in its
 Implementation
 ==============
 The user defined *atomic_user* class is a publicly derived class of
-``atomic_base<`` *Base* > .
+``atomic_base`` < *Base* > .
 It should be declared as follows:
 
 | |tab| ``class`` *atomic_user* : ``public CppAD::atomic_base<`` *Base* > {
 | |tab| ``public:``
-| |tab| |tab| *atomic_user* ( *ctor_arg_list* ) : ``atomic_base<`` *Base* >( *name* , *sparsity* )
+| |tab| |tab| *atomic_user* ( *ctor_arg_list* ) : ``atomic_base`` < *Base* >( *name* , *sparsity* )
 | |tab| ...
 | |tab| };
 
@@ -61,7 +61,7 @@ The ``atomic_base`` constructor and destructor cannot be called in
 Base
 ====
 The template parameter determines the
-*Base* type for this ``AD<`` *Base* > atomic operation.
+*Base* type for this ``AD`` < *Base* > atomic operation.
 
 name
 ====
@@ -77,7 +77,7 @@ sparsity
 ========
 This ``atomic_base`` constructor argument has prototype
 
-   ``atomic_base<`` *Base* >:: ``option_enum`` *sparsity*
+   ``atomic_base`` < *Base* >:: ``option_enum`` *sparsity*
 
 The current *sparsity* for an ``atomic_base`` object
 determines which type of sparsity patterns it uses
@@ -88,11 +88,11 @@ and its value is one of the following:
 
    * - *sparsity*
      - sparsity patterns
-   * - ``atomic_base<`` *Base* >:: ``pack_sparsity_enum``
+   * - ``atomic_base`` < *Base* >:: ``pack_sparsity_enum``
      - :ref:`CppAD_vector@vectorBool`
-   * - ``atomic_base<`` *Base* >:: ``bool_sparsity_enum``
+   * - ``atomic_base`` < *Base* >:: ``bool_sparsity_enum``
      - :ref:`vector<CppAD_vector-name>` ``<bool>``
-   * - ``atomic_base<`` *Base* >:: ``set_sparsity_enum``
+   * - ``atomic_base`` < *Base* >:: ``set_sparsity_enum``
      - :ref:`vector<CppAD_vector-name>` ``<std::set<std::size_t> >``
 
 There is a default value for *sparsity* if it is not

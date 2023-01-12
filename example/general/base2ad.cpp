@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -19,7 +19,7 @@ See Also
 Purpose
 *******
 This is a realistic example using :ref:`base2ad-name` to create
-an ``AD<`` *Base* > function from an *Base* function.
+an ``AD`` < *Base* > function from an *Base* function.
 The function represents an ordinary differential equation.
 It is differentiated with respect to
 its :ref:`variables<glossary@Variable>` .

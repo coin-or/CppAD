@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin Independent}
 {xrst_spell
@@ -34,7 +34,7 @@ The recording is stopped,
 and the operation sequence is transferred to the AD function object *f* ,
 using either the :ref:`function constructor<fun_construct-name>`
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 or the :ref:`dependent variable specifier<Dependent-name>`
 
@@ -45,7 +45,7 @@ The only other way to stop a recording is using
 Between when the recording is started and when it stopped,
 we refer to the elements of *x* ,
 and the values that depend on the elements of *x* ,
-as ``AD<`` *Base* > variables.
+as ``AD`` < *Base* > variables.
 
 x
 *
@@ -119,7 +119,7 @@ ADVector
 ********
 The type *ADVector* must be a :ref:`SimpleVector-name` class with
 :ref:`elements of type<SimpleVector@Elements of Specified Type>`
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
@@ -129,7 +129,7 @@ Each thread can have one, and only one, active recording.
 A call to ``Independent`` starts the recording for the current thread.
 The recording must be stopped by a corresponding call to
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 or
 

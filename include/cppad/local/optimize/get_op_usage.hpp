@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -161,7 +161,7 @@ Prototype
 Base
 ****
 Base type for the operator; i.e., this operation was recorded
-using ``AD<`` *Base* > and computations by this routine are done
+using ``AD`` < *Base* > and computations by this routine are done
 using type *Base* .
 
 Addr

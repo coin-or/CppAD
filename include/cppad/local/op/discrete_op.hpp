@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_DISCRETE_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin discrete_op dev}
@@ -42,7 +42,7 @@ always calculated as zero.
 RecBase
 *******
 Is the Base type when this function was recorded; i.e.,
-*ax* and *az* have type ``AD<`` *RecBase* > .
+*ax* and *az* have type ``AD`` < *RecBase* > .
 
 p
 *
@@ -109,7 +109,7 @@ is the k-th order Taylor coefficient corresponding to z
 
 ataylor
 *******
-The type of this parameter is ``AD<`` *RecBase* > .
+The type of this parameter is ``AD`` < *RecBase* > .
 Otherwise, it has the same description as *taylor* .
 
 Asserts

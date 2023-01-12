@@ -117,14 +117,14 @@ Vector Class: Constructors and Destructor
 Default
 *******
 
-   ``vector<`` *Type* > *vec*
+   ``vector`` < *Type* > *vec*
 
 creates an empty vector no elements and capacity zero.
 
 Sizing
 ******
 
-   ``vector<`` *Type* > *vec* ( *n* )
+   ``vector`` < *Type* > *vec* ( *n* )
 
 where *n* is a ``size_t`` or ``int`` ,
 creates the vector *vec* with *n* elements and capacity
@@ -138,9 +138,9 @@ Initializer List
 Copy
 ****
 
-   ``vector<`` *Type* > *vec* ( *other* )
+   ``vector`` < *Type* > *vec* ( *other* )
 
-where *other* is a ``vector<`` *Type* > ,
+where *other* is a ``vector`` < *Type* > ,
 creates the vector *vec*
 with *n* = *other* . ``size`` () elements and capacity
 greater than or equal *n* .

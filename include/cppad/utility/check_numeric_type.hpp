@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_CHECK_NUMERIC_TYPE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin CheckNumericType}
@@ -18,13 +18,13 @@ Syntax
 
    # ``include <cppad/utility/check_numeric_type.hpp>``
 
-``CheckNumericType<`` *NumericType* >()
+``CheckNumericType`` < *NumericType* >()
 
 Purpose
 *******
 The syntax
 
-   ``CheckNumericType<`` *NumericType* >()
+   ``CheckNumericType`` < *NumericType* >()
 
 preforms compile and run time checks that the type specified
 by *NumericType* satisfies all the requirements for

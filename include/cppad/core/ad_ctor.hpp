@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -19,12 +19,12 @@ AD Constructors
 Syntax
 ******
 
-| ``AD<`` *Base* > *ay* ()
-| ``AD<`` *Base* > *ay* ( *x* )
+| ``AD`` < *Base* > *ay* ()
+| ``AD`` < *Base* > *ay* ( *x* )
 
 Purpose
 *******
-creates a new ``AD<`` *Base* > object *ay*
+creates a new ``AD`` < *Base* > object *ay*
 and initializes it as a
 equal to *x* .
 
@@ -35,7 +35,7 @@ implicit
 ========
 There is an implicit constructor where *x* has prototype
 
-   ``const VecAD<`` *Base* >& *x*
+   ``const VecAD`` < *Base* >& *x*
 
 There also is an implicit constructor where *x* has prototype
 
@@ -59,7 +59,7 @@ ay
 **
 The target *ay* has prototype
 
-   ``AD<`` *Base* > *ay*
+   ``AD`` < *Base* > *ay*
 
 Example
 *******

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SPARSE_JAC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -67,7 +67,7 @@ f
 *
 This object has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 Note that the Taylor coefficients stored in *f* are affected
 by this operation; see
@@ -105,7 +105,7 @@ subset
 ******
 This argument has prototype
 
-   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+   ``sparse_rcv`` < *SizeVector* , *BaseVector* >& *subset*
 
 Its row size is *subset* . ``nr`` () == *m* ,
 and its column size is *subset* . ``nc`` () == *n* .
@@ -121,7 +121,7 @@ pattern
 *******
 This argument has prototype
 
-   ``const sparse_rc<`` *SizeVector* >& *pattern*
+   ``const sparse_rc`` < *SizeVector* >& *pattern*
 
 Its row size is *pattern* . ``nr`` () == *m* ,
 and its column size is *pattern* . ``nc`` () == *n* .

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_03 app}
@@ -63,11 +63,11 @@ and have the tapes created and grow automatically.
 The old method where one directly accesses the tape has been removed and the
 following functions are no longer available:
 
-| |tab| |tab| ``size_t`` *TapeName* . ``Independent`` ( ``AD<`` *Base* > & *indvar* )
+| |tab| |tab| ``size_t`` *TapeName* . ``Independent`` ( ``AD`` < *Base* > & *indvar* )
 | |tab| |tab| ``size_t`` *TapeName* . ``Record`` ( ``size_t`` *order* )
 | |tab| |tab| ``size_t`` *TapeName* . ``Stop`` ( ``void`` )
-| |tab| |tab| ``bool Dependent`` ( ``const AD<`` *Base* > & *var* ) ``const``
-| |tab| |tab| ``bool`` *TapeName* . ``Dependent`` ( ``const AD<`` *Base* > & *var* ) ``const``
+| |tab| |tab| ``bool Dependent`` ( ``const AD`` < *Base* > & *var* ) ``const``
+| |tab| |tab| ``bool`` *TapeName* . ``Dependent`` ( ``const AD`` < *Base* > & *var* ) ``const``
 | |tab| |tab| ``size_t`` *TapeName* . ``Total`` ( ``void`` ) ``const``
 | |tab| |tab| ``size_t`` *TapeName* . ``Required`` ( ``void`` ) ``const``
 | |tab| |tab| ``size_t`` *TapeName* . ``Erase`` ( ``void`` )
@@ -115,10 +115,10 @@ the resulting speed tests gave much faster results.
 =====
 The following function has been added:
 
-   ``void Independent`` ( ``const CppADvector<`` *Base* > & *x* )
+   ``void Independent`` ( ``const CppADvector`` < *Base* > & *x* )
 
 which will declare the independent variables and begin recording
-``AD<`` *Base* > operations
+``AD`` < *Base* > operations
 (see :ref:`Independent-name` ).
 The :ref:`ADFun-name` constructor was modified so that it
 stops the recording and erases that tape as well as creates the
@@ -677,7 +677,7 @@ a dependent variable in these cases.
 
 07-26
 =====
-The ``AD<`` *Base* > data structure
+The ``AD`` < *Base* > data structure
 was changed to include a doubly linked list of variables.
 This enabled  the
 :ref:`AD copy constructor<ad_ctor-name>` constructor and

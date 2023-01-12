@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_15 app}
@@ -615,7 +615,7 @@ for *work* and *p* .
 =====
 Remove the syntax
 
-   ``AD<`` *Base* > *y* = *x*
+   ``AD`` < *Base* > *y* = *x*
 
 for the :ref:`AD constructor<ad_ctor-name>` documentation because it does not
 work when the constructor is :ref:`ad_ctor@x@explicit` .

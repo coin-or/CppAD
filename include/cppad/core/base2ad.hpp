@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BASE2AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base2ad}
@@ -21,14 +21,14 @@ See Also
 Base
 ****
 This is the base type used to recorded the operation sequence in *f*
-and *af* ; i.e., the type ``AD<`` *Base* > was used to record
+and *af* ; i.e., the type ``AD`` < *Base* > was used to record
 the operation sequence.
 
 f
 *
 This object has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 It does it's derivative calculations using the type *Base* .
 
@@ -40,7 +40,7 @@ This object has prototype
 
 It has the same operation sequence as *f* ,
 but it does it's derivative calculations using the type
-``AD<`` *Base>* .
+``AD`` < *Base>* .
 This enables one to record new functions that are defined
 using derivatives of the function *f* .
 Initially, there are no Taylor coefficients stored in *af* and

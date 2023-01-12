@@ -2,7 +2,7 @@
 # define CPPAD_CORE_GRAPH_FROM_JSON_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/core/ad_fun.hpp>
@@ -18,7 +18,7 @@ ADFun Object Corresponding to a Json AD Graph
 Syntax
 ******
 
-| |tab| ``ADFun<`` *Base* > *fun*
+| |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``from_json`` ( *json* )
 
 Prototype

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SPARSE_JACOBIAN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // maximum number of sparse directions to compute at the same time
@@ -54,7 +54,7 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun<`` *Base* > *f*
+   ``ADFun`` < *Base* > *f*
 
 Note that the :ref:`ADFun-name` object *f* is not ``const``
 (see :ref:`sparse_jacobian@Uses Forward` below).

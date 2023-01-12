@@ -2,7 +2,7 @@
 # define CPPAD_CORE_POW_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -62,16 +62,16 @@ x
 The argument *x* has one of the following prototypes
 
 | |tab| ``const`` *Base* & *x*
-| |tab| ``const AD<`` *Base* >& *x*
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+| |tab| ``const AD`` < *Base* >& *x*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *x*
 
 y
 *
 The argument *y* has one of the following prototypes
 
 | |tab| ``const`` *Base* & *y*
-| |tab| ``const AD<`` *Base* >& *y*
-| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *y*
+| |tab| ``const AD`` < *Base* >& *y*
+| |tab| ``const VecAD`` < *Base* >:: ``reference&`` *y*
 
 z
 *
@@ -79,7 +79,7 @@ If both *x* and *y* are *Base* objects,
 the result *z* is also a *Base* object.
 Otherwise, it has prototype
 
-   ``AD<`` *Base* > *z*
+   ``AD`` < *Base* > *z*
 
 Operation Sequence
 ******************

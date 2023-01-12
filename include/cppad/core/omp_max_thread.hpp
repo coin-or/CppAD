@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OMP_MAX_THREAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin omp_max_thread app}
@@ -21,18 +21,18 @@ to set the number of threads.
 Syntax
 ******
 
-   ``AD<`` *Base* >:: ``omp_max_thread`` ( *number* )
+   ``AD`` < *Base* >:: ``omp_max_thread`` ( *number* )
 
 Purpose
 *******
-By default, for each ``AD<`` *Base* > class there is only one
+By default, for each ``AD`` < *Base* > class there is only one
 tape that records :ref:`glossary@AD of Base` operations.
 This tape is a global variable and hence it cannot be used
 by multiple OpenMP threads at the same time.
 The ``omp_max_thread`` function is used to set the
 maximum number of OpenMP threads that can be active.
 In this case, there is a different tape corresponding to each
-``AD<`` *Base* > class and thread pair.
+``AD`` < *Base* > class and thread pair.
 
 number
 ******

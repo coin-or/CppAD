@@ -2,7 +2,7 @@
 # define CPPAD_CORE_NEAR_EQUAL_EXT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin near_equal_ext}
@@ -20,7 +20,7 @@ The routine :ref:`NearEqual-name` determines if two objects of
 the same type are nearly.
 This routine is extended to the case where one object can have type
 *Type* while the other can have type
-``AD<`` *Type* > or
+``AD`` < *Type* > or
 ``AD< std::complex<`` *Type* > > .
 
 x
@@ -29,7 +29,7 @@ The arguments *x*
 has one of the following possible prototypes:
 
 | |tab| ``const`` *Type* & *x*
-| |tab| ``const AD<`` *Type* >                 & *x*
+| |tab| ``const AD`` < *Type* >                 & *x*
 | |tab| ``const AD< std::complex<`` *Type* > > & *x*
 
 y
@@ -38,7 +38,7 @@ The arguments *y*
 has one of the following possible prototypes:
 
 | |tab| ``const`` *Type* & *y*
-| |tab| ``const AD<`` *Type* >                 & *y*
+| |tab| ``const AD`` < *Type* >                 & *y*
 | |tab| ``const AD< std::complex<`` *Type* > > & *x*
 
 r

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_LU_RATIO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -151,7 +151,7 @@ ratio
 *****
 The argument *ratio* has prototype
 
-   ``AD<`` *Base* > & *ratio*
+   ``AD`` < *Base* > & *ratio*
 
 On input, the value of *ratio* does not matter.
 On output it is a measure of how good the choice of pivots is.
@@ -166,7 +166,7 @@ such ratios over with respect to all elements and all the pivots.
 Purpose
 =======
 Suppose that the execution of a call to ``LuRatio``
-is recorded in the ``ADFun<`` *Base* > object *F* .
+is recorded in the ``ADFun`` < *Base* > object *F* .
 Then a call to :ref:`Forward-name` of the form
 
    *F* . ``Forward`` ( *k* , *xk* )
@@ -192,7 +192,7 @@ ADvector
 ********
 The type *ADvector* must be a
 :ref:`simple vector class<SimpleVector-name>` with elements of type
-``AD<`` *Base* > .
+``AD`` < *Base* > .
 The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 

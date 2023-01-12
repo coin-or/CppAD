@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_ONE_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_one app}
@@ -46,7 +46,7 @@ Callback Routines
 
 Free Static Memory
 ==================
-``user_atomic<`` *Base* >:: ``clear`` ()
+``user_atomic`` < *Base* >:: ``clear`` ()
 
 Purpose
 *******
@@ -57,12 +57,12 @@ of a function
 
    y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 
-more efficiently than by coding it using ``AD<`` *Base* >
+more efficiently than by coding it using ``AD`` < *Base* >
 :ref:`atomic_base<glossary@Operation@Atomic>` operations
 and letting CppAD do the rest.
 In this case, ``CPPAD_USER_ATOMIC`` can be used
 add the user code for :math:`f(x)`, and its derivatives,
-to the set of ``AD<`` *Base* > atomic operations.
+to the set of ``AD`` < *Base* > atomic operations.
 
 Another possible purpose is to reduce the size of the tape.
 
@@ -93,7 +93,7 @@ The macro
 | |tab| *forward* , *reverse* , *for_jac_sparse* , *rev_jac_sparse* , *rev_hes_sparse*
 | )
 
-defines the ``AD<`` *Base* > routine *afun* .
+defines the ``AD`` < *Base* > routine *afun* .
 This macro can be placed within a namespace
 (not the ``CppAD`` namespace)
 but must be outside of any routine.
@@ -109,9 +109,9 @@ Base
 ====
 The macro argument *Base* specifies the
 :ref:`base type<base_require-name>`
-corresponding to ``AD<`` *Base>* operation sequences.
+corresponding to ``AD`` < *Base>* operation sequences.
 Calling the routine *afun* will add the operator defined
-by this macro to an ``AD<`` *Base>* operation sequence.
+by this macro to an ``AD`` < *Base>* operation sequence.
 
 ok
 **
@@ -255,16 +255,16 @@ to implement the function
 
    *afun* ( *id* , *ax* , *ay* )
 
-where the argument are vectors with elements of type ``AD<`` *Base* > .
+where the argument are vectors with elements of type ``AD`` < *Base* > .
 
 ax
 ==
 The *afun* argument *ax* has prototype
 
-   ``const`` *Tvector* < ``AD<`` *Base* > >& *ax*
+   ``const`` *Tvector* < ``AD`` < *Base* > >& *ax*
 
 It is the argument vector :math:`x \in \B{R}^n`
-at which the ``AD<`` *Base* > version of
+at which the ``AD`` < *Base* > version of
 :math:`y = f(x)` is to be evaluated.
 The dimension of the domain space for :math:`y = f (x)`
 is specified by :ref:`atomic_one@n` = *ax* . ``size`` () ,
@@ -274,11 +274,11 @@ ay
 ==
 The *afun* result *ay* has prototype
 
-   *Tvector* < ``AD<`` *Base* > >& *ay*
+   *Tvector* < ``AD`` < *Base* > >& *ay*
 
 The input values of its elements
 are not specified (must not matter).
-Upon return, it is the ``AD<`` *Base* > version of the
+Upon return, it is the ``AD`` < *Base* > version of the
 result vector :math:`y = f(x)`.
 The dimension of the range space for :math:`y = f (x)`
 is specified by :ref:`atomic_one@m` = *ay* . ``size`` () ,
@@ -746,7 +746,7 @@ User atomic functions hold onto static work space in order to
 increase speed by avoiding system memory allocation calls.
 The function call
 
-   ``user_atomic<`` *Base* >:: ``clear`` ()
+   ``user_atomic`` < *Base* >:: ``clear`` ()
 
 makes to work space :ref:`available<ta_available-name>` to
 for other uses by the same thread.

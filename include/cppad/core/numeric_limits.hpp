@@ -2,7 +2,7 @@
 # define CPPAD_CORE_NUMERIC_LIMITS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -19,13 +19,13 @@ Numeric Limits For an AD and Base Types
 Syntax
 ******
 
-| *eps* = ``numeric_limits<`` *Float* >:: ``epsilon`` ()
-| *min* = ``numeric_limits<`` *Float* >:: ``min`` ()
-| *max* = ``numeric_limits<`` *Float* >:: ``max`` ()
-| *nan* = ``numeric_limits<`` *Float* >:: ``quiet_NaN`` ()
-| *inf* = ``numeric_limits<`` *Float* >:: ``infinity`` ()
+| *eps* = ``numeric_limits`` < *Float* >:: ``epsilon`` ()
+| *min* = ``numeric_limits`` < *Float* >:: ``min`` ()
+| *max* = ``numeric_limits`` < *Float* >:: ``max`` ()
+| *nan* = ``numeric_limits`` < *Float* >:: ``quiet_NaN`` ()
+| *inf* = ``numeric_limits`` < *Float* >:: ``infinity`` ()
 
-``numeric_limits<`` *Float* >:: ``digits10``
+``numeric_limits`` < *Float* >:: ``digits10``
 
 CppAD::numeric_limits
 *********************
@@ -52,7 +52,7 @@ of ``std::numeric_limits`` .
 
 Float
 *****
-These functions are defined for all ``AD<`` *Base* > ,
+These functions are defined for all ``AD`` < *Base* > ,
 and for all corresponding *Base* types;
 see *Base* type :ref:`base_limits-name` .
 
@@ -131,7 +131,7 @@ digits10
 ********
 The member variable ``digits10`` has prototype
 
-   ``static const int numeric_limits<`` *Float* >:: ``digits10``
+   ``static const int numeric_limits`` < *Float* >:: ``digits10``
 
 It is the number of decimal digits that can be represented by a
 *Float* value.  A number with this many decimal digits can be

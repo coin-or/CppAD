@@ -2,7 +2,7 @@
 # define CPPAD_CORE_STANDARD_MATH_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -42,21 +42,21 @@ AD<Base>
 ========
 If the argument *x* has prototype
 
-   ``const AD<`` *Base* >& *x*
+   ``const AD`` < *Base* >& *x*
 
 then the result *y* has prototype
 
-   ``AD<`` *Base* > *y*
+   ``AD`` < *Base* > *y*
 
 VecAD<Base>
 ===========
 If the argument *x* has prototype
 
-   ``const VecAD<`` *Base* >:: ``reference&`` *x*
+   ``const VecAD`` < *Base* >:: ``reference&`` *x*
 
 then the result *y* has prototype
 
-   ``AD<`` *Base* > *y*
+   ``AD`` < *Base* > *y*
 
 {xrst_toc_hidden
    include/cppad/core/std_math_11.hpp

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin size_order}
 
@@ -29,7 +29,7 @@ f
 *
 The object *f* has prototype
 
-   ``const ADFun<`` *Base* > *f*
+   ``const ADFun`` < *Base* > *f*
 
 s
 *
@@ -45,7 +45,7 @@ Constructor
 ***********
 Directly after the :ref:`fun_construct-name` syntax
 
-   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 the value of *s* returned by ``size_order`` is one.
 This is because
