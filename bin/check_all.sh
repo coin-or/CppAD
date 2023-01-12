@@ -179,7 +179,12 @@ list=$(
 # ~/devel/check_copyright.sh not included in batch_edit branch
 for check in $list
 do
-   echo_log_eval $check
+   if [ "$check" == 'bin/check_xrst.sh' ]
+   then
+      echo_log_eval bin/check_xsrt.h +dev
+   else
+      echo_log_eval $check
+   fi
 done
 # ---------------------------------------------------------------------------
 # build/cppad-$version.tgz
