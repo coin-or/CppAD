@@ -122,6 +122,11 @@ public :
          );
       }
    }
+   //
+   // optimize
+   void optimize(Vector<addr_t>& dep_vec);
 };
+
+# include "optimize.hpp"
 
 # endif

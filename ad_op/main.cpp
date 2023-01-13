@@ -20,13 +20,16 @@ int main()
    op_arg[1] = 1; // x[1]
    //
    // res_arg
-   Vector<addr_t> res_index(2);
+   Vector<addr_t> dep_vec(2);
    //
    // tape
-   res_index[0] = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
-   op_arg[0]    = res_index[0];                      // x[0] + x[1]
-   op_arg[1]    = tape.next_con_op(4.0);             // 4.0
-   res_index[1] = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
+   dep_vec[0] = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
+   op_arg[0]  = dep_vec[0];                        // x[0] + x[1]
+   op_arg[1]  = tape.next_con_op(4.0);             // 4.0
+   dep_vec[1] = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
+   //
+   // optimize
+   tape.optimize(dep_vec);
    //
    // x
    Vector<double> x(2);
@@ -46,7 +49,7 @@ int main()
    // y
    Vector<double> y(2);
    for(size_t i = 0; i < 2; ++i)
-      y[i] = val_vec[ res_index[i] ];
+      y[i] = val_vec[ dep_vec[i] ];
    //
    // ok
    ok &= y[0] == x[0] + x[1];
