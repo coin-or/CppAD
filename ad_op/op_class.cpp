@@ -59,8 +59,8 @@ public:
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
       Vector<Base>&         value_vec    ) const override
-   {  const Base& left      = value_vec[ arg_vec[0] ];
-      const Base& right     = value_vec[ arg_vec[1] ];
+   {  const Base& left      = value_vec[ arg_vec[arg_index + 0] ];
+      const Base& right     = value_vec[ arg_vec[arg_index + 1] ];
       value_vec[res_index]  = left + right;
    }
 };
@@ -88,8 +88,8 @@ public:
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
       Vector<Base>&         value_vec    ) const override
-   {  const Base& left      = value_vec[ arg_vec[0] ];
-      const Base& right     = value_vec[ arg_vec[1] ];
+   {  const Base& left      = value_vec[ arg_vec[arg_index + 0] ];
+      const Base& right     = value_vec[ arg_vec[arg_index + 1] ];
       value_vec[res_index]  = left - right;
    }
 };
@@ -187,7 +187,7 @@ int main()
 {  bool ok = true;
    //
    // f_0 (x) = x[0] + x[1]
-   // f_1 (x) = x[0] - x[1]
+   // f_1 (x) = (x[0] + x[1]) - x[1]
    //
    // f
    tape_t<double> tape;
@@ -204,6 +204,8 @@ int main()
    //
    // tape
    res_index[0] = tape.next_op(add_op_enum, op_arg);
+   op_arg[0]    = res_index[0]; // x[0] + x[1]
+   op_arg[1]    = 1;            // x[1]
    res_index[1] = tape.next_op(sub_op_enum, op_arg);
    //
    // x
@@ -227,7 +229,7 @@ int main()
    //
    // ok
    ok &= y[0] == x[0] + x[1];
-   ok &= y[1] == x[0] - x[1];
+   ok &= y[1] == x[0];
    //
    std::cout << "x = " << x << "\n";
    std::cout << "y = " << y << "\n";
