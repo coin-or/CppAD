@@ -4,21 +4,16 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-
-# include "op.hpp"
+# include "binary_op.hpp"
 
 // sub_op_t
 template <class Base>
-class sub_op_t : public op_t<Base> {
+class sub_op_t : public binary_op_t<Base> {
 public:
    // op_enum
    op_enum_t op_enum(void) const override
    {  return sub_op_enum; }
-   // n_arg
-   addr_t n_arg(void) const override
-   {  return 2; }
-   addr_t n_res(void) const override
-   {  return 1; }
+   //
    // eval
    void eval(
       addr_t                arg_index    ,
