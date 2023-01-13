@@ -20,33 +20,6 @@ enum op_enum_t { add_op_enum, sub_op_enum, number_op_enum };
 template <class Base>
 class op_t {
 public:
-   // op_enum_, arg_index_
-   addr_t    arg_index_;
-   addr_t    res_index_;
-   //
-   // ctor(void)
-   op_t(void)
-   {
-      arg_index_ = std::numeric_limits<addr_t>::max();
-      res_index_ = std::numeric_limits<addr_t>::max();
-   }
-   //
-   // ctor(op_enum, arg_index, res_index)
-   op_t(addr_t arg_index, addr_t res_index) :
-   arg_index_( arg_index ),
-   res_index_( res_index )
-   { }
-   //
-   // arg_index
-   // index of first argument in arg_vec
-   addr_t arg_index(void) const
-   {  return arg_index_; }
-   //
-   // res_index
-   // index of first resut in value_vec
-   addr_t res_index(void) const
-   {  return res_index_; }
-   //
    // op_enum
    // type of this operator
    virtual op_enum_t op_enum(void) const = 0;
@@ -62,7 +35,9 @@ public:
    // eval
    // computes the results
    virtual void eval(
+      addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
+      addr_t                res_index    ,
       Vector<Base>&         value_vec    ) const = 0;
 };
 
@@ -70,10 +45,6 @@ public:
 template <class Base>
 class add_op_t : public op_t<Base> {
 public:
-   // ctor(op_enum, arg_index, res_index)
-   add_op_t(addr_t arg_index, addr_t res_index) :
-   op_t<Base>(arg_index, res_index)
-   { }
    // op_enum
    op_enum_t op_enum(void) const override
    {  return add_op_enum; }
@@ -84,10 +55,11 @@ public:
    {  return 1; }
    // eval
    void eval(
+      addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
+      addr_t                res_index    ,
       Vector<Base>&         value_vec    ) const override
-   {  addr_t      res_index = op_t<Base>::res_index_;
-      const Base& left      = value_vec[ arg_vec[0] ];
+   {  const Base& left      = value_vec[ arg_vec[0] ];
       const Base& right     = value_vec[ arg_vec[1] ];
       value_vec[res_index]  = left + right;
    }
@@ -97,10 +69,6 @@ public:
 template <class Base>
 class sub_op_t : public op_t<Base> {
 public:
-   // ctor(op_enum, arg_index, res_index)
-   sub_op_t(addr_t arg_index, addr_t res_index) :
-   op_t<Base>(arg_index, res_index)
-   { }
    // op_enum
    op_enum_t op_enum(void) const override
    {  return sub_op_enum; }
@@ -111,10 +79,11 @@ public:
    {  return 1; }
    // eval
    void eval(
+      addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
+      addr_t                res_index    ,
       Vector<Base>&         value_vec    ) const override
-   {  addr_t      res_index = op_t<Base>::res_index_;
-      const Base& left      = value_vec[ arg_vec[0] ];
+   {  const Base& left      = value_vec[ arg_vec[0] ];
       const Base& right     = value_vec[ arg_vec[1] ];
       value_vec[res_index]  = left - right;
    }
@@ -125,10 +94,15 @@ public:
 template <class Base>
 class tape_t {
 private :
+   struct op_info_t {
+      addr_t      arg_index;
+      addr_t      res_index;
+      op_t<Base>* op_ptr;
+   };
    addr_t                n_ind_;     // number of independent values
    addr_t                n_res_;     // index in value_vec of next result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in value_vec
-   Vector< op_t<Base>* > op_vec_;    // operators that define this function
+   Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<addr_t>        not_used1_;
    Vector<Base>          not_used2_;
 public :
@@ -136,14 +110,14 @@ public :
    // destructor
    ~tape_t(void)
    {  for(size_t i = 0; i < op_vec_.size(); ++i)
-         delete op_vec_[ op_vec_.size() - i - 1];
+         delete op_vec_[ op_vec_.size() - i - 1].op_ptr;
    }
    // set_ind
    void set_ind(addr_t n_ind)
    {  n_ind_     = n_ind;
       n_res_ = n_ind;
       for(size_t i = 0; i < op_vec_.size(); ++i)
-         delete op_vec_[ op_vec_.size() - i - 1];
+         delete op_vec_[ op_vec_.size() - i - 1].op_ptr;
       op_vec_.resize(0);
    }
    //
@@ -161,11 +135,11 @@ public :
       switch(op_enum)
       {
          case add_op_enum:
-         op_ptr = new add_op_t<Base>(n_arg, n_res);
+         op_ptr = new add_op_t<Base>();
          break;
 
          case sub_op_enum:
-         op_ptr = new sub_op_t<Base>(n_arg, n_res);
+         op_ptr = new sub_op_t<Base>();
          break;
 
          default:
@@ -173,7 +147,8 @@ public :
       }
       //
       // op_vec_
-      op_vec_.push_back(op_ptr);
+      op_info_t op_info = {n_arg, n_res, op_ptr};
+      op_vec_.push_back(op_info);
       //
       // arg_vec_
       addr_t n_op_arg = op_ptr->n_arg();
@@ -195,7 +170,13 @@ public :
    {  assert( value_vec.size() == n_res_ );
       addr_t n_op = op_vec_.size();
       for(addr_t i = 0; i < n_op; ++i)
-      {  op_vec_[i]->eval(arg_vec_, value_vec);
+      {  const op_info_t& op_info = op_vec_[i];
+         op_t<Base>* op_ptr       = op_info.op_ptr;
+         addr_t      arg_index    = op_info.arg_index;
+         addr_t      res_index    = op_info.res_index;
+         op_ptr->eval(
+            arg_index, arg_vec_, res_index, value_vec
+         );
       }
    }
 };
