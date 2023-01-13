@@ -16,12 +16,16 @@ public:
    //
    // eval
    void eval(
+      bool                  trace        ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
-      addr_t                res_index    ,
       const Vector<Base>&   con_vec      ,
+      addr_t                res_index    ,
       Vector<Base>&         val_vec      ) const override
    {  val_vec[res_index]  = con_vec[ arg_vec[arg_index + 0] ];
+      if( trace ) this->print_op(
+         "con", arg_index, arg_vec, res_index, val_vec
+      );
    }
 };
 template <class Base>

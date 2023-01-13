@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include "type.hpp"
+# include <cstdio>
 
 // op_t
 template <class Base>
@@ -25,10 +26,19 @@ public:
    // eval
    // computes the results
    virtual void eval(
+      bool                  trace        ,
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ,
+      const Vector<Base>&   con_vec      ,
+      addr_t                res_index    ,
+      Vector<Base>&         value_vec    ) const = 0;
+   //
+   // print_op
+   virtual void print_op(
+      const char*           name         ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      const Vector<Base>&   con_vec      ,
       Vector<Base>&         value_vec    ) const = 0;
 };
 

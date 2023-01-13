@@ -40,7 +40,8 @@ int main()
       val_vec[i] = x[i];
    //
    // val_vec
-   tape.eval(val_vec);
+   bool trace = true;
+   tape.eval(trace, val_vec);
    //
    // y
    Vector<double> y(2);

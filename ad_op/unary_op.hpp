@@ -21,11 +21,27 @@ public:
    //
    // eval
    virtual void eval(
+      bool                  trace        ,
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ,
+      const Vector<Base>&   con_vec      ,
+      addr_t                res_index    ,
+      Vector<Base>&         value_vec    ) const override = 0;
+   //
+   // print_op
+   void print_op(
+      const char*           name         ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      const Vector<Base>&   con_vec      ,
-      Vector<Base>&         value_vec    ) const override = 0;
+      Vector<Base>&         value_vec    ) const override
+   {  //
+      addr_t index  = arg_vec[ arg_index + 0 ];
+      Base   res    = value_vec[res_index];
+      std::printf(
+         "%5d %5s %5d %5s %10.3g\n", res_index, name, index, "", res
+      );
+   }
 };
 
 # endif

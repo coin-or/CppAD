@@ -21,8 +21,8 @@ private :
    addr_t                n_ind_;     // number of independent values
    addr_t                n_val_;     // index in val_vec of next result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
-   Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<Base>          con_vec_;   // constants used by the tape
+   Vector<op_info_t>     op_vec_;    // operators that define this function
 public :
    //
    // set_ind
@@ -107,7 +107,9 @@ public :
    {  return n_val_; }
    //
    // eval
-   void eval(Vector<Base>& val_vec) const
+   void eval(
+      bool          trace  ,
+      Vector<Base>& val_vec) const
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
       size_t n_op = op_vec_.size();
       for(size_t i = 0; i < n_op; ++i)
@@ -116,7 +118,7 @@ public :
          addr_t      arg_index    = op_info.arg_index;
          addr_t      res_index    = op_info.res_index;
          op_ptr->eval(
-            arg_index, arg_vec_, res_index, con_vec_, val_vec
+            trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
          );
       }
    }
