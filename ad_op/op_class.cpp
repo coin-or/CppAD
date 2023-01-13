@@ -126,7 +126,7 @@ template <class Base>
 class tape_t {
 private :
    addr_t                n_ind_;     // number of independent values
-   addr_t                res_index_; // index in value_vec of next result
+   addr_t                n_res_;     // index in value_vec of next result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in value_vec
    Vector< op_t<Base>* > op_vec_;    // operators that define this function
    Vector<addr_t>        not_used1_;
@@ -141,7 +141,7 @@ public :
    // set_ind
    void set_ind(addr_t n_ind)
    {  n_ind_     = n_ind;
-      res_index_ = n_ind;
+      n_res_ = n_ind;
       for(size_t i = 0; i < op_vec_.size(); ++i)
          delete op_vec_[ op_vec_.size() - i - 1];
       op_vec_.resize(0);
@@ -150,22 +150,22 @@ public :
    // next_op
    addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    {  //
-      // res_index
-      addr_t res_index = res_index_;
+      // n_res
+      addr_t n_res = n_res_;
       //
-      // arg_index
-      addr_t arg_index = arg_vec_.size();
+      // n_arg
+      addr_t n_arg = arg_vec_.size();
       //
       // op
       op_t<Base>* op_ptr = nullptr;
       switch(op_enum)
       {
          case add_op_enum:
-         op_ptr = new add_op_t<Base>(arg_index, res_index);
+         op_ptr = new add_op_t<Base>(n_arg, n_res);
          break;
 
          case sub_op_enum:
-         op_ptr = new sub_op_t<Base>(arg_index, res_index);
+         op_ptr = new sub_op_t<Base>(n_arg, n_res);
          break;
 
          default:
@@ -176,23 +176,23 @@ public :
       op_vec_.push_back(op_ptr);
       //
       // arg_vec_
-      addr_t n_arg = op_ptr->n_arg();
-      for(addr_t i = 0; i < n_arg; ++i)
+      addr_t n_op_arg = op_ptr->n_arg();
+      for(addr_t i = 0; i < n_op_arg; ++i)
          arg_vec_.push_back( op_arg[i] );
       //
-      // res_index_
-      res_index_ = res_index + op_ptr->n_res();
+      // n_res_
+      n_res_ = n_res + n_op_arg;
       //
-      return res_index;
+      return n_res;
    }
    //
    // n_res
    addr_t n_res(void) const
-   {  return res_index_; }
+   {  return n_res_; }
    //
    // eval
    void eval(Vector<Base>& value_vec)
-   {  assert( value_vec.size() == res_index_ );
+   {  assert( value_vec.size() == n_res_ );
       addr_t n_op = op_vec_.size();
       for(addr_t i = 0; i < n_op; ++i)
       {  op_vec_[i]->eval(arg_vec_, value_vec);
