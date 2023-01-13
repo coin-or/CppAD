@@ -64,6 +64,11 @@ public:
       value_vec[res_index]  = left + right;
    }
 };
+template <class Base>
+add_op_t<Base>* get_add_op_instance(void)
+{  static add_op_t<Base> instance;
+   return &instance;
+}
 
 // sub_op_t
 template <class Base>
@@ -88,7 +93,11 @@ public:
       value_vec[res_index]  = left - right;
    }
 };
-
+template <class Base>
+sub_op_t<Base>* get_sub_op_instance(void)
+{  static sub_op_t<Base> instance;
+   return &instance;
+}
 
 // tape_t
 template <class Base>
@@ -107,17 +116,10 @@ private :
    Vector<Base>          not_used2_;
 public :
    //
-   // destructor
-   ~tape_t(void)
-   {  for(size_t i = 0; i < op_vec_.size(); ++i)
-         delete op_vec_[ op_vec_.size() - i - 1].op_ptr;
-   }
    // set_ind
    void set_ind(addr_t n_ind)
    {  n_ind_     = n_ind;
       n_res_ = n_ind;
-      for(size_t i = 0; i < op_vec_.size(); ++i)
-         delete op_vec_[ op_vec_.size() - i - 1].op_ptr;
       op_vec_.resize(0);
    }
    //
@@ -135,11 +137,11 @@ public :
       switch(op_enum)
       {
          case add_op_enum:
-         op_ptr = new add_op_t<Base>();
+         op_ptr = get_add_op_instance<Base>();
          break;
 
          case sub_op_enum:
-         op_ptr = new sub_op_t<Base>();
+         op_ptr = get_sub_op_instance<Base>();
          break;
 
          default:
