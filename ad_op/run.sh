@@ -9,6 +9,7 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-echo_eval g++ -g -I ../include op_class.cpp -o op_class
-echo_eval ./op_class
+echo_eval g++ -g -I ../include main.cpp -o main
+echo_eval ./main
+echo_eval rm ./main
 echo 'ru.sh: OK'
