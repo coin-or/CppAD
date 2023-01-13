@@ -9,7 +9,7 @@
 # include <cppad/utility/vector.hpp>
 
 // addr_type
-typedef size_t addr_t;
+typedef int addr_t;
 
 // Vector
 template <class Base> using Vector = CppAD::vector<Base>;

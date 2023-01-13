@@ -9,7 +9,8 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-echo_eval g++ -g -I ../include main.cpp -o main
+flags="-Wall -pedantic-errors -Wshadow -Wfloat-conversion -Wconversion"
+echo_eval g++ $flags -g -I ../include main.cpp -o main
 echo_eval ./main
 echo_eval rm ./main
 echo 'run.sh: OK'

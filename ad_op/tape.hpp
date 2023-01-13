@@ -39,7 +39,7 @@ public :
       addr_t n_val = n_val_;
       //
       // n_arg
-      addr_t n_arg = arg_vec_.size();
+      addr_t n_arg = static_cast<addr_t>( arg_vec_.size() );
       //
       // op
       op_t<Base>* op_ptr = nullptr;
@@ -78,9 +78,9 @@ public :
    //
    // eval
    void eval(Vector<Base>& val_vec)
-   {  assert( val_vec.size() == n_val_ );
-      addr_t n_op = op_vec_.size();
-      for(addr_t i = 0; i < n_op; ++i)
+   {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
+      size_t n_op = op_vec_.size();
+      for(size_t i = 0; i < n_op; ++i)
       {  const op_info_t& op_info = op_vec_[i];
          op_t<Base>* op_ptr       = op_info.op_ptr;
          addr_t      arg_index    = op_info.arg_index;

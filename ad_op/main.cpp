@@ -34,9 +34,9 @@ int main()
    x[1] = 6.0;
    //
    // val_vec
-   size_t n_val = size_t( tape.n_val() );
+   addr_t n_val = tape.n_val();
    Vector<double> val_vec(n_val);
-   for(size_t i = 0; i < n_ind; ++i)
+   for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    //
    // val_vec
