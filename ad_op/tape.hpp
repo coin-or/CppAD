@@ -18,7 +18,7 @@ private :
       op_t<Base>* op_ptr;
    };
    addr_t                n_ind_;     // number of independent values
-   addr_t                n_res_;     // index in val_vec of next result
+   addr_t                n_val_;     // index in val_vec of next result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
    Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<addr_t>        not_used1_;
@@ -28,15 +28,15 @@ public :
    // set_ind
    void set_ind(addr_t n_ind)
    {  n_ind_ = n_ind;
-      n_res_ = n_ind;
+      n_val_ = n_ind;
       op_vec_.resize(0);
    }
    //
    // next_op
    addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    {  //
-      // n_res
-      addr_t n_res = n_res_;
+      // n_val
+      addr_t n_val = n_val_;
       //
       // n_arg
       addr_t n_arg = arg_vec_.size();
@@ -58,7 +58,7 @@ public :
       }
       //
       // op_vec_
-      op_info_t op_info = {n_arg, n_res, op_ptr};
+      op_info_t op_info = {n_arg, n_val, op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
@@ -66,19 +66,19 @@ public :
       for(addr_t i = 0; i < n_op_arg; ++i)
          arg_vec_.push_back( op_arg[i] );
       //
-      // n_res_
-      n_res_ = n_res + n_op_arg;
+      // n_val_
+      n_val_ = n_val + n_op_arg;
       //
-      return n_res;
+      return n_val;
    }
    //
-   // n_res
-   addr_t n_res(void) const
-   {  return n_res_; }
+   // n_val
+   addr_t n_val(void) const
+   {  return n_val_; }
    //
    // eval
    void eval(Vector<Base>& val_vec)
-   {  assert( val_vec.size() == n_res_ );
+   {  assert( val_vec.size() == n_val_ );
       addr_t n_op = op_vec_.size();
       for(addr_t i = 0; i < n_op; ++i)
       {  const op_info_t& op_info = op_vec_[i];

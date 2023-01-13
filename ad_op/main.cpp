@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
-
 # include "tape.hpp"
 
 int main()
@@ -35,9 +34,9 @@ int main()
    x[1] = 6.0;
    //
    // val_vec
-   size_t n_res = size_t( tape.n_res() );
-   Vector<double> val_vec(n_res);
-   for(size_t i = 0; i < 2; ++i)
+   size_t n_val = size_t( tape.n_val() );
+   Vector<double> val_vec(n_val);
+   for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    //
    // val_vec
@@ -55,9 +54,9 @@ int main()
    std::cout << "x = " << x << "\n";
    std::cout << "y = " << y << "\n";
    if( ok )
-   {  std::cout << "op_class: OK\n";
+   {  std::cout << "main: OK\n";
       return 0;
    }
-   std::cout << "op_class: Error\n";
+   std::cout << "main: Error\n";
    return 1;
 }
