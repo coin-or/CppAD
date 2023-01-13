@@ -4,7 +4,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-
 # include "type.hpp"
 # include "add_op.hpp"
 # include "sub_op.hpp"
@@ -19,8 +18,8 @@ private :
       op_t<Base>* op_ptr;
    };
    addr_t                n_ind_;     // number of independent values
-   addr_t                n_res_;     // index in value_vec of next result
-   Vector<addr_t>        arg_vec_;   // index of operator arguments in value_vec
+   addr_t                n_res_;     // index in val_vec of next result
+   Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
    Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<addr_t>        not_used1_;
    Vector<Base>          not_used2_;
@@ -28,7 +27,7 @@ public :
    //
    // set_ind
    void set_ind(addr_t n_ind)
-   {  n_ind_     = n_ind;
+   {  n_ind_ = n_ind;
       n_res_ = n_ind;
       op_vec_.resize(0);
    }
@@ -78,8 +77,8 @@ public :
    {  return n_res_; }
    //
    // eval
-   void eval(Vector<Base>& value_vec)
-   {  assert( value_vec.size() == n_res_ );
+   void eval(Vector<Base>& val_vec)
+   {  assert( val_vec.size() == n_res_ );
       addr_t n_op = op_vec_.size();
       for(addr_t i = 0; i < n_op; ++i)
       {  const op_info_t& op_info = op_vec_[i];
@@ -87,7 +86,7 @@ public :
          addr_t      arg_index    = op_info.arg_index;
          addr_t      res_index    = op_info.res_index;
          op_ptr->eval(
-            arg_index, arg_vec_, res_index, value_vec
+            arg_index, arg_vec_, res_index, val_vec
          );
       }
    }

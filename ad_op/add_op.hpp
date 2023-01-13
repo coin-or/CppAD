@@ -19,10 +19,10 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const override
-   {  const Base& left      = value_vec[ arg_vec[arg_index + 0] ];
-      const Base& right     = value_vec[ arg_vec[arg_index + 1] ];
-      value_vec[res_index]  = left + right;
+      Vector<Base>&         val_vec      ) const override
+   {  const Base& left    = val_vec[ arg_vec[arg_index + 0] ];
+      const Base& right   = val_vec[ arg_vec[arg_index + 1] ];
+      val_vec[res_index]  = left + right;
    }
 };
 template <class Base>

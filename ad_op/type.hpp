@@ -4,10 +4,8 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // -------------------------------------------------------------
-
 # include <cassert>
 # include <cstddef>
-# include <limits>
 # include <cppad/utility/vector.hpp>
 
 // addr_type
@@ -17,6 +15,11 @@ typedef size_t addr_t;
 template <class Base> using Vector = CppAD::vector<Base>;
 
 // op_enum_t
-enum op_enum_t { add_op_enum, sub_op_enum, number_op_enum };
+enum op_enum_t {
+   add_op_enum,
+   con_op_enum,
+   sub_op_enum,
+   number_op_enum
+};
 
 # endif

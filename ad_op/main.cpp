@@ -34,19 +34,19 @@ int main()
    x[0] = 5.0;
    x[1] = 6.0;
    //
-   // value_vec
+   // val_vec
    size_t n_res = size_t( tape.n_res() );
-   Vector<double> value_vec(n_res);
+   Vector<double> val_vec(n_res);
    for(size_t i = 0; i < 2; ++i)
-      value_vec[i] = x[i];
+      val_vec[i] = x[i];
    //
-   // value_vec
-   tape.eval(value_vec);
+   // val_vec
+   tape.eval(val_vec);
    //
    // y
    Vector<double> y(2);
    for(size_t i = 0; i < 2; ++i)
-      y[i] = value_vec[ res_index[i] ];
+      y[i] = val_vec[ res_index[i] ];
    //
    // ok
    ok &= y[0] == x[0] + x[1];
