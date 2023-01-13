@@ -23,10 +23,10 @@ int main()
    Vector<addr_t> res_index(2);
    //
    // tape
-   res_index[0] = tape.next_op(add_op_enum, op_arg);
-   op_arg[0]    = res_index[0]; // x[0] + x[1]
-   op_arg[1]    = 1;            // x[1]
-   res_index[1] = tape.next_op(sub_op_enum, op_arg);
+   res_index[0] = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
+   op_arg[0]    = res_index[0];                      // x[0] + x[1]
+   op_arg[1]    = tape.next_con_op(4.0);             // 4.0
+   res_index[1] = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
    //
    // x
    Vector<double> x(2);
@@ -49,7 +49,7 @@ int main()
    //
    // ok
    ok &= y[0] == x[0] + x[1];
-   ok &= y[1] == x[0];
+   ok &= y[1] == x[0] + x[1] - 4.0;
    //
    std::cout << "x = " << x << "\n";
    std::cout << "y = " << y << "\n";

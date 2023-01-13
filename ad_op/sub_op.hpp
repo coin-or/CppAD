@@ -19,6 +19,7 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
+      const Vector<Base>&   con_vec      ,
       Vector<Base>&         val_vec      ) const override
    {  const Base& left    = val_vec[ arg_vec[arg_index + 0] ];
       const Base& right   = val_vec[ arg_vec[arg_index + 1] ];

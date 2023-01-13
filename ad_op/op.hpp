@@ -28,6 +28,7 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
+      const Vector<Base>&   con_vec      ,
       Vector<Base>&         value_vec    ) const = 0;
 };
 
