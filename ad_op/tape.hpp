@@ -12,12 +12,14 @@
 // tape_t
 template <class Base>
 class tape_t {
-private :
-   struct op_info_t {
+public:
+   // op_info_t
+   typedef struct info {
       addr_t      arg_index;
       addr_t      res_index;
       op_t<Base>* op_ptr;
-   };
+   } op_info_t;
+private :
    addr_t                n_ind_;     // number of independent values
    addr_t                n_val_;     // index in val_vec of next result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
@@ -123,10 +125,10 @@ public :
       }
    }
    //
-   // optimize
-   void optimize(Vector<addr_t>& dep_vec);
+   // renumber
+   void renumber(void);
 };
 
-# include "optimize.hpp"
+# include "renumber.hpp"
 
 # endif

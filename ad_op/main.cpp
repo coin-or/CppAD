@@ -6,9 +6,6 @@
 int main()
 {  bool ok = true;
    //
-   // f_0 (x) = x[0] + x[1]
-   // f_1 (x) = (x[0] + x[1]) - x[1]
-   //
    // f
    tape_t<double> tape;
    addr_t n_ind = 2;
@@ -19,17 +16,15 @@ int main()
    op_arg[0] = 0; // x[0]
    op_arg[1] = 1; // x[1]
    //
-   // res_arg
+   // dep_vec
    Vector<addr_t> dep_vec(2);
    //
    // tape
-   dep_vec[0] = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
-   op_arg[0]  = dep_vec[0];                        // x[0] + x[1]
-   op_arg[1]  = tape.next_con_op(4.0);             // 4.0
-   dep_vec[1] = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
-   //
-   // optimize
-   tape.optimize(dep_vec);
+   tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
+   dep_vec[0]      = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
+   op_arg[0]       = dep_vec[0];                        // x[0] + x[1]
+   op_arg[1]       = tape.next_con_op(4.0);             // 4.0
+   dep_vec[1]      = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
    //
    // x
    Vector<double> x(2);
@@ -44,6 +39,13 @@ int main()
    //
    // val_vec
    bool trace = true;
+   tape.eval(trace, val_vec);
+   //
+   // renumber
+   tape.renumber();
+   //
+   // val_vec
+   std::cout << "\n";
    tape.eval(trace, val_vec);
    //
    // y

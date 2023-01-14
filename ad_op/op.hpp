@@ -42,4 +42,12 @@ public:
       Vector<Base>&         value_vec    ) const = 0;
 };
 
+// op_info_t
+template <class Base>
+struct op_info_t {
+   addr_t      arg_index;
+   addr_t      res_index;
+   op_t<Base>* op_ptr;
+};
+
 # endif
