@@ -26,14 +26,16 @@ int main()
    op_arg[1]       = tape.next_con_op(4.0);             // 4.0
    dep_vec[1]      = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
    //
+   // set_dep
+   tape.set_dep( dep_vec );
+   //
    // x
    Vector<double> x(2);
    x[0] = 5.0;
    x[1] = 6.0;
    //
    // val_vec
-   addr_t n_val = tape.n_val();
-   Vector<double> val_vec(n_val);
+   Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    //
@@ -43,10 +45,18 @@ int main()
    //
    // renumber
    tape.renumber();
-   //
-   // val_vec
+   val_vec.resize( tape.n_val() );
    std::cout << "\n";
    tape.eval(trace, val_vec);
+   //
+   // dead_code
+   tape.dead_code();
+   val_vec.resize( tape.n_val() );
+   std::cout << "\n";
+   tape.eval(trace, val_vec);
+   //
+   // dep_vec
+   dep_vec = tape.get_dep();
    //
    // y
    Vector<double> y(2);

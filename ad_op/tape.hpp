@@ -25,7 +25,16 @@ private :
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
    Vector<Base>          con_vec_;   // constants used by the tape
    Vector<op_info_t>     op_vec_;    // operators that define this function
+   Vector<addr_t>        dep_vec_;   // index in val_vec of dependent variables
 public :
+   void swap(tape_t& other)
+   {  std::swap( n_ind_, other.n_ind_ );
+      std::swap( n_val_, other.n_val_);
+      arg_vec_.swap( other.arg_vec_ );
+      con_vec_.swap( other.con_vec_ );
+      op_vec_.swap( other.op_vec_ );
+      dep_vec_.swap( other.dep_vec_ );
+   }
    //
    // set_ind
    void set_ind(addr_t n_ind)
@@ -34,6 +43,14 @@ public :
       op_vec_.resize(0);
       con_vec_.resize(0);
    }
+   //
+   // set_dep
+   void set_dep(const Vector<addr_t>& dep_vec)
+   {  dep_vec_ = dep_vec; }
+   //
+   // get_dep
+   const Vector<addr_t>& get_dep(void)
+   {  return dep_vec_; }
    //
    // next_op
    addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
@@ -127,8 +144,12 @@ public :
    //
    // renumber
    void renumber(void);
+   //
+   // dead_code
+   void dead_code(void);
 };
 
 # include "renumber.hpp"
+# include "dead_code.hpp"
 
 # endif

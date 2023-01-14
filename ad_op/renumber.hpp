@@ -134,6 +134,11 @@ void tape_t<Base>::renumber(void)
    for(size_t i = 0; i < arg_vec_.size(); ++i)
       arg_vec_[i] = new_val_index[ arg_vec_[i] ];
    //
+   // dep_vec_
+   for(size_t i = 0; i < dep_vec_.size(); ++i)
+      dep_vec_[i] = new_val_index[ dep_vec_[i] ];
+
+   //
    return;
 }
 # endif
