@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_vector.hpp}
@@ -142,6 +142,7 @@ private:
    // rev_depend
    bool rev_depend(
       size_t                         call_id     ,
+      const CppAD::vector<bool>&    ident_zero_x ,
       CppAD::vector<bool>&           depend_x    ,
       const CppAD::vector<bool>&     depend_y
    ) override;

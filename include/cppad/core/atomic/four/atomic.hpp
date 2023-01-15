@@ -308,7 +308,7 @@ public:
    // rev_depend
    virtual bool rev_depend(
       size_t                       call_id      ,
-      vector<bool>&                ident_zero_x ,
+      const vector<bool>&          ident_zero_x ,
       vector<bool>&                depend_x     ,
       const vector<bool>&          depend_y
    );

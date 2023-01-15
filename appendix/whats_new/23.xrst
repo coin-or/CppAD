@@ -13,6 +13,19 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+01-15
+=====
+The following atomic four ``rev_depend`` problems have been fixed.
+
+#. The atomic four :ref:`atomic_four_rev_depend@ident_zero_x` argument
+   can be used to reduce the number of depend_x (not depend_y) values.
+#. The *ident_zero_x* argument should have been ``const`` in the prototype.
+#. The :ref:`atomic_four_vector-name` and
+   :ref:`atomic_four_mat_mul-name` examples used the
+   :ref:`atomic_four_rev_depend@Syntax@Deprecated 2022-05-10`
+   version of the ``rev_depend`` callback; i.e., the one without
+   the *ident_zero_x* argument.
+
 01-12
 =====
 Fix a problem with the documentation conversion on

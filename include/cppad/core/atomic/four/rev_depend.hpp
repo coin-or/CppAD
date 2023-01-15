@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_FOUR_REV_DEPEND_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_rev_depend}
@@ -62,7 +62,7 @@ See :ref:`atomic_four_call@call_id` .
 ident_zero_x
 ************
 This can sometimes be used to create more efficient dependency
-(fewer true values in *depend_y* ).
+(fewer true values in *depend_x* ).
 If you do not see a way to do this, you can just ignore it.
 This argument has size equal to the number of arguments to this
 atomic function; i.e. the size of *ax* .
@@ -123,7 +123,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Base>
 bool atomic_four<Base>::rev_depend(
    size_t                      call_id      ,
-   vector<bool>&               ident_zero_x ,
+   const vector<bool>&         ident_zero_x ,
    vector<bool>&               depend_x     ,
    const vector<bool>&         depend_y     )
 // END_PROTOTYPE
