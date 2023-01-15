@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_REV_DEPEND_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_mat_mul_rev_depend.hpp}
@@ -33,6 +33,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Base>
 bool atomic_mat_mul<Base>::rev_depend(
    size_t                         call_id  ,
+   const CppAD::vector<bool>&     ident_zero_x,
    CppAD::vector<bool>&           depend_x ,
    const CppAD::vector<bool>&     depend_y )
 {
