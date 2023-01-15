@@ -11,9 +11,14 @@ template <class Base>
 class op_hash_table_t {
    typedef typename tape_t<Base>::op_info_t op_info_t;
 private:
+   // hash_base
+   std::hash<Base> hash_base;
    //
    // arg_vec_
    const Vector<addr_t>& arg_vec_;
+   //
+   // con_vec_
+   const Vector<Base>& con_vec_;
    //
    // op_vec_
    const Vector<op_info_t>& op_vec_;
@@ -22,22 +27,29 @@ private:
    CppAD::local::sparse::list_setvec table_;
    //
    // hash_code
-   addr_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
-   {  addr_t sum  = static_cast<addr_t> (op_enum);
-      for(addr_t i = 0; i < n_arg; ++i)
-         sum += arg_vec_[arg_index + i];
-      addr_t code = sum % addr_t ( table_.n_set() );
+   size_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
+   {  size_t code;
+      if( op_enum == con_op_enum )
+         code = hash_base( con_vec_[  arg_vec_[arg_index] ] );
+      else
+      {  code  = static_cast<addr_t> (op_enum);
+         for(addr_t i = 0; i < n_arg; ++i)
+            code += size_t( arg_vec_[arg_index + i] );
+      }
+      code = code % table_.n_set();
       return code;
    }
 public:
    // ctor
    op_hash_table_t(
          const Vector<addr_t>&    arg_vec,
+         const Vector<Base>&      con_vec,
          const Vector<op_info_t>& op_vec,
          addr_t                   n_hash_code,
          addr_t                   n_op
    ) :
    arg_vec_( arg_vec ) ,
+   con_vec_( con_vec ) ,
    op_vec_( op_vec )
    {  // table_
       table_.resize( size_t(n_hash_code), size_t(n_op) );
@@ -64,7 +76,13 @@ public:
          //
          // match
          bool match = op_enum_i == op_enum_j;
-         if( match )
+         if( match && op_enum_i == con_op_enum )
+         {  // 2DO: change to identically equal
+            const Base& c_i = con_vec_[ arg_vec_[arg_index_i] ];
+            const Base& c_j = con_vec_[ arg_vec_[arg_index_j] ];
+            match = c_i == c_j;
+         }
+         else if( match )
          {  for(addr_t k = 0; k < n_arg; ++k)
             {  addr_t val_index_i = new_val_index[ arg_vec_[arg_index_i+k] ];
                addr_t val_index_j = new_val_index[ arg_vec_[arg_index_j+k] ];
@@ -102,6 +120,7 @@ void tape_t<Base>::renumber(void)
    // op_hash_table
    op_hash_table_t<Base>  op_hash_table(
       arg_vec_,
+      con_vec_,
       op_vec_,
       n_val_,
       addr_t( op_vec_.size() )

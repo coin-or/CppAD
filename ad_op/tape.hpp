@@ -40,6 +40,7 @@ public :
    void set_ind(addr_t n_ind)
    {  n_ind_ = n_ind;
       n_val_ = n_ind;
+      dep_vec_.resize(0);
       op_vec_.resize(0);
       con_vec_.resize(0);
    }

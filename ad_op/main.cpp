@@ -22,10 +22,14 @@ int main()
    // tape
    tape.next_op(add_op_enum, op_arg); // x[0] + x[1] (no used)
    tape.next_con_op(5.0);             // 5.0 (not used)
+   //
    dep_vec[0]      = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
    op_arg[0]       = dep_vec[0];                        // x[0] + x[1]
    op_arg[1]       = tape.next_con_op(4.0);             // 4.0
-   dep_vec[1]      = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
+   addr_t temp_1   = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
+   op_arg[0]       = temp_1;
+   op_arg[1]       = tape.next_con_op(4.0);
+   dep_vec[1]      = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 8.0
    //
    // set_dep
    tape.set_dep( dep_vec );
@@ -66,7 +70,7 @@ int main()
    //
    // ok
    ok &= y[0] == x[0] + x[1];
-   ok &= y[1] == x[0] + x[1] - 4.0;
+   ok &= y[1] == x[0] + x[1] - 8.0;
    //
    std::cout << "x = " << x << "\n";
    std::cout << "y = " << y << "\n";
