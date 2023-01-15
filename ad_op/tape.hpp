@@ -60,7 +60,7 @@ public :
       addr_t n_val = n_val_;
       //
       // n_arg
-      addr_t n_arg = static_cast<addr_t>( arg_vec_.size() );
+      size_t n_arg = arg_vec_.size();
       //
       // op_ptr
       op_t<Base>* op_ptr = nullptr;
@@ -79,16 +79,16 @@ public :
       }
       //
       // op_vec_
-      op_info_t op_info = {n_arg, n_val, op_ptr};
+      op_info_t op_info = { addr_t(n_arg), n_val, op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
-      addr_t n_op_arg = op_ptr->n_arg();
-      for(addr_t i = 0; i < n_op_arg; ++i)
+      size_t n_op_arg = op_ptr->n_arg();
+      for(size_t i = 0; i < n_op_arg; ++i)
          arg_vec_.push_back( op_arg[i] );
       //
       // n_val_
-      n_val_ = n_val + op_ptr->n_res();
+      n_val_ = n_val + addr_t( op_ptr->n_res() );
       //
       return n_val;
    }
@@ -104,20 +104,20 @@ public :
       addr_t n_val = n_val_;
       //
       // n_arg
-      addr_t n_arg = static_cast<addr_t>( arg_vec_.size() );
+      size_t n_arg = arg_vec_.size();
       //
       // op_ptr
       op_t<Base>* op_ptr = get_con_op_instance<Base>();
       //
       // op_vec_
-      op_info_t op_info = {n_arg, n_val, op_ptr};
+      op_info_t op_info = { addr_t(n_arg), n_val, op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
       arg_vec_.push_back( n_con );
       //
       // n_val_
-      n_val_ = n_val + op_ptr->n_res();
+      n_val_ = n_val + addr_t( op_ptr->n_res() );
       //
       return n_val;
    }

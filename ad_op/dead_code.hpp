@@ -24,19 +24,19 @@ void tape_t<Base>::dead_code(void)
    size_t i_op = op_vec_.size();
    while( i_op-- )
    {  // n_arg, n_res, res_index, arg_index
-      addr_t n_arg     = op_vec_[i_op].op_ptr->n_arg();
-      addr_t n_res     = op_vec_[i_op].op_ptr->n_res();
+      size_t n_arg     = op_vec_[i_op].op_ptr->n_arg();
+      size_t n_res     = op_vec_[i_op].op_ptr->n_res();
       addr_t res_index = op_vec_[i_op].res_index;
       addr_t arg_index = op_vec_[i_op].arg_index;
       //
       // need_op
       bool need_op = false;
-      for(addr_t k = 0; k < n_res; ++k)
+      for(size_t k = 0; k < n_res; ++k)
          need_op |= need_val_index[ res_index + k];
       //
       // need_val_index
       if( need_op )
-      {  for(addr_t k = 0; k < n_arg; ++k)
+      {  for(size_t k = 0; k < n_arg; ++k)
             need_val_index[ arg_vec_[arg_index + k] ] = true;
       }
    }
@@ -56,17 +56,17 @@ void tape_t<Base>::dead_code(void)
    Vector<addr_t> op_arg;
    for(i_op = 0; i_op < op_vec_.size(); ++i_op)
    {  // n_res, res_index
-      addr_t n_res     = op_vec_[i_op].op_ptr->n_res();
+      size_t n_res     = op_vec_[i_op].op_ptr->n_res();
       addr_t res_index = op_vec_[i_op].res_index;
       //
       // need_op
       bool need_op = false;
-      for(addr_t k = 0; k < n_res; ++k)
+      for(size_t k = 0; k < n_res; ++k)
          need_op |= need_val_index[ res_index + k];
       //
       if( need_op )
       {  op_enum_t  op_enum   = op_vec_[i_op].op_ptr->op_enum();
-         addr_t     n_arg     = op_vec_[i_op].op_ptr->n_arg();
+         size_t     n_arg     = op_vec_[i_op].op_ptr->n_arg();
          addr_t     arg_index = op_vec_[i_op].arg_index;
          //
          // new_val_index
@@ -78,12 +78,12 @@ void tape_t<Base>::dead_code(void)
          }
          else
          {  op_arg.resize(n_arg);
-            for(addr_t k = 0; k < n_arg; ++k)
+            for(size_t k = 0; k < n_arg; ++k)
             {  assert( arg_vec_[arg_index + k] < res_index );
                op_arg[k] = new_val_index[ arg_vec_[arg_index + k] ];
             }
             addr_t new_res_index = new_tape.next_op(op_enum, op_arg);
-            for(addr_t k = 0; k < n_res; ++k)
+            for(addr_t k = 0; k < addr_t(n_res); ++k)
                new_val_index[ res_index ] = new_res_index + k;
          }
       }
