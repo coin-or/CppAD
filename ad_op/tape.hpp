@@ -27,6 +27,28 @@ private :
    Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<addr_t>        dep_vec_;   // index in val_vec of dependent variables
 public :
+   // ------------------------------------------------------------------------
+   // n_val
+   size_t n_val(void) const
+   {  return n_val_; }
+   //
+   // arg_vec
+   const Vector<addr_t>& arg_vec(void) const
+   {  return arg_vec_; }
+   //
+   // con_vec
+   const Vector<Base>& con_vec(void) const
+   {  return con_vec_; }
+   //
+   // op_vec
+   const Vector<op_info_t>& op_vec(void) const
+   {  return op_vec_; }
+   //
+   // dep_vec
+   const Vector<addr_t>& dep_vec(void) const
+   {  return dep_vec_; }
+   // ------------------------------------------------------------------------
+   //
    void swap(tape_t& other)
    {  std::swap( n_ind_, other.n_ind_ );
       std::swap( n_val_, other.n_val_);
@@ -45,26 +67,18 @@ public :
       con_vec_.resize(0);
    }
    //
-   // n_val
-   size_t n_val(void) const
-   {  return n_val_; }
-   //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec)
    {  dep_vec_ = dep_vec; }
    //
-   // get_dep
-   const Vector<addr_t>& get_dep(void)
-   {  return dep_vec_; }
-   //
    // next_op
    addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    {  //
-      // n_val
-      size_t n_val = n_val_;
+      // res_index
+      addr_t res_index = addr_t( n_val_) ;
       //
-      // n_arg
-      size_t n_arg = arg_vec_.size();
+      // arg_index
+      addr_t arg_index = addr_t( arg_vec_.size() );
       //
       // op_ptr
       op_t<Base>* op_ptr = nullptr;
@@ -83,7 +97,7 @@ public :
       }
       //
       // op_vec_
-      op_info_t op_info = { addr_t(n_arg), addr_t(n_val), op_ptr};
+      op_info_t op_info = { arg_index, res_index, op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
@@ -92,38 +106,38 @@ public :
          arg_vec_.push_back( op_arg[i] );
       //
       // n_val_
-      n_val_ = n_val + op_ptr->n_res();
+      n_val_ = n_val_ + op_ptr->n_res();
       //
-      return addr_t(n_val);
+      return res_index;
    }
    //
    // next_con_op
    addr_t next_con_op(const Base& constant)
    {  //
-      // n_con
-      addr_t n_con = static_cast<addr_t>( con_vec_.size() );
+      // con_index
+      addr_t con_index = addr_t( con_vec_.size() );
       con_vec_.push_back( constant );
       //
-      // n_val
-      size_t n_val = n_val_;
+      // res_index
+      addr_t res_index = addr_t( n_val_ );
       //
-      // n_arg
-      size_t n_arg = arg_vec_.size();
+      // arg_index
+      addr_t arg_index = addr_t( arg_vec_.size() );
       //
       // op_ptr
       op_t<Base>* op_ptr = get_con_op_instance<Base>();
       //
       // op_vec_
-      op_info_t op_info = { addr_t(n_arg), addr_t(n_val), op_ptr};
+      op_info_t op_info = { arg_index, res_index, op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
-      arg_vec_.push_back( n_con );
+      arg_vec_.push_back( con_index );
       //
       // n_val_
-      n_val_ = n_val + addr_t( op_ptr->n_res() );
+      n_val_ = n_val_ + op_ptr->n_res();
       //
-      return addr_t(n_val);
+      return res_index;
    }
    //
    // eval

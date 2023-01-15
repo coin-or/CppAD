@@ -47,6 +47,10 @@ int main()
    // val_vec
    bool trace = true;
    tape.eval(trace, val_vec);
+   std::cout << "n_arg = "    << tape.arg_vec().size();
+   std::cout << ", n_con = "  << tape.con_vec().size();
+   std::cout << ", n_op = "   << tape.op_vec().size();
+   std::cout << "\n";
    //
    // renumber
    tape.renumber();
@@ -59,9 +63,13 @@ int main()
    val_vec.resize( tape.n_val() );
    std::cout << "\n";
    tape.eval(trace, val_vec);
+   std::cout << "n_arg = "    << tape.arg_vec().size();
+   std::cout << ", n_con = "  << tape.con_vec().size();
+   std::cout << ", n_op = "   << tape.op_vec().size();
+   std::cout << "\n";
    //
    // dep_vec
-   dep_vec = tape.get_dep();
+   dep_vec = tape.dep_vec();
    //
    // y
    Vector<double> y(2);
