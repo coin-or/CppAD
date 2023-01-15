@@ -20,8 +20,8 @@ public:
       op_t<Base>* op_ptr;
    } op_info_t;
 private :
-   addr_t                n_ind_;     // number of independent values
-   addr_t                n_val_;     // index in val_vec of next result
+   size_t                n_ind_;     // number of independent values
+   size_t                n_val_;     // index in val_vec of next result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
    Vector<Base>          con_vec_;   // constants used by the tape
    Vector<op_info_t>     op_vec_;    // operators that define this function
@@ -37,13 +37,17 @@ public :
    }
    //
    // set_ind
-   void set_ind(addr_t n_ind)
+   void set_ind(size_t n_ind)
    {  n_ind_ = n_ind;
       n_val_ = n_ind;
       dep_vec_.resize(0);
       op_vec_.resize(0);
       con_vec_.resize(0);
    }
+   //
+   // n_val
+   size_t n_val(void) const
+   {  return n_val_; }
    //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec)
@@ -57,7 +61,7 @@ public :
    addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    {  //
       // n_val
-      addr_t n_val = n_val_;
+      size_t n_val = n_val_;
       //
       // n_arg
       size_t n_arg = arg_vec_.size();
@@ -79,7 +83,7 @@ public :
       }
       //
       // op_vec_
-      op_info_t op_info = { addr_t(n_arg), n_val, op_ptr};
+      op_info_t op_info = { addr_t(n_arg), addr_t(n_val), op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
@@ -88,9 +92,9 @@ public :
          arg_vec_.push_back( op_arg[i] );
       //
       // n_val_
-      n_val_ = n_val + addr_t( op_ptr->n_res() );
+      n_val_ = n_val + op_ptr->n_res();
       //
-      return n_val;
+      return addr_t(n_val);
    }
    //
    // next_con_op
@@ -101,7 +105,7 @@ public :
       con_vec_.push_back( constant );
       //
       // n_val
-      addr_t n_val = n_val_;
+      size_t n_val = n_val_;
       //
       // n_arg
       size_t n_arg = arg_vec_.size();
@@ -110,7 +114,7 @@ public :
       op_t<Base>* op_ptr = get_con_op_instance<Base>();
       //
       // op_vec_
-      op_info_t op_info = { addr_t(n_arg), n_val, op_ptr};
+      op_info_t op_info = { addr_t(n_arg), addr_t(n_val), op_ptr};
       op_vec_.push_back(op_info);
       //
       // arg_vec_
@@ -119,12 +123,8 @@ public :
       // n_val_
       n_val_ = n_val + addr_t( op_ptr->n_res() );
       //
-      return n_val;
+      return addr_t(n_val);
    }
-   //
-   // n_val
-   addr_t n_val(void) const
-   {  return n_val_; }
    //
    // eval
    void eval(

@@ -27,12 +27,12 @@ private:
    CppAD::local::sparse::list_setvec table_;
    //
    // hash_code
-   size_t hash_code(size_t n_arg, op_enum_t op_enum, addr_t arg_index)
+   size_t hash_code(size_t n_arg, op_enum_t op_enum, size_t arg_index)
    {  size_t code;
       if( op_enum == con_op_enum )
          code = hash_base( con_vec_[  arg_vec_[arg_index] ] );
       else
-      {  code  = static_cast<addr_t> (op_enum);
+      {  code  = size_t(op_enum);
          for(size_t i = 0; i < n_arg; ++i)
             code += size_t( arg_vec_[arg_index + i] );
       }
@@ -45,8 +45,8 @@ public:
          const Vector<addr_t>&    arg_vec,
          const Vector<Base>&      con_vec,
          const Vector<op_info_t>& op_vec,
-         addr_t                   n_hash_code,
-         addr_t                   n_op
+         size_t                   n_hash_code,
+         size_t                   n_op
    ) :
    arg_vec_( arg_vec ) ,
    con_vec_( con_vec ) ,
@@ -123,12 +123,12 @@ void tape_t<Base>::renumber(void)
       con_vec_,
       op_vec_,
       n_val_,
-      addr_t( op_vec_.size() )
+      op_vec_.size()
    );
    //
    // new_val_index
    Vector<addr_t> new_val_index( n_val_ );
-   for(addr_t i = 0; i < n_val_; ++i)
+   for(addr_t i = 0; i < addr_t(n_val_); ++i)
       new_val_index[i] = i;
    //
    // i_op

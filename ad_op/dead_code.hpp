@@ -15,7 +15,7 @@ void tape_t<Base>::dead_code(void)
    //
    // need_val_index
    Vector<bool> need_val_index(n_val_);
-   for(addr_t i = 0; i < n_val_; ++i)
+   for(size_t i = 0; i < n_val_; ++i)
       need_val_index[i] = false;
    for(size_t i = 0; i < dep_vec_.size(); ++i)
       need_val_index[ dep_vec_[i] ] = true;
@@ -47,10 +47,10 @@ void tape_t<Base>::dead_code(void)
    //
    // new_val_index
    Vector<addr_t> new_val_index( n_val_ );
-   for(addr_t i = 0; i < n_ind_; ++i)
-      new_val_index[i] = i;
-   for(addr_t i = n_ind_; i < n_val_; ++i)
-      new_val_index[i] = n_val_;
+   for(size_t i = 0; i < n_ind_; ++i)
+      new_val_index[i] = addr_t(i);
+   for(size_t i = n_ind_; i < n_val_; ++i)
+      new_val_index[i] = addr_t( n_val_ );
    //
    // op_arg, i_op
    Vector<addr_t> op_arg;
