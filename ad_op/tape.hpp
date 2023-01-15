@@ -72,73 +72,9 @@ public :
    {  dep_vec_ = dep_vec; }
    //
    // next_op
-   addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
-   {  //
-      // res_index
-      addr_t res_index = addr_t( n_val_) ;
-      //
-      // arg_index
-      addr_t arg_index = addr_t( arg_vec_.size() );
-      //
-      // op_ptr
-      op_t<Base>* op_ptr = nullptr;
-      switch(op_enum)
-      {
-         case add_op_enum:
-         op_ptr = get_add_op_instance<Base>();
-         break;
-
-         case sub_op_enum:
-         op_ptr = get_sub_op_instance<Base>();
-         break;
-
-         default:
-         assert( false );
-      }
-      //
-      // op_vec_
-      op_info_t op_info = { arg_index, res_index, op_ptr};
-      op_vec_.push_back(op_info);
-      //
-      // arg_vec_
-      size_t n_op_arg = op_ptr->n_arg();
-      for(size_t i = 0; i < n_op_arg; ++i)
-         arg_vec_.push_back( op_arg[i] );
-      //
-      // n_val_
-      n_val_ = n_val_ + op_ptr->n_res();
-      //
-      return res_index;
-   }
-   //
+   addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
    // next_con_op
-   addr_t next_con_op(const Base& constant)
-   {  //
-      // con_index
-      addr_t con_index = addr_t( con_vec_.size() );
-      con_vec_.push_back( constant );
-      //
-      // res_index
-      addr_t res_index = addr_t( n_val_ );
-      //
-      // arg_index
-      addr_t arg_index = addr_t( arg_vec_.size() );
-      //
-      // op_ptr
-      op_t<Base>* op_ptr = get_con_op_instance<Base>();
-      //
-      // op_vec_
-      op_info_t op_info = { arg_index, res_index, op_ptr};
-      op_vec_.push_back(op_info);
-      //
-      // arg_vec_
-      arg_vec_.push_back( con_index );
-      //
-      // n_val_
-      n_val_ = n_val_ + op_ptr->n_res();
-      //
-      return res_index;
-   }
+   addr_t next_con_op(const Base& constant);
    //
    // eval
    void eval(
@@ -164,6 +100,7 @@ public :
    void dead_code(void);
 };
 
+# include "tape_next.hpp"
 # include "renumber.hpp"
 # include "dead_code.hpp"
 
