@@ -20,7 +20,8 @@ int main()
    Vector<addr_t> dep_vec(2);
    //
    // tape
-   tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
+   tape.next_op(add_op_enum, op_arg); // x[0] + x[1] (no used)
+   tape.next_con_op(5.0);             // 5.0 (not used)
    dep_vec[0]      = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
    op_arg[0]       = dep_vec[0];                        // x[0] + x[1]
    op_arg[1]       = tape.next_con_op(4.0);             // 4.0
