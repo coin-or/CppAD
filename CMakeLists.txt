@@ -485,6 +485,7 @@ IF( NOT ( "${check_depends}" STREQUAL "" ) )
 ENDIF( NOT ( "${check_depends}" STREQUAL "" ) )
 #
 # directories with check depends entries
+ADD_SUBDIRECTORY(ad_op)
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(introduction)
 ADD_SUBDIRECTORY(test_more)
