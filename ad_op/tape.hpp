@@ -113,7 +113,7 @@ public :
       // trace
       if( trace )
       {  // no operators for independent variables
-         std::printf("independent variables\n");
+         std::printf("independent values\n");
          for(size_t res_index = 0; res_index < n_ind_; ++res_index)
          {  Base res = val_vec[res_index];
             std::printf(
