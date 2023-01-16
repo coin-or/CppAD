@@ -58,10 +58,16 @@ public:
    size_t match_op(size_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
       //
-      // n_arg, op_enum_i, arg_index_i
-      size_t    n_arg       = op_vec_[i_op].op_ptr->n_arg();
+      // op_enum_i, arg_index_i
       op_enum_t op_enum_i   = op_vec_[i_op].op_ptr->op_enum();
       addr_t    arg_index_i = op_vec_[i_op].arg_index;
+      //
+      // n_arg
+      size_t  n_arg;
+      if( op_enum_i == fun_op_enum )
+         n_arg = arg_vec_[ arg_index_i + 0];
+      else
+         n_arg  = op_vec_[i_op].op_ptr->n_arg();
       //
       // code
       size_t code = hash_code(n_arg, op_enum_i, arg_index_i);

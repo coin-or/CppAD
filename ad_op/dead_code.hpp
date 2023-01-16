@@ -124,8 +124,8 @@ void tape_t<Base>::dead_code(void)
          }
          else if( op_enum == fun_op_enum )
          {  fun_op_arg.resize(n_arg - 3);
-            for(size_t k = 0; k < n_arg; ++k)
-            {  addr_t val_index = arg_vec_[arg_index + 3 + k];
+            for(size_t k = 3; k < n_arg; ++k)
+            {  addr_t val_index = arg_vec_[arg_index + k];
                if( need_val_index[val_index] )
                   fun_op_arg[k - 3] = new_val_index[val_index];
                else

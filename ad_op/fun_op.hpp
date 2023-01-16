@@ -60,7 +60,7 @@ fun_op_t<Base>* get_fun_op_instance(void)
    return &instance;
 }
 //
-// next_fun_op
+// tape::next_fun_op
 template <class Base>
 addr_t tape_t<Base>::next_fun_op(
    size_t  function_id           ,
@@ -94,7 +94,7 @@ addr_t tape_t<Base>::next_fun_op(
    return res_index;
 }
 //
-// eval_fun_op
+// tape::eval_fun_op
 template <class Base>
 void tape_t<Base>::eval_fun_op(
    bool          trace   ,
@@ -124,6 +124,9 @@ void tape_t<Base>::eval_fun_op(
    call_fun_t<Base>* call_fun_ptr = call_fun_t<Base>::call_fun_ptr(function_id);
    call_fun_ptr->forward(x, y);
    //
+   // function_name
+   std::string function_name = call_fun_ptr->function_name();
+   //
    // value_vec
    for(size_t i = 0; i < n_res; ++i)
       val_vec[res_index + i] = y[i];
@@ -131,7 +134,6 @@ void tape_t<Base>::eval_fun_op(
    // trace
    if( ! trace )
       return;
-   std::string function_name = call_fun_ptr->function_name();
    std::printf( "%s(", function_name.c_str() );
    for(size_t i = 3; i < n_arg; ++i)
    {  if( i != 3 )
