@@ -109,15 +109,37 @@ public :
       bool          trace  ,
       Vector<Base>& val_vec) const
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
+      //
+      // trace
+      if( trace )
+      {  // no operators for independent variables
+         std::printf("independent variables\n");
+         for(size_t res_index = 0; res_index < n_ind_; ++res_index)
+         {  Base res = val_vec[res_index];
+            std::printf(
+               "%5ld %10.3g\n", res_index, res
+            );
+         }
+      }
+      //
+      // i_op
       size_t n_op = op_vec_.size();
       for(size_t i_op = 0; i_op < n_op; ++i_op)
-      {  const op_info_t& op_info = op_vec_[i_op];
-         op_t<Base>* op_ptr       = op_info.op_ptr;
-         if( op_ptr->op_enum() == fun_op_enum )
+      {  //
+         // op_info
+         const op_info_t& op_info = op_vec_[i_op];
+         if( op_info.op_ptr->op_enum() == fun_op_enum )
+         {  //
+            // tape_t::eval_fun_op
             eval_fun_op(trace, i_op, val_vec);
+         }
          else
-         {  addr_t      arg_index    = op_info.arg_index;
+         {  // op_ptr, arg_index, res_index
+            op_t<Base>* op_ptr       = op_info.op_ptr;
+            addr_t      arg_index    = op_info.arg_index;
             addr_t      res_index    = op_info.res_index;
+            //
+            // op_t::eval
             op_ptr->eval(
                trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
             );

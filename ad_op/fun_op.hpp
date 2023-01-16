@@ -134,12 +134,15 @@ void tape_t<Base>::eval_fun_op(
    // trace
    if( ! trace )
       return;
-   std::printf( "%s( %d",  function_name.c_str(), arg_vec_[arg_index] );
+   std::printf( "%s(", function_name.c_str() );
    for(size_t i = 3; i < n_arg; ++i)
-      std::printf(", %d", arg_vec_[arg_index + i]);
+   {  if( i != 3 )
+         printf(", ");
+      std::printf("%d", arg_vec_[arg_index + i]);
+   }
    std::printf(")\n");
    for(size_t i = 0; i < n_res; ++i)
-      std::printf("%ld %10.3g\n", res_index + i, y[i]);
+      std::printf("%5ld %10.3g\n", res_index + i, y[i]);
    //
    return;
 }
