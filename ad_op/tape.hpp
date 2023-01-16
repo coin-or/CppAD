@@ -26,7 +26,23 @@ private :
    Vector<Base>          con_vec_;   // constants used by the tape
    Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<addr_t>        dep_vec_;   // index in val_vec of dependent variables
+   //
 public :
+   virtual std::string function_name( size_t function_id )
+   {  return "";
+   }
+   virtual bool forward(
+      size_t              function_id    ,
+      const Vector<Base>& x              ,
+      Vector<Base>&       y              )
+   {  return false;
+   }
+   virtual bool rev_depend(
+      size_t              function_id    ,
+      Vector<bool>&       depend_x       ,
+      const Vector<bool>& depend_y       )
+   {  return false;
+   }
    // ------------------------------------------------------------------------
    // n_val
    size_t n_val(void) const
@@ -75,6 +91,18 @@ public :
    addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
    // next_con_op
    addr_t next_con_op(const Base& constant);
+   // next_fun_op
+   addr_t next_fun_op(
+      size_t function_id            ,
+      size_t n_res                  ,
+      const Vector<addr_t>& fun_arg
+   );
+   // eval_fun_op
+   void eval_fun_op(
+      bool          trace   ,
+      size_t        i_op    ,
+      Vector<Base>& val_vec
+   ) const;
    //
    // eval
    void eval(
@@ -82,14 +110,18 @@ public :
       Vector<Base>& val_vec) const
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
       size_t n_op = op_vec_.size();
-      for(size_t i = 0; i < n_op; ++i)
-      {  const op_info_t& op_info = op_vec_[i];
+      for(size_t i_op = 0; i_op < n_op; ++i_op)
+      {  const op_info_t& op_info = op_vec_[i_op];
          op_t<Base>* op_ptr       = op_info.op_ptr;
-         addr_t      arg_index    = op_info.arg_index;
-         addr_t      res_index    = op_info.res_index;
-         op_ptr->eval(
-            trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
-         );
+         if( op_ptr->op_enum() == fun_op_enum )
+            eval_fun_op(trace, i_op, val_vec);
+         else
+         {  addr_t      arg_index    = op_info.arg_index;
+            addr_t      res_index    = op_info.res_index;
+            op_ptr->eval(
+               trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
+            );
+         }
       }
    }
    //
@@ -100,8 +132,9 @@ public :
    void dead_code(void);
 };
 
-# include "tape_next.hpp"
+# include "next_op.hpp"
 # include "renumber.hpp"
 # include "dead_code.hpp"
+# include "fun_op.hpp"
 
 # endif

@@ -28,6 +28,8 @@ public:
       );
    }
 };
+//
+// get_con_op_instance
 template <class Base>
 con_op_t<Base>* get_con_op_instance(void)
 {  static con_op_t<Base> instance;

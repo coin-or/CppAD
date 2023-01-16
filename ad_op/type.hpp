@@ -18,6 +18,7 @@ template <class Base> using Vector = CppAD::vector<Base>;
 enum op_enum_t {
    add_op_enum,
    con_op_enum,
+   fun_op_enum,
    sub_op_enum,
    number_op_enum
 };

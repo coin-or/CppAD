@@ -12,5 +12,5 @@ echo_eval() {
 flags="-Wall -pedantic-errors -Wshadow -Wfloat-conversion -Wconversion"
 echo_eval g++ $flags -g -I ../include main.cpp -o main
 echo_eval ./main
-echo_eval rm ./main
+# echo_eval rm ./main
 echo 'run.sh: OK'
