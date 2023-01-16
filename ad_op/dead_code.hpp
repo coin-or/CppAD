@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include "tape.hpp"
+# include "call_fun.hpp"
 
 template <class Base>
 void tape_t<Base>::dead_code(void)
@@ -23,21 +24,46 @@ void tape_t<Base>::dead_code(void)
    // need_val_index
    size_t i_op = op_vec_.size();
    while( i_op-- )
-   {  // n_arg, n_res, res_index, arg_index
-      size_t n_arg     = op_vec_[i_op].op_ptr->n_arg();
-      size_t n_res     = op_vec_[i_op].op_ptr->n_res();
-      addr_t res_index = op_vec_[i_op].res_index;
-      addr_t arg_index = op_vec_[i_op].arg_index;
+   {  // op_enum, res_index, arg_index
+      op_enum_t  op_enum   = op_vec_[i_op].op_ptr->op_enum();
+      size_t res_index = op_vec_[i_op].res_index;
+      size_t arg_index = op_vec_[i_op].arg_index;
       //
-      // need_op
-      bool need_op = false;
-      for(size_t k = 0; k < n_res; ++k)
-         need_op |= need_val_index[ res_index + k];
-      //
-      // need_val_index
-      if( need_op )
-      {  for(size_t k = 0; k < n_arg; ++k)
-            need_val_index[ arg_vec_[arg_index + k] ] = true;
+      if( op_enum != fun_op_enum )
+      {  //
+         // n_arg, n_res
+         size_t n_arg     = op_vec_[i_op].op_ptr->n_arg();
+         size_t n_res     = op_vec_[i_op].op_ptr->n_res();
+         assert( n_res == 1 );
+         //
+         // need_op
+         bool need_op = need_val_index[ res_index + 0];
+         //
+         // need_val_index
+         if( need_op )
+         {  for(size_t k = 0; k < n_arg; ++k)
+               need_val_index[ arg_vec_[arg_index + k] ] = true;
+         }
+      }
+      else
+      {  assert( op_enum == fun_op_enum );
+         size_t n_arg       = size_t( arg_vec_[arg_index + 0] );
+         size_t n_res       = size_t( arg_vec_[arg_index + 1] );
+         size_t function_id = size_t( arg_vec_[arg_index + 2] );
+         //
+         // depend_y
+         Vector<bool> depend_y(n_res);
+         for(size_t i = 0; i < n_res; ++i)
+            depend_y[i] = need_val_index[ res_index + i ];
+         //
+         // depend_x
+         Vector<bool> depend_x(n_arg - 3);
+         call_fun_t<Base>* call_fun_ptr =
+            call_fun_t<Base>::call_fun_ptr(function_id);
+         call_fun_ptr->rev_depend(depend_x, depend_y);
+         //
+         for(size_t k = 3; k < n_arg; ++k)
+            need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-3];
       }
    }
    //
@@ -46,21 +72,41 @@ void tape_t<Base>::dead_code(void)
    new_tape.set_ind(n_ind_);
    //
    // new_val_index
+   // include zero at index n_ind_ in val_vec
    Vector<addr_t> new_val_index( n_val_ );
-   for(size_t i = 0; i < n_ind_; ++i)
+   for(size_t i = 0; i <= n_ind_; ++i)
       new_val_index[i] = addr_t(i);
-   for(size_t i = n_ind_; i < n_val_; ++i)
+   for(size_t i = n_ind_ + 1; i < n_val_; ++i)
       new_val_index[i] = addr_t( n_val_ );
    //
-   // op_arg, i_op
-   Vector<addr_t> op_arg;
+   // op_arg, fun_op_arg
+   Vector<addr_t> op_arg, fun_op_arg;
+# ifndef NDEBUG
+   // zero at index n_ind_
    assert( op_vec_[0].op_ptr->op_enum() == con_op_enum );
-   assert( size_t( op_vec_[0].arg_index ) == 0 );
-   assert( con_vec_[ arg_vec_[0] ]  == Base(0.0) );
+   assert( op_vec_[0].arg_index == 0 );
+   assert( op_vec_[0].res_index == addr_t( n_ind_ ) );
+   assert( arg_vec_[0] == 0 );
+   assert( con_vec_[0]  == Base(0.0) );
+# endif
+   // i_op
    for(i_op = 1; i_op < op_vec_.size(); ++i_op)
-   {  // n_res, res_index
-      size_t n_res     = op_vec_[i_op].op_ptr->n_res();
-      addr_t res_index = op_vec_[i_op].res_index;
+   {  //
+      // op_enum, arg_index, res_index
+      op_enum_t  op_enum   = op_vec_[i_op].op_ptr->op_enum();
+      addr_t     arg_index = op_vec_[i_op].arg_index;
+      addr_t     res_index = op_vec_[i_op].res_index;
+      //
+      // n_arg, n_res
+      size_t n_res, n_arg;
+      if( op_enum == fun_op_enum )
+      {  n_arg = arg_vec_[ arg_index + 0];
+         n_res = arg_vec_[ arg_index + 1];
+      }
+      else
+      {  n_arg = op_vec_[i_op].op_ptr->n_arg();
+         n_res = op_vec_[i_op].op_ptr->n_res();
+      }
       //
       // need_op
       bool need_op = false;
@@ -68,16 +114,31 @@ void tape_t<Base>::dead_code(void)
          need_op |= need_val_index[ res_index + k];
       //
       if( need_op )
-      {  op_enum_t  op_enum   = op_vec_[i_op].op_ptr->op_enum();
-         size_t     n_arg     = op_vec_[i_op].op_ptr->n_arg();
-         addr_t     arg_index = op_vec_[i_op].arg_index;
-         //
+      {  //
          // new_val_index
          if( op_enum == con_op_enum )
          {  Base value = con_vec_[ arg_vec_[ arg_index ] ];
             addr_t new_res_index = new_tape.next_con_op(value);
             assert( n_res == 1 );
             new_val_index[ res_index ] = new_res_index;
+         }
+         else if( op_enum == fun_op_enum )
+         {  fun_op_arg.resize(n_arg - 3);
+            for(size_t k = 0; k < n_arg; ++k)
+            {  addr_t val_index = arg_vec_[arg_index + 3 + k];
+               if( need_val_index[val_index] )
+                  fun_op_arg[k - 3] = new_val_index[val_index];
+               else
+               {  // zero at index n_ind_
+                  fun_op_arg[k - 3] = addr_t( n_ind_ );
+               }
+            }
+            size_t function_id = arg_vec_[arg_index + 2];
+            addr_t new_res_index = new_tape.next_fun_op(
+               function_id, n_res, fun_op_arg
+            );
+            for(addr_t k = 0; k < addr_t(n_res); ++k)
+               new_val_index[ res_index + k ] = new_res_index + k;
          }
          else
          {  op_arg.resize(n_arg);
