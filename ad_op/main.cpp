@@ -72,28 +72,35 @@ bool test_add_sub_con()
    x[0] = 5.0;
    x[1] = 6.0;
    //
-   // before optimizing
-   ok &= tape.arg_vec().size() == 11;
-   ok &= tape.con_vec().size() == 3;
-   ok &= tape.op_vec().size() == 7;
-   //
-   // renumber
-   tape.renumber();
-   //
-   // dead_code
-   tape.dead_code();
-   //
-   // after optimizing
-   ok &= tape.arg_vec().size() == 7;
-   ok &= tape.con_vec().size() == 1;
-   ok &= tape.op_vec().size() == 4;
+   // trace
+   bool trace = false;
    //
    // val_vec
-   bool trace = false;
-   Vector<double> val_vec( tape.n_val() );
+   Vector<double> val_vec;
+   //
+   // before optimizing
+   val_vec.resize( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    tape.eval(trace, val_vec);
+   ok &= tape.arg_vec().size() == 12;
+   ok &= tape.con_vec().size() == 4;
+   ok &= tape.op_vec().size() == 8;
+   //
+   // renumber
+   tape.renumber();
+   val_vec.resize( tape.n_val() );
+   tape.eval(trace, val_vec);
+   //
+   // dead_code
+   tape.dead_code();
+   val_vec.resize( tape.n_val() );
+   tape.eval(trace, val_vec);
+   //
+   // after optimizing
+   ok &= tape.arg_vec().size() == 8;
+   ok &= tape.con_vec().size() == 2;
+   ok &= tape.op_vec().size() == 5;
    //
    // dep_vec
    dep_vec = tape.dep_vec();

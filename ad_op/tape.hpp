@@ -81,6 +81,13 @@ public :
       dep_vec_.resize(0);
       op_vec_.resize(0);
       con_vec_.resize(0);
+# ifndef NDEBUG
+      size_t zero = size_t( next_con_op(Base(0.0)) );
+      assert ( zero == n_ind_ );
+# else
+      next_con_op( Base(0.0) );
+# endif
+      assert( n_val_ == n_ind + 1 );
    }
    //
    // set_dep

@@ -54,7 +54,10 @@ void tape_t<Base>::dead_code(void)
    //
    // op_arg, i_op
    Vector<addr_t> op_arg;
-   for(i_op = 0; i_op < op_vec_.size(); ++i_op)
+   assert( op_vec_[0].op_ptr->op_enum() == con_op_enum );
+   assert( size_t( op_vec_[0].arg_index ) == 0 );
+   assert( con_vec_[ arg_vec_[0] ]  == Base(0.0) );
+   for(i_op = 1; i_op < op_vec_.size(); ++i_op)
    {  // n_res, res_index
       size_t n_res     = op_vec_[i_op].op_ptr->n_res();
       addr_t res_index = op_vec_[i_op].res_index;

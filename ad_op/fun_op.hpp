@@ -117,15 +117,12 @@ void tape_t<Base>::eval_fun_op(
    // x
    Vector<Base> x(n_arg - 3);
    for(size_t i = 3; i < n_arg; ++i)
-      x[i-3] = val_vec[ arg_vec_[i] ];
+      x[i-3] = val_vec[ arg_vec_[arg_index + i] ];
    //
    // y
    Vector<Base> y(n_res);
    call_fun_t<Base>* call_fun_ptr = call_fun_t<Base>::call_fun_ptr(function_id);
    call_fun_ptr->forward(x, y);
-   //
-   // function_name
-   std::string function_name = call_fun_ptr->function_name();
    //
    // value_vec
    for(size_t i = 0; i < n_res; ++i)
@@ -134,6 +131,7 @@ void tape_t<Base>::eval_fun_op(
    // trace
    if( ! trace )
       return;
+   std::string function_name = call_fun_ptr->function_name();
    std::printf( "%s(", function_name.c_str() );
    for(size_t i = 3; i < n_arg; ++i)
    {  if( i != 3 )
