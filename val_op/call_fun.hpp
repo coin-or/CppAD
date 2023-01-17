@@ -45,6 +45,16 @@ public:
    virtual bool rev_depend(
       Vector<bool>&       depend_x       ,
       const Vector<bool>& depend_y       ) const = 0;
+   //
+   // clear
+   static bool clear(void)
+   {  for(size_t i = 0; i < deleted_.size(); ++i)
+         if( ! deleted_[i] )
+            return false;
+      call_fun_vec_.clear();
+      deleted_.clear();
+      return true;
+   }
 };
 
 # endif

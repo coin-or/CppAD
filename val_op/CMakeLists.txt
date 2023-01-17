@@ -4,7 +4,12 @@
 # ----------------------------------------------------------------------------
 # Build the val_op directory tests
 #
-SET(source_list val_op.cpp)
+# BEGIN_SORT_THIS_LINE_PLUS_2
+SET(source_list val_op.cpp
+   add_xam.cpp
+   fun_xam.cpp
+)
+# END_SORT_THIS_LINE_MINUS_2
 #
 set_compile_flags( val_op "${cppad_debug_which}" "${source_list}" )
 #
