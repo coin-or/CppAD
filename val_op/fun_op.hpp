@@ -8,7 +8,7 @@
 # include "op_base.hpp"
 # include "call_fun.hpp"
 
-// op_t
+// fun_op_t
 template <class Value>
 class fun_op_t : public op_base_t<Value> {
 public:

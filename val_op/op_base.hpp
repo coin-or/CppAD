@@ -9,8 +9,8 @@
 /*
 {xrst_begin val_op_base dev}
 
-The Value Operators Base Class
-##############################
+The Value Operator Base Class
+#############################
 
 Prototype
 *********
@@ -51,10 +51,13 @@ The possible values are:
    // END_ENUM_T
 }
 
-n_arg, n_res
-************
-This member function returns the number of arguments ( *n_arg* ) and
-the number of results ( *n_res* ) for this operator.
+n_arg
+*****
+This member function returns the number of arguments for this operator.
+
+n_res
+*****
+This member function returns the number of results for this operator.
 
 eval
 ****

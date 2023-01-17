@@ -109,8 +109,12 @@ where
 :math:`0 \leq k < \ell` , ... , and
 :math:`\phi` is the function corresponding to the operator.
 
+Operator Classes
+****************
 {xrst_toc_table
    val_op/op_base.hpp
+   val_op/unary_op.hpp
+   val_op/binary_op.hpp
 }
 
 
