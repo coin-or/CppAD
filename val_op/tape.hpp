@@ -17,7 +17,7 @@ public:
    typedef struct info {
       addr_t      arg_index;
       addr_t      res_index;
-      op_t<Value>* op_ptr;
+      op_base_t<Value>* op_ptr;
    } op_info_t;
 private :
    size_t                n_ind_;     // number of independent values
@@ -142,11 +142,11 @@ public :
          }
          else
          {  // op_ptr, arg_index, res_index
-            op_t<Value>* op_ptr      = op_info.op_ptr;
-            addr_t      arg_index    = op_info.arg_index;
-            addr_t      res_index    = op_info.res_index;
+            op_base_t<Value>* op_ptr      = op_info.op_ptr;
+            addr_t            arg_index   = op_info.arg_index;
+            addr_t            res_index   = op_info.res_index;
             //
-            // op_t::eval
+            // op_base_t<Value>::eval
             op_ptr->eval(
                trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
             );

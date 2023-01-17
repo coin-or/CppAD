@@ -35,8 +35,8 @@ Value
 This template parameter is the type used for each element of the
 :ref:`val_op_fun@Value Vector` .
 
-op_t
-****
+op_base
+*******
 This is the base class used for operators.
 All of its functions are public and pure virtual; i.e.,
 they all must be defined in order for a derived class object to be used.
@@ -106,7 +106,7 @@ is the entire :ref:`val_op_fun@Value Vector` .
 {xrst_end val_op_base}
 */
 // BEGIN_OP_T
-template <class Value> class op_t {
+template <class Value> class op_base_t {
 public:
    virtual op_enum_t op_enum(void) const = 0;
    virtual size_t n_arg(

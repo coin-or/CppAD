@@ -5,12 +5,12 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cstdio>
-# include "op.hpp"
+# include "op_base.hpp"
 # include "call_fun.hpp"
 
 // op_t
 template <class Value>
-class fun_op_t : public op_t<Value> {
+class fun_op_t : public op_base_t<Value> {
 public:
    // op_enum
    // type of this operator
@@ -74,7 +74,7 @@ addr_t tape_t<Value>::record_fun_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_t<Value>* op_ptr = get_fun_op_instance<Value>();
+   op_base_t<Value>* op_ptr = get_fun_op_instance<Value>();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
@@ -101,8 +101,8 @@ void tape_t<Value>::eval_fun_op(
    size_t        i_op    ,
    Vector<Value>& val_vec ) const
 {  // op_enum
-   op_t<Value>* op_ptr   = op_vec_[i_op].op_ptr;
-   op_enum_t   op_enum   = op_ptr->op_enum();
+   op_base_t<Value>* op_ptr   = op_vec_[i_op].op_ptr;
+   op_enum_t         op_enum  = op_ptr->op_enum();
    assert( op_enum == fun_op_enum );
    //
    // arg_index, res_index

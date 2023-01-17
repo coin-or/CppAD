@@ -17,7 +17,7 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_t<Value>* op_ptr = nullptr;
+   op_base_t<Value>* op_ptr = nullptr;
    switch(op_enum)
    {
       case add_op_enum:
@@ -62,7 +62,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_t<Value>* op_ptr = get_con_op_instance<Value>();
+   op_base_t<Value>* op_ptr = get_con_op_instance<Value>();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};

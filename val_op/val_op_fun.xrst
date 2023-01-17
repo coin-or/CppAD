@@ -110,7 +110,7 @@ where
 :math:`\phi` is the function corresponding to the operator.
 
 {xrst_toc_table
-   val_op/op.hpp
+   val_op/op_base.hpp
 }
 
 

@@ -4,11 +4,11 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include "op.hpp"
+# include "op_base.hpp"
 
 // unary_op_t
 template <class Value>
-class unary_op_t : public op_t<Value> {
+class unary_op_t : public op_base_t<Value> {
 public:
    // op_enum
    virtual op_enum_t op_enum(void) const override = 0;
