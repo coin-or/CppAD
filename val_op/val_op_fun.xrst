@@ -1,0 +1,114 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin val_op_fun dev}
+{xrst_spell
+}
+
+Value Operator Representation of a Function
+###########################################
+
+See Also
+********
+:ref:`json_ad_graph-name`, :ref:`cpp_ad_graph-name`
+
+function
+********
+This section defines an algorithmic representation of a function
+:math:`y = f(x)`.
+The vector *x* is called the independent value vector,
+and *y* is called the dependent value vector.
+A value an be a CppAD
+:ref:`glossary@Parameter@Constant`,
+:ref:`glossary@Parameter@Dynamic` parameter ,
+or a :ref:`glossary@Variable` .
+
+Value Vector
+************
+The values are ordered in a vector
+:math:`( v_0 , \ldots ,  v_{p-1} )` where *p* is the number of values.
+
+Independent Vector
+==================
+The independent sub-vector is
+
+.. math::
+
+   x = ( v_0 , \cdots , v_{n-1} )
+
+where :math:`n \leq p` is the number of independent values.
+
+Result Vector
+=============
+The result sub-vector is
+:math:`( v_n , \ldots , v_{p-1} )` .
+These are the values computed by the algorithm.
+This is a static single assignment SSA
+representation of representation; i.e.,
+each result has one and only one assignment.
+
+Dependent Vector
+================
+There is a vector of non-negative integer indices
+:math:`( d_0 , \cdots , d_{m-1} )`
+that specify the dependent variable vector as follows
+
+.. math::
+
+   y  = ( v_{d[0]} , \cdots , v_{d[m-1]} )
+
+note that :math:`d[j]` is used in place of :math:`d_j` above to
+avoid having two levels of sub-scripting.
+
+Constant Vector
+***************
+There is a separate constant vector
+:math:`( c_0 , \ldots ,  c_{q-1} )` where *q* is the number of constants.
+
+Operators
+*********
+Each component of the result vector is computed by an operator.
+
+Constant Operator
+=================
+The constant operator copies a constant from the constant vector
+to the result vector; i.e.
+:math:`v_\ell = c_k` where
+:math:`n \leq \ell < p` and
+:math:`0 \leq k < q` .
+
+Unary Operator
+==============
+A unary operator has one value argument and one result; i.e.,
+:math:`v_\ell = \phi ( v_k )` where
+:math:`n \leq \ell < p`,
+:math:`0 \leq k < \ell` and
+:math:`\phi` is the function corresponding to the operator.
+
+Binary Operator
+===============
+A binary operator has two value arguments and one result; i.e.,
+:math:`v_\ell = \phi ( v_j , v_k )` where
+:math:`n \leq \ell < p`,
+:math:`0 \leq j < \ell` ,
+:math:`0 \leq k < \ell` and
+:math:`\phi` is the function corresponding to the operator.
+
+Function Operator
+=================
+Each function operator has its own number of argument and result values.
+The arguments need not be sequential, but the results are; i.e.,
+
+.. math::
+
+      ( v_\ell , v_{\ell+1} , \cdots ) = \phi ( v_j , v_k , \cdots )
+
+where
+:math:`n \leq \ell < p`,
+:math:`0 \leq j < \ell` ,
+:math:`0 \leq k < \ell` , ... , and
+:math:`\phi` is the function corresponding to the operator.
+
+
+{xrst_end val_op_fun}
