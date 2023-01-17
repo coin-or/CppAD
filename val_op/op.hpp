@@ -17,11 +17,15 @@ public:
    //
    // n_arg
    // number of arguments
-   virtual size_t n_arg(void) const = 0;
+   virtual size_t n_arg(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const = 0;
    //
    // n_res
    // number of results
-   virtual size_t n_res(void) const = 0;
+   virtual size_t n_res(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const = 0;
    //
    // eval
    // computes the results

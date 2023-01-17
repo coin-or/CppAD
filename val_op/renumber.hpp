@@ -59,15 +59,10 @@ public:
    {  assert( i_op < table_.end() );
       //
       // op_enum_i, arg_index_i
-      op_enum_t op_enum_i   = op_vec_[i_op].op_ptr->op_enum();
-      addr_t    arg_index_i = op_vec_[i_op].arg_index;
-      //
-      // n_arg
-      size_t  n_arg;
-      if( op_enum_i == fun_op_enum )
-         n_arg = arg_vec_[ arg_index_i + 0];
-      else
-         n_arg  = op_vec_[i_op].op_ptr->n_arg();
+      addr_t    arg_index_i  = op_vec_[i_op].arg_index;
+      op_enum_t op_enum_i = op_vec_[i_op].op_ptr->op_enum();
+      size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index_i, arg_vec_);
+
       //
       // code
       size_t code = hash_code(n_arg, op_enum_i, arg_index_i);
@@ -147,9 +142,10 @@ void tape_t<Base>::renumber(void)
          // new_val_index
          // mapping so that op_j results will be used instead of op_i results;
          // i.e., op_i becomes dead code.
-         size_t n_res       = op_vec_[i_op].op_ptr->n_res();
+         addr_t arg_index_i = op_vec_[i_op].arg_index;
          addr_t res_index_i = op_vec_[i_op].res_index;
          addr_t res_index_j = op_vec_[j_op].res_index;
+         size_t n_res = op_vec_[i_op].op_ptr->n_res(arg_index_i, arg_vec_);
          for(addr_t k = 0; k < addr_t(n_res); ++k)
             new_val_index[res_index_i + k] = res_index_j + k;
       }

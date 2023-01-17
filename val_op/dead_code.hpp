@@ -24,17 +24,15 @@ void tape_t<Base>::dead_code(void)
    // need_val_index
    size_t i_op = op_vec_.size();
    while( i_op-- )
-   {  // op_enum, res_index, arg_index
-      op_enum_t  op_enum   = op_vec_[i_op].op_ptr->op_enum();
-      size_t res_index = op_vec_[i_op].res_index;
-      size_t arg_index = op_vec_[i_op].arg_index;
+   {  // op_enum, res_index, arg_index, n_arg, n_res
+      op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
+      addr_t res_index   = op_vec_[i_op].res_index;
+      addr_t arg_index   = op_vec_[i_op].arg_index;
+      size_t n_arg       = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      size_t n_res       = op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
       //
       if( op_enum != fun_op_enum )
-      {  //
-         // n_arg, n_res
-         size_t n_arg     = op_vec_[i_op].op_ptr->n_arg();
-         size_t n_res     = op_vec_[i_op].op_ptr->n_res();
-         assert( n_res == 1 );
+      {  assert( n_res == 1 );
          //
          // need_op
          bool need_op = need_val_index[ res_index + 0];
@@ -47,8 +45,6 @@ void tape_t<Base>::dead_code(void)
       }
       else
       {  assert( op_enum == fun_op_enum );
-         size_t n_arg       = size_t( arg_vec_[arg_index + 0] );
-         size_t n_res       = size_t( arg_vec_[arg_index + 1] );
          size_t function_id = size_t( arg_vec_[arg_index + 2] );
          //
          // depend_y
@@ -63,7 +59,7 @@ void tape_t<Base>::dead_code(void)
          call_fun_ptr->rev_depend(depend_x, depend_y);
          //
          for(size_t k = 3; k < n_arg; ++k)
-            need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-3];
+            need_val_index[ arg_vec_[size_t(arg_index) + k] ] = depend_x[k-3];
       }
    }
    //
@@ -93,20 +89,11 @@ void tape_t<Base>::dead_code(void)
    for(i_op = 1; i_op < op_vec_.size(); ++i_op)
    {  //
       // op_enum, arg_index, res_index
-      op_enum_t  op_enum   = op_vec_[i_op].op_ptr->op_enum();
-      addr_t     arg_index = op_vec_[i_op].arg_index;
-      addr_t     res_index = op_vec_[i_op].res_index;
-      //
-      // n_arg, n_res
-      size_t n_res, n_arg;
-      if( op_enum == fun_op_enum )
-      {  n_arg = arg_vec_[ arg_index + 0];
-         n_res = arg_vec_[ arg_index + 1];
-      }
-      else
-      {  n_arg = op_vec_[i_op].op_ptr->n_arg();
-         n_res = op_vec_[i_op].op_ptr->n_res();
-      }
+      op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
+      addr_t    arg_index = op_vec_[i_op].arg_index;
+      addr_t    res_index = op_vec_[i_op].res_index;
+      size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      size_t    n_res     = op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
       //
       // need_op
       bool need_op = false;

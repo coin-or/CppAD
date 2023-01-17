@@ -44,8 +44,7 @@ Result Vector
 The result sub-vector is
 :math:`( v_n , \ldots , v_{p-1} )` .
 These are the values computed by the algorithm.
-This is a static single assignment SSA
-representation of representation; i.e.,
+This is a static single assignment SSA representation; i.e.,
 each result has one and only one assignment.
 
 Dependent Vector

@@ -37,12 +37,12 @@ addr_t tape_t<Base>::next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    op_vec_.push_back(op_info);
    //
    // arg_vec_
-   size_t n_op_arg = op_ptr->n_arg();
+   size_t n_op_arg = op_ptr->n_arg(arg_index, arg_vec_);
    for(size_t i = 0; i < n_op_arg; ++i)
       arg_vec_.push_back( op_arg[i] );
    //
    // n_val_
-   n_val_ = n_val_ + op_ptr->n_res();
+   n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
    //
    return res_index;
 }
@@ -72,7 +72,7 @@ addr_t tape_t<Base>::next_con_op(const Base& constant)
    arg_vec_.push_back( con_index );
    //
    // n_val_
-   n_val_ = n_val_ + op_ptr->n_res();
+   n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
    //
    return res_index;
 }

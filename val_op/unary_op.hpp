@@ -14,9 +14,15 @@ public:
    virtual op_enum_t op_enum(void) const override = 0;
    //
    // n_arg
-   size_t n_arg(void) const override
+   virtual size_t n_arg(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
-   size_t n_res(void) const override
+   //
+   // n_res
+   virtual size_t n_res(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
    //
    // eval

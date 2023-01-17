@@ -18,16 +18,16 @@ public:
    {  return fun_op_enum; }
    //
    // n_arg
-   size_t n_arg(void) const override
-   {  assert( false );
-      return 0;
-   }
+   virtual size_t n_arg(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const override
+   {  return size_t( arg_vec[arg_index + 0] ); }
    //
    // n_res
-   size_t n_res(void) const override
-   {  assert( false );
-      return 0;
-   }
+   virtual size_t n_res(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const override
+   {  return size_t( arg_vec[arg_index + 1] ); }
    //
    // eval
    void eval(
