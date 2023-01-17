@@ -20,6 +20,7 @@
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool add_xam(void);
 extern bool fun_xam(void);
+extern bool test_one(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -33,6 +34,7 @@ int main(void)
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( add_xam,             "add_xam"        );
    Run( fun_xam,             "fun_xam"        );
+   Run( test_one,            "test_one"       );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

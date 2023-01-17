@@ -20,7 +20,8 @@ Prototype
 
 Purpose
 *******
-This class overrides the *n_arg*, *n_res_*, and *print_op* member functions.
+The class is derived from :ref:`op_base <val_op_base-name>`.
+It overrides the *n_arg*, *n_res_*, and *print_op* member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
 
 n_arg
@@ -49,6 +50,12 @@ prints the following values:
 #. left_index is the value vector index for the left operand
 #. right_index is the value vector index for the right operand
 #. res is the result for this operator; i.e. value vector at index res_index
+
+Operator Sub-Classes
+********************
+{xrst_toc_table
+   val_op/add_op.hpp
+}
 
 {xrst_end val_op_binary_op}
 */

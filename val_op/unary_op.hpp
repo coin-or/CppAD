@@ -20,7 +20,8 @@ Prototype
 
 Purpose
 *******
-This class overrides the *n_arg*, *n_res_*, and *print_op* member functions.
+The class is derived from :ref:`op_base <val_op_base-name>`.
+It overrides the *n_arg*, *n_res_*, and *print_op* member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
 
 n_arg
