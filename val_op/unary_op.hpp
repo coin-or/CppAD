@@ -7,8 +7,8 @@
 # include "op.hpp"
 
 // unary_op_t
-template <class Base>
-class unary_op_t : public op_t<Base> {
+template <class Value>
+class unary_op_t : public op_t<Value> {
 public:
    // op_enum
    virtual op_enum_t op_enum(void) const override = 0;
@@ -30,9 +30,9 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
-      const Vector<Base>&   con_vec      ,
+      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const override = 0;
+      Vector<Value>&        value_vec    ) const override = 0;
    //
    // print_op
    void print_op(
@@ -40,10 +40,10 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const override
+      Vector<Value>&        value_vec    ) const override
    {  //
       addr_t index  = arg_vec[ arg_index + 0 ];
-      Base   res    = value_vec[res_index];
+      Value  res    = value_vec[res_index];
       std::printf(
          "%5d %5s %5d %5s %10.3g\n", res_index, name, index, "", res
       );

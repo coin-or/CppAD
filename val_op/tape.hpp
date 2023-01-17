@@ -10,20 +10,20 @@
 # include "sub_op.hpp"
 
 // tape_t
-template <class Base>
+template <class Value>
 class tape_t {
 public:
    // op_info_t
    typedef struct info {
       addr_t      arg_index;
       addr_t      res_index;
-      op_t<Base>* op_ptr;
+      op_t<Value>* op_ptr;
    } op_info_t;
 private :
    size_t                n_ind_;     // number of independent values
    size_t                n_val_;     // index in val_vec of record result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
-   Vector<Base>          con_vec_;   // constants used by the tape
+   Vector<Value>         con_vec_;   // constants used by the tape
    Vector<op_info_t>     op_vec_;    // operators that define this function
    Vector<addr_t>        dep_vec_;   // index in val_vec of dependent variables
    //
@@ -33,8 +33,8 @@ public :
    }
    virtual bool forward(
       size_t              function_id    ,
-      const Vector<Base>& x              ,
-      Vector<Base>&       y              )
+      const Vector<Value>& x             ,
+      Vector<Value>&      y              )
    {  return false;
    }
    virtual bool rev_depend(
@@ -53,7 +53,7 @@ public :
    {  return arg_vec_; }
    //
    // con_vec
-   const Vector<Base>& con_vec(void) const
+   const Vector<Value>& con_vec(void) const
    {  return con_vec_; }
    //
    // op_vec
@@ -82,10 +82,10 @@ public :
       op_vec_.resize(0);
       con_vec_.resize(0);
 # ifndef NDEBUG
-      size_t zero = size_t( record_con_op(Base(0.0)) );
+      size_t zero = size_t( record_con_op(Value(0.0)) );
       assert ( zero == n_ind_ );
 # else
-      record_con_op( Base(0.0) );
+      record_con_op( Value(0.0) );
 # endif
       assert( n_val_ == n_ind + 1 );
    }
@@ -97,7 +97,7 @@ public :
    // record_op
    addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
    // record_con_op
-   addr_t record_con_op(const Base& constant);
+   addr_t record_con_op(const Value& constant);
    // record_fun_op
    addr_t record_fun_op(
       size_t function_id            ,
@@ -108,13 +108,13 @@ public :
    void eval_fun_op(
       bool          trace   ,
       size_t        i_op    ,
-      Vector<Base>& val_vec
+      Vector<Value>& val_vec
    ) const;
    //
    // eval
    void eval(
       bool          trace  ,
-      Vector<Base>& val_vec) const
+      Vector<Value>& val_vec) const
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
       //
       // trace
@@ -122,7 +122,7 @@ public :
       {  // no operators for independent variables
          std::printf("independent values\n");
          for(size_t res_index = 0; res_index < n_ind_; ++res_index)
-         {  Base res = val_vec[res_index];
+         {  Value res = val_vec[res_index];
             std::printf(
                "%5ld %10.3g\n", res_index, res
             );
@@ -142,7 +142,7 @@ public :
          }
          else
          {  // op_ptr, arg_index, res_index
-            op_t<Base>* op_ptr       = op_info.op_ptr;
+            op_t<Value>* op_ptr      = op_info.op_ptr;
             addr_t      arg_index    = op_info.arg_index;
             addr_t      res_index    = op_info.res_index;
             //

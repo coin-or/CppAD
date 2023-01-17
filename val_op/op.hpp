@@ -8,7 +8,7 @@
 # include <cstdio>
 
 // op_t
-template <class Base>
+template <class Value>
 class op_t {
 public:
    // op_enum
@@ -33,9 +33,9 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
-      const Vector<Base>&   con_vec      ,
+      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const = 0;
+      Vector<Value>&        value_vec    ) const = 0;
    //
    // print_op
    virtual void print_op(
@@ -43,15 +43,15 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const = 0;
+      Vector<Value>&        value_vec    ) const = 0;
 };
 
 // op_info_t
-template <class Base>
+template <class Value>
 struct op_info_t {
    addr_t      arg_index;
    addr_t      res_index;
-   op_t<Base>* op_ptr;
+   op_t<Value>* op_ptr;
 };
 
 # endif

@@ -7,18 +7,18 @@
 # include <cppad/local/sparse/list_setvec.hpp>
 # include "tape.hpp"
 
-template <class Base>
+template <class Value>
 class op_hash_table_t {
-   typedef typename tape_t<Base>::op_info_t op_info_t;
+   typedef typename tape_t<Value>::op_info_t op_info_t;
 private:
    // hash_base
-   std::hash<Base> hash_base;
+   std::hash<Value> hash_base;
    //
    // arg_vec_
    const Vector<addr_t>& arg_vec_;
    //
    // con_vec_
-   const Vector<Base>& con_vec_;
+   const Vector<Value>& con_vec_;
    //
    // op_vec_
    const Vector<op_info_t>& op_vec_;
@@ -43,7 +43,7 @@ public:
    // ctor
    op_hash_table_t(
          const Vector<addr_t>&    arg_vec,
-         const Vector<Base>&      con_vec,
+         const Vector<Value>&     con_vec,
          const Vector<op_info_t>& op_vec,
          size_t                   n_hash_code,
          size_t                   n_op
@@ -79,8 +79,8 @@ public:
          bool match = op_enum_i == op_enum_j;
          if( match && op_enum_i == con_op_enum )
          {  // 2DO: change to identically equal
-            const Base& c_i = con_vec_[ arg_vec_[arg_index_i] ];
-            const Base& c_j = con_vec_[ arg_vec_[arg_index_j] ];
+            const Value& c_i = con_vec_[ arg_vec_[arg_index_i] ];
+            const Value& c_j = con_vec_[ arg_vec_[arg_index_j] ];
             match = c_i == c_j;
          }
          else if( match )
@@ -111,15 +111,15 @@ public:
    }
 };
 
-template <class Base>
-void tape_t<Base>::renumber(void)
+template <class Value>
+void tape_t<Value>::renumber(void)
 {  // -----------------------------------------------------------------------
    // SAS Global Value Renumbering
    // https://en.wikipedia.org/wiki/Value_numbering
    // -----------------------------------------------------------------------
    //
    // op_hash_table
-   op_hash_table_t<Base>  op_hash_table(
+   op_hash_table_t<Value>  op_hash_table(
       arg_vec_,
       con_vec_,
       op_vec_,

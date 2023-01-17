@@ -6,7 +6,7 @@
 // -------------------------------------------------------------
 # include "type.hpp"
 
-template <class Base>
+template <class Value>
 class call_fun_t {
 private:
    inline static Vector<call_fun_t*> call_fun_vec_;
@@ -38,8 +38,8 @@ public:
    //
    // forward
    virtual bool forward(
-      const Vector<Base>& x              ,
-      Vector<Base>&       y              ) const = 0;
+      const Vector<Value>& x             ,
+      Vector<Value>&      y              ) const = 0;
    //
    // rev_depend
    virtual bool rev_depend(

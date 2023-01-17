@@ -12,7 +12,7 @@
 typedef int addr_t;
 
 // Vector
-template <class Base> using Vector = CppAD::vector<Base>;
+template <class Value> using Vector = CppAD::vector<Value>;
 
 // op_enum_t
 enum op_enum_t {

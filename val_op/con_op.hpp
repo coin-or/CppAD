@@ -7,8 +7,8 @@
 # include "unary_op.hpp"
 
 // con_op_t
-template <class Base>
-class con_op_t : public unary_op_t<Base> {
+template <class Value>
+class con_op_t : public unary_op_t<Value> {
 public:
    // op_enum
    op_enum_t op_enum(void) const override
@@ -19,9 +19,9 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
-      const Vector<Base>&   con_vec      ,
+      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         val_vec      ) const override
+      Vector<Value>&        val_vec      ) const override
    {  val_vec[res_index]  = con_vec[ arg_vec[arg_index + 0] ];
       if( trace ) this->print_op(
          "con", arg_index, arg_vec, res_index, val_vec
@@ -30,9 +30,9 @@ public:
 };
 //
 // get_con_op_instance
-template <class Base>
-con_op_t<Base>* get_con_op_instance(void)
-{  static con_op_t<Base> instance;
+template <class Value>
+con_op_t<Value>* get_con_op_instance(void)
+{  static con_op_t<Value> instance;
    return &instance;
 }
 

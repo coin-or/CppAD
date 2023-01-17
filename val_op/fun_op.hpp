@@ -9,8 +9,8 @@
 # include "call_fun.hpp"
 
 // op_t
-template <class Base>
-class fun_op_t : public op_t<Base> {
+template <class Value>
+class fun_op_t : public op_t<Value> {
 public:
    // op_enum
    // type of this operator
@@ -34,9 +34,9 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
-      const Vector<Base>&   con_vec      ,
+      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const override
+      Vector<Value>&        value_vec    ) const override
    {  assert( false );
       return;
    }
@@ -47,22 +47,22 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Base>&         value_vec    ) const override
+      Vector<Value>&        value_vec    ) const override
    {  assert( false );
       return;
    }
 };
 //
 // get_fun_op_instance
-template <class Base>
-fun_op_t<Base>* get_fun_op_instance(void)
-{  static fun_op_t<Base> instance;
+template <class Value>
+fun_op_t<Value>* get_fun_op_instance(void)
+{  static fun_op_t<Value> instance;
    return &instance;
 }
 //
 // tape::record_fun_op
-template <class Base>
-addr_t tape_t<Base>::record_fun_op(
+template <class Value>
+addr_t tape_t<Value>::record_fun_op(
    size_t  function_id           ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
@@ -74,7 +74,7 @@ addr_t tape_t<Base>::record_fun_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_t<Base>* op_ptr = get_fun_op_instance<Base>();
+   op_t<Value>* op_ptr = get_fun_op_instance<Value>();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
@@ -95,13 +95,13 @@ addr_t tape_t<Base>::record_fun_op(
 }
 //
 // tape::eval_fun_op
-template <class Base>
-void tape_t<Base>::eval_fun_op(
+template <class Value>
+void tape_t<Value>::eval_fun_op(
    bool          trace   ,
    size_t        i_op    ,
-   Vector<Base>& val_vec ) const
+   Vector<Value>& val_vec ) const
 {  // op_enum
-   op_t<Base>* op_ptr    = op_vec_[i_op].op_ptr;
+   op_t<Value>* op_ptr   = op_vec_[i_op].op_ptr;
    op_enum_t   op_enum   = op_ptr->op_enum();
    assert( op_enum == fun_op_enum );
    //
@@ -115,13 +115,13 @@ void tape_t<Base>::eval_fun_op(
    size_t function_id = size_t( arg_vec_[arg_index + 2] );
    //
    // x
-   Vector<Base> x(n_arg - 3);
+   Vector<Value> x(n_arg - 3);
    for(size_t i = 3; i < n_arg; ++i)
       x[i-3] = val_vec[ arg_vec_[arg_index + i] ];
    //
    // y
-   Vector<Base> y(n_res);
-   call_fun_t<Base>* call_fun_ptr = call_fun_t<Base>::call_fun_ptr(function_id);
+   Vector<Value> y(n_res);
+   call_fun_t<Value>* call_fun_ptr = call_fun_t<Value>::call_fun_ptr(function_id);
    call_fun_ptr->forward(x, y);
    //
    // function_name

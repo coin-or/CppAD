@@ -7,8 +7,8 @@
 # include "tape.hpp"
 //
 // record_op
-template <class Base>
-addr_t tape_t<Base>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
+template <class Value>
+addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 {  //
    // res_index
    addr_t res_index = addr_t( n_val_) ;
@@ -17,15 +17,15 @@ addr_t tape_t<Base>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_t<Base>* op_ptr = nullptr;
+   op_t<Value>* op_ptr = nullptr;
    switch(op_enum)
    {
       case add_op_enum:
-      op_ptr = get_add_op_instance<Base>();
+      op_ptr = get_add_op_instance<Value>();
       break;
 
       case sub_op_enum:
-      op_ptr = get_sub_op_instance<Base>();
+      op_ptr = get_sub_op_instance<Value>();
       break;
 
       default:
@@ -48,8 +48,8 @@ addr_t tape_t<Base>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 }
 //
 // record_con_op
-template <class Base>
-addr_t tape_t<Base>::record_con_op(const Base& constant)
+template <class Value>
+addr_t tape_t<Value>::record_con_op(const Value& constant)
 {  //
    // con_index
    addr_t con_index = addr_t( con_vec_.size() );
@@ -62,7 +62,7 @@ addr_t tape_t<Base>::record_con_op(const Base& constant)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_t<Base>* op_ptr = get_con_op_instance<Base>();
+   op_t<Value>* op_ptr = get_con_op_instance<Value>();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};

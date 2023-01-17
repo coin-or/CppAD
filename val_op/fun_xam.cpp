@@ -6,15 +6,15 @@
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 // my_fun_t
-template <class Base>
-class my_fun_t : public call_fun_t<Base> {
+template <class Value>
+class my_fun_t : public call_fun_t<Value> {
 private:
    std::string function_name(void) const override
    {  return "test_function";
    }
    bool forward(
-      const Vector<Base>& x              ,
-      Vector<Base>&       y              ) const override
+      const Vector<Value>& x             ,
+      Vector<Value>&      y              ) const override
    {  assert( x.size() == 4 );
       assert( y.size() == 2 );
       //

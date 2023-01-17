@@ -7,8 +7,8 @@
 # include "tape.hpp"
 # include "call_fun.hpp"
 
-template <class Base>
-void tape_t<Base>::dead_code(void)
+template <class Value>
+void tape_t<Value>::dead_code(void)
 {  // -----------------------------------------------------------------------
    // Dead Code Elimination
    // https://en.wikipedia.org/wiki/Dead-code_elimination
@@ -54,8 +54,8 @@ void tape_t<Base>::dead_code(void)
          //
          // depend_x
          Vector<bool> depend_x(n_arg - 3);
-         call_fun_t<Base>* call_fun_ptr =
-            call_fun_t<Base>::call_fun_ptr(function_id);
+         call_fun_t<Value>* call_fun_ptr =
+            call_fun_t<Value>::call_fun_ptr(function_id);
          call_fun_ptr->rev_depend(depend_x, depend_y);
          //
          for(size_t k = 3; k < n_arg; ++k)
@@ -83,7 +83,7 @@ void tape_t<Base>::dead_code(void)
    assert( op_vec_[0].arg_index == 0 );
    assert( op_vec_[0].res_index == addr_t( n_ind_ ) );
    assert( arg_vec_[0] == 0 );
-   assert( con_vec_[0]  == Base(0.0) );
+   assert( con_vec_[0]  == Value(0.0) );
 # endif
    // i_op
    for(i_op = 1; i_op < op_vec_.size(); ++i_op)
@@ -104,7 +104,7 @@ void tape_t<Base>::dead_code(void)
       {  //
          // new_val_index
          if( op_enum == con_op_enum )
-         {  Base value = con_vec_[ arg_vec_[ arg_index ] ];
+         {  Value value = con_vec_[ arg_vec_[ arg_index ] ];
             addr_t new_res_index = new_tape.record_con_op(value);
             assert( n_res == 1 );
             new_val_index[ res_index ] = new_res_index;
