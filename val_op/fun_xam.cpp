@@ -63,21 +63,21 @@ bool test_fun()
    // add = x[0] + x[1]
    op_arg[0] = 0;
    op_arg[1] = 1;
-   addr_t add = tape.next_op(add_op_enum, op_arg);
+   addr_t add = tape.record_op(add_op_enum, op_arg);
    //
    // sub = x[0] - x[1]
    op_arg[0] = 0;
    op_arg[1] = 1;
-   addr_t sub = tape.next_op(sub_op_enum, op_arg);
+   addr_t sub = tape.record_op(sub_op_enum, op_arg);
    //
    // g_0(x) = 2.0 + 3.0
    // g_1(x) = (x[0] + x[1]) * (x[0] - x[1])
-   fun_arg[0] = tape.next_con_op(3.0);
-   fun_arg[1] = tape.next_con_op(3.0);
+   fun_arg[0] = tape.record_con_op(3.0);
+   fun_arg[1] = tape.record_con_op(3.0);
    fun_arg[2] = add;
    fun_arg[3] = sub;
    size_t n_fun_res = 2;
-   addr_t res_index = tape.next_fun_op(function_id, n_fun_res, fun_arg);
+   addr_t res_index = tape.record_fun_op(function_id, n_fun_res, fun_arg);
    //
    // dep_vec
    // f(x) = g_1(x) =  (x[0] + x[1]) * (x[0] - x[1])

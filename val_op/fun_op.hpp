@@ -60,9 +60,9 @@ fun_op_t<Base>* get_fun_op_instance(void)
    return &instance;
 }
 //
-// tape::next_fun_op
+// tape::record_fun_op
 template <class Base>
-addr_t tape_t<Base>::next_fun_op(
+addr_t tape_t<Base>::record_fun_op(
    size_t  function_id           ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )

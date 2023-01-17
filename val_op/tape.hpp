@@ -21,7 +21,7 @@ public:
    } op_info_t;
 private :
    size_t                n_ind_;     // number of independent values
-   size_t                n_val_;     // index in val_vec of next result
+   size_t                n_val_;     // index in val_vec of record result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
    Vector<Base>          con_vec_;   // constants used by the tape
    Vector<op_info_t>     op_vec_;    // operators that define this function
@@ -82,10 +82,10 @@ public :
       op_vec_.resize(0);
       con_vec_.resize(0);
 # ifndef NDEBUG
-      size_t zero = size_t( next_con_op(Base(0.0)) );
+      size_t zero = size_t( record_con_op(Base(0.0)) );
       assert ( zero == n_ind_ );
 # else
-      next_con_op( Base(0.0) );
+      record_con_op( Base(0.0) );
 # endif
       assert( n_val_ == n_ind + 1 );
    }
@@ -94,12 +94,12 @@ public :
    void set_dep(const Vector<addr_t>& dep_vec)
    {  dep_vec_ = dep_vec; }
    //
-   // next_op
-   addr_t next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
-   // next_con_op
-   addr_t next_con_op(const Base& constant);
-   // next_fun_op
-   addr_t next_fun_op(
+   // record_op
+   addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
+   // record_con_op
+   addr_t record_con_op(const Base& constant);
+   // record_fun_op
+   addr_t record_fun_op(
       size_t function_id            ,
       size_t n_res                  ,
       const Vector<addr_t>& fun_arg
@@ -161,7 +161,7 @@ public :
    void dead_code(void);
 };
 
-# include "next_op.hpp"
+# include "record_op.hpp"
 # include "renumber.hpp"
 # include "dead_code.hpp"
 # include "fun_op.hpp"

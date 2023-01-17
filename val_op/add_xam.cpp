@@ -20,16 +20,16 @@ bool add_xam()
    Vector<addr_t> dep_vec(2);
    //
    // tape
-   tape.next_op(add_op_enum, op_arg); // x[0] + x[1] (no used)
-   tape.next_con_op(5.0);             // 5.0 (not used)
+   tape.record_op(add_op_enum, op_arg); // x[0] + x[1] (no used)
+   tape.record_con_op(5.0);             // 5.0 (not used)
    //
-   dep_vec[0]      = tape.next_op(add_op_enum, op_arg); // x[0] + x[1]
+   dep_vec[0]      = tape.record_op(add_op_enum, op_arg); // x[0] + x[1]
    op_arg[0]       = dep_vec[0];                        // x[0] + x[1]
-   op_arg[1]       = tape.next_con_op(4.0);             // 4.0
-   addr_t temp_1   = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
+   op_arg[1]       = tape.record_con_op(4.0);             // 4.0
+   addr_t temp_1   = tape.record_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
    op_arg[0]       = temp_1;
-   op_arg[1]       = tape.next_con_op(4.0);
-   dep_vec[1]      = tape.next_op(sub_op_enum, op_arg); // x[0] + x[1] - 8.0
+   op_arg[1]       = tape.record_con_op(4.0);
+   dep_vec[1]      = tape.record_op(sub_op_enum, op_arg); // x[0] + x[1] - 8.0
    //
    // set_dep
    tape.set_dep( dep_vec );

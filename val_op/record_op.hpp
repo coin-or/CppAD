@@ -6,9 +6,9 @@
 // ----------------------------------------------------------------------------
 # include "tape.hpp"
 //
-// next_op
+// record_op
 template <class Base>
-addr_t tape_t<Base>::next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
+addr_t tape_t<Base>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 {  //
    // res_index
    addr_t res_index = addr_t( n_val_) ;
@@ -47,9 +47,9 @@ addr_t tape_t<Base>::next_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    return res_index;
 }
 //
-// next_con_op
+// record_con_op
 template <class Base>
-addr_t tape_t<Base>::next_con_op(const Base& constant)
+addr_t tape_t<Base>::record_con_op(const Base& constant)
 {  //
    // con_index
    addr_t con_index = addr_t( con_vec_.size() );

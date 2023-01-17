@@ -105,7 +105,7 @@ void tape_t<Base>::dead_code(void)
          // new_val_index
          if( op_enum == con_op_enum )
          {  Base value = con_vec_[ arg_vec_[ arg_index ] ];
-            addr_t new_res_index = new_tape.next_con_op(value);
+            addr_t new_res_index = new_tape.record_con_op(value);
             assert( n_res == 1 );
             new_val_index[ res_index ] = new_res_index;
          }
@@ -121,7 +121,7 @@ void tape_t<Base>::dead_code(void)
                }
             }
             size_t function_id = arg_vec_[arg_index + 2];
-            addr_t new_res_index = new_tape.next_fun_op(
+            addr_t new_res_index = new_tape.record_fun_op(
                function_id, n_res, fun_op_arg
             );
             for(addr_t k = 0; k < addr_t(n_res); ++k)
@@ -133,7 +133,7 @@ void tape_t<Base>::dead_code(void)
             {  assert( arg_vec_[arg_index + k] < res_index );
                op_arg[k] = new_val_index[ arg_vec_[arg_index + k] ];
             }
-            addr_t new_res_index = new_tape.next_op(op_enum, op_arg);
+            addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
             for(addr_t k = 0; k < addr_t(n_res); ++k)
                new_val_index[ res_index ] = new_res_index + k;
          }
