@@ -8,6 +8,7 @@
 SET(source_list val_op.cpp
    add_xam.cpp
    fun_xam.cpp
+   sub_xam.cpp
    test_one.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

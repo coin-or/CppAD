@@ -73,7 +73,7 @@ public:
       const Value& right  = val_vec[ arg_vec[arg_index + 1] ];
       val_vec[res_index]  = left + right;
       if( trace ) this->print_op(
-            "add", arg_index, arg_vec, res_index, val_vec
+         "add", arg_index, arg_vec, res_index, val_vec
       );
    }
 };

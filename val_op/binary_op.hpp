@@ -55,6 +55,7 @@ Operator Sub-Classes
 ********************
 {xrst_toc_table
    val_op/add_op.hpp
+   val_op/sub_op.hpp
 }
 
 {xrst_end val_op_binary_op}
