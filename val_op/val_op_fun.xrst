@@ -65,8 +65,8 @@ Constant Vector
 There is a separate constant vector
 :math:`( c_0 , \ldots ,  c_{q-1} )` where *q* is the number of constants.
 
-Operators
-*********
+Operator
+********
 Each component of the result vector is computed by an operator.
 
 Constant Operator
@@ -108,6 +108,10 @@ where
 :math:`0 \leq j < \ell` ,
 :math:`0 \leq k < \ell` , ... , and
 :math:`\phi` is the function corresponding to the operator.
+
+{xrst_toc_table
+   val_op/op.hpp
+}
 
 
 {xrst_end val_op_fun}

@@ -14,7 +14,7 @@ typedef int addr_t;
 // Vector
 template <class Value> using Vector = CppAD::vector<Value>;
 
-// op_enum_t
+// BEGIN_ENUM_T
 enum op_enum_t {
    add_op_enum,
    con_op_enum,
@@ -22,5 +22,6 @@ enum op_enum_t {
    sub_op_enum,
    number_op_enum
 };
+// END_ENUM_T
 
 # endif
