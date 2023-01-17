@@ -217,9 +217,9 @@ int main()
    ok &= test_add_sub_con();
    ok &= test_fun();
    if( ok )
-   {  std::cout << "ad_op: OK\n";
+   {  std::cout << "val_op: OK\n";
       return 0;
    }
-   std::cout << "ad_op: Error\n";
+   std::cout << "val_op: Error\n";
    return 1;
 }
