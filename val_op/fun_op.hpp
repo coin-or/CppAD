@@ -53,14 +53,50 @@ function call.
 eval
 ****
 This override of :ref:`val_op_base@eval`
-will fail with an assert if it is called.
-It is only here to make fun_op_t a concrete class.
+calls the function identified by *function_id*
+to evaluate *n_res* results given *n_arg* - 3 arguments.
+
+#. The arguments to the function are
+   ::
+
+      val_vec[ arg_vec[ arg_index + 3 ] ] ,
+      val_vec[ arg_vec[ arg_index + 4 ] ] ,
+      ...
+      val_vec[ arg_vec[ arg_index + n_arg - 1 ] ]
+
+#. The results of the function evaluation are placed in
+   ::
+
+      val_vec[res_index + 0] ,
+      val_vec[res_index + 1] ,
+      ...
+      val_vec[res_index + n_res - 1]
+
+#. For *i* greater than or equal 3 and less than *n_arg*
+   ::
+
+      arg_vec[ arg_index + i ] < res_index
 
 print_op
 ********
 This override of :ref:`val_op_base@print_op`
-will fail with an assert if it is called.
-It is only here to make fun_op_t a concrete class.
+prints the following values:
+
+| |tab| function_name ( arg_index_0 , arg_index_1 , ... )
+| |tab| res_index_0  res_value_0
+| |tab| ...
+
+#. function_name is the name of this function which is assumed to be passed
+   as the name argument to print_op .
+#. for *j* between 0 and n_arg - 1, arg_index_j is the index
+   in val_vec for the corresponding arugment; i.e.
+   arg_vec[ arg_index +3 + j ].
+#. for *i* between 0 and n_res - 1, res_index_i is the index in
+   val_vec for the corresponding result and res_value is the value
+   of the result.
+#. The field width for res_index_i is 5,
+   the width for res_value_i is 10,
+   and there are two spaces bwtween those fields.
 
 {xrst_toc_hidden
    val_op/fun_xam.cpp
@@ -103,7 +139,6 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      )
    {  return size_t( arg_vec[arg_index + 2] ); }
-// END_FUN_OP_T
    //
    // eval
    void eval(
@@ -112,10 +147,9 @@ public:
       const Vector<addr_t>& arg_vec      ,
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const override
-   {  assert( false );
-      return;
-   }
+      Vector<Value>&        val_vec
+   ) const override;
+// END_FUN_OP_T
    //
    // print_op
    void print_op(
@@ -123,62 +157,72 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const override
-   {  assert( false );
-      return;
-   }
+      Vector<Value>&        val_vec
+   ) const override;
 };
 //
-// tape::eval_fun_op
+// eval
 template <class Value>
-void tape_t<Value>::eval_fun_op(
-   bool          trace   ,
-   size_t        i_op    ,
-   Vector<Value>& val_vec ) const
-{  // op_enum
-   op_base_t<Value>* op_ptr   = op_vec_[i_op].op_ptr;
-   op_enum_t         op_enum  = op_ptr->op_enum();
-   assert( op_enum == fun_op_enum );
-   //
-   // arg_index, res_index
-   size_t arg_index = size_t( op_vec_[i_op].arg_index );
-   size_t res_index = size_t( op_vec_[i_op].res_index );
-   //
-   // n_arg, n_res, function_id, n_fun_arg
-   size_t n_arg       = size_t( arg_vec_[arg_index + 0] );
-   size_t n_res       = size_t( arg_vec_[arg_index + 1] );
-   size_t function_id = size_t( arg_vec_[arg_index + 2] );
+void fun_op_t<Value>::eval(
+   bool                  trace        ,
+   addr_t                arg_index    ,
+   const Vector<addr_t>& arg_vec      ,
+   const Vector<Value>&  con_vec      ,
+   addr_t                res_index    ,
+   Vector<Value>&        val_vec      ) const
+{  //
+   // n_arg, n_res, function_id
+   size_t n_arg       = size_t( arg_vec[arg_index + 0] );
+   size_t n_res       = size_t( arg_vec[arg_index + 1] );
+   size_t function_id = size_t( arg_vec[arg_index + 2] );
    //
    // x
    Vector<Value> x(n_arg - 3);
    for(size_t i = 3; i < n_arg; ++i)
-      x[i-3] = val_vec[ arg_vec_[arg_index + i] ];
+      x[i-3] = val_vec[ arg_vec[arg_index + i] ];
+   //
+   // call_fun_ptr
+   Vector<Value> y(n_res);
+   call_fun_t<Value>* call_fun_ptr = \
+      call_fun_t<Value>::call_fun_ptr(function_id);
    //
    // y
-   Vector<Value> y(n_res);
-   call_fun_t<Value>* call_fun_ptr = call_fun_t<Value>::call_fun_ptr(function_id);
    call_fun_ptr->forward(x, y);
    //
    // function_name
    std::string function_name = call_fun_ptr->function_name();
    //
-   // value_vec
+   // val_vec
    for(size_t i = 0; i < n_res; ++i)
       val_vec[res_index + i] = y[i];
    //
    // trace
-   if( ! trace )
-      return;
-   std::printf( "%s(", function_name.c_str() );
+   if( trace ) this->print_op(
+      function_name.c_str(), arg_index, arg_vec, res_index, val_vec
+   );
+   return;
+}
+//
+// print_op
+template <class Value>
+void fun_op_t<Value>::print_op(
+   const char*           name         ,
+   addr_t                arg_index    ,
+   const Vector<addr_t>& arg_vec      ,
+   addr_t                res_index    ,
+   Vector<Value>&        val_vec      ) const
+{  size_t n_arg = this->n_arg(arg_index, arg_vec);
+   size_t n_res = this->n_res(arg_index, arg_vec);
+   //
+   std::printf( "%s(", name);
    for(size_t i = 3; i < n_arg; ++i)
    {  if( i != 3 )
          printf(", ");
-      std::printf("%d", arg_vec_[arg_index + i]);
+      std::printf("%d", arg_vec[arg_index + i]);
    }
    std::printf(")\n");
    for(size_t i = 0; i < n_res; ++i)
-      std::printf("%5ld  %10.3g\n", res_index + i, y[i]);
-   //
+      std::printf("%5ld  %10.3g\n", res_index + i, val_vec[res_index + i]);
    return;
 }
 

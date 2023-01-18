@@ -104,13 +104,6 @@ public :
       size_t n_res                  ,
       const Vector<addr_t>& fun_arg
    );
-   // eval_fun_op
-   void eval_fun_op(
-      bool          trace   ,
-      size_t        i_op    ,
-      Vector<Value>& val_vec
-   ) const;
-   //
    // eval
    void eval(
       bool          trace  ,
@@ -133,24 +126,16 @@ public :
       size_t n_op = op_vec_.size();
       for(size_t i_op = 0; i_op < n_op; ++i_op)
       {  //
-         // op_info
-         const op_info_t& op_info = op_vec_[i_op];
-         if( op_info.op_ptr->op_enum() == fun_op_enum )
-         {  //
-            // tape_t::eval_fun_op
-            eval_fun_op(trace, i_op, val_vec);
-         }
-         else
-         {  // op_ptr, arg_index, res_index
-            op_base_t<Value>* op_ptr      = op_info.op_ptr;
-            addr_t            arg_index   = op_info.arg_index;
-            addr_t            res_index   = op_info.res_index;
-            //
-            // op_base_t<Value>::eval
-            op_ptr->eval(
-               trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
-            );
-         }
+         // arg_index, res_index
+         const op_info_t& op_info     = op_vec_[i_op];
+         op_base_t<Value>* op_ptr     = op_info.op_ptr;
+         addr_t            arg_index  = op_info.arg_index;
+         addr_t            res_index  = op_info.res_index;
+         //
+         // op_base_t<Value>::eval
+         op_ptr->eval(
+            trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
+         );
       }
    }
    //
