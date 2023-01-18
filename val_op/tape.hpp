@@ -101,6 +101,7 @@ public :
    // record_fun_op
    addr_t record_fun_op(
       size_t function_id            ,
+      size_t call_id                ,
       size_t n_res                  ,
       const Vector<addr_t>& fun_arg
    );

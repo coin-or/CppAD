@@ -38,11 +38,13 @@ public:
    //
    // forward
    virtual bool forward(
+      size_t               call_id       ,
       const Vector<Value>& x             ,
-      Vector<Value>&      y              ) const = 0;
+      Vector<Value>&       y             ) const = 0;
    //
    // rev_depend
    virtual bool rev_depend(
+      size_t              call_id        ,
       Vector<bool>&       depend_x       ,
       const Vector<bool>& depend_y       ) const = 0;
    //

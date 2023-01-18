@@ -25,8 +25,9 @@ private:
    {  return "test_function";
    }
    bool forward(
+      size_t               call_id       ,
       const Vector<Value>& x             ,
-      Vector<Value>&      y              ) const override
+      Vector<Value>&       y             ) const override
    {  assert( x.size() == 4 );
       assert( y.size() == 2 );
       //
@@ -36,6 +37,7 @@ private:
       return true;
    }
    bool rev_depend(
+      size_t              call_id        ,
       Vector<bool>&       depend_x       ,
       const Vector<bool>& depend_y       ) const override
    {  assert( depend_x.size() == 4 );
@@ -76,8 +78,11 @@ bool test_fun()
    // f_1(x) = x[2] * x[3]
    for(addr_t i = 0; i < 4; ++i)
       fun_arg[i] = i;
+   size_t call_id   = 0;
    size_t n_fun_res = 2;
-   addr_t res_index = tape.record_fun_op(function_id, n_fun_res, fun_arg);
+   addr_t res_index = tape.record_fun_op(
+      function_id, call_id, n_fun_res, fun_arg
+   );
    //
    // dep_vec
    dep_vec[0] = res_index + 0;
@@ -100,7 +105,7 @@ bool test_fun()
       val_vec[i] = x[i];
    tape.eval(trace, val_vec);
    //
-   ok &= tape.arg_vec().size() == 1 + 3 + 4;
+   ok &= tape.arg_vec().size() == 1 + 4 + 4;
    ok &= tape.con_vec().size() == 1;
    ok &= tape.op_vec().size()  == 2;
    ok &= tape.n_val()          == n_ind + 1 + 2;

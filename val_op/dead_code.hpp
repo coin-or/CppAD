@@ -46,6 +46,7 @@ void tape_t<Value>::dead_code(void)
       else
       {  assert( op_enum == fun_op_enum );
          size_t function_id = size_t( arg_vec_[arg_index + 2] );
+         size_t call_id     = size_t( arg_vec_[arg_index + 3] );
          //
          // depend_y
          Vector<bool> depend_y(n_res);
@@ -53,13 +54,13 @@ void tape_t<Value>::dead_code(void)
             depend_y[i] = need_val_index[ res_index + i ];
          //
          // depend_x
-         Vector<bool> depend_x(n_arg - 3);
+         Vector<bool> depend_x(n_arg - 4);
          call_fun_t<Value>* call_fun_ptr =
             call_fun_t<Value>::call_fun_ptr(function_id);
-         call_fun_ptr->rev_depend(depend_x, depend_y);
+         call_fun_ptr->rev_depend(call_id, depend_x, depend_y);
          //
-         for(size_t k = 3; k < n_arg; ++k)
-            need_val_index[ arg_vec_[size_t(arg_index) + k] ] = depend_x[k-3];
+         for(size_t k = 4; k < n_arg; ++k)
+            need_val_index[ arg_vec_[size_t(arg_index) + k] ] = depend_x[k-4];
       }
    }
    //
@@ -110,19 +111,20 @@ void tape_t<Value>::dead_code(void)
             new_val_index[ res_index ] = new_res_index;
          }
          else if( op_enum == fun_op_enum )
-         {  fun_op_arg.resize(n_arg - 3);
-            for(size_t k = 3; k < n_arg; ++k)
+         {  fun_op_arg.resize(n_arg - 4);
+            for(size_t k = 4; k < n_arg; ++k)
             {  addr_t val_index = arg_vec_[arg_index + k];
                if( need_val_index[val_index] )
-                  fun_op_arg[k - 3] = new_val_index[val_index];
+                  fun_op_arg[k - 4] = new_val_index[val_index];
                else
                {  // zero at index n_ind_
-                  fun_op_arg[k - 3] = addr_t( n_ind_ );
+                  fun_op_arg[k - 4] = addr_t( n_ind_ );
                }
             }
             size_t function_id = arg_vec_[arg_index + 2];
+            size_t call_id     = arg_vec_[arg_index + 3];
             addr_t new_res_index = new_tape.record_fun_op(
-               function_id, n_res, fun_op_arg
+               function_id, call_id, n_res, fun_op_arg
             );
             for(addr_t k = 0; k < addr_t(n_res); ++k)
                new_val_index[ res_index + k ] = new_res_index + k;

@@ -47,20 +47,23 @@ see op_base :ref:`val_op_base@n_res` .
 
 function_id
 ***********
-This member function returns the *function_id* for the
-function call.
+This member function returns the *function_id* for the function call.
+
+call_id
+*******
+This member function returns the *call_id* for the function call.
 
 eval
 ****
 This override of :ref:`val_op_base@eval`
 calls the function identified by *function_id*
-to evaluate *n_res* results given *n_arg* - 3 arguments.
+to evaluate *n_res* results given *n_arg* - 4 arguments.
 
 #. The arguments to the function are
    ::
 
-      val_vec[ arg_vec[ arg_index + 3 ] ] ,
       val_vec[ arg_vec[ arg_index + 4 ] ] ,
+      val_vec[ arg_vec[ arg_index + 5 ] ] ,
       ...
       val_vec[ arg_vec[ arg_index + n_arg - 1 ] ]
 
@@ -72,7 +75,7 @@ to evaluate *n_res* results given *n_arg* - 3 arguments.
       ...
       val_vec[res_index + n_res - 1]
 
-#. For *i* greater than or equal 3 and less than *n_arg*
+#. For *i* greater than or equal 4 and less than *n_arg*
    ::
 
       arg_vec[ arg_index + i ] < res_index
@@ -89,14 +92,14 @@ prints the following values:
 #. function_name is the name of this function which is assumed to be passed
    as the name argument to print_op .
 #. for *j* between 0 and n_arg - 1, arg_index_j is the index
-   in val_vec for the corresponding arugment; i.e.
-   arg_vec[ arg_index +3 + j ].
+   in val_vec for the corresponding argument; i.e.
+   arg_vec[ arg_index + 4 + j ].
 #. for *i* between 0 and n_res - 1, res_index_i is the index in
    val_vec for the corresponding result and res_value is the value
    of the result.
 #. The field width for res_index_i is 5,
    the width for res_value_i is 10,
-   and there are two spaces bwtween those fields.
+   and there are two spaces between those fields.
 
 {xrst_toc_hidden
    val_op/fun_xam.cpp
@@ -140,6 +143,12 @@ public:
       const Vector<addr_t>& arg_vec      )
    {  return size_t( arg_vec[arg_index + 2] ); }
    //
+   // call_id
+   size_t call_id(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      )
+   {  return size_t( arg_vec[arg_index + 4] ); }
+   //
    // eval
    void eval(
       bool                  trace        ,
@@ -175,11 +184,12 @@ void fun_op_t<Value>::eval(
    size_t n_arg       = size_t( arg_vec[arg_index + 0] );
    size_t n_res       = size_t( arg_vec[arg_index + 1] );
    size_t function_id = size_t( arg_vec[arg_index + 2] );
+   size_t call_id     = size_t( arg_vec[arg_index + 3] );
    //
    // x
-   Vector<Value> x(n_arg - 3);
-   for(size_t i = 3; i < n_arg; ++i)
-      x[i-3] = val_vec[ arg_vec[arg_index + i] ];
+   Vector<Value> x(n_arg - 4);
+   for(size_t i = 4; i < n_arg; ++i)
+      x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
    // call_fun_ptr
    Vector<Value> y(n_res);
@@ -187,7 +197,7 @@ void fun_op_t<Value>::eval(
       call_fun_t<Value>::call_fun_ptr(function_id);
    //
    // y
-   call_fun_ptr->forward(x, y);
+   call_fun_ptr->forward(call_id, x, y);
    //
    // function_name
    std::string function_name = call_fun_ptr->function_name();
@@ -215,8 +225,8 @@ void fun_op_t<Value>::print_op(
    size_t n_res = this->n_res(arg_index, arg_vec);
    //
    std::printf( "%s(", name);
-   for(size_t i = 3; i < n_arg; ++i)
-   {  if( i != 3 )
+   for(size_t i = 4; i < n_arg; ++i)
+   {  if( i != 4 )
          printf(", ");
       std::printf("%d", arg_vec[arg_index + i]);
    }

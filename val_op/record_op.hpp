@@ -82,6 +82,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
 template <class Value>
 addr_t tape_t<Value>::record_fun_op(
    size_t  function_id           ,
+   size_t  call_id               ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
 {  //
@@ -99,10 +100,11 @@ addr_t tape_t<Value>::record_fun_op(
    op_vec_.push_back(op_info);
    //
    // arg_vec_
-   size_t n_arg = 3 + fun_arg.size();
+   size_t n_arg = 4 + fun_arg.size();
    arg_vec_.push_back( addr_t( n_arg ) );
    arg_vec_.push_back( addr_t( n_res ) );
    arg_vec_.push_back( addr_t( function_id ) );
+   arg_vec_.push_back( addr_t( call_id ) );
    for(size_t i = 0; i < fun_arg.size(); ++i)
       arg_vec_.push_back( fun_arg[i] );
    //
