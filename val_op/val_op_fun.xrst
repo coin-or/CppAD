@@ -115,6 +115,7 @@ Operator Classes
    val_op/op_base.hpp
    val_op/unary_op.hpp
    val_op/binary_op.hpp
+   val_op/con_op.hpp
 }
 
 

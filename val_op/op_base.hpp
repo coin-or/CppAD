@@ -73,38 +73,53 @@ print_op
 This member function prints a description of the operator that includes
 its argument indices, result indices, and values.
 
-Arguments
-*********
-
 trace
-=====
+*****
 if this is true (false) the print_op is (is not) called at the end
 of an eval operation.
 
 name
-====
+****
 is a short name, 5 or less characters, for this operator.
 
 arg_index
-=========
+*********
 is the index in *arg_vec* where the *n_arg* arguments to this function start.
 
-arg_vec
-=======
-The values *arg_vec* [ *arg_index* + *i* ] for *i* equal zero through
-*n_arg* - 1 are the index arguments to this function.
-
 con_vec
-=======
+*******
 is the :ref:`val_op_fun@Constant Vector` .
 
 res_index
-=========
+*********
 is the index in *val_vec* where the results for this operator start.
 
 val_vec
-=======
+*******
 is the entire :ref:`val_op_fun@Value Vector` .
+
+arg_vec
+*******
+
+Unary Operators
+===============
+If this operator is a unary operator
+
+#. arg_vec[arg_index + 0] < res_index
+#. val_vec[ arg_vec[ arg_index + 0 ] ] is the operand
+#. val_vec[ res_index] is the result computed by eval
+
+Binary Operators
+================
+If this operator is a binary operator
+
+#. arg_vec[arg_index + 0] < res_index
+#. arg_vec[arg_index + 1] < res_index
+#. val_vec[ arg_vec[ arg_index + 1 ] ] is the left operand
+#. val_vec[ arg_vec[ arg_index + 2 ] ] is the right operand
+#. val_vec[ res_index] is the result computed by eval
+
+
 
 {xrst_end val_op_base}
 */

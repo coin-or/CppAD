@@ -21,7 +21,7 @@ Prototype
    // END_ADD_OP_T
 }
 
-Purpose
+Context
 *******
 The class is derived from :ref:`val_op_binary_op-name` .
 It overrides the *op_enum* and *eval* member functions
@@ -34,13 +34,8 @@ This override of :ref:`val_op_base@op_enum` returns ``add_op_enum`` .
 eval
 ****
 This override of :ref:`val_op_base@eval` sets
-::
-
-   val_vec[res_index] = val_vec[ val_index[0] ] + val_vec[ val_index[1] ]
-
-where::
-
-   val_index[i] = arg_vec[ arg_index + i ]
+the result equal to the left operand plus the right operand; see
+:ref:`val_op_base@arg_vec@Binary Operators` .
 
 {xrst_toc_hidden
    val_op/add_xam.cpp

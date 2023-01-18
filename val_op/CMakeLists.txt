@@ -7,6 +7,7 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list val_op.cpp
    add_xam.cpp
+   con_xam.cpp
    fun_xam.cpp
    sub_xam.cpp
    test_one.cpp
