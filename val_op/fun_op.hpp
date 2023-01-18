@@ -129,40 +129,6 @@ public:
    }
 };
 //
-// tape::record_fun_op
-template <class Value>
-addr_t tape_t<Value>::record_fun_op(
-   size_t  function_id           ,
-   size_t  n_res                 ,
-   const Vector<addr_t>& fun_arg )
-{  //
-   // res_index
-   addr_t res_index = addr_t( n_val_ );
-   //
-   // arg_index
-   addr_t arg_index = addr_t( arg_vec_.size() );
-   //
-   // op_ptr
-   op_base_t<Value>* op_ptr = fun_op_t<Value>::get_instance();
-   //
-   // op_vec_
-   op_info_t op_info = { arg_index, res_index, op_ptr};
-   op_vec_.push_back(op_info);
-   //
-   // arg_vec_
-   size_t n_arg = 3 + fun_arg.size();
-   arg_vec_.push_back( addr_t( n_arg ) );
-   arg_vec_.push_back( addr_t( n_res ) );
-   arg_vec_.push_back( addr_t( function_id ) );
-   for(size_t i = 0; i < fun_arg.size(); ++i)
-      arg_vec_.push_back( fun_arg[i] );
-   //
-   // n_val_
-   n_val_ = n_val_ + n_res;
-   //
-   return res_index;
-}
-//
 // tape::eval_fun_op
 template <class Value>
 void tape_t<Value>::eval_fun_op(
