@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 # include <cstdio>
 # include "op_base.hpp"
-# include "call_fun.hpp"
+# include "call_base.hpp"
 /*
 {xrst_begin val_op_fun_op dev}
 {xrst_spell
@@ -191,16 +191,16 @@ void fun_op_t<Value>::eval(
    for(size_t i = 4; i < n_arg; ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
-   // call_fun_ptr
+   // call_base_ptr
    Vector<Value> y(n_res);
-   call_fun_t<Value>* call_fun_ptr = \
-      call_fun_t<Value>::call_fun_ptr(function_id);
+   call_base_t<Value>* call_base_ptr = \
+      call_base_t<Value>::call_base_ptr(function_id);
    //
    // y
-   call_fun_ptr->forward(call_id, x, y);
+   call_base_ptr->forward(call_id, x, y);
    //
    // function_name
-   std::string function_name = call_fun_ptr->function_name();
+   std::string function_name = call_base_ptr->function_name();
    //
    // val_vec
    for(size_t i = 0; i < n_res; ++i)

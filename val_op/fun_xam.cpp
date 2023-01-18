@@ -19,7 +19,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 // my_fun_t
 template <class Value>
-class my_fun_t : public call_fun_t<Value> {
+class my_fun_t : public call_base_t<Value> {
 private:
    std::string function_name(void) const override
    {  return "test_function";
@@ -127,7 +127,7 @@ bool test_fun()
 bool fun_xam(void)
 {  bool ok = true;
    ok     &= test_fun();
-   ok     &= call_fun_t<double>::clear();
+   ok     &= call_base_t<double>::clear();
    return ok;
 }
 // END_C++

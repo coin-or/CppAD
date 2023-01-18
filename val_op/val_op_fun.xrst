@@ -112,8 +112,9 @@ where
 Implementation
 **************
 {xrst_toc_table
-   val_op/op_base.hpp
    val_op/type.hpp
+   val_op/op_base.hpp
+   val_op/call_base.hpp
 }
 
 
