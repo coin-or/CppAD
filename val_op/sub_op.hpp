@@ -11,8 +11,8 @@
    xam
 }
 
-The Add Value Operator Class
-############################
+The Value Operator Subtract Class
+#################################
 
 Prototype
 *********

@@ -11,7 +11,7 @@
    xam
 }
 
-The Add Value Operator Class
+The Value Operator Add Class
 ############################
 
 Prototype

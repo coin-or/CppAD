@@ -7,10 +7,77 @@
 # include <cstdio>
 # include "op_base.hpp"
 # include "call_fun.hpp"
+/*
+{xrst_begin val_op_fun_op dev}
+{xrst_spell
+   xam
+}
 
-// fun_op_t
+The Value Operator Function Class
+#################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FUN_OP_T
+   // END_FUN_OP_T
+}
+{xrst_literal
+   // BEGIN_GET_INSTANCE
+   // END_GET_INSTANCE
+}
+
+Context
+*******
+The class is derived from :ref:`val_op_base-name` .
+It overrides all its base class virtual member functions
+and is a concrete class (it has no pure virtual functions).
+
+fun_op_enum
+***********
+This override of :ref:`val_op_base@op_enum` returns ``con_op_enum`` .
+
+n_arg
+*****
+This override of :ref:`val_op_base@n_arg` returns
+arg_vec[arg_index + 0] .
+
+n_res
+*****
+This override of :ref:`val_op_base@n_res` returns
+arg_vec[arg_index + 1] .
+
+function_id
+***********
+The *function_id* for call is
+arg_vec[arg_index + 2]
+
+eval
+****
+This is an override of :ref:`val_op_base@eval`
+will fail with an assert if it is called.
+It is only here to make fun_op_t a concrete class.
+
+print_op
+********
+This is an override of :ref:`val_op_base@print_op`
+will fail with an assert if it is called.
+It is only here to make fun_op_t a concrete class.
+
+{xrst_toc_hidden
+   val_op/fun_xam.cpp
+}
+Example
+*******
+The file :ref:`fun_xam.cpp <val_op_fun_xam.cpp-name>`
+is an example and test that uses this operator.
+
+{xrst_end val_op_fun_op}
+*/
+// BEGIN_FUN_OP_T
 template <class Value>
 class fun_op_t : public op_base_t<Value> {
+// END_FUN_OP_T
 public:
    // op_enum
    // type of this operator
@@ -18,13 +85,13 @@ public:
    {  return fun_op_enum; }
    //
    // n_arg
-   virtual size_t n_arg(
+   size_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 0] ); }
    //
    // n_res
-   virtual size_t n_res(
+   size_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 1] ); }
@@ -53,12 +120,13 @@ public:
    }
 };
 //
-// get_fun_op_instance
+// BEGIN_GET_INSTANCE
 template <class Value>
 fun_op_t<Value>* get_fun_op_instance(void)
 {  static fun_op_t<Value> instance;
    return &instance;
 }
+// END_GET_INSTANCE
 //
 // tape::record_fun_op
 template <class Value>
@@ -142,7 +210,7 @@ void tape_t<Value>::eval_fun_op(
    }
    std::printf(")\n");
    for(size_t i = 0; i < n_res; ++i)
-      std::printf("%5ld %10.3g\n", res_index + i, y[i]);
+      std::printf("%5ld  %10.3g\n", res_index + i, y[i]);
    //
    return;
 }

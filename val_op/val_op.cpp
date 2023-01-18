@@ -23,6 +23,7 @@ extern bool con_xam(void);
 extern bool fun_xam(void);
 extern bool sub_xam(void);
 extern bool test_one(void);
+extern bool test_two(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -39,6 +40,7 @@ int main(void)
    Run( fun_xam,             "fun_xam"        );
    Run( sub_xam,             "fun_xam"        );
    Run( test_one,            "test_one"       );
+   Run( test_two,            "test_two"       );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

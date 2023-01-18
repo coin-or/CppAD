@@ -120,6 +120,7 @@ Operator Classes
    val_op/unary_op.hpp
    val_op/binary_op.hpp
    val_op/con_op.hpp
+   val_op/fun_op.hpp
 }
 
 {xrst_end val_op_base}

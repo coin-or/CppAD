@@ -11,8 +11,8 @@
    xam
 }
 
-The Constant Operator Class
-###########################
+The Value Operator Constant Class
+#################################
 
 Prototype
 *********
@@ -24,7 +24,7 @@ Prototype
 Context
 *******
 The class is derived from :ref:`val_op_base-name` .
-It overrides all its virtual member functions
+It overrides all its base class virtual member functions
 and is a concrete class (it has no pure virtual functions).
 This is not a unary operator because the operand is in the
 constant vector and not the value vector.

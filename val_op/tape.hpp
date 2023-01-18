@@ -124,7 +124,7 @@ public :
          for(size_t res_index = 0; res_index < n_ind_; ++res_index)
          {  Value res = val_vec[res_index];
             std::printf(
-               "%5ld %10.3g\n", res_index, res
+               "%5ld  %10.3g\n", res_index, res
             );
          }
       }
