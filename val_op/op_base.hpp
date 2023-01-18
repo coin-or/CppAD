@@ -43,13 +43,8 @@ they all must be defined in order for a derived class object to be used.
 
 op_enum
 *******
-This member function returns the enum value corresponding to this operator.
-The possible values are:
-{xrst_literal
-   val_op/type.hpp
-   // BEGIN_ENUM_T
-   // END_ENUM_T
-}
+This member function returns the enum value corresponding to this operator;
+see :ref:`val_op_type@op_enum_t` .
 
 n_arg
 *****
@@ -119,7 +114,13 @@ If this operator is a binary operator
 #. val_vec[ arg_vec[ arg_index + 2 ] ] is the right operand
 #. val_vec[ res_index] is the result computed by eval
 
-
+Operator Classes
+****************
+{xrst_toc_table
+   val_op/unary_op.hpp
+   val_op/binary_op.hpp
+   val_op/con_op.hpp
+}
 
 {xrst_end val_op_base}
 */

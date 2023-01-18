@@ -29,8 +29,8 @@ and is a concrete class (it has no pure virtual functions).
 This is not a unary operator because the operand is in the
 constant vector and not the value vector.
 
-op_enum
-*******
+con_op_enum
+***********
 This override of :ref:`val_op_base@op_enum` returns ``con_op_enum`` .
 
 n_arg
@@ -88,13 +88,13 @@ public:
    {  return con_op_enum; }
    //
    // n_arg
-   virtual size_t n_arg(
+   size_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
    //
    // n_res
-   virtual size_t n_res(
+   size_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }

@@ -27,8 +27,8 @@ The class is derived from :ref:`val_op_binary_op-name` .
 It overrides the *op_enum* and *eval* member functions
 and is a concrete class (it has no pure virtual functions).
 
-op_enum
-*******
+sub_op_enum
+***********
 This override of :ref:`val_op_base@op_enum` returns ``sub_op_enum`` .
 
 eval

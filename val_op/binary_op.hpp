@@ -70,13 +70,13 @@ public:
    virtual op_enum_t op_enum(void) const override = 0;
    //
    // n_arg
-   virtual size_t n_arg(
+   size_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 2; }
    //
    // n_res
-   virtual size_t n_res(
+   size_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
