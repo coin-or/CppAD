@@ -27,6 +27,10 @@ The class is derived from :ref:`val_op_binary_op-name` .
 It overrides the *op_enum* and *eval* member functions
 and is a concrete class (it has no pure virtual functions).
 
+get_instance
+************
+This static member function returns a pointer to a sub_op_t object.
+
 sub_op_enum
 ***********
 This override of :ref:`val_op_base@op_enum` returns ``sub_op_enum`` .
@@ -51,6 +55,11 @@ is an example and test that uses this operator.
 template <class Value>
 class sub_op_t : public binary_op_t<Value> {
 public:
+   // get_instance
+   static sub_op_t* get_instance(void)
+   {  static sub_op_t instance;
+      return &instance;
+   }
    // op_enum
    op_enum_t op_enum(void) const override
    {  return sub_op_enum; }
@@ -72,10 +81,5 @@ public:
       );
    }
 };
-template <class Value>
-sub_op_t<Value>* get_sub_op_instance(void)
-{  static sub_op_t<Value> instance;
-   return &instance;
-}
 
 # endif

@@ -22,10 +22,6 @@ Prototype
    // BEGIN_FUN_OP_T
    // END_FUN_OP_T
 }
-{xrst_literal
-   // BEGIN_GET_INSTANCE
-   // END_GET_INSTANCE
-}
 
 Context
 *******
@@ -33,34 +29,36 @@ The class is derived from :ref:`val_op_base-name` .
 It overrides all its base class virtual member functions
 and is a concrete class (it has no pure virtual functions).
 
-fun_op_enum
-***********
+get_instance
+************
+This static member function returns a pointer to a fun_op_t object.
+
+op_enum
+*******
 This override of :ref:`val_op_base@op_enum` returns ``con_op_enum`` .
 
 n_arg
 *****
-This override of :ref:`val_op_base@n_arg` returns
-arg_vec[arg_index + 0] .
+see op_base :ref:`val_op_base@n_arg` .
 
 n_res
 *****
-This override of :ref:`val_op_base@n_res` returns
-arg_vec[arg_index + 1] .
+see op_base :ref:`val_op_base@n_res` .
 
 function_id
 ***********
-The *function_id* for call is
-arg_vec[arg_index + 2]
+This member function returns the *function_id* for the
+function call.
 
 eval
 ****
-This is an override of :ref:`val_op_base@eval`
+This override of :ref:`val_op_base@eval`
 will fail with an assert if it is called.
 It is only here to make fun_op_t a concrete class.
 
 print_op
 ********
-This is an override of :ref:`val_op_base@print_op`
+This override of :ref:`val_op_base@print_op`
 will fail with an assert if it is called.
 It is only here to make fun_op_t a concrete class.
 
@@ -77,8 +75,12 @@ is an example and test that uses this operator.
 // BEGIN_FUN_OP_T
 template <class Value>
 class fun_op_t : public op_base_t<Value> {
-// END_FUN_OP_T
 public:
+   // get_instance
+   static fun_op_t* get_instance(void)
+   {  static fun_op_t instance;
+      return &instance;
+   }
    // op_enum
    // type of this operator
    op_enum_t op_enum(void) const override
@@ -95,6 +97,13 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 1] ); }
+   //
+   // function_id
+   size_t function_id(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      )
+   {  return size_t( arg_vec[arg_index + 2] ); }
+// END_FUN_OP_T
    //
    // eval
    void eval(
@@ -120,14 +129,6 @@ public:
    }
 };
 //
-// BEGIN_GET_INSTANCE
-template <class Value>
-fun_op_t<Value>* get_fun_op_instance(void)
-{  static fun_op_t<Value> instance;
-   return &instance;
-}
-// END_GET_INSTANCE
-//
 // tape::record_fun_op
 template <class Value>
 addr_t tape_t<Value>::record_fun_op(
@@ -142,7 +143,7 @@ addr_t tape_t<Value>::record_fun_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = get_fun_op_instance<Value>();
+   op_base_t<Value>* op_ptr = fun_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};

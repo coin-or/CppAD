@@ -29,17 +29,21 @@ and is a concrete class (it has no pure virtual functions).
 This is not a unary operator because the operand is in the
 constant vector and not the value vector.
 
-con_op_enum
-***********
+get_instance
+************
+This static member function returns a pointer to a con_op_t object.
+
+op_enum
+*******
 This override of :ref:`val_op_base@op_enum` returns ``con_op_enum`` .
 
 n_arg
 *****
-This override of :ref:`val_op_base@n_arg` returns 1.
+see op_base :ref:`val_op_base@n_arg` .
 
 n_res
 *****
-This override of :ref:`val_op_base@n_res` returns 1.
+see op_base :ref:`val_op_base@n_res` .
 
 eval
 ****
@@ -81,8 +85,12 @@ is an example and test that uses this operator.
 // BEGIN_CON_OP_T
 template <class Value>
 class con_op_t : public op_base_t<Value> {
-// END_CON_OP_T
 public:
+   // get_instance
+   static con_op_t* get_instance(void)
+   {  static con_op_t instance;
+      return &instance;
+   }
    // op_enum
    op_enum_t op_enum(void) const override
    {  return con_op_enum; }
@@ -98,6 +106,7 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
+// END_CON_OP_T
    //
    // eval
    void eval(
@@ -128,12 +137,5 @@ public:
       );
    }
 };
-//
-// get_con_op_instance
-template <class Value>
-con_op_t<Value>* get_con_op_instance(void)
-{  static con_op_t<Value> instance;
-   return &instance;
-}
 
 # endif

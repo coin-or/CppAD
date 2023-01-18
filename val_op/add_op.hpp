@@ -27,8 +27,12 @@ The class is derived from :ref:`val_op_binary_op-name` .
 It overrides the *op_enum* and *eval* member functions
 and is a concrete class (it has no pure virtual functions).
 
-add_op_enum
-***********
+get_instance
+************
+This static member function returns a pointer to an add_op_t object.
+
+op_enum
+*******
 This override of :ref:`val_op_base@op_enum` returns ``add_op_enum`` .
 
 eval
@@ -51,6 +55,11 @@ is an example and test that uses this operator.
 template <class Value>
 class add_op_t : public binary_op_t<Value> {
 public:
+   // get_instance
+   static add_op_t* get_instance(void)
+   {  static add_op_t instance;
+      return &instance;
+   }
    // op_enum
    op_enum_t op_enum(void) const override
    {  return add_op_enum; }
@@ -72,10 +81,5 @@ public:
       );
    }
 };
-template <class Value>
-add_op_t<Value>* get_add_op_instance(void)
-{  static add_op_t<Value> instance;
-   return &instance;
-}
 
 # endif
