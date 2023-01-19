@@ -91,6 +91,8 @@ prints the following values:
 
 #. function_name is the name of this function which is assumed to be passed
    as the name argument to print_op .
+   This line indented 4 spaces; i.e., the name starts in column 5.
+   This is done so it is grouped with the operators in the trace output.
 #. for *j* between 0 and n_arg - 1, arg_index_j is the index
    in val_vec for the corresponding argument; i.e.
    arg_vec[ arg_index + 4 + j ].
@@ -224,7 +226,7 @@ void fun_op_t<Value>::print_op(
 {  size_t n_arg = this->n_arg(arg_index, arg_vec);
    size_t n_res = this->n_res(arg_index, arg_vec);
    //
-   std::printf( "%s(", name);
+   std::printf( "    %s(", name);
    for(size_t i = 4; i < n_arg; ++i)
    {  if( i != 4 )
          printf(", ");
