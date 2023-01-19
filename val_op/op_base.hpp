@@ -143,13 +143,13 @@ public:
       const Vector<addr_t>& arg_vec      ,
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const = 0;
+      Vector<Value>&        val_vec      ) const = 0;
    virtual void print_op(
       const char*           name         ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const = 0;
+      Vector<Value>&        val_vec      ) const = 0;
 };
 // END_OP_T
 

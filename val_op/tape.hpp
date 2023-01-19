@@ -94,7 +94,7 @@ dep_vec
    // END_DEP_VEC
 }
 This is the vector of dependent indices in the values vector.
-The function corresponding to a tape makes the independent values
+The function corresponding to a tape maps the independent values
 to the dependent values.
 
 swap
@@ -248,13 +248,14 @@ public :
       // trace
       if( trace )
       {  // no operators for independent variables
-         std::printf("independent values\n");
+         std::printf("independent vector\n");
          for(size_t res_index = 0; res_index < n_ind_; ++res_index)
          {  Value res = val_vec[res_index];
             std::printf(
                "%5ld  %10.3g\n", res_index, res
             );
          }
+         std::printf("operators\n");
       }
       //
       // i_op
@@ -271,6 +272,20 @@ public :
          op_ptr->eval(
             trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
          );
+      }
+      // trace
+      if( trace )
+      {  // no operators for dependent variables
+         std::printf("dependent vector\n");
+         for(size_t i = 0; i < dep_vec_.size(); ++i)
+         {  addr_t res_index = dep_vec_[i];
+            Value res        = val_vec[res_index];
+            std::printf(
+               "%5d  %10.3g\n", res_index, res
+            );
+         }
+         // space after end of this tape
+         std::printf("\n");
       }
    }
    //

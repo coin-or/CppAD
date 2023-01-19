@@ -128,10 +128,10 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const override
+      Vector<Value>&        val_vec      ) const override
    {  //
       addr_t val_index  = arg_vec[ arg_index + 0 ];
-      Value  res        = value_vec[res_index];
+      Value  res        = val_vec[res_index];
       std::printf(
          "%5d %5s %5d %5s %10.3g\n", res_index, name, val_index, "", res
       );

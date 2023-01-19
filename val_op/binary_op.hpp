@@ -89,7 +89,7 @@ public:
       const Vector<addr_t>& arg_vec      ,
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const override = 0;
+      Vector<Value>&        val_vec      ) const override = 0;
    //
    // print_op
    void print_op(
@@ -97,11 +97,11 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        value_vec    ) const override
+      Vector<Value>&        val_vec      ) const override
    {  //
       addr_t left_index   = arg_vec[ arg_index + 0 ];
       addr_t right_index  = arg_vec[ arg_index + 1 ];
-      Value  res          = value_vec[res_index];
+      Value  res          = val_vec[res_index];
       std::printf(
          "%5d %5s %5d %5d %10.3g\n",
          res_index, name, left_index, right_index, res
