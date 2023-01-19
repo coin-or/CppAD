@@ -12,7 +12,6 @@
 {xrst_begin val_op_tape dev}
 {xrst_spell
    dep
-   initializes
 }
 
 The Value Operator Tape
@@ -105,26 +104,6 @@ swap
 }
 This swaps the contents of this tape with another tape.
 
-set_ind
-*******
-{xrst_literal
-   // BEGIN_SET_IND
-   // END_SET_IND
-}
-This initializes the tape to be empty,
-then sets the number of independent variables, and
-then places the constant zero directly after the last independent variable.
-This is the first step in a creating a recording.
-
-set_dep
-*******
-{xrst_literal
-   // BEGIN_SET_DEP
-   // END_SET_DEP
-}
-This sets the dependent variables to the corresponding indices
-in the value vector.
-
 eval
 ****
 {xrst_literal
@@ -144,6 +123,12 @@ val_vec
 This vector has size equal to *n_val*.
 The first *n_ind* elements are inputs.
 The rest of the elements are outputs.
+
+Operations on Tape
+******************
+{xrst_toc_table
+   val_op/record_op.hpp
+}
 
 
 {xrst_end val_op_tape}
@@ -204,40 +189,6 @@ public :
       op_vec_.swap( other.op_vec_ );
       dep_vec_.swap( other.dep_vec_ );
    }
-   //
-   // BEGIN_SET_IND
-   void set_ind(size_t n_ind)
-   // END_SET_IND
-   {  n_ind_ = n_ind;
-      n_val_ = n_ind;
-      dep_vec_.resize(0);
-      op_vec_.resize(0);
-      con_vec_.resize(0);
-# ifndef NDEBUG
-      size_t zero = size_t( record_con_op(Value(0.0)) );
-      assert ( zero == n_ind_ );
-# else
-      record_con_op( Value(0.0) );
-# endif
-      assert( n_val_ == n_ind + 1 );
-   }
-   //
-   // BEGIN_SET_DEP
-   void set_dep(const Vector<addr_t>& dep_vec)
-   {  dep_vec_ = dep_vec; }
-   // END_SET_DEP
-   //
-   // record_op
-   addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
-   // record_con_op
-   addr_t record_con_op(const Value& constant);
-   // record_fun_op
-   addr_t record_fun_op(
-      size_t function_id            ,
-      size_t call_id                ,
-      size_t n_res                  ,
-      const Vector<addr_t>& fun_arg
-   );
    // BEGIN_EVAL
    void eval(
       bool          trace  ,
@@ -288,6 +239,26 @@ public :
          std::printf("\n");
       }
    }
+   //
+   // set_ind
+   addr_t set_ind(size_t n_ind);
+   //
+   // record_op
+   addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
+   //
+   // record_con_op
+   addr_t record_con_op(const Value& constant);
+   //
+   // record_fun_op
+   addr_t record_fun_op(
+      size_t function_id            ,
+      size_t call_id                ,
+      size_t n_res                  ,
+      const Vector<addr_t>& fun_arg
+   );
+   //
+   // set_dep
+   void set_dep(const Vector<addr_t>& dep_vec);
    //
    // renumber
    void renumber(void);

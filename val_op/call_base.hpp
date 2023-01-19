@@ -60,10 +60,21 @@ forward
    // BEGIN_FORWARD
    // END_FORWARD
 }
-This computes the function result vector *y*,
-given the *call_id* and the function argument vector *x*.
+
+call_id
+=======
+This can be used to identify
+extra information used by the function call evaluation.
+
+x
+=
+This is the argument vector for the function call.
+
+y
+=
+This is the return vector for the function call.
 The size of *y* is correct on input and should not change.
-Its element values on input are not specified.
+The input value of its elements are not specified.
 
 rev_depend
 **********
@@ -71,8 +82,23 @@ rev_depend
    // BEGIN_REV_DEPEND
    // END_REV_DEPEND
 }
-This computes the argument dependency vector *depend_x*,
-given the *call_id* and the result dependency vector *depend_y*.
+This routine performs reverse dependency analysis.
+
+call_id
+=======
+This can be used to identify
+extra information used by the function call evaluation.
+
+depend_y
+========
+This has size equal to the number of results for the function call.
+It the *i*-th component of this vector is true (false),
+the results of interest depend (do not depend)
+on the value of y[i].
+
+depend_x
+========
+This has size equal to the number of arguments for the function call.
 For each argument index *j*,
 if there is an *i* such that,
 depend_y[i] is true, and y[i] depends on x[j],

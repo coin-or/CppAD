@@ -47,7 +47,8 @@ see op_base :ref:`val_op_base@n_res` .
 
 function_id
 ***********
-This member function returns the *function_id* for the function call.
+This member function returns the *function_id* for the function call; see
+:ref:`val_op_call_base@function_id` .
 
 call_id
 *******

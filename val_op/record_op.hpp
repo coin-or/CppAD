@@ -6,10 +6,127 @@
 // ----------------------------------------------------------------------------
 # include "tape.hpp"
 # include "fun_op.hpp"
-//
-// record_op
+/*
+{xrst_begin val_op_record dev}
+{xrst_spell
+   operands
+   dep
+}
+
+Recording Value Operators on a Tape
+###################################
+
+Purpose
+*******
+These operations store a function in the :ref:`val_op_tape-name`.
+
+set_ind
+*******
+{xrst_literal
+   // BEGIN_SET_IND
+   // END_SET_IND
+}
+This clears all of the memory in the tape.
+It then sets the number of independent values and
+places the constant zero directly after the last independent value.
+The return value is the index where the zero is placed in the
+value vector; i.e., *n_ind* .
+This is the first step in a creating a recording.
+
+record_op
+*********
+{xrst_literal
+   // BEGIN_RECORD_OP
+   // END_RECORD_OP
+}
+This places a :ref:`val_op_unary-name` or :ref`val_op_binary-name`
+operator in the tape.
+The argument *op_enum* identifies the operator.
+The argument *op_arg* is a vector that contains the index of the operands
+in the value vector.
+It has length one (two) if this is a unary (binary) operator.
+The return value is the index were the result of the operation
+is placed in the value vector.
+
+record_con_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_CON_OP
+   // END_RECORD_CON_OP
+}
+This places a :ref:`val_op_con-name` operator in the tape.
+The return value is the index were *constant* is placed
+in the value vector.
+
+record_fun_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_FUN_OP
+   // END_RECORD_FUN_OP
+}
+This places a :ref:`val_op_fun-name` operator in the tape.
+
+function_id
+===========
+This is the :ref:`val_op_call_base@function_id` for this function call.
+
+call_id
+=======
+This is the :ref:`val_op_call_base@forward@call_id` for this function call.
+
+n_res
+=====
+This is the number of values returned by the function call
+and placed in the value vector.
+
+fun_arg
+=======
+This vector has size equal to the number of arguments to the function.
+The *j*-th element of *fun_arg* is the index on the value vector of
+the *j*-th argument to the function.
+
+return
+======
+This function returns the index in the value vector where
+the first result is placed (*n_res* results are placed in the value vector).
+
+set_dep
+*******
+{xrst_literal
+   // BEGIN_SET_DEP
+   // END_SET_DEP
+}
+This sets the dependent variables to the corresponding indices
+in the value vector.
+This is last step in creating a recording.
+
+{xrst_end val_op_record}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_SET_IND
+template <class Value>
+addr_t tape_t<Value>::set_ind(size_t n_ind)
+// END_SET_IND
+{  n_ind_ = n_ind;
+   n_val_ = n_ind;
+   dep_vec_.clear();
+   op_vec_.clear();
+   con_vec_.clear();
+# ifndef NDEBUG
+   addr_t zero = record_con_op(Value(0.0));
+   assert ( size_t(zero) == n_ind_ );
+# else
+   record_con_op( Value(0.0) );
+# endif
+   assert( n_val_ == n_ind + 1 );
+   //
+   return zero;
+}
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_OP
 template <class Value>
 addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
+// END_RECORD_OP
 {  //
    // res_index
    addr_t res_index = addr_t( n_val_) ;
@@ -47,10 +164,11 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    //
    return res_index;
 }
-//
-// record_con_op
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_CON_OP
 template <class Value>
 addr_t tape_t<Value>::record_con_op(const Value& constant)
+// END_RECORD_CON_OP
 {  //
    // con_index
    addr_t con_index = addr_t( con_vec_.size() );
@@ -77,14 +195,15 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    //
    return res_index;
 }
-//
-// record_fun_op
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_FUN_OP
 template <class Value>
 addr_t tape_t<Value>::record_fun_op(
    size_t  function_id           ,
    size_t  call_id               ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
+// END_RECORD_FUN_OP
 {  //
    // res_index
    addr_t res_index = addr_t( n_val_ );
@@ -113,5 +232,11 @@ addr_t tape_t<Value>::record_fun_op(
    //
    return res_index;
 }
-
+// ----------------------------------------------------------------------------
+// BEGIN_SET_DEP
+template <class Value>
+void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
+// END_SET_DEP
+{  dep_vec_ = dep_vec; }
+// ----------------------------------------------------------------------------
 # endif
