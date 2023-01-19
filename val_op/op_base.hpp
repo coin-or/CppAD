@@ -33,7 +33,7 @@ such because they are virtual or override functions.
 Value
 *****
 This template parameter is the type used for each element of the
-:ref:`val_op_fun@Value Vector` .
+:ref:`val_op@Value Vector` .
 
 op_base
 *******
@@ -85,7 +85,7 @@ is the index in *arg_vec* where the *n_arg* arguments to this function start.
 
 con_vec
 *******
-is the :ref:`val_op_fun@Constant Vector` .
+is the :ref:`val_op@Constant Vector` .
 
 res_index
 *********
@@ -93,7 +93,7 @@ is the index in *val_vec* where the results for this operator start.
 
 val_vec
 *******
-is the entire :ref:`val_op_fun@Value Vector` .
+is the entire :ref:`val_op@Value Vector` .
 
 arg_vec
 *******

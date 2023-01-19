@@ -135,16 +135,15 @@ Given the independent values, this routine execute the operators
 in order to evaluate the rest of the value vector.
 
 trace
------
-If this is try, the :ref:`op_base@print_op` function is used
+=====
+If this is try, the :ref:`val_op_base@print_op` function is used
 to print each of the operators.
 
 val_vec
--------
+=======
 This vector has size equal to *n_val*.
 The first *n_ind* elements are inputs.
 The rest of the elements are outputs.
-
 
 
 {xrst_end val_op_tape}
