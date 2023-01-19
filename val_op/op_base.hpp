@@ -72,6 +72,8 @@ trace
 *****
 if this is true (false) the print_op is (is not) called at the end
 of an eval operation.
+The independent variables are printed first
+and do not correspond to any operator.
 
 name
 ****

@@ -19,7 +19,7 @@ Value Operator Type Definitions
 
 addr_t
 ******
-This type is used to store vectors of positive indices.
+This type is used to store vectors of non-negative integers.
 It must be able to support an index equal to the length of the value vector.
 A signed type can be used for testing, but an unsigned type will support
 more indices with the same memory usage.
