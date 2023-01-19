@@ -17,9 +17,9 @@ function
 ********
 This section defines an algorithmic representation of a function
 :math:`y = f(x)`.
-The vector *x* is called the independent value vector,
-and *y* is called the dependent value vector.
-A value an be a CppAD
+The vector *x* is called the independent vector,
+and *y* is called the dependent vector.
+A value may be a CppAD
 :ref:`glossary@Parameter@Constant`,
 :ref:`glossary@Parameter@Dynamic` parameter ,
 or a :ref:`glossary@Variable` .
@@ -37,7 +37,7 @@ The independent sub-vector is
 
    x = ( v_0 , \cdots , v_{n-1} )
 
-where :math:`n \leq p` is the number of independent values.
+where :math:`n \leq p` is the length of the dependent vector.
 
 Result Vector
 =============
@@ -51,7 +51,7 @@ Dependent Vector
 ================
 There is a vector of non-negative integer indices
 :math:`( d_0 , \cdots , d_{m-1} )`
-that specify the dependent variable vector as follows
+that specify the dependent vector as follows
 
 .. math::
 
