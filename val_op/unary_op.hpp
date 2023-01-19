@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 # include "op_base.hpp"
 /*
-{xrst_begin val_op_unary_op dev}
+{xrst_begin val_op_unary dev}
 
 The Value Operator Unary Class
 ##############################
@@ -51,7 +51,7 @@ prints the following values:
 #. empty is an empty string used to line up columns with binary operator
 #. res is the result for this operator; i.e. value vector at index res_index
 
-{xrst_end val_op_unary_op}
+{xrst_end val_op_unary}
 */
 
 // BEGIN_UNARY_OP_T

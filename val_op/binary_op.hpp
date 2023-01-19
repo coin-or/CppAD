@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 # include "op_base.hpp"
 /*
-{xrst_begin val_op_binary_op dev}
+{xrst_begin val_op_binary dev}
 
 The Value Operator Binary Class
 ###############################
@@ -58,7 +58,7 @@ Operator Sub-Classes
    val_op/sub_op.hpp
 }
 
-{xrst_end val_op_binary_op}
+{xrst_end val_op_binary}
 */
 
 // BEGIN_BINARY_OP_T

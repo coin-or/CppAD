@@ -8,7 +8,7 @@
 # include "op_base.hpp"
 # include "call_base.hpp"
 /*
-{xrst_begin val_op_fun_op dev}
+{xrst_begin val_op_fun dev}
 {xrst_spell
    xam
 }
@@ -111,7 +111,7 @@ Example
 The file :ref:`fun_xam.cpp <val_op_fun_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_op_fun_op}
+{xrst_end val_op_fun}
 */
 // BEGIN_FUN_OP_T
 template <class Value>

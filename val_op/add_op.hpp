@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 # include "binary_op.hpp"
 /*
-{xrst_begin val_op_add_op dev}
+{xrst_begin val_op_add dev}
 {xrst_spell
    xam
 }
@@ -23,7 +23,7 @@ Prototype
 
 Context
 *******
-The class is derived from :ref:`val_op_binary_op-name` .
+The class is derived from :ref:`val_op_binary-name` .
 It overrides the *op_enum* and *eval* member functions
 and is a concrete class (it has no pure virtual functions).
 
@@ -49,7 +49,7 @@ Example
 The file :ref:`add_xam.cpp <val_op_add_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_op_add_op}
+{xrst_end val_op_add}
 */
 // BEGIN_ADD_OP_T
 template <class Value>
