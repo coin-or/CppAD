@@ -36,11 +36,11 @@ map_id
 }
 This returns the function identifier for a derived class object.
 
-function_name
-*************
+map_name
+********
 {xrst_literal
-   // BEGIN_FUNCTION_NAME
-   // END_FUNCTION_NAME
+   // BEGIN_MAP_NAME
+   // END_MAP_NAME
 }
 This returns a name for the function
 corresponding to the derived class object.
@@ -144,9 +144,9 @@ public:
    // END_FUNCTION_ID
    {  return map_id_;
    }
-   // BEGIN_FUNCTION_NAME
-   virtual std::string function_name(void) const = 0;
-   // END_FUNCTION_NAME
+   // BEGIN_MAP_NAME
+   virtual std::string map_name(void) const = 0;
+   // END_MAP_NAME
    //
    // BEGIN_CALL_BASE_PTR
    static call_base_t* call_base_ptr(size_t map_id)

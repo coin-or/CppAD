@@ -86,11 +86,11 @@ print_op
 This override of :ref:`val_op_base@print_op`
 prints the following values:
 
-| |tab| function_name ( arg_index_0 , arg_index_1 , ... )
+| |tab| map_name ( arg_index_0 , arg_index_1 , ... )
 | |tab| res_index_0  res_value_0
 | |tab| ...
 
-#. function_name is the name of this function which is assumed to be passed
+#. map_name is the name of this function which is assumed to be passed
    as the name argument to print_op .
    This line indented 4 spaces; i.e., the name starts in column 5.
    This is done so it is grouped with the operators in the trace output.
@@ -202,8 +202,8 @@ void map_op_t<Value>::eval(
    // y
    call_base_ptr->forward(call_id, x, y);
    //
-   // function_name
-   std::string function_name = call_base_ptr->function_name();
+   // map_name
+   std::string map_name      = call_base_ptr->map_name();
    //
    // val_vec
    for(size_t i = 0; i < n_res; ++i)
@@ -211,7 +211,7 @@ void map_op_t<Value>::eval(
    //
    // trace
    if( trace ) this->print_op(
-      function_name.c_str(), arg_index, arg_vec, res_index, val_vec
+      map_name.c_str(), arg_index, arg_vec, res_index, val_vec
    );
    return;
 }

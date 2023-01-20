@@ -21,7 +21,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 template <class Value>
 class my_fun_t : public call_base_t<Value> {
 private:
-   std::string function_name(void) const override
+   std::string map_name(void) const override
    {  return "test_function";
    }
    bool forward(
