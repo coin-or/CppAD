@@ -25,7 +25,7 @@ Syntax
 Purpose
 *******
 This the base class for defining functions corresponding to the
-:ref:`fun_op <val_op_fun-name>` .
+:ref:`map_op <val_op_fun-name>` .
 The pure virtual members must be defined by the derived class.
 
 function_id
@@ -113,10 +113,10 @@ derived member objects.
 The destructor for all the derived member objects must be called
 before clear is called.
 
-{xrst_comment fun_xam.cpp is included by fun_op.hpp}
+{xrst_comment map_xam.cpp is included by map_op.hpp}
 Example
 *******
-The file :ref:`fun_xam.cpp <val_op_fun_xam.cpp-name>`
+The file :ref:`map_xam.cpp <val_op_map_xam.cpp-name>`
 is an example and test that uses this class.
 
 {xrst_end val_op_call_base}

@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include "tape.hpp"
-# include "fun_op.hpp"
+# include "map_op.hpp"
 /*
 {xrst_begin val_op_record dev}
 {xrst_spell
@@ -58,11 +58,11 @@ This places a :ref:`val_op_con-name` operator in the tape.
 The return value is the index were *constant* is placed
 in the value vector.
 
-record_fun_op
+record_map_op
 *************
 {xrst_literal
-   // BEGIN_RECORD_FUN_OP
-   // END_RECORD_FUN_OP
+   // BEGIN_RECORD_MAP_OP
+   // END_RECORD_MAP_OP
 }
 This places a :ref:`val_op_fun-name` operator in the tape.
 
@@ -196,14 +196,14 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    return res_index;
 }
 // ----------------------------------------------------------------------------
-// BEGIN_RECORD_FUN_OP
+// BEGIN_RECORD_MAP_OP
 template <class Value>
-addr_t tape_t<Value>::record_fun_op(
+addr_t tape_t<Value>::record_map_op(
    size_t  function_id           ,
    size_t  call_id               ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
-// END_RECORD_FUN_OP
+// END_RECORD_MAP_OP
 {  //
    // res_index
    addr_t res_index = addr_t( n_val_ );
@@ -212,7 +212,7 @@ addr_t tape_t<Value>::record_fun_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = fun_op_t<Value>::get_instance();
+   op_base_t<Value>* op_ptr = map_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};

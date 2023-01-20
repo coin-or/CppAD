@@ -1,5 +1,5 @@
-# ifndef FUN_OP_HPP
-# define FUN_OP_HPP
+# ifndef MAP_OP_HPP
+# define MAP_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
@@ -19,8 +19,8 @@ The Value Operator Function Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FUN_OP_T
-   // END_FUN_OP_T
+   // BEGIN_MAP_OP_T
+   // END_MAP_OP_T
 }
 
 Context
@@ -31,7 +31,7 @@ and is a concrete class (it has no pure virtual functions).
 
 get_instance
 ************
-This static member function returns a pointer to a fun_op_t object.
+This static member function returns a pointer to a map_op_t object.
 
 op_enum
 *******
@@ -105,28 +105,28 @@ prints the following values:
    and there are two spaces between those fields.
 
 {xrst_toc_hidden
-   val_op/fun_xam.cpp
+   val_op/map_xam.cpp
 }
 Example
 *******
-The file :ref:`fun_xam.cpp <val_op_fun_xam.cpp-name>`
+The file :ref:`map_xam.cpp <val_op_map_xam.cpp-name>`
 is an example and test that uses this operator.
 
 {xrst_end val_op_fun}
 */
-// BEGIN_FUN_OP_T
+// BEGIN_MAP_OP_T
 template <class Value>
-class fun_op_t : public op_base_t<Value> {
+class map_op_t : public op_base_t<Value> {
 public:
    // get_instance
-   static fun_op_t* get_instance(void)
-   {  static fun_op_t instance;
+   static map_op_t* get_instance(void)
+   {  static map_op_t instance;
       return &instance;
    }
    // op_enum
    // type of this operator
    op_enum_t op_enum(void) const override
-   {  return fun_op_enum; }
+   {  return map_op_enum; }
    //
    // n_arg
    size_t n_arg(
@@ -161,7 +161,7 @@ public:
       addr_t                res_index    ,
       Vector<Value>&        val_vec
    ) const override;
-// END_FUN_OP_T
+// END_MAP_OP_T
    //
    // print_op
    void print_op(
@@ -175,7 +175,7 @@ public:
 //
 // eval
 template <class Value>
-void fun_op_t<Value>::eval(
+void map_op_t<Value>::eval(
    bool                  trace        ,
    addr_t                arg_index    ,
    const Vector<addr_t>& arg_vec      ,
@@ -218,7 +218,7 @@ void fun_op_t<Value>::eval(
 //
 // print_op
 template <class Value>
-void fun_op_t<Value>::print_op(
+void map_op_t<Value>::print_op(
    const char*           name         ,
    addr_t                arg_index    ,
    const Vector<addr_t>& arg_vec      ,

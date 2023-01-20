@@ -208,7 +208,7 @@ void tape_t<Value>::renumber(void)
       op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
       switch( op_enum )
       {  //
-         case fun_op_enum:
+         case map_op_enum:
          val_index += 4; // index where function arguments start
          n_val     -= 4; // number of funciton arguments
          break;

@@ -8,7 +8,7 @@
 SET(source_list val_op.cpp
    add_xam.cpp
    con_xam.cpp
-   fun_xam.cpp
+   map_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp
    test_one.cpp

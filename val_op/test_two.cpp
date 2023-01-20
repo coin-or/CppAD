@@ -80,7 +80,7 @@ bool test_fun()
    fun_arg[3] = sub;
    size_t call_id   = 0;
    size_t n_fun_res = 2;
-   addr_t res_index = tape.record_fun_op(
+   addr_t res_index = tape.record_map_op(
       function_id, call_id, n_fun_res, fun_arg
    );
    //

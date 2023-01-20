@@ -20,7 +20,7 @@
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool add_xam(void);
 extern bool con_xam(void);
-extern bool fun_xam(void);
+extern bool map_xam(void);
 extern bool renumber_xam(void);
 extern bool sub_xam(void);
 extern bool test_one(void);
@@ -38,9 +38,9 @@ int main(void)
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( add_xam,             "add_xam"        );
    Run( con_xam,             "con_xam"        );
-   Run( fun_xam,             "fun_xam"        );
+   Run( map_xam,             "map_xam"        );
    Run( renumber_xam,        "renumber_xam"   );
-   Run( sub_xam,             "fun_xam"        );
+   Run( sub_xam,             "map_xam"        );
    Run( test_one,            "test_one"       );
    Run( test_two,            "test_two"       );
    // END_SORT_THIS_LINE_MINUS_1

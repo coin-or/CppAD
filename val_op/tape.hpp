@@ -250,8 +250,8 @@ public :
    // record_con_op
    addr_t record_con_op(const Value& constant);
    //
-   // record_fun_op
-   addr_t record_fun_op(
+   // record_map_op
+   addr_t record_map_op(
       size_t function_id            ,
       size_t call_id                ,
       size_t n_res                  ,
@@ -271,6 +271,6 @@ public :
 # include "record_op.hpp"
 # include "renumber.hpp"
 # include "dead_code.hpp"
-# include "fun_op.hpp"
+# include "map_op.hpp"
 
 # endif
