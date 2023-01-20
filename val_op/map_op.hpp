@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 # include <cstdio>
 # include "op_base.hpp"
-# include "call_base.hpp"
+# include "map_base.hpp"
 /*
 {xrst_begin val_op_fun dev}
 {xrst_spell
@@ -48,7 +48,7 @@ see op_base :ref:`val_op_base@n_res` .
 map_id
 ******
 This member function returns the *map_id* for the function call; see
-:ref:`val_op_call_base@map_id` .
+:ref:`val_op_map_base@map_id` .
 
 call_id
 *******
@@ -194,16 +194,16 @@ void map_op_t<Value>::eval(
    for(size_t i = 4; i < n_arg; ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
-   // call_base_ptr
+   // map_base_ptr
    Vector<Value> y(n_res);
-   call_base_t<Value>* call_base_ptr = \
-      call_base_t<Value>::call_base_ptr(map_id);
+   map_base_t<Value>* map_base_ptr = \
+      map_base_t<Value>::map_base_ptr(map_id);
    //
    // y
-   call_base_ptr->forward(call_id, x, y);
+   map_base_ptr->forward(call_id, x, y);
    //
    // map_name
-   std::string map_name      = call_base_ptr->map_name();
+   std::string map_name      = map_base_ptr->map_name();
    //
    // val_vec
    for(size_t i = 0; i < n_res; ++i)

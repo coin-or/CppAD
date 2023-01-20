@@ -115,7 +115,7 @@ Implementation
 {xrst_toc_table
    val_op/type.hpp
    val_op/op_base.hpp
-   val_op/call_base.hpp
+   val_op/map_base.hpp
    val_op/tape.hpp
 }
 

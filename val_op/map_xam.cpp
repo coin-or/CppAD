@@ -17,9 +17,9 @@ Function Value Operator Example
 // BEGIN_C++
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
-// my_fun_t
+// my_map_t
 template <class Value>
-class my_fun_t : public call_base_t<Value> {
+class my_map_t : public map_base_t<Value> {
 private:
    std::string map_name(void) const override
    {  return "test_function";
@@ -54,8 +54,8 @@ private:
 bool test_fun()
 {  bool ok = true;
    //
-   // my_fun
-   my_fun_t<double> my_fun;
+   // my_map
+   my_map_t<double> my_map;
    //
    // f
    tape_t<double> tape;
@@ -72,7 +72,7 @@ bool test_fun()
    Vector<addr_t> dep_vec(n_res);
    //
    // map_id
-   size_t map_id      = my_fun.map_id();
+   size_t map_id      = my_map.map_id();
    //
    // f_0(x) = x[0] + x[1]
    // f_1(x) = x[2] * x[3]
@@ -127,7 +127,7 @@ bool test_fun()
 bool map_xam(void)
 {  bool ok = true;
    ok     &= test_fun();
-   ok     &= call_base_t<double>::clear();
+   ok     &= map_base_t<double>::clear();
    return ok;
 }
 // END_C++

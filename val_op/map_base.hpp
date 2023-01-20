@@ -6,7 +6,7 @@
 // -------------------------------------------------------------
 # include "type.hpp"
 /*
-{xrst_begin val_op_call_base dev}
+{xrst_begin val_op_map_base dev}
 {xrst_spell
    xam
 }
@@ -19,7 +19,7 @@ Syntax
 ::
 
    template <class Value>
-   class derived_t : public call_base_t<Value> { ...
+   class derived_t : public map_base_t<Value> { ...
 
 
 Purpose
@@ -31,8 +31,8 @@ The pure virtual members must be defined by the derived class.
 map_id
 ******
 {xrst_literal
-   // BEGIN_FUNCTION_ID
-   // END_FUNCTION_ID
+   // BEGIN_MAP_ID
+   // END_MAP_ID
 }
 This returns the function identifier for a derived class object.
 
@@ -45,11 +45,11 @@ map_name
 This returns a name for the function
 corresponding to the derived class object.
 
-call_base_ptr
-*************
+map_base_ptr
+************
 {xrst_literal
-   // BEGIN_CALL_BASE_PTR
-   // END_CALL_BASE_PTR
+   // BEGIN_MAP_BASE_PTR
+   // END_MAP_BASE_PTR
 }
 This returns a pointer that can be used to access the
 derived class object corresponding to the specified map_id .
@@ -119,40 +119,40 @@ Example
 The file :ref:`map_xam.cpp <val_op_map_xam.cpp-name>`
 is an example and test that uses this class.
 
-{xrst_end val_op_call_base}
+{xrst_end val_op_map_base}
 */
 template <class Value>
-class call_base_t {
+class map_base_t {
 private:
-   inline static Vector<call_base_t*> call_base_vec_;
+   inline static Vector<map_base_t*> map_base_vec_;
    inline static Vector<bool>        deleted_;
    const size_t                      map_id_;
 public:
    // ctor
-   call_base_t(void) :
-   map_id_ ( call_base_vec_.size() )
+   map_base_t(void) :
+   map_id_ ( map_base_vec_.size() )
    {  // 2DO: cannot be in parallel mode
-      call_base_vec_.push_back( this );
+      map_base_vec_.push_back( this );
       deleted_.push_back( false );
    }
-   ~call_base_t(void)
+   ~map_base_t(void)
    {  // 2DO: cannot be in parallel mode
       deleted_[map_id_] = true;
    }
-   // BEGIN_FUNCTION_ID
+   // BEGIN_MAP_ID
    size_t map_id(void)
-   // END_FUNCTION_ID
+   // END_MAP_ID
    {  return map_id_;
    }
    // BEGIN_MAP_NAME
    virtual std::string map_name(void) const = 0;
    // END_MAP_NAME
    //
-   // BEGIN_CALL_BASE_PTR
-   static call_base_t* call_base_ptr(size_t map_id)
-   // END_CALL_BASE_PTR
+   // BEGIN_MAP_BASE_PTR
+   static map_base_t* map_base_ptr(size_t map_id)
+   // END_MAP_BASE_PTR
    {  assert( ! deleted_[map_id] );
-      return call_base_vec_[map_id];
+      return map_base_vec_[map_id];
    }
    // BEGIN_FORWARD
    virtual bool forward(
@@ -173,7 +173,7 @@ public:
    {  for(size_t i = 0; i < deleted_.size(); ++i)
          if( ! deleted_[i] )
             return false;
-      call_base_vec_.clear();
+      map_base_vec_.clear();
       deleted_.clear();
       return true;
    }

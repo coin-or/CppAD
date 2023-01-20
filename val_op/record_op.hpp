@@ -68,11 +68,11 @@ This places a :ref:`val_op_fun-name` operator in the tape.
 
 map_id
 ======
-This is the :ref:`val_op_call_base@map_id` for this function call.
+This is the :ref:`val_op_map_base@map_id` for this function call.
 
 call_id
 =======
-This is the :ref:`val_op_call_base@forward@call_id` for this function call.
+This is the :ref:`val_op_map_base@forward@call_id` for this function call.
 
 n_res
 =====

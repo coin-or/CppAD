@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include "tape.hpp"
-# include "call_base.hpp"
+# include "map_base.hpp"
 
 template <class Value>
 void tape_t<Value>::dead_code(void)
@@ -55,9 +55,9 @@ void tape_t<Value>::dead_code(void)
          //
          // depend_x
          Vector<bool> depend_x(n_arg - 4);
-         call_base_t<Value>* call_base_ptr =
-            call_base_t<Value>::call_base_ptr(map_id);
-         call_base_ptr->rev_depend(call_id, depend_x, depend_y);
+         map_base_t<Value>* map_base_ptr =
+            map_base_t<Value>::map_base_ptr(map_id);
+         map_base_ptr->rev_depend(call_id, depend_x, depend_y);
          //
          for(size_t k = 4; k < n_arg; ++k)
             need_val_index[ arg_vec_[size_t(arg_index) + k] ] = depend_x[k-4];
