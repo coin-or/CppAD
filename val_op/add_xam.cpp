@@ -18,10 +18,11 @@ Add Value Operator Example
 bool add_xam()
 {  bool ok = true;
    //
-   // tape
+   // tape, ok
    tape_t<double> tape;
    size_t n_ind = 2;
-   tape.set_ind(n_ind);
+   size_t index_of_zero = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_zero == n_ind;
    //
    // op_arg
    Vector<addr_t> op_arg(2);
@@ -51,7 +52,7 @@ bool add_xam()
       val_vec[i] = x[i];
    tape.eval(trace, val_vec);
    //
-   // add one operator, one argument, one constant, and one value for zero
+   // ok
    ok &= tape.op_vec().size()  == 2;
    ok &= tape.arg_vec().size() == 3;
    ok &= tape.con_vec().size() == 1;

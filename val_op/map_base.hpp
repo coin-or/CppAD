@@ -64,7 +64,7 @@ forward
 call_id
 =======
 The *map_id* combined with the *call_id* yields the function
-correpsonding to a map operator usage.
+corresponding to a map operator usage.
 For example, one mapping might be used for matrix multiplication
 and the *call_id* might identify what the matrix dimensions are.
 

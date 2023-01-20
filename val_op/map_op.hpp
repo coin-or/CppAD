@@ -53,7 +53,7 @@ This member function returns the *map_id* for the mapping; see
 call_id
 *******
 This member function returns the *call_id* for this use of the mapping; see
-:ref:`val_op_map_base@map_base_ptr@call_id` .
+:ref:`val_op_map_base@forward@call_id` .
 
 eval
 ****

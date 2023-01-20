@@ -48,7 +48,8 @@ bool test_fun()
    // f
    tape_t<double> tape;
    size_t n_ind = 2;
-   tape.set_ind(n_ind);
+   size_t index_of_zero = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_zero == n_ind;
    //
    // n_res
    size_t n_res = 1;
@@ -105,6 +106,8 @@ bool test_fun()
       val_vec[i] = x[i];
    tape.eval(trace, val_vec);
    //
+   // ok
+   // before optmizing
    ok &= tape.arg_vec().size() == 15;
    ok &= tape.con_vec().size() == 3;
    ok &= tape.op_vec().size() == 6;
@@ -119,6 +122,8 @@ bool test_fun()
    val_vec.resize( tape.n_val() );
    tape.eval(trace, val_vec);
    //
+   // ok
+   // after optimizing
    ok &= tape.arg_vec().size() == 13;
    ok &= tape.con_vec().size() == 1;
    ok &= tape.op_vec().size() == 4;

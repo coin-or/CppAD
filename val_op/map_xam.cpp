@@ -60,7 +60,8 @@ bool test_fun()
    // f
    tape_t<double> tape;
    size_t n_ind = 4;
-   tape.set_ind(n_ind);
+   size_t index_of_zero = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_zero == n_ind;
    //
    // n_res
    size_t n_res = 2;
@@ -105,6 +106,7 @@ bool test_fun()
       val_vec[i] = x[i];
    tape.eval(trace, val_vec);
    //
+   // ok
    ok &= tape.arg_vec().size() == 1 + 4 + 4;
    ok &= tape.con_vec().size() == 1;
    ok &= tape.op_vec().size()  == 2;

@@ -9,7 +9,8 @@ bool test_one()
    // tape
    tape_t<double> tape;
    size_t n_ind = 2;
-   tape.set_ind(n_ind);
+   size_t index_of_zero = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_zero == n_ind;
    //
    // op_arg
    Vector<addr_t> op_arg(2);
@@ -24,7 +25,7 @@ bool test_one()
    tape.record_con_op(5.0);             // 5.0 (not used)
    //
    dep_vec[0]      = tape.record_op(add_op_enum, op_arg); // x[0] + x[1]
-   op_arg[0]       = dep_vec[0];                        // x[0] + x[1]
+   op_arg[0]       = dep_vec[0];                          // x[0] + x[1]
    op_arg[1]       = tape.record_con_op(4.0);             // 4.0
    addr_t temp_1   = tape.record_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
    op_arg[0]       = temp_1;
@@ -45,6 +46,7 @@ bool test_one()
    // val_vec
    Vector<double> val_vec;
    //
+   // val_vec, ok
    // before optimizing
    val_vec.resize( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
@@ -54,16 +56,17 @@ bool test_one()
    ok &= tape.con_vec().size() == 4;
    ok &= tape.op_vec().size() == 8;
    //
-   // renumber
+   // renumber, val_vec
    tape.renumber();
    val_vec.resize( tape.n_val() );
    tape.eval(trace, val_vec);
    //
-   // dead_code
+   // dead_code, val_vec
    tape.dead_code();
    val_vec.resize( tape.n_val() );
    tape.eval(trace, val_vec);
    //
+   // ok
    // after optimizing
    ok &= tape.arg_vec().size() == 8;
    ok &= tape.con_vec().size() == 2;

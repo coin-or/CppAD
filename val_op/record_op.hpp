@@ -31,6 +31,8 @@ It then sets the number of independent values and
 places the constant zero directly after the last independent value.
 The return value is the index where the zero is placed in the
 value vector; i.e., *n_ind* .
+The constant zero uses one operator,
+one argument, one constant, and one result.
 This is the first step in a creating a recording.
 
 record_op
