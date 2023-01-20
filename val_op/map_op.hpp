@@ -8,13 +8,13 @@
 # include "op_base.hpp"
 # include "map_base.hpp"
 /*
-{xrst_begin val_op_fun dev}
+{xrst_begin val_op_map dev}
 {xrst_spell
    xam
 }
 
-The Value Operator Function Class
-#################################
+The Value Operator Map Class
+############################
 
 Prototype
 *********
@@ -35,7 +35,7 @@ This static member function returns a pointer to a map_op_t object.
 
 op_enum
 *******
-This override of :ref:`val_op_base@op_enum` returns ``con_op_enum`` .
+This override of :ref:`val_op_base@op_enum` returns ``map_op_enum`` .
 
 n_arg
 *****
@@ -112,7 +112,7 @@ Example
 The file :ref:`map_xam.cpp <val_op_map_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_op_fun}
+{xrst_end val_op_map}
 */
 // BEGIN_MAP_OP_T
 template <class Value>

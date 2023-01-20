@@ -64,7 +64,7 @@ record_map_op
    // BEGIN_RECORD_MAP_OP
    // END_RECORD_MAP_OP
 }
-This places a :ref:`val_op_fun-name` operator in the tape.
+This places a :ref:`val_op_map-name` operator in the tape.
 
 map_id
 ======

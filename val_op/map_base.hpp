@@ -25,7 +25,7 @@ Syntax
 Purpose
 *******
 This the base class for defining functions corresponding to the
-:ref:`map_op <val_op_fun-name>` .
+:ref:`map_op <val_op_map-name>` .
 The pure virtual members must be defined by the derived class.
 
 map_id
