@@ -16,7 +16,7 @@ See Also
 Static Single-Assignment
 ************************
 This is an
- `SSA<https://en.wikipedia.org/wiki/Static_single-assignment_form>`_
+`SSA <https://en.wikipedia.org/wiki/Static_single-assignment_form>`_
 representation of a function :math:`y = f(x)`.
 The vector *x* is called the independent vector,
 and *y* is called the dependent vector.

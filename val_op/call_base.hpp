@@ -45,8 +45,8 @@ function_name
 This returns a name for the function
 corresponding to the derived class object.
 
-call_base__ptr
-**************
+call_base_ptr
+*************
 {xrst_literal
    // BEGIN_CALL_BASE_PTR
    // END_CALL_BASE_PTR
@@ -117,7 +117,7 @@ before clear is called.
 Example
 *******
 The file :ref:`fun_xam.cpp <val_op_fun_xam.cpp-name>`
-is an example and test that uses this operator.
+is an example and test that uses this class.
 
 {xrst_end val_op_call_base}
 */

@@ -55,8 +55,10 @@ bool renumber_xam()
    //
    // y, ok
    Vector<double> y(1);
-   y[0] = val_vec[ dep_vec[0] ];
-   ok  &= y[0] == x[0] + x[1];
+   dep_vec = tape.dep_vec();
+   y[0]    = val_vec[ dep_vec[0] ];
+   ok     &= size_t( dep_vec[0] ) == n_ind + 2;
+   ok     &= y[0] == x[0] + x[1];
    //
    // renumber
    ok &= size_t( dep_vec[0] ) == n_ind + 2;
@@ -70,8 +72,10 @@ bool renumber_xam()
    tape.eval(trace, val_vec);
    //
    // y, ok
-   y[0] = val_vec[ dep_vec[0] ];
-   ok  &= y[0] == x[0] + x[1];
+   dep_vec = tape.dep_vec();
+   y[0]    = val_vec[ dep_vec[0] ];
+   ok     &= size_t( dep_vec[0] ) == n_ind + 1;
+   ok     &= y[0] == x[0] + x[1];
    //
    return ok;
 }

@@ -116,6 +116,8 @@ public:
 {xrst_begin val_op_renumber dev}
 {xrst_spell
    dep
+   renumber
+   xam
 }
 
 Value Re-Numbering
@@ -142,6 +144,10 @@ Reference
 {xrst_toc_hidden
    val_op/renumber_xam.cpp
 }
+Example
+*******
+The file :ref:`renumber_xam.cpp <val_op_renumber_xam.cpp-name>` is an
+example and test of tape.renumber().
 
 {xrst_end val_op_renumber}
 -------------------------------------------------------------------------------
