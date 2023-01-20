@@ -96,7 +96,7 @@ set_dep
    // BEGIN_SET_DEP
    // END_SET_DEP
 }
-This sets the dependent variables to the corresponding indices
+This sets the dependent vector to the corresponding indices
 in the value vector.
 This is last step in creating a recording.
 

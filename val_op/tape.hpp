@@ -128,6 +128,7 @@ Operations on Tape
 ******************
 {xrst_toc_table
    val_op/record_op.hpp
+   val_op/renumber.hpp
 }
 
 

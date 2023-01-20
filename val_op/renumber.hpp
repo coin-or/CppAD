@@ -6,7 +6,8 @@
 // ---------------------------------------------------------------------------
 # include <cppad/local/sparse/list_setvec.hpp>
 # include "tape.hpp"
-
+//
+// op_hash_table_t
 template <class Value>
 class op_hash_table_t {
    typedef typename tape_t<Value>::op_info_t op_info_t;
@@ -58,7 +59,7 @@ public:
    size_t match_op(size_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
       //
-      // op_enum_i, arg_index_i
+      // op_enum_i, arg_index_i, n_arg
       addr_t    arg_index_i  = op_vec_[i_op].arg_index;
       op_enum_t op_enum_i = op_vec_[i_op].op_ptr->op_enum();
       size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index_i, arg_vec_);
@@ -110,10 +111,45 @@ public:
       return i_op;
    }
 };
+/*
+-------------------------------------------------------------------------------
+{xrst_begin val_op_renumber dev}
+{xrst_spell
+   dep
+}
 
+Value Re-Numbering
+##################
+
+Discussion
+**********
+This routine uses hash coding to find operators that are equivalent
+to a previous operators in the tape.
+It changes the use of an operator's results by use of the
+results for the equivalent previous operator with lowest index.
+This creates an equivalent tape where replaced operators are not removed,
+but the are dead code in the new tape.
+
+dep_vec
+*******
+This may change the indices corresponding to the dependent vector; i.e.,
+:ref:`val_op_tape@dep_vec`.
+
+Reference
+*********
+`value numbering <https://en.wikipedia.org/wiki/Value_numbering>`_ .
+
+{xrst_toc_hidden
+   val_op/renumber_xam.cpp
+}
+
+{xrst_end val_op_renumber}
+-------------------------------------------------------------------------------
+*/
 template <class Value>
 void tape_t<Value>::renumber(void)
-{  // -----------------------------------------------------------------------
+{
+ // -----------------------------------------------------------------------
    // SAS Global Value Renumbering
    // https://en.wikipedia.org/wiki/Value_numbering
    // -----------------------------------------------------------------------
@@ -152,8 +188,36 @@ void tape_t<Value>::renumber(void)
    }
    //
    // arg_vec_
-   for(size_t i = 0; i < arg_vec_.size(); ++i)
-      arg_vec_[i] = new_val_index[ arg_vec_[i] ];
+   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
+   {  //
+      // arg_index, n_arg
+      addr_t    arg_index = op_vec_[i_op].arg_index;
+      size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      //
+      // val_index, n_val
+      addr_t val_index = arg_index;
+      addr_t n_val     = addr_t(n_arg);
+      //
+      // op_enum, val_index, n_val
+      op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
+      switch( op_enum )
+      {  //
+         case fun_op_enum:
+         val_index += 4; // index where function arguments start
+         n_val     -= 4; // number of funciton arguments
+         break;
+         //
+         // n_val
+         case con_op_enum:
+         n_val = 0;  // no arguemnt indices are in the value vector
+         break;
+         //
+         default:
+         break;
+      }
+      for(addr_t i = 0; i < n_val; ++i)
+         arg_vec_[val_index + i] = new_val_index[ arg_vec_[val_index + i] ];
+   }
    //
    // dep_vec_
    for(size_t i = 0; i < dep_vec_.size(); ++i)

@@ -13,10 +13,11 @@ See Also
 ********
 :ref:`json_ad_graph-name`, :ref:`cpp_ad_graph-name`
 
-function
-********
-This section defines an algorithmic representation of a function
-:math:`y = f(x)`.
+Static Single-Assignment
+************************
+This is an
+ `SSA<https://en.wikipedia.org/wiki/Static_single-assignment_form>`_
+representation of a function :math:`y = f(x)`.
 The vector *x* is called the independent vector,
 and *y* is called the dependent vector.
 A value may be a CppAD

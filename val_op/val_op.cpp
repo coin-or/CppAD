@@ -21,6 +21,7 @@
 extern bool add_xam(void);
 extern bool con_xam(void);
 extern bool fun_xam(void);
+extern bool renumber_xam(void);
 extern bool sub_xam(void);
 extern bool test_one(void);
 extern bool test_two(void);
@@ -38,6 +39,7 @@ int main(void)
    Run( add_xam,             "add_xam"        );
    Run( con_xam,             "con_xam"        );
    Run( fun_xam,             "fun_xam"        );
+   Run( renumber_xam,        "renumber_xam"   );
    Run( sub_xam,             "fun_xam"        );
    Run( test_one,            "test_one"       );
    Run( test_two,            "test_two"       );
