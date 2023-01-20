@@ -66,9 +66,9 @@ record_map_op
 }
 This places a :ref:`val_op_fun-name` operator in the tape.
 
-function_id
-===========
-This is the :ref:`val_op_call_base@function_id` for this function call.
+map_id
+======
+This is the :ref:`val_op_call_base@map_id` for this function call.
 
 call_id
 =======
@@ -199,7 +199,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
 // BEGIN_RECORD_MAP_OP
 template <class Value>
 addr_t tape_t<Value>::record_map_op(
-   size_t  function_id           ,
+   size_t  map_id                ,
    size_t  call_id               ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
@@ -222,7 +222,7 @@ addr_t tape_t<Value>::record_map_op(
    size_t n_arg = 4 + fun_arg.size();
    arg_vec_.push_back( addr_t( n_arg ) );
    arg_vec_.push_back( addr_t( n_res ) );
-   arg_vec_.push_back( addr_t( function_id ) );
+   arg_vec_.push_back( addr_t( map_id ) );
    arg_vec_.push_back( addr_t( call_id ) );
    for(size_t i = 0; i < fun_arg.size(); ++i)
       arg_vec_.push_back( fun_arg[i] );

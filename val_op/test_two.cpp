@@ -59,8 +59,8 @@ bool test_fun()
    // dep_vec
    Vector<addr_t> dep_vec(n_res);
    //
-   // function_id
-   size_t function_id = my_fun.function_id();
+   // map_id
+   size_t map_id      = my_fun.map_id();
    //
    // add = x[0] + x[1]
    op_arg[0] = 0;
@@ -81,7 +81,7 @@ bool test_fun()
    size_t call_id   = 0;
    size_t n_fun_res = 2;
    addr_t res_index = tape.record_map_op(
-      function_id, call_id, n_fun_res, fun_arg
+      map_id, call_id, n_fun_res, fun_arg
    );
    //
    // dep_vec

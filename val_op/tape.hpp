@@ -252,7 +252,7 @@ public :
    //
    // record_map_op
    addr_t record_map_op(
-      size_t function_id            ,
+      size_t map_id                 ,
       size_t call_id                ,
       size_t n_res                  ,
       const Vector<addr_t>& fun_arg

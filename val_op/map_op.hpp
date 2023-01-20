@@ -45,10 +45,10 @@ n_res
 *****
 see op_base :ref:`val_op_base@n_res` .
 
-function_id
-***********
-This member function returns the *function_id* for the function call; see
-:ref:`val_op_call_base@function_id` .
+map_id
+******
+This member function returns the *map_id* for the function call; see
+:ref:`val_op_call_base@map_id` .
 
 call_id
 *******
@@ -57,7 +57,7 @@ This member function returns the *call_id* for the function call.
 eval
 ****
 This override of :ref:`val_op_base@eval`
-calls the function identified by *function_id*
+calls the function identified by *map_id*
 to evaluate *n_res* results given *n_arg* - 4 arguments.
 
 #. The arguments to the function are
@@ -140,8 +140,8 @@ public:
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 1] ); }
    //
-   // function_id
-   size_t function_id(
+   // map_id
+   size_t map_id(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      )
    {  return size_t( arg_vec[arg_index + 2] ); }
@@ -183,10 +183,10 @@ void map_op_t<Value>::eval(
    addr_t                res_index    ,
    Vector<Value>&        val_vec      ) const
 {  //
-   // n_arg, n_res, function_id
+   // n_arg, n_res, map_id
    size_t n_arg       = size_t( arg_vec[arg_index + 0] );
    size_t n_res       = size_t( arg_vec[arg_index + 1] );
-   size_t function_id = size_t( arg_vec[arg_index + 2] );
+   size_t map_id      = size_t( arg_vec[arg_index + 2] );
    size_t call_id     = size_t( arg_vec[arg_index + 3] );
    //
    // x
@@ -197,7 +197,7 @@ void map_op_t<Value>::eval(
    // call_base_ptr
    Vector<Value> y(n_res);
    call_base_t<Value>* call_base_ptr = \
-      call_base_t<Value>::call_base_ptr(function_id);
+      call_base_t<Value>::call_base_ptr(map_id);
    //
    // y
    call_base_ptr->forward(call_id, x, y);

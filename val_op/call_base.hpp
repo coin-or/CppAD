@@ -28,8 +28,8 @@ This the base class for defining functions corresponding to the
 :ref:`map_op <val_op_fun-name>` .
 The pure virtual members must be defined by the derived class.
 
-function_id
-***********
+map_id
+******
 {xrst_literal
    // BEGIN_FUNCTION_ID
    // END_FUNCTION_ID
@@ -52,7 +52,7 @@ call_base_ptr
    // END_CALL_BASE_PTR
 }
 This returns a pointer that can be used to access the
-derived class object corresponding to the specified function_id .
+derived class object corresponding to the specified map_id .
 
 forward
 *******
@@ -126,33 +126,33 @@ class call_base_t {
 private:
    inline static Vector<call_base_t*> call_base_vec_;
    inline static Vector<bool>        deleted_;
-   const size_t                      function_id_;
+   const size_t                      map_id_;
 public:
    // ctor
    call_base_t(void) :
-   function_id_ ( call_base_vec_.size() )
+   map_id_ ( call_base_vec_.size() )
    {  // 2DO: cannot be in parallel mode
       call_base_vec_.push_back( this );
       deleted_.push_back( false );
    }
    ~call_base_t(void)
    {  // 2DO: cannot be in parallel mode
-      deleted_[function_id_] = true;
+      deleted_[map_id_] = true;
    }
    // BEGIN_FUNCTION_ID
-   size_t function_id(void)
+   size_t map_id(void)
    // END_FUNCTION_ID
-   {  return function_id_;
+   {  return map_id_;
    }
    // BEGIN_FUNCTION_NAME
    virtual std::string function_name(void) const = 0;
    // END_FUNCTION_NAME
    //
    // BEGIN_CALL_BASE_PTR
-   static call_base_t* call_base_ptr(size_t function_id)
+   static call_base_t* call_base_ptr(size_t map_id)
    // END_CALL_BASE_PTR
-   {  assert( ! deleted_[function_id] );
-      return call_base_vec_[function_id];
+   {  assert( ! deleted_[map_id] );
+      return call_base_vec_[map_id];
    }
    // BEGIN_FORWARD
    virtual bool forward(
