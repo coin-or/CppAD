@@ -47,20 +47,21 @@ see op_base :ref:`val_op_base@n_res` .
 
 map_id
 ******
-This member function returns the *map_id* for the function call; see
+This member function returns the *map_id* for the mapping; see
 :ref:`val_op_map_base@map_id` .
 
 call_id
 *******
-This member function returns the *call_id* for the function call.
+This member function returns the *call_id* for this use of the mapping; see
+:ref:`val_op_map_base@map_base_ptr@call_id` .
 
 eval
 ****
 This override of :ref:`val_op_base@eval`
-calls the function identified by *map_id*
+calls the mapping identified by *map_id* , with the *call_id*,
 to evaluate *n_res* results given *n_arg* - 4 arguments.
 
-#. The arguments to the function are
+#. The arguments to the mapping are
    ::
 
       val_vec[ arg_vec[ arg_index + 4 ] ] ,
@@ -68,7 +69,7 @@ to evaluate *n_res* results given *n_arg* - 4 arguments.
       ...
       val_vec[ arg_vec[ arg_index + n_arg - 1 ] ]
 
-#. The results of the function evaluation are placed in
+#. The results of the mapping evaluation are placed in
    ::
 
       val_vec[res_index + 0] ,
@@ -90,7 +91,7 @@ prints the following values:
 | |tab| res_index_0  res_value_0
 | |tab| ...
 
-#. map_name is the name of this function which is assumed to be passed
+#. map_name is the name of this mapping which is assumed to be passed
    as the name argument to print_op .
    This line indented 4 spaces; i.e., the name starts in column 5.
    This is done so it is grouped with the operators in the trace output.

@@ -81,14 +81,17 @@ and placed in the value vector.
 
 fun_arg
 =======
-This vector has size equal to the number of arguments to the function.
+This vector has size equal to the number of arguments to the function
+for this mapping and *call_id* .
+(The combination of *map_id* and *call_id* must specify a function.)
 The *j*-th element of *fun_arg* is the index on the value vector of
 the *j*-th argument to the function.
 
 return
 ======
-This function returns the index in the value vector where
-the first result is placed (*n_res* results are placed in the value vector).
+The ``record_con_op`` function returns the index in the value vector where
+the first result is placed in the value vector.
+A total of *n_res* results are placed in the value vector.
 
 set_dep
 *******

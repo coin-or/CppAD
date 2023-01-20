@@ -34,7 +34,7 @@ map_id
    // BEGIN_MAP_ID
    // END_MAP_ID
 }
-This returns the function identifier for a derived class object.
+This returns the mapping identifier for a derived class object.
 
 map_name
 ********
@@ -63,8 +63,10 @@ forward
 
 call_id
 =======
-This can be used to identify
-extra information used by the function call evaluation.
+The *map_id* combined with the *call_id* yields the function
+correpsonding to a map operator usage.
+For example, one mapping might be used for matrix multiplication
+and the *call_id* might identify what the matrix dimensions are.
 
 x
 =
@@ -86,8 +88,7 @@ This routine performs reverse dependency analysis.
 
 call_id
 =======
-This can be used to identify
-extra information used by the function call evaluation.
+The has the same meaning as above.
 
 depend_y
 ========
