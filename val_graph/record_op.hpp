@@ -117,12 +117,8 @@ addr_t tape_t<Value>::set_ind(size_t n_ind)
    dep_vec_.clear();
    op_vec_.clear();
    con_vec_.clear();
-# ifndef NDEBUG
    addr_t zero = record_con_op(Value(0.0));
    assert ( size_t(zero) == n_ind_ );
-# else
-   record_con_op( Value(0.0) );
-# endif
    assert( n_val_ == n_ind + 1 );
    //
    return zero;

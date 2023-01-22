@@ -11,8 +11,8 @@
    xam
 }
 
-The Function Call Base Class
-############################
+The Map Base Class
+##################
 
 Syntax
 ******
