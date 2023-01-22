@@ -1,5 +1,5 @@
-# ifndef DEAD_CODE_HPP
-# define DEAD_CODE_HPP
+# ifndef CPPAD_VAL_GRAPH_DEAD_CODE_HPP
+# define CPPAD_VAL_GRAPH_DEAD_CODE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell

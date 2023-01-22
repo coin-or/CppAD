@@ -1,5 +1,5 @@
-# ifndef MAP_OP_HPP
-# define MAP_OP_HPP
+# ifndef CPPAD_VAL_GRAPH_MAP_OP_HPP
+# define CPPAD_VAL_GRAPH_MAP_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
@@ -48,12 +48,12 @@ see op_base :ref:`val_base_op@n_res` .
 map_id
 ******
 This member function returns the *map_id* for the mapping; see
-:ref:`val_map_op_base@map_id` .
+:ref:`val_graph_map_base@map_id` .
 
 call_id
 *******
 This member function returns the *call_id* for this use of the mapping; see
-:ref:`val_map_op_base@forward@call_id` .
+:ref:`val_graph_map_base@forward@call_id` .
 
 eval
 ****

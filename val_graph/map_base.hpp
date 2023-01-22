@@ -1,12 +1,12 @@
-# ifndef CALL_FUN_HPP
-# define CALL_FUN_HPP
+# ifndef CPPAD_VAL_GRAPH_MAP_BASE_HPP
+# define CPPAD_VAL_GRAPH_MAP_BASE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // -------------------------------------------------------------
 # include "type.hpp"
 /*
-{xrst_begin val_map_op_base dev}
+{xrst_begin val_graph_map_base dev}
 {xrst_spell
    xam
 }
@@ -120,7 +120,7 @@ Example
 The file :ref:`map_xam.cpp <val_map_op_xam.cpp-name>`
 is an example and test that uses this class.
 
-{xrst_end val_map_op_base}
+{xrst_end val_graph_map_base}
 */
 template <class Value>
 class map_base_t {

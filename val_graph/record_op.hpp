@@ -1,5 +1,5 @@
-# ifndef TAPE_NEXT_HPP
-# define TAPE_NEXT_HPP
+# ifndef CPPAD_VAL_GRAPH_RECORD_OP_HPP
+# define CPPAD_VAL_GRAPH_RECORD_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
@@ -7,7 +7,7 @@
 # include "tape.hpp"
 # include "map_op.hpp"
 /*
-{xrst_begin val_op_record dev}
+{xrst_begin val_graph_record_op dev}
 {xrst_spell
    operands
    dep
@@ -70,11 +70,11 @@ This places a :ref:`val_map_op-name` operator in the tape.
 
 map_id
 ======
-This is the :ref:`val_map_op_base@map_id` for this function call.
+This is the :ref:`val_graph_map_base@map_id` for this function call.
 
 call_id
 =======
-This is the :ref:`val_map_op_base@forward@call_id` for this function call.
+This is the :ref:`val_graph_map_base@forward@call_id` for this function call.
 
 n_res
 =====
@@ -105,7 +105,7 @@ This sets the dependent vector to the corresponding indices
 in the value vector.
 This is last step in creating a recording.
 
-{xrst_end val_op_record}
+{xrst_end val_graph_record_op}
 */
 // ----------------------------------------------------------------------------
 // BEGIN_SET_IND
