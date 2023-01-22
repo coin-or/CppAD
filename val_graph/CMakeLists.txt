@@ -2,10 +2,10 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# Build the val_op directory tests
+# Build the val_graph directory tests
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
-SET(source_list val_op.cpp
+SET(source_list val_graph.cpp
    add_xam.cpp
    con_xam.cpp
    dead_xam.cpp
@@ -17,9 +17,9 @@ SET(source_list val_op.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
-set_compile_flags( val_op "${cppad_debug_which}" "${source_list}" )
+set_compile_flags( val_graph "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE(val_op EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(val_graph EXCLUDE_FROM_ALL ${source_list})
 #
 # check_example_print_for
-add_check_executable(check val_op)
+add_check_executable(check val_graph)

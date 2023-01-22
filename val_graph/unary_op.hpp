@@ -4,9 +4,9 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include "op_base.hpp"
+# include "base_op.hpp"
 /*
-{xrst_begin val_op_unary dev}
+{xrst_begin val_unary_op dev}
 
 The Value Operator Unary Class
 ##############################
@@ -20,21 +20,21 @@ Prototype
 
 Purpose
 *******
-The class is derived from :ref:`op_base <val_op_base-name>`.
+The class is derived from :ref:`op_base <val_base_op-name>`.
 It overrides the *n_arg*, *n_res_*, and *print_op* member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
 
 n_arg
 *****
-This override of :ref:`val_op_base@n_arg` returns 1.
+This override of :ref:`val_base_op@n_arg` returns 1.
 
 n_res
 *****
-This override of :ref:`val_op_base@n_res` returns 1.
+This override of :ref:`val_base_op@n_res` returns 1.
 
 print_op
 ********
-This override of :ref:`val_op_base@print_op`
+This override of :ref:`val_base_op@print_op`
 prints the following values:
 
 .. csv-table::
@@ -51,7 +51,7 @@ prints the following values:
 #. empty is an empty string used to line up columns with binary operator
 #. res is the result for this operator; i.e. value vector at index res_index
 
-{xrst_end val_op_unary}
+{xrst_end val_unary_op}
 */
 
 // BEGIN_UNARY_OP_T

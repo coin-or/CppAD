@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include "tape.hpp"
 /*
-{xrst_begin val_op_map_xam.cpp dev}
+{xrst_begin val_map_op_xam.cpp dev}
 
 Function Value Operator Example
 ###############################
@@ -12,7 +12,7 @@ Function Value Operator Example
    // END_C++
 }
 
-{xrst_end val_op_map_xam.cpp}
+{xrst_end val_map_op_xam.cpp}
 */
 // BEGIN_C++
 namespace { // BEGIN_EMPTY_NAMESPACE

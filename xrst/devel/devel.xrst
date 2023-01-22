@@ -51,7 +51,7 @@ Contents
    include/cppad/local/graph/json_writer.hpp
    include/cppad/local/graph/csrc_writer.hpp
    cppad_lib/csrc_writer.cpp
-   val_graph/val_op.xrst
+   val_graph/val_graph.xrst
 }
 
 {xrst_end dev_graph}

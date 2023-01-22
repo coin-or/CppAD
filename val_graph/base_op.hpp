@@ -7,7 +7,7 @@
 # include "type.hpp"
 # include <cstdio>
 /*
-{xrst_begin val_op_base dev}
+{xrst_begin val_base_op dev}
 
 The Value Operator Base Class
 #############################
@@ -125,7 +125,7 @@ Operator Classes
    val_graph/map_op.hpp
 }
 
-{xrst_end val_op_base}
+{xrst_end val_base_op}
 */
 // BEGIN_OP_T
 template <class Value> class op_base_t {

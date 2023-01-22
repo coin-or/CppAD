@@ -6,7 +6,7 @@
 // -------------------------------------------------------------
 # include "type.hpp"
 /*
-{xrst_begin val_op_map_base dev}
+{xrst_begin val_map_op_base dev}
 {xrst_spell
    xam
 }
@@ -25,7 +25,7 @@ Syntax
 Purpose
 *******
 This the base class for defining functions corresponding to the
-:ref:`map_op <val_op_map-name>` .
+:ref:`map_op <val_map_op-name>` .
 The pure virtual members must be defined by the derived class.
 
 map_id
@@ -117,10 +117,10 @@ before clear is called.
 {xrst_comment map_xam.cpp is included by map_op.hpp}
 Example
 *******
-The file :ref:`map_xam.cpp <val_op_map_xam.cpp-name>`
+The file :ref:`map_xam.cpp <val_map_op_xam.cpp-name>`
 is an example and test that uses this class.
 
-{xrst_end val_op_map_base}
+{xrst_end val_map_op_base}
 */
 template <class Value>
 class map_base_t {

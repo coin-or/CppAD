@@ -4,9 +4,9 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include "op_base.hpp"
+# include "base_op.hpp"
 /*
-{xrst_begin val_op_con dev}
+{xrst_begin val_con_op dev}
 {xrst_spell
    xam
 }
@@ -23,7 +23,7 @@ Prototype
 
 Context
 *******
-The class is derived from :ref:`val_op_base-name` .
+The class is derived from :ref:`val_base_op-name` .
 It overrides all its base class virtual member functions
 and is a concrete class (it has no pure virtual functions).
 This is not a unary operator because the operand is in the
@@ -35,19 +35,19 @@ This static member function returns a pointer to a con_op_t object.
 
 op_enum
 *******
-This override of :ref:`val_op_base@op_enum` returns ``con_op_enum`` .
+This override of :ref:`val_base_op@op_enum` returns ``con_op_enum`` .
 
 n_arg
 *****
-see op_base :ref:`val_op_base@n_arg` .
+see op_base :ref:`val_base_op@n_arg` .
 
 n_res
 *****
-see op_base :ref:`val_op_base@n_res` .
+see op_base :ref:`val_base_op@n_res` .
 
 eval
 ****
-This override of :ref:`val_op_base@eval` sets
+This override of :ref:`val_base_op@eval` sets
 the result equal to
 ::
 
@@ -55,7 +55,7 @@ the result equal to
 
 print_op
 ********
-This override of :ref:`val_op_base@print_op`
+This override of :ref:`val_base_op@print_op`
 prints the following values:
 
 .. csv-table::
@@ -77,10 +77,10 @@ prints the following values:
 }
 Example
 *******
-The file :ref:`con_xam.cpp <val_op_con_xam.cpp-name>`
+The file :ref:`con_xam.cpp <val_con_op_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_op_con}
+{xrst_end val_con_op}
 */
 // BEGIN_CON_OP_T
 template <class Value>

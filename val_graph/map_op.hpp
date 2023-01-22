@@ -5,10 +5,10 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cstdio>
-# include "op_base.hpp"
+# include "base_op.hpp"
 # include "map_base.hpp"
 /*
-{xrst_begin val_op_map dev}
+{xrst_begin val_map_op dev}
 {xrst_spell
    xam
 }
@@ -25,7 +25,7 @@ Prototype
 
 Context
 *******
-The class is derived from :ref:`val_op_base-name` .
+The class is derived from :ref:`val_base_op-name` .
 It overrides all its base class virtual member functions
 and is a concrete class (it has no pure virtual functions).
 
@@ -35,29 +35,29 @@ This static member function returns a pointer to a map_op_t object.
 
 op_enum
 *******
-This override of :ref:`val_op_base@op_enum` returns ``map_op_enum`` .
+This override of :ref:`val_base_op@op_enum` returns ``map_op_enum`` .
 
 n_arg
 *****
-see op_base :ref:`val_op_base@n_arg` .
+see op_base :ref:`val_base_op@n_arg` .
 
 n_res
 *****
-see op_base :ref:`val_op_base@n_res` .
+see op_base :ref:`val_base_op@n_res` .
 
 map_id
 ******
 This member function returns the *map_id* for the mapping; see
-:ref:`val_op_map_base@map_id` .
+:ref:`val_map_op_base@map_id` .
 
 call_id
 *******
 This member function returns the *call_id* for this use of the mapping; see
-:ref:`val_op_map_base@forward@call_id` .
+:ref:`val_map_op_base@forward@call_id` .
 
 eval
 ****
-This override of :ref:`val_op_base@eval`
+This override of :ref:`val_base_op@eval`
 calls the mapping identified by *map_id* , with the *call_id*,
 to evaluate *n_res* results given *n_arg* - 4 arguments.
 
@@ -84,7 +84,7 @@ to evaluate *n_res* results given *n_arg* - 4 arguments.
 
 print_op
 ********
-This override of :ref:`val_op_base@print_op`
+This override of :ref:`val_base_op@print_op`
 prints the following values:
 
 | |tab| map_name ( arg_index_0 , arg_index_1 , ... )
@@ -110,10 +110,10 @@ prints the following values:
 }
 Example
 *******
-The file :ref:`map_xam.cpp <val_op_map_xam.cpp-name>`
+The file :ref:`map_xam.cpp <val_map_op_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_op_map}
+{xrst_end val_map_op}
 */
 // BEGIN_MAP_OP_T
 template <class Value>

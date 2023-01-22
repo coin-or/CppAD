@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include "tape.hpp"
 /*
-{xrst_begin val_op_sub_xam.cpp dev}
+{xrst_begin val_sub_op_xam.cpp dev}
 
 Subtract Value Operator Example
 ###############################
@@ -12,7 +12,7 @@ Subtract Value Operator Example
    // END_C++
 }
 
-{xrst_end val_op_sub_xam.cpp}
+{xrst_end val_sub_op_xam.cpp}
 */
 // BEGIN_C++
 bool sub_xam()

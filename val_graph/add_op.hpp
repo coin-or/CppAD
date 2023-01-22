@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 # include "binary_op.hpp"
 /*
-{xrst_begin val_op_add dev}
+{xrst_begin val_add_op dev}
 {xrst_spell
    xam
 }
@@ -23,7 +23,7 @@ Prototype
 
 Context
 *******
-The class is derived from :ref:`val_op_binary-name` .
+The class is derived from :ref:`val_binary_op-name` .
 It overrides the *op_enum* and *eval* member functions
 and is a concrete class (it has no pure virtual functions).
 
@@ -33,23 +33,23 @@ This static member function returns a pointer to an add_op_t object.
 
 op_enum
 *******
-This override of :ref:`val_op_base@op_enum` returns ``add_op_enum`` .
+This override of :ref:`val_base_op@op_enum` returns ``add_op_enum`` .
 
 eval
 ****
-This override of :ref:`val_op_base@eval` sets
+This override of :ref:`val_base_op@eval` sets
 the result equal to the left operand plus the right operand; see
-:ref:`val_op_base@arg_vec@Binary Operators` .
+:ref:`val_base_op@arg_vec@Binary Operators` .
 
 {xrst_toc_hidden
    val_graph/add_xam.cpp
 }
 Example
 *******
-The file :ref:`add_xam.cpp <val_op_add_xam.cpp-name>`
+The file :ref:`add_xam.cpp <val_add_op_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_op_add}
+{xrst_end val_add_op}
 */
 // BEGIN_ADD_OP_T
 template <class Value>

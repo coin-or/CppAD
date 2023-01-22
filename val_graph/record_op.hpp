@@ -41,7 +41,7 @@ record_op
    // BEGIN_RECORD_OP
    // END_RECORD_OP
 }
-This places a :ref:`val_op_unary-name` or :ref`val_op_binary-name`
+This places a :ref:`val_unary_op-name` or :ref`val_binary_op-name`
 operator in the tape.
 The argument *op_enum* identifies the operator.
 The argument *op_arg* is a vector that contains the index of the operands
@@ -56,7 +56,7 @@ record_con_op
    // BEGIN_RECORD_CON_OP
    // END_RECORD_CON_OP
 }
-This places a :ref:`val_op_con-name` operator in the tape.
+This places a :ref:`val_con_op-name` operator in the tape.
 The return value is the index were *constant* is placed
 in the value vector.
 
@@ -66,15 +66,15 @@ record_map_op
    // BEGIN_RECORD_MAP_OP
    // END_RECORD_MAP_OP
 }
-This places a :ref:`val_op_map-name` operator in the tape.
+This places a :ref:`val_map_op-name` operator in the tape.
 
 map_id
 ======
-This is the :ref:`val_op_map_base@map_id` for this function call.
+This is the :ref:`val_map_op_base@map_id` for this function call.
 
 call_id
 =======
-This is the :ref:`val_op_map_base@forward@call_id` for this function call.
+This is the :ref:`val_map_op_base@forward@call_id` for this function call.
 
 n_res
 =====

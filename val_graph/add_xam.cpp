@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include "tape.hpp"
 /*
-{xrst_begin val_op_add_xam.cpp dev}
+{xrst_begin val_add_op_xam.cpp dev}
 
 Add Value Operator Example
 ##########################
@@ -12,7 +12,7 @@ Add Value Operator Example
    // END_C++
 }
 
-{xrst_end val_op_add_xam.cpp}
+{xrst_end val_add_op_xam.cpp}
 */
 // BEGIN_C++
 bool add_xam()

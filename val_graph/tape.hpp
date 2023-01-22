@@ -115,7 +115,7 @@ in order to evaluate the rest of the value vector.
 
 trace
 =====
-If this is try, the :ref:`val_op_base@print_op` function is used
+If this is try, the :ref:`val_base_op@print_op` function is used
 to print each of the operators.
 
 val_vec

@@ -114,7 +114,7 @@ Implementation
 **************
 {xrst_toc_table
    val_graph/type.hpp
-   val_graph/op_base.hpp
+   val_graph/base_op.hpp
    val_graph/map_base.hpp
    val_graph/tape.hpp
 }
