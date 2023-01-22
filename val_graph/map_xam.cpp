@@ -16,6 +16,14 @@ Function Value Operator Example
 */
 // BEGIN_C++
 namespace { // BEGIN_EMPTY_NAMESPACE
+
+//
+// tape_t, Vector, addr_t, map_base_t
+using CppAD::local::val_graph::tape_t;
+using CppAD::local::val_graph::Vector;
+using CppAD::local::val_graph::addr_t;
+using CppAD::local::val_graph::map_base_t;
+
 // ---------------------------------------------------------------------------
 // my_map_t
 template <class Value>

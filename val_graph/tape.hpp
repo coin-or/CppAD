@@ -8,6 +8,7 @@
 # include "add_op.hpp"
 # include "con_op.hpp"
 # include "sub_op.hpp"
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op_tape dev}
 {xrst_spell
@@ -268,6 +269,7 @@ public :
    // dead_code
    void dead_code(void);
 };
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # include "record_op.hpp"
 # include "renumber.hpp"

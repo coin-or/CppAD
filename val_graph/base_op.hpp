@@ -6,6 +6,7 @@
 // ----------------------------------------------------------------------------
 # include "type.hpp"
 # include <cstdio>
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_base_op dev}
 
@@ -152,5 +153,7 @@ public:
       Vector<Value>&        val_vec      ) const = 0;
 };
 // END_OP_T
+
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # endif

@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include "base_op.hpp"
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_unary_op dev}
 
@@ -98,5 +99,6 @@ public:
       );
    }
 };
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # endif

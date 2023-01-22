@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 # include <cppad/local/sparse/list_setvec.hpp>
 # include "tape.hpp"
+namespace CppAD { namespace local { namespace val_graph {
 //
 // op_hash_table_t
 template <class Value>
@@ -232,4 +233,5 @@ void tape_t<Value>::renumber(void)
    //
    return;
 }
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 # endif

@@ -4,6 +4,13 @@
 # include "tape.hpp"
 
 namespace { // BEGIN_EMPTY_NAMESPACE
+//
+// tape_t, Vector, addr_t, op_enum_t, map_base_t
+using CppAD::local::val_graph::tape_t;
+using CppAD::local::val_graph::Vector;
+using CppAD::local::val_graph::addr_t;
+using CppAD::local::val_graph::op_enum_t;
+using CppAD::local::val_graph::map_base_t;
 // ---------------------------------------------------------------------------
 // my_map_t
 template <class Value>
@@ -41,6 +48,10 @@ private:
 // test_fun
 bool test_fun()
 {  bool ok = true;
+   //
+   // add_op_enum;
+   op_enum_t add_op_enum = CppAD::local::val_graph::add_op_enum;
+   op_enum_t sub_op_enum = CppAD::local::val_graph::sub_op_enum;
    //
    // my_map
    my_map_t<double> my_map;

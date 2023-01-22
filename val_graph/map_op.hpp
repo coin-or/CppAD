@@ -7,6 +7,7 @@
 # include <cstdio>
 # include "base_op.hpp"
 # include "map_base.hpp"
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_map_op dev}
 {xrst_spell
@@ -240,5 +241,6 @@ void map_op_t<Value>::print_op(
    return;
 }
 
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # endif

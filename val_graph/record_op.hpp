@@ -6,6 +6,7 @@
 // ----------------------------------------------------------------------------
 # include "tape.hpp"
 # include "map_op.hpp"
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_record_op dev}
 {xrst_spell
@@ -240,4 +241,7 @@ void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
 // END_SET_DEP
 {  dep_vec_ = dep_vec; }
 // ----------------------------------------------------------------------------
+
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
+
 # endif

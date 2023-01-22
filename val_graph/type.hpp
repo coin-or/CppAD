@@ -8,6 +8,7 @@
 # include <cassert>
 # include <cstddef>
 # include <cppad/utility/vector.hpp>
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op_type dev}
 {xrst_spell
@@ -57,5 +58,6 @@ operator class types (and does not correspond to an operator).
 
 {xrst_end val_op_type}
 */
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # endif

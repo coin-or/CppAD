@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 # include "tape.hpp"
 # include "map_base.hpp"
+namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op_dead_code dev}
 {xrst_spell
@@ -196,4 +197,7 @@ void tape_t<Value>::dead_code(void)
    //
    return;
 }
+
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
+
 # endif
