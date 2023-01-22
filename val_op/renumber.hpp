@@ -127,7 +127,7 @@ Discussion
 **********
 This routine uses hash coding to find operators that are equivalent
 to a previous operators in the tape.
-It changes the use of an operator's results by use of the
+It changes the use of an operator's results to use of the
 results for the equivalent previous operator with lowest index.
 This creates an equivalent tape where replaced operators are not removed,
 but the are dead code in the new tape.

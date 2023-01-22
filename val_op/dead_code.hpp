@@ -6,7 +6,50 @@
 // ---------------------------------------------------------------------------
 # include "tape.hpp"
 # include "map_base.hpp"
+/*
+{xrst_begin val_op_dead_code dev}
+{xrst_spell
+   dep
+   xam
+}
 
+Dead Code Elimination
+#####################
+
+Algorithm
+*********
+#. The dependent variables are marked as needed.
+#. The operators are scanned in reverse if an operators result is
+   needed, the corresponding arguments are marked as needed.
+   The map operator has a more complicated version of this marking.
+#. A forward pass is made though the operators and only the needed
+   ones are included.
+#. An operators result may have a new index
+   because some previous results were left out.
+   A mapping from the old result indices to the new result indices
+   enables subsequent operators to adjust their argument indices.
+#. After the forward pass, the mapping from old indices to new indices
+   is used to adjust the dependent variable indices.
+
+dep_vec
+*******
+This may change the indices corresponding to the dependent vector; i.e.,
+:ref:`val_op_tape@dep_vec`.
+
+Reference
+*********
+`dead-code elimination <https://en.wikipedia.org/wiki/Dead-code_elimination>`_
+
+{xrst_toc_hidden
+   val_op/dead_xam.cpp
+}
+Example
+*******
+The file :ref:`dead_xam.cpp <val_op_dead_xam.cpp-name>` is an
+example and test of tape.dead_code().
+
+{xrst_end val_op_dead_code}
+*/
 template <class Value>
 void tape_t<Value>::dead_code(void)
 {  // -----------------------------------------------------------------------
