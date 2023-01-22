@@ -142,7 +142,7 @@ Reference
 `value numbering <https://en.wikipedia.org/wiki/Value_numbering>`_ .
 
 {xrst_toc_hidden
-   val_op/renumber_xam.cpp
+   val_graph/renumber_xam.cpp
 }
 Example
 *******

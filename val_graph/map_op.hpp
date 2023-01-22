@@ -106,7 +106,7 @@ prints the following values:
    and there are two spaces between those fields.
 
 {xrst_toc_hidden
-   val_op/map_xam.cpp
+   val_graph/map_xam.cpp
 }
 Example
 *******

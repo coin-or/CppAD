@@ -42,7 +42,7 @@ the result equal to the left operand minus the right operand; see
 :ref:`val_op_base@arg_vec@Binary Operators` .
 
 {xrst_toc_hidden
-   val_op/sub_xam.cpp
+   val_graph/sub_xam.cpp
 }
 Example
 *******

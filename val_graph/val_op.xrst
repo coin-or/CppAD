@@ -113,10 +113,10 @@ where
 Implementation
 **************
 {xrst_toc_table
-   val_op/type.hpp
-   val_op/op_base.hpp
-   val_op/map_base.hpp
-   val_op/tape.hpp
+   val_graph/type.hpp
+   val_graph/op_base.hpp
+   val_graph/map_base.hpp
+   val_graph/tape.hpp
 }
 
 

@@ -73,7 +73,7 @@ prints the following values:
 #. res is the result for this operator; i.e. value vector at index res_index
 
 {xrst_toc_hidden
-   val_op/con_xam.cpp
+   val_graph/con_xam.cpp
 }
 Example
 *******

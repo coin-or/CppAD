@@ -41,7 +41,7 @@ Reference
 `dead-code elimination <https://en.wikipedia.org/wiki/Dead-code_elimination>`_
 
 {xrst_toc_hidden
-   val_op/dead_xam.cpp
+   val_graph/dead_xam.cpp
 }
 Example
 *******
