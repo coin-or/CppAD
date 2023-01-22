@@ -34,7 +34,7 @@ such because they are virtual or override functions.
 Value
 *****
 This template parameter is the type used for each element of the
-:ref:`val_op@Value Vector` .
+:ref:`val_graph@Value Vector` .
 
 op_base
 *******
@@ -45,7 +45,7 @@ they all must be defined in order for a derived class object to be used.
 op_enum
 *******
 This member function returns the enum value corresponding to this operator;
-see :ref:`val_op_type@op_enum_t` .
+see :ref:`val_graph_type@op_enum_t` .
 
 n_arg
 *****
@@ -86,7 +86,7 @@ is the index in *arg_vec* where the *n_arg* arguments to this function start.
 
 con_vec
 *******
-is the :ref:`val_op@Constant Vector` .
+is the :ref:`val_graph@Constant Vector` .
 
 res_index
 *********
@@ -94,7 +94,7 @@ is the index in *val_vec* where the results for this operator start.
 
 val_vec
 *******
-is the entire :ref:`val_op@Value Vector` .
+is the entire :ref:`val_graph@Value Vector` .
 
 arg_vec
 *******

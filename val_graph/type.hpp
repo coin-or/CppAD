@@ -10,7 +10,7 @@
 # include <cppad/utility/vector.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_op_type dev}
+{xrst_begin val_graph_type dev}
 {xrst_spell
    typedef
 }
@@ -56,7 +56,7 @@ enum op_enum_t {
 The ``number_op_enum`` entry is used for the number of concrete
 operator class types (and does not correspond to an operator).
 
-{xrst_end val_op_type}
+{xrst_end val_graph_type}
 */
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
