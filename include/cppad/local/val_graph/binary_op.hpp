@@ -55,8 +55,8 @@ prints the following values:
 Operator Sub-Classes
 ********************
 {xrst_toc_table
-   val_graph/add_op.hpp
-   val_graph/sub_op.hpp
+   include/cppad/local/val_graph/add_op.hpp
+   include/cppad/local/val_graph/sub_op.hpp
 }
 
 {xrst_end val_binary_op}

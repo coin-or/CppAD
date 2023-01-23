@@ -128,9 +128,9 @@ The rest of the elements are outputs.
 Operations on Tape
 ******************
 {xrst_toc_table
-   val_graph/record_op.hpp
-   val_graph/renumber.hpp
-   val_graph/dead_code.hpp
+   include/cppad/local/val_graph/record_op.hpp
+   include/cppad/local/val_graph/renumber.hpp
+   include/cppad/local/val_graph/dead_code.hpp
 }
 
 

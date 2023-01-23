@@ -120,10 +120,10 @@ If this operator is a binary operator
 Operator Classes
 ****************
 {xrst_toc_table
-   val_graph/unary_op.hpp
-   val_graph/binary_op.hpp
-   val_graph/con_op.hpp
-   val_graph/map_op.hpp
+   include/cppad/local/val_graph/unary_op.hpp
+   include/cppad/local/val_graph/binary_op.hpp
+   include/cppad/local/val_graph/con_op.hpp
+   include/cppad/local/val_graph/map_op.hpp
 }
 
 {xrst_end val_base_op}
