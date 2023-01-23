@@ -6,7 +6,7 @@
 // 2DO: remove this once bin/check_include_file.sh passes without it.
 # include <cppad/local/val_graph/unary_op.hpp>
 
-bool test_one()
+bool test_one(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum, sub_op_enum

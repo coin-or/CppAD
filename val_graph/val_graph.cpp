@@ -21,6 +21,7 @@
 extern bool add_xam(void);
 extern bool con_xam(void);
 extern bool dead_xam(void);
+extern bool fun2val_xam(void);
 extern bool map_xam(void);
 extern bool renumber_xam(void);
 extern bool sub_xam(void);
@@ -40,6 +41,7 @@ int main(void)
    Run( add_xam,             "add_xam"        );
    Run( con_xam,             "con_xam"        );
    Run( dead_xam,            "dead_xam"       );
+   // Run( fun2val_xam,         "fun2val_xam"    );
    Run( map_xam,             "map_xam"        );
    Run( renumber_xam,        "renumber_xam"   );
    Run( sub_xam,             "map_xam"        );

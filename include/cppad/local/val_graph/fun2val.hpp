@@ -106,7 +106,7 @@ void ADFun<Base, RecBase>::fun2val(
    for(size_t i = 0; i < n_parameter; ++i)
       par2val_index[i] = invalid_addr_t;
    for(size_t i = 0; i < n_dynamic_ind; ++i)
-      par2val_index[i + 1] = i;
+      par2val_index[i + 1] = addr_t(i);
    //
    // val_op_arg
    Vector<addr_t> val_op_arg;
@@ -115,7 +115,7 @@ void ADFun<Base, RecBase>::fun2val(
    // initial index in dyn_par_arg
    size_t i_arg = 0;
    //
-   // i_dyn
+   // val_tape
    // record dynamic parameter operations
    for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
    {  //
@@ -162,12 +162,15 @@ void ADFun<Base, RecBase>::fun2val(
    for(size_t i = 0; i < n_variable; ++i)
       var2val_index[i] = invalid_addr_t;
    for(size_t i = 0; i < n_variable_ind; ++i)
-      var2val_index[i + 1] = n_dynamic_ind + i;
+      var2val_index[i + 1] = addr_t( n_dynamic_ind + i );
    //
    // itr, var_op, arg, i_var, is_var, more_operators
    local::play::const_sequential_iterator itr  = play_.begin();
    Vector<bool>       is_var(2);
    bool more_operators = true;
+   //
+   // val_tape
+   // record variable operations
    while(more_operators)
    {  //
       // n_arg
@@ -204,6 +207,11 @@ void ADFun<Base, RecBase>::fun2val(
          is_var[1]   = true;
          break;
 
+         // EndOp:
+         case local::EndOp:
+         more_operators = false;
+         break;
+
          default:
          CPPAD_ASSERT_KNOWN( var_op > local::NumberOp,
             "This variable operator not yet implemented"
@@ -236,6 +244,12 @@ void ADFun<Base, RecBase>::fun2val(
       // var2val_index
       var2val_index[i_var] = val_index;
    }
+   // dep_vec
+   size_t n_dependent = dep_taddr_.size();
+   Vector<addr_t> dep_vec(n_dependent);
+   for(size_t i = 0; i < n_dependent; ++i)
+      dep_vec[i] = var2val_index[ dep_taddr_[i] ];
+   val_tape.set_dep( dep_vec );
 }
 
 } // END_CPPAD_NAMESPACE

@@ -15,7 +15,7 @@ Value Tape Re-Numbering Example
 {xrst_end val_op_renumber_xam.cpp}
 */
 // BEGIN_C++
-bool renumber_xam()
+bool renumber_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum;

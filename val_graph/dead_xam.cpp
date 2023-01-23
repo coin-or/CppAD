@@ -15,7 +15,7 @@ Dead Code Elimination Example
 {xrst_end val_op_dead_xam.cpp}
 */
 // BEGIN_C++
-bool dead_xam()
+bool dead_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum;

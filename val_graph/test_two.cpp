@@ -46,7 +46,7 @@ private:
 };
 // ---------------------------------------------------------------------------
 // test_fun
-bool test_fun()
+bool test_fun(void)
 {  bool ok = true;
    //
    // add_op_enum;

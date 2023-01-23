@@ -59,7 +59,7 @@ private:
 };
 // ---------------------------------------------------------------------------
 // test_fun
-bool test_fun()
+bool test_fun(void)
 {  bool ok = true;
    //
    // my_map

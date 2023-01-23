@@ -15,7 +15,7 @@ Constant Operator Example
 {xrst_end val_con_op_xam.cpp}
 */
 // BEGIN_C++
-bool con_xam()
+bool con_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, con_op_enum, add_op_enum;

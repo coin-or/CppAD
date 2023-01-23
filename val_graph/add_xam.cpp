@@ -15,7 +15,7 @@ Add Value Operator Example
 {xrst_end val_add_op_xam.cpp}
 */
 // BEGIN_C++
-bool add_xam()
+bool add_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum;

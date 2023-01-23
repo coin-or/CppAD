@@ -9,6 +9,7 @@ SET(source_list val_graph.cpp
    add_xam.cpp
    con_xam.cpp
    dead_xam.cpp
+   fun2val_xam.cpp
    map_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp

@@ -15,7 +15,7 @@ Subtract Value Operator Example
 {xrst_end val_sub_op_xam.cpp}
 */
 // BEGIN_C++
-bool sub_xam()
+bool sub_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, sub_op_enum;

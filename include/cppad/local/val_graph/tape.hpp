@@ -38,6 +38,14 @@ n_val
 }
 This is the number of elements in the value vector.
 
+n_ind
+*****
+{xrst_literal
+   // BEGIN_N_IND
+   // END_N_IND
+}
+This is the size of the independent vector.
+
 arg_vec
 *******
 {xrst_literal
@@ -93,7 +101,7 @@ dep_vec
    // BEGIN_DEP_VEC
    // END_DEP_VEC
 }
-This is the vector of dependent indices in the values vector.
+This is the vector of dependent indices in the value vector.
 The function corresponding to a tape maps the independent values
 to the dependent values.
 
@@ -161,6 +169,11 @@ public :
    size_t n_val(void) const
    {  return n_val_; }
    // END_N_VAL
+   //
+   // BEGIN_N_IND
+   size_t n_ind(void) const
+   {  return n_ind_; }
+   // END_N_IND
    //
    // BEGIN_ARG_VEC
    const Vector<addr_t>& arg_vec(void) const
