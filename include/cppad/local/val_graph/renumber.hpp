@@ -29,13 +29,13 @@ private:
    CppAD::local::sparse::list_setvec table_;
    //
    // hash_code
-   size_t hash_code(size_t n_arg, op_enum_t op_enum, size_t arg_index)
+   size_t hash_code(size_t n_arg, op_enum_t op_enum, addr_t arg_index)
    {  size_t code;
       if( op_enum == con_op_enum )
          code = hash_base( con_vec_[  arg_vec_[arg_index] ] );
       else
       {  code  = size_t(op_enum);
-         for(size_t i = 0; i < n_arg; ++i)
+         for(addr_t i = 0; i < addr_t(n_arg); ++i)
             code += size_t( arg_vec_[arg_index + i] );
       }
       code = code % table_.n_set();

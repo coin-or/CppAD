@@ -198,7 +198,7 @@ void map_op_t<Value>::eval(
    //
    // x
    Vector<Value> x(n_arg - 4);
-   for(size_t i = 4; i < n_arg; ++i)
+   for(addr_t i = 4; i < addr_t(n_arg); ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
    // map_base_ptr
@@ -213,7 +213,7 @@ void map_op_t<Value>::eval(
    std::string map_name      = map_base_ptr->map_name();
    //
    // val_vec
-   for(size_t i = 0; i < n_res; ++i)
+   for(addr_t i = 0; i < addr_t(n_res); ++i)
       val_vec[res_index + i] = y[i];
    //
    // trace
@@ -235,14 +235,14 @@ void map_op_t<Value>::print_op(
    size_t n_res = this->n_res(arg_index, arg_vec);
    //
    std::printf( "    %s(", name);
-   for(size_t i = 4; i < n_arg; ++i)
+   for(addr_t i = 4; i < addr_t(n_arg); ++i)
    {  if( i != 4 )
          printf(", ");
       std::printf("%d", arg_vec[arg_index + i]);
    }
    std::printf(")\n");
-   for(size_t i = 0; i < n_res; ++i)
-      std::printf("%5ld  %10.3g\n", res_index + i, val_vec[res_index + i]);
+   for(addr_t i = 0; i < addr_t(n_res); ++i)
+      std::printf("%5d  %10.3g\n", res_index + i, val_vec[res_index + i]);
    return;
 }
 

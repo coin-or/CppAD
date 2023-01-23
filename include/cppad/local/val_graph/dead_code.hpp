@@ -72,8 +72,8 @@ void tape_t<Value>::dead_code(void)
       op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
       addr_t res_index   = op_vec_[i_op].res_index;
       addr_t arg_index   = op_vec_[i_op].arg_index;
-      size_t n_arg       = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
-      size_t n_res       = op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
+      addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
+      addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
       //
       if( op_enum != map_op_enum )
       {  assert( n_res == 1 );
@@ -83,7 +83,7 @@ void tape_t<Value>::dead_code(void)
          //
          // need_val_index
          if( need_op )
-         {  for(size_t k = 0; k < n_arg; ++k)
+         {  for(addr_t k = 0; k < n_arg; ++k)
                need_val_index[ arg_vec_[arg_index + k] ] = true;
          }
       }
@@ -94,7 +94,7 @@ void tape_t<Value>::dead_code(void)
          //
          // depend_y
          Vector<bool> depend_y(n_res);
-         for(size_t i = 0; i < n_res; ++i)
+         for(addr_t i = 0; i < n_res; ++i)
             depend_y[i] = need_val_index[ res_index + i ];
          //
          // depend_x
@@ -103,8 +103,8 @@ void tape_t<Value>::dead_code(void)
             map_base_t<Value>::map_base_ptr(map_id);
          map_base_ptr->rev_depend(call_id, depend_x, depend_y);
          //
-         for(size_t k = 4; k < n_arg; ++k)
-            need_val_index[ arg_vec_[size_t(arg_index) + k] ] = depend_x[k-4];
+         for(addr_t k = 4; k < n_arg; ++k)
+            need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
       }
    }
    //
@@ -137,12 +137,12 @@ void tape_t<Value>::dead_code(void)
       op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
       addr_t    arg_index = op_vec_[i_op].arg_index;
       addr_t    res_index = op_vec_[i_op].res_index;
-      size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
-      size_t    n_res     = op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
+      addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
+      addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
       //
       // need_op
       bool need_op = false;
-      for(size_t k = 0; k < n_res; ++k)
+      for(addr_t k = 0; k < n_res; ++k)
          need_op |= need_val_index[ res_index + k];
       //
       if( need_op )
@@ -155,8 +155,8 @@ void tape_t<Value>::dead_code(void)
             new_val_index[ res_index ] = new_res_index;
          }
          else if( op_enum == map_op_enum )
-         {  map_op_arg.resize(n_arg - 4);
-            for(size_t k = 4; k < n_arg; ++k)
+         {  map_op_arg.resize( size_t(n_arg - 4) );
+            for(addr_t k = 4; k < n_arg; ++k)
             {  addr_t val_index = arg_vec_[arg_index + k];
                if( need_val_index[val_index] )
                   map_op_arg[k - 4] = new_val_index[val_index];
@@ -165,17 +165,17 @@ void tape_t<Value>::dead_code(void)
                   map_op_arg[k - 4] = addr_t( n_ind_ );
                }
             }
-            size_t map_id      = arg_vec_[arg_index + 2];
-            size_t call_id     = arg_vec_[arg_index + 3];
+            size_t map_id      = size_t( arg_vec_[arg_index + 2] );
+            size_t call_id     = size_t( arg_vec_[arg_index + 3] );
             addr_t new_res_index = new_tape.record_map_op(
-               map_id, call_id, n_res, map_op_arg
+               map_id, call_id, size_t(n_res), map_op_arg
             );
             for(addr_t k = 0; k < addr_t(n_res); ++k)
                new_val_index[ res_index + k ] = new_res_index + k;
          }
          else
-         {  op_arg.resize(n_arg);
-            for(size_t k = 0; k < n_arg; ++k)
+         {  op_arg.resize( size_t(n_arg) );
+            for(addr_t k = 0; k < n_arg; ++k)
             {  assert( arg_vec_[arg_index + k] < res_index );
                op_arg[k] = new_val_index[ arg_vec_[arg_index + k] ];
             }
