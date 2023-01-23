@@ -28,11 +28,13 @@ bool fun2val_xam(void)
    using CppAD::local::val_graph::Vector;
    //
    // ax, ay, f
-   Vector< AD<double> > ax(2), ay(1);
+   Vector< AD<double> > ap(1), ax(2), ay(2);
+   ap[0] = 1.0;
    ax[0] = 2.0;
    ax[1] = 3.0;
-   CppAD::Independent(ax);
-   ay[0] = ax[0] + ax[1];
+   CppAD::Independent(ax, ap);
+   ay[0] = ax[0] + 7.0;
+   ay[1] = ax[1] - ap[0];
    CppAD::ADFun<double> f(ax, ay);
    //
    // tape
@@ -43,7 +45,8 @@ bool fun2val_xam(void)
    Vector<addr_t> dep_vec = tape.dep_vec();
    //
    // x
-   Vector<double> x(2);
+   Vector<double> p(1), x(2);
+   p[0] = 4.0;
    x[0] = 5.0;
    x[1] = 6.0;
    //
@@ -52,16 +55,19 @@ bool fun2val_xam(void)
    //
    // val_vec
    Vector<double> val_vec( tape.n_val() );
-   for(size_t i = 0; i < tape.n_ind(); ++i)
-      val_vec[i] = x[i];
+   val_vec[0] = p[0];
+   val_vec[1] = x[0];
+   val_vec[2] = x[1];
    tape.eval(trace, val_vec);
    //
    // y
-   Vector<double> y(1);
+   Vector<double> y(2);
    y[0] = val_vec[ dep_vec[0] ];
+   y[1] = val_vec[ dep_vec[1] ];
    //
    // ok
-   ok &= y[0] == x[0] + x[1];
+   ok &= y[0] == x[0] + 7.0;
+   ok &= y[1] == x[1] - p[0];
    //
    return ok;
 }
