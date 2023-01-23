@@ -8,6 +8,8 @@
 # include <cassert>
 # include <cstddef>
 # include <cppad/utility/vector.hpp>
+# include <cppad/configure.hpp>
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_type dev}
@@ -25,7 +27,7 @@ It must be able to support an index equal to the length of the value vector.
 A signed type can be used for testing, but an unsigned type will support
 more indices with the same memory usage.
 {xrst_code hpp} */
-typedef int addr_t;
+typedef CPPAD_TAPE_ADDR_TYPE addr_t;
 /* {xrst_code}
 
 Vector

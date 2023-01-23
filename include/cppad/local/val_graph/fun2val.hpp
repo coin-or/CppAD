@@ -8,6 +8,7 @@
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/pod_vector.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -21,13 +22,15 @@ void ADFun<Base, RecBase>::fun2val(
    using local::val_graph::op_enum_t;
    op_enum_t number_op_enum = local::val_graph::number_op_enum;
    //
-   // op_code_dyn, number_dyn
+   // op_code_dyn, number_dyn, OpCode, NumberOp
    using local::op_code_dyn;
    op_code_dyn number_dyn = local::number_dyn;
-   //
-   // OpCode, NumberOp
    using local::OpCode;
    OpCode NumberOp = local::NumberOp;
+   //
+   // pod_vector, opcode_t
+   using local::pod_vector;
+   using local::opcode_t;
    //
    // invalid_addr_t, invalid_size_t
    addr_t invalid_addr_t = std::numeric_limits<addr_t>::max();
@@ -56,6 +59,18 @@ void ADFun<Base, RecBase>::fun2val(
    dyn_op2val_op[local::SubvpOp] = local::val_graph::sub_op_enum;
    dyn_op2val_op[local::SubvvOp] = local::val_graph::sub_op_enum;
    //
+   // dyn_par_op
+   // mapping from dynamic parameter index to operator
+   const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
+   //
+   // dyn_ind2par_ind
+   // mapping from dynamic parameter index to parameter index
+   const pod_vector<addr_t>& dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
+   //
+   // dyn_par_arg
+   // vector that contains arguments to all the dynamic parameter operators
+   const pod_vector<addr_t>&  dyn_par_arg( play_.dyn_par_arg() );
+   //
    // n_parameter
    // number of parameters
    size_t n_parameter = play_.num_par_rec();
@@ -66,7 +81,11 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // n_dynamic_ind
    // number of independent dynamic parameters
-   size_t n_dynmaic_ind = play_.num_dynamic_ind();
+   size_t n_dynamic_ind = play_.num_dynamic_ind();
+   //
+   // n_variables
+   // number of variables
+   const size_t n_variable = play_.num_var_rec();
    //
    // n_variable_ind
    // number of indepedent variables
@@ -78,7 +97,7 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // zero_val_index
    // initialize value vector tape
-   addr_t zero_val_index = set_ind( n_val_ind );
+   addr_t zero_val_index = val_tape.set_ind( n_val_ind );
    CPPAD_ASSERT_UNKNOWN( size_t(zero_val_index) == n_val_ind );
    //
    // par2val_index
@@ -127,6 +146,7 @@ void ADFun<Base, RecBase>::fun2val(
          {  Base constant = parameter[par_index];
             val_op_arg[i] = val_tape.record_con_op( constant );
             par2val_index[par_index] = val_op_arg[i];
+         }
       }
       //
       // record_op, val_index
@@ -141,7 +161,7 @@ void ADFun<Base, RecBase>::fun2val(
    Vector<addr_t> var2val_index(n_variable);
    for(size_t i = 0; i < n_variable; ++i)
       var2val_index[i] = invalid_addr_t;
-   for(size_ i = 0; i < n_variable_ind; ++i)
+   for(size_t i = 0; i < n_variable_ind; ++i)
       var2val_index[i + 1] = n_dynamic_ind + i;
    //
    // itr, var_op, arg, i_var, is_var, more_operators
@@ -188,7 +208,6 @@ void ADFun<Base, RecBase>::fun2val(
          CPPAD_ASSERT_KNOWN( var_op > local::NumberOp,
             "This variable operator not yet implemented"
          );
-
       }
       //
       // val_op
@@ -215,7 +234,8 @@ void ADFun<Base, RecBase>::fun2val(
       addr_t val_index = val_tape.record_op(val_op, val_op_arg);
       //
       // var2val_index
-      var2val_index[i_par] = val_index;
+      var2val_index[i_var] = val_index;
+   }
 }
 
 } // END_CPPAD_NAMESPACE

@@ -849,9 +849,7 @@ public:
 # include <cppad/local/sweep/for_hes.hpp>
 # include <cppad/core/graph/from_graph.hpp>
 # include <cppad/core/graph/to_graph.hpp>
-# ifdef THIS_SYMBOL_IS_NOT_DEFIEND
 # include <cppad/local/val_graph/fun2val.hpp>
-# endif
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
