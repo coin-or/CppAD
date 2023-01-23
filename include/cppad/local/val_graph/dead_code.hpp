@@ -4,8 +4,8 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include "tape.hpp"
-# include "map_base.hpp"
+# include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/val_graph/map_base.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op_dead_code dev}

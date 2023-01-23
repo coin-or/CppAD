@@ -5,8 +5,8 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cstdio>
-# include "base_op.hpp"
-# include "map_base.hpp"
+# include <cppad/local/val_graph/base_op.hpp>
+# include <cppad/local/val_graph/map_base.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_map_op dev}

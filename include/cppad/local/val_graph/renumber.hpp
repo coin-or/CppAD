@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/sparse/list_setvec.hpp>
-# include "tape.hpp"
+# include <cppad/local/val_graph/tape.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 //
 // op_hash_table_t

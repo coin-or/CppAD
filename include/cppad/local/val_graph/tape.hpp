@@ -4,10 +4,10 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include "type.hpp"
-# include "add_op.hpp"
-# include "con_op.hpp"
-# include "sub_op.hpp"
+# include <cppad/local/val_graph/type.hpp>
+# include <cppad/local/val_graph/add_op.hpp>
+# include <cppad/local/val_graph/con_op.hpp>
+# include <cppad/local/val_graph/sub_op.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op_tape dev}
@@ -271,9 +271,9 @@ public :
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
-# include "record_op.hpp"
-# include "renumber.hpp"
-# include "dead_code.hpp"
-# include "map_op.hpp"
+# include <cppad/local/val_graph/record_op.hpp>
+# include <cppad/local/val_graph/renumber.hpp>
+# include <cppad/local/val_graph/dead_code.hpp>
+# include <cppad/local/val_graph/map_op.hpp>
 
 # endif
