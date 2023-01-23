@@ -7,17 +7,18 @@
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
+# include <cppad/local/val_graph/tape.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 template <class Base, class RecBase>
-void ADFun<Base, RecBase>:fun2val(
-   local::val_graph::tape_t& val_tape  )
+void ADFun<Base, RecBase>::fun2val(
+   local::val_graph::tape_t<Base>& val_tape  )
 {  //
    // Vector, addr_t, op_enum_t
    using local::val_graph::Vector;
-   using local::val_graph:addr_t;
-   using local::val_graph:op_enum_t;
+   using local::val_graph::addr_t;
+   using local::val_graph::op_enum_t;
    op_enum_t number_op_enum = local::val_graph::number_op_enum;
    //
    // op_code_dyn, number_dyn
@@ -26,7 +27,7 @@ void ADFun<Base, RecBase>:fun2val(
    //
    // OpCode, NumberOp
    using local::OpCode;
-   OpCode NuberOp = local::NumberOp;
+   OpCode NumberOp = local::NumberOp;
    //
    // invalid_addr_t, invalid_size_t
    addr_t invalid_addr_t = std::numeric_limits<addr_t>::max();
@@ -37,15 +38,15 @@ void ADFun<Base, RecBase>:fun2val(
    //
    // dyn_op2val_op
    Vector<op_enum_t> dyn_op2val_op(number_dyn);
-   for(op_code_dyn op = op_code_dyn(0); op < number_dyn; ++op)
-      dyn_op2val_op[op] = number_op_enum; // invalid
+   for(size_t i = 0; i < size_t(number_dyn); ++i)
+      dyn_op2val_op[i] = number_op_enum; // invalid
    dyn_op2val_op[local::add_dyn] = local::val_graph::add_op_enum;
    dyn_op2val_op[local::sub_dyn] = local::val_graph::sub_op_enum;
    //
    // var_op2val_op
    Vector<op_enum_t> var_op2val_op(NumberOp);
-   for(OpCode op = OpCode(0); op < NumberOp; ++op)
-      var_op2val_op[op] = number_op_enum; // invalid
+   for(size_t i = 0; i < size_t(NumberOp); ++i)
+      var_op2val_op[i] = number_op_enum; // invalid
    //
    // add
    var_op2val_op[local::AddpvOp] = local::val_graph::add_op_enum;

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin ADFun}
@@ -33,6 +33,7 @@ Contents
 # include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/subgraph/info.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
+# include <cppad/local/val_graph/tape.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -301,10 +302,12 @@ public:
       const vector<bool>& var2dyn
    );
 
-   // convert function to  a C++ graph, Json graph, or C source code
+   // convert function to  a
+   // C++ graph, Json graph, C source code, val_graph
    void to_graph(cpp_graph& graph_obj);
    std::string to_json(void);
    void to_csrc(std::ostream& os, const std::string& type);
+   // void fun2val( local::val_graph::tape_t<Base>& val_tape );
 
    // create ADFun< AD<Base> > from this ADFun<Base>
    // (doxygen in cppad/core/base2ad.hpp)
@@ -846,6 +849,7 @@ public:
 # include <cppad/local/sweep/for_hes.hpp>
 # include <cppad/core/graph/from_graph.hpp>
 # include <cppad/core/graph/to_graph.hpp>
+// # include <cppad/local/val_graph/fun2val.hpp>
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
