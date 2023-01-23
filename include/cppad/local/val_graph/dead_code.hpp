@@ -8,7 +8,7 @@
 # include <cppad/local/val_graph/map_base.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_op_dead_code dev}
+{xrst_begin val_graph_dead_code dev}
 {xrst_spell
    dep
    xam
@@ -35,7 +35,7 @@ Algorithm
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
-:ref:`val_op_tape@dep_vec`.
+:ref:`val_graph_tape@dep_vec`.
 
 Reference
 *********
@@ -49,7 +49,7 @@ Example
 The file :ref:`dead_xam.cpp <val_op_dead_xam.cpp-name>` is an
 example and test of tape.dead_code().
 
-{xrst_end val_op_dead_code}
+{xrst_end val_graph_dead_code}
 */
 template <class Value>
 void tape_t<Value>::dead_code(void)

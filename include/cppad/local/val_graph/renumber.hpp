@@ -114,7 +114,7 @@ public:
 };
 /*
 -------------------------------------------------------------------------------
-{xrst_begin val_op_renumber dev}
+{xrst_begin val_graph_renumber dev}
 {xrst_spell
    dep
    renumber
@@ -136,7 +136,7 @@ but the are dead code in the new tape.
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
-:ref:`val_op_tape@dep_vec`.
+:ref:`val_graph_tape@dep_vec`.
 
 Reference
 *********
@@ -147,10 +147,10 @@ Reference
 }
 Example
 *******
-The file :ref:`renumber_xam.cpp <val_op_renumber_xam.cpp-name>` is an
+The file :ref:`renumber_xam.cpp <val_graph_renumber_xam.cpp-name>` is an
 example and test of tape.renumber().
 
-{xrst_end val_op_renumber}
+{xrst_end val_graph_renumber}
 -------------------------------------------------------------------------------
 */
 template <class Value>
