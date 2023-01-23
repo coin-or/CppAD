@@ -6,6 +6,10 @@
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/binary_op.hpp>
 
+// define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/utility/thread_alloc.hpp>
+
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_add_op dev}
@@ -59,7 +63,8 @@ class add_op_t : public binary_op_t<Value> {
 public:
    // get_instance
    static add_op_t* get_instance(void)
-   {  static add_op_t instance;
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static add_op_t instance;
       return &instance;
    }
    // op_enum

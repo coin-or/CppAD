@@ -7,6 +7,10 @@
 # include <cstdio>
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/map_base.hpp>
+
+// define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/utility/thread_alloc.hpp>
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_map_op dev}
@@ -122,7 +126,8 @@ class map_op_t : public op_base_t<Value> {
 public:
    // get_instance
    static map_op_t* get_instance(void)
-   {  static map_op_t instance;
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static map_op_t instance;
       return &instance;
    }
    // op_enum

@@ -5,6 +5,10 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
+
+// define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/utility/thread_alloc.hpp>
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_con_op dev}
@@ -89,7 +93,8 @@ class con_op_t : public op_base_t<Value> {
 public:
    // get_instance
    static con_op_t* get_instance(void)
-   {  static con_op_t instance;
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static con_op_t instance;
       return &instance;
    }
    // op_enum
