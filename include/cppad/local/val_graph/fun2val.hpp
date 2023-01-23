@@ -1,5 +1,5 @@
-# ifndef CPPAD_VAL_GRAPH_FUN2VAL_HPP
-# define CPPAD_VAL_GRAPH_FUN2VAL_HPP
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_FUN2VAL_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_FUN2VAL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-23 Bradley M. Bell
