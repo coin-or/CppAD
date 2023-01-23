@@ -22,19 +22,17 @@ void ADFun<Base, RecBase>::fun2val(
    using local::val_graph::op_enum_t;
    op_enum_t number_op_enum = local::val_graph::number_op_enum;
    //
-   // op_code_dyn, number_dyn, OpCode, NumberOp
+   // op_code_dyn, number_dyn, OpCode
    using local::op_code_dyn;
    op_code_dyn number_dyn = local::number_dyn;
    using local::OpCode;
-   OpCode NumberOp = local::NumberOp;
    //
    // pod_vector, opcode_t
    using local::pod_vector;
    using local::opcode_t;
    //
-   // invalid_addr_t, invalid_size_t
+   // invalid_addr_t
    addr_t invalid_addr_t = std::numeric_limits<addr_t>::max();
-   size_t invalid_size_t = std::numeric_limits<size_t>::max();
    //
    // parameter
    const Base* parameter = play_.GetPar();
@@ -47,17 +45,17 @@ void ADFun<Base, RecBase>::fun2val(
    dyn_op2val_op[local::sub_dyn] = local::val_graph::sub_op_enum;
    //
    // var_op2val_op
-   Vector<op_enum_t> var_op2val_op(NumberOp);
-   for(size_t i = 0; i < size_t(NumberOp); ++i)
+   Vector<op_enum_t> var_op2val_op(local::NumberOp);
+   for(size_t i = 0; i < size_t(local::NumberOp); ++i)
       var_op2val_op[i] = number_op_enum; // invalid
    //
    // add
    var_op2val_op[local::AddpvOp] = local::val_graph::add_op_enum;
    var_op2val_op[local::AddvvOp] = local::val_graph::add_op_enum;
    // sub
-   dyn_op2val_op[local::SubpvOp] = local::val_graph::sub_op_enum;
-   dyn_op2val_op[local::SubvpOp] = local::val_graph::sub_op_enum;
-   dyn_op2val_op[local::SubvvOp] = local::val_graph::sub_op_enum;
+   var_op2val_op[local::SubpvOp] = local::val_graph::sub_op_enum;
+   var_op2val_op[local::SubvpOp] = local::val_graph::sub_op_enum;
+   var_op2val_op[local::SubvvOp] = local::val_graph::sub_op_enum;
    //
    // dyn_par_op
    // mapping from dynamic parameter index to operator
@@ -105,8 +103,8 @@ void ADFun<Base, RecBase>::fun2val(
    Vector<addr_t> par2val_index(n_parameter);
    for(size_t i = 0; i < n_parameter; ++i)
       par2val_index[i] = invalid_addr_t;
-   for(size_t i = 0; i < n_dynamic_ind; ++i)
-      par2val_index[i + 1] = addr_t(i);
+   for(addr_t i = 0; i < addr_t( n_dynamic_ind ); ++i)
+      par2val_index[i + 1] = i;
    //
    // val_op_arg
    Vector<addr_t> val_op_arg;
@@ -139,7 +137,7 @@ void ADFun<Base, RecBase>::fun2val(
       // val_op_arg
       val_op_arg.resize(n_arg);
       for(size_t i = 0; i < n_arg; ++i)
-      {  size_t par_index = dyn_par_arg[i_arg + i];
+      {  size_t par_index = size_t( dyn_par_arg[i_arg + i] );
          if( par2val_index[par_index] != invalid_addr_t )
            val_op_arg[i] = par2val_index[par_index];
          else
@@ -161,8 +159,8 @@ void ADFun<Base, RecBase>::fun2val(
    Vector<addr_t> var2val_index(n_variable);
    for(size_t i = 0; i < n_variable; ++i)
       var2val_index[i] = invalid_addr_t;
-   for(size_t i = 0; i < n_variable_ind; ++i)
-      var2val_index[i + 1] = addr_t( n_dynamic_ind + i );
+   for(addr_t i = 0; i < addr_t(n_variable_ind); ++i)
+      var2val_index[i + 1] = addr_t( n_dynamic_ind )  + i;
    //
    // itr, var_op, arg, i_var, is_var, more_operators
    local::play::const_sequential_iterator itr  = play_.begin();
@@ -173,8 +171,6 @@ void ADFun<Base, RecBase>::fun2val(
    // record variable operations
    while(more_operators)
    {  //
-      // n_arg
-      size_t n_arg = invalid_size_t;
       //
       // var_op, arg, i_var
       local::OpCode    var_op;
@@ -182,19 +178,23 @@ void ADFun<Base, RecBase>::fun2val(
       size_t           i_var;
       (++itr).op_info(var_op, arg, i_var);
       //
+      // n_arg
+      size_t n_arg = local::NumArg( var_op );
+      //
+      // n_res
+      size_t n_res = local::NumRes( var_op );
+      //
       switch( var_op )
       {
          // first argument a parameter, second argument a variable
          case local::AddpvOp:
          case local::SubpvOp:
-         n_arg = 2;
          is_var[0]   = false;
          is_var[1]   = true;
          break;
 
          // first argument a variable, second argument a parameter
          case local::SubvpOp:
-         n_arg = 2;
          is_var[0]   = true;
          is_var[1]   = false;
          break;
@@ -202,7 +202,6 @@ void ADFun<Base, RecBase>::fun2val(
          // first argument a variable, second argument a variable
          case local::AddvvOp:
          case local::SubvvOp:
-         n_arg = 2;
          is_var[0]   = true;
          is_var[1]   = true;
          break;
@@ -212,17 +211,17 @@ void ADFun<Base, RecBase>::fun2val(
          more_operators = false;
          break;
 
+         // InvOp:
+         // The independent variable indices are already assigned
+         case local::InvOp:
+         n_res = 0;
+         break;
+
          default:
          CPPAD_ASSERT_KNOWN( var_op > local::NumberOp,
             "This variable operator not yet implemented"
          );
       }
-      //
-      // val_op
-      op_enum_t val_op = var_op2val_op[var_op];
-      CPPAD_ASSERT_KNOWN( val_op < number_op_enum ,
-         "This variable operator not yet implemented"
-      );
       //
       // val_op_arg
       val_op_arg.resize(n_arg);
@@ -237,12 +236,21 @@ void ADFun<Base, RecBase>::fun2val(
             par2val_index[ arg[i] ] = val_op_arg[i];
          }
       }
-      //
-      // record_op, val_index
-      addr_t val_index = val_tape.record_op(val_op, val_op_arg);
-      //
-      // var2val_index
-      var2val_index[i_var] = val_index;
+      if( n_res > 0 )
+      {  CPPAD_ASSERT_UNKNOWN( n_res == 1 );
+         //
+         // val_op
+         op_enum_t val_op = var_op2val_op[var_op];
+         CPPAD_ASSERT_KNOWN( val_op < number_op_enum ,
+            "This variable operator not yet implemented"
+         );
+         //
+         // record_op, val_index
+         addr_t val_index = val_tape.record_op(val_op, val_op_arg);
+         //
+         // var2val_index
+         var2val_index[i_var] = val_index;
+      }
    }
    // dep_vec
    size_t n_dependent = dep_taddr_.size();

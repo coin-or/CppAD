@@ -48,7 +48,7 @@ bool fun2val_xam(void)
    x[1] = 6.0;
    //
    // trace
-   bool trace = true;
+   bool trace = false;
    //
    // val_vec
    Vector<double> val_vec( tape.n_val() );

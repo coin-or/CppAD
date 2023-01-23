@@ -39,7 +39,7 @@ These member functions have he same specifications as for std::vector.
 The std::vector and CppAD::vector are two example template vector
 classes that can be used.
 {xrst_code hpp} */
-template <class Value> using Vector = std::vector<Value>;
+template <class Value> using Vector = CppAD::vector<Value>;
 /* {xrst_code}
 
 op_enum_t
