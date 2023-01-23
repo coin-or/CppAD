@@ -3,6 +3,9 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 
+// 2DO: remove this once bin/check_include_file.sh passes without it.
+# include <cppad/local/val_graph/unary_op.hpp>
+
 bool test_one()
 {  bool ok = true;
    //

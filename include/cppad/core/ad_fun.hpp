@@ -307,7 +307,7 @@ public:
    void to_graph(cpp_graph& graph_obj);
    std::string to_json(void);
    void to_csrc(std::ostream& os, const std::string& type);
-   // void fun2val( local::val_graph::tape_t<Base>& val_tape );
+   void fun2val( local::val_graph::tape_t<Base>& val_tape );
 
    // create ADFun< AD<Base> > from this ADFun<Base>
    // (doxygen in cppad/core/base2ad.hpp)
@@ -849,7 +849,9 @@ public:
 # include <cppad/local/sweep/for_hes.hpp>
 # include <cppad/core/graph/from_graph.hpp>
 # include <cppad/core/graph/to_graph.hpp>
-// # include <cppad/local/val_graph/fun2val.hpp>
+# ifdef THIS_SYMBOL_IS_NOT_DEFIEND
+# include <cppad/local/val_graph/fun2val.hpp>
+# endif
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
