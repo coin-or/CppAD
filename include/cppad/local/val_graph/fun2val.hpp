@@ -4,6 +4,59 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-23 Bradley M. Bell
 // --------------------------------------------------------------------------
+/*
+------------------------------------------------------------------------------
+{xrst_begin fun2val_graph dev}
+
+Create a C++ AD Graph Corresponding to an ADFun Object
+######################################################
+
+Syntax
+******
+
+| |tab| ``local::val_graph::tape_t`` < *Base*>  *val_tape*
+| |tab| ``ADFun`` < *Base* > *fun*
+| |tab| *fun* . ``fun2val`` ( *val_tape* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
+It is also :ref:`val_graph_tape@Value` type for the tape.
+
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+
+val_tape
+********
+This is a :ref:`val_graph_tape-name` object.
+The input contents of the tape does not matter.
+Upon return it is a
+:ref:`val_graph-name` representation of the function.
+
+Under Construction
+******************
+This routine is under construction and is only implemented
+for a few of the possible :ref:`ADFun-name` operators.
+
+{xrst_toc_hidden
+   val_graph/fun2val_xam.cpp
+}
+Examples
+********
+The file :ref:`val_fun2val_xam.cpp-name`
+is an example an test of this conversion.
+
+{xrst_end fun2val_graph}
+*/
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
@@ -12,9 +65,11 @@
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
+// BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void ADFun<Base, RecBase>::fun2val(
    local::val_graph::tape_t<Base>& val_tape  )
+// END_PROTOTYPE
 {  //
    // Vector, addr_t, op_enum_t
    using local::val_graph::Vector;

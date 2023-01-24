@@ -29,6 +29,10 @@ Purpose
 *******
 This class is used to define a function using a sequence of operators.
 
+Value
+*****
+This is the type used for evaluations using the tape.
+
 
 n_val
 *****

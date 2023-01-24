@@ -117,6 +117,7 @@ Implementation
    include/cppad/local/val_graph/base_op.hpp
    include/cppad/local/val_graph/map_base.hpp
    include/cppad/local/val_graph/tape.hpp
+   include/cppad/local/val_graph/fun2val.hpp
 }
 
 
