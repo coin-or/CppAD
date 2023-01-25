@@ -310,8 +310,8 @@ public:
    void fun2val( local::val_graph::tape_t<Base>& val_tape );
    void val2fun(
       const local::val_graph::tape_t<Base>& val_tape  ,
-      const CppAD::vector<Base>&            dyn_ind   ,
-      const CppAD::vector<Base>&            var_ind
+      const CppAD::vector<size_t>&          dyn_ind   ,
+      const CppAD::vector<size_t>&          var_ind
    );
 
    // create ADFun< AD<Base> > from this ADFun<Base>

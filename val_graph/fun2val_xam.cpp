@@ -6,8 +6,8 @@
 /*
 {xrst_begin val_fun2val_xam.cpp dev}
 
-Add Value Operator Example
-##########################
+Example Vale Graph From ADFun
+#############################
 {xrst_literal
    // BEGIN_C++
    // END_C++

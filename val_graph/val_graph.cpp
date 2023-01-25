@@ -27,6 +27,7 @@ extern bool renumber_xam(void);
 extern bool sub_xam(void);
 extern bool test_one(void);
 extern bool test_two(void);
+extern bool val2fun_xam(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -47,6 +48,7 @@ int main(void)
    Run( sub_xam,             "map_xam"        );
    Run( test_one,            "test_one"       );
    Run( test_two,            "test_two"       );
+   // Run( val2fun_xam,         "val2fun_xam"    );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak
