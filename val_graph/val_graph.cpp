@@ -48,7 +48,7 @@ int main(void)
    Run( sub_xam,             "map_xam"        );
    Run( test_one,            "test_one"       );
    Run( test_two,            "test_two"       );
-   // Run( val2fun_xam,         "val2fun_xam"    );
+   Run( val2fun_xam,         "val2fun_xam"    );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

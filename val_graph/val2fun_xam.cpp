@@ -66,7 +66,14 @@ bool val2fun_xam(void)
    //
    // set_dep
    tape.set_dep( dep_vec );
-   //
+   /*
+   // trace
+   bool trace = true;
+   Vector<double> val_vec( tape.n_val() );
+   for(size_t i = 0; i < n_ind; ++i)
+      val_vec[i] = double(5 + i);
+   tape.eval(trace, val_vec);
+   */
    // ADFun
    Vector<size_t> dyn_ind(2), var_ind(2);
    dyn_ind[0] = 0;

@@ -39,6 +39,16 @@ void ADFun<Base, RecBase>::val2fun(
    const vector<Base>&      val_con_vec = val_tape.con_vec();
    const vector<addr_t>&    val_dep_vec = val_tape.dep_vec();
    //
+   // check_push_back
+   auto check_push_back = [](
+      vector<addr_t>& vec      ,
+      auto            index    ,
+      auto            value    )
+   {  CPPAD_ASSERT_UNKNOWN( vec.size() == size_t(index) );
+      vec.push_back( value );
+      return;
+   };
+   //
    // nan
    Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
    //
@@ -66,6 +76,9 @@ void ADFun<Base, RecBase>::val2fun(
    // number of independent varibles
    size_t var_n_ind = var_ind.size();
    //
+   // val_n_op
+   size_t val_n_op = val_op_vec.size();
+   //
    CPPAD_ASSERT_KNOWN( dyn_n_ind + var_n_ind == val_n_ind,
       "val2fun: The number of independent variables and dynamic parameters\n"
       "is not equal to the size of the independent value vector"
@@ -83,7 +96,7 @@ void ADFun<Base, RecBase>::val2fun(
    {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= dyn_ind[i]"
       );
-      CPPAD_ASSERT_KNOWN( val_ad_type[ dyn_ind[i] ] != number_ad_type_enum,
+      CPPAD_ASSERT_KNOWN( val_ad_type[ dyn_ind[i] ] == number_ad_type_enum,
          "val2fun: dep_ind[i] == dep_ind[j] for some i and j"
       );
       val_ad_type[ dyn_ind[i] ] = dynamic_enum;
@@ -92,7 +105,7 @@ void ADFun<Base, RecBase>::val2fun(
    {  CPPAD_ASSERT_KNOWN( var_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= var_ind[i]"
       );
-      CPPAD_ASSERT_KNOWN( val_ad_type[ var_ind[i] ] != number_ad_type_enum,
+      CPPAD_ASSERT_KNOWN( val_ad_type[ var_ind[i] ] == number_ad_type_enum,
          "val2fun: var_ind[i] == dep_ind[j] for some i and j\n"
          "or var_ind[i] == var_ind[j] for some i and j"
       );
@@ -132,12 +145,12 @@ void ADFun<Base, RecBase>::val2fun(
    {  if( val_ad_type[i] == dynamic_enum )
       {  par_addr = rec.put_dyn_par(nan, local::ind_dyn);
          CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
-         val2fun_index.push_back( par_addr );
+         check_push_back(val2fun_index, i, par_addr);
       }
       else
       {  CPPAD_ASSERT_UNKNOWN( val_ad_type[i] == variable_enum );
          var_addr = rec.PutOp( local::InvOp );
-         val2fun_index.push_back( var_addr );
+         check_push_back(val2fun_index, i, var_addr);
       }
    }
    CPPAD_ASSERT_UNKNOWN( size_t(par_addr) == dyn_n_ind );
@@ -154,7 +167,7 @@ void ADFun<Base, RecBase>::val2fun(
    vector<addr_t>       arg;
    //
    // op_index
-   for(size_t op_index = 0; op_index < n_val; ++op_index)
+   for(size_t op_index = 0; op_index < val_n_op; ++op_index)
    {  //
       // op_ptr, agr_index, res_index, n_arg, op_enum
       const op_info_t& op_info       = val_op_vec[op_index];
@@ -186,10 +199,11 @@ void ADFun<Base, RecBase>::val2fun(
          ad_type_enum res_ad_type = constant_enum;
          for(addr_t i = 0; i < addr_t(n_arg); ++i)
          {  arg_ad_type[i] = val_ad_type[ val_arg_vec[arg_index + i] ];
-            arg[i]         = val2fun_index[ val_arg_vec[arg_index + 1] ];
+            arg[i]         = val2fun_index[ val_arg_vec[arg_index + i] ];
             CPPAD_ASSERT_UNKNOWN( arg_ad_type[i] < number_ad_type_enum );
             res_ad_type = std::max(res_ad_type, arg_ad_type[i] );
          }
+         val_ad_type[res_index] = res_ad_type;
          break;
       }
       //
@@ -200,10 +214,10 @@ void ADFun<Base, RecBase>::val2fun(
          case local::val_graph::con_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
          {  const Base& constant = val_con_vec[arg_index];
-            par_addr = rec.put_con_par(par_addr);
+            par_addr = rec.put_con_par(constant);
             CPPAD_ASSERT_UNKNOWN( parameter[par_addr] == constant );
             //
-            val2fun_index[res_index] = par_addr;
+            check_push_back(val2fun_index, res_index, par_addr);
          }
          break;
          //
@@ -214,46 +228,50 @@ void ADFun<Base, RecBase>::val2fun(
          {  tmp_addr = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
             CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
          }
-         else if( val_ad_type[res_index] == variable_enum )
-         {  tmp_addr = rec.PutOp(local::AddvvOp);
-            rec.PutArg(arg[0], arg[1]);
-         }
-         else if( arg_ad_type[0] == variable_enum )
-         {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] < variable_enum );
-            tmp_addr = rec.PutOp(local::AddpvOp);
-            rec.PutArg(arg[0], arg[1]);
-         }
          else
-         {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] == variable_enum );
-            CPPAD_ASSERT_UNKNOWN( arg_ad_type[0] < variable_enum );
-            tmp_addr = rec.PutOp(local::AddpvOp);
-            rec.PutArg(arg[1], arg[0]);
+         {  if( arg_ad_type[0] < variable_enum )
+            {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] == variable_enum );
+               tmp_addr = rec.PutOp(local::AddpvOp);
+            }
+            else if( arg_ad_type[1] < variable_enum )
+            {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[0] == variable_enum );
+               tmp_addr = rec.PutOp(local::AddpvOp);
+               std::swap(arg[0], arg[1]);
+            }
+            else
+            {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] == variable_enum );
+               CPPAD_ASSERT_UNKNOWN( arg_ad_type[0] == variable_enum );
+               tmp_addr = rec.PutOp(local::AddvvOp);
+            }
+            rec.PutArg(arg[0], arg[1]);
          }
-         val2fun_index[res_index] = tmp_addr;
+         check_push_back(val2fun_index, res_index, tmp_addr);
          break;
          //
          // sub_op_enum
          case local::val_graph::sub_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
          if( val_ad_type[res_index] == dynamic_enum )
-         {  tmp_addr = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
+         {  tmp_addr = rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
             CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
          }
-         else if( val_ad_type[res_index] == variable_enum )
-         {  tmp_addr = rec.PutOp(local::SubvvOp);
-            rec.PutArg(arg[0], arg[1]);
-         }
-         else if( arg_ad_type[0] == variable_enum )
-         {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] < variable_enum );
-            tmp_addr = rec.PutOp(local::SubvpOp);
-            rec.PutArg(arg[0], arg[1]);
-         }
          else
-         {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] == variable_enum );
-            tmp_addr = rec.PutOp(local::SubpvOp);
+         {  if( arg_ad_type[0] < variable_enum )
+            {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] == variable_enum );
+               tmp_addr = rec.PutOp(local::SubpvOp);
+            }
+            else if( arg_ad_type[1] < variable_enum )
+            {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[0] == variable_enum );
+               tmp_addr = rec.PutOp(local::SubvpOp);
+            }
+            else
+            {  CPPAD_ASSERT_UNKNOWN( arg_ad_type[1] == variable_enum );
+               CPPAD_ASSERT_UNKNOWN( arg_ad_type[0] == variable_enum );
+               tmp_addr = rec.PutOp(local::SubvvOp);
+            }
             rec.PutArg(arg[0], arg[1]);
          }
-         val2fun_index[res_index] = tmp_addr;
+         check_push_back(val2fun_index, res_index, tmp_addr);
          break;
          //
          default:
