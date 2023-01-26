@@ -6,7 +6,7 @@
 // 2DO: remove this once bin/check_include_file.sh passes without it.
 # include <cppad/local/val_graph/unary_op.hpp>
 
-bool test_one(void)
+bool test_not_used(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum, sub_op_enum
@@ -40,7 +40,7 @@ bool test_one(void)
    op_arg[1]       = tape.record_con_op(4.0);             // 4.0
    addr_t temp_1   = tape.record_op(sub_op_enum, op_arg); // x[0] + x[1] - 4.0
    op_arg[0]       = temp_1;
-   op_arg[1]       = tape.record_con_op(4.0);
+   op_arg[1]       = tape.record_con_op(4.0);             // duplicate
    dep_vec[1]      = tape.record_op(sub_op_enum, op_arg); // x[0] + x[1] - 8.0
    //
    // set_dep

@@ -65,7 +65,7 @@ for a few of the possible :ref:`ADFun-name` operators.
 }
 Examples
 ********
-The file :ref:`val_val2fun_xam.cpp-name`
+The file :ref:`val2fun_xam.cpp-name`
 is an example an test of this conversion.
 
 {xrst_end val2fun_graph}

@@ -25,8 +25,8 @@ extern bool dead_xam(void);
 extern bool fun2val_xam(void);
 extern bool renumber_xam(void);
 extern bool sub_xam(void);
-extern bool test_one(void);
-extern bool test_two(void);
+extern bool test_not_used(void);
+extern bool test_opt_call(void);
 extern bool val2fun_xam(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -39,16 +39,16 @@ int main(void)
    // This line is used by test_one.sh
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( add_xam,             "add_xam"        );
-   Run( call_xam,             "call_xam"        );
-   Run( con_xam,             "con_xam"        );
-   Run( dead_xam,            "dead_xam"       );
-   Run( fun2val_xam,         "fun2val_xam"    );
-   Run( renumber_xam,        "renumber_xam"   );
-   Run( sub_xam,             "sub_xam"        );
-   Run( test_one,            "test_one"       );
-   Run( test_two,            "test_two"       );
-   Run( val2fun_xam,         "val2fun_xam"    );
+   Run( add_xam,             "add_xam"           );
+   Run( call_xam,             "call_xam"         );
+   Run( con_xam,             "con_xam"           );
+   Run( dead_xam,            "dead_xam"          );
+   Run( fun2val_xam,         "fun2val_xam"       );
+   Run( renumber_xam,        "renumber_xam"      );
+   Run( sub_xam,             "sub_xam"           );
+   Run( test_not_used,       "test_not_used"     );
+   Run( test_opt_call,       "test_opt_call"     );
+   Run( val2fun_xam,         "val2fun_xam"       );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

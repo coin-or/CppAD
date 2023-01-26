@@ -74,8 +74,8 @@ private:
 };
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
-// test_two
-bool test_two(void)
+// test_opt_call
+bool test_opt_call(void)
 {  bool ok = true;
    //
    // add_op_enum;

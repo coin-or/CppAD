@@ -13,8 +13,8 @@ SET(source_list val_graph.cpp
    call_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp
-   test_one.cpp
-   test_two.cpp
+   test/not_used.cpp
+   test/opt_call.cpp
    val2fun_xam.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
