@@ -141,7 +141,7 @@ private:
    // ------------------------------------------------------
    // constants
    //
-   /// index of this object in lcal::atomic_index
+   /// index of this object in local::atomic_index
    /// (set by constructor and not changed; i.e., effectively const)
    size_t index_;
    //
@@ -167,6 +167,10 @@ private:
    work_struct* work_[CPPAD_MAX_NUM_THREADS];
    // -----------------------------------------------------
 public:
+   //
+   // atomic_index
+   size_t atomic_index(void) const
+   { return index_; }
    // =====================================================================
    // In User API
    // =====================================================================

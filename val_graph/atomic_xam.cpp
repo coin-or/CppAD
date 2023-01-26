@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
-# include <cppad/cppad.hpp>
+# include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_map_op_xam.cpp dev}
+{xrst_begin val_atomic_xam.cpp dev}
 
 Function Value Operator Example
 ###############################
@@ -12,7 +12,7 @@ Function Value Operator Example
    // END_C++
 }
 
-{xrst_end val_map_op_xam.cpp}
+{xrst_end val_atomic_xam.cpp}
 */
 // BEGIN_C++
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -25,48 +25,19 @@ using CppAD::local::val_graph::addr_t;
 using CppAD::local::val_graph::map_base_t;
 
 // ---------------------------------------------------------------------------
-namespace { // BEGIN_EMPTY_NAMESPACE
-//
-// my_atomic_t
-class my_atomic_t : public CppAD::atomic_four<double> {
-public:
-   my_atomic_t(void) :
-   CppAD::atomic_four<double>("my_atomic")
-   { }
+// map_atomic_t
+template <class Value>
+class map_atomic_t : public map_base_t<Value> {
 private:
-   // for_type
-   bool for_type(
-      size_t                                    call_id     ,
-      const CppAD::vector<CppAD::ad_type_enum>& type_x      ,
-      CppAD::vector<CppAD::ad_type_enum>&       type_y      ) override
-   {
-      assert( call_id == 0 );       // default value
-      assert( type_x.size() == 4 );
-      assert( type_y.size() == 2 );
-      //
-      type_y[0] = std::max(type_x[0], type_x[1]);
-      type_y[1] = std::max(type_x[2], type_x[3]);
-      //
-      return true;
+   std::string map_name(void) const override
+   {  return "test_function";
    }
-   // forward
    bool forward(
-      size_t                       call_id      ,
-      const CppAD::vector<bool>&   select_y     ,
-      size_t                       order_low    ,
-      size_t                       order_up     ,
-      const CppAD::vector<double>& taylor_x     ,
-      CppAD::vector<double>&       taylor_y     ) override
-   {  //
-      assert( call_id == 0 );       // default value
-      assert( order_low == 0);
-      assert( order_up == 0);
-      assert( taylor_x.size() == 4 );
-      assert( taylor_y.size() == 2 );
-      //
-      // x, y
-      const CppAD::vector<double>& x = taylor_x;
-      CppAD::vector<double>&       y = taylor_y;
+      size_t               call_id       ,
+      const Vector<Value>& x             ,
+      Vector<Value>&       y             ) const override
+   {  assert( x.size() == 4 );
+      assert( y.size() == 2 );
       //
       y[0] = x[0] + x[1];
       y[1] = x[2] * x[3];
@@ -74,12 +45,10 @@ private:
       return true;
    }
    bool rev_depend(
-      size_t                     call_id     ,
-      CppAD::vector<bool>&       depend_x    ,
-      const CppAD::vector<bool>& depend_y    ) override
-   {  //
-      assert( call_id == 0 );
-      assert( depend_x.size() == 4 );
+      size_t              call_id        ,
+      Vector<bool>&       depend_x       ,
+      const Vector<bool>& depend_y       ) const override
+   {  assert( depend_x.size() == 4 );
       assert( depend_y.size() == 2 );
       //
       depend_x[0] = depend_x[1] = depend_y[0];
@@ -88,14 +57,13 @@ private:
       return true;
    }
 };
-} // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 // test_fun
 bool test_fun(void)
 {  bool ok = true;
    //
-   // my_atomic
-   my_atomic_t my_atomic;
+   // my_map
+   my_map_t<double> my_map;
    //
    // f
    tape_t<double> tape;
@@ -113,7 +81,7 @@ bool test_fun(void)
    Vector<addr_t> dep_vec(n_res);
    //
    // map_id
-   size_t map_id      = my_atomic.atomic_index();
+   size_t map_id      = my_map.map_id();
    //
    // f_0(x) = x[0] + x[1]
    // f_1(x) = x[2] * x[3]

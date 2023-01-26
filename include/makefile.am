@@ -339,6 +339,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/utility/cppad_vector_itr.hpp \
 	cppad/local/utility/vector_bool.hpp \
 	cppad/local/val_graph/add_op.hpp \
+	cppad/local/val_graph/atomic.hpp \
 	cppad/local/val_graph/base_op.hpp \
 	cppad/local/val_graph/binary_op.hpp \
 	cppad/local/val_graph/con_op.hpp \
@@ -352,6 +353,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/tape.hpp \
 	cppad/local/val_graph/type.hpp \
 	cppad/local/val_graph/unary_op.hpp \
+	cppad/local/val_graph/val2fun.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \

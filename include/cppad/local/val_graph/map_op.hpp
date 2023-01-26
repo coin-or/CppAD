@@ -7,6 +7,8 @@
 # include <cstdio>
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/map_base.hpp>
+# include <cppad/local/atomic_index.hpp>
+# include <cppad/local/val_graph/atomic.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -197,29 +199,37 @@ void map_op_t<Value>::eval(
    size_t call_id     = size_t( arg_vec[arg_index + 3] );
    //
    // x
-   Vector<Value> x(n_arg - 4);
+   CppAD::vector<Value> x(n_arg - 4);
    for(addr_t i = 4; i < addr_t(n_arg); ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
-   // map_base_ptr
-   Vector<Value> y(n_res);
-   map_base_t<Value>* map_base_ptr = \
-      map_base_t<Value>::map_base_ptr(map_id);
-   //
    // y
-   map_base_ptr->forward(call_id, x, y);
-   //
-   // map_name
-   std::string map_name      = map_base_ptr->map_name();
+   CppAD::vector<Value> y(n_res);
+   atomic_forward<Value>(map_id, call_id, x, y);
    //
    // val_vec
    for(addr_t i = 0; i < addr_t(n_res); ++i)
       val_vec[res_index + i] = y[i];
    //
    // trace
-   if( trace ) this->print_op(
-      map_name.c_str(), arg_index, arg_vec, res_index, val_vec
-   );
+   if( trace )
+   {  //
+      // map_id = atomic_index
+      CPPAD_ASSERT_UNKNOWN( map_id != 0 );
+      //
+      // map_name
+      bool   set_null = false;
+      size_t index_in = map_id;
+      size_t type     = 0;       // not used, set to avoid compiler warning
+      void*  v_ptr    = nullptr; // not used, set to avoid compiler warning
+      std::string name;
+      local::atomic_index<Value>(set_null, index_in, type, &name, v_ptr);
+      //
+      // print_op
+      this->print_op(
+         name.c_str(), arg_index, arg_vec, res_index, val_vec
+      );
+   }
    return;
 }
 //

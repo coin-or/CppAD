@@ -165,6 +165,10 @@ public:
       bool_sparsity_enum   ,
       set_sparsity_enum
    };
+   //
+   // atomic_index
+   size_t atomic_index(void) const
+   { return index_; }
 private:
    // ------------------------------------------------------
    // constants

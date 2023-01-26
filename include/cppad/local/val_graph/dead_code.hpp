@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/map_base.hpp>
+# include <cppad/local/val_graph/atomic.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_dead_code dev}
@@ -99,9 +99,7 @@ void tape_t<Value>::dead_code(void)
          //
          // depend_x
          Vector<bool> depend_x(n_arg - 4);
-         map_base_t<Value>* map_base_ptr =
-            map_base_t<Value>::map_base_ptr(map_id);
-         map_base_ptr->rev_depend(call_id, depend_x, depend_y);
+         atomic_rev_depend<Value>(map_id, call_id, depend_x, depend_y);
          //
          for(addr_t k = 4; k < n_arg; ++k)
             need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
