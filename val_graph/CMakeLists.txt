@@ -10,7 +10,7 @@ SET(source_list val_graph.cpp
    con_xam.cpp
    dead_xam.cpp
    fun2val_xam.cpp
-   map_xam.cpp
+   call_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp
    test_one.cpp

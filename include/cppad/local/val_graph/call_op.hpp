@@ -113,11 +113,11 @@ prints the following values:
 
 {xrst_toc_hidden
    include/cppad/local/val_graph/atomic.hpp
-   val_graph/map_xam.cpp
+   val_graph/call_xam.cpp
 }
 Example
 *******
-The file :ref:`map_xam.cpp <val_call_op_xam.cpp-name>`
+The file :ref:`call_xam.cpp <val_call_op_xam.cpp-name>`
 is an example and test that uses this operator.
 
 {xrst_end val_call_op}

@@ -86,8 +86,8 @@ private:
 };
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
-// map_xam
-bool map_xam(void)
+// call_xam
+bool call_xam(void)
 {  bool ok = true;
    //
    // my_atomic

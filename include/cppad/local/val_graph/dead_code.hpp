@@ -22,7 +22,7 @@ Algorithm
 #. The dependent variables are marked as needed.
 #. The operators are scanned in reverse if an operators result is
    needed, the corresponding arguments are marked as needed.
-   The map operator has a more complicated version of this marking.
+   The call operator has a more complicated version of this marking.
 #. A forward pass is made though the operators and only the needed
    ones are included.
 #. An operators result may have a new index
