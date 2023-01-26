@@ -117,10 +117,7 @@ Implementation
    include/cppad/local/val_graph/base_op.hpp
    include/cppad/local/val_graph/tape.hpp
    include/cppad/local/val_graph/fun2val.hpp
-   val_graph/val2fun_xam.cpp
-}
-{xrst_comment
-   last two entries above should be children of implementation entries
+   include/cppad/local/val_graph/val2fun.hpp
 }
 
 

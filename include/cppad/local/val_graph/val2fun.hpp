@@ -5,7 +5,70 @@
 // SPDX-FileContributor: 2003-23 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
-------------------------------------------------------------------------------
+{xrst_begin val2fun_graph dev}
+
+Create an ADFun Object Corresponding to a Value Graph
+#####################################################
+
+Syntax
+******
+
+| |tab| ``ADFun`` < *Base* > *fun*
+| |tab| *fun* . ``val2fun`` ( *val_tape* , *dyn_ind* , *var_ind* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
+It is also :ref:`val_graph_tape@Value` type for the tape.
+
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+
+val_tape
+********
+This is a :ref:`val_graph_tape-name` representation of the function.
+
+*dyn_ind*
+*********
+The *i*-th element of the vector is the index in the value graph
+of the *i*-th independent dynamic parameter in *afun* .
+
+*var_ind*
+*********
+The *i*-th element of the vector is the index in *val_tape*
+of the *i*-th independent variable in *afun* .
+No two elements of *dyn_ind* or *var_ind* can have the same value.
+Furthermore, the total number of elements in these two vectors
+must be the number of independent variables in *val_tape* .
+
+*afun*
+******
+The input contents of *afun* do not matter.
+Upon return it is an ADFun representation of the function.
+
+Under Construction
+******************
+This routine is under construction and is only implemented
+for a few of the possible :ref:`ADFun-name` operators.
+
+{xrst_toc_hidden
+   val_graph/val2fun_xam.cpp
+}
+Examples
+********
+The file :ref:`val_val2fun_xam.cpp-name`
+is an example an test of this conversion.
+
+{xrst_end val2fun_graph}
 */
 
 # include <cppad/core/ad_fun.hpp>

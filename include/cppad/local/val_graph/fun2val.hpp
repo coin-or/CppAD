@@ -8,13 +8,12 @@
 ------------------------------------------------------------------------------
 {xrst_begin fun2val_graph dev}
 
-Create a C++ AD Graph Corresponding to an ADFun Object
-######################################################
+Create a Value Graph Corresponding to an ADFun Object
+#####################################################
 
 Syntax
 ******
 
-| |tab| ``local::val_graph::tape_t`` < *Base*>  *val_tape*
 | |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``fun2val`` ( *val_tape* )
 
@@ -41,6 +40,14 @@ This is a :ref:`val_graph_tape-name` object.
 The input contents of the tape does not matter.
 Upon return it is a
 :ref:`val_graph-name` representation of the function.
+The independent dynamic parameters have the same order as in
+*afun* and come first (in the value graph independent vector).
+The independent variables have the same order as in
+*afun* and come after the independent dynamic parameters.
+
+afun
+****
+This is the function that the value graph will correspond to.
 
 Under Construction
 ******************
