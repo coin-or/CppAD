@@ -269,8 +269,8 @@ public :
    // record_con_op
    addr_t record_con_op(const Value& constant);
    //
-   // record_map_op
-   addr_t record_map_op(
+   // record_call_op
+   addr_t record_call_op(
       size_t atomic_index           ,
       size_t call_id                ,
       size_t n_res                  ,
@@ -291,6 +291,6 @@ public :
 # include <cppad/local/val_graph/record_op.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
-# include <cppad/local/val_graph/map_op.hpp>
+# include <cppad/local/val_graph/call_op.hpp>
 
 # endif

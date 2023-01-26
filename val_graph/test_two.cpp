@@ -121,7 +121,7 @@ bool test_two(void)
    fun_arg[3] = sub;
    size_t call_id   = 0;
    size_t n_fun_res = 2;
-   addr_t res_index = tape.record_map_op(
+   addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_fun_res, fun_arg
    );
    //

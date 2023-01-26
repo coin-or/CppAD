@@ -182,8 +182,8 @@ void ADFun<Base, RecBase>::val2fun(
       arg_ad_type.resize(n_arg);
       switch( op_enum )
       {
-         // map_op
-         case local::val_graph::map_op_enum:
+         // call_op
+         case local::val_graph::call_op_enum:
          // 2DO: implement this case
          assert( false );
          break;

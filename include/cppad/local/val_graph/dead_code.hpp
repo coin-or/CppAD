@@ -75,7 +75,7 @@ void tape_t<Value>::dead_code(void)
       addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
       addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
       //
-      if( op_enum != map_op_enum )
+      if( op_enum != call_op_enum )
       {  assert( n_res == 1 );
          //
          // need_op
@@ -88,7 +88,7 @@ void tape_t<Value>::dead_code(void)
          }
       }
       else
-      {  assert( op_enum == map_op_enum );
+      {  assert( op_enum == call_op_enum );
          size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
          size_t call_id       = size_t( arg_vec_[arg_index + 3] );
          //
@@ -118,8 +118,8 @@ void tape_t<Value>::dead_code(void)
    for(size_t i = n_ind_ + 1; i < n_val_; ++i)
       new_val_index[i] = addr_t( n_val_ );
    //
-   // op_arg, map_op_arg
-   Vector<addr_t> op_arg, map_op_arg;
+   // op_arg, call_op_arg
+   Vector<addr_t> op_arg, call_op_arg;
 # ifndef NDEBUG
    // zero at index n_ind_
    assert( op_vec_[0].op_ptr->op_enum() == con_op_enum );
@@ -152,21 +152,21 @@ void tape_t<Value>::dead_code(void)
             assert( n_res == 1 );
             new_val_index[ res_index ] = new_res_index;
          }
-         else if( op_enum == map_op_enum )
-         {  map_op_arg.resize( size_t(n_arg - 4) );
+         else if( op_enum == call_op_enum )
+         {  call_op_arg.resize( size_t(n_arg - 4) );
             for(addr_t k = 4; k < n_arg; ++k)
             {  addr_t val_index = arg_vec_[arg_index + k];
                if( need_val_index[val_index] )
-                  map_op_arg[k - 4] = new_val_index[val_index];
+                  call_op_arg[k - 4] = new_val_index[val_index];
                else
                {  // zero at index n_ind_
-                  map_op_arg[k - 4] = addr_t( n_ind_ );
+                  call_op_arg[k - 4] = addr_t( n_ind_ );
                }
             }
             size_t atomic_index      = size_t( arg_vec_[arg_index + 2] );
             size_t call_id     = size_t( arg_vec_[arg_index + 3] );
-            addr_t new_res_index = new_tape.record_map_op(
-               atomic_index, call_id, size_t(n_res), map_op_arg
+            addr_t new_res_index = new_tape.record_call_op(
+               atomic_index, call_id, size_t(n_res), call_op_arg
             );
             for(addr_t k = 0; k < addr_t(n_res); ++k)
                new_val_index[ res_index + k ] = new_res_index + k;

@@ -123,7 +123,7 @@ Operator Classes
    include/cppad/local/val_graph/unary_op.hpp
    include/cppad/local/val_graph/binary_op.hpp
    include/cppad/local/val_graph/con_op.hpp
-   include/cppad/local/val_graph/map_op.hpp
+   include/cppad/local/val_graph/call_op.hpp
 }
 
 {xrst_end val_base_op}

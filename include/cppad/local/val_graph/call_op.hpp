@@ -14,7 +14,7 @@
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_map_op dev}
+{xrst_begin val_call_op dev}
 {xrst_spell
    xam
 }
@@ -37,11 +37,11 @@ and is a concrete class (it has no pure virtual functions).
 
 get_instance
 ************
-This static member function returns a pointer to a map_op_t object.
+This static member function returns a pointer to a call_op_t object.
 
 op_enum
 *******
-This override of :ref:`val_base_op@op_enum` returns ``map_op_enum`` .
+This override of :ref:`val_base_op@op_enum` returns ``call_op_enum`` .
 
 n_arg
 *****
@@ -67,7 +67,7 @@ This override of :ref:`val_base_op@eval` makes the atomic function call
 identified by *atomic_index* , with the *call_id*,
 to evaluate *n_res* results given *n_arg* - 4 arguments.
 
-#. The arguments for the funciton call are
+#. The arguments for the function call are
    ::
 
       val_vec[ arg_vec[ arg_index + 4 ] ] ,
@@ -117,25 +117,25 @@ prints the following values:
 }
 Example
 *******
-The file :ref:`map_xam.cpp <val_map_op_xam.cpp-name>`
+The file :ref:`map_xam.cpp <val_call_op_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_map_op}
+{xrst_end val_call_op}
 */
 // BEGIN_MAP_OP_T
 template <class Value>
-class map_op_t : public op_base_t<Value> {
+class call_op_t : public op_base_t<Value> {
 public:
    // get_instance
-   static map_op_t* get_instance(void)
+   static call_op_t* get_instance(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static map_op_t instance;
+      static call_op_t instance;
       return &instance;
    }
    // op_enum
    // type of this operator
    op_enum_t op_enum(void) const override
-   {  return map_op_enum; }
+   {  return call_op_enum; }
    //
    // n_arg
    size_t n_arg(
@@ -184,7 +184,7 @@ public:
 //
 // eval
 template <class Value>
-void map_op_t<Value>::eval(
+void call_op_t<Value>::eval(
    bool                  trace        ,
    addr_t                arg_index    ,
    const Vector<addr_t>& arg_vec      ,
@@ -235,7 +235,7 @@ void map_op_t<Value>::eval(
 //
 // print_op
 template <class Value>
-void map_op_t<Value>::print_op(
+void call_op_t<Value>::print_op(
    const char*           name         ,
    addr_t                arg_index    ,
    const Vector<addr_t>& arg_vec      ,

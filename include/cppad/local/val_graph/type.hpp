@@ -50,7 +50,7 @@ This enum type is used to identify the concrete operator class types.
 enum op_enum_t {
    add_op_enum,      // addition
    con_op_enum,      // constants
-   map_op_enum,      // atomic functions
+   call_op_enum,      // atomic functions
    sub_op_enum,      // subtraction
    number_op_enum
 };

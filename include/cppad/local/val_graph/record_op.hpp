@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/map_op.hpp>
+# include <cppad/local/val_graph/call_op.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_record_op dev}
@@ -61,16 +61,16 @@ This places a :ref:`val_con_op-name` operator in the tape.
 The return value is the index were *constant* is placed
 in the value vector.
 
-record_map_op
-*************
+record_call_op
+**************
 {xrst_literal
    // BEGIN_RECORD_MAP_OP
    // END_RECORD_MAP_OP
 }
-This places a :ref:`val_map_op-name` operator in the tape.
+This places a :ref:`val_call_op-name` operator in the tape.
 
 atomic_index
-=============
+============
 This is the :ref:`val_graph_atomic@atomic_index` for this function call.
 
 call_id
@@ -200,7 +200,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
 // ----------------------------------------------------------------------------
 // BEGIN_RECORD_MAP_OP
 template <class Value>
-addr_t tape_t<Value>::record_map_op(
+addr_t tape_t<Value>::record_call_op(
    size_t  atomic_index          ,
    size_t  call_id               ,
    size_t  n_res                 ,
@@ -214,7 +214,7 @@ addr_t tape_t<Value>::record_map_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = map_op_t<Value>::get_instance();
+   op_base_t<Value>* op_ptr = call_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};

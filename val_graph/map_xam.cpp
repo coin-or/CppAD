@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/cppad.hpp>
 /*
-{xrst_begin val_map_op_xam.cpp dev}
+{xrst_begin val_call_op_xam.cpp dev}
 
 Function Value Operator Example
 ###############################
@@ -12,7 +12,7 @@ Function Value Operator Example
    // END_C++
 }
 
-{xrst_end val_map_op_xam.cpp}
+{xrst_end val_call_op_xam.cpp}
 */
 // BEGIN_C++
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -117,7 +117,7 @@ bool map_xam(void)
       fun_arg[i] = i;
    size_t call_id   = 0;
    size_t n_fun_res = 2;
-   addr_t res_index = tape.record_map_op(
+   addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_fun_res, fun_arg
    );
    //
