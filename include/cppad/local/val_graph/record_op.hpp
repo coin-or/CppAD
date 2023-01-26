@@ -71,11 +71,11 @@ This places a :ref:`val_map_op-name` operator in the tape.
 
 map_id
 ======
-This is the :ref:`val_graph_map_base@map_id` for this function call.
+This is the :ref:`val_graph_atomic@atomic_index` for this function call.
 
 call_id
 =======
-This is the :ref:`val_graph_map_base@forward@call_id` for this function call.
+This is the :ref:`val_graph_atomic@call_id` for this function call.
 
 n_res
 =====

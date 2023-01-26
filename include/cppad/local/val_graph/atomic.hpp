@@ -13,15 +13,86 @@
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
+{xrst_begin val_graph_atomic dev}
+
+Value Graph Interface To Atomic Functions
+#########################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_FORWARD
+   // END_ATOMIC_FORWARD
+}
+{xrst_literal
+   // BEGIN_ATOMIC_REV_DEPEND
+   // END_ATOMIC_REV_DEPEND
+}
+
+atomic_index
+************
+If :ref:`atomic_four_ctor@atomic_user@afun` is a fourth
+generation atomic function, the corresponding *atomic_index* is the
+``size_t`` value
+
+| |tab| *atomic_index* = *atom*afun* . ``atomic_index`` ()
+
+The same is true for third and second generation atomic functions.
+
+call_id
+*******
+The *atomic_index* combined with the *call_id* yields the function call
+corresponding to a use of an atomic function.
+For example, one atomic function might be used for matrix multiplication
+and the *call_id* might identify what the matrix dimensions are.
+
+
+atomic_forward
+**************
+
+x
+=
+This is the argument vector for this function call.
+
+y
+=
+This is the return vector for the function call; i.e.,
+the value of the function at *x* .
+The size of *y* is correct on input and should not change.
+The input value of its elements are not specified.
+
+
+atomic_rev_depend
+*****************
+
+depend_y
+========
+This has size equal to the number of results for the function call.
+It the *i*-th component of this vector is true (false),
+the results of interest depend (do not depend)
+on the value of y[i].
+
+depend_x
+========
+This has size equal to the number of arguments for the function call.
+For each argument index *j*,
+if there is an *i* such that,
+depend_y[i] is true, and y[i] depends on x[j],
+then depend_x[j] must  be set to true.
+The size of *depend_x* is correct on input and should not change.
+Its element values on input are not specified.
+
+{xrst_end val_graph_atomic}
 */
 // ---------------------------------------------------------------------------
-// atomic_forward
+// BEGIN_ATOMIC_FORWARD
 template <class Value>
 void atomic_forward(
    size_t               atomic_index  ,
    size_t               call_id       ,
    const Vector<Value>& x             ,
    Vector<Value>&       y             )
+// END_ATOMIC_FORWARD
 {  //
    // parameter_x
    const Vector<Value>& parameter_x = x;
@@ -63,13 +134,14 @@ void atomic_forward(
    );
 }
 // ---------------------------------------------------------------------------
-// atomic_rev_depend
+// BEGIN_ATOMIC_REV_DEPEND
 template <class Value>
 void atomic_rev_depend(
    size_t              atomic_index   ,
    size_t              call_id        ,
    Vector<bool>&       depend_x       ,
    const Vector<bool>& depend_y       )
+// END_ATOMIC_REV_DEPEND
 {  //
    // parameter_x
    // 2DO: if atomic_three functions are used, need to get this from the

@@ -22,10 +22,6 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 using CppAD::local::val_graph::tape_t;
 using CppAD::local::val_graph::Vector;
 using CppAD::local::val_graph::addr_t;
-using CppAD::local::val_graph::map_base_t;
-
-// ---------------------------------------------------------------------------
-namespace { // BEGIN_EMPTY_NAMESPACE
 //
 // my_atomic_t
 class my_atomic_t : public CppAD::atomic_four<double> {
@@ -90,8 +86,8 @@ private:
 };
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
-// test_fun
-bool test_fun(void)
+// map_xam
+bool map_xam(void)
 {  bool ok = true;
    //
    // my_atomic
@@ -162,14 +158,6 @@ bool test_fun(void)
    ok &= y[0] == x[0] + x[1];
    ok &= y[1] == x[2] * x[3];
    //
-   return ok;
-}
-// ---------------------------------------------------------------------------
-} // END_EMPTY_NAMESPACE
-bool map_xam(void)
-{  bool ok = true;
-   ok     &= test_fun();
-   ok     &= map_base_t<double>::clear();
    return ok;
 }
 // END_C++

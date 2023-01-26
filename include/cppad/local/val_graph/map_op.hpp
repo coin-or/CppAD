@@ -6,7 +6,6 @@
 // ----------------------------------------------------------------------------
 # include <cstdio>
 # include <cppad/local/val_graph/base_op.hpp>
-# include <cppad/local/val_graph/map_base.hpp>
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/local/val_graph/atomic.hpp>
 
@@ -55,12 +54,12 @@ see op_base :ref:`val_base_op@n_res` .
 map_id
 ******
 This member function returns the *map_id* for the mapping; see
-:ref:`val_graph_map_base@map_id` .
+:ref:`val_graph_atomic@atomic_index` .
 
 call_id
 *******
 This member function returns the *call_id* for this use of the mapping; see
-:ref:`val_graph_map_base@forward@call_id` .
+:ref:`val_graph_atomic@call_id` .
 
 eval
 ****
@@ -113,6 +112,7 @@ prints the following values:
    and there are two spaces between those fields.
 
 {xrst_toc_hidden
+   include/cppad/local/val_graph/atomic.hpp
    val_graph/map_xam.cpp
 }
 Example

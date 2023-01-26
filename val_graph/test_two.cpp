@@ -5,14 +5,11 @@
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 //
-// tape_t, Vector, addr_t, op_enum_t, map_base_t
+// tape_t, Vector, addr_t, op_enum_t
 using CppAD::local::val_graph::tape_t;
 using CppAD::local::val_graph::Vector;
 using CppAD::local::val_graph::addr_t;
 using CppAD::local::val_graph::op_enum_t;
-using CppAD::local::val_graph::map_base_t;
-// ---------------------------------------------------------------------------
-namespace { // BEGIN_EMPTY_NAMESPACE
 //
 // my_atomic_t
 class my_atomic_t : public CppAD::atomic_four<double> {
@@ -77,8 +74,8 @@ private:
 };
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
-// test_fun
-bool test_fun(void)
+// test_two
+bool test_two(void)
 {  bool ok = true;
    //
    // add_op_enum;
@@ -180,13 +177,5 @@ bool test_fun(void)
    // ok
    ok &= y[0] == (x[0] + x[1]) * (x[0] - x[1]);
    //
-   return ok;
-}
-// ---------------------------------------------------------------------------
-} // END_EMPTY_NAMESPACE
-bool test_two(void)
-{  bool ok = true;
-   ok     &= test_fun();
-   ok     &= map_base_t<double>::clear();
    return ok;
 }
