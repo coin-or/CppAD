@@ -51,9 +51,9 @@ n_res
 *****
 see op_base :ref:`val_base_op@n_res` .
 
-map_id
-******
-This member function returns the *map_id* for the mapping; see
+atomic_index
+************
+This member function returns the *atomic_index* for the mapping; see
 :ref:`val_graph_atomic@atomic_index` .
 
 call_id
@@ -63,11 +63,11 @@ This member function returns the *call_id* for this use of the mapping; see
 
 eval
 ****
-This override of :ref:`val_base_op@eval`
-calls the mapping identified by *map_id* , with the *call_id*,
+This override of :ref:`val_base_op@eval` makes the atomic function call
+identified by *atomic_index* , with the *call_id*,
 to evaluate *n_res* results given *n_arg* - 4 arguments.
 
-#. The arguments to the mapping are
+#. The arguments for the funciton call are
    ::
 
       val_vec[ arg_vec[ arg_index + 4 ] ] ,
@@ -75,7 +75,7 @@ to evaluate *n_res* results given *n_arg* - 4 arguments.
       ...
       val_vec[ arg_vec[ arg_index + n_arg - 1 ] ]
 
-#. The results of the mapping evaluation are placed in
+#. The results of the function call are placed in
    ::
 
       val_vec[res_index + 0] ,
@@ -93,11 +93,11 @@ print_op
 This override of :ref:`val_base_op@print_op`
 prints the following values:
 
-| |tab| map_name ( arg_index_0 , arg_index_1 , ... )
+| |tab| name ( arg_index_0 , arg_index_1 , ... )
 | |tab| res_index_0  res_value_0
 | |tab| ...
 
-#. map_name is the name of this mapping which is assumed to be passed
+#. name is the name of this atomic function which is assumed to be passed
    as the name argument to print_op .
    This line indented 4 spaces; i.e., the name starts in column 5.
    This is done so it is grouped with the operators in the trace output.
@@ -149,8 +149,8 @@ public:
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 1] ); }
    //
-   // map_id
-   size_t map_id(
+   // atomic_index
+   size_t atomic_index(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      )
    {  return size_t( arg_vec[arg_index + 2] ); }
@@ -192,10 +192,10 @@ void map_op_t<Value>::eval(
    addr_t                res_index    ,
    Vector<Value>&        val_vec      ) const
 {  //
-   // n_arg, n_res, map_id
+   // n_arg, n_res, atomic_index
    size_t n_arg       = size_t( arg_vec[arg_index + 0] );
    size_t n_res       = size_t( arg_vec[arg_index + 1] );
-   size_t map_id      = size_t( arg_vec[arg_index + 2] );
+   size_t atomic_index      = size_t( arg_vec[arg_index + 2] );
    size_t call_id     = size_t( arg_vec[arg_index + 3] );
    //
    // x
@@ -205,7 +205,7 @@ void map_op_t<Value>::eval(
    //
    // y
    CppAD::vector<Value> y(n_res);
-   atomic_forward<Value>(map_id, call_id, x, y);
+   atomic_forward<Value>(atomic_index, call_id, x, y);
    //
    // val_vec
    for(addr_t i = 0; i < addr_t(n_res); ++i)
@@ -214,12 +214,12 @@ void map_op_t<Value>::eval(
    // trace
    if( trace )
    {  //
-      // map_id = atomic_index
-      CPPAD_ASSERT_UNKNOWN( map_id != 0 );
+      // atomic_index = atomic_index
+      CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
       //
-      // map_name
+      // name
       bool   set_null = false;
-      size_t index_in = map_id;
+      size_t index_in = atomic_index;
       size_t type     = 0;       // not used, set to avoid compiler warning
       void*  v_ptr    = nullptr; // not used, set to avoid compiler warning
       std::string name;

@@ -89,8 +89,8 @@ void tape_t<Value>::dead_code(void)
       }
       else
       {  assert( op_enum == map_op_enum );
-         size_t map_id      = size_t( arg_vec_[arg_index + 2] );
-         size_t call_id     = size_t( arg_vec_[arg_index + 3] );
+         size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
+         size_t call_id       = size_t( arg_vec_[arg_index + 3] );
          //
          // depend_y
          Vector<bool> depend_y(n_res);
@@ -99,7 +99,7 @@ void tape_t<Value>::dead_code(void)
          //
          // depend_x
          Vector<bool> depend_x(n_arg - 4);
-         atomic_rev_depend<Value>(map_id, call_id, depend_x, depend_y);
+         atomic_rev_depend<Value>(atomic_index, call_id, depend_x, depend_y);
          //
          for(addr_t k = 4; k < n_arg; ++k)
             need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
@@ -163,10 +163,10 @@ void tape_t<Value>::dead_code(void)
                   map_op_arg[k - 4] = addr_t( n_ind_ );
                }
             }
-            size_t map_id      = size_t( arg_vec_[arg_index + 2] );
+            size_t atomic_index      = size_t( arg_vec_[arg_index + 2] );
             size_t call_id     = size_t( arg_vec_[arg_index + 3] );
             addr_t new_res_index = new_tape.record_map_op(
-               map_id, call_id, size_t(n_res), map_op_arg
+               atomic_index, call_id, size_t(n_res), map_op_arg
             );
             for(addr_t k = 0; k < addr_t(n_res); ++k)
                new_val_index[ res_index + k ] = new_res_index + k;

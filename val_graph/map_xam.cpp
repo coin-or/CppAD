@@ -18,7 +18,7 @@ Function Value Operator Example
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 //
-// tape_t, Vector, addr_t, map_base_t
+// tape_t, Vector, addr_t
 using CppAD::local::val_graph::tape_t;
 using CppAD::local::val_graph::Vector;
 using CppAD::local::val_graph::addr_t;
@@ -108,8 +108,8 @@ bool map_xam(void)
    // dep_vec
    Vector<addr_t> dep_vec(n_res);
    //
-   // map_id
-   size_t map_id      = my_atomic.atomic_index();
+   // atomic_index
+   size_t atomic_index      = my_atomic.atomic_index();
    //
    // f_0(x) = x[0] + x[1]
    // f_1(x) = x[2] * x[3]
@@ -118,7 +118,7 @@ bool map_xam(void)
    size_t call_id   = 0;
    size_t n_fun_res = 2;
    addr_t res_index = tape.record_map_op(
-      map_id, call_id, n_fun_res, fun_arg
+      atomic_index, call_id, n_fun_res, fun_arg
    );
    //
    // dep_vec

@@ -45,7 +45,7 @@ int main(void)
    Run( fun2val_xam,         "fun2val_xam"    );
    Run( map_xam,             "map_xam"        );
    Run( renumber_xam,        "renumber_xam"   );
-   Run( sub_xam,             "map_xam"        );
+   Run( sub_xam,             "sub_xam"        );
    Run( test_one,            "test_one"       );
    Run( test_two,            "test_two"       );
    Run( val2fun_xam,         "val2fun_xam"    );

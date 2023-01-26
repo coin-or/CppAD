@@ -69,8 +69,8 @@ record_map_op
 }
 This places a :ref:`val_map_op-name` operator in the tape.
 
-map_id
-======
+atomic_index
+=============
 This is the :ref:`val_graph_atomic@atomic_index` for this function call.
 
 call_id
@@ -86,7 +86,7 @@ fun_arg
 =======
 This vector has size equal to the number of arguments to the function
 for this mapping and *call_id* .
-(The combination of *map_id* and *call_id* must specify a function.)
+(The combination of *atomic_index* and *call_id* must specify a function.)
 The *j*-th element of *fun_arg* is the index on the value vector of
 the *j*-th argument to the function.
 
@@ -201,7 +201,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
 // BEGIN_RECORD_MAP_OP
 template <class Value>
 addr_t tape_t<Value>::record_map_op(
-   size_t  map_id                ,
+   size_t  atomic_index          ,
    size_t  call_id               ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
@@ -224,7 +224,7 @@ addr_t tape_t<Value>::record_map_op(
    size_t n_arg = 4 + fun_arg.size();
    arg_vec_.push_back( addr_t( n_arg ) );
    arg_vec_.push_back( addr_t( n_res ) );
-   arg_vec_.push_back( addr_t( map_id ) );
+   arg_vec_.push_back( addr_t( atomic_index ) );
    arg_vec_.push_back( addr_t( call_id ) );
    for(size_t i = 0; i < fun_arg.size(); ++i)
       arg_vec_.push_back( fun_arg[i] );
