@@ -26,6 +26,7 @@ extern bool fun2val_xam(void);
 extern bool renumber_xam(void);
 extern bool sub_xam(void);
 extern bool test_fun2val_atom(void);
+extern bool test_nan(void);
 extern bool test_not_used(void);
 extern bool test_opt_call(void);
 extern bool val2fun_xam(void);
@@ -48,6 +49,7 @@ int main(void)
    Run( renumber_xam,        "renumber_xam"      );
    Run( sub_xam,             "sub_xam"           );
    Run( test_fun2val_atom,   "test_fun2val_atom" );
+   Run( test_nan,            "test_nan"          );
    Run( test_not_used,       "test_not_used"     );
    Run( test_opt_call,       "test_opt_call"     );
    Run( val2fun_xam,         "val2fun_xam"       );

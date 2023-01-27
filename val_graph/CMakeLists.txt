@@ -7,13 +7,14 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list val_graph.cpp
    add_xam.cpp
+   call_xam.cpp
    con_xam.cpp
    dead_xam.cpp
    fun2val_xam.cpp
-   call_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp
    test/fun2val_atom.cpp
+   test/nan.cpp
    test/not_used.cpp
    test/opt_call.cpp
    val2fun_xam.cpp
