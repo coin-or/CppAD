@@ -193,10 +193,10 @@ void call_op_t<Value>::eval(
    Vector<Value>&        val_vec      ) const
 {  //
    // n_arg, n_res, atomic_index
-   size_t n_arg       = size_t( arg_vec[arg_index + 0] );
-   size_t n_res       = size_t( arg_vec[arg_index + 1] );
-   size_t atomic_index      = size_t( arg_vec[arg_index + 2] );
-   size_t call_id     = size_t( arg_vec[arg_index + 3] );
+   size_t n_arg         = size_t( arg_vec[arg_index + 0] );
+   size_t n_res         = size_t( arg_vec[arg_index + 1] );
+   size_t atomic_index  = size_t( arg_vec[arg_index + 2] );
+   size_t call_id       = size_t( arg_vec[arg_index + 3] );
    //
    // x
    CppAD::vector<Value> x(n_arg - 4);

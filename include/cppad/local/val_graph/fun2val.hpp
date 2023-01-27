@@ -177,6 +177,9 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // val_tape
    // record dynamic parameter operations
+   //
+   // val_index
+   addr_t val_index = invalid_addr_t;
    for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
    {  //
       // i_par
@@ -186,34 +189,85 @@ void ADFun<Base, RecBase>::fun2val(
       // operator for this dynamic parameter
       local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
       //
-      // val_op
-      op_enum_t val_op = dyn_op2val_op[dyn_op];
-      CPPAD_ASSERT_KNOWN( val_op < number_op_enum ,
-         "This dynamic operator not yet implemented"
-      );
-      //
-      // n_arg
-      // number of parameter arguments with exception of atom_dyn
-      size_t n_arg = num_arg_dyn(dyn_op);
-      //
-      // val_op_arg
-      val_op_arg.resize(n_arg);
-      for(size_t i = 0; i < n_arg; ++i)
-      {  size_t par_index = size_t( dyn_par_arg[i_arg + i] );
-         if( par2val_index[par_index] != invalid_addr_t )
-           val_op_arg[i] = par2val_index[par_index];
-         else
-         {  Base constant = parameter[par_index];
-            val_op_arg[i] = val_tape.record_con_op( constant );
-            par2val_index[par_index] = val_op_arg[i];
+      // n_arg, val_index, dyn_op
+      size_t n_arg;
+      switch( dyn_op )
+      {  //
+         // atom_dyn
+         case local::atom_dyn:
+         {  //
+            // atomic_index, call_id, n_call_arg, n_res
+            size_t atomic_index = size_t( dyn_par_arg[i_arg + 0] );
+            size_t call_id      = size_t( dyn_par_arg[i_arg + 1] );
+            size_t n_call_arg   = size_t( dyn_par_arg[i_arg + 2] );
+            size_t n_res        = size_t( dyn_par_arg[i_arg + 3] );
+            // num_dyn          = size_t( dyn_par_arg[i_age + 4] );
+            //
+            // val_op_arg
+            val_op_arg.resize( n_call_arg );
+            for(size_t i = 0; i < n_call_arg; i++)
+            {  addr_t par_index = dyn_par_arg[i_arg + i + 5];
+               if( par2val_index[par_index] != invalid_addr_t )
+                  val_op_arg[i] = par2val_index[par_index];
+               else
+               {  // val_tape, val_op_arg, par2val_index
+                  Base constant = parameter[par_index];
+                  val_op_arg[i] = val_tape.record_con_op( constant );
+                  par2val_index[par_index] = val_op_arg[i];
+               }
+            }
+            // n_arg, val_tape, val_index
+            n_arg     = n_call_arg + 5;
+            val_index = val_tape.record_call_op(
+               atomic_index, call_id, n_res, val_op_arg
+            );
          }
+         break;
+         //
+         // ------------------------------------------------------------------
+         // result_dyn
+         // This is a place holder for multiple result operators
+         case local::result_dyn:
+         CPPAD_ASSERT_UNKNOWN( val_index != invalid_addr_t );
+         n_arg      = 0;
+         val_index += 1;
+         break;
+         //
+         // ------------------------------------------------------------------
+         default:
+         //
+         // n_arg, val_op
+         // must be a unary or binary operator
+         op_enum_t val_op = dyn_op2val_op[dyn_op];
+         CPPAD_ASSERT_KNOWN( val_op < number_op_enum ,
+            "This dynamic operator not yet implemented"
+         );
+         {  //
+            // val_op_arg
+            n_arg = num_arg_dyn(dyn_op);
+            val_op_arg.resize(n_arg);
+            for(size_t i = 0; i < n_arg; ++i)
+            {  addr_t par_index = dyn_par_arg[i_arg + i];
+               if( par2val_index[par_index] != invalid_addr_t )
+                  val_op_arg[i] = par2val_index[par_index];
+               else
+               {  // val_tape, val_op_arg, par2val_index
+                  Base constant = parameter[par_index];
+                  val_op_arg[i] = val_tape.record_con_op( constant );
+                  par2val_index[par_index] = val_op_arg[i];
+               }
+            }
+            // val_tape, val_index
+            val_index = val_tape.record_op(val_op, val_op_arg);
+         }
+         break;
       }
-      //
-      // record_op, val_index
-      addr_t val_index = val_tape.record_op(val_op, val_op_arg);
-      //
       // par2val_index
+      // Each dyn_op has one result, result_dyn ops are added to make this so
       par2val_index[i_par] = val_index;
+      //
+      // i_arg
+      i_arg += n_arg;
    }
    //
    // var2val_index
@@ -308,7 +362,7 @@ void ADFun<Base, RecBase>::fun2val(
          );
          //
          // record_op, val_index
-         addr_t val_index = val_tape.record_op(val_op, val_op_arg);
+         val_index = val_tape.record_op(val_op, val_op_arg);
          //
          // var2val_index
          var2val_index[i_var] = val_index;
