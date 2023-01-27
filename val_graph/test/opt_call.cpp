@@ -2,88 +2,25 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
+# include "../atomic_xam.hpp"
 
-namespace { // BEGIN_EMPTY_NAMESPACE
-//
-// tape_t, Vector, addr_t, op_enum_t
-using CppAD::local::val_graph::tape_t;
-using CppAD::local::val_graph::Vector;
-using CppAD::local::val_graph::addr_t;
-using CppAD::local::val_graph::op_enum_t;
-//
-// my_atomic_t
-class my_atomic_t : public CppAD::atomic_four<double> {
-public:
-   my_atomic_t(void) :
-   CppAD::atomic_four<double>("my_atomic")
-   { }
-private:
-   // for_type
-   bool for_type(
-      size_t                                    call_id     ,
-      const CppAD::vector<CppAD::ad_type_enum>& type_x      ,
-      CppAD::vector<CppAD::ad_type_enum>&       type_y      ) override
-   {
-      assert( call_id == 0 );       // default value
-      assert( type_x.size() == 4 );
-      assert( type_y.size() == 2 );
-      //
-      type_y[0] = std::max(type_x[0], type_x[1]);
-      type_y[1] = std::max(type_x[2], type_x[3]);
-      //
-      return true;
-   }
-   // forward
-   bool forward(
-      size_t                       call_id      ,
-      const CppAD::vector<bool>&   select_y     ,
-      size_t                       order_low    ,
-      size_t                       order_up     ,
-      const CppAD::vector<double>& taylor_x     ,
-      CppAD::vector<double>&       taylor_y     ) override
-   {  //
-      assert( call_id == 0 );       // default value
-      assert( order_low == 0);
-      assert( order_up == 0);
-      assert( taylor_x.size() == 4 );
-      assert( taylor_y.size() == 2 );
-      //
-      // x, y
-      const CppAD::vector<double>& x = taylor_x;
-      CppAD::vector<double>&       y = taylor_y;
-      //
-      y[0] = x[0] + x[1];
-      y[1] = x[2] * x[3];
-      //
-      return true;
-   }
-   bool rev_depend(
-      size_t                     call_id     ,
-      CppAD::vector<bool>&       depend_x    ,
-      const CppAD::vector<bool>& depend_y    ) override
-   {  //
-      assert( call_id == 0 );
-      assert( depend_x.size() == 4 );
-      assert( depend_y.size() == 2 );
-      //
-      depend_x[0] = depend_x[1] = depend_y[0];
-      depend_x[2] = depend_x[3] = depend_y[1];
-      //
-      return true;
-   }
-};
-} // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 // test_opt_call
 bool test_opt_call(void)
 {  bool ok = true;
    //
+   // tape_t, Vector, addr_t, op_enum_t
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   using CppAD::local::val_graph::op_enum_t;
+   //
    // add_op_enum;
    op_enum_t add_op_enum = CppAD::local::val_graph::add_op_enum;
    op_enum_t sub_op_enum = CppAD::local::val_graph::sub_op_enum;
    //
-   // my_atomic
-   my_atomic_t my_atomic;
+   // atomic_xam
+   val_atomic_xam atomic_xam;
    //
    // f
    tape_t<double> tape;
@@ -101,7 +38,7 @@ bool test_opt_call(void)
    Vector<addr_t> dep_vec(n_res);
    //
    // atomic_index
-   size_t atomic_index      = my_atomic.atomic_index();
+   size_t atomic_index      = atomic_xam.atomic_index();
    //
    // add = x[0] + x[1]
    op_arg[0] = 0;
