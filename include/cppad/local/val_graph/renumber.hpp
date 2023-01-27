@@ -64,7 +64,17 @@ public:
       addr_t    arg_index_i  = op_vec_[i_op].arg_index;
       op_enum_t op_enum_i = op_vec_[i_op].op_ptr->op_enum();
       size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index_i, arg_vec_);
-
+      //
+      // nan
+      if( op_enum_i == con_op_enum )
+      {  if( CppAD::isnan( con_vec_[ arg_vec_[arg_index_i] ] ) )
+         {  CPPAD_ASSERT_UNKNOWN( op_vec_[0].op_ptr->op_enum()==con_op_enum );
+            CPPAD_ASSERT_UNKNOWN( op_vec_[0].arg_index == 0 );
+            CPPAD_ASSERT_UNKNOWN( arg_vec_[0] == 0 );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( con_vec_[0] ) );
+            return 0;
+         }
+      }
       //
       // code
       size_t code = hash_code(n_arg, op_enum_i, arg_index_i);

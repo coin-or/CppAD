@@ -44,8 +44,8 @@ bool call_xam(void)
    // f
    tape_t<double> tape;
    size_t n_ind = 4;
-   size_t index_of_zero = size_t ( tape.set_ind(n_ind) );
-   ok &= index_of_zero == n_ind;
+   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_nan == n_ind;
    //
    // n_res
    size_t n_res = 2;

@@ -28,8 +28,8 @@ bool add_xam(void)
    // tape, ok
    tape_t<double> tape;
    size_t n_ind = 2;
-   size_t index_of_zero = size_t ( tape.set_ind(n_ind) );
-   ok &= index_of_zero == n_ind;
+   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_nan == n_ind;
    //
    // op_arg
    Vector<addr_t> op_arg(2);

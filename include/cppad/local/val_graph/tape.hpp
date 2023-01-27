@@ -259,6 +259,9 @@ public :
          std::printf("\n");
       }
    }
+   // ------------------------------------------------------------------------
+   // functions documented in files included below
+   // ------------------------------------------------------------------------
    //
    // set_ind
    addr_t set_ind(size_t n_ind);
@@ -291,6 +294,5 @@ public :
 # include <cppad/local/val_graph/record_op.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
-# include <cppad/local/val_graph/call_op.hpp>
 
 # endif

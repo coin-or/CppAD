@@ -6,6 +6,8 @@
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/call_op.hpp>
+# include <cppad/core/numeric_limits.hpp>
+//
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_record_op dev}
@@ -29,10 +31,10 @@ set_ind
 }
 This clears all of the memory in the tape.
 It then sets the number of independent values and
-places the constant zero directly after the last independent value.
-The return value is the index where the zero is placed in the
+places the constant nan directly after the last independent value.
+The return value is the index where the nan is placed in the
 value vector; i.e., *n_ind* .
-The constant zero uses one operator,
+The constant nan uses one operator,
 one argument, one constant, and one result.
 This is the first step in a creating a recording.
 
@@ -113,16 +115,17 @@ This is last step in creating a recording.
 template <class Value>
 addr_t tape_t<Value>::set_ind(size_t n_ind)
 // END_SET_IND
-{  n_ind_ = n_ind;
+{  Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
+   n_ind_ = n_ind;
    n_val_ = n_ind;
    dep_vec_.clear();
    op_vec_.clear();
    con_vec_.clear();
-   addr_t zero = record_con_op(Value(0.0));
-   assert ( size_t(zero) == n_ind_ );
+   addr_t nan_addr = record_con_op(nan);
+   assert ( size_t(nan_addr) == n_ind_ );
    assert( n_val_ == n_ind + 1 );
    //
-   return zero;
+   return nan_addr;
 }
 // ----------------------------------------------------------------------------
 // BEGIN_RECORD_OP

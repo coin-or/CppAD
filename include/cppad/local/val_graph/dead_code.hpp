@@ -111,7 +111,7 @@ void tape_t<Value>::dead_code(void)
    new_tape.set_ind(n_ind_);
    //
    // new_val_index
-   // include zero at index n_ind_ in val_vec
+   // include nan at index n_ind_ in val_vec
    Vector<addr_t> new_val_index( n_val_ );
    for(size_t i = 0; i <= n_ind_; ++i)
       new_val_index[i] = addr_t(i);
@@ -121,12 +121,12 @@ void tape_t<Value>::dead_code(void)
    // op_arg, call_op_arg
    Vector<addr_t> op_arg, call_op_arg;
 # ifndef NDEBUG
-   // zero at index n_ind_
+   // nan at index n_ind_
    assert( op_vec_[0].op_ptr->op_enum() == con_op_enum );
    assert( op_vec_[0].arg_index == 0 );
    assert( op_vec_[0].res_index == addr_t( n_ind_ ) );
    assert( arg_vec_[0] == 0 );
-   assert( con_vec_[0]  == Value(0.0) );
+   assert( CppAD::isnan( con_vec_[0] ) );
 # endif
    // i_op
    for(i_op = 1; i_op < op_vec_.size(); ++i_op)
@@ -159,7 +159,7 @@ void tape_t<Value>::dead_code(void)
                if( need_val_index[val_index] )
                   call_op_arg[k - 4] = new_val_index[val_index];
                else
-               {  // zero at index n_ind_
+               {  // nan at index n_ind_
                   call_op_arg[k - 4] = addr_t( n_ind_ );
                }
             }

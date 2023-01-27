@@ -189,7 +189,7 @@ void ADFun<Base, RecBase>::val2fun(
    rec.set_record_compare(false);
    //
    // rec, parameter
-   // initialize with the value nan at index zero
+   // initialize with the value nan at index nan
    const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec());
    CPPAD_ASSERT_UNKNOWN( parameter.size() == 0 );
    par_addr = rec.put_con_par(nan);
@@ -278,7 +278,9 @@ void ADFun<Base, RecBase>::val2fun(
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
          {  const Base& constant = val_con_vec[arg_index];
             par_addr = rec.put_con_par(constant);
-            CPPAD_ASSERT_UNKNOWN( parameter[par_addr] == constant );
+            CPPAD_ASSERT_UNKNOWN(
+               CppAD::isnan(constant) || parameter[par_addr] == constant
+            );
             //
             check_push_back(val2fun_index, res_index, par_addr);
          }

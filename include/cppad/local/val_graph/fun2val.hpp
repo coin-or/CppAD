@@ -155,10 +155,10 @@ void ADFun<Base, RecBase>::fun2val(
    // number of indepedent valuse
    size_t n_val_ind = n_dynamic_ind + n_variable_ind;
    //
-   // zero_val_index
+   // nan_val_index
    // initialize value vector tape
-   addr_t zero_val_index = val_tape.set_ind( n_val_ind );
-   CPPAD_ASSERT_UNKNOWN( size_t(zero_val_index) == n_val_ind );
+   addr_t nan_val_index = val_tape.set_ind( n_val_ind );
+   CPPAD_ASSERT_UNKNOWN( size_t(nan_val_index) == n_val_ind );
    //
    // par2val_index
    // Initialize mapping from parameter index to index in value vector.
