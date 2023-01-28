@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_CALL_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/atomic_index.hpp>
@@ -1177,11 +1177,7 @@ void call_atomic_rev_depend(
    {  size_t n = parameter_x.size();
       ident_zero_x.resize(n);
       for(size_t j = 0; j < n; ++j)
-      {  if( type_x[j] >= constant_enum )
-            ident_zero_x[j] = false;
-         else
-            ident_zero_x[j] = IdenticalZero( parameter_x[j] );
-      }
+         ident_zero_x[j] = type_x[j] == identical_zero_enum;
    }
 # ifndef NDEBUG
    bool ok = v_ptr != nullptr;

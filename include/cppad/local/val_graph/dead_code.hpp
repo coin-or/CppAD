@@ -58,6 +58,22 @@ void tape_t<Value>::dead_code(void)
    // https://en.wikipedia.org/wiki/Dead-code_elimination
    // -----------------------------------------------------------------------
    //
+   // ident_zero
+   Vector<bool> ident_zero(n_val_);
+   for(size_t i = 0; i < n_val_; ++i)
+      ident_zero[i] = false;
+   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
+   {  op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
+      if( op_enum == con_op_enum )
+      {  addr_t res_index = op_vec_[i_op].res_index;
+         Value& constant  = con_vec_[ arg_vec_[ op_vec_[i_op].arg_index ] ];
+         ident_zero[res_index] = CppAD::IdenticalZero( constant );
+      }
+   }
+   //
+   // ident_zero_x, depend_x, depend_y
+   Vector<bool> ident_zero_x, depend_x, depend_y;
+   //
    // need_val_index
    Vector<bool> need_val_index(n_val_);
    for(size_t i = 0; i < n_val_; ++i)
@@ -92,14 +108,21 @@ void tape_t<Value>::dead_code(void)
          size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
          size_t call_id       = size_t( arg_vec_[arg_index + 3] );
          //
+         // ident_zero_x
+         ident_zero_x.resize(n_arg - 4);
+         for(addr_t i = 4; i < n_arg; ++i)
+            ident_zero_x[i-4] = ident_zero[ arg_vec_[arg_index + i] ];
+         //
          // depend_y
-         Vector<bool> depend_y(n_res);
+         depend_y.resize(n_res);
          for(addr_t i = 0; i < n_res; ++i)
             depend_y[i] = need_val_index[ res_index + i ];
          //
          // depend_x
-         Vector<bool> depend_x(n_arg - 4);
-         atomic_rev_depend<Value>(atomic_index, call_id, depend_x, depend_y);
+         depend_x.resize(n_arg - 4);
+         atomic_rev_depend<Value>(
+            atomic_index, call_id, ident_zero_x, depend_x, depend_y
+         );
          //
          for(addr_t k = 4; k < n_arg; ++k)
             need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];

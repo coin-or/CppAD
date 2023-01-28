@@ -139,21 +139,27 @@ template <class Value>
 void atomic_rev_depend(
    size_t              atomic_index   ,
    size_t              call_id        ,
+   const Vector<bool>& ident_zero_x   ,
    Vector<bool>&       depend_x       ,
    const Vector<bool>& depend_y       )
 // END_ATOMIC_REV_DEPEND
 {  //
    // parameter_x
-   // 2DO: if atomic_three functions are used, need to get this from the
-   // constants in the val_graph.
+   // 2DO: need to create a version of atomic three that has this information
+   // in call_id. Perhaps extra versions of callbacks.
    Vector<Value>  parameter_x( depend_x.size() );
    for(size_t i = 0; i < depend_x.size(); ++i)
       parameter_x[i] = CppAD::numeric_limits<Value>::quiet_NaN();
    //
    // type_x
+   // All that matters (for atomic_four) is if value is identically zero
    Vector<ad_type_enum> type_x( depend_x.size() );
    for(size_t i = 0; i < depend_x.size(); ++i)
-      type_x[i] = variable_enum;
+   {  if( ident_zero_x[i] )
+         type_x[i] = identical_zero_enum;
+      else
+         type_x[i] = variable_enum;
+   }
    //
    // call_atomic_rev_depend
    local::sweep::call_atomic_rev_depend<Value, Value>(

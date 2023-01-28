@@ -1,5 +1,5 @@
-# ifndef  CPPAD_LOCAL_VAL_GRAPH_MAP_OP_HPP
-# define  CPPAD_LOCAL_VAL_GRAPH_MAP_OP_HPP
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_CALL_OP_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_CALL_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
@@ -25,8 +25,8 @@ The Value Operator Map Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_MAP_OP_T
-   // END_MAP_OP_T
+   // BEGIN_CALL_OP_T
+   // END_CALL_OP_T
 }
 
 Context
@@ -122,7 +122,7 @@ is an example and test that uses this operator.
 
 {xrst_end val_call_op}
 */
-// BEGIN_MAP_OP_T
+// BEGIN_CALL_OP_T
 template <class Value>
 class call_op_t : public op_base_t<Value> {
 public:
@@ -170,7 +170,7 @@ public:
       addr_t                res_index    ,
       Vector<Value>&        val_vec
    ) const override;
-// END_MAP_OP_T
+// END_CALL_OP_T
    //
    // print_op
    void print_op(
