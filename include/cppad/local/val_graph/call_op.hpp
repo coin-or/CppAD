@@ -159,7 +159,7 @@ public:
    size_t call_id(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      )
-   {  return size_t( arg_vec[arg_index + 4] ); }
+   {  return size_t( arg_vec[arg_index + 3] ); }
    //
    // eval
    void eval(

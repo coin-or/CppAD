@@ -10,20 +10,20 @@
 # ifdef NDEBUG
 # define CPPAD_ASSERT_AD_TYPE(ad_obj)
 # else
-# define CPPAD_ASSERT_AD_TYPE(ad_obj)                 \
-   switch(ad_obj.ad_type_)                           \
+# define CPPAD_ASSERT_AD_TYPE(ad_obj)               \
+   switch(ad_obj.ad_type_)                          \
    {  case constant_enum:                           \
       CPPAD_ASSERT_UNKNOWN( ad_obj.tape_id_ == 0 ); \
       break;                                        \
-                                                      \
+                                                    \
       case dynamic_enum:                            \
       case variable_enum:                           \
       break;                                        \
-                                                      \
+                                                    \
       default:                                      \
       CPPAD_ASSERT_UNKNOWN(false);                  \
-   }                                                 \
-   CPPAD_ASSERT_UNKNOWN(                             \
+   }                                                \
+   CPPAD_ASSERT_UNKNOWN(                            \
       ad_obj.tape_id_ == 0 ||                       \
       ad_obj.ad_type_ == dynamic_enum ||            \
       ad_obj.ad_type_ == variable_enum              \
