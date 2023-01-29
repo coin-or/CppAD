@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ ! -e "bin/run_cmake.sh" ]
 then
@@ -203,7 +203,7 @@ then
 fi
 # ---------------------------------------------------------------------------
 # clean all variables in cmake cache
-cmake_args='-U .+ -D cmake_defined_ok=FALSE'
+cmake_args='-U .+ -D cmake_defined_ok=FALSE -G Ninja'
 #
 if [ "$verbose" == 'yes' ]
 then

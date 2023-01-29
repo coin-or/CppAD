@@ -215,7 +215,7 @@ echo_log_eval cd build
 # -----------------------------------------------------------------------------
 # can comment out this make check to if only running tests below it
 n_job=`nproc`
-cmd="make -j $n_job check"
+cmd="ninja -j $n_job check"
 echo "$cmd >& check_all.tmp"
 echo "$cmd" > $top_srcdir/check_all.tmp
 if ! $cmd >& $top_srcdir/check_all.tmp
@@ -233,10 +233,9 @@ do
    fi
 done
 # ----------------------------------------------------------------------------
-# extra speed tests not run with option specified
+# extra speed tests not run with different options
 #
-# make speed_cppad in case make check above is commented out
-echo_log_eval make -j $n_job speed_cppad
+echo_log_eval ninja -j $n_job speed_cppad
 for option in onetape colpack optimize atomic memory boolsparsity
 do
    #
@@ -244,8 +243,8 @@ do
 done
 if ! echo "$skip" | grep 'adolc' > /dev/null
 then
-   # make speed_adolc in case make check above is commented out
-   echo_log_eval make -j $n_job speed_adolc
+   # redo build of speed_adolc in case it is commented out above
+   echo_log_eval ninja -j $n_job speed_adolc
    #
    echo_eval speed/adolc/speed_adolc correct         432 onetape
    echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
@@ -265,8 +264,8 @@ do
       program="$dir/example_multi_thread_${threading}"
       program_list="$program_list $program"
       #
-      # make program in case make check above is commented out
-      echo_log_eval make -j $n_job example_multi_thread_${threading}
+      # redo this build in case it is commented out above
+      echo_log_eval ninja -j $n_job example_multi_thread_${threading}
       #
       # all programs check the fast cases
       echo_log_eval $program a11c
@@ -297,8 +296,10 @@ fi
 #
 # print_for test
 program='example/print_for/example_print_for'
-# make program in case make check above is commented out
-echo_log_eval make -j $n_job example_print_for
+#
+# redo this build in case it is commented out above
+echo_log_eval ninja -j $n_job example_print_for
+#
 echo_log_eval $program
 $program | sed -e '/^Test passes/,$d' > junk.1.$$
 $program | sed -e '1,/^Test passes/d' > junk.2.$$
@@ -313,7 +314,7 @@ fi
 #
 # ---------------------------------------------------------------------------
 # check install
-echo_log_eval make install
+echo_log_eval ninja install
 echo_log_eval cd ..
 echo_log_eval bin/check_install.sh
 # ---------------------------------------------------------------------------
