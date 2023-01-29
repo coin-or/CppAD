@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -59,7 +59,7 @@ bool dynamic(void)
    // csrc_file
    // created in std::filesystem::current_path
    std::string c_type    = "double";
-   std::string csrc_file = "jit_dynamic.c";
+   std::string csrc_file = "dynamic.c";
    std::ofstream ofs;
    ofs.open(csrc_file , std::ofstream::out);
    f.to_csrc(ofs, c_type);

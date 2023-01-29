@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin jit_atomic.cpp}
@@ -40,7 +40,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 // write_c_file
 std::string write_c_file(size_t index, const std::string& csrc)
 {  //
-   std::string file_name = "test_to_csrc_" + CppAD::to_string(index) + ".c";
+   std::string file_name = "atomic_" + CppAD::to_string(index) + ".c";
    //
    // write file_name
    std::ofstream os;
@@ -143,11 +143,8 @@ bool atomic(void)
    CppAD::ADFun<double> f(ax, ay);
    f.function_name_set(function_name);
    //
-   // library_name
-   std::string library_name = "test_to_csrc";
-   //
    // dll_file
-   std::string dll_file = "test_to_csrc" DLL_EXT;
+   std::string dll_file = "atomic" DLL_EXT;
    //
    // csrc_files
    CppAD::vector<std::string> csrc_files(2);
