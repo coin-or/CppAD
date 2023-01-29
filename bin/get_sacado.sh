@@ -1,9 +1,9 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin get_sacado.sh} 
+# {xrst_begin get_sacado.sh}
 # {xrst_spell
 #     trilinos
 # }
@@ -133,13 +133,15 @@ then
 fi
 echo_eval cd build
 # -----------------------------------------------------------------------------
-echo_eval cmake \
-   -D CMAKE_BUILD_TYPE:STRING=RELEASE \
-   -D Trilinos_ENABLE_Sacado:BOOL=ON \
-   -D Sacado_ENABLE_TESTS:BOOL=OFF \
-   -D CMAKE_INSTALL_PREFIX:PATH=$prefix \
+cmd="cmake \
+   -D CMAKE_BUILD_TYPE=RELEASE \
+   -D Trilinos_ENABLE_Sacado=ON \
+   -D Sacado_ENABLE_TESTS=OFF \
+   -D CMAKE_INSTALL_PREFIX=$prefix \
    -D Trilinos_INSTALL_LIB_DIR=$prefix/$libdir \
-   ..
+   .."
+echo $cmd
+$cmd
 echo_eval make -j $n_job install
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag
