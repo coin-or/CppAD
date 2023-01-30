@@ -13,8 +13,15 @@
 // BEGIN_CPAPD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
 
-// ----------------------------------------------------------------------------
 /*
+// ----------------------------------------------------------------------------
+{xrst_begin_parent call_atomic dev}
+
+Atomic Function Callbacks
+#########################
+
+{xrst_end call_atomic}
+// ----------------------------------------------------------------------------
 {xrst_begin atomic_forward_callback dev}
 
 Forward Mode Callback to Atomic Functions
