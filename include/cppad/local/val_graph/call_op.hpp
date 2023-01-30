@@ -7,7 +7,7 @@
 # include <cstdio>
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/atomic_index.hpp>
-# include <cppad/local/val_graph/atomic.hpp>
+# include <cppad/core/atomic/four/atomic.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -54,12 +54,12 @@ see op_base :ref:`val_base_op@n_res` .
 atomic_index
 ************
 This member function returns the *atomic_index* for the mapping; see
-:ref:`val_graph_atomic@atomic_index` .
+:ref:`atomic_index@index_out` in the case where *index_in* is zero.
 
 call_id
 *******
 This member function returns the *call_id* for this use of the mapping; see
-:ref:`val_graph_atomic@call_id` .
+:ref:`atomic_four_call@call_id` .
 
 eval
 ****
@@ -112,7 +112,6 @@ prints the following values:
    and there are two spaces between those fields.
 
 {xrst_toc_hidden
-   include/cppad/local/val_graph/atomic.hpp
    val_graph/call_xam.cpp
 }
 Example
@@ -198,14 +197,41 @@ void call_op_t<Value>::eval(
    size_t atomic_index  = size_t( arg_vec[arg_index + 2] );
    size_t call_id       = size_t( arg_vec[arg_index + 3] );
    //
+   // v_ptr, name
+   CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
+   bool         set_null = false;
+   size_t       type     = 0;       // result: set to avoid warning
+   std::string  name;               // result:
+   void*        v_ptr    = nullptr; // result: set to avoid warning
+   local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
+   CPPAD_ASSERT_UNKNOWN( type == 4 ); // val_graph only supports atomic_four
+   //
    // x
    CppAD::vector<Value> x(n_arg - 4);
    for(addr_t i = 4; i < addr_t(n_arg); ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
-   // y
+   // select_y
+   CppAD::vector<bool> select_y(n_res);
+   for(size_t i = 0; i < n_res; ++i)
+      select_y[i] = false;
+   //
+   // y, ok
    CppAD::vector<Value> y(n_res);
-   atomic_forward<Value>(atomic_index, call_id, x, y);
+   bool ok = false;
+   if( v_ptr != nullptr )
+   {  size_t order_low = 0, order_up = 0;
+      atomic_four<Value>* afun = reinterpret_cast<atomic_four<Value>*>(v_ptr);
+      ok = afun->forward(call_id, select_y, order_low, order_up, x, y);
+   }
+   if( ! ok )
+   {  std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic forward returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
    //
    // val_vec
    for(addr_t i = 0; i < addr_t(n_res); ++i)
@@ -216,14 +242,6 @@ void call_op_t<Value>::eval(
    {  //
       // atomic_index = atomic_index
       CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
-      //
-      // name
-      bool   set_null = false;
-      size_t index_in = atomic_index;
-      size_t type     = 0;       // not used, set to avoid compiler warning
-      void*  v_ptr    = nullptr; // not used, set to avoid compiler warning
-      std::string name;
-      local::atomic_index<Value>(set_null, index_in, type, &name, v_ptr);
       //
       // print_op
       this->print_op(

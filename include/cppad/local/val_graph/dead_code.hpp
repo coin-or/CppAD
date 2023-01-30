@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/atomic.hpp>
+# include <cppad/local/atomic_index.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_dead_code dev}
@@ -108,6 +108,18 @@ void tape_t<Value>::dead_code(void)
          size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
          size_t call_id       = size_t( arg_vec_[arg_index + 3] );
          //
+         // v_ptr, name
+         CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
+         bool         set_null = false;
+         size_t       type     = 0;       // result: set to avoid warning
+         std::string  name;               // result:
+         void*        v_ptr    = nullptr; // result: set to avoid warning
+         local::atomic_index<Value>(
+            set_null, atomic_index, type, &name, v_ptr
+         );
+         // val_graph only supports atomic_four
+         CPPAD_ASSERT_UNKNOWN( type == 4 );
+         //
          // ident_zero_x
          ident_zero_x.resize(n_arg - 4);
          for(addr_t i = 4; i < n_arg; ++i)
@@ -118,11 +130,26 @@ void tape_t<Value>::dead_code(void)
          for(addr_t i = 0; i < n_res; ++i)
             depend_y[i] = need_val_index[ res_index + i ];
          //
-         // depend_x
+         // depend_x, ok
          depend_x.resize(n_arg - 4);
-         atomic_rev_depend<Value>(
-            atomic_index, call_id, ident_zero_x, depend_x, depend_y
-         );
+         bool ok = false;
+         if( v_ptr != nullptr )
+         {  atomic_four<Value>* afun =
+               reinterpret_cast< atomic_four<Value>* >(v_ptr);
+            ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+            if( ! ok )
+            {  // try deprecated version of this function
+               ok = afun->rev_depend(call_id, depend_x, depend_y);
+            }
+         }
+         if( ! ok )
+         {  std::string msg = name;
+            if( v_ptr == nullptr )
+               msg += ": this atomic function has been deleted";
+            else
+               msg += ": atomic forward returned false";
+            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+         }
          //
          for(addr_t k = 4; k < n_arg; ++k)
             need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];

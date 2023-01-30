@@ -73,21 +73,23 @@ This places a :ref:`val_call_op-name` operator in the tape.
 
 atomic_index
 ============
-This is the :ref:`val_graph_atomic@atomic_index` for this function call.
+This is the *atomic_index* for the atomic function; see
+:ref:`atomic_index@index_out` in the case where *index_in* is zero.
 
 call_id
 =======
-This is the :ref:`val_graph_atomic@call_id` for this function call.
+This is the *call_id* for this use of the atomic function; see
+:ref:`atomic_four_call@call_id` .
 
 n_res
 =====
-This is the number of values returned by the function call
+This is the number of values returned by the atomic function call
 and placed in the value vector.
 
 fun_arg
 =======
-This vector has size equal to the number of arguments to the function
-for this mapping and *call_id* .
+This vector has size equal to the number of arguments to the atomic function
+for this *call_id* .
 (The combination of *atomic_index* and *call_id* must specify a function.)
 The *j*-th element of *fun_arg* is the index on the value vector of
 the *j*-th argument to the function.
