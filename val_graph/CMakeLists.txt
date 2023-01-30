@@ -17,6 +17,7 @@ SET(source_list val_graph.cpp
    test/nan.cpp
    test/not_used.cpp
    test/opt_call.cpp
+   test/val2fun_atom.cpp
    val2fun_xam.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

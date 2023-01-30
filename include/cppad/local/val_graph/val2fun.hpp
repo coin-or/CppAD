@@ -102,16 +102,6 @@ void ADFun<Base, RecBase>::val2fun(
    const vector<Base>&      val_con_vec = val_tape.con_vec();
    const vector<addr_t>&    val_dep_vec = val_tape.dep_vec();
    //
-   // check_push_back
-   auto check_push_back = [](
-      vector<addr_t>& vec      ,
-      auto            index    ,
-      auto            value    )
-   {  CPPAD_ASSERT_UNKNOWN( vec.size() == size_t(index) );
-      vec.push_back( value );
-      return;
-   };
-   //
    // nan
    Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
    //
@@ -185,7 +175,9 @@ void ADFun<Base, RecBase>::val2fun(
    // val2fun_index
    // mapping from value index to index in the AD function object.
    // The meaning of this index depends on its ad_type.
-   vector<addr_t> val2fun_index;
+   vector<addr_t> val2fun_index(n_val);
+   for(size_t i = 0; i < n_val; ++i)
+      val2fun_index[i] = std::numeric_limits<addr_t>::max(); // invalid
    //
    // rec
    // start a functon recording
@@ -213,14 +205,14 @@ void ADFun<Base, RecBase>::val2fun(
    // put the independent value vector in the function recording
    for(size_t i = 0; i < val_n_ind; ++i)
    {  if( val_ad_type[i] == dynamic_enum )
-      {  par_addr = rec.put_dyn_par(nan, local::ind_dyn);
+      {  par_addr         = rec.put_dyn_par(nan, local::ind_dyn);
+         val2fun_index[i] = par_addr;
          CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
-         check_push_back(val2fun_index, i, par_addr);
       }
       else
       {  CPPAD_ASSERT_UNKNOWN( val_ad_type[i] == variable_enum );
-         var_addr = rec.PutOp( local::InvOp );
-         check_push_back(val2fun_index, i, var_addr);
+         var_addr         = rec.PutOp( local::InvOp );
+         val2fun_index[i] = var_addr;
       }
    }
    CPPAD_ASSERT_UNKNOWN( size_t(par_addr) == dyn_n_ind );
@@ -267,7 +259,7 @@ void ADFun<Base, RecBase>::val2fun(
                CppAD::isnan(constant) || parameter[par_addr] == constant
             );
             //
-            check_push_back(val2fun_index, res_index, par_addr);
+            val2fun_index[res_index] = par_addr;
             val_index2con[res_index] = constant;
          }
          break;
@@ -308,10 +300,14 @@ void ADFun<Base, RecBase>::val2fun(
             // val_graph only supports atomic_four
             CPPAD_ASSERT_UNKNOWN( type == 4 );
             //
-            // ad_type_x
+            // ad_type_x, taylor_x
             ad_type_x.resize(n_arg - 4);
+            taylor_x.resize(n_arg - 4);
             for(addr_t i = 4; i < addr_t(n_arg); ++i)
-               ad_type_x[i-4] = val_ad_type[ val_arg_vec[arg_index + i] ];
+            {  addr_t val_index =  val_arg_vec[arg_index + i];
+               ad_type_x[i-4]   = val_ad_type[ val_index ];
+               taylor_x[i-4]    = val_index2con[ val_index ];
+            }
             //
             // ad_type_y, ok, afun
             ad_type_y.resize(n_res);
@@ -370,8 +366,8 @@ void ADFun<Base, RecBase>::val2fun(
                ax.resize(n_arg - 4);
                for(addr_t j = 4; j < addr_t(n_arg); ++j)
                {  addr_t val_index = val_arg_vec[arg_index + j];
-                  ax[j].taddr_     = val2fun_index[val_index];
-                  ax[j].value_     = val_index2con[val_index];
+                  ax[j-4].taddr_   = val2fun_index[val_index];
+                  ax[j-4].value_   = val_index2con[val_index];
                }
                // ay
                ay.resize(n_res);
@@ -430,7 +426,7 @@ void ADFun<Base, RecBase>::val2fun(
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
          }
-         check_push_back(val2fun_index, res_index, tmp_addr);
+         val2fun_index[res_index] = tmp_addr;
          break;
          // ------------------------------------------------------------------
          // sub_op_enum
@@ -458,7 +454,7 @@ void ADFun<Base, RecBase>::val2fun(
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
          }
-         check_push_back(val2fun_index, res_index, tmp_addr);
+         val2fun_index[res_index] = tmp_addr;
          break;
          // ------------------------------------------------------------------
          default:

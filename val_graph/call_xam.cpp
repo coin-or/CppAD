@@ -41,19 +41,17 @@ bool call_xam(void)
    // atomic_xam
    val_atomic_xam atomic_xam;
    //
+   // callarg, op_arg
+   Vector<addr_t> callarg(4), op_arg(2);
+   //
    // f
    tape_t<double> tape;
    size_t n_ind = 4;
    size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
    ok &= index_of_nan == n_ind;
    //
-   // n_res
+   // n_res, dep_vec
    size_t n_res = 2;
-   //
-   // fun_arg, op_arg
-   Vector<addr_t> fun_arg(4), op_arg(2);
-   //
-   // dep_vec
    Vector<addr_t> dep_vec(n_res);
    //
    // atomic_index
@@ -62,11 +60,11 @@ bool call_xam(void)
    // f_0(x) = x[0] + x[1]
    // f_1(x) = x[2] * x[3]
    for(addr_t i = 0; i < 4; ++i)
-      fun_arg[i] = i;
-   size_t call_id   = 0;
-   size_t n_fun_res = 2;
+      callarg[i] = i;
+   size_t call_id    = 0;
+   size_t n_call_res = 2;
    addr_t res_index = tape.record_call_op(
-      atomic_index, call_id, n_fun_res, fun_arg
+      atomic_index, call_id, n_call_res, callarg
    );
    //
    // dep_vec
