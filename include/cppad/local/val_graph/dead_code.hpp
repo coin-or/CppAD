@@ -147,7 +147,7 @@ void tape_t<Value>::dead_code(void)
             if( v_ptr == nullptr )
                msg += ": this atomic function has been deleted";
             else
-               msg += ": atomic forward returned false";
+               msg += ": atomic rev_depend returned false";
             CPPAD_ASSERT_KNOWN(false, msg.c_str() );
          }
          //

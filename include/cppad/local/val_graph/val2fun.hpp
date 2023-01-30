@@ -153,7 +153,7 @@ void ADFun<Base, RecBase>::val2fun(
    // val_ad_type
    // initialize this mapping and set its value of independent vector
    vector<ad_type_enum> val_ad_type(n_val);
-   for(size_t i = 0; i < size_t(number_ad_type_enum); ++i)
+   for(size_t i = 0; i < n_val; ++i)
       val_ad_type[i] = number_ad_type_enum; // invalid
    for(size_t i = 0; i < dyn_n_ind; ++i)
    {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
@@ -174,6 +174,13 @@ void ADFun<Base, RecBase>::val2fun(
       );
       val_ad_type[ var_ind[i] ] = variable_enum;
    }
+   //
+   // val_index2con_index
+   // We could save space by including val_ad_type information in this vector.
+   // (just give dynamics, variables, and invalid different values).
+   vector<Base> val_index2con(n_val);
+   for(size_t i = 0; i < n_val; ++i)
+      val_index2con[i] = nan;
    //
    // val2fun_index
    // mapping from value index to index in the AD function object.
@@ -225,9 +232,12 @@ void ADFun<Base, RecBase>::val2fun(
    for(size_t i = 0; i < var_n_ind; ++i)
       ind_taddr_[i] = i + 1;
    //
-   // ad_type_x, fun_arg;
-   vector<ad_type_enum> ad_type_x;
+   // ad_type_x, ad_type_y, fun_arg, select_y
+   vector<ad_type_enum> ad_type_x, ad_type_y;
    vector<addr_t>       fun_arg;
+   vector<bool>         select_y;
+   vector<Base>         taylor_x, taylor_y;
+   vector< AD<Base> >   ax, ay;
    //
    // op_index
    for(size_t op_index = 0; op_index < val_n_op; ++op_index)
@@ -240,42 +250,17 @@ void ADFun<Base, RecBase>::val2fun(
       size_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
       op_enum_t        op_enum   = op_ptr->op_enum();
       //
-      // arg, ad_type_x, val_ad_type
-      fun_arg.resize(n_arg);
-      ad_type_x.resize(n_arg);
-      switch( op_enum )
-      {
-         // call_op
-         case local::val_graph::call_op_enum:
-         // 2DO: implement this case
-         assert( false );
-         break;
-         //
-         // con_op
-         case local::val_graph::con_op_enum:
-         ad_type_x[0]         = constant_enum;
-         val_ad_type[res_index] = constant_enum;
-         break;
-         //
-         // other cases
-         default:
-         ad_type_enum res_ad_type = constant_enum;
-         for(addr_t i = 0; i < addr_t(n_arg); ++i)
-         {  ad_type_x[i] = val_ad_type[ val_arg_vec[arg_index + i] ];
-            fun_arg[i]   = val2fun_index[ val_arg_vec[arg_index + i] ];
-            CPPAD_ASSERT_UNKNOWN( ad_type_x[i] < number_ad_type_enum );
-            res_ad_type = std::max(res_ad_type, ad_type_x[i] );
-         }
-         val_ad_type[res_index] = res_ad_type;
-         break;
-      }
-      //
-      // rec, val2fun_index
+      // fun_arg, val_ad_type
       switch( op_enum )
       {  //
-         // con_op_enum
+         // con_op
          case local::val_graph::con_op_enum:
+         //
+         // val_index2con
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
+         ad_type_x.resize(n_arg);
+         ad_type_x[0]           = constant_enum;
+         val_ad_type[res_index] = constant_enum;
          {  const Base& constant = val_con_vec[arg_index];
             par_addr = rec.put_con_par(constant);
             CPPAD_ASSERT_UNKNOWN(
@@ -283,9 +268,142 @@ void ADFun<Base, RecBase>::val2fun(
             );
             //
             check_push_back(val2fun_index, res_index, par_addr);
+            val_index2con[res_index] = constant;
          }
          break;
          //
+         // default
+         default:
+         {  ad_type_x.resize(n_arg);
+            fun_arg.resize(n_arg);
+            ad_type_enum res_ad_type = constant_enum;
+            for(addr_t i = 0; i < addr_t(n_arg); ++i)
+            {  ad_type_x[i] = val_ad_type[ val_arg_vec[arg_index + i] ];
+               fun_arg[i]   = val2fun_index[ val_arg_vec[arg_index + i] ];
+               CPPAD_ASSERT_UNKNOWN( ad_type_x[i] < number_ad_type_enum );
+               res_ad_type = std::max(res_ad_type, ad_type_x[i] );
+            }
+            val_ad_type[res_index] = res_ad_type;
+         }
+         CPPAD_ASSERT_UNKNOWN( constant_enum < val_ad_type[res_index] );
+         break;
+         //
+         // call_op
+         case local::val_graph::call_op_enum:
+         {  //
+            // atomic_index, call_id
+            size_t n_res        = size_t( val_arg_vec[arg_index + 1] );
+            size_t atomic_index = size_t( val_arg_vec[arg_index + 2] );
+            size_t call_id      = size_t( val_arg_vec[arg_index + 3] );
+            //
+            // v_ptr, name
+            CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
+            bool         set_null = false;
+            size_t       type     = 0;       // result: set to avoid warning
+            std::string  name;               // result:
+            void*        v_ptr    = nullptr; // result: set to avoid warning
+            local::atomic_index<Base>(
+               set_null, atomic_index, type, &name, v_ptr
+            );
+            // val_graph only supports atomic_four
+            CPPAD_ASSERT_UNKNOWN( type == 4 );
+            //
+            // ad_type_x
+            ad_type_x.resize(n_arg - 4);
+            for(addr_t i = 4; i < addr_t(n_arg); ++i)
+               ad_type_x[i-4] = val_ad_type[ val_arg_vec[arg_index + i] ];
+            //
+            // ad_type_y, ok, afun
+            ad_type_y.resize(n_res);
+            bool               ok = false;
+            atomic_four<Base>* afun = nullptr;
+            if( v_ptr != nullptr )
+            {  afun = reinterpret_cast< atomic_four<Base>* >(v_ptr);
+               ok = afun->for_type(call_id, ad_type_x, ad_type_y);
+            }
+            if( ! ok )
+            {  std::string msg = name;
+               if( v_ptr == nullptr )
+                  msg += ": this atomic function has been deleted";
+               else
+                  msg += ": atomic for_type returned false";
+               CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+            }
+            if( ok )
+            {  // taylor_y
+               select_y.resize(n_res);
+               for(size_t i = 0; i < n_res; ++i)
+                  select_y[i] = ad_type_y[i] == constant_enum;
+               size_t order_low = 0, order_up = 0;
+               taylor_y.resize(n_res);
+               ok = afun->forward(
+                  call_id,
+                  select_y,
+                  order_low,
+                  order_up,
+                  taylor_x,
+                  taylor_y
+               );
+               if( ! ok )
+               {  std::string msg = name;
+                  msg += ": atomic forward returned false";
+                  CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+               }
+            }
+            //
+            // record_dynamic, record_variable
+            bool record_dynamic  = false;
+            bool record_variable = false;
+            for(size_t i = 0; i < n_res; ++i)
+            {  CPPAD_ASSERT_UNKNOWN( ad_type_y[i] <= variable_enum );
+               record_dynamic  |= ad_type_y[i] == dynamic_enum;
+               record_variable |= ad_type_y[i] == variable_enum;
+            }
+            // tape_id
+            // tape_id is zero because not a true recording
+            tape_id_t tape_id = 0;
+            //
+            // ax, ay
+            if( record_dynamic || record_variable )
+            {  //
+               // ax
+               ax.resize(n_arg - 4);
+               for(addr_t j = 4; j < addr_t(n_arg); ++j)
+               {  addr_t val_index = val_arg_vec[arg_index + j];
+                  ax[j].taddr_     = val2fun_index[val_index];
+                  ax[j].value_     = val_index2con[val_index];
+               }
+               // ay
+               ay.resize(n_res);
+               for(addr_t j = 0; j < addr_t(n_res); ++j)
+               {  ay[j].taddr_     = 0; // not used
+                  ay[j].value_     = taylor_y[j];
+               }
+            }
+            if( record_dynamic ) rec.put_dyn_atomic(
+               tape_id, atomic_index, call_id, ad_type_x, ad_type_y, ax, ay
+            );
+            if( record_variable ) rec.put_var_atomic(
+               tape_id, atomic_index, call_id, ad_type_x, ad_type_y, ax, ay
+            );
+            //
+            // val2fun_index, val_index2con
+            for(addr_t i = 0; i < addr_t(n_res); ++i)
+            {  val2fun_index[res_index + i] = ay[i].taddr_;
+               val_index2con[res_index + i] = taylor_y[i];
+            }
+         }
+         break;
+      }
+      //
+      // rec, val2fun_index, val_index2con
+      switch( op_enum )
+      {  //
+         // call_op, con_op
+         case local::val_graph::call_op_enum:
+         case local::val_graph::con_op_enum:
+         break;
+         // ------------------------------------------------------------------
          // add_op_enum
          case local::val_graph::add_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
@@ -314,7 +432,7 @@ void ADFun<Base, RecBase>::val2fun(
          }
          check_push_back(val2fun_index, res_index, tmp_addr);
          break;
-         //
+         // ------------------------------------------------------------------
          // sub_op_enum
          case local::val_graph::sub_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
@@ -342,7 +460,7 @@ void ADFun<Base, RecBase>::val2fun(
          }
          check_push_back(val2fun_index, res_index, tmp_addr);
          break;
-         //
+         // ------------------------------------------------------------------
          default:
          CPPAD_ASSERT_KNOWN( op_enum > local::val_graph::number_op_enum,
             "op_enum is not yet implemented"
