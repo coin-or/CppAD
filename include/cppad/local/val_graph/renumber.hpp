@@ -211,28 +211,28 @@ void tape_t<Value>::renumber(void)
       addr_t    arg_index = op_vec_[i_op].arg_index;
       size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
       //
-      // val_index, n_val
+      // val_index, n_val_arg
       addr_t val_index = arg_index;
-      addr_t n_val     = addr_t(n_arg);
+      addr_t n_val_arg = addr_t(n_arg);
       //
-      // op_enum, val_index, n_val
+      // op_enum, val_index, n_val_arg
       op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
       switch( op_enum )
       {  //
          case call_op_enum:
          val_index += 4; // index where function arguments start
-         n_val     -= 4; // number of funciton arguments
+         n_val_arg -= 4; // number of funciton arguments
          break;
          //
-         // n_val
+         // n_val_arg
          case con_op_enum:
-         n_val = 0;  // no arguemnt indices are in the value vector
+         n_val_arg = 0;  // no arguemnt indices are in the value vector
          break;
          //
          default:
          break;
       }
-      for(addr_t i = 0; i < n_val; ++i)
+      for(addr_t i = 0; i < n_val_arg; ++i)
          arg_vec_[val_index + i] = new_val_index[ arg_vec_[val_index + i] ];
    }
    //

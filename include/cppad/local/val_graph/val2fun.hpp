@@ -165,7 +165,7 @@ void ADFun<Base, RecBase>::val2fun(
       val_ad_type[ var_ind[i] ] = variable_enum;
    }
    //
-   // val_index2con_index
+   // val_index2con
    // if tape_has_call_op, this is the value for constants (others are nan)
    vector<Base> val_index2con;
    bool tape_has_call_op = false;
