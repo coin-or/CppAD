@@ -339,12 +339,12 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/utility/cppad_vector_itr.hpp \
 	cppad/local/utility/vector_bool.hpp \
 	cppad/local/val_graph/add_op.hpp \
-	cppad/local/val_graph/atomic.hpp \
 	cppad/local/val_graph/base_op.hpp \
 	cppad/local/val_graph/binary_op.hpp \
 	cppad/local/val_graph/call_op.hpp \
 	cppad/local/val_graph/con_op.hpp \
 	cppad/local/val_graph/dead_code.hpp \
+	cppad/local/val_graph/fold_con.hpp \
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/record_op.hpp \
 	cppad/local/val_graph/renumber.hpp \
