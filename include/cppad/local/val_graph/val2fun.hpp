@@ -166,11 +166,20 @@ void ADFun<Base, RecBase>::val2fun(
    }
    //
    // val_index2con_index
-   // We could save space by including val_ad_type information in this vector.
-   // (just give dynamics, variables, and invalid different values).
-   vector<Base> val_index2con(n_val);
-   for(size_t i = 0; i < n_val; ++i)
-      val_index2con[i] = nan;
+   // if tape_has_call_op, this is the value for constants (others are nan)
+   vector<Base> val_index2con;
+   bool tape_has_call_op = false;
+   for(size_t i = 0; i < val_op_vec.size(); ++i)
+   {  op_base_t<Base>* op_ptr    = val_op_vec[i].op_ptr;
+      tape_has_call_op |= op_ptr->op_enum() == local::val_graph::call_op_enum;
+   }
+   if( tape_has_call_op )
+   {  val_index2con.resize(n_val);
+      for(size_t i = 0; i < val_n_ind; ++i)
+         val_index2con[i] = nan;
+      bool trace = false;
+      val_tape.eval(trace, val_index2con);
+   }
    //
    // val2fun_index
    // mapping from value index to index in the AD function object.
@@ -242,13 +251,13 @@ void ADFun<Base, RecBase>::val2fun(
       size_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
       op_enum_t        op_enum   = op_ptr->op_enum();
       //
-      // fun_arg, val_ad_type
+      // fun_arg, val_ad_type, val2fun_index
       switch( op_enum )
       {  //
          // con_op
          case local::val_graph::con_op_enum:
          //
-         // val_index2con
+         // val2fun_index
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
          ad_type_x.resize(n_arg);
          ad_type_x[0]           = constant_enum;
@@ -260,7 +269,6 @@ void ADFun<Base, RecBase>::val2fun(
             );
             //
             val2fun_index[res_index] = par_addr;
-            val_index2con[res_index] = constant;
          }
          break;
          //
@@ -300,13 +308,12 @@ void ADFun<Base, RecBase>::val2fun(
             // val_graph only supports atomic_four
             CPPAD_ASSERT_UNKNOWN( type == 4 );
             //
-            // ad_type_x, taylor_x
+            // ad_type_x
             ad_type_x.resize(n_arg - 4);
             taylor_x.resize(n_arg - 4);
             for(addr_t i = 4; i < addr_t(n_arg); ++i)
             {  addr_t val_index =  val_arg_vec[arg_index + i];
                ad_type_x[i-4]   = val_ad_type[ val_index ];
-               taylor_x[i-4]    = val_index2con[ val_index ];
             }
             //
             // ad_type_y, ok, afun
@@ -324,27 +331,6 @@ void ADFun<Base, RecBase>::val2fun(
                else
                   msg += ": atomic for_type returned false";
                CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-            }
-            if( ok )
-            {  // taylor_y
-               select_y.resize(n_res);
-               for(size_t i = 0; i < n_res; ++i)
-                  select_y[i] = ad_type_y[i] == constant_enum;
-               size_t order_low = 0, order_up = 0;
-               taylor_y.resize(n_res);
-               ok = afun->forward(
-                  call_id,
-                  select_y,
-                  order_low,
-                  order_up,
-                  taylor_x,
-                  taylor_y
-               );
-               if( ! ok )
-               {  std::string msg = name;
-                  msg += ": atomic forward returned false";
-                  CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-               }
             }
             //
             // record_dynamic, record_variable
@@ -373,7 +359,7 @@ void ADFun<Base, RecBase>::val2fun(
                ay.resize(n_res);
                for(addr_t j = 0; j < addr_t(n_res); ++j)
                {  ay[j].taddr_     = 0; // not used
-                  ay[j].value_     = taylor_y[j];
+                  ay[j].value_     = val_index2con[res_index + j];
                }
             }
             if( record_dynamic ) rec.put_dyn_atomic(
@@ -383,16 +369,16 @@ void ADFun<Base, RecBase>::val2fun(
                tape_id, atomic_index, call_id, ad_type_x, ad_type_y, ax, ay
             );
             //
-            // val2fun_index, val_index2con
+            // val2fun_index, val_ad_type
             for(addr_t i = 0; i < addr_t(n_res); ++i)
             {  val2fun_index[res_index + i] = ay[i].taddr_;
-               val_index2con[res_index + i] = taylor_y[i];
+               val_ad_type[res_index + i]   = ad_type_y[i];
             }
          }
          break;
       }
       //
-      // rec, val2fun_index, val_index2con
+      // rec, val2fun_index
       switch( op_enum )
       {  //
          // call_op, con_op
@@ -473,8 +459,8 @@ void ADFun<Base, RecBase>::val2fun(
    //
    // dep_taddr_
    // address of the dependent variables on variable tape
-   dep_taddr_.resize( var_n_ind );
-   for(size_t i = 0; i < var_n_ind; ++i)
+   dep_taddr_.resize( val_dep_vec.size() );
+   for(size_t i = 0; i < val_dep_vec.size(); ++i)
    {  var_addr      = val_dep_vec[i];
       dep_taddr_[i] = val2fun_index[var_addr];
    }

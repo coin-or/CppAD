@@ -166,7 +166,7 @@ example and test of tape.renumber().
 template <class Value>
 void tape_t<Value>::renumber(void)
 {
- // -----------------------------------------------------------------------
+   // -----------------------------------------------------------------------
    // SAS Global Value Renumbering
    // https://en.wikipedia.org/wiki/Value_numbering
    // -----------------------------------------------------------------------

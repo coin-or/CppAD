@@ -53,7 +53,7 @@ int main(void)
    Run( test_nan,            "test_nan"          );
    Run( test_not_used,       "test_not_used"     );
    Run( test_opt_call,       "test_opt_call"     );
-   // Run( test_val2fun_atom,   "test_val2fun_atom" );
+   Run( test_val2fun_atom,   "test_val2fun_atom" );
    Run( val2fun_xam,         "val2fun_xam"       );
    // END_SORT_THIS_LINE_MINUS_1
 
