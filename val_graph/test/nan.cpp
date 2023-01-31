@@ -35,9 +35,9 @@ bool test_nan(void)
    // set_dep
    tape.set_dep( dep_vec );
    //
-   ok &= tape.op_vec().size()  == 3;
-   ok &= tape.con_vec().size() == 3;
-   ok &= tape.arg_vec().size() == 3;
+   ok &= tape.op_vec().size()  == 2;
+   ok &= tape.con_vec().size() == 2;
+   ok &= tape.arg_vec().size() == 2;
    //
    bool trace = false;
    //

@@ -91,68 +91,78 @@ void tape_t<Value>::dead_code(void)
       addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
       addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
       //
-      if( op_enum != call_op_enum )
-      {  assert( n_res == 1 );
+      switch( op_enum )
+      {  //
+         // con_op_enum
+         case con_op_enum:
+         break;
          //
-         // need_op
-         bool need_op = need_val_index[ res_index + 0];
-         //
-         // need_val_index
-         if( need_op )
-         {  for(addr_t k = 0; k < n_arg; ++k)
-               need_val_index[ arg_vec_[arg_index + k] ] = true;
-         }
-      }
-      else
-      {  assert( op_enum == call_op_enum );
-         size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
-         size_t call_id       = size_t( arg_vec_[arg_index + 3] );
-         //
-         // v_ptr, name
-         CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
-         bool         set_null = false;
-         size_t       type     = 0;       // result: set to avoid warning
-         std::string  name;               // result:
-         void*        v_ptr    = nullptr; // result: set to avoid warning
-         local::atomic_index<Value>(
-            set_null, atomic_index, type, &name, v_ptr
-         );
-         // val_graph only supports atomic_four
-         CPPAD_ASSERT_UNKNOWN( type == 4 );
-         //
-         // ident_zero_x
-         ident_zero_x.resize(n_arg - 4);
-         for(addr_t i = 4; i < n_arg; ++i)
-            ident_zero_x[i-4] = ident_zero[ arg_vec_[arg_index + i] ];
-         //
-         // depend_y
-         depend_y.resize(n_res);
-         for(addr_t i = 0; i < n_res; ++i)
-            depend_y[i] = need_val_index[ res_index + i ];
-         //
-         // depend_x, ok
-         depend_x.resize(n_arg - 4);
-         bool ok = false;
-         if( v_ptr != nullptr )
-         {  atomic_four<Value>* afun =
-               reinterpret_cast< atomic_four<Value>* >(v_ptr);
-            ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
-            if( ! ok )
-            {  // try deprecated version of this function
-               ok = afun->rev_depend(call_id, depend_x, depend_y);
+         // default
+         default:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
+         CPPAD_ASSERT_UNKNOWN( n_res == 1 );
+         {  //
+            // need_op
+            bool need_op = need_val_index[ res_index + 0];
+            //
+            // need_val_index
+            if( need_op )
+            {  for(addr_t k = 0; k < n_arg; ++k)
+                  need_val_index[ arg_vec_[arg_index + k] ] = true;
             }
          }
-         if( ! ok )
-         {  std::string msg = name;
-            if( v_ptr == nullptr )
-               msg += ": this atomic function has been deleted";
-            else
-               msg += ": atomic rev_depend returned false";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-         }
+         break;
          //
-         for(addr_t k = 4; k < n_arg; ++k)
-            need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
+         case call_op_enum:
+         {  size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
+            size_t call_id       = size_t( arg_vec_[arg_index + 3] );
+            //
+            // v_ptr, name
+            CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
+            bool         set_null = false;
+            size_t       type     = 0;       // result: set to avoid warning
+            std::string  name;               // result:
+            void*        v_ptr    = nullptr; // result: set to avoid warning
+            local::atomic_index<Value>(
+               set_null, atomic_index, type, &name, v_ptr
+            );
+            // val_graph only supports atomic_four
+            CPPAD_ASSERT_UNKNOWN( type == 4 );
+            //
+            // ident_zero_x
+            ident_zero_x.resize(n_arg - 4);
+            for(addr_t i = 4; i < n_arg; ++i)
+               ident_zero_x[i-4] = ident_zero[ arg_vec_[arg_index + i] ];
+            //
+            // depend_y
+            depend_y.resize(n_res);
+            for(addr_t i = 0; i < n_res; ++i)
+               depend_y[i] = need_val_index[ res_index + i ];
+            //
+            // depend_x, ok
+            depend_x.resize(n_arg - 4);
+            bool ok = false;
+            if( v_ptr != nullptr )
+            {  atomic_four<Value>* afun =
+                  reinterpret_cast< atomic_four<Value>* >(v_ptr);
+               ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+               if( ! ok )
+               {  // try deprecated version of this function
+                  ok = afun->rev_depend(call_id, depend_x, depend_y);
+               }
+            }
+            if( ! ok )
+            {  std::string msg = name;
+               if( v_ptr == nullptr )
+                  msg += ": this atomic function has been deleted";
+               else
+                  msg += ": atomic rev_depend returned false";
+               CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+            }
+            //
+            for(addr_t k = 4; k < n_arg; ++k)
+               need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
+         }
       }
    }
    //
@@ -222,7 +232,7 @@ void tape_t<Value>::dead_code(void)
                new_val_index[ res_index + k ] = new_res_index + k;
          }
          else
-         {  op_arg.resize( size_t(n_arg) );
+         {  op_arg.resize(n_arg);
             for(addr_t k = 0; k < n_arg; ++k)
             {  assert( arg_vec_[arg_index + k] < res_index );
                op_arg[k] = new_val_index[ arg_vec_[arg_index + k] ];

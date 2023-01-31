@@ -141,6 +141,7 @@ Operations on Tape
 ******************
 {xrst_toc_table
    include/cppad/local/val_graph/record_op.hpp
+   include/cppad/local/val_graph/fold_con.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
 }
@@ -283,6 +284,9 @@ public :
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec);
    //
+   // fold_con
+   void fold_con(void);
+   //
    // renumber
    void renumber(void);
    //
@@ -292,6 +296,7 @@ public :
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # include <cppad/local/val_graph/record_op.hpp>
+# include <cppad/local/val_graph/fold_con.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 

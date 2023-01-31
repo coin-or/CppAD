@@ -10,6 +10,7 @@ SET(source_list val_graph.cpp
    call_xam.cpp
    con_xam.cpp
    dead_xam.cpp
+   fold_con_xam.cpp
    fun2val_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp

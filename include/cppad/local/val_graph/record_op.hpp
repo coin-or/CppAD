@@ -60,8 +60,10 @@ record_con_op
    // END_RECORD_CON_OP
 }
 This places a :ref:`val_con_op-name` operator in the tape.
-The return value is the index were *constant* is placed
+The return value is the index were *constant* will be placed
 in the value vector.
+Note that if *constant* is nan, the return value will always be *n_ind*; i.e,
+only one nan gets paced in the constant vector.
 
 record_call_op
 **************
@@ -177,6 +179,13 @@ template <class Value>
 addr_t tape_t<Value>::record_con_op(const Value& constant)
 // END_RECORD_CON_OP
 {  //
+   // nan
+   if( op_vec_.size() == 0 )
+   {  CPPAD_ASSERT_UNKNOWN( CppAD::isnan(constant) && n_val_ == n_ind_ );
+   }
+   else if( CppAD::isnan(constant) )
+      return addr_t( n_ind_ );
+   //
    // con_index
    addr_t con_index = addr_t( con_vec_.size() );
    con_vec_.push_back( constant );

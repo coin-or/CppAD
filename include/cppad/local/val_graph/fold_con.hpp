@@ -1,0 +1,225 @@
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_FOLD_CON_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_FOLD_CON_HPP
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2023-23 Bradley M. Bell
+/*
+-------------------------------------------------------------------------------
+{xrst_begin val_graph_fold_con dev}
+{xrst_spell
+   dep
+   xam
+}
+
+Constant Folding
+################
+
+Discussion
+**********
+This routine recognizes when all the results for an operator are a constant.
+In this case, uses of the operators results are changed to uses
+of the corresponding constants and
+the original operator then becomes dead code.
+This is like :ref:`value numbering <val_graph_renumber-title>` but a major
+difference is that it adds a new operator for each folded constant.
+
+dep_vec
+*******
+This may change the indices corresponding to the dependent vector; i.e.,
+:ref:`val_graph_tape@dep_vec`.
+
+Reference
+*********
+`constant folding <https://en.wikipedia.org/wiki/Constant_folding>`_ .
+
+{xrst_toc_hidden
+   val_graph/fold_con_xam.cpp
+}
+Example
+*******
+The file :ref:`fold_con_xam.cpp <val_graph_fold_con_xam.cpp-name>`
+is an example and test of tape.fold_con().
+
+{xrst_end val_graph_fold_con}
+-------------------------------------------------------------------------------
+*/
+# include <cppad/local/val_graph/tape.hpp>
+
+namespace CppAD { namespace local { namespace val_graph {
+
+template <class Value>
+void tape_t<Value>::fold_con(void)
+{
+   //
+   // nan
+   Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
+   //
+   // val_index2con
+   vector<Value> val_index2con(n_val_);
+   for(size_t i = 0; i < n_ind_; ++i)
+      val_index2con[i] = nan;
+   bool trace = false;
+   eval(trace, val_index2con);
+   //
+   // is_consant
+   Vector<bool> is_constant(n_val_);
+   for(size_t i = 0; i < n_val_; ++i)
+      is_constant[i] = false;
+   //
+   // type_x, type_y
+   Vector<ad_type_enum> type_x, type_y;
+   //
+   // op_arg
+   Vector<addr_t> op_arg;
+   //
+   // new_tape
+   tape_t new_tape;
+   new_tape.set_ind(n_ind_);
+   //
+   // old2new_index
+   Vector<addr_t> old2new_index;
+   for(addr_t i = 0; i < addr_t(n_ind_); ++i)
+      old2new_index.push_back( i );
+   //
+   // i_op
+   // Note that i_op = 0 corresponds to the nan at index zero in con_vec_
+   // and record_con_op uses the nan that is alread there.
+   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
+   {
+      // op_ptr, agr_index, res_index, n_arg, op_enum
+      const op_info_t& op_info    = op_vec_[i_op];
+      op_base_t<Value>* op_ptr    = op_info.op_ptr;
+      addr_t           arg_index  = op_info.arg_index;
+      addr_t           res_index  = op_info.res_index;
+      size_t           n_arg      = op_ptr->n_arg(arg_index, arg_vec_);
+      op_enum_t        op_enum    = op_ptr->op_enum();
+      CPPAD_ASSERT_UNKNOWN( size_t( res_index ) == old2new_index.size() );
+      //
+      // new_tape, is_constant, old2new_index
+      bool fold;
+      switch(op_enum)
+      {  //
+         // con_op
+         case con_op_enum:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1);
+         {  is_constant[res_index] = true;
+            const Value& value   = val_index2con[res_index];
+            addr_t new_res_index = new_tape.record_con_op(value);
+            old2new_index.push_back( new_res_index );
+         }
+         break;
+         //
+         // default
+         default:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
+         {  fold = true;
+            for(addr_t i = 0; i < addr_t(n_arg); ++i)
+               fold &= is_constant[ arg_vec_[arg_index + i] ];
+            if( fold )
+            {  is_constant[res_index]  = true;
+               const Value& value      = val_index2con[res_index];
+               addr_t new_res_index    = new_tape.record_con_op(value);
+               old2new_index.push_back( new_res_index );
+            }
+            else
+            {  op_arg.resize(n_arg);
+               for(addr_t k = 0; k < addr_t(n_arg); ++k)
+               {  addr_t old_index = arg_vec_[arg_index + k];
+                  assert( old_index < res_index );
+                  op_arg[k] = old2new_index[old_index];
+               }
+               addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
+               old2new_index.push_back( new_res_index );
+            }
+         }
+         break;
+         //
+         // call_op
+         case call_op_enum:
+         {  //
+            // atomic_index, call_id
+            size_t n_res        = size_t( arg_vec_[arg_index + 1] );
+            size_t atomic_index = size_t( arg_vec_[arg_index + 2] );
+            size_t call_id      = size_t( arg_vec_[arg_index + 3] );
+            //
+            // v_ptr, name
+            CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
+            bool         set_null = false;
+            size_t       type     = 0;       // result: set to avoid warning
+            std::string  name;               // result:
+            void*        v_ptr    = nullptr; // result: set to avoid warning
+            local::atomic_index<Value>(
+               set_null, atomic_index, type, &name, v_ptr
+            );
+            // val_graph only supports atomic_four
+            CPPAD_ASSERT_UNKNOWN( type == 4 );
+            //
+            // type_x
+            type_x.resize(n_arg - 4);
+            for(addr_t i = 4; i < addr_t(n_arg); ++i)
+            {  addr_t val_index =  arg_vec_[arg_index + i];
+               if( is_constant[val_index] )
+                  type_x[i-4] = constant_enum;
+               else
+                  type_x[i-4] = variable_enum;;
+            }
+            //
+            // type_y, ok, afun
+            type_y.resize(n_res);
+            bool               ok = false;
+            atomic_four<Value>* afun = nullptr;
+            if( v_ptr != nullptr )
+            {  afun = reinterpret_cast< atomic_four<Value>* >(v_ptr);
+               ok = afun->for_type(call_id, type_x, type_y);
+            }
+            if( ! ok )
+            {  std::string msg = name;
+               if( v_ptr == nullptr )
+                  msg += ": this atomic function has been deleted";
+               else
+                  msg += ": atomic for_type returned false";
+               CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+            }
+            fold = true;
+            for(addr_t i = 0; i < addr_t(n_res); ++i)
+            {  is_constant[res_index + i] = type_y[i] <= constant_enum;
+               fold                      &= is_constant[res_index + i];
+            }
+            if( fold ) for(addr_t i = 0; i < addr_t(n_res); ++i)
+            {  is_constant[res_index + i]  = true;
+               const Value& value      = val_index2con[res_index + i];
+               addr_t new_res_index    = new_tape.record_con_op(value);
+               old2new_index.push_back( new_res_index );
+            }
+            else
+            {  op_arg.resize( size_t(n_arg - 4) );
+               for(addr_t k = 4; k < addr_t(n_arg); ++k)
+               {  addr_t old_index   = arg_vec_[arg_index + k];
+                  op_arg[k - 4]      = old2new_index[old_index];
+               }
+               addr_t new_res_index = new_tape.record_call_op(
+                  atomic_index, call_id, size_t(n_res), op_arg
+               );
+               for(addr_t k = 0; k < addr_t(n_res); ++k)
+                  old2new_index.push_back(new_res_index + k);
+            }
+         }
+         break;
+      }
+   }
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec( dep_vec_.size() );
+   for(size_t k = 0; k < dep_vec_.size(); ++k)
+      dep_vec[k] = old2new_index[ dep_vec_[k] ];
+   new_tape.set_dep( dep_vec );
+   //
+   // swap
+   swap(new_tape);
+   //
+   return;
+}
+
+} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
+
+# endif
