@@ -22,8 +22,13 @@ Prototype
 Purpose
 *******
 The class is derived from :ref:`op_base <val_base_op-name>`.
-It overrides the *n_arg*, *n_res_*, and *print_op* member functions.
+It overrides the *is_binary*, *n_arg*, *n_res_*, and *print_op*
+member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
+
+is_binary
+*********
+This override of :ref:`val_base_op@is_binary` returns true.
 
 n_arg
 *****
@@ -67,8 +72,10 @@ template <class Value>
 class binary_op_t : public op_base_t<Value> {
 // END_BINARY_OP_T
 public:
-   // op_enum
-   virtual op_enum_t op_enum(void) const override = 0;
+   //
+   // is_binary
+   bool is_binary(void) const override
+   {  return true; }
    //
    // n_arg
    size_t n_arg(
@@ -82,6 +89,8 @@ public:
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
    //
+   // op_enum
+   virtual op_enum_t op_enum(void) const override = 0;
    //
    // eval
    virtual void eval(

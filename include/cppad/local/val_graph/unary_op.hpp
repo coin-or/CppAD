@@ -22,8 +22,12 @@ Prototype
 Purpose
 *******
 The class is derived from :ref:`op_base <val_base_op-name>`.
-It overrides the *n_arg*, *n_res_*, and *print_op* member functions.
+It overrides the *is_unary*, *n_arg*, *n_res_*, and *print_op* member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
+
+is_unary
+********
+This override of :ref:`val_base_op@is_unary` returns true.
 
 n_arg
 *****
@@ -60,20 +64,25 @@ template <class Value>
 class unary_op_t : public op_base_t<Value> {
 // END_UNARY_OP_T
 public:
-   // op_enum
-   virtual op_enum_t op_enum(void) const override = 0;
+   //
+   // is_unary
+   bool is_unary(void) const override
+   {  return true; }
    //
    // n_arg
-   virtual size_t n_arg(
+   size_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
    //
    // n_res
-   virtual size_t n_res(
+   size_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
+   //
+   // op_enum
+   virtual op_enum_t op_enum(void) const override = 0;
    //
    // eval
    virtual void eval(

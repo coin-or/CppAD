@@ -117,6 +117,17 @@ If this operator is a binary operator
 #. val_vec[ arg_vec[ arg_index + 2 ] ] is the right operand
 #. val_vec[ res_index] is the result computed by eval
 
+is_unary
+********
+is true (false) if this is (is not) a unary operator;
+see :ref:`val_unary_op-name`.
+
+is_binary
+*********
+is true (false) if this is (is not) a binary operator;
+see :ref:`val_binary_op-name`.
+
+
 Operator Classes
 ****************
 {xrst_toc_table
@@ -151,6 +162,11 @@ public:
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
       Vector<Value>&        val_vec      ) const = 0;
+   //
+   virtual bool is_unary(void) const
+   {  return false; }
+   virtual bool is_binary(void) const
+   {  return false; }
 };
 // END_OP_T
 

@@ -84,35 +84,58 @@ void tape_t<Value>::dead_code(void)
    // need_val_index
    size_t i_op = op_vec_.size();
    while( i_op-- )
-   {  // op_enum, res_index, arg_index, n_arg, n_res
-      op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
+   {  // is_unary, is_binary res_index, arg_index
+      bool   is_unary    = op_vec_[i_op].op_ptr->is_unary();
+      bool   is_binary   = op_vec_[i_op].op_ptr->is_binary();
       addr_t res_index   = op_vec_[i_op].res_index;
       addr_t arg_index   = op_vec_[i_op].arg_index;
+      //
+      // op_enum, n_arg, n_res
+      op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
       addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
       addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
       //
-      switch( op_enum )
-      {  //
-         // con_op_enum
-         case con_op_enum:
-         break;
+      // is_unary
+      if( is_unary )
+      {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_res == 1 );
          //
+         // need_op
+         bool need_op = need_val_index[res_index + 0];
+         //
+         // need_val_index
+         if( need_op )
+            need_val_index[ arg_vec_[arg_index + 0] ] = true;
+      }
+      //
+      // is_binary
+      else if( is_binary )
+      {  CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_res == 1 );
+         //
+         // need_op
+         bool need_op = need_val_index[res_index + 0];
+         //
+         // need_val_index
+         if( need_op )
+         {  need_val_index[ arg_vec_[arg_index + 0] ] = true;
+            need_val_index[ arg_vec_[arg_index + 1] ] = true;
+         }
+      }
+      // not unary or binary
+      else switch( op_enum )
+      {  //
          // default
          default:
-         CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
-         CPPAD_ASSERT_UNKNOWN( n_res == 1 );
-         {  //
-            // need_op
-            bool need_op = need_val_index[ res_index + 0];
-            //
-            // need_val_index
-            if( need_op )
-            {  for(addr_t k = 0; k < n_arg; ++k)
-                  need_val_index[ arg_vec_[arg_index + k] ] = true;
-            }
-         }
+         CPPAD_ASSERT_KNOWN( false,
+            "val_graph::dead_code: this operator not yet implemented"
+         );
          break;
          //
+         // con_op_enum
+         case con_op_enum:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_res == 1 );
+         break;
+         //
+         // call_op_enum
          case call_op_enum:
          {  size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
             size_t call_id       = size_t( arg_vec_[arg_index + 3] );
