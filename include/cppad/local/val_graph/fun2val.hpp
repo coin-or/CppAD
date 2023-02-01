@@ -69,6 +69,7 @@ is an example an test of this conversion.
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/local/val_graph/type_var_op.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -294,32 +295,68 @@ void ADFun<Base, RecBase>::fun2val(
       size_t           i_var;
       (++itr).op_info(var_op, arg, i_var);
       //
-      // n_arg
-      size_t n_arg = local::NumArg( var_op );
+      // is_bianry
+      bool is_binary = local::val_graph::binary_var_op(var_op);
       //
-      // n_res
-      size_t n_res = local::NumRes( var_op );
-      //
-      switch( var_op )
+      if( is_binary )
+      {   switch( var_op )
+         {
+            default:
+            CPPAD_ASSERT_KNOWN(false,
+               "val_graph::fun2val: This variable operator not yet implemented"
+            );
+
+            // first argument a parameter, second argument a variable
+            case local::AddpvOp:
+            case local::SubpvOp:
+            is_var[0]   = false;
+            is_var[1]   = true;
+            break;
+
+            // first argument a variable, second argument a parameter
+            case local::SubvpOp:
+            is_var[0]   = true;
+            is_var[1]   = false;
+            break;
+
+            // first argument a variable, second argument a variable
+            case local::AddvvOp:
+            case local::SubvvOp:
+            is_var[0]   = true;
+            is_var[1]   = true;
+            break;
+         }
+         //
+         // val_op_arg
+         val_op_arg.resize(2);
+         for(size_t i = 0; i < 2; ++i)
+         {  if( is_var[i] )
+               val_op_arg[i] = var2val_index[ arg[i] ];
+            else if( par2val_index[ arg[i] ] != invalid_addr_t )
+               val_op_arg[i] = par2val_index[ arg[i] ];
+            else
+            {  Base constant = parameter[ arg[i] ];
+               val_op_arg[i] = val_tape.record_con_op( constant );
+               par2val_index[ arg[i] ] = val_op_arg[i];
+            }
+         }
+         //
+         // val_op
+         op_enum_t val_op = var_op2val_op[var_op];
+         CPPAD_ASSERT_UNKNOWN( val_op < number_op_enum );
+         //
+         // record_op, val_index
+         val_index = val_tape.record_op(val_op, val_op_arg);
+         //
+         // var2val_index
+         var2val_index[i_var] = val_index;
+      }
+      else switch(var_op)
       {
-         // first argument a parameter, second argument a variable
-         case local::AddpvOp:
-         case local::SubpvOp:
-         is_var[0]   = false;
-         is_var[1]   = true;
-         break;
-
-         // first argument a variable, second argument a parameter
-         case local::SubvpOp:
-         is_var[0]   = true;
-         is_var[1]   = false;
-         break;
-
-         // first argument a variable, second argument a variable
-         case local::AddvvOp:
-         case local::SubvvOp:
-         is_var[0]   = true;
-         is_var[1]   = true;
+         default:
+         CPPAD_ASSERT_KNOWN(false,
+            "val_graph::fun2val: This variable operator not yet implemented"
+         );
          break;
 
          // EndOp:
@@ -330,42 +367,7 @@ void ADFun<Base, RecBase>::fun2val(
          // InvOp:
          // The independent variable indices are already assigned
          case local::InvOp:
-         n_res = 0;
          break;
-
-         default:
-         CPPAD_ASSERT_KNOWN( var_op > local::NumberOp,
-            "This variable operator not yet implemented"
-         );
-      }
-      //
-      // val_op_arg
-      val_op_arg.resize(n_arg);
-      for(size_t i = 0; i < n_arg; ++i)
-      {  if( is_var[i] )
-            val_op_arg[i] = var2val_index[ arg[i] ];
-         else if( par2val_index[ arg[i] ] != invalid_addr_t )
-            val_op_arg[i] = par2val_index[ arg[i] ];
-         else
-         {  Base constant = parameter[ arg[i] ];
-            val_op_arg[i] = val_tape.record_con_op( constant );
-            par2val_index[ arg[i] ] = val_op_arg[i];
-         }
-      }
-      if( n_res > 0 )
-      {  CPPAD_ASSERT_UNKNOWN( n_res == 1 );
-         //
-         // val_op
-         op_enum_t val_op = var_op2val_op[var_op];
-         CPPAD_ASSERT_KNOWN( val_op < number_op_enum ,
-            "This variable operator not yet implemented"
-         );
-         //
-         // record_op, val_index
-         val_index = val_tape.record_op(val_op, val_op_arg);
-         //
-         // var2val_index
-         var2val_index[i_var] = val_index;
       }
    }
    // dep_vec

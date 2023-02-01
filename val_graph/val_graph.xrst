@@ -118,6 +118,7 @@ Implementation
    include/cppad/local/val_graph/tape.hpp
    include/cppad/local/val_graph/fun2val.hpp
    include/cppad/local/val_graph/val2fun.hpp
+   include/cppad/local/val_graph/type_var_op.hpp
 }
 
 
