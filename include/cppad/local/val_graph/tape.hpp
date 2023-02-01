@@ -4,10 +4,14 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include <cppad/local/val_graph/type.hpp>
+// BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/local/val_graph/add_op.hpp>
 # include <cppad/local/val_graph/con_op.hpp>
+# include <cppad/local/val_graph/neg_op.hpp>
 # include <cppad/local/val_graph/sub_op.hpp>
+# include <cppad/local/val_graph/type.hpp>
+// END_SORT_THIS_LINE_MINUS_1
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_tape dev}

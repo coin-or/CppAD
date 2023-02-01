@@ -147,16 +147,21 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    op_base_t<Value>* op_ptr = nullptr;
    switch(op_enum)
    {
+      default:
+      assert( false );
+      break;
+
       case add_op_enum:
       op_ptr = add_op_t<Value>::get_instance();
+      break;
+
+      case neg_op_enum:
+      op_ptr = neg_op_t<Value>::get_instance();
       break;
 
       case sub_op_enum:
       op_ptr = sub_op_t<Value>::get_instance();
       break;
-
-      default:
-      assert( false );
    }
    //
    // op_vec_

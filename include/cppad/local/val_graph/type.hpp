@@ -46,15 +46,18 @@ op_enum_t
 *********
 A concrete class does not have any pure virtual functions.
 This enum type is used to identify the concrete operator class types.
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
 {xrst_code hpp}*/
 enum op_enum_t {
    add_op_enum,      // addition
+   call_op_enum,     // atomic functions
    con_op_enum,      // constants
-   call_op_enum,      // atomic functions
+   neg_op_enum,      // negative
    sub_op_enum,      // subtraction
    number_op_enum
 };
 /* {xrst_code}
+{xrst_comment END_SORT_THIS_LINE_MINUS_4}
 The ``number_op_enum`` entry is used for the number of concrete
 operator class types (and does not correspond to an operator).
 
