@@ -186,6 +186,7 @@ void tape_t<Value>::dead_code(void)
             for(addr_t k = 4; k < n_arg; ++k)
                need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
          }
+         break;
       }
    }
    //
@@ -213,11 +214,14 @@ void tape_t<Value>::dead_code(void)
 # endif
    // i_op
    for(i_op = 1; i_op < op_vec_.size(); ++i_op)
-   {  //
-      // op_enum, arg_index, res_index
-      op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
-      addr_t    arg_index = op_vec_[i_op].arg_index;
-      addr_t    res_index = op_vec_[i_op].res_index;
+   {  // is_unary, is_binary res_index, arg_index
+      bool   is_unary    = op_vec_[i_op].op_ptr->is_unary();
+      bool   is_binary   = op_vec_[i_op].op_ptr->is_binary();
+      addr_t res_index   = op_vec_[i_op].res_index;
+      addr_t arg_index   = op_vec_[i_op].arg_index;
+      //
+      // op_enum, n_arg, n_res
+      op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
       addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
       addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
       //
@@ -228,41 +232,64 @@ void tape_t<Value>::dead_code(void)
       //
       if( need_op )
       {  //
-         // new_val_index
-         if( op_enum == con_op_enum )
-         {  Value value = con_vec_[ arg_vec_[ arg_index ] ];
-            addr_t new_res_index = new_tape.record_con_op(value);
-            assert( n_res == 1 );
-            new_val_index[ res_index ] = new_res_index;
+         // is_unary
+         if( is_unary )
+         {  op_arg.resize(1);
+            assert( arg_vec_[arg_index + 0] < res_index );
+            op_arg[0] = new_val_index[ arg_vec_[arg_index + 0] ];
+            //
+            // record_op, new_val_index
+            new_val_index[res_index] = new_tape.record_op(op_enum, op_arg);
          }
-         else if( op_enum == call_op_enum )
-         {  call_op_arg.resize( size_t(n_arg - 4) );
-            for(addr_t k = 4; k < n_arg; ++k)
-            {  addr_t val_index = arg_vec_[arg_index + k];
-               if( need_val_index[val_index] )
-                  call_op_arg[k - 4] = new_val_index[val_index];
-               else
-               {  // nan at index n_ind_
-                  call_op_arg[k - 4] = addr_t( n_ind_ );
+         // is_binary
+         else if( is_binary )
+         {  op_arg.resize(2);
+            assert( arg_vec_[arg_index + 0] < res_index );
+            assert( arg_vec_[arg_index + 1] < res_index );
+            op_arg[0] = new_val_index[ arg_vec_[arg_index + 0] ];
+            op_arg[1] = new_val_index[ arg_vec_[arg_index + 1] ];
+            //
+            // record_op, new_val_index
+            new_val_index[res_index] = new_tape.record_op(op_enum, op_arg);
+         }
+         // not unary or binary
+         else switch( op_enum )
+         {  //
+            // default
+            default:
+            CPPAD_ASSERT_UNKNOWN(false);
+            break;
+            //
+            // con_op_enum
+            case con_op_enum:
+            {  Value value = con_vec_[ arg_vec_[ arg_index ] ];
+               //
+               // record_con_op, new_val_index
+               new_val_index[res_index] = new_tape.record_con_op(value);
+            }
+            break;
+            //
+            // call_op_enum
+            case call_op_enum:
+            {  call_op_arg.resize( size_t(n_arg - 4) );
+               for(addr_t k = 4; k < n_arg; ++k)
+               {  addr_t val_index = arg_vec_[arg_index + k];
+                  if( need_val_index[val_index] )
+                     call_op_arg[k - 4] = new_val_index[val_index];
+                  else
+                  {  // nan at index n_ind_
+                     call_op_arg[k - 4] = addr_t( n_ind_ );
+                  }
                }
+               size_t atomic_index      = size_t( arg_vec_[arg_index + 2] );
+               size_t call_id     = size_t( arg_vec_[arg_index + 3] );
+               addr_t new_res_index = new_tape.record_call_op(
+                  atomic_index, call_id, size_t(n_res), call_op_arg
+               );
+               for(addr_t k = 0; k < addr_t(n_res); ++k)
+                  new_val_index[ res_index + k ] = new_res_index + k;
             }
-            size_t atomic_index      = size_t( arg_vec_[arg_index + 2] );
-            size_t call_id     = size_t( arg_vec_[arg_index + 3] );
-            addr_t new_res_index = new_tape.record_call_op(
-               atomic_index, call_id, size_t(n_res), call_op_arg
-            );
-            for(addr_t k = 0; k < addr_t(n_res); ++k)
-               new_val_index[ res_index + k ] = new_res_index + k;
-         }
-         else
-         {  op_arg.resize(n_arg);
-            for(addr_t k = 0; k < n_arg; ++k)
-            {  assert( arg_vec_[arg_index + k] < res_index );
-               op_arg[k] = new_val_index[ arg_vec_[arg_index + k] ];
-            }
-            addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
-            for(addr_t k = 0; k < addr_t(n_res); ++k)
-               new_val_index[ res_index ] = new_res_index + k;
+            break;
          }
       }
    }
