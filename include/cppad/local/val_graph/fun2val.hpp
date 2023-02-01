@@ -279,7 +279,7 @@ void ADFun<Base, RecBase>::fun2val(
    for(addr_t i = 0; i < addr_t(n_variable_ind); ++i)
       var2val_index[i + 1] = addr_t( n_dynamic_ind )  + i;
    //
-   // itr, var_op, arg, i_var, is_var, more_operators
+   // itr, is_var, more_operators
    local::play::const_sequential_iterator itr  = play_.begin();
    Vector<bool>       is_var(2);
    bool more_operators = true;
@@ -289,11 +289,11 @@ void ADFun<Base, RecBase>::fun2val(
    while(more_operators)
    {  //
       //
-      // var_op, arg, i_var
+      // itr, var_op, var_op_arg, i_var
       local::OpCode    var_op;
-      const            addr_t* arg;
+      const            addr_t* var_op_arg;
       size_t           i_var;
-      (++itr).op_info(var_op, arg, i_var);
+      (++itr).op_info(var_op, var_op_arg, i_var);
       //
       // is_bianry
       bool is_binary = local::val_graph::binary_var_op(var_op);
@@ -331,13 +331,13 @@ void ADFun<Base, RecBase>::fun2val(
          val_op_arg.resize(2);
          for(size_t i = 0; i < 2; ++i)
          {  if( is_var[i] )
-               val_op_arg[i] = var2val_index[ arg[i] ];
-            else if( par2val_index[ arg[i] ] != invalid_addr_t )
-               val_op_arg[i] = par2val_index[ arg[i] ];
+               val_op_arg[i] = var2val_index[ var_op_arg[i] ];
+            else if( par2val_index[ var_op_arg[i] ] != invalid_addr_t )
+               val_op_arg[i] = par2val_index[ var_op_arg[i] ];
             else
-            {  Base constant = parameter[ arg[i] ];
+            {  Base constant = parameter[ var_op_arg[i] ];
                val_op_arg[i] = val_tape.record_con_op( constant );
-               par2val_index[ arg[i] ] = val_op_arg[i];
+               par2val_index[ var_op_arg[i] ] = val_op_arg[i];
             }
          }
          //
