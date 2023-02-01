@@ -86,33 +86,22 @@ void tape_t<Value>::fold_con(void)
    // and record_con_op uses the nan that is alread there.
    for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
    {
-      // op_ptr, agr_index, res_index, n_arg, op_enum
+      // is_unary, is_binary, arg_index, res_index, op_enum, n_arg
       const op_info_t& op_info    = op_vec_[i_op];
       op_base_t<Value>* op_ptr    = op_info.op_ptr;
-      addr_t           arg_index  = op_info.arg_index;
-      addr_t           res_index  = op_info.res_index;
-      size_t           n_arg      = op_ptr->n_arg(arg_index, arg_vec_);
-      op_enum_t        op_enum    = op_ptr->op_enum();
+      bool       is_unary  = op_ptr->is_unary();
+      bool       is_binary = op_ptr->is_binary();
+      addr_t     arg_index = op_info.arg_index;
+      addr_t     res_index = op_info.res_index;
+      op_enum_t  op_enum   = op_ptr->op_enum();
+      size_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
+      //
       CPPAD_ASSERT_UNKNOWN( size_t( res_index ) == old2new_index.size() );
       //
       // new_tape, is_constant, old2new_index
-      bool fold;
-      switch(op_enum)
-      {  //
-         // con_op
-         case con_op_enum:
-         CPPAD_ASSERT_UNKNOWN( n_arg == 1);
-         {  is_constant[res_index] = true;
-            const Value& value   = val_index2con[res_index];
-            addr_t new_res_index = new_tape.record_con_op(value);
-            old2new_index.push_back( new_res_index );
-         }
-         break;
-         //
-         // default
-         default:
-         CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
-         {  fold = true;
+      if( is_unary || is_binary )
+      {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
+         {  bool fold = true;
             for(addr_t i = 0; i < addr_t(n_arg); ++i)
                fold &= is_constant[ arg_vec_[arg_index + i] ];
             if( fold )
@@ -131,6 +120,24 @@ void tape_t<Value>::fold_con(void)
                addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
                old2new_index.push_back( new_res_index );
             }
+         }
+      }
+      else switch(op_enum)
+      {  //
+         // default
+         default:
+         CPPAD_ASSERT_KNOWN(false,
+            "val_graph::fold_con: This operator not yet implemented"
+         );
+         break;
+         //
+         // con_op
+         case con_op_enum:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1);
+         {  is_constant[res_index] = true;
+            const Value& value   = val_index2con[res_index];
+            addr_t new_res_index = new_tape.record_con_op(value);
+            old2new_index.push_back( new_res_index );
          }
          break;
          //
@@ -180,7 +187,7 @@ void tape_t<Value>::fold_con(void)
                   msg += ": atomic for_type returned false";
                CPPAD_ASSERT_KNOWN(false, msg.c_str() );
             }
-            fold = true;
+            bool fold = true;
             for(addr_t i = 0; i < addr_t(n_res); ++i)
             {  is_constant[res_index + i] = type_y[i] <= constant_enum;
                fold                      &= is_constant[res_index + i];
