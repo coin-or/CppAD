@@ -6,7 +6,6 @@
 # include "../atomic_xam.hpp"
 
 namespace { // BEIGN_EMPTY_NAMESPACE
-
 // ----------------------------------------------------------------------------
 bool dynamic_atom(void)
 {  bool ok = true;

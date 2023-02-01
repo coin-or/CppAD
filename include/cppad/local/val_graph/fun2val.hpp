@@ -283,7 +283,7 @@ void ADFun<Base, RecBase>::fun2val(
    local::play::const_sequential_iterator itr  = play_.begin();
    Vector<bool>       is_var(2);
    bool more_operators = true;
-   bool in_atomic_call = true;
+   bool in_atomic_call = false;
    //
    // val_tape
    // record variable operations
