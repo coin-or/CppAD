@@ -29,6 +29,7 @@ extern bool renumber_xam(void);
 extern bool sub_xam(void);
 extern bool test_fold_atom(void);
 extern bool test_fun2val_atom(void);
+extern bool test_fun2val_unary(void);
 extern bool test_nan(void);
 extern bool test_not_used(void);
 extern bool test_opt_call(void);
@@ -45,22 +46,23 @@ int main(void)
    // This line is used by test_one.sh
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( add_xam,             "add_xam"           );
-   Run( call_xam,             "call_xam"         );
-   Run( con_xam,             "con_xam"           );
-   Run( dead_xam,            "dead_xam"          );
-   Run( fold_con_xam,        "fold_con_xam"      );
-   Run( fun2val_xam,         "fun2val_xam"       );
-   Run( neg_xam,             "neg_xam"           );
-   Run( renumber_xam,        "renumber_xam"      );
-   Run( sub_xam,             "sub_xam"           );
-   Run( test_fold_atom,      "test_fold_atom"    );
-   Run( test_fun2val_atom,   "test_fun2val_atom" );
-   Run( test_nan,            "test_nan"          );
-   Run( test_not_used,       "test_not_used"     );
-   Run( test_opt_call,       "test_opt_call"     );
-   Run( test_val2fun_atom,   "test_val2fun_atom" );
-   Run( val2fun_xam,         "val2fun_xam"       );
+   Run( add_xam,             "add_xam"             );
+   Run( call_xam,             "call_xam"           );
+   Run( con_xam,             "con_xam"             );
+   Run( dead_xam,            "dead_xam"            );
+   Run( fold_con_xam,        "fold_con_xam"        );
+   Run( fun2val_xam,         "fun2val_xam"         );
+   Run( neg_xam,             "neg_xam"             );
+   Run( renumber_xam,        "renumber_xam"        );
+   Run( sub_xam,             "sub_xam"             );
+   Run( test_fold_atom,      "test_fold_atom"      );
+   Run( test_fun2val_atom,   "test_fun2val_atom"   );
+   // Run( test_fun2val_unary,  "test_fun2val_unary"  );
+   Run( test_nan,            "test_nan"            );
+   Run( test_not_used,       "test_not_used"       );
+   Run( test_opt_call,       "test_opt_call"       );
+   Run( test_val2fun_atom,   "test_val2fun_atom"   );
+   Run( val2fun_xam,         "val2fun_xam"         );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

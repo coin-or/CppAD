@@ -17,6 +17,7 @@ SET(source_list val_graph.cpp
    sub_xam.cpp
    test/fold_atom.cpp
    test/fun2val_atom.cpp
+   test/fun2val_unary.cpp
    test/nan.cpp
    test/not_used.cpp
    test/opt_call.cpp

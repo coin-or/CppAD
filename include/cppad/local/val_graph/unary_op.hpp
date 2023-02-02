@@ -56,6 +56,12 @@ prints the following values:
 #. empty is an empty string used to line up columns with binary operator
 #. res is the result for this operator; i.e. value vector at index res_index
 
+Operator Sub-Classes
+********************
+{xrst_toc_table
+   include/cppad/local/val_graph/neg_op.hpp
+}
+
 {xrst_end val_unary_op}
 */
 

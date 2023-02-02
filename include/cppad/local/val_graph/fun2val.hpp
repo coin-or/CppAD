@@ -70,6 +70,7 @@ is an example an test of this conversion.
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/local/val_graph/type_var_op.hpp>
+# include <cppad/local/val_graph/type_dyn_op.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -105,12 +106,16 @@ void ADFun<Base, RecBase>::fun2val(
    for(size_t i = 0; i < size_t(number_dyn); ++i)
       dyn_op2val_op[i] = number_op_enum; // invalid
    dyn_op2val_op[local::add_dyn] = local::val_graph::add_op_enum;
+   dyn_op2val_op[local::neg_dyn] = local::val_graph::neg_op_enum;
    dyn_op2val_op[local::sub_dyn] = local::val_graph::sub_op_enum;
-   //
+   // ------------------------------------------------------------------------
    // var_op2val_op
    Vector<op_enum_t> var_op2val_op(local::NumberOp);
    for(size_t i = 0; i < size_t(local::NumberOp); ++i)
       var_op2val_op[i] = number_op_enum; // invalid
+   //
+   // unary operators
+   var_op2val_op[local::NegOp] = local::val_graph::neg_op_enum;
    //
    // add
    var_op2val_op[local::AddpvOp] = local::val_graph::add_op_enum;
@@ -119,6 +124,7 @@ void ADFun<Base, RecBase>::fun2val(
    var_op2val_op[local::SubpvOp] = local::val_graph::sub_op_enum;
    var_op2val_op[local::SubvpOp] = local::val_graph::sub_op_enum;
    var_op2val_op[local::SubvvOp] = local::val_graph::sub_op_enum;
+   // ------------------------------------------------------------------------
    //
    // dyn_par_op
    // mapping from dynamic parameter index to operator
@@ -179,7 +185,7 @@ void ADFun<Base, RecBase>::fun2val(
    // val_tape
    // record dynamic parameter operations
    //
-   // val_index
+   // val_tape, val_index, par2val_index
    addr_t val_index = invalid_addr_t;
    for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
    {  //
@@ -190,10 +196,46 @@ void ADFun<Base, RecBase>::fun2val(
       // operator for this dynamic parameter
       local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
       //
-      // n_arg, val_index, dyn_op
+      // is_unary, is_binary
+      bool is_unary  = local::val_graph::unary_dyn_op(dyn_op);
+      bool is_binary = local::val_graph::binary_dyn_op(dyn_op);
+      //
+      // n_arg, val_tape, val_index, par2val_index
       size_t n_arg;
-      switch( dyn_op )
+      if( is_unary || is_binary )
       {  //
+         // val_tape, val_index, par2val_index
+         n_arg = num_arg_dyn(dyn_op);
+         val_op_arg.resize(n_arg);
+         for(size_t i = 0; i < n_arg; ++i)
+         {  addr_t par_index = dyn_par_arg[i_arg + i];
+            if( par2val_index[par_index] != invalid_addr_t )
+               val_op_arg[i] = par2val_index[par_index];
+            else
+            {  Base constant = parameter[par_index];
+               val_op_arg[i] = val_tape.record_con_op( constant );
+               par2val_index[par_index] = val_op_arg[i];
+            }
+         }
+         // val_tape, val_index
+         op_enum_t val_op = dyn_op2val_op[dyn_op];
+         val_index = val_tape.record_op(val_op, val_op_arg);
+      }
+      else switch( dyn_op )
+      {  //
+         default:
+         CPPAD_ASSERT_KNOWN(false,
+            "val_graph::fun2val: This dynamic operator not yet implemented"
+         );
+         //
+         // result_dyn
+         // This is a place holder for multiple result operators
+         case local::result_dyn:
+         CPPAD_ASSERT_UNKNOWN( val_index != invalid_addr_t );
+         n_arg      = 0;
+         val_index += 1;
+         break;
+         //
          // atom_dyn
          case local::atom_dyn:
          {  //
@@ -224,44 +266,6 @@ void ADFun<Base, RecBase>::fun2val(
             );
          }
          break;
-         //
-         // ------------------------------------------------------------------
-         // result_dyn
-         // This is a place holder for multiple result operators
-         case local::result_dyn:
-         CPPAD_ASSERT_UNKNOWN( val_index != invalid_addr_t );
-         n_arg      = 0;
-         val_index += 1;
-         break;
-         //
-         // ------------------------------------------------------------------
-         default:
-         //
-         // n_arg, val_op
-         // must be a unary or binary operator
-         op_enum_t val_op = dyn_op2val_op[dyn_op];
-         CPPAD_ASSERT_KNOWN( val_op < number_op_enum ,
-            "This dynamic operator not yet implemented"
-         );
-         {  //
-            // val_op_arg
-            n_arg = num_arg_dyn(dyn_op);
-            val_op_arg.resize(n_arg);
-            for(size_t i = 0; i < n_arg; ++i)
-            {  addr_t par_index = dyn_par_arg[i_arg + i];
-               if( par2val_index[par_index] != invalid_addr_t )
-                  val_op_arg[i] = par2val_index[par_index];
-               else
-               {  // val_tape, val_op_arg, par2val_index
-                  Base constant = parameter[par_index];
-                  val_op_arg[i] = val_tape.record_con_op( constant );
-                  par2val_index[par_index] = val_op_arg[i];
-               }
-            }
-            // val_tape, val_index
-            val_index = val_tape.record_op(val_op, val_op_arg);
-         }
-         break;
       }
       // par2val_index
       // Each dyn_op has one result, result_dyn ops are added to make this so
@@ -285,8 +289,7 @@ void ADFun<Base, RecBase>::fun2val(
    bool more_operators = true;
    bool in_atomic_call = false;
    //
-   // val_tape
-   // record variable operations
+   // val_tape, var2val_index
    while(more_operators)
    {  //
       //
@@ -296,10 +299,25 @@ void ADFun<Base, RecBase>::fun2val(
       size_t           i_var;
       (++itr).op_info(var_op, var_op_arg, i_var);
       //
-      // is_bianry
+      // is_unary, is_bianry
+      bool is_unary  = local::val_graph::unary_var_op(var_op);
       bool is_binary = local::val_graph::binary_var_op(var_op);
       //
-      if( is_binary )
+      if( is_unary )
+      {  //
+         // val_op
+         op_enum_t val_op = var_op2val_op[var_op];
+         CPPAD_ASSERT_UNKNOWN( val_op < number_op_enum );
+         //
+         // val_tape, val_index
+         val_op_arg.resize(1);
+         val_op_arg[0] = var2val_index[ var_op_arg[0] ];
+         val_index = val_tape.record_op(val_op, val_op_arg);
+         //
+         // var2val_index
+         var2val_index[i_var] = val_index;
+      }
+      else if( is_binary )
       {   switch( var_op )
          {
             default:

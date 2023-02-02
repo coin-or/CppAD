@@ -131,6 +131,7 @@ inline bool binary_var_op(OpCode var_op)
       case ZmulvpOp:
       case ZmulvvOp:
       result = true;
+      break;
    }
    return result;
 }
