@@ -154,8 +154,8 @@ public:
    xam
 }
 
-The Value Operator Derived Classes
-##################################
+The Unary Value Operator Derived Classes
+########################################
 
 Prototype
 *********

@@ -6,11 +6,51 @@
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
 namespace CppAD { namespace local { namespace val_graph {
-/*
-{xrst_begin val_binary_op dev}
 
-The Value Operator Binary Class
-###############################
+# define CPPAD_VAL_GRAPH_BINARY(Name, Op) \
+   template <class Value> \
+   class Name##_op_t : public binary_op_t<Value> { \
+   public: \
+      /* get_instance */ \
+      static Name##_op_t* get_instance(void) \
+      {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \
+         static Name##_op_t instance; \
+         return &instance; \
+      } \
+      /* op_enum */ \
+      op_enum_t op_enum(void) const override \
+      {  return Name##_op_enum;  \
+      } \
+      /* eval */ \
+      void eval( \
+         bool                  trace        , \
+         addr_t                arg_index    , \
+         const Vector<addr_t>& arg_vec      , \
+         const Vector<Value>&  con_vec      , \
+         addr_t                res_index    , \
+         Vector<Value>&        val_vec      ) const override \
+      {  const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
+         const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
+         val_vec[res_index]  = left Op right; \
+         if( trace ) this->print_op( \
+            #Name , arg_index, arg_vec, res_index, val_vec \
+         ); \
+      } \
+   }
+
+/*
+------------------------------------------------------------------------------
+{xrst_begin_parent val_binary_op dev}
+
+The Binary Value Operators
+##########################
+
+{xrst_end val_binary_op}
+------------------------------------------------------------------------------
+{xrst_begin val_binary_op_base dev}
+
+The Binary Value Operator Base Class
+####################################
 
 Prototype
 *********
@@ -57,14 +97,7 @@ prints the following values:
 #. right_index is the value vector index for the right operand
 #. res is the result for this operator; i.e. value vector at index res_index
 
-Operator Sub-Classes
-********************
-{xrst_toc_table
-   include/cppad/local/val_graph/add_op.hpp
-   include/cppad/local/val_graph/sub_op.hpp
-}
-
-{xrst_end val_binary_op}
+{xrst_end val_binary_op_base}
 */
 
 // BEGIN_BINARY_OP_T
@@ -118,6 +151,69 @@ public:
       );
    }
 };
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_binary_op_derived dev}
+{xrst_spell
+   operands
+   xam
+}
+
+The Binary Value Operator Derived Classes
+#########################################
+
+Prototype
+*********
+| |tab| ``template <class Value>``
+| |tab| ``class`` *Name*\ ``_opt_t : public binary_op_t<Value>``
+
+*Name*
+******
+Unary operators are defined for the following names:
+
+.. csv-table:: Unary Operators
+   :widths: auto
+   :header-rows: 1
+
+   Name,description
+   add,result is the sum of the two operands
+   sub,result is the first operand minus the second
+
+Context
+*******
+This class is derived from :ref:`val_binary_op-name` .
+It overrides the *op_enum* and *eval* member functions
+and is a concrete class (it has no pure virtual functions).
+
+get_instance
+************
+This static member function returns a pointer to a
+*Name*\ ``_op_t`` object.
+
+op_enum
+*******
+This override of :ref:`val_base_op@op_enum` returns
+*Name*\ ``_op_enum`` .
+
+eval
+****
+This override of :ref:`val_base_op@eval` sets
+the result equal to the binary operator applied to the operands; see
+:ref:`val_base_op@arg_vec@Unary Operators` .
+
+
+{xrst_toc_hidden
+   val_graph/binary_xam.cpp
+}
+Example
+*******
+The file :ref:`binary_xam.cpp <val_binary_op_xam.cpp-name>`
+is an example and test that uses this operator.
+
+{xrst_end val_binary_op_derived}
+*/
+CPPAD_VAL_GRAPH_BINARY(add, +);
+CPPAD_VAL_GRAPH_BINARY(sub, -);
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 

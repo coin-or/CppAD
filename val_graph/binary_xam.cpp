@@ -3,29 +3,29 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_sub_op_xam.cpp dev}
+{xrst_begin val_binary_op_xam.cpp dev}
 
-Subtract Value Operator Example
-###############################
+Binary Value Operator Example
+#############################
 {xrst_literal
    // BEGIN_C++
    // END_C++
 }
 
-{xrst_end val_sub_op_xam.cpp}
+{xrst_end val_binary_op_xam.cpp}
 */
 // BEGIN_C++
-bool sub_xam(void)
+bool binary_xam(void)
 {  bool ok = true;
    //
-   // tape_t, Vector, addr_t, sub_op_enum;
+   // tape_t, Vector, addr_t, add_op_enum;
    using CppAD::local::val_graph::tape_t;
    using CppAD::local::val_graph::Vector;
    using CppAD::local::val_graph::addr_t;
    using CppAD::local::val_graph::op_enum_t;
-   op_enum_t sub_op_enum = CppAD::local::val_graph::sub_op_enum;
+   op_enum_t add_op_enum = CppAD::local::val_graph::add_op_enum;
    //
-   // tape
+   // tape, ok
    tape_t<double> tape;
    size_t n_ind = 2;
    size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
@@ -40,7 +40,7 @@ bool sub_xam(void)
    Vector<addr_t> dep_vec(1);
    //
    // tape
-   dep_vec[0] = tape.record_op(sub_op_enum, op_arg); // x[0] + x[1]
+   dep_vec[0] = tape.record_op(add_op_enum, op_arg); // x[0] + x[1]
    //
    // set_dep
    tape.set_dep( dep_vec );
@@ -70,7 +70,7 @@ bool sub_xam(void)
    y[0] = val_vec[ dep_vec[0] ];
    //
    // ok
-   ok &= y[0] == x[0] - x[1];
+   ok &= y[0] == x[0] + x[1];
    //
    return ok;
 }

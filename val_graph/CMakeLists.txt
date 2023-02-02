@@ -6,7 +6,7 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list val_graph.cpp
-   add_xam.cpp
+   binary_xam.cpp
    call_xam.cpp
    con_xam.cpp
    dead_xam.cpp

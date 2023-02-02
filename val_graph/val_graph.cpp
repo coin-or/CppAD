@@ -18,7 +18,7 @@
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
-extern bool add_xam(void);
+extern bool binary_xam(void);
 extern bool call_xam(void);
 extern bool con_xam(void);
 extern bool dead_xam(void);
@@ -46,8 +46,8 @@ int main(void)
    // This line is used by test_one.sh
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( add_xam,             "add_xam"             );
-   Run( call_xam,             "call_xam"           );
+   Run( binary_xam,          "binary_xam"          );
+   Run( call_xam,            "call_xam"            );
    Run( con_xam,             "con_xam"             );
    Run( dead_xam,            "dead_xam"            );
    Run( fold_con_xam,        "fold_con_xam"        );
