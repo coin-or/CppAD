@@ -57,7 +57,7 @@ int main(void)
    Run( sub_xam,             "sub_xam"             );
    Run( test_fold_atom,      "test_fold_atom"      );
    Run( test_fun2val_atom,   "test_fun2val_atom"   );
-   // Run( test_fun2val_unary,  "test_fun2val_unary"  );
+   Run( test_fun2val_unary,  "test_fun2val_unary"  );
    Run( test_nan,            "test_nan"            );
    Run( test_not_used,       "test_not_used"       );
    Run( test_opt_call,       "test_opt_call"       );

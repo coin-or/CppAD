@@ -50,7 +50,7 @@ bool neg(void)
    // val_vec
    Vector<double> val_vec( tape.n_val() );
    val_vec[0] = p[0];
-   val_vec[1] = p[1];
+   val_vec[1] = x[0];
    tape.eval(trace, val_vec);
    //
    // y

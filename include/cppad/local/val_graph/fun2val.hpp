@@ -289,7 +289,7 @@ void ADFun<Base, RecBase>::fun2val(
    bool more_operators = true;
    bool in_atomic_call = false;
    //
-   // val_tape, var2val_index
+   // val_tape, var2val_index, par2val_index
    while(more_operators)
    {  //
       //
@@ -346,7 +346,7 @@ void ADFun<Base, RecBase>::fun2val(
             break;
          }
          //
-         // val_op_arg
+         // val_tape, par2val_index
          val_op_arg.resize(2);
          for(size_t i = 0; i < 2; ++i)
          {  if( is_var[i] )
@@ -376,6 +376,18 @@ void ADFun<Base, RecBase>::fun2val(
          CPPAD_ASSERT_KNOWN(false,
             "val_graph::fun2val: This variable operator not yet implemented"
          );
+         break;
+
+         // ParOp:
+         case local::ParOp:
+         if( par2val_index[ var_op_arg[0] ] != invalid_addr_t )
+            val_index = par2val_index[ var_op_arg[0] ];
+         else
+         {  Base constant = parameter[ var_op_arg[0] ];
+            val_index     = val_tape.record_con_op( constant );
+            par2val_index[ var_op_arg[0] ] = val_index;
+         }
+         var2val_index[i_var] = val_index;
          break;
 
          // EndOp:
