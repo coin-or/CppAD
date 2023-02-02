@@ -700,8 +700,7 @@ and changed
    # AM_CXXFLAGS     = -g $(CXX_FLAGS)
    AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 
-to
-::
+to::
 
    AM_CXXFLAGS     = -g $(CXX_FLAGS)
    # AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)

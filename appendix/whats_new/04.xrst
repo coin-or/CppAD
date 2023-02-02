@@ -549,12 +549,9 @@ you will have to change
 
    # include "cppad.hpp"
 
-to
-::
+to::
 
    # include "cppad/cppad.hpp"
-
-.
 
 The window ``nmake`` file ``Speed/Speed.mak`` was out of date.
 This has been fixed.

@@ -12,6 +12,11 @@ default = 'user_guide.xrst'
 app     = 'appendix/appendix.xrst'
 dev     = 'xrst/devel/devel.xrst'
 
+[heading]
+#   level         0,     1,     2,     3,     4,
+character = [   '#',   '*',   '=',   '-',   '.',  ]
+overline  = [ false, false, false, false, false,  ]
+
 [include_all]
 rst_epilog = ''
 rst_prolog = '''
