@@ -5,12 +5,51 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
+
+# define CPPAD_VAL_GRAPH_UNARY(Name, Op) \
+   template <class Value> \
+   class Name##_op_t : public unary_op_t<Value> { \
+   public: \
+      /* get_instance */ \
+      static Name##_op_t* get_instance(void) \
+      {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \
+         static Name##_op_t instance; \
+         return &instance; \
+      } \
+      /* op_enum */ \
+      op_enum_t op_enum(void) const override \
+      {  return Name##_op_enum; \
+      } \
+      /* eval */ \
+      void eval( \
+         bool                  trace        , \
+         addr_t                arg_index    , \
+         const Vector<addr_t>& arg_vec      , \
+         const Vector<Value>&  con_vec      , \
+         addr_t                res_index    , \
+         Vector<Value>&        val_vec      ) const override \
+      {  const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
+         val_vec[res_index]  = Op ( value ); \
+         if( trace ) this->print_op( \
+            #Name , arg_index, arg_vec, res_index, val_vec \
+         ); \
+      } \
+   }
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_unary_op dev}
+------------------------------------------------------------------------------
+{xrst_begin_parent val_unary_op dev}
 
-The Value Operator Unary Class
-##############################
+The Unary Value Operators
+#########################
+
+{xrst_end val_unary_op}
+------------------------------------------------------------------------------
+{xrst_begin val_unary_op_base dev}
+
+The Unary Value Operator Base Class
+###################################
 
 Prototype
 *********
@@ -56,13 +95,7 @@ prints the following values:
 #. empty is an empty string used to line up columns with binary operator
 #. res is the result for this operator; i.e. value vector at index res_index
 
-Operator Sub-Classes
-********************
-{xrst_toc_table
-   include/cppad/local/val_graph/neg_op.hpp
-}
-
-{xrst_end val_unary_op}
+{xrst_end val_unary_op_base}
 */
 
 // BEGIN_UNARY_OP_T
@@ -114,6 +147,69 @@ public:
       );
    }
 };
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_unary_op_derived dev}
+{xrst_spell
+   xam
+}
+
+The Value Operator Derived Classes
+##################################
+
+Prototype
+*********
+| |tab| ``template <class Value>``
+| |tab| ``class`` *Name*\ ``_opt_t : public unary_op_t<Value>``
+
+*Name*
+******
+Unary operators are defined for the following names:
+
+.. csv-table:: Unary Operators
+   :widths: auto
+   :header-rows: 1
+
+   Name,description
+   neg,result is negative of operand
+
+Context
+*******
+This class is derived from :ref:`val_unary_op-name` .
+It overrides the *op_enum* and *eval* member functions
+and is a concrete class (it has no pure virtual functions).
+
+get_instance
+************
+This static member function returns a pointer to a
+*Name*\ ``_op_t`` object.
+
+op_enum
+*******
+This override of :ref:`val_base_op@op_enum` returns
+*Name*\ ``_op_enum`` .
+
+eval
+****
+This override of :ref:`val_base_op@eval` sets
+the result equal to the unary operator applied to the operand; see
+:ref:`val_base_op@arg_vec@Unary Operators` .
+
+
+{xrst_toc_hidden
+   val_graph/unary_xam.cpp
+}
+Example
+*******
+The file :ref:`unary_xam.cpp <val_unary_op_xam.cpp-name>`
+is an example and test that uses this operator.
+
+{xrst_end val_unary_op_derived}
+*/
+CPPAD_VAL_GRAPH_UNARY(neg, -);
+
+// ---------------------------------------------------------------------------
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
+# undef CPPAD_VAL_GRAPH_UNARY
 # endif

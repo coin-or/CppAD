@@ -3,19 +3,19 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_neg_op_xam.cpp dev}
+{xrst_begin val_unary_op_xam.cpp dev}
 
-Add Value Operator Example
-##########################
+Unary Value Operator Example
+############################
 {xrst_literal
    // BEGIN_C++
    // END_C++
 }
 
-{xrst_end val_neg_op_xam.cpp}
+{xrst_end val_unary_op_xam.cpp}
 */
 // BEGIN_C++
-bool neg_xam(void)
+bool unary_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, neg_op_enum;

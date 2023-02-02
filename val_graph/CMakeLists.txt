@@ -12,7 +12,6 @@ SET(source_list val_graph.cpp
    dead_xam.cpp
    fold_con_xam.cpp
    fun2val_xam.cpp
-   neg_xam.cpp
    renumber_xam.cpp
    sub_xam.cpp
    test/fold_atom.cpp
@@ -22,6 +21,7 @@ SET(source_list val_graph.cpp
    test/not_used.cpp
    test/opt_call.cpp
    test/val2fun_atom.cpp
+   unary_xam.cpp
    val2fun_xam.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

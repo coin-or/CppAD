@@ -5,9 +5,9 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 // BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/local/val_graph/unary_op.hpp>
 # include <cppad/local/val_graph/add_op.hpp>
 # include <cppad/local/val_graph/con_op.hpp>
-# include <cppad/local/val_graph/neg_op.hpp>
 # include <cppad/local/val_graph/sub_op.hpp>
 # include <cppad/local/val_graph/type.hpp>
 // END_SORT_THIS_LINE_MINUS_1
