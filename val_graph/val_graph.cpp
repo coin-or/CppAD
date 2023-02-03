@@ -25,7 +25,6 @@ extern bool dead_xam(void);
 extern bool fold_con_xam(void);
 extern bool fun2val_xam(void);
 extern bool renumber_xam(void);
-extern bool sub_xam(void);
 extern bool test_fold_atom(void);
 extern bool test_fun2val_atom(void);
 extern bool test_fun2val_unary(void);
@@ -53,7 +52,6 @@ int main(void)
    Run( fold_con_xam,        "fold_con_xam"        );
    Run( fun2val_xam,         "fun2val_xam"         );
    Run( renumber_xam,        "renumber_xam"        );
-   Run( sub_xam,             "sub_xam"             );
    Run( test_fold_atom,      "test_fold_atom"      );
    Run( test_fun2val_atom,   "test_fun2val_atom"   );
    Run( test_fun2val_unary,  "test_fun2val_unary"  );

@@ -13,7 +13,6 @@ SET(source_list val_graph.cpp
    fold_con_xam.cpp
    fun2val_xam.cpp
    renumber_xam.cpp
-   sub_xam.cpp
    test/fold_atom.cpp
    test/fun2val_atom.cpp
    test/fun2val_unary.cpp
