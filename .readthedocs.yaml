@@ -9,6 +9,10 @@ build:
       # xrst
       - pip install xrst
       #
+      # This is only necessary if you need the most recent testing verison
+      - pip uninstall -y xrst
+      - pip install --index-url https://test.pypi.org/simple/ xrst
+      #
       # build/html
       # The xsrst html_directory for this configuration is build/html.
       # Build the default (user_guide) and app (appendix) groups.
