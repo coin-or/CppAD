@@ -13,6 +13,12 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+02-05
+=====
+Merge in pull request 168.
+This fixes an issue with :ref:`link_dll_lib-name`
+on windows when building with unicode.
+
 01-15
 =====
 The following atomic four ``rev_depend`` problems have been fixed.

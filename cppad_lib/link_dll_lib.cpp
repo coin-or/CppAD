@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/utility/to_string.hpp>
 # include <cppad/utility/link_dll_lib.hpp>
@@ -23,7 +23,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 //  dlopen
 void* link_dll_lib::dlopen(const char *filename, int flag)
-{  HINSTANCE hinstance = LoadLibrary(filename);
+{  HINSTANCE hinstance = LoadLibraryA(filename);
    return reinterpret_cast<void*>( hinstance );
 }
 // dlsym
