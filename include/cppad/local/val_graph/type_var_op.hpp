@@ -84,7 +84,7 @@ inline bool unary_var_op(OpCode var_op)
    operands
 }
 
-Is This a Unary Variable Operator
+Is This a Binary Variable Operator
 #################################
 
 Prototype
@@ -130,6 +130,61 @@ inline bool binary_var_op(OpCode var_op)
       case ZmulpvOp:
       case ZmulvpOp:
       case ZmulvvOp:
+      result = true;
+      break;
+   }
+   return result;
+}
+/*
+-------------------------------------------------------------------------------
+{xrst_begin compare_var_op dev}
+{xrst_spell
+   operands
+}
+
+Is This a Comparison Variable Operator
+######################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_COMPARE_VAR_OP
+   // END_COMPARE_VAR_OP
+}
+
+var_op
+******
+is the variable operator.
+
+Return
+******
+The return is true if this operator is a comparison operator.
+
+{xrst_end compare_var_op}
+*/
+// BEGIN_COMPARE_VAR_OP
+inline bool compare_var_op(OpCode var_op)
+// END_COMPARE_VAR_OP
+{  bool result;
+   switch(var_op)
+   {  default:
+      result = false;
+      break;
+      //
+      case local::EqppOp:
+      case local::EqpvOp:
+      case local::EqvvOp:
+      case local::NeppOp:
+      case local::NepvOp:
+      case local::NevvOp:
+      case local::LtppOp:
+      case local::LtpvOp:
+      case local::LtvpOp:
+      case local::LtvvOp:
+      case local::LeppOp:
+      case local::LepvOp:
+      case local::LevpOp:
+      case local::LevvOp:
       result = true;
       break;
    }

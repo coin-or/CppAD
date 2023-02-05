@@ -300,8 +300,9 @@ void ADFun<Base, RecBase>::fun2val(
       (++itr).op_info(var_op, var_op_arg, i_var);
       //
       // is_unary, is_bianry
-      bool is_unary  = local::val_graph::unary_var_op(var_op);
-      bool is_binary = local::val_graph::binary_var_op(var_op);
+      bool is_unary   = local::val_graph::unary_var_op(var_op);
+      bool is_binary  = local::val_graph::binary_var_op(var_op);
+      bool is_compare = local::val_graph::compare_var_op(var_op);
       //
       if( is_unary )
       {  //
@@ -369,6 +370,101 @@ void ADFun<Base, RecBase>::fun2val(
          //
          // var2val_index
          var2val_index[i_var] = val_index;
+      }
+      else if( is_compare )
+      {  //
+         // left_index, right_index
+         addr_t left_index, right_index;
+         switch( var_op )
+         {
+            // default
+            default:
+            CPPAD_ASSERT_UNKNOWN(false);
+            left_index  = 0; // to avoid compiler warning
+            right_index = 0;
+            break;
+
+            // both nodes parameters
+            case local::EqppOp:
+            case local::NeppOp:
+            case local::LtppOp:
+            case local::LeppOp:
+            left_index  = par2val_index[ var_op_arg[0] ];
+            right_index = par2val_index[ var_op_arg[1] ];
+            break;
+
+            // first node parameter, second variable
+            case local::EqpvOp:
+            case local::NepvOp:
+            case local::LtpvOp:
+            case local::LepvOp:
+            left_index  = par2val_index[ var_op_arg[0] ];
+            right_index = var2val_index[ var_op_arg[1] ];
+            break;
+
+            // first node variable, second parameter
+            case local::LtvpOp:
+            case local::LevpOp:
+            left_index  = var2val_index[ var_op_arg[0] ];
+            right_index = par2val_index[ var_op_arg[1] ];
+            break;
+
+            // both nodes variables
+            case local::EqvvOp:
+            case local::NevvOp:
+            case local::LtvvOp:
+            case local::LevvOp:
+            left_index  = var2val_index[ var_op_arg[0] ];
+            right_index = var2val_index[ var_op_arg[1] ];
+            break;
+
+         }
+         // compare_enum
+         local::val_graph::compare_enum_t compare_enum;
+         // Set graph_op
+         switch( var_op )
+         {
+            // default
+            default:
+            CPPAD_ASSERT_UNKNOWN(false);
+            // set to avoid comiler warning
+            compare_enum = local::val_graph::number_compare_enum;
+            break;
+
+            case local::EqppOp:
+            case local::EqpvOp:
+            case local::EqvvOp:
+            compare_enum = local::val_graph::compare_eq_enum;
+            break;
+
+            case local::NeppOp:
+            case local::NepvOp:
+            case local::NevvOp:
+            compare_enum = local::val_graph::compare_ne_enum;
+            break;
+
+            case local::LtppOp:
+            case local::LtpvOp:
+            case local::LtvpOp:
+            case local::LtvvOp:
+            compare_enum = local::val_graph::compare_lt_enum;
+            break;
+
+            case local::LeppOp:
+            case local::LepvOp:
+            case local::LevpOp:
+            case local::LevvOp:
+            compare_enum = local::val_graph::compare_le_enum;
+            break;
+
+         }
+         //
+         // tape
+         val_index = val_tape.record_comp_op(
+            compare_enum, left_index, right_index
+         );
+         CPPAD_ASSERT_UNKNOWN(val_index == 0); // no result for this operator
+         break;
       }
       else switch(var_op)
       {

@@ -200,11 +200,85 @@ bool unary_op(void)
    return ok;
 }
 // ----------------------------------------------------------------------------
+// comp_op
+bool comp_op(void)
+{  bool ok = true;
+   //
+   // AD, addr_t
+   using CppAD::AD;
+   using CppAD::addr_t;
+   //
+   // tape_t, Vector
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   //
+   // ap, ax
+   Vector< AD<double> > ap(1), ax(1);
+   ap[0] = 2.0;
+   ax[0] = 3.0;
+   CppAD::Independent(ax, ap);
+   //
+   // f
+   Vector< AD<double> > ay(1);
+   if( ap[0] < ax[0] )
+      ay[0] = ax[0];
+   else
+      ay[0] = ap[0];
+   CppAD::ADFun<double> f(ax, ay);
+   //
+   // tape
+   tape_t<double> tape;
+   f.fun2val(tape);
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec = tape.dep_vec();
+   ok &= dep_vec.size() == 1;
+   ok &= tape.n_ind() == 2;
+   //
+   // trace
+   bool trace = true;
+   //
+   // p, x
+   Vector<double> p(1), x(1);
+   p[0] = 5.0; // p[0] < x[0] is true
+   x[0] = 6.0;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   val_vec[0] = p[0];
+   val_vec[1] = x[0];
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y, ok
+   Vector<double> y(2);
+   y[0] = val_vec[ dep_vec[0] ];
+   ok &= y[0] == x[0];
+   //
+   // p, x
+   p[0] = 6.0; // p[0] < x[0] is false
+   x[0] = 5.0;
+   //
+   // val_vec
+   val_vec[0] = p[0];
+   val_vec[1] = x[0];
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 1;
+   //
+   // y, ok
+   y[0] = val_vec[ dep_vec[0] ];
+   ok &= y[0] == x[0];
+   //
+   return ok;
+}
+// ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_fun2val(void)
 {  bool ok = true;
    ok     &= dynamic_atom();
    ok     &= variable_atom();
    ok     &= unary_op();
+   ok     &= comp_op();
    return ok;
 }
