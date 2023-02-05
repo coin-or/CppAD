@@ -15,12 +15,11 @@ SET(source_list val_graph.cpp
    fun2val_xam.cpp
    renumber_xam.cpp
    test/fold_atom.cpp
-   test/fun2val_atom.cpp
-   test/fun2val_unary.cpp
+   test/fun2val.cpp
    test/nan.cpp
    test/not_used.cpp
    test/opt_call.cpp
-   test/val2fun_atom.cpp
+   test/val2fun.cpp
    unary_xam.cpp
    val2fun_xam.cpp
 )

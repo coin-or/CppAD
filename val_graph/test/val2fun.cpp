@@ -180,7 +180,7 @@ bool variable_atom(void)
 }
 // ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
-bool test_val2fun_atom(void)
+bool test_val2fun(void)
 {  bool ok = true;
    ok     &= dynamic_atom();
    ok     &= variable_atom();

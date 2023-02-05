@@ -27,12 +27,11 @@ extern bool fold_con_xam(void);
 extern bool fun2val_xam(void);
 extern bool renumber_xam(void);
 extern bool test_fold_atom(void);
-extern bool test_fun2val_atom(void);
-extern bool test_fun2val_unary(void);
+extern bool test_fun2val(void);
 extern bool test_nan(void);
 extern bool test_not_used(void);
 extern bool test_opt_call(void);
-extern bool test_val2fun_atom(void);
+extern bool test_val2fun(void);
 extern bool unary_xam(void);
 extern bool val2fun_xam(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -55,12 +54,11 @@ int main(void)
    Run( fun2val_xam,         "fun2val_xam"         );
    Run( renumber_xam,        "renumber_xam"        );
    Run( test_fold_atom,      "test_fold_atom"      );
-   Run( test_fun2val_atom,   "test_fun2val_atom"   );
-   Run( test_fun2val_unary,  "test_fun2val_unary"  );
+   Run( test_fun2val,        "test_fun2val"        );
    Run( test_nan,            "test_nan"            );
    Run( test_not_used,       "test_not_used"       );
    Run( test_opt_call,       "test_opt_call"       );
-   Run( test_val2fun_atom,   "test_val2fun_atom"   );
+   Run( test_val2fun,        "test_val2fun"        );
    Run( unary_xam,           "unary_xam"           );
    Run( val2fun_xam,         "val2fun_xam"         );
    // END_SORT_THIS_LINE_MINUS_1
