@@ -67,7 +67,7 @@ compare_op_enum_t
 This enum type is used to identify which comparison a :ref:`val_comp_op-name`
 does.
 {xrst_code hpp}*/
-enum compare_op_enum_t {
+enum compare_enum_t {
    compare_eq_enum,  // equal
    compare_ne_enum,  // not equal
    compare_lt_enum,  // less than

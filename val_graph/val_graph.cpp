@@ -20,6 +20,7 @@
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool binary_xam(void);
 extern bool call_xam(void);
+extern bool comp_xam(void);
 extern bool con_xam(void);
 extern bool dead_xam(void);
 extern bool fold_con_xam(void);
@@ -47,6 +48,7 @@ int main(void)
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( binary_xam,          "binary_xam"          );
    Run( call_xam,            "call_xam"            );
+   Run( comp_xam,            "comp_xam"            );
    Run( con_xam,             "con_xam"             );
    Run( dead_xam,            "dead_xam"            );
    Run( fold_con_xam,        "fold_con_xam"        );

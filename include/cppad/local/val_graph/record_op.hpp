@@ -78,7 +78,7 @@ no value vector result for this operator.
 
 compare_enum
 ============
-This identifies which comparison is done by this use of the comapre operator.
+This identifies which comparison is done by this use of the compare operator.
 
 left_index
 ==========
@@ -205,9 +205,9 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 // BEGIN_RECORD_COMP_OP
 template <class Value>
 addr_t tape_t<Value>::record_comp_op(
-   compare_op_enum_t compare_enum ,
-   addr_t            left_index   ,
-   addr_t            right_index  )
+   compare_enum_t compare_enum ,
+   addr_t         left_index   ,
+   addr_t         right_index  )
 // END_RECORD_COMP_OP
 {  // res_index
    addr_t res_index = 0; // invalid result index

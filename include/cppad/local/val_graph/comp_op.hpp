@@ -11,7 +11,7 @@
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_com_op dev}
+{xrst_begin val_comp_op dev}
 {xrst_spell
    xam
 }
@@ -52,7 +52,7 @@ see op_base :ref:`val_base_op@n_res` .
 eval
 ****
 This override of :ref:`val_base_op@eval` .
-If the comparsion is false (true), one (zero) is added to
+If the comparison is false (true), one (zero) is added to
 the compare_false argument to eval.
 
 trace
@@ -73,14 +73,14 @@ If trace is true, this member function prints the following values:
 #. compare_false is the value of the compare_false argument after the eval
 
 {xrst_toc_hidden
-   val_graph/com_xam.cpp
+   val_graph/comp_xam.cpp
 }
 Example
 *******
-The file :ref:`com_xam.cpp <val_com_op_xam.cpp-name>`
+The file :ref:`com_xam.cpp <val_comp_op_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_com_op}
+{xrst_end val_comp_op}
 */
 // BEGIN_COM_OP_T
 template <class Value>
@@ -122,10 +122,9 @@ public:
    {
       //
       // compare_enum, left_index, right_index
-      compare_op_enum_t compare_enum;
-      compare_enum         = compare_op_enum_t( arg_vec[arg_index + 0] );
-      addr_t left_index    = arg_vec[arg_index + 1];
-      addr_t right_index   = arg_vec[arg_index + 2];
+      compare_enum_t compare_enum = compare_enum_t( arg_vec[arg_index + 0] );
+      addr_t left_index           = arg_vec[arg_index + 1];
+      addr_t right_index          = arg_vec[arg_index + 2];
       //
       // left, right
       const Value&   left          = val_vec[left_index];
@@ -169,7 +168,7 @@ public:
          return;
       //
       std::printf(
-         "%11s %5d %5d %10ld", name, left_index, right_index, compare_false
+         "%11s %5d %5d %10ld\n", name, left_index, right_index, res
       );
       return;
    }

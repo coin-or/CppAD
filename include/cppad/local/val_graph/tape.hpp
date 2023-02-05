@@ -294,9 +294,9 @@ public :
    //
    // record_comp_op
    addr_t record_comp_op(
-      compare_op_enum_t compare_enum ,
-      addr_t            left_index   ,
-      addr_t            right_index
+      compare_enum_t compare_enum ,
+      addr_t         left_index   ,
+      addr_t         right_index
    );
    //
    // record_call_op
