@@ -23,7 +23,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 //  dlopen
 void* link_dll_lib::dlopen(const char *filename, int flag)
-{  HINSTANCE hinstance = LoadLibrary(filename);
+{  HINSTANCE hinstance = LoadLibraryA(filename);
    return reinterpret_cast<void*>( hinstance );
 }
 // dlsym
