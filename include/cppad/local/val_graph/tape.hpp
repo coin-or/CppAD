@@ -214,11 +214,13 @@ public :
       dep_vec_.swap( other.dep_vec_ );
    }
    // BEGIN_EVAL
-   void eval(
+   size_t eval(
       bool          trace  ,
       Vector<Value>& val_vec) const
    // END_EVAL
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
+      //
+      size_t compare_false = 0;
       //
       // trace
       if( trace )
@@ -245,7 +247,13 @@ public :
          //
          // op_base_t<Value>::eval
          op_ptr->eval(
-            trace, arg_index, arg_vec_, con_vec_, res_index, val_vec
+            trace,
+            arg_index,
+            arg_vec_,
+            con_vec_,
+            res_index,
+            compare_false,
+            val_vec
          );
       }
       // trace
@@ -262,6 +270,7 @@ public :
          // space after end of this tape
          std::printf("\n");
       }
+      return compare_false;
    }
    // ------------------------------------------------------------------------
    // functions documented in files included below

@@ -155,6 +155,7 @@ public:
       const Vector<addr_t>& arg_vec      ,
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
+      size_t&               compare_false,
       Vector<Value>&        val_vec      ) const = 0;
    //
    virtual bool is_unary(void) const

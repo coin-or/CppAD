@@ -28,6 +28,7 @@ namespace CppAD { namespace local { namespace val_graph {
          const Vector<addr_t>& arg_vec      , \
          const Vector<Value>&  con_vec      , \
          addr_t                res_index    , \
+         size_t&               compare_false, \
          Vector<Value>&        val_vec      ) const override \
       {  const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
          const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
@@ -131,6 +132,7 @@ public:
       const Vector<addr_t>& arg_vec      ,
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
+      size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override = 0;
    //
    // print_op

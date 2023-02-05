@@ -27,6 +27,7 @@
          const Vector<addr_t>& arg_vec      , \
          const Vector<Value>&  con_vec      , \
          addr_t                res_index    , \
+         size_t&               compare_false, \
          Vector<Value>&        val_vec      ) const override \
       {  const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
          val_vec[res_index]  = Op ( value ); \
@@ -129,6 +130,7 @@ public:
       const Vector<addr_t>& arg_vec      ,
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
+      size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override = 0;
    //
    // print_op
