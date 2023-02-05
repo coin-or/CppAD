@@ -156,12 +156,6 @@ public:
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       Vector<Value>&        val_vec      ) const = 0;
-   virtual void print_op(
-      const char*           name         ,
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      addr_t                res_index    ,
-      Vector<Value>&        val_vec      ) const = 0;
    //
    virtual bool is_unary(void) const
    {  return false; }

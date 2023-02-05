@@ -78,8 +78,7 @@ This override of :ref:`val_base_op@n_res` returns 1.
 
 print_op
 ********
-This override of :ref:`val_base_op@print_op`
-prints the following values:
+This member function prints the following values:
 
 .. csv-table::
    :widths: auto
@@ -138,7 +137,7 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
-      Vector<Value>&        val_vec      ) const override
+      Vector<Value>&        val_vec      ) const
    {  //
       addr_t val_index  = arg_vec[ arg_index + 0 ];
       Value  res        = val_vec[res_index];

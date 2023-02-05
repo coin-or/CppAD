@@ -58,10 +58,9 @@ the result equal to
 
       con_vec[ arg_vec[ arg_index + 0 ] ]
 
-print_op
-********
-This override of :ref:`val_base_op@print_op`
-prints the following values:
+trace
+=====
+If trace is true, this member function prints the following values:
 
 .. csv-table::
    :widths: auto
@@ -122,24 +121,18 @@ public:
       const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       Vector<Value>&        val_vec      ) const override
-   {  val_vec[res_index]  = con_vec[ arg_vec[arg_index + 0] ];
-      if( trace ) this->print_op(
-         "con", arg_index, arg_vec, res_index, val_vec
-      );
-   }
-   //
-   // print_op
-   void print_op(
-      const char*           name         ,
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      addr_t                res_index    ,
-      Vector<Value>&        val_vec      ) const override
    {  //
-      addr_t val_index  = arg_vec[ arg_index + 0 ];
+      // val_index, val_vec
+      addr_t val_index    = arg_vec[ arg_index + 0 ];
+      val_vec[res_index]  = con_vec[ val_index ];
+      //
+      // trace
+      if( ! trace )
+         return;
+      //
       Value  res        = val_vec[res_index];
       std::printf(
-         "%5d %5s %5d %5s %10.3g\n", res_index, name, val_index, "", res
+         "%5d %5s %5d %5s %10.3g\n", res_index, "con", val_index, "", res
       );
    }
 };

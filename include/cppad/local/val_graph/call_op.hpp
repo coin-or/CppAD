@@ -88,10 +88,9 @@ to evaluate *n_res* results given *n_arg* - 4 arguments.
 
       arg_vec[ arg_index + i ] < res_index
 
-print_op
-********
-This override of :ref:`val_base_op@print_op`
-prints the following values:
+trace
+=====
+If trace is true, this member function prints the following values:
 
 | |tab| name ( arg_index_0 , arg_index_1 , ... )
 | |tab| res_index_0  res_value_0
@@ -178,7 +177,7 @@ public:
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
       Vector<Value>&        val_vec
-   ) const override;
+   ) const;
 };
 //
 // eval
@@ -196,6 +195,7 @@ void call_op_t<Value>::eval(
    size_t n_res         = size_t( arg_vec[arg_index + 1] );
    size_t atomic_index  = size_t( arg_vec[arg_index + 2] );
    size_t call_id       = size_t( arg_vec[arg_index + 3] );
+   CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
    //
    // v_ptr, name
    CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
@@ -238,31 +238,10 @@ void call_op_t<Value>::eval(
       val_vec[res_index + i] = y[i];
    //
    // trace
-   if( trace )
-   {  //
-      // atomic_index = atomic_index
-      CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
-      //
-      // print_op
-      this->print_op(
-         name.c_str(), arg_index, arg_vec, res_index, val_vec
-      );
-   }
-   return;
-}
-//
-// print_op
-template <class Value>
-void call_op_t<Value>::print_op(
-   const char*           name         ,
-   addr_t                arg_index    ,
-   const Vector<addr_t>& arg_vec      ,
-   addr_t                res_index    ,
-   Vector<Value>&        val_vec      ) const
-{  size_t n_arg = this->n_arg(arg_index, arg_vec);
-   size_t n_res = this->n_res(arg_index, arg_vec);
+   if( ! trace )
+      return;
    //
-   std::printf( "    %s(", name);
+   std::printf( "    %s(", name.c_str() );
    for(addr_t i = 4; i < addr_t(n_arg); ++i)
    {  if( i != 4 )
          printf(", ");
