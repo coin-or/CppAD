@@ -62,7 +62,9 @@ bool test_not_used(void)
    val_vec.resize( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    ok &= tape.arg_vec().size() == 12;
    ok &= tape.con_vec().size() == 4;
    ok &= tape.op_vec().size() == 8;
@@ -70,12 +72,14 @@ bool test_not_used(void)
    // renumber, val_vec
    tape.renumber();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // dead_code, val_vec
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // ok
    // after optimizing

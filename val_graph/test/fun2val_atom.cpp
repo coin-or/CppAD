@@ -57,7 +57,9 @@ bool dynamic_atom(void)
    for(size_t i = 0; i < 4; ++i)
       val_vec[i] = p[i];
    val_vec[4] = x[0];
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // y
    Vector<double> y(1);
@@ -121,7 +123,9 @@ bool variable_atom(void)
    val_vec[0] = p[0];
    for(size_t i = 0; i < 4; ++i)
       val_vec[i + 1] = x[i];
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // y
    Vector<double> y(2);

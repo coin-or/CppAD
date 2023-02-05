@@ -64,7 +64,9 @@ bool dynamic_atom(void)
    Vector<double> val_vec( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = double(5 + i);
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    */
    //
    // ADFun
@@ -149,7 +151,9 @@ bool variable_atom(void)
    Vector<double> val_vec( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = double(5 + i);
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    */
    // ADFun
    Vector<size_t> var_ind(4), dyn_ind(1);

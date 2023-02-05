@@ -127,7 +127,8 @@ eval
    // END_EVAL
 }
 Given the independent values, this routine execute the operators
-in order to evaluate the rest of the value vector.
+in order to evaluate the rest of the value vector and the compare_false
+counter.
 
 trace
 =====
@@ -139,6 +140,13 @@ val_vec
 This vector has size equal to *n_val*.
 The first *n_ind* elements are inputs.
 The rest of the elements are outputs.
+
+compare_false
+=============
+This is the number of :ref:`val_comp_op-name` that had a false
+result for their comparisons.
+This is both an input and output; i.e., each false comparison
+will add one to this value.
 
 Operations on Tape
 ******************
@@ -214,13 +222,12 @@ public :
       dep_vec_.swap( other.dep_vec_ );
    }
    // BEGIN_EVAL
-   size_t eval(
-      bool          trace  ,
-      Vector<Value>& val_vec) const
+   void eval(
+      bool           trace         ,
+      size_t&        compare_false ,
+      Vector<Value>& val_vec       ) const
    // END_EVAL
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
-      //
-      size_t compare_false = 0;
       //
       // trace
       if( trace )
@@ -270,7 +277,7 @@ public :
          // space after end of this tape
          std::printf("\n");
       }
-      return compare_false;
+      return;
    }
    // ------------------------------------------------------------------------
    // functions documented in files included below
@@ -284,6 +291,13 @@ public :
    //
    // record_con_op
    addr_t record_con_op(const Value& constant);
+   //
+   // record_comp_op
+   addr_t record_comp_op(
+      compare_op_enum_t compare_enum ,
+      addr_t            left_index   ,
+      addr_t            right_index
+   );
    //
    // record_call_op
    addr_t record_call_op(

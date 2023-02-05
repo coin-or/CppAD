@@ -51,6 +51,7 @@ This enum type is used to identify the concrete operator class types.
 enum op_enum_t {
    add_op_enum,      // addition
    call_op_enum,     // atomic functions
+   comp_op_enum,     // compare operator
    con_op_enum,      // constants
    neg_op_enum,      // negative
    sub_op_enum,      // subtraction
@@ -61,6 +62,18 @@ enum op_enum_t {
 The ``number_op_enum`` entry is used for the number of concrete
 operator class types (and does not correspond to an operator).
 
+compare_op_enum_t
+*****************
+This enum type is used to identify which comparison a :ref:`val_comp_op-name`
+does.
+{xrst_code hpp}*/
+enum compare_op_enum_t {
+   compare_eq_enum,  // equal
+   compare_ne_enum,  // not equal
+   compare_lt_enum,  // less than
+   compare_le_enum   // less than or equal
+};
+/*{xrst_code}
 {xrst_end val_graph_type}
 */
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

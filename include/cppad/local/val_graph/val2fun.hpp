@@ -178,7 +178,8 @@ void ADFun<Base, RecBase>::val2fun(
       for(size_t i = 0; i < val_n_ind; ++i)
          val_index2con[i] = nan;
       bool trace = false;
-      val_tape.eval(trace, val_index2con);
+      size_t compare_false = 0;
+      val_tape.eval(trace, compare_false, val_index2con);
    }
    //
    // val2fun_index

@@ -6,6 +6,7 @@
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/call_op.hpp>
+# include <cppad/local/val_graph/comp_op.hpp>
 # include <cppad/core/numeric_limits.hpp>
 //
 namespace CppAD { namespace local { namespace val_graph {
@@ -64,6 +65,28 @@ The return value is the index were *constant* will be placed
 in the value vector.
 Note that if *constant* is nan, the return value will always be *n_ind*; i.e,
 only one nan gets paced in the constant vector.
+
+record_comp_op
+**************
+{xrst_literal
+   // BEGIN_RECORD_COMP_OP
+   // END_RECORD_COMP_OP
+}
+This places a :ref:`val_comp_op-name` operator in the tape.
+The return value is always zero because there is
+no value vector result for this operator.
+
+compare_enum
+============
+This identifies which comparison is done by this use of the comapre operator.
+
+left_index
+==========
+This is the value vector index for the left operand in the comparison.
+
+right_index
+===========
+This is the value vector index for the left operand in the comparison.
 
 record_call_op
 **************
@@ -175,6 +198,34 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    //
    // n_val_
    n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
+   //
+   return res_index;
+}
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_COMP_OP
+template <class Value>
+addr_t tape_t<Value>::record_comp_op(
+   compare_op_enum_t compare_enum ,
+   addr_t            left_index   ,
+   addr_t            right_index  )
+// END_RECORD_COMP_OP
+{  // res_index
+   addr_t res_index = 0; // invalid result index
+   //
+   // arg_index
+   addr_t arg_index = addr_t( arg_vec_.size() );
+   //
+   // op_ptr
+   op_base_t<Value>* op_ptr = comp_op_t<Value>::get_instance();
+   //
+   // op_vec_
+   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_vec_.push_back(op_info);
+   //
+   // arg_vec_
+   arg_vec_.push_back( addr_t(compare_enum) );
+   arg_vec_.push_back( left_index );
+   arg_vec_.push_back( right_index );
    //
    return res_index;
 }

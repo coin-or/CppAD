@@ -83,7 +83,9 @@ bool result_not_used(void)
    Vector<double> val_vec( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // ok
    // before optmizing
@@ -94,12 +96,14 @@ bool result_not_used(void)
    // renumber
    tape.renumber();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // dead_code
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // ok
    // after optimizing
@@ -196,7 +200,9 @@ bool ident_zero(void)
    Vector<double> val_vec( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // ok
    // before optmizing
@@ -207,7 +213,8 @@ bool ident_zero(void)
    // dead_code
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // ok
    // after optimizing the subtract operator has been removd

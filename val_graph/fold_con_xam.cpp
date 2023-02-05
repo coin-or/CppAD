@@ -66,7 +66,9 @@ bool fold_con_xam(void)
    Vector<double> val_vec( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec);
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // y, ok
    Vector<double> y(1);
@@ -84,7 +86,8 @@ bool fold_con_xam(void)
    val_vec.resize( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // dead_code
    tape.dead_code();
@@ -94,7 +97,8 @@ bool fold_con_xam(void)
    val_vec.resize( tape.n_val() );
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec);
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
    //
    // y, ok
    dep_vec = tape.dep_vec();
