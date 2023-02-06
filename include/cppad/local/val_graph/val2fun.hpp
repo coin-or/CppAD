@@ -141,46 +141,20 @@ void ADFun<Base, RecBase>::val2fun(
    size_t n_val = val_tape.n_val();
    //
    // val_ad_type
-   // initialize this mapping and set its value of independent vector
    vector<ad_type_enum> val_ad_type(n_val);
    for(size_t i = 0; i < n_val; ++i)
       val_ad_type[i] = number_ad_type_enum; // invalid
-   for(size_t i = 0; i < dyn_n_ind; ++i)
-   {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
-         "val2fun: number of independent values is <= dyn_ind[i]"
-      );
-      CPPAD_ASSERT_KNOWN( val_ad_type[ dyn_ind[i] ] == number_ad_type_enum,
-         "val2fun: dep_ind[i] == dep_ind[j] for some i and j"
-      );
-      val_ad_type[ dyn_ind[i] ] = dynamic_enum;
-   }
-   for(size_t i = 0; i < var_n_ind; ++i)
-   {  CPPAD_ASSERT_KNOWN( var_ind[i] < val_n_ind,
-         "val2fun: number of independent values is <= var_ind[i]"
-      );
-      CPPAD_ASSERT_KNOWN( val_ad_type[ var_ind[i] ] == number_ad_type_enum,
-         "val2fun: var_ind[i] == dep_ind[j] for some i and j\n"
-         "or var_ind[i] == var_ind[j] for some i and j"
-      );
-      val_ad_type[ var_ind[i] ] = variable_enum;
-   }
    //
    // val_index2con
-   // if tape_has_call_op, this is the value for constants (others are nan)
+   // this is the value for constants (others are nan)
    vector<Base> val_index2con;
-   bool tape_has_call_op = false;
-   for(size_t i = 0; i < val_op_vec.size(); ++i)
-   {  op_base_t<Base>* op_ptr    = val_op_vec[i].op_ptr;
-      tape_has_call_op |= op_ptr->op_enum() == local::val_graph::call_op_enum;
-   }
-   if( tape_has_call_op )
-   {  val_index2con.resize(n_val);
-      for(size_t i = 0; i < val_n_ind; ++i)
-         val_index2con[i] = nan;
-      bool trace = false;
-      size_t compare_false = 0;
-      val_tape.eval(trace, compare_false, val_index2con);
-   }
+   val_index2con.resize(n_val);
+   for(size_t i = 0; i < val_n_ind; ++i)
+      val_index2con[i] = nan;
+   bool trace = false;
+   size_t compare_false = 0;
+   val_tape.eval(trace, compare_false, val_index2con);
+   //
    //
    // val2fun_index
    // mapping from value index to index in the AD function object.
@@ -211,22 +185,34 @@ void ADFun<Base, RecBase>::val2fun(
    rec.PutOp(local::BeginOp);
    rec.PutArg(0); // parameter argumnet is the nan above
    //
-   // rec, val2fun_index
+   // rec, val_ad_type, val2fun_index
    // put the independent value vector in the function recording
-   for(size_t i = 0; i < val_n_ind; ++i)
-   {  if( val_ad_type[i] == dynamic_enum )
-      {  par_addr         = rec.put_dyn_par(nan, local::ind_dyn);
-         val2fun_index[i] = par_addr;
-         CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
-      }
-      else
-      {  CPPAD_ASSERT_UNKNOWN( val_ad_type[i] == variable_enum );
-         var_addr         = rec.PutOp( local::InvOp );
-         val2fun_index[i] = var_addr;
-      }
+
+   for(size_t i = 0; i < dyn_n_ind; ++i)
+   {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
+         "val2fun: number of independent values is <= dyn_ind[i]"
+      );
+      CPPAD_ASSERT_KNOWN( val_ad_type[ dyn_ind[i] ] == number_ad_type_enum,
+         "val2fun: dep_ind[i] == dep_ind[j] for some i and j"
+      );
+      val_ad_type[ dyn_ind[i] ]  = dynamic_enum;
+      par_addr                    = rec.put_dyn_par(nan, local::ind_dyn);
+      val2fun_index[ dyn_ind[i] ] = par_addr;
+      CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
    }
-   CPPAD_ASSERT_UNKNOWN( size_t(par_addr) == dyn_n_ind );
-   CPPAD_ASSERT_UNKNOWN( size_t(var_addr) == var_n_ind );
+
+   for(size_t i = 0; i < var_n_ind; ++i)
+   {  CPPAD_ASSERT_KNOWN( var_ind[i] < val_n_ind,
+         "val2fun: number of independent values is <= var_ind[i]"
+      );
+      CPPAD_ASSERT_KNOWN( val_ad_type[ var_ind[i] ] == number_ad_type_enum,
+         "val2fun: var_ind[i] == dep_ind[j] for some i and j\n"
+         "or var_ind[i] == var_ind[j] for some i and j"
+      );
+      val_ad_type[ var_ind[i] ]   = variable_enum;
+      var_addr                    = rec.PutOp( local::InvOp );
+      val2fun_index[ var_ind[i] ] = var_addr;
+   }
    //
    // ind_taddr_
    // address of the independent variables on variable tape
@@ -256,7 +242,9 @@ void ADFun<Base, RecBase>::val2fun(
       //
       // fun_arg, val_ad_type
       if( is_unary || is_binary )
-      {  ad_type_x.resize(n_arg);
+      {  //
+         // ad_type_x, val_ad_type
+         ad_type_x.resize(n_arg);
          fun_arg.resize(n_arg);
          ad_type_enum res_ad_type = constant_enum;
          for(addr_t i = 0; i < addr_t(n_arg); ++i)
@@ -335,20 +323,18 @@ void ADFun<Base, RecBase>::val2fun(
          }
          val2fun_index[res_index] = tmp_addr;
       }
-      if( ! is_unary && ! is_binary ) switch( op_enum )
-      {  //
+      else switch( op_enum )
+      {  // ! ( is_unary || is_binary)
+         //
          // default
          default:
          CPPAD_ASSERT_KNOWN( op_enum > local::val_graph::number_op_enum,
             "val_graph::val2fun: op_enum is not yet implemented"
          );
          // con_op
+         // rec, val2fun_index
          case local::val_graph::con_op_enum:
-         //
-         // val2fun_index
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
-         ad_type_x.resize(n_arg);
-         ad_type_x[0]           = constant_enum;
          val_ad_type[res_index] = constant_enum;
          {  const Base& constant = val_con_vec[arg_index];
             par_addr = rec.put_con_par(constant);
@@ -359,7 +345,78 @@ void ADFun<Base, RecBase>::val2fun(
             val2fun_index[res_index] = par_addr;
          }
          break;
-         //
+         // -------------------------------------------------------------------
+         // comp_op
+         case local::val_graph::comp_op_enum:
+         {  //
+            // compare, left_index, right_index
+            addr_t compare          = val_arg_vec[arg_index + 0];
+            addr_t left_index       = val_arg_vec[arg_index + 1];
+            addr_t right_index      = val_arg_vec[arg_index + 2];
+            //
+            // var_left, var_right, dyn_left, dyn_right
+            bool var_left  = val_ad_type[left_index]  == variable_enum;
+            bool var_right = val_ad_type[right_index] == variable_enum;
+            bool dyn_left  = val_ad_type[left_index]  == dynamic_enum;
+            bool dyn_right = val_ad_type[right_index] == dynamic_enum;
+            //
+            // ax
+            ax.resize(2);
+            //
+            if( var_left | dyn_left )
+               ax[0].taddr_ = val2fun_index[left_index];
+            else
+               ax[0].value_ = val_index2con[left_index];
+            //
+            if( var_right | dyn_right )
+               ax[1].taddr_ = val2fun_index[right_index];
+            else
+               ax[1].value_ = val_index2con[right_index];
+            //
+            // res, compare_enum
+            using local::val_graph::compare_enum_t;
+            compare_enum_t compare_enum = compare_enum_t( compare );
+            bool res;
+            switch(compare_enum)
+            {  //
+               default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               break;
+               //
+               case local::val_graph::compare_eq_enum:
+               res = true;
+               rec.comp_eq(
+                  var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], res
+               );
+               break;
+               //
+               case local::val_graph::compare_le_enum:
+               res = true;
+               rec.comp_le(
+                  var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], res
+               );
+               break;
+               //
+               case local::val_graph::compare_lt_enum:
+               res = true;
+               rec.comp_lt(
+                  var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], res
+               );
+               break;
+               //
+               case local::val_graph::compare_ne_enum:
+               res = false;
+               rec.comp_eq(
+                  var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], res
+               );
+               break;
+               //
+               case local::val_graph::compare_no_enum:
+               break;
+            }
+         }
+         break;
+         // -------------------------------------------------------------------
          // call_op
          case local::val_graph::call_op_enum:
          {  //
