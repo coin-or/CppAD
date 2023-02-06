@@ -341,6 +341,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/base_op.hpp \
 	cppad/local/val_graph/binary_op.hpp \
 	cppad/local/val_graph/call_op.hpp \
+	cppad/local/val_graph/comp_op.hpp \
 	cppad/local/val_graph/con_op.hpp \
 	cppad/local/val_graph/dead_code.hpp \
 	cppad/local/val_graph/fold_con.hpp \
