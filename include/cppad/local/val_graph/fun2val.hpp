@@ -299,10 +299,11 @@ void ADFun<Base, RecBase>::fun2val(
       size_t           i_var;
       (++itr).op_info(var_op, var_op_arg, i_var);
       //
-      // is_unary, is_bianry
-      bool is_unary   = local::val_graph::unary_var_op(var_op);
-      bool is_binary  = local::val_graph::binary_var_op(var_op);
-      bool is_compare = local::val_graph::compare_var_op(var_op);
+      // is_unary, is_binary, is_compare
+      bool is_unary, is_binary, is_compare;
+      local::val_graph::type_var_op(
+         var_op, is_unary, is_binary, is_compare
+      );
       //
       if( is_unary )
       {  //
