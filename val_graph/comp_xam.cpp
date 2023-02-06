@@ -43,14 +43,18 @@ bool comp_xam(void)
    op_arg[1] = 1; // x[1]
    //
    // tape
+   // put two identical compare operators in the tape
    addr_t left_index  = 0; // x[0]
    addr_t right_index = 1; // x[1]
-   addr_t res_index = tape.record_comp_op(
-      compare_lt_enum, left_index, right_index // x[0] < x[1]
-   );
-   ok &= res_index == 0; // no result for this operator
+   for(size_t i = 0; i < 2; ++i)
+   {  addr_t res_index = tape.record_comp_op(
+         compare_lt_enum, left_index, right_index // x[0] < x[1]
+      );
+      ok &= res_index == 0; // no result for this operator
+   }
    //
    // tape, dep_vec
+   tape.record_op(add_op_enum, op_arg);              // not used
    dep_vec[0] = tape.record_op(add_op_enum, op_arg); // x[0] + x[1]
    //
    // set_dep
@@ -72,11 +76,6 @@ bool comp_xam(void)
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;  // x[0] < x[1] is true
    //
-   // ok
-   Vector<double> y(1);
-   y[0] = val_vec[ dep_vec[0] ];
-   ok &= y[0] == x[0] + x[1];
-   //
    // x
    x[0] = 6.0;
    x[1] = 5.0;
@@ -84,10 +83,37 @@ bool comp_xam(void)
    // val_vec, compare_false
    for(size_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
+   compare_false = 0;
    tape.eval(trace, compare_false, val_vec);
-   ok &= compare_false == 1;  // x[0] < x[1] is false
+   ok &= compare_false == 2;        // there are two x[0] < x[1] comparisons
+   ok &= tape.op_vec().size() == 5; // 1 con_op, 2 comp_op, 2 add_op
+   //
+   // tape
+   bool keep_compare = true;
+   tape.renumber();
+   tape.dead_code(keep_compare);
+   ok &= tape.op_vec().size() == 3; // 1 con_op, 1 comp_op, 1 add_op
+   //
+   // ok, val_vec
+   compare_false = 0;
+   val_vec.resize( tape.n_val() );
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 1;  // only one x[0] < x[1] left
+   //
+   // tape
+   keep_compare = false;
+   tape.dead_code(keep_compare);
+   ok &= tape.op_vec().size() == 2; // 1 con_op, 0 comp_op, 1 add_op
+   //
+   // ok, val_vec
+   val_vec.resize( tape.n_val() );
+   compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;  // none of the x[0] < x[1] left
    //
    // ok
+   Vector<double> y(1);
+   dep_vec = tape.dep_vec();
    y[0] = val_vec[ dep_vec[0] ];
    ok &= y[0] == x[0] + x[1];
    //

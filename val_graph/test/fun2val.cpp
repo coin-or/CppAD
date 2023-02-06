@@ -236,7 +236,7 @@ bool comp_op(void)
    ok &= tape.n_ind() == 2;
    //
    // trace
-   bool trace = true;
+   bool trace = false;
    //
    // p, x
    Vector<double> p(1), x(1);

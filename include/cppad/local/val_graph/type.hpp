@@ -72,7 +72,8 @@ enum compare_enum_t {
    compare_ne_enum,    // not equal
    compare_lt_enum,    // less than
    compare_le_enum,    // less than or equal
-   number_compare_enum // number of compare enum values
+   compare_no_enum,    // no comparison (used during optimization)
+   number_compare_enum
 };
 /*{xrst_code}
 {xrst_end val_graph_type}

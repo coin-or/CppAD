@@ -130,45 +130,61 @@ public:
       const Value&   left          = val_vec[left_index];
       const Value&   right         = val_vec[right_index];
       //
-      // res
-      size_t res;
+      // res, name
+      bool res;
       const char* name;
       switch( compare_enum )
       {  //
          // eq
          case compare_eq_enum:
-         res  = size_t(left != right);
+         res  = left == right;
          name = "eq";
          break;
          //
          // ne
          case compare_ne_enum:
-         res  = size_t(left == right);
+         res  = left != right;
          name = "ne";
          break;
          //
          // lt
          case compare_lt_enum:
-         res  = size_t(left >= right);
+         res  = left < right;
          name = "lt";
          break;
          //
          // le
          case compare_le_enum:
-         res  = size_t(left > right);
+         res  = left <= right;
          name = "le";
+         break;
+         //
+         // no
+         case compare_no_enum:
+         res  = true;
+         name = "no";
          break;
          //
          default:
          CPPAD_ASSERT_UNKNOWN(false);
       }
-      compare_false += res;
+      //
+      // compare_false
+      if( ! res )
+         ++compare_false;
+      //
       // trace
       if( ! trace )
          return;
       //
+      const char* res_str;
+      if( res )
+         res_str = "true";
+      else
+         res_str = "false";
+      //
       std::printf(
-         "%11s %5d %5d %10ld\n", name, left_index, right_index, res
+         "%11s %5d %5d %10s\n", name, left_index, right_index, res_str
       );
       return;
    }

@@ -143,6 +143,15 @@ results for the equivalent previous operator with lowest index.
 This creates an equivalent tape where replaced operators are not removed,
 but the are dead code in the new tape.
 
+Compare Operators
+*****************
+If two or more compare operators are identical, the first will be kept as
+is and the others will be changed to compare_no_enum operators.
+In this case future calls to eval will on add one to
+:ref:`val_graph_tape@eval@compare_false`,
+for each unique comparison that is false.
+be removed.
+
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
@@ -199,7 +208,12 @@ void tape_t<Value>::renumber(void)
          addr_t res_index_i = op_vec_[i_op].res_index;
          addr_t res_index_j = op_vec_[j_op].res_index;
          size_t n_res = op_vec_[i_op].op_ptr->n_res(arg_index_i, arg_vec_);
-         for(addr_t k = 0; k < addr_t(n_res); ++k)
+         if( n_res == 0 )
+         {  op_enum_t op_enum = op_vec_[i_op].op_ptr->op_enum();
+            CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
+            arg_vec_[arg_index_i + 0] = compare_no_enum;
+         }
+         else for(addr_t k = 0; k < addr_t(n_res); ++k)
             new_val_index[res_index_i + k] = res_index_j + k;
       }
    }
@@ -219,17 +233,22 @@ void tape_t<Value>::renumber(void)
       op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
       switch( op_enum )
       {  //
+         default:
+         break;
+         //
          case call_op_enum:
          val_index += 4; // index where function arguments start
          n_val_arg -= 4; // number of funciton arguments
          break;
          //
+         case comp_op_enum:
+         val_index += 1; // index of left argument to comparison
+         n_val_arg -= 1; // left and right arguments
+         break;
+         //
          // n_val_arg
          case con_op_enum:
          n_val_arg = 0;  // no arguemnt indices are in the value vector
-         break;
-         //
-         default:
          break;
       }
       for(addr_t i = 0; i < n_val_arg; ++i)

@@ -85,7 +85,7 @@ inline bool unary_var_op(OpCode var_op)
 }
 
 Is This a Binary Variable Operator
-#################################
+##################################
 
 Prototype
 *********
@@ -138,9 +138,6 @@ inline bool binary_var_op(OpCode var_op)
 /*
 -------------------------------------------------------------------------------
 {xrst_begin compare_var_op dev}
-{xrst_spell
-   operands
-}
 
 Is This a Comparison Variable Operator
 ######################################

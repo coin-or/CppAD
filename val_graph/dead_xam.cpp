@@ -77,7 +77,8 @@ bool dead_xam(void)
    ok &= tape.con_vec().size() == 3;
    //
    // dead_code, val_vec
-   tape.dead_code();
+   bool keep_compare = true; // no compare operatos so value does not matter
+   tape.dead_code(keep_compare);
    val_vec.resize( tape.n_val() );
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;

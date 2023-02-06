@@ -90,7 +90,8 @@ bool fold_con_xam(void)
    ok &= compare_false == 0;
    //
    // dead_code
-   tape.dead_code();
+   bool keep_compare = true; // no compare operatos so value does not matter
+   tape.dead_code(keep_compare);
    ok     &= tape.con_vec().size() == 2;
    //
    // val_vec

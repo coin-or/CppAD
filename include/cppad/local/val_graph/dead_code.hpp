@@ -17,6 +17,21 @@ namespace CppAD { namespace local { namespace val_graph {
 Dead Code Elimination
 #####################
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN_DEAD_CODE
+   // END_DEAD_CODE
+}
+
+keep_compare
+************
+#. If this is false, all the :ref`val_comp_op-name` operators will be removed.
+   In this case future calls to eval will not modify
+   :ref:`val_graph_tape@eval@compare_false` .
+#. If this is true, the compare_no_enum compare operators are removed and
+   other comparisons are kept.
+
 Algorithm
 *********
 #. The dependent variables are marked as needed.
@@ -51,8 +66,10 @@ example and test of tape.dead_code().
 
 {xrst_end val_graph_dead_code}
 */
+// BEGIN_DEAD_CODE
 template <class Value>
-void tape_t<Value>::dead_code(void)
+void tape_t<Value>::dead_code(bool keep_compare)
+// END_DEAD_CODE
 {  // -----------------------------------------------------------------------
    // Dead Code Elimination
    // https://en.wikipedia.org/wiki/Dead-code_elimination
@@ -128,6 +145,11 @@ void tape_t<Value>::dead_code(void)
          CPPAD_ASSERT_KNOWN( false,
             "val_graph::dead_code: this operator not yet implemented"
          );
+         break;
+         //
+         // comp_op_enum
+         case comp_op_enum:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 3 && n_res == 0 );
          break;
          //
          // con_op_enum
@@ -227,7 +249,12 @@ void tape_t<Value>::dead_code(void)
       //
       // need_op
       bool need_op = false;
-      for(addr_t k = 0; k < n_res; ++k)
+      if( n_res == 0 )
+      {  CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
+         need_op  = keep_compare;
+         need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
+      }
+      else for(addr_t k = 0; k < n_res; ++k)
          need_op |= need_val_index[ res_index + k];
       //
       if( need_op )
@@ -258,6 +285,18 @@ void tape_t<Value>::dead_code(void)
             // default
             default:
             CPPAD_ASSERT_UNKNOWN(false);
+            break;
+            //
+            // comp_op_enum
+            case comp_op_enum:
+            {  compare_enum_t compare_enum;
+               compare_enum       = compare_enum_t( arg_vec_[arg_index + 0] );
+               addr_t left_index  = new_val_index[ arg_vec_[arg_index + 1] ];
+               addr_t right_index = new_val_index[ arg_vec_[arg_index + 2] ];
+               new_tape.record_comp_op(
+                  compare_enum, left_index, right_index
+               );
+            }
             break;
             //
             // con_op_enum

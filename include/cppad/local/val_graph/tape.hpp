@@ -317,7 +317,7 @@ public :
    void renumber(void);
    //
    // dead_code
-   void dead_code(void);
+   void dead_code(bool keep_compare);
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
