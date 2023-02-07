@@ -44,6 +44,7 @@ is an example and test of tape.fold_con().
 -------------------------------------------------------------------------------
 */
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/val_graph/call_atomic.hpp>
 
 namespace CppAD { namespace local { namespace val_graph {
 
@@ -66,6 +67,9 @@ void tape_t<Value>::fold_con(void)
    Vector<bool> is_constant(n_val_);
    for(size_t i = 0; i < n_val_; ++i)
       is_constant[i] = false;
+   //
+   // con_x
+   Vector<Value> con_x;
    //
    // type_x, type_y
    Vector<ad_type_enum> type_x, type_y;
@@ -149,50 +153,34 @@ void tape_t<Value>::fold_con(void)
             size_t n_res        = size_t( arg_vec_[arg_index + 1] );
             size_t atomic_index = size_t( arg_vec_[arg_index + 2] );
             size_t call_id      = size_t( arg_vec_[arg_index + 3] );
+            CPPAD_ASSERT_UNKNOWN( atomic_index > 0 );
             //
-            // v_ptr, name
-            CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
-            bool         set_null = false;
-            size_t       type     = 0;       // result: set to avoid warning
-            std::string  name;               // result:
-            void*        v_ptr    = nullptr; // result: set to avoid warning
-            local::atomic_index<Value>(
-               set_null, atomic_index, type, &name, v_ptr
-            );
-            // val_graph only supports atomic_four
-            CPPAD_ASSERT_UNKNOWN( type == 4 );
-            //
-            // type_x
+            // con_x, type_x
             type_x.resize(n_arg - 4);
+            con_x.resize(n_arg - 4);
             for(addr_t i = 4; i < addr_t(n_arg); ++i)
             {  addr_t val_index =  arg_vec_[arg_index + i];
+               con_x[i-4] = val_index2con[val_index];
                if( is_constant[val_index] )
                   type_x[i-4] = constant_enum;
                else
                   type_x[i-4] = variable_enum;;
             }
             //
-            // type_y, ok, afun
+            // type_y
             type_y.resize(n_res);
-            bool               ok = false;
-            atomic_four<Value>* afun = nullptr;
-            if( v_ptr != nullptr )
-            {  afun = reinterpret_cast< atomic_four<Value>* >(v_ptr);
-               ok = afun->for_type(call_id, type_x, type_y);
-            }
-            if( ! ok )
-            {  std::string msg = name;
-               if( v_ptr == nullptr )
-                  msg += ": this atomic function has been deleted";
-               else
-                  msg += ": atomic for_type returned false";
-               CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-            }
+            call_atomic_for_type<Value>(
+               con_x, type_x, type_y, atomic_index, call_id
+            );
+            //
+            // fold
             bool fold = true;
             for(addr_t i = 0; i < addr_t(n_res); ++i)
             {  is_constant[res_index + i] = type_y[i] <= constant_enum;
                fold                      &= is_constant[res_index + i];
             }
+            //
+            // new_tape, old2new_index
             if( fold ) for(addr_t i = 0; i < addr_t(n_res); ++i)
             {  is_constant[res_index + i]  = true;
                const Value& value      = val_index2con[res_index + i];
@@ -200,7 +188,8 @@ void tape_t<Value>::fold_con(void)
                old2new_index.push_back( new_res_index );
             }
             else
-            {  op_arg.resize( size_t(n_arg - 4) );
+            {  // keep the function call
+               op_arg.resize( size_t(n_arg - 4) );
                for(addr_t k = 4; k < addr_t(n_arg); ++k)
                {  addr_t old_index   = arg_vec_[arg_index + k];
                   op_arg[k - 4]      = old2new_index[old_index];
