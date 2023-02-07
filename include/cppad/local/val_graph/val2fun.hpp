@@ -74,6 +74,7 @@ is an example an test of this conversion.
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/val_graph/call_atomic.hpp>
 # include <cppad/local/pod_vector.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -146,15 +147,18 @@ void ADFun<Base, RecBase>::val2fun(
       val_ad_type[i] = number_ad_type_enum; // invalid
    //
    // val_index2con
-   // this is the value for constants (others are nan)
-   vector<Base> val_index2con;
-   val_index2con.resize(n_val);
-   for(size_t i = 0; i < val_n_ind; ++i)
+   // After fold_con, all the constants that get used are op_con results.
+   vector<Base> val_index2con(n_val);
+   for(size_t i = 0; i < n_val; ++i)
       val_index2con[i] = nan;
-   bool trace = false;
-   size_t compare_false = 0;
-   val_tape.eval(trace, compare_false, val_index2con);
-   //
+   for(size_t i_op = 0; i_op < val_op_vec.size(); ++i_op)
+   {  op_enum_t op_enum = val_op_vec[i_op].op_ptr->op_enum();
+      if( op_enum == local::val_graph::con_op_enum )
+      {  addr_t res_index = val_op_vec[i_op].res_index;
+         addr_t con_index = val_arg_vec[ val_op_vec[i_op].arg_index ];
+         val_index2con[res_index] = val_con_vec[con_index];
+      }
+   }
    //
    // val2fun_index
    // mapping from value index to index in the AD function object.
@@ -224,7 +228,7 @@ void ADFun<Base, RecBase>::val2fun(
    vector<ad_type_enum> ad_type_x, ad_type_y;
    vector<addr_t>       fun_arg;
    vector<bool>         select_y;
-   vector<Base>         taylor_x, taylor_y;
+   vector<Base>         con_x;
    vector< AD<Base> >   ax, ay;
    //
    // op_index
@@ -425,42 +429,20 @@ void ADFun<Base, RecBase>::val2fun(
             size_t atomic_index = size_t( val_arg_vec[arg_index + 2] );
             size_t call_id      = size_t( val_arg_vec[arg_index + 3] );
             //
-            // v_ptr, name
-            CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
-            bool         set_null = false;
-            size_t       type     = 0;       // result: set to avoid warning
-            std::string  name;               // result:
-            void*        v_ptr    = nullptr; // result: set to avoid warning
-            local::atomic_index<Base>(
-               set_null, atomic_index, type, &name, v_ptr
-            );
-            // val_graph only supports atomic_four
-            CPPAD_ASSERT_UNKNOWN( type == 4 );
-            //
-            // ad_type_x
+            // ad_type_x, con_x
             ad_type_x.resize(n_arg - 4);
-            taylor_x.resize(n_arg - 4);
+            con_x.resize(n_arg - 4);
             for(addr_t i = 4; i < addr_t(n_arg); ++i)
             {  addr_t val_index =  val_arg_vec[arg_index + i];
                ad_type_x[i-4]   = val_ad_type[ val_index ];
+               con_x[i-4]       = val_index2con[ val_index ];
             }
             //
-            // ad_type_y, ok, afun
+            // ad_type_y
             ad_type_y.resize(n_res);
-            bool               ok = false;
-            atomic_four<Base>* afun = nullptr;
-            if( v_ptr != nullptr )
-            {  afun = reinterpret_cast< atomic_four<Base>* >(v_ptr);
-               ok = afun->for_type(call_id, ad_type_x, ad_type_y);
-            }
-            if( ! ok )
-            {  std::string msg = name;
-               if( v_ptr == nullptr )
-                  msg += ": this atomic function has been deleted";
-               else
-                  msg += ": atomic for_type returned false";
-               CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-            }
+            local::val_graph::call_atomic_for_type<Base>(
+               con_x, ad_type_x, ad_type_y, atomic_index, call_id
+            );
             //
             // record_dynamic, record_variable
             bool record_dynamic  = false;
