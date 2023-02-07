@@ -46,7 +46,7 @@ Callbacks
 | |tab| *dependency* , *ident_zero_x* , *select_x* *select_y* , *pattern_out*
 | )
 | *ok* = *afun* . ``hes_sparsity`` ( *call_id* ,
-| |tab| *ident_zero_x* , *select_x* *select_y* , *pattern_out*
+| |tab| *ident_zero_x* , *select_x* , *select_y* , *pattern_out*
 | )
 | *ok* = *afun* . ``rev_depend`` ( *call_id* ,
 | |tab| *ident_zero_x* , *depend_x* , *depend_y*
