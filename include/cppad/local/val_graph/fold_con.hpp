@@ -55,11 +55,11 @@ void tape_t<Value>::fold_con(void)
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    //
    // val_index2con
-   size_t compare_false = 0;
    vector<Value> val_index2con(n_val_);
    for(size_t i = 0; i < n_ind_; ++i)
       val_index2con[i] = nan;
-   bool trace = false;
+   bool trace           = false;
+   size_t compare_false = 0;
    eval(trace, compare_false, val_index2con);
    //
    // is_consant

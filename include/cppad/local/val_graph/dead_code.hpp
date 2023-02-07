@@ -75,21 +75,28 @@ void tape_t<Value>::dead_code(bool keep_compare)
    // https://en.wikipedia.org/wiki/Dead-code_elimination
    // -----------------------------------------------------------------------
    //
-   // ident_zero
-   Vector<bool> ident_zero(n_val_);
+   // val_index2con
+   Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
+   Vector<Value> val_index2con(n_val_);
    for(size_t i = 0; i < n_val_; ++i)
-      ident_zero[i] = false;
+      val_index2con[i] = nan;
    for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
-   {  op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
+   {  op_enum_t op_enum = op_vec_[i_op].op_ptr->op_enum();
       if( op_enum == con_op_enum )
       {  addr_t res_index = op_vec_[i_op].res_index;
-         Value& constant  = con_vec_[ arg_vec_[ op_vec_[i_op].arg_index ] ];
-         ident_zero[res_index] = CppAD::IdenticalZero( constant );
+         const Value& con = con_vec_[ arg_vec_[ op_vec_[i_op].arg_index ] ];
+         val_index2con[res_index] = con;
       }
    }
    //
-   // ident_zero_x, depend_x, depend_y
-   Vector<bool> ident_zero_x, depend_x, depend_y;
+   // con_x
+   Vector<Value> con_x;
+   //
+   // type_x
+   Vector<ad_type_enum> type_x;
+   //
+   // depend_x, depend_y
+   Vector<bool> depend_x, depend_y;
    //
    // need_val_index
    Vector<bool> need_val_index(n_val_);
@@ -162,49 +169,30 @@ void tape_t<Value>::dead_code(bool keep_compare)
          {  size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
             size_t call_id       = size_t( arg_vec_[arg_index + 3] );
             //
-            // v_ptr, name
-            CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
-            bool         set_null = false;
-            size_t       type     = 0;       // result: set to avoid warning
-            std::string  name;               // result:
-            void*        v_ptr    = nullptr; // result: set to avoid warning
-            local::atomic_index<Value>(
-               set_null, atomic_index, type, &name, v_ptr
-            );
-            // val_graph only supports atomic_four
-            CPPAD_ASSERT_UNKNOWN( type == 4 );
-            //
-            // ident_zero_x
-            ident_zero_x.resize(n_arg - 4);
+            // con_x, type_x
+            con_x.resize(n_arg - 4);
+            type_x.resize(n_arg - 4);
             for(addr_t i = 4; i < n_arg; ++i)
-               ident_zero_x[i-4] = ident_zero[ arg_vec_[arg_index + i] ];
+            {  con_x[i-4] = val_index2con[ arg_vec_[arg_index + i] ];
+               if( CppAD::isnan( con_x[i-4] ) )
+                  type_x[i-4] = variable_enum;
+               else
+                  type_x[i-4] = constant_enum;
+            }
             //
             // depend_y
             depend_y.resize(n_res);
             for(addr_t i = 0; i < n_res; ++i)
                depend_y[i] = need_val_index[ res_index + i ];
             //
-            // depend_x, ok
+            // depend_x
+            // only constants (not dynamic parameters) are incldued in con_x
             depend_x.resize(n_arg - 4);
-            bool ok = false;
-            if( v_ptr != nullptr )
-            {  atomic_four<Value>* afun =
-                  reinterpret_cast< atomic_four<Value>* >(v_ptr);
-               ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
-               if( ! ok )
-               {  // try deprecated version of this function
-                  ok = afun->rev_depend(call_id, depend_x, depend_y);
-               }
-            }
-            if( ! ok )
-            {  std::string msg = name;
-               if( v_ptr == nullptr )
-                  msg += ": this atomic function has been deleted";
-               else
-                  msg += ": atomic rev_depend returned false";
-               CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-            }
+            local::sweep::call_atomic_rev_depend<Value, Value>(
+               atomic_index, call_id, con_x, type_x, depend_x, depend_y
+            );
             //
+            // need_val_index
             for(addr_t k = 4; k < n_arg; ++k)
                need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
          }
