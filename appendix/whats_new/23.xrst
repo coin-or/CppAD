@@ -13,6 +13,15 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+02-07
+=====
+The atomic four rev_depend argument
+:ref:`atomic_four_rev_depend@ident_zero_x` was not catching
+all the identically zero values.
+This has been fixed.
+It was not a bug but was not as efficient when
+an atomic four function used this information to reduce the work.
+
 02-05
 =====
 Merge in pull request 168.

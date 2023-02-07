@@ -57,10 +57,13 @@ what is the type, in the call, for each component of x.
 need_y
 ******
 specifies which components of taylor_y are necessary.
+Only the components of y with the type equal to need_y need
+to be computed. If need_y is greater than variable_enum,
+then all the components of y must be computed.
 
 select_y
 ********
-specifies which components of taylor_x are necessary.
+specifies which components of taylor_y are necessary.
 
 order_low
 *********
@@ -429,7 +432,7 @@ void call_atomic_for_jac_sparsity(
    {  size_t n = x_index.size();
       ident_zero_x.resize(n);
       for(size_t j = 0; j < n; ++j)
-      {  if( type_x[j] >= constant_enum )
+      {  if( type_x[j] > constant_enum )
             ident_zero_x[j] = false;
          else
             ident_zero_x[j] = IdenticalZero( parameter_x[j] );
@@ -591,7 +594,7 @@ void call_atomic_rev_jac_sparsity(
    {  size_t n = x_index.size();
       ident_zero_x.resize(n);
       for(size_t j = 0; j < n; ++j)
-      {  if( type_x[j] >= constant_enum )
+      {  if( type_x[j] > constant_enum )
             ident_zero_x[j] = false;
          else
             ident_zero_x[j] = IdenticalZero( parameter_x[j] );
@@ -802,7 +805,7 @@ void call_atomic_for_hes_sparsity(
    {  size_t n = x_index.size();
       ident_zero_x.resize(n);
       for(size_t j = 0; j < n; ++j)
-      {  if( type_x[j] >= constant_enum )
+      {  if( type_x[j] > constant_enum )
             ident_zero_x[j] = false;
          else
             ident_zero_x[j] = IdenticalZero( parameter_x[j] );
@@ -1013,7 +1016,7 @@ void call_atomic_rev_hes_sparsity(
    {  size_t n = x_index.size();
       ident_zero_x.resize(n);
       for(size_t j = 0; j < n; ++j)
-      {  if( type_x[j] >= constant_enum )
+      {  if( type_x[j] > constant_enum )
             ident_zero_x[j] = false;
          else
             ident_zero_x[j] = IdenticalZero( parameter_x[j] );
@@ -1184,7 +1187,7 @@ void call_atomic_rev_depend(
    {  size_t n = parameter_x.size();
       ident_zero_x.resize(n);
       for(size_t j = 0; j < n; ++j)
-      {  if( type_x[j] >= constant_enum )
+      {  if( type_x[j] > constant_enum )
             ident_zero_x[j] = false;
          else
             ident_zero_x[j] = IdenticalZero( parameter_x[j] );
