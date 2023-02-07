@@ -8,6 +8,7 @@
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/core/atomic/four/atomic.hpp>
+# include <cppad/local/sweep/call_atomic.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -199,41 +200,33 @@ void call_op_t<Value>::eval(
    size_t call_id       = size_t( arg_vec[arg_index + 3] );
    CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
    //
-   // v_ptr, name
-   CPPAD_ASSERT_UNKNOWN( 0 < atomic_index );
-   bool         set_null = false;
-   size_t       type     = 0;       // result: set to avoid warning
-   std::string  name;               // result:
-   void*        v_ptr    = nullptr; // result: set to avoid warning
-   local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
-   CPPAD_ASSERT_UNKNOWN( type == 4 ); // val_graph only supports atomic_four
-   //
    // x
    CppAD::vector<Value> x(n_arg - 4);
    for(addr_t i = 4; i < addr_t(n_arg); ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
+   // type_x
+   CppAD::vector<ad_type_enum> type_x(n_arg - 4);
+   for(addr_t i = 4; i < addr_t(n_arg); ++i)
+      type_x[i-4] = variable_enum;
+   //
+   // need_y
+   size_t need_y = size_t( number_ad_type_enum );
+   //
+   // order_low, order_up
+   size_t order_low = 0, order_up = 0;
+   //
    // select_y
    CppAD::vector<bool> select_y(n_res);
    for(size_t i = 0; i < n_res; ++i)
-      select_y[i] = false;
+      select_y[i] = true;
    //
-   // y, ok
+   // y
    CppAD::vector<Value> y(n_res);
-   bool ok = false;
-   if( v_ptr != nullptr )
-   {  size_t order_low = 0, order_up = 0;
-      atomic_four<Value>* afun = reinterpret_cast<atomic_four<Value>*>(v_ptr);
-      ok = afun->forward(call_id, select_y, order_low, order_up, x, y);
-   }
-   if( ! ok )
-   {  std::string msg = name;
-      if( v_ptr == nullptr )
-         msg += ": this atomic function has been deleted";
-      else
-         msg += ": atomic forward returned false";
-      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-   }
+   local::sweep::call_atomic_forward<Value,Value>(
+      x, type_x, need_y, select_y, order_low, order_up,
+      atomic_index, call_id, x, y
+   );
    //
    // val_vec
    for(addr_t i = 0; i < addr_t(n_res); ++i)
@@ -242,6 +235,13 @@ void call_op_t<Value>::eval(
    // trace
    if( ! trace )
       return;
+    //
+    // v_ptr, name
+    bool         set_null = false;
+    size_t       type     = 0;       // result: set to avoid warning
+    std::string  name;               // result:
+    void*        v_ptr    = nullptr; // result: set to avoid warning
+    local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
    //
    std::printf( "    %s(", name.c_str() );
    for(addr_t i = 4; i < addr_t(n_arg); ++i)

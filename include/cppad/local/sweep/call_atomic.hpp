@@ -57,10 +57,13 @@ what is the type, in the call, for each component of x.
 need_y
 ******
 specifies which components of taylor_y are necessary.
+Only the componenty of y with the type equal to need_y need
+to be computed. If need_y is greater than variable_enum,
+then all the components of y must be computed.
 
 select_y
 ********
-specifies which components of taylor_x are necessary.
+specifies which components of taylor_y are necessary.
 
 order_low
 *********
