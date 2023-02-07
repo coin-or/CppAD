@@ -41,12 +41,12 @@ The input contents of the tape does not matter.
 Upon return it is a
 :ref:`val_graph-name` representation of the function.
 The independent dynamic parameters have the same order as in
-*afun* and come first (in the value graph independent vector).
+*fun* and come first (in the value graph independent vector).
 The independent variables have the same order as in
-*afun* and come after the independent dynamic parameters.
+*fun* and come after the independent dynamic parameters.
 
-afun
-****
+fun
+***
 This is the function that the value graph will correspond to.
 
 Under Construction
@@ -162,10 +162,14 @@ void ADFun<Base, RecBase>::fun2val(
    // number of indepedent valuse
    size_t n_val_ind = n_dynamic_ind + n_variable_ind;
    //
+# ifndef NDEBUG
    // nan_val_index
    // initialize value vector tape
    addr_t nan_val_index = val_tape.set_ind( n_val_ind );
    CPPAD_ASSERT_UNKNOWN( size_t(nan_val_index) == n_val_ind );
+# else
+   val_tape.set_ind( n_val_ind );
+# endif
    //
    // par2val_index
    // Initialize mapping from parameter index to index in value vector.

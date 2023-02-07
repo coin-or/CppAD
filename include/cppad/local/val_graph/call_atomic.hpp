@@ -135,7 +135,7 @@ void call_atomic_for_type(
          reinterpret_cast< atomic_base<Value>* >(v_ptr);
       afun->set_old(call_id);
       vector<ad_type_enum> empty;
-      ok = afun->forward(
+      afun->forward(
          p, q, vx, vy, taylor_x, taylor_y
       );
       for(size_t i = 0; i < ny; ++i)
@@ -149,13 +149,13 @@ void call_atomic_for_type(
    {  CPPAD_ASSERT_UNKNOWN( type == 3 );
       atomic_three<Value>* afun =
          reinterpret_cast< atomic_three<Value>* >(v_ptr);
-      ok = afun->for_type(constant_x, type_x, type_y );
+      afun->for_type(constant_x, type_x, type_y );
    }
    else
    {  CPPAD_ASSERT_UNKNOWN( type == 4 );
       atomic_four<Value>* afun =
          reinterpret_cast< atomic_four<Value>* >(v_ptr);
-      ok = afun->for_type(call_id, type_x, type_y);
+      afun->for_type(call_id, type_x, type_y);
    }
 # endif
 }

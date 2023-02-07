@@ -209,8 +209,11 @@ void tape_t<Value>::renumber(void)
          addr_t res_index_j = op_vec_[j_op].res_index;
          size_t n_res = op_vec_[i_op].op_ptr->n_res(arg_index_i, arg_vec_);
          if( n_res == 0 )
-         {  op_enum_t op_enum = op_vec_[i_op].op_ptr->op_enum();
+         {
+# ifndef NDEBUG
+            op_enum_t op_enum = op_vec_[i_op].op_ptr->op_enum();
             CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
+# endif
             arg_vec_[arg_index_i + 0] = compare_no_enum;
          }
          else for(addr_t k = 0; k < addr_t(n_res); ++k)

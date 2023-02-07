@@ -929,6 +929,7 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/utility/vector_bool.hpp \
 	cppad/local/val_graph/base_op.hpp \
 	cppad/local/val_graph/binary_op.hpp \
+	cppad/local/val_graph/call_atomic.hpp \
 	cppad/local/val_graph/call_op.hpp \
 	cppad/local/val_graph/comp_op.hpp \
 	cppad/local/val_graph/con_op.hpp \

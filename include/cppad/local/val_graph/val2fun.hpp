@@ -40,19 +40,19 @@ This is a :ref:`val_graph_tape-name` representation of the function.
 *dyn_ind*
 *********
 The *i*-th element of the vector is the index in the value graph
-of the *i*-th independent dynamic parameter in *afun* .
+of the *i*-th independent dynamic parameter in *fun* .
 
 *var_ind*
 *********
 The *i*-th element of the vector is the index in *val_tape*
-of the *i*-th independent variable in *afun* .
+of the *i*-th independent variable in *fun* .
 No two elements of *dyn_ind* or *var_ind* can have the same value.
 Furthermore, the total number of elements in these two vectors
 must be the number of independent variables in *val_tape* .
 
-*afun*
-******
-The input contents of *afun* do not matter.
+*fun*
+*****
+The input contents of *fun* do not matter.
 Upon return it is an ADFun representation of the function.
 
 Under Construction
@@ -118,9 +118,11 @@ void ADFun<Base, RecBase>::val2fun(
    // a parameter or variable temporary index
    addr_t tmp_addr;
    //
+# ifndef NDEBUG
    // val_n_ind
    // size of the independent value vector
    size_t val_n_ind = val_tape.n_ind();
+# endif
    //
    // dyn_n_ind
    // number of independent dynamc parameters
@@ -175,10 +177,14 @@ void ADFun<Base, RecBase>::val2fun(
    rec.set_abort_op_index(0);
    rec.set_record_compare(false);
    //
-   // rec, parameter
-   // initialize with the value nan at index nan
+   // parameter
+# ifndef NDEBUG
    const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec());
    CPPAD_ASSERT_UNKNOWN( parameter.size() == 0 );
+# endif
+   //
+   // rec
+   // initialize with the value nan at index nan
    par_addr = rec.put_con_par(nan);
    CPPAD_ASSERT_UNKNOWN( par_addr == 0 );
    CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
@@ -267,6 +273,7 @@ void ADFun<Base, RecBase>::val2fun(
             CPPAD_ASSERT_KNOWN( op_enum > local::val_graph::number_op_enum,
                "val_graph::val2fun: op_enum is not yet implemented"
             );
+            tmp_addr = 0; // to avoid compiler warning
             break;
             // ----------------------------------------------------------------
             // add_op_enum

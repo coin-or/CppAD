@@ -167,6 +167,8 @@ public:
          //
          default:
          CPPAD_ASSERT_UNKNOWN(false);
+         res  = false; // to avoid compiler warning
+         name = "";
       }
       //
       // compare_false
