@@ -76,6 +76,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
    // -----------------------------------------------------------------------
    //
    // val_index2con
+   // After fold_con, all the constants that get used are op_con results.
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    Vector<Value> val_index2con(n_val_);
    for(size_t i = 0; i < n_val_; ++i)

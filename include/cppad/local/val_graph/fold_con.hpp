@@ -16,12 +16,14 @@ Constant Folding
 
 Discussion
 **********
-This routine recognizes when all the results for an operator are a constant.
-In this case, uses of the operators results are changed to uses
-of the corresponding constants and
-the original operator then becomes dead code.
 This is like :ref:`value numbering <val_graph_renumber-title>` but a major
 difference is that it adds a new operator for each folded constant.
+
+#. operator results that are constants get replaced by con_op operators.
+   Thus all the constants that are used to compute the dependent values
+   are the result of a con_op operator.
+#. If all the results for an operator get replaced, the operator becomes
+   dead code.
 
 dep_vec
 *******
@@ -173,32 +175,29 @@ void tape_t<Value>::fold_con(void)
                con_x, type_x, type_y, atomic_index, call_id
             );
             //
-            // fold
-            bool fold = true;
+            // new_tape, new_res_index
+            // record the function call
+            op_arg.resize( size_t(n_arg - 4) );
+            for(addr_t k = 4; k < addr_t(n_arg); ++k)
+            {  addr_t old_index   = arg_vec_[arg_index + k];
+               op_arg[k - 4]      = old2new_index[old_index];
+            }
+            addr_t new_res_index = new_tape.record_call_op(
+               atomic_index, call_id, size_t(n_res), op_arg
+            );
+            //
+            // is_constant, new_tape, old2new_index
             for(addr_t i = 0; i < addr_t(n_res); ++i)
             {  is_constant[res_index + i] = type_y[i] <= constant_enum;
-               fold                      &= is_constant[res_index + i];
-            }
-            //
-            // new_tape, old2new_index
-            if( fold ) for(addr_t i = 0; i < addr_t(n_res); ++i)
-            {  is_constant[res_index + i]  = true;
-               const Value& value      = val_index2con[res_index + i];
-               addr_t new_res_index    = new_tape.record_con_op(value);
-               old2new_index.push_back( new_res_index );
-            }
-            else
-            {  // keep the function call
-               op_arg.resize( size_t(n_arg - 4) );
-               for(addr_t k = 4; k < addr_t(n_arg); ++k)
-               {  addr_t old_index   = arg_vec_[arg_index + k];
-                  op_arg[k - 4]      = old2new_index[old_index];
+               if( is_constant[res_index + i] )
+               {  const Value& value      = val_index2con[res_index + i];
+                  addr_t con_res_index    = new_tape.record_con_op(value);
+                  old2new_index.push_back( con_res_index );
                }
-               addr_t new_res_index = new_tape.record_call_op(
-                  atomic_index, call_id, size_t(n_res), op_arg
-               );
-               for(addr_t k = 0; k < addr_t(n_res); ++k)
-                  old2new_index.push_back(new_res_index + k);
+               else
+               {  // if none of these results get used, this call is dead code
+                  old2new_index.push_back(new_res_index + i);
+               }
             }
          }
          break;
