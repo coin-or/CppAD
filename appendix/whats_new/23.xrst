@@ -13,6 +13,12 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+02-08
+=====
+A :ref:`Discrete-name` function is now initialized
+by the ``CPPAD_DISCRETE_FUNCITON`` macro instead of later
+the first time it is used.
+
 02-07
 =====
 The atomic four rev_depend argument
