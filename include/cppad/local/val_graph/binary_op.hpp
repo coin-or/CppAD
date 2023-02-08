@@ -43,15 +43,15 @@ namespace CppAD { namespace local { namespace val_graph {
 ------------------------------------------------------------------------------
 {xrst_begin_parent val_binary_op dev}
 
-The Binary Value Operators
-##########################
+Binary Value Operators
+######################
 
 {xrst_end val_binary_op}
 ------------------------------------------------------------------------------
 {xrst_begin val_binary_op_base dev}
 
-The Binary Value Operator Base Class
-####################################
+The Value Operator Binary Class
+###############################
 
 Prototype
 *********

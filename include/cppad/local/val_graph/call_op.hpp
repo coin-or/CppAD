@@ -20,8 +20,8 @@ namespace CppAD { namespace local { namespace val_graph {
    xam
 }
 
-The Value Operator Map Class
-############################
+The Call Value Operator
+#######################
 
 Prototype
 *********

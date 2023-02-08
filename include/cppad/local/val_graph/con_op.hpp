@@ -16,8 +16,8 @@ namespace CppAD { namespace local { namespace val_graph {
    xam
 }
 
-The Value Operator Constant Class
-#################################
+The Constant Value Operator
+###########################
 
 Prototype
 *********

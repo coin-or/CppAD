@@ -42,8 +42,8 @@ namespace CppAD { namespace local { namespace val_graph {
 ------------------------------------------------------------------------------
 {xrst_begin_parent val_unary_op dev}
 
-The Unary Value Operators
-#########################
+Unary Value Operators
+#####################
 
 {xrst_end val_unary_op}
 ------------------------------------------------------------------------------
