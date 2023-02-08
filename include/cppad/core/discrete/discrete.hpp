@@ -51,7 +51,10 @@ Source Code
 inline CppAD::AD<Base> name (const CppAD::AD<Base>& ax) \
 {    static CppAD::discrete<Base> fun(#name, name);     \
      return fun.ad(ax);                                 \
-}
+}                                                       \
+CppAD::AD<Base> this_variable_name_used_to_initialize_discrete_ ##name =  \
+name( CppAD::AD<Base>(0.0) );
+//
 # define CppADCreateDiscrete CPPAD_DISCRETE_FUNCTION
 /* {xrst_code}
 {xrst_spell_on}
@@ -211,7 +214,7 @@ the static object returned by :ref:`discrete_list-name` .
 {xrst_end discrete_ctor}
 */
 public:
-   discrete(const char* name, Fun f) :
+   discrete(const std::string& name, Fun f) :
    name_(name), f_(f) , index_( List().size() )
    {  std::string msg = "discrete: first call to the discrete function ";
       msg  += name;
@@ -309,6 +312,31 @@ Prototype
       return ay;
    }
 /*
+ ------------------------------------------------------------------------------
+{xrst_begin discrete_index dev}
+{xrst_spell
+   msg
+   str
+}
+
+Index That Identifies a Discrete Function
+#########################################
+{xrst_code hpp} */
+static size_t index(const std::string& name)
+{  size_t i = List().size();
+   while(i--)
+   {  if( List()[i]->name_ == name )
+         return i;
+   }
+   std::string msg = "There is no discrete function named " + name;
+   CPPAD_ASSERT_KNOWN(false, msg.c_str());
+   return List().size();
+}
+/* {xrst_code}
+
+{xrst_end discrete_index}
+*/
+/*
 ------------------------------------------------------------------------------
 {xrst_begin discrete_name dev}
 
@@ -332,8 +360,8 @@ Source Code
 ***********
 {xrst_spell_off}
 {xrst_code hpp} */
-   static const char* name(size_t index)
-   {  return List()[index]->name_.c_str(); }
+   static const std::string& name(size_t index)
+   {  return List()[index]->name_; }
 /* {xrst_code}
 {xrst_spell_on}
 

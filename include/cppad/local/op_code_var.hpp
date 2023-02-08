@@ -1237,8 +1237,8 @@ void printOp(
 
       case DisOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-      {  const char* name = discrete<Base>::name(arg[0]);
-         printOpField(os, " f=", name, ncol);
+      {  const std::string name = discrete<Base>::name(arg[0]);
+         printOpField(os, " f=", name.c_str(), ncol);
          printOpField(os, " x=", arg[1], ncol);
       }
       break;

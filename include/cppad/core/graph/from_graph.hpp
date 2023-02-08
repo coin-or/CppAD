@@ -176,7 +176,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
    for(size_t i = 0; i < n_graph_discrete; ++i)
       discrete_index[i] = n_list_discrete; // invalid discrete index
    for(size_t index = 0; index < n_list_discrete; ++index)
-   {  const char* name( discrete<Base>::name(index) );
+   {  const std::string& name( discrete<Base>::name(index) );
       size_t graph_index = graph_obj.discrete_name_vec_find(name);
       if( graph_index != n_graph_discrete )
       {  if( discrete_index[graph_index] != n_list_discrete )
