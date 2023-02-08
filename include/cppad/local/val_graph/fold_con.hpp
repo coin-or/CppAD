@@ -39,7 +39,7 @@ Reference
 }
 Example
 *******
-The file :ref:`fold_con_xam.cpp <val_graph_fold_con_xam.cpp-name>`
+The file :ref:`fold_con_xam.cpp <val_fold_con_xam.cpp-name>`
 is an example and test of tape.fold_con().
 
 {xrst_end val_graph_fold_con}

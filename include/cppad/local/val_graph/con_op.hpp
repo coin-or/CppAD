@@ -81,7 +81,7 @@ If trace is true, this member function prints the following values:
 }
 Example
 *******
-The file :ref:`con_xam.cpp <val_con_op_xam.cpp-name>`
+The file :ref:`con_xam.cpp <val_con_xam.cpp-name>`
 is an example and test that uses this operator.
 
 {xrst_end val_con_op}

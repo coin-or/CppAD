@@ -4,7 +4,7 @@
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/type.hpp>
 /*
-{xrst_begin val_comp_op_xam.cpp dev}
+{xrst_begin val_comp_xam.cpp dev}
 
 Binary Value Operator Example
 #############################
@@ -13,7 +13,7 @@ Binary Value Operator Example
    // END_C++
 }
 
-{xrst_end val_comp_op_xam.cpp}
+{xrst_end val_comp_xam.cpp}
 */
 // BEGIN_C++
 bool comp_xam(void)

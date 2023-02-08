@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_graph_fold_con_xam.cpp dev}
+{xrst_begin val_fold_con_xam.cpp dev}
 
 Value Tape Re-Numbering Example
 ###############################
@@ -12,7 +12,7 @@ Value Tape Re-Numbering Example
    // END_C++
 }
 
-{xrst_end val_graph_fold_con_xam.cpp}
+{xrst_end val_fold_con_xam.cpp}
 */
 // BEGIN_C++
 bool fold_con_xam(void)

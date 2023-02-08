@@ -4,7 +4,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 /*
-{xrst_begin val_atomic_xam dev}
+{xrst_begin val_atomic_xam.hpp dev}
 
 An Example Atomic Function
 ##########################
@@ -34,7 +34,7 @@ of the function above
    // BEGIN_VAL_ATOMIC_XAM
    // END_VAL_ATOMIC_XAM
 }
-{xrst_end val_atomic_xam}
+{xrst_end val_atomic_xam.hpp}
 */
 // BEGIN_VAL_ATOMIC_XAM
 class val_atomic_xam : public CppAD::atomic_four<double> {

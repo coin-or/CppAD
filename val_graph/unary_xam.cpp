@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_unary_op_xam.cpp dev}
+{xrst_begin val_unary_xam.cpp dev}
 
 Unary Value Operator Example
 ############################
@@ -12,7 +12,7 @@ Unary Value Operator Example
    // END_C++
 }
 
-{xrst_end val_unary_op_xam.cpp}
+{xrst_end val_unary_xam.cpp}
 */
 // BEGIN_C++
 bool unary_xam(void)

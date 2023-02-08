@@ -77,7 +77,7 @@ If trace is true, this member function prints the following values:
 }
 Example
 *******
-The file :ref:`com_xam.cpp <val_comp_op_xam.cpp-name>`
+The file :ref:`com_xam.cpp <val_comp_xam.cpp-name>`
 is an example and test that uses this operator.
 
 {xrst_end val_comp_op}

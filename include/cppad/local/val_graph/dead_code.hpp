@@ -61,7 +61,7 @@ Reference
 }
 Example
 *******
-The file :ref:`dead_xam.cpp <val_op_dead_xam.cpp-name>` is an
+The file :ref:`dead_xam.cpp <val_dead_xam.cpp-name>` is an
 example and test of tape.dead_code().
 
 {xrst_end val_graph_dead_code}

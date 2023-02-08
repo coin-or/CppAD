@@ -166,7 +166,7 @@ Reference
 }
 Example
 *******
-The file :ref:`renumber_xam.cpp <val_graph_renumber_xam.cpp-name>` is an
+The file :ref:`renumber_xam.cpp <val_renumber_xam.cpp-name>` is an
 example and test of tape.renumber().
 
 {xrst_end val_graph_renumber}

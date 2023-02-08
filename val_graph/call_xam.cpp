@@ -4,7 +4,7 @@
 # include <cppad/cppad.hpp>
 # include "atomic_xam.hpp"
 /*
-{xrst_begin val_call_op_xam.cpp dev}
+{xrst_begin val_call_xam.cpp dev}
 {xrst_spell
    xam
 }
@@ -17,7 +17,7 @@ Function Value Operator Example
 }
 atomic_xam
 **********
-This example uses :ref:`val_atomic_xam-name` .
+This example uses :ref:`val_atomic_xam.hpp-name` .
 
 Source Code
 ***********
@@ -26,7 +26,7 @@ Source Code
    // END_C++
 }
 
-{xrst_end val_call_op_xam.cpp}
+{xrst_end val_call_xam.cpp}
 */
 // BEGIN_C++
 // call_xam

@@ -202,7 +202,7 @@ the result equal to the unary operator applied to the operand; see
 }
 Example
 *******
-The file :ref:`unary_xam.cpp <val_unary_op_xam.cpp-name>`
+The file :ref:`unary_xam.cpp <val_unary_xam.cpp-name>`
 is an example and test that uses this operator.
 
 {xrst_end val_unary_op_derived}

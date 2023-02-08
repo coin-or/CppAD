@@ -4,7 +4,7 @@
 # include <cppad/cppad.hpp>
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val2fun_xam.cpp dev}
+{xrst_begin val_val2fun_xam.cpp dev}
 
 Example ADFun From Value Graph
 ##############################
@@ -13,7 +13,7 @@ Example ADFun From Value Graph
    // END_C++
 }
 
-{xrst_end val2fun_xam.cpp}
+{xrst_end val_val2fun_xam.cpp}
 */
 // BEGIN_C++
 bool val2fun_xam(void)

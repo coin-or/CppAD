@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_op_dead_xam.cpp dev}
+{xrst_begin val_dead_xam.cpp dev}
 
 Dead Code Elimination Example
 #############################
@@ -12,7 +12,7 @@ Dead Code Elimination Example
    // END_C++
 }
 
-{xrst_end val_op_dead_xam.cpp}
+{xrst_end val_dead_xam.cpp}
 */
 // BEGIN_C++
 bool dead_xam(void)
