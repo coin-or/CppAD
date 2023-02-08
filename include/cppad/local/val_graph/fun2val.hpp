@@ -240,6 +240,27 @@ void ADFun<Base, RecBase>::fun2val(
          val_index += 1;
          break;
          //
+         // dis_dyn
+         case local::dis_dyn:
+         {  // val_tape, val_index, par2val_index
+            val_op_arg.resize(1);
+            addr_t discrete_index = dyn_par_arg[i_arg + 0];
+            addr_t par_index      = dyn_par_arg[i_arg + 1];
+            if( par2val_index[par_index] != invalid_addr_t )
+               val_op_arg[0] = par2val_index[par_index];
+            else
+            {  Base constant = parameter[par_index];
+               val_op_arg[0] = val_tape.record_con_op( constant );
+               par2val_index[par_index] = val_op_arg[0];
+            }
+            // n_arg, val_tape, val_index
+            n_arg = 2;
+            val_index = val_tape.record_dis_op(
+               discrete_index, val_op_arg[0]
+            );
+         }
+         break;
+         //
          // atom_dyn
          case local::atom_dyn:
          {  //
@@ -499,6 +520,19 @@ void ADFun<Base, RecBase>::fun2val(
          // InvOp:
          // The independent variable indices are already assigned
          case local::InvOp:
+         break;
+         //
+         // DisOp
+         case local::DisOp:
+         {  // val_tape, var2val_index
+            val_op_arg.resize(1);
+            addr_t discrete_index = var_op_arg[0];
+            val_op_arg[0]         = var2val_index[ var_op_arg[1] ];
+            val_index             = val_tape.record_dis_op(
+               discrete_index, val_op_arg[0]
+            );
+            var2val_index[i_var]  = val_index;
+         }
          break;
 
          // --------------------------------------------------------------
