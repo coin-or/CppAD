@@ -53,6 +53,7 @@ enum op_enum_t {
    call_op_enum,     // atomic functions
    comp_op_enum,     // compare operator
    con_op_enum,      // constants
+   dis_op_enum,      // discrete functions
    neg_op_enum,      // negative
    sub_op_enum,      // subtraction
    number_op_enum

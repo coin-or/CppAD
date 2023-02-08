@@ -7,6 +7,7 @@
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/call_op.hpp>
 # include <cppad/local/val_graph/comp_op.hpp>
+# include <cppad/local/val_graph/dis_op.hpp>
 # include <cppad/core/numeric_limits.hpp>
 //
 namespace CppAD { namespace local { namespace val_graph {
@@ -66,6 +67,19 @@ in the value vector.
 Note that if *constant* is nan, the return value will always be *n_ind*; i.e,
 only one nan gets paced in the constant vector.
 
+record_dis_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_DIS_OP
+   // END_RECORD_DIS_OP
+}
+This places a :ref:`val_dis_op-name` operator in the tape.
+The argument *discrete_index* identifies which discrete function to use.
+The argument *val_index* is the index of the operand
+in the value vector.
+The return value is the index were the result will be placed
+in the value vector.
+
 record_comp_op
 **************
 {xrst_literal
@@ -91,8 +105,8 @@ This is the value vector index for the left operand in the comparison.
 record_call_op
 **************
 {xrst_literal
-   // BEGIN_RECORD_MAP_OP
-   // END_RECORD_MAP_OP
+   // BEGIN_RECORD_CALL_OP
+   // END_RECORD_CALL_OP
 }
 This places a :ref:`val_call_op-name` operator in the tape.
 
@@ -268,14 +282,42 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    return res_index;
 }
 // ----------------------------------------------------------------------------
-// BEGIN_RECORD_MAP_OP
+// BEGIN_RECORD_DIS_OP
+template <class Value>
+addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
+// END_RECORD_DIS_OP
+{  //
+   // res_index
+   addr_t res_index = addr_t( n_val_ );
+   //
+   // arg_index
+   addr_t arg_index = addr_t( arg_vec_.size() );
+   //
+   // op_ptr
+   op_base_t<Value>* op_ptr = dis_op_t<Value>::get_instance();
+   //
+   // op_vec_
+   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_vec_.push_back(op_info);
+   //
+   // arg_vec_
+   arg_vec_.push_back( discrete_index );
+   arg_vec_.push_back( val_index );
+   //
+   // n_val_
+   n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
+   //
+   return res_index;
+}
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_CALL_OP
 template <class Value>
 addr_t tape_t<Value>::record_call_op(
    size_t  atomic_index          ,
    size_t  call_id               ,
    size_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
-// END_RECORD_MAP_OP
+// END_RECORD_CALL_OP
 {  //
    // res_index
    addr_t res_index = addr_t( n_val_ );

@@ -23,6 +23,7 @@ extern bool call_xam(void);
 extern bool comp_xam(void);
 extern bool con_xam(void);
 extern bool dead_xam(void);
+extern bool dis_xam(void);
 extern bool fold_con_xam(void);
 extern bool fun2val_xam(void);
 extern bool renumber_xam(void);
@@ -50,6 +51,7 @@ int main(void)
    Run( comp_xam,            "comp_xam"            );
    Run( con_xam,             "con_xam"             );
    Run( dead_xam,            "dead_xam"            );
+   Run( dis_xam,             "dis_xam"             );
    Run( fold_con_xam,        "fold_con_xam"        );
    Run( fun2val_xam,         "fun2val_xam"         );
    Run( renumber_xam,        "renumber_xam"        );

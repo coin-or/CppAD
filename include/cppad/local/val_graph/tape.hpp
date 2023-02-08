@@ -292,6 +292,9 @@ public :
    // record_con_op
    addr_t record_con_op(const Value& constant);
    //
+   // record_dis_op
+   addr_t record_dis_op(addr_t discrete_index, addr_t op_arg);
+   //
    // record_comp_op
    addr_t record_comp_op(
       compare_enum_t compare_enum ,

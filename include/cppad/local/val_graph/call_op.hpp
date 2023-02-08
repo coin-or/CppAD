@@ -93,15 +93,14 @@ trace
 =====
 If trace is true, this member function prints the following values:
 
-| |tab| name ( arg_index_0 , arg_index_1 , ... )
+| |tab| name ( val_index_0 , val_index_1 , ... )
 | |tab| res_index_0  res_value_0
 | |tab| ...
 
-#. name is the name of this atomic function which is assumed to be passed
-   as the name argument to print_op .
+#. name is the name of this atomic function.
    This line indented 4 spaces; i.e., the name starts in column 5.
    This is done so it is grouped with the operators in the trace output.
-#. for *j* between 0 and n_arg - 1, arg_index_j is the index
+#. for *j* between 0 and n_arg - 1, val_index_j is the index
    in val_vec for the corresponding argument; i.e.
    arg_vec[ arg_index + 4 + j ].
 #. for *i* between 0 and n_res - 1, res_index_i is the index in
@@ -193,7 +192,7 @@ void call_op_t<Value>::eval(
    size_t&               compare_false,
    Vector<Value>&        val_vec      ) const
 {  //
-   // n_arg, n_res, atomic_index
+   // n_arg, n_res, atomic_index, call_id
    size_t n_arg         = size_t( arg_vec[arg_index + 0] );
    size_t n_res         = size_t( arg_vec[arg_index + 1] );
    size_t atomic_index  = size_t( arg_vec[arg_index + 2] );
