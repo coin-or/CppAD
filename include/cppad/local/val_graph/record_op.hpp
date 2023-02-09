@@ -333,7 +333,7 @@ addr_t tape_t<Value>::record_call_op(
    op_vec_.push_back(op_info);
    //
    // arg_vec_
-   size_t n_arg = 4 + fun_arg.size();
+   addr_t n_arg = 4 + addr_t( fun_arg.size() );
    arg_vec_.push_back( addr_t( n_arg ) );
    arg_vec_.push_back( addr_t( n_res ) );
    arg_vec_.push_back( addr_t( atomic_index ) );

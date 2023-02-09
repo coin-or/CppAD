@@ -29,13 +29,13 @@ private:
    CppAD::local::sparse::list_setvec table_;
    //
    // hash_code
-   size_t hash_code(size_t n_arg, op_enum_t op_enum, addr_t arg_index)
+   size_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
    {  size_t code;
       if( op_enum == con_op_enum )
          code = hash_base( con_vec_[  arg_vec_[arg_index] ] );
       else
       {  code  = size_t(op_enum);
-         for(addr_t i = 0; i < addr_t(n_arg); ++i)
+         for(addr_t i = 0; i < n_arg; ++i)
             code += size_t( arg_vec_[arg_index + i] );
       }
       code = code % table_.n_set();
@@ -63,7 +63,7 @@ public:
       // op_enum_i, arg_index_i, n_arg
       addr_t    arg_index_i  = op_vec_[i_op].arg_index;
       op_enum_t op_enum_i = op_vec_[i_op].op_ptr->op_enum();
-      size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index_i, arg_vec_);
+      addr_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index_i, arg_vec_);
       //
       // nan
       if( op_enum_i == con_op_enum )
@@ -96,7 +96,7 @@ public:
             match = c_i == c_j;
          }
          else if( match )
-         {  for(addr_t k = 0; k < addr_t(n_arg); ++k)
+         {  for(addr_t k = 0; k < n_arg; ++k)
             {  addr_t val_index_i = new_val_index[ arg_vec_[arg_index_i+k] ];
                addr_t val_index_j = new_val_index[ arg_vec_[arg_index_j+k] ];
                match &= val_index_i == val_index_j;
@@ -207,7 +207,7 @@ void tape_t<Value>::renumber(void)
          addr_t arg_index_i = op_vec_[i_op].arg_index;
          addr_t res_index_i = op_vec_[i_op].res_index;
          addr_t res_index_j = op_vec_[j_op].res_index;
-         size_t n_res = op_vec_[i_op].op_ptr->n_res(arg_index_i, arg_vec_);
+         addr_t n_res = op_vec_[i_op].op_ptr->n_res(arg_index_i, arg_vec_);
          if( n_res == 0 )
          {
 # ifndef NDEBUG
@@ -216,7 +216,7 @@ void tape_t<Value>::renumber(void)
 # endif
             arg_vec_[arg_index_i + 0] = compare_no_enum;
          }
-         else for(addr_t k = 0; k < addr_t(n_res); ++k)
+         else for(addr_t k = 0; k < n_res; ++k)
             new_val_index[res_index_i + k] = res_index_j + k;
       }
    }
@@ -226,11 +226,11 @@ void tape_t<Value>::renumber(void)
    {  //
       // arg_index, n_arg
       addr_t    arg_index = op_vec_[i_op].arg_index;
-      size_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
       //
       // val_index, n_val_arg
       addr_t val_index = arg_index;
-      addr_t n_val_arg = addr_t(n_arg);
+      addr_t n_val_arg = n_arg;
       //
       // op_enum, val_index, n_val_arg
       op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();

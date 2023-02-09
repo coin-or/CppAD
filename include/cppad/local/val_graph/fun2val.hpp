@@ -205,13 +205,13 @@ void ADFun<Base, RecBase>::fun2val(
       bool is_binary = local::val_graph::binary_dyn_op(dyn_op);
       //
       // n_arg, val_tape, val_index, par2val_index
-      size_t n_arg;
+      addr_t n_arg;
       if( is_unary || is_binary )
       {  //
          // val_tape, val_index, par2val_index
-         n_arg = num_arg_dyn(dyn_op);
+         n_arg = addr_t( num_arg_dyn(dyn_op) );
          val_op_arg.resize(n_arg);
-         for(size_t i = 0; i < n_arg; ++i)
+         for(addr_t i = 0; i < n_arg; ++i)
          {  addr_t par_index = dyn_par_arg[i_arg + i];
             if( par2val_index[par_index] != invalid_addr_t )
                val_op_arg[i] = par2val_index[par_index];
@@ -267,13 +267,13 @@ void ADFun<Base, RecBase>::fun2val(
             // atomic_index, call_id, n_call_arg, n_res
             size_t atomic_index = size_t( dyn_par_arg[i_arg + 0] );
             size_t call_id      = size_t( dyn_par_arg[i_arg + 1] );
-            size_t n_call_arg   = size_t( dyn_par_arg[i_arg + 2] );
-            size_t n_res        = size_t( dyn_par_arg[i_arg + 3] );
+            addr_t n_call_arg   = dyn_par_arg[i_arg + 2];
+            addr_t n_res        =  dyn_par_arg[i_arg + 3] ;
             // num_dyn          = size_t( dyn_par_arg[i_age + 4] );
             //
             // val_op_arg
             val_op_arg.resize( n_call_arg );
-            for(size_t i = 0; i < n_call_arg; i++)
+            for(addr_t i = 0; i < n_call_arg; i++)
             {  addr_t par_index = dyn_par_arg[i_arg + i + 5];
                if( par2val_index[par_index] != invalid_addr_t )
                   val_op_arg[i] = par2val_index[par_index];

@@ -106,17 +106,17 @@ public:
 // END_CON_OP_T
    //
    // n_aux
-   size_t n_aux(void) const override
+   addr_t n_aux(void) const override
    {  return 1; }
    //
    // n_arg
-   size_t n_arg(
+   addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
    //
    // n_res
-   size_t n_res(
+   addr_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }

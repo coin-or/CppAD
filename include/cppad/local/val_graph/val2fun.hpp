@@ -247,7 +247,7 @@ void ADFun<Base, RecBase>::val2fun(
       bool             is_binary = op_ptr->is_binary();
       addr_t           arg_index = op_info.arg_index;
       addr_t           res_index = op_info.res_index;
-      size_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
+      addr_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
       op_enum_t        op_enum   = op_ptr->op_enum();
       //
       // rec, val_ad_type, val2fun_index
@@ -257,7 +257,7 @@ void ADFun<Base, RecBase>::val2fun(
          ad_type_x.resize(n_arg);
          fun_arg.resize(n_arg);
          ad_type_enum res_ad_type = constant_enum;
-         for(addr_t i = 0; i < addr_t(n_arg); ++i)
+         for(addr_t i = 0; i < n_arg; ++i)
          {  ad_type_x[i] = val_ad_type[ val_arg_vec[arg_index + i] ];
             fun_arg[i]   = val2fun_index[ val_arg_vec[arg_index + i] ];
             CPPAD_ASSERT_UNKNOWN( ad_type_x[i] < number_ad_type_enum );
@@ -466,14 +466,14 @@ void ADFun<Base, RecBase>::val2fun(
          case local::val_graph::call_op_enum:
          {  //
             // atomic_index, call_id
-            size_t n_res        = size_t( val_arg_vec[arg_index + 1] );
+            addr_t n_res        =  val_arg_vec[arg_index + 1] ;
             size_t atomic_index = size_t( val_arg_vec[arg_index + 2] );
             size_t call_id      = size_t( val_arg_vec[arg_index + 3] );
             //
             // ad_type_x, con_x
             ad_type_x.resize(n_arg - 4);
             con_x.resize(n_arg - 4);
-            for(addr_t i = 4; i < addr_t(n_arg); ++i)
+            for(addr_t i = 4; i < n_arg; ++i)
             {  addr_t val_index =  val_arg_vec[arg_index + i];
                ad_type_x[i-4]   = val_ad_type[ val_index ];
                con_x[i-4]       = val_index2con[ val_index ];
@@ -488,7 +488,7 @@ void ADFun<Base, RecBase>::val2fun(
             // record_dynamic, record_variable
             bool record_dynamic  = false;
             bool record_variable = false;
-            for(size_t i = 0; i < n_res; ++i)
+            for(addr_t i = 0; i < n_res; ++i)
             {  CPPAD_ASSERT_UNKNOWN( ad_type_y[i] <= variable_enum );
                record_dynamic  |= ad_type_y[i] == dynamic_enum;
                record_variable |= ad_type_y[i] == variable_enum;
@@ -502,14 +502,14 @@ void ADFun<Base, RecBase>::val2fun(
             {  //
                // ax
                ax.resize(n_arg - 4);
-               for(addr_t j = 4; j < addr_t(n_arg); ++j)
+               for(addr_t j = 4; j < n_arg; ++j)
                {  addr_t val_index = val_arg_vec[arg_index + j];
                   ax[j-4].taddr_   = val2fun_index[val_index];
                   ax[j-4].value_   = val_index2con[val_index];
                }
                // ay
                ay.resize(n_res);
-               for(addr_t j = 0; j < addr_t(n_res); ++j)
+               for(addr_t j = 0; j < n_res; ++j)
                {  ay[j].taddr_     = 0; // not used
                   ay[j].value_     = val_index2con[res_index + j];
                }
@@ -522,7 +522,7 @@ void ADFun<Base, RecBase>::val2fun(
             );
             //
             // val2fun_index, val_ad_type
-            for(addr_t i = 0; i < addr_t(n_res); ++i)
+            for(addr_t i = 0; i < n_res; ++i)
             {  val2fun_index[res_index + i] = ay[i].taddr_;
                val_ad_type[res_index + i]   = ad_type_y[i];
             }

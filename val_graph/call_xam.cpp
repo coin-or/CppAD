@@ -51,7 +51,7 @@ bool call_xam(void)
    ok &= index_of_nan == n_ind;
    //
    // n_res, dep_vec
-   size_t n_res = 2;
+   addr_t n_res = 2;
    Vector<addr_t> dep_vec(n_res);
    //
    // atomic_index
@@ -99,7 +99,7 @@ bool call_xam(void)
    // y
    Vector<double> y(n_res);
    dep_vec = tape.dep_vec();
-   for(size_t i = 0; i < n_res; ++i)
+   for(addr_t i = 0; i < n_res; ++i)
       y[i] = val_vec[ dep_vec[i] ];
    //
    // ok

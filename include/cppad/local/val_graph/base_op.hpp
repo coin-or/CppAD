@@ -151,11 +151,11 @@ Operator Classes
 template <class Value> class op_base_t {
 public:
    virtual op_enum_t op_enum(void) const = 0;
-   virtual size_t n_aux(void) const = 0;
-   virtual size_t n_arg(
+   virtual addr_t n_aux(void) const = 0;
+   virtual addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const = 0;
-   virtual size_t n_res(
+   virtual addr_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const = 0;
    virtual void eval(

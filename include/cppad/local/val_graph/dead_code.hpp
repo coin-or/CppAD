@@ -117,8 +117,8 @@ void tape_t<Value>::dead_code(bool keep_compare)
       //
       // op_enum, n_arg, n_res
       op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
-      addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
-      addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
+      addr_t n_arg =  op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t n_res =  op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
       //
       // is_unary
       if( is_unary )
@@ -233,8 +233,8 @@ void tape_t<Value>::dead_code(bool keep_compare)
       //
       // op_enum, n_arg, n_res
       op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
-      addr_t n_arg = addr_t( op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_));
-      addr_t n_res = addr_t( op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_));
+      addr_t n_arg =  op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t n_res =  op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
       //
       // need_op
       bool need_op = false;
@@ -314,7 +314,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
                addr_t new_res_index = new_tape.record_call_op(
                   atomic_index, call_id, size_t(n_res), call_op_arg
                );
-               for(addr_t k = 0; k < addr_t(n_res); ++k)
+               for(addr_t k = 0; k < n_res; ++k)
                   new_val_index[ res_index + k ] = new_res_index + k;
             }
             break;

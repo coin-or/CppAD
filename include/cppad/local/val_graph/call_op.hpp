@@ -140,17 +140,17 @@ public:
    {  return call_op_enum; }
    //
    // n_aux
-   size_t n_aux(void) const override
+   addr_t n_aux(void) const override
    {  return 4; }
    //
    // n_arg
-   size_t n_arg(
+   addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 0] ); }
    //
    // n_res
-   size_t n_res(
+   addr_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return size_t( arg_vec[arg_index + 1] ); }
@@ -201,20 +201,20 @@ void call_op_t<Value>::eval(
    Vector<Value>&        val_vec      ) const
 {  //
    // n_arg, n_res, atomic_index, call_id
-   size_t n_arg         = size_t( arg_vec[arg_index + 0] );
-   size_t n_res         = size_t( arg_vec[arg_index + 1] );
+   addr_t n_arg         =  arg_vec[arg_index + 0] ;
+   addr_t n_res         =  arg_vec[arg_index + 1] ;
    size_t atomic_index  = size_t( arg_vec[arg_index + 2] );
    size_t call_id       = size_t( arg_vec[arg_index + 3] );
    CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
    //
    // x
    CppAD::vector<Value> x(n_arg - 4);
-   for(addr_t i = 4; i < addr_t(n_arg); ++i)
+   for(addr_t i = 4; i < n_arg; ++i)
       x[i-4] = val_vec[ arg_vec[arg_index + i] ];
    //
    // type_x
    CppAD::vector<ad_type_enum> type_x(n_arg - 4);
-   for(addr_t i = 4; i < addr_t(n_arg); ++i)
+   for(addr_t i = 4; i < n_arg; ++i)
       type_x[i-4] = variable_enum;
    //
    // need_y
@@ -225,7 +225,7 @@ void call_op_t<Value>::eval(
    //
    // select_y
    CppAD::vector<bool> select_y(n_res);
-   for(size_t i = 0; i < n_res; ++i)
+   for(addr_t i = 0; i < n_res; ++i)
       select_y[i] = true;
    //
    // y
@@ -236,7 +236,7 @@ void call_op_t<Value>::eval(
    );
    //
    // val_vec
-   for(addr_t i = 0; i < addr_t(n_res); ++i)
+   for(addr_t i = 0; i < n_res; ++i)
       val_vec[res_index + i] = y[i];
    //
    // trace
@@ -251,13 +251,13 @@ void call_op_t<Value>::eval(
     local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
    //
    std::printf( "    %s(", name.c_str() );
-   for(addr_t i = 4; i < addr_t(n_arg); ++i)
+   for(addr_t i = 4; i < n_arg; ++i)
    {  if( i != 4 )
          printf(", ");
       std::printf("%d", arg_vec[arg_index + i]);
    }
    std::printf(")\n");
-   for(addr_t i = 0; i < addr_t(n_res); ++i)
+   for(addr_t i = 0; i < n_res; ++i)
       std::printf("%5d  %10.3g\n", res_index + i, val_vec[res_index + i]);
    return;
 }

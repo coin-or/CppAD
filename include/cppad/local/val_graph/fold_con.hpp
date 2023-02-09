@@ -110,7 +110,7 @@ void tape_t<Value>::fold_con(void)
       addr_t     arg_index = op_info.arg_index;
       addr_t     res_index = op_info.res_index;
       op_enum_t  op_enum   = op_ptr->op_enum();
-      size_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
       //
       CPPAD_ASSERT_UNKNOWN( size_t( res_index ) == old2new_index.size() );
       //
@@ -118,7 +118,7 @@ void tape_t<Value>::fold_con(void)
       if( is_unary || is_binary )
       {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
          {  bool fold = true;
-            for(addr_t i = 0; i < addr_t(n_arg); ++i)
+            for(addr_t i = 0; i < n_arg; ++i)
                fold &= is_constant[ arg_vec_[arg_index + i] ];
             if( fold )
             {  is_constant[res_index]  = true;
@@ -128,7 +128,7 @@ void tape_t<Value>::fold_con(void)
             }
             else
             {  op_arg.resize(n_arg);
-               for(addr_t k = 0; k < addr_t(n_arg); ++k)
+               for(addr_t k = 0; k < n_arg; ++k)
                {  addr_t old_index = arg_vec_[arg_index + k];
                   assert( old_index < res_index );
                   op_arg[k] = old2new_index[old_index];
@@ -183,7 +183,7 @@ void tape_t<Value>::fold_con(void)
          case call_op_enum:
          {  //
             // atomic_index, call_id
-            size_t n_res        = size_t( arg_vec_[arg_index + 1] );
+            addr_t n_res        =  arg_vec_[arg_index + 1] ;
             size_t atomic_index = size_t( arg_vec_[arg_index + 2] );
             size_t call_id      = size_t( arg_vec_[arg_index + 3] );
             CPPAD_ASSERT_UNKNOWN( atomic_index > 0 );
@@ -191,7 +191,7 @@ void tape_t<Value>::fold_con(void)
             // con_x, type_x
             type_x.resize(n_arg - 4);
             con_x.resize(n_arg - 4);
-            for(addr_t i = 4; i < addr_t(n_arg); ++i)
+            for(addr_t i = 4; i < n_arg; ++i)
             {  addr_t val_index =  arg_vec_[arg_index + i];
                con_x[i-4] = val_index2con[val_index];
                if( is_constant[val_index] )
@@ -209,7 +209,7 @@ void tape_t<Value>::fold_con(void)
             // new_tape, new_res_index
             // record the function call
             op_arg.resize( size_t(n_arg - 4) );
-            for(addr_t k = 4; k < addr_t(n_arg); ++k)
+            for(addr_t k = 4; k < n_arg; ++k)
             {  addr_t old_index   = arg_vec_[arg_index + k];
                op_arg[k - 4]      = old2new_index[old_index];
             }
@@ -218,7 +218,7 @@ void tape_t<Value>::fold_con(void)
             );
             //
             // is_constant, new_tape, old2new_index
-            for(addr_t i = 0; i < addr_t(n_res); ++i)
+            for(addr_t i = 0; i < n_res; ++i)
             {  is_constant[res_index + i] = type_y[i] <= constant_enum;
                if( is_constant[res_index + i] )
                {  const Value& value      = val_index2con[res_index + i];
