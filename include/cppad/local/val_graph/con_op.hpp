@@ -42,13 +42,17 @@ op_enum
 *******
 This override of :ref:`val_base_op@op_enum` returns ``con_op_enum`` .
 
+n_aux
+*****
+This override of :ref:`val_base_op@n_aux` return 1.
+
 n_arg
 *****
-see op_base :ref:`val_base_op@n_arg` .
+This override of :ref:`val_base_op@n_arg` returns 1.
 
 n_res
 *****
-see op_base :ref:`val_base_op@n_res` .
+This override of :ref:`val_base_op@n_res` returns 1.
 
 eval
 ****
@@ -99,6 +103,11 @@ public:
    // op_enum
    op_enum_t op_enum(void) const override
    {  return con_op_enum; }
+// END_CON_OP_T
+   //
+   // n_aux
+   size_t n_aux(void) const override
+   {  return 1; }
    //
    // n_arg
    size_t n_arg(
@@ -111,7 +120,6 @@ public:
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
    {  return 1; }
-// END_CON_OP_T
    //
    // eval
    void eval(

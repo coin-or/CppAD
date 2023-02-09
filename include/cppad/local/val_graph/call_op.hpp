@@ -44,6 +44,10 @@ op_enum
 *******
 This override of :ref:`val_base_op@op_enum` returns ``call_op_enum`` .
 
+n_aux
+*****
+This override of :ref:`val_base_op@n_aux` return 4.
+
 n_arg
 *****
 see op_base :ref:`val_base_op@n_arg` .
@@ -134,6 +138,10 @@ public:
    // type of this operator
    op_enum_t op_enum(void) const override
    {  return call_op_enum; }
+   //
+   // n_aux
+   size_t n_aux(void) const override
+   {  return 4; }
    //
    // n_arg
    size_t n_arg(

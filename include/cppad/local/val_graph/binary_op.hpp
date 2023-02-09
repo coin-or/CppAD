@@ -71,6 +71,10 @@ is_binary
 *********
 This override of :ref:`val_base_op@is_binary` returns true.
 
+n_aux
+*****
+This override of :ref:`val_base_op@n_aux` return 0.
+
 n_arg
 *****
 This override of :ref:`val_base_op@n_arg` returns 2.
@@ -109,6 +113,10 @@ public:
    // is_binary
    bool is_binary(void) const override
    {  return true; }
+   //
+   // n_aux
+   size_t n_aux(void) const override
+   {  return 0; }
    //
    // n_arg
    size_t n_arg(
