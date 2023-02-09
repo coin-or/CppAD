@@ -25,6 +25,15 @@ difference is that it adds a new operator for each folded constant.
 #. If all the results for an operator get replaced, the operator becomes
    dead code.
 
+CppAD
+=====
+CppAD functions fold constants before recording but constants
+that result from an atomic function do not have separate constant operators.
+Perhaps fun2val could make a separate operator for these constants
+and it would not be necessary to fold constants here.
+On the other hand, folding will be necessary if we allow for creating a new
+tape where some of the independent values are constants
+
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
@@ -137,7 +146,7 @@ void tape_t<Value>::fold_con(void)
             "val_graph::fold_con: This operator not yet implemented"
          );
          break;
-         //
+         // ----------------------------------------------------------------
          // con_op
          case con_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg == 1);
@@ -147,7 +156,29 @@ void tape_t<Value>::fold_con(void)
             old2new_index.push_back( new_res_index );
          }
          break;
-         //
+         // ----------------------------------------------------------------
+         // dis_op
+         // new_tape, is_constant, old2new_index
+         case dis_op_enum:
+         CPPAD_ASSERT_UNKNOWN( n_arg == 2);
+         {  addr_t old_index = arg_vec_[arg_index + 1];
+            if( is_constant[old_index] )
+            {  is_constant[res_index] = true;
+               const Value& value      = val_index2con[res_index];
+               addr_t new_res_index    = new_tape.record_con_op(value);
+               old2new_index.push_back( new_res_index );
+            }
+            else
+            {  addr_t discrete_index = arg_vec_[arg_index + 0];
+               addr_t new_index      = old2new_index[ old_index ];
+               addr_t new_res_index  = new_tape.record_dis_op(
+                  discrete_index, new_index
+               );
+               old2new_index.push_back( new_res_index );
+            }
+         }
+         break;
+         // ----------------------------------------------------------------
          // call_op
          case call_op_enum:
          {  //

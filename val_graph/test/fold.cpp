@@ -23,7 +23,7 @@ bool atom(void)
    // callarg, op_arg
    Vector<addr_t> callarg(4), op_arg(2);
    //
-   // f
+   // tape, ok
    tape_t<double> tape;
    size_t n_ind = 1;
    size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
@@ -120,6 +120,99 @@ bool atom(void)
    return ok;
 }
 // ----------------------------------------------------------------------------
+// dis_op
+//
+double floor(const double& arg)
+{  return std::floor(arg); }
+//
+CPPAD_DISCRETE_FUNCTION(double, floor);
+bool dis_op(void)
+{  bool ok = true;
+   //
+   // tape_t, Vector, addr_t, add_op_enum;
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   using CppAD::local::val_graph::op_enum_t;
+   op_enum_t add_op_enum = CppAD::local::val_graph::add_op_enum;
+   //
+   // tape, ok
+   tape_t<double> tape;
+   size_t n_ind = 1;
+   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_nan == n_ind;
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec(1);
+   //
+   // c
+   Vector<double> c(2);
+   c[0] = 5.5;
+   c[1] = floor( c[0] );
+   //
+   // tape
+   addr_t c0_addr        = tape.record_con_op( c[0] );
+   addr_t discrete_index = addr_t( CppAD::discrete<double>::index("floor") );
+   addr_t c1_addr        = tape.record_dis_op(discrete_index, c0_addr);
+   //
+   // tape, dep_vec
+   // y[0] = x[0] + c[1]
+   Vector<addr_t> op_arg(2);
+   op_arg[0] = 0;        // x[0]
+   op_arg[1] = c1_addr;  // c[1]
+   dep_vec[0]            = tape.record_op(add_op_enum, op_arg); // x[0] + c[1]
+   //
+   // tape
+   tape.set_dep( dep_vec );
+   //
+   // trace
+   bool trace = false;
+   //
+   // x
+   Vector<double> x(1);
+   x[0] = 3.0;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   for(size_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y, ok
+   Vector<double> y(1);
+   y[0]    = val_vec[ dep_vec[0] ];
+   ok     &= y[0] == x[0] + c[1];
+   ok     &= tape.con_vec().size() == 2;
+   ok     &= tape.op_vec().size()  == 4;
+   ok     &= tape.arg_vec().size() == 6;
+   //
+   // fold_con
+   tape.fold_con();
+   //
+   // dead_code
+   bool keep_compare = true;
+   tape.dead_code(keep_compare);
+   //
+   // val_vec
+   val_vec.resize( tape.n_val() );
+   for(size_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y, ok
+   dep_vec = tape.dep_vec();
+   y[0]    = val_vec[ dep_vec[0] ];
+   ok     &= y[0] == x[0] + c[1];
+   ok     &= tape.con_vec().size() == 2;
+   ok     &= tape.op_vec().size()  == 3;
+   ok     &= tape.arg_vec().size() == 4;
+   //
+   return ok;
+}
+// ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 //
 // test_fold
@@ -127,6 +220,7 @@ bool test_fold(void)
 {  bool ok = true;
    //
    ok &= atom();
+   ok &= dis_op();
    //
    return ok;
 }
