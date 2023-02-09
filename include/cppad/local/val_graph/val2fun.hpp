@@ -250,7 +250,7 @@ void ADFun<Base, RecBase>::val2fun(
       size_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
       op_enum_t        op_enum   = op_ptr->op_enum();
       //
-      // fun_arg, val_ad_type
+      // rec, val_ad_type, val2fun_index
       if( is_unary || is_binary )
       {  //
          // ad_type_x, val_ad_type
@@ -264,6 +264,9 @@ void ADFun<Base, RecBase>::val2fun(
             res_ad_type = std::max(res_ad_type, ad_type_x[i] );
          }
          val_ad_type[res_index] = res_ad_type;
+         CPPAD_ASSERT_KNOWN( constant_enum < res_ad_type,
+            "val2fun: must first call fold_con"
+         );
          //
          // rec, val2fun_index
          switch( op_enum )
@@ -342,22 +345,52 @@ void ADFun<Base, RecBase>::val2fun(
          CPPAD_ASSERT_KNOWN( op_enum > local::val_graph::number_op_enum,
             "val_graph::val2fun: op_enum is not yet implemented"
          );
+         // ------------------------------------------------------------------
+         // dis_op
+         // rec, val_ad_type, val2fun_index
+         case local::val_graph::dis_op_enum:
+         fun_arg.resize(1);
+         CPPAD_ASSERT_UNKNOWN( n_arg = 2 );
+         {  addr_t dynamic_index  = val_arg_vec[arg_index + 0];
+            addr_t val_index      = val_arg_vec[arg_index + 1];
+            fun_arg[0]            = val2fun_index[val_index];
+            ad_type_enum  ad_type = val_ad_type[val_index];
+            CPPAD_ASSERT_KNOWN( constant_enum < ad_type,
+               "val2fun: must first call fold_con"
+            );
+            if( ad_type == dynamic_enum )
+            {  tmp_addr = rec.put_dyn_par(
+                  nan, local::dis_dyn, dynamic_index, fun_arg[0]
+               );
+            }
+            else
+            {  CPPAD_ASSERT_UNKNOWN( ad_type == variable_enum );
+               tmp_addr = rec.PutOp(local::DisOp);
+               rec.PutArg( dynamic_index );
+               rec.PutArg( fun_arg[0] );
+            }
+            val_ad_type[res_index]   = ad_type;
+            val2fun_index[res_index] = tmp_addr;
+         }
+         break;
+         // ------------------------------------------------------------------
          // con_op
-         // rec, val2fun_index
+         // rec, val_ad_type, val2fun_index
          case local::val_graph::con_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
-         val_ad_type[res_index] = constant_enum;
          {  const Base& constant = val_con_vec[arg_index];
             par_addr = rec.put_con_par(constant);
             CPPAD_ASSERT_UNKNOWN(
                CppAD::isnan(constant) || parameter[par_addr] == constant
             );
             //
+            val_ad_type[res_index]   = constant_enum;
             val2fun_index[res_index] = par_addr;
          }
          break;
          // -------------------------------------------------------------------
          // comp_op
+         // rec
          case local::val_graph::comp_op_enum:
          {  //
             // compare, left_index, right_index
@@ -429,6 +462,7 @@ void ADFun<Base, RecBase>::val2fun(
          break;
          // -------------------------------------------------------------------
          // call_op
+         // rec, val_ad_type, val2fun_index
          case local::val_graph::call_op_enum:
          {  //
             // atomic_index, call_id
@@ -496,20 +530,27 @@ void ADFun<Base, RecBase>::val2fun(
          break;
       }
    }
+   // dep_taddr_, rec
+   // address of the dependent variables on variable tape
+   dep_taddr_.resize( val_dep_vec.size() );
+   for(size_t i = 0; i < val_dep_vec.size(); ++i)
+   {  addr_t val_index     = val_dep_vec[i];
+      ad_type_enum ad_type = val_ad_type[val_index];
+      addr_t fun_index     = val2fun_index[val_index];
+      if( ad_type < variable_enum )
+      {  // see RecordParOp(const AD<Base>& y)
+         rec.PutArg( fun_index );
+         fun_index = rec.PutOp(local::ParOp);
+      }
+      dep_taddr_[i] = fun_index;
+   }
    // rec
    rec.PutOp(local::EndOp);
+   //
    //
    // ----------------------------------------------------------------------
    // End recording, set private member data except for
    // ----------------------------------------------------------------------
-   //
-   // dep_taddr_
-   // address of the dependent variables on variable tape
-   dep_taddr_.resize( val_dep_vec.size() );
-   for(size_t i = 0; i < val_dep_vec.size(); ++i)
-   {  var_addr      = val_dep_vec[i];
-      dep_taddr_[i] = val2fun_index[var_addr];
-   }
    //
    // bool values in this object except check_for_nan_
    has_been_optimized_        = false;

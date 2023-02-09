@@ -249,6 +249,78 @@ bool comp_op(void)
    //
    return ok;
 }
+// ----------------------------------------------------------------------------
+// dis_op
+double floor(const double& arg)
+{  return std::floor(arg); }
+//
+CPPAD_DISCRETE_FUNCTION(double, floor);
+bool dis_op(void)
+{  bool ok = true;
+   //
+   // AD, addr_t
+   using CppAD::AD;
+   using CppAD::addr_t;
+   //
+   // tape_t, Vector
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   //
+   // tape
+   tape_t<double> tape;
+   //
+   // ap, ax
+   Vector<double> p(1), x(1);
+   p[0] = 2.3;
+   x[0] = 3.4;
+   //
+   // tape, ok
+   size_t n_ind = 2;
+   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   ok &= index_of_nan == n_ind;
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec(2);
+   //
+   // tape, dep_vec
+   addr_t discrete_index, val_index;
+   discrete_index = addr_t( CppAD::discrete<double>::index("floor") );
+   val_index  = 0; // p[0]
+   dep_vec[0] = tape.record_dis_op(discrete_index, val_index); // floor( p[0] )
+   val_index  = 1; // x[0]
+   dep_vec[1] = tape.record_dis_op(discrete_index, val_index); // floor( x[0] )
+   //
+   // tape
+   tape.set_dep(dep_vec);
+   //
+   // trace
+   bool trace = false;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   val_vec[0] = p[0];
+   val_vec[1] = x[0];
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // f
+   Vector<size_t> var_ind(1), dyn_ind(1);
+   dyn_ind[0] = 0;
+   var_ind[0] = 1;
+   CppAD::ADFun<double> f;
+   f.val2fun( tape, dyn_ind , var_ind);
+   //
+   // ok
+   p[0] =   5.5;
+   x[0] = - 5.5;
+   f.new_dynamic(p);
+   Vector<double> y = f.Forward(0, x);
+   ok &= y[0] == std::floor( p[0] );
+   ok &= y[1] == std::floor( x[0] );
+   //
+   return ok;
+}
 // ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_val2fun(void)
@@ -256,5 +328,6 @@ bool test_val2fun(void)
    ok     &= dynamic_atom();
    ok     &= variable_atom();
    ok     &= comp_op();
+   ok     &= dis_op();
    return ok;
 }
