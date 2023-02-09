@@ -4,8 +4,10 @@
 # include <cppad/local/val_graph/tape.hpp>
 # include "../atomic_xam.hpp"
 //
-// test_fold_atom
-bool test_fold_atom(void)
+namespace { // BEGIN_EMPTY_NAMESPACE
+// ----------------------------------------------------------------------------
+// atom
+bool atom(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum;
@@ -114,6 +116,17 @@ bool test_fold_atom(void)
    ok     &= tape.con_vec().size() == 3;
    ok     &= tape.op_vec().size()  == 5;
    ok     &= tape.arg_vec().size() == 7;
+   //
+   return ok;
+}
+// ----------------------------------------------------------------------------
+} // END_EMPTY_NAMESPACE
+//
+// test_fold
+bool test_fold(void)
+{  bool ok = true;
+   //
+   ok &= atom();
    //
    return ok;
 }
