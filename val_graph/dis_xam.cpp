@@ -32,8 +32,8 @@ bool dis_xam(void)
    //
    // tape, ok
    tape_t<double> tape;
-   size_t n_ind = 1;
-   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   addr_t n_ind = 1;
+   addr_t index_of_nan = tape.set_ind(n_ind);
    ok &= index_of_nan == n_ind;
    //
    // dep_vec

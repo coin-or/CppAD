@@ -68,7 +68,7 @@ void tape_t<Value>::fold_con(void)
    //
    // val_index2con
    vector<Value> val_index2con(n_val_);
-   for(size_t i = 0; i < n_ind_; ++i)
+   for(addr_t i = 0; i < n_ind_; ++i)
       val_index2con[i] = nan;
    bool trace           = false;
    size_t compare_false = 0;
@@ -76,7 +76,7 @@ void tape_t<Value>::fold_con(void)
    //
    // is_consant
    Vector<bool> is_constant(n_val_);
-   for(size_t i = 0; i < n_val_; ++i)
+   for(addr_t i = 0; i < n_val_; ++i)
       is_constant[i] = false;
    //
    // con_x

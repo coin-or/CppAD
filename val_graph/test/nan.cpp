@@ -18,8 +18,8 @@ bool test_nan(void)
    //
    // tape
    tape_t<double> tape;
-   size_t n_ind = 1;
-   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   addr_t n_ind = 1;
+   addr_t index_of_nan = tape.set_ind(n_ind);
    ok &= index_of_nan == n_ind;
    //
    // op_arg
@@ -43,7 +43,7 @@ bool test_nan(void)
    //
    // val_vec
    Vector<double> val_vec( tape.n_val() );
-   for(size_t i = 0; i < n_ind; ++i)
+   for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = 0.0;
    size_t compare_false = 0;
    tape.eval(trace, compare_false, val_vec);
@@ -62,7 +62,7 @@ bool test_nan(void)
    //
    // val_vec
    val_vec.resize( tape.n_val() );
-   for(size_t i = 0; i < n_ind; ++i)
+   for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = 0.0;
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;

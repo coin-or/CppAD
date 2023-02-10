@@ -154,7 +154,7 @@ This is last step in creating a recording.
 // ----------------------------------------------------------------------------
 // BEGIN_SET_IND
 template <class Value>
-addr_t tape_t<Value>::set_ind(size_t n_ind)
+addr_t tape_t<Value>::set_ind(addr_t n_ind)
 // END_SET_IND
 {  Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    n_ind_ = n_ind;
@@ -163,7 +163,7 @@ addr_t tape_t<Value>::set_ind(size_t n_ind)
    op_vec_.clear();
    con_vec_.clear();
    addr_t nan_addr = record_con_op(nan);
-   assert ( size_t(nan_addr) == n_ind_ );
+   assert ( nan_addr == n_ind_ );
    assert( n_val_ == n_ind + 1 );
    //
    return nan_addr;
@@ -346,7 +346,7 @@ addr_t tape_t<Value>::record_call_op(
       arg_vec_.push_back( fun_arg[i] );
    //
    // n_val_
-   n_val_ = n_val_ + n_res;
+   n_val_ = n_val_ + addr_t(n_res);
    //
    return res_index;
 }

@@ -172,8 +172,8 @@ public :
    } op_info_t;
    // END_OP_INFO_T
 private :
-   size_t                n_ind_;     // number of independent values
-   size_t                n_val_;     // index in val_vec of record result
+   addr_t                n_ind_;     // number of independent values
+   addr_t                n_val_;     // index in val_vec of record result
    Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
    Vector<Value>         con_vec_;   // constants used by the tape
    Vector<op_info_t>     op_vec_;    // operators that define this function
@@ -182,12 +182,12 @@ private :
 public :
    // ------------------------------------------------------------------------
    // BEGIN_N_VAL
-   size_t n_val(void) const
+   addr_t n_val(void) const
    {  return n_val_; }
    // END_N_VAL
    //
    // BEGIN_N_IND
-   size_t n_ind(void) const
+   addr_t n_ind(void) const
    {  return n_ind_; }
    // END_N_IND
    //
@@ -233,10 +233,10 @@ public :
       if( trace )
       {  // no operators for independent variables
          std::printf("independent vector\n");
-         for(size_t res_index = 0; res_index < n_ind_; ++res_index)
+         for(addr_t res_index = 0; res_index < n_ind_; ++res_index)
          {  Value res = val_vec[res_index];
             std::printf(
-               "%5ld  %10.3g\n", res_index, res
+               "%5d  %10.3g\n", res_index, res
             );
          }
          std::printf("operators\n");
@@ -284,7 +284,7 @@ public :
    // ------------------------------------------------------------------------
    //
    // set_ind
-   addr_t set_ind(size_t n_ind);
+   addr_t set_ind(addr_t n_ind);
    //
    // record_op
    addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);

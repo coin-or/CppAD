@@ -46,8 +46,8 @@ bool call_xam(void)
    //
    // f
    tape_t<double> tape;
-   size_t n_ind = 4;
-   size_t index_of_nan = size_t ( tape.set_ind(n_ind) );
+   addr_t n_ind = 4;
+   addr_t index_of_nan = tape.set_ind(n_ind);
    ok &= index_of_nan == n_ind;
    //
    // n_res, dep_vec
@@ -76,7 +76,7 @@ bool call_xam(void)
    //
    // x
    Vector<double> x(n_ind);
-   for(size_t i = 0; i < n_ind; ++i)
+   for(addr_t i = 0; i < n_ind; ++i)
       x[i] = 2.0 + double(n_ind - i);
    //
    // trace
@@ -84,7 +84,7 @@ bool call_xam(void)
    //
    // val_vec
    Vector<double> val_vec( tape.n_val() );
-   for(size_t i = 0; i < n_ind; ++i)
+   for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    size_t compare_false = 0;
    tape.eval(trace, compare_false, val_vec);

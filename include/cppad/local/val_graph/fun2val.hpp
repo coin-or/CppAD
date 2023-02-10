@@ -164,13 +164,13 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // n_val_ind
    // number of indepedent valuse
-   size_t n_val_ind = n_dynamic_ind + n_variable_ind;
+   addr_t n_val_ind = addr_t( n_dynamic_ind + n_variable_ind );
    //
 # ifndef NDEBUG
    // nan_val_index
    // initialize value vector tape
    addr_t nan_val_index = val_tape.set_ind( n_val_ind );
-   CPPAD_ASSERT_UNKNOWN( size_t(nan_val_index) == n_val_ind );
+   CPPAD_ASSERT_UNKNOWN( nan_val_index == n_val_ind );
 # else
    val_tape.set_ind( n_val_ind );
 # endif

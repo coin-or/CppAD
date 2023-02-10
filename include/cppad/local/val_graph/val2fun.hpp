@@ -141,17 +141,17 @@ void ADFun<Base, RecBase>::val2fun(
    );
    //
    // n_val
-   size_t n_val = val_tape.n_val();
+   addr_t n_val = val_tape.n_val();
    //
    // val_ad_type
    vector<ad_type_enum> val_ad_type(n_val);
-   for(size_t i = 0; i < n_val; ++i)
+   for(addr_t i = 0; i < n_val; ++i)
       val_ad_type[i] = number_ad_type_enum; // invalid
    //
    // val_index2con
    // After fold_con, all the constants that get used are op_con results.
    vector<Base> val_index2con(n_val);
-   for(size_t i = 0; i < n_val; ++i)
+   for(addr_t i = 0; i < n_val; ++i)
       val_index2con[i] = nan;
    for(size_t i_op = 0; i_op < val_op_vec.size(); ++i_op)
    {  op_enum_t op_enum = val_op_vec[i_op].op_ptr->op_enum();
@@ -166,7 +166,7 @@ void ADFun<Base, RecBase>::val2fun(
    // mapping from value index to index in the AD function object.
    // The meaning of this index depends on its ad_type.
    vector<addr_t> val2fun_index(n_val);
-   for(size_t i = 0; i < n_val; ++i)
+   for(addr_t i = 0; i < n_val; ++i)
       val2fun_index[i] = std::numeric_limits<addr_t>::max(); // invalid
    //
    // rec
