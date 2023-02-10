@@ -120,6 +120,10 @@ void ADFun<Base, RecBase>::fun2val(
    // add
    var_op2val_op[local::AddpvOp] = local::val_graph::add_op_enum;
    var_op2val_op[local::AddvvOp] = local::val_graph::add_op_enum;
+   //
+   // mul
+   var_op2val_op[local::MulpvOp] = local::val_graph::mul_op_enum;
+   var_op2val_op[local::MulvvOp] = local::val_graph::mul_op_enum;
    // sub
    var_op2val_op[local::SubpvOp] = local::val_graph::sub_op_enum;
    var_op2val_op[local::SubvpOp] = local::val_graph::sub_op_enum;
@@ -355,6 +359,7 @@ void ADFun<Base, RecBase>::fun2val(
             // first argument a parameter, second argument a variable
             case local::AddpvOp:
             case local::SubpvOp:
+            case local::MulpvOp:
             is_var[0]   = false;
             is_var[1]   = true;
             break;
@@ -368,6 +373,7 @@ void ADFun<Base, RecBase>::fun2val(
             // first argument a variable, second argument a variable
             case local::AddvvOp:
             case local::SubvvOp:
+            case local::MulvvOp:
             is_var[0]   = true;
             is_var[1]   = true;
             break;

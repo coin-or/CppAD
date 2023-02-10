@@ -312,6 +312,34 @@ void ADFun<Base, RecBase>::val2fun(
             }
             break;
             // ----------------------------------------------------------------
+            // mul_op_enum
+            case local::val_graph::mul_op_enum:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            if( val_ad_type[res_index] == dynamic_enum )
+            {  tmp_addr = rec.put_dyn_par(
+                  nan, local::mul_dyn, fun_arg[0], fun_arg[1]
+               );
+               CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
+            }
+            else
+            {  if( ad_type_x[0] < variable_enum )
+               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
+                  tmp_addr = rec.PutOp(local::MulpvOp);
+               }
+               else if( ad_type_x[1] < variable_enum )
+               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
+                  tmp_addr = rec.PutOp(local::MulpvOp);
+                  std::swap(fun_arg[0], fun_arg[1]);
+               }
+               else
+               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
+                  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
+                  tmp_addr = rec.PutOp(local::MulvvOp);
+               }
+               rec.PutArg(fun_arg[0], fun_arg[1]);
+            }
+            break;
+            // ----------------------------------------------------------------
             // sub_op_enum
             case local::val_graph::sub_op_enum:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );

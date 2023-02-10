@@ -42,6 +42,7 @@ private:
       return code;
    }
 public:
+   // -------------------------------------------------------------------------
    // ctor
    op_hash_table_t(
          const Vector<addr_t>&    arg_vec,
@@ -56,6 +57,24 @@ public:
    {  // table_
       table_.resize( size_t(n_hash_code), size_t(n_op) );
    }
+   // -------------------------------------------------------------------------
+   Vector<size_t> size_count()
+   {  Vector<size_t> count;
+      size_t n_set  = table_.n_set();
+      for(size_t i = 0; i < n_set; ++i)
+      {  size_t number_elements = table_.number_elements(i);
+         if( number_elements >= count.size() )
+         {  size_t old_size = count.size();
+            size_t new_size = number_elements + 1;
+            count.resize(new_size);
+            for(size_t j = old_size; j < new_size; ++j)
+               count[j] = 0;
+         }
+         count[number_elements] += 1;
+      }
+      return count;
+   }
+   // -------------------------------------------------------------------------
    // match_op
    size_t match_op(size_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
@@ -262,8 +281,13 @@ void tape_t<Value>::renumber(void)
    for(size_t i = 0; i < dep_vec_.size(); ++i)
       dep_vec_[i] = new_val_index[ dep_vec_[i] ];
 
-   //
+   /*
+   // A set size more than one represents a collision
+   Vector<size_t> size_count = op_hash_table.size_count();
+   for(size_t i = 0; i < size_count.size(); ++i)
+      std::cout << "size = " << i << ", count = " << size_count[i] << "\n";
    return;
+   */
 }
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 # endif

@@ -54,6 +54,7 @@ enum op_enum_t {
    comp_op_enum,     // compare operator
    con_op_enum,      // constants
    dis_op_enum,      // discrete functions
+   mul_op_enum,      // multiplication
    neg_op_enum,      // negative
    sub_op_enum,      // subtraction
    number_op_enum

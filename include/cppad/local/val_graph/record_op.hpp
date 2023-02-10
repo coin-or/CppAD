@@ -192,6 +192,10 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
       op_ptr = add_op_t<Value>::get_instance();
       break;
 
+      case mul_op_enum:
+      op_ptr = mul_op_t<Value>::get_instance();
+      break;
+
       case neg_op_enum:
       op_ptr = neg_op_t<Value>::get_instance();
       break;
