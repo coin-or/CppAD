@@ -934,6 +934,7 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/val_graph/comp_op.hpp \
 	cppad/local/val_graph/con_op.hpp \
 	cppad/local/val_graph/dead_code.hpp \
+	cppad/local/val_graph/dis_op.hpp \
 	cppad/local/val_graph/fold_con.hpp \
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/record_op.hpp \
