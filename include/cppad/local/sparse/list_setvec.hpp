@@ -4,10 +4,8 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include <set>
 # include <cppad/local/define.hpp>
 # include <cppad/local/is_pod.hpp>
-# include <cppad/local/pod_vector.hpp>
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace sparse {
