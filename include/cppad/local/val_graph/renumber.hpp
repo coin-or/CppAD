@@ -200,11 +200,12 @@ void tape_t<Value>::renumber(void)
    // -----------------------------------------------------------------------
    //
    // op_hash_table
+   size_t n_hash_code = 1 + (n_val_ / 2);
    op_hash_table_t<Value>  op_hash_table(
       arg_vec_,
       con_vec_,
       op_vec_,
-      n_val_,
+      n_hash_code,
       op_vec_.size()
    );
    //
