@@ -8,7 +8,7 @@
 # include <cppad/local/atomic_index.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_graph_dead_code dev}
+{xrst_begin val_tape_dead_code dev}
 {xrst_spell
    dep
    xam
@@ -28,7 +28,7 @@ keep_compare
 ************
 #. If this is false, all the :ref`val_comp_op-name` operators will be removed.
    In this case future calls to eval will not modify
-   :ref:`val_graph_tape@eval@compare_false` .
+   :ref:`val_tape@eval@compare_false` .
 #. If this is true, the compare_no_enum compare operators are removed and
    other comparisons are kept.
 
@@ -50,7 +50,7 @@ Algorithm
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
-:ref:`val_graph_tape@dep_vec`.
+:ref:`val_tape@dep_vec`.
 
 Reference
 *********
@@ -64,7 +64,7 @@ Example
 The file :ref:`dead_xam.cpp <val_dead_xam.cpp-name>` is an
 example and test of tape.dead_code().
 
-{xrst_end val_graph_dead_code}
+{xrst_end val_tape_dead_code}
 */
 // BEGIN_DEAD_CODE
 template <class Value>

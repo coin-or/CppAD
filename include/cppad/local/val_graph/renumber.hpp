@@ -155,7 +155,7 @@ public:
 };
 /*
 -------------------------------------------------------------------------------
-{xrst_begin val_graph_renumber dev}
+{xrst_begin val_tape_renumber dev}
 {xrst_spell
    dep
    renumber
@@ -179,14 +179,14 @@ Compare Operators
 If two or more compare operators are identical, the first will be kept as
 is and the others will be changed to compare_no_enum operators.
 In this case future calls to eval will on add one to
-:ref:`val_graph_tape@eval@compare_false`,
+:ref:`val_tape@eval@compare_false`,
 for each unique comparison that is false.
 be removed.
 
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
-:ref:`val_graph_tape@dep_vec`.
+:ref:`val_tape@dep_vec`.
 
 Reference
 *********
@@ -200,7 +200,7 @@ Example
 The file :ref:`renumber_xam.cpp <val_renumber_xam.cpp-name>` is an
 example and test of tape.renumber().
 
-{xrst_end val_graph_renumber}
+{xrst_end val_tape_renumber}
 -------------------------------------------------------------------------------
 */
 template <class Value>

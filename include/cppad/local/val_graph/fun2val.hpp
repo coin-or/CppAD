@@ -28,7 +28,7 @@ Base
 ****
 is the type corresponding to this :ref:`adfun-name` object;
 i.e., its calculations are done using the type *Base* .
-It is also :ref:`val_graph_tape@Value` type for the tape.
+It is also :ref:`val_tape@Value` type for the tape.
 
 RecBase
 *******
@@ -36,7 +36,7 @@ in the prototype above, *RecBase* is the same type as *Base* .
 
 val_tape
 ********
-This is a :ref:`val_graph_tape-name` object.
+This is a :ref:`val_tape-name` object.
 The input contents of the tape does not matter.
 Upon return it is a
 :ref:`val_graph-name` representation of the function.

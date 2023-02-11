@@ -15,7 +15,7 @@
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_graph_tape dev}
+{xrst_begin val_tape dev}
 {xrst_spell
    dep
 }
@@ -160,7 +160,7 @@ Operations on Tape
 }
 
 
-{xrst_end val_graph_tape}
+{xrst_end val_tape}
 */
 // BEGIN_TAPE_T
 template <class Value> class tape_t {

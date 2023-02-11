@@ -23,7 +23,7 @@ Recording Value Operators on a Tape
 
 Purpose
 *******
-These operations store a function in the :ref:`val_graph_tape-name`.
+These operations store a function in the :ref:`val_tape-name`.
 
 set_ind
 *******

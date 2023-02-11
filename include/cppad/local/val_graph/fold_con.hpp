@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 /*
 -------------------------------------------------------------------------------
-{xrst_begin val_graph_fold_con dev}
+{xrst_begin val_tape_fold_con dev}
 {xrst_spell
    dep
    xam
@@ -16,7 +16,7 @@ Constant Folding
 
 Discussion
 **********
-This is like :ref:`value numbering <val_graph_renumber-title>` but a major
+This is like :ref:`value numbering <val_tape_renumber-title>` but a major
 difference is that it adds a new operator for each folded constant.
 
 #. operator results that are constants get replaced by con_op operators.
@@ -40,7 +40,7 @@ that result from an atomic function do not have separate constant operators.
 dep_vec
 *******
 This may change the indices corresponding to the dependent vector; i.e.,
-:ref:`val_graph_tape@dep_vec`.
+:ref:`val_tape@dep_vec`.
 
 Reference
 *********
@@ -54,7 +54,7 @@ Example
 The file :ref:`fold_con_xam.cpp <val_fold_con_xam.cpp-name>`
 is an example and test of tape.fold_con().
 
-{xrst_end val_graph_fold_con}
+{xrst_end val_tape_fold_con}
 -------------------------------------------------------------------------------
 */
 # include <cppad/local/val_graph/tape.hpp>
