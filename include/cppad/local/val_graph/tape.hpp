@@ -11,6 +11,8 @@
 # include <cppad/local/val_graph/type.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 
+# define CPPAD_VAL_GRAPH_TAPE_TRACE 0
+
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_tape dev}
@@ -329,4 +331,5 @@ public :
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 
+# undef CPPAD_VAL_GRAPH_TAPE_TRACE
 # endif

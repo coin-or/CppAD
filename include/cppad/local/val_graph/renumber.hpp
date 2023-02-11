@@ -210,6 +210,12 @@ void tape_t<Value>::renumber(void)
    // SAS Global Value Renumbering
    // https://en.wikipedia.org/wiki/Value_numbering
    // -----------------------------------------------------------------------
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // thread, initial_inuse
+   size_t thread        = thread_alloc::thread_num();
+   size_t initial_inuse = thread_alloc::inuse(thread);
+# endif
+   //
    //
    // n_op
    addr_t n_op = addr_t( op_vec_.size() );
@@ -297,13 +303,17 @@ void tape_t<Value>::renumber(void)
    for(size_t i = 0; i < dep_vec_.size(); ++i)
       dep_vec_[i] = new_val_index[ dep_vec_[i] ];
 
-   /*
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
    // A set size more than one represents a collision
    Vector<size_t> size_count = op_hash_table.size_count();
    for(size_t i = 0; i < size_count.size(); ++i)
       std::cout << "size = " << i << ", count = " << size_count[i] << "\n";
+   //
+   // inuse
+   size_t final_inuse = thread_alloc::inuse(thread);
+   std::cout << "renumber:  inuse = " << final_inuse - initial_inuse << "\n";
+# endif
    return;
-   */
 }
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 # endif

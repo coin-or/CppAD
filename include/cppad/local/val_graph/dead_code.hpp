@@ -74,6 +74,11 @@ void tape_t<Value>::dead_code(bool keep_compare)
    // Dead Code Elimination
    // https://en.wikipedia.org/wiki/Dead-code_elimination
    // -----------------------------------------------------------------------
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // thread, initial_inuse
+   size_t thread        = thread_alloc::thread_num();
+   size_t initial_inuse = thread_alloc::inuse(thread);
+# endif
    //
    // val_index2con
    // After fold_con, all the constants that get used are op_con results.
@@ -331,6 +336,11 @@ void tape_t<Value>::dead_code(bool keep_compare)
    // swap
    swap(new_tape);
    //
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // inuse
+   size_t final_inuse = thread_alloc::inuse(thread);
+   std::cout << "dead_code: inuse = " << final_inuse - initial_inuse << "\n";
+# endif
    return;
 }
 

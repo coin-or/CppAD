@@ -62,6 +62,11 @@ namespace CppAD { namespace local { namespace val_graph {
 template <class Value>
 void tape_t<Value>::fold_con(void)
 {
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // thread, initial_inuse
+   size_t thread        = thread_alloc::thread_num();
+   size_t initial_inuse = thread_alloc::inuse(thread);
+# endif
    //
    // nan
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
@@ -243,7 +248,11 @@ void tape_t<Value>::fold_con(void)
    //
    // swap
    swap(new_tape);
-   //
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // inuse
+   size_t final_inuse = thread_alloc::inuse(thread);
+   std::cout << "fold_con: inuse = " << final_inuse - initial_inuse << "\n";
+# endif
    return;
 }
 
