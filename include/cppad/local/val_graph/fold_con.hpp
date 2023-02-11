@@ -29,10 +29,13 @@ CppAD
 =====
 CppAD functions fold constants before recording but constants
 that result from an atomic function do not have separate constant operators.
-Perhaps fun2val could make a separate operator for these constants
-and it would not be necessary to fold constants here.
-On the other hand, folding will be necessary if we allow for creating a new
-tape where some of the independent values are constants
+
+#. Perhaps fun2val could make a separate operator for these constants
+   and it would not be necessary to fold constants here.
+#. On the other hand, folding will be necessary if we allow for creating a new
+   tape where some of the independent values are constants
+#. Currently, this uses more memory than the other optimization steps
+   and is of dubious value in the context of CppAD.
 
 dep_vec
 *******
@@ -80,7 +83,7 @@ void tape_t<Value>::fold_con(void)
    eval(trace, compare_false, val_index2con);
    //
    // is_consant
-   Vector<bool> is_constant(n_val_);
+   vectorBool is_constant(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
       is_constant[i] = false;
    //
@@ -251,7 +254,7 @@ void tape_t<Value>::fold_con(void)
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // inuse
    size_t final_inuse = thread_alloc::inuse(thread);
-   std::cout << "fold_con: inuse = " << final_inuse - initial_inuse << "\n";
+   std::cout << "fold_con:  inuse = " << final_inuse - initial_inuse << "\n";
 # endif
    return;
 }

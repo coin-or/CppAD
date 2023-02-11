@@ -81,19 +81,13 @@ void tape_t<Value>::dead_code(bool keep_compare)
 # endif
    //
    // val_index2con
-   // After fold_con, all the constants that get used are op_con results.
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    Vector<Value> val_index2con(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
       val_index2con[i] = nan;
-   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
-   {  op_enum_t op_enum = op_vec_[i_op].op_ptr->op_enum();
-      if( op_enum == con_op_enum )
-      {  addr_t res_index = op_vec_[i_op].res_index;
-         const Value& con = con_vec_[ arg_vec_[ op_vec_[i_op].arg_index ] ];
-         val_index2con[res_index] = con;
-      }
-   }
+   bool trace           = false;
+   size_t compare_false = 0;
+   eval(trace, compare_false, val_index2con);
    //
    // con_x
    Vector<Value> con_x;

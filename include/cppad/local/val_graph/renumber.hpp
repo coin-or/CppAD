@@ -70,12 +70,12 @@ public:
       table_.resize( n_hash_code, n_op );
    }
    // -------------------------------------------------------------------------
-   Vector<size_t> size_count()
-   {  Vector<size_t> count;
-      size_t n_set  = table_.n_set();
-      for(size_t i = 0; i < n_set; ++i)
-      {  size_t number_elements = table_.number_elements(i);
-         if( number_elements >= count.size() )
+   Vector<addr_t> size_count()
+   {  Vector<addr_t> count;
+      addr_t n_set  = table_.n_set();
+      for(addr_t i = 0; i < n_set; ++i)
+      {  addr_t number_elements = table_.number_elements(i);
+         if( size_t( number_elements ) >= count.size() )
          {  size_t old_size = count.size();
             size_t new_size = number_elements + 1;
             count.resize(new_size);
@@ -305,7 +305,7 @@ void tape_t<Value>::renumber(void)
 
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // A set size more than one represents a collision
-   Vector<size_t> size_count = op_hash_table.size_count();
+   Vector<addr_t> size_count = op_hash_table.size_count();
    for(size_t i = 0; i < size_count.size(); ++i)
       std::cout << "size = " << i << ", count = " << size_count[i] << "\n";
    //
