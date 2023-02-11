@@ -905,6 +905,7 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/sparse/internal.hpp \
 	cppad/local/sparse/list_setvec.hpp \
 	cppad/local/sparse/pack_setvec.hpp \
+	cppad/local/sparse/size_setvec.hpp \
 	cppad/local/sparse/svec_setvec.hpp \
 	cppad/local/sparse/unary_op.hpp \
 	cppad/local/std_set.hpp \
