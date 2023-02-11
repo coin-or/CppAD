@@ -4,8 +4,20 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/local/sparse/list_setvec.hpp>
+# include <cppad/local/sparse/size_setvec.hpp>
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/is_pod.hpp>
+
+// Tell pod_vector class that each size_setvec<addr_t>::pair_s_type is
+// plain old data and hence the corresponding constructor need not be called.
+ namespace CppAD { namespace local {
+   template <> inline bool
+   is_pod< sparse::size_setvec<addr_t>::pair_s_type > (void)
+   {  return true; }
+ } }
+
+
+
 namespace CppAD { namespace local { namespace val_graph {
 //
 // op_hash_table_t
@@ -26,10 +38,10 @@ private:
    const Vector<op_info_t>& op_vec_;
    //
    // table
-   CppAD::local::sparse::list_setvec table_;
+   CppAD::local::sparse::size_setvec<addr_t> table_;
    //
    // hash_code
-   size_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
+   addr_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
    {  size_t code;
       if( op_enum == con_op_enum )
          code = hash_base( con_vec_[  arg_vec_[arg_index] ] );
@@ -39,7 +51,7 @@ private:
             code += size_t( arg_vec_[arg_index + i] );
       }
       code = code % table_.n_set();
-      return code;
+      return addr_t( code );
    }
 public:
    // -------------------------------------------------------------------------
@@ -48,14 +60,14 @@ public:
          const Vector<addr_t>&    arg_vec,
          const Vector<Value>&     con_vec,
          const Vector<op_info_t>& op_vec,
-         size_t                   n_hash_code,
-         size_t                   n_op
+         addr_t                   n_hash_code,
+         addr_t                   n_op
    ) :
    arg_vec_( arg_vec ) ,
    con_vec_( con_vec ) ,
    op_vec_( op_vec )
    {  // table_
-      table_.resize( size_t(n_hash_code), size_t(n_op) );
+      table_.resize( n_hash_code, n_op );
    }
    // -------------------------------------------------------------------------
    Vector<size_t> size_count()
@@ -76,7 +88,7 @@ public:
    }
    // -------------------------------------------------------------------------
    // match_op
-   size_t match_op(size_t i_op, const Vector<addr_t>& new_val_index)
+   addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
       //
       // op_enum_i, arg_index_i, n_arg
@@ -96,13 +108,13 @@ public:
       }
       //
       // code
-      size_t code = hash_code(n_arg, op_enum_i, arg_index_i);
+      addr_t code = hash_code(n_arg, op_enum_i, arg_index_i);
       //
       // itr
-      CppAD::local::sparse::list_setvec_const_iterator itr(table_, code);
+      local::sparse::size_setvec_const_iterator<addr_t> itr(table_, code);
       while( *itr != table_.end() )
       {  // op_enum_j, arg_index_j
-         size_t j_op           = *itr;
+         addr_t j_op           = *itr;
          op_enum_t op_enum_j   = op_vec_[j_op].op_ptr->op_enum();
          addr_t    arg_index_j = op_vec_[j_op].arg_index;
          //
@@ -199,14 +211,17 @@ void tape_t<Value>::renumber(void)
    // https://en.wikipedia.org/wiki/Value_numbering
    // -----------------------------------------------------------------------
    //
+   // n_op
+   addr_t n_op = addr_t( op_vec_.size() );
+   //
    // op_hash_table
-   size_t n_hash_code = 1 + (n_val_ / 2);
+   addr_t n_hash_code = 1 + (n_val_ / 2);
    op_hash_table_t<Value>  op_hash_table(
       arg_vec_,
       con_vec_,
       op_vec_,
       n_hash_code,
-      op_vec_.size()
+      n_op
    );
    //
    // new_val_index
@@ -215,9 +230,9 @@ void tape_t<Value>::renumber(void)
       new_val_index[i] = i;
    //
    // i_op
-   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
+   for(addr_t i_op = 0; i_op < n_op; ++i_op)
    {  // j_op
-      size_t j_op = op_hash_table.match_op(i_op, new_val_index);
+      addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
       if( j_op != i_op )
       {  assert( j_op < i_op );
          //
@@ -242,7 +257,7 @@ void tape_t<Value>::renumber(void)
    }
    //
    // arg_vec_
-   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
+   for(addr_t i_op = 0; i_op < n_op; ++i_op)
    {  //
       // arg_index, n_arg
       addr_t    arg_index = op_vec_[i_op].arg_index;
