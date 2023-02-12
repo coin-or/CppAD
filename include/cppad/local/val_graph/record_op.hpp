@@ -5,9 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/call_op.hpp>
-# include <cppad/local/val_graph/comp_op.hpp>
-# include <cppad/local/val_graph/dis_op.hpp>
+# include <cppad/local/val_graph/op_enum2class.hpp>
 # include <cppad/core/numeric_limits.hpp>
 //
 namespace CppAD { namespace local { namespace val_graph {
@@ -160,8 +158,9 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    n_ind_ = n_ind;
    n_val_ = n_ind;
    dep_vec_.clear();
-   op_vec_.clear();
    con_vec_.clear();
+   op_vec_.clear();
+   //
    addr_t nan_addr = record_con_op(nan);
    assert ( nan_addr == n_ind_ );
    assert( n_val_ == n_ind + 1 );
@@ -181,29 +180,7 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = nullptr;
-   switch(op_enum)
-   {
-      default:
-      assert( false );
-      break;
-
-      case add_op_enum:
-      op_ptr = add_op_t<Value>::get_instance();
-      break;
-
-      case mul_op_enum:
-      op_ptr = mul_op_t<Value>::get_instance();
-      break;
-
-      case neg_op_enum:
-      op_ptr = neg_op_t<Value>::get_instance();
-      break;
-
-      case sub_op_enum:
-      op_ptr = sub_op_t<Value>::get_instance();
-      break;
-   }
+   op_base_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
