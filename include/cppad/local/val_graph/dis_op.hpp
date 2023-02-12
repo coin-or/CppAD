@@ -40,9 +40,13 @@ op_enum
 *******
 This override of :ref:`val_base_op@op_enum` returns ``dis_op_enum`` .
 
-n_aux
-*****
-This override of :ref:`val_base_op@n_aux` return 1.
+n_before
+********
+This override of :ref:`val_base_op@n_before` return 1.
+
+n_after
+*******
+This override of :ref:`val_base_op@n_after` return 0.
 
 n_arg
 *****
@@ -92,6 +96,14 @@ is an example and test that uses this operator.
 template <class Value>
 class dis_op_t : public base_op_t<Value> {
 public:
+   // n_before
+   addr_t n_before(void) const override
+   {  return 1; }
+   //
+   // n_after
+   addr_t n_after(void) const override
+   {  return 0; }
+   //
    // get_instance
    static dis_op_t* get_instance(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
@@ -108,10 +120,6 @@ public:
       const Vector<addr_t>& arg_vec      )
    {  return size_t( arg_vec[arg_index + 0] ); }
 // END_DIS_OP_T
-   //
-   // n_aux
-   addr_t n_aux(void) const override
-   {  return 1; }
    //
    // n_arg
    addr_t n_arg(

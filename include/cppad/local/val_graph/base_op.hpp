@@ -47,11 +47,15 @@ op_enum
 This member function returns the enum value corresponding to this operator;
 see :ref:`val_graph_type@op_enum_t` .
 
-n_aux
-*****
+n_before
+********
 This member function returns the number of auxiliary arguments
-for this operator. Auxiliary argument come first and are not indices
-in the value vector.
+that come before the arguments that are value vector indices.
+
+n_after
+*******
+This member function returns the number of auxiliary arguments
+that come after the arguments that are value vector indices.
 
 n_arg
 *****
@@ -150,8 +154,9 @@ Operator Classes
 // BEGIN_OP_T
 template <class Value> class base_op_t {
 public:
-   virtual op_enum_t op_enum(void) const = 0;
-   virtual addr_t n_aux(void) const = 0;
+   virtual addr_t    n_before(void) const = 0;
+   virtual addr_t    n_after(void)  const = 0;
+   virtual op_enum_t op_enum(void)  const = 0;
    virtual addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const = 0;

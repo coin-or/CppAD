@@ -69,9 +69,13 @@ is_unary
 ********
 This override of :ref:`val_base_op@is_unary` returns true.
 
-n_aux
-*****
-This override of :ref:`val_base_op@n_aux` return 0.
+n_before
+********
+This override of :ref:`val_base_op@n_before` return 0.
+
+n_after
+*******
+This override of :ref:`val_base_op@n_after` return 0.
 
 n_arg
 *****
@@ -107,14 +111,17 @@ template <class Value>
 class unary_op_t : public base_op_t<Value> {
 // END_UNARY_OP_T
 public:
+   // n_before
+   addr_t n_before(void) const override
+   {  return 0; }
+   //
+   // n_after
+   addr_t n_after(void) const override
+   {  return 0; }
    //
    // is_unary
    bool is_unary(void) const override
    {  return true; }
-   //
-   // n_aux
-   addr_t n_aux(void) const override
-   {  return 0; }
    //
    // n_arg
    addr_t n_arg(

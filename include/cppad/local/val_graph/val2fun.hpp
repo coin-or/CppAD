@@ -248,21 +248,25 @@ void ADFun<Base, RecBase>::val2fun(
       bool             is_binary = op_ptr->is_binary();
       addr_t           arg_index = op_info.arg_index;
       addr_t           res_index = op_info.res_index;
-      addr_t           n_aux     = op_ptr->n_aux();
+      addr_t           n_before  = op_ptr->n_before();
+      addr_t           n_after   = op_ptr->n_after();
       addr_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
-      CPPAD_ASSERT_UNKNOWN( n_aux <= n_arg );
+      CPPAD_ASSERT_UNKNOWN( n_before + n_after <= n_arg );
+      //
+      // n_x
+      addr_t n_x = n_arg - n_before - n_after;
       //
       // ad_type_x, fun_arg, con_x, max_ad_type
-      ad_type_x.resize(n_arg - n_aux);
-      fun_arg.resize(n_arg - n_aux);
-      con_x.resize(n_arg - n_aux);
+      ad_type_x.resize(n_x);
+      fun_arg.resize(n_x);
+      con_x.resize(n_x);
       ad_type_enum max_ad_type = constant_enum;
-      for(addr_t i = n_aux; i < n_arg; ++i)
-      {  addr_t val_index     = val_arg_vec[arg_index + i];
-         ad_type_x[i - n_aux] = val_ad_type[val_index];
-         fun_arg[i - n_aux]   = val2fun_index[val_index];
-         con_x[i - n_aux]     = val_index2con[val_index];
-         max_ad_type          = std::max(max_ad_type, ad_type_x[i - n_aux] );
+      for(addr_t i = 0; i < n_x; ++i)
+      {  addr_t val_index     = val_arg_vec[arg_index + n_before + i];
+         ad_type_x[i] = val_ad_type[val_index];
+         fun_arg[i]   = val2fun_index[val_index];
+         con_x[i]     = val_index2con[val_index];
+         max_ad_type  = std::max(max_ad_type, ad_type_x[i] );
       }
       //
       // rec, val_ad_type, val2fun_index
@@ -520,11 +524,11 @@ void ADFun<Base, RecBase>::val2fun(
             if( record_dynamic || record_variable )
             {  //
                // ax
-               ax.resize(n_arg - 4);
-               for(addr_t j = 4; j < n_arg; ++j)
-               {  addr_t val_index = val_arg_vec[arg_index + j];
-                  ax[j-4].taddr_   = val2fun_index[val_index];
-                  ax[j-4].value_   = val_index2con[val_index];
+               ax.resize(n_x);
+               for(addr_t j = 0; j < n_x; ++j)
+               {  addr_t val_index = val_arg_vec[arg_index + n_before + j];
+                  ax[j].taddr_   = val2fun_index[val_index];
+                  ax[j].value_   = val_index2con[val_index];
                }
                // ay
                ay.resize(n_res);

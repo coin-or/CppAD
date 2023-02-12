@@ -44,9 +44,13 @@ op_enum
 *******
 This override of :ref:`val_base_op@op_enum` returns ``call_op_enum`` .
 
-n_aux
-*****
-This override of :ref:`val_base_op@n_aux` return 4.
+n_before
+********
+This override of :ref:`val_base_op@n_before` return 4.
+
+n_after
+*******
+This override of :ref:`val_base_op@n_after` return 0.
 
 n_arg
 *****
@@ -128,6 +132,14 @@ is an example and test that uses this operator.
 template <class Value>
 class call_op_t : public base_op_t<Value> {
 public:
+   // n_before
+   addr_t n_before(void) const override
+   {  return 4; }
+   //
+   // n_after
+   addr_t n_after(void) const override
+   {  return 0; }
+   //
    // get_instance
    static call_op_t* get_instance(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
@@ -138,10 +150,6 @@ public:
    // type of this operator
    op_enum_t op_enum(void) const override
    {  return call_op_enum; }
-   //
-   // n_aux
-   addr_t n_aux(void) const override
-   {  return 4; }
    //
    // n_arg
    addr_t n_arg(
@@ -207,15 +215,18 @@ void call_op_t<Value>::eval(
    size_t call_id       = size_t( arg_vec[arg_index + 3] );
    CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
    //
+   // n_x
+   addr_t n_x = n_arg - n_before() - n_after();
+   //
    // x
-   CppAD::vector<Value> x(n_arg - 4);
-   for(addr_t i = 4; i < n_arg; ++i)
-      x[i-4] = val_vec[ arg_vec[arg_index + i] ];
+   CppAD::vector<Value> x(n_x);
+   for(addr_t i = 0; i < n_x; ++i)
+      x[i] = val_vec[ arg_vec[arg_index + n_before() + i] ];
    //
    // type_x
-   CppAD::vector<ad_type_enum> type_x(n_arg - 4);
-   for(addr_t i = 4; i < n_arg; ++i)
-      type_x[i-4] = variable_enum;
+   CppAD::vector<ad_type_enum> type_x(n_x);
+   for(addr_t i = 0; i < n_x; ++i)
+      type_x[i] = variable_enum;
    //
    // need_y
    size_t need_y = size_t( number_ad_type_enum );
@@ -251,10 +262,10 @@ void call_op_t<Value>::eval(
     local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
    //
    std::printf( "    %s(", name.c_str() );
-   for(addr_t i = 4; i < n_arg; ++i)
-   {  if( i != 4 )
+   for(addr_t i = 0; i < n_x; ++i)
+   {  if( i != 0 )
          printf(", ");
-      std::printf("%d", arg_vec[arg_index + i]);
+      std::printf("%d", arg_vec[arg_index + n_before() + i]);
    }
    std::printf(")\n");
    for(addr_t i = 0; i < n_res; ++i)
