@@ -38,10 +38,10 @@ to a pointer to an operator base class object :ref:`val_base_op-name` .
 // ----------------------------------------------------------------------------
 // BEGIN_OP_ENUM2CLASS
 template <class Value>
-op_base_t<Value>* op_enum2class(op_enum_t op_enum)
+base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 // END_OP_ENUM2CLASS
 {  //
-   op_base_t<Value>* op_ptr;
+   base_op_t<Value>* op_ptr;
    switch(op_enum)
    {
       default:

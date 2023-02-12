@@ -180,7 +180,7 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
+   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
@@ -211,7 +211,7 @@ addr_t tape_t<Value>::record_comp_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = comp_op_t<Value>::get_instance();
+   base_op_t<Value>* op_ptr = comp_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
@@ -248,7 +248,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = con_op_t<Value>::get_instance();
+   base_op_t<Value>* op_ptr = con_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
@@ -275,7 +275,7 @@ addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = dis_op_t<Value>::get_instance();
+   base_op_t<Value>* op_ptr = dis_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};
@@ -307,7 +307,7 @@ addr_t tape_t<Value>::record_call_op(
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_ptr
-   op_base_t<Value>* op_ptr = call_op_t<Value>::get_instance();
+   base_op_t<Value>* op_ptr = call_op_t<Value>::get_instance();
    //
    // op_vec_
    op_info_t op_info = { arg_index, res_index, op_ptr};

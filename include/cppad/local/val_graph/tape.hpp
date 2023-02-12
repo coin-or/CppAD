@@ -170,7 +170,7 @@ public :
    typedef struct {
       addr_t      arg_index;    // starting index in arg_vec for an operator
       addr_t      res_index;    // starting result index in val_vec
-      op_base_t<Value>* op_ptr; // pointer to this operator
+      base_op_t<Value>* op_ptr; // pointer to this operator
    } op_info_t;
    // END_OP_INFO_T
 private :
@@ -250,11 +250,11 @@ public :
       {  //
          // arg_index, res_index
          const op_info_t& op_info     = op_vec_[i_op];
-         op_base_t<Value>* op_ptr     = op_info.op_ptr;
+         base_op_t<Value>* op_ptr     = op_info.op_ptr;
          addr_t            arg_index  = op_info.arg_index;
          addr_t            res_index  = op_info.res_index;
          //
-         // op_base_t<Value>::eval
+         // base_op_t<Value>::eval
          op_ptr->eval(
             trace,
             arg_index,

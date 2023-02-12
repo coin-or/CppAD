@@ -50,11 +50,11 @@ This override of :ref:`val_base_op@n_aux` return 4.
 
 n_arg
 *****
-see op_base :ref:`val_base_op@n_arg` .
+see base_op :ref:`val_base_op@n_arg` .
 
 n_res
 *****
-see op_base :ref:`val_base_op@n_res` .
+see base_op :ref:`val_base_op@n_res` .
 
 atomic_index
 ************
@@ -126,7 +126,7 @@ is an example and test that uses this operator.
 */
 // BEGIN_CALL_OP_T
 template <class Value>
-class call_op_t : public op_base_t<Value> {
+class call_op_t : public base_op_t<Value> {
 public:
    // get_instance
    static call_op_t* get_instance(void)

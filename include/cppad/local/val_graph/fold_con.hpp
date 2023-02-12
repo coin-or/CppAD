@@ -112,7 +112,7 @@ void tape_t<Value>::fold_con(void)
    {
       // is_unary, is_binary, arg_index, res_index, op_enum, n_arg
       const op_info_t& op_info    = op_vec_[i_op];
-      op_base_t<Value>* op_ptr    = op_info.op_ptr;
+      base_op_t<Value>* op_ptr    = op_info.op_ptr;
       bool       is_unary  = op_ptr->is_unary();
       bool       is_binary = op_ptr->is_binary();
       addr_t     arg_index = op_info.arg_index;

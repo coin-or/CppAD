@@ -92,7 +92,7 @@ is an example and test that uses this operator.
 */
 // BEGIN_CON_OP_T
 template <class Value>
-class con_op_t : public op_base_t<Value> {
+class con_op_t : public base_op_t<Value> {
 public:
    // get_instance
    static con_op_t* get_instance(void)

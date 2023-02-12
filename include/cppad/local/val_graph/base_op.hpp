@@ -36,7 +36,7 @@ Value
 This template parameter is the type used for each element of the
 :ref:`val_graph@Value Vector` .
 
-op_base
+base_op
 *******
 This is the base class used for operators.
 All of its functions are public and pure virtual; i.e.,
@@ -148,7 +148,7 @@ Operator Classes
 {xrst_end val_base_op}
 */
 // BEGIN_OP_T
-template <class Value> class op_base_t {
+template <class Value> class base_op_t {
 public:
    virtual op_enum_t op_enum(void) const = 0;
    virtual addr_t n_aux(void) const = 0;

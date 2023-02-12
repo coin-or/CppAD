@@ -47,7 +47,7 @@ Unary Value Operators
 
 {xrst_end val_unary_op}
 ------------------------------------------------------------------------------
-{xrst_begin val_unary_op_base dev}
+{xrst_begin val_unary_base_op dev}
 
 The Unary Value Operator Base Class
 ###################################
@@ -61,7 +61,7 @@ Prototype
 
 Purpose
 *******
-The class is derived from :ref:`op_base <val_base_op-name>`.
+The class is derived from :ref:`base_op <val_base_op-name>`.
 It overrides the *is_unary*, *n_arg*, *n_res_*, and *print_op* member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
 
@@ -99,12 +99,12 @@ This member function prints the following values:
 #. empty is an empty string used to line up columns with binary operator
 #. res is the result for this operator; i.e. value vector at index res_index
 
-{xrst_end val_unary_op_base}
+{xrst_end val_unary_base_op}
 */
 
 // BEGIN_UNARY_OP_T
 template <class Value>
-class unary_op_t : public op_base_t<Value> {
+class unary_op_t : public base_op_t<Value> {
 // END_UNARY_OP_T
 public:
    //

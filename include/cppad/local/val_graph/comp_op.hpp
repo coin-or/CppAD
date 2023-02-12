@@ -88,7 +88,7 @@ is an example and test that uses this operator.
 */
 // BEGIN_COM_OP_T
 template <class Value>
-class comp_op_t : public op_base_t<Value> {
+class comp_op_t : public base_op_t<Value> {
 public:
    //
    // get_instance

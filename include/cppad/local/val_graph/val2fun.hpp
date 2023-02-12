@@ -93,8 +93,8 @@ void ADFun<Base, RecBase>::val2fun(
    // op_info_t
    typedef typename local::val_graph::tape_t<Base>::op_info_t op_info_t;
    //
-   // op_base_t, op_enum_t
-   using local::val_graph::op_base_t;
+   // base_op_t, op_enum_t
+   using local::val_graph::base_op_t;
    using local::val_graph::op_enum_t;
    //
    // val_op_vec, val_arg_vec, val_con_vec, val_dep_vec
@@ -242,7 +242,7 @@ void ADFun<Base, RecBase>::val2fun(
    {  //
       // is_unary, is_binary, arg_index, res_index, n_arg, op_enum
       const op_info_t& op_info   = val_op_vec[op_index];
-      op_base_t<Base>* op_ptr    = op_info.op_ptr;
+      base_op_t<Base>* op_ptr    = op_info.op_ptr;
       bool             is_unary  = op_ptr->is_unary();
       bool             is_binary = op_ptr->is_binary();
       addr_t           arg_index = op_info.arg_index;

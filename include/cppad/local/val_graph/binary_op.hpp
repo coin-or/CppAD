@@ -48,7 +48,7 @@ Binary Value Operators
 
 {xrst_end val_binary_op}
 ------------------------------------------------------------------------------
-{xrst_begin val_binary_op_base dev}
+{xrst_begin val_binary_base_op dev}
 
 The Value Operator Binary Class
 ###############################
@@ -62,7 +62,7 @@ Prototype
 
 Purpose
 *******
-The class is derived from :ref:`op_base <val_base_op-name>`.
+The class is derived from :ref:`base_op <val_base_op-name>`.
 It overrides the *is_binary*, *n_arg*, *n_res_*, and *print_op*
 member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
@@ -101,12 +101,12 @@ This member function prints the following values:
 #. right_index is the value vector index for the right operand
 #. res is the result for this operator; i.e. value vector at index res_index
 
-{xrst_end val_binary_op_base}
+{xrst_end val_binary_base_op}
 */
 
 // BEGIN_BINARY_OP_T
 template <class Value>
-class binary_op_t : public op_base_t<Value> {
+class binary_op_t : public base_op_t<Value> {
 // END_BINARY_OP_T
 public:
    //
