@@ -37,6 +37,9 @@ private:
    // op_vec_
    const Vector<op_info_t>& op_vec_;
    //
+   // op_enum_vec_
+   const Vector<uint8_t>& op_enum_vec_;
+   //
    // table
    CppAD::local::sparse::size_setvec<addr_t> table_;
    //
@@ -60,12 +63,14 @@ public:
          const Vector<addr_t>&    arg_vec,
          const Vector<Value>&     con_vec,
          const Vector<op_info_t>& op_vec,
+         const Vector<uint8_t>&   op_enum_vec,
          addr_t                   n_hash_code,
          addr_t                   n_op
    ) :
    arg_vec_( arg_vec ) ,
    con_vec_( con_vec ) ,
-   op_vec_( op_vec )
+   op_vec_( op_vec )   ,
+   op_enum_vec_( op_enum_vec )
    {  // table_
       table_.resize( n_hash_code, n_op );
    }
@@ -91,15 +96,18 @@ public:
    addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
       //
-      // op_enum_i, arg_index_i, n_arg
-      addr_t    arg_index_i  = op_vec_[i_op].arg_index;
-      op_enum_t op_enum_i = op_vec_[i_op].op_ptr->op_enum();
-      addr_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index_i, arg_vec_);
+      // op_enum_i, op_ptr
+      op_enum_t op_enum_i      = op_enum_t( op_enum_vec_[i_op] );
+      base_op_t<Value>* op_ptr = tape_t<Value>::base_op_ptr(op_enum_i);
+      //
+      // arg_index_i, n_arg
+      addr_t arg_index_i = op_vec_[i_op].arg_index;
+      addr_t n_arg       = op_ptr->n_arg(arg_index_i, arg_vec_);
       //
       // nan
       if( op_enum_i == con_op_enum )
       {  if( CppAD::isnan( con_vec_[ arg_vec_[arg_index_i] ] ) )
-         {  CPPAD_ASSERT_UNKNOWN( op_vec_[0].op_ptr->op_enum()==con_op_enum );
+         {  CPPAD_ASSERT_UNKNOWN( op_enum_t(op_enum_vec_[0]) == con_op_enum );
             CPPAD_ASSERT_UNKNOWN( op_vec_[0].arg_index == 0 );
             CPPAD_ASSERT_UNKNOWN( arg_vec_[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( CppAD::isnan( con_vec_[0] ) );
@@ -115,7 +123,7 @@ public:
       while( *itr != table_.end() )
       {  // op_enum_j, arg_index_j
          addr_t j_op           = *itr;
-         op_enum_t op_enum_j   = op_vec_[j_op].op_ptr->op_enum();
+         op_enum_t op_enum_j   = op_enum_t( op_enum_vec_[j_op] );
          addr_t    arg_index_j = op_vec_[j_op].arg_index;
          //
          // match
@@ -226,6 +234,7 @@ void tape_t<Value>::renumber(void)
       arg_vec_,
       con_vec_,
       op_vec_,
+      op_enum_vec_,
       n_hash_code,
       n_op
    );
@@ -237,7 +246,12 @@ void tape_t<Value>::renumber(void)
    //
    // i_op
    for(addr_t i_op = 0; i_op < n_op; ++i_op)
-   {  // j_op
+   {  //
+      // op_enum, op_ptr
+      op_enum_t op_enum        = get_op_enum(i_op);
+      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+      //
+      // j_op
       addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
       if( j_op != i_op )
       {  assert( j_op < i_op );
@@ -248,11 +262,10 @@ void tape_t<Value>::renumber(void)
          addr_t arg_index_i = op_vec_[i_op].arg_index;
          addr_t res_index_i = op_vec_[i_op].res_index;
          addr_t res_index_j = op_vec_[j_op].res_index;
-         addr_t n_res = op_vec_[i_op].op_ptr->n_res(arg_index_i, arg_vec_);
+         addr_t n_res       = op_ptr->n_res(arg_index_i, arg_vec_);
          if( n_res == 0 )
          {
 # ifndef NDEBUG
-            op_enum_t op_enum = op_vec_[i_op].op_ptr->op_enum();
             CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
 # endif
             arg_vec_[arg_index_i + 0] = compare_no_enum;
@@ -265,16 +278,19 @@ void tape_t<Value>::renumber(void)
    // arg_vec_
    for(addr_t i_op = 0; i_op < n_op; ++i_op)
    {  //
+      // op_enum, op_ptr
+      op_enum_t op_enum        = get_op_enum(i_op);
+      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+      //
       // arg_index, n_arg
       addr_t    arg_index = op_vec_[i_op].arg_index;
-      addr_t    n_arg     = op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t    n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
       //
       // val_index, n_val_arg
       addr_t val_index = arg_index;
       addr_t n_val_arg = n_arg;
       //
-      // op_enum, val_index, n_val_arg
-      op_enum_t op_enum   = op_vec_[i_op].op_ptr->op_enum();
+      // val_index, n_val_arg
       switch( op_enum )
       {  //
          default:

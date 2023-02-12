@@ -5,10 +5,11 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 // BEGIN_SORT_THIS_LINE_PLUS_1
-# include <cppad/local/val_graph/unary_op.hpp>
 # include <cppad/local/val_graph/binary_op.hpp>
 # include <cppad/local/val_graph/con_op.hpp>
+# include <cppad/local/val_graph/op_enum2class.hpp>
 # include <cppad/local/val_graph/type.hpp>
+# include <cppad/local/val_graph/unary_op.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 
 # define CPPAD_VAL_GRAPH_TAPE_TRACE 0
@@ -168,20 +169,35 @@ template <class Value> class tape_t {
 public :
    // BEGIN_OP_INFO_T
    typedef struct {
-      addr_t      arg_index;    // starting index in arg_vec for an operator
-      addr_t      res_index;    // starting result index in val_vec
-      base_op_t<Value>* op_ptr; // pointer to this operator
+      addr_t      arg_index;    // arg_vec_ index for an operator use
+      addr_t      res_index;    // val_vec  index for an operator use
    } op_info_t;
    // END_OP_INFO_T
 private :
-   addr_t                n_ind_;     // number of independent values
-   addr_t                n_val_;     // index in val_vec of record result
-   Vector<addr_t>        arg_vec_;   // index of operator arguments in val_vec
-   Vector<Value>         con_vec_;   // constants used by the tape
-   Vector<op_info_t>     op_vec_;    // operators that define this function
-   Vector<addr_t>        dep_vec_;   // index in val_vec of dependent variables
+   addr_t             n_ind_;       // number of independent values
+   addr_t             n_val_;       // total number of values
+   Vector<addr_t>     arg_vec_;     // arguments for all operator uses
+   Vector<Value>      con_vec_;     // constants for all operator uses
+   Vector<addr_t>     dep_vec_;     // dependent variable indices in val_vec
+   Vector<op_info_t>  op_vec_;      // operator uses
+   Vector<uint8_t>    op_enum_vec_; // one byte per operator enum value.
+   //
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // set by set_ind, used by set_dep
+   size_t  set_ind_inuse_;
+# endif
    //
 public :
+   static base_op_t<Value>* base_op_ptr(op_enum_t op_enum)
+   {  return op_enum2class<Value>(op_enum);
+   }
+   void set_op_enum(op_enum_t op_enum)
+   {  op_enum_vec_.push_back( uint8_t(op_enum) );
+   }
+   op_enum_t get_op_enum(addr_t addr) const
+   {  op_enum_t op_enum =  op_enum_t( op_enum_vec_[addr] );
+      return op_enum;
+   }
    // ------------------------------------------------------------------------
    // BEGIN_N_VAL
    addr_t n_val(void) const
@@ -220,8 +236,9 @@ public :
       std::swap( n_val_, other.n_val_);
       arg_vec_.swap( other.arg_vec_ );
       con_vec_.swap( other.con_vec_ );
-      op_vec_.swap( other.op_vec_ );
       dep_vec_.swap( other.dep_vec_ );
+      op_vec_.swap( other.op_vec_ );
+      op_enum_vec_.swap( other.op_enum_vec_ );
    }
    // BEGIN_EVAL
    void eval(
@@ -245,12 +262,13 @@ public :
       }
       //
       // i_op
-      size_t n_op = op_vec_.size();
-      for(size_t i_op = 0; i_op < n_op; ++i_op)
+      addr_t n_op = addr_t( op_vec_.size() );
+      for(addr_t i_op = 0; i_op < n_op; ++i_op)
       {  //
          // arg_index, res_index
-         const op_info_t& op_info     = op_vec_[i_op];
-         base_op_t<Value>* op_ptr     = op_info.op_ptr;
+         const op_info_t&  op_info    = op_vec_[i_op];
+         op_enum_t         op_enum    = get_op_enum( i_op );
+         base_op_t<Value>* op_ptr     = base_op_ptr(op_enum);
          addr_t            arg_index  = op_info.arg_index;
          addr_t            res_index  = op_info.res_index;
          //

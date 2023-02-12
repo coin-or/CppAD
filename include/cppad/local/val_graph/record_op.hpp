@@ -160,6 +160,12 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    dep_vec_.clear();
    con_vec_.clear();
    op_vec_.clear();
+   op_enum_vec_.clear();
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // set_ind_inue
+   size_t thread  = thread_alloc::thread_num();
+   set_ind_inuse_ = thread_alloc::inuse(thread);
+# endif
    //
    addr_t nan_addr = record_con_op(nan);
    assert ( nan_addr == n_ind_ );
@@ -179,12 +185,16 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    // arg_index
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
+   // op_enum_vec_
+   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
+   set_op_enum( op_enum );
    //
    // op_vec_
-   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_info_t op_info = { arg_index, res_index};
    op_vec_.push_back(op_info);
+   //
+   // op_ptr
+   base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
    //
    // arg_vec_
    size_t n_op_arg = op_ptr->n_arg(arg_index, arg_vec_);
@@ -210,11 +220,12 @@ addr_t tape_t<Value>::record_comp_op(
    // arg_index
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = comp_op_t<Value>::get_instance();
+   // op_enum_vec_
+   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
+   set_op_enum( comp_op_enum );
    //
    // op_vec_
-   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_info_t op_info = { arg_index, res_index};
    op_vec_.push_back(op_info);
    //
    // arg_vec_
@@ -247,15 +258,20 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    // arg_index
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = con_op_t<Value>::get_instance();
+   // op_enum_vec_
+   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
+   set_op_enum( con_op_enum );
    //
    // op_vec_
-   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_info_t op_info = { arg_index, res_index};
    op_vec_.push_back(op_info);
    //
    // arg_vec_
    arg_vec_.push_back( con_index );
+   //
+   // op_ptr
+   base_op_t<Value>* op_ptr = base_op_ptr(con_op_enum);
+   //
    //
    // n_val_
    n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
@@ -274,12 +290,16 @@ addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
    // arg_index
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = dis_op_t<Value>::get_instance();
+   // op_enum_vec_
+   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
+   set_op_enum( dis_op_enum );
    //
    // op_vec_
-   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_info_t op_info = { arg_index, res_index};
    op_vec_.push_back(op_info);
+   //
+   // op_ptr
+   base_op_t<Value>* op_ptr = base_op_ptr(dis_op_enum);
    //
    // arg_vec_
    arg_vec_.push_back( discrete_index );
@@ -306,11 +326,12 @@ addr_t tape_t<Value>::record_call_op(
    // arg_index
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = call_op_t<Value>::get_instance();
+   // op_enum_vec_
+   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
+   set_op_enum( call_op_enum );
    //
    // op_vec_
-   op_info_t op_info = { arg_index, res_index, op_ptr};
+   op_info_t op_info = { arg_index, res_index};
    op_vec_.push_back(op_info);
    //
    // arg_vec_
@@ -332,7 +353,14 @@ addr_t tape_t<Value>::record_call_op(
 template <class Value>
 void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
 // END_SET_DEP
-{  dep_vec_ = dep_vec; }
+{  dep_vec_ = dep_vec;
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // inuse
+   size_t thread        = thread_alloc::thread_num();
+   size_t set_dep_inuse = thread_alloc::inuse(thread);
+   std::cout << "tape:      inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
+# endif
+}
 // ----------------------------------------------------------------------------
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

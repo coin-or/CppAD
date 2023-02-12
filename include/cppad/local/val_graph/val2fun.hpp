@@ -133,7 +133,7 @@ void ADFun<Base, RecBase>::val2fun(
    size_t var_n_ind = var_ind.size();
    //
    // val_n_op
-   size_t val_n_op = val_op_vec.size();
+   addr_t val_n_op = addr_t( val_op_vec.size() );
    //
    CPPAD_ASSERT_KNOWN( dyn_n_ind + var_n_ind == val_n_ind,
       "val2fun: The number of independent variables and dynamic parameters\n"
@@ -153,8 +153,8 @@ void ADFun<Base, RecBase>::val2fun(
    vector<Base> val_index2con(n_val);
    for(addr_t i = 0; i < n_val; ++i)
       val_index2con[i] = nan;
-   for(size_t i_op = 0; i_op < val_op_vec.size(); ++i_op)
-   {  op_enum_t op_enum = val_op_vec[i_op].op_ptr->op_enum();
+   for(addr_t i_op = 0; i_op < val_n_op; ++i_op)
+   {  op_enum_t op_enum = val_tape.get_op_enum(i_op);
       if( op_enum == local::val_graph::con_op_enum )
       {  addr_t res_index = val_op_vec[i_op].res_index;
          addr_t con_index = val_arg_vec[ val_op_vec[i_op].arg_index ];
@@ -238,18 +238,18 @@ void ADFun<Base, RecBase>::val2fun(
    vector< AD<Base> >   ax, ay;
    //
    // op_index
-   for(size_t op_index = 0; op_index < val_n_op; ++op_index)
+   for(addr_t i_op = 0; i_op < val_n_op; ++i_op)
    {  //
       // is_unary, is_binary, arg_index, res_index, n_arg, op_enum
-      const op_info_t& op_info   = val_op_vec[op_index];
-      base_op_t<Base>* op_ptr    = op_info.op_ptr;
+      const op_info_t& op_info   = val_op_vec[i_op];
+      op_enum_t        op_enum   = val_tape.get_op_enum(i_op);
+      base_op_t<Base>* op_ptr    = val_tape.base_op_ptr(op_enum);
       bool             is_unary  = op_ptr->is_unary();
       bool             is_binary = op_ptr->is_binary();
       addr_t           arg_index = op_info.arg_index;
       addr_t           res_index = op_info.res_index;
       addr_t           n_aux     = op_ptr->n_aux();
       addr_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);
-      op_enum_t        op_enum   = op_ptr->op_enum();
       CPPAD_ASSERT_UNKNOWN( n_aux <= n_arg );
       //
       // ad_type_x, fun_arg, con_x, max_ad_type

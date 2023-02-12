@@ -106,18 +106,22 @@ void tape_t<Value>::dead_code(bool keep_compare)
       need_val_index[ dep_vec_[i] ] = true;
    //
    // need_val_index
-   size_t i_op = op_vec_.size();
+   addr_t i_op = addr_t( op_vec_.size() );
    while( i_op-- )
-   {  // is_unary, is_binary res_index, arg_index
-      bool   is_unary    = op_vec_[i_op].op_ptr->is_unary();
-      bool   is_binary   = op_vec_[i_op].op_ptr->is_binary();
+   {  //
+      // op_enum, op_ptr
+      op_enum_t op_enum        = get_op_enum(i_op);
+      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+      //
+      // is_unary, is_binary res_index, arg_index
+      bool   is_unary    = op_ptr->is_unary();
+      bool   is_binary   = op_ptr->is_binary();
       addr_t res_index   = op_vec_[i_op].res_index;
       addr_t arg_index   = op_vec_[i_op].arg_index;
       //
-      // op_enum, n_arg, n_res
-      op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
-      addr_t n_arg =  op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
-      addr_t n_res =  op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
+      // n_arg, n_res
+      addr_t n_arg =  op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t n_res =  op_ptr->n_res(arg_index, arg_vec_);
       //
       // is_unary
       if( is_unary )
@@ -216,24 +220,29 @@ void tape_t<Value>::dead_code(bool keep_compare)
    Vector<addr_t> op_arg, call_op_arg;
 # ifndef NDEBUG
    // nan at index n_ind_
-   assert( op_vec_[0].op_ptr->op_enum() == con_op_enum );
+   assert( get_op_enum(0) == con_op_enum );
    assert( op_vec_[0].arg_index == 0 );
    assert( op_vec_[0].res_index == addr_t( n_ind_ ) );
    assert( arg_vec_[0] == 0 );
    assert( CppAD::isnan( con_vec_[0] ) );
 # endif
    // i_op
-   for(i_op = 1; i_op < op_vec_.size(); ++i_op)
-   {  // is_unary, is_binary res_index, arg_index
-      bool   is_unary    = op_vec_[i_op].op_ptr->is_unary();
-      bool   is_binary   = op_vec_[i_op].op_ptr->is_binary();
+   addr_t n_op = addr_t( op_vec_.size() );
+   for(i_op = 1; i_op < n_op; ++i_op)
+   {  //
+      // op_enum, op_ptr
+      op_enum_t op_enum        = get_op_enum(i_op);
+      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+
+      // is_unary, is_binary res_index, arg_index
+      bool   is_unary    = op_ptr->is_unary();
+      bool   is_binary   = op_ptr->is_binary();
       addr_t res_index   = op_vec_[i_op].res_index;
       addr_t arg_index   = op_vec_[i_op].arg_index;
       //
-      // op_enum, n_arg, n_res
-      op_enum_t  op_enum = op_vec_[i_op].op_ptr->op_enum();
-      addr_t n_arg =  op_vec_[i_op].op_ptr->n_arg(arg_index, arg_vec_);
-      addr_t n_res =  op_vec_[i_op].op_ptr->n_res(arg_index, arg_vec_);
+      // n_arg, n_res
+      addr_t n_arg =  op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t n_res =  op_ptr->n_res(arg_index, arg_vec_);
       //
       // need_op
       bool need_op = false;

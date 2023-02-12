@@ -108,16 +108,19 @@ void tape_t<Value>::fold_con(void)
    // i_op
    // Note that i_op = 0 corresponds to the nan at index zero in con_vec_
    // and record_con_op uses the nan that is alread there.
-   for(size_t i_op = 0; i_op < op_vec_.size(); ++i_op)
-   {
-      // is_unary, is_binary, arg_index, res_index, op_enum, n_arg
-      const op_info_t& op_info    = op_vec_[i_op];
-      base_op_t<Value>* op_ptr    = op_info.op_ptr;
+   addr_t n_op = addr_t( op_vec_.size() );
+   for(addr_t i_op = 0; i_op < n_op; ++i_op)
+   {  //
+      // op_info, op_enum, op_ptr
+      const op_info_t& op_info = op_vec_[i_op];
+      op_enum_t op_enum        = get_op_enum(i_op);
+      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+
+      // is_unary, is_binary, arg_index, res_index, n_arg
       bool       is_unary  = op_ptr->is_unary();
       bool       is_binary = op_ptr->is_binary();
       addr_t     arg_index = op_info.arg_index;
       addr_t     res_index = op_info.res_index;
-      op_enum_t  op_enum   = op_ptr->op_enum();
       addr_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
       //
       CPPAD_ASSERT_UNKNOWN( size_t( res_index ) == old2new_index.size() );
