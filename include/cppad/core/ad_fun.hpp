@@ -33,7 +33,6 @@ Contents
 # include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/subgraph/info.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
-# include <cppad/local/val_graph/tape.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
