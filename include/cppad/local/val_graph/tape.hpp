@@ -13,7 +13,7 @@
 # include <cppad/local/val_graph/op_iterator.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 
-# define CPPAD_VAL_GRAPH_TAPE_TRACE 1
+# define CPPAD_VAL_GRAPH_TAPE_TRACE 0
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
@@ -268,8 +268,7 @@ public :
       //
       // op_itr, i_op
       op_iterator<Value> op_itr(*this, 0);
-      addr_t n_op = addr_t( op_enum_vec_.size() );
-      for(addr_t i_op = 0; i_op < n_op; ++i_op)
+      for(addr_t i_op = 0; i_op < n_op(); ++i_op)
       {  //
          // op_ptr, arg_index, res_index
          const base_op_t<Value>* op_ptr     = op_itr.op_ptr();

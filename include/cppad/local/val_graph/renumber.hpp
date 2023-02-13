@@ -224,13 +224,10 @@ void tape_t<Value>::renumber(void)
    size_t initial_inuse = thread_alloc::inuse(thread);
 # endif
    //
-   // n_op
-   addr_t n_op = addr_t( op_enum_vec_.size() );
-   //
    // op2arg_index, op2res_index
-   Vector<addr_t> op2arg_index(n_op), op2res_index(n_op);
+   Vector<addr_t> op2arg_index( n_op() ), op2res_index( n_op() );
    {  op_iterator op_itr(*this, 0);
-      for(addr_t i_op = 0; i_op < n_op; ++i_op)
+      for(addr_t i_op = 0; i_op < n_op(); ++i_op)
       {  op2arg_index[i_op] = op_itr.arg_index();
          op2res_index[i_op] = op_itr.res_index();
          ++op_itr;
@@ -247,7 +244,7 @@ void tape_t<Value>::renumber(void)
       new_val_index[i] = i;
    //
    // i_op
-   for(addr_t i_op = 0; i_op < n_op; ++i_op)
+   for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
       // op_enum, op_itr
       op_enum_t               op_enum  = op_enum_t( op_enum_vec()[i_op] );
@@ -280,7 +277,7 @@ void tape_t<Value>::renumber(void)
    }
    //
    // arg_vec_
-   for(addr_t i_op = 0; i_op < n_op; ++i_op)
+   for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
       // op_enum, op_ptr
       op_enum_t               op_enum  = op_enum_t( op_enum_vec()[i_op] );

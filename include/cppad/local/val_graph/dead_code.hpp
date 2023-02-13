@@ -105,14 +105,11 @@ void tape_t<Value>::dead_code(bool keep_compare)
    for(size_t i = 0; i < dep_vec_.size(); ++i)
       need_val_index[ dep_vec_[i] ] = true;
    //
-   // n_op
-   addr_t n_op = addr_t( op_enum_vec_.size() );
-   //
    // op_itr_reverse
-   op_iterator op_itr_reverse(*this, n_op);
+   op_iterator op_itr_reverse(*this, n_op() );
    //
    // need_val_index
-   addr_t i_op = n_op;
+   addr_t i_op = n_op();
    while( i_op-- )
    {  //
       // op_itr_reverse
@@ -244,7 +241,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
    op_iterator op_itr_forward(*this, 0);
    //
    // i_op
-   for(i_op = 1; i_op < n_op; ++i_op)
+   for(i_op = 1; i_op < n_op(); ++i_op)
    {  //
       // op_itr_forward
       ++op_itr_forward; // skip index zero
