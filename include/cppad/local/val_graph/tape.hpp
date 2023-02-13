@@ -192,13 +192,6 @@ public :
    static base_op_t<Value>* base_op_ptr(op_enum_t op_enum)
    {  return op_enum2class<Value>(op_enum);
    }
-   void set_op_enum(op_enum_t op_enum)
-   {  op_enum_vec_.push_back( uint8_t(op_enum) );
-   }
-   op_enum_t get_op_enum(addr_t addr) const
-   {  op_enum_t op_enum =  op_enum_t( op_enum_vec_[addr] );
-      return op_enum;
-   }
    // ------------------------------------------------------------------------
    // BEGIN_N_VAL
    addr_t n_val(void) const

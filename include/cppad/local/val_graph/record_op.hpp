@@ -185,7 +185,7 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_enum_vec_
-   set_op_enum( op_enum );
+   op_enum_vec_.push_back( uint8_t( op_enum ) );
    //
    // op_ptr
    base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
@@ -212,7 +212,7 @@ addr_t tape_t<Value>::record_comp_op(
    addr_t res_index = 0; // invalid result index
    //
    // op_enum_vec_
-   set_op_enum( comp_op_enum );
+   op_enum_vec_.push_back( uint8_t( comp_op_enum ) );
    //
    // arg_vec_
    arg_vec_.push_back( addr_t(compare_enum) );
@@ -245,7 +245,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_enum_vec_
-   set_op_enum( con_op_enum );
+   op_enum_vec_.push_back( uint8_t( con_op_enum ) );
    //
    // arg_vec_
    arg_vec_.push_back( con_index );
@@ -272,7 +272,7 @@ addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_enum_vec_
-   set_op_enum( dis_op_enum );
+   op_enum_vec_.push_back( uint8_t( dis_op_enum ) );
    //
    // op_ptr
    base_op_t<Value>* op_ptr = base_op_ptr(dis_op_enum);
@@ -300,7 +300,7 @@ addr_t tape_t<Value>::record_call_op(
    addr_t res_index = addr_t( n_val_ );
    //
    // op_enum_vec_
-   set_op_enum( call_op_enum );
+   op_enum_vec_.push_back( uint8_t( call_op_enum ) );
    //
    // arg_vec_
    addr_t n_arg = 5 + addr_t( fun_arg.size() );

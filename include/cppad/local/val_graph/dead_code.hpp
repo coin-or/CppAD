@@ -232,7 +232,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
    Vector<addr_t> op_arg, call_op_arg;
 # ifndef NDEBUG
    // nan at index n_ind_
-   assert( get_op_enum(0) == con_op_enum );
+   assert( op_enum_t( op_enum_vec_[0] ) == con_op_enum );
    assert( arg_vec_[0] == 0 );
    assert( CppAD::isnan( con_vec_[0] ) );
 # endif
