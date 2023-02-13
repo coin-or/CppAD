@@ -159,7 +159,6 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    n_val_ = n_ind;
    dep_vec_.clear();
    con_vec_.clear();
-   op_vec_.clear();
    op_enum_vec_.clear();
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // set_ind_inue
@@ -186,12 +185,7 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_enum_vec_
-   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
    set_op_enum( op_enum );
-   //
-   // op_vec_
-   op_info_t op_info = { arg_index, res_index};
-   op_vec_.push_back(op_info);
    //
    // op_ptr
    base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
@@ -217,16 +211,8 @@ addr_t tape_t<Value>::record_comp_op(
 {  // res_index
    addr_t res_index = 0; // invalid result index
    //
-   // arg_index
-   addr_t arg_index = addr_t( arg_vec_.size() );
-   //
    // op_enum_vec_
-   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
    set_op_enum( comp_op_enum );
-   //
-   // op_vec_
-   op_info_t op_info = { arg_index, res_index};
-   op_vec_.push_back(op_info);
    //
    // arg_vec_
    arg_vec_.push_back( addr_t(compare_enum) );
@@ -242,7 +228,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
 // END_RECORD_CON_OP
 {  //
    // nan
-   if( op_vec_.size() == 0 )
+   if( op_enum_vec_.size() == 0 )
    {  CPPAD_ASSERT_UNKNOWN( CppAD::isnan(constant) && n_val_ == n_ind_ );
    }
    else if( CppAD::isnan(constant) )
@@ -259,12 +245,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_enum_vec_
-   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
    set_op_enum( con_op_enum );
-   //
-   // op_vec_
-   op_info_t op_info = { arg_index, res_index};
-   op_vec_.push_back(op_info);
    //
    // arg_vec_
    arg_vec_.push_back( con_index );
@@ -291,12 +272,7 @@ addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
    addr_t arg_index = addr_t( arg_vec_.size() );
    //
    // op_enum_vec_
-   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
    set_op_enum( dis_op_enum );
-   //
-   // op_vec_
-   op_info_t op_info = { arg_index, res_index};
-   op_vec_.push_back(op_info);
    //
    // op_ptr
    base_op_t<Value>* op_ptr = base_op_ptr(dis_op_enum);
@@ -323,16 +299,8 @@ addr_t tape_t<Value>::record_call_op(
    // res_index
    addr_t res_index = addr_t( n_val_ );
    //
-   // arg_index
-   addr_t arg_index = addr_t( arg_vec_.size() );
-   //
    // op_enum_vec_
-   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == op_vec_.size() );
    set_op_enum( call_op_enum );
-   //
-   // op_vec_
-   op_info_t op_info = { arg_index, res_index};
-   op_vec_.push_back(op_info);
    //
    // arg_vec_
    addr_t n_arg = 5 + addr_t( fun_arg.size() );

@@ -86,13 +86,13 @@ bool comp_xam(void)
    compare_false = 0;
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 2;        // there are two x[0] < x[1] comparisons
-   ok &= tape.op_vec().size() == 5; // 1 con_op, 2 comp_op, 2 add_op
+   ok &= tape.n_op() == 5; // 1 con_op, 2 comp_op, 2 add_op
    //
    // tape
    bool keep_compare = true;
    tape.renumber();
    tape.dead_code(keep_compare);
-   ok &= tape.op_vec().size() == 3; // 1 con_op, 1 comp_op, 1 add_op
+   ok &= tape.n_op() == 3; // 1 con_op, 1 comp_op, 1 add_op
    //
    // ok, val_vec
    compare_false = 0;
@@ -103,7 +103,7 @@ bool comp_xam(void)
    // tape
    keep_compare = false;
    tape.dead_code(keep_compare);
-   ok &= tape.op_vec().size() == 2; // 1 con_op, 0 comp_op, 1 add_op
+   ok &= tape.n_op() == 2; // 1 con_op, 0 comp_op, 1 add_op
    //
    // ok, val_vec
    val_vec.resize( tape.n_val() );

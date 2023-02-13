@@ -35,7 +35,7 @@ bool test_nan(void)
    // set_dep
    tape.set_dep( dep_vec );
    //
-   ok &= tape.op_vec().size()  == 2;
+   ok &= tape.n_op()  == 2;
    ok &= tape.con_vec().size() == 2;
    ok &= tape.arg_vec().size() == 2;
    //
@@ -56,7 +56,7 @@ bool test_nan(void)
    bool keep_compare = true; // no compare operatos so value does not matter
    tape.dead_code(keep_compare);
    //
-   ok &= tape.op_vec().size()  == 1;
+   ok &= tape.n_op()  == 1;
    ok &= tape.con_vec().size() == 1;
    ok &= tape.arg_vec().size() == 1;
    //

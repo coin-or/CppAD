@@ -76,7 +76,7 @@ bool fold_con_xam(void)
    y[0]    = val_vec[ dep_vec[0] ];
    ok     &= y[0] == x[0] + c[0] + c[1];
    ok     &= tape.con_vec().size() == 3;
-   ok     &= tape.op_vec().size() == 5;
+   ok     &= tape.n_op() == 5;
    //
    // fold_con
    tape.fold_con();

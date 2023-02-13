@@ -113,7 +113,7 @@ void tape_t<Value>::fold_con(void)
    op_iterator op_itr(*this, 0);
    //
    // i_op
-   addr_t n_op = addr_t( op_vec_.size() );
+   addr_t n_op = addr_t( op_enum_vec_.size() );
    for(addr_t i_op = 1; i_op < n_op; ++i_op)
    {  //
       // op_itr

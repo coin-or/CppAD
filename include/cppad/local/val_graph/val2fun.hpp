@@ -91,15 +91,11 @@ void ADFun<Base, RecBase>::val2fun(
    // vector
    using CppAD::vector;
    //
-   // op_info_t
-   typedef typename local::val_graph::tape_t<Base>::op_info_t op_info_t;
-   //
    // base_op_t, op_enum_t
    using local::val_graph::base_op_t;
    using local::val_graph::op_enum_t;
    //
-   // val_op_vec, val_arg_vec, val_con_vec, val_dep_vec
-   const vector<op_info_t>& val_op_vec = val_tape.op_vec();
+   // val_arg_vec, val_con_vec, val_dep_vec
    const vector<addr_t>&    val_arg_vec = val_tape.arg_vec();
    const vector<Base>&      val_con_vec = val_tape.con_vec();
    const vector<addr_t>&    val_dep_vec = val_tape.dep_vec();
@@ -134,7 +130,7 @@ void ADFun<Base, RecBase>::val2fun(
    size_t var_n_ind = var_ind.size();
    //
    // val_n_op
-   addr_t val_n_op = addr_t( val_op_vec.size() );
+   addr_t val_n_op = val_tape.n_op();
    //
    CPPAD_ASSERT_KNOWN( dyn_n_ind + var_n_ind == val_n_ind,
       "val2fun: The number of independent variables and dynamic parameters\n"

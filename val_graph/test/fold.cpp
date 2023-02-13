@@ -83,7 +83,7 @@ bool atom(void)
    ok     &= y[0] == x[0] + c[0] + c[1];
    ok     &= y[1] == x[0] + c[2] * c[3];
    ok     &= tape.con_vec().size() == 5;
-   ok     &= tape.op_vec().size()  == 8;
+   ok     &= tape.n_op()  == 8;
    ok     &= tape.arg_vec().size() == 1 + 4 + 4 + 5 + 2 + 2;
    //
    // fold_con
@@ -114,7 +114,7 @@ bool atom(void)
    ok     &= y[0] == x[0] + c[0] + c[1];
    ok     &= y[1] == x[0] + c[2] * c[3];
    ok     &= tape.con_vec().size() == 3;
-   ok     &= tape.op_vec().size()  == 5;
+   ok     &= tape.n_op()  == 5;
    ok     &= tape.arg_vec().size() == 7;
    //
    return ok;
@@ -185,7 +185,7 @@ bool dis_op(void)
    y[0]    = val_vec[ dep_vec[0] ];
    ok     &= y[0] == x[0] + c[1];
    ok     &= tape.con_vec().size() == 2;
-   ok     &= tape.op_vec().size()  == 4;
+   ok     &= tape.n_op()  == 4;
    ok     &= tape.arg_vec().size() == 6;
    //
    // fold_con
@@ -207,7 +207,7 @@ bool dis_op(void)
    y[0]    = val_vec[ dep_vec[0] ];
    ok     &= y[0] == x[0] + c[1];
    ok     &= tape.con_vec().size() == 2;
-   ok     &= tape.op_vec().size()  == 3;
+   ok     &= tape.n_op()  == 3;
    ok     &= tape.arg_vec().size() == 4;
    //
    return ok;

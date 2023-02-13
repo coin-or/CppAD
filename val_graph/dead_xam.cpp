@@ -72,7 +72,7 @@ bool dead_xam(void)
    size_t compare_false = 0;
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;
-   ok &= tape.op_vec().size() == 6;
+   ok &= tape.n_op() == 6;
    ok &= tape.arg_vec().size() == 9;
    ok &= tape.con_vec().size() == 3;
    //
@@ -84,7 +84,7 @@ bool dead_xam(void)
    ok &= compare_false == 0;
    //
    // ok
-   ok &= tape.op_vec().size() == 4;
+   ok &= tape.n_op() == 4;
    ok &= tape.arg_vec().size() == 6;
    ok &= tape.con_vec().size() == 2;
    //

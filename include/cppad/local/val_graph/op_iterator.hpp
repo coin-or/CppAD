@@ -65,7 +65,7 @@ namespace CppAD { namespace local { namespace val_graph  {
 // tape_t;
 template <class Value> class tape_t;
 
-template <class Value> 
+template <class Value>
 class op_iterator {
 //
 private:
@@ -97,14 +97,13 @@ public:
    // END_MEMBER_FUNCTIONS
    //
    // BEGIN_CTOR
-   op_iterator(const tape_t<Value>& tape, addr_t op_index) 
+   op_iterator(const tape_t<Value>& tape, addr_t op_index)
    // END_CTOR
-   : 
-   tape_ ( tape )         , 
-   op_ptr_(nullptr)       , 
+   :
+   tape_ ( tape )         ,
+   op_ptr_(nullptr)       ,
    op_index_ ( op_index )
-   {  addr_t n_op = addr_t( tape.op_enum_vec().size() );
-      CPPAD_ASSERT_UNKNOWN( size_t(n_op) == tape.op_vec().size() );  
+   {  addr_t n_op = tape.n_op();
       //
       if( op_index == 0 )
       {  op_enum_t op_enum = op_enum_t( tape.op_enum_vec()[op_index] );
@@ -121,13 +120,13 @@ public:
       {  CPPAD_ASSERT_KNOWN( false,
             "op_iterator: op_index is not zero or number of operators in tape"
          );
-      } 
+      }
    }
    //
    // BEGIN_INCREMENT
    void operator++(void)
    // END_INCREMENT
-   {  CPPAD_ASSERT_KNOWN( op_index_ < addr_t( tape_.op_enum_vec().size() ),
+   {  CPPAD_ASSERT_KNOWN( op_index_ < addr_t( tape_.n_op() ),
          "op_iterator: attempt to increment past the end of the tape"
       );
       //
@@ -141,7 +140,7 @@ public:
       res_index_ += n_res;
       //
       // op_ptr_
-      if( size_t(op_index_)  == tape_.op_enum_vec().size() )
+      if( op_index_ == tape_.n_op() )
          op_ptr_ = nullptr;
       else
       {  op_enum_t op_enum = op_enum_t( tape_.op_enum_vec()[op_index_] );
@@ -177,7 +176,7 @@ public:
       addr_t n_res = op_ptr_->n_res(arg_index_, tape_.arg_vec());
       res_index_ -= n_res;
    }
-}; 
+};
 
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

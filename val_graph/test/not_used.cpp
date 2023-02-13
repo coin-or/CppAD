@@ -67,7 +67,7 @@ bool test_not_used(void)
    ok &= compare_false == 0;
    ok &= tape.arg_vec().size() == 12;
    ok &= tape.con_vec().size() == 4;
-   ok &= tape.op_vec().size() == 8;
+   ok &= tape.n_op() == 8;
    //
    // renumber, val_vec
    tape.renumber();
@@ -86,7 +86,7 @@ bool test_not_used(void)
    // after optimizing
    ok &= tape.arg_vec().size() == 8;
    ok &= tape.con_vec().size() == 2;
-   ok &= tape.op_vec().size() == 5;
+   ok &= tape.n_op() == 5;
    //
    // dep_vec
    dep_vec = tape.dep_vec();

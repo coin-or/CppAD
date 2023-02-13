@@ -236,8 +236,6 @@ void tape_t<Value>::dead_code(bool keep_compare)
 # ifndef NDEBUG
    // nan at index n_ind_
    assert( get_op_enum(0) == con_op_enum );
-   assert( op_vec_[0].arg_index == 0 );
-   assert( op_vec_[0].res_index == addr_t( n_ind_ ) );
    assert( arg_vec_[0] == 0 );
    assert( CppAD::isnan( con_vec_[0] ) );
 # endif
@@ -256,7 +254,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
       addr_t                  res_index = op_itr_forward.res_index();
       addr_t                  arg_index = op_itr_forward.arg_index();
       //
-      // op_enum, is_unary, is_binary 
+      // op_enum, is_unary, is_binary
       op_enum_t op_enum   = op_ptr->op_enum();
       bool      is_unary  = op_ptr->is_unary();
       bool      is_binary = op_ptr->is_binary();

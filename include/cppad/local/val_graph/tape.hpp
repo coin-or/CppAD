@@ -13,7 +13,7 @@
 # include <cppad/local/val_graph/op_iterator.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 
-# define CPPAD_VAL_GRAPH_TAPE_TRACE 0
+# define CPPAD_VAL_GRAPH_TAPE_TRACE 1
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
@@ -40,7 +40,6 @@ Value
 *****
 This is the type used for evaluations using the tape.
 
-
 n_val
 *****
 {xrst_literal
@@ -48,6 +47,14 @@ n_val
    // END_N_VAL
 }
 This is the number of elements in the value vector.
+
+n_op
+****
+{xrst_literal
+   // BEGIN_N_OP
+   // END_N_OP
+}
+This is the number of operators in the tape.
 
 n_ind
 *****
@@ -74,15 +81,6 @@ con_vec
 }
 This is a vector of constants that are loaded into the value vector.
 (Constants do not depend on the independent values.)
-
-op_vec
-******
-{xrst_literal
-   // BEGIN_OP_VEC
-   // END_OP_VEC
-}
-Each element of this vector corresponds to an operator usage.
-The order of the vector is the order of operations.
 
 op_enum_vec
 ***********
@@ -177,20 +175,12 @@ Operations on Tape
 // BEGIN_TAPE_T
 template <class Value> class tape_t {
 // END_TAPE_T
-public :
-   // BEGIN_OP_INFO_T
-   typedef struct {
-      addr_t      arg_index;    // arg_vec_ index for an operator use
-      addr_t      res_index;    // val_vec  index for an operator use
-   } op_info_t;
-   // END_OP_INFO_T
 private :
    addr_t             n_ind_;       // number of independent values
    addr_t             n_val_;       // total number of values
    Vector<addr_t>     arg_vec_;     // arguments for all operator uses
    Vector<Value>      con_vec_;     // constants for all operator uses
    Vector<addr_t>     dep_vec_;     // dependent variable indices in val_vec
-   Vector<op_info_t>  op_vec_;      // operator uses
    Vector<uint8_t>    op_enum_vec_; // one byte per operator enum value.
    //
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
@@ -215,6 +205,11 @@ public :
    {  return n_val_; }
    // END_N_VAL
    //
+   // BEGIN_N_OP
+   addr_t n_op(void) const
+   {  return addr_t( op_enum_vec_.size() ); }
+   // END_N_OP
+   //
    // BEGIN_N_IND
    addr_t n_ind(void) const
    {  return n_ind_; }
@@ -229,11 +224,6 @@ public :
    const Vector<Value>& con_vec(void) const
    {  return con_vec_; }
    // END_CON_VEC
-   //
-   // BEGIN_OP_VEC
-   const Vector<op_info_t>& op_vec(void) const
-   {  return op_vec_; }
-   // END_OP_VEC
    //
    // BEGIN_OP_ENUM_VEC
    const Vector<uint8_t>& op_enum_vec(void) const
@@ -253,7 +243,6 @@ public :
       arg_vec_.swap( other.arg_vec_ );
       con_vec_.swap( other.con_vec_ );
       dep_vec_.swap( other.dep_vec_ );
-      op_vec_.swap( other.op_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
    }
    // BEGIN_EVAL

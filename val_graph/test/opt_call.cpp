@@ -91,7 +91,7 @@ bool result_not_used(void)
    // before optmizing
    ok &= tape.arg_vec().size() == 1 + 2 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
-   ok &= tape.op_vec().size() == 6;
+   ok &= tape.n_op() == 6;
    //
    // renumber
    tape.renumber();
@@ -110,7 +110,7 @@ bool result_not_used(void)
    // after optimizing
    ok &= tape.arg_vec().size() == 1 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 1;
-   ok &= tape.op_vec().size() == 4;
+   ok &= tape.n_op() == 4;
    //
    // y
    Vector<double> y(n_dep);
@@ -209,7 +209,7 @@ bool ident_zero(void)
    // before optmizing
    ok &= tape.arg_vec().size() == 1 + 2 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
-   ok &= tape.op_vec().size() == 6;
+   ok &= tape.n_op() == 6;
    //
    // dead_code
    bool keep_compare = true; // no compare operatos so value does not matter
@@ -222,7 +222,7 @@ bool ident_zero(void)
    // after optimizing the subtract operator has been removd
    ok &= tape.arg_vec().size() == 1 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
-   ok &= tape.op_vec().size() == 5;
+   ok &= tape.n_op() == 5;
    //
    // y
    Vector<double> y(n_dep);

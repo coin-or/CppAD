@@ -62,7 +62,7 @@ bool dis_xam(void)
    ok &= compare_false == 0;
    //
    // ok
-   ok &= tape.op_vec().size()  == 2;
+   ok &= tape.n_op()  == 2;
    ok &= tape.arg_vec().size() == 3;
    ok &= tape.con_vec().size() == 1;
    ok &= tape.n_val()          == n_ind + 2;

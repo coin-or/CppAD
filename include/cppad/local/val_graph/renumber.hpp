@@ -65,8 +65,7 @@ public:
    ) :
    tape_( tape ), op2arg_index_(op2arg_index)
    {  // table_
-      addr_t n_op = addr_t( tape.op_enum_vec().size() );
-      CPPAD_ASSERT_UNKNOWN( size_t(n_op) == tape.op_enum_vec().size() );
+      addr_t n_op = tape.n_op();
       //
       table_.resize( n_hash_code, n_op );
    }
