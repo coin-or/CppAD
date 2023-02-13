@@ -37,6 +37,8 @@ of the function above
 {xrst_end val_atomic_xam.hpp}
 */
 // BEGIN_VAL_ATOMIC_XAM
+# include <cppad/cppad.hpp>
+
 class val_atomic_xam : public CppAD::atomic_four<double> {
 public:
    val_atomic_xam(void) :

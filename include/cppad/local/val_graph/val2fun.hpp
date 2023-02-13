@@ -76,6 +76,7 @@ is an example an test of this conversion.
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/call_atomic.hpp>
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/core/cppad_assert.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -153,14 +154,9 @@ void ADFun<Base, RecBase>::val2fun(
    vector<Base> val_index2con(n_val);
    for(addr_t i = 0; i < n_val; ++i)
       val_index2con[i] = nan;
-   for(addr_t i_op = 0; i_op < val_n_op; ++i_op)
-   {  op_enum_t op_enum = val_tape.get_op_enum(i_op);
-      if( op_enum == local::val_graph::con_op_enum )
-      {  addr_t res_index = val_op_vec[i_op].res_index;
-         addr_t con_index = val_arg_vec[ val_op_vec[i_op].arg_index ];
-         val_index2con[res_index] = val_con_vec[con_index];
-      }
-   }
+   bool trace           = false;
+   size_t compare_false = 0;
+   val_tape.eval(trace, compare_false, val_index2con);
    //
    // val2fun_index
    // mapping from value index to index in the AD function object.
@@ -191,7 +187,8 @@ void ADFun<Base, RecBase>::val2fun(
    //
    // rec
    // Place the variable with index 0 in the tape
-   CPPAD_ASSERT_NARG_NRES(local::BeginOp, 1, 1);
+   CPPAD_ASSERT_UNKNOWN( NumArg(local::BeginOp) == 1);
+   CPPAD_ASSERT_UNKNOWN( NumRes(local::BeginOp) == 1);
    rec.PutOp(local::BeginOp);
    rec.PutArg(0); // parameter argumnet is the nan above
    //
@@ -237,17 +234,25 @@ void ADFun<Base, RecBase>::val2fun(
    vector<Base>         con_x;
    vector< AD<Base> >   ax, ay;
    //
-   // op_index
+   // op_itr
+   local::val_graph::op_iterator op_itr(val_tape, 0);
+   //
+   // i_op
    for(addr_t i_op = 0; i_op < val_n_op; ++i_op)
    {  //
-      // is_unary, is_binary, arg_index, res_index, n_arg, op_enum
-      const op_info_t& op_info   = val_op_vec[i_op];
-      op_enum_t        op_enum   = val_tape.get_op_enum(i_op);
-      base_op_t<Base>* op_ptr    = val_tape.base_op_ptr(op_enum);
+      // op_itr
+      if( 0 < i_op )
+         ++op_itr;
+      //
+      // op_ptr, arg_index, res_index
+      const base_op_t<Base>* op_ptr    = op_itr.op_ptr();
+      addr_t                 arg_index = op_itr.arg_index();
+      addr_t                 res_index = op_itr.res_index();
+      //
+      // op_enum, is_unary, is_binary, n_arg
+      op_enum_t        op_enum   = op_ptr->op_enum();
       bool             is_unary  = op_ptr->is_unary();
       bool             is_binary = op_ptr->is_binary();
-      addr_t           arg_index = op_info.arg_index;
-      addr_t           res_index = op_info.res_index;
       addr_t           n_before  = op_ptr->n_before();
       addr_t           n_after   = op_ptr->n_after();
       addr_t           n_arg     = op_ptr->n_arg(arg_index, val_arg_vec);

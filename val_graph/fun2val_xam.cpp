@@ -3,6 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/cppad.hpp>
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/val_graph/fun2val.hpp>
 /*
 {xrst_begin val_fun2val_xam.cpp dev}
 

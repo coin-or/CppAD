@@ -853,8 +853,6 @@ public:
 # include <cppad/local/sweep/for_hes.hpp>
 # include <cppad/core/graph/from_graph.hpp>
 # include <cppad/core/graph/to_graph.hpp>
-# include <cppad/local/val_graph/fun2val.hpp>
-# include <cppad/local/val_graph/val2fun.hpp>
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
