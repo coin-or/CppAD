@@ -91,14 +91,6 @@ op_enum_vec
 Each element of this vector corresponds to an operator usage.
 The order of the vector is the order of operations.
 
-info
-****
-{xrst_literal
-   // BEGIN_OP_INFO_T
-   // END_OP_INFO_T
-}
-This is the information corresponding to one operator usage.
-
 arg_index
 =========
 this specifies the offset in arg_vec for this operator usage.
