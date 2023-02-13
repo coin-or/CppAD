@@ -10,6 +10,7 @@
 # include <cppad/local/val_graph/op_enum2class.hpp>
 # include <cppad/local/val_graph/type.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
+# include <cppad/local/val_graph/op_iterator.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 
 # define CPPAD_VAL_GRAPH_TAPE_TRACE 0
@@ -167,6 +168,7 @@ Operations on Tape
    include/cppad/local/val_graph/fold_con.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
+   include/cppad/local/val_graph/op_iterator.hpp
 }
 
 
@@ -275,16 +277,15 @@ public :
          std::printf("operators\n");
       }
       //
-      // i_op
-      addr_t n_op = addr_t( op_vec_.size() );
+      // op_itr, i_op
+      op_iterator<Value> op_itr(*this, 0);
+      addr_t n_op = addr_t( op_enum_vec_.size() );
       for(addr_t i_op = 0; i_op < n_op; ++i_op)
       {  //
-         // arg_index, res_index
-         const op_info_t&  op_info    = op_vec_[i_op];
-         op_enum_t         op_enum    = get_op_enum( i_op );
-         base_op_t<Value>* op_ptr     = base_op_ptr(op_enum);
-         addr_t            arg_index  = op_info.arg_index;
-         addr_t            res_index  = op_info.res_index;
+         // op_ptr, arg_index, res_index
+         const base_op_t<Value>* op_ptr     = op_itr.op_ptr();
+         addr_t                  arg_index  = op_itr.arg_index();
+         addr_t                  res_index  = op_itr.res_index();
          //
          // base_op_t<Value>::eval
          op_ptr->eval(
@@ -296,6 +297,9 @@ public :
             compare_false,
             val_vec
          );
+         //
+         // op_itr
+         ++op_itr;
       }
       // trace
       if( trace )

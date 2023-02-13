@@ -105,19 +105,28 @@ void tape_t<Value>::dead_code(bool keep_compare)
    for(size_t i = 0; i < dep_vec_.size(); ++i)
       need_val_index[ dep_vec_[i] ] = true;
    //
+   // n_op
+   addr_t n_op = addr_t( op_enum_vec_.size() );
+   //
+   // op_itr_reverse
+   op_iterator op_itr_reverse(*this, n_op);
+   //
    // need_val_index
-   addr_t i_op = addr_t( op_vec_.size() );
+   addr_t i_op = n_op;
    while( i_op-- )
    {  //
-      // op_enum, op_ptr
-      op_enum_t op_enum        = get_op_enum(i_op);
-      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+      // op_itr_reverse
+      --op_itr_reverse;
       //
-      // is_unary, is_binary res_index, arg_index
-      bool   is_unary    = op_ptr->is_unary();
-      bool   is_binary   = op_ptr->is_binary();
-      addr_t res_index   = op_vec_[i_op].res_index;
-      addr_t arg_index   = op_vec_[i_op].arg_index;
+      // op_ptr, arg_index, res_index
+      const base_op_t<Value>* op_ptr    = op_itr_reverse.op_ptr();
+      addr_t                  res_index = op_itr_reverse.res_index();
+      addr_t                  arg_index = op_itr_reverse.arg_index();
+      //
+      // op_enum, is_unary, is_binary
+      op_enum_t op_enum   = op_ptr->op_enum();
+      bool      is_unary  = op_ptr->is_unary();
+      bool      is_binary = op_ptr->is_binary();
       //
       // n_arg, n_res
       addr_t n_arg =  op_ptr->n_arg(arg_index, arg_vec_);
@@ -232,19 +241,25 @@ void tape_t<Value>::dead_code(bool keep_compare)
    assert( arg_vec_[0] == 0 );
    assert( CppAD::isnan( con_vec_[0] ) );
 # endif
+   //
+   // op_itr_forward
+   op_iterator op_itr_forward(*this, 0);
+   //
    // i_op
-   addr_t n_op = addr_t( op_vec_.size() );
    for(i_op = 1; i_op < n_op; ++i_op)
    {  //
-      // op_enum, op_ptr
-      op_enum_t op_enum        = get_op_enum(i_op);
-      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
-
-      // is_unary, is_binary res_index, arg_index
-      bool   is_unary    = op_ptr->is_unary();
-      bool   is_binary   = op_ptr->is_binary();
-      addr_t res_index   = op_vec_[i_op].res_index;
-      addr_t arg_index   = op_vec_[i_op].arg_index;
+      // op_itr_forward
+      ++op_itr_forward; // skip index zero
+      //
+      // op_ptr, arg_index, res_index
+      const base_op_t<Value>* op_ptr    = op_itr_forward.op_ptr();
+      addr_t                  res_index = op_itr_forward.res_index();
+      addr_t                  arg_index = op_itr_forward.arg_index();
+      //
+      // op_enum, is_unary, is_binary 
+      op_enum_t op_enum   = op_ptr->op_enum();
+      bool      is_unary  = op_ptr->is_unary();
+      bool      is_binary = op_ptr->is_binary();
       //
       // n_arg, n_res
       addr_t n_arg =  op_ptr->n_arg(arg_index, arg_vec_);

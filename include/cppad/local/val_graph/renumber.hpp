@@ -23,11 +23,13 @@ namespace CppAD { namespace local { namespace val_graph {
 // op_hash_table_t
 template <class Value>
 class op_hash_table_t {
-   typedef typename tape_t<Value>::op_info_t op_info_t;
 private:
    //
    // tape_
    const tape_t<Value>& tape_;
+   //
+   // op2arg_index_
+   const Vector<addr_t>& op2arg_index_;
    //
    // hash_value_
    std::hash<Value> hash_value_;
@@ -57,13 +59,14 @@ public:
    // -------------------------------------------------------------------------
    // ctor
    op_hash_table_t(
-         const tape_t<Value>&     tape        ,
+         const tape_t<Value>&     tape         ,
+         const Vector<addr_t>&    op2arg_index ,
          addr_t                   n_hash_code
    ) :
-   tape_( tape )
+   tape_( tape ), op2arg_index_(op2arg_index)
    {  // table_
       addr_t n_op = addr_t( tape.op_enum_vec().size() );
-      CPPAD_ASSERT_UNKNOWN( size_t(n_op) == tape.op_vec().size() );
+      CPPAD_ASSERT_UNKNOWN( size_t(n_op) == tape.op_enum_vec().size() );
       //
       table_.resize( n_hash_code, n_op );
    }
@@ -89,10 +92,9 @@ public:
    addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
       //
-      // arg_vec, con_vec, op_vec, op_enum_vec
+      // arg_vec, con_vec, op_enum_vec
       const Vector<addr_t>&    arg_vec = tape_.arg_vec();
       const Vector<Value>&     con_vec = tape_.con_vec();
-      const Vector<op_info_t>& op_vec = tape_.op_vec();
       const Vector<uint8_t>&   op_enum_vec = tape_.op_enum_vec();
       //
       // op_enum_i, op_ptr
@@ -100,14 +102,14 @@ public:
       base_op_t<Value>* op_ptr = tape_t<Value>::base_op_ptr(op_enum_i);
       //
       // arg_index_i, n_arg
-      addr_t arg_index_i = op_vec[i_op].arg_index;
+      addr_t arg_index_i = op2arg_index_[i_op];
       addr_t n_arg       = op_ptr->n_arg(arg_index_i, arg_vec);
       //
       // nan
       if( op_enum_i == con_op_enum )
       {  if( CppAD::isnan( con_vec[ arg_vec[arg_index_i] ] ) )
          {  CPPAD_ASSERT_UNKNOWN( op_enum_t(op_enum_vec[0]) == con_op_enum );
-            CPPAD_ASSERT_UNKNOWN( op_vec[0].arg_index == 0 );
+            CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( arg_vec[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( CppAD::isnan( con_vec[0] ) );
             return 0;
@@ -123,7 +125,7 @@ public:
       {  // op_enum_j, arg_index_j
          addr_t j_op           = *itr;
          op_enum_t op_enum_j   = op_enum_t( op_enum_vec[j_op] );
-         addr_t    arg_index_j = op_vec[j_op].arg_index;
+         addr_t    arg_index_j = op2arg_index_[j_op];
          //
          // match
          bool match = op_enum_i == op_enum_j;
@@ -223,13 +225,22 @@ void tape_t<Value>::renumber(void)
    size_t initial_inuse = thread_alloc::inuse(thread);
 # endif
    //
-   //
    // n_op
-   addr_t n_op = addr_t( op_vec_.size() );
+   addr_t n_op = addr_t( op_enum_vec_.size() );
+   //
+   // op2arg_index, op2res_index
+   Vector<addr_t> op2arg_index(n_op), op2res_index(n_op);
+   {  op_iterator op_itr(*this, 0);
+      for(addr_t i_op = 0; i_op < n_op; ++i_op)
+      {  op2arg_index[i_op] = op_itr.arg_index();
+         op2res_index[i_op] = op_itr.res_index();
+         ++op_itr;
+      }
+   }
    //
    // op_hash_table
    addr_t n_hash_code = 1 + (n_val_ / 2);
-   op_hash_table_t<Value>  op_hash_table(*this, n_hash_code);
+   op_hash_table_t<Value>  op_hash_table(*this, op2arg_index, n_hash_code);
    //
    // new_val_index
    Vector<addr_t> new_val_index( n_val_ );
@@ -239,9 +250,13 @@ void tape_t<Value>::renumber(void)
    // i_op
    for(addr_t i_op = 0; i_op < n_op; ++i_op)
    {  //
-      // op_enum, op_ptr
-      op_enum_t op_enum        = get_op_enum(i_op);
-      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+      // op_enum, op_itr
+      op_enum_t               op_enum  = op_enum_t( op_enum_vec()[i_op] );
+      const base_op_t<Value>* op_ptr   = base_op_ptr(op_enum);
+      //
+      // arg_index_i, res_index_i
+      addr_t arg_index_i = op2arg_index[i_op];
+      addr_t res_index_i = op2res_index[i_op];
       //
       // j_op
       addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
@@ -251,9 +266,7 @@ void tape_t<Value>::renumber(void)
          // new_val_index
          // mapping so that op_j results will be used instead of op_i results;
          // i.e., op_i becomes dead code.
-         addr_t arg_index_i = op_vec_[i_op].arg_index;
-         addr_t res_index_i = op_vec_[i_op].res_index;
-         addr_t res_index_j = op_vec_[j_op].res_index;
+         addr_t res_index_j = op2res_index[j_op];
          addr_t n_res       = op_ptr->n_res(arg_index_i, arg_vec_);
          if( n_res == 0 )
          {
@@ -271,11 +284,11 @@ void tape_t<Value>::renumber(void)
    for(addr_t i_op = 0; i_op < n_op; ++i_op)
    {  //
       // op_enum, op_ptr
-      op_enum_t op_enum        = get_op_enum(i_op);
-      base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+      op_enum_t               op_enum  = op_enum_t( op_enum_vec()[i_op] );
+      const base_op_t<Value>* op_ptr   = base_op_ptr(op_enum);
       //
       // arg_index, n_arg
-      addr_t    arg_index = op_vec_[i_op].arg_index;
+      addr_t    arg_index = op2arg_index[i_op];
       addr_t    n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
       //
       // n_before, n_x

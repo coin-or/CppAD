@@ -349,6 +349,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/dis_op.hpp \
 	cppad/local/val_graph/fold_con.hpp \
 	cppad/local/val_graph/fun2val.hpp \
+	cppad/local/val_graph/op_enum2class.hpp \
+	cppad/local/val_graph/op_iterator.hpp \
 	cppad/local/val_graph/record_op.hpp \
 	cppad/local/val_graph/renumber.hpp \
 	cppad/local/val_graph/tape.hpp \
