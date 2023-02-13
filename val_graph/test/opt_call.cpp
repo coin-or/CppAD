@@ -89,7 +89,7 @@ bool result_not_used(void)
    //
    // ok
    // before optmizing
-   ok &= tape.arg_vec().size() == 15;
+   ok &= tape.arg_vec().size() == 1 + 2 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
    ok &= tape.op_vec().size() == 6;
    //
@@ -108,7 +108,7 @@ bool result_not_used(void)
    //
    // ok
    // after optimizing
-   ok &= tape.arg_vec().size() == 13;
+   ok &= tape.arg_vec().size() == 1 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 1;
    ok &= tape.op_vec().size() == 4;
    //
@@ -207,7 +207,7 @@ bool ident_zero(void)
    //
    // ok
    // before optmizing
-   ok &= tape.arg_vec().size() == 11 + 4;
+   ok &= tape.arg_vec().size() == 1 + 2 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
    ok &= tape.op_vec().size() == 6;
    //
@@ -220,7 +220,7 @@ bool ident_zero(void)
    //
    // ok
    // after optimizing the subtract operator has been removd
-   ok &= tape.arg_vec().size() == 9 + 4;
+   ok &= tape.arg_vec().size() == 1 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
    ok &= tape.op_vec().size() == 5;
    //

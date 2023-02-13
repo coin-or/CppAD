@@ -84,7 +84,7 @@ bool atom(void)
    ok     &= y[1] == x[0] + c[2] * c[3];
    ok     &= tape.con_vec().size() == 5;
    ok     &= tape.op_vec().size()  == 8;
-   ok     &= tape.arg_vec().size() == 13 + 4;
+   ok     &= tape.arg_vec().size() == 1 + 4 + 4 + 5 + 2 + 2;
    //
    // fold_con
    tape.fold_con();

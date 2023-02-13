@@ -173,15 +173,19 @@ void tape_t<Value>::dead_code(bool keep_compare)
          {  size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
             size_t call_id       = size_t( arg_vec_[arg_index + 3] );
             //
+            // n_x, n_before
+            addr_t n_before = op_ptr->n_before();
+            addr_t n_x = n_arg - n_before - op_ptr->n_after();
+            //
             // con_x, type_x
-            con_x.resize(n_arg - 4);
-            type_x.resize(n_arg - 4);
-            for(addr_t i = 4; i < n_arg; ++i)
-            {  con_x[i-4] = val_index2con[ arg_vec_[arg_index + i] ];
-               if( CppAD::isnan( con_x[i-4] ) )
-                  type_x[i-4] = variable_enum;
+            con_x.resize(n_x);
+            type_x.resize(n_x);
+            for(addr_t i = 0; i < n_x; ++i)
+            {  con_x[i] = val_index2con[ arg_vec_[arg_index + n_before + i] ];
+               if( CppAD::isnan( con_x[i] ) )
+                  type_x[i] = variable_enum;
                else
-                  type_x[i-4] = constant_enum;
+                  type_x[i] = constant_enum;
             }
             //
             // depend_y
@@ -191,14 +195,16 @@ void tape_t<Value>::dead_code(bool keep_compare)
             //
             // depend_x
             // only constants (not dynamic parameters) are incldued in con_x
-            depend_x.resize(n_arg - 4);
+            depend_x.resize(n_x);
             local::sweep::call_atomic_rev_depend<Value, Value>(
                atomic_index, call_id, con_x, type_x, depend_x, depend_y
             );
             //
             // need_val_index
-            for(addr_t k = 4; k < n_arg; ++k)
-               need_val_index[ arg_vec_[arg_index + k] ] = depend_x[k-4];
+            for(addr_t k = 0; k < n_x; ++k)
+            {  addr_t val_index = arg_vec_[arg_index + n_before + k];
+               need_val_index[val_index] = depend_x[k];
+            }
          }
          break;
       }
@@ -307,14 +313,20 @@ void tape_t<Value>::dead_code(bool keep_compare)
             //
             // call_op_enum
             case call_op_enum:
-            {  call_op_arg.resize( size_t(n_arg - 4) );
-               for(addr_t k = 4; k < n_arg; ++k)
-               {  addr_t val_index = arg_vec_[arg_index + k];
+            {
+               //
+               // n_x, n_before
+               addr_t n_before = op_ptr->n_before();
+               addr_t n_x = n_arg - n_before - op_ptr->n_after();
+               //
+               call_op_arg.resize(n_x);
+               for(addr_t k = 0; k < n_x; ++k)
+               {  addr_t val_index = arg_vec_[arg_index + n_before + k];
                   if( need_val_index[val_index] )
-                     call_op_arg[k - 4] = new_val_index[val_index];
+                     call_op_arg[k] = new_val_index[val_index];
                   else
                   {  // nan at index n_ind_
-                     call_op_arg[k - 4] = addr_t( n_ind_ );
+                     call_op_arg[k] = addr_t( n_ind_ );
                   }
                }
                size_t atomic_index      = size_t( arg_vec_[arg_index + 2] );

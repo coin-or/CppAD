@@ -50,7 +50,7 @@ private:
       CppAD::vector<CppAD::ad_type_enum>&       type_y      ) override
    {
       assert( call_id == 0 );       // default value
-      assert( type_x.size() == 4 );
+      CPPAD_ASSERT_UNKNOWN( type_x.size() == 4 );
       assert( type_y.size() == 2 );
       //
       type_y[0] = std::max(type_x[0], type_x[1]);

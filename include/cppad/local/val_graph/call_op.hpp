@@ -18,6 +18,7 @@ namespace CppAD { namespace local { namespace val_graph {
 {xrst_begin val_call_op dev}
 {xrst_spell
    xam
+   iterate
 }
 
 The Call Value Operator
@@ -50,7 +51,9 @@ This override of :ref:`val_base_op@n_before` return 4.
 
 n_after
 *******
-This override of :ref:`val_base_op@n_after` return 0.
+This override of :ref:`val_base_op@n_after` return 1.
+This is for a second copy of *n_arg* that can be used to iterate
+through the operators in reverse.
 
 n_arg
 *****
@@ -138,7 +141,7 @@ public:
    //
    // n_after
    addr_t n_after(void) const override
-   {  return 0; }
+   {  return 1; }
    //
    // get_instance
    static call_op_t* get_instance(void)

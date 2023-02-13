@@ -335,13 +335,14 @@ addr_t tape_t<Value>::record_call_op(
    op_vec_.push_back(op_info);
    //
    // arg_vec_
-   addr_t n_arg = 4 + addr_t( fun_arg.size() );
-   arg_vec_.push_back( addr_t( n_arg ) );
+   addr_t n_arg = 5 + addr_t( fun_arg.size() );
+   arg_vec_.push_back( n_arg );
    arg_vec_.push_back( addr_t( n_res ) );
    arg_vec_.push_back( addr_t( atomic_index ) );
    arg_vec_.push_back( addr_t( call_id ) );
    for(size_t i = 0; i < fun_arg.size(); ++i)
       arg_vec_.push_back( fun_arg[i] );
+   arg_vec_.push_back( n_arg );
    //
    // n_val_
    n_val_ = n_val_ + addr_t(n_res);

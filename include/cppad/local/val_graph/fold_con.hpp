@@ -199,16 +199,20 @@ void tape_t<Value>::fold_con(void)
             size_t call_id      = size_t( arg_vec_[arg_index + 3] );
             CPPAD_ASSERT_UNKNOWN( atomic_index > 0 );
             //
+            // n_before, n_x
+            addr_t n_before = op_ptr->n_before();
+            addr_t n_x      = n_arg - n_before - op_ptr->n_after();
+            //
             // con_x, type_x
-            type_x.resize(n_arg - 4);
-            con_x.resize(n_arg - 4);
-            for(addr_t i = 4; i < n_arg; ++i)
-            {  addr_t val_index =  arg_vec_[arg_index + i];
-               con_x[i-4] = val_index2con[val_index];
+            type_x.resize(n_x);
+            con_x.resize(n_x);
+            for(addr_t i = 0; i < n_x; ++i)
+            {  addr_t val_index =  arg_vec_[arg_index + n_before + i];
+               con_x[i] = val_index2con[val_index];
                if( is_constant[val_index] )
-                  type_x[i-4] = constant_enum;
+                  type_x[i] = constant_enum;
                else
-                  type_x[i-4] = variable_enum;;
+                  type_x[i] = variable_enum;;
             }
             //
             // type_y
@@ -219,10 +223,10 @@ void tape_t<Value>::fold_con(void)
             //
             // new_tape, new_res_index
             // record the function call
-            op_arg.resize( size_t(n_arg - 4) );
-            for(addr_t k = 4; k < n_arg; ++k)
-            {  addr_t old_index   = arg_vec_[arg_index + k];
-               op_arg[k - 4]      = old2new_index[old_index];
+            op_arg.resize(n_x);
+            for(addr_t k = 0; k < n_x; ++k)
+            {  addr_t old_index   = arg_vec_[arg_index + n_before + k];
+               op_arg[k]      = old2new_index[old_index];
             }
             addr_t new_res_index = new_tape.record_call_op(
                atomic_index, call_id, size_t(n_res), op_arg
