@@ -110,7 +110,7 @@ void tape_t<Value>::fold_con(void)
    is_constant[n_ind_] = true;
    //
    // op_itr
-   op_iterator op_itr(*this, 0);
+   op_iterator<Value> op_itr(*this, 0);
    //
    // i_op
    for(addr_t i_op = 1; i_op < n_op(); ++i_op)

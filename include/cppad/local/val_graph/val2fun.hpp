@@ -231,7 +231,7 @@ void ADFun<Base, RecBase>::val2fun(
    vector< AD<Base> >   ax, ay;
    //
    // op_itr
-   local::val_graph::op_iterator op_itr(val_tape, 0);
+   local::val_graph::op_iterator<Base> op_itr(val_tape, 0);
    //
    // i_op
    for(addr_t i_op = 0; i_op < val_n_op; ++i_op)

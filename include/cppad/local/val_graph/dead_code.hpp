@@ -106,7 +106,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
       need_val_index[ dep_vec_[i] ] = true;
    //
    // op_itr_reverse
-   op_iterator op_itr_reverse(*this, n_op() );
+   op_iterator<Value> op_itr_reverse(*this, n_op() );
    //
    // need_val_index
    addr_t i_op = n_op();
@@ -238,7 +238,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
 # endif
    //
    // op_itr_forward
-   op_iterator op_itr_forward(*this, 0);
+   op_iterator<Value> op_itr_forward(*this, 0);
    //
    // i_op
    for(i_op = 1; i_op < n_op(); ++i_op)
