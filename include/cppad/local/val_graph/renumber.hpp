@@ -25,8 +25,8 @@ template <class Value>
 class op_hash_table_t {
    typedef typename tape_t<Value>::op_info_t op_info_t;
 private:
-   // hash_base
-   std::hash<Value> hash_base;
+   // hash_value_
+   std::hash<Value> hash_value_;
    //
    // arg_vec_
    const Vector<addr_t>& arg_vec_;
@@ -47,7 +47,7 @@ private:
    addr_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
    {  size_t code;
       if( op_enum == con_op_enum )
-         code = hash_base( con_vec_[  arg_vec_[arg_index] ] );
+         code = hash_value_( con_vec_[  arg_vec_[arg_index] ] );
       else
       {  code  = size_t(op_enum);
          for(addr_t i = 0; i < n_arg; ++i)
