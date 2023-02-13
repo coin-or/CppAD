@@ -83,6 +83,15 @@ op_vec
 Each element of this vector corresponds to an operator usage.
 The order of the vector is the order of operations.
 
+op_enum_vec
+***********
+{xrst_literal
+   // BEGIN_OP_ENUM_VEC
+   // END_OP_ENUM_VEC
+}
+Each element of this vector corresponds to an operator usage.
+The order of the vector is the order of operations.
+
 info
 ****
 {xrst_literal
@@ -223,6 +232,11 @@ public :
    const Vector<op_info_t>& op_vec(void) const
    {  return op_vec_; }
    // END_OP_VEC
+   //
+   // BEGIN_OP_ENUM_VEC
+   const Vector<uint8_t>& op_enum_vec(void) const
+   {  return op_enum_vec_; }
+   // END_OP_ENUM_VEC
    //
    // BEGIN_DEP_VEC
    const Vector<addr_t>& dep_vec(void) const
