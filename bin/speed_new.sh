@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 program="bin/speed_new.sh"
 if [ "$0" != "$program" ]
@@ -41,10 +41,10 @@ then
    test_name='speed'
 fi
 # ----------------------------------------------------------------------------
-build_dir='build/speed/cppad'
-if [ ! -e $build_dir ]
+target_dir='build/speed/cppad'
+if [ ! -e $target_dir ]
 then
-   echo_eval mkdir -p $build_dir
+   echo_eval mkdir -p $target_dir
 fi
 # ----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -66,28 +66,24 @@ do
       echo_eval git_new.sh from
    fi
    out_file="$name.$option_list.out"
-   if [ -e "$build_dir/$out_file" ]
+   if [ -e "$target_dir/$out_file" ]
    then
-      echo "Using existing $build_dir/$out_file"
+      echo "Using existing $target_dir/$out_file"
    else
-      # change into cppad speed directory
-      echo_eval cd $build_dir
-      #
       # compile the speed test
-      echo "make check_speed_cppad > $build_dir/$name.log"
-      make check_speed_cppad > $name.log
+      echo "ninja -C build check_speed_cppad > $target_dir/$name.log"
+      ninja -C build check_speed_cppad > $target_dir/$name.log
       #
       # run speed test for the current version
-      echo "./speed_cppad $test_name 123 $* > $build_dir/$out_file"
-      ./speed_cppad $test_name 123 $* > $out_file
+      echo "$target_dir/speed_cppad $test_name $* > $target_dir/$out_file"
+      $target_dir/speed_cppad $test_name $* > $target_dir/$out_file
       #
-      echo_eval cd ../../..
    fi
 done
 # compare the results
 echo "    one=cur, two=new"
 bin/speed_diff.sh \
-   $build_dir/cur.$option_list.out $build_dir/new.$option_list.out
+   $target_dir/cur.$option_list.out $target_dir/new.$option_list.out
 # ----------------------------------------------------------------------------
 echo "$0: OK"
 exit 0
