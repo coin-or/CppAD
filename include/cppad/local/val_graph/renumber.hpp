@@ -141,6 +141,7 @@ public:
                match &= val_index_i == val_index_j;
             }
             bool communative = op_enum_i == add_op_enum;
+            communative     |= op_enum_i == mul_op_enum;
             if( communative && ! match )
             {  addr_t val_index_i = new_val_index[ arg_vec[arg_index_i+0] ];
                addr_t val_index_j = new_val_index[ arg_vec[arg_index_j+1] ];
