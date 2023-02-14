@@ -60,6 +60,10 @@ that come after the arguments that are value vector indices.
 n_arg
 *****
 This member function returns the number of arguments for this operator.
+Only the :ref:`call operator<val_call_op-title>`
+uses the *arg_index* and *arg_vec* arguments to this function.
+You can set *arg_index* to
+*arg_vec*.size() (an invalid value) if you know this is not a call operator.
 
 n_res
 *****

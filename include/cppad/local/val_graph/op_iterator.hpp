@@ -167,8 +167,10 @@ public:
       if( op_enum == call_op_enum )
          n_arg = tape_.arg_vec()[arg_index_ - 1];
       else
-      {  addr_t not_used = 0;
-         n_arg = op_ptr_->n_arg(not_used, tape_.arg_vec());
+      {  // arg_index
+         // set to an invalid value for an index in the arg_vec vector.
+         addr_t arg_index = addr_t( tape_.arg_vec().size() );
+         n_arg = op_ptr_->n_arg(arg_index, tape_.arg_vec());
       }
       arg_index_ -= n_arg;
       //
