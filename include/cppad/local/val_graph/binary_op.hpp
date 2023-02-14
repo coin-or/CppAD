@@ -63,7 +63,8 @@ Prototype
 Purpose
 *******
 The class is derived from :ref:`base_op <val_base_op-name>`.
-It overrides the *is_binary*, *n_arg*, *n_res_*, and *print_op*
+It overrides the
+*is_binary*, *n_before*, *n_after*, *n_arg*, *n_res_*, and *print_op*
 member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
 
@@ -85,10 +86,14 @@ This override of :ref:`val_base_op@n_arg` returns 2.
 
 n_res
 *****
-This override of :ref:`val_base_op@n_res` returns 1.
+This override of :ref:`val_base_op@n_res` returns 0.
 
 print_op
 ********
+{xrst_literal
+   // BEGIN_PRINT_OP
+   // END_PRINT_OP
+}
 This member function prints the following values:
 
 .. csv-table::
@@ -150,13 +155,14 @@ public:
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override = 0;
    //
-   // print_op
+   // BEGIN_PRINT_OP
    void print_op(
       const char*           name         ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
       Vector<Value>&        val_vec      ) const
+   // END_PRINT_OP
    {  //
       addr_t left_index   = arg_vec[ arg_index + 0 ];
       addr_t right_index  = arg_vec[ arg_index + 1 ];
@@ -224,7 +230,7 @@ the result equal to the binary operator applied to the operands; see
 Example
 *******
 The file :ref:`binary_xam.cpp <val_binary_xam.cpp-name>`
-is an example and test that uses this operator.
+is an example and test that uses a binary operator.
 
 {xrst_end val_binary_op_derived}
 */

@@ -62,7 +62,9 @@ Prototype
 Purpose
 *******
 The class is derived from :ref:`base_op <val_base_op-name>`.
-It overrides the *is_unary*, *n_arg*, *n_res_*, and *print_op* member functions.
+It overrides the
+*is_unary*, *n_before*, *n_after*, *n_arg*, *n_res_*, and *print_op*
+member functions.
 The *op_enum* and *eval* member functions are still pure virtual.
 
 is_unary
@@ -87,6 +89,10 @@ This override of :ref:`val_base_op@n_res` returns 1.
 
 print_op
 ********
+{xrst_literal
+   // BEGIN_PRINT_OP
+   // END_PRINT_OP
+}
 This member function prints the following values:
 
 .. csv-table::
@@ -148,13 +154,14 @@ public:
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override = 0;
    //
-   // print_op
+   // BEGIN_PRINT_OP
    void print_op(
       const char*           name         ,
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ,
       addr_t                res_index    ,
       Vector<Value>&        val_vec      ) const
+   // END_PRINT_OP
    {  //
       addr_t val_index  = arg_vec[ arg_index + 0 ];
       Value  res        = val_vec[res_index];
@@ -218,7 +225,7 @@ the result equal to the unary operator applied to the operand; see
 Example
 *******
 The file :ref:`unary_xam.cpp <val_unary_xam.cpp-name>`
-is an example and test that uses this operator.
+is an example and test that uses a unary operator.
 
 {xrst_end val_unary_op_derived}
 */
