@@ -4,7 +4,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include <cppad/local/val_graph/type.hpp>
+# include <cppad/local/val_graph/val_type.hpp>
 # include <cstdio>
 namespace CppAD { namespace local { namespace val_graph {
 /*

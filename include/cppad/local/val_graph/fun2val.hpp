@@ -69,8 +69,8 @@ is an example an test of this conversion.
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/pod_vector.hpp>
-# include <cppad/local/val_graph/type_var_op.hpp>
-# include <cppad/local/val_graph/type_dyn_op.hpp>
+# include <cppad/local/val_graph/var_type.hpp>
+# include <cppad/local/val_graph/dyn_type.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 

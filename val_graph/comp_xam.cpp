@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/type.hpp>
+# include <cppad/local/val_graph/val_type.hpp>
 /*
 {xrst_begin val_comp_xam.cpp dev}
 

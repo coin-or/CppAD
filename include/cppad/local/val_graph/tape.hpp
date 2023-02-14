@@ -8,7 +8,7 @@
 # include <cppad/local/val_graph/binary_op.hpp>
 # include <cppad/local/val_graph/con_op.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
-# include <cppad/local/val_graph/type.hpp>
+# include <cppad/local/val_graph/val_type.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
 # include <cppad/local/val_graph/op_iterator.hpp>
 // END_SORT_THIS_LINE_MINUS_1

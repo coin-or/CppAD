@@ -113,14 +113,14 @@ where
 Implementation
 **************
 {xrst_toc_table
-   include/cppad/local/val_graph/type.hpp
+   include/cppad/local/val_graph/val_type.hpp
    include/cppad/local/val_graph/base_op.hpp
    include/cppad/local/val_graph/tape.hpp
    include/cppad/local/val_graph/op_enum2class.hpp
    include/cppad/local/val_graph/fun2val.hpp
    include/cppad/local/val_graph/val2fun.hpp
-   include/cppad/local/val_graph/type_dyn_op.hpp
-   include/cppad/local/val_graph/type_var_op.hpp
+   include/cppad/local/val_graph/dyn_type.hpp
+   include/cppad/local/val_graph/var_type.hpp
    include/cppad/local/val_graph/call_atomic.hpp
 }
 
