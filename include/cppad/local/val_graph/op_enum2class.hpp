@@ -46,6 +46,7 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
    {
       default:
       assert( false );
+      op_ptr = nullptr; // set in this case to avoid compiler warning
       break;
 
       case add_op_enum:

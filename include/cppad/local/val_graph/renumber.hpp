@@ -56,6 +56,9 @@ private:
          addr_t n_before = op_ptr->n_before();
          addr_t n_after  = op_ptr->n_after();
          //
+         // code
+         code = 0;
+         //
          // These are auxillary indices
          for(addr_t i = 0; i < n_before; ++i)
             code += size_t( arg_vec[arg_index + i] );
