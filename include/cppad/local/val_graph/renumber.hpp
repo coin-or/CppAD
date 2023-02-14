@@ -38,18 +38,35 @@ private:
    CppAD::local::sparse::size_setvec<addr_t> table_;
    //
    // hash_code
-   addr_t hash_code(addr_t n_arg, op_enum_t op_enum, addr_t arg_index)
+   addr_t hash_code(
+      base_op_t<Value>* op_ptr            ,
+      addr_t arg_index                    ,
+      const Vector<addr_t>& new_val_index )
    {  //
-      // arg_vec, con_vec
+      // arg_vec, con_vec, op_enum
       const Vector<addr_t>& arg_vec = tape_.arg_vec();
       const Vector<Value>&  con_vec = tape_.con_vec();
+      op_enum_t             op_enum = op_ptr->op_enum();
       //
       size_t code;
       if( op_enum == con_op_enum )
          code = hash_value_( con_vec[  arg_vec[arg_index] ] );
       else
-      {  code  = size_t(op_enum);
-         for(addr_t i = 0; i < n_arg; ++i)
+      {  addr_t n_arg    = op_ptr->n_arg(arg_index, arg_vec);
+         addr_t n_before = op_ptr->n_before();
+         addr_t n_after  = op_ptr->n_after();
+         //
+         // These are auxillary indices
+         for(addr_t i = 0; i < n_before; ++i)
+            code += size_t( arg_vec[arg_index + i] );
+         //
+         // These arguments are indices in the value vector, so check for a
+         // match with the lowest equivalent value vector index.
+         for(addr_t i = n_before; i < n_arg - n_after; ++i)
+            code += size_t( new_val_index[ arg_vec[arg_index + i] ] );
+         //
+         // These are auxillary indices
+         for(addr_t i = n_arg - n_after; i < n_arg ; ++i)
             code += size_t( arg_vec[arg_index + i] );
       }
       code = code % table_.n_set();
@@ -92,21 +109,21 @@ public:
    {  assert( i_op < table_.end() );
       //
       // arg_vec, con_vec, op_enum_vec
-      const Vector<addr_t>&    arg_vec = tape_.arg_vec();
-      const Vector<Value>&     con_vec = tape_.con_vec();
+      const Vector<addr_t>&    arg_vec     = tape_.arg_vec();
+      const Vector<Value>&     con_vec     = tape_.con_vec();
       const Vector<uint8_t>&   op_enum_vec = tape_.op_enum_vec();
       //
-      // op_enum_i, op_ptr
-      op_enum_t op_enum_i      = op_enum_t( op_enum_vec[i_op] );
-      base_op_t<Value>* op_ptr = tape_t<Value>::base_op_ptr(op_enum_i);
+      // op_enum, op_ptr
+      op_enum_t op_enum      = op_enum_t( op_enum_vec[i_op] );
+      base_op_t<Value>* op_ptr = tape_t<Value>::base_op_ptr(op_enum);
       //
-      // arg_index_i, n_arg
-      addr_t arg_index_i = op2arg_index_[i_op];
-      addr_t n_arg       = op_ptr->n_arg(arg_index_i, arg_vec);
+      // arg_index, n_arg
+      addr_t arg_index = op2arg_index_[i_op];
+      addr_t n_arg     = op_ptr->n_arg(arg_index, arg_vec);
       //
       // nan
-      if( op_enum_i == con_op_enum )
-      {  if( CppAD::isnan( con_vec[ arg_vec[arg_index_i] ] ) )
+      if( op_enum == con_op_enum )
+      {  if( CppAD::isnan( con_vec[ arg_vec[arg_index] ] ) )
          {  CPPAD_ASSERT_UNKNOWN( op_enum_t(op_enum_vec[0]) == con_op_enum );
             CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( arg_vec[0] == 0 );
@@ -116,40 +133,52 @@ public:
       }
       //
       // code
-      addr_t code = hash_code(n_arg, op_enum_i, arg_index_i);
+      addr_t code = hash_code(op_ptr, arg_index, new_val_index);
       //
       // itr
       local::sparse::size_setvec_const_iterator<addr_t> itr(table_, code);
       while( *itr != table_.end() )
       {  // op_enum_j, arg_index_j
-         addr_t j_op           = *itr;
-         op_enum_t op_enum_j   = op_enum_t( op_enum_vec[j_op] );
-         addr_t    arg_index_j = op2arg_index_[j_op];
+         addr_t                j_op = *itr;
+         op_enum_t        op_enum_j = op_enum_t( op_enum_vec[j_op] );
+         base_op_t<Value>* op_ptr_j = tape_t<Value>::base_op_ptr(op_enum_j);
+         addr_t         arg_index_j = op2arg_index_[j_op];
+         addr_t             n_arg_j = op_ptr_j->n_arg(arg_index_j, arg_vec);
          //
          // match
-         bool match = op_enum_i == op_enum_j;
-         if( match && op_enum_i == con_op_enum )
+         bool match = (op_enum == op_enum_j) & (n_arg == n_arg_j);
+         if( match && op_enum == con_op_enum )
          {  // 2DO: change to identically equal
-            const Value& c_i = con_vec[ arg_vec[arg_index_i] ];
+            const Value& c = con_vec[ arg_vec[arg_index] ];
             const Value& c_j = con_vec[ arg_vec[arg_index_j] ];
-            match = c_i == c_j;
+            match = c == c_j;
          }
          else if( match )
-         {  for(addr_t k = 0; k < n_arg; ++k)
-            {  addr_t val_index_i = new_val_index[ arg_vec[arg_index_i+k] ];
-               addr_t val_index_j = new_val_index[ arg_vec[arg_index_j+k] ];
-               match &= val_index_i == val_index_j;
+         {  addr_t n_before = op_ptr->n_before();
+            addr_t n_after  = op_ptr->n_after();
+            //
+            for(addr_t k = 0; k < n_before; ++k)
+               match &= arg_vec[arg_index + k] == arg_vec[arg_index_j + k];
+            //
+            for(addr_t k = n_before; k < n_arg - n_after; ++k)
+            {  addr_t val_index   = new_val_index[ arg_vec[arg_index + k] ];
+               addr_t val_index_j = new_val_index[ arg_vec[arg_index_j + k] ];
+               match &= val_index == val_index_j;
             }
-            bool communative = op_enum_i == add_op_enum;
-            communative     |= op_enum_i == mul_op_enum;
+            //
+            for(addr_t k = n_arg - n_after; k < n_arg; ++k)
+               match &= arg_vec[arg_index + k] == arg_vec[arg_index_j + k];
+            //
+            bool communative = op_enum == add_op_enum;
+            communative     |= op_enum == mul_op_enum;
             if( communative && ! match )
-            {  addr_t val_index_i = new_val_index[ arg_vec[arg_index_i+0] ];
-               addr_t val_index_j = new_val_index[ arg_vec[arg_index_j+1] ];
-               match = val_index_i == val_index_j;
+            {  addr_t val_index   = new_val_index[ arg_vec[arg_index + 0] ];
+               addr_t val_index_j = new_val_index[ arg_vec[arg_index_j + 1] ];
+               match = val_index == val_index_j;
                //
-               val_index_i = new_val_index[ arg_vec[arg_index_i+1] ];
-               val_index_j = new_val_index[ arg_vec[arg_index_j+0] ];
-               match &= val_index_i == val_index_j;
+               val_index   = new_val_index[ arg_vec[arg_index + 1] ];
+               val_index_j = new_val_index[ arg_vec[arg_index_j + 0] ];
+               match &= val_index == val_index_j;
             }
          }
          if( match )
