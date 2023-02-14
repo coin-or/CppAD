@@ -150,22 +150,22 @@ public:
       const char* name;
       switch( compare_enum )
       {  //
-         // eq
+         // c_eq
          case compare_eq_enum:
          res  = left == right;
-         name = "eq";
+         name = "c_eq";
          break;
          //
          // ne
          case compare_ne_enum:
          res  = left != right;
-         name = "ne";
+         name = "c_ne";
          break;
          //
          // lt
          case compare_lt_enum:
          res  = left < right;
-         name = "lt";
+         name = "c_lt";
          break;
          //
          // le
@@ -177,7 +177,7 @@ public:
          // no
          case compare_no_enum:
          res  = true;
-         name = "no";
+         name = "c_no";
          break;
          //
          default:
