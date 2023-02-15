@@ -159,6 +159,7 @@ Operations on Tape
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/op_iterator.hpp
+   include/cppad/local/val_graph/rev_depend.hpp
 }
 
 
@@ -329,6 +330,9 @@ public :
    //
    // renumber
    void renumber(void);
+   //
+   // rev_depend
+   Vector<uint8_t> rev_depend();
    //
    // dead_code
    void dead_code(bool keep_compare);

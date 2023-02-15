@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/atomic_index.hpp>
+# include <cppad/local/val_graph/rev_depend.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_tape_dead_code dev}
@@ -80,141 +80,8 @@ void tape_t<Value>::dead_code(bool keep_compare)
    size_t initial_inuse = thread_alloc::inuse(thread);
 # endif
    //
-   // val_index2con
-   Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
-   Vector<Value> val_index2con(n_val_);
-   for(addr_t i = 0; i < n_val_; ++i)
-      val_index2con[i] = nan;
-   bool trace           = false;
-   size_t compare_false = 0;
-   eval(trace, compare_false, val_index2con);
-   //
-   // con_x
-   Vector<Value> con_x;
-   //
-   // type_x
-   Vector<ad_type_enum> type_x;
-   //
-   // depend_x, depend_y
-   Vector<bool> depend_x, depend_y;
-   //
-   // need_val_index
-   Vector<bool> need_val_index(n_val_);
-   for(addr_t i = 0; i < n_val_; ++i)
-      need_val_index[i] = false;
-   for(size_t i = 0; i < dep_vec_.size(); ++i)
-      need_val_index[ dep_vec_[i] ] = true;
-   //
-   // op_itr_reverse
-   op_iterator<Value> op_itr_reverse(*this, n_op() );
-   //
-   // need_val_index
-   addr_t i_op = n_op();
-   while( i_op-- )
-   {  //
-      // op_itr_reverse
-      --op_itr_reverse;
-      //
-      // op_ptr, arg_index, res_index
-      const base_op_t<Value>* op_ptr    = op_itr_reverse.op_ptr();
-      addr_t                  res_index = op_itr_reverse.res_index();
-      addr_t                  arg_index = op_itr_reverse.arg_index();
-      //
-      // op_enum, is_unary, is_binary
-      op_enum_t op_enum   = op_ptr->op_enum();
-      bool      is_unary  = op_ptr->is_unary();
-      bool      is_binary = op_ptr->is_binary();
-      //
-      // n_arg, n_res
-      addr_t n_arg =  op_ptr->n_arg(arg_index, arg_vec_);
-      addr_t n_res =  op_ptr->n_res(arg_index, arg_vec_);
-      //
-      // is_unary
-      if( is_unary )
-      {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_res == 1 );
-         //
-         // need_op
-         bool need_op = need_val_index[res_index + 0];
-         //
-         // need_val_index
-         if( need_op )
-            need_val_index[ arg_vec_[arg_index + 0] ] = true;
-      }
-      //
-      // is_binary
-      else if( is_binary )
-      {  CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_res == 1 );
-         //
-         // need_op
-         bool need_op = need_val_index[res_index + 0];
-         //
-         // need_val_index
-         if( need_op )
-         {  need_val_index[ arg_vec_[arg_index + 0] ] = true;
-            need_val_index[ arg_vec_[arg_index + 1] ] = true;
-         }
-      }
-      // not unary or binary
-      else switch( op_enum )
-      {  //
-         // default
-         default:
-         CPPAD_ASSERT_KNOWN( false,
-            "val_graph::dead_code: this operator not yet implemented"
-         );
-         break;
-         //
-         // comp_op_enum
-         case comp_op_enum:
-         CPPAD_ASSERT_UNKNOWN( n_arg == 3 && n_res == 0 );
-         break;
-         //
-         // con_op_enum
-         case con_op_enum:
-         CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_res == 1 );
-         break;
-         //
-         // call_op_enum
-         case call_op_enum:
-         {  size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
-            size_t call_id       = size_t( arg_vec_[arg_index + 3] );
-            //
-            // n_x, n_before
-            addr_t n_before = op_ptr->n_before();
-            addr_t n_x = n_arg - n_before - op_ptr->n_after();
-            //
-            // con_x, type_x
-            con_x.resize(n_x);
-            type_x.resize(n_x);
-            for(addr_t i = 0; i < n_x; ++i)
-            {  con_x[i] = val_index2con[ arg_vec_[arg_index + n_before + i] ];
-               if( CppAD::isnan( con_x[i] ) )
-                  type_x[i] = variable_enum;
-               else
-                  type_x[i] = constant_enum;
-            }
-            //
-            // depend_y
-            depend_y.resize(n_res);
-            for(addr_t i = 0; i < n_res; ++i)
-               depend_y[i] = need_val_index[ res_index + i ];
-            //
-            // depend_x
-            // only constants (not dynamic parameters) are incldued in con_x
-            depend_x.resize(n_x);
-            local::sweep::call_atomic_rev_depend<Value, Value>(
-               atomic_index, call_id, con_x, type_x, depend_x, depend_y
-            );
-            //
-            // need_val_index
-            for(addr_t k = 0; k < n_x; ++k)
-            {  addr_t val_index = arg_vec_[arg_index + n_before + k];
-               need_val_index[val_index] = depend_x[k];
-            }
-         }
-         break;
-      }
-   }
+   // val_use_case
+   Vector<uint8_t> val_use_case = rev_depend();
    //
    // new_tape
    tape_t new_tape;
@@ -241,7 +108,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
    op_iterator<Value> op_itr_forward(*this, 0);
    //
    // i_op
-   for(i_op = 1; i_op < n_op(); ++i_op)
+   for(addr_t i_op = 1; i_op < n_op(); ++i_op)
    {  //
       // op_itr_forward
       ++op_itr_forward; // skip index zero
@@ -268,7 +135,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
          need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
       }
       else for(addr_t k = 0; k < n_res; ++k)
-         need_op |= need_val_index[ res_index + k];
+         need_op |= bool( val_use_case[ res_index + k] );
       //
       if( need_op )
       {  //
@@ -332,7 +199,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
                call_op_arg.resize(n_x);
                for(addr_t k = 0; k < n_x; ++k)
                {  addr_t val_index = arg_vec_[arg_index + n_before + k];
-                  if( need_val_index[val_index] )
+                  if( val_use_case[val_index] )
                      call_op_arg[k] = new_val_index[val_index];
                   else
                   {  // nan at index n_ind_

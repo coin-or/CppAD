@@ -347,18 +347,19 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/con_op.hpp \
 	cppad/local/val_graph/dead_code.hpp \
 	cppad/local/val_graph/dis_op.hpp \
+	cppad/local/val_graph/dyn_type.hpp \
 	cppad/local/val_graph/fold_con.hpp \
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_iterator.hpp \
 	cppad/local/val_graph/record_op.hpp \
 	cppad/local/val_graph/renumber.hpp \
+	cppad/local/val_graph/rev_depend.hpp \
 	cppad/local/val_graph/tape.hpp \
-	cppad/local/val_graph/type.hpp \
-	cppad/local/val_graph/type_dyn_op.hpp \
-	cppad/local/val_graph/type_var_op.hpp \
 	cppad/local/val_graph/unary_op.hpp \
 	cppad/local/val_graph/val2fun.hpp \
+	cppad/local/val_graph/val_type.hpp \
+	cppad/local/val_graph/var_type.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
