@@ -342,7 +342,7 @@ void tape_t<Value>::renumber(void)
    //
    // inuse
    size_t final_inuse = thread_alloc::inuse(thread);
-   std::cout << "renumber:  inuse = " << final_inuse - initial_inuse << "\n";
+   std::cout << "renumber:   inuse = " << final_inuse - initial_inuse << "\n";
 # endif
    return;
 }

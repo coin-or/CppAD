@@ -231,7 +231,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // inuse
    size_t final_inuse = thread_alloc::inuse(thread);
-   std::cout << "dead_code: inuse = " << final_inuse - initial_inuse << "\n";
+   std::cout << "dead_code:  inuse = " << final_inuse - initial_inuse << "\n";
 # endif
    return;
 }

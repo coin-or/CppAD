@@ -55,6 +55,11 @@ template <class Value>
 Vector<uint8_t> tape_t<Value>::rev_depend(void)
 // END_REV_DEPEND
 {
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // thread, initial_inuse
+   size_t thread        = thread_alloc::thread_num();
+   size_t initial_inuse = thread_alloc::inuse(thread);
+# endif
    //
    // con_x
    Vector<Value> con_x;
@@ -166,6 +171,11 @@ Vector<uint8_t> tape_t<Value>::rev_depend(void)
          }
       }
    }
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // inuse
+   size_t final_inuse = thread_alloc::inuse(thread);
+   std::cout << "rev_depend: inuse = " << final_inuse - initial_inuse << "\n";
+# endif
    return val_use_case;
 }
 

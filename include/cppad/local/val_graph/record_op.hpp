@@ -327,7 +327,7 @@ void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
    // inuse
    size_t thread        = thread_alloc::thread_num();
    size_t set_dep_inuse = thread_alloc::inuse(thread);
-   std::cout << "tape:      inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
+   std::cout << "tape:       inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
 # endif
 }
 // ----------------------------------------------------------------------------
