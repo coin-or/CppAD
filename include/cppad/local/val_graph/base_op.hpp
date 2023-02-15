@@ -56,14 +56,25 @@ n_after
 *******
 This member function returns the number of auxiliary arguments
 that come after the arguments that are value vector indices.
+This can only be zero or one.
+
 
 n_arg
 *****
 This member function returns the number of arguments for this operator.
-Only the :ref:`call operator<val_call_op-title>`
-uses the *arg_index* and *arg_vec* arguments to this function.
+
+Fixed
+=====
+If *n_after* returns zero, this operator has a fixed number of arguments.
+In this case, the *arg_index* and *arg_vec* arguments to this function.
 You can set *arg_index* to
 *arg_vec*.size() (an invalid value) if you know this is not a call operator.
+
+Variable
+========
+If *n_after* returns one, this operator has a variable number of arguments.
+In this case the last argument is an auxiliary argument and is
+equal to the number of arguments for this use of this operator.
 
 n_res
 *****

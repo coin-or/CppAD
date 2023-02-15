@@ -86,7 +86,7 @@ This override of :ref:`val_base_op@n_arg` returns 2.
 
 n_res
 *****
-This override of :ref:`val_base_op@n_res` returns 0.
+This override of :ref:`val_base_op@n_res` returns 1.
 
 print_op
 ********

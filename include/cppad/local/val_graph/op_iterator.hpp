@@ -162,9 +162,13 @@ public:
       op_enum_t op_enum = op_enum_t( tape_.op_enum_vec()[op_index_] );
       op_ptr_           = op_enum2class<Value>(op_enum);
       //
+      // n_after
+      addr_t n_after = op_ptr_->n_after();
+      CPPAD_ASSERT_UNKNOWN( n_after == 0 || n_after == 1 );
+      //
       // arg_index_
       addr_t n_arg;
-      if( op_enum == call_op_enum )
+      if( n_after )
          n_arg = tape_.arg_vec()[arg_index_ - 1];
       else
       {  // arg_index
