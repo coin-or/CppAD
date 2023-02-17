@@ -322,6 +322,12 @@ public :
       const Vector<addr_t>& fun_arg
    );
    //
+   // record_csum_op
+   addr_t record_csum_op(
+      const Vector<addr_t>& add,
+      const Vector<addr_t>& sub
+   );
+   //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec);
    //

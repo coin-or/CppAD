@@ -15,6 +15,7 @@ namespace CppAD { namespace local { namespace val_graph {
 {xrst_begin val_graph_type dev}
 {xrst_spell
    typedef
+   csum
 }
 
 Value Operator Type Definitions
@@ -61,6 +62,7 @@ enum op_enum_t {
    call_op_enum,     // atomic functions
    comp_op_enum,     // compare operator
    con_op_enum,      // constants
+   csum_op_enum,     // cumulative summation
    dis_op_enum,      // discrete functions
    mul_op_enum,      // multiplication
    neg_op_enum,      // negative

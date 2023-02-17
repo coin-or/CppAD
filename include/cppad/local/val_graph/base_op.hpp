@@ -162,6 +162,7 @@ Operator Classes
    include/cppad/local/val_graph/dis_op.hpp
    include/cppad/local/val_graph/comp_op.hpp
    include/cppad/local/val_graph/call_op.hpp
+   include/cppad/local/val_graph/csum_op.hpp
 }
 
 {xrst_end val_base_op}

@@ -4,13 +4,16 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
+// BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/binary_op.hpp>
 # include <cppad/local/val_graph/call_op.hpp>
 # include <cppad/local/val_graph/comp_op.hpp>
 # include <cppad/local/val_graph/con_op.hpp>
+# include <cppad/local/val_graph/csum_op.hpp>
 # include <cppad/local/val_graph/dis_op.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
+// END_SORT_THIS_LINE_MINUS_1
 //
 namespace CppAD { namespace local { namespace val_graph {
 /*
@@ -63,6 +66,10 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 
       case con_op_enum:
       op_ptr = con_op_t<Value>::get_instance();
+      break;
+
+      case csum_op_enum:
+      op_ptr = csum_op_t<Value>::get_instance();
       break;
 
       case dis_op_enum:

@@ -67,6 +67,41 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
 }
 /*
 -------------------------------------------------------------------------------
+{xrst_begin val_set_dep dev}
+{xrst_spell
+   dep
+}
+
+Setting the Dependent Variables
+###############################
+
+set_dep
+*******
+{xrst_literal
+   // BEGIN_SET_DEP
+   // END_SET_DEP
+}
+This sets the dependent vector to the corresponding indices
+in the value vector.
+This is last step in creating a recording.
+
+{xrst_end val_set_dep}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_SET_DEP
+template <class Value>
+void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
+// END_SET_DEP
+{  dep_vec_ = dep_vec;
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // inuse
+   size_t thread        = thread_alloc::thread_num();
+   size_t set_dep_inuse = thread_alloc::inuse(thread);
+   std::cout << "tape:       inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
+# endif
+}
+/*
+-------------------------------------------------------------------------------
 {xrst_begin val_record_op dev}
 {xrst_spell
    operands
@@ -117,12 +152,12 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
       arg_vec_.push_back( op_arg[i] );
    //
    // n_val_
-   n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
+   ++n_val_;
    //
    return res_index;
 }
 /*
-{xrst_begin val_record_con_op dev}
+{xrst_betin val_record_con_op dev}
 
 Recording Constants
 ###################
@@ -159,10 +194,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    con_vec_.push_back( constant );
    //
    // res_index
-   addr_t res_index = addr_t( n_val_ );
-   //
-   // arg_index
-   addr_t arg_index = addr_t( arg_vec_.size() );
+   addr_t res_index = n_val_;
    //
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t( con_op_enum ) );
@@ -170,12 +202,8 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    // arg_vec_
    arg_vec_.push_back( con_index );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = base_op_ptr(con_op_enum);
-   //
-   //
    // n_val_
-   n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
+   ++n_val_;
    //
    return res_index;
 }
@@ -207,23 +235,17 @@ addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
 // END_RECORD_DIS_OP
 {  //
    // res_index
-   addr_t res_index = addr_t( n_val_ );
-   //
-   // arg_index
-   addr_t arg_index = addr_t( arg_vec_.size() );
+   addr_t res_index = n_val_;
    //
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t( dis_op_enum ) );
-   //
-   // op_ptr
-   base_op_t<Value>* op_ptr = base_op_ptr(dis_op_enum);
    //
    // arg_vec_
    arg_vec_.push_back( discrete_index );
    arg_vec_.push_back( val_index );
    //
    // n_val_
-   n_val_ = n_val_ + op_ptr->n_res(arg_index, arg_vec_);
+   ++n_val_;
    //
    return res_index;
 }
@@ -335,7 +357,7 @@ addr_t tape_t<Value>::record_call_op(
 // END_RECORD_CALL_OP
 {  //
    // res_index
-   addr_t res_index = addr_t( n_val_ );
+   addr_t res_index = n_val_;
    //
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t( call_op_enum ) );
@@ -355,43 +377,74 @@ addr_t tape_t<Value>::record_call_op(
    //
    return res_index;
 }
-
 /*
--------------------------------------------------------------------------------
-{xrst_begin val_set_dep dev}
+------------------------------------------------------------------------------
+{xrst_begin val_record_csum_op dev}
 {xrst_spell
-   dep
+   csum
 }
 
-Setting the Dependent Variables
-###############################
+Recording Cumulative Summation Operations
+#########################################
 
-set_dep
-*******
+record_csum_op
+**************
 {xrst_literal
-   // BEGIN_SET_DEP
-   // END_SET_DEP
+   // BEGIN_RECORD_CSUM_OP
+   // END_RECORD_CSUM_OP
 }
-This sets the dependent vector to the corresponding indices
-in the value vector.
-This is last step in creating a recording.
+This places a :ref:`val_csum_op-name` operator in the tape.
 
-{xrst_end val_set_dep}
+add
+===
+This is the vector of value indices corresponding to the values
+that are added to the sum.
+
+sub
+===
+This is the vector of value indices corresponding to the values
+that are subtracted from the sum.
+
+return
+======
+The ``record_con_op`` function returns the index in the value vector where
+the sum is placed.
+
+{xrst_end val_record_csum_op}
 */
 // ----------------------------------------------------------------------------
-// BEGIN_SET_DEP
+// BEGIN_RECORD_CSUM_OP
 template <class Value>
-void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
-// END_SET_DEP
-{  dep_vec_ = dep_vec;
-# if CPPAD_VAL_GRAPH_TAPE_TRACE
-   // inuse
-   size_t thread        = thread_alloc::thread_num();
-   size_t set_dep_inuse = thread_alloc::inuse(thread);
-   std::cout << "tape:       inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
-# endif
+addr_t tape_t<Value>::record_csum_op(
+   const Vector<addr_t>& add ,
+   const Vector<addr_t>& sub )
+// END_RECORD_CSUM_OP
+{  //
+   // n_add, n_sub, n_arg
+   addr_t n_add = addr_t( add.size() );
+   addr_t n_sub = addr_t( sub.size() );
+   addr_t n_arg = 3 + n_add + n_sub;
+   //
+   // res_index
+   addr_t res_index = n_val_;
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t( csum_op_enum ) );
+   //
+   // arg_vc_
+   arg_vec_.push_back( n_add );
+   arg_vec_.push_back( n_sub );
+   for(size_t i = 0; i < add.size(); ++i)
+      arg_vec_.push_back( add[i] );
+   for(size_t i = 0; i < sub.size(); ++i)
+      arg_vec_.push_back( sub[i] );
+   arg_vec_.push_back( n_arg );
+   //
+   // n_val_
+   ++n_val_;
+   //
+   return res_index;
 }
-// ----------------------------------------------------------------------------
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
