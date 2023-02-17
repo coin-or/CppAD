@@ -10,18 +10,21 @@
 //
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin val_graph_record_op dev}
-{xrst_spell
-   operands
-   dep
-}
+{xrst_begin_parent val_record_all_op dev}
 
-Recording Value Operators on a Tape
-###################################
+Recording Value Operations on a Tape
+####################################
 
 Purpose
 *******
 These operations store a function in the :ref:`val_tape-name`.
+
+{xrst_end val_record_all_op}
+------------------------------------------------------------------------------
+{xrst_begin val_set_ind dev}
+
+Setting Independent Variables
+#############################
 
 set_ind
 *******
@@ -37,117 +40,7 @@ value vector; i.e., *n_ind* .
 The constant nan uses one operator,
 one argument, one constant, and one result.
 This is the first step in a creating a recording.
-
-record_op
-*********
-{xrst_literal
-   // BEGIN_RECORD_OP
-   // END_RECORD_OP
-}
-This places a :ref:`val_unary_op-name` or :ref`val_binary_op-name`
-operator in the tape.
-The argument *op_enum* identifies the operator.
-The argument *op_arg* is a vector that contains the index of the operands
-in the value vector.
-It has length one (two) if this is a unary (binary) operator.
-The return value is the index were the result of the operation
-is placed in the value vector.
-
-record_con_op
-*************
-{xrst_literal
-   // BEGIN_RECORD_CON_OP
-   // END_RECORD_CON_OP
-}
-This places a :ref:`val_con_op-name` operator in the tape.
-The return value is the index were *constant* will be placed
-in the value vector.
-Note that if *constant* is nan, the return value will always be *n_ind*; i.e,
-only one nan gets paced in the constant vector.
-
-record_dis_op
-*************
-{xrst_literal
-   // BEGIN_RECORD_DIS_OP
-   // END_RECORD_DIS_OP
-}
-This places a :ref:`val_dis_op-name` operator in the tape.
-The argument *discrete_index* identifies which discrete function to use.
-The argument *val_index* is the index of the operand
-in the value vector.
-The return value is the index were the result will be placed
-in the value vector.
-
-record_comp_op
-**************
-{xrst_literal
-   // BEGIN_RECORD_COMP_OP
-   // END_RECORD_COMP_OP
-}
-This places a :ref:`val_comp_op-name` operator in the tape.
-The return value is always zero because there is
-no value vector result for this operator.
-
-compare_enum
-============
-This identifies which comparison is done by this use of the compare operator.
-
-left_index
-==========
-This is the value vector index for the left operand in the comparison.
-
-right_index
-===========
-This is the value vector index for the left operand in the comparison.
-
-record_call_op
-**************
-{xrst_literal
-   // BEGIN_RECORD_CALL_OP
-   // END_RECORD_CALL_OP
-}
-This places a :ref:`val_call_op-name` operator in the tape.
-
-atomic_index
-============
-This is the *atomic_index* for the atomic function; see
-:ref:`atomic_index@index_out` in the case where *index_in* is zero.
-
-call_id
-=======
-This is the *call_id* for this use of the atomic function; see
-:ref:`atomic_four_call@call_id` .
-
-n_res
-=====
-This is the number of values returned by the atomic function call
-and placed in the value vector.
-
-fun_arg
-=======
-This vector has size equal to the number of arguments to the atomic function
-for this *call_id* .
-(The combination of *atomic_index* and *call_id* must specify a function.)
-The *j*-th element of *fun_arg* is the index on the value vector of
-the *j*-th argument to the function.
-
-return
-======
-The ``record_con_op`` function returns the index in the value vector where
-the first result is placed in the value vector.
-A total of *n_res* results are placed in the value vector.
-
-set_dep
-*******
-{xrst_literal
-   // BEGIN_SET_DEP
-   // END_SET_DEP
-}
-This sets the dependent vector to the corresponding indices
-in the value vector.
-This is last step in creating a recording.
-
-{xrst_end val_graph_record_op}
+{xrst_end val_set_ind}
 */
 // ----------------------------------------------------------------------------
 // BEGIN_SET_IND
@@ -172,6 +65,34 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    //
    return nan_addr;
 }
+/*
+-------------------------------------------------------------------------------
+{xrst_begin val_record_op dev}
+{xrst_spell
+   operands
+}
+
+
+Recording Unary and Binary Operations
+#####################################
+
+record_op
+*********
+{xrst_literal
+   // BEGIN_RECORD_OP
+   // END_RECORD_OP
+}
+This places a :ref:`val_unary_op-name` or :ref`val_binary_op-name`
+operator in the tape.
+The argument *op_enum* identifies the operator.
+The argument *op_arg* is a vector that contains the index of the operands
+in the value vector.
+It has length one (two) if this is a unary (binary) operator.
+The return value is the index were the result of the operation
+is placed in the value vector.
+
+{xrst_end val_record_op}
+*/
 // ----------------------------------------------------------------------------
 // BEGIN_RECORD_OP
 template <class Value>
@@ -200,27 +121,26 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    //
    return res_index;
 }
-// ----------------------------------------------------------------------------
-// BEGIN_RECORD_COMP_OP
-template <class Value>
-addr_t tape_t<Value>::record_comp_op(
-   compare_enum_t compare_enum ,
-   addr_t         left_index   ,
-   addr_t         right_index  )
-// END_RECORD_COMP_OP
-{  // res_index
-   addr_t res_index = 0; // invalid result index
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( comp_op_enum ) );
-   //
-   // arg_vec_
-   arg_vec_.push_back( addr_t(compare_enum) );
-   arg_vec_.push_back( left_index );
-   arg_vec_.push_back( right_index );
-   //
-   return res_index;
+/*
+{xrst_begin val_record_con_op dev}
+
+Recording Constants
+###################
+
+record_con_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_CON_OP
+   // END_RECORD_CON_OP
 }
+This places a :ref:`val_con_op-name` operator in the tape.
+The return value is the index were *constant* will be placed
+in the value vector.
+Note that if *constant* is nan, the return value will always be *n_ind*; i.e,
+only one nan gets paced in the constant vector.
+
+{xrst_end val_record_con_op}
+*/
 // ----------------------------------------------------------------------------
 // BEGIN_RECORD_CON_OP
 template <class Value>
@@ -259,6 +179,27 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    //
    return res_index;
 }
+/*
+-------------------------------------------------------------------------------
+{xrst_begin val_record_dis_op dev}
+
+Recording The Discrete Operations
+#################################
+
+record_dis_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_DIS_OP
+   // END_RECORD_DIS_OP
+}
+This places a :ref:`val_dis_op-name` operator in the tape.
+The argument *discrete_index* identifies which discrete function to use.
+The argument *val_index* is the index of the operand
+in the value vector.
+The return value is the index were the result will be placed
+in the value vector.
+{xrst_end val_record_dis_op}
+*/
 // ----------------------------------------------------------------------------
 // BEGIN_RECORD_DIS_OP
 template <class Value>
@@ -286,6 +227,103 @@ addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
    //
    return res_index;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_record_comp_op dev}
+
+Recording Comparison Operations
+###############################
+
+record_comp_op
+**************
+{xrst_literal
+   // BEGIN_RECORD_COMP_OP
+   // END_RECORD_COMP_OP
+}
+This places a :ref:`val_comp_op-name` operator in the tape.
+The return value is always zero because there is
+no value vector result for this operator.
+
+compare_enum
+============
+This identifies which comparison is done by this use of the compare operator.
+
+left_index
+==========
+This is the value vector index for the left operand in the comparison.
+
+right_index
+===========
+This is the value vector index for the left operand in the comparison.
+{xrst_end val_record_comp_op}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_COMP_OP
+template <class Value>
+addr_t tape_t<Value>::record_comp_op(
+   compare_enum_t compare_enum ,
+   addr_t         left_index   ,
+   addr_t         right_index  )
+// END_RECORD_COMP_OP
+{  // res_index
+   addr_t res_index = 0; // invalid result index
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t( comp_op_enum ) );
+   //
+   // arg_vec_
+   arg_vec_.push_back( addr_t(compare_enum) );
+   arg_vec_.push_back( left_index );
+   arg_vec_.push_back( right_index );
+   //
+   return res_index;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_record_call_op dev}
+
+Recording Call Operations
+#########################
+
+record_call_op
+**************
+{xrst_literal
+   // BEGIN_RECORD_CALL_OP
+   // END_RECORD_CALL_OP
+}
+This places a :ref:`val_call_op-name` operator in the tape.
+
+atomic_index
+============
+This is the *atomic_index* for the atomic function; see
+:ref:`atomic_index@index_out` in the case where *index_in* is zero.
+
+call_id
+=======
+This is the *call_id* for this use of the atomic function; see
+:ref:`atomic_four_call@call_id` .
+
+n_res
+=====
+This is the number of values returned by the atomic function call
+and placed in the value vector.
+
+fun_arg
+=======
+This vector has size equal to the number of arguments to the atomic function
+for this *call_id* .
+(The combination of *atomic_index* and *call_id* must specify a function.)
+The *j*-th element of *fun_arg* is the index on the value vector of
+the *j*-th argument to the function.
+
+return
+======
+The ``record_con_op`` function returns the index in the value vector where
+the first result is placed in the value vector.
+A total of *n_res* results are placed in the value vector.
+
+{xrst_end val_record_call_op}
+*/
 // ----------------------------------------------------------------------------
 // BEGIN_RECORD_CALL_OP
 template <class Value>
@@ -317,6 +355,29 @@ addr_t tape_t<Value>::record_call_op(
    //
    return res_index;
 }
+
+/*
+-------------------------------------------------------------------------------
+{xrst_begin val_set_dep dev}
+{xrst_spell
+   dep
+}
+
+Setting the Dependent Variables
+###############################
+
+set_dep
+*******
+{xrst_literal
+   // BEGIN_SET_DEP
+   // END_SET_DEP
+}
+This sets the dependent vector to the corresponding indices
+in the value vector.
+This is last step in creating a recording.
+
+{xrst_end val_set_dep}
+*/
 // ----------------------------------------------------------------------------
 // BEGIN_SET_DEP
 template <class Value>

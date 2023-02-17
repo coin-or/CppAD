@@ -95,11 +95,6 @@ to evaluate *n_res* results given *n_arg* - 4 arguments.
       ...
       val_vec[res_index + n_res - 1]
 
-#. For *i* greater than or equal 4 and less than *n_arg*
-   ::
-
-      arg_vec[ arg_index + i ] < res_index
-
 trace
 =====
 If trace is true, this member function prints the following values:
@@ -189,15 +184,6 @@ public:
       Vector<Value>&        val_vec
    ) const override;
 // END_CALL_OP_T
-   //
-   // print_op
-   void print_op(
-      const char*           name         ,
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      addr_t                res_index    ,
-      Vector<Value>&        val_vec
-   ) const;
 };
 //
 // eval
@@ -256,13 +242,13 @@ void call_op_t<Value>::eval(
    // trace
    if( ! trace )
       return;
-    //
-    // v_ptr, name
-    bool         set_null = false;
-    size_t       type     = 0;       // result: set to avoid warning
-    std::string  name;               // result:
-    void*        v_ptr    = nullptr; // result: set to avoid warning
-    local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
+   //
+   // v_ptr, name
+   bool         set_null = false;
+   size_t       type     = 0;       // result: set to avoid warning
+   std::string  name;               // result:
+   void*        v_ptr    = nullptr; // result: set to avoid warning
+   local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
    //
    std::printf( "    %s(", name.c_str() );
    for(addr_t i = 0; i < n_x; ++i)
