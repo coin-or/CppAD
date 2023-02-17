@@ -81,7 +81,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
 # endif
    //
    // val_use_case
-   Vector<uint8_t> val_use_case = rev_depend();
+   Vector<addr_s> val_use_case = rev_depend();
    //
    // new_tape
    tape_t new_tape;
@@ -199,7 +199,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
                call_op_arg.resize(n_x);
                for(addr_t k = 0; k < n_x; ++k)
                {  addr_t val_index = arg_vec_[arg_index + n_before + k];
-                  if( val_use_case[val_index] )
+                  if( bool( val_use_case[val_index] ) )
                      call_op_arg[k] = new_val_index[val_index];
                   else
                   {  // nan at index n_ind_

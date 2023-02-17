@@ -23,11 +23,19 @@ Value Operator Type Definitions
 addr_t
 ******
 This type is used to store vectors of non-negative integers.
-It must be able to support an index equal to the length of the value vector.
+It must be able to support an index equal to the length of the arg_vec vector.
 A signed type can be used for testing, but an unsigned type will support
 more indices with the same memory usage.
 {xrst_code hpp} */
 typedef CPPAD_TAPE_ADDR_TYPE addr_t;
+/* {xrst_code}
+
+addr_s
+******
+This is a signed type is used to store vectors of integers.
+It must be able to support an index equal to the length of the arg_vec vector.
+{xrst_code hpp} */
+typedef CPPAD_TAPE_ADDR_TYPE addr_s;
 /* {xrst_code}
 
 Vector

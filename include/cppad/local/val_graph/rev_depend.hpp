@@ -33,26 +33,28 @@ val_use_case
 The return vector has size equal to the number of values; i.e.,
 :ref:`val_tape@n_val` .
 
-zero
+Zero
 ****
 If *val_use_case* [ *i* ] is zero, the value with index *i* is not needed
 to compute the dependent variables.
 
-one
-***
-If *val_use_case* [ *i* ] is one, the value with index *i* is not a
-dependent variable and it is only used once.
+Operator Index
+**************
+If abs( *val_use_case* [ *i* ] ) is greater than zero and less than n_op,
+the value with index *i* is not a dependent variable and it is only used once.
+If this value is negative,
+it is used as the second operand in a binary operator.
 
-two
-***
-If *val_use_case* [ *i* ] is two, the value with index *i* is a
-dependent variable or it is used more than once.
+n_op
+****
+If *val_use_case* [ *i* ] is equal to n_op (the number of operators),
+the value with index *i* is a dependent variable or it is used more than once.
 
 {xrst_end val_tape_rev_depend}
 */
 // BEGIN_REV_DEPEND
 template <class Value>
-Vector<uint8_t> tape_t<Value>::rev_depend(void)
+Vector<addr_s> tape_t<Value>::rev_depend(void)
 // END_REV_DEPEND
 {
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
@@ -80,11 +82,11 @@ Vector<uint8_t> tape_t<Value>::rev_depend(void)
    eval(trace, compare_false, val_index2con);
    //
    // val_use_case
-   Vector<uint8_t> val_use_case(n_val_);
+   Vector<addr_s> val_use_case(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
-      val_use_case[i] = 0;             // no operator uses this result
+      val_use_case[i] = 0;                  // no operator uses this result
    for(size_t i = 0; i < dep_vec_.size(); ++i)
-      val_use_case[ dep_vec_[i] ] = 2; // result is a dependent var
+      val_use_case[ dep_vec_[i] ] = n_op(); // result is a dependent var
    //
    // op_itr
    op_iterator<Value> op_itr(*this, n_op() );
@@ -101,12 +103,13 @@ Vector<uint8_t> tape_t<Value>::rev_depend(void)
       addr_t                  res_index = op_itr.res_index();
       addr_t                  arg_index = op_itr.arg_index();
       //
-      // op_enum, n_before, n_after, n_arg, n_res
+      // op_enum, n_before, n_after, n_arg, n_res, is_binary
       op_enum_t op_enum   = op_ptr->op_enum();
       addr_t    n_before  = op_ptr->n_before();
       addr_t    n_after   = op_ptr->n_after();
       addr_t    n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
       addr_t    n_res     = op_ptr->n_res(arg_index, arg_vec_);
+      bool      is_binary = op_ptr->is_binary();
       //
       if( 0 < n_res && op_enum != call_op_enum )
       {  CPPAD_ASSERT_UNKNOWN( n_res == 1 );
@@ -118,10 +121,14 @@ Vector<uint8_t> tape_t<Value>::rev_depend(void)
          if( need_op )
          {  for(addr_t i = n_before; i < n_arg - n_after; ++i)
             {  addr_t val_index = arg_vec_[arg_index + i];
-               if( val_use_case[val_index] == 0 )
-                  val_use_case[val_index] = 1; // one op uses this result
+               if( val_use_case[val_index] != 0 )
+                  val_use_case[val_index] = n_op(); // used by multiple ops
                else
-                  val_use_case[val_index] = 2; // multiple uses
+               {  if( is_binary && i == 1 )
+                     val_use_case[val_index] = - i_op;  // only used by i_op
+                  else
+                     val_use_case[val_index] = i_op;    // only used by i_op
+               }
             }
          }
       }
@@ -164,9 +171,9 @@ Vector<uint8_t> tape_t<Value>::rev_depend(void)
          {  addr_t val_index = arg_vec_[arg_index + n_before + k];
             if( depend_x[k] )
             {  if( val_use_case[val_index] == 0 )
-                  val_use_case[val_index] = 1;    // one use
+                  val_use_case[val_index] = i_op;   // only used by i_op
                else
-                  val_use_case[val_index] = 2;  // multiple uses
+                  val_use_case[val_index] = n_op(); // used by multiple ops
             }
          }
       }

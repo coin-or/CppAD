@@ -332,7 +332,7 @@ public :
    void renumber(void);
    //
    // rev_depend
-   Vector<uint8_t> rev_depend();
+   Vector<addr_s> rev_depend();
    //
    // dead_code
    void dead_code(bool keep_compare);
