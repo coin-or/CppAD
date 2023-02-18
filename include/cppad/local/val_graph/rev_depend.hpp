@@ -35,15 +35,16 @@ The return vector has size equal to the number of values; i.e.,
 
 Zero
 ****
-If *val_use_case* [ *i* ] is zero, the value with index *i* is not needed
+If *val_use_case* [ *i_op* ] is zero, the value with index *i_op* is not needed
 to compute the dependent variables.
 
 Operator Index
 **************
-If abs( *val_use_case* [ *i* ] ) is greater than zero and less than n_op,
-the value with index *i* is not a dependent variable and it is only used once.
-If this value is negative,
-it is used as the second operand in a binary operator.
+If j_op = abs( *val_use_case* [ *val_index* ] ) is greater than zero
+and less than n_op, the the value with index *val_index*
+is not a dependent variable and it is used once by operator j_op.
+If this value_use_case is positive (negative),
+it is used as the first operand (second operand) in a j_op operator.
 
 n_op
 ****

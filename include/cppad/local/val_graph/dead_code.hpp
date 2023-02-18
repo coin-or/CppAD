@@ -96,7 +96,7 @@ void tape_t<Value>::dead_code(bool keep_compare)
       new_val_index[i] = addr_t( n_val_ );
    //
    // op_arg, call_op_arg
-   Vector<addr_t> op_arg, call_op_arg;
+   Vector<addr_t> op_arg, call_op_arg, add, sub;
 # ifndef NDEBUG
    // nan at index n_ind_
    assert( op_enum_t( op_enum_vec_[0] ) == con_op_enum );
@@ -185,6 +185,22 @@ void tape_t<Value>::dead_code(bool keep_compare)
                //
                // record_con_op, new_val_index
                new_val_index[res_index] = new_tape.record_con_op(value);
+            }
+            break;
+            //
+            // csum_op_enum
+            case csum_op_enum:
+            {  //
+               // n_add
+               addr_t n_add = arg_vec_[arg_index + 0];
+               addr_t n_sub = arg_vec_[arg_index + 1];
+               add.resize(n_add);
+               sub.resize(n_sub);
+               for(addr_t i = 0; i < n_add; ++i)
+                  add[i] = arg_vec_[arg_index + 2 + i];
+               for(addr_t i = 0; i < n_sub; ++i)
+                  sub[i] = arg_vec_[arg_index + 2 + n_add + i];
+               new_val_index[res_index] = new_tape.record_csum_op(add, sub);
             }
             break;
             //

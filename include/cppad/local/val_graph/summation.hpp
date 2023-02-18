@@ -27,7 +27,7 @@ void tape_t<Value>::set_op2arg_index(void)
    // op2arg_indeex
    Vector<addr_t> op2arg_index( n_op() );
    op_iterator<Value> op_itr(*this, 0);
-   for(addr_t i_op = 0; i_op < n_op; ++i_op)
+   for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {   op2arg_index[i_op] = op_itr.arg_index();
       ++op_itr;
    }
@@ -55,7 +55,7 @@ void tape_t<Value>::replace_csum_op(
    op_enum_vec_[i_op] = uint8_t( csum_op_enum );
    //
    // arg_index_vec_
-   op2arg_index[i_op] = addr_t( arg_vec_.size() );
+   op2arg_index_[i_op] = addr_t( arg_vec_.size() );
    //
    // n_add, arg_vec_
    addr_t n_add  = addr_t( csum_info.add_list.size() );
@@ -69,13 +69,13 @@ void tape_t<Value>::replace_csum_op(
    std::list<addr_t>::const_iterator itr;
    //
    // arg_vec_: addition variables
-   for(itr = csum_info.add_list.begin(); itr = csum_info.add_list.end(); ++itr)
+   for(itr = csum_info.add_list.begin(); itr != csum_info.add_list.end(); ++itr)
    {  CPPAD_ASSERT_UNKNOWN( *itr < res_index );
       arg_vec_.push_back( *itr );
    }
    //
    // arg_vec_: subtraction variables
-   for(itr = csum_info.sub_list.begin(); itr = csum_info.sub_list.end(); ++itr)
+   for(itr = csum_info.sub_list.begin(); itr != csum_info.sub_list.end(); ++itr)
    {  CPPAD_ASSERT_UNKNOWN( *itr < res_index );
       arg_vec_.push_back( *itr );
    }
@@ -146,7 +146,7 @@ void tape_t<Value>::summation(void)
       addr_t    n_arg      = op_ptr->n_arg(arg_index, arg_vec_);
       //
       // use_i, sum_i
-      bool use_i = 0 != val_use_case[i_op];
+      bool use_i = 0 != val_use_case[res_index];
       bool sum_i   = sum_op( op_enum_i );
       if( use_i & sum_i )
       {  // i_op is one of neg, add, or sub
@@ -188,14 +188,11 @@ void tape_t<Value>::summation(void)
             csum_info_i.second_done = true;
          }
          //
-         // new_res_index
-         addr_t new_res_index = 0; // invalid index in value vector
-         //
-         if( val_use_case[i_op] == n_op() )
+         if( val_use_case[res_index] == n_op() )
          {  // i_op is a dependent variable or used more than once
             //
             if( is_csum_i )
-            {  new_res_index = replace_csum_op(res_index, i_op, csum_map[i_op]);
+            {  replace_csum_op(res_index, i_op, csum_map[i_op]);
                csum_map.erase( i_op );
             }
          }
@@ -203,11 +200,11 @@ void tape_t<Value>::summation(void)
          {  //
             // j_op, second_operand
             // i_op result is and operand for the j_op operator
-            addr_t j_op         = val_use_case[i_op];
+            addr_t j_op         = val_use_case[res_index];
             bool second_operand = j_op < 0;
             if( second_operand )
                   j_op = - j_op;
-            CPPAD_ASSERT_UNNOWN( 0 < j_op && j_op < n_op() );
+            CPPAD_ASSERT_UNKNOWN( 0 < j_op && j_op < n_op() );
             //
             // op_enum_j
             op_enum_t op_enum_j = op_enum_t( op_enum_vec_[j_op] );
@@ -218,7 +215,7 @@ void tape_t<Value>::summation(void)
             if( ! sum_j )
             {  // The only use of i_op is not a summation operator
                if( is_csum_i )
-               {  new_res_index = record_csum_op( csum_map[i_op] );
+               {  replace_csum_op(res_index, i_op,  csum_map[i_op]);
                   csum_map.erase( i_op );
                }
             }
@@ -227,7 +224,7 @@ void tape_t<Value>::summation(void)
                //
                // csum_map[i_op]
                if( ! is_csum_i )
-               {  csum_info_t& csum_info;
+               {  csum_info_t csum_info;
                   switch(op_enum_i)
                   {  //
                      default:

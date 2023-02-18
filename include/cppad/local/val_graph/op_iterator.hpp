@@ -173,16 +173,20 @@ public:
       CPPAD_ASSERT_UNKNOWN( n_after == 0 || n_after == 1 );
       //
       // arg_index_
-      addr_t n_arg;
-      if( n_after )
-         n_arg = tape_.arg_vec()[arg_index_ - 1];
+      if( 0 < tape_.op2arg_index().size() )
+         arg_index_ = tape_.op2arg_index()[op_index_];
       else
-      {  // arg_index
-         // set to an invalid value for an index in the arg_vec vector.
-         addr_t arg_index = addr_t( tape_.arg_vec().size() );
-         n_arg = op_ptr_->n_arg(arg_index, tape_.arg_vec());
+      {  addr_t n_arg;
+         if( n_after )
+            n_arg = tape_.arg_vec()[arg_index_ - 1];
+         else
+         {  // arg_index
+            // set to an invalid value for an index in the arg_vec vector.
+            addr_t arg_index = addr_t( tape_.arg_vec().size() );
+            n_arg = op_ptr_->n_arg(arg_index, tape_.arg_vec());
+         }
+         arg_index_ -= n_arg;
       }
-      arg_index_ -= n_arg;
       //
       // res_index_
       addr_t n_res = op_ptr_->n_res(arg_index_, tape_.arg_vec());
