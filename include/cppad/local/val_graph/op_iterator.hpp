@@ -136,14 +136,20 @@ public:
       //
       // op_index_, arg_index_, res_index_
       ++op_index_;
-      arg_index_ += n_arg;
       res_index_ += n_res;
       //
       // op_ptr_
       if( op_index_ == tape_.n_op() )
-         op_ptr_ = nullptr;
+      {  op_ptr_    = nullptr;
+         arg_index_ = addr_t( tape_.arg_vec().size() ); // invalid value
+      }
       else
-      {  op_enum_t op_enum = op_enum_t( tape_.op_enum_vec()[op_index_] );
+      {  if( tape_.op2arg_index().size() == 0 )
+            arg_index_ += n_arg;
+         else
+            arg_index_ = tape_.op2arg_index()[op_index_];
+         //
+         op_enum_t op_enum = op_enum_t( tape_.op_enum_vec()[op_index_] );
          op_ptr_           = op_enum2class<Value>(op_enum);
       }
    }

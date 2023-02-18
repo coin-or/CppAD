@@ -16,6 +16,10 @@
 # define CPPAD_VAL_GRAPH_TAPE_TRACE 0
 
 namespace CppAD { namespace local { namespace val_graph {
+
+// csum_info_t: forward declare
+struct csum_info_t;
+
 /*
 {xrst_begin val_tape dev}
 {xrst_spell
@@ -176,6 +180,11 @@ private :
    Vector<addr_t>     dep_vec_;     // dependent variable indices in val_vec
    Vector<uint8_t>    op_enum_vec_; // one byte per operator enum value.
    //
+   // op2arg_index_
+   // Optional vector that changes how op_iterator works.
+   // This is necessare is we are using replace_csum_op with this tape.
+   Vector<addr_t> op2arg_index_;
+   //
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // set by set_ind, used by set_dep
    size_t  set_ind_inuse_;
@@ -292,7 +301,7 @@ public :
       return;
    }
    // ------------------------------------------------------------------------
-   // functions documented in files included below
+   // functions in record_op.hpp
    // ------------------------------------------------------------------------
    //
    // set_ind
@@ -330,6 +339,9 @@ public :
    //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec);
+   // ------------------------------------------------------------------------
+   // functions in their own files
+   // ------------------------------------------------------------------------
    //
    // fold_con
    void fold_con(void);
@@ -342,6 +354,26 @@ public :
    //
    // dead_code
    void dead_code(bool keep_compare);
+   //
+   // ------------------------------------------------------------------------
+   // function in summation.hpp
+   // ------------------------------------------------------------------------
+   //
+   // summation
+   void summation(void);
+   //
+   // set_op2arg_index
+   void set_op2arg_index();
+   //
+   // op2arg_index
+   const Vector<addr_t>& op2arg_index(void) const;
+   //
+   // replace_csum_op
+   void replace_csum_op(
+      addr_t       res_index ,
+      addr_t       i_op      ,
+      csum_info_t& csum_info
+   );
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
@@ -349,6 +381,7 @@ public :
 # include <cppad/local/val_graph/fold_con.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
+# include <cppad/local/val_graph/summation.hpp>
 
 # undef CPPAD_VAL_GRAPH_TAPE_TRACE
 # endif

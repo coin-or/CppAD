@@ -53,6 +53,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    dep_vec_.clear();
    con_vec_.clear();
    op_enum_vec_.clear();
+   op2arg_index_.clear();
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // set_ind_inue
    size_t thread  = thread_alloc::thread_num();
