@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/local/val_graph/tape.hpp>
 /*
-{xrst_begin val_csum_xam.cpp dev}
+{xrst_begin val_summation_xam.cpp dev}
 
 Combining Value Operators Into a Cumulative Summation Example
 #############################################################
@@ -12,7 +12,7 @@ Combining Value Operators Into a Cumulative Summation Example
    // END_C++
 }
 
-{xrst_end val_csum_xam.cpp}
+{xrst_end val_summation_xam.cpp}
 */
 // BEGIN_C++
 bool summation_xam(void)

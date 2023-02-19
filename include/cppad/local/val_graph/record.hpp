@@ -10,7 +10,7 @@
 //
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin_parent val_record_all_op dev}
+{xrst_begin_parent val_record dev}
 
 Recording Value Operations on a Tape
 ####################################
@@ -19,7 +19,7 @@ Purpose
 *******
 These operations store a function in the :ref:`val_tape-name`.
 
-{xrst_end val_record_all_op}
+{xrst_end val_record}
 ------------------------------------------------------------------------------
 {xrst_begin val_set_ind dev}
 

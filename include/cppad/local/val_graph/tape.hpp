@@ -158,10 +158,11 @@ will add one to this value.
 Operations on Tape
 ******************
 {xrst_toc_table
-   include/cppad/local/val_graph/record_op.hpp
+   include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/fold_con.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
+   include/cppad/local/val_graph/summation.hpp
    include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/rev_depend.hpp
 }
@@ -301,7 +302,7 @@ public :
       return;
    }
    // ------------------------------------------------------------------------
-   // functions in record_op.hpp
+   // functions in record.hpp
    // ------------------------------------------------------------------------
    //
    // set_ind
@@ -356,7 +357,7 @@ public :
    void dead_code(bool keep_compare);
    //
    // ------------------------------------------------------------------------
-   // function in summation.hpp
+   // functions in summation.hpp
    // ------------------------------------------------------------------------
    //
    // summation
@@ -377,7 +378,7 @@ public :
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
-# include <cppad/local/val_graph/record_op.hpp>
+# include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/fold_con.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>

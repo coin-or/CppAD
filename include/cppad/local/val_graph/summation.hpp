@@ -1,5 +1,5 @@
-# ifndef  CPPAD_LOCAL_VAL_GRAPH_SUMMATION_HPP
-# define  CPPAD_LOCAL_VAL_GRAPH_SUMMATION_HPP
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_REPLACE_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_REPLACE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
@@ -7,22 +7,86 @@
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
 namespace CppAD { namespace local { namespace val_graph {
+/*
+------------------------------------------------------------------------------
+{xrst_begin_parent val_summation dev}
+{xrst_spell
+   csum
+}
 
-// csum_info
-// information for one cumulative summation operator
-struct csum_info_t {
-   bool              first_done;  // is first op argument included below
-   bool              second_done; // is second op argument included below
-   std::list<addr_t> add_list;    // list of value indices to add
-   std::list<addr_t> sub_list;    // list of value indices to subtract
-   //
-   csum_info_t() : first_done(false), second_done(false) { }
-};
-//
-// set_op2arg_index
+Combine Multiple sum Operators into a csum Operator
+###################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_SUMMATION
+   // END_SUMMATION
+}
+
+
+Discussion
+**********
+We refer to an add, sub, neg, or csum operator as a sum operation.
+If the result for one of these operations is only used by a sum operator,
+the two operations can be replaced by a single csum operator.
+This process is repeated until the result is used by some other operation
+or the result is a dependent variable.
+
+Limitation
+**********
+The process above terminates before reaching a csum operator in the
+original tape. To get full optimization in this case, csum operators
+should first be converted to add and sub operations.
+
+Example
+*******
+The file :ref:`val_summation_xam.cpp-name` is an example and test using
+tape.summation().
+
+Contents
+********
+{xrst_toc_table
+   val_graph/summation_xam.cpp
+}
+
+{xrst_end val_summation}
+-------------------------------------------------------------------------------
+{xrst_begin val_op2arg_index dev}
+
+Set and Get the op2arg_index Vector
+###################################
+This vector maps an operator index to the corresponding arg_index; i.e.,
+the index in arg_vec of the first argument for this operator.
+
+set
+***
+This ensures that the op2arg_index vector has been set.
+{xrst_literal
+   // BEGIN_SET_OP2ARG_INDEX
+   // END_SET_OP2ARG_INDEX
+}
+
+get
+***
+This gets th op2arg_index vector.
+If its size is zero, it has not been set.
+{xrst_literal
+   // BEGIN_OP2ARG_INDEX
+   // END_OP2ARG_INDEX
+}
+
+
+{xrst_end val_op2arg_index}
+*/
+// BEGIN_SET_OP2ARG_INDEX
 template <class Value>
 void tape_t<Value>::set_op2arg_index(void)
-{  CPPAD_ASSERT_UNKNOWN( op2arg_index_.size() == 0 );
+// END_SET_OP2ARG_INDEX
+{  if( 0 < op2arg_index_.size() )
+   {  CPPAD_ASSERT_UNKNOWN( op2arg_index_.size() == size_t( n_op() ) );
+      return;
+   }
    //
    // op2arg_indeex
    Vector<addr_t> op2arg_index( n_op() );
@@ -38,18 +102,84 @@ void tape_t<Value>::set_op2arg_index(void)
    op2arg_index_.swap(op2arg_index);
 }
 //
-// op2arg_index
+// BEGIN_OP2ARG_INDEX
 template <class Value>
 const Vector<addr_t>& tape_t<Value>::op2arg_index(void) const
+// END_OP2ARG_INDEX
 {  return op2arg_index_; }
+/*
+-----------------------------------------------------------------------------
+{xrst_begin val_csum_info dev}
+{xrst_spell
+   struct
+   csum
+}
+
+Information for a Cumulative Summation
+######################################
+
+{xrst_code cpp} */
+struct csum_info_t {
+   bool  first_done;  // is first operator argument included in lists
+   bool  second_done; // is second operator argument included in lists
+   std::list<addr_t> add_list; // list of value indices to add
+   std::list<addr_t> sub_list; // list of value indices to subtract
+   // ctor
+   csum_info_t() : first_done(false), second_done(false) { }
+};
+/* {xrst_code}
+{xrst_end val_csum_info}
+------------------------------------------------------------------------------
+{xrst_begin val_replace_csum_op dev}
+{xrst_spell
+   csum
+}
+
+Replace An Operator with a Cumulative Summation
+###############################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_REPLACE_CSUM_OP
+   // END_REPLACE_CSUM_OP
+}
+
+Replacement Operator Use
+************************
+This will replace an operator use in the tape.
+The :ref:`set_op2arg_index <val_op2arg_index@set>` must have been
+executed on this tape before a replacement can be done.
+
+res_index
+*********
+is the value index of the result for this operator.
+
+op_index
+********
+is the index of the operator that we are replacing
+This operator must have just one result with index res_index.
+
+csum_info
+*********
+Is the cumulative summation information for the operator
+that we are replacing.
+The idea here is that there are multiple add, sub, and neg operators
+that become dead code when this replacement is done.
+
+{xrst_end val_replace_csum_op}
+*/
 //
-// replace_csum_op
+// BEGIN_REPLACE_CSUM_OP
 template <class Value>
 void tape_t<Value>::replace_csum_op(
    addr_t       res_index ,
    addr_t       i_op      ,
    csum_info_t& csum_info )
+// END_REPLACE_CSUM_OP
 {
+   //
+   // This is a replace
    //
    // op_enum_vec_
    op_enum_vec_[i_op] = uint8_t( csum_op_enum );
@@ -86,11 +216,12 @@ void tape_t<Value>::replace_csum_op(
    //
    return;
 }
-
-
+// ---------------------------------------------------------------------------
+// BEGIN_SUMMATION
 template <class Value>
 void tape_t<Value>::summation(void)
-{  // -----------------------------------------------------------------------
+// END_SUMMATION
+{  //
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // thread, initial_inuse
    size_t thread        = thread_alloc::thread_num();
@@ -296,6 +427,11 @@ void tape_t<Value>::summation(void)
          }
       }
    }
+# if CPPAD_VAL_GRAPH_TAPE_TRACE
+   // inuse
+   size_t final_inuse = thread_alloc::inuse(thread);
+   std::cout << "summation:  inuse = " << final_inuse - initial_inuse << "\n";
+# endif
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

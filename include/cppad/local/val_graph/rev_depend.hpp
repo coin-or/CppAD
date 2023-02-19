@@ -41,7 +41,7 @@ to compute the dependent variables.
 Operator Index
 **************
 If j_op = abs( *val_use_case* [ *val_index* ] ) is greater than zero
-and less than n_op, the the value with index *val_index*
+and less than n_op, the value with index *val_index*
 is not a dependent variable and it is used once by operator j_op.
 If this value_use_case is positive (negative),
 it is used as the first operand (second operand) in a j_op operator.
