@@ -223,9 +223,9 @@ void ADFun<Base, RecBase>::val2fun(
    for(size_t i = 0; i < var_n_ind; ++i)
       ind_taddr_[i] = i + 1;
    //
-   // ad_type_x, ad_type_y, fun_arg, select_y
+   // ad_type_x, ad_type_y, fun_arg, csum_arg, select_y
    vector<ad_type_enum> ad_type_x, ad_type_y;
-   vector<addr_t>       fun_arg;
+   vector<addr_t>       fun_arg, csum_arg;
    vector<bool>         select_y;
    vector<Base>         con_x;
    vector< AD<Base> >   ax, ay;
@@ -494,12 +494,104 @@ void ADFun<Base, RecBase>::val2fun(
          }
          break;
          // -------------------------------------------------------------------
+         // csum_op
+         // rec, val_ad_type, val2fun_index
+         case local::val_graph::csum_op_enum:
+         if( dynamic_enum <= max_ad_type )
+         {  //
+            // n_add, n_sub, n_arg
+            addr_t n_add =  val_arg_vec[arg_index + 0];
+            addr_t n_sub =  val_arg_vec[arg_index + 1];
+            CPPAD_ASSERT_UNKNOWN( n_arg == 3 + n_add + n_sub );
+            //
+            // sum_constant
+            Base sum_constant = Base(0.0);
+            for(addr_t i = 0; i < n_add; ++i)
+            {  if( ad_type_x[i] <= constant_enum )
+                  sum_constant += con_x[i];
+            }
+            for(addr_t i = 0; i < n_sub; ++i)
+            {  if( ad_type_x[n_add + i] <= constant_enum )
+                  sum_constant -= con_x[n_add + i];
+            }
+            // rec, sum_constant_addr
+            addr_t sum_constant_addr = rec.put_con_par(sum_constant);
+            CPPAD_ASSERT_UNKNOWN(parameter[sum_constant_addr] == sum_constant);
+            //
+            if( max_ad_type == dynamic_enum )
+            {  tmp_addr = sum_constant_addr;
+               for(addr_t i = 0; i < n_x; ++i)
+               {  tmp_addr = rec.put_dyn_par(
+                     nan, local::add_dyn, tmp_addr, fun_arg[i]
+                  );
+                  CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[tmp_addr] ) );
+               }
+            }
+            else if( max_ad_type == variable_enum )
+            {  //
+               // n_add_var, n_add_dyn
+               addr_t n_add_dyn = 0;
+               addr_t n_add_var = 0;
+               for(addr_t i = 0; i < n_add; ++i)
+               {  if( ad_type_x[i] == dynamic_enum )
+                     ++n_add_dyn;
+                  if( ad_type_x[i] == variable_enum )
+                     ++n_add_var;
+               }
+               //
+               // n_add_var, n_add_dyn
+               addr_t n_sub_dyn = 0;
+               addr_t n_sub_var = 0;
+               for(addr_t i = 0; i < n_sub; ++i)
+               {  if( ad_type_x[n_add + i] == dynamic_enum )
+                     ++n_sub_dyn;
+                  if( ad_type_x[n_add + i] == variable_enum )
+                     ++n_sub_var;
+               }
+               //
+               // csum_arg
+               addr_t n_tot = 6 + n_add_var + n_sub_var + n_add_dyn + n_sub_dyn;
+               csum_arg.resize(n_tot);
+               csum_arg[0] = sum_constant_addr;
+               csum_arg[1] = 5 + n_add_var;
+               csum_arg[2] = csum_arg[1] + n_sub_var;
+               csum_arg[3] = csum_arg[2] + n_add_dyn;
+               csum_arg[4] = csum_arg[3] + n_sub_dyn;
+               //
+               addr_t i_variable = 5;
+               addr_t i_dynamic  = i_variable + n_add_var + n_sub_var;
+               for(addr_t i = 0; i < n_add; ++i)
+               {  if( ad_type_x[i] == dynamic_enum )
+                     csum_arg[i_dynamic++]  = fun_arg[i];
+                  if( ad_type_x[i] == variable_enum )
+                     csum_arg[i_variable++] = fun_arg[i];
+               }
+               for(addr_t i = 0; i < n_sub; ++i)
+               {  if( ad_type_x[n_add + i] == dynamic_enum )
+                     csum_arg[i_dynamic++]  = fun_arg[n_add + i];
+                  if( ad_type_x[n_sub + i] == variable_enum )
+                     csum_arg[i_variable++] = fun_arg[n_add + i];
+               }
+               CPPAD_ASSERT_UNKNOWN( i_dynamic == n_tot - 1 );
+               csum_arg[i_dynamic] = i_dynamic;
+               //
+               // rec, tmp_addr
+               tmp_addr = rec.PutOp(local::CSumOp);
+               for(addr_t i = 0; i < n_tot; ++i)
+                  rec.PutArg( csum_arg[i] );
+               CPPAD_ASSERT_UNKNOWN( local::NumRes(local::CSumOp) == 1 );
+            }
+            val_ad_type[res_index]   = max_ad_type;
+            val2fun_index[res_index] = tmp_addr;
+         }
+         break;
+         // -------------------------------------------------------------------
          // call_op
          // rec, val_ad_type, val2fun_index
          case local::val_graph::call_op_enum:
          {  //
             // atomic_index, call_id
-            addr_t n_res        =  val_arg_vec[arg_index + 1] ;
+            addr_t n_res        =  val_arg_vec[arg_index + 1];
             size_t atomic_index = size_t( val_arg_vec[arg_index + 2] );
             size_t call_id      = size_t( val_arg_vec[arg_index + 3] );
             //

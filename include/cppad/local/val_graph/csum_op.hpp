@@ -155,7 +155,7 @@ public:
       const Vector<addr_t>& arg_vec      ) const override
    {  addr_t n_add = arg_vec[arg_index + 0];
       addr_t n_sub = arg_vec[arg_index + 1];
-      return 2 + n_add + n_sub;
+      return 3 + n_add + n_sub;
    }
    //
    // n_res
