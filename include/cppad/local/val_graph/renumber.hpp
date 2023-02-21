@@ -39,9 +39,9 @@ private:
    //
    // hash_code
    addr_t hash_code(
-      base_op_t<Value>* op_ptr            ,
-      addr_t arg_index                    ,
-      const Vector<addr_t>& new_val_index )
+      const base_op_t<Value>* op_ptr        ,
+      addr_t                  arg_index     ,
+      const Vector<addr_t>&   new_val_index )
    {  //
       // arg_vec, con_vec, op_enum
       const Vector<addr_t>& arg_vec = tape_.arg_vec();
@@ -111,14 +111,13 @@ public:
    addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    {  assert( i_op < table_.end() );
       //
-      // arg_vec, con_vec, op_enum_vec
+      // arg_vec, con_vec
       const Vector<addr_t>&    arg_vec     = tape_.arg_vec();
       const Vector<Value>&     con_vec     = tape_.con_vec();
-      const Vector<uint8_t>&   op_enum_vec = tape_.op_enum_vec();
       //
       // op_enum, op_ptr
-      op_enum_t op_enum      = op_enum_t( op_enum_vec[i_op] );
-      base_op_t<Value>* op_ptr = tape_t<Value>::base_op_ptr(op_enum);
+      const base_op_t<Value>* op_ptr = tape_.base_op_ptr(i_op);
+      op_enum_t op_enum              = op_ptr->op_enum();
       //
       // arg_index, n_arg
       addr_t arg_index = op2arg_index_[i_op];
@@ -127,8 +126,7 @@ public:
       // nan
       if( op_enum == con_op_enum )
       {  if( CppAD::isnan( con_vec[ arg_vec[arg_index] ] ) )
-         {  CPPAD_ASSERT_UNKNOWN( op_enum_t(op_enum_vec[0]) == con_op_enum );
-            CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
+         {  CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( arg_vec[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( CppAD::isnan( con_vec[0] ) );
             return 0;
@@ -142,11 +140,11 @@ public:
       local::sparse::size_setvec_const_iterator<addr_t> itr(table_, code);
       while( *itr != table_.end() )
       {  // op_enum_j, arg_index_j
-         addr_t                j_op = *itr;
-         op_enum_t        op_enum_j = op_enum_t( op_enum_vec[j_op] );
-         base_op_t<Value>* op_ptr_j = tape_t<Value>::base_op_ptr(op_enum_j);
-         addr_t         arg_index_j = op2arg_index_[j_op];
-         addr_t             n_arg_j = op_ptr_j->n_arg(arg_index_j, arg_vec);
+         addr_t                  j_op = *itr;
+         const base_op_t<Value>* op_ptr_j = tape_.base_op_ptr(j_op);
+         op_enum_t op_enum_j   = op_ptr_j->op_enum();
+         addr_t    arg_index_j = op2arg_index_[j_op];
+         addr_t     n_arg_j    = op_ptr_j->n_arg(arg_index_j, arg_vec);
          //
          // match
          bool match = (op_enum == op_enum_j) & (n_arg == n_arg_j);
@@ -280,8 +278,8 @@ void tape_t<Value>::renumber(void)
    for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
       // op_enum, op_itr
-      op_enum_t               op_enum  = op_enum_t( op_enum_vec()[i_op] );
-      const base_op_t<Value>* op_ptr   = base_op_ptr(op_enum);
+      const base_op_t<Value>* op_ptr   = base_op_ptr(i_op);
+      op_enum_t               op_enum  = op_ptr->op_enum();
       //
       // arg_index_i, res_index_i
       addr_t arg_index_i = op2arg_index[i_op];
@@ -313,8 +311,7 @@ void tape_t<Value>::renumber(void)
    for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
       // op_enum, op_ptr
-      op_enum_t               op_enum  = op_enum_t( op_enum_vec()[i_op] );
-      const base_op_t<Value>* op_ptr   = base_op_ptr(op_enum);
+      const base_op_t<Value>* op_ptr   = base_op_ptr(i_op);
       //
       // arg_index, n_arg
       addr_t    arg_index = op2arg_index[i_op];

@@ -44,6 +44,13 @@ Value
 *****
 This is the type used for evaluations using the tape.
 
+op_ptr
+******
+{xrst_literal
+   // BEGIN_OP_PTR
+   // END_OP_PTR
+}
+
 n_val
 *****
 {xrst_literal
@@ -94,20 +101,6 @@ op_enum_vec
 }
 Each element of this vector corresponds to an operator usage.
 The order of the vector is the order of operations.
-
-arg_index
-=========
-this specifies the offset in arg_vec for this operator usage.
-
-rex_index
-=========
-this specifies the offset in the value vector
-of the first result for this operator usage.
-
-op_ptr
-======
-this is a pointer to the operator corresponding to this
-operator usage.
 
 dep_vec
 *******
@@ -192,9 +185,12 @@ private :
 # endif
    //
 public :
-   static base_op_t<Value>* base_op_ptr(op_enum_t op_enum)
-   {  return op_enum2class<Value>(op_enum);
+   // BEGIN_OP_PTR
+   const base_op_t<Value>* base_op_ptr(addr_t op_index) const
+   {  op_enum_t op_enum = op_enum_t( op_enum_vec_[op_index] );
+      return op_enum2class<Value>(op_enum);
    }
+   // END_OP_PTR
    // ------------------------------------------------------------------------
    // BEGIN_N_VAL
    addr_t n_val(void) const

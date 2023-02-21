@@ -145,7 +145,7 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    op_enum_vec_.push_back( uint8_t( op_enum ) );
    //
    // op_ptr
-   base_op_t<Value>* op_ptr = base_op_ptr(op_enum);
+   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
    //
    // arg_vec_
    size_t n_op_arg = op_ptr->n_arg(arg_index, arg_vec_);
