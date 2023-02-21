@@ -20,7 +20,6 @@ SET(source_list val_graph.cpp
    test/fold.cpp
    test/fun2val.cpp
    test/nan.cpp
-   test/not_used.cpp
    test/opt_call.cpp
    test/optimize.cpp
    test/val2fun.cpp

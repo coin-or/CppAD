@@ -335,7 +335,14 @@ void tape_t<Value>::summation(void)
             bool second_operand = j_op < 0;
             if( second_operand )
                   j_op = - j_op;
+# ifndef NDEBUG
             CPPAD_ASSERT_UNKNOWN( 0 < j_op && j_op < n_op() );
+            {  addr_t arg_index_j = op2arg_index_[j_op];
+               if( second_operand )
+                  ++arg_index_j;
+               CPPAD_ASSERT_UNKNOWN( res_index == arg_vec_[ arg_index_j ] );
+            }
+# endif
             //
             // op_enum_j
             op_enum_t op_enum_j = op_enum_t( op_enum_vec_[j_op] );
@@ -351,7 +358,7 @@ void tape_t<Value>::summation(void)
                }
             }
             else
-            {  // The only use of i_op resut is in a summation operator
+            {  // The only use of i_op result is in a summation operator
                //
                // csum_map[i_op]
                if( ! is_csum_i )

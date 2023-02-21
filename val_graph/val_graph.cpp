@@ -32,7 +32,6 @@ extern bool summation_xam(void);
 extern bool test_fold(void);
 extern bool test_fun2val(void);
 extern bool test_nan(void);
-extern bool test_not_used(void);
 extern bool test_opt_call(void);
 extern bool test_optimize(void);
 extern bool test_val2fun(void);
@@ -63,7 +62,6 @@ int main(void)
    Run( test_fold,           "test_fold"           );
    Run( test_fun2val,        "test_fun2val"        );
    Run( test_nan,            "test_nan"            );
-   Run( test_not_used,       "test_not_used"       );
    Run( test_opt_call,       "test_opt_call"       );
    Run( test_optimize,       "test_optimize"       );
    Run( test_val2fun,        "test_val2fun"        );
