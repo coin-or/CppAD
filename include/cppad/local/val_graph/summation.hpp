@@ -251,12 +251,21 @@ void tape_t<Value>::summation(void)
       return;
    };
    //
+   // cat_list
+   auto cat_list = [] (std::list<addr_t>& des, std::list<addr_t>& src)
+   {  std::list<addr_t>::iterator itr_pos         = des.end();
+      std::list<addr_t>::const_iterator itr_begin = src.begin();
+      std::list<addr_t>::const_iterator itr_end   = src.end();
+      des.insert(itr_pos, itr_begin, itr_end);
+      return;
+   };
+   //
    // set_op2arg_index
    // This is necessary before calling replace_csum_op.
    set_op2arg_index();
    //
    // val_use_case
-   Vector<addr_s> val_use_case = rev_depend();
+   Vector<addr_t> val_use_case = rev_depend();
    //
    // op_itr
    op_iterator<Value> op_itr(*this, 0);
@@ -268,16 +277,16 @@ void tape_t<Value>::summation(void)
       ++op_itr; // skip index zero
       //
       // op_ptr, arg_index, res_index
-      const base_op_t<Value>* op_ptr    = op_itr.op_ptr();
-      addr_t                  res_index = op_itr.res_index();
-      addr_t                  arg_index = op_itr.arg_index();
+      const base_op_t<Value>* op_ptr_i    = op_itr.op_ptr();
+      addr_t                  res_index_i = op_itr.res_index();
+      addr_t                  arg_index_i = op_itr.arg_index();
       //
       // op_enum_i, n_arg
-      op_enum_t op_enum_i  = op_ptr->op_enum();
-      addr_t    n_arg      = op_ptr->n_arg(arg_index, arg_vec_);
+      op_enum_t op_enum_i  = op_ptr_i->op_enum();
+      addr_t    n_arg      = op_ptr_i->n_arg(arg_index_i, arg_vec_);
       //
       // use_i, sum_i
-      bool use_i = 0 != val_use_case[res_index];
+      bool use_i = 0 != val_use_case[res_index_i];
       bool sum_i   = sum_op( op_enum_i );
       if( use_i & sum_i )
       {  // i_op is one of neg, add, or sub
@@ -285,12 +294,18 @@ void tape_t<Value>::summation(void)
          // op_arg
          op_arg.resize(n_arg);
          for(addr_t i = 0; i < n_arg; ++i)
-            op_arg[i] = arg_vec_[arg_index + i];
+            op_arg[i] = arg_vec_[arg_index_i + i];
+         //
+         // op_arg_equal
+         bool op_arg_equal = false;
+         if( op_ptr_i->is_binary() )
+            op_arg_equal = op_arg[0] == op_arg[1];
          //
          // is_csum_i, csum_map[i_op]
          bool is_csum_i  = 0 < csum_map.count(i_op);
          if( is_csum_i )
-         {  csum_info_t& csum_info_i = csum_map[i_op];
+         {  CPPAD_ASSERT_UNKNOWN( ! op_arg_equal );
+            csum_info_t& csum_info_i = csum_map[i_op];
             switch(op_enum_i)
             {  //
                default:
@@ -319,30 +334,19 @@ void tape_t<Value>::summation(void)
             csum_info_i.second_done = true;
          }
          //
-         if( val_use_case[res_index] == n_op() )
+         if( val_use_case[res_index_i] == n_op() )
          {  // i_op is a dependent variable or used more than once
             //
             if( is_csum_i )
-            {  replace_csum_op(res_index, i_op, csum_map[i_op]);
+            {  replace_csum_op(res_index_i, i_op, csum_map[i_op]);
                csum_map.erase( i_op );
             }
          }
          else
          {  //
-            // j_op, second_operand
-            // i_op result is and operand for the j_op operator
-            addr_t j_op         = val_use_case[res_index];
-            bool second_operand = j_op < 0;
-            if( second_operand )
-                  j_op = - j_op;
-# ifndef NDEBUG
-            CPPAD_ASSERT_UNKNOWN( 0 < j_op && j_op < n_op() );
-            {  addr_t arg_index_j = op2arg_index_[j_op];
-               if( second_operand )
-                  ++arg_index_j;
-               CPPAD_ASSERT_UNKNOWN( res_index == arg_vec_[ arg_index_j ] );
-            }
-# endif
+            // j_op
+            // i_op result is only used by the j_op operator
+            addr_t j_op = val_use_case[res_index_i];
             //
             // op_enum_j
             op_enum_t op_enum_j = op_enum_t( op_enum_vec_[j_op] );
@@ -353,7 +357,7 @@ void tape_t<Value>::summation(void)
             if( ! sum_j )
             {  // The only use of i_op is not a summation operator
                if( is_csum_i )
-               {  replace_csum_op(res_index, i_op,  csum_map[i_op]);
+               {  replace_csum_op(res_index_i, i_op,  csum_map[i_op]);
                   csum_map.erase( i_op );
                }
             }
@@ -381,9 +385,12 @@ void tape_t<Value>::summation(void)
                      break;
                      //
                      // sub_op_enum
+                     // no use is adding and subtracting the same argument
                      case sub_op_enum:
-                     csum_info.add_list.push_back(op_arg[0]);
-                     csum_info.sub_list.push_back(op_arg[1]);
+                     if( ! op_arg_equal )
+                     {  csum_info.add_list.push_back(op_arg[0]);
+                        csum_info.sub_list.push_back(op_arg[1]);
+                     }
                      break;
                   }
                   csum_map[i_op] = csum_info;
@@ -391,6 +398,20 @@ void tape_t<Value>::summation(void)
                //
                // csum_info_i
                csum_info_t& csum_info_i = csum_map[i_op];
+               //
+               // second_operand
+               bool second_operand = false;
+               if( (op_enum_j == add_op_enum) | (op_enum_j == sub_op_enum) )
+               {  addr_t          arg_index_j = op2arg_index_[j_op];
+                  addr_t          right_index = arg_vec_[arg_index_j + 1];
+                  second_operand  = right_index == res_index_i;
+# ifndef NDEBUG
+                  addr_t            left_index  = arg_vec_[arg_index_j + 0];
+                  CPPAD_ASSERT_UNKNOWN(
+                     left_index == res_index_i || right_index == res_index_i
+                  );
+# endif
+               }
                //
                // is_csum_j
                bool is_csum_j = 0 < csum_map.count(j_op);
@@ -411,22 +432,34 @@ void tape_t<Value>::summation(void)
                   break;
                   //
                   case add_op_enum:
+                  if( op_arg_equal )
+                  {  cat_list(csum_info_j.add_list, csum_info_i.add_list);
+                     cat_list(csum_info_j.sub_list, csum_info_i.sub_list);
+                  }
                   splice_list(csum_info_j.add_list, csum_info_i.add_list);
                   splice_list(csum_info_j.sub_list, csum_info_i.sub_list);
                   break;
                   //
                   case sub_op_enum:
-                  if( second_operand )
+                  if( second_operand & (! op_arg_equal) )
                   {  splice_list(csum_info_j.add_list, csum_info_i.sub_list);
                      splice_list(csum_info_j.sub_list, csum_info_i.add_list);
                   }
                   else
-                  {  splice_list(csum_info_j.add_list, csum_info_i.add_list);
+                  {  if( op_arg_equal )
+                     {  cat_list(csum_info_j.add_list, csum_info_i.add_list);
+                        cat_list(csum_info_j.sub_list, csum_info_i.sub_list);
+                     }
+                     splice_list(csum_info_j.add_list, csum_info_i.add_list);
                      splice_list(csum_info_j.sub_list, csum_info_i.sub_list);
                   }
                   break;
                }
-               if( second_operand )
+               if( op_arg_equal )
+               {  csum_info_j.first_done  = true;
+                  csum_info_j.second_done = true;
+               }
+               else if( second_operand )
                   csum_info_j.second_done = true;
                else
                   csum_info_j.first_done = true;

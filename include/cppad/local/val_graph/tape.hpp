@@ -347,7 +347,7 @@ public :
    void renumber(void);
    //
    // rev_depend
-   Vector<addr_s> rev_depend();
+   Vector<addr_t> rev_depend();
    //
    // dead_code
    void dead_code(bool keep_compare);

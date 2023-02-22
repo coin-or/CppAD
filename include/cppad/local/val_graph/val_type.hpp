@@ -31,14 +31,6 @@ more indices with the same memory usage.
 typedef CPPAD_TAPE_ADDR_TYPE addr_t;
 /* {xrst_code}
 
-addr_s
-******
-This is a signed type is used to store vectors of integers.
-It must be able to support an index equal to the length of the arg_vec vector.
-{xrst_code hpp} */
-typedef CPPAD_TAPE_ADDR_TYPE addr_s;
-/* {xrst_code}
-
 Vector
 ******
 This is a :ref:`SimpleVector-name` template class.

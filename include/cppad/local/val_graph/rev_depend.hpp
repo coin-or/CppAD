@@ -34,28 +34,33 @@ The return vector has size equal to the number of values; i.e.,
 :ref:`val_tape@n_val` .
 
 Zero
-****
-If *val_use_case* [ *i_op* ] is zero, the value with index *i_op* is not needed
+====
+If *val_use_case* [ *val_index* ] is zero,
+the value with index *val_index* is not needed
 to compute the dependent variables.
 
-Operator Index
-**************
-If j_op = abs( *val_use_case* [ *val_index* ] ) is greater than zero
-and less than n_op, the value with index *val_index*
-is not a dependent variable and it is used once by operator j_op.
-If this value_use_case is positive (negative),
-it is used as the first operand (second operand) in a j_op operator.
-
 n_op
-****
-If *val_use_case* [ *i* ] is equal to n_op (the number of operators),
-the value with index *i* is a dependent variable or it is used more than once.
+====
+If *val_use_case* [ *val_index* ] is equal to n_op (the number of operators),
+the value with index *val_index* satisfies one of the following conditions:
+
+#. It is a dependent variable.
+#. It is used by more than one operator.
+#. It is used more than once by one operator and that operator is not a
+   binary operator.
+
+
+Otherwise
+=========
+If *val_use_case* [ *val_index* ]  is the index of the only operator that
+uses the value with index *val_index* as an argument.
 
 {xrst_end val_tape_rev_depend}
 */
 // BEGIN_REV_DEPEND
+// val_use_case = tape.rev_depend()
 template <class Value>
-Vector<addr_s> tape_t<Value>::rev_depend(void)
+Vector<addr_t> tape_t<Value>::rev_depend(void)
 // END_REV_DEPEND
 {
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
@@ -83,11 +88,23 @@ Vector<addr_s> tape_t<Value>::rev_depend(void)
    eval(trace, compare_false, val_index2con);
    //
    // val_use_case
-   Vector<addr_s> val_use_case(n_val_);
+   // initialize as no operator uses any value
+   Vector<addr_t> val_use_case(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
-      val_use_case[i] = 0;                  // no operator uses this result
+      val_use_case[i] = 0;
+   //
+   // val_use_case
    for(size_t i = 0; i < dep_vec_.size(); ++i)
       val_use_case[ dep_vec_[i] ] = n_op(); // result is a dependent var
+   //
+   // inc_val_use_case
+   auto inc_val_use_case =
+      [this, &val_use_case](addr_t val_index, addr_t op_index)
+   {  if( val_use_case[val_index] == 0 )
+         val_use_case[val_index] = op_index; // only used by this operator
+      else
+         val_use_case[val_index] = n_op();   // is used multiple times
+   };
    //
    // op_itr
    op_iterator<Value> op_itr(*this, n_op() );
@@ -118,17 +135,19 @@ Vector<addr_s> tape_t<Value>::rev_depend(void)
          // need_op
          bool need_op = bool( val_use_case[res_index + 0] );
          //
-         // use_case
+         // val_use_case
          if( need_op )
-         {  for(addr_t i = n_before; i < n_arg - n_after; ++i)
-            {  addr_t val_index = arg_vec_[arg_index + i];
-               if( val_use_case[val_index] != 0 )
-                  val_use_case[val_index] = n_op(); // used by multiple ops
-               else
-               {  if( is_binary && i == 1 )
-                     val_use_case[val_index] = - i_op;  // only used by i_op
-                  else
-                     val_use_case[val_index] = i_op;    // only used by i_op
+         {  if( is_binary )
+            {  addr_t left_index  = arg_vec_[arg_index + 0];
+               addr_t right_index = arg_vec_[arg_index + 1];
+               inc_val_use_case(left_index, i_op);
+               if( left_index != right_index )
+                  inc_val_use_case(right_index, i_op);
+            }
+            else
+            {  for(addr_t i = n_before; i < n_arg - n_after; ++i)
+               {  addr_t val_index = arg_vec_[arg_index + i];
+                  inc_val_use_case(val_index, i_op);
                }
             }
          }
@@ -171,11 +190,7 @@ Vector<addr_s> tape_t<Value>::rev_depend(void)
          for(addr_t k = 0; k < n_x; ++k)
          {  addr_t val_index = arg_vec_[arg_index + n_before + k];
             if( depend_x[k] )
-            {  if( val_use_case[val_index] == 0 )
-                  val_use_case[val_index] = i_op;   // only used by i_op
-               else
-                  val_use_case[val_index] = n_op(); // used by multiple ops
-            }
+               inc_val_use_case(val_index, i_op);
          }
       }
    }
