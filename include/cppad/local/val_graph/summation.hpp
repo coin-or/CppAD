@@ -296,16 +296,15 @@ void tape_t<Value>::summation(void)
          for(addr_t i = 0; i < n_arg; ++i)
             op_arg[i] = arg_vec_[arg_index_i + i];
          //
-         // op_arg_equal
-         bool op_arg_equal = false;
+         // op_arg_equal_i
+         bool op_arg_equal_i = false;
          if( op_ptr_i->is_binary() )
-            op_arg_equal = op_arg[0] == op_arg[1];
+            op_arg_equal_i = op_arg[0] == op_arg[1];
          //
          // is_csum_i, csum_map[i_op]
          bool is_csum_i  = 0 < csum_map.count(i_op);
          if( is_csum_i )
-         {  CPPAD_ASSERT_UNKNOWN( ! op_arg_equal );
-            csum_info_t& csum_info_i = csum_map[i_op];
+         {  csum_info_t& csum_info_i = csum_map[i_op];
             switch(op_enum_i)
             {  //
                default:
@@ -318,16 +317,24 @@ void tape_t<Value>::summation(void)
                //
                case add_op_enum:
                if( ! csum_info_i.first_done )
+               {  CPPAD_ASSERT_UNKNOWN( ! op_arg_equal_i );
                   csum_info_i.add_list.push_back(op_arg[0]);
+               }
                if( ! csum_info_i.second_done )
+               {  CPPAD_ASSERT_UNKNOWN( ! op_arg_equal_i );
                   csum_info_i.add_list.push_back(op_arg[1]);
+               }
                break;
                //
                case sub_op_enum:
                if( ! csum_info_i.first_done )
+               {  CPPAD_ASSERT_UNKNOWN( ! op_arg_equal_i );
                   csum_info_i.add_list.push_back(op_arg[0]);
+               }
                if( ! csum_info_i.second_done )
+               {  CPPAD_ASSERT_UNKNOWN( ! op_arg_equal_i );
                   csum_info_i.sub_list.push_back(op_arg[1]);
+               }
                break;
             }
             csum_info_i.first_done  = true;
@@ -387,7 +394,7 @@ void tape_t<Value>::summation(void)
                      // sub_op_enum
                      // no use is adding and subtracting the same argument
                      case sub_op_enum:
-                     if( ! op_arg_equal )
+                     if( ! op_arg_equal_i )
                      {  csum_info.add_list.push_back(op_arg[0]);
                         csum_info.sub_list.push_back(op_arg[1]);
                      }
@@ -401,16 +408,16 @@ void tape_t<Value>::summation(void)
                //
                // second_operand
                bool second_operand = false;
+               bool op_arg_equal_j = false;
                if( (op_enum_j == add_op_enum) | (op_enum_j == sub_op_enum) )
                {  addr_t          arg_index_j = op2arg_index_[j_op];
                   addr_t          right_index = arg_vec_[arg_index_j + 1];
+                  addr_t          left_index  = arg_vec_[arg_index_j + 0];
                   second_operand  = right_index == res_index_i;
-# ifndef NDEBUG
-                  addr_t            left_index  = arg_vec_[arg_index_j + 0];
+                  op_arg_equal_j  = right_index == left_index;
                   CPPAD_ASSERT_UNKNOWN(
                      left_index == res_index_i || right_index == res_index_i
                   );
-# endif
                }
                //
                // is_csum_j
@@ -432,7 +439,7 @@ void tape_t<Value>::summation(void)
                   break;
                   //
                   case add_op_enum:
-                  if( op_arg_equal )
+                  if( op_arg_equal_j )
                   {  cat_list(csum_info_j.add_list, csum_info_i.add_list);
                      cat_list(csum_info_j.sub_list, csum_info_i.sub_list);
                   }
@@ -441,21 +448,25 @@ void tape_t<Value>::summation(void)
                   break;
                   //
                   case sub_op_enum:
-                  if( second_operand & (! op_arg_equal) )
-                  {  splice_list(csum_info_j.add_list, csum_info_i.sub_list);
-                     splice_list(csum_info_j.sub_list, csum_info_i.add_list);
+                  if( second_operand )
+                  {  if( ! op_arg_equal_j )
+                     {  splice_list(csum_info_j.add_list, csum_info_i.sub_list);
+                        splice_list(csum_info_j.sub_list, csum_info_i.add_list);
+                     }
+                  }
+                  else if( op_arg_equal_j )
+                  {  cat_list(csum_info_j.add_list, csum_info_i.add_list);
+                     cat_list(csum_info_j.sub_list, csum_info_i.sub_list);
+                     splice_list(csum_info_j.add_list, csum_info_i.add_list);
+                     splice_list(csum_info_j.sub_list, csum_info_i.sub_list);
                   }
                   else
-                  {  if( op_arg_equal )
-                     {  cat_list(csum_info_j.add_list, csum_info_i.add_list);
-                        cat_list(csum_info_j.sub_list, csum_info_i.sub_list);
-                     }
-                     splice_list(csum_info_j.add_list, csum_info_i.add_list);
+                  {  splice_list(csum_info_j.add_list, csum_info_i.add_list);
                      splice_list(csum_info_j.sub_list, csum_info_i.sub_list);
                   }
                   break;
                }
-               if( op_arg_equal )
+               if( op_arg_equal_j )
                {  csum_info_j.first_done  = true;
                   csum_info_j.second_done = true;
                }

@@ -197,9 +197,9 @@ void tape_t<Value>::dead_code(bool keep_compare)
                add.resize(n_add);
                sub.resize(n_sub);
                for(addr_t i = 0; i < n_add; ++i)
-                  add[i] = arg_vec_[arg_index + 2 + i];
+                  add[i] = new_val_index[ arg_vec_[arg_index + 2 + i] ];
                for(addr_t i = 0; i < n_sub; ++i)
-                  sub[i] = arg_vec_[arg_index + 2 + n_add + i];
+                  sub[i] = new_val_index[ arg_vec_[arg_index + 2 + n_add + i] ];
                new_val_index[res_index] = new_tape.record_csum_op(add, sub);
             }
             break;

@@ -50,7 +50,7 @@ bool summation_xam(void)
    op_arg[1] = mul;
    addr_t sub = tape.record_op(sub_op_enum, op_arg);
    //
-   // op_aarg, neg = x[2] * x[3] - x[0] - x[1]
+   // op_arg, neg = x[2] * x[3] - x[0] - x[1]
    op_arg.resize(1);
    op_arg[0] = sub;
    addr_t neg = tape.record_op(neg_op_enum, op_arg);

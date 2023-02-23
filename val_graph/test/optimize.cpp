@@ -315,6 +315,106 @@ bool not_used(void)
    return ok;
 }
 // ---------------------------------------------------------------------------
+// summation
+bool summation(void)
+{  bool ok = true;
+   //
+   // tape_t, Vector, addr_t, csum_op_enum;
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   using CppAD::local::val_graph::op_enum_t;
+   op_enum_t add_op_enum = CppAD::local::val_graph::add_op_enum;
+   op_enum_t sub_op_enum = CppAD::local::val_graph::sub_op_enum;
+   op_enum_t mul_op_enum = CppAD::local::val_graph::mul_op_enum;
+   //
+   // tape, ok
+   tape_t<double> tape;
+   addr_t n_ind = 4;
+   addr_t index_of_nan = tape.set_ind(n_ind);
+   ok &= index_of_nan == n_ind;
+   Vector<addr_t> op_arg(2);
+   //
+   // op_arg, add = x[0] + x[0]
+   // This operator will become part of a cumulative sumation
+   op_arg[0] = 0;   // x[0]
+   op_arg[1] = 0;   // x[0]
+   addr_t add = tape.record_op(add_op_enum, op_arg);
+   //
+   // op_arg, mul = x[2] * x[3]
+   // This operator cannot become part of a cumulative summation
+   op_arg[0] = 2;   // x[2]
+   op_arg[1] = 3;   // x[3]
+   addr_t mul = tape.record_op(mul_op_enum, op_arg);
+   //
+   // op_arg, sub = x[2] * x[3] - x[0] - x[0]
+   // Test case where second arg gets replaced
+   op_arg[0] = mul;
+   op_arg[1] = add;
+   addr_t sub = tape.record_op(sub_op_enum, op_arg);
+   //
+   // op_arg, add = 2 * ( x[2] * x[3] - x[0] - x[0] )
+   op_arg[0] = sub;
+   op_arg[1] = sub;
+   add = tape.record_op(add_op_enum, op_arg);
+   //
+   // dep_vec, tape
+   Vector<addr_t> dep_vec(1);
+   dep_vec[0] = add; // 2 * ( x[2] * x[3] - x[0] - x[0] )
+   //
+   // set_dep
+   tape.set_dep( dep_vec );
+   //
+   // x
+   Vector<double> x(n_ind);
+   for(addr_t i = 0; i < n_ind; ++i)
+      x[i] = double(2 + i);
+   //
+   // trace
+   bool trace = false;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   for(addr_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // ok
+   ok &= tape.n_op()  == 5;
+   ok &= tape.con_vec().size() == 1;
+   ok &= tape.arg_vec().size() == 1 + 4 * 2;
+   ok &= tape.n_val()          == n_ind + 1 + 4;
+   //
+   // summation
+   tape.summation();
+   bool keep_compare = true;
+   tape.dead_code(keep_compare);
+   //
+   // ok
+   ok &= tape.n_op()  == 3;
+   ok &= tape.con_vec().size() == 1;
+   ok &= tape.arg_vec().size() == 1 + 2 + (6 + 3);
+   ok &= tape.n_val()          == n_ind + 3;
+   //
+   // eval
+   val_vec.resize( tape.n_val() );
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y
+   Vector<double> y(1);
+   dep_vec = tape.dep_vec();
+   y[0]    = val_vec[ dep_vec[0] ];
+   //
+   // ok
+   ok &= y[0] == 2.0 * ( x[2] * x[3] - x[0] - x[0] );
+   //
+   return ok;
+}
+// END_C++
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 
 //
@@ -324,5 +424,6 @@ bool test_optimize(void)
    ok     &= communative();
    ok     &= propagate_match();
    ok     &= not_used();
+   ok     &= summation();
    return ok;
 }
