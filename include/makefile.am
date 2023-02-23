@@ -345,6 +345,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/call_op.hpp \
 	cppad/local/val_graph/comp_op.hpp \
 	cppad/local/val_graph/con_op.hpp \
+	cppad/local/val_graph/csum_op.hpp \
 	cppad/local/val_graph/dead_code.hpp \
 	cppad/local/val_graph/dis_op.hpp \
 	cppad/local/val_graph/dyn_type.hpp \
@@ -352,9 +353,10 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_iterator.hpp \
-	cppad/local/val_graph/record_op.hpp \
+	cppad/local/val_graph/record.hpp \
 	cppad/local/val_graph/renumber.hpp \
 	cppad/local/val_graph/rev_depend.hpp \
+	cppad/local/val_graph/summation.hpp \
 	cppad/local/val_graph/tape.hpp \
 	cppad/local/val_graph/unary_op.hpp \
 	cppad/local/val_graph/val2fun.hpp \
