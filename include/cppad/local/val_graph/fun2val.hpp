@@ -190,6 +190,19 @@ void ADFun<Base, RecBase>::fun2val(
    // initial index in dyn_par_arg
    size_t i_arg = 0;
    //
+   // ensure_par2val_index
+   // val_tape, par2val_index
+   auto ensure_par2val_index =
+   [&val_tape, &par2val_index, &parameter, invalid_addr_t] (addr_t par_index)
+   {  addr_t result = par2val_index[par_index];
+      if( result == invalid_addr_t )
+      {  Base constant            = parameter[par_index];
+         result                   = val_tape.record_con_op(constant);
+         par2val_index[par_index] = result;
+      }
+      return result;
+   };
+   //
    // val_tape
    // record dynamic parameter operations
    //
@@ -217,13 +230,7 @@ void ADFun<Base, RecBase>::fun2val(
          val_op_arg.resize(n_arg);
          for(addr_t i = 0; i < n_arg; ++i)
          {  addr_t par_index = dyn_par_arg[i_arg + i];
-            if( par2val_index[par_index] != invalid_addr_t )
-               val_op_arg[i] = par2val_index[par_index];
-            else
-            {  Base constant = parameter[par_index];
-               val_op_arg[i] = val_tape.record_con_op( constant );
-               par2val_index[par_index] = val_op_arg[i];
-            }
+            val_op_arg[i]    = ensure_par2val_index(par_index);
          }
          // val_tape, val_index
          op_enum_t val_op = dyn_op2val_op[dyn_op];
@@ -250,13 +257,8 @@ void ADFun<Base, RecBase>::fun2val(
             val_op_arg.resize(1);
             addr_t discrete_index = dyn_par_arg[i_arg + 0];
             addr_t par_index      = dyn_par_arg[i_arg + 1];
-            if( par2val_index[par_index] != invalid_addr_t )
-               val_op_arg[0] = par2val_index[par_index];
-            else
-            {  Base constant = parameter[par_index];
-               val_op_arg[0] = val_tape.record_con_op( constant );
-               par2val_index[par_index] = val_op_arg[0];
-            }
+            val_op_arg[0]         = ensure_par2val_index(par_index);
+            //
             // n_arg, val_tape, val_index
             n_arg = 2;
             val_index = val_tape.record_dis_op(
@@ -275,18 +277,11 @@ void ADFun<Base, RecBase>::fun2val(
             addr_t n_res        =  dyn_par_arg[i_arg + 3] ;
             // num_dyn          = size_t( dyn_par_arg[i_age + 4] );
             //
-            // val_op_arg
+            // val_op_arg, val_tape, par2val_index
             val_op_arg.resize( n_call_arg );
             for(addr_t i = 0; i < n_call_arg; i++)
             {  addr_t par_index = dyn_par_arg[i_arg + i + 5];
-               if( par2val_index[par_index] != invalid_addr_t )
-                  val_op_arg[i] = par2val_index[par_index];
-               else
-               {  // val_tape, val_op_arg, par2val_index
-                  Base constant = parameter[par_index];
-                  val_op_arg[i] = val_tape.record_con_op( constant );
-                  par2val_index[par_index] = val_op_arg[i];
-               }
+               val_op_arg[i] = ensure_par2val_index(par_index);
             }
             // n_arg, val_tape, val_index
             n_arg     = n_call_arg + 5;
@@ -379,18 +374,13 @@ void ADFun<Base, RecBase>::fun2val(
             break;
          }
          //
-         // val_tape, par2val_index
+         // varl_op_arg, val_tape, par2val_index
          val_op_arg.resize(2);
          for(size_t i = 0; i < 2; ++i)
          {  if( is_var[i] )
                val_op_arg[i] = var2val_index[ var_op_arg[i] ];
-            else if( par2val_index[ var_op_arg[i] ] != invalid_addr_t )
-               val_op_arg[i] = par2val_index[ var_op_arg[i] ];
             else
-            {  Base constant = parameter[ var_op_arg[i] ];
-               val_op_arg[i] = val_tape.record_con_op( constant );
-               par2val_index[ var_op_arg[i] ] = val_op_arg[i];
-            }
+               val_op_arg[i] = ensure_par2val_index( var_op_arg[i] );
          }
          //
          // val_op
@@ -507,14 +497,9 @@ void ADFun<Base, RecBase>::fun2val(
          break;
 
          // ParOp:
+         // val_tape, par2val_index, var2val_index
          case local::ParOp:
-         if( par2val_index[ var_op_arg[0] ] != invalid_addr_t )
-            val_index = par2val_index[ var_op_arg[0] ];
-         else
-         {  Base constant = parameter[ var_op_arg[0] ];
-            val_index     = val_tape.record_con_op( constant );
-            par2val_index[ var_op_arg[0] ] = val_index;
-         }
+         val_index            = ensure_par2val_index( var_op_arg[0] );
          var2val_index[i_var] = val_index;
          break;
 
