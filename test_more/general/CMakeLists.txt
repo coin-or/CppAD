@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the test_more/general tests
 #
@@ -148,8 +148,8 @@ ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_general
    ${cppad_lib}
-   ${adolc_LIBRARIES}
-   ${ipopt_LIBRARIES}
+   ${adolc_LINK_LIBRARIES}
+   ${ipopt_LINK_LIBRARIES}
    ${colpack_libs}
 )
 #

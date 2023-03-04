@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/general directory tests
 #
@@ -138,7 +138,7 @@ ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_general
-   ${adolc_LIBRARIES}
+   ${adolc_LINK_LIBRARIES}
    ${cppad_lib}
    ${colpack_libs}
 )

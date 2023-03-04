@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # pkgconfig_info(package system_include)
 #
@@ -21,8 +21,8 @@
 # cppad_has_${package}: (out)
 # is 1 (0) if include_${package} is true (false).
 #
-# ${package}_LIBRARIES: (out)
-# is a list of libraries necessary to use this package.
+# ${package}_LINK_LIBRARIES: (out)
+# is a list of absolute paths to libraries necessary to use this package.
 #
 # This macros uses temporary variables with names that begin with
 # pkgconfig_info_.
@@ -71,7 +71,7 @@ MACRO(pkgconfig_info package system_include)
       #
       # pkgconfig_info_dirs
       STRING(
-         REGEX REPLACE "/coin-or$" ""
+         REGEX REPLACE "/coin-or" ""
          pkgconfig_info_dirs "${${pkgconfig_info_package}_INCLUDE_DIRS}"
       )
       #
