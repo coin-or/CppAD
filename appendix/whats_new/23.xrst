@@ -13,6 +13,14 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+03-04
+=====
+There were some problems running :ref:`cmake_check-name` when
+:ref:`cmake@include_ipopt` was true
+(and certain combination of other cmake options).
+This has been fixed.
+
+
 02-08
 =====
 A :ref:`Discrete-name` function is now initialized

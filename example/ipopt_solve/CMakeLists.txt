@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/ipopt_solve directory tests
 
@@ -24,7 +24,7 @@ ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL ${source_list})
 # as determined by pkg-config for ipopt
 TARGET_LINK_LIBRARIES(example_ipopt_solve
    ${cppad_lib}
-   ${ipopt_LIBRARIES}
+   ${ipopt_LINK_LIBRARIES}
    ${colpack_libs}
 )
 

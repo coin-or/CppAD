@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the cppad_ipopt/speed directory tests
 # Inherit build type from ../CMakeList.txt
@@ -38,7 +38,7 @@ TARGET_LINK_LIBRARIES(
    cppad_ipopt_speed
    cppad_ipopt
    ${cppad_lib}
-   ${ipopt_LIBRARIES}
+   ${ipopt_LINK_LIBRARIES}
    ${colpack_libs}
 )
 
