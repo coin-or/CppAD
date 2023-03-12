@@ -115,6 +115,7 @@ Implementation
 {xrst_toc_table
    include/cppad/local/val_graph/val_type.hpp
    include/cppad/local/val_graph/base_op.hpp
+   include/cppad/local/val_graph/print_op.hpp
    include/cppad/local/val_graph/tape.hpp
    include/cppad/local/val_graph/op_enum2class.hpp
    include/cppad/local/val_graph/fun2val.hpp

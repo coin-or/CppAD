@@ -9,6 +9,7 @@
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/core/atomic/four/atomic.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
+# include <cppad/local/val_graph/print_op.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -250,15 +251,15 @@ void call_op_t<Value>::eval(
    void*        v_ptr    = nullptr; // result: set to avoid warning
    local::atomic_index<Value>(set_null, atomic_index, type, &name, v_ptr);
    //
-   std::printf( "    %s(", name.c_str() );
+   Vector<addr_t> arg_val_index(n_x);
    for(addr_t i = 0; i < n_x; ++i)
-   {  if( i != 0 )
-         printf(", ");
-      std::printf("%d", arg_vec[arg_index + n_before() + i]);
-   }
-   std::printf(")\n");
+      arg_val_index[i] = arg_vec[arg_index + n_before() + i];
+   //
+   Vector<Value> res_value(n_res);
    for(addr_t i = 0; i < n_res; ++i)
-      std::printf("%5d  %10.3g\n", res_index + i, val_vec[res_index + i]);
+      res_value[i] = val_vec[res_index + i];
+   //
+   print_op(name, arg_val_index, res_index, res_value);
    return;
 }
 

@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
+# include <cppad/local/val_graph/print_op.hpp>
 
 # define CPPAD_VAL_GRAPH_UNARY(Name, Op) \
    template <class Value> \
@@ -163,10 +164,10 @@ public:
       Vector<Value>&        val_vec      ) const
    // END_PRINT_OP
    {  //
-      addr_t val_index  = arg_vec[ arg_index + 0 ];
-      Value  res        = val_vec[res_index];
-      std::printf(
-         "%5d %5s %5d %5s %10.3g\n", res_index, name, val_index, "", res
+      Vector<addr_t> arg_val_index  = { arg_vec[ arg_index + 0 ] };
+      Vector<Value>  res_value      = { val_vec[res_index] };
+      CppAD::local::val_graph::print_op(
+         name, arg_val_index, res_index, res_value
       );
    }
 };

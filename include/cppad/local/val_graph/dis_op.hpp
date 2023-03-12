@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
+# include <cppad/local/val_graph/print_op.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -154,8 +155,9 @@ public:
          return;
       //
       std::string name = discrete<Value>::name(discrete_index);
-      std::printf( "    %s( %d )\n", name.c_str(), arg_vec[arg_index + 1]);
-      std::printf("%5d  %10.3g\n", res_index, val_vec[res_index]);
+      Vector<addr_t> arg_val_index = { arg_vec[arg_index + 1] };
+      Vector<Value> res_value      = { val_vec[res_index] };
+      print_op(name, arg_val_index, res_index, res_value);
       //
       return;
    }

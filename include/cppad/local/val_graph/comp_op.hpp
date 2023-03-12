@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
+# include <cppad/local/val_graph/print_op.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>

@@ -9,6 +9,7 @@
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/core/atomic/four/atomic.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
+# include <cppad/local/val_graph/print_op.hpp>
 
 // define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -218,21 +219,18 @@ void csum_op_t<Value>::eval(
    if( ! trace )
       return;
    //
-   std::printf( "    %s(", "add" );
+   Vector<addr_t> arg_val_index(n_add);
    for(addr_t i = 0; i < n_add; ++i)
-   {  if( i != 0 )
-         printf(", ");
-      std::printf("%d", arg_vec[arg_index + 2 + i]);
-   }
-   std::printf(")\n");
-   std::printf( "    %s(", "sub" );
+      arg_val_index[i] = arg_vec[ arg_index + 2 + i ];
+   Vector<Value> res_value = { val_vec[res_index] };
+   print_op("add", arg_val_index, res_index, res_value);
+   //
+   arg_val_index.resize(n_sub);
    for(addr_t i = 0; i < n_sub; ++i)
-   {  if( i != 0 )
-         printf(", ");
-      std::printf("%d", arg_vec[arg_index + 2 + n_add + i]);
-   }
-   std::printf(")\n");
-   std::printf("%5d  %10.3g\n", res_index, val_vec[res_index]);
+      arg_val_index[i] = arg_vec[ arg_index + 2 + n_add + i ];
+   res_value.resize(0);
+   print_op("sub", arg_val_index, res_index, res_value);
+   //
    return;
 }
 

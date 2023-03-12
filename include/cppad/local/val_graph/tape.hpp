@@ -244,16 +244,18 @@ public :
       Vector<Value>& val_vec       ) const
    // END_EVAL
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
+      using std::setw;
+      using std::right;
+      using std::cout;
       //
       // trace
       if( trace )
       {  // no operators for independent variables
-         std::printf("independent vector\n");
+         std::cout << "independent vector\n";
          for(addr_t res_index = 0; res_index < n_ind_; ++res_index)
          {  Value res = val_vec[res_index];
-            std::printf(
-               "%5d  %10.3g\n", res_index, res
-            );
+            cout << right << setw(5) << res_index;
+            cout << " " << right << setw(10) << res << "\n";
          }
          std::printf("operators\n");
       }
@@ -284,13 +286,12 @@ public :
       // trace
       if( trace )
       {  // no operators for dependent variables
-         std::printf("dependent vector\n");
+         std::cout << "dependent vector\n";
          for(size_t i = 0; i < dep_vec_.size(); ++i)
          {  addr_t res_index = dep_vec_[i];
             Value res        = val_vec[res_index];
-            std::printf(
-               "%5d  %10.3g\n", res_index, res
-            );
+            cout << right << setw(5) << res_index;
+            cout << " " << right << setw(10) << res << "\n";
          }
          // space after end of this tape
          std::printf("\n");

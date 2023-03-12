@@ -146,10 +146,9 @@ public:
       if( ! trace )
          return;
       //
-      Value  res        = val_vec[res_index];
-      std::printf(
-         "%5d %5s %5d %5s %10.3g\n", res_index, "con", val_index, "", res
-      );
+      Vector<addr_t> arg_val_index;
+      Vector<Value> res_value = { val_vec[res_index] };
+      print_op("con", arg_val_index, res_index, res_value);
    }
 };
 
