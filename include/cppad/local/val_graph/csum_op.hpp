@@ -96,26 +96,7 @@ This override of :ref:`val_base_op@eval` computes the summation.
 
 trace
 =====
-If trace is true, this member function prints the following values:
-
-| |tab| add ( add_index_0 , add_index_1 , ... )
-| |tab| sub ( sub_index_0 , sub_index_1 , ... )
-| |tab| res_index  res_value
-
-#. The add and sub lines are indented 4 spaces; i.e.,
-   the add and sub start in column 5.
-   This is done so it is grouped with the operators in the trace output.
-#. for *j* between 0 and n_add - 1, add_index_0 is the index
-   in val_vec for the corresponding add argument; i.e.
-   arg_vec[ arg_index + 2 + j ].
-#. for *j* between 0 and n_sub - 1, add_index_0 is the index
-   in val_vec for the corresponding subtract argument; i.e.
-   arg_vec[ arg_index + 2 + n_add + j ].
-#. res_index (res_value) is the index (value) in
-   val_vec for the result of this operation.
-#. The field width for res_index is 5,
-   the width for res_value is 10,
-   and there are two spaces between those fields.
+If trace is true, :ref:`val_print_op-name` is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/csum_xam.cpp

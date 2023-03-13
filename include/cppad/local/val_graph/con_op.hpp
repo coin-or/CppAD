@@ -68,21 +68,7 @@ the result equal to
 
 trace
 =====
-If trace is true, this member function prints the following values:
-
-.. csv-table::
-   :widths: auto
-
-   **meaning**,res_index,name,con_index,empty,res
-   **width**,5,5,5,5,10
-
-#. width is the number of characters used to print the value
-   not counting an extra space that is placed between values
-#. res_index is the value vector index for the result
-#. name is the name of the operator
-#. con_index is the constant vector index for the operand
-#. empty is an empty string used to line up columns with binary operator
-#. res is the result for this operator; i.e. value vector at index res_index
+If trace is true, :ref:`val_print_op-name` is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/con_xam.cpp

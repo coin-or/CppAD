@@ -96,10 +96,9 @@ its argument indices, result indices, and values.
 
 trace
 *****
-if this is true (false) the print_op is (is not) called at the end
+if this is true (false) the
+:ref:`val_print_op-name` function is (is not) called at the end
 of an eval operation.
-The independent variables are printed first
-and do not correspond to any operator.
 
 name
 ****

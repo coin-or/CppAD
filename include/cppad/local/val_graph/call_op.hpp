@@ -98,24 +98,7 @@ to evaluate *n_res* results given *n_arg* - 4 arguments.
 
 trace
 =====
-If trace is true, this member function prints the following values:
-
-| |tab| name ( val_index_0 , val_index_1 , ... )
-| |tab| res_index_0  res_value_0
-| |tab| ...
-
-#. name is the name of this atomic function.
-   This line indented 4 spaces; i.e., the name starts in column 5.
-   This is done so it is grouped with the operators in the trace output.
-#. for *j* between 0 and n_arg - 1, val_index_j is the index
-   in val_vec for the corresponding argument; i.e.
-   arg_vec[ arg_index + 4 + j ].
-#. for *i* between 0 and n_res - 1, res_index_i is the index in
-   val_vec for the corresponding result and res_value is the value
-   of the result.
-#. The field width for res_index_i is 5,
-   the width for res_value_i is 10,
-   and there are two spaces between those fields.
+If trace is true, :ref:`val_print_op-name` is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/call_xam.cpp

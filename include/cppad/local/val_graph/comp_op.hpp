@@ -66,20 +66,7 @@ the compare_false argument to eval.
 
 trace
 =====
-If trace is true, this member function prints the following values:
-
-.. csv-table::
-   :widths: auto
-
-   **meaning**,name,left_index,right_index,compare_false
-   **width**,11,5,5,5,10
-
-#. width is the number of characters used to print the value
-   not counting an extra space that is placed between values
-#. name is the name of the operator
-#. left_index is the value vector index for the left operand
-#. right_index is the value vector index for the right operand
-#. compare_false is the value of the compare_false argument after the eval
+If trace is true, :ref:`val_print_op-name` is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/comp_xam.cpp

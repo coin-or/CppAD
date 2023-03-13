@@ -94,21 +94,7 @@ print_op
    // BEGIN_PRINT_OP
    // END_PRINT_OP
 }
-This member function prints the following values:
-
-.. csv-table::
-   :widths: auto
-
-   **meaning**,res_index,name,val_index,empty,res
-   **width**,5,5,5,5,10
-
-#. width is the number of characters used to print the value
-   not counting an extra space that is placed between values
-#. res_index is the value vector index for the result
-#. name is the name of the operator
-#. val_index is the value vector index for the operand
-#. empty is an empty string used to line up columns with binary operator
-#. res is the result for this operator; i.e. value vector at index res_index
+This member function uses :ref:`val_print_op-name` to print unary operators.
 
 {xrst_end val_unary_base_op}
 */

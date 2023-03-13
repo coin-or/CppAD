@@ -67,21 +67,7 @@ the result equal to the discrete function evaluated at
 
 trace
 =====
-If trace is true, this member function prints the following values:
-
-| |tab| name ( val_index )
-| |tab| res_index  res_value
-
-#. name is the name of this discrete function.
-   This line indented 4 spaces; i.e., the name starts in column 5.
-   This is done so it is grouped with the operators in the trace output.
-#. val_index is the index in val_vec for the discrete function argument; i.e,
-   arg_vec[ arg_index + 4 + j ].
-#. res_index is the index in val_vec for the result and res_value is the value
-   of the result.
-#. The field width for res_index is 5,
-   the width for res_value is 10,
-   and there are two spaces between those fields.
+If trace is true, :ref:`val_print_op-name` is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/dis_xam.cpp
