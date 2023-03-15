@@ -14,8 +14,9 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_type dev}
 {xrst_spell
-   typedef
+   cexp
    csum
+   typedef
 }
 
 Value Operator Type Definitions
@@ -52,7 +53,8 @@ This enum type is used to identify the concrete operator class types.
 enum op_enum_t {
    add_op_enum,      // addition
    call_op_enum,     // atomic functions
-   comp_op_enum,     // compare operator
+   cexp_op_enum,     // conditional expression
+   comp_op_enum,     // comparison
    con_op_enum,      // constants
    csum_op_enum,     // cumulative summation
    dis_op_enum,      // discrete functions

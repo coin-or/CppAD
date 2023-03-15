@@ -19,7 +19,7 @@ Binary Value Operator Example
 bool comp_xam(void)
 {  bool ok = true;
    //
-   // tape_t, Vector, addr_t, add_op_enum;
+   // tape_t, Vector, addr_t, add_op_enum, compare_lt_enum;
    using CppAD::local::val_graph::tape_t;
    using CppAD::local::val_graph::Vector;
    using CppAD::local::val_graph::addr_t;

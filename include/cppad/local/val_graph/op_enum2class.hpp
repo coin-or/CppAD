@@ -8,6 +8,7 @@
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/binary_op.hpp>
 # include <cppad/local/val_graph/call_op.hpp>
+# include <cppad/local/val_graph/cexp_op.hpp>
 # include <cppad/local/val_graph/comp_op.hpp>
 # include <cppad/local/val_graph/con_op.hpp>
 # include <cppad/local/val_graph/csum_op.hpp>
@@ -62,6 +63,10 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 
       case comp_op_enum:
       op_ptr = comp_op_t<Value>::get_instance();
+      break;
+
+      case cexp_op_enum:
+      op_ptr = cexp_op_t<Value>::get_instance();
       break;
 
       case con_op_enum:

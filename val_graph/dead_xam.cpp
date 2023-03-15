@@ -18,7 +18,7 @@ Dead Code Elimination Example
 bool dead_xam(void)
 {  bool ok = true;
    //
-   // tape_t, Vector, addr_t, add_op_enum;
+   // tape_t, Vector, addr_t, add_op_enum, sub_op_enum;
    using CppAD::local::val_graph::tape_t;
    using CppAD::local::val_graph::Vector;
    using CppAD::local::val_graph::addr_t;

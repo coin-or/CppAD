@@ -335,6 +335,15 @@ public :
       const Vector<addr_t>& sub
    );
    //
+   // record_cexp_op
+   addr_t record_cexp_op(
+      compare_enum_t compare_enum ,
+      addr_t         left         ,
+      addr_t         right        ,
+      addr_t         if_true      ,
+      addr_t         if_false
+   );
+   //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec);
    // ------------------------------------------------------------------------

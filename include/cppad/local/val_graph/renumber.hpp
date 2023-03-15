@@ -277,9 +277,8 @@ void tape_t<Value>::renumber(void)
    // i_op
    for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
-      // op_enum, op_itr
+      // op_ptr
       const base_op_t<Value>* op_ptr   = base_op_ptr(i_op);
-      op_enum_t               op_enum  = op_ptr->op_enum();
       //
       // arg_index_i, res_index_i
       addr_t arg_index_i = op2arg_index[i_op];
@@ -298,7 +297,7 @@ void tape_t<Value>::renumber(void)
          if( n_res == 0 )
          {
 # ifndef NDEBUG
-            CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
+            CPPAD_ASSERT_UNKNOWN( op_ptr->op_enum() == comp_op_enum );
 # endif
             arg_vec_[arg_index_i + 0] = compare_no_enum;
          }
@@ -310,7 +309,7 @@ void tape_t<Value>::renumber(void)
    // arg_vec_
    for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
-      // op_enum, op_ptr
+      // op_ptr
       const base_op_t<Value>* op_ptr   = base_op_ptr(i_op);
       //
       // arg_index, n_arg

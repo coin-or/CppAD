@@ -8,6 +8,7 @@
 SET(source_list val_graph.cpp
    binary_xam.cpp
    call_xam.cpp
+   cexp_xam.cpp
    comp_xam.cpp
    con_xam.cpp
    csum_xam.cpp

@@ -277,7 +277,8 @@ This is the value vector index for the left operand in the comparison.
 
 right_index
 ===========
-This is the value vector index for the left operand in the comparison.
+This is the value vector index for the right operand in the comparison.
+
 {xrst_end val_record_comp_op}
 */
 // ----------------------------------------------------------------------------
@@ -432,7 +433,7 @@ addr_t tape_t<Value>::record_csum_op(
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t( csum_op_enum ) );
    //
-   // arg_vc_
+   // arg_vec_
    arg_vec_.push_back( n_add );
    arg_vec_.push_back( n_sub );
    for(size_t i = 0; i < add.size(); ++i)
@@ -440,6 +441,82 @@ addr_t tape_t<Value>::record_csum_op(
    for(size_t i = 0; i < sub.size(); ++i)
       arg_vec_.push_back( sub[i] );
    arg_vec_.push_back( n_arg );
+   //
+   // n_val_
+   ++n_val_;
+   //
+   return res_index;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_record_cexp_op dev}
+{xrst_spell
+   cexp
+}
+
+Recording Comparison Operations
+###############################
+
+record_cexp_op
+**************
+{xrst_literal
+   // BEGIN_RECORD_CEXP_OP
+   // END_RECORD_CEXP_OP
+}
+This places a :ref:`val_cexp_op-name` operator in the tape.
+
+compare_enum
+============
+This identifies which comparison is used by this conditional expression.
+
+left
+====
+This is the value vector index for the left operand in the comparison.
+
+right
+=====
+This is the value vector index for the right operand in the comparison.
+
+if_true
+=======
+This is the index of the value of the value that is used for the result if
+the comparison is true.
+
+if_false
+========
+This is the index of the value of the value that is used for the result if
+the comparison is false.
+
+return
+======
+The ``record_con_op`` function returns the index in the value vector where
+the result is placed in the value vector.
+
+{xrst_end val_record_cexp_op}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_CEXP_OP
+template <class Value>
+addr_t tape_t<Value>::record_cexp_op(
+   compare_enum_t comp_enum ,
+   addr_t         left      ,
+   addr_t         right     ,
+   addr_t         if_true   ,
+   addr_t         if_false  )
+// END_RECORD_CEXP_OP
+{  //
+   // res_index
+   addr_t res_index = n_val_;
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t(cexp_op_enum) );
+   //
+   // arg_vec_
+   arg_vec_.push_back( addr_t(comp_enum) );
+   arg_vec_.push_back( left );
+   arg_vec_.push_back( right );
+   arg_vec_.push_back( if_true );
+   arg_vec_.push_back( if_false );
    //
    // n_val_
    ++n_val_;
