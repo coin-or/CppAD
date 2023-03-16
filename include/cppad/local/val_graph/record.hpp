@@ -146,14 +146,18 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    op_enum_vec_.push_back( uint8_t( op_enum ) );
    //
    // arg_vec_
-   size_t n_op_arg = op_ptr->n_arg(arg_index, arg_vec_);
-   for(size_t i = 0; i < n_op_arg; ++i)
+   for(size_t i = 0; i < op_arg.size(); ++i)
       arg_vec_.push_back( op_arg[i] );
    //
    // n_val_
    ++n_val_;
    //
-   CPPAD_ASSERT_UNKNOWN
+   CPPAD_ASSERT_UNKNOWN(
+      size_t( op_ptr->n_arg(arg_index, arg_vec_) ) == op_arg.size()
+   );
+   CPPAD_ASSERT_UNKNOWN(
+      size_t( op_ptr->n_res(arg_index, arg_vec_) ) == 1
+   );
    //
    return res_index;
 }

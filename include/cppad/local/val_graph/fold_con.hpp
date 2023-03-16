@@ -123,36 +123,40 @@ void tape_t<Value>::fold_con(void)
       addr_t                  arg_index = op_itr.arg_index();
       addr_t                  res_index = op_itr.res_index();
       //
-      // op_enum, is_unary, is_binary, n_arg
+      // op_enum, n_arg, n_before, n_after, n_res
       op_enum_t  op_enum   = op_ptr->op_enum();
-      bool       is_unary  = op_ptr->is_unary();
-      bool       is_binary = op_ptr->is_binary();
+      addr_t     n_before  = op_ptr->n_before();
+      addr_t     n_after   = op_ptr->n_after();
       addr_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t     n_res     = op_ptr->n_res(arg_index, arg_vec_);
       //
       CPPAD_ASSERT_UNKNOWN( size_t( res_index ) == old2new_index.size() );
       //
       // new_tape, is_constant, old2new_index
-      if( is_unary || is_binary )
-      {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
-         {  bool fold = true;
-            for(addr_t i = 0; i < n_arg; ++i)
-               fold &= is_constant[ arg_vec_[arg_index + i] ];
-            if( fold )
-            {  is_constant[res_index]  = true;
-               const Value& value      = val_index2con[res_index];
-               addr_t new_res_index    = new_tape.record_con_op(value);
-               old2new_index.push_back( new_res_index );
+      if( n_res == 1 && op_enum != con_op_enum )
+      {  bool fold = true;
+         for(addr_t i = n_before; i < n_arg - n_after; ++i)
+            fold &= is_constant[ arg_vec_[arg_index + i] ];
+         if( fold )
+         {  is_constant[res_index]  = true;
+            const Value& value      = val_index2con[res_index];
+            addr_t new_res_index    = new_tape.record_con_op(value);
+            old2new_index.push_back( new_res_index );
+         }
+         else
+         {  op_arg.resize(n_arg);
+            for(addr_t k = 0; k < n_before; ++k)
+               op_arg[k] = arg_vec_[arg_index + k];
+            for(addr_t k = n_before; k < n_arg - n_after; ++k)
+            {  addr_t old_index = arg_vec_[arg_index + k];
+               assert( old_index < res_index );
+               op_arg[k] = old2new_index[old_index];
             }
-            else
-            {  op_arg.resize(n_arg);
-               for(addr_t k = 0; k < n_arg; ++k)
-               {  addr_t old_index = arg_vec_[arg_index + k];
-                  assert( old_index < res_index );
-                  op_arg[k] = old2new_index[old_index];
-               }
-               addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
-               old2new_index.push_back( new_res_index );
-            }
+            for(addr_t k = 1; k <= n_after; ++k)
+               op_arg[n_arg - k] = arg_vec_[arg_index + n_arg - k];
+            //
+            addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
+            old2new_index.push_back( new_res_index );
          }
       }
       else switch(op_enum)
@@ -174,39 +178,15 @@ void tape_t<Value>::fold_con(void)
          }
          break;
          // ----------------------------------------------------------------
-         // dis_op
-         // new_tape, is_constant, old2new_index
-         case dis_op_enum:
-         CPPAD_ASSERT_UNKNOWN( n_arg == 2);
-         {  addr_t old_index = arg_vec_[arg_index + 1];
-            if( is_constant[old_index] )
-            {  is_constant[res_index] = true;
-               const Value& value      = val_index2con[res_index];
-               addr_t new_res_index    = new_tape.record_con_op(value);
-               old2new_index.push_back( new_res_index );
-            }
-            else
-            {  addr_t discrete_index = arg_vec_[arg_index + 0];
-               addr_t new_index      = old2new_index[ old_index ];
-               addr_t new_res_index  = new_tape.record_dis_op(
-                  discrete_index, new_index
-               );
-               old2new_index.push_back( new_res_index );
-            }
-         }
-         break;
-         // ----------------------------------------------------------------
          // call_op
          case call_op_enum:
          {  //
             // atomic_index, call_id
-            addr_t n_res        =  arg_vec_[arg_index + 1] ;
             size_t atomic_index = size_t( arg_vec_[arg_index + 2] );
             size_t call_id      = size_t( arg_vec_[arg_index + 3] );
             CPPAD_ASSERT_UNKNOWN( atomic_index > 0 );
             //
             // n_before, n_x
-            addr_t n_before = op_ptr->n_before();
             addr_t n_x      = n_arg - n_before - op_ptr->n_after();
             //
             // con_x, type_x
