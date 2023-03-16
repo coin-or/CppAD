@@ -118,12 +118,10 @@ record_op
    // BEGIN_RECORD_OP
    // END_RECORD_OP
 }
-This places a :ref:`val_unary_op-name` or :ref`val_binary_op-name`
-operator in the tape.
+This places any operator that has one result in the tape.
 The argument *op_enum* identifies the operator.
 The argument *op_arg* is a vector that contains the index of the operands
 in the value vector.
-It has length one (two) if this is a unary (binary) operator.
 The return value is the index were the result of the operation
 is placed in the value vector.
 
@@ -135,6 +133,9 @@ template <class Value>
 addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 // END_RECORD_OP
 {  //
+   // op_ptr
+   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
+   //
    // res_index
    addr_t res_index = addr_t( n_val_) ;
    //
@@ -144,9 +145,6 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t( op_enum ) );
    //
-   // op_ptr
-   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
-   //
    // arg_vec_
    size_t n_op_arg = op_ptr->n_arg(arg_index, arg_vec_);
    for(size_t i = 0; i < n_op_arg; ++i)
@@ -154,6 +152,8 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    //
    // n_val_
    ++n_val_;
+   //
+   CPPAD_ASSERT_UNKNOWN
    //
    return res_index;
 }
