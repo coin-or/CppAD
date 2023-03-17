@@ -242,7 +242,7 @@ void ADFun<Base, RecBase>::fun2val(
          CPPAD_ASSERT_KNOWN(false,
             "val_graph::fun2val: This dynamic operator not yet implemented"
          );
-         //
+         // -------------------------------------------------------------------
          // result_dyn
          // This is a place holder for multiple result operators
          case local::result_dyn:
@@ -250,7 +250,7 @@ void ADFun<Base, RecBase>::fun2val(
          n_arg      = 0;
          val_index += 1;
          break;
-         //
+         // -------------------------------------------------------------------
          // dis_dyn
          case local::dis_dyn:
          {  // val_tape, val_index, par2val_index
@@ -266,7 +266,58 @@ void ADFun<Base, RecBase>::fun2val(
             );
          }
          break;
-         //
+         // -------------------------------------------------------------------
+         // cond_exp
+         case local::cond_exp_dyn:
+         {  CompareOp cop = CompareOp( dyn_par_arg[i_arg + 0] );
+            addr_t left     = ensure_par2val_index( dyn_par_arg[i_arg + 1] );
+            addr_t right    = ensure_par2val_index( dyn_par_arg[i_arg + 2] );
+            addr_t if_true  = ensure_par2val_index( dyn_par_arg[i_arg + 3] );
+            addr_t if_false = ensure_par2val_index( dyn_par_arg[i_arg + 4] );
+            local::val_graph::compare_enum_t compare_enum;
+            switch( cop )
+            {  case CompareLt:
+               compare_enum = local::val_graph::compare_lt_enum;
+               break;
+
+               case CompareLe:
+               compare_enum = local::val_graph::compare_le_enum;
+               break;
+
+               case CompareEq:
+               compare_enum = local::val_graph::compare_eq_enum;
+               break;
+
+               case CompareGe:
+               compare_enum = local::val_graph::compare_lt_enum;
+               std::swap(if_true, if_false);
+               break;
+
+               case CompareGt:
+               compare_enum = local::val_graph::compare_le_enum;
+               std::swap(if_true, if_false);
+               break;
+
+               case CompareNe:
+               compare_enum = local::val_graph::compare_eq_enum;
+               std::swap(if_true, if_false);
+               break;
+
+               default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               // avoid warning about value not set
+               compare_enum = local::val_graph::compare_no_enum;
+               break;
+            }
+            //
+            // n_arg, val_tape, val_index
+            n_arg     = 5;
+            val_index = val_tape.record_cexp_op(
+               compare_enum, left, right, if_true, if_false
+            );
+         }
+         break;
+         // -------------------------------------------------------------------
          // atom_dyn
          case local::atom_dyn:
          {  //
@@ -328,7 +379,7 @@ void ADFun<Base, RecBase>::fun2val(
       local::val_graph::type_var_op(
          var_op, is_unary, is_binary, is_compare
       );
-      //
+      // ----------------------------------------------------------------------
       if( is_unary )
       {  //
          // val_op
@@ -343,6 +394,7 @@ void ADFun<Base, RecBase>::fun2val(
          // var2val_index
          var2val_index[i_var] = val_index;
       }
+      // ----------------------------------------------------------------------
       else if( is_binary )
       {   switch( var_op )
          {
@@ -393,6 +445,7 @@ void ADFun<Base, RecBase>::fun2val(
          // var2val_index
          var2val_index[i_var] = val_index;
       }
+      // ----------------------------------------------------------------------
       else if( is_compare )
       {  //
          // left_index, right_index
@@ -488,6 +541,7 @@ void ADFun<Base, RecBase>::fun2val(
          CPPAD_ASSERT_UNKNOWN(val_index == 0); // no result for this operator
          break;
       }
+      // ----------------------------------------------------------------------
       else switch(var_op)
       {
          default:
@@ -523,6 +577,68 @@ void ADFun<Base, RecBase>::fun2val(
                discrete_index, val_op_arg[0]
             );
             var2val_index[i_var]  = val_index;
+         }
+         break;
+         // --------------------------------------------------------------
+         case local::CExpOp:
+         {  // cop, left, right, if_true, if_false
+            CompareOp cop = CompareOp( var_op_arg[0] );
+            addr_t left, right, if_true, if_false;
+            if( var_op_arg[1] & 1 )
+               left = var2val_index[ var_op_arg[2] ];
+            else
+               left = ensure_par2val_index( var_op_arg[2] );
+            if( var_op_arg[1] & 2 )
+               right = var2val_index[ var_op_arg[3] ];
+            else
+               right = ensure_par2val_index( var_op_arg[3] );
+            if( var_op_arg[1] & 4 )
+               if_true = var2val_index[ var_op_arg[4] ];
+            else
+               if_true = ensure_par2val_index( var_op_arg[4] );
+            if( var_op_arg[1] & 8 )
+               if_false = var2val_index[ var_op_arg[5] ];
+            else
+               if_false = ensure_par2val_index( var_op_arg[5] );
+            //
+            // compare_enum
+            local::val_graph::compare_enum_t compare_enum;
+            switch( cop )
+            {  case CompareLt:
+               compare_enum = local::val_graph::compare_lt_enum;
+               break;
+
+               case CompareLe:
+               compare_enum = local::val_graph::compare_le_enum;
+               break;
+
+               case CompareEq:
+               compare_enum = local::val_graph::compare_eq_enum;
+               break;
+
+               case CompareGe:
+               compare_enum = local::val_graph::compare_lt_enum;
+               std::swap(if_true, if_false);
+               break;
+
+               case CompareGt:
+               compare_enum = local::val_graph::compare_le_enum;
+               std::swap(if_true, if_false);
+               break;
+
+               case CompareNe:
+               compare_enum = local::val_graph::compare_eq_enum;
+               std::swap(if_true, if_false);
+               break;
+
+               default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               break;
+            }
+            val_index = val_tape.record_cexp_op(
+               compare_enum, left, right, if_true, if_false
+            );
+            var2val_index[i_var] = val_index;
          }
          break;
 

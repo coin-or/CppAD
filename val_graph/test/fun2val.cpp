@@ -338,6 +338,75 @@ bool dis_op(void)
    return ok;
 }
 // ----------------------------------------------------------------------------
+// cexp_op
+bool cexp_op(void)
+{  bool ok = true;
+   //
+   // AD, addr_t
+   using CppAD::AD;
+   using CppAD::addr_t;
+   //
+   // tape_t, Vector
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   //
+   // ap, ax
+   Vector< AD<double> > ap(2), ax(2);
+   ap[0] = 2.0;
+   ap[1] = 3.0;
+   ax[0] = 4.0;
+   ax[1] = 5.0;
+   CppAD::Independent(ax, ap);
+   //
+   // ay
+   Vector< AD<double> > ay(2);
+   ay[0] = CondExpGt(ap[0], ap[1], AD<double>(6.0), AD<double>(7.0) );
+   ay[1] = CondExpLt(ax[0], ax[1], ap[0], ap[1]);
+   //
+   // f
+   CppAD::ADFun<double> f(ax, ay);
+   //
+   // tape
+   tape_t<double> tape;
+   f.fun2val(tape);
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec = tape.dep_vec();
+   ok &= dep_vec.size() == 2;
+   //
+   // x
+   ok &= tape.n_ind() == 4;
+   Vector<double> p(2), x(2);
+   p[0] =   5.0;
+   p[1] =   4.0;
+   x[0] =   3.0;
+   x[1] =   2.0;
+   //
+   // trace
+   bool trace = false;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   val_vec[0] = p[0];
+   val_vec[1] = p[1];
+   val_vec[2] = x[0];
+   val_vec[3] = x[1];
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y
+   Vector<double> y(2);
+   y[0] = val_vec[ dep_vec[0] ];
+   y[1] = val_vec[ dep_vec[1] ];
+   //
+   // ok
+   ok &= y[0] == 6.0;
+   ok &= y[1] == p[1];
+   //
+   return ok;
+}
+// ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_fun2val(void)
 {  bool ok = true;
@@ -346,5 +415,6 @@ bool test_fun2val(void)
    ok     &= unary_op();
    ok     &= comp_op();
    ok     &= dis_op();
+   ok     &= cexp_op();
    return ok;
 }
