@@ -149,10 +149,10 @@ public:
          // match
          bool match = (op_enum == op_enum_j) & (n_arg == n_arg_j);
          if( match && op_enum == con_op_enum )
-         {  // 2DO: change to identically equal
+         {  //
             const Value& c = con_vec[ arg_vec[arg_index] ];
             const Value& c_j = con_vec[ arg_vec[arg_index_j] ];
-            match = c == c_j;
+            match            = IdenticalEqualCon(c, c_j);
          }
          else if( match )
          {  addr_t n_before = op_ptr->n_before();
