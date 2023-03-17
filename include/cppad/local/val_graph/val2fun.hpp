@@ -269,14 +269,15 @@ void ADFun<Base, RecBase>::val2fun(
          con_x[i]     = val_index2con[val_index];
          max_ad_type  = std::max(max_ad_type, ad_type_x[i] );
       }
+      CPPAD_ASSERT_KNOWN(
+         n_x == 0 || constant_enum < max_ad_type,
+         "val2fun: must first call fold_con"
+      );
       //
       // rec, val_ad_type, val2fun_index
       if( is_unary || is_binary )
       {  //
          val_ad_type[res_index] = max_ad_type;
-         CPPAD_ASSERT_KNOWN( constant_enum < max_ad_type,
-            "val2fun: must first call fold_con"
-         );
          //
          // rec, val2fun_index
          switch( op_enum )
@@ -390,9 +391,6 @@ void ADFun<Base, RecBase>::val2fun(
          fun_arg.resize(1);
          CPPAD_ASSERT_UNKNOWN( n_arg = 2 );
          {  addr_t dynamic_index  = val_arg_vec[arg_index + 0];
-            CPPAD_ASSERT_KNOWN( constant_enum < max_ad_type,
-               "val2fun: must first call fold_con"
-            );
             if( max_ad_type == dynamic_enum )
             {  tmp_addr = rec.put_dyn_par(
                   nan, local::dis_dyn, dynamic_index, fun_arg[0]
