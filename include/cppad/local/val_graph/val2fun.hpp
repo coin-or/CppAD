@@ -91,9 +91,10 @@ void ADFun<Base, RecBase>::val2fun(
    // vector
    using CppAD::vector;
    //
-   // base_op_t, op_enum_t
+   // base_op_t, op_enum_t, compare_enum_t
    using local::val_graph::base_op_t;
    using local::val_graph::op_enum_t;
+   using local::val_graph::compare_enum_t;
    //
    // val_arg_vec, val_con_vec, val_dep_vec
    const vector<addr_t>&    val_arg_vec = val_tape.arg_vec();
@@ -422,6 +423,47 @@ void ADFun<Base, RecBase>::val2fun(
          }
          break;
          // -------------------------------------------------------------------
+         // cexp_op
+         case local::val_graph::cexp_op_enum:
+         {  //
+            // compare, compare_enum, cop
+            addr_t         compare       = val_arg_vec[arg_index + 0];
+            compare_enum_t compare_enum = compare_enum_t( compare );
+            CompareOp      cop;
+            if( compare_enum == local::val_graph::compare_eq_enum )
+               cop = CompareEq;
+            else if( compare_enum == local::val_graph::compare_le_enum )
+               cop = CompareLe;
+            else
+            {  CPPAD_ASSERT_UNKNOWN(
+                  compare_enum == local::val_graph::compare_lt_enum
+               );
+               cop = CompareLt;
+            }
+            if( max_ad_type == dynamic_enum )
+            {  tmp_addr = rec.put_dyn_cond_exp(
+                  nan, cop, fun_arg[0], fun_arg[1], fun_arg[2], fun_arg[3]
+               );
+            }
+            else
+            {  addr_t flag = 0;
+               addr_t bit  = 1;
+               for(size_t j = 0; j < 4; ++j)
+               {  if( ad_type_x[j] == variable_enum )
+                     flag |= bit;
+                  bit = 2 * bit;
+               }
+               CPPAD_ASSERT_UNKNOWN( flag != 0 );
+               rec.PutArg(
+                  cop, flag, fun_arg[0], fun_arg[1], fun_arg[2], fun_arg[3]
+               );
+               tmp_addr = rec.PutOp(local::CExpOp);
+            }
+            val_ad_type[res_index]   = max_ad_type;
+            val2fun_index[res_index] = tmp_addr;
+         }
+         break;
+         // -------------------------------------------------------------------
          // comp_op
          // rec
          case local::val_graph::comp_op_enum:
@@ -449,7 +491,6 @@ void ADFun<Base, RecBase>::val2fun(
                ax[1].value_ = con_x[1];
             //
             // res, compare_enum
-            using local::val_graph::compare_enum_t;
             compare_enum_t compare_enum = compare_enum_t( compare );
             bool res;
             switch(compare_enum)

@@ -327,11 +327,10 @@ bool dis_op(void)
 bool csum_op(void)
 {  bool ok = true;
    //
-   // tape_t, Vector, addr_t, sub_op_enum;
+   // tape_t, Vector, addr_t
    using CppAD::local::val_graph::tape_t;
    using CppAD::local::val_graph::Vector;
    using CppAD::local::val_graph::addr_t;
-   using CppAD::local::val_graph::op_enum_t;
    //
    // tape, ok
    tape_t<double> tape;
@@ -398,6 +397,113 @@ bool csum_op(void)
    //
    return ok;
 }
+// ----------------------------------------------------------------------------
+// cexp_op
+bool cexp_op(void)
+{  bool ok = true;
+   //
+   // tape_t, Vector, addr_t
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   //
+   // compare_lt_enum
+   CppAD::local::val_graph::compare_enum_t compare_lt_enum =
+      CppAD::local::val_graph::compare_lt_enum;
+   //
+   // tape, ok
+   tape_t<double> tape;
+   addr_t n_ind = 4;
+   addr_t index_of_nan = tape.set_ind(n_ind);
+   ok &= index_of_nan == n_ind;
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec(2);
+   //
+   // c[0], c[1]
+   Vector<addr_t> c(2);
+   c[0] = -2.0;
+   c[1] = -3.0;
+   addr_t c0 = tape.record_con_op( c[0] );
+   addr_t c1 = tape.record_con_op( c[1] );
+   //
+   // left, right, if_true, if_false
+   addr_t left     = 0; // p[0]
+   addr_t right    = 1; // p[1]
+   addr_t if_true  = 2; // x[0]
+   addr_t if_false = 3; // x[1]
+   //
+   // tape, dep_vec
+   dep_vec[0] = tape.record_cexp_op(
+      compare_lt_enum, left, right, if_true, if_false
+   );
+   //
+   // left, right, if_true, if_false
+   left     = c0; // c[0]
+   right    = c1; // c[1]
+   if_true  = 0;  // p[0]
+   if_false = 1;  // p[1]
+   //
+   // tape, dep_vec
+   dep_vec[1] = tape.record_cexp_op(
+      compare_lt_enum, left, right, if_true, if_false
+   );
+   tape.set_dep( dep_vec );
+   //
+   // trace
+   bool trace = false;
+   //
+   // val_vec, ok
+   Vector<double> x(2), p(2), val_vec( tape.n_val() );
+   val_vec[0] = p[0] = 2.0;
+   val_vec[1] = p[1] = 3.0;
+   val_vec[2] = x[0] = 5.0;
+   val_vec[3] = x[1] = 8.0;
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y
+   Vector<double> y(2);
+   y[0] = val_vec[ dep_vec[0] ];
+   y[1] = val_vec[ dep_vec[1] ];
+   //
+   // ok
+   if( p[0] < p[1] )
+      ok &= y[0] == x[0];
+   else
+      ok &= y[0] == x[1];
+   if( c[0] < c[1] )
+      ok &= y[1] == p[0];
+   else
+      ok &= y[1] == p[1];
+   //
+   // f
+   Vector<size_t> var_ind(2), dyn_ind(2);
+   dyn_ind[0] = 0; // p[0]
+   dyn_ind[1] = 1; // p[1]
+   var_ind[0] = 2; // x[0]
+   var_ind[1] = 3; // x[1]
+   CppAD::ADFun<double> f;
+   f.val2fun(tape, dyn_ind, var_ind);
+   //
+   // f, y, ok
+   f.new_dynamic(p);
+   y = f.Forward(0, x);
+   ok &= f.compare_change_number() == 0;
+   //
+   // ok
+   if( p[0] < p[1] )
+      ok &= y[0] == x[0];
+   else
+      ok &= y[0] == x[1];
+   if( c[0] < c[1] )
+      ok &= y[1] == p[0];
+   else
+      ok &= y[1] == p[1];
+   //
+   return ok;
+}
 // ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_val2fun(void)
@@ -407,5 +513,6 @@ bool test_val2fun(void)
    ok     &= comp_op();
    ok     &= dis_op();
    ok     &= csum_op();
+   ok     &= cexp_op();
    return ok;
 }
