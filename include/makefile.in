@@ -943,6 +943,7 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_iterator.hpp \
+	cppad/local/val_graph/opt_val_graph.hpp \
 	cppad/local/val_graph/print_op.hpp \
 	cppad/local/val_graph/record.hpp \
 	cppad/local/val_graph/renumber.hpp \

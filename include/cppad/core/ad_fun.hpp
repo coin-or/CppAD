@@ -302,16 +302,19 @@ public:
    );
 
    // convert function to  a
-   // C++ graph, Json graph, C source code, val_graph
+   // C++ graph, Json graph, C source code
    void to_graph(cpp_graph& graph_obj);
    std::string to_json(void);
    void to_csrc(std::ostream& os, const std::string& type);
+   //
+   // value graph routines
    void fun2val( local::val_graph::tape_t<Base>& val_tape );
    void val2fun(
       const local::val_graph::tape_t<Base>& val_tape  ,
       const CppAD::vector<size_t>&          dyn_ind   ,
       const CppAD::vector<size_t>&          var_ind
    );
+   void opt_val_graph(void);
 
    // create ADFun< AD<Base> > from this ADFun<Base>
    // (doxygen in cppad/core/base2ad.hpp)
@@ -870,5 +873,8 @@ public:
 # include <cppad/core/graph/from_json.hpp>
 # include <cppad/core/graph/to_json.hpp>
 # include <cppad/core/to_csrc.hpp>
+
+// 2DO: move to core directory
+# include <cppad/local/val_graph/opt_val_graph.hpp>
 
 # endif
