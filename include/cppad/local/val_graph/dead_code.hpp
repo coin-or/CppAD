@@ -118,14 +118,12 @@ void tape_t<Value>::dead_code(bool keep_compare)
       addr_t                  res_index = op_itr_forward.res_index();
       addr_t                  arg_index = op_itr_forward.arg_index();
       //
-      // op_enum, is_unary, is_binary
-      op_enum_t op_enum   = op_ptr->op_enum();
-      bool      is_unary  = op_ptr->is_unary();
-      bool      is_binary = op_ptr->is_binary();
-      //
-      // n_arg, n_res
-      addr_t n_arg =  op_ptr->n_arg(arg_index, arg_vec_);
-      addr_t n_res =  op_ptr->n_res(arg_index, arg_vec_);
+      // op_enum, n_arg, n_before, n_after, n_res
+      op_enum_t  op_enum   = op_ptr->op_enum();
+      addr_t     n_before  = op_ptr->n_before();
+      addr_t     n_after   = op_ptr->n_after();
+      addr_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t     n_res     = op_ptr->n_res(arg_index, arg_vec_);
       //
       // need_op
       bool need_op = false;
@@ -139,27 +137,21 @@ void tape_t<Value>::dead_code(bool keep_compare)
       //
       if( need_op )
       {  //
-         // is_unary
-         if( is_unary )
-         {  op_arg.resize(1);
-            assert( arg_vec_[arg_index + 0] < res_index );
-            op_arg[0] = new_val_index[ arg_vec_[arg_index + 0] ];
+         if( n_res == 1 && op_enum != con_op_enum )
+         {  op_arg.resize(n_arg);
+            for(addr_t k = 0; k < n_before; ++k)
+               op_arg[k] = arg_vec_[arg_index + k];
+            for(addr_t k = n_before; k < n_arg - n_after; ++k)
+            {  addr_t old_index = arg_vec_[arg_index + k];
+               assert( old_index < res_index );
+               op_arg[k] = new_val_index[old_index];
+            }
+            for(addr_t k = 1; k <= n_after; ++k)
+               op_arg[n_arg - k] = arg_vec_[arg_index + n_arg - k];
             //
-            // record_op, new_val_index
-            new_val_index[res_index] = new_tape.record_op(op_enum, op_arg);
+            addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
+            new_val_index[res_index] = new_res_index;
          }
-         // is_binary
-         else if( is_binary )
-         {  op_arg.resize(2);
-            assert( arg_vec_[arg_index + 0] < res_index );
-            assert( arg_vec_[arg_index + 1] < res_index );
-            op_arg[0] = new_val_index[ arg_vec_[arg_index + 0] ];
-            op_arg[1] = new_val_index[ arg_vec_[arg_index + 1] ];
-            //
-            // record_op, new_val_index
-            new_val_index[res_index] = new_tape.record_op(op_enum, op_arg);
-         }
-         // not unary or binary
          else switch( op_enum )
          {  //
             // default
@@ -188,28 +180,11 @@ void tape_t<Value>::dead_code(bool keep_compare)
             }
             break;
             //
-            // csum_op_enum
-            case csum_op_enum:
-            {  //
-               // n_add
-               addr_t n_add = arg_vec_[arg_index + 0];
-               addr_t n_sub = arg_vec_[arg_index + 1];
-               add.resize(n_add);
-               sub.resize(n_sub);
-               for(addr_t i = 0; i < n_add; ++i)
-                  add[i] = new_val_index[ arg_vec_[arg_index + 2 + i] ];
-               for(addr_t i = 0; i < n_sub; ++i)
-                  sub[i] = new_val_index[ arg_vec_[arg_index + 2 + n_add + i] ];
-               new_val_index[res_index] = new_tape.record_csum_op(add, sub);
-            }
-            break;
-            //
             // call_op_enum
             case call_op_enum:
             {
                //
-               // n_x, n_before
-               addr_t n_before = op_ptr->n_before();
+               // n_x
                addr_t n_x = n_arg - n_before - op_ptr->n_after();
                //
                call_op_arg.resize(n_x);
