@@ -50,8 +50,9 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
 {  Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    n_ind_ = n_ind;
    n_val_ = n_ind;
-   dep_vec_.clear();
+   arg_vec_.clear();
    con_vec_.clear();
+   dep_vec_.clear();
    op_enum_vec_.clear();
    op2arg_index_.clear();
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
