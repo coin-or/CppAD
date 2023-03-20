@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 // 2DO: Test that optimize.hpp use of atomic_base<Base>::rev_sparse_jac works.
 
@@ -9,8 +9,22 @@
 # include <cppad/speed/det_by_minor.hpp>
 
 namespace {
+   //
+   // use opt_val_graph and ignore conditional_skip_
+   bool use_opt_val_graph_;
+   //
    // include conditional skip optimization
    bool conditional_skip_;
+   //
+   // optimize_with_options
+   void optimize_with_options(CppAD::ADFun<double>& f)
+   {  if( use_opt_val_graph_ )
+         f.opt_val_graph();
+      else if( conditional_skip_ )
+         f.optimize();
+      else
+         f.optimize("no_conditional_skip");
+   }
 
    // accuracy for almost equal checks
    using CppAD::NearEqual;
@@ -46,14 +60,10 @@ namespace {
 
       // create f: X -> Y
       CppAD::ADFun<double> f(ax, ay);
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
-
+      optimize_with_options(f);
 
       // vectors for function values
-      CPPAD_TESTVECTOR(double) x( f.Domain() );
+      CPPAD_TESTVECTOR(double) x( f.Domain() ), p( f.size_dyn_ind() );
       CPPAD_TESTVECTOR(double) y( f.Range() );
 
       // vectors for derivative values
@@ -69,8 +79,11 @@ namespace {
       ok &= ay[4] == ax[1];
 
       // function values
+      p[0] = 0.;
+      p[1] = 1.;
       x[0] = 2.;
       x[1] = 3.;
+      f.new_dynamic(p);
       y    = f.Forward(0, x);
       ok &= ( y[0] == x[0] );
       ok &= ( y[1] == x[0] );
@@ -99,7 +112,6 @@ namespace {
       ok   &= dx[1] == dy[2] + dy[3] + dy[4];
 
       // now change the dynamic parameter so the results are reversed
-      CPPAD_TESTVECTOR(double) p( f.size_dyn_ind() );
       p[0] = 1.0;
       p[1] = 0.0;
       f.new_dynamic(p);
@@ -271,8 +283,8 @@ namespace {
       ay[0] = asum * asum;
       CppAD::ADFun<double> f(ax, ay);
       //
-      f.optimize(); // creates a cumulative sum operator
-      f.optimize(); // optimizes such a function
+      optimize_with_options(f); // creates a cumulative sum operator
+      optimize_with_options(f); // optimizes such a function
       //
       // zero order forward
       vector<double> x(n), p(n), y(1);
@@ -2455,8 +2467,17 @@ namespace {
 
 bool optimize(void)
 {  bool ok = true;
+   //
+   // opt_val_graph cases
+   use_opt_val_graph_      = true;
+   // ok     &= optimize_csum(); not working yet
+   ok     &= cond_exp_ppvv();
+   use_opt_val_graph_      = false;
+   //
+   // conditional_skip_, atomic_sparsity_option_
    conditional_skip_       = true;
    atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+   //
 
    ok     &= atomic_cond_exp_sparsity();
 

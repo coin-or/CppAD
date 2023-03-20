@@ -25,7 +25,7 @@ template <class Base, class RecBase>
 void ADFun<Base, RecBase>::opt_val_graph(void)
 // END_PROTOTYPE
 {  //
-   // n_dyn_ind, n_var_ind, keep_compare  
+   // n_dyn_ind, n_var_ind, keep_compare
    size_t n_dyn_ind = size_dyn_ind();
    size_t n_var_ind = Domain();
    bool keep_compare = true;
@@ -51,6 +51,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    // val_tape: optimize
    val_tape.renumber();
    // val_tape.fold_con();
+   val_tape.summation();
    val_tape.dead_code(keep_compare);
    //
    // this
@@ -58,7 +59,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    val2fun(val_tape, dyn_ind, var_ind);
    //
    // no collision limit in value graph representaiton.
-   return; 
+   return;
 }
 
 } // END_CPPAD_NAMESPACE

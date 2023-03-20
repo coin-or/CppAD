@@ -373,6 +373,11 @@ bool csum_op(void)
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;
    //
+   // y, ok
+   Vector<double> y(1);
+   y[0] = val_vec[ dep_vec[0] ];
+   ok &= y[0] == x[0] - x[1] + p[0] - p[1]  + c[0] - c[1];
+   //
    // f
    Vector<size_t> var_ind(2), dyn_ind(2);
    var_ind[0] = 0; // x[0]
@@ -381,11 +386,6 @@ bool csum_op(void)
    dyn_ind[1] = 3; // p[1]
    CppAD::ADFun<double> f;
    f.val2fun(tape, dyn_ind, var_ind);
-   //
-   // y
-   Vector<double> y(1);
-   y[0] = val_vec[ dep_vec[0] ];
-   ok &= y[0] == x[0] - x[1] + p[0] - p[1]  + c[0] - c[1];
    //
    // f, y
    f.new_dynamic(p);

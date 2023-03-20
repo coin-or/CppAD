@@ -11,6 +11,9 @@
 # include <cppad/local/val_graph/val_type.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
 # include <cppad/local/val_graph/op_iterator.hpp>
+# include <cppad/local/val_graph/fun2val.hpp>
+# include <cppad/local/val_graph/val2fun.hpp>
+# include <cppad/local/val_graph/opt_val_graph.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 
 # define CPPAD_VAL_GRAPH_TAPE_TRACE 0

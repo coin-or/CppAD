@@ -407,6 +407,93 @@ bool cexp_op(void)
    return ok;
 }
 // ----------------------------------------------------------------------------
+// csum_op
+bool csum_op(void)
+{  bool ok = true;
+   //
+   // tape_t, Vector, addr_t
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   //
+   // tape, ok
+   tape_t<double> tape;
+   addr_t n_ind = 4;
+   addr_t index_of_nan = tape.set_ind(n_ind);
+   ok &= index_of_nan == n_ind;
+   //
+   // c[0], c[1]
+   Vector<addr_t> c(2);
+   c[0] = -2.0;
+   c[1] = -3.0;
+   addr_t c0 = tape.record_con_op( c[0] );
+   addr_t c1 = tape.record_con_op( c[1] );
+   //
+   // add, sub
+   Vector<addr_t> add(3), sub(3);
+   add[0] = 0;  // x[0]
+   add[1] = 2;  // p[0]
+   add[2] = c0; // c[0]
+   //
+   sub[0] = 1;   // x[1]
+   sub[1] = 3;   // p[1]
+   sub[2] = c1;  // c[1]
+   //
+   // tape, dep_vec
+   Vector<addr_t> dep_vec(1);
+   dep_vec[0] = tape.record_csum_op(add, sub);
+   tape.set_dep( dep_vec );
+   //
+   // trace
+   bool trace = false;
+   //
+   // val_vec, ok
+   Vector<double> x(2), p(2), val_vec( tape.n_val() );
+   val_vec[0] = x[0] = 2.0;
+   val_vec[1] = x[1] = 3.0;
+   val_vec[2] = p[0] = 5.0;
+   val_vec[3] = p[1] = 8.0;
+   size_t compare_false = 0;
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y, ok
+   Vector<double> y(1);
+   y[0] = val_vec[ dep_vec[0] ];
+   ok &= y[0] == x[0] - x[1] + p[0] - p[1]  + c[0] - c[1];
+   //
+   // f: val2fun
+   Vector<size_t> var_ind(2), dyn_ind(2);
+   var_ind[0] = 0; // x[0]
+   var_ind[1] = 1; // x[1]
+   dyn_ind[0] = 2; // p[0]
+   dyn_ind[1] = 3; // p[1]
+   CppAD::ADFun<double> f;
+   f.val2fun(tape, dyn_ind, var_ind);
+   //
+   // tape: fun2val, dep_vec
+   f.fun2val(tape);
+   dep_vec = tape.dep_vec();
+   //
+   // y, ok
+   f.new_dynamic(p);
+   y = f.Forward(0, x);
+   y[0] = val_vec[ dep_vec[0] ];
+   ok &= y[0] == x[0] - x[1] + p[0] - p[1]  + c[0] - c[1];
+   //
+   // val_vec, ok
+   val_vec.resize( tape.n_val() );
+   tape.eval(trace, compare_false, val_vec);
+   ok &= compare_false == 0;
+   //
+   // y, ok
+   y[0] = val_vec[ dep_vec[0] ];
+   ok &= y[0] == x[0] - x[1] + p[0] - p[1]  + c[0] - c[1];
+   //
+   //
+   return ok;
+}
+// ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_fun2val(void)
 {  bool ok = true;
@@ -416,5 +503,6 @@ bool test_fun2val(void)
    ok     &= comp_op();
    ok     &= dis_op();
    ok     &= cexp_op();
+   ok     &= csum_op();
    return ok;
 }

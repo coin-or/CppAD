@@ -580,6 +580,35 @@ void ADFun<Base, RecBase>::fun2val(
          }
          break;
          // --------------------------------------------------------------
+         case local::CSumOp:
+         {  //
+            // add, sub
+            Vector<addr_t> add, sub;
+            //
+            // add: constant term
+            add.push_back( ensure_par2val_index( var_op_arg[0] ) );
+            //
+            // add: variables
+            for(addr_t i = 5; i < var_op_arg[1]; ++i)
+               add.push_back( var2val_index[ var_op_arg[i] ] );
+            //
+            // sub: variables
+            for(addr_t i = var_op_arg[1]; i < var_op_arg[2]; ++i)
+               sub.push_back( var2val_index[ var_op_arg[i] ] );
+            //
+            // add: dynamic parameters
+            for(addr_t i = var_op_arg[2]; i < var_op_arg[3]; ++i)
+               add.push_back( ensure_par2val_index( var_op_arg[i] ) );
+            //
+            // sub: dynamic parameters
+            for(addr_t i = var_op_arg[3]; i < var_op_arg[4]; ++i)
+               sub.push_back( ensure_par2val_index( var_op_arg[i] ) );
+            //
+            // val_tape, var2val_index
+            var2val_index[i_var] = val_tape.record_csum_op(add, sub);
+         }
+         break;
+         // --------------------------------------------------------------
          case local::CExpOp:
          {  // cop, left, right, if_true, if_false
             CompareOp cop = CompareOp( var_op_arg[0] );

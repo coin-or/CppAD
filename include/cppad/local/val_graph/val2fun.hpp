@@ -74,6 +74,7 @@ is an example an test of this conversion.
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/val_graph/op_iterator.hpp>
 # include <cppad/local/val_graph/call_atomic.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
