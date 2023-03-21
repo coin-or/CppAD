@@ -42,6 +42,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    local::val_graph::tape_t<Base> val_tape;
    fun2val(val_tape);
    //
+   //
    // this
    // free all the memory associated with this funciton
    {  ADFun<Base> g;
@@ -52,7 +53,21 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    val_tape.renumber();
    // val_tape.fold_con();
    val_tape.summation();
+   /*
+   CppAD::vector<Base> val_vec( val_tape.n_val() );
+   for(addr_t i = 0; i < val_tape.n_ind(); ++i)
+      val_vec[i] = Base(i + 4);
+   size_t compare_false = 0;
+   bool   trace = true;
+   val_tape.eval(trace, compare_false, val_vec);
+   */
    val_tape.dead_code(keep_compare);
+   /*
+   val_vec.resize( val_tape.n_val() );
+   for(addr_t i = 0; i < val_tape.n_ind(); ++i)
+      val_vec[i] = Base(i + 4);
+   val_tape.eval(trace, compare_false, val_vec);
+   */
    //
    // this
    // convert optimized value graph to fun

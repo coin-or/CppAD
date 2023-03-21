@@ -178,8 +178,8 @@ private :
    Vector<uint8_t>    op_enum_vec_; // one byte per operator enum value.
    //
    // op2arg_index_
-   // Optional vector that changes how op_iterator works.
-   // This is necessare is we are using replace_csum_op with this tape.
+   // Optional vector that changes how op_iterator works; e.g.,
+   // this is necessary is we are using replace_csum_op with this tape.
    Vector<addr_t> op2arg_index_;
    //
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
@@ -239,6 +239,7 @@ public :
       con_vec_.swap( other.con_vec_ );
       dep_vec_.swap( other.dep_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
+      op2arg_index_.swap( other.op2arg_index_ );
    }
    // BEGIN_EVAL
    void eval(

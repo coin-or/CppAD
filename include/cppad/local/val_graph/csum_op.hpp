@@ -206,11 +206,13 @@ void csum_op_t<Value>::eval(
    Vector<Value> res_value = { val_vec[res_index] };
    print_op("add", arg_val_index, res_index, res_value);
    //
-   arg_val_index.resize(n_sub);
-   for(addr_t i = 0; i < n_sub; ++i)
-      arg_val_index[i] = arg_vec[ arg_index + 2 + n_add + i ];
-   res_value.resize(0);
-   print_op("sub", arg_val_index, res_index, res_value);
+   if( n_sub > 0 )
+   {  arg_val_index.resize(n_sub);
+      for(addr_t i = 0; i < n_sub; ++i)
+         arg_val_index[i] = arg_vec[ arg_index + 2 + n_add + i ];
+      res_value.resize(0);
+      print_op("sub", arg_val_index, res_index, res_value);
+   }
    //
    return;
 }
