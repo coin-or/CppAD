@@ -607,6 +607,7 @@ void ADFun<Base, RecBase>::fun2val(
             // val_tape, var2val_index
             var2val_index[i_var] = val_tape.record_csum_op(add, sub);
          }
+         itr.correct_before_increment();
          break;
          // --------------------------------------------------------------
          case local::CExpOp:

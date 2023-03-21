@@ -37,12 +37,9 @@ bool csum_op(void)
    y     = f.Forward(0, x);
    ok &= y[0] == check;
    //
-   /*
-   Not yet working
    f.opt_val_graph();
    y     = f.Forward(0, x);
    ok &= y[0] == check;
-   */
    //
    return ok;
 }
