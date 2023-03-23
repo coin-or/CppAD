@@ -413,7 +413,7 @@ void ADFun<Base, RecBase>::val2fun(
          // rec, val_ad_type, val2fun_index
          case local::val_graph::con_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
-         {  const Base& constant = val_con_vec[arg_index];
+         {  const Base& constant = val_con_vec[ val_arg_vec[arg_index] ];
             par_addr = rec.put_con_par(constant);
             CPPAD_ASSERT_UNKNOWN(
                CppAD::isnan(constant) || parameter[par_addr] == constant

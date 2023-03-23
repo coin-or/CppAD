@@ -2470,7 +2470,7 @@ bool optimize(void)
    //
    // opt_val_graph cases
    use_opt_val_graph_      = true;
-   // ok     &= optimize_csum(); not working yet
+   ok     &= optimize_csum();
    ok     &= cond_exp_ppvv();
    use_opt_val_graph_      = false;
    //

@@ -10,34 +10,56 @@ bool csum_op(void)
    using CppAD::AD;
    using CppAD::vector;
    //
-   size_t n = 4;
-   vector< AD<double> > ax(n);
+   // ax, ap
+   size_t n = 2;
+   vector< AD<double> > ax(n), ap(n);
    for(size_t j = 0; j < n; ++j)
-      ax[j] = 0.0;
-   Independent(ax);
+   {  ax[j] = 0.0;
+      ap[j] = 0.0;
+   }
+   Independent(ax, ap);
    //
-   AD<double> asum   = 0.0;
+   // asum
+   AD<double> asum = 0.0;
    for(size_t j = 0; j < n; ++j)
-      asum += ax[j];
+   {  asum += ax[j];
+      asum += ap[j];
+   }
+   AD<double> aplus  = ax[0] + ap[0];
+   AD<double> aminus = ax[0] - ap[0];
+   asum             += CondExpLe(ax[0], ap[0], aplus, aminus);
    //
+   // f
    vector< AD<double> > ay(1);
    ay[0] = asum * asum;
    CppAD::ADFun<double> f(ax, ay);
    //
+   // opt_val_graph
    f.opt_val_graph();
    //
+   // x, p, y, check, ok
    // zero order forward
-   vector<double> x(n), y(1);
+   vector<double> x(n), p(n), y(1);
    double sum = 0.0;
    for(size_t j = 0; j < n; ++j)
-   {  x[j]  = double(j + 1);
+   {  p[j]  = double(j + 1);
+      x[j]  = double(n + j + 1);
       sum  += x[j];
+      sum  += p[j];
    }
+   if( x[0] <= p[0] )
+      sum += x[0] + p[0];
+   else
+      sum += x[0] - p[0];
+   //
    double check = sum * sum;
+   f.new_dynamic(p);
    y     = f.Forward(0, x);
    ok &= y[0] == check;
    //
+   // opt_val_graph, y, ok
    f.opt_val_graph();
+   f.new_dynamic(p);
    y     = f.Forward(0, x);
    ok &= y[0] == check;
    //

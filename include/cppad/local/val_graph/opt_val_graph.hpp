@@ -57,7 +57,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    /*
    CppAD::vector<Base> val_vec( val_tape.n_val() );
    for(addr_t i = 0; i < val_tape.n_ind(); ++i)
-      val_vec[i] = Base(i + 4);
+      val_vec[i] = Base(i + 1);
    size_t compare_false = 0;
    bool   trace = true;
    val_tape.eval(trace, compare_false, val_vec);
