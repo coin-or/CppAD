@@ -7,14 +7,10 @@
 # include <iostream>
 # include <iomanip>
 /*
-{xrst_begin val_print_op dev}
+{xrst_begin_parent val_print_op dev}
 
 Printing Value Operators
 ########################
-
-See Also
-********
-:ref:`val_print_special_op-name`
 
 Prototype
 *********
@@ -25,8 +21,10 @@ Prototype
 
 Output Notation
 ***************
-Values inside of parenthesis are arguments that are result indices
-for the operator name  that comes before the left parenthesis.
+#. Values inside of parenthesis are arguments that are result indices
+   for the operator name  that comes before the left parenthesis.
+#. Values inside of brackets are indices for vector name that
+   comes before the left bracket.
 
 name
 ****
@@ -50,6 +48,11 @@ to get the result for the previous operator.
 For example, printing the :ref:`val_csum_op-name` is accomplished by a call
 with *name* equal add followed by one with *name* equal sub
 where the add call has one result and the sub call has no results.
+
+Special Cases
+*************
+{xrst_toc_table
+}
 
 {xrst_end val_print_op}
 */
@@ -104,44 +107,17 @@ void print_op(
    cout << std::endl;
 }
 /*
-{xrst_begin val_print_special_op dev}
-{xrst_spell
-   csum
-}
+{xrst_begin val_print_con_op dev}
 
-Printing Special Operators
-##########################
-
-See Also
-********
-:ref:`val_print_op-name`
+Printing Constant Operators
+###########################
 
 Prototype
 *********
-{xrst_code hpp}
-template <class Value>
-void print_special_op(
-   const Vector<addr_t>& arg             ,
-   addr_t                res_index       ,
-   const Vector<Value>&  res_value       )
-{xrst_code}
-where *special* has one of the values below\:
-
-print_con_op
-============
-print a :ref:`val_con_op-name` operator (*special* is con).
-
-print_csum_op
-=============
-print a :ref:`val_csum_op-name` operator (*special* is csum).
-
-Output Notation
-***************
-#. Values inside of parenthesis are arguments that are result indices
-   for the operator name  that comes before the left parenthesis.
-#. Values inside of brackets are indices for vector name that
-   comes before the left bracket.
-
+{xrst_literal
+   // BEGIN_PRINT_CON_OP
+   // END_PRINT_CON_OP
+}
 
 arg
 ***
@@ -155,15 +131,15 @@ res_value
 *********
 is a vector of results for this operator (must be length one).
 
-
-{xrst_end val_print_special_op}
+{xrst_end val_print_con_op}
 */
-// print_con_op
+// BEGIN_PRINT_CON_OP
 template <class Value>
 void print_con_op(
    const Vector<addr_t>& arg             ,
    addr_t                res_index       ,
    const Vector<Value>&  res_value       )
+// END_PRINT_CON_OP
 {  CPPAD_ASSERT_UNKNOWN( arg.size() == 1 );
    CPPAD_ASSERT_UNKNOWN( res_value.size() == 1 );
    using std::setw;
@@ -177,7 +153,34 @@ void print_con_op(
       return;
    }
 }
-// print_csum_op
+/*
+{xrst_begin val_print_csum_op dev}
+
+Printing Cumulative Summation Operators
+#######################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PRINT_CSUM_OP
+   // END_PRINT_CSUM_OP
+}
+
+arg
+***
+is a vector containing all the operator arguments (must be length one).
+
+res_index
+*********
+is the index of the result for this operator.
+
+res_value
+*********
+is a vector of results for this operator (must be length one).
+
+{xrst_end val_print_csum_op}
+*/
+// BEGIN_PRINT_CSUM_OP
 template <class Value>
 void print_csum_op(
    const Vector<addr_t>& arg             ,

@@ -96,7 +96,7 @@ This override of :ref:`val_base_op@eval` computes the summation.
 
 trace
 =====
-If trace is true, :ref:`val_print_special_op@Prototype@print_csum_op`
+If trace is true, :ref:`val_print_csum_op-name`
 is called to print this operator.
 
 {xrst_toc_hidden

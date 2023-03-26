@@ -68,7 +68,7 @@ the result equal to
 
 trace
 =====
-If trace is true, :ref:`val_print_special_op@Prototype@print_con_op`
+If trace is true, :ref:`val_print_con_op-name`
 is called to print this operator.
 
 {xrst_toc_hidden
