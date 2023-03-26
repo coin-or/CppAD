@@ -7,10 +7,14 @@
 # include <iostream>
 # include <iomanip>
 /*
-{xrst_begin_parent val_print_op dev}
+{xrst_begin val_print_op dev}
 
 Printing Value Operators
 ########################
+
+See Also
+********
+:ref:`val_print_special_op-name`
 
 Prototype
 *********
@@ -21,10 +25,8 @@ Prototype
 
 Output Notation
 ***************
-#. Values inside of parenthesis are arguments that are result indices
-   for the operator name  that comes before the left parenthesis.
-#. Values inside of brackets are indices for vector name that
-   comes before the left bracket.
+Values inside of parenthesis are arguments that are result indices
+for the operator name  that comes before the left parenthesis.
 
 name
 ****
@@ -48,11 +50,6 @@ to get the result for the previous operator.
 For example, printing the :ref:`val_csum_op-name` is accomplished by a call
 with *name* equal add followed by one with *name* equal sub
 where the add call has one result and the sub call has no results.
-
-Special Cases
-*************
-{xrst_toc_table
-}
 
 {xrst_end val_print_op}
 */
@@ -107,17 +104,44 @@ void print_op(
    cout << std::endl;
 }
 /*
-{xrst_begin val_print_con_op dev}
+{xrst_begin val_print_special_op dev}
+{xrst_spell
+   csum
+}
 
-Printing Constant Operators
-###########################
+Printing Special Operators
+##########################
+
+See Also
+********
+:ref:`val_print_op-name`
 
 Prototype
 *********
-{xrst_literal
-   // BEGIN_PRINT_CON_OP
-   // END_PRINT_CON_OP
-}
+{xrst_code hpp}
+template <class Value>
+void print_special_op(
+   const Vector<addr_t>& arg             ,
+   addr_t                res_index       ,
+   const Vector<Value>&  res_value       )
+{xrst_code}
+where *special* has one of the values below\:
+
+print_con_op
+============
+print a :ref:`val_con_op-name` operator (*special* is con).
+
+print_csum_op
+=============
+print a :ref:`val_csum_op-name` operator (*special* is csum).
+
+Output Notation
+***************
+#. Values inside of parenthesis are arguments that are result indices
+   for the operator name  that comes before the left parenthesis.
+#. Values inside of brackets are indices for vector name that
+   comes before the left bracket.
+
 
 arg
 ***
@@ -131,15 +155,15 @@ res_value
 *********
 is a vector of results for this operator (must be length one).
 
-{xrst_end val_print_con_op}
+
+{xrst_end val_print_special_op}
 */
-// BEGIN_PRINT_CON_OP
+// print_con_op
 template <class Value>
 void print_con_op(
    const Vector<addr_t>& arg             ,
    addr_t                res_index       ,
    const Vector<Value>&  res_value       )
-// END_PRINT_CON_OP
 {  CPPAD_ASSERT_UNKNOWN( arg.size() == 1 );
    CPPAD_ASSERT_UNKNOWN( res_value.size() == 1 );
    using std::setw;
@@ -151,6 +175,44 @@ void print_con_op(
       cout << right << setw(5) << std::right << arg[0] << "]";
       cout << std::endl;
       return;
+   }
+}
+// print_csum_op
+template <class Value>
+void print_csum_op(
+   const Vector<addr_t>& arg             ,
+   addr_t                res_index       ,
+   const Vector<Value>&  res_value       )
+// END_PRINT_CSUM_OP
+{  CPPAD_ASSERT_UNKNOWN( res_value.size() == 1);
+   //
+   using std::setw;
+   using std::right;
+   using std::cout;
+   //
+   // n_add, n_sub
+   addr_t n_add = arg[0];
+   addr_t n_sub = arg[1];
+   //
+   CPPAD_ASSERT_UNKNOWN( arg.size() == size_t(3 + n_add + n_sub ) );
+   //
+   cout << right << setw(5) << res_index;
+   cout << " " << right << setw(10) << res_value[0];
+   cout << " = " << right << setw(5)  << "csum+" << "(";
+   for(addr_t i = 0; i < n_add; ++i)
+   {  cout << right << setw(5) << arg[2 + i];
+      if( i + 1 < n_add )
+         cout << ",";
+   }
+   cout << ")" << std::endl;
+   if( n_sub > 0 )
+   {  cout << setw(19) << "" << right << setw(5)  << "csum-" << "(";
+      for(addr_t i = 0; i < n_sub; ++i)
+      {  cout << right << setw(5) << arg[2 + n_add + i];
+         if( i + 1 < n_add )
+            cout << ",";
+      }
+      cout << ")" << std::endl;
    }
 }
 

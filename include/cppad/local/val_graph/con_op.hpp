@@ -68,7 +68,7 @@ the result equal to
 
 trace
 =====
-If trace is true, :ref:`val_print_con_op-name`
+If trace is true, :ref:`val_print_special_op@Prototype@print_con_op`
 is called to print this operator.
 
 {xrst_toc_hidden
@@ -133,6 +133,7 @@ public:
       if( ! trace )
          return;
       //
+      // print_con_op
       Vector<addr_t> arg = { arg_vec[ arg_index + 0 ] };
       Vector<Value> res_value = { val_vec[res_index] };
       print_con_op(arg, res_index, res_value);

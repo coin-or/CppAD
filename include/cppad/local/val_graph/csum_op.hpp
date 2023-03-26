@@ -96,7 +96,8 @@ This override of :ref:`val_base_op@eval` computes the summation.
 
 trace
 =====
-If trace is true, :ref:`val_print_op-name` is called to print this operator.
+If trace is true, :ref:`val_print_special_op@Prototype@print_csum_op`
+is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/csum_xam.cpp
@@ -200,19 +201,12 @@ void csum_op_t<Value>::eval(
    if( ! trace )
       return;
    //
-   Vector<addr_t> arg_val_index(n_add);
-   for(addr_t i = 0; i < n_add; ++i)
-      arg_val_index[i] = arg_vec[ arg_index + 2 + i ];
+   // print_csum_op
+   Vector<addr_t> arg(3 + n_add + n_sub);
+   for(size_t i = 0; i < arg.size(); ++i)
+      arg[i] = arg_vec[ arg_index + i ];
    Vector<Value> res_value = { val_vec[res_index] };
-   print_op("add", arg_val_index, res_index, res_value);
-   //
-   if( n_sub > 0 )
-   {  arg_val_index.resize(n_sub);
-      for(addr_t i = 0; i < n_sub; ++i)
-         arg_val_index[i] = arg_vec[ arg_index + 2 + n_add + i ];
-      res_value.resize(0);
-      print_op("sub", arg_val_index, res_index, res_value);
-   }
+   print_csum_op(arg, res_index, res_value );
    //
    return;
 }
