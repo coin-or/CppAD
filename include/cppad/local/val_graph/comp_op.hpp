@@ -66,7 +66,8 @@ the compare_false argument to eval.
 
 trace
 =====
-If trace is true, :ref:`val_print_op-name` is called to print this operator.
+If trace is true, :ref:`val_print_comp_op-name`
+is called to print this operator.
 
 {xrst_toc_hidden
    val_graph/comp_xam.cpp
@@ -133,65 +134,56 @@ public:
       const Value&   left          = val_vec[left_index];
       const Value&   right         = val_vec[right_index];
       //
-      // res, name
-      bool res;
-      const char* name;
+      // result, comp_name
+      bool result;
+      const char* comp_name;
       switch( compare_enum )
       {  //
-         // c_eq
          case compare_eq_enum:
-         res  = left == right;
-         name = "c_eq";
+         result    = left == right;
+         comp_name = "eq";
          break;
          //
          // ne
          case compare_ne_enum:
-         res  = left != right;
-         name = "c_ne";
+         result    = left != right;
+         comp_name = "ne";
          break;
          //
          // lt
          case compare_lt_enum:
-         res  = left < right;
-         name = "c_lt";
+         result    = left < right;
+         comp_name = "lt";
          break;
          //
          // le
          case compare_le_enum:
-         res  = left <= right;
-         name = "le";
+         result    = left <= right;
+         comp_name = "le";
          break;
          //
          // no
          case compare_no_enum:
-         res  = true;
-         name = "c_no";
+         result    = true;
+         comp_name = "no";
          break;
          //
          default:
          CPPAD_ASSERT_UNKNOWN(false);
-         res  = false; // to avoid compiler warning
-         name = "";
+         result    = false; // to avoid compiler warning
+         comp_name = "";
       }
       //
       // compare_false
-      if( ! res )
+      if( ! result )
          ++compare_false;
       //
       // trace
       if( ! trace )
          return;
       //
-      const char* res_str;
-      if( res )
-         res_str = "true";
-      else
-         res_str = "false";
-      //
-      std::printf(
-         "%11s %5d %5d %10s\n", name, left_index, right_index, res_str
-      );
-      return;
+      // print_comp_op
+      print_comp_op(comp_name, left_index, right_index, result);
    }
 };
 

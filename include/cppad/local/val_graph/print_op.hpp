@@ -107,6 +107,7 @@ void print_op(
    cout << std::endl;
 }
 /*
+------------------------------------------------------------------------------
 {xrst_begin val_print_con_op dev}
 
 Printing Constant Operators
@@ -154,6 +155,7 @@ void print_con_op(
    }
 }
 /*
+------------------------------------------------------------------------------
 {xrst_begin val_print_csum_op dev}
 
 Printing Cumulative Summation Operators
@@ -217,6 +219,61 @@ void print_csum_op(
       }
       cout << ")" << std::endl;
    }
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_print_comp_op dev}
+
+Printing Compare Operators
+##########################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PRINT_COMP_OP
+   // END_PRINT_COMP_OP
+}
+
+comp_name
+*********
+is the name of the comparison operator; e.g., "lt"
+
+left_index
+**********
+is the value index corresponding to the left operand in the comparison.
+
+right_index
+***********
+is the value index corresponding to the right operand in the comparison.
+
+result
+******
+is the result of the comparison.
+
+{xrst_end val_print_comp_op}
+*/
+// BEGIN_PRINT_COMP_OP
+inline void print_comp_op(
+   const char* comp_name   ,
+   addr_t      left_index  ,
+   addr_t      right_index ,
+   bool        result      )
+// END_PRINT_COMP_OP
+{  //
+   using std::setw;
+   using std::right;
+   using std::cout;
+   //
+   const char* res_str;
+   if( result )
+      res_str = "true";
+   else
+      res_str = "false";
+   //
+   cout << setw(19) << "" << right << setw(5)  << comp_name << "(";
+   cout << right << setw(5) << left_index  << ",";
+   cout << right << setw(5) << right_index << ") = ";
+   cout << right << setw(5) << res_str << std::endl;
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
