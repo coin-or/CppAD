@@ -28,7 +28,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    // n_dyn_ind, n_var_ind, keep_compare
    size_t n_dyn_ind = size_dyn_ind();
    size_t n_var_ind = Domain();
-   bool keep_compare = true;
+   bool keep_compare = false;
    //
    // dyn_ind, var_ind
    CppAD::vector<size_t> dyn_ind(n_dyn_ind), var_ind(n_var_ind);

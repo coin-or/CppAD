@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppad_det_minor.cpp}
@@ -66,6 +66,9 @@ namespace {
       f.Dependent(a_A, a_detA);
       //
       // optimize
+      if( global_option["opt_val_graph"] )
+      {  f.opt_val_graph();
+      }
       if( global_option["optimize"] )
       {  std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
@@ -86,7 +89,7 @@ bool link_det_minor(
 
    // --------------------------------------------------------------------
    // check global options
-   const char* valid[] = { "memory", "onetape", "optimize"};
+   const char* valid[] = { "memory", "onetape", "optimize", "opt_val_graph"};
    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
    typedef std::map<std::string, bool>::iterator iterator;
    //
