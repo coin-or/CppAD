@@ -9,15 +9,32 @@
 /*
 {xrst_begin val_print_op dev}
 
-Printing Value Operators
-########################
+Printing A Value Operator
+#########################
 
 Prototype
 *********
+
+print_op
+========
 {xrst_literal
    // BEGIN_PRINT_OP
    // END_PRINT_OP
 }
+
+print_con_op
+============
+{xrst_literal
+   // BEGIN_PRINT_CON_OP
+   // END_PRINT_CON_OP
+}
+
+Output Notation
+***************
+#. Values inside of parenthesis are arguments that are result indices
+   for the operator name  that comes before the left parenthesis.
+#. Values inside of brackets are indices for vector name that
+   comes before the left bracket.
 
 name
 ****
@@ -33,7 +50,6 @@ res_index
 *********
 is the index of the first result for this operator.
 
-
 res_value
 *********
 is a vector of results for this operator.
@@ -43,10 +59,16 @@ For example, printing the :ref:`val_csum_op-name` is accomplished by a call
 with *name* equal add followed by one with *name* equal sub
 where the add call has one result and the sub call has no results.
 
+con_vec
+*******
+is the vector of constants for the tape containing the constant operator
+being printed.
+
 
 {xrst_end val_print_op}
 */
 
+// BEGIN_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace val_graph {
 
 // BEGIN_PRINT_OP
@@ -96,6 +118,27 @@ void print_op(
    cout << std::endl;
 }
 
+// BEGIN_PRINT_CON_OP
+template <class Value>
+void print_con_op(
+   const Vector<Value>&  con_vec         ,
+   const Vector<addr_t>& arg_val_index   ,
+   addr_t                res_index       ,
+   const Vector<Value>&  res_value       )
+// END_PRINT_CON_OP
+{  CPPAD_ASSERT_UNKNOWN( arg_val_index.size() == 1 );
+   CPPAD_ASSERT_UNKNOWN( res_value.size() == 1 );
+   using std::setw;
+   using std::right;
+   using std::cout;
+   {  cout << right << setw(5) << res_index;
+      cout << " " << right << setw(10) << res_value[0];
+      cout << " = " << right << setw(5)  << "con" << "[";
+      cout << right << setw(5) << std::right << arg_val_index[0] << "]";
+      cout << std::endl;
+      return;
+   }
+}
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
