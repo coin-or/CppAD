@@ -21,6 +21,8 @@ Prototype
 
 Output Notation
 ***************
+#. The first column is a value index and the second column is the
+   corresponding value.
 #. Values inside of parenthesis are arguments that are result indices
    for the operator name  that comes before the left parenthesis.
 #. Values inside of brackets are indices for vector name that
@@ -42,12 +44,7 @@ is the index of the first result for this operator.
 
 res_value
 *********
-is a vector of results for this operator.
-If this vector is empty, this operator is combined with the previous operator
-to get the result for the previous operator.
-For example, printing the :ref:`val_csum_op-name` is accomplished by a call
-with *name* equal add followed by one with *name* equal sub
-where the add call has one result and the sub call has no results.
+is a non-empty vector of results for this operator.
 
 Special Cases
 *************
@@ -87,10 +84,9 @@ void print_op(
       cout << ")" << std::endl;
       return;
    }
-   if( n_res == 0 )
-      cout << setw(19) << "";
    //
    // Multiple results
+   CPPAD_ASSERT_UNKNOWN( n_res > 1 );
    cout << right << setw(5) << name << "(";
    for(size_t i = 0; i < n_arg; ++i)
    {  cout << right << setw(5) << val_arg[i];
