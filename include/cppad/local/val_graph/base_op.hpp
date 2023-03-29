@@ -16,18 +16,18 @@ The Value Operator Base Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_OP_T
-   // END_OP_T
+   // BEGIN_BASE_OP_T
+   // END_BASE_OP_T
 }
 
 Purpose
 *******
-This section describes the properties that are them same for all
-value operators.
+This section describes the value operator base class
+(all the value operators are derived from this class).
 
 Member Variables
 ****************
-None of the operators have any member variables,
+None of the value operators have any member variables,
 so their functions are like static functions but cannot be declared as
 such because they are virtual or override functions.
 
@@ -46,22 +46,38 @@ op_enum
 *******
 This member function returns the enum value corresponding to this operator;
 see :ref:`val_graph_type@op_enum_t` .
+{xrst_literal
+   // BEGIN_OP_ENUM
+   // END_OP_ENUM
+}
 
 n_before
 ********
 This member function returns the number of auxiliary arguments
 that come before the arguments that are value vector indices.
+{xrst_literal
+   // BEGIN_N_BEFORE
+   // END_N_BEFORE
+}
 
 n_after
 *******
 This member function returns the number of auxiliary arguments
 that come after the arguments that are value vector indices.
 This can only be zero or one.
+{xrst_literal
+   // BEGIN_N_AFTER
+   // END_N_AFTER
+}
 
 
 n_arg
 *****
 This member function returns the number of arguments for this operator.
+{xrst_literal
+   // BEGIN_N_ARG
+   // END_N_ARG
+}
 
 Fixed
 =====
@@ -79,6 +95,10 @@ equal to the number of arguments for this use of this operator.
 n_res
 *****
 This member function returns the number of results for this operator.
+{xrst_literal
+   // BEGIN_N_RES
+   // END_N_RES
+}
 
 eval
 ****
@@ -86,19 +106,27 @@ The values in *val_vec* with index less than *res_index*
 are inputs to this member function.
 The *n_res* values starting at *res_index* in *val_vec* are
 computed by this function.
-If *trace* is true, print_op is called the this operator
-(after the results have been computed).
+{xrst_literal
+   // BEGIN_EVAL
+   // END_EVAL
+}
 
-print_op
-********
-This member function prints a description of the operator that includes
-its argument indices, result indices, and values.
+tape
+====
+This is a pointer to the tape that the operator is being evaluated for.
+We use arg_vec to denote tape->arg_vec() below.
 
 trace
-*****
-if this is true (false) the
-:ref:`val_print_op-name` function is (is not) called at the end
-of an eval operation.
+=====
+if this is true (false) the operator is (is not) printed
+at the end of the eval operation.
+
+compare_false
+=============
+This is the number of :ref:`val_comp_op-name` that had a false
+result for their comparisons.
+This is both an input and output; i.e., each false comparison
+will add one to this value.
 
 name
 ****
@@ -107,10 +135,6 @@ is a short name, 5 or less characters, for this operator.
 arg_index
 *********
 is the index in *arg_vec* where the *n_arg* arguments to this function start.
-
-con_vec
-*******
-is the :ref:`val_graph@Constant Vector` .
 
 res_index
 *********
@@ -122,6 +146,7 @@ is the entire :ref:`val_graph@Value Vector` .
 
 arg_vec
 *******
+During  the eval function, arg_vec below denotes tape->arg_vec() .
 
 Unary Operators
 ===============
@@ -145,11 +170,19 @@ is_unary
 ********
 is true (false) if this is (is not) a unary operator;
 see :ref:`val_unary_op-name`.
+{xrst_literal
+   // BEGIN_IS_UNARY
+   // END_IS_UNARY
+}
 
 is_binary
 *********
 is true (false) if this is (is not) a binary operator;
 see :ref:`val_binary_op-name`.
+{xrst_literal
+   // BEGIN_IS_BINARY
+   // END_IS_BINARY
+}
 
 
 Operator Classes
@@ -171,20 +204,35 @@ Operator Classes
 // tape_t
 template<class Value> class tape_t;
 
-// BEGIN_OP_T
+// BEGIN_BASE_OP_T
 template <class Value> class base_op_t {
 public:
-   virtual addr_t    n_before(void) const = 0;
-   virtual addr_t    n_after(void)  const = 0;
+// END_BASE_OP_T
+   // BEGIN_OP_ENUM
    virtual op_enum_t op_enum(void)  const = 0;
+   // END_OP_ENUM
+   //
+   // BEGIN_N_BEFORE
+   virtual addr_t    n_before(void) const = 0;
+   // END_N_BEFORE
+   //
+   // BEGIN_N_AFTER
+   virtual addr_t    n_after(void)  const = 0;
+   // END_N_AFTER
+   //
+   // BEGIN_N_ARG
    virtual addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const = 0;
+   // END_N_ARG
+   //
+   // BEGIN_N_RES
    virtual addr_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const = 0;
+   // END_N_RES
    //
-   // eval
+   // BEGIN_EVAL
    virtual void eval(
       const tape_t<Value>*  tape         ,
       bool                  trace        ,
@@ -192,13 +240,18 @@ public:
       addr_t                res_index    ,
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const = 0;
+   // END_EVAL
    //
+   // BEGIN_IS_UNARY
    virtual bool is_unary(void) const
+   // END_IS_UNARY
    {  return false; }
+   //
+   // BEGIN_IS_BINARY
    virtual bool is_binary(void) const
+   // END_IS_BINARY
    {  return false; }
 };
-// END_OP_T
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
