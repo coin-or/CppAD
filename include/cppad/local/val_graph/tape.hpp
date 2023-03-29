@@ -275,10 +275,9 @@ public :
          //
          // base_op_t<Value>::eval
          op_ptr->eval(
+            this,
             trace,
             arg_index,
-            arg_vec_,
-            con_vec_,
             res_index,
             compare_false,
             val_vec

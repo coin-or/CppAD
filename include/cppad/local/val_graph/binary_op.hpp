@@ -25,18 +25,18 @@ namespace CppAD { namespace local { namespace val_graph {
       } \
       /* eval */ \
       void eval( \
+         const tape_t<Value>*  tape         , \
          bool                  trace        , \
          addr_t                arg_index    , \
-         const Vector<addr_t>& arg_vec      , \
-         const Vector<Value>&  con_vec      , \
          addr_t                res_index    , \
          size_t&               compare_false, \
          Vector<Value>&        val_vec      ) const override \
-      {  const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
+      {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
+         const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
          const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
          val_vec[res_index]  = left Op right; \
          if( trace ) this->print_op( \
-            #Name , arg_index, arg_vec, res_index, val_vec \
+            #Name , arg_index, tape->arg_vec(), res_index, val_vec \
          ); \
       } \
    }
@@ -136,10 +136,9 @@ public:
    //
    // eval
    virtual void eval(
+      const tape_t<Value>*  tape         ,
       bool                  trace        ,
       addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override = 0;

@@ -23,14 +23,14 @@
       } \
       /* eval */ \
       void eval( \
+         const tape_t<Value>*  tape         , \
          bool                  trace        , \
          addr_t                arg_index    , \
-         const Vector<addr_t>& arg_vec      , \
-         const Vector<Value>&  con_vec      , \
          addr_t                res_index    , \
          size_t&               compare_false, \
          Vector<Value>&        val_vec      ) const override \
-      {  const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
+      {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
+         const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
          val_vec[res_index]  = Op ( value ); \
          if( trace ) this->print_op( \
             #Name , arg_index, arg_vec, res_index, val_vec \
@@ -133,10 +133,9 @@ public:
    //
    // eval
    virtual void eval(
+      const tape_t<Value>*  tape         ,
       bool                  trace        ,
       addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override = 0;

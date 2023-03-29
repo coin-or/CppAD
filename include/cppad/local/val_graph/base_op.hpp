@@ -167,6 +167,10 @@ Operator Classes
 
 {xrst_end val_base_op}
 */
+//
+// tape_t
+template<class Value> class tape_t;
+
 // BEGIN_OP_T
 template <class Value> class base_op_t {
 public:
@@ -179,11 +183,12 @@ public:
    virtual addr_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const = 0;
+   //
+   // eval
    virtual void eval(
+      const tape_t<Value>*  tape         ,
       bool                  trace        ,
       addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const = 0;

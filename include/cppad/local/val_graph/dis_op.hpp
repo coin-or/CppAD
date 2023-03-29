@@ -122,14 +122,16 @@ public:
    //
    // eval
    void eval(
+      const tape_t<Value>*  tape         ,
       bool                  trace        ,
       addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       size_t&               compare_false,
       Vector<Value>&        val_vec      ) const override
    {  //
+      // arg_vec
+      const Vector<addr_t>& arg_vec( tape->arg_vec() );
+      //
       // val_index, val_vec
       size_t       discrete_index = size_t( arg_vec[arg_index + 0] );
       addr_t       val_index      = arg_vec[ arg_index + 1 ];

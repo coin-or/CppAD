@@ -161,10 +161,9 @@ public:
    //
    // eval
    void eval(
+      const tape_t<Value>*  tape         ,
       bool                  trace        ,
       addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      const Vector<Value>&  con_vec      ,
       addr_t                res_index    ,
       size_t&               compare_false,
       Vector<Value>&        val_vec
@@ -175,14 +174,16 @@ public:
 // eval
 template <class Value>
 void csum_op_t<Value>::eval(
+   const tape_t<Value>*  tape         ,
    bool                  trace        ,
    addr_t                arg_index    ,
-   const Vector<addr_t>& arg_vec      ,
-   const Vector<Value>&  con_vec      ,
    addr_t                res_index    ,
    size_t&               compare_false,
    Vector<Value>&        val_vec      ) const
 {  //
+   // arg_vec
+   const Vector<addr_t>& arg_vec( tape->arg_vec() );
+   //
    // n_add, n_sub
    addr_t n_add         =  arg_vec[arg_index + 0] ;
    addr_t n_sub         =  arg_vec[arg_index + 1] ;

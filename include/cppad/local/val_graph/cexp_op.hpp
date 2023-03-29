@@ -123,14 +123,15 @@ public:
    //
    // eval
    void eval(
+      const tape_t<Value>*  tape           ,
       bool                  trace          ,
       addr_t                arg_index      ,
-      const Vector<addr_t>& arg_vec        ,
-      const Vector<Value>&  con_vec        ,
       addr_t                res_index      ,
       size_t&               compare_false  ,
       Vector<Value>&        val_vec        ) const override
-   {
+   {  //
+      // arg_vec
+      const Vector<addr_t>& arg_vec( tape->arg_vec() );
       //
       // compare_enum, left_index, right_index
       compare_enum_t compare_enum = compare_enum_t( arg_vec[arg_index + 0] );
