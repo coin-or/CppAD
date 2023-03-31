@@ -22,6 +22,9 @@ These operations store a function in the :ref:`val_tape-name`.
 {xrst_end val_record}
 ------------------------------------------------------------------------------
 {xrst_begin val_set_ind dev}
+{xrst_spell
+   str
+}
 
 Setting Independent Variables
 #############################
@@ -32,14 +35,22 @@ set_ind
    // BEGIN_SET_IND
    // END_SET_IND
 }
-This clears all of the memory in the tape.
-It then sets the number of independent values and
-places the constant nan directly after the last independent value.
-The return value is the index where the nan is placed in the
-value vector; i.e., *n_ind* .
-The constant nan uses one operator,
-one argument, one constant, and one result.
-This is the first step in a creating a recording.
+The following is the first step in a creating a recording:
+
+#. Clear all of the memory that is currently used by the tape.
+#. Set the number of independent values.
+#. The empty string is placed in the string constant vector str_vec\_.
+#. Place the constant nan directly after the last independent value.
+   This constant has index zero in the value constant vector con_vec\_.
+#. The return value is the index in the value vector where the nan
+   will be placed; i.e., *n_ind* .
+
+Directly after this operation:
+{xrst_literal
+   // BEGIN_POST_CONDITION
+   // END_POST_CONDITION
+}
+
 {xrst_end val_set_ind}
 */
 // ----------------------------------------------------------------------------
@@ -52,6 +63,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    n_val_ = n_ind;
    arg_vec_.clear();
    con_vec_.clear();
+   str_vec_.clear();
    dep_vec_.clear();
    op_enum_vec_.clear();
    op2arg_index_.clear();
@@ -61,11 +73,18 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    set_ind_inuse_ = thread_alloc::inuse(thread);
 # endif
    //
+   str_vec_.push_back( '\0' );
    addr_t nan_addr = record_con_op(nan);
-   assert ( nan_addr == n_ind_ );
    assert( n_val_ == n_ind + 1 );
    //
+   // BEGIN_POST_CONDITION
+   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == 1 ); // one operator
+   CPPAD_ASSERT_UNKNOWN( arg_vec_.size() == 1 );     // one argument
+   CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
+   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == '\0' );      // empty string
+   CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
    return nan_addr;
+   // END_POST_CONDITION
 }
 /*
 -------------------------------------------------------------------------------
@@ -283,6 +302,11 @@ This is the value vector index for the left operand in the comparison.
 right_index
 ===========
 This is the value vector index for the right operand in the comparison.
+
+return
+======
+The return value is zero because this operator does not have a result
+(and zero is used for an invalid result value).
 
 {xrst_end val_record_comp_op}
 */
@@ -525,6 +549,89 @@ addr_t tape_t<Value>::record_cexp_op(
    //
    // n_val_
    ++n_val_;
+   //
+   return res_index;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_record_pri_op dev}
+
+Recording Print Operations
+##########################
+
+record_pri_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_PRI_OP
+   // END_RECORD_PRI_OP
+}
+This places a :ref:`val_pri_op-name` operator in the tape.
+The return value is always zero because there is
+no value vector result for this operator.
+
+before
+======
+This is the text that is printed before the value when *flag* is positive.
+
+after
+=====
+This is the text that is printed after the value when *flag* is positive.
+
+flag_index
+==========
+This is the value vector index for the flag operand.
+
+value_index
+===========
+This is the value vector index for the value that is printed
+when the flag is positive.
+
+return
+======
+The return value is zero because this operator does not have a result
+(and zero is used for an invalid result value).
+
+{xrst_end val_record_pri_op}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_PRI_OP
+template <class Value>
+addr_t tape_t<Value>::record_pri_op(
+   const std::string& before      ,
+   const std::string& after       ,
+   addr_t             flag_index  ,
+   addr_t             value_index )
+// END_RECORD_PRI_OP
+{  //
+   // empty string
+   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == '\0' );
+   //
+   // end of previous string
+   CPPAD_ASSERT_UNKNOWN( str_vec_[ str_vec_.size() - 1 ] == '\0' );
+   //
+   // res_index
+   addr_t res_index = 0; // invalid result index
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t(pri_op_enum) );
+   //
+   // arg_vec_: before_index
+   addr_t before_index = addr_t( str_vec_.size() );
+   for(size_t i = 0; i < before.size(); ++i)
+      str_vec_.push_back( before[i] );
+   str_vec_.push_back( '\0' );
+   arg_vec_.push_back( before_index );
+   //
+   // arg_vec_: after_index
+   addr_t after_index = addr_t( str_vec_.size() );
+   for(size_t i = 0; i < after.size(); ++i)
+      str_vec_.push_back( after[i] );
+   str_vec_.push_back( '\0' );
+   arg_vec_.push_back( after_index );
+   //
+   // arg_vec_: flag_index, value_index
+   arg_vec_.push_back( flag_index );
+   arg_vec_.push_back( value_index );
    //
    return res_index;
 }

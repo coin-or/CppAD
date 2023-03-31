@@ -187,16 +187,19 @@ see :ref:`val_binary_op-name`.
 
 Operator Classes
 ****************
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
-   include/cppad/local/val_graph/unary_op.hpp
    include/cppad/local/val_graph/binary_op.hpp
-   include/cppad/local/val_graph/con_op.hpp
-   include/cppad/local/val_graph/dis_op.hpp
-   include/cppad/local/val_graph/comp_op.hpp
    include/cppad/local/val_graph/call_op.hpp
-   include/cppad/local/val_graph/csum_op.hpp
    include/cppad/local/val_graph/cexp_op.hpp
+   include/cppad/local/val_graph/comp_op.hpp
+   include/cppad/local/val_graph/con_op.hpp
+   include/cppad/local/val_graph/csum_op.hpp
+   include/cppad/local/val_graph/dis_op.hpp
+   include/cppad/local/val_graph/pri_op.hpp
+   include/cppad/local/val_graph/unary_op.hpp
 }
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 {xrst_end val_base_op}
 */

@@ -28,6 +28,7 @@ extern bool dead_xam(void);
 extern bool dis_xam(void);
 extern bool fold_con_xam(void);
 extern bool fun2val_xam(void);
+extern bool pri_xam(void);
 extern bool renumber_xam(void);
 extern bool summation_xam(void);
 extern bool test_fold(void);
@@ -60,6 +61,7 @@ int main(void)
    Run( dis_xam,             "dis_xam"             );
    Run( fold_con_xam,        "fold_con_xam"        );
    Run( fun2val_xam,         "fun2val_xam"         );
+   Run( pri_xam,             "pri_xam"             );
    Run( renumber_xam,        "renumber_xam"        );
    Run( summation_xam,       "summation_xam"       );
    Run( test_fold,           "test_fold"           );

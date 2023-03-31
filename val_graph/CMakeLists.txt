@@ -16,6 +16,7 @@ SET(source_list val_graph.cpp
    dis_xam.cpp
    fold_con_xam.cpp
    fun2val_xam.cpp
+   pri_xam.cpp
    renumber_xam.cpp
    summation_xam.cpp
    test/fold.cpp

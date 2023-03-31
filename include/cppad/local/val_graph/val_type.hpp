@@ -60,6 +60,7 @@ enum op_enum_t {
    dis_op_enum,      // discrete functions
    mul_op_enum,      // multiplication
    neg_op_enum,      // negative
+   pri_op_enum,      // print
    sub_op_enum,      // subtraction
    number_op_enum
 };

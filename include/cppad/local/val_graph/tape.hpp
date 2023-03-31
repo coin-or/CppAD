@@ -27,6 +27,7 @@ struct csum_info_t;
 {xrst_begin val_tape dev}
 {xrst_spell
    dep
+   str
 }
 
 The Value Operator Tape
@@ -93,8 +94,15 @@ con_vec
    // BEGIN_CON_VEC
    // END_CON_VEC
 }
-This is a vector of constants that are loaded into the value vector.
-(Constants do not depend on the independent values.)
+This is a vector of value constants.
+
+str_vec
+*******
+{xrst_literal
+   // BEGIN_STR_VEC
+   // END_STR_VEC
+}
+This is a vector of string constants.
 
 op_enum_vec
 ***********
@@ -135,8 +143,8 @@ counter.
 
 trace
 =====
-If this is try, the :ref:`val_base_op@print_op` function is used
-to print each of the operators.
+If this is true, the :ref:`val_print_op-name` functions are used
+to print the operators.
 
 val_vec
 =======
@@ -173,7 +181,8 @@ private :
    addr_t             n_ind_;       // number of independent values
    addr_t             n_val_;       // total number of values
    Vector<addr_t>     arg_vec_;     // arguments for all operator uses
-   Vector<Value>      con_vec_;     // constants for all operator uses
+   Vector<Value>      con_vec_;     // value constants
+   Vector<char>       str_vec_;     // string constants
    Vector<addr_t>     dep_vec_;     // dependent variable indices in val_vec
    Vector<uint8_t>    op_enum_vec_; // one byte per operator enum value.
    //
@@ -219,6 +228,11 @@ public :
    const Vector<Value>& con_vec(void) const
    {  return con_vec_; }
    // END_CON_VEC
+   //
+   // BEGIN_STR_VEC
+   const Vector<char>& str_vec(void) const
+   {  return str_vec_; }
+   // END_STR_VEC
    //
    // BEGIN_OP_ENUM_VEC
    const Vector<uint8_t>& op_enum_vec(void) const
@@ -345,6 +359,14 @@ public :
       addr_t         right        ,
       addr_t         if_true      ,
       addr_t         if_false
+   );
+   //
+   // record_pri_op
+   addr_t record_pri_op(
+      const std::string& before      ,
+      const std::string& after       ,
+      addr_t             flag_index  ,
+      addr_t             value_index
    );
    //
    // set_dep

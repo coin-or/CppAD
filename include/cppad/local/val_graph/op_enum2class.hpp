@@ -13,6 +13,7 @@
 # include <cppad/local/val_graph/con_op.hpp>
 # include <cppad/local/val_graph/csum_op.hpp>
 # include <cppad/local/val_graph/dis_op.hpp>
+# include <cppad/local/val_graph/pri_op.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 //
@@ -87,6 +88,10 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 
       case neg_op_enum:
       op_ptr = neg_op_t<Value>::get_instance();
+      break;
+
+      case pri_op_enum:
+      op_ptr = pri_op_t<Value>::get_instance();
       break;
 
       case sub_op_enum:

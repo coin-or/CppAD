@@ -271,6 +271,61 @@ inline void print_comp_op(
    cout << right << setw(5) << right_index << ") = ";
    cout << right << setw(5) << res_str << std::endl;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_print_pri_op dev}
+{xrst_spell
+   str
+}
+
+Printing Print Operators
+########################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PRINT_PRI_OP
+   // END_PRINT_PRI_OP
+}
+
+before_index
+************
+is the index in str_vec corresponding to the before text.
+
+after_index
+***********
+is the index in str_vec corresponding to the after text.
+
+flag_index
+**********
+is the index in the value vector corresponding to the flag.
+
+value_index
+***********
+is the index in the value vector corresponding to the value that is printed
+if the flag is positive.
+
+
+{xrst_end val_print_pri_op}
+*/
+// BEGIN_PRINT_PRI_OP
+inline void print_pri_op(
+   addr_t       before_index ,
+   addr_t       after_index  ,
+   addr_t       flag_index   ,
+   addr_t       value_index  )
+// END_PRINT_PRI_OP
+{  //
+   using std::setw;
+   using std::right;
+   using std::cout;
+   //
+   cout << setw(19) << "" << right << setw(5)  << "pri" << "[";
+   cout << right << setw(5) << before_index  << ",";
+   cout << right << setw(5) << after_index   << "](";
+   cout << right << setw(5) << flag_index    << ",";
+   cout << right << setw(5) << value_index << ")" << std::endl;
+}
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
