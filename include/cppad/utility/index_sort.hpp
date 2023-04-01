@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_INDEX_SORT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -35,7 +35,8 @@ The argument *ind* has prototype
    *SizeVector* & *ind*
 
 where *SizeVector* is
-a :ref:`SimpleVector-name` class with elements of type ``size_t`` .
+a :ref:`SimpleVector-name` class with elements of type *Size_t* ,
+where *Size_t* is an integral type.
 The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
@@ -81,13 +82,13 @@ File used to implement the CppAD index sort utility
 /*!
 Helper class used by index_sort
 */
-template <class Compare>
+template <class Compare, class Size_t>
 class index_sort_element {
 private:
    /// key used to determine position of this element
    Compare key_;
    /// index vlaue corresponding to this key
-   size_t  index_;
+   Size_t  index_;
 public:
    /// operator requried by std::sort
    bool operator<(const index_sort_element& other) const
@@ -96,13 +97,13 @@ public:
    void set_key(const Compare& value)
    {  key_ = value; }
    /// set the index for this element
-   void set_index(const size_t& index)
+   void set_index(const Size_t& index)
    {  index_ = index; }
    /// get the key for this element
    Compare get_key(void) const
    {  return key_; }
    /// get the index for this element
-   size_t get_index(void) const
+   Size_t get_index(void) const
    {  return index_; }
 };
 
@@ -130,26 +131,27 @@ The output value of its elements satisfy
 */
 template <class KeyVector, class SizeVector>
 void index_sort(const KeyVector& keys, SizeVector& ind)
-{  typedef typename KeyVector::value_type Compare;
-   CheckSimpleVector<size_t, SizeVector>();
-
-   typedef index_sort_element<Compare> element;
-
+{  typedef typename KeyVector::value_type      Compare;
+   typedef typename SizeVector::value_type     Size_t;
+   typedef index_sort_element<Compare, Size_t> Element;
+   //
+   CheckSimpleVector<Size_t, SizeVector>();
+   //
    CPPAD_ASSERT_KNOWN(
-      size_t(keys.size()) == size_t(ind.size()),
+      keys.size() == ind.size(),
       "index_sort: vector sizes do not match"
    );
 
-   size_t size_work = size_t(keys.size());
+   size_t size_work = keys.size();
    size_t size_out;
-   element* work =
-      thread_alloc::create_array<element>(size_work, size_out);
+   Element* work =
+      thread_alloc::create_array<Element>(size_work, size_out);
 
    // copy initial order into work
    size_t i;
    for(i = 0; i < size_work; i++)
    {  work[i].set_key( keys[i] );
-      work[i].set_index( i );
+      work[i].set_index( Size_t(i) );
    }
 
    // sort the work array
