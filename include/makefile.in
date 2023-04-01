@@ -340,7 +340,6 @@ myincludedir = $(includedir)/$(postfix_dir)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 nobase_myinclude_HEADERS = \
-	cppad/local/val_graph/pri_op.hpp \
 	cppad/base_require.hpp \
 	cppad/configure.hpp \
 	cppad/core/abort_recording.hpp \
@@ -945,9 +944,11 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_iterator.hpp \
 	cppad/local/val_graph/opt_val_graph.hpp \
+	cppad/local/val_graph/pri_op.hpp \
 	cppad/local/val_graph/print_op.hpp \
 	cppad/local/val_graph/record.hpp \
 	cppad/local/val_graph/renumber.hpp \
+	cppad/local/val_graph/repeat_con.hpp \
 	cppad/local/val_graph/rev_depend.hpp \
 	cppad/local/val_graph/summation.hpp \
 	cppad/local/val_graph/tape.hpp \
