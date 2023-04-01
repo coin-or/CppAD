@@ -18,6 +18,7 @@ SET(source_list val_graph.cpp
    fun2val_xam.cpp
    pri_xam.cpp
    renumber_xam.cpp
+   repeat_xam.cpp
    summation_xam.cpp
    test/fold.cpp
    test/fun2val.cpp

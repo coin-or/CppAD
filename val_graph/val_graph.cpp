@@ -30,6 +30,7 @@ extern bool fold_con_xam(void);
 extern bool fun2val_xam(void);
 extern bool pri_xam(void);
 extern bool renumber_xam(void);
+extern bool repeat_xam(void);
 extern bool summation_xam(void);
 extern bool test_fold(void);
 extern bool test_fun2val(void);
@@ -63,6 +64,7 @@ int main(void)
    Run( fun2val_xam,         "fun2val_xam"         );
    Run( pri_xam,             "pri_xam"             );
    Run( renumber_xam,        "renumber_xam"        );
+   Run( repeat_xam,          "repeat_xam"          );
    Run( summation_xam,       "summation_xam"       );
    Run( test_fold,           "test_fold"           );
    Run( test_fun2val,        "test_fun2val"        );
