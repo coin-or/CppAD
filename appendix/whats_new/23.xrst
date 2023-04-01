@@ -13,6 +13,11 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+04-01
+=====
+Extend index_sort so that the
+:ref:`index_sort@ind` vector can have elements of any integral type.
+
 03-04
 =====
 There were some problems running :ref:`cmake_check-name` when
