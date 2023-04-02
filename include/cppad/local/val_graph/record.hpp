@@ -73,7 +73,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    set_ind_inuse_ = thread_alloc::inuse(thread);
 # endif
    //
-   str_vec_.push_back( '\0' );
+   str_vec_.push_back( "" );
    addr_t nan_addr = record_con_op(nan);
    assert( n_val_ == n_ind + 1 );
    //
@@ -81,7 +81,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == 1 ); // one operator
    CPPAD_ASSERT_UNKNOWN( arg_vec_.size() == 1 );     // one argument
    CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
-   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == '\0' );      // empty string
+   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );        // empty string
    CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
    return nan_addr;
    // END_POST_CONDITION
@@ -604,10 +604,7 @@ addr_t tape_t<Value>::record_pri_op(
 // END_RECORD_PRI_OP
 {  //
    // empty string
-   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == '\0' );
-   //
-   // end of previous string
-   CPPAD_ASSERT_UNKNOWN( str_vec_[ str_vec_.size() - 1 ] == '\0' );
+   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );
    //
    // res_index
    addr_t res_index = 0; // invalid result index
@@ -617,16 +614,12 @@ addr_t tape_t<Value>::record_pri_op(
    //
    // arg_vec_: before_index
    addr_t before_index = addr_t( str_vec_.size() );
-   for(size_t i = 0; i < before.size(); ++i)
-      str_vec_.push_back( before[i] );
-   str_vec_.push_back( '\0' );
+   str_vec_.push_back(before);
    arg_vec_.push_back( before_index );
    //
    // arg_vec_: after_index
    addr_t after_index = addr_t( str_vec_.size() );
-   for(size_t i = 0; i < after.size(); ++i)
-      str_vec_.push_back( after[i] );
-   str_vec_.push_back( '\0' );
+   str_vec_.push_back(after);
    arg_vec_.push_back( after_index );
    //
    // arg_vec_: flag_index, value_index

@@ -66,10 +66,10 @@ This override of :ref:`val_base_op@eval` defines the following values:
    :header: 1
 
    Type,Name,Definition
-   C string, *before* ,  str_vec + arg_vec[ arg_index + 0 ],
-   C string, *after*  ,  str_vec + arg_vec[ arg_index + 1 ],
-   Value,    *flag*   ,   val_vec[ arg_vec[ arg_index + 2 ] ]
-   Value,    *value*  ,   val_vec[ arg_vec[ arg_index + 3 ] ]
+   string, *before*  ,  str_vec[ arg_vec[ arg_index + 0 ] ]
+   string, *after*   ,  str_vec[ arg_vec[ arg_index + 1 ] ]
+   Value,    *flag*  ,  val_vec[ arg_vec[ arg_index + 2 ] ]
+   Value,    *value* ,  val_vec[ arg_vec[ arg_index + 3 ] ]
 
 If *flag* is greater than zero, *before*, *value*, *after* are printed
 in that order.
@@ -135,8 +135,8 @@ public:
       Vector<Value>&        val_vec      ) const override
    {  //
       // arg_vec, str_vec
-      const Vector<addr_t>& arg_vec( tape->arg_vec() );
-      const Vector<char>&   str_vec( tape->str_vec() );
+      const Vector<addr_t>&       arg_vec( tape->arg_vec() );
+      const Vector<std::string>&  str_vec( tape->str_vec() );
       //
       // arg
       Vector<addr_t> arg(4);
@@ -149,10 +149,10 @@ public:
       }
       //
       // before, after, flag, value
-      const char* before = str_vec.data() + arg[0];
-      const char* after  = str_vec.data() + arg[1];
-      Value       flag   =  val_vec[ arg[2] ];
-      Value       value  =  val_vec[ arg[3] ];
+      const std::string& before  = str_vec[ arg[0] ];
+      const std::string& after   = str_vec[ arg[1] ];
+      const Value&       flag    = val_vec[ arg[2] ];
+      const Value&       value   = val_vec[ arg[3] ];
       if( flag > 0 )
          std::cout << before << value << after;
    }

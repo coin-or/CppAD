@@ -178,13 +178,13 @@ Operations on Tape
 template <class Value> class tape_t {
 // END_TAPE_T
 private :
-   addr_t             n_ind_;       // number of independent values
-   addr_t             n_val_;       // total number of values
-   Vector<addr_t>     arg_vec_;     // arguments for all operator uses
-   Vector<Value>      con_vec_;     // value constants
-   Vector<char>       str_vec_;     // string constants
-   Vector<addr_t>     dep_vec_;     // dependent variable indices in val_vec
-   Vector<uint8_t>    op_enum_vec_; // one byte per operator enum value.
+   addr_t              n_ind_;       // number of independent values
+   addr_t              n_val_;       // total number of values
+   Vector<addr_t>      arg_vec_;     // arguments for all operator uses
+   Vector<Value>       con_vec_;     // value constants
+   Vector<std::string> str_vec_;     // string constants
+   Vector<addr_t>      dep_vec_;     // dependent variable indices in val_vec
+   Vector<uint8_t>     op_enum_vec_; // one byte per operator enum value.
    //
    // op2arg_index_
    // Optional vector that changes how op_iterator works; e.g.,
@@ -230,7 +230,7 @@ public :
    // END_CON_VEC
    //
    // BEGIN_STR_VEC
-   const Vector<char>& str_vec(void) const
+   const Vector<std::string>& str_vec(void) const
    {  return str_vec_; }
    // END_STR_VEC
    //
