@@ -260,6 +260,7 @@ public :
       std::swap( n_val_, other.n_val_);
       arg_vec_.swap( other.arg_vec_ );
       con_vec_.swap( other.con_vec_ );
+      str_vec_.swap( other.str_vec_ );
       dep_vec_.swap( other.dep_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
       op2arg_index_.swap( other.op2arg_index_ );

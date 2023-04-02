@@ -83,6 +83,9 @@ void tape_t<Value>::dead_code(void)
    // keep_compare
    bool keep_compare = option_map_["keep_compare"] == "true";
    //
+   // keep_print
+   bool keep_print = option_map_["keep_print"] == "true";
+   //
    // val_use_case
    Vector<addr_t> val_use_case = rev_depend();
    //
@@ -131,9 +134,14 @@ void tape_t<Value>::dead_code(void)
       // need_op
       bool need_op = false;
       if( n_res == 0 )
-      {  CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
-         need_op  = keep_compare;
-         need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
+      {  if( op_enum == comp_op_enum )
+         {  need_op  = keep_compare;
+            need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
+         }
+         else
+         {  CPPAD_ASSERT_UNKNOWN( op_enum == pri_op_enum );
+            need_op = keep_print;
+         }
       }
       else for(addr_t k = 0; k < n_res; ++k)
          need_op |= 0 != val_use_case[ res_index + k];
@@ -170,6 +178,18 @@ void tape_t<Value>::dead_code(void)
                addr_t right_index = new_val_index[ arg_vec_[arg_index + 2] ];
                new_tape.record_comp_op(
                   compare_enum, left_index, right_index
+               );
+            }
+            break;
+            //
+            // pri_op_enum
+            case pri_op_enum:
+            {  std::string before = str_vec_[ arg_vec_[arg_index + 0] ];
+               std::string after  = str_vec_[ arg_vec_[arg_index + 1] ];
+               addr_t left_index  = new_val_index[ arg_vec_[arg_index + 2] ];
+               addr_t right_index = new_val_index[ arg_vec_[arg_index + 3] ];
+               new_tape.record_pri_op(
+                  before, after, left_index, right_index
                );
             }
             break;
