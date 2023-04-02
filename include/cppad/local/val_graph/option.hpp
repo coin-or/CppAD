@@ -23,13 +23,17 @@ Prototype
    // END_SET_OPTION
 }
 
-{xrst_toc_hidden
-   val_graph/option_xam.cpp
-}
-Example
-*******
-The file :ref:`option_xam.cpp <val_option_xam.cpp-name>` is an
-example and test of tape.set_option().
+keep_compare
+************
+If *name* is keep_compare, *value* must be true or false .
+If it is false (true), :ref:`val_comp_op-name` operators will (will not)
+be removed during :ref:`val_tape_dead_code-name` optimization.
+
+keep_print
+**********
+If *name* is keep_print, *value* must be true or false .
+If it is false (true), :ref:`val_pri_op-name` operators will (will not)
+be removed during dead code optimization.
 
 {xrst_end val_tape_option}
 */

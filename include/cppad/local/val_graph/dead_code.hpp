@@ -26,11 +26,18 @@ Prototype
 
 keep_compare
 ************
+see :ref:`val_tape_option@keep_compare`:
+
 #. If this is false, all the :ref`val_comp_op-name` operators will be removed.
    In this case future calls to eval will not modify
    :ref:`val_tape@eval@compare_false` .
 #. If this is true, the compare_no_enum compare operators are removed and
    other comparisons are kept.
+
+keep_print
+**********
+see :ref:`val_tape_option@keep_print`:
+
 
 Algorithm
 *********

@@ -60,6 +60,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    // val_tape.fold_con();
    val_tape.summation();
    val_tape.dead_code();
+   val_tape.reduce_str();
    /*
    CppAD::vector<Base> val_vec( val_tape.n_val() );
    for(addr_t i = 0; i < val_tape.n_ind(); ++i)

@@ -33,6 +33,9 @@ It changes the use of duplicates to use the constant
 with the lowest index (in the str_vec\_ vector).
 This creates an equivalent tape where duplicates are removed.
 Only arg_vec\_ and str_vec\_ are modified.
+This should be done after
+:ref:`dead code removal<val_tape_dead_code-name>
+becasue dead code removal may make multile copies of the same string.
 
 {xrst_toc_hidden
    val_graph/reduce_xam.cpp
