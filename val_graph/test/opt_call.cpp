@@ -100,8 +100,7 @@ bool result_not_used(void)
    ok &= compare_false == 0;
    //
    // dead_code
-   bool keep_compare = true; // no compare operatos so value does not matter
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    val_vec.resize( tape.n_val() );
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;
@@ -212,8 +211,7 @@ bool ident_zero(void)
    ok &= tape.n_op() == 6;
    //
    // dead_code
-   bool keep_compare = true; // no compare operatos so value does not matter
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    val_vec.resize( tape.n_val() );
    tape.eval(trace, compare_false, val_vec);
    ok &= compare_false == 0;

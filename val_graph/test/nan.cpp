@@ -53,8 +53,7 @@ bool test_nan(void)
    tape.renumber();
    //
    // dead_code
-   bool keep_compare = true; // no compare operatos so value does not matter
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    //
    ok &= tape.n_op()  == 1;
    ok &= tape.con_vec().size() == 1;

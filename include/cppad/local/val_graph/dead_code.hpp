@@ -68,7 +68,7 @@ example and test of tape.dead_code().
 */
 // BEGIN_DEAD_CODE
 template <class Value>
-void tape_t<Value>::dead_code(bool keep_compare)
+void tape_t<Value>::dead_code(void)
 // END_DEAD_CODE
 {  // -----------------------------------------------------------------------
    // Dead Code Elimination
@@ -79,6 +79,9 @@ void tape_t<Value>::dead_code(bool keep_compare)
    size_t thread        = thread_alloc::thread_num();
    size_t initial_inuse = thread_alloc::inuse(thread);
 # endif
+   //
+   // keep_compare
+   bool keep_compare = option_map_["keep_compare"] == "true";
    //
    // val_use_case
    Vector<addr_t> val_use_case = rev_depend();

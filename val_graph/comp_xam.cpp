@@ -89,9 +89,9 @@ bool comp_xam(void)
    ok &= tape.n_op() == 5; // 1 con_op, 2 comp_op, 2 add_op
    //
    // tape
-   bool keep_compare = true;
+   tape.set_option("keep_compare", "true");
    tape.renumber();
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    ok &= tape.n_op() == 3; // 1 con_op, 1 comp_op, 1 add_op
    //
    // ok, val_vec
@@ -101,8 +101,8 @@ bool comp_xam(void)
    ok &= compare_false == 1;  // only one x[0] < x[1] left
    //
    // tape
-   keep_compare = false;
-   tape.dead_code(keep_compare);
+   tape.set_option("keep_compare", "false");
+   tape.dead_code();
    ok &= tape.n_op() == 2; // 1 con_op, 0 comp_op, 1 add_op
    //
    // ok, val_vec

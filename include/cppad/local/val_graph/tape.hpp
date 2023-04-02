@@ -170,6 +170,7 @@ Operations on Tape
    include/cppad/local/val_graph/summation.hpp
    include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/rev_depend.hpp
+   include/cppad/local/val_graph/option.hpp
 }
 
 
@@ -192,12 +193,19 @@ private :
    // this is necessary is we are using replace_csum_op with this tape.
    Vector<addr_t> op2arg_index_;
    //
+   // option_map_
+   std::map< std::string, std::string > option_map_;
+   //
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // set by set_ind, used by set_dep
    size_t  set_ind_inuse_;
 # endif
    //
 public :
+   // default constructor
+   tape_t(void)
+   {  initialize_option(); }
+   //
    // BEGIN_OP_PTR
    const base_op_t<Value>* base_op_ptr(addr_t op_index) const
    {  op_enum_t op_enum = op_enum_t( op_enum_vec_[op_index] );
@@ -386,10 +394,10 @@ public :
    void renumber(void);
    //
    // rev_depend
-   Vector<addr_t> rev_depend();
+   Vector<addr_t> rev_depend(void);
    //
    // dead_code
-   void dead_code(bool keep_compare);
+   void dead_code(void);
    //
    // ------------------------------------------------------------------------
    // functions in summation.hpp
@@ -410,6 +418,16 @@ public :
       addr_t       i_op      ,
       csum_info_t& csum_info
    );
+   //
+   // ------------------------------------------------------------------------
+   // functions in option.hpp
+   // ------------------------------------------------------------------------
+   //
+   // initialize_option
+   void initialize_option(void);
+   //
+   // set_option
+   void set_option(const std::string& name, const std::string& value);
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
@@ -419,6 +437,7 @@ public :
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/summation.hpp>
+# include <cppad/local/val_graph/option.hpp>
 
 # undef CPPAD_VAL_GRAPH_TAPE_TRACE
 # endif

@@ -87,8 +87,7 @@ bool summation_xam(void)
    //
    // summation
    tape.summation();
-   bool keep_compare = true;
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    //
    // ok
    ok &= tape.n_op()  == 3;

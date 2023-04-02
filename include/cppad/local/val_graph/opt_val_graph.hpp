@@ -32,10 +32,9 @@ template <class Base, class RecBase>
 void ADFun<Base, RecBase>::opt_val_graph(void)
 // END_OPT_VAL_GRAPH
 {  //
-   // n_dyn_ind, n_var_ind, keep_compare
+   // n_dyn_ind, n_var_ind
    size_t n_dyn_ind = size_dyn_ind();
    size_t n_var_ind = Domain();
-   bool keep_compare = false;
    //
    // dyn_ind, var_ind
    CppAD::vector<size_t> dyn_ind(n_dyn_ind), var_ind(n_var_ind);
@@ -60,7 +59,7 @@ void ADFun<Base, RecBase>::opt_val_graph(void)
    val_tape.renumber();
    // val_tape.fold_con();
    val_tape.summation();
-   val_tape.dead_code(keep_compare);
+   val_tape.dead_code();
    /*
    CppAD::vector<Base> val_vec( val_tape.n_val() );
    for(addr_t i = 0; i < val_tape.n_ind(); ++i)

@@ -97,8 +97,7 @@ bool atom(void)
    ok &= compare_false == 0;
    //
    // dead_code
-   bool keep_compare = true; // no compare operatos so value does not matter
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    //
    // val_vec
    val_vec.resize( tape.n_val() );
@@ -192,8 +191,7 @@ bool dis_op(void)
    tape.fold_con();
    //
    // dead_code
-   bool keep_compare = true;
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    //
    // val_vec
    val_vec.resize( tape.n_val() );
@@ -273,8 +271,7 @@ bool cexp_op(void)
    tape.fold_con();
    //
    // dead_code
-   bool keep_compare = true;
-   tape.dead_code(keep_compare);
+   tape.dead_code();
    //
    // val_vec
    val_vec.resize( tape.n_val() );
