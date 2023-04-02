@@ -6,8 +6,8 @@
 /*
 {xrst_begin val_pri_xam.cpp dev}
 
-Binary Value Operator Example
-#############################
+Print Operator Example
+######################
 {xrst_literal
    // BEGIN_C++
    // END_C++
@@ -47,6 +47,7 @@ bool pri_xam(void)
    addr_t      flag_index   = dep_vec[0];
    addr_t      value_index  = dep_vec[0];
    tape.record_pri_op(before, after, flag_index, value_index);
+   tape.record_pri_op(before, after, flag_index, value_index);
    //
    // set_dep
    tape.set_dep( dep_vec );
@@ -59,9 +60,6 @@ bool pri_xam(void)
    x[0] = 5.0;
    x[1] = 6.0;
    //
-   tape.set_option("keep_print", "true");
-   tape.dead_code();
-   //
    // val_vec, compare_false
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
@@ -72,23 +70,8 @@ bool pri_xam(void)
    // ok
    ok &= compare_false         == 0;
    ok &= tape.n_val()          == 4;
-   ok &= tape.n_op()           == 3;
+   ok &= tape.n_op()           == 4;
    ok &= tape.str_vec().size() == 3;
-   ok &= tape.str_vec()[0]     == "";
-   //
-   // dead_code
-   tape.set_option("keep_print", "false");
-   tape.dead_code();
-   //
-   // val_vec, compare_false
-   val_vec.resize( tape.n_val() );
-   tape.eval(trace, compare_false, val_vec);
-   //
-   // ok
-   ok &= compare_false         == 0;
-   ok &= tape.n_val()          == 4;
-   ok &= tape.n_op()           == 2;
-   ok &= tape.str_vec().size() == 1;
    ok &= tape.str_vec()[0]     == "";
    //
    // ok

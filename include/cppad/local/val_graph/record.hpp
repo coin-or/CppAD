@@ -572,10 +572,14 @@ no value vector result for this operator.
 before
 ======
 This is the text that is printed before the value when *flag* is positive.
+If a previous str_vec\_ entry is equal to before, it is used.
+Otherwise a new entry equal to before is added to str_vec\_.
 
 after
 =====
 This is the text that is printed after the value when *flag* is positive.
+If a previous str_vec\_ entry is equal to after, it is used.
+Otherwise a new entry equal to after is added to str_vec\_.
 
 flag_index
 ==========
@@ -603,6 +607,18 @@ addr_t tape_t<Value>::record_pri_op(
    addr_t             value_index )
 // END_RECORD_PRI_OP
 {  //
+   // str_index
+   using std::string;
+   auto str_index = [](const string& str, Vector<string>& str_vec)
+   {  size_t result = str_vec.size();
+      for(size_t i = 0; i < str_vec.size(); ++i)
+      {  if( str == str_vec[i] )
+            result = i;
+      }
+      if( result == str_vec.size() )
+         str_vec.push_back(str);
+      return addr_t( result );
+   };
    // empty string
    CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );
    //
@@ -612,23 +628,13 @@ addr_t tape_t<Value>::record_pri_op(
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t(pri_op_enum) );
    //
-   // arg_vec_: before_index
-   if( before == "" )
-      arg_vec_.push_back(0);
-   else
-   {  addr_t index = addr_t( str_vec_.size() );
-      str_vec_.push_back(before);
-      arg_vec_.push_back( index );
-   }
+   // str_vec_, arg_vec_: before_index
+   addr_t before_index = str_index(before, str_vec_);
+   arg_vec_.push_back( before_index );
    //
-   // arg_vec_: before_index
-   if( after == "" )
-      arg_vec_.push_back(0);
-   else
-   {  addr_t index = addr_t( str_vec_.size() );
-      str_vec_.push_back(after);
-      arg_vec_.push_back( index );
-   }
+   // str_vec_, arg_vec_: after_index
+   addr_t after_index = str_index(after, str_vec_);
+   arg_vec_.push_back( after_index );
    //
    // arg_vec_: flag_index, value_index
    arg_vec_.push_back( flag_index );
