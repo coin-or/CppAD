@@ -613,14 +613,22 @@ addr_t tape_t<Value>::record_pri_op(
    op_enum_vec_.push_back( uint8_t(pri_op_enum) );
    //
    // arg_vec_: before_index
-   addr_t before_index = addr_t( str_vec_.size() );
-   str_vec_.push_back(before);
-   arg_vec_.push_back( before_index );
+   if( before == "" )
+      arg_vec_.push_back(0);
+   else
+   {  addr_t index = addr_t( str_vec_.size() );
+      str_vec_.push_back(before);
+      arg_vec_.push_back( index );
+   }
    //
-   // arg_vec_: after_index
-   addr_t after_index = addr_t( str_vec_.size() );
-   str_vec_.push_back(after);
-   arg_vec_.push_back( after_index );
+   // arg_vec_: before_index
+   if( after == "" )
+      arg_vec_.push_back(0);
+   else
+   {  addr_t index = addr_t( str_vec_.size() );
+      str_vec_.push_back(after);
+      arg_vec_.push_back( index );
+   }
    //
    // arg_vec_: flag_index, value_index
    arg_vec_.push_back( flag_index );

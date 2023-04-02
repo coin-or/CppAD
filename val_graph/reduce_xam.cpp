@@ -4,7 +4,7 @@
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/val_type.hpp>
 /*
-{xrst_begin val_pri_xam.cpp dev}
+{xrst_begin val_reduce_xam.cpp dev}
 
 Binary Value Operator Example
 #############################
@@ -13,10 +13,10 @@ Binary Value Operator Example
    // END_C++
 }
 
-{xrst_end val_pri_xam.cpp}
+{xrst_end val_reduce_xam.cpp}
 */
 // BEGIN_C++
-bool pri_xam(void)
+bool reduce_xam(void)
 {  bool ok = true;
    //
    // tape_t, Vector, addr_t, add_op_enum, compare_lt_enum;
@@ -47,6 +47,7 @@ bool pri_xam(void)
    addr_t      flag_index   = dep_vec[0];
    addr_t      value_index  = dep_vec[0];
    tape.record_pri_op(before, after, flag_index, value_index);
+   tape.record_pri_op(before, after, flag_index, value_index);
    //
    // set_dep
    tape.set_dep( dep_vec );
@@ -69,7 +70,20 @@ bool pri_xam(void)
    // ok
    ok &= compare_false         == 0;
    ok &= tape.n_val()          == 4;
-   ok &= tape.n_op()           == 3;
+   ok &= tape.n_op()           == 4;
+   ok &= tape.str_vec().size() == 5;
+   ok &= tape.str_vec()[0]     == "";
+   //
+   // reduce_str
+   tape.reduce_str();
+   //
+   // val_vec, compare_false
+   tape.eval(trace, compare_false, val_vec);
+   //
+   // ok
+   ok &= compare_false         == 0;
+   ok &= tape.n_val()          == 4;
+   ok &= tape.n_op()           == 4;
    ok &= tape.str_vec().size() == 3;
    ok &= tape.str_vec()[0]     == "";
    //

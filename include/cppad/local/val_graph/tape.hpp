@@ -375,9 +375,8 @@ public :
    // functions in their own files
    // ------------------------------------------------------------------------
    //
-   // repeat_con, repeat_con_val
-   void repeat_con(void);
-   void repeat_con_val(void);
+   // reduce_str
+   void reduce_str(void);
    //
    // fold_con
    void fold_con(void);
@@ -415,7 +414,7 @@ public :
 
 # include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/fold_con.hpp>
-# include <cppad/local/val_graph/repeat_con.hpp>
+# include <cppad/local/val_graph/reduce_str.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/summation.hpp>

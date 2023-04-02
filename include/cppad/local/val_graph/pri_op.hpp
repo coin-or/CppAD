@@ -117,7 +117,7 @@ public:
    addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
-   {  return 3; }
+   {  return 4; }
    //
    // n_res
    addr_t n_res(
