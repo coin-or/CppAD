@@ -42,7 +42,7 @@ bool pri_xam(void)
    dep_vec[0] = tape.record_op(sub_op_enum, op_arg); // x[0] - x[1]
    //
    // tape
-   std::string before       = "0 < x[0] - x[1] = ";
+   std::string before       = "0 >= x[0] - x[1] = ";
    std::string after        = "\n";
    addr_t      flag_index   = dep_vec[0];
    addr_t      value_index  = dep_vec[0];
@@ -57,8 +57,8 @@ bool pri_xam(void)
    //
    // x
    Vector<double> x(2);
-   x[0] = 5.0;
-   x[1] = 6.0;
+   x[0] = 6.0;
+   x[1] = 5.0;
    //
    // val_vec, compare_false
    Vector<double> val_vec( tape.n_val() );

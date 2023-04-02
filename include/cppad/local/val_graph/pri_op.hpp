@@ -71,7 +71,7 @@ This override of :ref:`val_base_op@eval` defines the following values:
    Value,    *flag*  ,  val_vec[ arg_vec[ arg_index + 2 ] ]
    Value,    *value* ,  val_vec[ arg_vec[ arg_index + 3 ] ]
 
-If *flag* is greater than zero, *before*, *value*, *after* are printed
+If *flag* is less than or equal zero, *before*, *value*, *after* are printed
 in that order.
 
 
@@ -153,7 +153,7 @@ public:
       const std::string& after   = str_vec[ arg[1] ];
       const Value&       flag    = val_vec[ arg[2] ];
       const Value&       value   = val_vec[ arg[3] ];
-      if( flag > 0 )
+      if( flag <= 0 )
          std::cout << before << value << after;
    }
 };

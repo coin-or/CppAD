@@ -580,6 +580,33 @@ void ADFun<Base, RecBase>::fun2val(
          }
          break;
          // --------------------------------------------------------------
+         case local::PriOp:
+         {  //
+            // before, after
+            std::string before( play_.GetTxt( size_t( var_op_arg[2] ) ) );
+            std::string after(  play_.GetTxt( size_t( var_op_arg[4] ) ) );
+            //
+            // flag_index
+            addr_t flag_index;
+            if( var_op_arg[0] & 1 )
+               flag_index = var2val_index[ var_op_arg[1] ];
+            else
+               flag_index = ensure_par2val_index( var_op_arg[1] );
+            //
+            // value_index
+            addr_t value_index;
+            if( var_op_arg[0] & 1 )
+               value_index = var2val_index[ var_op_arg[3] ];
+            else
+               value_index = ensure_par2val_index( var_op_arg[3] );
+            //
+            val_index = val_tape.record_pri_op(
+               before, after, flag_index, value_index
+            );
+         }
+         CPPAD_ASSERT_UNKNOWN(val_index == 0); // no result for this operator
+         break;
+         // --------------------------------------------------------------
          case local::CSumOp:
          {  //
             // add, sub
