@@ -14,6 +14,13 @@
 Constant Folding
 ################
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FOLD_CON
+   // END_FOLD_CON
+}
+
 Discussion
 **********
 This is like :ref:`value numbering <val_tape_renumber-title>` but a major
@@ -62,8 +69,10 @@ is an example and test of tape.fold_con().
 
 namespace CppAD { namespace local { namespace val_graph {
 
+// BEGIN_FOLD_CON
 template <class Value>
 void tape_t<Value>::fold_con(void)
+// END_FOLD_CON
 {
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // thread, initial_inuse

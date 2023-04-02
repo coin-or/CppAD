@@ -11,19 +11,28 @@ namespace CppAD { namespace local { namespace val_graph {
 -------------------------------------------------------------------------------
 {xrst_begin val_tape_reduce_str dev}
 {xrst_spell
+   str
+   xam
 }
 
-Repeated String Re-Numbering
-############################
+Remove Duplicate Strings
+########################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_REDUCE_STR
+   // END_REDUCE_STR
+}
 
 Discussion
 **********
 This routine sorts the string constants
 to find duplicates in the tape.
 It changes the use of duplicates to use the constant
-with the lowest index (in the str_vec_ vector).
+with the lowest index (in the str_vec\_ vector).
 This creates an equivalent tape where duplicates are removed.
-Only arg_vec_ and str_vec_ are modified.
+Only arg_vec\_ and str_vec\_ are modified.
 
 {xrst_toc_hidden
    val_graph/reduce_xam.cpp
@@ -33,12 +42,13 @@ Example
 The file :ref:`reduce_xam.cpp <val_reduce_xam.cpp-name>` is an
 example and test of tape.reduce_str().
 
-{xrst_end val_tape_renumber}
+{xrst_end val_tape_reduce_str}
 */
 // ---------------------------------------------------------------------------
-// reduce_str
+// BEGIN_REDUCE_STR
 template <class Value>
 void tape_t<Value>::reduce_str(void)
+// END_REDUCE_STR
 {
    if( str_vec_.size() < 2 )
       return;

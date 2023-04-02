@@ -164,6 +164,7 @@ Operations on Tape
 {xrst_toc_table
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/fold_con.hpp
+   include/cppad/local/val_graph/reduce_str.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/summation.hpp

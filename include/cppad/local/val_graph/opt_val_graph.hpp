@@ -12,6 +12,13 @@
 Optimize the Value Graph Corresponding to This Function
 #######################################################
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN_OPT_VAL_GRAPH
+   // END_OPT_VAL_GRAPH
+}
+
 {xrst_end opt_val_graph}
 */
 
@@ -20,10 +27,10 @@ Optimize the Value Graph Corresponding to This Function
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-// BEGIN_PROTOTYPE
+// BEGIN_OPT_VAL_GRAPH
 template <class Base, class RecBase>
 void ADFun<Base, RecBase>::opt_val_graph(void)
-// END_PROTOTYPE
+// END_OPT_VAL_GRAPH
 {  //
    // n_dyn_ind, n_var_ind, keep_compare
    size_t n_dyn_ind = size_dyn_ind();

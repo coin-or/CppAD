@@ -204,6 +204,13 @@ public:
 Value Re-Numbering
 ##################
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RENUMBER
+   // END_RENUMBER
+}
+
 Discussion
 **********
 This routine uses hash coding to find operators that are equivalent
@@ -242,8 +249,10 @@ example and test of tape.renumber().
 {xrst_end val_tape_renumber}
 -------------------------------------------------------------------------------
 */
+// BEGIN_RENUMBER
 template <class Value>
 void tape_t<Value>::renumber(void)
+// END_RENUMBER
 {
    // -----------------------------------------------------------------------
    // SAS Global Value Renumbering
