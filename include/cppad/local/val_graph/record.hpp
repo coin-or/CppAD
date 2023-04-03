@@ -555,6 +555,9 @@ addr_t tape_t<Value>::record_cexp_op(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_record_pri_op dev}
+{xrst_spell
+   str
+}
 
 Recording Print Operations
 ##########################

@@ -359,7 +359,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/pri_op.hpp \
 	cppad/local/val_graph/print_op.hpp \
 	cppad/local/val_graph/record.hpp \
-	cppad/local/val_graph/reduce_str.hpp \
 	cppad/local/val_graph/renumber.hpp \
 	cppad/local/val_graph/rev_depend.hpp \
 	cppad/local/val_graph/summation.hpp \
