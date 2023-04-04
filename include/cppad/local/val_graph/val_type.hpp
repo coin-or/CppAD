@@ -51,6 +51,7 @@ This enum type is used to identify the concrete operator class types.
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
 {xrst_code hpp}*/
 enum op_enum_t {
+   abs_op_enum,      // absolute value
    add_op_enum,      // addition
    call_op_enum,     // atomic functions
    cexp_op_enum,     // conditional expression

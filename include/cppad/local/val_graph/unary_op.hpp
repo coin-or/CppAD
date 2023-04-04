@@ -215,7 +215,10 @@ is an example and test that uses a unary operator.
 
 {xrst_end val_unary_op_derived}
 */
+// BEGIN_SORT_THIS_LINE_PLUS_1
+CPPAD_VAL_GRAPH_UNARY(abs, fabs);
 CPPAD_VAL_GRAPH_UNARY(neg, -);
+// END_SORT_THIS_LINE_MINUS_1
 
 // ---------------------------------------------------------------------------
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

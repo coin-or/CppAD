@@ -722,14 +722,16 @@ void ADFun<Base, RecBase>::val2fun(
          break;
       }
    }
-   // dep_taddr_, rec
-   // address of the dependent variables on variable tape
+   // dep_taddr_, dep_parameter, rec
+   // dep_taddr_ is address of the dependent variables on variable tape
    dep_taddr_.resize( val_dep_vec.size() );
+   dep_parameter_.resize( val_dep_vec.size() );
    for(size_t i = 0; i < val_dep_vec.size(); ++i)
    {  addr_t val_index     = val_dep_vec[i];
       ad_type_enum ad_type = val_ad_type[val_index];
       addr_t fun_index     = val2fun_index[val_index];
-      if( ad_type < variable_enum )
+      dep_parameter_[i]    = ad_type < variable_enum;
+      if( dep_parameter_[i] )
       {  // see RecordParOp(const AD<Base>& y)
          rec.PutArg( fun_index );
          fun_index = rec.PutOp(local::ParOp);

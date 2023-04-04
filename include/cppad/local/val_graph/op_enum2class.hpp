@@ -54,6 +54,10 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
       op_ptr = nullptr; // set in this case to avoid compiler warning
       break;
 
+      case abs_op_enum:
+      op_ptr = abs_op_t<Value>::get_instance();
+      break;
+
       case add_op_enum:
       op_ptr = add_op_t<Value>::get_instance();
       break;

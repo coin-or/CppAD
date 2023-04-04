@@ -386,7 +386,7 @@ namespace {
       CppAD::ADFun<double> f(ax, ayf);
 
       // optimize f(x)
-      f.optimize();
+      optimize_with_options(f);
 
       // compute f'(x)
       vector<double> x(n), jac(m * n);
@@ -2470,8 +2470,9 @@ bool optimize(void)
    //
    // opt_val_graph cases
    use_opt_val_graph_      = true;
-   ok     &= optimize_csum();
    ok     &= cond_exp_ppvv();
+   ok     &= optimize_csum();
+   ok     &= optimize_ode();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
