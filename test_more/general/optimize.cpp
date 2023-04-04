@@ -433,10 +433,7 @@ namespace {
       CppAD::ADFun<double> f(ax, ay);
 
       // now optimize the operation sequence
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      optimize_with_options(f);
 
       // now zero order forward
       vector<double> x(2), y(1);
@@ -506,13 +503,8 @@ namespace {
       // create function object f : ax -> ay
       CppAD::ADFun<double> f(ax, ay);
 
-
       // now optimize the operation sequence
-      j_check.option( atomic_sparsity_option_ );
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      optimize_with_options(f);
 
       // check result where true case is used; i.e., au[0] > au[1]
       vector<double> x(2), y(1);
@@ -2473,6 +2465,9 @@ bool optimize(void)
    ok     &= cond_exp_ppvv();
    ok     &= optimize_csum();
    ok     &= optimize_ode();
+   ok     &= nested_cond_exp();
+   ok     &= atomic_cond_exp_sparsity();
+   // ok     &= atomic_cond_exp(); This case not working
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
