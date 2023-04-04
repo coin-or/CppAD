@@ -758,7 +758,7 @@ namespace {
       original += 1;
       opt      += 1;
 
-      // Wwe do not use the argument x[5], to
+      // We do not use the argument x[5], to
       // make sure it is not optimized out.
 
       return;
@@ -2457,7 +2457,7 @@ bool optimize(void)
    ok     &= atomic_cond_exp_sparsity();
    ok     &= atomic_no_used();
    ok     &= atomic_arguments();
-   // ok     &= depend_one();
+   ok     &= depend_one();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_

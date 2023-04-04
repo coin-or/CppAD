@@ -304,7 +304,18 @@ void ADFun<Base, RecBase>::val2fun(
             );
             tmp_addr = 0; // to avoid compiler warning
             break;
+            //
+            // sin
+            case local::val_graph::sin_op_enum:
+            if( max_ad_type == dynamic_enum )
+               tmp_addr = rec.put_dyn_par( nan, local::sin_dyn, fun_arg[0] );
+            else
+            {  tmp_addr = rec.PutOp(local::SinOp);
+               rec.PutArg( fun_arg[0] );
+            }
+            break;
          }
+         val2fun_index[res_index] = tmp_addr;
       }
       else if( is_binary )
       {  //
@@ -400,7 +411,7 @@ void ADFun<Base, RecBase>::val2fun(
                //
                // div
                case local::val_graph::div_op_enum:
-               tmp_addr = rec.PutOp(local::DivvvOp);
+               tmp_addr = rec.PutOp(local::DivpvOp);
                break;
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
