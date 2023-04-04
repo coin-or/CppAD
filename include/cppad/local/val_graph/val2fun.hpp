@@ -143,10 +143,10 @@ void ADFun<Base, RecBase>::val2fun(
    // n_val
    addr_t n_val = val_tape.n_val();
    //
-   // val_ad_type
-   vector<ad_type_enum> val_ad_type(n_val);
+   // fun_ad_type
+   vector<ad_type_enum> fun_ad_type(n_val);
    for(addr_t i = 0; i < n_val; ++i)
-      val_ad_type[i] = number_ad_type_enum; // invalid
+      fun_ad_type[i] = number_ad_type_enum; // invalid
    //
    // val_index2con
    // After fold_con, all the constants that get used are op_con results.
@@ -191,16 +191,16 @@ void ADFun<Base, RecBase>::val2fun(
    rec.PutOp(local::BeginOp);
    rec.PutArg(0); // parameter argumnet is the nan above
    //
-   // rec, val_ad_type, val2fun_index
+   // rec, fun_ad_type, val2fun_index
    // put the independent dynamic paraeters in the function recording
    for(size_t i = 0; i < dyn_n_ind; ++i)
    {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= dyn_ind[i]"
       );
-      CPPAD_ASSERT_KNOWN( val_ad_type[ dyn_ind[i] ] == number_ad_type_enum,
+      CPPAD_ASSERT_KNOWN( fun_ad_type[ dyn_ind[i] ] == number_ad_type_enum,
          "val2fun: dep_ind[i] == dep_ind[j] for some i and j"
       );
-      val_ad_type[ dyn_ind[i] ]  = dynamic_enum;
+      fun_ad_type[ dyn_ind[i] ]  = dynamic_enum;
       par_addr                    = rec.put_dyn_par(nan, local::ind_dyn);
       val2fun_index[ dyn_ind[i] ] = par_addr;
       CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
@@ -210,11 +210,11 @@ void ADFun<Base, RecBase>::val2fun(
    {  CPPAD_ASSERT_KNOWN( var_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= var_ind[i]"
       );
-      CPPAD_ASSERT_KNOWN( val_ad_type[ var_ind[i] ] == number_ad_type_enum,
+      CPPAD_ASSERT_KNOWN( fun_ad_type[ var_ind[i] ] == number_ad_type_enum,
          "val2fun: var_ind[i] == dep_ind[j] for some i and j\n"
          "or var_ind[i] == var_ind[j] for some i and j"
       );
-      val_ad_type[ var_ind[i] ]   = variable_enum;
+      fun_ad_type[ var_ind[i] ]   = variable_enum;
       var_addr                    = rec.PutOp( local::InvOp );
       val2fun_index[ var_ind[i] ] = var_addr;
    }
@@ -278,7 +278,7 @@ void ADFun<Base, RecBase>::val2fun(
       ad_type_enum max_ad_type = constant_enum;
       for(addr_t i = 0; i < n_x; ++i)
       {  addr_t val_index     = val_arg_vec[arg_index + n_before + i];
-         ad_type_x[i] = val_ad_type[val_index];
+         ad_type_x[i] = fun_ad_type[val_index];
          fun_arg[i]   = val2fun_index[val_index];
          con_x[i]     = val_index2con[val_index];
          max_ad_type  = std::max(max_ad_type, ad_type_x[i] );
@@ -288,10 +288,10 @@ void ADFun<Base, RecBase>::val2fun(
          "val2fun: must first call fold_con"
       );
       //
-      // rec, val_ad_type, val2fun_index
+      // rec, fun_ad_type, val2fun_index
       if( is_unary || is_binary )
       {  //
-         val_ad_type[res_index] = max_ad_type;
+         fun_ad_type[res_index] = max_ad_type;
          //
          // rec, val2fun_index
          switch( op_enum )
@@ -307,7 +307,7 @@ void ADFun<Base, RecBase>::val2fun(
             // add_op_enum
             case local::val_graph::add_op_enum:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            if( val_ad_type[res_index] == dynamic_enum )
+            if( fun_ad_type[res_index] == dynamic_enum )
             {  tmp_addr = rec.put_dyn_par(
                   nan, local::add_dyn, fun_arg[0], fun_arg[1]
                );
@@ -335,7 +335,7 @@ void ADFun<Base, RecBase>::val2fun(
             // mul_op_enum
             case local::val_graph::mul_op_enum:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            if( val_ad_type[res_index] == dynamic_enum )
+            if( fun_ad_type[res_index] == dynamic_enum )
             {  tmp_addr = rec.put_dyn_par(
                   nan, local::mul_dyn, fun_arg[0], fun_arg[1]
                );
@@ -363,7 +363,7 @@ void ADFun<Base, RecBase>::val2fun(
             // sub_op_enum
             case local::val_graph::sub_op_enum:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            if( val_ad_type[res_index] == dynamic_enum )
+            if( fun_ad_type[res_index] == dynamic_enum )
             {  tmp_addr = rec.put_dyn_par(
                   nan, local::sub_dyn, fun_arg[0], fun_arg[1]
                );
@@ -400,7 +400,7 @@ void ADFun<Base, RecBase>::val2fun(
          );
          // ------------------------------------------------------------------
          // dis_op
-         // rec, val_ad_type, val2fun_index
+         // rec, fun_ad_type, val2fun_index
          case local::val_graph::dis_op_enum:
          fun_arg.resize(1);
          CPPAD_ASSERT_UNKNOWN( n_arg = 2 );
@@ -416,17 +416,17 @@ void ADFun<Base, RecBase>::val2fun(
                rec.PutArg( dynamic_index );
                rec.PutArg( fun_arg[0] );
             }
-            val_ad_type[res_index]   = max_ad_type;
+            fun_ad_type[res_index]   = max_ad_type;
             val2fun_index[res_index] = tmp_addr;
          }
          break;
          // ------------------------------------------------------------------
          // con_op
-         // rec, val_ad_type, val2fun_index
+         // rec, fun_ad_type, val2fun_index
          case local::val_graph::con_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
          {  par_addr                 = rec_con_index[ val_arg_vec[arg_index] ];
-            val_ad_type[res_index]   = constant_enum;
+            fun_ad_type[res_index]   = constant_enum;
             val2fun_index[res_index] = par_addr;
 # ifndef NDEBUG
             const Base& constant = val_con_vec[ val_arg_vec[arg_index] ];
@@ -449,9 +449,9 @@ void ADFun<Base, RecBase>::val2fun(
             // is_var
             // base 2 representaiton of [ is_var(flag), is_var(value) ]
             addr_t is_var = 0;
-            if( val_ad_type[flag] == variable_enum )
+            if( fun_ad_type[flag] == variable_enum )
                is_var += 1;
-            if( val_ad_type[value] == variable_enum )
+            if( fun_ad_type[value] == variable_enum )
                is_var += 2;
             //
             // rec
@@ -496,7 +496,7 @@ void ADFun<Base, RecBase>::val2fun(
                );
                tmp_addr = rec.PutOp(local::CExpOp);
             }
-            val_ad_type[res_index]   = max_ad_type;
+            fun_ad_type[res_index]   = max_ad_type;
             val2fun_index[res_index] = tmp_addr;
          }
          break;
@@ -571,7 +571,7 @@ void ADFun<Base, RecBase>::val2fun(
          break;
          // -------------------------------------------------------------------
          // csum_op
-         // rec, val_ad_type, val2fun_index
+         // rec, fun_ad_type, val2fun_index
          case local::val_graph::csum_op_enum:
          if( dynamic_enum <= max_ad_type )
          {  //
@@ -657,13 +657,13 @@ void ADFun<Base, RecBase>::val2fun(
                   rec.PutArg( csum_arg[i] );
                CPPAD_ASSERT_UNKNOWN( local::NumRes(local::CSumOp) == 1 );
             }
-            val_ad_type[res_index]   = max_ad_type;
+            fun_ad_type[res_index]   = max_ad_type;
             val2fun_index[res_index] = tmp_addr;
          }
          break;
          // -------------------------------------------------------------------
          // call_op
-         // rec, val_ad_type, val2fun_index
+         // rec, fun_ad_type, val2fun_index
          case local::val_graph::call_op_enum:
          {  //
             // atomic_index, call_id
@@ -713,10 +713,10 @@ void ADFun<Base, RecBase>::val2fun(
                tape_id, atomic_index, call_id, ad_type_x, ad_type_y, ax, ay
             );
             //
-            // val2fun_index, val_ad_type
+            // val2fun_index, fun_ad_type
             for(addr_t i = 0; i < n_res; ++i)
             {  val2fun_index[res_index + i] = ay[i].taddr_;
-               val_ad_type[res_index + i]   = ad_type_y[i];
+               fun_ad_type[res_index + i]   = ad_type_y[i];
             }
          }
          break;
@@ -728,7 +728,7 @@ void ADFun<Base, RecBase>::val2fun(
    dep_parameter_.resize( val_dep_vec.size() );
    for(size_t i = 0; i < val_dep_vec.size(); ++i)
    {  addr_t val_index     = val_dep_vec[i];
-      ad_type_enum ad_type = val_ad_type[val_index];
+      ad_type_enum ad_type = fun_ad_type[val_index];
       addr_t fun_index     = val2fun_index[val_index];
       dep_parameter_[i]    = ad_type < variable_enum;
       if( dep_parameter_[i] )
