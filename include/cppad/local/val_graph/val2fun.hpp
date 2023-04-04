@@ -289,9 +289,10 @@ void ADFun<Base, RecBase>::val2fun(
       );
       //
       // rec, fun_ad_type, val2fun_index
-      if( is_unary || is_binary )
+      if( is_unary )
       {  //
          fun_ad_type[res_index] = max_ad_type;
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
          //
          // rec, val2fun_index
          switch( op_enum )
@@ -303,90 +304,137 @@ void ADFun<Base, RecBase>::val2fun(
             );
             tmp_addr = 0; // to avoid compiler warning
             break;
-            // ----------------------------------------------------------------
-            // add_op_enum
-            case local::val_graph::add_op_enum:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            if( fun_ad_type[res_index] == dynamic_enum )
-            {  tmp_addr = rec.put_dyn_par(
+         }
+      }
+      else if( is_binary )
+      {  //
+         fun_ad_type[res_index] = max_ad_type;
+         CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+         //
+         if( max_ad_type == dynamic_enum )
+         {  switch(op_enum)
+            {  default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               break;
+               //
+               // add
+               case local::val_graph::add_op_enum:
+               tmp_addr = rec.put_dyn_par(
                   nan, local::add_dyn, fun_arg[0], fun_arg[1]
                );
-               CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
-            }
-            else
-            {  if( ad_type_x[0] < variable_enum )
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
-                  tmp_addr = rec.PutOp(local::AddpvOp);
-               }
-               else if( ad_type_x[1] < variable_enum )
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
-                  tmp_addr = rec.PutOp(local::AddpvOp);
-                  std::swap(fun_arg[0], fun_arg[1]);
-               }
-               else
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
-                  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
-                  tmp_addr = rec.PutOp(local::AddvvOp);
-               }
-               rec.PutArg(fun_arg[0], fun_arg[1]);
-            }
-            break;
-            // ----------------------------------------------------------------
-            // mul_op_enum
-            case local::val_graph::mul_op_enum:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            if( fun_ad_type[res_index] == dynamic_enum )
-            {  tmp_addr = rec.put_dyn_par(
-                  nan, local::mul_dyn, fun_arg[0], fun_arg[1]
-               );
-               CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
-            }
-            else
-            {  if( ad_type_x[0] < variable_enum )
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
-                  tmp_addr = rec.PutOp(local::MulpvOp);
-               }
-               else if( ad_type_x[1] < variable_enum )
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
-                  tmp_addr = rec.PutOp(local::MulpvOp);
-                  std::swap(fun_arg[0], fun_arg[1]);
-               }
-               else
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
-                  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
-                  tmp_addr = rec.PutOp(local::MulvvOp);
-               }
-               rec.PutArg(fun_arg[0], fun_arg[1]);
-            }
-            break;
-            // ----------------------------------------------------------------
-            // sub_op_enum
-            case local::val_graph::sub_op_enum:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            if( fun_ad_type[res_index] == dynamic_enum )
-            {  tmp_addr = rec.put_dyn_par(
+               break;
+               //
+               // sub
+               case local::val_graph::sub_op_enum:
+               tmp_addr = rec.put_dyn_par(
                   nan, local::sub_dyn, fun_arg[0], fun_arg[1]
                );
-               CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
+               break;
+               //
+               // mul
+               case local::val_graph::mul_op_enum:
+               tmp_addr = rec.put_dyn_par(
+                  nan, local::mul_dyn, fun_arg[0], fun_arg[1]
+               );
+               break;
+               //
+               // div
+               case local::val_graph::div_op_enum:
+               tmp_addr = rec.put_dyn_par(
+                  nan, local::div_dyn, fun_arg[0], fun_arg[1]
+               );
+               break;
             }
-            else
-            {  if( ad_type_x[0] < variable_enum )
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
-                  tmp_addr = rec.PutOp(local::SubpvOp);
-               }
-               else if( ad_type_x[1] < variable_enum )
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
-                  tmp_addr = rec.PutOp(local::SubvpOp);
-               }
-               else
-               {  CPPAD_ASSERT_UNKNOWN( ad_type_x[1] == variable_enum );
-                  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
-                  tmp_addr = rec.PutOp(local::SubvvOp);
-               }
-               rec.PutArg(fun_arg[0], fun_arg[1]);
+            CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
+         }
+         else if(
+            ad_type_x[0] == variable_enum &&
+            ad_type_x[1] == variable_enum )
+         {  switch(op_enum)
+            {  default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               break;
+               //
+               // add
+               case local::val_graph::add_op_enum:
+               tmp_addr = rec.PutOp(local::AddvvOp);
+               break;
+               //
+               // sub
+               case local::val_graph::sub_op_enum:
+               tmp_addr = rec.PutOp(local::SubvvOp);
+               break;
+               //
+               // mul
+               case local::val_graph::mul_op_enum:
+               tmp_addr = rec.PutOp(local::MulvvOp);
+               break;
+               //
+               // div
+               case local::val_graph::div_op_enum:
+               tmp_addr = rec.PutOp(local::DivvvOp);
+               break;
             }
-            break;
-            // ----------------------------------------------------------------
+            rec.PutArg(fun_arg[0], fun_arg[1]);
+         }
+         else if( ad_type_x[1] == variable_enum )
+         {  switch(op_enum)
+            {  default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               break;
+               //
+               // add
+               case local::val_graph::add_op_enum:
+               tmp_addr = rec.PutOp(local::AddpvOp);
+               break;
+               //
+               // sub
+               case local::val_graph::sub_op_enum:
+               tmp_addr = rec.PutOp(local::SubpvOp);
+               break;
+               //
+               // mul
+               case local::val_graph::mul_op_enum:
+               tmp_addr = rec.PutOp(local::MulpvOp);
+               break;
+               //
+               // div
+               case local::val_graph::div_op_enum:
+               tmp_addr = rec.PutOp(local::DivvvOp);
+               break;
+            }
+            rec.PutArg(fun_arg[0], fun_arg[1]);
+         }
+         else
+         {  CPPAD_ASSERT_UNKNOWN( ad_type_x[0] == variable_enum );
+            switch(op_enum)
+            {  default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               break;
+               //
+               // add
+               case local::val_graph::add_op_enum:
+               tmp_addr = rec.PutOp(local::AddpvOp);
+               std::swap(fun_arg[0], fun_arg[1]);
+               break;
+               //
+               // sub
+               case local::val_graph::sub_op_enum:
+               tmp_addr = rec.PutOp(local::SubvpOp);
+               break;
+               //
+               // mul
+               case local::val_graph::mul_op_enum:
+               tmp_addr = rec.PutOp(local::MulpvOp);
+               std::swap(fun_arg[0], fun_arg[1]);
+               break;
+               //
+               // div
+               case local::val_graph::div_op_enum:
+               tmp_addr = rec.PutOp(local::DivvpOp);
+               break;
+            }
+            rec.PutArg(fun_arg[0], fun_arg[1]);
          }
          val2fun_index[res_index] = tmp_addr;
       }
