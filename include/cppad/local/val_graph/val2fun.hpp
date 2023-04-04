@@ -97,10 +97,11 @@ void ADFun<Base, RecBase>::val2fun(
    using local::val_graph::op_enum_t;
    using local::val_graph::compare_enum_t;
    //
-   // val_arg_vec, val_con_vec, val_dep_vec
-   const vector<addr_t>&    val_arg_vec = val_tape.arg_vec();
-   const vector<Base>&      val_con_vec = val_tape.con_vec();
-   const vector<addr_t>&    val_dep_vec = val_tape.dep_vec();
+   // val_arg_vec, val_con_vec, val_str_vec, val_dep_vec
+   const vector<addr_t>&      val_arg_vec = val_tape.arg_vec();
+   const vector<Base>&        val_con_vec = val_tape.con_vec();
+   const vector<std::string>& val_str_vec = val_tape.str_vec();
+   const vector<addr_t>&      val_dep_vec = val_tape.dep_vec();
    //
    // nan
    Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
@@ -191,8 +192,7 @@ void ADFun<Base, RecBase>::val2fun(
    rec.PutArg(0); // parameter argumnet is the nan above
    //
    // rec, val_ad_type, val2fun_index
-   // put the independent value vector in the function recording
-
+   // put the independent dynamic paraeters in the function recording
    for(size_t i = 0; i < dyn_n_ind; ++i)
    {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= dyn_ind[i]"
@@ -205,7 +205,7 @@ void ADFun<Base, RecBase>::val2fun(
       val2fun_index[ dyn_ind[i] ] = par_addr;
       CPPAD_ASSERT_UNKNOWN( isnan( parameter[par_addr] ) );
    }
-
+   // put the independent variables in the function recording
    for(size_t i = 0; i < var_n_ind; ++i)
    {  CPPAD_ASSERT_KNOWN( var_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= var_ind[i]"
@@ -224,6 +224,18 @@ void ADFun<Base, RecBase>::val2fun(
    ind_taddr_.resize(var_n_ind);
    for(size_t i = 0; i < var_n_ind; ++i)
       ind_taddr_[i] = i + 1;
+   //
+   // rec_con_index
+   vector<addr_t> rec_con_index( val_con_vec.size() );
+   for(size_t i = 0; i < val_con_vec.size(); ++i)
+      rec_con_index[i] = rec.put_con_par( val_con_vec[i] );
+   //
+   // rec_str_index
+   vector<addr_t> rec_str_index( val_str_vec.size() );
+   for(size_t i = 0; i < val_str_vec.size(); ++i)
+   {  const std::string& str = val_str_vec[i];
+      rec_str_index[i]       = rec.PutTxt( str.c_str() );
+   }
    //
    // ad_type_x, ad_type_y, fun_arg, csum_arg, select_y
    vector<ad_type_enum> ad_type_x, ad_type_y;
@@ -413,14 +425,38 @@ void ADFun<Base, RecBase>::val2fun(
          // rec, val_ad_type, val2fun_index
          case local::val_graph::con_op_enum:
          CPPAD_ASSERT_UNKNOWN( n_arg = 1 );
-         {  const Base& constant = val_con_vec[ val_arg_vec[arg_index] ];
-            par_addr = rec.put_con_par(constant);
+         {  par_addr                 = rec_con_index[ val_arg_vec[arg_index] ];
+            val_ad_type[res_index]   = constant_enum;
+            val2fun_index[res_index] = par_addr;
+# ifndef NDEBUG
+            const Base& constant = val_con_vec[ val_arg_vec[arg_index] ];
             CPPAD_ASSERT_UNKNOWN(
                CppAD::isnan(constant) || parameter[par_addr] == constant
             );
+# endif
+         }
+         break;
+         // -------------------------------------------------------------------
+         // pri_op: rec
+         case local::val_graph::pri_op_enum:
+         {  //
+            // before, after, flag, value
+            addr_t before = rec_str_index[ val_arg_vec[arg_index + 0] ];
+            addr_t after  = rec_str_index[ val_arg_vec[arg_index + 1] ];
+            addr_t flag   = fun_arg[0];
+            addr_t value  = fun_arg[1];
             //
-            val_ad_type[res_index]   = constant_enum;
-            val2fun_index[res_index] = par_addr;
+            // is_var
+            // base 2 representaiton of [ is_var(flag), is_var(value) ]
+            addr_t is_var = 0;
+            if( val_ad_type[flag] == variable_enum )
+               is_var += 1;
+            if( val_ad_type[value] == variable_enum )
+               is_var += 2;
+            //
+            // rec
+            rec.PutOp(local::PriOp);
+            rec.PutArg(is_var, flag, before, value, after);
          }
          break;
          // -------------------------------------------------------------------
