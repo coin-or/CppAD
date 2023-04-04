@@ -298,7 +298,7 @@ void ADFun<Base, RecBase>::val2fun(
          {  //
             // default
             default:
-            CPPAD_ASSERT_KNOWN( op_enum > local::val_graph::number_op_enum,
+            CPPAD_ASSERT_KNOWN(false,
                "val_graph::val2fun: op_enum is not yet implemented"
             );
             tmp_addr = 0; // to avoid compiler warning

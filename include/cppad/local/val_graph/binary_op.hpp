@@ -225,6 +225,7 @@ is an example and test that uses a binary operator.
 CPPAD_VAL_GRAPH_BINARY(add, +);
 CPPAD_VAL_GRAPH_BINARY(sub, -);
 CPPAD_VAL_GRAPH_BINARY(mul, *);
+CPPAD_VAL_GRAPH_BINARY(div, /);
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 

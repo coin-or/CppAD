@@ -59,9 +59,11 @@ enum op_enum_t {
    con_op_enum,      // constants
    csum_op_enum,     // cumulative summation
    dis_op_enum,      // discrete functions
+   div_op_enum,      // division
    mul_op_enum,      // multiplication
    neg_op_enum,      // negative
    pri_op_enum,      // print
+   sin_op_enum,      // sine function
    sub_op_enum,      // subtraction
    number_op_enum
 };

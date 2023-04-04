@@ -575,10 +575,7 @@ namespace {
       ok  &= f.number_skip() == 0;
 
       // now optimize the operation sequence
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      optimize_with_options(f);
 
       // optimized zero order forward when condition is false
       x[0] = 4.;
@@ -641,10 +638,7 @@ namespace {
 
       // now optimize the operation sequence
       g_check.option( atomic_sparsity_option_ );
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      optimize_with_options(f);
 
       // number of variables after optimization
       // (does not include ay[0] and ay[1])
@@ -693,10 +687,7 @@ namespace {
 
       // now optimize f so that the calculation of au[1] is removed
       g_check.option( atomic_sparsity_option_ );
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      optimize_with_options(f);
 
       // number of variables after optimization
       size_t n_after = f.size_var();
@@ -813,10 +804,7 @@ namespace {
       ok &= F.size_var() == original;
 
       // Optimize the operation sequence
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      optimize_with_options(F);
 
       // Check size after optimization
       ok &= F.size_var() == opt;
@@ -2467,7 +2455,9 @@ bool optimize(void)
    ok     &= optimize_ode();
    ok     &= nested_cond_exp();
    ok     &= atomic_cond_exp_sparsity();
-   // ok     &= atomic_cond_exp(); This case not working
+   ok     &= atomic_no_used();
+   ok     &= atomic_arguments();
+   // ok     &= depend_one();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_

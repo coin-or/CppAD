@@ -115,20 +115,27 @@ void ADFun<Base, RecBase>::fun2val(
       var_op2val_op[i] = number_op_enum; // invalid
    //
    // unary operators
-   var_op2val_op[local::NegOp]   = local::val_graph::neg_op_enum;
    var_op2val_op[local::AbsOp]   = local::val_graph::abs_op_enum;
+   var_op2val_op[local::NegOp]   = local::val_graph::neg_op_enum;
+   var_op2val_op[local::SinOp]   = local::val_graph::sin_op_enum;
    //
    // add
    var_op2val_op[local::AddpvOp] = local::val_graph::add_op_enum;
    var_op2val_op[local::AddvvOp] = local::val_graph::add_op_enum;
    //
-   // mul
-   var_op2val_op[local::MulpvOp] = local::val_graph::mul_op_enum;
-   var_op2val_op[local::MulvvOp] = local::val_graph::mul_op_enum;
    // sub
    var_op2val_op[local::SubpvOp] = local::val_graph::sub_op_enum;
    var_op2val_op[local::SubvpOp] = local::val_graph::sub_op_enum;
    var_op2val_op[local::SubvvOp] = local::val_graph::sub_op_enum;
+   //
+   // mul
+   var_op2val_op[local::MulpvOp] = local::val_graph::mul_op_enum;
+   var_op2val_op[local::MulvvOp] = local::val_graph::mul_op_enum;
+   //
+   // div
+   var_op2val_op[local::DivpvOp] = local::val_graph::div_op_enum;
+   var_op2val_op[local::DivvpOp] = local::val_graph::div_op_enum;
+   var_op2val_op[local::DivvvOp] = local::val_graph::div_op_enum;
    // ------------------------------------------------------------------------
    //
    // dyn_par_op
@@ -408,12 +415,14 @@ void ADFun<Base, RecBase>::fun2val(
             case local::AddpvOp:
             case local::SubpvOp:
             case local::MulpvOp:
+            case local::DivpvOp:
             is_var[0]   = false;
             is_var[1]   = true;
             break;
 
             // first argument a variable, second argument a parameter
             case local::SubvpOp:
+            case local::DivvpOp:
             is_var[0]   = true;
             is_var[1]   = false;
             break;
@@ -422,6 +431,7 @@ void ADFun<Base, RecBase>::fun2val(
             case local::AddvvOp:
             case local::SubvvOp:
             case local::MulvvOp:
+            case local::DivvvOp:
             is_var[0]   = true;
             is_var[1]   = true;
             break;

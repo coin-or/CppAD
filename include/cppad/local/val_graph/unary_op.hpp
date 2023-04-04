@@ -218,6 +218,7 @@ is an example and test that uses a unary operator.
 // BEGIN_SORT_THIS_LINE_PLUS_1
 CPPAD_VAL_GRAPH_UNARY(abs, fabs);
 CPPAD_VAL_GRAPH_UNARY(neg, -);
+CPPAD_VAL_GRAPH_UNARY(sin, sin);
 // END_SORT_THIS_LINE_MINUS_1
 
 // ---------------------------------------------------------------------------

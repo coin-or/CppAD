@@ -86,6 +86,10 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
       op_ptr = dis_op_t<Value>::get_instance();
       break;
 
+      case div_op_enum:
+      op_ptr = div_op_t<Value>::get_instance();
+      break;
+
       case mul_op_enum:
       op_ptr = mul_op_t<Value>::get_instance();
       break;
@@ -96,6 +100,10 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 
       case pri_op_enum:
       op_ptr = pri_op_t<Value>::get_instance();
+      break;
+
+      case sin_op_enum:
+      op_ptr = sin_op_t<Value>::get_instance();
       break;
 
       case sub_op_enum:
