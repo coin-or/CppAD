@@ -42,6 +42,12 @@ to a pointer to an operator base class object :ref:`val_base_op-name` .
 */
 // ----------------------------------------------------------------------------
 // BEGIN_OP_ENUM2CLASS
+
+# define CPPAD_VAL_GRAPH_INSTANCE(name) \
+   case name##_op_enum: \
+   op_ptr = name##_op_t<Value>::get_instance(); \
+   break;
+
 template <class Value>
 base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 // END_OP_ENUM2CLASS
@@ -54,64 +60,28 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
       op_ptr = nullptr; // set in this case to avoid compiler warning
       break;
 
-      case abs_op_enum:
-      op_ptr = abs_op_t<Value>::get_instance();
-      break;
-
-      case add_op_enum:
-      op_ptr = add_op_t<Value>::get_instance();
-      break;
-
-      case call_op_enum:
-      op_ptr = call_op_t<Value>::get_instance();
-      break;
-
-      case comp_op_enum:
-      op_ptr = comp_op_t<Value>::get_instance();
-      break;
-
-      case cexp_op_enum:
-      op_ptr = cexp_op_t<Value>::get_instance();
-      break;
-
-      case con_op_enum:
-      op_ptr = con_op_t<Value>::get_instance();
-      break;
-
-      case csum_op_enum:
-      op_ptr = csum_op_t<Value>::get_instance();
-      break;
-
-      case dis_op_enum:
-      op_ptr = dis_op_t<Value>::get_instance();
-      break;
-
-      case div_op_enum:
-      op_ptr = div_op_t<Value>::get_instance();
-      break;
-
-      case mul_op_enum:
-      op_ptr = mul_op_t<Value>::get_instance();
-      break;
-
-      case neg_op_enum:
-      op_ptr = neg_op_t<Value>::get_instance();
-      break;
-
-      case pri_op_enum:
-      op_ptr = pri_op_t<Value>::get_instance();
-      break;
-
-      case sin_op_enum:
-      op_ptr = sin_op_t<Value>::get_instance();
-      break;
-
-      case sub_op_enum:
-      op_ptr = sub_op_t<Value>::get_instance();
-      break;
+      // BEGIN_SORT_THIS_LINE_PLUS_1
+      CPPAD_VAL_GRAPH_INSTANCE(abs)
+      CPPAD_VAL_GRAPH_INSTANCE(add)
+      CPPAD_VAL_GRAPH_INSTANCE(call)
+      CPPAD_VAL_GRAPH_INSTANCE(cexp)
+      CPPAD_VAL_GRAPH_INSTANCE(comp)
+      CPPAD_VAL_GRAPH_INSTANCE(con)
+      CPPAD_VAL_GRAPH_INSTANCE(csum)
+      CPPAD_VAL_GRAPH_INSTANCE(dis)
+      CPPAD_VAL_GRAPH_INSTANCE(div)
+      CPPAD_VAL_GRAPH_INSTANCE(mul)
+      CPPAD_VAL_GRAPH_INSTANCE(neg)
+      CPPAD_VAL_GRAPH_INSTANCE(pow)
+      CPPAD_VAL_GRAPH_INSTANCE(pri)
+      CPPAD_VAL_GRAPH_INSTANCE(sin)
+      CPPAD_VAL_GRAPH_INSTANCE(sub)
+      // END_SORT_THIS_LINE_MINUS_1
    }
    return op_ptr;
 }
+
+# undef CPPAD_VAL_GRAPH_INSTANCE
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 

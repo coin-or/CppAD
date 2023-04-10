@@ -62,6 +62,7 @@ enum op_enum_t {
    div_op_enum,      // division
    mul_op_enum,      // multiplication
    neg_op_enum,      // negative
+   pow_op_enum,      // print
    pri_op_enum,      // print
    sin_op_enum,      // sine function
    sub_op_enum,      // subtraction

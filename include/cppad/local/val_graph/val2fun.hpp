@@ -355,6 +355,13 @@ void ADFun<Base, RecBase>::val2fun(
                   nan, local::div_dyn, fun_arg[0], fun_arg[1]
                );
                break;
+               //
+               // pow
+               case local::val_graph::pow_op_enum:
+               tmp_addr = rec.put_dyn_par(
+                  nan, local::pow_dyn, fun_arg[0], fun_arg[1]
+               );
+               break;
             }
             CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
          }
@@ -385,6 +392,11 @@ void ADFun<Base, RecBase>::val2fun(
                case local::val_graph::div_op_enum:
                tmp_addr = rec.PutOp(local::DivvvOp);
                break;
+               //
+               // pow
+               case local::val_graph::pow_op_enum:
+               tmp_addr = rec.PutOp(local::PowvvOp);
+               break;
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
          }
@@ -412,6 +424,11 @@ void ADFun<Base, RecBase>::val2fun(
                // div
                case local::val_graph::div_op_enum:
                tmp_addr = rec.PutOp(local::DivpvOp);
+               break;
+               //
+               // pow
+               case local::val_graph::pow_op_enum:
+               tmp_addr = rec.PutOp(local::PowpvOp);
                break;
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
@@ -443,6 +460,11 @@ void ADFun<Base, RecBase>::val2fun(
                // div
                case local::val_graph::div_op_enum:
                tmp_addr = rec.PutOp(local::DivvpOp);
+               break;
+               //
+               // pow
+               case local::val_graph::pow_op_enum:
+               tmp_addr = rec.PutOp(local::PowvpOp);
                break;
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);

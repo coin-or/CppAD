@@ -9,7 +9,7 @@
 
 namespace CppAD { namespace local { namespace val_graph {
 
-# define CPPAD_VAL_GRAPH_BINARY(Name, Op) \
+# define CPPAD_VAL_GRAPH_BINARY(Name, left_right_expression) \
    template <class Value> \
    class Name##_op_t : public binary_op_t<Value> { \
    public: \
@@ -34,7 +34,7 @@ namespace CppAD { namespace local { namespace val_graph {
       {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
          const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
          const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
-         val_vec[res_index]  = left Op right; \
+         val_vec[res_index]  = left_right_expression; \
          if( trace ) this->print_op( \
             #Name , arg_index, tape->arg_vec(), res_index, val_vec \
          ); \
@@ -222,10 +222,11 @@ is an example and test that uses a binary operator.
 
 {xrst_end val_binary_op_derived}
 */
-CPPAD_VAL_GRAPH_BINARY(add, +);
-CPPAD_VAL_GRAPH_BINARY(sub, -);
-CPPAD_VAL_GRAPH_BINARY(mul, *);
-CPPAD_VAL_GRAPH_BINARY(div, /);
+CPPAD_VAL_GRAPH_BINARY(add, left + right);
+CPPAD_VAL_GRAPH_BINARY(sub, left - right);
+CPPAD_VAL_GRAPH_BINARY(mul, left * right);
+CPPAD_VAL_GRAPH_BINARY(div, left / right);
+CPPAD_VAL_GRAPH_BINARY(pow, pow(left, right) );
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 

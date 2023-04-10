@@ -58,12 +58,30 @@ inline void type_var_op(
    switch(var_op)
    {  //
       default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+      // BEGIN_SORT_THIS_LINE_PLUS_1
+      case AFunOp:
+      case BeginOp:
+      case CExpOp:
+      case CSumOp:
+      case DisOp:
+      case EndOp:
+      case FunapOp:
+      case FunavOp:
+      case FunrpOp:
+      case FunrvOp:
+      case InvOp:
+      case ParOp:
+      case PriOp:
+      // END_SORT_THIS_LINE_MINUS_1
       is_unary   = false;
       is_binary  = false;
       is_compare = false;
       break;
       //
       // unary operators
+      // BEGIN_SORT_THIS_LINE_PLUS_1
       case AbsOp:
       case AcosOp:
       case AcoshOp:
@@ -86,12 +104,14 @@ inline void type_var_op(
       case SqrtOp:
       case TanOp:
       case TanhOp:
+      // END_SORT_THIS_LINE_MINUS_1
       is_unary   = true;
       is_binary  = false;
       is_compare = false;
       break;
       //
       // binary operators
+      // BEGIN_SORT_THIS_LINE_PLUS_1
       case AddpvOp:
       case AddvvOp:
       case DivpvOp:
@@ -99,6 +119,7 @@ inline void type_var_op(
       case DivvvOp:
       case MulpvOp:
       case MulvvOp:
+      case PowpvOp:
       case PowvpOp:
       case PowvvOp:
       case SubpvOp:
@@ -107,26 +128,29 @@ inline void type_var_op(
       case ZmulpvOp:
       case ZmulvpOp:
       case ZmulvvOp:
+      // END_SORT_THIS_LINE_MINUS_1
       is_unary   = false;
       is_binary  = true;
       is_compare = false;
       break;
       //
       // compare operators
+      // BEGIN_SORT_THIS_LINE_PLUS_1
       case local::EqppOp:
       case local::EqpvOp:
       case local::EqvvOp:
-      case local::NeppOp:
-      case local::NepvOp:
-      case local::NevvOp:
-      case local::LtppOp:
-      case local::LtpvOp:
-      case local::LtvpOp:
-      case local::LtvvOp:
       case local::LeppOp:
       case local::LepvOp:
       case local::LevpOp:
       case local::LevvOp:
+      case local::LtppOp:
+      case local::LtpvOp:
+      case local::LtvpOp:
+      case local::LtvvOp:
+      case local::NeppOp:
+      case local::NepvOp:
+      case local::NevvOp:
+      // END_SORT_THIS_LINE_MINUS_1
       is_unary   = false;
       is_binary  = false;
       is_compare = true;

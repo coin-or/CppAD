@@ -136,6 +136,11 @@ void ADFun<Base, RecBase>::fun2val(
    var_op2val_op[local::DivpvOp] = local::val_graph::div_op_enum;
    var_op2val_op[local::DivvpOp] = local::val_graph::div_op_enum;
    var_op2val_op[local::DivvvOp] = local::val_graph::div_op_enum;
+   //
+   // pow
+   var_op2val_op[local::PowpvOp] = local::val_graph::pow_op_enum;
+   var_op2val_op[local::PowvpOp] = local::val_graph::pow_op_enum;
+   var_op2val_op[local::PowvvOp] = local::val_graph::pow_op_enum;
    // ------------------------------------------------------------------------
    //
    // dyn_par_op
@@ -416,6 +421,7 @@ void ADFun<Base, RecBase>::fun2val(
             case local::SubpvOp:
             case local::MulpvOp:
             case local::DivpvOp:
+            case local::PowpvOp:
             is_var[0]   = false;
             is_var[1]   = true;
             break;
@@ -423,6 +429,7 @@ void ADFun<Base, RecBase>::fun2val(
             // first argument a variable, second argument a parameter
             case local::SubvpOp:
             case local::DivvpOp:
+            case local::PowvpOp:
             is_var[0]   = true;
             is_var[1]   = false;
             break;
@@ -432,6 +439,7 @@ void ADFun<Base, RecBase>::fun2val(
             case local::SubvvOp:
             case local::MulvvOp:
             case local::DivvvOp:
+            case local::PowvvOp:
             is_var[0]   = true;
             is_var[1]   = true;
             break;

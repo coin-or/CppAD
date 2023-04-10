@@ -923,10 +923,7 @@ namespace {
       Y[2] = pow(X[0], X[1]);
 
       CppAD::ADFun<double> F(X, Y);
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      optimize_with_options(F);
       y = F.Forward(0, x);
 
       // Use identically equal because the result of the operations
@@ -2458,6 +2455,7 @@ bool optimize(void)
    ok     &= atomic_no_used();
    ok     &= atomic_arguments();
    ok     &= depend_one();
+   ok     &= depend_three();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
