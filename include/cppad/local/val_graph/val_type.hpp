@@ -60,9 +60,11 @@ enum op_enum_t {
    csum_op_enum,     // cumulative summation
    dis_op_enum,      // discrete functions
    div_op_enum,      // division
+   erf_op_enum,      // error function
+   erfc_op_enum,     // complementary error function
    mul_op_enum,      // multiplication
    neg_op_enum,      // negative
-   pow_op_enum,      // print
+   pow_op_enum,      // power function
    pri_op_enum,      // print
    sin_op_enum,      // sine function
    sub_op_enum,      // subtraction

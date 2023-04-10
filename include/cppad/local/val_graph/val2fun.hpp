@@ -230,6 +230,14 @@ void ADFun<Base, RecBase>::val2fun(
    for(size_t i = 0; i < val_con_vec.size(); ++i)
       rec_con_index[i] = rec.put_con_par( val_con_vec[i] );
    //
+   // zero_index
+   addr_t zero_index = rec.put_con_par( Base(0.0) );
+   //
+   // two_sqrt_pi_index: 2 / sqrt(pi)
+   addr_t two_sqrt_pi_index = rec.put_con_par(
+      Base(1.0) / sqrt( atan( Base(1.0) ) )
+   );
+   //
    // rec_str_index
    vector<addr_t> rec_str_index( val_str_vec.size() );
    for(size_t i = 0; i < val_str_vec.size(); ++i)
@@ -312,6 +320,32 @@ void ADFun<Base, RecBase>::val2fun(
             else
             {  tmp_addr = rec.PutOp(local::SinOp);
                rec.PutArg( fun_arg[0] );
+            }
+            break;
+            //
+            // erf
+            case local::val_graph::erf_op_enum:
+            if( max_ad_type == dynamic_enum )
+               tmp_addr = rec.put_dyn_par( nan, local::erf_dyn, fun_arg[0] );
+            else
+            {  tmp_addr = rec.PutOp(local::ErfOp);
+               CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
+               rec.PutArg( fun_arg[0] );
+               rec.PutArg( zero_index );
+               rec.PutArg( two_sqrt_pi_index );
+            }
+            break;
+            //
+            // erfc
+            case local::val_graph::erfc_op_enum:
+            if( max_ad_type == dynamic_enum )
+               tmp_addr = rec.put_dyn_par( nan, local::erfc_dyn, fun_arg[0] );
+            else
+            {  tmp_addr = rec.PutOp(local::ErfcOp);
+               CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
+               rec.PutArg( fun_arg[0] );
+               rec.PutArg( zero_index );
+               rec.PutArg( two_sqrt_pi_index );
             }
             break;
          }

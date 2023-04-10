@@ -116,6 +116,8 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // unary operators
    var_op2val_op[local::AbsOp]   = local::val_graph::abs_op_enum;
+   var_op2val_op[local::ErfOp]   = local::val_graph::erf_op_enum;
+   var_op2val_op[local::ErfcOp]  = local::val_graph::erfc_op_enum;
    var_op2val_op[local::NegOp]   = local::val_graph::neg_op_enum;
    var_op2val_op[local::SinOp]   = local::val_graph::sin_op_enum;
    //

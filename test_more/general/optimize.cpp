@@ -973,10 +973,7 @@ namespace {
 
       vector<double> y_original     = F.Forward(0, x);
       size_t         size_original  = F.size_var();
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      optimize_with_options(F);
       //
       // each erf (erfc) has 5 result values:
       //  x*x, -x*x, exp(-x*x), exp(-x*x)*2/sqrt(pi), erf(x)
@@ -2456,6 +2453,7 @@ bool optimize(void)
    ok     &= atomic_arguments();
    ok     &= depend_one();
    ok     &= depend_three();
+   ok     &= depend_four();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
