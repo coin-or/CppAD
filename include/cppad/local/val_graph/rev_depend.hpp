@@ -162,10 +162,11 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
          //
          // n_x
          addr_t n_x = n_arg - n_before - n_after;
+         size_t nx  = size_t(n_x);
          //
          // con_x, type_x
-         con_x.resize(n_x);
-         type_x.resize(n_x);
+         con_x.resize(nx);
+         type_x.resize(nx);
          for(addr_t i = 0; i < n_x; ++i)
          {  con_x[i] = val_index2con[ arg_vec_[arg_index + n_before + i] ];
             if( CppAD::isnan( con_x[i] ) )
@@ -181,7 +182,7 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
          //
          // depend_x
          // only constants (not dynamic parameters) are incldued in con_x
-         depend_x.resize(n_x);
+         depend_x.resize(nx);
          local::sweep::call_atomic_rev_depend<Value, Value>(
             atomic_index, call_id, con_x, type_x, depend_x, depend_y
          );

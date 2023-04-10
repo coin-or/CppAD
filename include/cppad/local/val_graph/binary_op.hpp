@@ -6,10 +6,11 @@
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/print_op.hpp>
+# include <cppad/base_require.hpp>
 
 namespace CppAD { namespace local { namespace val_graph {
 
-# define CPPAD_VAL_GRAPH_BINARY(Name, left_right_expression) \
+# define CPPAD_VAL_GRAPH_BINARY(Name, Op) \
    template <class Value> \
    class Name##_op_t : public binary_op_t<Value> { \
    public: \
@@ -34,7 +35,7 @@ namespace CppAD { namespace local { namespace val_graph {
       {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
          const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
          const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
-         val_vec[res_index]  = left_right_expression; \
+         val_vec[res_index]  = left Op right; \
          if( trace ) this->print_op( \
             #Name , arg_index, tape->arg_vec(), res_index, val_vec \
          ); \
@@ -222,11 +223,43 @@ is an example and test that uses a binary operator.
 
 {xrst_end val_binary_op_derived}
 */
-CPPAD_VAL_GRAPH_BINARY(add, left + right);
-CPPAD_VAL_GRAPH_BINARY(sub, left - right);
-CPPAD_VAL_GRAPH_BINARY(mul, left * right);
-CPPAD_VAL_GRAPH_BINARY(div, left / right);
-CPPAD_VAL_GRAPH_BINARY(pow, pow(left, right) );
+CPPAD_VAL_GRAPH_BINARY(add, +);
+CPPAD_VAL_GRAPH_BINARY(sub, -);
+CPPAD_VAL_GRAPH_BINARY(mul, *);
+CPPAD_VAL_GRAPH_BINARY(div, /);
+
+template <class Value>
+class pow_op_t : public binary_op_t<Value> {
+public:
+   /* get_instance */
+   static pow_op_t* get_instance(void)
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static pow_op_t instance;
+      return &instance;
+   }
+   /* op_enum */
+   op_enum_t op_enum(void) const override
+   {  return pow_op_enum;
+   }
+   /* eval */
+   void eval(
+      const tape_t<Value>*  tape         ,
+      bool                  trace        ,
+      addr_t                arg_index    ,
+      addr_t                res_index    ,
+      size_t&               compare_false,
+      Vector<Value>&        val_vec      ) const override
+   {  const Vector<addr_t>& arg_vec( tape->arg_vec() );
+      const Value& left   = val_vec[ arg_vec[arg_index + 0] ];
+      const Value& right  = val_vec[ arg_vec[arg_index + 1] ];
+      // Only the line directly below is different from
+      // CPPAD_VAL_GRAPH_BINARY(pow, pow)
+      val_vec[res_index]  = pow(left, right);
+      if( trace ) this->print_op(
+         "pow", arg_index, tape->arg_vec(), res_index, val_vec
+      );
+   }
+};
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 

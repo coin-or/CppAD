@@ -17,6 +17,7 @@ namespace CppAD { namespace local { namespace val_graph {
    cexp
    csum
    typedef
+   erfc
 }
 
 Value Operator Type Definitions
