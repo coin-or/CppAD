@@ -79,6 +79,19 @@ is an example an test of this conversion.
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
 
+# define CPPAD_VAL2FUN_DYN_BINARY(name)                 \
+   case local::val_graph::name##_op_enum:               \
+   tmp_addr = rec.put_dyn_par(                          \
+      nan, local::name##_dyn, fun_arg[0], fun_arg[1]    \
+   );                                                   \
+   break;
+
+# define CPPAD_VAL2FUN_VAR_BINARY(name, Op)             \
+   case local::val_graph::name##_op_enum:               \
+   tmp_addr = rec.PutOp(local::Op);                     \
+   break;
+
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_PROTOTYPE
@@ -362,40 +375,11 @@ void ADFun<Base, RecBase>::val2fun(
                CPPAD_ASSERT_UNKNOWN(false);
                break;
                //
-               // add
-               case local::val_graph::add_op_enum:
-               tmp_addr = rec.put_dyn_par(
-                  nan, local::add_dyn, fun_arg[0], fun_arg[1]
-               );
-               break;
-               //
-               // sub
-               case local::val_graph::sub_op_enum:
-               tmp_addr = rec.put_dyn_par(
-                  nan, local::sub_dyn, fun_arg[0], fun_arg[1]
-               );
-               break;
-               //
-               // mul
-               case local::val_graph::mul_op_enum:
-               tmp_addr = rec.put_dyn_par(
-                  nan, local::mul_dyn, fun_arg[0], fun_arg[1]
-               );
-               break;
-               //
-               // div
-               case local::val_graph::div_op_enum:
-               tmp_addr = rec.put_dyn_par(
-                  nan, local::div_dyn, fun_arg[0], fun_arg[1]
-               );
-               break;
-               //
-               // pow
-               case local::val_graph::pow_op_enum:
-               tmp_addr = rec.put_dyn_par(
-                  nan, local::pow_dyn, fun_arg[0], fun_arg[1]
-               );
-               break;
+               CPPAD_VAL2FUN_DYN_BINARY(add);
+               CPPAD_VAL2FUN_DYN_BINARY(sub);
+               CPPAD_VAL2FUN_DYN_BINARY(mul);
+               CPPAD_VAL2FUN_DYN_BINARY(div);
+               CPPAD_VAL2FUN_DYN_BINARY(pow);
             }
             CPPAD_ASSERT_UNKNOWN( isnan( parameter[tmp_addr] ) );
          }
@@ -407,30 +391,11 @@ void ADFun<Base, RecBase>::val2fun(
                CPPAD_ASSERT_UNKNOWN(false);
                break;
                //
-               // add
-               case local::val_graph::add_op_enum:
-               tmp_addr = rec.PutOp(local::AddvvOp);
-               break;
-               //
-               // sub
-               case local::val_graph::sub_op_enum:
-               tmp_addr = rec.PutOp(local::SubvvOp);
-               break;
-               //
-               // mul
-               case local::val_graph::mul_op_enum:
-               tmp_addr = rec.PutOp(local::MulvvOp);
-               break;
-               //
-               // div
-               case local::val_graph::div_op_enum:
-               tmp_addr = rec.PutOp(local::DivvvOp);
-               break;
-               //
-               // pow
-               case local::val_graph::pow_op_enum:
-               tmp_addr = rec.PutOp(local::PowvvOp);
-               break;
+               CPPAD_VAL2FUN_VAR_BINARY(add, AddvvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(sub, SubvvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(mul, MulvvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(div, DivvvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(pow, PowvvOp);
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
          }
@@ -440,30 +405,11 @@ void ADFun<Base, RecBase>::val2fun(
                CPPAD_ASSERT_UNKNOWN(false);
                break;
                //
-               // add
-               case local::val_graph::add_op_enum:
-               tmp_addr = rec.PutOp(local::AddpvOp);
-               break;
-               //
-               // sub
-               case local::val_graph::sub_op_enum:
-               tmp_addr = rec.PutOp(local::SubpvOp);
-               break;
-               //
-               // mul
-               case local::val_graph::mul_op_enum:
-               tmp_addr = rec.PutOp(local::MulpvOp);
-               break;
-               //
-               // div
-               case local::val_graph::div_op_enum:
-               tmp_addr = rec.PutOp(local::DivpvOp);
-               break;
-               //
-               // pow
-               case local::val_graph::pow_op_enum:
-               tmp_addr = rec.PutOp(local::PowpvOp);
-               break;
+               CPPAD_VAL2FUN_VAR_BINARY(add, AddpvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(sub, SubpvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(mul, MulpvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(div, DivpvOp);
+               CPPAD_VAL2FUN_VAR_BINARY(pow, PowpvOp);
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
          }
@@ -480,26 +426,15 @@ void ADFun<Base, RecBase>::val2fun(
                std::swap(fun_arg[0], fun_arg[1]);
                break;
                //
-               // sub
-               case local::val_graph::sub_op_enum:
-               tmp_addr = rec.PutOp(local::SubvpOp);
-               break;
-               //
                // mul
                case local::val_graph::mul_op_enum:
                tmp_addr = rec.PutOp(local::MulpvOp);
                std::swap(fun_arg[0], fun_arg[1]);
                break;
                //
-               // div
-               case local::val_graph::div_op_enum:
-               tmp_addr = rec.PutOp(local::DivvpOp);
-               break;
-               //
-               // pow
-               case local::val_graph::pow_op_enum:
-               tmp_addr = rec.PutOp(local::PowvpOp);
-               break;
+               CPPAD_VAL2FUN_VAR_BINARY(sub, SubvpOp);
+               CPPAD_VAL2FUN_VAR_BINARY(div, DivvpOp);
+               CPPAD_VAL2FUN_VAR_BINARY(pow, PowvpOp);
             }
             rec.PutArg(fun_arg[0], fun_arg[1]);
          }
@@ -914,6 +849,9 @@ void ADFun<Base, RecBase>::val2fun(
    //
    return;
 }
+
+# undef CPPAD_VAL2FUN_DYN_BINARY
+# undef CPPAD_VAL2FUN_VAR_BINARY
 
 } // END_CPPAD_NAMESPACE
 // --------------------------------------------------------------------------
