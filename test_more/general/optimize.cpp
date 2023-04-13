@@ -1387,11 +1387,8 @@ namespace {
       // create function object F : X -> Y
       ADFun<double> F(X, Y);
 
-      // now optimize the operation sequence
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(F);
 
       // use zero order to evaluate F[ (3, 4) ]
       CppAD::vector<double>  x0( F.Domain() );
@@ -1441,11 +1438,8 @@ namespace {
       // create function object F : X -> Y
       ADFun<double> F(X, Y);
 
-      // now optimize the operation sequence
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(F);
 
       // use zero order to evaluate F[ (3, 4) ]
       CppAD::vector<double>  x0( F.Domain() );
@@ -1521,10 +1515,9 @@ namespace {
 
       // create function object F : X -> Y
       ADFun<double> F(X, Y);
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(F);
 
       // ---------------------------------------------------------
       // dependency matrix for the identity function
@@ -1602,10 +1595,9 @@ namespace {
 
       // create function object F : X -> Y
       ADFun<double> F(X, Y);
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(F);
 
       // ----------------------------------------------------------
       // dependency matrix for the identity function
@@ -1662,10 +1654,9 @@ namespace {
 
       // create function object F : X -> Y
       CppAD::ADFun<double> F(X, Y);
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(F);
 
       // sparsity pattern for the identity function U(x) = x
       CppAD::vector<bool> Px(n * n);
@@ -1713,10 +1704,9 @@ namespace {
       Y[3] = CondExpLt(zero,  one,  two,  X[3] + .5);
 
       CppAD::ADFun<double> f(X, Y);
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
 
       CppAD::vector<double> x(n), y(m);
       size_t i;
@@ -1759,10 +1749,9 @@ namespace {
       Y[0] = CondExpLt(X[0],  zero,  true_case, false_case);
 
       CppAD::ADFun<double> f(X, Y);
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
 
       CppAD::vector<double> x(n), y(m), w(m), dw(n);
       x[0] = 1.0;
@@ -1892,7 +1881,10 @@ namespace {
       CppAD::ADFun<double> g(ax, ay);
       // should have 1 + n + m + m varaibles
       ok &= g.size_var() == (1 + n + m + m);
-      g.optimize();
+
+      // optimize
+      optimize_with_options(g);
+
       // should have 1 + n + m varaibles
       ok &= g.size_var() == (1 + n + m);
 
@@ -1934,10 +1926,7 @@ namespace {
 
       // Used to fail assert in optimize that forward mode results
       // are identically equal
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      optimize_with_options(f);
 
       return ok;
    }
@@ -1958,10 +1947,10 @@ namespace {
       CppAD::ADFun<double> f(ax, ay);
 
       size_t size_before = f.size_var();
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
+
       size_t size_after = f.size_var();
       ok &= size_after + 1 == size_before;
 
@@ -2014,10 +2003,10 @@ namespace {
       x[0]      = 1.0;
       x[1]      = 2.0;
       y_before  = f.Forward(0, x);
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
+
       y_after   = f.Forward(0, x);
 
       ok &= NearEqual(y_before[0], y_after[0], eps10, eps10);
@@ -2060,10 +2049,10 @@ namespace {
       dx[0]     = 2.0;
       dx[1]     = 2.0;
       dy_before = f.Forward(1, dx);
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
+
       y_after   = f.Forward(0, x);
       dy_after  = f.Forward(1, dx);
 
@@ -2096,10 +2085,9 @@ namespace {
       ay[0] = my_max(ax) + my_max(ax);
       CppAD::ADFun<double> f(ax, ay);
 
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
 
       vector<double> x(n), w(1), dx(n);
       for(size_t j = 0;j < n; j++)
@@ -2140,10 +2128,9 @@ namespace {
       // a unary expression
       ay[2]  = CppAD::CondExpGe(ax[0], three, exp(ax[0]), exp(ax[0]) );
       CppAD::ADFun<double> f(ax, ay);
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
 
       // check case where x[0] >= 3
       vector<double> x(2), y(3);
@@ -2194,10 +2181,8 @@ namespace {
       ay[1] = CppAD::CondExpGe(var_4, par_1, 8.0 * ax[0], 9.0 * ax[1]);
       CppAD::ADFun<double> f(ax, ay);
       //
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(f);
 
       // check case where x[0] = 2, x[1] = 4
       vector<double> x(2), y(2);
@@ -2234,11 +2219,9 @@ namespace {
       AD<double> cexp = CondExpLt(left, right, if_true, if_false);
       ay[0] = cexp + if_false;
       CppAD::ADFun<double> f(ax, ay);
-      //
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+
+      // optimize
+      optimize_with_options(f);
       //
       // check case where x[0] < x[1]
       vector<double> x(2), y(1);
@@ -2302,7 +2285,10 @@ namespace {
       vector<double> x(1), y_before(1), y_after(1);
       x[0]     = .1;
       y_before = f.Forward(0, x);
-      f.optimize();
+
+      // optimize
+      optimize_with_options(f);
+
       y_after  = f.Forward(0, x);
       //
       ok &= CppAD::NearEqual(y_before[0], y_after[0], eps99, eps99);
@@ -2340,7 +2326,10 @@ namespace {
       vector<double> x(1), y_before(1), y_after(1);
       x[0]     = -0.1;
       y_before = f.Forward(0, x, s);
-      f.optimize();
+
+      // optimize
+      optimize_with_options(f);
+
       y_after  = f.Forward(0, x, s);
       //
       ok &= CppAD::NearEqual(y_before[0], y_after[0], eps99, eps99);
@@ -2448,6 +2437,24 @@ bool optimize(void)
    ok     &= duplicate_three();
    ok     &= duplicate_four();
    ok     &= cumulative_sum();
+   ok     &= forward_csum();
+   ok     &= reverse_csum();
+   ok     &= forward_sparse_jacobian();
+   ok     &= reverse_sparse_jacobian();
+   ok     &= reverse_sparse_hessian();
+   ok     &= cond_exp_depend();
+   ok     &= cond_exp_removed();
+   ok     &= atomic_one_test();
+   ok     &= not_identically_equal();
+   ok     &= discrete_function();
+   ok     &= cond_exp_skip_atomic();
+   ok     &= cond_exp_atomic_dependence();
+   ok     &= cond_exp_reverse();
+   ok     &= cond_exp_both_true_and_false();
+   ok     &= cond_exp_skip_remove_var();
+   ok     &= cond_exp_if_false_used_after();
+   ok     &= only_check_variables_when_hash_codes_match();
+   // ok     &= check_print_for(); not yet working
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
