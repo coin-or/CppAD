@@ -115,11 +115,30 @@ void ADFun<Base, RecBase>::fun2val(
       var_op2val_op[i] = number_op_enum; // invalid
    //
    // unary operators
-   var_op2val_op[local::AbsOp]   = local::val_graph::abs_op_enum;
-   var_op2val_op[local::ErfOp]   = local::val_graph::erf_op_enum;
-   var_op2val_op[local::ErfcOp]  = local::val_graph::erfc_op_enum;
-   var_op2val_op[local::NegOp]   = local::val_graph::neg_op_enum;
-   var_op2val_op[local::SinOp]   = local::val_graph::sin_op_enum;
+   // BEGIN_SORT_THIS_LINE_PLUS_1
+   var_op2val_op[local::AbsOp]    = local::val_graph::abs_op_enum;
+   var_op2val_op[local::AcosOp]   = local::val_graph::acos_op_enum;
+   var_op2val_op[local::AcoshOp]  = local::val_graph::acosh_op_enum;
+   var_op2val_op[local::AsinOp]   = local::val_graph::asin_op_enum;
+   var_op2val_op[local::AsinhOp]  = local::val_graph::asinh_op_enum;
+   var_op2val_op[local::AtanOp]   = local::val_graph::atan_op_enum;
+   var_op2val_op[local::AtanhOp]  = local::val_graph::atanh_op_enum;
+   var_op2val_op[local::CosOp]    = local::val_graph::cos_op_enum;
+   var_op2val_op[local::CoshOp]   = local::val_graph::cosh_op_enum;
+   var_op2val_op[local::ErfOp]    = local::val_graph::erf_op_enum;
+   var_op2val_op[local::ErfcOp]   = local::val_graph::erfc_op_enum;
+   var_op2val_op[local::ExpOp]    = local::val_graph::exp_op_enum;
+   var_op2val_op[local::Expm1Op]  = local::val_graph::expm1_op_enum;
+   var_op2val_op[local::Log1pOp]  = local::val_graph::log1p_op_enum;
+   var_op2val_op[local::LogOp]    = local::val_graph::log_op_enum;
+   var_op2val_op[local::NegOp]    = local::val_graph::neg_op_enum;
+   var_op2val_op[local::SignOp]   = local::val_graph::sign_op_enum;
+   var_op2val_op[local::SinOp]    = local::val_graph::sin_op_enum;
+   var_op2val_op[local::SinhOp]   = local::val_graph::sinh_op_enum;
+   var_op2val_op[local::SqrtOp]   = local::val_graph::sqrt_op_enum;
+   var_op2val_op[local::TanOp]    = local::val_graph::tan_op_enum;
+   var_op2val_op[local::TanhOp]   = local::val_graph::tanh_op_enum;
+   // END_SORT_THIS_LINE_MINUS_1
    //
    // add
    var_op2val_op[local::AddpvOp] = local::val_graph::add_op_enum;

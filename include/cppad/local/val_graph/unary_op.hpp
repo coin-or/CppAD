@@ -216,11 +216,28 @@ is an example and test that uses a unary operator.
 {xrst_end val_unary_op_derived}
 */
 // BEGIN_SORT_THIS_LINE_PLUS_1
-CPPAD_VAL_GRAPH_UNARY(abs,  fabs);
-CPPAD_VAL_GRAPH_UNARY(erf,  erf);
-CPPAD_VAL_GRAPH_UNARY(erfc, erfc);
-CPPAD_VAL_GRAPH_UNARY(neg,  -);
-CPPAD_VAL_GRAPH_UNARY(sin,  sin);
+CPPAD_VAL_GRAPH_UNARY(abs,   fabs);
+CPPAD_VAL_GRAPH_UNARY(acos,  acos);
+CPPAD_VAL_GRAPH_UNARY(acosh, acosh);
+CPPAD_VAL_GRAPH_UNARY(asin,  asin);
+CPPAD_VAL_GRAPH_UNARY(asinh, asinh);
+CPPAD_VAL_GRAPH_UNARY(atan,  atan);
+CPPAD_VAL_GRAPH_UNARY(atanh, atanh);
+CPPAD_VAL_GRAPH_UNARY(cos,   cos);
+CPPAD_VAL_GRAPH_UNARY(cosh,  cosh);
+CPPAD_VAL_GRAPH_UNARY(erf,   erf);
+CPPAD_VAL_GRAPH_UNARY(erfc,  erfc);
+CPPAD_VAL_GRAPH_UNARY(exp,   exp);
+CPPAD_VAL_GRAPH_UNARY(expm1, expm1);
+CPPAD_VAL_GRAPH_UNARY(log1p, log1p);
+CPPAD_VAL_GRAPH_UNARY(log,   log);
+CPPAD_VAL_GRAPH_UNARY(neg,   -);
+CPPAD_VAL_GRAPH_UNARY(sign,  sign);
+CPPAD_VAL_GRAPH_UNARY(sin,   sin);
+CPPAD_VAL_GRAPH_UNARY(sinh,  sinh);
+CPPAD_VAL_GRAPH_UNARY(sqrt,  sqrt);
+CPPAD_VAL_GRAPH_UNARY(tan,   tan);
+CPPAD_VAL_GRAPH_UNARY(tanh,  tanh);
 // END_SORT_THIS_LINE_MINUS_1
 
 // ---------------------------------------------------------------------------

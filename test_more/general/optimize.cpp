@@ -1097,10 +1097,7 @@ namespace {
       ok &= F.size_var() == (n + 1 + original);
 
       // Optimize the operation sequence
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      optimize_with_options(F);
 
       // Check size after optimization
       ok &= F.size_var() == (n + 1 + opt);
@@ -2454,6 +2451,7 @@ bool optimize(void)
    ok     &= depend_one();
    ok     &= depend_three();
    ok     &= depend_four();
+   ok     &= duplicate_one();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_

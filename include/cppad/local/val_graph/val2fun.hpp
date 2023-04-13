@@ -79,11 +79,24 @@ is an example an test of this conversion.
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
 
+# define CPPAD_VAL2FUN_DYN_UNARY(name)                  \
+   case local::val_graph::name##_op_enum:               \
+   tmp_addr = rec.put_dyn_par(                          \
+      nan, local::name##_dyn, fun_arg[0]                \
+   );                                                   \
+   break;
+
 # define CPPAD_VAL2FUN_DYN_BINARY(name)                 \
    case local::val_graph::name##_op_enum:               \
    tmp_addr = rec.put_dyn_par(                          \
       nan, local::name##_dyn, fun_arg[0], fun_arg[1]    \
    );                                                   \
+   break;
+
+# define CPPAD_VAL2FUN_VAR_UNARY(name, Op)              \
+   case local::val_graph::name##_op_enum:               \
+   tmp_addr = rec.PutOp(local::Op);                     \
+   rec.PutArg( fun_arg[0] );                            \
    break;
 
 # define CPPAD_VAL2FUN_VAR_BINARY(name, Op)             \
@@ -316,51 +329,92 @@ void ADFun<Base, RecBase>::val2fun(
          CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
          //
          // rec, val2fun_index
-         switch( op_enum )
-         {  //
-            // default
-            default:
-            CPPAD_ASSERT_KNOWN(false,
-               "val_graph::val2fun: op_enum is not yet implemented"
-            );
-            tmp_addr = 0; // to avoid compiler warning
-            break;
-            //
-            // sin
-            case local::val_graph::sin_op_enum:
-            if( max_ad_type == dynamic_enum )
-               tmp_addr = rec.put_dyn_par( nan, local::sin_dyn, fun_arg[0] );
-            else
-            {  tmp_addr = rec.PutOp(local::SinOp);
-               rec.PutArg( fun_arg[0] );
+         if( max_ad_type == dynamic_enum )
+         {  switch( op_enum )
+            {  //
+               // default
+               default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               tmp_addr = 0; // to avoid compiler warning
+               break;
+               //
+               // BEGIN_SORT_THIS_LINE_PLUS_1
+               CPPAD_VAL2FUN_DYN_UNARY(abs);
+               CPPAD_VAL2FUN_DYN_UNARY(acos);
+               CPPAD_VAL2FUN_DYN_UNARY(acosh);
+               CPPAD_VAL2FUN_DYN_UNARY(asin);
+               CPPAD_VAL2FUN_DYN_UNARY(asinh);
+               CPPAD_VAL2FUN_DYN_UNARY(atan);
+               CPPAD_VAL2FUN_DYN_UNARY(atanh);
+               CPPAD_VAL2FUN_DYN_UNARY(cos);
+               CPPAD_VAL2FUN_DYN_UNARY(cosh);
+               CPPAD_VAL2FUN_DYN_UNARY(erf);
+               CPPAD_VAL2FUN_DYN_UNARY(erfc);
+               CPPAD_VAL2FUN_DYN_UNARY(exp);
+               CPPAD_VAL2FUN_DYN_UNARY(expm1);
+               CPPAD_VAL2FUN_DYN_UNARY(log);
+               CPPAD_VAL2FUN_DYN_UNARY(log1p);
+               CPPAD_VAL2FUN_DYN_UNARY(neg);
+               CPPAD_VAL2FUN_DYN_UNARY(sign);
+               CPPAD_VAL2FUN_DYN_UNARY(sin);
+               CPPAD_VAL2FUN_DYN_UNARY(sinh);
+               CPPAD_VAL2FUN_DYN_UNARY(sqrt);
+               CPPAD_VAL2FUN_DYN_UNARY(tan);
+               // END_SORT_THIS_LINE_MINUS_1
             }
-            break;
-            //
-            // erf
-            case local::val_graph::erf_op_enum:
-            if( max_ad_type == dynamic_enum )
-               tmp_addr = rec.put_dyn_par( nan, local::erf_dyn, fun_arg[0] );
-            else
-            {  tmp_addr = rec.PutOp(local::ErfOp);
-               CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
-               rec.PutArg( fun_arg[0] );
-               rec.PutArg( zero_index );
-               rec.PutArg( two_sqrt_pi_index );
+         }
+         else
+         {  switch( op_enum )
+            {
+               // default
+               default:
+               CPPAD_ASSERT_UNKNOWN(false);
+               tmp_addr = 0; // to avoid compiler warning
+               break;
+               //
+               // BEGIN_SORT_THIS_LINE_PLUS_1
+               CPPAD_VAL2FUN_VAR_UNARY(abs,     AbsOp);
+               CPPAD_VAL2FUN_VAR_UNARY(acos,    AcosOp);
+               CPPAD_VAL2FUN_VAR_UNARY(acosh,   AcoshOp);
+               CPPAD_VAL2FUN_VAR_UNARY(asin,    AsinOp);
+               CPPAD_VAL2FUN_VAR_UNARY(asinh,   AsinhOp);
+               CPPAD_VAL2FUN_VAR_UNARY(atan,    AtanOp);
+               CPPAD_VAL2FUN_VAR_UNARY(atanh,   AtanhOp);
+               CPPAD_VAL2FUN_VAR_UNARY(cos,     CosOp);
+               CPPAD_VAL2FUN_VAR_UNARY(cosh,    CoshOp);
+               CPPAD_VAL2FUN_VAR_UNARY(exp,     ExpOp);
+               CPPAD_VAL2FUN_VAR_UNARY(expm1,   Expm1Op);
+               CPPAD_VAL2FUN_VAR_UNARY(log,     LogOp);
+               CPPAD_VAL2FUN_VAR_UNARY(log1p,   Log1pOp);
+               CPPAD_VAL2FUN_VAR_UNARY(neg,     NegOp);
+               CPPAD_VAL2FUN_VAR_UNARY(sign,    SignOp);
+               CPPAD_VAL2FUN_VAR_UNARY(sin,     SinOp);
+               CPPAD_VAL2FUN_VAR_UNARY(sinh,    SinhOp);
+               CPPAD_VAL2FUN_VAR_UNARY(sqrt,    SqrtOp);
+               CPPAD_VAL2FUN_VAR_UNARY(tan,     TanOp);
+               CPPAD_VAL2FUN_VAR_UNARY(tanh,    TanhOp);
+               // END_SORT_THIS_LINE_MINUS_1
+               //
+               // erf
+               case local::val_graph::erf_op_enum:
+               {  tmp_addr = rec.PutOp(local::ErfOp);
+                  CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
+                  rec.PutArg( fun_arg[0] );
+                  rec.PutArg( zero_index );
+                  rec.PutArg( two_sqrt_pi_index );
+               }
+               break;
+               //
+               // erfc
+               case local::val_graph::erfc_op_enum:
+               {  tmp_addr = rec.PutOp(local::ErfcOp);
+                  CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
+                  rec.PutArg( fun_arg[0] );
+                  rec.PutArg( zero_index );
+                  rec.PutArg( two_sqrt_pi_index );
+               }
+               break;
             }
-            break;
-            //
-            // erfc
-            case local::val_graph::erfc_op_enum:
-            if( max_ad_type == dynamic_enum )
-               tmp_addr = rec.put_dyn_par( nan, local::erfc_dyn, fun_arg[0] );
-            else
-            {  tmp_addr = rec.PutOp(local::ErfcOp);
-               CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
-               rec.PutArg( fun_arg[0] );
-               rec.PutArg( zero_index );
-               rec.PutArg( two_sqrt_pi_index );
-            }
-            break;
          }
          val2fun_index[res_index] = tmp_addr;
       }
@@ -850,7 +904,9 @@ void ADFun<Base, RecBase>::val2fun(
    return;
 }
 
+# undef CPPAD_VAL2FUN_DYN_UNARY
 # undef CPPAD_VAL2FUN_DYN_BINARY
+# undef CPPAD_VAL2FUN_VAR_UNARY
 # undef CPPAD_VAL2FUN_VAR_BINARY
 
 } // END_CPPAD_NAMESPACE
