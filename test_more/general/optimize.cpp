@@ -2447,7 +2447,7 @@ bool optimize(void)
    ok     &= duplicate_two();
    ok     &= duplicate_three();
    ok     &= duplicate_four();
-   // ok     &= cumulative_sum(); not yet working
+   ok     &= cumulative_sum();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_

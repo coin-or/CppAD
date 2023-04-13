@@ -749,7 +749,7 @@ void ADFun<Base, RecBase>::val2fun(
                for(addr_t i = 0; i < n_sub; ++i)
                {  if( ad_type_x[n_add + i] == dynamic_enum )
                      csum_arg[i_dynamic++]  = fun_arg[n_add + i];
-                  if( ad_type_x[n_sub + i] == variable_enum )
+                  if( ad_type_x[n_add + i] == variable_enum )
                      csum_arg[i_variable++] = fun_arg[n_add + i];
                }
                CPPAD_ASSERT_UNKNOWN( i_dynamic == n_tot - 1 );
