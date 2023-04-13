@@ -1165,10 +1165,8 @@ namespace {
       for(i = 0; i < m; i++)
          ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(F);
 
       // check number of variables  in optimized version
       ok &= (F.size_var() == 1 + n + m + 2 );
@@ -1234,10 +1232,8 @@ namespace {
       for(i = 0; i < m; i++)
          ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(F);
 
       // check number of variables  in optimized version
       ok &= (F.size_var() == 1 + n + m + 2 );
@@ -1292,10 +1288,8 @@ namespace {
       y   = F.Forward(0, x);
       ok &= NearEqual(y[0], Value(Y[0]), eps10, eps10);
 
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(F);
 
       // check same number of variables in optimized version
       ok &= (F.size_var() == 1 + n + n_operations );
@@ -1360,10 +1354,8 @@ namespace {
       for(i = 0; i < m; i++)
          ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
-      if( conditional_skip_ )
-         F.optimize();
-      else
-         F.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(F);
 
       // check number of variables  in optimized version
       ok &= (F.size_var() == n_optimize );
@@ -2452,6 +2444,10 @@ bool optimize(void)
    ok     &= depend_three();
    ok     &= depend_four();
    ok     &= duplicate_one();
+   ok     &= duplicate_two();
+   ok     &= duplicate_three();
+   ok     &= duplicate_four();
+   // ok     &= cumulative_sum(); not yet working
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
