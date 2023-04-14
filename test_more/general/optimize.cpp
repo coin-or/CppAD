@@ -1459,7 +1459,7 @@ namespace {
 
       return ok;
    }
-   bool forward_sparse_jacobian()
+   bool forward_sparse_jacobian(void)
    {  bool ok = true;
       using namespace CppAD;
 
@@ -1543,7 +1543,7 @@ namespace {
 
       return ok;
    }
-   bool reverse_sparse_jacobian()
+   bool reverse_sparse_jacobian(void)
    {  bool ok = true;
       using namespace CppAD;
 
@@ -2382,11 +2382,8 @@ namespace {
       ay[0] = ac2;
       CppAD::ADFun<double> f(ax, ay);
 
-      // now optimize the operation sequence
-      if( conditional_skip_ )
-         f.optimize();
-      else
-         f.optimize("no_conditional_skip");
+      // optimize
+      optimize_with_options(f);
 
       // now zero order forward
       vector<double> x(2), y(1);
@@ -2423,6 +2420,8 @@ bool optimize(void)
    // opt_val_graph cases
    use_opt_val_graph_      = true;
    ok     &= cond_exp_ppvv();
+   // skip:  exceed_collision_limit(void)
+   // skip: no_cumulative_sum(void)
    ok     &= optimize_csum();
    ok     &= optimize_ode();
    ok     &= nested_cond_exp();
@@ -2430,6 +2429,7 @@ bool optimize(void)
    ok     &= atomic_no_used();
    ok     &= atomic_arguments();
    ok     &= depend_one();
+   // skip: depend_two(void) because it uses VecAD
    ok     &= depend_three();
    ok     &= depend_four();
    ok     &= duplicate_one();
@@ -2455,6 +2455,7 @@ bool optimize(void)
    ok     &= cond_exp_if_false_used_after();
    ok     &= only_check_variables_when_hash_codes_match();
    ok     &= check_print_for();
+   ok     &= intersect_cond_exp();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
