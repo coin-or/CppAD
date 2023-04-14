@@ -66,8 +66,8 @@ namespace {
       f.Dependent(a_A, a_detA);
       //
       // optimize
-      if( global_option["opt_val_graph"] )
-      {  f.opt_val_graph();
+      if( global_option["val_optimize"] )
+      {  f.val_optimize();
       }
       if( global_option["optimize"] )
       {  std::string optimize_options =
@@ -89,7 +89,7 @@ bool link_det_minor(
 
    // --------------------------------------------------------------------
    // check global options
-   const char* valid[] = { "memory", "onetape", "optimize", "opt_val_graph"};
+   const char* valid[] = { "memory", "onetape", "optimize", "val_optimize"};
    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
    typedef std::map<std::string, bool>::iterator iterator;
    //

@@ -205,11 +205,11 @@ If it is false, this optimization will not be done.
 Note that this option is usually slower unless it is combined with the
 ``onetape`` option.
 
-opt_val_graph
-=============
-{xrst_comment 2DO: make :ref:`opt_val_graph-name` part of user documentation}
+val_optimize
+============
+{xrst_comment 2DO: make :ref:`val_optimize-name` part of user documentation}
 If this option is present,
-CppAD will use :code:`opt_val_graph` to optimize the operation sequence
+CppAD will use :code:`val_optimize` to optimize the operation sequence
 before doing the computations.
 This option is expected to be slower unless it is combined with the
 ``onetape`` option.
@@ -409,7 +409,7 @@ namespace {
       "subsparsity",
       "colpack",
       "symmetric",
-      "opt_val_graph"
+      "val_optimize"
    };
    size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
    // ----------------------------------------------------------------

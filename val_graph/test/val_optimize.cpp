@@ -34,8 +34,8 @@ bool csum_op(void)
    ay[0] = asum * asum;
    CppAD::ADFun<double> f(ax, ay);
    //
-   // opt_val_graph
-   f.opt_val_graph();
+   // val_optimize
+   f.val_optimize();
    //
    // x, p, y, check, ok
    // zero order forward
@@ -57,8 +57,8 @@ bool csum_op(void)
    y     = f.Forward(0, x);
    ok &= y[0] == check;
    //
-   // opt_val_graph, y, ok
-   f.opt_val_graph();
+   // val_optimize, y, ok
+   f.val_optimize();
    f.new_dynamic(p);
    y     = f.Forward(0, x);
    ok &= y[0] == check;
@@ -67,7 +67,7 @@ bool csum_op(void)
 }
 // ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
-bool test_opt_val_graph(void)
+bool test_val_optimize(void)
 {  bool ok = true;
    ok     &= csum_op();
    return ok;

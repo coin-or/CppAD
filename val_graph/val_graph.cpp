@@ -35,7 +35,7 @@ extern bool test_fold(void);
 extern bool test_fun2val(void);
 extern bool test_nan(void);
 extern bool test_opt_call(void);
-extern bool test_opt_val_graph(void);
+extern bool test_val_optimize(void);
 extern bool test_optimize(void);
 extern bool test_val2fun(void);
 extern bool unary_xam(void);

@@ -23,7 +23,7 @@ SET(source_list val_graph.cpp
    test/fun2val.cpp
    test/nan.cpp
    test/opt_call.cpp
-   test/opt_val_graph.cpp
+   test/val_optimize.cpp
    test/optimize.cpp
    test/val2fun.cpp
    unary_xam.cpp

@@ -10,16 +10,16 @@
 
 namespace {
    //
-   // use opt_val_graph and ignore conditional_skip_
-   bool use_opt_val_graph_;
+   // use val_optimize and ignore conditional_skip_
+   bool use_val_optimize_;
    //
    // include conditional skip optimization
    bool conditional_skip_;
    //
    // optimize_with_options
    void optimize_with_options(CppAD::ADFun<double>& f)
-   {  if( use_opt_val_graph_ )
-         f.opt_val_graph();
+   {  if( use_val_optimize_ )
+         f.val_optimize();
       else if( conditional_skip_ )
          f.optimize();
       else
@@ -2417,8 +2417,8 @@ namespace {
 bool optimize(void)
 {  bool ok = true;
    //
-   // opt_val_graph cases
-   use_opt_val_graph_      = true;
+   // val_optimize cases
+   use_val_optimize_      = true;
    ok     &= cond_exp_ppvv();
    // skip:  exceed_collision_limit(void)
    // skip: no_cumulative_sum(void)
@@ -2456,7 +2456,7 @@ bool optimize(void)
    ok     &= only_check_variables_when_hash_codes_match();
    ok     &= check_print_for();
    ok     &= intersect_cond_exp();
-   use_opt_val_graph_      = false;
+   use_val_optimize_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_
    conditional_skip_       = true;

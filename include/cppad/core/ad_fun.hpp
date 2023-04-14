@@ -314,7 +314,7 @@ public:
       const CppAD::vector<size_t>&          dyn_ind   ,
       const CppAD::vector<size_t>&          var_ind
    );
-   void opt_val_graph(void);
+   void val_optimize(void);
 
    // create ADFun< AD<Base> > from this ADFun<Base>
    // (doxygen in cppad/core/base2ad.hpp)
@@ -875,6 +875,6 @@ public:
 # include <cppad/core/to_csrc.hpp>
 
 // 2DO: move to core directory
-# include <cppad/local/val_graph/opt_val_graph.hpp>
+# include <cppad/local/val_graph/val_optimize.hpp>
 
 # endif

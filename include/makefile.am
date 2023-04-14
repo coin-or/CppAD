@@ -354,7 +354,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_iterator.hpp \
-	cppad/local/val_graph/opt_val_graph.hpp \
+	cppad/local/val_graph/val_optimize.hpp \
 	cppad/local/val_graph/option.hpp \
 	cppad/local/val_graph/pri_op.hpp \
 	cppad/local/val_graph/print_op.hpp \

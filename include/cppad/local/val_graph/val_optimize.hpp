@@ -1,12 +1,12 @@
-# ifndef  CPPAD_LOCAL_VAL_GRAPH_OPT_VAL_GRAPH_HPP
-# define  CPPAD_LOCAL_VAL_GRAPH_OPT_VAL_GRAPH_HPP
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_VAL_OPTIMIZE_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_VAL_OPTIMIZE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-23 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
-{xrst_begin opt_val_graph dev}
+{xrst_begin val_optimize dev}
 
 
 Optimize the Value Graph Corresponding to This Function
@@ -15,11 +15,11 @@ Optimize the Value Graph Corresponding to This Function
 Prototype
 *********
 {xrst_literal
-   // BEGIN_OPT_VAL_GRAPH
-   // END_OPT_VAL_GRAPH
+   // BEGIN_VAL_OPTIMIZE
+   // END_VAL_OPTIMIZE
 }
 
-{xrst_end opt_val_graph}
+{xrst_end val_optimize}
 */
 
 # include <cppad/core/ad_fun.hpp>
@@ -27,10 +27,10 @@ Prototype
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-// BEGIN_OPT_VAL_GRAPH
+// BEGIN_VAL_OPTIMIZE
 template <class Base, class RecBase>
-void ADFun<Base, RecBase>::opt_val_graph(void)
-// END_OPT_VAL_GRAPH
+void ADFun<Base, RecBase>::val_optimize(void)
+// END_VAL_OPTIMIZE
 {  //
    // n_dyn_ind, n_var_ind
    size_t n_dyn_ind = size_dyn_ind();

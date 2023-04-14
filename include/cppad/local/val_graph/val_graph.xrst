@@ -120,7 +120,7 @@ Implementation
    include/cppad/local/val_graph/op_enum2class.hpp
    include/cppad/local/val_graph/fun2val.hpp
    include/cppad/local/val_graph/val2fun.hpp
-   include/cppad/local/val_graph/opt_val_graph.hpp
+   include/cppad/local/val_graph/val_optimize.hpp
    include/cppad/local/val_graph/dyn_type.hpp
    include/cppad/local/val_graph/var_type.hpp
    include/cppad/local/val_graph/call_atomic.hpp
