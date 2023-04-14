@@ -141,13 +141,14 @@ void tape_t<Value>::dead_code(void)
       // need_op
       bool need_op = false;
       if( n_res == 0 )
-      {  if( op_enum == comp_op_enum )
-         {  need_op  = keep_compare;
-            need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
+      {  if( op_enum == pri_op_enum )
+         {  need_op  = keep_print;
+            need_op &= arg_vec_[arg_index + 2] != this->n_ind();
          }
          else
-         {  CPPAD_ASSERT_UNKNOWN( op_enum == pri_op_enum );
-            need_op = keep_print;
+         {  CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
+            need_op  = keep_compare;
+            need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
          }
       }
       else for(addr_t k = 0; k < n_res; ++k)

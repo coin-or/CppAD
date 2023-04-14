@@ -304,11 +304,15 @@ void tape_t<Value>::renumber(void)
          addr_t res_index_j = op2res_index[j_op];
          addr_t n_res       = op_ptr->n_res(arg_index_i, arg_vec_);
          if( n_res == 0 )
-         {
-# ifndef NDEBUG
-            CPPAD_ASSERT_UNKNOWN( op_ptr->op_enum() == comp_op_enum );
-# endif
-            arg_vec_[arg_index_i + 0] = compare_no_enum;
+         {  //
+            // change the i_op operator to a no op
+            if( op_ptr->op_enum() == pri_op_enum )
+               arg_vec_[arg_index_i + 2] = this->n_ind();
+            else
+            {
+               CPPAD_ASSERT_UNKNOWN( op_ptr->op_enum() == comp_op_enum );
+               arg_vec_[arg_index_i + 0] = compare_no_enum;
+            }
          }
          else for(addr_t k = 0; k < n_res; ++k)
             new_val_index[res_index_i + k] = res_index_j + k;

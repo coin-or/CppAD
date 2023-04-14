@@ -2454,7 +2454,7 @@ bool optimize(void)
    ok     &= cond_exp_skip_remove_var();
    ok     &= cond_exp_if_false_used_after();
    ok     &= only_check_variables_when_hash_codes_match();
-   // ok     &= check_print_for(); not yet working
+   ok     &= check_print_for();
    use_opt_val_graph_      = false;
    //
    // conditional_skip_, atomic_sparsity_option_

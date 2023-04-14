@@ -74,6 +74,24 @@ bool pri_xam(void)
    ok &= tape.str_vec().size() == 3;
    ok &= tape.str_vec()[0]     == "";
    //
+   // tape
+   tape.set_option("keep_print", "true");
+   tape.renumber();
+   tape.dead_code();
+   //
+   // val_vec, compare_false
+   val_vec.resize( tape.n_val() );
+   for(addr_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   tape.eval(trace, compare_false, val_vec);
+   //
+   // ok
+   ok &= compare_false         == 0;
+   ok &= tape.n_val()          == 4;
+   ok &= tape.n_op()           == 3;
+   ok &= tape.str_vec().size() == 3;
+   ok &= tape.str_vec()[0]     == "";
+   //
    // ok
    Vector<double> y(1);
    dep_vec = tape.dep_vec();

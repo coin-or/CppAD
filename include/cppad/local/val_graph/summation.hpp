@@ -286,8 +286,16 @@ void tape_t<Value>::summation(void)
       addr_t    n_arg      = op_ptr_i->n_arg(arg_index_i, arg_vec_);
       //
       // use_i, sum_i
-      bool use_i = 0 != val_use_case[res_index_i];
       bool sum_i   = sum_op( op_enum_i );
+      bool use_i   = false;
+      if( sum_i )
+      {
+# ifndef NDEBUG
+         addr_t n_res = op_ptr_i->n_res(arg_index_i, arg_vec_);
+         CPPAD_ASSERT_UNKNOWN( n_res == 1 );
+# endif
+         use_i = 0 != val_use_case[res_index_i];
+      }
       if( use_i & sum_i )
       {  // i_op is one of neg, add, or sub
          //
