@@ -58,7 +58,7 @@ bool dynamic_atom(void)
       val_vec[i] = p[i];
    val_vec[4] = x[0];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y
@@ -124,7 +124,7 @@ bool variable_atom(void)
    for(size_t i = 0; i < 4; ++i)
       val_vec[i + 1] = x[i];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y
@@ -185,7 +185,7 @@ bool unary_op(void)
    val_vec[0] = p[0];
    val_vec[1] = x[0];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y
@@ -248,7 +248,7 @@ bool comp_op(void)
    val_vec[0] = p[0];
    val_vec[1] = x[0];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y, ok
@@ -263,7 +263,7 @@ bool comp_op(void)
    // val_vec
    val_vec[0] = p[0];
    val_vec[1] = x[0];
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 1;
    //
    // y, ok
@@ -323,7 +323,7 @@ bool dis_op(void)
    val_vec[0] = p[0];
    val_vec[1] = x[0];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y
@@ -392,7 +392,7 @@ bool cexp_op(void)
    val_vec[2] = x[0];
    val_vec[3] = x[1];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y
@@ -454,7 +454,7 @@ bool csum_op(void)
    val_vec[2] = p[0] = 5.0;
    val_vec[3] = p[1] = 8.0;
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y, ok
@@ -483,7 +483,7 @@ bool csum_op(void)
    //
    // val_vec, ok
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y, ok
@@ -540,7 +540,7 @@ bool pri_op(void)
    val_vec[0] = p[0];
    val_vec[1] = x[0];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y, ok

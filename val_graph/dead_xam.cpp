@@ -70,7 +70,7 @@ bool dead_xam(void)
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    ok &= tape.n_op() == 6;
    ok &= tape.arg_vec().size() == 9;
@@ -79,7 +79,7 @@ bool dead_xam(void)
    // dead_code, val_vec
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // ok

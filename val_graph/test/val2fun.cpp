@@ -66,7 +66,7 @@ bool dynamic_atom(void)
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = double(5 + i);
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    */
    //
@@ -153,7 +153,7 @@ bool variable_atom(void)
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = double(5 + i);
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // ADFun
@@ -227,7 +227,7 @@ bool comp_op(void)
    val_vec[0] = 5.0; // x[0]
    val_vec[1] = 6.0; // x[1]
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // f
@@ -302,7 +302,7 @@ bool dis_op(void)
    val_vec[0] = p[0];
    val_vec[1] = x[0];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // f
@@ -370,7 +370,7 @@ bool csum_op(void)
    val_vec[2] = p[0] = 5.0;
    val_vec[3] = p[1] = 8.0;
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y, ok
@@ -460,7 +460,7 @@ bool cexp_op(void)
    val_vec[2] = x[0] = 5.0;
    val_vec[3] = x[1] = 8.0;
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y
@@ -548,7 +548,7 @@ bool pri_op(void)
    val_vec[0] = 6.0; // x[0]
    val_vec[1] = 5.0; // x[1]
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // f

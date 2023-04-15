@@ -66,7 +66,7 @@ void ADFun<Base, RecBase>::val_optimize(void)
       val_vec[i] = Base(i + 1);
    size_t compare_false = 0;
    bool   trace = true;
-   val_tape.eval(trace, compare_false, val_vec);
+   val_tape.eval(trace, val_vec, compare_false);
    */
    // this
    // convert optimized value graph to fun

@@ -29,4 +29,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|\(This override.*\) return |\1 returns |
+s|eval(trace, compare_false, val_vec);|eval(trace, val_vec, compare_false);|
+s|eval(trace, compare_false, val_index2con);|eval(trace, val_index2con, compare_false);|

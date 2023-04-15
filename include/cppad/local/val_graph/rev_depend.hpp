@@ -85,7 +85,7 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
       val_index2con[i] = nan;
    bool trace           = false;
    size_t compare_false = 0;
-   eval(trace, compare_false, val_index2con);
+   eval(trace, val_index2con, compare_false);
    //
    // val_use_case
    // initialize as no operator uses any value

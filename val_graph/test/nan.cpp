@@ -46,7 +46,7 @@ bool test_nan(void)
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = 0.0;
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // renumber
@@ -63,7 +63,7 @@ bool test_nan(void)
    val_vec.resize( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = 0.0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;
    //
    // y

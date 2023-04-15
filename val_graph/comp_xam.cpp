@@ -73,7 +73,7 @@ bool comp_xam(void)
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    size_t compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;  // x[0] < x[1] is true
    //
    // x
@@ -84,7 +84,7 @@ bool comp_xam(void)
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 2;        // there are two x[0] < x[1] comparisons
    ok &= tape.n_op() == 5; // 1 con_op, 2 comp_op, 2 add_op
    //
@@ -97,7 +97,7 @@ bool comp_xam(void)
    // ok, val_vec
    compare_false = 0;
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 1;  // only one x[0] < x[1] left
    //
    // tape
@@ -108,7 +108,7 @@ bool comp_xam(void)
    // ok, val_vec
    val_vec.resize( tape.n_val() );
    compare_false = 0;
-   tape.eval(trace, compare_false, val_vec);
+   tape.eval(trace, val_vec, compare_false);
    ok &= compare_false == 0;  // none of the x[0] < x[1] left
    //
    // ok

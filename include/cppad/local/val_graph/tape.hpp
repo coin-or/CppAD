@@ -154,7 +154,8 @@ The rest of the elements are outputs.
 
 compare_false
 =============
-This is the number of :ref:`val_comp_op-name` that had a false
+This argument is optional.
+It is the number of :ref:`val_comp_op-name` that had a false
 result for their comparisons.
 This is both an input and output; i.e., each false comparison
 will add one to this value.
@@ -264,11 +265,19 @@ public :
       op_enum_vec_.swap( other.op_enum_vec_ );
       op2arg_index_.swap( other.op2arg_index_ );
    }
-   // BEGIN_EVAL
+   // eval(trace, val_vec)
    void eval(
       bool           trace         ,
-      size_t&        compare_false ,
       Vector<Value>& val_vec       ) const
+   {  size_t compare_false = 0;
+      eval(trace, val_vec, compare_false);
+   }
+   // BEGIN_EVAL
+   // eval(trace, val_vec, compare_false)
+   void eval(
+      bool           trace         ,
+      Vector<Value>& val_vec       ,
+      size_t&        compare_false ) const
    // END_EVAL
    {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
       using std::setw;
