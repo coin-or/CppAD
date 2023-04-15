@@ -15,6 +15,7 @@
 # include <cppad/local/val_graph/dis_op.hpp>
 # include <cppad/local/val_graph/pri_op.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
+# include <cppad/local/val_graph/vec_op.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 //
 namespace CppAD { namespace local { namespace val_graph {
@@ -82,6 +83,7 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
       CPPAD_VAL_GRAPH_INSTANCE(erfc)
       CPPAD_VAL_GRAPH_INSTANCE(exp)
       CPPAD_VAL_GRAPH_INSTANCE(expm1)
+      CPPAD_VAL_GRAPH_INSTANCE(load)
       CPPAD_VAL_GRAPH_INSTANCE(log)
       CPPAD_VAL_GRAPH_INSTANCE(log1p)
       CPPAD_VAL_GRAPH_INSTANCE(mul)
@@ -92,6 +94,7 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
       CPPAD_VAL_GRAPH_INSTANCE(sin)
       CPPAD_VAL_GRAPH_INSTANCE(sinh)
       CPPAD_VAL_GRAPH_INSTANCE(sqrt)
+      CPPAD_VAL_GRAPH_INSTANCE(store)
       CPPAD_VAL_GRAPH_INSTANCE(sub)
       CPPAD_VAL_GRAPH_INSTANCE(tan)
       CPPAD_VAL_GRAPH_INSTANCE(tanh)

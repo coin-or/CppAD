@@ -71,6 +71,7 @@ enum op_enum_t {
    erfc_op_enum,     // complementary error function
    exp_op_enum,      // exponential function
    expm1_op_enum,    // exponential function minus one
+   load_op_enum,     // load an element from a dynamic vector
    log1p_op_enum,    // one plust natural log
    log_op_enum,      // natural log function
    mul_op_enum,      // multiplication
@@ -81,6 +82,7 @@ enum op_enum_t {
    sin_op_enum,      // sine function
    sinh_op_enum,     // hyperbolic sine
    sqrt_op_enum,     // square root
+   store_op_enum,    // store an element in a dynamic vector
    sub_op_enum,      // subtraction
    tan_op_enum,      // tangent
    tanh_op_enum,     // hyperbolic tangent

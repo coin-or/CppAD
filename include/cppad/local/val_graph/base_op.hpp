@@ -198,6 +198,7 @@ Operator Classes
    include/cppad/local/val_graph/dis_op.hpp
    include/cppad/local/val_graph/pri_op.hpp
    include/cppad/local/val_graph/unary_op.hpp
+   include/cppad/local/val_graph/vec_op.hpp
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
