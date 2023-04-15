@@ -21,6 +21,7 @@ the indices may depend on the independent values.
 
 {xrst_comment
    val_graph/vec_xam.cpp
+
 Example
 *******
 The file :ref:`com_xam.cpp <val_vec_xam.cpp-name>`
@@ -162,7 +163,7 @@ public:
          return;
       //
       // print_store_op
-      // print_store_op(which_vector, vector_index, value_index);
+      print_store_op(which_vector, vector_index, value_index);
    }
 };
 // ---------------------------------------------------------------------------
@@ -299,7 +300,7 @@ public:
          return;
       //
       // print_load_op
-      // print_load_op(which_vector, vector_index, res_index, res_value);
+      print_load_op(which_vector, vector_index, res_index, res_value);
    }
 };
 

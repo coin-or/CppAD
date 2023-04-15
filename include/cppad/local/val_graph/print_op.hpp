@@ -326,6 +326,100 @@ inline void print_pri_op(
    cout << right << setw(5) << flag_index    << ",";
    cout << right << setw(5) << value_index << ")" << std::endl;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_print_store_op dev}
+
+Printing Store Operators
+########################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PRINT_STORE_OP
+   // END_PRINT_STORE_OP
+}
+
+which_vector
+************
+is the index in val_vec_vec corresponding to this vector.
+
+vector_index
+************
+is the index in val_vec corresponding to the index for this vector element.
+
+value_index
+***********
+is the index in val_vec corresponding to the new value for this vector element.
+
+
+{xrst_end val_print_store_op}
+*/
+// BEGIN_PRINT_STORE_OP
+inline void print_store_op(
+   addr_t       which_vector ,
+   addr_t       vector_index ,
+   addr_t       value_index  )
+// END_PRINT_STORE_OP
+{  //
+   using std::setw;
+   using std::right;
+   using std::cout;
+   //
+   cout << setw(19) << "" << right << setw(5)  << "store" << "[";
+   cout << right << setw(5) << which_vector  << "](";
+   cout << right << setw(5) << vector_index  << ",";
+   cout << right << setw(5) << value_index << ")" << std::endl;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_print_load_op dev}
+{xrst_spell
+}
+
+Printing Load Operators
+#######################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PRINT_LOAD_OP
+   // END_PRINT_LOAD_OP
+}
+
+which_vector
+************
+is the index in val_vec_vec corresponding to this vector.
+
+vector_index
+************
+is the index in val_vec corresponding to the index for this vector element.
+
+res_index
+*********
+in the index in val_vec corresponding to the result for this operator.
+
+{xrst_end val_print_load_op}
+*/
+// BEGIN_PRINT_LOAD_OP
+template <class Value>
+inline void print_load_op(
+   addr_t       which_vector ,
+   addr_t       vector_index ,
+   addr_t       res_index    ,
+   const Value& res_value    )
+// END_PRINT_LOAD_OP
+{  //
+   using std::setw;
+   using std::right;
+   using std::cout;
+   //
+   cout << right << setw(5) << res_index;
+   cout << " " << right << setw(10) << res_value;
+   cout << setw(5)  << "load" << "[";
+   cout << right << setw(5) << which_vector  << "](";
+   cout << right << setw(5) << vector_index << ")" << std::endl;
+}
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
