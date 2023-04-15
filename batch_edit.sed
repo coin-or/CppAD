@@ -32,15 +32,16 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of each line
-/size_t& *compare_false *,/! b one
+/const tape_t<Value>\* *tape/! b one
 N
-s|size_t&       |SIZE_T\&|
-s|Vector<Value>&|size_t\&       |
-s|SIZE_T&|Vector<Value>\&|
-#
-s|val_vec      |VAL_VEC|
-s|val_vec$|VAL_VEC|
-s|compare_false|val_vec      |
-s|VAL_VEC|compare_false|
-s|compare_false *$|compare_false|
+N
+N
+N
+N
+N
+s|const tape_t<Value>\*\( *\)tape\( *\),|const tape_t<Value>*\1    tape\2 ,|
+s|\(\n *\)\([^ ]*\)\( *\)\([^ ]*\)\( *\),|\1\2\3    \4\5 ,|g
+s|\n\( *\)\([^ ]*\)\( *\)\([^ ]*\)\( *\))|\n\1Vector< Vector<Value> >\&  val_vec_vec   ,\
+\1\2\3    \4\5 )|
+
 : one
