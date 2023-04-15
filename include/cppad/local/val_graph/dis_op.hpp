@@ -44,6 +44,10 @@ This override of :ref:`val_base_op@op_enum` returns ``dis_op_enum`` .
 n_before
 ********
 This override of :ref:`val_base_op@n_before` return 1.
+{xrst_literal
+   // BEGIN_ARG_BEFORE
+   // END_ARG_BEFORE
+}
 
 n_after
 *******
@@ -63,7 +67,7 @@ This override of :ref:`val_base_op@eval` sets
 the result equal to the discrete function evaluated at
 ::
 
-      val_vec[ arg_vec[ arg_index + 0 ] ]
+      val_vec[ arg_vec[ arg_index + 1 ] ]
 
 trace
 =====
@@ -132,8 +136,12 @@ public:
       // arg_vec
       const Vector<addr_t>& arg_vec( tape->arg_vec() );
       //
-      // val_index, val_vec
+      // discrete_index
+      // BEGIN_ARG_BEFORE
       size_t       discrete_index = size_t( arg_vec[arg_index + 0] );
+      // END_ARG_BEFORE
+      //
+      // val_vec
       addr_t       val_index      = arg_vec[ arg_index + 1 ];
       const Value& value          = val_vec[val_index];
       val_vec[res_index] = discrete<Value>::eval(discrete_index, value);

@@ -64,13 +64,10 @@ eval
 This override of :ref:`val_base_op@eval` .
 If the comparison is false (true), one (zero) is added to
 the compare_false argument to eval.
-
-#. arg_vec[ arg_index + 0 ] is the comparison operator;
-   compare_eq_enum, compare_lt_enum, or compare_le_enum .
-#. left     = arg_vec[ arg_index + 1 ]
-#. right    = arg_vec[ arg_index + 2 ]
-#. if_true  = arg_vec[ arg_index + 3 ]
-#. if_false = arg_vec[ arg_index + 4 ]
+{xrst_literal
+   // BEGIN_ARGS
+   // END_ARGS
+}
 
 trace
 =====
@@ -134,11 +131,13 @@ public:
       const Vector<addr_t>& arg_vec( tape->arg_vec() );
       //
       // compare_enum, left_index, right_index
+      // BEGIN_ARGS
       compare_enum_t compare_enum = compare_enum_t( arg_vec[arg_index + 0] );
       addr_t left_index           = arg_vec[arg_index + 1];
       addr_t right_index          = arg_vec[arg_index + 2];
       addr_t if_true_index        = arg_vec[arg_index + 3];
       addr_t if_false_index       = arg_vec[arg_index + 4];
+      // END_ARGS
       //
       // left, right
       const Value&   left          = val_vec[left_index];

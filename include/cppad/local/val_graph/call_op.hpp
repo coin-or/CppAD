@@ -49,6 +49,10 @@ This override of :ref:`val_base_op@op_enum` returns ``call_op_enum`` .
 n_before
 ********
 This override of :ref:`val_base_op@n_before` return 4.
+{xrst_literal
+   // BEGIN_ARG_BEFORE
+   // END_ARG_BEFORE
+}
 
 n_after
 *******
@@ -183,11 +187,13 @@ void call_op_t<Value>::eval(
    const Vector<addr_t>& arg_vec( tape->arg_vec() );
    //
    // n_arg, n_res, atomic_index, call_id
+   // BEGIN_ARG_BEFORE
    addr_t n_arg         =  arg_vec[arg_index + 0] ;
    addr_t n_res         =  arg_vec[arg_index + 1] ;
    size_t atomic_index  = size_t( arg_vec[arg_index + 2] );
    size_t call_id       = size_t( arg_vec[arg_index + 3] );
    CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
+   // END_ARG_BEFORE
    //
    // n_x
    addr_t n_x = n_arg - n_before() - n_after();

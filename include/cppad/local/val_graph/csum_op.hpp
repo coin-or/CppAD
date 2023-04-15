@@ -51,6 +51,10 @@ This override of :ref:`val_base_op@op_enum` returns ``csum_op_enum`` .
 n_before
 ********
 This override of :ref:`val_base_op@n_before` return 2.
+{xrst_literal
+   // BEGIN_ARG_BEFORE
+   // END_ARG_BEFORE
+}
 
 n_after
 *******
@@ -185,8 +189,10 @@ void csum_op_t<Value>::eval(
    const Vector<addr_t>& arg_vec( tape->arg_vec() );
    //
    // n_add, n_sub
+   // BEGIN_ARG_BEFORE
    addr_t n_add         =  arg_vec[arg_index + 0] ;
    addr_t n_sub         =  arg_vec[arg_index + 1] ;
+   // END_ARG_BEFORE
    //
    // sum
    Value sum(0.0);

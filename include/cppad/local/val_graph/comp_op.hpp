@@ -23,8 +23,8 @@ The Compare Value Operator
 Prototype
 *********
 {xrst_literal
-   // BEGIN_COM_OP_T
-   // END_COM_OP_T
+   // BEGIN_COMP_OP_T
+   // END_COMP_OP_T
 }
 
 Context
@@ -63,6 +63,10 @@ eval
 This override of :ref:`val_base_op@eval` .
 If the comparison is false (true), one (zero) is added to
 the compare_false argument to eval.
+{xrst_literal
+   // BEGIN_ARGS
+   // END_ARGS
+}
 
 trace
 =====
@@ -79,7 +83,7 @@ is an example and test that uses this operator.
 
 {xrst_end val_comp_op}
 */
-// BEGIN_COM_OP_T
+// BEGIN_COMP_OP_T
 template <class Value>
 class comp_op_t : public base_op_t<Value> {
 public:
@@ -100,7 +104,7 @@ public:
    // op_enum
    op_enum_t op_enum(void) const override
    {  return comp_op_enum; }
-// END_COM_OP_T
+// END_COMP_OP_T
    //
    // n_arg
    addr_t n_arg(
@@ -127,9 +131,11 @@ public:
       const Vector<addr_t>& arg_vec( tape->arg_vec() );
       //
       // compare_enum, left_index, right_index
+      // BEGIN_ARGS
       compare_enum_t compare_enum = compare_enum_t( arg_vec[arg_index + 0] );
       addr_t left_index           = arg_vec[arg_index + 1];
       addr_t right_index          = arg_vec[arg_index + 2];
+      // END_ARGS
       //
       // left, right
       const Value&   left          = val_vec[left_index];
