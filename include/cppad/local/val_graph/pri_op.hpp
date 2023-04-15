@@ -43,11 +43,11 @@ This override of :ref:`val_base_op@op_enum` returns ``pri_op_enum`` .
 
 n_before
 ********
-This override of :ref:`val_base_op@n_before` return 2.
+This override of :ref:`val_base_op@n_before` returns 2.
 
 n_after
 *******
-This override of :ref:`val_base_op@n_after` return 0.
+This override of :ref:`val_base_op@n_after` returns 0.
 
 n_arg
 *****

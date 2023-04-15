@@ -14,13 +14,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#  include/cppad/local/val_graph/opt_val_graph.hpp
-#  val_graph/test/opt_val_graph.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#  s|opt_val_graph|val_optimize|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -32,5 +29,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|opt_val_graph|val_optimize|g
-s|OPT_VAL_GRAPH|VAL_OPTIMIZE|g
+s|\(This override.*\) return |\1 returns |

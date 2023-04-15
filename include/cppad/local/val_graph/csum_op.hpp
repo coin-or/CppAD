@@ -50,7 +50,7 @@ This override of :ref:`val_base_op@op_enum` returns ``csum_op_enum`` .
 
 n_before
 ********
-This override of :ref:`val_base_op@n_before` return 2.
+This override of :ref:`val_base_op@n_before` returns 2.
 {xrst_literal
    // BEGIN_ARG_BEFORE
    // END_ARG_BEFORE
@@ -58,7 +58,7 @@ This override of :ref:`val_base_op@n_before` return 2.
 
 n_after
 *******
-This override of :ref:`val_base_op@n_after` return 1.
+This override of :ref:`val_base_op@n_after` returns 1.
 This is for a copy of *n_arg* that can be used to iterate
 through the operators in reverse.
 

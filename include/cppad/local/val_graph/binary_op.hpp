@@ -77,11 +77,11 @@ This override of :ref:`val_base_op@is_binary` returns true.
 
 n_before
 ********
-This override of :ref:`val_base_op@n_before` return 0.
+This override of :ref:`val_base_op@n_before` returns 0.
 
 n_after
 *******
-This override of :ref:`val_base_op@n_after` return 0.
+This override of :ref:`val_base_op@n_after` returns 0.
 
 n_arg
 *****

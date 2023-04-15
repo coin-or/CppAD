@@ -44,11 +44,11 @@ This override of :ref:`val_base_op@op_enum` returns ``comp_op_enum`` .
 
 n_before
 ********
-This override of :ref:`val_base_op@n_before` return 1.
+This override of :ref:`val_base_op@n_before` returns 1.
 
 n_after
 *******
-This override of :ref:`val_base_op@n_after` return 0.
+This override of :ref:`val_base_op@n_after` returns 0.
 
 n_arg
 *****
@@ -56,7 +56,7 @@ This override of :ref:`val_base_op@n_arg` returns 3.
 
 n_res
 *****
-This override of :ref:`val_base_op@n_res` return 1.
+This override of :ref:`val_base_op@n_res` returns 1.
 
 eval
 ****
