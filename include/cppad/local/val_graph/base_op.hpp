@@ -241,8 +241,8 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       addr_t                res_index    ,
-      size_t&               compare_false,
-      Vector<Value>&        val_vec      ) const = 0;
+      Vector<Value>&        val_vec      ,
+      size_t&               compare_false) const = 0;
    // END_EVAL
    //
    // BEGIN_IS_UNARY

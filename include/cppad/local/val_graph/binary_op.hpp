@@ -30,8 +30,8 @@ namespace CppAD { namespace local { namespace val_graph {
          bool                  trace        , \
          addr_t                arg_index    , \
          addr_t                res_index    , \
-         size_t&               compare_false, \
-         Vector<Value>&        val_vec      ) const override \
+         Vector<Value>&        val_vec      , \
+         size_t&               compare_false) const override \
       {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
          const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
          const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
@@ -141,8 +141,8 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       addr_t                res_index    ,
-      size_t&               compare_false,
-      Vector<Value>&        val_vec      ) const override = 0;
+      Vector<Value>&        val_vec      ,
+      size_t&               compare_false) const override = 0;
    //
    // BEGIN_PRINT_OP
    void print_op(
@@ -247,8 +247,8 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       addr_t                res_index    ,
-      size_t&               compare_false,
-      Vector<Value>&        val_vec      ) const override
+      Vector<Value>&        val_vec      ,
+      size_t&               compare_false) const override
    {  const Vector<addr_t>& arg_vec( tape->arg_vec() );
       const Value& left   = val_vec[ arg_vec[arg_index + 0] ];
       const Value& right  = val_vec[ arg_vec[arg_index + 1] ];

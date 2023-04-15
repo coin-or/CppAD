@@ -311,8 +311,8 @@ public :
             trace,
             arg_index,
             res_index,
-            compare_false,
-            val_vec
+            val_vec,
+            compare_false
          );
          //
          // op_itr

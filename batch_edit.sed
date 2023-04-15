@@ -32,7 +32,15 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of each line
-/compare_false *= *0;/d
-/compare_false *== *0/d
-s|eval(trace, val_vec, compare_false);|eval(trace, val_vec);|
-s|eval(trace, val_index2con, compare_false);|eval(trace, val_index2con);|
+/size_t& *compare_false *,/! b one
+N
+s|size_t&       |SIZE_T\&|
+s|Vector<Value>&|size_t\&       |
+s|SIZE_T&|Vector<Value>\&|
+#
+s|val_vec      |VAL_VEC|
+s|val_vec$|VAL_VEC|
+s|compare_false|val_vec      |
+s|VAL_VEC|compare_false|
+s|compare_false *$|compare_false|
+: one

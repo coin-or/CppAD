@@ -151,8 +151,8 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       addr_t                res_index    ,
-      size_t&               compare_false,
-      Vector<Value>&        val_vec      ) const override
+      Vector<Value>&        val_vec      ,
+      size_t&               compare_false) const override
    {  //
       // arg_vec, str_vec
       const Vector<addr_t>&       arg_vec( tape->arg_vec() );

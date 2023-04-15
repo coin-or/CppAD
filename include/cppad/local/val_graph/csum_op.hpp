@@ -169,8 +169,8 @@ public:
       bool                  trace        ,
       addr_t                arg_index    ,
       addr_t                res_index    ,
-      size_t&               compare_false,
-      Vector<Value>&        val_vec
+      Vector<Value>&        val_vec      ,
+      size_t&               compare_false
    ) const override;
 // END_CSUM_OP_T
 };
@@ -182,8 +182,8 @@ void csum_op_t<Value>::eval(
    bool                  trace        ,
    addr_t                arg_index    ,
    addr_t                res_index    ,
-   size_t&               compare_false,
-   Vector<Value>&        val_vec      ) const
+   Vector<Value>&        val_vec      ,
+   size_t&               compare_false) const
 {  //
    // arg_vec
    const Vector<addr_t>& arg_vec( tape->arg_vec() );
