@@ -57,9 +57,7 @@ bool dis_xam(void)
    // val_vec
    Vector<double> val_vec( tape.n_val() );
    val_vec[0] = x[0];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    ok &= tape.n_op()  == 2;

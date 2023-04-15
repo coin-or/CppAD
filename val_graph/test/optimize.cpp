@@ -67,9 +67,7 @@ bool communative(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    // before optmizing
@@ -80,14 +78,12 @@ bool communative(void)
    // renumber
    tape.renumber();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // dead_code
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    // after optimizing
@@ -175,9 +171,7 @@ bool propagate_match(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    // before optmizing
@@ -188,14 +182,12 @@ bool propagate_match(void)
    // renumber
    tape.renumber();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // dead_code
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    // after optimizing
@@ -272,9 +264,7 @@ bool not_used(void)
    val_vec.resize( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    ok &= tape.arg_vec().size() == 12;
    ok &= tape.con_vec().size() == 4;
    ok &= tape.n_op() == 8;
@@ -282,14 +272,12 @@ bool not_used(void)
    // renumber, val_vec
    tape.renumber();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // dead_code, val_vec
    tape.dead_code();
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    // after optimizing
@@ -374,9 +362,7 @@ bool summation(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    ok &= tape.n_op()  == 5;
@@ -396,8 +382,7 @@ bool summation(void)
    //
    // eval
    val_vec.resize( tape.n_val() );
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // y
    Vector<double> y(1);

@@ -64,11 +64,9 @@ bool pri_xam(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
+   tape.eval(trace, val_vec);
    //
    // ok
-   ok &= compare_false         == 0;
    ok &= tape.n_val()          == 4;
    ok &= tape.n_op()           == 4;
    ok &= tape.str_vec().size() == 3;
@@ -83,10 +81,9 @@ bool pri_xam(void)
    val_vec.resize( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec, compare_false);
+   tape.eval(trace, val_vec);
    //
    // ok
-   ok &= compare_false         == 0;
    ok &= tape.n_val()          == 4;
    ok &= tape.n_op()           == 3;
    ok &= tape.str_vec().size() == 3;

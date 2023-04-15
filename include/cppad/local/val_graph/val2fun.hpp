@@ -180,8 +180,7 @@ void ADFun<Base, RecBase>::val2fun(
    for(addr_t i = 0; i < n_val; ++i)
       val_index2con[i] = nan;
    bool trace           = false;
-   size_t compare_false = 0;
-   val_tape.eval(trace, val_index2con, compare_false);
+   val_tape.eval(trace, val_index2con);
    //
    // val2fun_index
    // mapping from value index to index in the AD function object.

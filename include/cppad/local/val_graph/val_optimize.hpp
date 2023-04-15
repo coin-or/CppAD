@@ -64,9 +64,8 @@ void ADFun<Base, RecBase>::val_optimize(void)
    CppAD::vector<Base> val_vec( val_tape.n_val() );
    for(addr_t i = 0; i < val_tape.n_ind(); ++i)
       val_vec[i] = Base(i + 1);
-   size_t compare_false = 0;
    bool   trace = true;
-   val_tape.eval(trace, val_vec, compare_false);
+   val_tape.eval(trace, val_vec);
    */
    // this
    // convert optimized value graph to fun

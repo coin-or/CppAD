@@ -88,8 +88,7 @@ void tape_t<Value>::fold_con(void)
    for(addr_t i = 0; i < n_ind_; ++i)
       val_index2con[i] = nan;
    bool trace           = false;
-   size_t compare_false = 0;
-   eval(trace, val_index2con, compare_false);
+   eval(trace, val_index2con);
    //
    // is_consant
    vectorBool is_constant(n_val_);

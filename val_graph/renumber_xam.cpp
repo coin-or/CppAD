@@ -58,9 +58,7 @@ bool renumber_xam(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // y, ok
    Vector<double> y(1);
@@ -78,8 +76,7 @@ bool renumber_xam(void)
    // val_vec
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // y, ok
    dep_vec = tape.dep_vec();

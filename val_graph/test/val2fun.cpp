@@ -65,9 +65,7 @@ bool dynamic_atom(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = double(5 + i);
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    */
    //
    // ADFun
@@ -152,9 +150,7 @@ bool variable_atom(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = double(5 + i);
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ADFun
    Vector<size_t> var_ind(4), dyn_ind(1);
@@ -226,9 +222,7 @@ bool comp_op(void)
    Vector<double> val_vec( tape.n_val() );
    val_vec[0] = 5.0; // x[0]
    val_vec[1] = 6.0; // x[1]
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // f
    // switch x[0] and x[1] so y[0] = x[1] - x[0] and compare is x[1] < x[0]
@@ -301,9 +295,7 @@ bool dis_op(void)
    Vector<double> val_vec( tape.n_val() );
    val_vec[0] = p[0];
    val_vec[1] = x[0];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // f
    Vector<size_t> var_ind(1), dyn_ind(1);
@@ -369,9 +361,7 @@ bool csum_op(void)
    val_vec[1] = x[1] = 3.0;
    val_vec[2] = p[0] = 5.0;
    val_vec[3] = p[1] = 8.0;
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // y, ok
    Vector<double> y(1);
@@ -459,9 +449,7 @@ bool cexp_op(void)
    val_vec[1] = p[1] = 3.0;
    val_vec[2] = x[0] = 5.0;
    val_vec[3] = x[1] = 8.0;
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // y
    Vector<double> y(2);
@@ -547,9 +535,7 @@ bool pri_op(void)
    Vector<double> val_vec( tape.n_val() );
    val_vec[0] = 6.0; // x[0]
    val_vec[1] = 5.0; // x[1]
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // f
    Vector<size_t> var_ind(2), dyn_ind(0);

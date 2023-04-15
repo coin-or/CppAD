@@ -59,9 +59,7 @@ bool csum_xam(void)
    Vector<double> val_vec( tape.n_val() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // ok
    ok &= tape.n_op()  == 4;

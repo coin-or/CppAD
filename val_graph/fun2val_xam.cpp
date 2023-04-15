@@ -59,9 +59,7 @@ bool fun2val_xam(void)
    val_vec[0] = p[0];
    val_vec[1] = x[0];
    val_vec[2] = x[1];
-   size_t compare_false = 0;
-   tape.eval(trace, val_vec, compare_false);
-   ok &= compare_false == 0;
+   tape.eval(trace, val_vec);
    //
    // y
    Vector<double> y(2);

@@ -11,6 +11,9 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#  val_graph/comp_xam.cpp
+#  val_graph/test/fun2val.cpp
+#  include/cppad/local/val_graph/tape.hpp
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -28,6 +31,8 @@
 # extra_seds='
 # '
 # ----------------------------------------------------------------------------
-# Put other sed commands below here and without # at start of linei
-s|eval(trace, compare_false, val_vec);|eval(trace, val_vec, compare_false);|
-s|eval(trace, compare_false, val_index2con);|eval(trace, val_index2con, compare_false);|
+# Put other sed commands below here and without # at start of each line
+/compare_false *= *0;/d
+/compare_false *== *0/d
+s|eval(trace, val_vec, compare_false);|eval(trace, val_vec);|
+s|eval(trace, val_index2con, compare_false);|eval(trace, val_index2con);|

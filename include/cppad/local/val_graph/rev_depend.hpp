@@ -84,8 +84,7 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
    for(addr_t i = 0; i < n_val_; ++i)
       val_index2con[i] = nan;
    bool trace           = false;
-   size_t compare_false = 0;
-   eval(trace, val_index2con, compare_false);
+   eval(trace, val_index2con);
    //
    // val_use_case
    // initialize as no operator uses any value
