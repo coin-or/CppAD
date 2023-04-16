@@ -35,7 +35,7 @@ set_ind
    // BEGIN_SET_IND
    // END_SET_IND
 }
-The following is the first step in a creating a recording:
+This is the first step in a creating a recording. It does the following:
 
 #. Clear all of the memory that is currently used by the tape.
 #. Set the number of independent values.
@@ -64,6 +64,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    arg_vec_.clear();
    con_vec_.clear();
    str_vec_.clear();
+   size_vec_.clear();
    dep_vec_.clear();
    op_enum_vec_.clear();
    op2arg_index_.clear();
@@ -82,9 +83,56 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    CPPAD_ASSERT_UNKNOWN( arg_vec_.size() == 1 );     // one argument
    CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
    CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );        // empty string
+   CPPAD_ASSERT_UNKNOWN( size_vec_.size() == 0 );    // no dynamic vectors
    CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
    return nan_addr;
    // END_POST_CONDITION
+}
+/*
+{xrst_begin val_add_vec dev}
+
+Adding a Dynamic Vector
+#######################
+
+add_vec
+*******
+{xrst_literal
+   // BEGIN_ADD_VEC
+   // END_ADD_VEC
+}
+This creates a new dynamic vector with the specified size.
+A dynamic vector must be created before a load or store can be recorded
+for the corresponding vector.
+
+size
+****
+is the size of the vector being created.
+The value of the elements of the vector is unspecified.
+One must use a the :ref:`val_load_op-name` to store values in the vector.
+
+return
+******
+The return value is an index identifying which vector this is
+*which_vector* for
+:ref:`load <val_load_op@eval@which_vector>` and
+:ref:`store <val_store_op@eval@which_vector>` operators
+that use this dynamic vector.
+
+
+{xrst_end val_add_vec}
+*/
+// BEGIN_ADD_VEC
+template <class Value>
+addr_t tape_t<Value>::add_vec(addr_t size)
+// END_ADD_VEC
+{  //
+   // vector_index
+   addr_t vector_index = addr_t( size_vec_.size() );
+   //
+   // size_vec_
+   size_vec_.push_back(size);
+   //
+   return vector_index;
 }
 /*
 -------------------------------------------------------------------------------
@@ -124,13 +172,9 @@ void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
 /*
 -------------------------------------------------------------------------------
 {xrst_begin val_record_op dev}
-{xrst_spell
-   operands
-}
 
-
-Recording Unary and Binary Operations
-#####################################
+Recording Operators with One Result
+###################################
 
 record_op
 *********
@@ -138,10 +182,20 @@ record_op
    // BEGIN_RECORD_OP
    // END_RECORD_OP
 }
-This places any operator that has one result in the tape.
-The argument *op_enum* identifies the operator.
-The argument *op_arg* is a vector that contains the index of the operands
-in the value vector.
+This can be used to place any operator that has one result in the tape;
+e.g., the unary and binary operators.
+
+op_enum
+*******
+The argument identifies the operator.
+
+op_arg
+******
+The vector contains the arg_vec values for this operator.
+Its size must be equal to :ref:`val_base_op@n_arg` for this operator.
+
+return
+******
 The return value is the index were the result of the operation
 is placed in the value vector.
 
@@ -157,10 +211,11 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
    //
    // res_index
-   addr_t res_index = addr_t( n_val_) ;
-   //
+   addr_t res_index = n_val_;
+# ifndef NDEBUG
    // arg_index
    addr_t arg_index = addr_t( arg_vec_.size() );
+# endif
    //
    // op_enum_vec_
    op_enum_vec_.push_back( uint8_t( op_enum ) );
@@ -212,7 +267,7 @@ addr_t tape_t<Value>::record_con_op(const Value& constant)
    {  CPPAD_ASSERT_UNKNOWN( CppAD::isnan(constant) && n_val_ == n_ind_ );
    }
    else if( CppAD::isnan(constant) )
-      return addr_t( n_ind_ );
+      return n_ind_;
    //
    // con_index
    addr_t con_index = addr_t( con_vec_.size() );
@@ -642,6 +697,118 @@ addr_t tape_t<Value>::record_pri_op(
    // arg_vec_: flag_index, value_index
    arg_vec_.push_back( flag_index );
    arg_vec_.push_back( value_index );
+   //
+   return res_index;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_record_load_op dev}
+
+Recording Load Operations
+#########################
+
+record_load_op
+**************
+{xrst_literal
+   // BEGIN_RECORD_LOAD_OP
+   // END_RECORD_LOAD_OP
+}
+This places a :ref:`val_load_op-name` operator in the tape.
+
+which_vector
+============
+This is the index returned by :ref:`val_add_vec-name`
+for this dynamic vector.
+
+vector_index
+============
+This is the index, in the value vector, of the index in the dynamic vector,
+of the element for this load operation.
+
+return
+******
+The return value is the index were the result of the operation
+is placed in the value vector.
+
+{xrst_end val_record_load_op}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_LOAD_OP
+template <class Value>
+addr_t tape_t<Value>::record_load_op(
+   addr_t   which_vector  ,
+   addr_t   vector_index  )
+// END_RECORD_LOAD_OP
+{  //
+   // res_index
+   addr_t res_index = n_val_;
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t(load_op_enum) );
+   //
+   // arg_vec_
+   arg_vec_.push_back( which_vector );
+   arg_vec_.push_back( vector_index );
+   //
+   // n_val_
+   ++n_val_;
+   //
+   return res_index;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_record_store_op dev}
+
+Recording Store Operations
+##########################
+
+record_store_op
+***************
+{xrst_literal
+   // BEGIN_RECORD_STORE_OP
+   // END_RECORD_STORE_OP
+}
+This places a :ref:`val_store_op-name` operator in the tape.
+
+which_vector
+============
+This is the index returned by :ref:`val_add_vec-name`
+for this dynamic vector.
+
+vector_index
+============
+This is the index, in the value vector, of the index in the dynamic vector,
+of the element for this store operation.
+
+return
+******
+The return value is always zero because there is
+no value vector result for this operator.
+
+{xrst_end val_record_store_op}
+*/
+// ----------------------------------------------------------------------------
+// BEGIN_RECORD_STORE_OP
+template <class Value>
+addr_t tape_t<Value>::record_store_op(
+   addr_t   which_vector  ,
+   addr_t   vector_index  ,
+   addr_t   value_index   )
+// END_RECORD_STORE_OP
+{  //
+   // res_index
+   addr_t res_index = 0;
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t(store_op_enum) );
+   //
+   // arg_vec_
+   arg_vec_.push_back( which_vector );
+   arg_vec_.push_back( vector_index );
+   arg_vec_.push_back( value_index  );
+   //
+   // n_val_
+   ++n_val_;
    //
    return res_index;
 }

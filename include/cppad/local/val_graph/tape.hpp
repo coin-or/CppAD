@@ -86,7 +86,7 @@ con_vec
    // BEGIN_CON_VEC
    // END_CON_VEC
 }
-This is a vector of value constants.
+This is the vector of value constants.
 
 str_vec
 *******
@@ -94,7 +94,15 @@ str_vec
    // BEGIN_STR_VEC
    // END_STR_VEC
 }
-This is a vector of string constants.
+This is the vector of string constants.
+
+size_vec
+********
+{xrst_literal
+   // BEGIN_SIZE_VEC
+   // END_SIZE_VEC
+}
+This vector has the size for each of the dynamic vectors.
 
 op_enum_vec
 ***********
@@ -184,6 +192,7 @@ private :
    Vector<addr_t>      arg_vec_;     // arguments for all operator uses
    Vector<Value>       con_vec_;     // value constants
    Vector<std::string> str_vec_;     // string constants
+   Vector<addr_t>      size_vec_;    // size for each of the dynamic vectors
    Vector<addr_t>      dep_vec_;     // dependent variable indices in val_vec
    Vector<uint8_t>     op_enum_vec_; // one byte per operator enum value.
    //
@@ -242,6 +251,11 @@ public :
    {  return str_vec_; }
    // END_STR_VEC
    //
+   // BEGIN_SIZE_VEC
+   const Vector<addr_t>& size_vec(void) const
+   {  return size_vec_; }
+   // END_SIZE_VEC
+   //
    // BEGIN_OP_ENUM_VEC
    const Vector<uint8_t>& op_enum_vec(void) const
    {  return op_enum_vec_; }
@@ -260,6 +274,7 @@ public :
       arg_vec_.swap( other.arg_vec_ );
       con_vec_.swap( other.con_vec_ );
       str_vec_.swap( other.str_vec_ );
+      size_vec_.swap( other.size_vec_ );
       dep_vec_.swap( other.dep_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
       op2arg_index_.swap( other.op2arg_index_ );
@@ -358,6 +373,9 @@ public :
    // set_ind
    addr_t set_ind(addr_t n_ind);
    //
+   // add_vec
+   addr_t add_vec(addr_t size);
+   //
    // record_op
    addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
    //
@@ -403,6 +421,19 @@ public :
       const std::string& after       ,
       addr_t             flag_index  ,
       addr_t             value_index
+   );
+   //
+   // record_load_op
+   addr_t record_load_op(
+      addr_t   which_vector  ,
+      addr_t   vector_index
+   );
+   //
+   // record_store_op
+   addr_t record_store_op(
+      addr_t   which_vector  ,
+      addr_t   vector_index  ,
+      addr_t   value_index
    );
    //
    // set_dep
