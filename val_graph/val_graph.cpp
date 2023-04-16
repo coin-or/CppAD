@@ -35,11 +35,12 @@ extern bool test_fold(void);
 extern bool test_fun2val(void);
 extern bool test_nan(void);
 extern bool test_opt_call(void);
-extern bool test_val_optimize(void);
 extern bool test_optimize(void);
 extern bool test_val2fun(void);
+extern bool test_val_optimize(void);
 extern bool unary_xam(void);
 extern bool val2fun_xam(void);
+extern bool vec_xam(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -72,6 +73,7 @@ int main(void)
    Run( test_val2fun,        "test_val2fun"        );
    Run( unary_xam,           "unary_xam"           );
    Run( val2fun_xam,         "val2fun_xam"         );
+   Run( vec_xam,             "vec_xam"             );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

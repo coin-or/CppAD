@@ -416,7 +416,7 @@ inline void print_load_op(
    //
    cout << right << setw(5) << res_index;
    cout << " " << right << setw(10) << res_value;
-   cout << setw(5)  << "load" << "[";
+   cout << " = " << setw(5)  << "load" << "[";
    cout << right << setw(5) << which_vector  << "](";
    cout << right << setw(5) << vector_index << ")" << std::endl;
 }

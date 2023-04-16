@@ -807,9 +807,6 @@ addr_t tape_t<Value>::record_store_op(
    arg_vec_.push_back( vector_index );
    arg_vec_.push_back( value_index  );
    //
-   // n_val_
-   ++n_val_;
-   //
    return res_index;
 }
 

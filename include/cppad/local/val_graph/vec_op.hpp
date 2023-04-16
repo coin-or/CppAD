@@ -13,20 +13,22 @@
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin_parent val_vec_op dev}
+{xrst_spell
+   xam
+}
 
 The Dynamic Vector Value Operators
 ##################################
 These classes implement dynamic vectors; i.e., vector were
 the indices may depend on the independent values.
 
-{xrst_comment
+{xrst_toc_hidden
    val_graph/vec_xam.cpp
-
+}
 Example
 *******
 The file :ref:`com_xam.cpp <val_vec_xam.cpp-name>`
 is an example and test that uses this operator.
-}
 
 {xrst_end val_vec_op}
 // ---------------------------------------------------------------------------

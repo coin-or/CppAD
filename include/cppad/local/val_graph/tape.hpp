@@ -311,7 +311,22 @@ public :
       Vector< Vector<Value> >& val_vec_vec   ,
       size_t&                  compare_false ) const
    // END_EVAL
-   {  assert( val_vec.size() == static_cast<size_t>(n_val_) );
+   {  CPPAD_ASSERT_KNOWN(
+         val_vec.size() == size_t(n_val_),
+         "eval: size of val_vec not equal to tape.n_val()"
+      );
+      CPPAD_ASSERT_KNOWN(
+         val_vec_vec.size() == size_vec_.size(),
+         "eval: size of val_vec_vec is not equal tape.size_vec().size()"
+      );
+# ifndef NDEBUG
+      for(size_t i = 0; i < size_vec_.size(); ++i)
+      {  CPPAD_ASSERT_KNOWN(
+            val_vec_vec[i].size() == size_t( size_vec_[i] ),
+            "eval: size of val_vec_vec[i] is not equal tape.size_vec()[i]"
+         );
+      }
+# endif
       using std::setw;
       using std::right;
       using std::cout;

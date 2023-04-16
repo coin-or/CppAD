@@ -23,11 +23,12 @@ SET(source_list val_graph.cpp
    test/fun2val.cpp
    test/nan.cpp
    test/opt_call.cpp
-   test/val_optimize.cpp
    test/optimize.cpp
    test/val2fun.cpp
+   test/val_optimize.cpp
    unary_xam.cpp
    val2fun_xam.cpp
+   vec_xam.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
