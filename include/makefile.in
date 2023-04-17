@@ -943,7 +943,6 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/val_graph/fun2val.hpp \
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_iterator.hpp \
-	cppad/local/val_graph/val_optimize.hpp \
 	cppad/local/val_graph/option.hpp \
 	cppad/local/val_graph/pri_op.hpp \
 	cppad/local/val_graph/print_op.hpp \
@@ -954,8 +953,10 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/val_graph/tape.hpp \
 	cppad/local/val_graph/unary_op.hpp \
 	cppad/local/val_graph/val2fun.hpp \
+	cppad/local/val_graph/val_optimize.hpp \
 	cppad/local/val_graph/val_type.hpp \
 	cppad/local/val_graph/var_type.hpp \
+	cppad/local/val_graph/vec_op.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
