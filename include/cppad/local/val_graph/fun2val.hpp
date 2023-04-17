@@ -222,7 +222,7 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // i_arg
    // initial index in dyn_par_arg
-   size_t i_arg = 0;
+   addr_t i_arg = 0;
    //
    // ensure_par2val_index
    // val_tape, par2val_index
@@ -356,8 +356,8 @@ void ADFun<Base, RecBase>::fun2val(
          case local::atom_dyn:
          {  //
             // atomic_index, call_id, n_call_arg, n_res
-            size_t atomic_index = size_t( dyn_par_arg[i_arg + 0] );
-            size_t call_id      = size_t( dyn_par_arg[i_arg + 1] );
+            addr_t atomic_index = dyn_par_arg[i_arg + 0];
+            addr_t call_id      = dyn_par_arg[i_arg + 1];
             addr_t n_call_arg   = dyn_par_arg[i_arg + 2];
             addr_t n_res        =  dyn_par_arg[i_arg + 3] ;
             // num_dyn          = size_t( dyn_par_arg[i_age + 4] );

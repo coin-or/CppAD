@@ -147,7 +147,7 @@ void ADFun<Base, RecBase>::val2fun(
 # ifndef NDEBUG
    // val_n_ind
    // size of the independent value vector
-   size_t val_n_ind = val_tape.n_ind();
+   size_t val_n_ind = size_t( val_tape.n_ind() );
 # endif
    //
    // dyn_n_ind
@@ -839,7 +839,7 @@ void ADFun<Base, RecBase>::val2fun(
          rec.PutArg( fun_index );
          fun_index = rec.PutOp(local::ParOp);
       }
-      dep_taddr_[i] = fun_index;
+      dep_taddr_[i] = size_t( fun_index );
    }
    // rec
    rec.PutOp(local::EndOp);

@@ -72,7 +72,7 @@ private:
          for(addr_t i = n_arg - n_after; i < n_arg ; ++i)
             code += size_t( arg_vec[arg_index + i] );
       }
-      code = code % table_.n_set();
+      code = code % size_t( table_.n_set() );
       return addr_t( code );
    }
 public:
@@ -97,7 +97,7 @@ public:
       {  addr_t number_elements = table_.number_elements(i);
          if( size_t( number_elements ) >= count.size() )
          {  size_t old_size = count.size();
-            size_t new_size = number_elements + 1;
+            addr_t new_size = number_elements + 1;
             count.resize(new_size);
             for(size_t j = old_size; j < new_size; ++j)
                count[j] = 0;

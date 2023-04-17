@@ -95,7 +95,7 @@ void print_op(
       else
             cout << ")";
    }
-   for(size_t i = 0; i < n_res; ++i)
+   for(addr_t i = 0; i < addr_t( n_res ); ++i)
    {  cout << std::endl;
       cout << right << setw(5) << res_index + i;
       cout << " " << setw(10) << res_value[i];

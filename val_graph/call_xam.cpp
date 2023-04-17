@@ -55,14 +55,14 @@ bool call_xam(void)
    Vector<addr_t> dep_vec(n_res);
    //
    // atomic_index
-   size_t atomic_index = atomic_xam.atomic_index();
+   addr_t atomic_index = addr_t( atomic_xam.atomic_index() );
    //
    // f_0(x) = x[0] + x[1]
    // f_1(x) = x[2] * x[3]
    for(addr_t i = 0; i < 4; ++i)
       callarg[i] = i;
-   size_t call_id    = 0;
-   size_t n_call_res = 2;
+   addr_t call_id    = 0;
+   addr_t n_call_res = 2;
    addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_call_res, callarg
    );

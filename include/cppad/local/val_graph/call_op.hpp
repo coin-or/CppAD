@@ -141,13 +141,13 @@ public:
    addr_t n_arg(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
-   {  return size_t( arg_vec[arg_index + 0] ); }
+   {  return arg_vec[arg_index + 0]; }
    //
    // n_res
    addr_t n_res(
       addr_t                arg_index    ,
       const Vector<addr_t>& arg_vec      ) const override
-   {  return size_t( arg_vec[arg_index + 1] ); }
+   {  return arg_vec[arg_index + 1]; }
    //
    // atomic_index
    size_t atomic_index(

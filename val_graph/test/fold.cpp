@@ -30,7 +30,7 @@ bool atom(void)
    ok &= index_of_nan == n_ind;
    //
    // atomic_index
-   size_t atomic_index = atomic_xam.atomic_index();
+   addr_t atomic_index = addr_t( atomic_xam.atomic_index() );
    //
    // g_0(x) = c[0] + c[1]
    // g_1(x) = c[2] * c[3]
@@ -39,8 +39,8 @@ bool atom(void)
    {  c[i] = double(i + 2);
       callarg[i] = tape.record_con_op(c[i]);
    }
-   size_t n_call_res = 2;
-   size_t call_id    = 0;
+   addr_t n_call_res = 2;
+   addr_t call_id    = 0;
    addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_call_res, callarg
    );

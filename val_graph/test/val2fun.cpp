@@ -35,14 +35,14 @@ bool dynamic_atom(void)
    Vector<addr_t> dep_vec(2);
    //
    // atomic_index
-   size_t atomic_index = atomic_xam.atomic_index();
+   addr_t atomic_index = addr_t( atomic_xam.atomic_index() );
    //
    // g_0(x) = p[0] + p[1]
    // g_1(x) = p[2] * p[3]
    for(addr_t i = 0; i < 4; ++i)
       call_arg[i] = i;
-   size_t call_id    = 0;
-   size_t n_call_res = 2;
+   addr_t call_id    = 0;
+   addr_t n_call_res = 2;
    addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_call_res, call_arg
    );
@@ -70,7 +70,7 @@ bool dynamic_atom(void)
    //
    // ADFun
    Vector<size_t> dyn_ind(4), var_ind(1);
-   for(addr_t i = 0; i < 4; i++)
+   for(size_t i = 0; i < 4; i++)
       dyn_ind[i] = i;
    var_ind[0] = 4;
    CppAD::ADFun<double> f;
@@ -120,14 +120,14 @@ bool variable_atom(void)
    Vector<addr_t> dep_vec(2);
    //
    // atomic_index
-   size_t atomic_index = atomic_xam.atomic_index();
+   addr_t atomic_index = addr_t (atomic_xam.atomic_index() );
    //
    // g_0(x) = x[0] + x[1]
    // g_1(x) = x[2] * x[3]
    for(addr_t i = 0; i < 4; ++i)
       call_arg[i] = i;
-   size_t call_id    = 0;
-   size_t n_call_res = 2;
+   addr_t call_id    = 0;
+   addr_t n_call_res = 2;
    addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_call_res, call_arg
    );
@@ -154,7 +154,7 @@ bool variable_atom(void)
    //
    // ADFun
    Vector<size_t> var_ind(4), dyn_ind(1);
-   for(addr_t i = 0; i < 4; i++)
+   for(size_t i = 0; i < 4; i++)
       var_ind[i] = i;
    dyn_ind[0] = 4;
    CppAD::ADFun<double> f;

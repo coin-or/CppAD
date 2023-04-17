@@ -409,9 +409,9 @@ public :
    //
    // record_call_op
    addr_t record_call_op(
-      size_t atomic_index           ,
-      size_t call_id                ,
-      size_t n_res                  ,
+      addr_t atomic_index           ,
+      addr_t call_id                ,
+      addr_t n_res                  ,
       const Vector<addr_t>& fun_arg
    );
    //

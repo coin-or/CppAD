@@ -165,7 +165,7 @@ public:
       //
       // arg
       Vector<addr_t> arg(4);
-      for(size_t i = 0; i < 4; ++i)
+      for(addr_t i = 0; i < 4; ++i)
          arg[i] = arg_vec[ arg_index + i ];
       //
       if( trace )

@@ -91,7 +91,7 @@ void tape_t<Value>::fold_con(void)
    eval(trace, val_index2con);
    //
    // is_consant
-   vectorBool is_constant(n_val_);
+   vectorBool is_constant( static_cast<size_t>(n_val_) );
    for(addr_t i = 0; i < n_val_; ++i)
       is_constant[i] = false;
    //
@@ -190,8 +190,8 @@ void tape_t<Value>::fold_con(void)
          case call_op_enum:
          {  //
             // atomic_index, call_id
-            size_t atomic_index = size_t( arg_vec_[arg_index + 2] );
-            size_t call_id      = size_t( arg_vec_[arg_index + 3] );
+            addr_t atomic_index = arg_vec_[arg_index + 2];
+            addr_t call_id      = arg_vec_[arg_index + 3];
             CPPAD_ASSERT_UNKNOWN( atomic_index > 0 );
             //
             // n_before, n_x
@@ -212,7 +212,7 @@ void tape_t<Value>::fold_con(void)
             // type_y
             type_y.resize(n_res);
             call_atomic_for_type<Value>(
-               con_x, type_x, type_y, atomic_index, call_id
+               con_x, type_x, type_y, size_t(atomic_index), size_t(call_id)
             );
             //
             // new_tape, new_res_index
@@ -223,7 +223,7 @@ void tape_t<Value>::fold_con(void)
                op_arg[k]      = old2new_index[old_index];
             }
             addr_t new_res_index = new_tape.record_call_op(
-               atomic_index, call_id, size_t(n_res), op_arg
+               atomic_index, call_id, n_res, op_arg
             );
             //
             // is_constant, new_tape, old2new_index

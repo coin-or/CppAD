@@ -40,7 +40,7 @@ bool result_not_used(void)
    Vector<addr_t> dep_vec(n_dep);
    //
    // atomic_index
-   size_t atomic_index      = atomic_xam.atomic_index();
+   addr_t atomic_index  = addr_t( atomic_xam.atomic_index() );
    //
    // add = x[0] + x[1]
    op_arg[0] = 0;
@@ -58,8 +58,8 @@ bool result_not_used(void)
    fun_arg[1] = tape.record_con_op(3.0);
    fun_arg[2] = add;
    fun_arg[3] = sub;
-   size_t call_id   = 0;
-   size_t n_fun_res = 2;
+   addr_t call_id   = 0;
+   addr_t n_fun_res = 2;
    addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_fun_res, fun_arg
    );
@@ -153,7 +153,7 @@ bool ident_zero(void)
    Vector<addr_t> dep_vec(n_dep);
    //
    // atomic_index
-   size_t atomic_index      = atomic_xam.atomic_index();
+   addr_t atomic_index = addr_t( atomic_xam.atomic_index() );
    //
    // add = x[0] + x[1]
    op_arg[0] = 0;
@@ -171,8 +171,8 @@ bool ident_zero(void)
    fun_arg[1] = tape.record_con_op(3.0);
    fun_arg[2] = sub;
    fun_arg[3] = tape.record_con_op(0.0);
-   size_t call_id   = 0;
-   size_t n_fun_res = 2;
+   addr_t call_id   = 0;
+   addr_t n_fun_res = 2;
    addr_t res_index = tape.record_call_op(
       atomic_index, call_id, n_fun_res, fun_arg
    );

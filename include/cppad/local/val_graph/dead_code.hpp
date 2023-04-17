@@ -228,10 +228,10 @@ void tape_t<Value>::dead_code(void)
                      call_op_arg[k] = addr_t( n_ind_ );
                   }
                }
-               size_t atomic_index      = size_t( arg_vec_[arg_index + 2] );
-               size_t call_id     = size_t( arg_vec_[arg_index + 3] );
+               addr_t atomic_index = arg_vec_[arg_index + 2];
+               addr_t call_id      = arg_vec_[arg_index + 3];
                addr_t new_res_index = new_tape.record_call_op(
-                  atomic_index, call_id, size_t(n_res), call_op_arg
+                  atomic_index, call_id, n_res, call_op_arg
                );
                for(addr_t k = 0; k < n_res; ++k)
                   new_val_index[ res_index + k ] = new_res_index + k;

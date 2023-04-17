@@ -436,9 +436,9 @@ A total of *n_res* results are placed in the value vector.
 // BEGIN_RECORD_CALL_OP
 template <class Value>
 addr_t tape_t<Value>::record_call_op(
-   size_t  atomic_index          ,
-   size_t  call_id               ,
-   size_t  n_res                 ,
+   addr_t  atomic_index          ,
+   addr_t  call_id               ,
+   addr_t  n_res                 ,
    const Vector<addr_t>& fun_arg )
 // END_RECORD_CALL_OP
 {  //
@@ -451,9 +451,9 @@ addr_t tape_t<Value>::record_call_op(
    // arg_vec_
    addr_t n_arg = 5 + addr_t( fun_arg.size() );
    arg_vec_.push_back( n_arg );
-   arg_vec_.push_back( addr_t( n_res ) );
-   arg_vec_.push_back( addr_t( atomic_index ) );
-   arg_vec_.push_back( addr_t( call_id ) );
+   arg_vec_.push_back( n_res );
+   arg_vec_.push_back( atomic_index );
+   arg_vec_.push_back( call_id );
    for(size_t i = 0; i < fun_arg.size(); ++i)
       arg_vec_.push_back( fun_arg[i] );
    arg_vec_.push_back( n_arg );

@@ -430,7 +430,7 @@ private:
       CPPAD_ASSERT_UNKNOWN( data_[0].next  == 0  );
       // -----------------------------------------------------------
       // save a copy of the reference counters in temporary_
-      temporary_.resize(n_set);
+      temporary_.resize( size_t(n_set) );
       for(s_type i = 0; i < n_set; i++)
          temporary_[i] = reference_count(i);
       // -----------------------------------------------------------
@@ -684,8 +684,8 @@ public:
       }
       end_                   = end;
       //
-      start_.resize(n_set);
-      post_.resize(n_set);
+      start_.resize( size_t(n_set) );
+      post_.resize(  size_t(n_set) );
       //
       for(s_type i = 0; i < n_set; i++)
       {  start_[i] = 0;

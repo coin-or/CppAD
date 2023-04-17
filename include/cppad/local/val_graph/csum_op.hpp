@@ -212,7 +212,7 @@ void csum_op_t<Value>::eval(
    //
    // print_csum_op
    Vector<addr_t> arg(3 + n_add + n_sub);
-   for(size_t i = 0; i < arg.size(); ++i)
+   for(addr_t i = 0; i < addr_t( arg.size() ); ++i)
       arg[i] = arg_vec[ arg_index + i ];
    Vector<Value> res_value = { val_vec[res_index] };
    print_csum_op(arg, res_index, res_value );
