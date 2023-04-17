@@ -146,6 +146,7 @@ Contents
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/sparse/internal.hpp>
 # include <cppad/local/atomic_index.hpp>
+# include <cppad/core/ad.hpp>
 
 // needed before one can use in_parallel
 # include <cppad/utility/thread_alloc.hpp>
@@ -165,6 +166,10 @@ public:
       bool_sparsity_enum   ,
       set_sparsity_enum
    };
+   //
+   // atomic_index
+   size_t atomic_index(void) const
+   { return index_; }
 private:
    // ------------------------------------------------------
    // constants

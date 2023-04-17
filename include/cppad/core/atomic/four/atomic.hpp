@@ -122,8 +122,13 @@ Contents
 */
 
 # include <set>
+# include <map>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/atomic_index.hpp>
+# include <cppad/core/ad_type.hpp>
+# include <cppad/utility/sparse_rc.hpp>
+# include <cppad/local/pod_vector.hpp>
+# include <cppad/local/op_code_var.hpp>
 
 // needed before one can use in_parallel
 # include <cppad/utility/thread_alloc.hpp>
@@ -141,7 +146,7 @@ private:
    // ------------------------------------------------------
    // constants
    //
-   /// index of this object in lcal::atomic_index
+   /// index of this object in local::atomic_index
    /// (set by constructor and not changed; i.e., effectively const)
    size_t index_;
    //
