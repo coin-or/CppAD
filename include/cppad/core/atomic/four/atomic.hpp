@@ -133,9 +133,6 @@ Contents
 // needed before one can use in_parallel
 # include <cppad/utility/thread_alloc.hpp>
 
-// 2DO: remove this and figure out a minimal include
-# include <cppad/cppad.hpp>
-
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file atomic_four.hpp
@@ -177,6 +174,8 @@ private:
 public:
    //
    // atomic_index
+   // Needed by val_graph and not documented. Perhaps should be in
+   // include/cppad/core/atomic/four/devel/devel.xrst
    size_t atomic_index(void) const
    { return index_; }
    // =====================================================================
