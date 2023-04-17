@@ -201,7 +201,7 @@ will output the value *scalar* to *os* .
 
 resize
 ******
-If *n* is a ``size_t`` ,
+If *n* is a ``size_t`` or ``int`` ,
 
    *vec* . ``resize`` ( *n* )
 

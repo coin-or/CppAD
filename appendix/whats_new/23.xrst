@@ -15,9 +15,12 @@ mm-dd
 
 04-17
 =====
-Extend the CppAD::vector template class so that the
-:ref:`cppad_vector_size@resize` argument can be an ``int``
+Extend the CppAD::vector CppAD::vectorBool template classes so that the
+:ref:`CppAD_vector@resize` argument can be an ``int``
 (this was causing a warning with the clang++ compiler).
+Also extend :ref:`CppAD_vector@vectorBool` so that any index type,
+that can be converted to size_t, can be used to access elements
+(whithout a clang++ warning).
 
 04-01
 =====
