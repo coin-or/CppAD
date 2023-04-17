@@ -13,6 +13,12 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+04-17
+=====
+Extend the CppAD::vector template class so that the
+:ref:`cppad_vector_size@resize` argument can be an ``int``
+(this was causing a warning with the clang++ compiler).
+
 04-01
 =====
 Extend index_sort so that the

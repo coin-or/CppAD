@@ -56,6 +56,11 @@ bool CppAD_vector(void)
    int    two_i = 2;
    vector<Scalar> vec(2), other(two_s), another(two_i);
 
+   // check resize with size_t and with int
+   vec.resize(2);
+   other.resize(two_s);
+   another.resize(two_i);
+
    // assignment returns reference for use in other assignments
    another[0] = Scalar(1);
    another[1] = Scalar(2);
