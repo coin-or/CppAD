@@ -41,17 +41,19 @@ bool vectorBool(void)
    x.resize( two_i );
    ok &= (x.size() == 2);
 
-   // set element values
-   x[0] = false;
-   x[1] = true;
+   // set element values using size_t and int
+   size_t zero_s = 0;
+   int    one_i  = 1;
+   x[zero_s]     = false;
+   x[one_i]      = true;
 
    vectorBool y(2);       // sizing constructor
    ok &= (y.size() == 2);
 
-   // swap
+   // swap, get element values using size_t and int
    y.swap(x);
-   ok &= y[0] == false;
-   ok &= y[1] == true;
+   ok &= y[zero_s] == false;
+   ok &= y[one_i]  == true;
 
    const vectorBool z(y); // copy constructor and const element access
    ok &= (z.size() == 2);

@@ -277,9 +277,8 @@ vectorBool: Assignment Operators
 Syntax
 ******
 
-   *vec* . ``swap`` ( *other* )
-
-*vec* = *other*
+| |tab| *vec* . ``swap`` ( *other* )
+| |tab| *vec* = *other*
 
 Prototype
 *********
@@ -404,6 +403,11 @@ Source Code
       unit_t mask         = unit_t(1) << bit_index;
       return local::utility::vectorBoolElement(data_ + unit_index , mask);
    }
+   template <class Index> bool operator[]( Index i) const
+   {  return (*this)[size_t(i)]; }
+   template <class Index>
+   local::utility::vectorBoolElement operator[](Index i)
+   {  return (*this)[size_t(i)]; }
 /* {xrst_code}
 {xrst_spell_on}
 
