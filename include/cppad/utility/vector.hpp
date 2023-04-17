@@ -209,8 +209,8 @@ Vector Class: Change Size
 Syntax
 ******
 
-   *vec* . ``resize`` ( *n* )
-   *vec* . ``clear`` ()
+| |tab|  *vec* . ``resize`` ( *n* )
+| |tab| *vec* . ``clear`` ()
 
 n
 *

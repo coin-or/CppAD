@@ -202,24 +202,13 @@ vectorBool: Change Size
 Syntax
 ******
 
-   *vec* . ``resize`` ( *n* )
-
-*vec* . ``clear`` ()
-
-Prototype
-*********
-{xrst_literal
-   // BEGIN_RESIZE
-   // END_RESIZE
-}
-{xrst_literal
-   // BEGIN_CLEAR
-   // END_CLEAR
-}
+| |tab| *vec* . ``resize`` ( *n* )
+| |tab| *vec* . ``clear`` ()
 
 n
 *
-is the number of elements in the new version of the vector.
+is a ``size_t`` or ``int`` specifying
+the number of elements in the new version of the vector.
 
 resize
 ******
@@ -239,6 +228,13 @@ the memory allocated for this vector is freed and
 */
 // BEGIN_RESIZE
 public:
+   void resize(int n)
+   {  CPPAD_ASSERT_KNOWN(
+         n >= 0,
+         "CppAD::vector: attempt to create a vector with a negative size."
+      );
+      resize( size_t(n) );
+   }
    void resize(size_t n)
 // END_RESIZE
    {  length_ = n;

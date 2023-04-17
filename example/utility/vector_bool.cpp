@@ -34,8 +34,14 @@ bool vectorBool(void)
    vectorBool x;          // default constructor
    ok &= (x.size() == 0);
 
-   x.resize(2);             // resize and set element assignment to bool
+   // resize using size_t or int
+   size_t two_s = 2;
+   int    two_i = 2;
+   x.resize( two_s );
+   x.resize( two_i );
    ok &= (x.size() == 2);
+
+   // set element values
    x[0] = false;
    x[1] = true;
 
