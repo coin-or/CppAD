@@ -146,6 +146,7 @@ Contents
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/sparse/internal.hpp>
 # include <cppad/local/atomic_index.hpp>
+# include <cppad/core/ad.hpp>
 
 // needed before one can use in_parallel
 # include <cppad/utility/thread_alloc.hpp>

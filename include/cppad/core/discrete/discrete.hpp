@@ -6,6 +6,7 @@
 // ----------------------------------------------------------------------------
 # include <vector>
 # include <cppad/core/cppad_assert.hpp>
+# include <cppad/local/op_code_dyn.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
