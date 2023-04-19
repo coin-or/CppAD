@@ -102,15 +102,15 @@ void tape_t<Value>::dead_code(void)
    new_tape.set_ind(n_ind_);
    //
    // new_tape, new_which_vec
-   Vector<addr_t> new_which_vec( size_vec_.size() );
+   Vector<addr_t> new_which_vec( vec_size_.size() );
    {  addr_t which_vector = 0;
-      for(size_t i = 0; i < size_vec_.size(); ++i)
+      for(size_t i = 0; i < vec_size_.size(); ++i)
       {  if( 0 < vec_last_load[i] )
          {  new_which_vec[i] = which_vector++;
-            new_tape.add_vec( size_vec_[i] );
+            new_tape.add_vec( vec_size_[i] );
          }
          else
-            new_which_vec[i] = addr_t( size_vec_.size() );
+            new_which_vec[i] = addr_t( vec_size_.size() );
       }
    }
 

@@ -64,7 +64,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    arg_vec_.clear();
    con_vec_.clear();
    str_vec_.clear();
-   size_vec_.clear();
+   vec_size_.clear();
    dep_vec_.clear();
    op_enum_vec_.clear();
    op2arg_index_.clear();
@@ -83,7 +83,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    CPPAD_ASSERT_UNKNOWN( arg_vec_.size() == 1 );     // one argument
    CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
    CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );        // empty string
-   CPPAD_ASSERT_UNKNOWN( size_vec_.size() == 0 );    // no dynamic vectors
+   CPPAD_ASSERT_UNKNOWN( vec_size_.size() == 0 );    // no dynamic vectors
    CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
    return nan_addr;
    // END_POST_CONDITION
@@ -127,10 +127,10 @@ addr_t tape_t<Value>::add_vec(addr_t size)
 // END_ADD_VEC
 {  //
    // vector_index
-   addr_t vector_index = addr_t( size_vec_.size() );
+   addr_t vector_index = addr_t( vec_size_.size() );
    //
-   // size_vec_
-   size_vec_.push_back(size);
+   // vec_size_
+   vec_size_.push_back(size);
    //
    return vector_index;
 }

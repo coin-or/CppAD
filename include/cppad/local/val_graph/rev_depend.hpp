@@ -56,7 +56,7 @@ vec_last_load
 *************
 This vector is empty on input.
 Upon return, it has size equal the number of dynamic vectors; i.e.,
-size_vec\_.size() .
+vec_size\_.size() .
 The value
 
    *i_op* = *vec_last_load* [ *which_vector* ]
@@ -104,9 +104,9 @@ void tape_t<Value>::rev_depend(
    Vector<bool> depend_x, depend_y;
    //
    // val_index2con
-   Vector< Vector<Value> > val_vec_vec( size_vec_.size() );
-   for(size_t i = 0; i < size_vec_.size(); ++i)
-      val_vec_vec[i].resize( size_vec_[i] );
+   Vector< Vector<Value> > val_vec_vec( vec_size_.size() );
+   for(size_t i = 0; i < vec_size_.size(); ++i)
+      val_vec_vec[i].resize( vec_size_[i] );
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    Vector<Value> val_index2con(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
@@ -122,8 +122,8 @@ void tape_t<Value>::rev_depend(
    //
    // vec_last_load
    // initialize as the no operator uses any dynamic vector
-   vec_last_load.resize( size_vec_.size() );
-   for(size_t i = 0; i < size_vec_.size(); ++i)
+   vec_last_load.resize( vec_size_.size() );
+   for(size_t i = 0; i < vec_size_.size(); ++i)
       vec_last_load[i] = 0;
    //
    // val_use_case

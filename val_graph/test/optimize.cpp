@@ -473,9 +473,9 @@ bool dynamic_vector(void)
    //
    // val_vec
    val_vec.resize( tape.n_val() );
-   val_vec_vec.resize( tape.size_vec().size() );
+   val_vec_vec.resize( tape.vec_size().size() );
    for(size_t i = 0; i < val_vec_vec.size(); ++i)
-      val_vec_vec[i].resize( tape.size_vec()[i] );
+      val_vec_vec[i].resize( tape.vec_size()[i] );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    tape.eval(trace, val_vec, val_vec_vec);

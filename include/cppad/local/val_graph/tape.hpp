@@ -96,7 +96,7 @@ str_vec
 }
 This is the vector of string constants.
 
-size_vec
+vec_size
 ********
 {xrst_literal
    // BEGIN_SIZE_VEC
@@ -192,7 +192,7 @@ private :
    Vector<addr_t>      arg_vec_;     // arguments for all operator uses
    Vector<Value>       con_vec_;     // value constants
    Vector<std::string> str_vec_;     // string constants
-   Vector<addr_t>      size_vec_;    // size for each of the dynamic vectors
+   Vector<addr_t>      vec_size_;    // size for each of the dynamic vectors
    Vector<addr_t>      dep_vec_;     // dependent variable indices in val_vec
    Vector<uint8_t>     op_enum_vec_; // one byte per operator enum value.
    //
@@ -252,8 +252,8 @@ public :
    // END_STR_VEC
    //
    // BEGIN_SIZE_VEC
-   const Vector<addr_t>& size_vec(void) const
-   {  return size_vec_; }
+   const Vector<addr_t>& vec_size(void) const
+   {  return vec_size_; }
    // END_SIZE_VEC
    //
    // BEGIN_OP_ENUM_VEC
@@ -274,7 +274,7 @@ public :
       arg_vec_.swap( other.arg_vec_ );
       con_vec_.swap( other.con_vec_ );
       str_vec_.swap( other.str_vec_ );
-      size_vec_.swap( other.size_vec_ );
+      vec_size_.swap( other.vec_size_ );
       dep_vec_.swap( other.dep_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
       op2arg_index_.swap( other.op2arg_index_ );
@@ -283,9 +283,9 @@ public :
    void eval(
       bool           trace         ,
       Vector<Value>& val_vec       ) const
-   {  Vector< Vector<Value> > val_vec_vec( size_vec_.size() );
-      for(size_t i = 0; i < size_vec_.size(); ++i)
-         val_vec_vec[i].resize( size_vec_[i] );
+   {  Vector< Vector<Value> > val_vec_vec( vec_size_.size() );
+      for(size_t i = 0; i < vec_size_.size(); ++i)
+         val_vec_vec[i].resize( vec_size_[i] );
       size_t                  compare_false = 0;
       eval(trace, val_vec, val_vec_vec, compare_false);
    }
@@ -318,14 +318,14 @@ public :
          "eval: size of val_vec not equal to tape.n_val()"
       );
       CPPAD_ASSERT_KNOWN(
-         val_vec_vec.size() == size_vec_.size(),
-         "eval: size of val_vec_vec is not equal tape.size_vec().size()"
+         val_vec_vec.size() == vec_size_.size(),
+         "eval: size of val_vec_vec is not equal tape.vec_size().size()"
       );
 # ifndef NDEBUG
-      for(size_t i = 0; i < size_vec_.size(); ++i)
+      for(size_t i = 0; i < vec_size_.size(); ++i)
       {  CPPAD_ASSERT_KNOWN(
-            val_vec_vec[i].size() == size_t( size_vec_[i] ),
-            "eval: size of val_vec_vec[i] is not equal tape.size_vec()[i]"
+            val_vec_vec[i].size() == size_t( vec_size_[i] ),
+            "eval: size of val_vec_vec[i] is not equal tape.vec_size()[i]"
          );
       }
 # endif
