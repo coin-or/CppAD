@@ -238,13 +238,13 @@ public:
    //
    // BEGIN_EVAL
    virtual void eval(
-      const tape_t<Value>*      tape          ,
-      bool                      trace         ,
-      addr_t                    arg_index     ,
-      addr_t                    res_index     ,
-      Vector<Value>&            val_vec       ,
-      Vector< Vector<Value> >&  val_vec_vec   ,
-      size_t&                   compare_false ) const = 0;
+      const tape_t<Value>*       tape          ,
+      bool                       trace         ,
+      addr_t                     arg_index     ,
+      addr_t                     res_index     ,
+      Vector<Value>&             val_vec       ,
+      Vector< Vector<addr_t> >&  ind_vec_vec   ,
+      size_t&                    compare_false ) const = 0;
    // END_EVAL
    //
    // BEGIN_IS_UNARY

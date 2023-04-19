@@ -168,7 +168,7 @@ public:
       addr_t                    arg_index     ,
       addr_t                    res_index     ,
       Vector<Value>&            val_vec       ,
-      Vector< Vector<Value> >&  val_vec_vec   ,
+      Vector< Vector<addr_t> >& ind_vec_vec   ,
       size_t&                   compare_false
     ) const override;
 // END_CALL_OP_T
@@ -182,7 +182,7 @@ void call_op_t<Value>::eval(
    addr_t                    arg_index     ,
    addr_t                    res_index     ,
    Vector<Value>&            val_vec       ,
-   Vector< Vector<Value> >&  val_vec_vec   ,
+   Vector< Vector<addr_t> >& ind_vec_vec   ,
    size_t&                   compare_false ) const
 {  //
    // arg_vec

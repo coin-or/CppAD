@@ -72,11 +72,11 @@ bool vec_xam(void)
    //
    // val_vec
    Vector<double> val_vec( tape.n_val() );
-   Vector< Vector<double> > val_vec_vec(1);
-   val_vec_vec[0].resize(2);
+   Vector< Vector<addr_t> > ind_vec_vec(1);
+   ind_vec_vec[0].resize(2);
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
-   tape.eval(trace, val_vec, val_vec_vec);
+   tape.eval(trace, val_vec, ind_vec_vec);
    //
    // ok
    ok &= tape.n_op()           == 10;

@@ -28,7 +28,7 @@
          addr_t                    arg_index     , \
          addr_t                    res_index     , \
          Vector<Value>&            val_vec       , \
-         Vector< Vector<Value> >&  val_vec_vec   , \
+         Vector< Vector<addr_t> >& ind_vec_vec   , \
          size_t&                   compare_false ) const override \
       {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
          const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
@@ -139,7 +139,7 @@ public:
       addr_t                    arg_index     ,
       addr_t                    res_index     ,
       Vector<Value>&            val_vec       ,
-      Vector< Vector<Value> >&  val_vec_vec   ,
+      Vector< Vector<addr_t> >& ind_vec_vec   ,
       size_t&                   compare_false ) const override = 0;
    //
    // BEGIN_PRINT_OP

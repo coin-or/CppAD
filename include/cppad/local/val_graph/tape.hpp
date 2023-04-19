@@ -152,7 +152,7 @@ This vector has size equal to *n_val*.
 The first *n_ind* elements are inputs.
 The rest of the elements are outputs.
 
-val_vec_vec
+ind_vec_vec
 ===========
 This argument is optional.
 Each element of this argument is a dynamic vector.
@@ -283,49 +283,49 @@ public :
    void eval(
       bool           trace         ,
       Vector<Value>& val_vec       ) const
-   {  Vector< Vector<Value> > val_vec_vec( vec_size_.size() );
+   {  Vector< Vector<addr_t> > ind_vec_vec( vec_size_.size() );
       for(size_t i = 0; i < vec_size_.size(); ++i)
-         val_vec_vec[i].resize( vec_size_[i] );
+         ind_vec_vec[i].resize( vec_size_[i] );
       size_t                  compare_false = 0;
-      eval(trace, val_vec, val_vec_vec, compare_false);
+      eval(trace, val_vec, ind_vec_vec, compare_false);
    }
    // eval(trace, val_vec, compare_false)
    void eval(
       bool           trace         ,
       Vector<Value>& val_vec       ,
       size_t&        compare_false ) const
-   {  Vector< Vector<Value> > val_vec_vec;
-      eval(trace, val_vec, val_vec_vec, compare_false);
+   {  Vector< Vector<addr_t> > ind_vec_vec;
+      eval(trace, val_vec, ind_vec_vec, compare_false);
    }
-   // eval(trace, val_vec, val_vec_vec)
+   // eval(trace, val_vec, ind_vec_vec)
    void eval(
-      bool                     trace       ,
-      Vector<Value>&           val_vec     ,
-      Vector< Vector<Value> >& val_vec_vec ) const
+      bool                      trace       ,
+      Vector<Value>&            val_vec     ,
+      Vector< Vector<addr_t> >& ind_vec_vec ) const
    {  size_t compare_false = 0;
-      eval(trace, val_vec, val_vec_vec, compare_false);
+      eval(trace, val_vec, ind_vec_vec, compare_false);
    }
    // BEGIN_EVAL
-   // eval(trace, val_vec, val_vec_vec, compare_false)
+   // eval(trace, val_vec, ind_vec_vec, compare_false)
    void eval(
-      bool                     trace         ,
-      Vector<Value>&           val_vec       ,
-      Vector< Vector<Value> >& val_vec_vec   ,
-      size_t&                  compare_false ) const
+      bool                      trace         ,
+      Vector<Value>&            val_vec       ,
+      Vector< Vector<addr_t> >& ind_vec_vec   ,
+      size_t&                   compare_false ) const
    // END_EVAL
    {  CPPAD_ASSERT_KNOWN(
          val_vec.size() == size_t(n_val_),
          "eval: size of val_vec not equal to tape.n_val()"
       );
       CPPAD_ASSERT_KNOWN(
-         val_vec_vec.size() == vec_size_.size(),
-         "eval: size of val_vec_vec is not equal tape.vec_size().size()"
+         ind_vec_vec.size() == vec_size_.size(),
+         "eval: size of ind_vec_vec is not equal tape.vec_size().size()"
       );
 # ifndef NDEBUG
       for(size_t i = 0; i < vec_size_.size(); ++i)
       {  CPPAD_ASSERT_KNOWN(
-            val_vec_vec[i].size() == size_t( vec_size_[i] ),
-            "eval: size of val_vec_vec[i] is not equal tape.vec_size()[i]"
+            ind_vec_vec[i].size() == size_t( vec_size_[i] ),
+            "eval: size of ind_vec_vec[i] is not equal tape.vec_size()[i]"
          );
       }
 # endif
@@ -361,7 +361,7 @@ public :
             arg_index,
             res_index,
             val_vec,
-            val_vec_vec,
+            ind_vec_vec,
             compare_false
          );
          //

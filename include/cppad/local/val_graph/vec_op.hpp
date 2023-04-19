@@ -138,41 +138,42 @@ public:
    //
    // eval
    void eval(
-      const tape_t<Value>*     tape           ,
-      bool                     trace          ,
-      addr_t                   arg_index      ,
-      addr_t                   res_index      ,
-      Vector<Value>&           val_vec        ,
-      Vector< Vector<Value> >& val_vec_vec    ,
-      size_t&                  compare_false  ) const override
+      const tape_t<Value>*      tape           ,
+      bool                      trace          ,
+      addr_t                    arg_index      ,
+      addr_t                    res_index      ,
+      Vector<Value>&            val_vec        ,
+      Vector< Vector<addr_t> >& ind_vec_vec    ,
+      size_t&                   compare_false  ) const override
    {  //
       // arg_vec, vec_vec
       const Vector<addr_t>& arg_vec( tape->arg_vec() );
       //
       // this_vector
       // BEGIN_LOAD_ARG_BEFORE
-      addr_t         which_vector = arg_vec[arg_index + 0];
-      Vector<Value>& this_vector  = val_vec_vec[which_vector];
+      addr_t          which_vector = arg_vec[arg_index + 0];
+      Vector<addr_t>& this_vector  = ind_vec_vec[which_vector];
       // END_LOAD_ARG_BEFORE
       //
       // vector_index
       addr_t vector_index = arg_vec[arg_index + 1];
       //
-      // res_value
-      Value index     = val_vec[vector_index];
-      CPPAD_ASSERT_KNOWN( size_t( Integer(index) ) < this_vector.size(),
+      // dynamic_index
+      Value index          = val_vec[vector_index];
+      addr_t dynamic_index = addr_t( Integer(index) );
+      CPPAD_ASSERT_KNOWN( size_t(dynamic_index) < this_vector.size(),
          "dynamic vector index is greater than or equal vector size"
       );
-      Value res_value = this_vector[ Integer(index) ];
       //
       // val_vec
-      val_vec[res_index] = res_value;
+      val_vec[res_index] = val_vec[ this_vector[dynamic_index] ];
       //
       // trace
       if( ! trace )
          return;
       //
       // print_load_op
+      Value res_value = val_vec[res_index];
       print_load_op(which_vector, vector_index, res_index, res_value);
    }
 };
@@ -290,36 +291,36 @@ public:
    //
    // eval
    void eval(
-      const tape_t<Value>*     tape           ,
-      bool                     trace          ,
-      addr_t                   arg_index      ,
-      addr_t                   res_index      ,
-      Vector<Value>&           val_vec        ,
-      Vector< Vector<Value> >& val_vec_vec    ,
-      size_t&                  compare_false  ) const override
+      const tape_t<Value>*      tape           ,
+      bool                      trace          ,
+      addr_t                    arg_index      ,
+      addr_t                    res_index      ,
+      Vector<Value>&            val_vec        ,
+      Vector< Vector<addr_t> >& ind_vec_vec    ,
+      size_t&                   compare_false  ) const override
    {  //
       // arg_vec, vec_vec
       const Vector<addr_t>& arg_vec( tape->arg_vec() );
       //
       // this_vector
       // BEGIN_STORE_ARG_BEFORE
-      addr_t         which_vector = arg_vec[arg_index + 0];
-      Vector<Value>& this_vector  = val_vec_vec[which_vector];
+      addr_t          which_vector = arg_vec[arg_index + 0];
+      Vector<addr_t>& this_vector  = ind_vec_vec[which_vector];
       // END_STORE_ARG_BEFORE
       //
       // vector_index, value_index
       addr_t vector_index = arg_vec[arg_index + 1];
       addr_t value_index  = arg_vec[arg_index + 2];
       //
-      // index, value
-      Value index = val_vec[vector_index];
-      Value value = val_vec[value_index];
-      //
-      // val_vec_vec
-      CPPAD_ASSERT_KNOWN( size_t( Integer(index) ) < this_vector.size(),
+      // dynamic_index
+      Value index          = val_vec[vector_index];
+      addr_t dynamic_index = addr_t( Integer(index) );
+      CPPAD_ASSERT_KNOWN( dynamic_index < this_vector.size(),
          "dynamic vector index is greater than or equal vector size"
       );
-      this_vector[ Integer(index) ] = value;
+      //
+      // val_vec_vec
+      this_vector[dynamic_index] = value_index;
       //
       // trace
       if( ! trace )
