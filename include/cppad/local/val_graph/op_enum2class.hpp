@@ -15,7 +15,7 @@
 # include <cppad/local/val_graph/dis_op.hpp>
 # include <cppad/local/val_graph/pri_op.hpp>
 # include <cppad/local/val_graph/unary_op.hpp>
-# include <cppad/local/val_graph/vec_op.hpp>
+# include <cppad/local/val_graph/vector_op.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 //
 namespace CppAD { namespace local { namespace val_graph {

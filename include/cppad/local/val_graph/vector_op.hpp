@@ -12,7 +12,7 @@
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
-{xrst_begin_parent val_vec_op dev}
+{xrst_begin_parent val_vector_op dev}
 {xrst_spell
    xam
 }
@@ -30,7 +30,7 @@ Example
 The file :ref:`com_xam.cpp <val_vec_xam.cpp-name>`
 is an example and test that uses this operator.
 
-{xrst_end val_vec_op}
+{xrst_end val_vector_op}
 // ---------------------------------------------------------------------------
 {xrst_begin val_load_op dev}
 
