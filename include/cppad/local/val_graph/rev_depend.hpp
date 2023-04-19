@@ -13,10 +13,6 @@ namespace CppAD { namespace local { namespace val_graph {
 Reverse Dependency Analysis
 ###########################
 
-Syntax
-******
-| |tab| *val_use_case* = *tape*.rev_depend()
-
 Prototype
 *********
 {xrst_literal
@@ -30,7 +26,8 @@ Is the :ref:`val_tape-name` that we are analyzing.
 
 val_use_case
 ************
-The return vector has size equal to the number of values; i.e.,
+This vector is empty on input.
+Upon return, it has size equal to the number of values; i.e.,
 :ref:`val_tape@n_val` .
 
 Zero
@@ -49,20 +46,48 @@ the value with index *val_index* satisfies one of the following conditions:
 #. It is used more than once by one operator and that operator is not a
    binary operator.
 
-
 Otherwise
 =========
-If *val_use_case* [ *val_index* ]  is the index of the only operator that
+If *val_use_case* [ *val_index* ] is not zero or n_op,
+it is the index of the only operator that
 uses the value with index *val_index* as an argument.
+
+vec_last_load
+*************
+This vector is empty on input.
+Upon return, it has size equal the number of dynamic vectors; i.e.,
+size_vec\_.size() .
+The value
+
+   *i_op* = *vec_last_load* [ *which_vector* ]
+
+is the index of the last load operator,
+that used the dynamic vector with index *which_vector* ,
+and is needed to compute the dependent variables.
+
+Improvement
+===========
+This could be done differently as a vector of maps.
+
+   *i_op* = *vec_last_load*[ *which_vector* ] [ *value_index* ]
+
+would be the operator index of the last load operator with the same
+:ref:`val_load_op@eval@which_vector` and :ref:`val_load_op@eval@vector_index` .
+Then we could avoid two stores to the same vector and index with no
+load in between.
 
 {xrst_end val_tape_rev_depend}
 */
 // BEGIN_REV_DEPEND
-// val_use_case = tape.rev_depend()
+// tape.rev_depend(val_use_case, vec_last_load)
 template <class Value>
-Vector<addr_t> tape_t<Value>::rev_depend(void)
+void tape_t<Value>::rev_depend(
+   Vector<addr_t>& val_use_case  ,
+   Vector<addr_t>& vec_last_load )
 // END_REV_DEPEND
-{
+{  CPPAD_ASSERT_UNKNOWN( val_use_case.size() == 0 );
+   CPPAD_ASSERT_UNKNOWN( vec_last_load.size() == 0 );
+   //
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // thread, initial_inuse
    size_t thread        = thread_alloc::thread_num();
@@ -79,6 +104,9 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
    Vector<bool> depend_x, depend_y;
    //
    // val_index2con
+   Vector< Vector<Value> > val_vec_vec( size_vec_.size() );
+   for(size_t i = 0; i < size_vec_.size(); ++i)
+      val_vec_vec[i].resize( size_vec_[i] );
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    Vector<Value> val_index2con(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
@@ -88,9 +116,15 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
    //
    // val_use_case
    // initialize as no operator uses any value
-   Vector<addr_t> val_use_case(n_val_);
+   val_use_case.resize(n_val_);
    for(addr_t i = 0; i < n_val_; ++i)
       val_use_case[i] = 0;
+   //
+   // vec_last_load
+   // initialize as the no operator uses any dynamic vector
+   vec_last_load.resize( size_vec_.size() );
+   for(size_t i = 0; i < size_vec_.size(); ++i)
+      vec_last_load[i] = 0;
    //
    // val_use_case
    for(size_t i = 0; i < dep_vec_.size(); ++i)
@@ -142,6 +176,14 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
                inc_val_use_case(left_index, i_op);
                if( left_index != right_index )
                   inc_val_use_case(right_index, i_op);
+            }
+            else if( op_enum == load_op_enum )
+            {  CPPAD_ASSERT_UNKNOWN( i_op != 0 );
+               addr_t which_vector = arg_vec_[arg_index + 0];
+               addr_t val_index    = arg_vec_[arg_index + 1];
+               if( vec_last_load[which_vector] == 0 )
+                  vec_last_load[which_vector] = i_op;
+               inc_val_use_case(val_index, i_op);
             }
             else
             {  for(addr_t i = n_before; i < n_arg - n_after; ++i)
@@ -199,7 +241,7 @@ Vector<addr_t> tape_t<Value>::rev_depend(void)
    size_t final_inuse = thread_alloc::inuse(thread);
    std::cout << "rev_depend: inuse = " << final_inuse - initial_inuse << "\n";
 # endif
-   return val_use_case;
+   return;
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

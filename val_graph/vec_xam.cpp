@@ -44,7 +44,7 @@ bool vec_xam(void)
    addr_t four = tape.record_con_op(4.0);
    //
    // tape
-   // vector[0] = 1, vector[1] = 0
+   // vector[0] = 4, vector[1] = 1
    tape.record_store_op(which_vector, zero, four);
    tape.record_store_op(which_vector, one, one);
    //

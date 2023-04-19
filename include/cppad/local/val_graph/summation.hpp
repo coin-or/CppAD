@@ -264,8 +264,9 @@ void tape_t<Value>::summation(void)
    // This is necessary before calling replace_csum_op.
    set_op2arg_index();
    //
-   // val_use_case
-   Vector<addr_t> val_use_case = rev_depend();
+   // val_use_case, vec_last_load
+   Vector<addr_t> val_use_case, vec_last_load;
+   rev_depend(val_use_case, vec_last_load);
    //
    // op_itr
    op_iterator<Value> op_itr(*this, 0);

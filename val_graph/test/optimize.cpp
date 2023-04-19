@@ -370,7 +370,7 @@ bool summation(void)
    ok &= tape.arg_vec().size() == 1 + 4 * 2;
    ok &= tape.n_val()          == n_ind + 1 + 4;
    //
-   // summation
+   // summation, dead_code
    tape.summation();
    tape.dead_code();
    //
@@ -394,6 +394,109 @@ bool summation(void)
    //
    return ok;
 }
+bool dynamic_vector(void)
+{  bool ok = true;
+   //
+   // tape_t, Vector, addr_t, compare_lt_enum
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   //
+   // tape, ok
+   tape_t<double> tape;
+   addr_t n_ind = 2;
+   addr_t index_of_nan = tape.set_ind(n_ind);
+   ok &= index_of_nan == n_ind;
+   //
+   // x0, x1, x2
+   addr_t x0 = 0;   // x[0]
+   addr_t x1 = 1;   // x[1]
+   //
+   // which_vector: vector with two elements
+   addr_t first_vector  = tape.add_vec(2);
+   addr_t second_vector = tape.add_vec(2);
+   //
+   // zero, one, two
+   addr_t zero = tape.record_con_op(0.0);
+   addr_t one  = tape.record_con_op(1.0);
+   //
+   // tape
+   // first_vector[0]  = x[0],  first_vector[1]  = 0
+   // second_vector[0] = 1,     second_vector[1] = x[1]
+   tape.record_store_op(first_vector, zero, x0);
+   tape.record_store_op(first_vector, one, zero);
+   tape.record_store_op(second_vector, zero, one);
+   tape.record_store_op(second_vector, one, x1);
+   //
+   // dep_vec, tape
+   Vector<addr_t> dep_vec(2);
+   dep_vec[0] = tape.record_load_op(second_vector, zero);   // 1
+   dep_vec[1] = tape.record_load_op(second_vector, one);    // x[1]
+   //
+   // set_dep
+   tape.set_dep( dep_vec );
+   //
+   // x
+   Vector<double> x(n_ind);
+   x[0] = 3.0;
+   x[1] = 4.0;
+   //
+   // trace
+   bool trace = false;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   Vector< Vector<double> > val_vec_vec(2);
+   val_vec_vec[0].resize(2);
+   val_vec_vec[1].resize(2);
+   for(addr_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   tape.eval(trace, val_vec, val_vec_vec);
+   //
+   // ok
+   ok &= tape.n_op()           == 9;
+   ok &= tape.con_vec().size() == 3;
+   ok &= tape.arg_vec().size() == 3 + 4 * 3 + 2 * 2;
+   ok &= tape.n_val()          == n_ind + 3 + 2;
+   //
+   // y
+   Vector<double> y(2);
+   for(size_t i = 0; i < 2; ++i)
+      y[i] = val_vec[ dep_vec[i] ];
+   //
+   // ok
+   ok &= y[0] == 1.0;
+   ok &= y[1] == x[1];
+   //
+   // dead_code
+   tape.dead_code();
+   //
+   // val_vec
+   val_vec.resize( tape.n_val() );
+   val_vec_vec.resize( tape.size_vec().size() );
+   for(size_t i = 0; i < val_vec_vec.size(); ++i)
+      val_vec_vec[i].resize( tape.size_vec()[i] );
+   for(addr_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   tape.eval(trace, val_vec, val_vec_vec);
+   //
+   // ok
+   ok &= tape.n_op()           == 7;
+   ok &= tape.con_vec().size() == 3;
+   ok &= tape.arg_vec().size() == 3 + 2 * 3 + 2 * 2;
+   ok &= tape.n_val()          == n_ind + 3 + 2;
+   //
+   // y
+   dep_vec = tape.dep_vec();
+   for(size_t i = 0; i < 2; ++i)
+      y[i] = val_vec[ dep_vec[i] ];
+   //
+   // ok
+   ok &= y[0] == 1.0;
+   ok &= y[1] == x[1];
+   //
+   return ok;
+}
 // END_C++
 // ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
@@ -406,5 +509,6 @@ bool test_optimize(void)
    ok     &= propagate_match();
    ok     &= not_used();
    ok     &= summation();
+   ok     &= dynamic_vector();
    return ok;
 }

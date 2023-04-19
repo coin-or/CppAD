@@ -93,12 +93,27 @@ void tape_t<Value>::dead_code(void)
    // keep_print
    bool keep_print = option_map_["keep_print"] == "true";
    //
-   // val_use_case
-   Vector<addr_t> val_use_case = rev_depend();
+   // val_use_case, vec_last_load
+   Vector<addr_t> val_use_case, vec_last_load;
+   rev_depend(val_use_case, vec_last_load);
    //
    // new_tape
    tape_t new_tape;
    new_tape.set_ind(n_ind_);
+   //
+   // new_tape, new_which_vec
+   Vector<addr_t> new_which_vec( size_vec_.size() );
+   {  addr_t which_vector = 0;
+      for(size_t i = 0; i < size_vec_.size(); ++i)
+      {  if( 0 < vec_last_load[i] )
+         {  new_which_vec[i] = which_vector++;
+            new_tape.add_vec( size_vec_[i] );
+         }
+         else
+            new_which_vec[i] = addr_t( size_vec_.size() );
+      }
+   }
+
    //
    // new_val_index
    // include nan at index n_ind_ in val_vec
@@ -141,7 +156,11 @@ void tape_t<Value>::dead_code(void)
       // need_op
       bool need_op = false;
       if( n_res == 0 )
-      {  if( op_enum == pri_op_enum )
+      {  if( op_enum == store_op_enum )
+         {  addr_t which_vector = arg_vec_[arg_index + 0];
+            need_op             = i_op < vec_last_load[which_vector];
+         }
+         else if( op_enum == pri_op_enum )
          {  need_op  = keep_print;
             need_op &= arg_vec_[arg_index + 2] != this->n_ind();
          }
@@ -156,7 +175,11 @@ void tape_t<Value>::dead_code(void)
       //
       if( need_op )
       {  //
-         if( n_res == 1 && op_enum != con_op_enum )
+         bool simple = n_res == 1;
+         simple     &= op_enum != con_op_enum;
+         simple     &= op_enum != call_op_enum;
+         simple     &= op_enum != load_op_enum;
+         if( simple )
          {  op_arg.resize(n_arg);
             for(addr_t k = 0; k < n_before; ++k)
                op_arg[k] = arg_vec_[arg_index + k];
@@ -176,6 +199,39 @@ void tape_t<Value>::dead_code(void)
             // default
             default:
             CPPAD_ASSERT_UNKNOWN(false);
+            break;
+            //
+            // load_op_enum
+            case load_op_enum:
+            {  CPPAD_ASSERT_UNKNOWN( n_res == 1);
+               addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
+               addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
+               //
+               // record_con_op, new_val_index
+               new_val_index[res_index] = \
+                  new_tape.record_load_op( which_vector, vector_index);
+            }
+            break;
+            //
+            // con_op_enum
+            case con_op_enum:
+            {  CPPAD_ASSERT_UNKNOWN( n_res == 1 );
+               Value value = con_vec_[ arg_vec_[ arg_index ] ];
+               //
+               // record_con_op, new_val_index
+               new_val_index[res_index] = new_tape.record_con_op(value);
+            }
+            break;
+            //
+            // store_op_enum
+            case store_op_enum:
+            {  addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
+               addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
+               addr_t value_index  = new_val_index[ arg_vec_[arg_index + 2] ];
+               new_tape.record_store_op(
+                  which_vector, vector_index, value_index
+               );
+            }
             break;
             //
             // comp_op_enum
@@ -199,15 +255,6 @@ void tape_t<Value>::dead_code(void)
                new_tape.record_pri_op(
                   before, after, left_index, right_index
                );
-            }
-            break;
-            //
-            // con_op_enum
-            case con_op_enum:
-            {  Value value = con_vec_[ arg_vec_[ arg_index ] ];
-               //
-               // record_con_op, new_val_index
-               new_val_index[res_index] = new_tape.record_con_op(value);
             }
             break;
             //

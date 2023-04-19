@@ -283,7 +283,9 @@ public :
    void eval(
       bool           trace         ,
       Vector<Value>& val_vec       ) const
-   {  Vector< Vector<Value> > val_vec_vec;
+   {  Vector< Vector<Value> > val_vec_vec( size_vec_.size() );
+      for(size_t i = 0; i < size_vec_.size(); ++i)
+         val_vec_vec[i].resize( size_vec_[i] );
       size_t                  compare_false = 0;
       eval(trace, val_vec, val_vec_vec, compare_false);
    }
@@ -464,7 +466,10 @@ public :
    void renumber(void);
    //
    // rev_depend
-   Vector<addr_t> rev_depend(void);
+   void rev_depend(
+      Vector<addr_t>& val_use_case  ,
+      Vector<addr_t>& vec_last_load
+   );
    //
    // dead_code
    void dead_code(void);
