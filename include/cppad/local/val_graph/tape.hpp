@@ -102,7 +102,18 @@ vec_size
    // BEGIN_VEC_SIZE
    // END_VEC_SIZE
 }
-This vector has the size for each of the dynamic vectors.
+This vector has length equal to the number of dynamic vectors.
+The i-th element of this vector is the size of the i-th dynamic vector.
+
+vec_initial
+***********
+{xrst_literal
+   // BEGIN_VEC_INITIAL
+   // END_VEC_INITIAL
+}
+This vector has length equal to the number of dynamic vectors.
+This i-th element of this vector is the vector of initial indices
+for the i-th dynamic vector; see :ref:`val_vec_op-name` .
 
 op_enum_vec
 ***********
@@ -112,15 +123,6 @@ op_enum_vec
 }
 Each element of this vector corresponds to an operator usage.
 The order of the vector is the order of operations.
-
-vec_initial
-***********
-{xrst_literal
-   // BEGIN_VEC_INITIAL
-   // END_VEC_INITIAL
-}
-The initial indices for each of the dynamic vectors; see
-:ref:`val_vec_op-name` .
 
 dep_vec
 *******
@@ -269,15 +271,15 @@ public :
    {  return vec_size_; }
    // END_VEC_SIZE
    //
-   // BEGIN_OP_ENUM_VEC
-   const Vector<uint8_t>& op_enum_vec(void) const
-   {  return op_enum_vec_; }
-   // END_OP_ENUM_VEC
-   //
    // BEGIN_VEC_INITIAL
    const Vector< Vector<addr_t> >& vec_initial(void) const
    {  return vec_initial_; }
    // END_VEC_INITIAL
+   //
+   // BEGIN_OP_ENUM_VEC
+   const Vector<uint8_t>& op_enum_vec(void) const
+   {  return op_enum_vec_; }
+   // END_OP_ENUM_VEC
    //
    // BEGIN_DEP_VEC
    const Vector<addr_t>& dep_vec(void) const
@@ -293,6 +295,7 @@ public :
       con_vec_.swap( other.con_vec_ );
       str_vec_.swap( other.str_vec_ );
       vec_size_.swap( other.vec_size_ );
+      vec_initial_.swap( other.vec_initial_ );
       dep_vec_.swap( other.dep_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
       op2arg_index_.swap( other.op2arg_index_ );
@@ -408,9 +411,6 @@ public :
    // set_ind
    addr_t set_ind(addr_t n_ind);
    //
-   // add_vec
-   addr_t add_vec(addr_t size);
-   //
    // record_op
    addr_t record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg);
    //
@@ -458,6 +458,9 @@ public :
       addr_t             value_index
    );
    //
+   // record_vec_op
+   addr_t record_vec_op(const Vector<addr_t>& initial);
+   //
    // record_load_op
    addr_t record_load_op(
       addr_t   which_vector  ,
@@ -470,9 +473,6 @@ public :
       addr_t   vector_index  ,
       addr_t   value_index
    );
-   //
-   // record_vec_op
-   addr_t record_vec_op(const Vector<addr_t>& initial);
    //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec);

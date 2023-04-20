@@ -412,21 +412,19 @@ bool dynamic_vector(void)
    addr_t x0 = 0;   // x[0]
    addr_t x1 = 1;   // x[1]
    //
-   // which_vector: vector with two elements
-   addr_t first_vector  = tape.add_vec(2);
-   addr_t second_vector = tape.add_vec(2);
-   //
    // zero, one, two
    addr_t zero = tape.record_con_op(0.0);
    addr_t one  = tape.record_con_op(1.0);
    //
    // tape
    // first_vector[0]  = x[0],  first_vector[1]  = 0
+   Vector<addr_t> first_initial = {x0, zero};
+   tape.record_vec_op(first_initial);
+   //
+   // tape, second_vector
    // second_vector[0] = 1,     second_vector[1] = x[1]
-   tape.record_store_op(first_vector, zero, x0);
-   tape.record_store_op(first_vector, one, zero);
-   tape.record_store_op(second_vector, zero, one);
-   tape.record_store_op(second_vector, one, x1);
+   Vector<addr_t> second_initial = {one, x1};
+   addr_t         second_vector  = tape.record_vec_op(second_initial);
    //
    // dep_vec, tape
    Vector<addr_t> dep_vec(2);
@@ -454,10 +452,11 @@ bool dynamic_vector(void)
    tape.eval(trace, val_vec, ind_vec_vec);
    //
    // ok
-   ok &= tape.n_op()           == 9;
-   ok &= tape.con_vec().size() == 3;
-   ok &= tape.arg_vec().size() == 3 + 4 * 3 + 2 * 2;
-   ok &= tape.n_val()          == n_ind + 3 + 2;
+   ok &= tape.n_op()            == 7;
+   ok &= tape.con_vec().size()  == 3;
+   ok &= tape.arg_vec().size()  == 3 + 2 + 2 * 2;
+   ok &= tape.n_val()           == n_ind + 3 + 2;
+   ok &= tape.vec_size().size() == 2;
    //
    // y
    Vector<double> y(2);
@@ -481,10 +480,11 @@ bool dynamic_vector(void)
    tape.eval(trace, val_vec, ind_vec_vec);
    //
    // ok
-   ok &= tape.n_op()           == 7;
+   ok &= tape.n_op()           == 6;
    ok &= tape.con_vec().size() == 3;
-   ok &= tape.arg_vec().size() == 3 + 2 * 3 + 2 * 2;
+   ok &= tape.arg_vec().size() == 3 + 1 + 2 * 2;
    ok &= tape.n_val()          == n_ind + 3 + 2;
+   ok &= tape.vec_size().size() == 1;
    //
    // y
    dep_vec = tape.dep_vec();

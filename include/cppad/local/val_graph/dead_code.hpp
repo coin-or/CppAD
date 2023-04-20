@@ -101,18 +101,11 @@ void tape_t<Value>::dead_code(void)
    tape_t new_tape;
    new_tape.set_ind(n_ind_);
    //
-   // new_tape, new_which_vec
+   // new_which_vec
+   // initialize all dynamic vectors as not used
    Vector<addr_t> new_which_vec( vec_size_.size() );
-   {  addr_t which_vector = 0;
-      for(size_t i = 0; i < vec_size_.size(); ++i)
-      {  if( 0 < vec_last_load[i] )
-         {  new_which_vec[i] = which_vector++;
-            new_tape.add_vec( vec_size_[i] );
-         }
-         else
-            new_which_vec[i] = addr_t( vec_size_.size() );
-      }
-   }
+   for(size_t i = 0; i < vec_size_.size(); ++i)
+      new_which_vec[i] = addr_t( vec_size_.size() );
 
    //
    // new_val_index
@@ -156,7 +149,7 @@ void tape_t<Value>::dead_code(void)
       // need_op
       bool need_op = false;
       if( n_res == 0 )
-      {  if( op_enum == store_op_enum )
+      {  if( op_enum == vec_op_enum || op_enum == store_op_enum )
          {  addr_t which_vector = arg_vec_[arg_index + 0];
             need_op             = i_op < vec_last_load[which_vector];
          }
@@ -231,6 +224,17 @@ void tape_t<Value>::dead_code(void)
                new_tape.record_store_op(
                   which_vector, vector_index, value_index
                );
+            }
+            break;
+            //
+            // vec_op_enum
+            case vec_op_enum:
+            {  addr_t old_which_vector       = arg_vec_[arg_index + 0];
+               const Vector<addr_t>& initial = vec_initial_[old_which_vector];
+               addr_t which_vector           = new_tape.record_vec_op(initial);
+               //
+               // new_which_vec
+               new_which_vec[old_which_vector] = which_vector;
             }
             break;
             //

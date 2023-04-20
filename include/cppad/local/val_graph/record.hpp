@@ -65,6 +65,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    con_vec_.clear();
    str_vec_.clear();
    vec_size_.clear();
+   vec_initial_.clear();
    dep_vec_.clear();
    op_enum_vec_.clear();
    op2arg_index_.clear();
@@ -87,52 +88,6 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
    return nan_addr;
    // END_POST_CONDITION
-}
-/*
-{xrst_begin val_add_vec dev}
-
-Adding a Dynamic Vector
-#######################
-
-add_vec
-*******
-{xrst_literal
-   // BEGIN_ADD_VEC
-   // END_ADD_VEC
-}
-This creates a new dynamic vector with the specified size.
-A dynamic vector must be created before a load or store can be recorded
-for the corresponding vector.
-
-size
-****
-is the size of the vector being created.
-The value of the elements of the vector is unspecified.
-One must use a the :ref:`val_load_op-name` to store values in the vector.
-
-return
-******
-The return value is an index identifying which vector this is
-*which_vector* for
-:ref:`load <val_load_op@eval@which_vector>` and
-:ref:`store <val_store_op@eval@which_vector>` operators
-that use this dynamic vector.
-
-
-{xrst_end val_add_vec}
-*/
-// BEGIN_ADD_VEC
-template <class Value>
-addr_t tape_t<Value>::add_vec(addr_t size)
-// END_ADD_VEC
-{  //
-   // vector_index
-   addr_t vector_index = addr_t( vec_size_.size() );
-   //
-   // vec_size_
-   vec_size_.push_back(size);
-   //
-   return vector_index;
 }
 /*
 -------------------------------------------------------------------------------
@@ -778,8 +733,8 @@ This places a :ref:`val_load_op-name` operator in the tape.
 
 which_vector
 ============
-This is the index returned by :ref:`val_add_vec-name`
-for this dynamic vector.
+This is the index returned by :ref:`val_vec_op-name`
+when it created this dynamic vector.
 
 vector_index
 ============
@@ -801,6 +756,9 @@ addr_t tape_t<Value>::record_load_op(
    addr_t   vector_index  )
 // END_RECORD_LOAD_OP
 {  //
+   // check that vec_op_enum comes before load_op_enum
+   CPPAD_ASSERT_UNKNOWN( which_vector < vec_size_.size() );
+   //
    // res_index
    addr_t res_index = n_val_;
    //
@@ -833,8 +791,8 @@ This places a :ref:`val_store_op-name` operator in the tape.
 
 which_vector
 ============
-This is the index returned by :ref:`val_add_vec-name`
-for this dynamic vector.
+This is the index returned by :ref:`val_vec_op-name`
+when it created this dynamic vector.
 
 vector_index
 ============
@@ -857,6 +815,9 @@ addr_t tape_t<Value>::record_store_op(
    addr_t   value_index   )
 // END_RECORD_STORE_OP
 {  //
+   // check that vec_op_enum comes before store_op_enum
+   CPPAD_ASSERT_UNKNOWN( which_vector < vec_size_.size() );
+   //
    // res_index
    addr_t res_index = 0;
    //
