@@ -86,6 +86,7 @@ enum op_enum_t {
    sub_op_enum,      // subtraction
    tan_op_enum,      // tangent
    tanh_op_enum,     // hyperbolic tangent
+   vec_op_enum,      // create a new dynamic vector
    number_op_enum
 };
 /* {xrst_code}

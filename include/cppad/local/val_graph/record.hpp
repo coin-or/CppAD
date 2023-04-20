@@ -702,6 +702,67 @@ addr_t tape_t<Value>::record_pri_op(
 }
 /*
 ------------------------------------------------------------------------------
+{xrst_begin val_record_vec_op dev}
+
+Record Adding a Dynamic Vector
+##############################
+
+record_vec_op
+*************
+{xrst_literal
+   // BEGIN_RECORD_VEC_OP
+   // END_RECORD_VEC_OP
+}
+This creates a new dynamic vector with the specified initial values.
+A dynamic vector must be created before a load or store can be recorded
+for the corresponding vector.
+
+initial
+*******
+The size of this vector is the size of the dynamic vector being created.
+The initial value for the dynamic vector at index *vector_index* is
+the value vector at index *initial*[ *vector_index* ]; i.e.,
+
+   *val_vec* [ *initial* [ *vector_index* ] ]
+
+where *val_vec* is the value vector.
+
+which_vector
+************
+The return value is an index identifying
+which dynamic vector is created.
+This is the *which_vector* argument for subsequent
+:ref:`load <val_load_op@eval@which_vector>` and
+:ref:`store <val_store_op@eval@which_vector>` operators
+that use this dynamic vector.
+
+
+{xrst_end val_record_vec_op}
+*/
+// BEGIN_RECORD_VEC_OP
+template <class Value>
+addr_t tape_t<Value>::record_vec_op(const Vector<addr_t>& initial)
+// END_RECORD_VEC_OP
+{  //
+   // which_vector
+   addr_t which_vector = addr_t( vec_initial_.size() );
+   //
+   // vec_size_
+   vec_size_.push_back( addr_t( initial.size() ) );
+   //
+   // vec_initial_
+   vec_initial_.push_back( initial );
+   //
+   // op_enum_vec_
+   op_enum_vec_.push_back( uint8_t(vec_op_enum) );
+   //
+   // arg_vec_
+   arg_vec_.push_back( which_vector );
+   //
+   return which_vector;
+}
+/*
+------------------------------------------------------------------------------
 {xrst_begin val_record_load_op dev}
 
 Recording Load Operations

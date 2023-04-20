@@ -98,6 +98,7 @@ base_op_t<Value>* op_enum2class(op_enum_t op_enum)
       CPPAD_VAL_GRAPH_INSTANCE(sub)
       CPPAD_VAL_GRAPH_INSTANCE(tan)
       CPPAD_VAL_GRAPH_INSTANCE(tanh)
+      CPPAD_VAL_GRAPH_INSTANCE(vec)
       // END_SORT_THIS_LINE_MINUS_1
    }
    return op_ptr;

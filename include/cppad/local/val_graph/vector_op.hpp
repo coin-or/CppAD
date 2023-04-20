@@ -32,6 +32,141 @@ is an example and test that uses this operator.
 
 {xrst_end val_vector_op}
 // ---------------------------------------------------------------------------
+{xrst_begin val_vec_op dev}
+
+Create A Dynamic Vector Operator
+################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_VEC_OP_T
+   // END_VEC_OP_T
+}
+
+Context
+*******
+It is derived from :ref:`val_base_op-name` .
+It overrides all its base class virtual member functions
+and is a concrete class (it has no pure virtual functions).
+
+get_instance
+************
+This static member function returns a pointer to a vec_op_t object.
+
+op_enum
+*******
+This override of :ref:`val_base_op@op_enum` returns ``vec_op_enum`` .
+
+n_before
+********
+This override of :ref:`val_base_op@n_before` returns 1.
+{xrst_literal
+   // BEGIN_VEC_ARG_BEFORE
+   // END_VEC_ARG_BEFORE
+}
+
+n_after
+*******
+This override of :ref:`val_base_op@n_after` returns 0.
+
+n_arg
+*****
+This override of :ref:`val_base_op@n_arg` returns 1.
+
+n_res
+*****
+This override of :ref:`val_base_op@n_res` return 0.
+
+eval
+****
+This override of :ref:`val_base_op@eval` implement a
+create dynamic vector operation.
+
+trace
+=====
+If trace is true, :ref:`val_print_vec_op-name`
+is called to print this operator.
+
+{xrst_end val_vec_op}
+*/
+// BEGIN_VEC_OP_T
+template <class Value>
+class vec_op_t : public base_op_t<Value> {
+public:
+   // n_before
+   addr_t n_before(void) const override
+   {  return 1; }
+   //
+   // n_after
+   addr_t n_after(void) const override
+   {  return 0; }
+   //
+   // get_instance
+   static vec_op_t* get_instance(void)
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static vec_op_t instance;
+      return &instance;
+   }
+   // op_enum
+   op_enum_t op_enum(void) const override
+   {  return vec_op_enum; }
+// END_VEC_OP_T
+   //
+   // n_arg
+   addr_t n_arg(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const override
+   {  return 1; }
+   //
+   // n_res
+   addr_t n_res(
+      addr_t                arg_index    ,
+      const Vector<addr_t>& arg_vec      ) const override
+   {  return 0; }
+   //
+   // eval
+   void eval(
+      const tape_t<Value>*      tape           ,
+      bool                      trace          ,
+      addr_t                    arg_index      ,
+      addr_t                    res_index      ,
+      Vector<Value>&            val_vec        ,
+      Vector< Vector<addr_t> >& ind_vec_vec    ,
+      size_t&                   compare_false  ) const override
+   {  //
+      // arg_vec, vec_vec
+      const Vector<addr_t>& arg_vec( tape->arg_vec() );
+      //
+      // which_vector
+      // BEGIN_VEC_ARG_BEFORE
+      addr_t  which_vector = arg_vec[arg_index + 0];
+      // END_VEC_ARG_BEFORE
+      //
+      // initial
+      const Vector<addr_t> initial = tape->vec_initial()[which_vector];
+# ifndef NDEBUG
+      CPPAD_ASSERT_UNKNOWN( tape->vec_size()[which_vector] == initial.size() );
+      for(size_t i = 0; i < initial.size(); ++i)
+      {  CPPAD_ASSERT_KNOWN(
+            initial[i] < res_index,
+            "vec_op: initial indices must come before index of next result"
+         );
+      }
+# endif
+      //
+      // ind_vec_vec
+      ind_vec_vec[which_vector] = initial;
+      //
+      if( ! trace )
+         return;
+      //
+      // print_vec_op
+      print_vec_op(which_vector, initial);
+   }
+};
+// ---------------------------------------------------------------------------
+/*
 {xrst_begin val_load_op dev}
 
 Dynamic Vector Load Operator

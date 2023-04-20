@@ -99,8 +99,8 @@ This is the vector of string constants.
 vec_size
 ********
 {xrst_literal
-   // BEGIN_SIZE_VEC
-   // END_SIZE_VEC
+   // BEGIN_VEC_SIZE
+   // END_VEC_SIZE
 }
 This vector has the size for each of the dynamic vectors.
 
@@ -112,6 +112,15 @@ op_enum_vec
 }
 Each element of this vector corresponds to an operator usage.
 The order of the vector is the order of operations.
+
+vec_initial
+***********
+{xrst_literal
+   // BEGIN_VEC_INITIAL
+   // END_VEC_INITIAL
+}
+The initial indices for each of the dynamic vectors; see
+:ref:`val_vec_op-name` .
 
 dep_vec
 *******
@@ -196,6 +205,10 @@ private :
    Vector<addr_t>      dep_vec_;     // dependent variable indices in val_vec
    Vector<uint8_t>     op_enum_vec_; // one byte per operator enum value.
    //
+   // vec_initial_
+   // initial indices for all the dynamic vectors
+   Vector< Vector<addr_t> > vec_initial_;
+   //
    // op2arg_index_
    // Optional vector that changes how op_iterator works; e.g.,
    // this is necessary is we are using replace_csum_op with this tape.
@@ -251,15 +264,20 @@ public :
    {  return str_vec_; }
    // END_STR_VEC
    //
-   // BEGIN_SIZE_VEC
+   // BEGIN_VEC_SIZE
    const Vector<addr_t>& vec_size(void) const
    {  return vec_size_; }
-   // END_SIZE_VEC
+   // END_VEC_SIZE
    //
    // BEGIN_OP_ENUM_VEC
    const Vector<uint8_t>& op_enum_vec(void) const
    {  return op_enum_vec_; }
    // END_OP_ENUM_VEC
+   //
+   // BEGIN_VEC_INITIAL
+   const Vector< Vector<addr_t> >& vec_initial(void) const
+   {  return vec_initial_; }
+   // END_VEC_INITIAL
    //
    // BEGIN_DEP_VEC
    const Vector<addr_t>& dep_vec(void) const
@@ -452,6 +470,9 @@ public :
       addr_t   vector_index  ,
       addr_t   value_index
    );
+   //
+   // record_vec_op
+   addr_t record_vec_op(const Vector<addr_t>& initial);
    //
    // set_dep
    void set_dep(const Vector<addr_t>& dep_vec);

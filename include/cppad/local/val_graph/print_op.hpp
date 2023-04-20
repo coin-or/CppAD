@@ -420,6 +420,52 @@ inline void print_load_op(
    cout << right << setw(5) << which_vector  << "](";
    cout << right << setw(5) << vector_index << ")" << std::endl;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin val_print_vec_op dev}
+{xrst_spell
+}
+
+Printing New Dynamic Vector Operators
+#####################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PRINT_VEC_OP
+   // END_PRINT_VEC_OP
+}
+
+which_vector
+************
+is the index in val_vec_vec corresponding to this vector.
+
+initial
+*******
+is the vector of indices in val_vec (the value vector)
+corresponding to the initial values for this dynamic vector.
+
+{xrst_end val_print_vec_op}
+*/
+// BEGIN_PRINT_VEC_OP
+inline void print_vec_op(
+   addr_t                which_vector ,
+   const Vector<addr_t>& initial      )
+// END_PRINT_VEC_OP
+{  //
+   using std::setw;
+   using std::right;
+   using std::cout;
+   //
+   cout << setw(19) << "" << right << setw(5)  << "vec" << "[";
+   cout << right << setw(5) << which_vector  << "](";
+   for(size_t i = 0; i < initial.size(); ++i)
+   {  cout << right << setw(5) << initial[i];
+      if( i + 1 < initial.size() )
+         cout << ",";
+   }
+   cout << ")" << std::endl;
+}
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 

@@ -35,18 +35,14 @@ bool vec_xam(void)
    addr_t x1 = 1;   // x[1]
    addr_t x2 = 2;   // x[2]
    //
-   // which_vector: vector with two elements
-   addr_t which_vector = tape.add_vec(2);
-   //
-   // zero, one, two
-   addr_t zero = tape.record_con_op(0.0);
+   // one, four
    addr_t one  = tape.record_con_op(1.0);
    addr_t four = tape.record_con_op(4.0);
    //
-   // tape
+   // which_vector
    // vector[0] = 4, vector[1] = 1
-   tape.record_store_op(which_vector, zero, four);
-   tape.record_store_op(which_vector, one, one);
+   Vector<addr_t> initial = {four, one};
+   addr_t which_vector = tape.record_vec_op(initial);
    //
    // dep_vec, tape
    Vector<addr_t> dep_vec(3);
@@ -79,10 +75,10 @@ bool vec_xam(void)
    tape.eval(trace, val_vec, ind_vec_vec);
    //
    // ok
-   ok &= tape.n_op()           == 10;
-   ok &= tape.con_vec().size() == 4;
-   ok &= tape.arg_vec().size() == 4 + 3 * 3 + 2 * 3;
-   ok &= tape.n_val()          == n_ind + 4 + 3;
+   ok &= tape.n_op()           == 8;
+   ok &= tape.con_vec().size() == 3;
+   ok &= tape.arg_vec().size() == 3 + 1 + 3 * 2 + 3;
+   ok &= tape.n_val()          == n_ind + 3 + 3;
    //
    // y
    Vector<double> y(3);
