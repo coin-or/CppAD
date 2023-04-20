@@ -146,7 +146,6 @@ public:
       // initial
       const Vector<addr_t> initial = tape->vec_initial()[which_vector];
 # ifndef NDEBUG
-      CPPAD_ASSERT_UNKNOWN( tape->vec_size()[which_vector] == initial.size() );
       for(size_t i = 0; i < initial.size(); ++i)
       {  CPPAD_ASSERT_KNOWN(
             initial[i] < res_index,

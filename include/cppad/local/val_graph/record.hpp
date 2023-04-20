@@ -64,7 +64,6 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    arg_vec_.clear();
    con_vec_.clear();
    str_vec_.clear();
-   vec_size_.clear();
    vec_initial_.clear();
    dep_vec_.clear();
    op_enum_vec_.clear();
@@ -84,7 +83,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    CPPAD_ASSERT_UNKNOWN( arg_vec_.size() == 1 );     // one argument
    CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
    CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );        // empty string
-   CPPAD_ASSERT_UNKNOWN( vec_size_.size() == 0 );    // no dynamic vectors
+   CPPAD_ASSERT_UNKNOWN( vec_initial_.size() == 0 );    // no dynamic vectors
    CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
    return nan_addr;
    // END_POST_CONDITION
@@ -702,9 +701,6 @@ addr_t tape_t<Value>::record_vec_op(const Vector<addr_t>& initial)
    // which_vector
    addr_t which_vector = addr_t( vec_initial_.size() );
    //
-   // vec_size_
-   vec_size_.push_back( addr_t( initial.size() ) );
-   //
    // vec_initial_
    vec_initial_.push_back( initial );
    //
@@ -757,7 +753,7 @@ addr_t tape_t<Value>::record_load_op(
 // END_RECORD_LOAD_OP
 {  //
    // check that vec_op_enum comes before load_op_enum
-   CPPAD_ASSERT_UNKNOWN( which_vector < vec_size_.size() );
+   CPPAD_ASSERT_UNKNOWN( which_vector < vec_initial_.size() );
    //
    // res_index
    addr_t res_index = n_val_;
@@ -816,7 +812,7 @@ addr_t tape_t<Value>::record_store_op(
 // END_RECORD_STORE_OP
 {  //
    // check that vec_op_enum comes before store_op_enum
-   CPPAD_ASSERT_UNKNOWN( which_vector < vec_size_.size() );
+   CPPAD_ASSERT_UNKNOWN( which_vector < vec_initial_.size() );
    //
    // res_index
    addr_t res_index = 0;

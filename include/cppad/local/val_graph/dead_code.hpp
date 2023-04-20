@@ -103,9 +103,9 @@ void tape_t<Value>::dead_code(void)
    //
    // new_which_vec
    // initialize all dynamic vectors as not used
-   Vector<addr_t> new_which_vec( vec_size_.size() );
-   for(size_t i = 0; i < vec_size_.size(); ++i)
-      new_which_vec[i] = addr_t( vec_size_.size() );
+   Vector<addr_t> new_which_vec( vec_initial_.size() );
+   for(size_t i = 0; i < vec_initial_.size(); ++i)
+      new_which_vec[i] = addr_t( vec_initial_.size() );
 
    //
    // new_val_index

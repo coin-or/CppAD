@@ -456,7 +456,7 @@ bool dynamic_vector(void)
    ok &= tape.con_vec().size()  == 3;
    ok &= tape.arg_vec().size()  == 3 + 2 + 2 * 2;
    ok &= tape.n_val()           == n_ind + 3 + 2;
-   ok &= tape.vec_size().size() == 2;
+   ok &= tape.vec_initial().size() == 2;
    //
    // y
    Vector<double> y(2);
@@ -472,9 +472,9 @@ bool dynamic_vector(void)
    //
    // val_vec
    val_vec.resize( tape.n_val() );
-   ind_vec_vec.resize( tape.vec_size().size() );
+   ind_vec_vec.resize( tape.vec_initial().size() );
    for(size_t i = 0; i < ind_vec_vec.size(); ++i)
-      ind_vec_vec[i].resize( tape.vec_size()[i] );
+      ind_vec_vec[i].resize( tape.vec_initial()[i].size() );
    for(addr_t i = 0; i < n_ind; ++i)
       val_vec[i] = x[i];
    tape.eval(trace, val_vec, ind_vec_vec);
@@ -484,7 +484,7 @@ bool dynamic_vector(void)
    ok &= tape.con_vec().size() == 3;
    ok &= tape.arg_vec().size() == 3 + 1 + 2 * 2;
    ok &= tape.n_val()          == n_ind + 3 + 2;
-   ok &= tape.vec_size().size() == 1;
+   ok &= tape.vec_initial().size() == 1;
    //
    // y
    dep_vec = tape.dep_vec();
