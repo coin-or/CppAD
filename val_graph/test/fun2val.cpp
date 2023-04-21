@@ -550,10 +550,76 @@ bool pri_op(void)
    //
    return ok;
 }
+// -------------------------------------------------------------------------
+// vector_op
+bool vector_op(void)
+{  bool ok = true;
+   //
+   // AD, addr_t
+   using CppAD::AD;
+   using CppAD::addr_t;
+   //
+   // tape_t, Vector
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   //
+   // ax
+   Vector< AD<double> > ax(3);
+   ax[0] = 0.0; // zero or one
+   ax[1] = 2.0;
+   ax[2] = 3.0;
+   CppAD::Independent(ax);
+   //
+   // av
+   CppAD::VecAD<double> au(2);
+   au[ ax[0] ]       = ax[1];
+   au[ 1.0 - ax[0] ] = ax[2];
+   //
+   // f
+   Vector< AD<double> > ay(2);
+   ay[0] = au[ AD<double>(0) ];
+   ay[1] = au[ AD<double>(1) ];
+   CppAD::ADFun<double> f(ax, ay);
+   //
+   // tape
+   tape_t<double> tape;
+   f.fun2val(tape);
+   //
+   // dep_vec
+   Vector<addr_t> dep_vec = tape.dep_vec();
+   ok &= dep_vec.size() == 2;
+   ok &= tape.n_ind() == 3;
+   //
+   // trace
+   bool trace = false;
+   //
+   // x
+   Vector<double> x(3);
+   x[0] = 1.0; // zero or one
+   x[1] = 4.0;
+   x[2] = 5.0;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   for(size_t i = 0; i < 3; ++i)
+      val_vec[i] = x[i];
+   tape.eval(trace, val_vec);
+   //
+   // y, ok
+   Vector<double> y(2);
+   y[0] = val_vec[ dep_vec[0] ];
+   y[1] = val_vec[ dep_vec[1] ];
+   //
+   ok &= y[ size_t( x[0] ) ]       == x[1];
+   ok &= y[ size_t( 1.0 - x[0] ) ] == x[2];
+   //
+   return ok;
+}
 // ----------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_fun2val(void)
 {  bool ok = true;
+   ok     &= vector_op();
    ok     &= dynamic_atom();
    ok     &= variable_atom();
    ok     &= unary_op();

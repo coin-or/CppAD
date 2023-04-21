@@ -209,6 +209,43 @@ void ADFun<Base, RecBase>::fun2val(
    val_tape.set_ind( n_val_ind );
 # endif
    //
+   // val_tape, vec_info_vec
+   // Put dynamic vectors in val_tape and create vec_info_vec
+   struct vec_info_t { size_t size; size_t offset; };
+   Vector<vec_info_t> vec_info_vec;
+   {  size_t n_vecad_ind = play_.num_var_vecad_ind_rec();
+      size_t index         = 0;
+      while(index < n_vecad_ind)
+      {  size_t size         = play_.GetVecInd(index++);
+         size_t offset       = index;
+         //
+         Vector<addr_t> initial(size);
+         for(size_t i = 0; i < size; ++i)
+         {  size_t par_index = play_.GetVecInd(index++);
+            addr_t val_index = val_tape.record_con_op( parameter[par_index] );
+            initial[i]       = val_index;
+         }
+# ifdef NDEBUG
+         val_tape.record_vec_op(initial);
+# else
+         addr_t which_vector = val_tape.record_vec_op(initial);
+         CPPAD_ASSERT_UNKNOWN( size_t(which_vector) == vec_info_vec.size() );
+# endif
+         vec_info_t vec_info = {size, offset};
+         vec_info_vec.push_back( vec_info );
+      }
+   }
+   //
+   // vec_offset2index
+   // mapping from vecad offset to index in vec_info_vec
+   auto vec_offset2index = [&vec_info_vec](addr_t offset)
+   {  addr_t index = 0;
+      while( vec_info_vec[index].offset < offset )
+         ++index;
+      CPPAD_ASSERT_UNKNOWN( vec_info_vec[index].offset == size_t(offset) );
+      return index;
+   };
+   //
    // par2val_index
    // Initialize mapping from parameter index to index in value vector.
    Vector<addr_t> par2val_index(n_parameter);
@@ -617,6 +654,70 @@ void ADFun<Base, RecBase>::fun2val(
                discrete_index, val_op_arg[0]
             );
             var2val_index[i_var]  = val_index;
+         }
+         break;
+         // --------------------------------------------------------------
+         case local::LdpOp:
+         {  addr_t which_vector = vec_offset2index( var_op_arg[0] );
+            addr_t vector_index = ensure_par2val_index( var_op_arg[1] );
+            //
+            var2val_index[i_var] = val_tape.record_load_op(
+               which_vector, vector_index
+            );
+         }
+         break;
+         //
+         case local::LdvOp:
+         {  addr_t which_vector = vec_offset2index( var_op_arg[0] );
+            addr_t vector_index = var2val_index[ var_op_arg[1] ];
+            //
+            var2val_index[i_var] = val_tape.record_load_op(
+               which_vector, vector_index
+            );
+         }
+         break;
+         //
+         case local::StppOp:
+         {  addr_t which_vector = vec_offset2index( var_op_arg[0] );
+            addr_t vector_index = ensure_par2val_index( var_op_arg[1] );
+            addr_t value_index  = ensure_par2val_index( var_op_arg[2] );
+            //
+            val_tape.record_store_op(
+               which_vector, vector_index, value_index
+            );
+         }
+         break;
+         //
+         case local::StpvOp:
+         {  addr_t which_vector = vec_offset2index( var_op_arg[0] );
+            addr_t vector_index = ensure_par2val_index( var_op_arg[1] );
+            addr_t value_index  = var2val_index[ var_op_arg[2] ];
+            //
+            val_tape.record_store_op(
+               which_vector, vector_index, value_index
+            );
+         }
+         break;
+         //
+         case local::StvpOp:
+         {  addr_t which_vector = vec_offset2index( var_op_arg[0] );
+            addr_t vector_index = var2val_index[ var_op_arg[1] ];
+            addr_t value_index  = ensure_par2val_index( var_op_arg[2] );
+            //
+            val_tape.record_store_op(
+               which_vector, vector_index, value_index
+            );
+         }
+         break;
+         //
+         case local::StvvOp:
+         {  addr_t which_vector = vec_offset2index( var_op_arg[0] );
+            addr_t vector_index = var2val_index[ var_op_arg[1] ];
+            addr_t value_index  = var2val_index[ var_op_arg[2] ];
+            //
+            val_tape.record_store_op(
+               which_vector, vector_index, value_index
+            );
          }
          break;
          // --------------------------------------------------------------

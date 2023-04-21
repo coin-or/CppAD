@@ -72,8 +72,14 @@ inline void type_var_op(
       case FunrpOp:
       case FunrvOp:
       case InvOp:
+      case LdpOp:
+      case LdvOp:
       case ParOp:
       case PriOp:
+      case StppOp:
+      case StpvOp:
+      case StvpOp:
+      case StvvOp:
       // END_SORT_THIS_LINE_MINUS_1
       is_unary   = false;
       is_binary  = false;

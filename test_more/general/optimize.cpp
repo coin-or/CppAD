@@ -2416,11 +2416,6 @@ namespace {
 
 bool optimize(void)
 {  bool ok = true;
-# if 0
-   //
-# else
-   depend_two();
-# endif
    //
    // val_optimize cases
    use_val_optimize_      = true;
