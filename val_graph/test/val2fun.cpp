@@ -615,7 +615,7 @@ bool vector_op(void)
    x[2] = 6.0;
    //
    // trace
-   bool trace = true;
+   bool trace = false;
    //
    // val_vec
    Vector<double> val_vec( tape.n_val() );
@@ -679,6 +679,6 @@ bool test_val2fun(void)
    ok     &= csum_op();
    ok     &= cexp_op();
    ok     &= pri_op();
-   // ok     &= vector_op(); not yet working
+   ok     &= vector_op();
    return ok;
 }

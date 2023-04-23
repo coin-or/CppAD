@@ -272,8 +272,11 @@ void ADFun<Base, RecBase>::val2fun(
       ind_taddr_[i] = i + 1;
    //
    // rec_con_index
+   // First constant in CppAD recording and val_graph is nan
    vector<addr_t> rec_con_index( val_con_vec.size() );
-   for(size_t i = 0; i < val_con_vec.size(); ++i)
+   CPPAD_ASSERT_UNKNOWN( CppAD::isnan( val_con_vec[0] ) );
+   rec_con_index[0] = 0;
+   for(size_t i = 1; i < val_con_vec.size(); ++i)
       rec_con_index[i] = rec.put_con_par( val_con_vec[i] );
    //
    // zero_index
@@ -337,10 +340,12 @@ void ADFun<Base, RecBase>::val2fun(
          con_x[i]     = val_index2con[val_index];
          max_ad_type  = std::max(max_ad_type, ad_type_x[i] );
       }
+      /*
       CPPAD_ASSERT_KNOWN(
          n_x == 0 || constant_enum < max_ad_type,
          "val2fun: must first call fold_con"
       );
+      */
       //
       // rec, fun_ad_type, val2fun_index
       if( is_unary )
@@ -797,10 +802,14 @@ void ADFun<Base, RecBase>::val2fun(
             offset               = vecad_offset[which_vector];
             addr_t load_op_index = addr_t( rec.num_var_load_rec() );
             rec.PutArg(offset, fun_arg[0], load_op_index);
-            if( fun_ad_type[0] < variable_enum )
-               rec.PutOp(local::LdpOp);
+            if( ad_type_x[0] < variable_enum )
+               var_addr = rec.PutLoadOp(local::LdpOp);
             else
-               rec.PutOp(local::LdvOp);
+               var_addr = rec.PutLoadOp(local::LdvOp);
+            //
+            // The result of a load function is always a variable
+            fun_ad_type[res_index]   = variable_enum;
+            val2fun_index[res_index] = var_addr;
          }
          break;
          //
@@ -809,14 +818,14 @@ void ADFun<Base, RecBase>::val2fun(
          {  addr_t which_vector = val_arg_vec[arg_index + 0];
             offset              = vecad_offset[which_vector];
             rec.PutArg(offset, fun_arg[0], fun_arg[1] );
-            if( fun_ad_type[0] < variable_enum )
-            {  if( fun_ad_type[1] < variable_enum )
+            if( ad_type_x[0] < variable_enum )
+            {  if( ad_type_x[1] < variable_enum )
                   rec.PutOp(local::StppOp);
                else
                   rec.PutOp(local::StpvOp);
             }
             else
-            {  if( fun_ad_type[1] < variable_enum )
+            {  if( ad_type_x[1] < variable_enum )
                   rec.PutOp(local::StvpOp);
                else
                   rec.PutOp(local::StvvOp);

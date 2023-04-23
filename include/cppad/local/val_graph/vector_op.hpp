@@ -22,9 +22,32 @@ The Dynamic Vector Value Operators
 These classes implement dynamic vectors; i.e., vector were
 the indices may depend on the independent values.
 
+ind_vec_vec
+***********
+The size of this vector is equal to the number of dynamic vectors.
+The size of each element of this vector is equal to the size of the
+corresponding dynamic vector plus one.
+It is a vector of value indices mapping dynamic vector indices to the
+index in the value vector for the current value of the dynamic vector.
+The last element for each dynamic vector is a flag.
+If it is nan, an index value for a store operation was nan.
+In this case, all the subsequent load operation results (for that vector)
+will be nan.
+In addition, if the index for a load operation is nan,
+the corresponding result will be nan.
+
 {xrst_toc_hidden
    val_graph/vec_xam.cpp
 }
+Operators
+*********
+Only the following operators use the eval
+:ref:`val_base_op@eval@ind_vec_vec` argument:
+`:ref:val_vec_op-name` ,
+`:ref:val_load_op-name` ,
+`:ref:val_store_op-name` .
+
+
 Example
 *******
 The file :ref:`com_xam.cpp <val_vec_xam.cpp-name>`
@@ -155,7 +178,14 @@ public:
 # endif
       //
       // ind_vec_vec
-      ind_vec_vec[which_vector] = initial;
+      CPPAD_ASSERT_UNKNOWN( ind_vec_vec.size() == which_vector );
+      ind_vec_vec.push_back(initial);
+      ind_vec_vec[which_vector].resize( initial.size() + 1 );
+      //
+      // ind_vec_vec
+      // Does not point to the nan in the tape which is at index tape->n_ind()
+      CPPAD_ASSERT_UNKNOWN( 0 < tape->n_ind() );
+      ind_vec_vec[which_vector][ initial.size() ] = 0;
       //
       if( ! trace )
          return;
@@ -241,7 +271,7 @@ class load_op_t : public base_op_t<Value> {
 public:
    // n_before
    addr_t n_before(void) const override
-   {  return 0; }
+   {  return 1; }
    //
    // n_after
    addr_t n_after(void) const override
@@ -292,15 +322,26 @@ public:
       // vector_index
       addr_t vector_index = arg_vec[arg_index + 1];
       //
-      // dynamic_index
+      // index
       Value index          = val_vec[vector_index];
-      addr_t dynamic_index = addr_t( Integer(index) );
-      CPPAD_ASSERT_KNOWN( size_t(dynamic_index) < this_vector.size(),
-         "dynamic vector index is greater than or equal vector size"
-      );
       //
       // val_vec
-      val_vec[res_index] = val_vec[ this_vector[dynamic_index] ];
+      addr_t flag = this_vector[ this_vector.size() - 1 ];
+      if( flag == tape->n_ind() || CppAD::isnan(index) )
+      {  val_vec[res_index] = val_vec[ tape->n_ind() ];
+         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( val_vec[res_index] ) );
+      }
+      else
+      {  //
+         // dynamic_index
+         addr_t dynamic_index = addr_t( Integer(index) );
+         CPPAD_ASSERT_KNOWN( size_t(dynamic_index) + 1 < this_vector.size(),
+            "dynamic vector index is greater than or equal vector size"
+         );
+         //
+         // val_vec
+         val_vec[res_index] = val_vec[ this_vector[dynamic_index] ];
+      }
       //
       // trace
       if( ! trace )
@@ -394,7 +435,7 @@ class store_op_t : public base_op_t<Value> {
 public:
    // n_before
    addr_t n_before(void) const override
-   {  return 0; }
+   {  return 1; }
    //
    // n_after
    addr_t n_after(void) const override
@@ -446,15 +487,22 @@ public:
       addr_t vector_index = arg_vec[arg_index + 1];
       addr_t value_index  = arg_vec[arg_index + 2];
       //
-      // dynamic_index
+      // index
       Value index          = val_vec[vector_index];
-      addr_t dynamic_index = addr_t( Integer(index) );
-      CPPAD_ASSERT_KNOWN( dynamic_index < this_vector.size(),
-         "dynamic vector index is greater than or equal vector size"
-      );
-      //
-      // val_vec_vec
-      this_vector[dynamic_index] = value_index;
+      if( CppAD::isnan(index) )
+      {  // set flag for this vector
+         this_vector[ this_vector.size() - 1 ] = tape->n_ind();
+      }
+      else
+      {  // dynamic_index
+         addr_t dynamic_index = addr_t( Integer(index) );
+         CPPAD_ASSERT_KNOWN( dynamic_index + 1 < this_vector.size(),
+            "dynamic vector index is greater than or equal vector size"
+         );
+         //
+         // val_vec_vec
+         this_vector[dynamic_index] = value_index;
+      }
       //
       // trace
       if( ! trace )

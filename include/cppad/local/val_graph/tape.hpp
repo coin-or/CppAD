@@ -300,9 +300,8 @@ public :
       using std::cout;
       //
       // ind_vec_vec
-      Vector< Vector<addr_t> > ind_vec_vec( vec_initial_.size() );
-      for(size_t i = 0; i < vec_initial_.size(); ++i)
-         ind_vec_vec[i].resize( vec_initial_[i].size() );
+      // Only the vector_op routines use this eval argument
+      Vector< Vector<addr_t> > ind_vec_vec;
       //
       // trace
       if( trace )
