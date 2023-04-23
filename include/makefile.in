@@ -956,7 +956,7 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/val_graph/val_optimize.hpp \
 	cppad/local/val_graph/val_type.hpp \
 	cppad/local/val_graph/var_type.hpp \
-	cppad/local/val_graph/vec_op.hpp \
+	cppad/local/val_graph/vector_op.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
