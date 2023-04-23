@@ -154,13 +154,6 @@ This vector has size equal to *n_val*.
 The first *n_ind* elements are inputs.
 The rest of the elements are outputs.
 
-ind_vec_vec
-===========
-This argument is optional.
-Each element of this argument is a dynamic vector.
-If there are no dynamic vectors in the tape this argument must
-be empty (or not present).
-
 compare_false
 =============
 This argument is optional.
@@ -288,55 +281,28 @@ public :
    void eval(
       bool           trace         ,
       Vector<Value>& val_vec       ) const
-   {  Vector< Vector<addr_t> > ind_vec_vec( vec_initial_.size() );
-      for(size_t i = 0; i < vec_initial_.size(); ++i)
-         ind_vec_vec[i].resize( vec_initial_[i].size() );
-      size_t                  compare_false = 0;
-      eval(trace, val_vec, ind_vec_vec, compare_false);
-   }
-   // eval(trace, val_vec, compare_false)
-   void eval(
-      bool           trace         ,
-      Vector<Value>& val_vec       ,
-      size_t&        compare_false ) const
-   {  Vector< Vector<addr_t> > ind_vec_vec;
-      eval(trace, val_vec, ind_vec_vec, compare_false);
-   }
-   // eval(trace, val_vec, ind_vec_vec)
-   void eval(
-      bool                      trace       ,
-      Vector<Value>&            val_vec     ,
-      Vector< Vector<addr_t> >& ind_vec_vec ) const
-   {  size_t compare_false = 0;
-      eval(trace, val_vec, ind_vec_vec, compare_false);
+   {  size_t                  compare_false = 0;
+      eval(trace, val_vec, compare_false);
    }
    // BEGIN_EVAL
-   // eval(trace, val_vec, ind_vec_vec, compare_false)
+   // eval(trace, val_vec, compare_false)
    void eval(
       bool                      trace         ,
       Vector<Value>&            val_vec       ,
-      Vector< Vector<addr_t> >& ind_vec_vec   ,
       size_t&                   compare_false ) const
    // END_EVAL
    {  CPPAD_ASSERT_KNOWN(
          val_vec.size() == size_t(n_val_),
          "eval: size of val_vec not equal to tape.n_val()"
       );
-      CPPAD_ASSERT_KNOWN(
-         ind_vec_vec.size() == vec_initial_.size(),
-         "eval: size of ind_vec_vec is not equal tape.vec_initial().size()"
-      );
-# ifndef NDEBUG
-      for(size_t i = 0; i < vec_initial_.size(); ++i)
-      {  CPPAD_ASSERT_KNOWN(
-            ind_vec_vec[i].size() == size_t( vec_initial_[i].size() ),
-            "eval: size of ind_vec_vec[i] is not equal tape.vec_initial()[i].size()"
-         );
-      }
-# endif
       using std::setw;
       using std::right;
       using std::cout;
+      //
+      // ind_vec_vec
+      Vector< Vector<addr_t> > ind_vec_vec( vec_initial_.size() );
+      for(size_t i = 0; i < vec_initial_.size(); ++i)
+         ind_vec_vec[i].resize( vec_initial_[i].size() );
       //
       // trace
       if( trace )

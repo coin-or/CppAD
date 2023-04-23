@@ -216,6 +216,27 @@ void ADFun<Base, RecBase>::val2fun(
    rec.PutOp(local::BeginOp);
    rec.PutArg(0); // parameter argumnet is the nan above
    //
+   // rec, vecad_offset
+   // place the VecAD objects in the recording
+   vector<addr_t> vecad_offset;
+   addr_t         offset = 1;
+   for(size_t i = 0; i < val_tape.vec_initial().size(); ++i)
+   {  const vector<addr_t>& val_initial = val_tape.vec_initial()[i];
+      size_t size = val_initial.size();
+      local::pod_vector<addr_t>  fun_initial(size);
+      for(size_t j = 0; j < size; ++j)
+      {  addr_t val_index  = val_initial[j];
+         const Base& value = val_index2con[val_index];
+         CPPAD_ASSERT_KNOWN( ! CppAD::isnan(value),
+            "val2fun: an initial value for a dynamic array is not constant"
+         );
+         fun_initial[j] =  rec.put_con_par( value );
+      }
+      rec.put_var_vecad(size, fun_initial);
+      vecad_offset.push_back( offset );
+      offset += addr_t(size + 1);
+   }
+   //
    // rec, fun_ad_type, val2fun_index
    // put the independent dynamic paraeters in the function recording
    for(size_t i = 0; i < dyn_n_ind; ++i)
@@ -764,6 +785,45 @@ void ADFun<Base, RecBase>::val2fun(
             val2fun_index[res_index] = tmp_addr;
          }
          break;
+         // -------------------------------------------------------------------
+         // vec_op
+         case local::val_graph::vec_op_enum:
+         // All the VecAD objects have alread been initialized
+         break;
+         //
+         // load_op
+         case local::val_graph::load_op_enum:
+         {  addr_t which_vector  = val_arg_vec[arg_index + 0];
+            offset               = vecad_offset[which_vector];
+            addr_t load_op_index = addr_t( rec.num_var_load_rec() );
+            rec.PutArg(offset, fun_arg[0], load_op_index);
+            if( fun_ad_type[0] < variable_enum )
+               rec.PutOp(local::LdpOp);
+            else
+               rec.PutOp(local::LdvOp);
+         }
+         break;
+         //
+         // store_op
+         case local::val_graph::store_op_enum:
+         {  addr_t which_vector = val_arg_vec[arg_index + 0];
+            offset              = vecad_offset[which_vector];
+            rec.PutArg(offset, fun_arg[0], fun_arg[1] );
+            if( fun_ad_type[0] < variable_enum )
+            {  if( fun_ad_type[1] < variable_enum )
+                  rec.PutOp(local::StppOp);
+               else
+                  rec.PutOp(local::StpvOp);
+            }
+            else
+            {  if( fun_ad_type[1] < variable_enum )
+                  rec.PutOp(local::StvpOp);
+               else
+                  rec.PutOp(local::StvvOp);
+            }
+         }
+         break;
+         //
          // -------------------------------------------------------------------
          // call_op
          // rec, fun_ad_type, val2fun_index

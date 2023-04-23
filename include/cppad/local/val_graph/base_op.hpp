@@ -121,6 +121,15 @@ trace
 if this is true (false) the operator is (is not) printed
 at the end of the eval operation.
 
+ind_vec_vec
+===========
+The size of this vector is equal to the number of dynamic vectors.
+The size of each element of this vector is equal to the size of the
+corresponding dynamic vector.
+If there are no dynamic vectors in the tape this argument must
+be empty (or not present).
+This argument is only used by the :ref:`val_vector_op-name` operations.
+
 compare_false
 =============
 This is the number of :ref:`val_comp_op-name` that had a false

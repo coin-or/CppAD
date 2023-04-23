@@ -559,6 +559,116 @@ bool pri_op(void)
    return ok;
 }
 // ---------------------------------------------------------------------------
+bool vector_op(void)
+{  bool ok = true;
+   //
+   // tape_t, Vector, addr_t, compare_lt_enum
+   using CppAD::local::val_graph::tape_t;
+   using CppAD::local::val_graph::Vector;
+   using CppAD::local::val_graph::addr_t;
+   using CppAD::local::val_graph::op_enum_t;
+   op_enum_t sub_op_enum = CppAD::local::val_graph::sub_op_enum;
+   //
+   // tape, ok
+   tape_t<double> tape;
+   addr_t n_ind = 3;
+   addr_t index_of_nan = tape.set_ind(n_ind);
+   ok &= index_of_nan == n_ind;
+   //
+   // x0, x1, x2
+   addr_t x0 = 0;   // x[0] must be zero or one
+   addr_t x1 = 1;   // x[1]
+   addr_t x2 = 2;   // x[2]
+   //
+   // zero, one, four
+   addr_t zero  = tape.record_con_op(0.0);
+   addr_t one   = tape.record_con_op(1.0);
+   addr_t four  = tape.record_con_op(4.0);
+   //
+   // which_vector
+   // vec[0] = 4, vec[1] = 1
+   Vector<addr_t> initial = {four, one};
+   addr_t which_vector = tape.record_vec_op(initial);
+   //
+   // dep_vec, tape
+   Vector<addr_t> dep_vec(3);
+   dep_vec[0] = tape.record_load_op(which_vector, x0); // y[0] = x[initial[x[0]]
+   //
+   // one_minus_x0
+   Vector<addr_t> op_arg = {one, x0};
+   addr_t one_minus_x0 = tape.record_op(sub_op_enum, op_arg);
+   //
+   // dep_vec, tape
+   // vec[x[0]] = x[1]
+   tape.record_store_op(which_vector, x0, x1);           // vec[x[0]]   = x[1]
+   tape.record_store_op(which_vector, one_minus_x0, x2); // vec[1-x[0]] = x[2]
+   //
+   // set_dep
+   dep_vec[1] = tape.record_load_op(which_vector, zero); // y[1] = vec[0]
+   dep_vec[2] = tape.record_load_op(which_vector, one);  // y[2] = vec[1]
+   tape.set_dep( dep_vec );
+   //
+   // x
+   Vector<double> x(n_ind);
+   x[0] = 1.0;
+   x[1] = 5.0;
+   x[2] = 6.0;
+   //
+   // trace
+   bool trace = true;
+   //
+   // val_vec
+   Vector<double> val_vec( tape.n_val() );
+   for(addr_t i = 0; i < n_ind; ++i)
+      val_vec[i] = x[i];
+   tape.eval(trace, val_vec);
+   //
+   // y
+   Vector<double> y(3);
+   for(size_t i = 0; i < 3; ++i)
+      y[i] = val_vec[ dep_vec[i] ];
+   //
+   // ok
+   if( x[0] == 0.0 )
+   {  ok &= y[0] == 4.0;
+      ok &= y[1] == x[1];
+      ok &= y[2] == x[2];
+   }
+   else
+   {  assert( x[0] == 1.0);
+      ok &= y[0] == 1.0;
+      ok &= y[1] == x[2];
+      ok &= y[2] == x[1];
+   }
+   //
+   // f
+   Vector<size_t> var_ind(3), dyn_ind(0);
+   var_ind[0] = 0;
+   var_ind[1] = 1;
+   var_ind[2] = 2;
+   CppAD::ADFun<double> f;
+   f.val2fun(tape, dyn_ind, var_ind);
+   //
+   // y
+   y = f.Forward(0, x);
+   //
+   // ok
+   if( x[0] == 0.0 )
+   {  ok &= y[0] == 4.0;
+      ok &= y[1] == x[1];
+      ok &= y[2] == x[2];
+   }
+   else
+   {  assert( x[0] == 1.0);
+      ok &= y[0] == 1.0;
+      ok &= y[1] == x[2];
+      ok &= y[2] == x[1];
+   }
+   //
+   return ok;
+}
+// END_C++
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 bool test_val2fun(void)
 {  bool ok = true;
@@ -569,5 +679,6 @@ bool test_val2fun(void)
    ok     &= csum_op();
    ok     &= cexp_op();
    ok     &= pri_op();
+   // ok     &= vector_op(); not yet working
    return ok;
 }
