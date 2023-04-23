@@ -2429,7 +2429,7 @@ bool optimize(void)
    ok     &= atomic_no_used();
    ok     &= atomic_arguments();
    ok     &= depend_one();
-   // skip: depend_two(void) because it uses VecAD
+   ok     &= depend_two();
    ok     &= depend_three();
    ok     &= depend_four();
    ok     &= duplicate_one();
