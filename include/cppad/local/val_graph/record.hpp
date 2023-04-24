@@ -753,7 +753,7 @@ addr_t tape_t<Value>::record_load_op(
 // END_RECORD_LOAD_OP
 {  //
    // check that vec_op_enum comes before load_op_enum
-   CPPAD_ASSERT_UNKNOWN( which_vector < vec_initial_.size() );
+   CPPAD_ASSERT_UNKNOWN( size_t(which_vector) < vec_initial_.size() );
    //
    // res_index
    addr_t res_index = n_val_;
@@ -812,7 +812,7 @@ addr_t tape_t<Value>::record_store_op(
 // END_RECORD_STORE_OP
 {  //
    // check that vec_op_enum comes before store_op_enum
-   CPPAD_ASSERT_UNKNOWN( which_vector < vec_initial_.size() );
+   CPPAD_ASSERT_UNKNOWN( size_t(which_vector) < vec_initial_.size() );
    //
    // res_index
    addr_t res_index = 0;

@@ -178,7 +178,7 @@ public:
 # endif
       //
       // ind_vec_vec
-      CPPAD_ASSERT_UNKNOWN( ind_vec_vec.size() == which_vector );
+      CPPAD_ASSERT_UNKNOWN( ind_vec_vec.size() == size_t(which_vector) );
       ind_vec_vec.push_back(initial);
       ind_vec_vec[which_vector].resize( initial.size() + 1 );
       //
@@ -496,7 +496,7 @@ public:
       else
       {  // dynamic_index
          addr_t dynamic_index = addr_t( Integer(index) );
-         CPPAD_ASSERT_KNOWN( dynamic_index + 1 < this_vector.size(),
+         CPPAD_ASSERT_KNOWN( size_t(dynamic_index) + 1 < this_vector.size(),
             "dynamic vector index is greater than or equal vector size"
          );
          //

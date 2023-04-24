@@ -239,10 +239,11 @@ void ADFun<Base, RecBase>::fun2val(
    // vec_offset2index
    // mapping from vecad offset to index in vec_info_vec
    auto vec_offset2index = [&vec_info_vec](addr_t offset)
-   {  addr_t index = 0;
-      while( vec_info_vec[index].offset < offset )
+   {  addr_t index    = 0;
+      size_t offset_s = size_t(offset);
+      while( vec_info_vec[index].offset < offset_s )
          ++index;
-      CPPAD_ASSERT_UNKNOWN( vec_info_vec[index].offset == size_t(offset) );
+      CPPAD_ASSERT_UNKNOWN( vec_info_vec[index].offset == offset_s );
       return index;
    };
    //
