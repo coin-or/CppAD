@@ -7,6 +7,7 @@
 
 # include <stack>
 # include <iterator>
+# include <cppad/local/optimize/extract_option.hpp>
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
 # include <cppad/local/optimize/get_dyn_previous.hpp>
@@ -134,6 +135,7 @@ the return value is true (false).
 Contents
 ********
 {xrst_toc_table
+   include/cppad/local/optimize/extract_option.hpp
    include/cppad/local/optimize/cexp_info.hpp
    include/cppad/local/optimize/get_cexp_info.hpp
    include/cppad/local/optimize/get_op_usage.hpp
@@ -164,51 +166,16 @@ bool optimize_run(
    play->template setup_random<Addr>();
    local::play::const_random_iterator<Addr> random_itr =
       play->template get_random<Addr>();
-
-   bool conditional_skip    = true;
-   bool compare_op          = true;
-   bool print_for_op        = true;
-   bool cumulative_sum_op   = true;
-   size_t collision_limit   = 10;
-   size_t index = 0;
-   while( index < options.size() )
-   {  while( index < options.size() && options[index] == ' ' )
-         ++index;
-      std::string option;
-      while( index < options.size() && options[index] != ' ' )
-         option += options[index++];
-      if( option != "" )
-      {  if( option == "no_conditional_skip" )
-            conditional_skip = false;
-         else if( option == "no_compare_op" )
-            compare_op = false;
-         else if( option == "no_print_for_op" )
-            print_for_op = false;
-         else if( option == "no_cumulative_sum_op" )
-            cumulative_sum_op = false;
-         else if( option.substr(0, 16)  == "collision_limit=" )
-         {  std::string value = option.substr(16, option.size());
-            bool value_ok = value.size() > 0;
-            for(size_t i = 0; i < value.size(); ++i)
-            {  value_ok &= '0' <= value[i];
-               value_ok &= value[i] <= '9';
-            }
-            if( ! value_ok )
-            {  option += " value is not a sequence of decimal digits";
-               CPPAD_ASSERT_KNOWN( false , option.c_str() );
-            }
-            collision_limit = size_t( std::atoi( value.c_str() ) );
-            if( collision_limit < 1 )
-            {  option += " value must be greater than zero";
-               CPPAD_ASSERT_KNOWN( false , option.c_str() );
-            }
-         }
-         else
-         {  option += " is not a valid optimize option";
-            CPPAD_ASSERT_KNOWN( false , option.c_str() );
-         }
-      }
-   }
+   //
+   // conditional_skip, compare_op, print_for_op, cumulative_sum_op,
+   // collisiojn_limit
+   options_t result = extract_option(options);
+   bool conditional_skip    = result.conditional_skip;
+   bool compare_op          = result.compare_op;
+   bool print_for_op        = result.print_for_op;
+   bool cumulative_sum_op   = result.cumulative_sum_op;
+   size_t collision_limit   = result.collision_limit;
+   //
    // number of operators in the player
    const size_t num_op = play->num_op_rec();
    CPPAD_ASSERT_UNKNOWN(

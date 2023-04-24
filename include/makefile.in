@@ -872,6 +872,7 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/local/optimize/cexp_info.hpp \
 	cppad/local/optimize/csum_op_info.hpp \
 	cppad/local/optimize/csum_stacks.hpp \
+	cppad/local/optimize/extract_option.hpp \
 	cppad/local/optimize/get_cexp_info.hpp \
 	cppad/local/optimize/get_dyn_previous.hpp \
 	cppad/local/optimize/get_op_previous.hpp \
