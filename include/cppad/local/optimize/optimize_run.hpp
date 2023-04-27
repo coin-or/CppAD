@@ -167,14 +167,15 @@ bool optimize_run(
    local::play::const_random_iterator<Addr> random_itr =
       play->template get_random<Addr>();
    //
-   // conditional_skip, compare_op, print_for_op, cumulative_sum_op,
-   // collisiojn_limit
-   options_t result = extract_option(options);
-   bool conditional_skip    = result.conditional_skip;
+   // compare_op, conditional_skip, cumulative_sum_op, print_for_op,
+   // collision_limit
+   options_t result         = extract_option(options);
    bool compare_op          = result.compare_op;
-   bool print_for_op        = result.print_for_op;
+   bool conditional_skip    = result.conditional_skip;
    bool cumulative_sum_op   = result.cumulative_sum_op;
+   bool print_for_op        = result.print_for_op;
    size_t collision_limit   = result.collision_limit;
+   CPPAD_ASSERT_UNKNOWN( result.val_graph == false );
    //
    // number of operators in the player
    const size_t num_op = play->num_op_rec();

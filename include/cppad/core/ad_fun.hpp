@@ -314,7 +314,7 @@ public:
       const CppAD::vector<size_t>&          dyn_ind   ,
       const CppAD::vector<size_t>&          var_ind
    );
-   void val_optimize(void);
+   void val_optimize(const std::string& options);
 
    // create ADFun< AD<Base> > from this ADFun<Base>
    // (doxygen in cppad/core/base2ad.hpp)

@@ -19,19 +19,35 @@ Prototype
    // END_VAL_OPTIMIZE
 }
 
+options
+=======
+See :ref:`optimize_extract_option@options` .
+
 {xrst_end val_optimize}
 */
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/optimize/extract_option.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_VAL_OPTIMIZE
 template <class Base, class RecBase>
-void ADFun<Base, RecBase>::val_optimize(void)
+void ADFun<Base, RecBase>::val_optimize(const std::string& options)
 // END_VAL_OPTIMIZE
 {  //
+   // compare_op, cumulative_sum_op, print_for_op,
+   local::optimize::options_t result = local::optimize::extract_option(options);
+   bool compare_op          = result.compare_op;
+   bool cumulative_sum_op   = result.cumulative_sum_op;
+   bool print_for_op        = result.print_for_op;
+   //
+   CPPAD_ASSERT_UNKNOWN( result.val_graph == true );
+   CPPAD_ASSERT_KNOWN( result.conditional_skip == false,
+      "optimize options: "
+      "val_graph is present and no_conditional_skip is not present"
+   );
    // n_dyn_ind, n_var_ind
    size_t n_dyn_ind = size_dyn_ind();
    size_t n_var_ind = Domain();
@@ -55,10 +71,24 @@ void ADFun<Base, RecBase>::val_optimize(void)
       swap(g);
    }
    //
-   // val_tape: optimize
+   // val_tape: renumber
    val_tape.renumber();
-   // val_tape.fold_con();
-   val_tape.summation();
+   //
+   // val_tape: fold_con();
+   //
+   // val_tape: summation
+   if( cumulative_sum_op )
+      val_tape.summation();
+   //
+   // val_tape: dead_code
+   if( compare_op )
+      val_tape.set_option("keep_compare", "true");
+   else
+      val_tape.set_option("keep_compare", "false");
+   if( print_for_op )
+      val_tape.set_option("keep_print", "true");
+   else
+      val_tape.set_option("keep_print", "false");
    val_tape.dead_code();
    /*
    CppAD::vector<Base> val_vec( val_tape.n_val() );

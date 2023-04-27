@@ -35,7 +35,7 @@ bool csum_op(void)
    CppAD::ADFun<double> f(ax, ay);
    //
    // val_optimize
-   f.val_optimize();
+   f.val_optimize("val_graph no_conditional_skip");
    //
    // x, p, y, check, ok
    // zero order forward
@@ -58,7 +58,7 @@ bool csum_op(void)
    ok &= y[0] == check;
    //
    // val_optimize, y, ok
-   f.val_optimize();
+   f.val_optimize("val_graph no_conditional_skip");
    f.new_dynamic(p);
    y     = f.Forward(0, x);
    ok &= y[0] == check;
