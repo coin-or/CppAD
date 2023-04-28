@@ -447,7 +447,8 @@ void ADFun<Base, RecBase>::fun2val(
       (++itr).op_info(var_op, var_op_arg, i_var);
       //
       // is_unary, is_binary, is_compare
-      bool is_unary, is_binary, is_compare;
+      // initialize to avoid compiler warning
+      bool is_unary = false, is_binary = false, is_compare = false;
       local::val_graph::type_var_op(
          var_op, is_unary, is_binary, is_compare
       );
@@ -832,6 +833,8 @@ void ADFun<Base, RecBase>::fun2val(
 
                default:
                CPPAD_ASSERT_UNKNOWN(false);
+               // set to avoid compiler warning
+               compare_enum = local::val_graph::number_compare_enum;
                break;
             }
             val_index = val_tape.record_cexp_op(

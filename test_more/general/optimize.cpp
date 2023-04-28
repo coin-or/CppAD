@@ -19,7 +19,10 @@ namespace {
    // optimize_with_options
    void optimize_with_options(CppAD::ADFun<double>& f)
    {  if( use_val_optimize_ )
+      {  // See val_graph: 2DO in optimize.hpp
+         // f.optimize("val_graph no_conditional_skip");
          f.val_optimize("val_graph no_conditional_skip");
+      }
       else if( conditional_skip_ )
          f.optimize();
       else

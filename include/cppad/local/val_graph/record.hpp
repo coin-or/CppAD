@@ -161,9 +161,6 @@ template <class Value>
 addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 // END_RECORD_OP
 {  //
-   // op_ptr
-   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
-   //
    // res_index
    addr_t res_index = n_val_;
 # ifndef NDEBUG
@@ -181,12 +178,15 @@ addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
    // n_val_
    ++n_val_;
    //
+# ifndef NDEBUG
+   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
    CPPAD_ASSERT_UNKNOWN(
       size_t( op_ptr->n_arg(arg_index, arg_vec_) ) == op_arg.size()
    );
    CPPAD_ASSERT_UNKNOWN(
       size_t( op_ptr->n_res(arg_index, arg_vec_) ) == 1
    );
+# endif
    //
    return res_index;
 }

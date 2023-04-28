@@ -67,9 +67,11 @@ namespace {
       //
       // optimize
       if( global_option["val_optimize"] )
-      {  f.val_optimize();
+      {  std::string optimize_options =
+            "val_graph no_conditional_skip no_compare_op no_print_for_op";
+         f.val_optimize(optimize_options);
       }
-      if( global_option["optimize"] )
+      else if( global_option["optimize"] )
       {  std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
          f.optimize(optimize_options);

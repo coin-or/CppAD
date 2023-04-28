@@ -142,7 +142,8 @@ void ADFun<Base, RecBase>::val2fun(
    //
    // tmp_addr
    // a parameter or variable temporary index
-   addr_t tmp_addr;
+   // initialize to zero to avoid compiler warnings
+   addr_t tmp_addr = 0;
    //
 # ifndef NDEBUG
    // val_n_ind

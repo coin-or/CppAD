@@ -248,70 +248,100 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
    size_t size_op_before = size_op();
 # endif
 
-   // place to store the optimized version of the recording
-   local::recorder<Base> rec;
-
    // number of independent variables
-   size_t n = ind_taddr_.size();
+   size_t n_ind_var = ind_taddr_.size();
 
 # ifndef NDEBUG
-   size_t i, j, m = dep_taddr_.size();
-   CppAD::vector<Base> x(n), y(m), check(m);
+   // n_ind_dyn, ind_dynamic
+   size_t n_ind_dyn = play_.num_dynamic_ind();
+   CppAD::vector<Base> ind_dynamic(n_ind_dyn);
+   //
+   // n_dep_var, x, y, check, max_taylor, check_zero_order
+   size_t n_dep_var = dep_taddr_.size();
+   CppAD::vector<Base> x(n_ind_var), y(n_dep_var), check(n_dep_var);
    Base max_taylor(0);
    bool check_zero_order = num_order_taylor_ > 0;
    if( check_zero_order )
-   {  // zero order coefficients for independent vars
-      for(j = 0; j < n; j++)
+   {  //
+      // ind_dynamic
+      for(size_t j = 0; j < n_ind_dyn; ++j)
+      {  const addr_t par_ind = play_.dyn_ind2par_ind()[j];
+         ind_dynamic[j]       = play_.all_par_vec()[par_ind];
+      }
+      //
+      // x
+      // zero order coefficients for independent vars
+      for(size_t j = 0; j < n_ind_var; j++)
       {  CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
          CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]    == j+1   );
          x[j] = taylor_[ ind_taddr_[j] * cap_order_taylor_ + 0];
       }
+      // y
       // zero order coefficients for dependent vars
-      for(i = 0; i < m; i++)
+      for(size_t i = 0; i < n_dep_var; i++)
       {  CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );
          y[i] = taylor_[ dep_taddr_[i] * cap_order_taylor_ + 0];
       }
+      // max_taylor
       // maximum zero order coefficient not counting BeginOp at beginning
       // (which is correpsonds to uninitialized memory).
-      for(i = 1; i < num_var_tape_; i++)
+      for(size_t i = 1; i < num_var_tape_; i++)
       {  if(  abs_geq(taylor_[i*cap_order_taylor_+0] , max_taylor) )
             max_taylor = taylor_[i*cap_order_taylor_+0];
       }
    }
 # endif
 
-   // create the optimized recording
-   size_t exceed = false;
-   switch( play_.address_type() )
-   {
-      case local::play::unsigned_short_enum:
-      exceed = local::optimize::optimize_run<unsigned short>(
-         options, n, dep_taddr_, &play_, &rec
-      );
-      break;
-
-      case local::play::unsigned_int_enum:
-      exceed = local::optimize::optimize_run<unsigned int>(
-         options, n, dep_taddr_, &play_, &rec
-      );
-      break;
-
-      case local::play::size_t_enum:
-      exceed = local::optimize::optimize_run<size_t>(
-         options, n, dep_taddr_, &play_, &rec
-      );
-      break;
-
-      default:
-      CPPAD_ASSERT_UNKNOWN(false);
+   /*
+   val_graph: 2DO
+   This is not yet working for Base types that do not have a standard hash
+   //
+   // val_graph
+   bool val_graph = options.find("val_graph") != std::string::npos;
+   //
+   if( val_graph )
+   {  val_optimize(options);
+      exceed_collision_limit_ = false;
    }
-   exceed_collision_limit_ = exceed;
+   else
+   */
+   {
+      // place to store the optimized version of the recording
+      local::recorder<Base> rec;
+
+      // create the optimized recording
+      size_t exceed = false;
+      switch( play_.address_type() )
+      {
+         case local::play::unsigned_short_enum:
+         exceed = local::optimize::optimize_run<unsigned short>(
+            options, n_ind_var, dep_taddr_, &play_, &rec
+         );
+         break;
+
+         case local::play::unsigned_int_enum:
+         exceed = local::optimize::optimize_run<unsigned int>(
+            options, n_ind_var, dep_taddr_, &play_, &rec
+         );
+         break;
+
+         case local::play::size_t_enum:
+         exceed = local::optimize::optimize_run<size_t>(
+            options, n_ind_var, dep_taddr_, &play_, &rec
+         );
+         break;
+
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+      }
+      exceed_collision_limit_ = exceed;
+
+      // now replace the recording
+      play_.get_recording(rec, n_ind_var);
+   }
 
    // number of variables in the recording
-   num_var_tape_  = rec.num_var_rec();
-
-   // now replace the recording
-   play_.get_recording(rec, n);
+   num_var_tape_  = play_.num_var_rec();
 
    // set flag so this function knows it has been optimized
    has_been_optimized_ = true;
@@ -343,11 +373,12 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
    {  std::stringstream s;
       //
       // zero order forward calculation using new operation sequence
+      new_dynamic(ind_dynamic);
       check = Forward(0, x, s);
 
       // check results
       Base eps99 = Base(99) * CppAD::numeric_limits<Base>::epsilon();
-      for(i = 0; i < m; i++)
+      for(size_t i = 0; i < n_dep_var; i++)
       if( ! abs_geq( eps99 * max_taylor , check[i] - y[i] ) )
       {  std::string msg = "Error during check of f.optimize().";
          msg += "\neps99 * max_taylor = " + to_string(eps99 * max_taylor);
