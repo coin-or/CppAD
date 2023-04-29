@@ -96,6 +96,29 @@ The larger *value* , the more identical expressions the optimizer
 can recognize, but the slower the optimizer may run.
 The default for *value* is ``10`` .
 
+val_graph
+=========
+If the sub-string ``val_graph`` appears in *options* ,
+the value graph optimizer is used.
+This is a new CppAD operation sequence optimizer.
+Early testing indicates that it uses less memory and
+produces code that has similar speed to the old optimizer.
+For some large problems the new optimizer take longer but it produces
+faster code.
+The new optimizer has a much simpler implementation and this should make
+it easier to improve in the future.
+
+no_conditional_skip
+-------------------
+If the sub-string ``val_graph`` is present, the ``no_conditional_skip``
+sub-string must also appear.
+
+collision_limit=value
+---------------------
+If the sub-string ``val_graph`` is present, the ``collision_limit=value``
+sub-string must **not** appear.
+Currently, there is no collision limit for the new optimizer.
+
 Re-Optimize
 ***********
 Before 2019-06-28, optimizing twice was not supported and would fail
@@ -292,9 +315,6 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
    }
 # endif
 
-   /*
-   val_graph: 2DO
-   This is not yet working for Base types that do not have a standard hash
    //
    // val_graph
    bool val_graph = options.find("val_graph") != std::string::npos;
@@ -304,7 +324,6 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
       exceed_collision_limit_ = false;
    }
    else
-   */
    {
       // place to store the optimized version of the recording
       local::recorder<Base> rec;

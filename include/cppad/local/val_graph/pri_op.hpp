@@ -178,7 +178,7 @@ public:
       const std::string& after   = str_vec[ arg[1] ];
       const Value&       flag    = val_vec[ arg[2] ];
       const Value&       value   = val_vec[ arg[3] ];
-      if( flag <= 0 )
+      if( flag <= Value(0) )
          std::cout << before << value << after;
    }
 };
