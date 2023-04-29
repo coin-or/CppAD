@@ -19,6 +19,28 @@
 
 
 namespace CppAD { namespace local { namespace val_graph {
+
+// hash_value
+template <class Value>
+size_t hash_value(const Value& value)
+{
+   CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
+   CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
+   //
+   // v
+   const unsigned short* v
+             = reinterpret_cast<const unsigned short*>(& value);
+   //
+   // sum
+   size_t i   = sizeof(value) / 2 - 1;
+   size_t sum = v[i];
+   while(i--)
+      sum += v[i];
+   //
+   return sum;
+}
+
+
 //
 // op_hash_table_t
 template <class Value>
@@ -30,9 +52,6 @@ private:
    //
    // op2arg_index_
    const Vector<addr_t>& op2arg_index_;
-   //
-   // hash_value_
-   std::hash<Value> hash_value_;
    //
    // table
    CppAD::local::sparse::size_setvec<addr_t> table_;
@@ -50,7 +69,7 @@ private:
       //
       size_t code;
       if( op_enum == con_op_enum )
-         code = hash_value_( con_vec[  arg_vec[arg_index] ] );
+         code = hash_value( con_vec[  arg_vec[arg_index] ] );
       else
       {  addr_t n_arg    = op_ptr->n_arg(arg_index, arg_vec);
          addr_t n_before = op_ptr->n_before();
