@@ -32,7 +32,7 @@ It follows that
 
    \partial_t y_i (t, x) = \left \{ \begin{array}{ll}
       0                   & \R{if} \; i = 0 \\
-      x_i y_{i-1} (t, x)  & \R{otherwise} 
+      x_i y_{i-1} (t, x)  & \R{otherwise}
    \end{array} \right .
    \\
    \partial_t y (t, x) =
@@ -79,7 +79,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 // y(t, x)
 template <class Scalar, class Vector>
 Vector Y(Scalar t, const Vector& x)
-{  size_t m = x.size();  
+{  size_t m = x.size();
    Vector y(m);
    //
    // y
@@ -161,7 +161,7 @@ bool rev_depend(void)
    // f
    // optimize uses rev_depend
    CppAD::ADFun<double> f(ax, az);
-   f.optimize();
+   f.optimize("val_graph no_conditional_skip");
    // -----------------------------------------------------------------------
    // check_f
    // -----------------------------------------------------------------------

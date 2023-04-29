@@ -255,8 +255,9 @@ void ADFun<Base, RecBase>::fun2val(
    for(addr_t i = 0; i < addr_t( n_dynamic_ind ); ++i)
       par2val_index[i + 1] = i;
    //
-   // val_op_arg, var_op_res
+   // val_op_arg, var_op_res, res_is_par;
    Vector<addr_t> val_op_arg, var_op_res;
+   Vector<bool>   res_is_par;
    //
    // i_arg
    // initial index in dyn_par_arg
@@ -846,7 +847,7 @@ void ADFun<Base, RecBase>::fun2val(
 
          // --------------------------------------------------------------
          case local::FunapOp:
-         val_op_arg.push_back( par2val_index[var_op_arg[0]] );
+         val_op_arg.push_back( ensure_par2val_index( var_op_arg[0] ) );
          break;
 
          case local::FunavOp:
@@ -856,10 +857,12 @@ void ADFun<Base, RecBase>::fun2val(
 
          case local::FunrpOp:
          var_op_res.push_back( var_op_arg[0] );
+         res_is_par.push_back(true);
          break;
 
          case local::FunrvOp:
          var_op_res.push_back( addr_t(i_var) );
+         res_is_par.push_back(false);
          break;
 
          case local::AFunOp:
@@ -867,6 +870,7 @@ void ADFun<Base, RecBase>::fun2val(
          if( in_atomic_call )
          {  val_op_arg.resize(0);
             var_op_res.resize(0);
+            res_is_par.resize(0);
          }
          else
          {  // atomic_index, call_id, n_res
@@ -877,13 +881,18 @@ void ADFun<Base, RecBase>::fun2val(
             addr_t n_arg        = var_op_arg[2];
             CPPAD_ASSERT_UNKNOWN( val_op_arg.size() == size_t(n_arg) );
             CPPAD_ASSERT_UNKNOWN( var_op_res.size() == size_t(n_res) );
+            CPPAD_ASSERT_UNKNOWN( res_is_par.size() == size_t(n_res) );
 # endif
             // var2val_index
             addr_t res_index = val_tape.record_call_op(
                atomic_index, call_id, n_res, val_op_arg
             );
             for(addr_t i = 0; i < n_res; ++i)
-               var2val_index[ var_op_res[i] ] = res_index + i;
+            {  if( res_is_par[i] )
+                  par2val_index[ var_op_res[i] ] = res_index + i;
+               else
+                  var2val_index[ var_op_res[i] ] = res_index + i;
+            }
          }
          break;
       }

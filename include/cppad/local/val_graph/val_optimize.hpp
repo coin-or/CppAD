@@ -70,7 +70,13 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
    {  ADFun<Base> g;
       swap(g);
    }
-   //
+   /*
+   CppAD::vector<Base> val_vec( val_tape.n_val() );
+   for(addr_t i = 0; i < val_tape.n_ind(); ++i)
+      val_vec[i] = Base(i + 1);
+   bool   trace = true;
+   val_tape.eval(trace, val_vec);
+   */
    // val_tape: renumber
    val_tape.renumber();
    //
