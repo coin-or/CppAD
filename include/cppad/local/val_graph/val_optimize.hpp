@@ -21,7 +21,7 @@ Prototype
 
 options
 =======
-See :ref:`optimize_extract_option@options` .
+See :ref:`optimize@options` .
 
 {xrst_end val_optimize}
 */

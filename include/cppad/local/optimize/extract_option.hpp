@@ -32,65 +32,7 @@ The return value, *result* below,  has the following type
 
 options
 *******
-
-no_compare_op
-=============
-If this sub-string is (is not) present,
-*result*.compare_op is false (true).
-In this case comparison operators are (are not) removed from the optimized tape.
-These operators are necessary for the :ref:`compare_change-name` feature to be
-meaningful in the resulting recording.
-On the other hand, they are otherwise not necessary and take extra time
-when this feature is not needed.
-
-no_conditional_skip
-===================
-If this sub-string is (is not) present,
-*result*.conditional_skip is false (true).
-In this case conditional skip operations are not (are) generated.
-This may make the optimize routine use significantly less (more) memory
-and take significantly less (more) time.
-
-no_cumulative_sum_op
-====================
-If this sub-string is (is not) present,
-*result*.cumulative_sum_op is false (true).
-In this case cumulative sum operations will not (will)
-be generated during the optimization; see
-:ref:`optimize_cumulative_sum.cpp-name` .
-
-no_print_for_op
-===============
-If this sub-string is (is not) present,
-*result*.print_for_op is false (true).
-In this case then :ref:`printfor-name` operators ``PriOp``
-are (are not) removed from the optimized tape.
-These operators are useful for reporting problems evaluating derivatives
-at independent variable values different from those used to record a function.
-
-collision_limit=value
-=====================
-If this sub-string is (is not) present,
-the optimizer's hash code collision limit will be *value* (10).
-When the collision limit is exceeded, the expressions with that hash code
-are removed and a new lists of expressions with that has code is started.
-The larger *value* , the more identical expressions the optimizer
-can recognize, but the slower the optimizer may run.
-The default for *value* is ``10`` .
-
-yes_val_graph
-=============
-If this sub-string is present, the value graph optimizer is used.
-This is a new CppAD optimizer that has a much simpler implementation.
-It is expected to be much better in the long run
-(because it is easier to improve).
-
-no_conditional_skip
-   If val_graph is present, no_conditional_skip must also be present.
-
-collision_limit=value
-   If val_graph is present, the collision_limit=value must not be present
-   (there is currently no collision limit for the val_graph optimizer).
+See :ref:`optimize@options`
 
 {xrst_end optimize_extract_option}
 */

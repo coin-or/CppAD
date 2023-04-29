@@ -10,6 +10,11 @@
 Changes and Additions to CppAD During 2023
 ##########################################
 
+val_graph Branch
+****************
+Add :ref:`optimize@options@val_graph` to the
+list of possible optimizer options.
+
 mm-dd
 *****
 

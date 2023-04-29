@@ -66,17 +66,14 @@ namespace {
       f.Dependent(a_A, a_detA);
       //
       // optimize
+      std::string optimize_options =
+         "no_conditional_skip no_compare_op no_print_for_op";
       if( global_option["val_optimize"] )
-      {  std::string optimize_options =
-            "val_graph no_conditional_skip no_compare_op no_print_for_op";
+      {  optimize_options += " val_graph";
          f.val_optimize(optimize_options);
       }
-      else if( global_option["optimize"] )
-      {  std::string optimize_options =
-            "no_conditional_skip no_compare_op no_print_for_op";
+      if( global_option["optimize"] )
          f.optimize(optimize_options);
-      }
-
    }
 
 }
