@@ -101,10 +101,10 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	eigen_mat_inv.cpp ipopt_solve.cpp alloc_openmp.cpp \
 	abs_normal.cpp acos.cpp acosh.cpp add.cpp add_eq.cpp \
 	add_zero.cpp adfun.cpp asin.cpp asinh.cpp assign.cpp atan.cpp \
-	atan2.cpp atanh.cpp atomic_three.cpp azmul.cpp base2ad.cpp \
-	base_alloc.cpp bool_sparsity.cpp check_simple_vector.cpp \
-	chkpoint_one.cpp chkpoint_two.cpp compare.cpp \
-	compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
+	atan2.cpp atanh.cpp atomic_four.cpp atomic_three.cpp azmul.cpp \
+	base2ad.cpp base_alloc.cpp bool_sparsity.cpp \
+	check_simple_vector.cpp chkpoint_one.cpp chkpoint_two.cpp \
+	compare.cpp compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
 	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp cpp_graph.cpp \
 	cppad_vector.cpp dbl_epsilon.cpp dependency.cpp div.cpp \
 	div_eq.cpp div_zero_one.cpp erf.cpp exp.cpp expm1.cpp \
@@ -138,11 +138,12 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	acos.$(OBJEXT) acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
 	add_zero.$(OBJEXT) adfun.$(OBJEXT) asin.$(OBJEXT) \
 	asinh.$(OBJEXT) assign.$(OBJEXT) atan.$(OBJEXT) \
-	atan2.$(OBJEXT) atanh.$(OBJEXT) atomic_three.$(OBJEXT) \
-	azmul.$(OBJEXT) base2ad.$(OBJEXT) base_alloc.$(OBJEXT) \
-	bool_sparsity.$(OBJEXT) check_simple_vector.$(OBJEXT) \
-	chkpoint_one.$(OBJEXT) chkpoint_two.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
+	atan2.$(OBJEXT) atanh.$(OBJEXT) atomic_four.$(OBJEXT) \
+	atomic_three.$(OBJEXT) azmul.$(OBJEXT) base2ad.$(OBJEXT) \
+	base_alloc.$(OBJEXT) bool_sparsity.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) chkpoint_one.$(OBJEXT) \
+	chkpoint_two.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_ad.$(OBJEXT) cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) \
 	cos.$(OBJEXT) cosh.$(OBJEXT) cpp_graph.$(OBJEXT) \
 	cppad_vector.$(OBJEXT) dbl_epsilon.$(OBJEXT) \
@@ -204,9 +205,10 @@ am__depfiles_remade = ./$(DEPDIR)/abs_normal.Po ./$(DEPDIR)/acos.Po \
 	./$(DEPDIR)/alloc_openmp.Po ./$(DEPDIR)/asin.Po \
 	./$(DEPDIR)/asinh.Po ./$(DEPDIR)/assign.Po ./$(DEPDIR)/atan.Po \
 	./$(DEPDIR)/atan2.Po ./$(DEPDIR)/atanh.Po \
-	./$(DEPDIR)/atomic_three.Po ./$(DEPDIR)/azmul.Po \
-	./$(DEPDIR)/base2ad.Po ./$(DEPDIR)/base_adolc.Po \
-	./$(DEPDIR)/base_alloc.Po ./$(DEPDIR)/bool_sparsity.Po \
+	./$(DEPDIR)/atomic_four.Po ./$(DEPDIR)/atomic_three.Po \
+	./$(DEPDIR)/azmul.Po ./$(DEPDIR)/base2ad.Po \
+	./$(DEPDIR)/base_adolc.Po ./$(DEPDIR)/base_alloc.Po \
+	./$(DEPDIR)/bool_sparsity.Po \
 	./$(DEPDIR)/check_simple_vector.Po ./$(DEPDIR)/chkpoint_one.Po \
 	./$(DEPDIR)/chkpoint_two.Po ./$(DEPDIR)/compare.Po \
 	./$(DEPDIR)/compare_change.Po ./$(DEPDIR)/cond_exp.Po \
@@ -534,6 +536,7 @@ general_SOURCES = \
 	atan.cpp \
 	atan2.cpp \
 	atanh.cpp \
+	atomic_four.cpp \
 	atomic_three.cpp \
 	azmul.cpp \
 	base2ad.cpp \
@@ -708,6 +711,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atanh.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_four.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_three.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/azmul.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@ # am--include-marker
@@ -971,6 +975,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/atan.Po
 	-rm -f ./$(DEPDIR)/atan2.Po
 	-rm -f ./$(DEPDIR)/atanh.Po
+	-rm -f ./$(DEPDIR)/atomic_four.Po
 	-rm -f ./$(DEPDIR)/atomic_three.Po
 	-rm -f ./$(DEPDIR)/azmul.Po
 	-rm -f ./$(DEPDIR)/base2ad.Po
@@ -1130,6 +1135,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/atan.Po
 	-rm -f ./$(DEPDIR)/atan2.Po
 	-rm -f ./$(DEPDIR)/atanh.Po
+	-rm -f ./$(DEPDIR)/atomic_four.Po
 	-rm -f ./$(DEPDIR)/atomic_three.Po
 	-rm -f ./$(DEPDIR)/azmul.Po
 	-rm -f ./$(DEPDIR)/base2ad.Po
