@@ -54,10 +54,12 @@ Algorithm
 #. After the forward pass, the mapping from old indices to new indices
    is used to adjust the dependent variable indices.
 
-dep_vec
+
+Changes
 *******
-This may change the indices corresponding to the dependent vector; i.e.,
-:ref:`val_tape@dep_vec`.
+Only the following values, for this tape, are guaranteed to be same:
+#. The number of independent values :ref:`val_tape@n_ind` .
+#. The size of the dependent vector :ref:`dep_vec.size() <val_tape@dep_vec>` .
 
 Reference
 *********

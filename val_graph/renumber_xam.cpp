@@ -74,8 +74,6 @@ bool renumber_xam(void)
    ok &= dep_vec[0] == n_ind + 1;
    //
    // val_vec
-   for(addr_t i = 0; i < n_ind; ++i)
-      val_vec[i] = x[i];
    tape.eval(trace, val_vec);
    //
    // y, ok

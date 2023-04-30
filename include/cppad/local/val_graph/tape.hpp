@@ -267,14 +267,15 @@ public :
    // BEGIN_SWAP
    void swap(tape_t& other)
    // END_SWAP
-   {  std::swap( n_ind_, other.n_ind_ );
+   {  // same order as declaration of member variables just below private:
+      std::swap( n_ind_, other.n_ind_ );
       std::swap( n_val_, other.n_val_);
       arg_vec_.swap( other.arg_vec_ );
       con_vec_.swap( other.con_vec_ );
       str_vec_.swap( other.str_vec_ );
-      vec_initial_.swap( other.vec_initial_ );
       dep_vec_.swap( other.dep_vec_ );
       op_enum_vec_.swap( other.op_enum_vec_ );
+      vec_initial_.swap( other.vec_initial_ );
       op2arg_index_.swap( other.op2arg_index_ );
    }
    // eval(trace, val_vec)

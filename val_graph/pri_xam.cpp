@@ -79,8 +79,6 @@ bool pri_xam(void)
    //
    // val_vec, compare_false
    val_vec.resize( tape.n_val() );
-   for(addr_t i = 0; i < n_ind; ++i)
-      val_vec[i] = x[i];
    tape.eval(trace, val_vec);
    //
    // ok

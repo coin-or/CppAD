@@ -12,6 +12,7 @@ namespace CppAD { namespace local { namespace val_graph {
 {xrst_begin_parent val_summation dev}
 {xrst_spell
    csum
+   dep
 }
 
 Combine Multiple sum Operators into a csum Operator
@@ -38,6 +39,12 @@ Limitation
 The process above terminates before reaching a csum operator in the
 original tape. To get full optimization in this case, csum operators
 should first be converted to add and sub operations.
+
+Changes
+*******
+Only the following values, for this tape, are guaranteed to be same:
+#. The number of independent values :ref:`val_tape@n_ind` .
+#. The size of the dependent vector :ref:`dep_vec.size() <val_tape@dep_vec>` .
 
 Example
 *******
