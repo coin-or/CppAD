@@ -277,6 +277,7 @@ public :
       op_enum_vec_.swap( other.op_enum_vec_ );
       vec_initial_.swap( other.vec_initial_ );
       op2arg_index_.swap( other.op2arg_index_ );
+      option_map_.swap( other.option_map_ );
    }
    // eval(trace, val_vec)
    void eval(
