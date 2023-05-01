@@ -37,11 +37,13 @@ set_ind
 }
 This is the first step in a creating a recording. It does the following:
 
-#. Clear all of the memory that is currently used by the tape.
+#. Clear all of the memory that is currently used by the tape except
+   for the options settings.
 #. Set the number of independent values.
 #. The empty string is placed in the string constant vector str_vec\_.
+   This string has index zero in the string constant vector str_vec\_.
 #. Place the constant nan directly after the last independent value.
-   This constant has index zero in the value constant vector con_vec\_.
+   This value has index zero in the value constant vector con_vec\_.
 #. The return value is the index in the value vector where the nan
    will be placed; i.e., *n_ind* .
 
@@ -68,6 +70,7 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
    dep_vec_.clear();
    op_enum_vec_.clear();
    op2arg_index_.clear();
+   // option_map_ does not change during this operation.
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // set_ind_inue
    size_t thread  = thread_alloc::thread_num();
