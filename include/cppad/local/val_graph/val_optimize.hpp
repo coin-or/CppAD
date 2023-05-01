@@ -30,6 +30,7 @@ See :ref:`optimize@options` .
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/optimize/extract_option.hpp>
 
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_VAL_OPTIMIZE
@@ -97,10 +98,7 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
       val_tape.set_option("keep_print", "false");
    val_tape.dead_code();
    /*
-   CppAD::vector<Base> val_vec( val_tape.n_val() );
-   for(addr_t i = 0; i < val_tape.n_ind(); ++i)
-      val_vec[i] = Base(i + 1);
-   bool   trace = true;
+   val_vec.resize( val_tape.n_val() );
    val_tape.eval(trace, val_vec);
    */
    // this
