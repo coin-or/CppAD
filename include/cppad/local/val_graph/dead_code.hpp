@@ -61,6 +61,18 @@ Only the following values, for this tape, are guaranteed to be same:
 #. The number of independent values :ref:`val_tape@n_ind` .
 #. The size of the dependent vector :ref:`dep_vec.size() <val_tape@dep_vec>` .
 
+use_val
+*******
+The i-th element of the return vector *use_val* is true (false), if and only if
+the i-th element of the value vector is used to compute the dependent values.
+There are two exceptions to this rule. One exception is that all the independent
+values are marked as used no matter what.
+The other exception is that the nan, after the independent variables,
+is also marked as used no matter what.
+If *use_val*\ [i] is false, the i-th value must be the result of a
+call operator. In addition, at least one result for each call will
+have a corresponding *use_val* of true.
+
 Reference
 *********
 `dead-code elimination <https://en.wikipedia.org/wiki/Dead-code_elimination>`_
@@ -76,8 +88,9 @@ example and test of tape.dead_code().
 {xrst_end val_tape_dead_code}
 */
 // BEGIN_DEAD_CODE
+// use_val = dead_code()
 template <class Value>
-void tape_t<Value>::dead_code(void)
+vectorBool tape_t<Value>::dead_code(void)
 // END_DEAD_CODE
 {  // -----------------------------------------------------------------------
    // Dead Code Elimination
@@ -117,6 +130,14 @@ void tape_t<Value>::dead_code(void)
       new_val_index[i] = addr_t(i);
    for(addr_t i = n_ind_ + 1; i < n_val_; ++i)
       new_val_index[i] = addr_t( n_val_ );
+   //
+   // use_val
+   // Because the call operator can have more than one result, not all the
+   // results for all the needed operators are used. Initilaize as all the
+   // independent values and the nan after them are used.
+   vectorBool use_val(n_ind_ + 1);
+   for(addr_t i = 0; i < n_ind_; ++i)
+      use_val[i] = true;
    //
    // op_arg, call_op_arg
    Vector<addr_t> op_arg, call_op_arg, add, sub;
@@ -169,7 +190,7 @@ void tape_t<Value>::dead_code(void)
          need_op |= 0 != val_use_case[ res_index + k];
       //
       if( need_op )
-      {  //
+      {  // new_val_index, use_val
          bool simple = n_res == 1;
          simple     &= op_enum != con_op_enum;
          simple     &= op_enum != call_op_enum;
@@ -188,6 +209,9 @@ void tape_t<Value>::dead_code(void)
             //
             addr_t new_res_index = new_tape.record_op(op_enum, op_arg);
             new_val_index[res_index] = new_res_index;
+            //
+            // use_val
+            use_val.push_back(true);
          }
          else switch( op_enum )
          {  //
@@ -197,29 +221,38 @@ void tape_t<Value>::dead_code(void)
             break;
             //
             // load_op_enum
+            // new_val_index, use_val
             case load_op_enum:
-            {  CPPAD_ASSERT_UNKNOWN( n_res == 1);
-               addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
+            CPPAD_ASSERT_UNKNOWN( n_res == 1);
+            {  addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
                addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
                //
                // record_con_op, new_val_index
                new_val_index[res_index] = \
                   new_tape.record_load_op( which_vector, vector_index);
+               //
+               // use_val
+               use_val.push_back(true);
             }
             break;
             //
             // con_op_enum
+            // new_val_index, use_val
             case con_op_enum:
-            {  CPPAD_ASSERT_UNKNOWN( n_res == 1 );
-               Value value = con_vec_[ arg_vec_[ arg_index ] ];
+            CPPAD_ASSERT_UNKNOWN( n_res == 1 );
+            {  Value value = con_vec_[ arg_vec_[ arg_index ] ];
                //
                // record_con_op, new_val_index
                new_val_index[res_index] = new_tape.record_con_op(value);
+               //
+               // use_val
+               use_val.push_back(true);
             }
             break;
             //
             // store_op_enum
             case store_op_enum:
+            CPPAD_ASSERT_UNKNOWN( n_res == 0 );
             {  addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
                addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
                addr_t value_index  = new_val_index[ arg_vec_[arg_index + 2] ];
@@ -231,6 +264,7 @@ void tape_t<Value>::dead_code(void)
             //
             // vec_op_enum
             case vec_op_enum:
+            CPPAD_ASSERT_UNKNOWN( n_res == 0 );
             {  addr_t old_which_vector       = arg_vec_[arg_index + 0];
                const Vector<addr_t>& initial = vec_initial_[old_which_vector];
                addr_t which_vector           = new_tape.record_vec_op(initial);
@@ -242,6 +276,7 @@ void tape_t<Value>::dead_code(void)
             //
             // comp_op_enum
             case comp_op_enum:
+            CPPAD_ASSERT_UNKNOWN( n_res == 0 );
             {  compare_enum_t compare_enum;
                compare_enum       = compare_enum_t( arg_vec_[arg_index + 0] );
                addr_t left_index  = new_val_index[ arg_vec_[arg_index + 1] ];
@@ -253,6 +288,7 @@ void tape_t<Value>::dead_code(void)
             break;
             //
             // pri_op_enum
+            CPPAD_ASSERT_UNKNOWN( n_res == 0 );
             case pri_op_enum:
             {  std::string before = str_vec_[ arg_vec_[arg_index + 0] ];
                std::string after  = str_vec_[ arg_vec_[arg_index + 1] ];
@@ -265,9 +301,9 @@ void tape_t<Value>::dead_code(void)
             break;
             //
             // call_op_enum
+            // new_val_index, use_val
             case call_op_enum:
-            {
-               //
+            {  //
                // n_x
                addr_t n_x = n_arg - n_before - op_ptr->n_after();
                //
@@ -287,7 +323,11 @@ void tape_t<Value>::dead_code(void)
                   atomic_index, call_id, n_res, call_op_arg
                );
                for(addr_t k = 0; k < n_res; ++k)
-                  new_val_index[ res_index + k ] = new_res_index + k;
+               {  new_val_index[ res_index + k ] = new_res_index + k;
+                  //
+                  bool use_val_k = val_use_case[ res_index + k ] != 0;
+                  use_val.push_back( use_val_k );
+               }
             }
             break;
          }
@@ -308,7 +348,10 @@ void tape_t<Value>::dead_code(void)
    size_t final_inuse = thread_alloc::inuse(thread);
    std::cout << "dead_code:  inuse = " << final_inuse - initial_inuse << "\n";
 # endif
-   return;
+   // BEGIN_RETURN
+   CPPAD_ASSERT_UNKNOWN( size_t( n_val() ) == use_val.size() );
+   return use_val;
+   // END_RETURN
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

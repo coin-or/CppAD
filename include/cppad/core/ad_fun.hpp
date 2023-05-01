@@ -312,6 +312,12 @@ public:
    void val2fun(
       const local::val_graph::tape_t<Base>& val_tape  ,
       const CppAD::vector<size_t>&          dyn_ind   ,
+      const CppAD::vector<size_t>&          var_ind   ,
+      const CppAD::vectorBool&              use_val
+   );
+   void val2fun(
+      const local::val_graph::tape_t<Base>& val_tape  ,
+      const CppAD::vector<size_t>&          dyn_ind   ,
       const CppAD::vector<size_t>&          var_ind
    );
    void val_optimize(const std::string& options);

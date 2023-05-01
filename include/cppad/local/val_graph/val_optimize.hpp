@@ -87,7 +87,7 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
    if( cumulative_sum_op )
       val_tape.summation();
    //
-   // val_tape: dead_code
+   // val_tape: dead_code, val_use
    if( compare_op )
       val_tape.set_option("keep_compare", "true");
    else
@@ -96,14 +96,14 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
       val_tape.set_option("keep_print", "true");
    else
       val_tape.set_option("keep_print", "false");
-   val_tape.dead_code();
+   vectorBool use_val = val_tape.dead_code();
    /*
    val_vec.resize( val_tape.n_val() );
    val_tape.eval(trace, val_vec);
    */
    // this
    // convert optimized value graph to fun
-   val2fun(val_tape, dyn_ind, var_ind);
+   val2fun(val_tape, dyn_ind, var_ind, use_val);
    //
    // no collision limit in value graph representaiton.
    return;

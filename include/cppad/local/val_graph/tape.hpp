@@ -444,7 +444,7 @@ public :
    );
    //
    // dead_code
-   void dead_code(void);
+   vectorBool dead_code(void);
    //
    // ------------------------------------------------------------------------
    // functions in summation.hpp

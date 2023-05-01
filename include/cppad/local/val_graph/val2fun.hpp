@@ -15,6 +15,7 @@ Syntax
 
 | |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``val2fun`` ( *val_tape* , *dyn_ind* , *var_ind* )
+| |tab| *fun* . ``val2fun`` ( *val_tape* , *dyn_ind* , *var_ind* , *use_val* )
 
 Prototype
 *********
@@ -49,6 +50,15 @@ of the *i*-th independent variable in *fun* .
 No two elements of *dyn_ind* or *var_ind* can have the same value.
 Furthermore, the total number of elements in these two vectors
 must be the number of independent variables in *val_tape* .
+
+use_val
+*******
+If this vector is present extra detection is done to convert
+variables to parameters.
+It has size equal to *val_tape*\ .n_val().
+For each value index, that is a result for a
+:ref:`val_call_op-name`, the corresponding *use_val*\ [i] is true (false)
+if the result is used to compute one of the dependent variables.
 
 *fun*
 *****
@@ -107,12 +117,22 @@ is an example an test of this conversion.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-// BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void ADFun<Base, RecBase>::val2fun(
    const local::val_graph::tape_t<Base>& val_tape  ,
    const CppAD::vector<size_t>&          dyn_ind   ,
    const CppAD::vector<size_t>&          var_ind   )
+{  vectorBool use_val;
+   val2fun(val_tape, dyn_ind, var_ind, use_val);
+}
+
+// BEGIN_PROTOTYPE
+template <class Base, class RecBase>
+void ADFun<Base, RecBase>::val2fun(
+   const local::val_graph::tape_t<Base>& val_tape  ,
+   const CppAD::vector<size_t>&          dyn_ind   ,
+   const CppAD::vector<size_t>&          var_ind   ,
+   const CppAD::vectorBool&              use_val   )
 // END_PROTOTYPE
 {  //
    // vector
@@ -872,11 +892,18 @@ void ADFun<Base, RecBase>::val2fun(
                   ax[j].taddr_   = val2fun_index[val_index];
                   ax[j].value_   = val_index2con[val_index];
                }
-               // ay
+               // ay, ad_type_y
                ay.resize(n_res);
                for(addr_t j = 0; j < n_res; ++j)
                {  ay[j].taddr_     = 0; // not used
                   ay[j].value_     = val_index2con[res_index + j];
+                  if( use_val.size() != 0 )
+                  {  if( ! use_val[res_index + j] )
+                     {  ay[j].value_  = nan;
+                        if( ad_type_y[j] == variable_enum )
+                           ad_type_y[j] = constant_enum;
+                     }
+                  }
                }
             }
             if( record_dynamic ) rec.put_dyn_atomic(
