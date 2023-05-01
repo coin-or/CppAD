@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -377,7 +377,7 @@ bool norm_sq(void)
    //
    // optimize
    // this uses the rev_depend overide above
-   f.optimize();
+   f.optimize("val_graph no_conditional_skip");
    //
    // ok
    // check zero order forward mode (on optimized verison of f)
