@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppad_mat_mul.cpp}
@@ -39,7 +39,9 @@ bool link_mat_mul(
 
    // --------------------------------------------------------------------
    // check global options
-   const char* valid[] = { "memory", "onetape", "optimize", "atomic"};
+   const char* valid[] = {
+      "memory", "onetape", "optimize", "atomic", "val_graph"
+   };
    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
    typedef std::map<std::string, bool>::iterator iterator;
    //
@@ -56,6 +58,8 @@ bool link_mat_mul(
    // optimization options: no conditional skips or compare operators
    std::string optimize_options =
       "no_conditional_skip no_compare_op no_print_for_op";
+   if( global_option["val_graph"] )
+      optimize_options += " val_graph";
    // -----------------------------------------------------
    // setup
    typedef CppAD::AD<double>           ADScalar;

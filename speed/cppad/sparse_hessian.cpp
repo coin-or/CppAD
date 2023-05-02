@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppad_sparse_hessian.cpp}
@@ -55,6 +55,8 @@ namespace {
       // optimization options
       std::string optimize_options =
          "no_conditional_skip no_compare_op no_print_for_op";
+      if( global_option["val_graph"] )
+         optimize_options += " val_graph";
       //
       // order of derivative in sparse_hes_fun
       size_t order = 0;
@@ -277,7 +279,7 @@ bool link_sparse_hessian(
    // check global options
    const char* valid[] = {
       "memory", "onetape", "optimize", "hes2jac", "subgraph",
-      "boolsparsity", "revsparsity", "symmetric"
+      "boolsparsity", "revsparsity", "symmetric", "val_graph"
 # if CPPAD_HAS_COLPACK
       , "colpack"
 # else

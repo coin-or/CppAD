@@ -14,11 +14,16 @@ val_graph Branch
 ****************
 #. Add :ref:`optimize@options@val_graph` to the
    list of possible optimizer options.
-#. Simplify :ref:`atomic_four_lin_ode_rev_depend.cpp-name` 
+#. Add the :ref:`speed_main@Global Options@val_graph`
+   option to the speed tests. This option has been implemented
+   with all of the :ref:`speed_cppad-name` tests.
+#. Simplify :ref:`atomic_four_lin_ode_rev_depend.cpp-name`
    and add m to the
    `atomic_four_lin_ode_rev_depend.cpp@Problem Parameters` that can be changed.
 #. Fix the title of the
    :ref:`atomic_four_lin_ode_base_solver.hpp-title` section.
+#. Change all the atomic_four :ref:`examples <atomic_four_example-name>`
+   that use :ref:`optimize-name` to include the ``val_graph`` option.
 
 mm-dd
 *****

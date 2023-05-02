@@ -68,10 +68,8 @@ namespace {
       // optimize
       std::string optimize_options =
          "no_conditional_skip no_compare_op no_print_for_op";
-      if( global_option["val_optimize"] )
-      {  optimize_options += " val_graph";
-         f.val_optimize(optimize_options);
-      }
+      if( global_option["val_graph"] )
+         optimize_options += " val_graph";
       if( global_option["optimize"] )
          f.optimize(optimize_options);
    }
@@ -88,7 +86,7 @@ bool link_det_minor(
 
    // --------------------------------------------------------------------
    // check global options
-   const char* valid[] = { "memory", "onetape", "optimize", "val_optimize"};
+   const char* valid[] = { "memory", "onetape", "optimize", "val_graph"};
    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
    typedef std::map<std::string, bool>::iterator iterator;
    //
