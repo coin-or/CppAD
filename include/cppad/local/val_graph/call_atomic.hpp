@@ -84,15 +84,14 @@ void call_atomic_for_type(
    {
       if( type == 2 )
       {  size_t p = 0, q = 0, nx = type_x.size(), ny = type_y.size();
-         Vector<bool> vx(nx), vy(ny);
+         CppAD::vector<bool> vx(nx), vy(ny);
          for(size_t i = 0; i < nx; ++i)
             vx[i] = type_x[i] > constant_enum;
-         const Vector<Value>& taylor_x = constant_x;
-         Vector<Value> taylor_y(ny);
+         const CppAD::vector<Value>& taylor_x = constant_x;
+         CppAD::vector<Value> taylor_y(ny);
          atomic_base<Value>* afun =
             reinterpret_cast< atomic_base<Value>* >(v_ptr);
          afun->set_old(call_id);
-         vector<ad_type_enum> empty;
          ok = afun->forward(
             p, q, vx, vy, taylor_x, taylor_y
          );
@@ -128,15 +127,14 @@ void call_atomic_for_type(
 # else
    if( type == 2 )
    {  size_t p = 0, q = 0, nx = type_x.size(), ny = type_y.size();
-      Vector<bool> vx(nx), vy(ny);
+      CppAD::vector<bool> vx(nx), vy(ny);
       for(size_t i = 0; i < nx; ++i)
          vx[i] = type_x[i] > constant_enum;
-      const Vector<Value>& taylor_x = constant_x;
-      Vector<Value> taylor_y(ny);
+      const CppAD::vector<Value>& taylor_x = constant_x;
+      CppAD::vector<Value> taylor_y(ny);
       atomic_base<Value>* afun =
          reinterpret_cast< atomic_base<Value>* >(v_ptr);
       afun->set_old(call_id);
-      vector<ad_type_enum> empty;
       afun->forward(
          p, q, vx, vy, taylor_x, taylor_y
       );

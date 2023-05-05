@@ -316,11 +316,14 @@ void ADFun<Base, RecBase>::val2fun(
    }
    //
    // ad_type_x, ad_type_y, fun_arg, csum_arg, select_y
-   Vector<ad_type_enum> ad_type_x, ad_type_y;
    Vector<addr_t>       fun_arg, csum_arg;
    Vector<bool>         select_y;
-   Vector<Base>         con_x;
    Vector< AD<Base> >   ax, ay;
+   //
+   // con_x, at_type_x, ad_type_y;
+   // Use CppAD::vector because call_atomic_for_type requires it
+   CppAD::vector<Base>  con_x;
+   CppAD::vector<ad_type_enum> ad_type_x, ad_type_y;
    //
    // op_itr
    local::val_graph::op_iterator<Base> op_itr(val_tape, 0);

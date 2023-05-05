@@ -94,14 +94,11 @@ void tape_t<Value>::rev_depend(
    size_t initial_inuse = thread_alloc::inuse(thread);
 # endif
    //
-   // con_x
-   Vector<Value> con_x;
-   //
-   // type_x
-   Vector<ad_type_enum> type_x;
-   //
-   // depend_x, depend_y
-   Vector<bool> depend_x, depend_y;
+   // con_x, type_x, depend_x, depend_y
+   // use CppAD::vector because call_atomic_rev_depend expect it
+   CppAD::vector<Value> con_x;
+   CppAD::vector<ad_type_enum> type_x;
+   CppAD::vector<bool> depend_x, depend_y;
    //
    // val_index2con
    Vector< Vector<Value> > val_vec_vec( vec_initial_.size() );

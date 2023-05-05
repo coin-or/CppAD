@@ -97,11 +97,10 @@ void tape_t<Value>::fold_con(void)
    for(addr_t i = 0; i < n_val_; ++i)
       is_constant[i] = false;
    //
-   // con_x
-   Vector<Value> con_x;
-   //
-   // type_x, type_y
-   Vector<ad_type_enum> type_x, type_y;
+   // con_x, type_x, type_y
+   // use CppAD::vector because call_atomic_for_type expects it
+   CppAD::vector<Value> con_x;
+   CppAD::vector<ad_type_enum> type_x, type_y;
    //
    // op_arg
    Vector<addr_t> op_arg;

@@ -54,7 +54,8 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
    size_t n_var_ind = Domain();
    //
    // dyn_ind, var_ind
-   CppAD::vector<size_t> dyn_ind(n_dyn_ind), var_ind(n_var_ind);
+   using CppAD::local::val_graph::Vector;
+   Vector<size_t> dyn_ind(n_dyn_ind), var_ind(n_var_ind);
    for(size_t j = 0; j < n_dyn_ind; ++j)
       dyn_ind[j] = j;
    for(size_t j = 0; j < n_var_ind; ++j)
@@ -72,7 +73,7 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
       swap(g);
    }
    /*
-   CppAD::vector<Base> val_vec( val_tape.n_val() );
+   Vector<Base> val_vec( val_tape.n_val() );
    for(addr_t i = 0; i < val_tape.n_ind(); ++i)
       val_vec[i] = Base(i + 1);
    bool   trace = true;
