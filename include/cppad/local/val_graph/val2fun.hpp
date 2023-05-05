@@ -119,9 +119,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 template <class Base, class RecBase>
 void ADFun<Base, RecBase>::val2fun(
-   const local::val_graph::tape_t<Base>& val_tape  ,
-   const CppAD::vector<size_t>&          dyn_ind   ,
-   const CppAD::vector<size_t>&          var_ind   )
+   const local::val_graph::tape_t<Base>&                   val_tape  ,
+   const CppAD::local::val_graph::Vector<size_t>&          dyn_ind   ,
+   const CppAD::local::val_graph::Vector<size_t>&          var_ind   )
 {  vectorBool use_val;
    val2fun(val_tape, dyn_ind, var_ind, use_val);
 }
@@ -129,14 +129,14 @@ void ADFun<Base, RecBase>::val2fun(
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void ADFun<Base, RecBase>::val2fun(
-   const local::val_graph::tape_t<Base>& val_tape  ,
-   const CppAD::vector<size_t>&          dyn_ind   ,
-   const CppAD::vector<size_t>&          var_ind   ,
-   const CppAD::vectorBool&              use_val   )
+   const local::val_graph::tape_t<Base>&                   val_tape  ,
+   const CppAD::local::val_graph::Vector<size_t>&          dyn_ind   ,
+   const CppAD::local::val_graph::Vector<size_t>&          var_ind   ,
+   const CppAD::vectorBool&                                use_val   )
 // END_PROTOTYPE
 {  //
    // vector
-   using CppAD::vector;
+   using CppAD::local::val_graph::Vector;
    //
    // base_op_t, op_enum_t, compare_enum_t
    using local::val_graph::base_op_t;
@@ -144,10 +144,10 @@ void ADFun<Base, RecBase>::val2fun(
    using local::val_graph::compare_enum_t;
    //
    // val_arg_vec, val_con_vec, val_str_vec, val_dep_vec
-   const vector<addr_t>&      val_arg_vec = val_tape.arg_vec();
-   const vector<Base>&        val_con_vec = val_tape.con_vec();
-   const vector<std::string>& val_str_vec = val_tape.str_vec();
-   const vector<addr_t>&      val_dep_vec = val_tape.dep_vec();
+   const Vector<addr_t>&      val_arg_vec = val_tape.arg_vec();
+   const Vector<Base>&        val_con_vec = val_tape.con_vec();
+   const Vector<std::string>& val_str_vec = val_tape.str_vec();
+   const Vector<addr_t>&      val_dep_vec = val_tape.dep_vec();
    //
    // nan
    Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
@@ -191,13 +191,13 @@ void ADFun<Base, RecBase>::val2fun(
    addr_t n_val = val_tape.n_val();
    //
    // fun_ad_type
-   vector<ad_type_enum> fun_ad_type(n_val);
+   Vector<ad_type_enum> fun_ad_type(n_val);
    for(addr_t i = 0; i < n_val; ++i)
       fun_ad_type[i] = number_ad_type_enum; // invalid
    //
    // val_index2con
    // After fold_con, all the constants that get used are op_con results.
-   vector<Base> val_index2con(n_val);
+   Vector<Base> val_index2con(n_val);
    for(addr_t i = 0; i < n_val; ++i)
       val_index2con[i] = nan;
    bool trace           = false;
@@ -206,7 +206,7 @@ void ADFun<Base, RecBase>::val2fun(
    // val2fun_index
    // mapping from value index to index in the AD function object.
    // The meaning of this index depends on its ad_type.
-   vector<addr_t> val2fun_index(n_val);
+   Vector<addr_t> val2fun_index(n_val);
    for(addr_t i = 0; i < n_val; ++i)
       val2fun_index[i] = std::numeric_limits<addr_t>::max(); // invalid
    //
@@ -239,10 +239,10 @@ void ADFun<Base, RecBase>::val2fun(
    //
    // rec, vecad_offset
    // place the VecAD objects in the recording
-   vector<addr_t> vecad_offset;
+   Vector<addr_t> vecad_offset;
    addr_t         offset = 1;
    for(size_t i = 0; i < val_tape.vec_initial().size(); ++i)
-   {  const vector<addr_t>& val_initial = val_tape.vec_initial()[i];
+   {  const Vector<addr_t>& val_initial = val_tape.vec_initial()[i];
       size_t size = val_initial.size();
       local::pod_vector<addr_t>  fun_initial(size);
       for(size_t j = 0; j < size; ++j)
@@ -294,7 +294,7 @@ void ADFun<Base, RecBase>::val2fun(
    //
    // rec_con_index
    // First constant in CppAD recording and val_graph is nan
-   vector<addr_t> rec_con_index( val_con_vec.size() );
+   Vector<addr_t> rec_con_index( val_con_vec.size() );
    CPPAD_ASSERT_UNKNOWN( CppAD::isnan( val_con_vec[0] ) );
    rec_con_index[0] = 0;
    for(size_t i = 1; i < val_con_vec.size(); ++i)
@@ -309,18 +309,18 @@ void ADFun<Base, RecBase>::val2fun(
    );
    //
    // rec_str_index
-   vector<addr_t> rec_str_index( val_str_vec.size() );
+   Vector<addr_t> rec_str_index( val_str_vec.size() );
    for(size_t i = 0; i < val_str_vec.size(); ++i)
    {  const std::string& str = val_str_vec[i];
       rec_str_index[i]       = rec.PutTxt( str.c_str() );
    }
    //
    // ad_type_x, ad_type_y, fun_arg, csum_arg, select_y
-   vector<ad_type_enum> ad_type_x, ad_type_y;
-   vector<addr_t>       fun_arg, csum_arg;
-   vector<bool>         select_y;
-   vector<Base>         con_x;
-   vector< AD<Base> >   ax, ay;
+   Vector<ad_type_enum> ad_type_x, ad_type_y;
+   Vector<addr_t>       fun_arg, csum_arg;
+   Vector<bool>         select_y;
+   Vector<Base>         con_x;
+   Vector< AD<Base> >   ax, ay;
    //
    // op_itr
    local::val_graph::op_iterator<Base> op_itr(val_tape, 0);

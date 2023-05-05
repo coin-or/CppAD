@@ -33,6 +33,7 @@ Contents
 # include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/subgraph/info.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
+# include <cppad/local/val_graph/val_type.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -310,15 +311,15 @@ public:
    // value graph routines
    void fun2val( local::val_graph::tape_t<Base>& val_tape );
    void val2fun(
-      const local::val_graph::tape_t<Base>& val_tape  ,
-      const CppAD::vector<size_t>&          dyn_ind   ,
-      const CppAD::vector<size_t>&          var_ind   ,
-      const CppAD::vectorBool&              use_val
+      const local::val_graph::tape_t<Base>&                   val_tape  ,
+      const CppAD::local::val_graph::Vector<size_t>&          dyn_ind   ,
+      const CppAD::local::val_graph::Vector<size_t>&          var_ind   ,
+      const CppAD::vectorBool&                                use_val
    );
    void val2fun(
-      const local::val_graph::tape_t<Base>& val_tape  ,
-      const CppAD::vector<size_t>&          dyn_ind   ,
-      const CppAD::vector<size_t>&          var_ind
+      const local::val_graph::tape_t<Base>&                   val_tape  ,
+      const CppAD::local::val_graph::Vector<size_t>&          dyn_ind   ,
+      const CppAD::local::val_graph::Vector<size_t>&          var_ind
    );
    void val_optimize(const std::string& options);
 

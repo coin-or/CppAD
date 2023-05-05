@@ -30,9 +30,11 @@ Value
 *****
 is the base type corresponding to the atomic function.
 
-vector
-******
-is the CppAD::vector template class.
+CppAD::vector
+*************
+this routine uses the CppAD::vector template class
+(and not CppAD::local::val_graph::Vector) because atomic functions expect
+CppAD::vector.
 
 constant_x
 **********
@@ -61,11 +63,11 @@ the atomic_one :ref:`atomic_one@id` .
 // BEGIN_FORWARD
 template <class Value>
 void call_atomic_for_type(
-   const vector<Value>&         constant_x  ,
-   const vector<ad_type_enum>&  type_x      ,
-   vector<ad_type_enum>&        type_y      ,
-   size_t                       atom_index  ,
-   size_t                       call_id     )
+   const CppAD::vector<Value>&         constant_x  ,
+   const CppAD::vector<ad_type_enum>&  type_x      ,
+   CppAD::vector<ad_type_enum>&        type_y      ,
+   size_t                              atom_index  ,
+   size_t                              call_id     )
 // END_FORWARD
 {  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
    //

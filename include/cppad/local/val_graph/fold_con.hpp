@@ -86,7 +86,7 @@ void tape_t<Value>::fold_con(void)
    Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
    //
    // val_index2con
-   vector<Value> val_index2con(n_val_);
+   Vector<Value> val_index2con(n_val_);
    for(addr_t i = 0; i < n_ind_; ++i)
       val_index2con[i] = nan;
    bool trace           = false;
