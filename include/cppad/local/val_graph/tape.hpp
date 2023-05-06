@@ -166,13 +166,14 @@ Operations on Tape
 ******************
 {xrst_toc_table
    include/cppad/local/val_graph/record.hpp
-   include/cppad/local/val_graph/fold_con.hpp
+   include/cppad/local/val_graph/op_hash_table.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/summation.hpp
    include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/rev_depend.hpp
    include/cppad/local/val_graph/option.hpp
+   include/cppad/local/val_graph/fold_con.hpp
 }
 
 
@@ -479,11 +480,12 @@ public :
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # include <cppad/local/val_graph/record.hpp>
-# include <cppad/local/val_graph/fold_con.hpp>
+# include <cppad/local/val_graph/op_hash_table.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/summation.hpp>
 # include <cppad/local/val_graph/option.hpp>
+# include <cppad/local/val_graph/fold_con.hpp>
 
 # undef CPPAD_VAL_GRAPH_TAPE_TRACE
 # endif
