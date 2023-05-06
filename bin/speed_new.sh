@@ -9,7 +9,7 @@ then
    echo "$program: must be executed from its parent directory"
    exit 1
 fi
-if [ "$1" == '' ]
+if [ "$2" == '' ]
 then
 cat << EOF
 usage:
@@ -30,12 +30,19 @@ then
    exit 1
 fi
 test_name="$1"
+seed="$2"
+shift
 shift
 option_list="$test_name"
 for option in $*
 do
    option_list="${option_list}_$option"
 done
+if ! [[ $seed =~ ^[0-9]+$ ]]
+then
+   echo "$program: seed = $seed is not an integer"
+   exit 1
+fi
 if [ "$test_name" == 'all' ]
 then
    test_name='speed'
@@ -71,12 +78,14 @@ do
       echo "Using existing $target_dir/$out_file"
    else
       # compile the speed test
-      echo "ninja -C build check_speed_cppad > $target_dir/$name.log"
-      ninja -C build check_speed_cppad > $target_dir/$name.log
+      echo "ninja -C build check_speed_cppad  > $target_dir/$name.log"
+      echo "ninja -C build check_speed_cppad" > $target_dir/$name.log
+      ninja -C build check_speed_cppad >> $target_dir/$name.log
       #
       # run speed test for the current version
-      echo "$target_dir/speed_cppad $test_name $* > $target_dir/$out_file"
-      $target_dir/speed_cppad $test_name $* > $target_dir/$out_file
+      echo "$target_dir/speed_cppad $test_name $seed $* > $target_dir/$out_file"
+      echo "$target_dir/speed_cppad $test_name $seed $*" > $target_dir/$out_file
+      $target_dir/speed_cppad $test_name $seed $* >> $target_dir/$out_file
       #
    fi
 done
