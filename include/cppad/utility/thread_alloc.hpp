@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_THREAD_ALLOC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <sstream>
@@ -823,7 +823,13 @@ Example
          inc_inuse(cap_bytes, thread);
          dec_available(cap_bytes, thread);
 
-         // return pointer to memory, do not inclue thread_alloc information
+# ifndef NDEBUG
+         // check that pointers and doubles are aligned
+         std::uintptr_t i_ptr = reinterpret_cast<std::uintptr_t>(v_ptr);
+         CPPAD_ASSERT_UNKNOWN( i_ptr % sizeof(v_ptr) == 0 );
+         CPPAD_ASSERT_UNKNOWN( i_ptr % sizeof(double) == 0 );
+# endif
+         // return pointer to memory, do not inclue block_t at begining
          return v_ptr;
       }
 
