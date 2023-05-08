@@ -63,7 +63,7 @@ Only the following values, for this tape, are guaranteed to be same:
 
 new_use_val
 ***********
-The i-th element of the return vector *new_use_val* is true (false), 
+The i-th element of the return vector *new_use_val* is true (false),
 if and only if
 the i-th element of the value vector is used to compute the dependent values.
 There are two exceptions to this rule. One exception is that all the independent
@@ -131,6 +131,12 @@ vectorBool tape_t<Value>::dead_code(void)
       new_val_index[i] = addr_t(i);
    for(addr_t i = n_ind_ + 1; i < n_val_; ++i)
       new_val_index[i] = addr_t( n_val_ );
+# ifndef NDEBUG
+   // nan at index n_ind_
+   assert( op_enum_t( op_enum_vec_[0] ) == con_op_enum );
+   assert( arg_vec_[0] == 0 );
+   assert( CppAD::isnan( con_vec_[0] ) );
+# endif
    //
    // new_use_val
    // Because the call operator can have more than one result, not all the
@@ -140,14 +146,8 @@ vectorBool tape_t<Value>::dead_code(void)
    for(addr_t i = 0; i < n_ind_; ++i)
       new_use_val[i] = true;
    //
-   // work, call_op_arg
-   Vector<addr_t> work, call_op_arg, add, sub;
-# ifndef NDEBUG
-   // nan at index n_ind_
-   assert( op_enum_t( op_enum_vec_[0] ) == con_op_enum );
-   assert( arg_vec_[0] == 0 );
-   assert( CppAD::isnan( con_vec_[0] ) );
-# endif
+   // work
+   Vector<addr_t> work;
    //
    // op_itr_forward
    op_iterator<Value> op_itr_forward(*this, 0);
