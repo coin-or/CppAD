@@ -59,12 +59,15 @@ new_val_index
 This maps old value indices to new value indices
 for indices less than the first result for the *i_op* operator.
 New value indices are the result of using previous operator matches.
+For arguments that are value indices,
+the new indices are used when checking to see if operators match.
 
 j_op
 ====
 The return value *j_op* is the lowest operator index that corresponds to a
 match for *i_op* . If it is equal to *i_op* , then this operator has been placed
 in the hash table (for future matches).
+Otherwise *j_op* is less than *i_op* and its results are equivalent to *i_op*.
 
 size_count
 **********

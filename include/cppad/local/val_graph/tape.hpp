@@ -4,6 +4,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <cppad/local/val_graph/op_iterator.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
 # include <cppad/local/val_graph/val_type.hpp>
 # include <cppad/local/val_graph/op_iterator.hpp>
@@ -166,6 +167,7 @@ Operations on Tape
 ******************
 {xrst_toc_table
    include/cppad/local/val_graph/record.hpp
+   include/cppad/local/val_graph/record_new.hpp
    include/cppad/local/val_graph/op_hash_table.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/dead_code.hpp
@@ -447,6 +449,15 @@ public :
    // dead_code
    vectorBool dead_code(void);
    //
+   // record_new
+   addr_t record_new(
+      tape_t&                   new_tape         ,
+      Vector<addr_t>&           new_which_vec    ,
+      Vector<addr_t>&           work             ,
+      const Vector<addr_t>&     new_val_index    ,
+      const op_iterator<Value>& op_itr        
+   );
+   //
    // ------------------------------------------------------------------------
    // functions in summation.hpp
    // ------------------------------------------------------------------------
@@ -480,6 +491,7 @@ public :
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 # include <cppad/local/val_graph/record.hpp>
+# include <cppad/local/val_graph/record_new.hpp>
 # include <cppad/local/val_graph/op_hash_table.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
