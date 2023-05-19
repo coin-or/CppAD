@@ -7,6 +7,8 @@
 {xrst_spell
    usr
    msys
+   cstdint
+   uintptr
 }
 
 Changes and Additions to CppAD During 2023
@@ -14,6 +16,11 @@ Changes and Additions to CppAD During 2023
 
 mm-dd
 *****
+
+05-19
+=====
+Fix ``uintptr_t`` not defined (on some systems) by adding the following
+before using it: ``# include <cstdint>`` .
 
 05-18
 =====
