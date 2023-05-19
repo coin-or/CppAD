@@ -5,6 +5,8 @@
 
 {xrst_begin whats_new_23 app}
 {xrst_spell
+   usr
+   msys
 }
 
 Changes and Additions to CppAD During 2023
@@ -12,6 +14,13 @@ Changes and Additions to CppAD During 2023
 
 mm-dd
 *****
+
+05-18
+=====
+Remove the unnecessary include directory ``/usr/include``
+from the :ref:`speed_cppad_jit-name` speed tests.
+This was including multiple versions of some system include files
+on the msys system.
 
 04-17
 =====
