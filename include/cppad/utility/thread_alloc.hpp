@@ -8,6 +8,7 @@
 # include <sstream>
 # include <limits>
 # include <memory>
+# include <cstdint>
 
 
 # ifdef _MSC_VER
