@@ -5,6 +5,10 @@
 
 {xrst_begin whats_new_23 app}
 {xrst_spell
+   usr
+   msys
+   cstdint
+   uintptr
 }
 
 Changes and Additions to CppAD During 2023
@@ -27,6 +31,18 @@ val_graph Branch
 
 mm-dd
 *****
+
+05-19
+=====
+Fix ``uintptr_t`` not defined (on some systems) by adding the following
+before using it: ``# include <cstdint>`` .
+
+05-18
+=====
+Remove the unnecessary include directory ``/usr/include``
+from the :ref:`speed_cppad_jit-name` speed tests.
+This was including multiple versions of some system include files
+on the msys system.
 
 04-17
 =====

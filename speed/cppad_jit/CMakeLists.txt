@@ -1,12 +1,9 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the speed/cppad_jit directory tests
 # Inherit build type from ../CMakeList.txt
-
-# Set the install prefix for this package
-SET(cppad_jit_prefix "/usr")
 
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
@@ -16,7 +13,6 @@ ADD_DEFINITIONS("-DCPPAD_CPPAD_JIT_SPEED")
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES(
    ${CMAKE_CURRENT_SOURCE_DIR}/../src
-   ${cppad_jit_prefix}/include
 )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]

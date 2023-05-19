@@ -26,7 +26,10 @@ jobs:
           #
           # OpenMP_CXX_FOUND=FALSE
           # Without this get cannot find ... /libgomp.dll.a: Invalid argument.
-          # 2DO: Need to fix this.
+          # This seems to be a cmake problem because changing the link argument
+          #    from: -lC:/msys64/mingw64/lib/libgomp.dll.a
+          #    to:   C:/msys64/mingw64/lib/libgomp.dll.a
+          # and changing the other similar arguments, fixes the problem
           sed -i CMakeLists.txt \
             -e 's|IF(.*Darwin.*)|IF( TRUE )|' \
             -e 's|ELSE(.*Darwin.*)|ELSE( TRUE )|' \
