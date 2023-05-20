@@ -193,6 +193,7 @@ vectorBool tape_t<Value>::dead_code(void)
             new_which_vec   ,
             work            ,
             new_val_index   ,
+            val_use_case    ,
             op_itr_forward
          );
          //

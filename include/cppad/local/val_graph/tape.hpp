@@ -455,7 +455,8 @@ public :
       Vector<addr_t>&           new_which_vec    ,
       Vector<addr_t>&           work             ,
       const Vector<addr_t>&     new_val_index    ,
-      const op_iterator<Value>& op_itr        
+      const Vector<addr_t>&     val_use_case     ,
+      const op_iterator<Value>& op_itr
    );
    //
    // ------------------------------------------------------------------------

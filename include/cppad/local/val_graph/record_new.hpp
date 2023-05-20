@@ -50,11 +50,17 @@ This is work space used by record_new and not otherwise specified.
 
 new_val_index
 *************
-This vector has size ``n_val()`` 
+This vector has size ``n_val()``
 but it is only defined for indices less than *res_index* (see below).
 It is a mapping from each value index in the old tape
 to the corresponding value index in the new tape.
- 
+
+val_use_case
+************
+If *val_use_case* [ *val_index* ] is zero,
+the value with index *val_index* is not needed to compute
+the dependent variables.
+
 op_itr
 ******
 This :ref:`val_op_iterator@op_itr` corresponds to the operator
@@ -81,9 +87,10 @@ addr_t tape_t<Value>::record_new(
    Vector<addr_t>&           new_which_vec    ,
    Vector<addr_t>&           work             ,
    const Vector<addr_t>&     new_val_index    ,
+   const Vector<addr_t>&     val_use_case     ,
    const op_iterator<Value>& op_itr           )
 // END_RECORD_NEW
-{  
+{
    //
    // op_arg
    Vector<addr_t>& op_arg(work);
@@ -118,6 +125,7 @@ addr_t tape_t<Value>::record_new(
       for(addr_t k = n_before; k < n_arg - n_after; ++k)
       {  addr_t old_index = arg_vec_[arg_index + k];
          assert( old_index < res_index );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[old_index] != 0 );
          op_arg[k] = new_val_index[old_index];
       }
       for(addr_t k = 1; k <= n_after; ++k)
@@ -163,6 +171,8 @@ addr_t tape_t<Value>::record_new(
       {  addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
          addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
          addr_t value_index  = new_val_index[ arg_vec_[arg_index + 2] ];
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 1] ] != 0 );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 2] ] != 0 );
          new_tape.record_store_op(
             which_vector, vector_index, value_index
          );
@@ -188,6 +198,8 @@ addr_t tape_t<Value>::record_new(
          compare_enum       = compare_enum_t( arg_vec_[arg_index + 0] );
          addr_t left_index  = new_val_index[ arg_vec_[arg_index + 1] ];
          addr_t right_index = new_val_index[ arg_vec_[arg_index + 2] ];
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 1] ] != 0 );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 2] ] != 0 );
          new_tape.record_comp_op(
             compare_enum, left_index, right_index
          );
@@ -201,6 +213,8 @@ addr_t tape_t<Value>::record_new(
          std::string after  = str_vec_[ arg_vec_[arg_index + 1] ];
          addr_t left_index  = new_val_index[ arg_vec_[arg_index + 2] ];
          addr_t right_index = new_val_index[ arg_vec_[arg_index + 3] ];
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 2] ] != 0 );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 3] ] != 0 );
          new_tape.record_pri_op(
             before, after, left_index, right_index
          );
@@ -213,12 +227,25 @@ addr_t tape_t<Value>::record_new(
       {  //
          // n_x
          addr_t n_x = n_arg - n_before - op_ptr->n_after();
+# ifndef NDEBUG
+         bool one_arg_needed = false;
+# endif
          //
          op_arg.resize(n_x);
          for(addr_t k = 0; k < n_x; ++k)
          {  addr_t val_index = arg_vec_[arg_index + n_before + k];
-            op_arg[k]        = new_val_index[val_index];
+            if( val_use_case[val_index] != 0 )
+            {  op_arg[k] = new_val_index[val_index];
+# ifndef NDEBUG
+               one_arg_needed =  true;
+# endif
+            }
+            else
+            {  // nan in the new tape
+               op_arg[k] = new_tape.n_ind();
+            }
          }
+         CPPAD_ASSERT_UNKNOWN( one_arg_needed );
          addr_t atomic_index = arg_vec_[arg_index + 2];
          addr_t call_id      = arg_vec_[arg_index + 3];
          new_res_index       = new_tape.record_call_op(
