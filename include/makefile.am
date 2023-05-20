@@ -353,6 +353,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/val_graph/dyn_type.hpp \
 	cppad/local/val_graph/fold_con.hpp \
 	cppad/local/val_graph/fun2val.hpp \
+	cppad/local/val_graph/op2arg_index.hpp \
 	cppad/local/val_graph/op_enum2class.hpp \
 	cppad/local/val_graph/op_hash_table.hpp \
 	cppad/local/val_graph/op_iterator.hpp \

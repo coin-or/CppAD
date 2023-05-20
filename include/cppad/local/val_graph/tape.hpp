@@ -165,18 +165,21 @@ will add one to this value.
 
 Operations on Tape
 ******************
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   include/cppad/local/val_graph/dead_code.hpp
+   include/cppad/local/val_graph/fold_con.hpp
+   include/cppad/local/val_graph/op2arg_index.hpp
+   include/cppad/local/val_graph/op_hash_table.hpp
+   include/cppad/local/val_graph/op_iterator.hpp
+   include/cppad/local/val_graph/option.hpp
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/record_new.hpp
-   include/cppad/local/val_graph/op_hash_table.hpp
    include/cppad/local/val_graph/renumber.hpp
-   include/cppad/local/val_graph/dead_code.hpp
-   include/cppad/local/val_graph/summation.hpp
-   include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/rev_depend.hpp
-   include/cppad/local/val_graph/option.hpp
-   include/cppad/local/val_graph/fold_con.hpp
+   include/cppad/local/val_graph/summation.hpp
 }
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 
 {xrst_end val_tape}
@@ -491,14 +494,17 @@ public :
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
+// BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/local/val_graph/dead_code.hpp>
+# include <cppad/local/val_graph/fold_con.hpp>
+# include <cppad/local/val_graph/op2arg_index.hpp>
+# include <cppad/local/val_graph/op_hash_table.hpp>
+# include <cppad/local/val_graph/option.hpp>
 # include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/record_new.hpp>
-# include <cppad/local/val_graph/op_hash_table.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
-# include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/summation.hpp>
-# include <cppad/local/val_graph/option.hpp>
-# include <cppad/local/val_graph/fold_con.hpp>
+// END_SORT_THIS_LINE_MINUS_1
 
 # undef CPPAD_VAL_GRAPH_TAPE_TRACE
 # endif
