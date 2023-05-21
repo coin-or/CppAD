@@ -167,6 +167,7 @@ Operations on Tape
 ******************
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   include/cppad/local/val_graph/cumulative.hpp
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/fold_con.hpp
    include/cppad/local/val_graph/op2arg_index.hpp
@@ -481,6 +482,12 @@ public :
       addr_t       i_op      ,
       csum_info_t& csum_info
    );
+   // -----------------------------------------------------------------------
+   // functions in cumulative.hpp
+   // -----------------------------------------------------------------------
+   //
+   // op2csum
+   void op2csum(addr_t op_index);
    //
    // ------------------------------------------------------------------------
    // functions in option.hpp
@@ -495,6 +502,7 @@ public :
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/local/val_graph/cumulative.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/fold_con.hpp>
 # include <cppad/local/val_graph/op2arg_index.hpp>

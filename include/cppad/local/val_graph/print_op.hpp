@@ -198,19 +198,31 @@ void print_csum_op(
    CPPAD_ASSERT_UNKNOWN( arg.size() == size_t(3 + n_add + n_sub ) );
    //
    cout << right << setw(5) << res_index;
-   cout << " " << right << setw(10) << res_value[0];
-   cout << " = " << right << setw(5)  << "csum+" << "(";
-   for(addr_t i = 0; i < n_add; ++i)
-   {  cout << right << setw(5) << arg[2 + i];
-      if( i + 1 < n_add )
-         cout << ",";
+   cout << " " << right << setw(10) << res_value[0] << " = ";
+   if( n_add > 0 )
+   {  cout << right << setw(5)  << "csum+" << "(";
+      for(addr_t i = 0; i < n_add; ++i)
+      {  cout << right << setw(5) << arg[2 + i];
+         if( i + 1 < n_add )
+            cout << ",";
+      }
+      cout << ")" << std::endl;
+      if( n_sub > 0 )
+      {  cout << setw(19) << "" << right << setw(5)  << "csum-" << "(";
+         for(addr_t i = 0; i < n_sub; ++i)
+         {  cout << right << setw(5) << arg[2 + n_add + i];
+            if( i + 1 < n_sub )
+               cout << ",";
+         }
+         cout << ")" << std::endl;
+      }
    }
-   cout << ")" << std::endl;
-   if( n_sub > 0 )
-   {  cout << setw(19) << "" << right << setw(5)  << "csum-" << "(";
+   else
+   {  CPPAD_ASSERT_UNKNOWN( n_sub > 0 );
+      cout << right << setw(5)  << "csum-" << "(";
       for(addr_t i = 0; i < n_sub; ++i)
       {  cout << right << setw(5) << arg[2 + n_add + i];
-         if( i + 1 < n_add )
+         if( i + 1 < n_sub )
             cout << ",";
       }
       cout << ")" << std::endl;

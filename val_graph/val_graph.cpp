@@ -24,6 +24,7 @@ extern bool cexp_xam(void);
 extern bool comp_xam(void);
 extern bool con_xam(void);
 extern bool csum_xam(void);
+extern bool cumulative_xam(void);
 extern bool dead_xam(void);
 extern bool dis_xam(void);
 extern bool fold_con_xam(void);
@@ -59,6 +60,7 @@ int main(void)
    Run( comp_xam,            "comp_xam"            );
    Run( con_xam,             "con_xam"             );
    Run( csum_xam,            "csum_xam"            );
+   Run( cumulative_xam,      "cumulative_xam"      );
    Run( dead_xam,            "dead_xam"            );
    Run( dis_xam,             "dis_xam"             );
    Run( fold_con_xam,        "fold_con_xam"        );

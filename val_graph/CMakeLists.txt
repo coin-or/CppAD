@@ -12,6 +12,7 @@ SET(source_list val_graph.cpp
    comp_xam.cpp
    con_xam.cpp
    csum_xam.cpp
+   cumulative_xam.cpp
    dead_xam.cpp
    dis_xam.cpp
    fold_con_xam.cpp
