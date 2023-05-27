@@ -14,6 +14,8 @@ namespace CppAD { namespace local { namespace val_graph {
 
 Convert Add, Subtract, or Negative to Cumulative Summation
 ##########################################################
+These are ideas under construction for a better way to combine
+cumulative summation operators; i.e., an alternative to the summation.hpp file.
 
 Prototype
 *********
