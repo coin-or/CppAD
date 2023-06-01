@@ -114,13 +114,14 @@ FOREACH(pkg adolc ipopt cppadcg)
       )
    ENDIF( ${pkg}_prefix )
 ENDFOREACH(pkg adolc eigen ipopt)
+#
+IF( cmake_needs_dot_slash )
+   MESSAGE(FATAL_ERROR
+      "cmake_needs_dot_slash was removed; see release notes for 2023-06-01"
+   )
+ENDIF( cmake_needs_dot_slash )
 # -----------------------------------------------------------------------------
 # Current Arguments
-#
-# cmake_needs_dot_slash
-command_line_arg(cmake_needs_dot_slash "false" BOOL
-"does cmake need a ./ in the front of an executable name in a custom command"
-)
 #
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING

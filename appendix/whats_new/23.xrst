@@ -10,6 +10,9 @@
    cstdint
    uintptr
    trilinos
+   kludge
+   pacman
+   mingw
 }
 
 Changes and Additions to CppAD During 2023
@@ -17,6 +20,17 @@ Changes and Additions to CppAD During 2023
 
 mm-dd
 *****
+
+06-01
+=====
+The ``cmake_needs_dot_slash`` symbol was removed from the cmake command line.
+It was a kludge for msys2 systems.
+The proper fix is to use
+{xrst_code sh}
+   pacman -S mingw-w64-x86_64-cmake
+{xrst_code}
+( not use ``pacman -S cmake`` )
+to install cmake on an msys2 system.
 
 05-31
 =====
