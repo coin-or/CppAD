@@ -9,6 +9,7 @@
    msys
    cstdint
    uintptr
+   trilinos
 }
 
 Changes and Additions to CppAD During 2023
@@ -16,6 +17,14 @@ Changes and Additions to CppAD During 2023
 
 mm-dd
 *****
+
+05-31
+=====
+There was an error building the old version of the sacado library using
+:ref:`get_sacado.sh-name` with g++-13.1.1.
+This has been fixed by advancing to trilinos-14-0-0
+and patching one of its include files; see trilinos issue
+`11923 <https://github.com/trilinos/Trilinos/issues/11923>`_ .
 
 05-19
 =====
