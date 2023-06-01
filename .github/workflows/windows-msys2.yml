@@ -29,11 +29,7 @@ jobs:
           pushd build
           #
           # configure
-          cmake \
-            -D CMAKE_SYSTEM_NAME=MSYS \
-            -D CMAKE_VERBOSE_MAKEFILE=NO \
-            -D cmake_needs_dot_slash=YES \
-            ..
+          cmake -G "MSYS Makefiles" ..
           #
           # check
           cmake --build . --target check --parallel 1
