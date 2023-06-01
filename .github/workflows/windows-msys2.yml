@@ -19,24 +19,10 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git mingw-w64-x86_64-cc cmake make
+          install: git mingw-w64-x86_64-cc mingw-w64-x86_64-cmake make
 
       - name: CppAD check
         run: |
-          #
-          # OpenMP_CXX_FOUND=FALSE
-          # Without this get cannot find ... /libgomp.dll.a: Invalid argument.
-          # This seems to be a cmake problem because changing the link argument
-          #    from: -lC:/msys64/mingw64/lib/libgomp.dll.a
-          #    to:   C:/msys64/mingw64/lib/libgomp.dll.a
-          # and changing the other similar arguments, fixes the problem
-          sed -i CMakeLists.txt \
-            -e 's|IF(.*Darwin.*)|IF( TRUE )|' \
-            -e 's|ELSE(.*Darwin.*)|ELSE( TRUE )|' \
-            -e 's|ENDIF(.*Darwin.*)|ENDIF( TRUE )|' \
-            -e 's|on Darwin (Mac) systems|on this system|'
-          echo "git diff CMakeLists.txt"
-          git diff CMakeLists.txt
           #
           # Create build directory
           mkdir build
