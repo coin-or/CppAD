@@ -100,39 +100,39 @@ Options
 =======
 The full version of the command, with all its optional arguments is:
 
-| ``cmake``                                                                      \\
-| |tab| ``-D CMAKE_VERBOSE_MAKEFILE`` = *cmake_verbose_makefile*                        \\
-| |tab| ``-D CMAKE_BUILD_TYPE`` = *cmake_build_type*                                    \\
-| |tab| ``-G`` *generator*                                                            \\
+| ``cmake``                                                                 \\
+| |tab| ``-D CMAKE_VERBOSE_MAKEFILE`` = *cmake_verbose_makefile*            \\
+| |tab| ``-D CMAKE_BUILD_TYPE`` = *cmake_build_type*                        \\
+| |tab| ``-G`` *generator*                                                  \\
 | |tab| \\
-| |tab| ``-D cppad_prefix`` = *cppad_prefix*                                            \\
-| |tab| ``-D cppad_postfix`` = *cppad_postfix*                                          \\
+| |tab| ``-D cppad_prefix`` = *cppad_prefix*                                \\
+| |tab| ``-D cppad_postfix`` = *cppad_postfix*                              \\
 | |tab| \\
-| |tab| ``-D cmake_install_includedirs`` = *cmake_install_includedirs*                  \\
-| |tab| ``-D cmake_install_libdirs`` = *cmake_install_libdirs*                          \\
+| |tab| ``-D cmake_install_includedirs`` = *cmake_install_includedirs*      \\
+| |tab| ``-D cmake_install_libdirs`` = *cmake_install_libdirs*              \\
 | |tab| \\
-| |tab| ``-D cmake_install_datadir`` = *cmake_install_datadir*                          \\
-| |tab| ``-D cmake_install_docdir`` = *cmake_install_docdir*                            \\
+| |tab| ``-D cmake_install_datadir`` = *cmake_install_datadir*              \\
+| |tab| ``-D cmake_install_docdir`` = *cmake_install_docdir*                \\
 | |tab| \\
-| |tab| ``-D cmake_defined_ok`` = *cmake_defined_ok*                                    \\
+| |tab| ``-D cmake_defined_ok`` = *cmake_defined_ok*                        \\
 | |tab| \\
-| |tab| ``-D include_adolc`` = *true_or_false*                                          \\
-| |tab| ``-D include_eigen`` = *true_or_false*                                          \\
-| |tab| ``-D include_ipopt`` = *true_or_false*                                          \\
-| |tab| ``-D include_cppadcg`` = *true_or_false*                                        \\
+| |tab| ``-D include_adolc`` = *true_or_false*                              \\
+| |tab| ``-D include_eigen`` = *true_or_false*                              \\
+| |tab| ``-D include_ipopt`` = *true_or_false*                              \\
+| |tab| ``-D include_cppadcg`` = *true_or_false*                            \\
 | |tab| \\
-| |tab| ``-D eigen_prefix`` = *eigen_prefix*
-| |tab| ``-D colpack_prefix`` = *colpack_prefix*                                        \\
-| |tab| ``-D fadbad_prefix`` = *fadbad_prefix*                                          \\
-| |tab| ``-D sacado_prefix`` = *sacado_prefix*                                          \\
+| |tab| ``-D eigen_prefix`` = *eigen_prefix*                                \\
+| |tab| ``-D colpack_prefix`` = *colpack_prefix*                            \\
+| |tab| ``-D fadbad_prefix`` = *fadbad_prefix*                              \\
+| |tab| ``-D sacado_prefix`` = *sacado_prefix*                              \\
 | |tab| \\
-| |tab| ``-D cppad_cxx_flags`` = *cppad_cxx_flags*                                      \\
-| |tab| ``-D cppad_profile_flag`` = *cppad_profile_flag*                                \\
-| |tab| ``-D cppad_testvector`` = *cppad_testvector*                                    \\
-| |tab| ``-D cppad_max_num_threads`` = *cppad_max_num_threads*                          \\
-| |tab| ``-D cppad_tape_id_type`` = *cppad_tape_id_type*                                \\
-| |tab| ``-D cppad_tape_addr_type`` = *cppad_tape_addr_type*                            \\
-| |tab| ``-D cppad_debug_which`` = *cppad_debug_which*                                  \\
+| |tab| ``-D cppad_cxx_flags`` = *cppad_cxx_flags*                          \\
+| |tab| ``-D cppad_profile_flag`` = *cppad_profile_flag*                    \\
+| |tab| ``-D cppad_testvector`` = *cppad_testvector*                        \\
+| |tab| ``-D cppad_max_num_threads`` = *cppad_max_num_threads*              \\
+| |tab| ``-D cppad_tape_id_type`` = *cppad_tape_id_type*                    \\
+| |tab| ``-D cppad_tape_addr_type`` = *cppad_tape_addr_type*                \\
+| |tab| ``-D cppad_debug_which`` = *cppad_debug_which*                      \\
 | |tab| \\
 | |tab| ..
 
