@@ -75,8 +75,8 @@ do
       ninja -C build check_speed_cppad > $target_dir/$name.log
       #
       # run speed test for the current version
-      echo "$target_dir/speed_cppad $test_name $* > $target_dir/$out_file"
-      $target_dir/speed_cppad $test_name $* > $target_dir/$out_file
+      echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
+      $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
       #
    fi
 done
