@@ -13,6 +13,7 @@
    kludge
    pacman
    mingw
+   kokkos
 }
 
 Changes and Additions to CppAD During 2023
@@ -20,6 +21,11 @@ Changes and Additions to CppAD During 2023
 
 mm-dd
 *****
+
+06-04
+=====
+Fix a warning form the Trilinos Kokkos package when including
+:ref:`sacado_prefix-name` on the cmake command line.
 
 06-01
 =====

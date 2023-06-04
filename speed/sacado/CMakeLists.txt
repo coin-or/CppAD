@@ -8,6 +8,10 @@
 # assert sacado_prefix is defined
 assert( sacado_prefix )
 
+# Avoid the following warning:
+# The installed Kokkos configuration does not support CXX extensions.
+SET(CMAKE_CXX_EXTENSIONS Off)
+
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
 # intended to add preprocessor definitions.
