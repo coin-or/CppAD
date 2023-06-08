@@ -22,6 +22,12 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+06-07
+=====
+Add links to
+:ref:`Install@Generator`, :ref:`Install@cppad.spec`,  and :ref:`Install@xrst`
+in the CppAD install instructions.
+
 06-04
 =====
 Fix a warning form the Trilinos Kokkos package when including
