@@ -235,6 +235,9 @@ Below is a table with a few of the possible files
    ``"Unix Makefiles"``,make files for unix operating system
    ``"NMake Makefiles"``,make files for Visual Studio
    ``"MSYS Makefiles"``,make files for msys2
+   ``Ninja``, `Ninja`_ build system
+
+.. _Ninja: https://en.wikipedia.org/wiki/Ninja_(build_system)
 
 Other generator choices are available; see the cmake
 `generators <http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators>`_ documentation.
