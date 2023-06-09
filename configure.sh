@@ -20,7 +20,7 @@
 #    optionally
 #    postfix
 #    stdvector
-#    testvector
+#    dir
 #    ublas
 #    usr
 #    Fortran
@@ -156,6 +156,7 @@
 # :ref:`multi_thread@CPPAD_MAX_NUM_THREADS` .
 # It must be greater than or equal to four; i.e.,
 # *max_num_threads*  >= 4 .
+# The default value for this option is 64.
 #
 # cxx_flags
 # *********
@@ -175,7 +176,7 @@
 #
 # postfix_dir
 # ***********
-# By default, the postfix directory is empty; i.e., there
+# The default value for this directory is empty; i.e., there
 # is no postfix directory.
 # As an example of using the ``POSTFIX_DIR`` = *postfix_dir* option,
 # if you specify
@@ -190,6 +191,8 @@
 #
 # adolc_dir
 # *********
+# The default value for this directory is empty; i.e., there
+# is no adolc directory.
 # If you have
 # `ADOL-C <https://projects.coin-or.org/ADOL-C>`_
 # installed on your system, you can
@@ -242,6 +245,8 @@
 #
 # boost_dir
 # *********
+# The default value for this directory is empty; i.e., there
+# is no boost directory.
 # If the command line argument
 #
 #    ``BOOST_DIR`` = *boost_dir*
@@ -257,6 +262,8 @@
 #
 # eigen_dir
 # *********
+# The default value for this directory is empty; i.e., there
+# is no eigen directory.
 # If you have
 # `Eigen <http://eigen.tuxfamily.org>`_
 # installed on your system, you can
@@ -272,6 +279,8 @@
 #
 # fadbad_dir
 # **********
+# The default value for this directory is empty; i.e., there
+# is no fadbad directory.
 # If you have
 # `Fadbad 2.1 <http://www.fadbad.com/>`_
 # installed on your system, you can
@@ -289,6 +298,8 @@
 #
 # ipopt_dir
 # *********
+# The default value for this directory is empty; i.e., there
+# is no ipopt directory.
 # If you have
 # `Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_
 # installed on your system, you can
@@ -310,6 +321,8 @@
 #
 # sacado_dir
 # **********
+# The default value for this directory is empty; i.e., there
+# is no sacado directory.
 # If you have
 # `Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
 # installed on your system, you can
@@ -327,6 +340,7 @@
 #
 # tape_addr_type
 # **************
+# The default value for this type is ``size_t`` .
 # If the command line argument *tape_addr_type* is present,
 # it specifies the type used for address in the AD recordings (tapes).
 # The valid values for this argument are
@@ -348,6 +362,7 @@
 #
 # tape_id_type
 # ************
+# The default value for this type is ``size_t`` .
 # If the command line argument *tape_id_type* is present,
 # it specifies the type used for identifying tapes.
 # The valid values for this argument are
@@ -415,30 +430,31 @@ first_executable() {
    first_executable_result=''
    while [ "$first_executable_result" == '' ] && [ "$1" != '' ]
    do
-      if which $1 > /dev/null
+      if which $1 >& /dev/null
       then
          first_executable_result="$(which $1)"
       fi
+      shift
    done
 }
 # ----------------------------------------------------------------------------
 echo $0 $*
 #
-prefix=''
+prefix="$HOME"
 testvector=''
-with_clang=''
 enable_msvc=''
-max_num_threads=''
+with_clang=''
+max_num_threads='64'
 cxx_flags=''
-postfix_dir=''
-adolc_dir=''
-boost_dir=''
-eigen_dir=''
-fadbad_dir=''
-sacado_dir=''
-ipopt_dir=''
-tape_addr_type=''
-tape_id_type=''
+postfix_dir='NOTFOUND'
+adolc_dir='NOTFOUND'
+boost_dir='NOTFOUND'
+eigen_dir='NOTFOUND'
+fadbad_dir='NOTFOUND'
+sacado_dir='NOTFOUND'
+ipopt_dir='NOTFOUND'
+tape_addr_type='size_t'
+tape_id_type='size_t'
 while [ "$1" != '' ]
 do
    case "$1" in
@@ -515,6 +531,10 @@ do
    esac
    shift
 done
+if [ "$testvector" == '' ]
+then
+   testvector='cppad'
+fi
 if [ "$with_clang" == 'yes' ] && [ "$enable_msvc" == 'yes' ]
 then
    echo 'configure: cannot specify both --enable-mcvc and --with-clang'
@@ -581,52 +601,24 @@ fi
 #
 # source_dir
 source_dir=$( echo $0 | sed -e 's|/configure.sh$||' )
-if [ "$source_dir" == "$0" ]
+if [ "$source_dir" == "$0" ] || [ "$source_dir" == '.' ]
 then
-   echo 'configure: cannot find path to configure file in configure command'
+   echo 'configure: cannot run configure.sh in the current directory'
    exit 1
 fi
 #
 # include_adolc
 include_adolc='false'
-if [ "$adolc_dir" != '' ]
+if [ "$adolc_dir" != 'NOTFOUND' ]
 then
    include_adolc='true'
 fi
 #
 # include_ipopt
 include_ipopt='false'
-if [ "$ipopt_dir" != '' ]
+if [ "$ipopt_dir" != 'NOTFOUND' ]
 then
    include_ipopt='true'
-fi
-#
-# eigen_prefix
-eigen_prefix='NOTFOUND'
-if [ "$eigen_dir" != '' ]
-then
-   eigen_prefix="$eigen_dir"
-fi
-#
-# fadbad_prefix
-fadbad_prefix='NOTFOUND'
-if [ "$fadbad_dir" != '' ]
-then
-   fadbad_prefix="$fadbad_dir"
-fi
-#
-# sacado_prefix
-sacado_prefix='NOTFOUND'
-if [ "$sacado_dir" != '' ]
-then
-   sacado_prefix="$sacado_dir"
-fi
-#
-# cppad_testvector
-cppad_testvector='cppad'
-if [  "$testvector" != '' ]
-then
-   cppad_testvector="$testvector"
 fi
 #
 # cppad_cxx_flags
@@ -638,14 +630,6 @@ cmake_install_libdirs='lib;lib64'
 if [ -d '/usr/lib64' ]
 then
    cmake_install_libdirs='lib64;lib'
-fi
-#
-# cppad_prefix
-if [ "$prefix" == '' ]
-then
-   cppad_prefix="$HOME"
-else
-   cppad_prefix="$prefix"
 fi
 #
 # CMakeCache.txt
@@ -666,7 +650,7 @@ echo cmake \
    $cmake_c_compiler \
    $cmake_fortran_compiler \
    \
-   -D cppad_prefix="$cppad_prefix" \
+   -D cppad_prefix="$prefix" \
    -D cppad_postfix="$postfix_dir" \
    \
    -D cmake_install_includedirs=include \
@@ -679,14 +663,14 @@ echo cmake \
    -D include_ipopt=$include_adolc \
    -D include_cppadcg=false \
    \
-   -D eigen_prefix="$eigen_prefix" \
+   -D eigen_prefix="$eigen_dir" \
    -D colpack_prefix='NOTFOUND' \
-   -D fadbad_prefix="$fadbad_prefix" \
-   -D sacado_prefix="$sacado_prefix" \
+   -D fadbad_prefix="$fadbad_dir" \
+   -D sacado_prefix="$sacado_dir" \
    \
    -D cppad_cxx_flags="$cxx_flags" \
    -D cppad_profile_flag='' \
-   -D cppad_testvector="$cppad_testvector"  \
+   -D cppad_testvector="$testvector"  \
    -D cppad_max_num_threads="$max_num_threads" \
    -D cppad_tape_id_type="$tape_id_type" \
    -D cppad_tape_addr_type="$tape_addr_type" \
@@ -720,7 +704,7 @@ cmake \
    \
    -D cppad_cxx_flags="$cxx_flags" \
    -D cppad_profile_flag='' \
-   -D cppad_testvector="$cppad_testvector"  \
+   -D cppad_testvector="$testvector"  \
    -D cppad_max_num_threads="$max_num_threads" \
    -D cppad_tape_id_type="$tape_id_type" \
    -D cppad_tape_addr_type="$tape_addr_type" \
