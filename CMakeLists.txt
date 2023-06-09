@@ -494,7 +494,9 @@ IF( cppad_has_ipopt )
    ADD_SUBDIRECTORY(cppad_ipopt)
 ENDIF( cppad_has_ipopt )
 #
+# check, test
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
+ADD_CUSTOM_TARGET(test DEPENDS ${check_depends})
 # ============================================================================
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
