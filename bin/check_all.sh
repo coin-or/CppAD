@@ -181,8 +181,7 @@ list=$(
    ls bin/check_* | sed \
    -e '/check_all.sh/d' \
    -e '/check_doxygen.sh/d' \
-   -e '/check_install.sh/d' \
-   -e '/check_configure.sh/d'
+   -e '/check_install.sh/d'
 )
 # ~/devel/check_copyright.sh not included in batch_edit branch
 for check in $list
@@ -216,9 +215,9 @@ then
    builder='make'
    if [ "$compiler" == 'clang' ]
    then
-      echo_log_eval bin/run_configure.sh clang=yes
+      echo_log_eval bin/run_configure.sh $standard --with_clang
    else
-      echo_log_eval bin/run_configure.sh clang=no
+      echo_log_eval bin/run_configure.sh $standard
    fi
 else
    builder='ninja'

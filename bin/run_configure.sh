@@ -8,16 +8,38 @@ then
    echo "bin/run_configure.sh: must be executed from its parent directory"
    exit 1
 fi
-if [ "$1" == 'clang=yes' ]
-then
-   with_clang='--with-clang'
-elif [ "$1" == 'clang=no' ]
-then
-   with_clang=''
-else
-   echo 'usage: bin/run_configure (clang=yes|clang=no)'
-   exit 1
-fi
+# -----------------------------------------------------------------------------
+with_clang=''
+cpp_standard='-std=c++17'
+while [ "$1" != '' ]
+do
+   if [ "$1" == '--help' ]
+   then
+      cat << EOF
+usage: bin/run_configure.sh \\
+   [--help] \\
+   [--with_clang] \\
+   [--std=c++yy]
+EOF
+      exit 0
+   fi
+   case "$1" in
+
+      --with_clang)
+      with_clang='--with_clang'
+      ;;
+
+      --std=c++*)
+      standard=$(echo "$1" | sed -e 's|^--std=c++||')
+      cpp_standard="-std=c++$standard"
+      ;;
+
+      *)
+      echo "$1 is an invalid option, try bin/run_configure.sh --help"
+      exit 1
+
+   esac
+done
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -43,7 +65,7 @@ export PKG_CONFIG_PATH
 testvector='cppad'
 #
 # cppad_cxx_flags
-cppad_cxx_flags="-Wall -pedantic-errors -std=c++17 -Wshadow"
+cppad_cxx_flags="$cpp_standard -Wall -pedantic-errors -Wshadow"
 cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
 #
 # ---------------------------------------------------------------------------

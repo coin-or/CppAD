@@ -400,7 +400,7 @@ usage: <path_to_configure>/configure \\
    [BOOST_DIR=boost_dir] \\
    [EIGEN_DIR=eigne_dir] \\
    [FADBAD_DIR=fadbad_dir] \\
-   [SACADO_DIR=sacado_dirr] \\
+   [SACADO_DIR=sacado_dir] \\
    [IPOPT_DIR=ipopt_dir] \\
    [TAPE_ADDR_TYPE=tape_addr_type] \\
    [TAPE_ID_TYPE=tape_id_type]
