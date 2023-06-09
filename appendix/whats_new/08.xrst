@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_08 app}
@@ -238,7 +238,7 @@ In addition, the missing
 
 07-02
 =====
-Extend :ref:`autotools@Configure` command to check for
+Extend :ref:`configure@Configure` command to check for
 extras libraries that are necessary for linking the ipopt example.
 
 06-18
@@ -392,7 +392,7 @@ This has been fixed.
 
 01-24
 =====
-The :ref:`autotools@postfix_dir`
+The :ref:`configure@postfix_dir`
 has been added to the ``configure`` command line options.
 
 01-21

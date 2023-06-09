@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_17 app}
@@ -260,7 +260,7 @@ e.g., see :ref:`multi_atomic_two.cpp-name` .
 #. The ``example/multi_thread/test_multi`` directory used
    to have an example using the deprecated
    :ref:`atomic_one-name` functions in a multi-threading setting
-   (that only built with the deprecated :ref:`autotools-name` ).
+   (that only built with the deprecated :ref:`configure-name` ).
    This have been removed.
 
 06-07
@@ -329,7 +329,7 @@ are in the ``example/ipopt_solve`` directory.
 =====
 
 #. The file ``build.sh`` was moved to ``bin/autotools.sh`` ,
-   and `auto tools' has been changed to :ref:`autotools-name` .
+   and `auto tools' has been changed to :ref:`configure-name` .
 #. The README file was replace by readme.md
    and AUTHORS was moved to authors.
 #. The NEWS, INSALL, and ChangeLog files
@@ -339,7 +339,7 @@ are in the ``example/ipopt_solve`` directory.
    This has been fixed.
 #. Specifications were added so that :ref:`to_string-name` yields exact results
    for integer types and machine precision for floating point types.
-#. Some editing was done to the :ref:`autotools-name` instructions.
+#. Some editing was done to the :ref:`configure-name` instructions.
 
 05-12
 =====
@@ -508,7 +508,7 @@ in this case (because the result is always zero).
 #. The subset of deprecated features corresponding to
    the cmake command option ``cppad_deprecated=YES``
    have been completely removed.
-#. Fix problems with :ref:`autotools-name` build
+#. Fix problems with :ref:`configure-name` build
    (started near 02-01 while working on sparsity branch).
 #. Reorder (better organize) the :ref:`ADFun-name` documentation section.
 

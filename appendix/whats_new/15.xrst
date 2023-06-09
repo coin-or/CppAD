@@ -77,10 +77,10 @@ by including
 
 12-01
 =====
-Fix problem with :ref:`autotools-name` install handling of the
+Fix problem with :ref:`configure-name` install handling of the
 deprecated files.
 This included changing the autotools
-``--with-implicit_ctor`` option to :ref:`autotools-name` .
+``--with-implicit_ctor`` option to :ref:`configure-name` .
 This was removed on
 :ref:`2017-02-10<whats_new_17@mm-dd@02-10>` .
 
@@ -204,7 +204,7 @@ see :ref:`optimize@options@no_print_for_op` .
 #. The documentation for some of the :ref:`deprecated-name` features
    was missing the date when they were deprecated.
    This has been fixed; e.g., see
-   :ref:`autotools@Deprecated 2012-12-26` .
+   :ref:`configure@Deprecated 2012-12-26` .
 
 10-04
 =====
@@ -424,7 +424,7 @@ of the :ref:`Hessian<sparsity_sub.cpp@RevSparseHes>` .
 #. The source code control for CppAD has a link to ``compile`` ,
    instead of real file.
    This sometimes caused problems with the
-   deprecated :ref:`autotools-name` install procedure and has been fixed.
+   deprecated :ref:`configure-name` install procedure and has been fixed.
 
 08-16
 =====
@@ -779,7 +779,7 @@ This has been fixed.
 
 01-21
 =====
-The deprecated :ref:`autotools-name` procedure had a bug in the
+The deprecated :ref:`configure-name` procedure had a bug in the
 detection of when the size of an ``unsigned int``
 was the same as the size of a ``size_t`` . This has been fixed.
 

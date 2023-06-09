@@ -157,7 +157,7 @@ to simplify and better organize the speed tests been completed:
    :ref:`speed/adolc<speed_adolc-name>`,Adolc drivers for the template functions
    :ref:`speed/cppad<speed_cppad-name>`,CppAD drivers for the template functions
    :ref:`speed/fadbad<speed_fadbad-name>`,Fadbad drivers for the template functions
-   :ref:`speed/profile<autotools@Profiling CppAD>`,profiling version of CppAD drivers
+   speed/profile,profiling version of CppAD drivers
 
 12-13
 =====
@@ -225,7 +225,7 @@ This has been fixed.
 12-05
 =====
 Add the unix installation
-:ref:`autotools@--with-Documentation` option
+--with_Documentation option
 and remove the
 *postfix_dir* option.
 
@@ -1075,7 +1075,7 @@ file ``cppad/local/CppADError.h`` ).
 01-02
 =====
 Add the sed script ``Speed/gprof.sed`` to aid in the display of the
-:ref:`profiling<autotools@Profiling CppAD>` output.
+profiling output.
 
 Make the following source code files easier to understand:
 ``Add.h`` , ``Sub.h`` , ``Mul.h`` , ``Div.h``

@@ -91,7 +91,7 @@ to distinguish them from :ref:`CppAD::ipopt::solve<ipopt_solve-name>` .
 In ``branches/ipopt_solve`` :
 
 #. Convert documentation most all documentation references from
-   the deprecated :ref:`autotools-name` instructions to the new :ref:`cmake-name`
+   the deprecated :ref:`configure-name` instructions to the new :ref:`cmake-name`
    instructions.
 #. Include the :ref:`Introduction-name` programs in the
    :ref:`cmake_check-name` built using :ref:`cmake-name` .
@@ -158,10 +158,10 @@ It has been fixed.
 12-14
 =====
 
-#. Fix the old :ref:`autotools-name` so that it works with the
+#. Fix the old :ref:`configure-name` so that it works with the
    new ``cppad.pc`` .
 #. Fix the old installation
-   :ref:`autotools@--with-Documentation` option
+   --with_Documentation option
    (it was attempting to copy from the wrong directory).
 
 12-13
@@ -221,7 +221,7 @@ Update the :ref:`wish_list-name` :
 =====
 
 #. Finish documenting the new :ref:`cmake-name` configuration instructions
-   and deprecate the old :ref:`unix<autotools-name>` instructions.
+   and deprecate the old :ref:`unix<configure-name>` instructions.
 #. Change the specifications for
    :ref:`multi_thread@CPPAD_MAX_NUM_THREADS`
    to allow for a value of one.
@@ -243,7 +243,7 @@ Advanced the CppAD version to ``cppad-20121114`` .
    This included factoring out the
    :ref:`download-name` procedure as a separate section
    so that the same download instruction also apply to the
-   :ref:`unix<autotools-name>` install procedure.
+   :ref:`unix<configure-name>` install procedure.
 
 #. Changed
    :ref:`example/compare_change.cpp<compare_change.cpp-name>`
@@ -288,14 +288,14 @@ This has been fixed and the comments for this example have been improved.
 
 10-31
 =====
-The CppAD :ref:`profiling<autotools@Profiling CppAD>` was not compiling
+The CppAD profiling was not compiling
 the ``speed/src/\*.cpp`` files with the profiling flag.
 This has been changes
 (only for the profiling speed test).
 
 10-30
 =====
-The :ref:`autotools@fadbad_dir` directory install instructions
+The :ref:`configure@fadbad_dir` directory install instructions
 were changed.
 To be specific, ``FADBAD++`` was changed to ``include/FADBAD++`` .
 This makes it more like the other optional packages.
@@ -404,7 +404,7 @@ a simpler :ref:`atomic_one-name` example.
 07-07
 =====
 Add the ``CPPAD_TAPE_ID_TYPE`` argument to the
-:ref:`autotools@Configure` command line.
+:ref:`configure@Configure` command line.
 
 07-05
 =====
@@ -419,7 +419,7 @@ used ``CPPAD_TEST_VECTOR`` would no longer work.
 #. Replace the requirement that the :ref:`SimpleVector-name`
    :ref:`SimpleVector@size` function return a ``size_t`` value to
    the requirement that it can be converted to a ``size_t`` value.
-#. The :ref:`--with-eigenvector<autotools@Configure>` option was
+#. The :ref:`--with-eigenvector<configure@Configure>` option was
    added to the ``configure`` command line.
 
 07-03
@@ -475,7 +475,7 @@ linear algebra package.
 =====
 Include the :ref:`base_adolc.hpp-name` as
 ``<cppad/example/base_adolc.hpp>`` under the
-:ref:`autotools@prefix_dir` directory.
+:ref:`configure@prefix_dir` directory.
 
 06-12
 =====
@@ -635,7 +635,7 @@ Merged in changes from ``branches/sparse`` :
 
 04-19
 =====
-The :ref:`autotools@boost_dir`
+The :ref:`configure@boost_dir`
 configure command line value has been changed to be the corresponding
 prefix during the installation of boost.
 To be specific, it used to be that
@@ -660,9 +660,9 @@ Fix bug when using :ref:`atomic_one-name` functions with
 04-10
 =====
 Add control of the
-:ref:`autotools@max_num_threads` argument
+:ref:`configure@max_num_threads` argument
 to the unix
-:ref:`autotools@Configure` command.
+:ref:`configure@Configure` command.
 
 04-06
 =====
@@ -691,7 +691,7 @@ Fixed a race condition when using CppAD with
 :ref:`multi-threading<multi_thread-name>` .
 This has been fixed and the error message below no longer occurs.
 Suppose that you ran the CppAD
-:ref:`autotools@Configure` command in the ``work``
+:ref:`configure@Configure` command in the ``work``
 directory.
 If you then edited the file ``work/multi_thread/makefile``
 and changed
@@ -789,7 +789,7 @@ one should call :ref:`free_available<ta_free_available-name>` for all threads.
    :ref:`simple_ad_bthread.cpp-name`
    and :ref:`simple_ad_pthread.cpp-name` .
 #. Fix bug in finding boost multi-threading library
-   (due to fact that :ref:`autotools@boost_dir`
+   (due to fact that :ref:`configure@boost_dir`
    is not the prefix during the boost installation).
 
 03-02
@@ -843,13 +843,13 @@ is greater than one
 =====
 Make another attempt to fix linking with boost threads where the wrong
 version of the library is in the system include directory; i.e.,
-to have :ref:`autotools@boost_dir` override the default
+to have :ref:`configure@boost_dir` override the default
 library.
 
 01-27
 =====
 There were some problems with
-:ref:`configure's<autotools@Configure>` automatic detection of
+:ref:`configure's<configure@Configure>` automatic detection of
 the boost multi-threading library.
 These have been fixed.
 
@@ -900,7 +900,7 @@ Change variable notation and use :ref:`optimize-name` in
 01-16
 =====
 The test program ``example/multi_thread/test.sh`` failed if the
-:ref:`autotools@openmp_flags` not present in the
+openmp_flags not present in the
 ``configure`` command.
 This has been fixed.
 In addition, this ``test.sh`` has been made faster by cycling through
@@ -910,7 +910,7 @@ test.
 01-15
 =====
 Fix ``make test`` so it works when
-:ref:`autotools@Configure` is run in the distribution directory
+:ref:`configure@Configure` is run in the distribution directory
 ``cppad-`` *yyyymmdd*
 (not just when it is run in a different directory).
 

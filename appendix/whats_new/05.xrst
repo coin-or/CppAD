@@ -282,7 +282,7 @@ This makes ``VecAD`` some what more efficient.
 11-19
 =====
 Improve the output messages generated during execution of the
-:ref:`autotools@Configure` command.
+:ref:`configure@Configure` command.
 
 Put a try and catch block around all of the uses of
 ``new`` so that if a memory allocation error occurs,
@@ -346,7 +346,7 @@ the whish list.
 
 10-18
 =====
-The Unix install :ref:`autotools@Configure` command
+The Unix install :ref:`configure@Configure` command
 was missing the ``--`` before of the ``prefix`` command line
 argument.
 
@@ -366,7 +366,7 @@ so that ``CppAD::vector<bool>`` does not pack one bit per value
 10-12
 =====
 Change the
-:ref:`autotools@Configure` script so that compilation of the
+:ref:`configure@Configure` script so that compilation of the
 :ref:`get_started.cpp-name` and :ref:`print_for_cout.cpp-name` examples are optional.
 
 One of the dates in the Unix installation
@@ -377,7 +377,7 @@ out of date. This has been fixed.
 =====
 Change the Unix install ``configure`` script
 so that is reports information using the same order and notation as its
-:ref:`documentation<autotools@Configure>` .
+:ref:`documentation<configure@Configure>` .
 
 Some compiler errors in the :ref:`ode_gear_control.cpp-name` and
 :ref:`ode_stiff.cpp-name` examples were fixed.
@@ -395,7 +395,7 @@ has been removed from the documentation.
 09-27
 =====
 Add the
-:ref:`autotools@prefix_dir` and
+:ref:`configure@prefix_dir` and
 *postfix_dir* ( *postfix_dir* has since been removed)
 options to the ``configure`` command line.
 This gives the user more control over the location where CppAD is installed.
@@ -421,8 +421,8 @@ In addition, the example :ref:`numeric_type.cpp-name` has been added.
 
 Make the building of the
 ``Example`` , ``TestMore`` , and ``Speed`` , directories
-optional during the :ref:`autotools@Configure` command.
-The :ref:`Unix installation instructions<autotools-name>` were
+optional during the :ref:`configure@Configure` command.
+The :ref:`Unix installation instructions<configure-name>` were
 overhauled to make the larger set of options easy to understand.
 
 09-14
@@ -549,7 +549,7 @@ as well as an entry in the
 07-15
 =====
 The ``BOOST_DIR`` and ``CPP_ERROR_WARN``
-:ref:`autotools@Configure` options
+:ref:`configure@Configure` options
 were not properly implemented for compiling the
 ``lib`` sub-directory.
 This has been fixed.
@@ -794,7 +794,7 @@ During the process above, the function :ref:`con_dyn_var@Variable` was added.
 
 04-20
 =====
-Add :ref:`profiling<autotools@Profiling CppAD>`
+Add profiling
 to the speed tests.
 
 04-19
@@ -840,10 +840,10 @@ An new multiple level of AD example :ref:`mul_level-name` was added.
 03-01
 =====
 An option that specifies error and warning
-:ref:`flags<autotools@cxx_flags>`
+:ref:`flags<configure@cxx_flags>`
 for all the C++ compile commands,
 was added to the
-:ref:`Unix installation instructions<autotools-name>` .
+:ref:`Unix installation instructions<configure-name>` .
 
 02-24
 =====

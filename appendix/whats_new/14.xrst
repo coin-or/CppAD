@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_14 app}
@@ -106,7 +106,7 @@ This has been fixed.
 12-17
 =====
 Fix some compiler warnings and :ref:`speed-name` program names
-when using the deprecated :ref:`autotools-name` install procedure.
+when using the deprecated :ref:`configure-name` install procedure.
 
 12-16
 =====
@@ -133,7 +133,7 @@ a new version of the ``omhelp`` documentation tool.
    :ref:`create_array<ta_create_array@Alignment>` specifications
    and
    :ref:`thread_alloc example<thread_alloc.cpp-name>` .
-#. Advance the deprecated :ref:`unix install<autotools-name>` utilities to
+#. Advance the deprecated :ref:`unix install<configure-name>` utilities to
    autoconf-2.69 and automake-1.13.4.
 
 09-28
@@ -194,7 +194,7 @@ To be specific, :math:`x^{(k)}` was changed to be :math:`u^{(k)}`.
 05-23
 =====
 The :ref:`speed-name` test instructions were converted from using
-the old autotools :ref:`unix install<autotools-name>` instructions
+the old autotools :ref:`unix install<configure-name>` instructions
 to use the :ref:`cmake-name` install instructions.
 These instructions should work on any system, not just unix.
 

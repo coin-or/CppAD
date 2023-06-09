@@ -3,11 +3,10 @@
 # # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # # ----------------------------------------------------------------------------
-# \{xrst_begin configure.sh app}
+# {xrst_begin configure app}
 # {xrst_spell
 #    adouble
 #    ansi
-#    autotools
 #    badiff
 #    boostvector
 #    cl
@@ -15,9 +14,6 @@
 #    cygdrive
 #    dist
 #    eigenvector
-#    fopenmp
-#    gprof
-#    htm
 #    italic
 #    linux
 #    msvc
@@ -27,7 +23,8 @@
 #    testvector
 #    ublas
 #    usr
-#    yyyymmdd
+#    Fortran
+#    Ralphs
 # }
 # {xrst_comment_ch #}
 #
@@ -61,8 +58,8 @@
 # | |tab| ``--help``                                       \\
 # | |tab| ``--prefix`` = *prefix_dir*                      \\
 # | |tab| ``--with-`` *test* ``vector``                    \\
-# | |tab| ``--with-clang``                                 \\
 # | |tab| ``--enable-msvc``                                \\
+# | |tab| ``--with-clang``                                 \\
 # | |tab| ``MAX_NUM_THREADS`` = *max_num_threads*          \\
 # | |tab| ``CXX_FLAGS`` = *cxx_flags*                      \\
 # | |tab| ``POSTFIX_DIR`` = *postfix_dir*                  \\
@@ -136,15 +133,19 @@
 # and
 # :ref:`configure@eigen_dir` .
 #
+# --enable-msvc
+# *************
+# If this flag is present, the Microsoft ``cl`` compiler will be
+# placed at the front of a list of compilers to search for.
+# The resulting C++, C, and Fortran compiler orders work Coin-OR specific
+# and chosen by Ted Ralphs.
+#
 # --with-clang
 # ************
 # If this flag is present, ``clang++`` ( ``clang`` )
 # will be used for the C++ (C) compiler.
-#
-# --enable-msvc
-# *************
-# If this flag is present, the Microsoft ``cl`` compiler will be
-# placed at the front of the list of compilers to search for.
+# This will override the C++ and C compiler choices set by the
+# --enable-msvc flag above.
 #
 # max_num_threads
 # ***************
@@ -183,11 +184,6 @@
 # :ref:`installed<configure@make install>` in the directory
 #
 #    / ``usr/local/include/coin-or/cppad``
-#
-# If :ref:`configure@--with-Documentation`
-# is specified, the CppAD documentation files will be installed in the directory
-#
-#    / ``usr/local/share/doc/coin-or/cppad-`` *yyyymmdd*
 #
 # adolc_dir
 # *********
@@ -380,7 +376,7 @@
 #
 #    ``make install DESTDIR`` = *DestinationDirectory*
 #
-# \{xrst_end configure}
+# {xrst_end configure}
 # ----------------------------------------------------------------------------
 #
 # --help
@@ -457,12 +453,12 @@ do
       testvector=$( echo $1 | sed -e 's|^--with-||' -e 's|vector$||')
       ;;
 
-      --with-clang)
-      with_clang='yes'
-      ;;
-
       --enable-msvc)
       enable_msvc='yes'
+      ;;
+
+      --with-clang)
+      with_clang='yes'
       ;;
 
       CXX_FLAGS=*)

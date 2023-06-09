@@ -451,7 +451,7 @@ To be specific the smallest type from the set
 
 05-29
 =====
-The :ref:`autotools-name` install procedure was not working since 05-26.
+The :ref:`configure-name` install procedure was not working since 05-26.
 This has been fixed.
 
 05-28

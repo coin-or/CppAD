@@ -6,6 +6,7 @@
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
+#  xrst/install/autotools.xrst
 # '
 # List of files that are not edited by the sed commands in this file
 # (with the possible exception of the extra_seds commands).
@@ -29,4 +30,12 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|${\([a-z_]*\)_LIBRARIES}|${\1_LINK_LIBRARIES}|g
+s|\\{xrst_begin configure.sh|{xrst_begin configure|
+s|\\{xrst_end configure|{xrst_end configure|
+s|xrst/install/autotools.xrst|configure.sh|
+s|:ref:`autotools@--with-Documentation`|--with_Documentation|g
+s|:ref:`\([^<`]*\)<autotools@Profiling CppAD>`|\1|g
+s|:ref:`\([^<`]*\)<autotools@openmp_flags>`|\1|g
+s|:ref:`autotools@openmp_flags`|openmp_flags|g
+s|:ref:`autotools|:ref:`configure|g
+s|:ref:`\([^<`]*\)<autotools|:ref:`\1<configure|g
