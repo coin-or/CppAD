@@ -25,6 +25,7 @@
 #    usr
 #    Fortran
 #    Ralphs
+#    nmake
 # }
 # {xrst_comment_ch #}
 #
@@ -137,15 +138,17 @@
 # *************
 # If this flag is present, the Microsoft ``cl`` compiler will be
 # placed at the front of a list of compilers to search for.
+# In addition, nmake_ make files will be generated.
 # The resulting C++, C, and Fortran compiler orders work Coin-OR specific
 # and chosen by Ted Ralphs.
+#
+# .. _nmake: https://learn.microsoft.com/en-us/cpp/build/reference/nmake-reference
 #
 # --with-clang
 # ************
 # If this flag is present, ``clang++`` ( ``clang`` )
 # will be used for the C++ (C) compiler.
-# This will override the C++ and C compiler choices set by the
-# --enable-msvc flag above.
+# This option cannot appear when the --enable-msvc option appears.
 #
 # max_num_threads
 # ***************
@@ -512,9 +515,25 @@ do
    esac
    shift
 done
+if [ "$with_clang" == 'yes' ] && [ "$enable_msvc" == 'yes' ]
+then
+   echo 'configure: cannot specify both --enable-mcvc and --with-clang'
+   exit 1
+fi
 # ----------------------------------------------------------------------------
-# The compiler orders below are Coin-OR specific and chosen by Ted Ralphs
-# ----------------------------------------------------------------------------
+# type_makefile
+if [ "$enable_msvc" == 'yes' ]
+then
+   type_makefile='NMake Makefiles'
+else
+   if [[ $(uname -s) =~ ^MSYS_.* ]]
+   then
+      type_makefile='MSYS Makefiles'
+   else
+      type_makefile='Unix Makefiles'
+   fi
+fi
+#
 # cmake_cxx_compiler
 cmake_cxx_compiler=''
 if [ "$enable_msvc" == 'yes' ]
@@ -530,7 +549,7 @@ elif [ "$first_executable_result" != '' ]
 then
    cmake_cxx_compiler="-D CMAKE_CXX_COMPILER=$first_executable_result"
 fi
-# ----------------------------------------------------------------------------
+#
 # cmake_c_compiler
 cmake_c_compiler=''
 if [ "$enable_msvc" == 'yes' ]
@@ -546,7 +565,7 @@ elif [ "$first_executable_result" != '' ]
 then
    cmake_c_compiler="-D CMAKE_C_COMPILER=$first_executable_result"
 fi
-# ----------------------------------------------------------------------------
+#
 # CMAKE_Fortran_COMPILER
 cmake_fortran_compiler=''
 if [ "$enable_msvc" == 'yes' ]
@@ -559,7 +578,6 @@ if [ "$first_executable_result" != '' ]
 then
    cmake_fortran_compiler="-D CMAKE_Fortan_COMPILER=$first_executable_result"
 fi
-# ----------------------------------------------------------------------------
 #
 # source_dir
 source_dir=$( echo $0 | sed -e 's|/configure.sh$||' )
@@ -635,13 +653,14 @@ if [ -e CMakeCache.txt ]
 then
    rm CMakeCache.txt
 fi
+echo
 echo cmake \
    -U .+ \
    -S "$source_dir" \
    -B . \
    \
    -D CMAKE_VERBOSE_MAKEFILE=0 \
-   -G 'Unix Makefiles' \
+   -G "'$type_makefile'" \
    \
    $cmake_cxx_compiler \
    $cmake_c_compiler \
@@ -679,7 +698,7 @@ cmake \
    -B . \
    \
    -D CMAKE_VERBOSE_MAKEFILE=0 \
-   -G 'Unix Makefiles' \
+   -G "$type_makefile" \
    \
    -D cppad_prefix="$prefix" \
    -D cppad_postfix="$postfix_dir" \

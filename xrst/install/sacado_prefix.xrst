@@ -1,8 +1,12 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin sacado_prefix}
+{xrst_spell
+   Kokkos
+   Trilinos
+}
 
 Including Sacado Speed Tests
 ############################
@@ -10,6 +14,12 @@ Including Sacado Speed Tests
 Sacado Home Page
 ****************
 https://github.com/trilinos/Trilinos/tree/master/packages/sacado
+
+Requirement
+***********
+The c++14 standard (or higher)
+is necessary to build Sacado because it uses Kokkos; see
+`Trilinos issue 6260 <https://github.com/trilinos/Trilinos/issues/6260>`_ .
 
 Purpose
 *******
