@@ -19,6 +19,9 @@ ENDIF( POLICY CMP0054 )
 SET(cppad_version "20230609")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
+IF( NOT DEFINED CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE "NOTFOUND")
+ENDIF( NOT DEFINED CMAKE_BUILD_TYPE)
 #
 # Set name of this project and create the variables
 # cppad_BINARY_DIR and cppad_SOURCE_DIR.

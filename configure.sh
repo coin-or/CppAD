@@ -558,7 +558,7 @@ fi
 cmake_cxx_compiler=''
 if [ "$enable_msvc" == 'yes' ]
 then
-   first_executble icl cl g++
+   first_executable icl cl g++
 else
    first_executable g++ clang++ CC pgCC icpc gpp cxx cc++
 fi
