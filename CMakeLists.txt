@@ -16,9 +16,12 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20230519")
+SET(cppad_version "20230610")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
+IF( NOT DEFINED CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE "NOTFOUND")
+ENDIF( NOT DEFINED CMAKE_BUILD_TYPE)
 #
 # Set name of this project and create the variables
 # cppad_BINARY_DIR and cppad_SOURCE_DIR.
@@ -114,13 +117,14 @@ FOREACH(pkg adolc ipopt cppadcg)
       )
    ENDIF( ${pkg}_prefix )
 ENDFOREACH(pkg adolc eigen ipopt)
+#
+IF( cmake_needs_dot_slash )
+   MESSAGE(FATAL_ERROR
+      "cmake_needs_dot_slash was removed; see release notes for 2023-06-01"
+   )
+ENDIF( cmake_needs_dot_slash )
 # -----------------------------------------------------------------------------
 # Current Arguments
-#
-# cmake_needs_dot_slash
-command_line_arg(cmake_needs_dot_slash "false" BOOL
-"does cmake need a ./ in the front of an executable name in a custom command"
-)
 #
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
@@ -494,7 +498,9 @@ IF( cppad_has_ipopt )
    ADD_SUBDIRECTORY(cppad_ipopt)
 ENDIF( cppad_has_ipopt )
 #
+# check, test
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
+ADD_CUSTOM_TARGET(test DEPENDS ${check_depends})
 # ============================================================================
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

@@ -9,7 +9,6 @@ copyright_owner='Bradley M. Bell'
 # version number (can be empty).
 version_files='
    user_guide.xrst
-   configure.ac
 '
 #
 # List of special files, for this repository, that the devel tools ignore.
@@ -26,7 +25,6 @@ ignore_files='
    /.gitignore
    /.readthedocs.yaml
    /COPYING
-   /ar-lib
    /authors
    /batch_edit.sed
    /bin/build.bat
@@ -35,15 +33,7 @@ ignore_files='
    /bin/get_omhelp.sh
    /cmake/cppad_uninstall.cmake
    /coin.png
-   /compile
-   /config.guess
-   /config.sub
-   /configure
-   /configure
-   /depcomp
    /epl-2.0.txt
-   /install-sh
-   /missing
    /readme.md
    /sphinx/preamble.rst
    /uw_copy_040507.html

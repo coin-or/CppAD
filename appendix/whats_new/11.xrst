@@ -109,8 +109,8 @@ preprocessor symbols that are in the CppAD API.
 
 11-21
 =====
-Separate :ref:`--with-boostvector<autotools@--with-testvector>`
-for :ref:`autotools@boost_dir` .
+Separate :ref:`--with-boostvector<configure@--with-testvector>`
+for :ref:`configure@boost_dir` .
 This enables one to specify *boost_dir* for
 :ref:`team_bthread.cpp-name` with out using boost vectors.
 
@@ -303,14 +303,14 @@ These changes are described below.
    ``openmp/run.sh`` to ``openmp/run.cpp`` .
 #. 08-31:
    Change ``--with-openmp`` to
-   :ref:`OPENMP_FLAGS=openmp_flags<autotools@openmp_flags>` configure
+   OPENMP_FLAGS=openmp_flags configure
    command line argument.
 
 #. 08-30:
    Create the ``openmp/run.cpp`` program
    and move the ``openmp_multi_newton.cpp`` test from
    ``openmp/run.sh`` to ``openmp/run.cpp`` .
-   This uses :ref:`autotools@Configure`
+   This uses :ref:`configure@Configure`
    information for building the tests.
 #. 08-30:
    Document the ``--with-openmp`` configure
@@ -509,10 +509,10 @@ This has been fixed in :ref:`tan_reverse-name` .
 07-14
 =====
 
-#. The :ref:`autotools-name` instructions for running the individual
+#. The :ref:`configure-name` instructions for running the individual
    correctness and speed tests were out of date.
    This has been fixed; see
-   :ref:`example and tests<autotools@make@Examples and Tests>` .
+   :ref:`example and tests<configure@make@Examples and Tests>` .
 #. Move ``parallel_ad.cpp`` from ``example`` directory
    to ``openmp`` directory (and convert it from a function to a program).
 #. Simplify ``example_a11c.cpp`` by making it just a correctness test.
@@ -616,8 +616,8 @@ Add the routine :ref:`parallel_ad-name` to fix bug when using
 06-18
 =====
 
-#. The :ref:`autotools@tape_addr_type` option was added
-   to the :ref:`autotools@Configure` command line.
+#. The :ref:`configure@tape_addr_type` option was added
+   to the :ref:`configure@Configure` command line.
 #. The function :ref:`fun_property@size_op_seq` results uses
    ``sizeof(CppAD_TAPE_ADDR_TYPE)``
    where it used to use ``sizeof(size_t)`` .
@@ -625,7 +625,7 @@ Add the routine :ref:`parallel_ad-name` to fix bug when using
    (put the information in ``cppad/configure.hpp`` .)
    This removes the need to undefine symbols that were
    defined by ``cppad/config.h`` and that did not begin with ``CPPAD_`` .
-#. Change :ref:`adolc<autotools@adolc_dir>` library linkage so it
+#. Change :ref:`adolc<configure@adolc_dir>` library linkage so it
    works with version ``ADOL-C-2.2.0`` .
 
 05-29
@@ -844,7 +844,7 @@ The following have been fixed:
 #. The install of the documentation failed
    when it was done from a directory other than the top source directory.
 #. The GPL distribution had the output of the
-   :ref:`autotools@Configure` command in it.
+   :ref:`configure@Configure` command in it.
 #. Since the change on 01-09, the file
    ``omh/appendix/11.omh`` has been required to build the
    documentation (and it has been missing from the distribution).
@@ -852,7 +852,7 @@ The following have been fixed:
    with the ``g++`` compiler.
    The Fadbad :ref:`speed<speed_fadbad-name>` tests have a special
    flag with this warning removed from the
-   :ref:`autotools@cxx_flags` .
+   :ref:`configure@cxx_flags` .
 
 01-09
 =====
@@ -865,7 +865,7 @@ where *license* is ``gpl`` or ``cpl`` .
 #. The version of automake used to build the corresponding
    ``makefile.in`` files did not define ``abs_top_builddir`` .
 #. The include file ``cppad_ipopt_nlp.hpp`` was always installed, even if
-   :ref:`autotools@ipopt_dir` was not defined on the
+   :ref:`configure@ipopt_dir` was not defined on the
    ``configure`` command line.
 #. The speed test library ``libspeed.a`` was being installed
    (it is only intended for testing).

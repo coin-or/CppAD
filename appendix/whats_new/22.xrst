@@ -103,8 +103,9 @@ This suppressed the running of the corresponding examples; e.g.,
 07-10
 =====
 
-#. Add the :ref:`cmake@cmake_needs_dot_slash` symbol
-   to the cmake command line.
+#. Add the cmake_needs_dot_slash symbol to the cmake command line.
+   This has since been removed; see whats_new_23 for
+   :ref:`whats_new_23@mm-dd@06-01`.
 #. Change the test case in ``speed/example/speed_program.cpp`` because
    some compilers have gotten smarter and do not calculate values
    that are not used.

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_21 app}
@@ -45,7 +45,7 @@ Change ``virtual`` to ``override`` in all the
 
 12-08
 =====
-Update to a newer version of the :ref:`autotools-name` .
+Update to a newer version of the :ref:`configure-name` .
 
 09-04
 =====
@@ -356,6 +356,6 @@ The example :ref:`pow_nan.cpp-name` was added.
    :ref:`Independent@dynamic` parameters and
    value of one of these parameters was zero or one when the function
    was recorded.
-#. Fix a bug in the :ref:`autotools-name` building of ``cppad_lib`` .
+#. Fix a bug in the :ref:`configure-name` building of ``cppad_lib`` .
 
 {xrst_end whats_new_21}

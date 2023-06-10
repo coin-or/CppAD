@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # add_check_executable(parent_target short_name)
 # add_check_executable(parent_target short_name arguments)
@@ -71,17 +71,10 @@ MACRO(add_check_executable parent_target short_name)
       SET(add_check_executable_depends ${add_check_executable_no_check} )
    ENDIF( )
    #
-   # add_check_executable_dot_slash
-   IF( ${cmake_needs_dot_slash} )
-      SET(add_check_executable_dot_slash "./")
-   ELSE ( )
-      SET(add_check_executable_dot_slash "")
-   ENDIF( )
-   #
    # create this target
    ADD_CUSTOM_TARGET(
       ${add_check_executable_full_name}
-      ${add_check_executable_dot_slash}${add_check_executable_no_check}
+      ${add_check_executable_no_check}
       ${add_check_executable_arguments}
       DEPENDS ${add_check_executable_depends}
    )

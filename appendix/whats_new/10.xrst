@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin whats_new_10 app}
@@ -57,7 +57,7 @@ This has been fixed.
 =====
 Promote :ref:`cppad_ipopt_nlp-name` from an example to a library
 that gets installed
-(provided that the :ref:`autotools@ipopt_dir`
+(provided that the :ref:`configure@ipopt_dir`
 is specified on the ``configure`` command line).
 
 08-21
@@ -69,7 +69,7 @@ both older and newer versions of ``ipopt`` .
 =====
 The new versions of ipopt use ``pkg-config`` to record the location
 where its necessary libraries are stored on the system.
-The cppad :ref:`autotools@Configure` command has
+The cppad :ref:`configure@Configure` command has
 been improved so that it can work both with versions of ipopt that use
 ``pkg-config`` and ones that don't.
 
@@ -77,7 +77,7 @@ been improved so that it can work both with versions of ipopt that use
 =====
 Old versions of the ipopt library were located in
 *ipopt_dir* / ``lib/libipopt.`` *
-(see :ref:`autotools@ipopt_dir` ),
+(see :ref:`configure@ipopt_dir` ),
 but newer versions will be located in
 *ipopt_dir* / ``lib/coin-or/libipopt.`` * .
 The directory *ipopt_dir* / ``lib/coin`` has been added to the library
@@ -175,7 +175,7 @@ where a library is built.
 A bug was introduced in the :ref:`whats_new_10@mm-dd@02-05`
 change whereby the ``make`` command tried to build the
 ``libcppad_ipopt.a`` library even if ``IPOPT_DIR`` was
-not specified on the :ref:`autotools@Configure` command line.
+not specified on the :ref:`configure@Configure` command line.
 This has been fixed.
 
 02-06
@@ -195,7 +195,7 @@ fixed on ``02-05`` .
 
 #. Simplify running all the tests by adding the
    ``make test`` command.
-#. Simplify the :ref:`autotools@Configure` command by removing
+#. Simplify the :ref:`configure@Configure` command by removing
    need for:
    ``--with-Speed`` ,
    ``--with-Introduction`` ,

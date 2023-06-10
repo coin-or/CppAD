@@ -112,10 +112,10 @@ without having to rebuild the optional packages.
 
 12-11
 =====
-Change the autotools :ref:`autotools@Configure` script
+Change the autotools :ref:`configure@Configure` script
 so that it does better detection of the microsoft cl compiler.
 In addition, add documentation for the
-:ref:`autotools@--enable-msvc` option.
+:ref:`configure@--enable-msvc` option.
 
 12-06
 =====
@@ -197,7 +197,7 @@ possibly un-initialized warning on some compilers.
 10-20
 =====
 The *have_ar* variable has been removed from the
-:ref:`autotools-name` configuration and the configuration now exits
+:ref:`configure-name` configuration and the configuration now exits
 if ``AM_PROG_AR`` does not find an archiving tool.
 This was done to try and solve some configuration problems with
 a combination of ``msys2`` and the Visual Studio compiler.
@@ -205,7 +205,7 @@ a combination of ``msys2`` and the Visual Studio compiler.
 10-17
 =====
 
-#. The :ref:`autotools-name` configuration would fail when it tried
+#. The :ref:`configure-name` configuration would fail when it tried
    to compile a :ref:`cppadcg-name` include file
    (the autotools configuration does not support ``cppadcg`` ).
    This has been fixed.

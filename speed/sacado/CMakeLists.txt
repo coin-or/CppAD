@@ -1,12 +1,16 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the speed/sacado directory tests
 # Inherit build type from ../CMakeList.txt
 
 # assert sacado_prefix is defined
 assert( sacado_prefix )
+
+# Avoid the following warning:
+# The installed Kokkos configuration does not support CXX extensions.
+SET(CMAKE_CXX_EXTENSIONS Off)
 
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
@@ -38,28 +42,20 @@ TARGET_LINK_LIBRARIES(speed_sacado
    ${colpack_libs}
 )
 # determine libraries necessary to link Sacado
-SET(config_file "${sacado_prefix}/include/Makefile.export.Sacado")
-IF(NOT EXISTS ${config_file})
-   MESSAGE(FATAL_ERROR
-"the file sacado_prefix/include/Makefile.export.Sacado does not exist
-where sacado_prefix=${sacado_prefix}"
-   )
-ENDIF(NOT EXISTS ${config_file})
-SET(cmd "grep" "Sacado_LIBRARIES=" "${config_file}")
-EXECUTE_PROCESS(
-   COMMAND         ${cmd}
-   OUTPUT_VARIABLE temp1
-)
-STRING(REGEX REPLACE "Sacado_LIBRARIES= *-l" "" temp2  ${temp1})
-STRING(STRIP ${temp2} temp3)
-STRING(REGEX REPLACE " *-l" ";" sacado_lib_list ${temp3})
+FOREACH(dir ${cmake_install_libdirs})
+   IF( IS_DIRECTORY ${sacado_prefix}/${dir}/cmake/Trilinos )
+      SET(Trilinos_DIR "${sacado_prefix}/${dir}/cmake/Trilinos" )
+   ENDIF( IS_DIRECTORY ${sacado_prefix}/${dir}/cmake/Trilinos )
+ENDFOREACH( dir )
+FIND_PACKAGE(Trilinos CONFIG)
+print_variable(Sacado_LIBRARIES)
 #
 # include the dl library if it is in the system path
 CHECK_LIBRARY_EXISTS( dl dlopen "${CMAKE_SYSTEM_LIBRARY_PATH}" dl_found )
 IF( dl_found )
-   TARGET_LINK_LIBRARIES(speed_sacado speed_src ${sacado_lib_list} dl)
+   TARGET_LINK_LIBRARIES( speed_sacado speed_src ${Sacado_LIBRARIES} dl )
 ELSE( dl_found )
-   TARGET_LINK_LIBRARIES(speed_sacado speed_src ${sacado_lib_list})
+   TARGET_LINK_LIBRARIES( speed_sacado speed_src ${Sacado_LIBRARIES} )
 ENDIF( dl_found )
 #
 # the check_speed_sacado

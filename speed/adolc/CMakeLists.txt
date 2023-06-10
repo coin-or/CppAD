@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the speed/adolc directory tests
 # Inherit build type from ../CMakeList.txt
@@ -37,7 +37,7 @@ ADD_EXECUTABLE( speed_adolc EXCLUDE_FROM_ALL ${source_list} )
 TARGET_LINK_LIBRARIES(speed_adolc
    speed_src
    ${cppad_lib}
-   adolc
+   ${adolc_LINK_LIBRARIES}
    ${colpack_libs}
 )
 

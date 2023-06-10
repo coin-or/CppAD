@@ -5,10 +5,16 @@
 
 {xrst_begin whats_new_23 app}
 {xrst_spell
+   autotools
    usr
    msys
    cstdint
    uintptr
+   trilinos
+   kludge
+   pacman
+   mingw
+   kokkos
 }
 
 Changes and Additions to CppAD During 2023
@@ -31,6 +37,45 @@ val_graph Branch
 
 mm-dd
 *****
+
+06-10
+=====
+#. The autotools configure script has been replaced by
+   :ref:`configure-name` which just maps the configure script interface
+   to the :ref:`cmake-name` interface.
+   The corresponding autotools files were removed.
+#. In some cases there was a problem linking the adolc library to the
+   :ref:`speed_adolc-name` tests. This has been fixed.
+
+06-07
+=====
+Add links to
+:ref:`Install@Generator`, :ref:`Install@cppad.spec`,  and :ref:`Install@xrst`
+in the CppAD install instructions.
+
+06-04
+=====
+Fix a warning form the Trilinos Kokkos package when including
+:ref:`sacado_prefix-name` on the cmake command line.
+
+06-01
+=====
+The ``cmake_needs_dot_slash`` symbol was removed from the cmake command line.
+It was a kludge for msys2 systems.
+The proper fix is to use
+{xrst_code sh}
+   pacman -S mingw-w64-x86_64-cmake
+{xrst_code}
+( not use ``pacman -S cmake`` )
+to install cmake on an msys2 system.
+
+05-31
+=====
+There was an error building the old version of the sacado library using
+:ref:`get_sacado.sh-name` with g++-13.1.1.
+This has been fixed by advancing to trilinos-14-0-0
+and patching one of its include files; see trilinos issue
+`11923 <https://github.com/trilinos/Trilinos/issues/11923>`_ .
 
 05-19
 =====

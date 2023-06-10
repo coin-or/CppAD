@@ -34,7 +34,7 @@ mm-dd
 #. There was a problem with this automation
    when ``eigen`` was used for the cppad :ref:`testvector-name` .
    This has been fixed.
-#. There was a problem with deprecated :ref:`autotools-name`
+#. There was a problem with deprecated :ref:`configure-name`
    (created when optional implicit constructor from any type was added).
    This has been fixed by adding the
    ``--with-implicit_ctor`` option
@@ -129,7 +129,7 @@ For more details, see :ref:`optimize_nest_conditional.cpp-name` .
    This required adding the
    :ref:`RevSparseJac@dependency` argument to the
    reverse Jacobian sparsity pattern calculation.
-#. Fix the deprecated autotools install (see :ref:`autotools-name` )
+#. Fix the deprecated autotools install (see :ref:`configure-name` )
    which was broken by the changes on 10-22.
    To be specific, the
    example for :ref:`number_skip-name` was not being included.

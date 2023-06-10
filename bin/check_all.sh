@@ -87,7 +87,9 @@ else
    compiler='--clang'
 fi
 #
-# Prefer c-17 standard
+# 3/2 time c++17 standard
+# 3/4 time use bin/run_cmake.sh
+# 1/4 time use bin/configure.sh
 random_01 standard
 if [ "$random_01_standard" == '0' ]
 then
@@ -95,11 +97,14 @@ then
    if [ "$random_01_standard" == '0' ]
    then
       standard='--c++11'
+      use_configure='no'
    else
       standard='--c++17'
+      use_configure='yes'
    fi
 else
    standard='--c++17'
+   use_configure='no'
 fi
 #
 if [ "$build_type" == 'debug' ]
@@ -138,6 +143,7 @@ compiler        = $compiler
 standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
+use_configure   = $use_configure
 EOF
 cat << EOF >> $top_srcdir/check_all.log
 tarball         = $cppad-$version.tgz
@@ -145,6 +151,7 @@ compiler        = $compiler
 standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
+use_configure   = $use_configure
 EOF
 if [ "$compiler" == 'default' ]
 then
@@ -152,7 +159,7 @@ then
 fi
 if [ "$standard" == '--c++17' ]
 then
-   standard='' # default for run_cmake.sh
+   standard='' # default for run_cmake.sh and configure
 fi
 # ---------------------------------------------------------------------------
 # absoute prefix where optional packages are installed
@@ -202,20 +209,31 @@ then
 fi
 echo_log_eval cp -r ../prefix build/prefix
 #
-# run_cmake.sh
-# prefix is extracted from bin/get_optional
-echo_log_eval bin/run_cmake.sh \
-   $verbose \
-   --profile_speed \
-   $compiler \
-   $standard \
-   $debug_which \
-   $package_vector
+# prefix is extracted from bin/get_optional in both cases
+if [ "$use_configure" == 'yes' ]
+then
+   builder='make'
+   if [ "$compiler" == 'clang' ]
+   then
+      echo_log_eval bin/run_configure.sh $standard --with_clang
+   else
+      echo_log_eval bin/run_configure.sh $standard
+   fi
+else
+   builder='ninja'
+   echo_log_eval bin/run_cmake.sh \
+      $verbose \
+      --profile_speed \
+      $compiler \
+      $standard \
+      $debug_which \
+      $package_vector
+fi
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
 # can comment out this make check to if only running tests below it
-n_job=`nproc`
-cmd="ninja -j $n_job check"
+n_job=$(nproc)
+cmd="$builder -j $n_job check"
 echo "$cmd >& check_all.tmp"
 echo "$cmd" > $top_srcdir/check_all.tmp
 if ! $cmd >& $top_srcdir/check_all.tmp
@@ -224,36 +242,22 @@ then
 fi
 echo 'Re-running Command'
 echo_log_eval $cmd
-# -----------------------------------------------------------------------------
-for package in adolc cppadcg eigen ipopt fadbad sacado
-do
-   if echo $standard | grep "no_$package" > /dev/null
-   then
-      skip="$skip $package"
-   fi
-done
 # ----------------------------------------------------------------------------
 # extra speed tests not run with different options
 #
-echo_log_eval ninja -j $n_job speed_cppad
 for option in onetape colpack optimize atomic memory boolsparsity
 do
-   #
    echo_eval speed/cppad/speed_cppad correct 432 $option
 done
-if ! echo "$skip" | grep 'adolc' > /dev/null
-then
-   # redo build of speed_adolc in case it is commented out above
-   echo_log_eval ninja -j $n_job speed_adolc
-   #
-   echo_eval speed/adolc/speed_adolc correct         432 onetape
-   echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
-   echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
-fi
+#
+echo_eval speed/adolc/speed_adolc correct         432 onetape
+echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
+echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
 #
 # ----------------------------------------------------------------------------
 # extra multi_thread tests
 program_list=''
+skip=''
 for threading in bthread openmp pthread
 do
    dir="example/multi_thread/$threading"
@@ -265,7 +269,7 @@ do
       program_list="$program_list $program"
       #
       # redo this build in case it is commented out above
-      echo_log_eval ninja -j $n_job example_multi_thread_${threading}
+      echo_log_eval $builder -j $n_job example_multi_thread_${threading}
       #
       # all programs check the fast cases
       echo_log_eval $program a11c
@@ -298,7 +302,7 @@ fi
 program='example/print_for/example_print_for'
 #
 # redo this build in case it is commented out above
-echo_log_eval ninja -j $n_job example_print_for
+echo_log_eval $builder -j $n_job example_print_for
 #
 echo_log_eval $program
 $program | sed -e '/^Test passes/,$d' > junk.1.$$
@@ -314,7 +318,7 @@ fi
 #
 # ---------------------------------------------------------------------------
 # check install
-echo_log_eval ninja install
+echo_log_eval $builder install
 echo_log_eval cd ..
 echo_log_eval bin/check_install.sh
 # ---------------------------------------------------------------------------

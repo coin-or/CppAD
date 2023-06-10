@@ -187,6 +187,11 @@ EOF
    esac
    shift
 done
+if [ "$standard" == 'c++11' ]
+then
+   # Scacdo will not build with c++11
+   yes_sacado='no'
+fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then

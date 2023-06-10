@@ -43,7 +43,7 @@
 # version of Trilinos:
 # {xrst_spell_off}
 # {xrst_code sh}
-version='13-0-1'
+version='14-0-0'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -71,7 +71,8 @@ echo_eval() {
    eval $*
 }
 # -----------------------------------------------------------------------------
-web_page='https://github.com/trilinos/Trilinos.git'
+web_page='https://github.com/trilinos/Trilinos/archive/refs/tags'
+release_name="trilinos-release-$version"
 cppad_dir=`pwd`
 # -----------------------------------------------------------------------------
 # n_job
@@ -95,7 +96,7 @@ echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
    echo "Skipping configuration because $configured_flag exits"
-   echo_eval cd external/trilinos.git/build
+   echo_eval cd external/$release_name/build
    echo_eval make -j $n_job install
    echo "get_$package.sh: OK"
    exit 0
@@ -117,14 +118,20 @@ fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 # create the trilions source directory and change into it
-if [ ! -e trilinos.git ]
+if [ ! -e $release_name ]
 then
-   echo_eval git clone $web_page trilinos.git
+   wget "$web_page/$release_name.tar.gz"
+   tar -xzf "$release_name.tar.gz"
+   mv Trilinos-$release_name $release_name
+   #
+   # see https://github.com/trilinos/Trilinos/issues/11923
+   file="$release_name/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp"
+   if ! grep '^#include <cstdint>' $file > /dev/null
+   then
+      sed -i $file -e 's|#include <iosfwd>|&\n#include <cstdint>|'
+   fi
 fi
-echo_eval cd trilinos.git
-echo_eval git checkout master
-echo_eval git pull
-echo_eval git checkout trilinos-release-$version
+echo_eval cd $release_name
 # -----------------------------------------------------------------------------
 # change into build sub-directory
 if [ ! -e build ]

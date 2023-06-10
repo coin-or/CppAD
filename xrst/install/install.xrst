@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin Install}
 {xrst_spell
-   makefiles
    nmake
+   autotools
 }
 
 CppAD Download, Test, and Install Instructions
@@ -36,14 +36,24 @@ Use the command
    make install
 
 to install CppAD.
-If you created ``nmake`` makefiles, you will have
-to use
-::
 
-   nmake install
-
-see the
+Generator
+*********
+If you want to use ``nmake`` or ``ninja`` instead of ``make``,
+in Step 4;  see the
 :ref:`cmake@generator` option for the ``cmake`` command.
+
+cppad.spec
+**********
+If you are thinking of creating a system specific install of CppAD,
+the fedora spec file may be of help; see
+`cppad.spec
+<https://src.fedoraproject.org/rpms/cppad/blob/rawhide/f/cppad.spec>`_ .
+
+xrst
+****
+The `xrst <xrst.readthedocs.io>`_ package is used to build the CppAD
+documentation.
 
 Contents
 ********
@@ -54,8 +64,9 @@ Contents
    pkgconfig/CMakeLists.txt
 }
 
-Deprecated
-**********
-:ref:`autotools-name`
+configure
+*********
+The :ref:`configure-name` script provides configuration interface that is
+similar to the old CppAD autotools install.
 
 {xrst_end Install}

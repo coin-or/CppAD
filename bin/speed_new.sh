@@ -9,7 +9,7 @@ then
    echo "$program: must be executed from its parent directory"
    exit 1
 fi
-if [ "$2" == '' ]
+if [ "$1" == '' ]
 then
 cat << EOF
 usage:
@@ -30,19 +30,12 @@ then
    exit 1
 fi
 test_name="$1"
-seed="$2"
-shift
 shift
 option_list="$test_name"
 for option in $*
 do
    option_list="${option_list}_$option"
 done
-if ! [[ $seed =~ ^[0-9]+$ ]]
-then
-   echo "$program: seed = $seed is not an integer"
-   exit 1
-fi
 if [ "$test_name" == 'all' ]
 then
    test_name='speed'
@@ -60,8 +53,6 @@ echo_eval() {
    eval $*
 }
 # ----------------------------------------------------------------------------
-echo "bin/run_cmake.sh --debug_none > /dev/null"
-bin/run_cmake.sh --debug_none > /dev/null
 #
 for name in cur new
 do
@@ -72,20 +63,21 @@ do
    else
       echo_eval git_new.sh from
    fi
+   echo "bin/run_cmake.sh --debug_none > /dev/null"
+   bin/run_cmake.sh --debug_none > /dev/null
+   #
    out_file="$name.$option_list.out"
    if [ -e "$target_dir/$out_file" ]
    then
       echo "Using existing $target_dir/$out_file"
    else
       # compile the speed test
-      echo "ninja -C build check_speed_cppad  > $target_dir/$name.log"
-      echo "ninja -C build check_speed_cppad" > $target_dir/$name.log
-      ninja -C build check_speed_cppad >> $target_dir/$name.log
+      echo "ninja -C build check_speed_cppad > $target_dir/$name.log"
+      ninja -C build check_speed_cppad > $target_dir/$name.log
       #
       # run speed test for the current version
-      echo "$target_dir/speed_cppad $test_name $seed $* > $target_dir/$out_file"
-      echo "$target_dir/speed_cppad $test_name $seed $*" > $target_dir/$out_file
-      $target_dir/speed_cppad $test_name $seed $* >> $target_dir/$out_file
+      echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
+      $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
       #
    fi
 done

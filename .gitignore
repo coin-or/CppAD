@@ -1,15 +1,12 @@
 # ----------------------------------------------------------------------------
 # specific files
 #
-# created by autotools
-/aclocal.m4
-/autom4te.cache
 #
 # cmake configure files
 /bin/test_one.sh
 /include/cppad/configure.hpp
 #
-# create by bin/test_one.sh 
+# create by bin/test_one.sh
 /test_one.cpp
 /test_one.exe
 #
