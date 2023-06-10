@@ -25,10 +25,12 @@ mm-dd
 
 06-10
 =====
-The autotools configure script has been replaced by
-:ref:`configure-name` which just maps the configure script interface
-to the :ref:`cmake-name` interface.
-The corresponding autotools files were removed.
+#. The autotools configure script has been replaced by
+   :ref:`configure-name` which just maps the configure script interface
+   to the :ref:`cmake-name` interface.
+   The corresponding autotools files were removed.
+#. In some cases there was a problem linking the adolc library to the
+   :ref:`speed_adolc-name` tests. This has been fixed.
 
 06-07
 =====

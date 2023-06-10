@@ -39,6 +39,7 @@ EOF
       exit 1
 
    esac
+   shift
 done
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
