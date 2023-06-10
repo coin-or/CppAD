@@ -89,7 +89,7 @@
 # some object libraries that are used by the tests
 # ::
 #
-#    ``make``
+#    make
 #
 # Examples and Tests
 # ==================
@@ -158,7 +158,7 @@
 #
 # max_num_threads
 # ***************
-# this specifies the value for the default value for the preprocessor symbol
+# this specifies the value for the preprocessor symbol
 # :ref:`multi_thread@CPPAD_MAX_NUM_THREADS` .
 # It must be greater than or equal to four; i.e.,
 # *max_num_threads*  >= 4 .
@@ -166,7 +166,7 @@
 #
 # cxx_flags
 # *********
-# If the command line argument *CompilerFlags* is present,
+# If the command line argument *cxx_flags* is present,
 # it specifies compiler flags.
 # For example,
 #
@@ -177,7 +177,7 @@
 # in all the C++ compile commands.
 # The error and warning flags chosen must be valid options
 # for the C++ compiler.
-# The default value for *CompilerFlags* is the
+# The default value for *cxx_flags* is the
 # empty string.
 #
 # postfix_dir
