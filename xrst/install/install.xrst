@@ -6,6 +6,7 @@
 {xrst_begin Install}
 {xrst_spell
    nmake
+   autotools
 }
 
 CppAD Download, Test, and Install Instructions
@@ -63,8 +64,9 @@ Contents
    pkgconfig/CMakeLists.txt
 }
 
-Deprecated
-**********
-:ref:`configure-name`
+configure
+*********
+The :ref:`configure-name` script provides configuration interface that is
+similar to the old CppAD autotools install.
 
 {xrst_end Install}

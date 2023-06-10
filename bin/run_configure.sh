@@ -83,7 +83,7 @@ then
    echo_eval rm -r CMakeFiles
 fi
 # -----------------------------------------------------------------------------
-../configure.sh \
+../configure \
    --prefix=$prefix \
    $with_clang \
    --with-stdvector \

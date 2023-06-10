@@ -20,12 +20,13 @@
 #    optionally
 #    postfix
 #    stdvector
-#    dir
 #    ublas
 #    usr
 #    Fortran
-#    Ralphs
 #    nmake
+#    testvector
+#    github
+#    msys
 # }
 # {xrst_comment_ch #}
 #
@@ -50,6 +51,8 @@
 # ***************
 # Create the directory *dist_dir* / ``build`` ,
 # which will be referred to as the build directory below.
+# (The build directory can be in any location
+# so long as it is not the *dist_dir* .)
 #
 # Configure
 # *********
@@ -138,9 +141,12 @@
 # *************
 # If this flag is present, the Microsoft ``cl`` compiler will be
 # placed at the front of a list of compilers to search for.
-# In addition, nmake_ make files will be generated.
-# The resulting C++, C, and Fortran compiler orders work Coin-OR specific
-# and chosen by Ted Ralphs.
+# In addition, nmake_ make files will be generated; i.e.,
+# you will use ``nmake`` instead of ``make`` to build, test, and install.
+# The resulting C++, C, and Fortran compiler orders work Coin-OR specific;
+# see 
+# `Building with Visual Studio in MSys2
+# <https://coin-or.github.io/user_introduction.html#building-with-visual-studio-in-msys2>`_ .
 #
 # .. _nmake: https://learn.microsoft.com/en-us/cpp/build/reference/nmake-reference
 #
@@ -600,10 +606,11 @@ then
 fi
 #
 # source_dir
-source_dir=$( echo $0 | sed -e 's|/configure.sh$||' )
+source_dir=$( echo $0 | sed -e 's|/configure$||' )
 if [ "$source_dir" == "$0" ] || [ "$source_dir" == '.' ]
 then
-   echo 'configure: cannot run configure.sh in the current directory'
+   echo 'configure: cannot run configure in the current working directory'
+   pwd
    exit 1
 fi
 #
@@ -710,5 +717,5 @@ cmake \
    -D cppad_tape_addr_type="$tape_addr_type" \
    -D cppad_debug_which='debug_none'
 # ----------------------------------------------------------------------------
-echo 'configure.sh: OK'
+echo 'configure: OK'
 exit 0
