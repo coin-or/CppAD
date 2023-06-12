@@ -42,7 +42,7 @@ see :ref:`val_tape_option@keep_print`:
 Algorithm
 *********
 #. The dependent variables are marked as needed.
-#. The operators are scanned in reverse if an operators result is
+#. The operators are scanned in reverse and if an operator's result is
    needed, the corresponding arguments are marked as needed.
    The call operator has a more complicated version of this marking.
 #. A forward pass is made though the operators and only the needed
@@ -60,6 +60,7 @@ Changes
 Only the following values, for this tape, are guaranteed to be same:
 #. The number of independent values :ref:`val_tape@n_ind` .
 #. The size of the dependent vector :ref:`dep_vec.size() <val_tape@dep_vec>` .
+#. The mapping from the independent to the dependent variables.
 
 new_use_val
 ***********
@@ -122,7 +123,6 @@ vectorBool tape_t<Value>::dead_code(void)
    Vector<addr_t> new_which_vec( vec_initial_.size() );
    for(size_t i = 0; i < vec_initial_.size(); ++i)
       new_which_vec[i] = addr_t( vec_initial_.size() );
-
    //
    // new_val_index
    // include nan at index n_ind_ in val_vec
@@ -131,11 +131,12 @@ vectorBool tape_t<Value>::dead_code(void)
       new_val_index[i] = addr_t(i);
    for(addr_t i = n_ind_ + 1; i < n_val_; ++i)
       new_val_index[i] = addr_t( n_val_ );
+   //
 # ifndef NDEBUG
    // nan at index n_ind_
-   assert( op_enum_t( op_enum_vec_[0] ) == con_op_enum );
-   assert( arg_vec_[0] == 0 );
-   assert( CppAD::isnan( con_vec_[0] ) );
+   assert( op_enum_t( new_tape.op_enum_vec_[0] ) == con_op_enum );
+   assert( new_tape.arg_vec_[0] == 0 );
+   assert( CppAD::isnan( new_tape.con_vec_[0] ) );
 # endif
    //
    // new_use_val
@@ -143,7 +144,7 @@ vectorBool tape_t<Value>::dead_code(void)
    // results for all the needed operators are used. Initilaize as all the
    // independent values and the nan after them are used.
    vectorBool new_use_val(n_ind_ + 1);
-   for(addr_t i = 0; i < n_ind_; ++i)
+   for(addr_t i = 0; i <= n_ind_; ++i)
       new_use_val[i] = true;
    //
    // work
@@ -194,7 +195,9 @@ vectorBool tape_t<Value>::dead_code(void)
             work            ,
             new_val_index   ,
             val_use_case    ,
-            op_itr_forward
+            op_ptr          ,
+            arg_index       ,
+            res_index
          );
          //
          // new_val_index

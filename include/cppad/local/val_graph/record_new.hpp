@@ -61,16 +61,19 @@ If *val_use_case* [ *val_index* ] is zero,
 the value with index *val_index* is not needed to compute
 the dependent variables.
 
-op_itr
+op_ptr
 ******
-This :ref:`val_op_iterator@op_itr` corresponds to the operator
-on old tape that is being copied to the new tape.
+This is a pointer to the :ref:`val_base_op-name` for the operator on this tape.
 
-old_res_index
-*************
-We use *old_res_index* to refer to the value *op_itr*\ ``.res_index()`` ;
-i.e., the value index in the old tape that corresponds to the first result
-for this operator.
+arg_index
+*********
+This is the value index corresponding to the first argument for the operator
+on this tape.
+
+res_index
+*********
+This is the value index corresponding to the first result for the operator
+on this tape.
 
 new_res_index
 *************
@@ -88,7 +91,9 @@ addr_t tape_t<Value>::record_new(
    Vector<addr_t>&           work             ,
    const Vector<addr_t>&     new_val_index    ,
    const Vector<addr_t>&     val_use_case     ,
-   const op_iterator<Value>& op_itr           )
+   const base_op_t<Value>*   op_ptr           ,
+   addr_t                    arg_index        ,
+   addr_t                    res_index        )
 // END_RECORD_NEW
 {
    //
@@ -98,13 +103,6 @@ addr_t tape_t<Value>::record_new(
    // new_res_index
    // set to avoid compiler warning
    addr_t new_res_index = 0;
-   //
-   // op_ptr, arg_index, res_index
-   const base_op_t<Value>* op_ptr    = op_itr.op_ptr();
-   addr_t                  arg_index = op_itr.arg_index();
-# ifndef NDEBUG
-   addr_t                  res_index = op_itr.res_index();
-# endif
    //
    // op_enum, n_arg, n_before, n_after, n_res
    op_enum_t  op_enum   = op_ptr->op_enum();

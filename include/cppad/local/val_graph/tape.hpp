@@ -47,6 +47,8 @@ op_ptr
    // BEGIN_OP_PTR
    // END_OP_PTR
 }
+This is the :ref:`base_op <val_base_op-name>` corresponding to
+*op_index* in this tape.
 
 n_val
 *****
@@ -176,6 +178,7 @@ Operations on Tape
    include/cppad/local/val_graph/option.hpp
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/record_new.hpp
+   include/cppad/local/val_graph/compress.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/rev_depend.hpp
    include/cppad/local/val_graph/summation.hpp
@@ -453,6 +456,9 @@ public :
    // dead_code
    vectorBool dead_code(void);
    //
+   // compress
+   vectorBool compress(void);
+   //
    // record_new
    addr_t record_new(
       tape_t&                   new_tape         ,
@@ -460,7 +466,9 @@ public :
       Vector<addr_t>&           work             ,
       const Vector<addr_t>&     new_val_index    ,
       const Vector<addr_t>&     val_use_case     ,
-      const op_iterator<Value>& op_itr
+      const base_op_t<Value>*   op_ptr           ,
+      addr_t                    arg_index        ,
+      addr_t                    res_index
    );
    //
    // ------------------------------------------------------------------------
@@ -510,6 +518,7 @@ public :
 # include <cppad/local/val_graph/option.hpp>
 # include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/record_new.hpp>
+# include <cppad/local/val_graph/compress.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/summation.hpp>
 // END_SORT_THIS_LINE_MINUS_1

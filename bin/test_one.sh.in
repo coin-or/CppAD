@@ -159,10 +159,10 @@ fi
 library_flags="$library_flags $cppad_lib_path -lpthread"
 #
 cd build
-if ! make cppad_lib
+if ! ninja cppad_lib
 then
-   echo 'test_one.sh: Error during make cppad_lib in build directory'
-   exit
+   echo 'test_one.sh: ninja cppad_lib failed: see erros above'
+   exit 1
 fi
 cd ..
 # --------------------------------------------------------------------------

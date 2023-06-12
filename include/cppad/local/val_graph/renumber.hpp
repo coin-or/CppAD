@@ -48,6 +48,7 @@ Changes
 Only the following values, for this tape, are guaranteed to be same:
 #. The number of independent values :ref:`val_tape@n_ind` .
 #. The size of the dependent vector :ref:`dep_vec.size() <val_tape@dep_vec>` .
+#. The mapping from the independent to the dependent variables.
 
 Reference
 *********
@@ -96,6 +97,7 @@ void tape_t<Value>::renumber(void)
    op_hash_table_t<Value>  op_hash_table(*this, op2arg_index, n_hash_code);
    //
    // new_val_index
+   // value used for operators that are not replaced.
    Vector<addr_t> new_val_index( n_val_ );
    for(addr_t i = 0; i < addr_t(n_val_); ++i)
       new_val_index[i] = i;

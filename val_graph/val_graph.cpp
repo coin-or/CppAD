@@ -22,6 +22,7 @@ extern bool binary_xam(void);
 extern bool call_xam(void);
 extern bool cexp_xam(void);
 extern bool comp_xam(void);
+extern bool compress_xam(void);
 extern bool con_xam(void);
 extern bool csum_xam(void);
 extern bool cumulative_xam(void);
@@ -58,6 +59,7 @@ int main(void)
    Run( call_xam,            "call_xam"            );
    Run( cexp_xam,            "cexp_xam"            );
    Run( comp_xam,            "comp_xam"            );
+   Run( compress_xam,        "compress_xam"        );
    Run( con_xam,             "con_xam"             );
    Run( csum_xam,            "csum_xam"            );
    Run( cumulative_xam,      "cumulative_xam"      );

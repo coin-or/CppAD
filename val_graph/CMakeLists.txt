@@ -10,6 +10,7 @@ SET(source_list val_graph.cpp
    call_xam.cpp
    cexp_xam.cpp
    comp_xam.cpp
+   compress_xam.cpp
    con_xam.cpp
    csum_xam.cpp
    cumulative_xam.cpp
