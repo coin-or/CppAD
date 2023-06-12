@@ -67,7 +67,7 @@ namespace {
       //
       // optimize
       std::string optimize_options =
-         "no_conditional_skip no_compare_op no_print_for_op";
+      "no_conditional_skip no_compare_op no_print_for_op no_cumulative_sum_op";
       if( global_option["val_graph"] )
          optimize_options += " val_graph";
       if( global_option["optimize"] )
