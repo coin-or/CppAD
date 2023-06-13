@@ -23,6 +23,12 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+06-13
+=====
+Change the :ref:`cppad_det_minor.cpp-name` speed test to use the
+:ref:`optimize@options@no_cumulative_sum_op` optimization option
+(because it is faster for this case).
+
 06-10
 =====
 #. The autotools configure script has been replaced by
