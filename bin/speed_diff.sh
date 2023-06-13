@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed_diff.sh' ]
 then
@@ -29,6 +29,19 @@ then
    echo "speed_diff.sh: the file $speed_two does not exist."
    exit 1
 fi
+#
+# ---------------------------------------------------------------------------
+sed -n -e'/_size *=/p' $speed_one | sort -u > speed_diff.1.$$
+sed -n -e'/_size *=/p' $speed_two | sort -u > speed_diff.2.$$
+if ! diff speed_diff.1.$$ speed_diff.2.$$
+then
+   echo "Size in $speed_one"
+   echo "Note equal size in $speed_two"
+   rm speed_diff.1.$$ speed_diff.2.$$
+   exit 1
+fi
+rm speed_diff.1.$$ speed_diff.2.$$
+# ---------------------------------------------------------------------------
 #
 sed -n \
    -e 's|^[a-z]*_||' \

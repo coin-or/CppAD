@@ -88,42 +88,12 @@ then
    echo "$program: only implemented for git repository"
    exit 1
 fi
-# -----------------------------------------------------------------------------
-# copy this file to a separate name so can restore it when done
-mv bin/speed_branch.sh speed_branch.copy.$$
-git checkout bin/speed_branch.sh
 # ----------------------------------------------------------------------------
 target_dir='build/speed/cppad'
 if [ ! -e $target_dir ]
 then
    echo_eval mkdir -p $target_dir
 fi
-# -----------------------------------------------------------------------------
-# get sizes in master speed/main.cpp
-git show master:speed/main.cpp > speed_branch.main.$$
-cat << EOF > speed_branch.sed.$$
-/^   for(size_t i = 0; i < n_size; i++)\$/! b skip
-: loop
-N
-/^   }\$/! b loop
-s/^   for(size_t i = 0; i < n_size; i++)^   {/    /
-s/^   }\$//
-p
-: skip
-EOF
-sed speed_branch.main.$$ -n -f speed_branch.sed.$$ > speed_branch.size.$$
-#
-# sed script to mark size location (must work if size_t not present)
-cat << EOF > speed_branch.sed.$$
-/^   for([a-z_]* *i = 0; i < n_size; i++) *\$/! b skip
-: loop
-N
-/^   }\$/! b loop
-s|{|{^   // BEGIN_SIZES^   |
-s|^   }\$|^   // END_SIZES&|
-: skip
-EOF
-rm speed_branch.main.$$
 # -----------------------------------------------------------------------------
 for branch in $branch_one $branch_two
 do
@@ -147,18 +117,9 @@ do
             echo "test_name is all or sparse_hessian"
             echo "and branch $branch came on or before 20150130"
             echo "when bug was fixed in the sparse_hessian speed test."
-            echo_eval git checkout --force --quiet master
-            mv speed_branch.copy.$$ bin/speed_branch.sh
             exit 1
          fi
       fi
-      #
-      # changes sizes in speed/main.cpp to be same as in master branch
-      sed -i speed/main.cpp -f speed_branch.sed.$$
-      sed  speed/main.cpp  -n -e '1,/BEGIN_SIZES/p' > speed_branch.main.$$
-      cat  speed_branch.size.$$                    >> speed_branch.main.$$
-      sed  speed/main.cpp  -n -e '/END_SIZES/,$p'  >> speed_branch.main.$$
-      mv speed_branch.main.$$ speed/main.cpp
       #
       # versions of CppAD before 20170625 did not have --debug_none option
       echo "bin/run_cmake.sh --debug_none >& $target_dir/$log_file"
@@ -176,15 +137,10 @@ do
       echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
       $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
       #
-      # restore speed/main.cpp to state in repo
-      git checkout speed/main.cpp
    fi
 done
 # return to master (branch where we started)
 echo_eval git checkout --quiet master
-rm speed_branch.sed.$$
-rm speed_branch.size.$$
-mv speed_branch.copy.$$ bin/speed_branch.sh
 #
 # compare the results
 echo "    one=$branch_one , two=$branch_two"

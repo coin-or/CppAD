@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cstring>
@@ -608,13 +608,13 @@ int main(int argc, char *argv[])
    CppAD::vector<size_t> size_sparse_hessian(n_size);
    CppAD::vector<size_t> size_sparse_jacobian(n_size);
    for(size_t i = 0; i < n_size; i++)
-   {  size_det_minor[i]   = i + 2;
-      size_det_lu[i]      = 10 * i + 1;
-      size_mat_mul[i]     = 10 * i + 1;
-      size_ode[i]         = 10 * i + 1;
-      size_poly[i]        = 10 * i + 1;
-      size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
-      size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
+   {  size_det_minor[i]   =  2 * i + 2;
+      size_det_lu[i]      = 20 * i + 1;
+      size_mat_mul[i]     = 20 * i + 1;
+      size_ode[i]         = 20 * i + 1;
+      size_poly[i]        = 20 * i + 1;
+      size_sparse_hessian[i]  = 250 * (i + 1) * (i + 1);
+      size_sparse_jacobian[i] = 250 * (i + 1) * (i + 1);
    }
    switch(match)
    {
