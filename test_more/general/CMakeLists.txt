@@ -43,6 +43,7 @@ SET(source_list
    atan.cpp
    atan2.cpp
    atanh.cpp
+   atomic_four.cpp
    atomic_three.cpp
    azmul.cpp
    base2ad.cpp

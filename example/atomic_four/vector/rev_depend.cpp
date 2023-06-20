@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_vector_rev_depend.cpp}
@@ -100,7 +100,7 @@ bool rev_depend(void)
    //
    // optimize
    // The atomic funciton rev_depend routine is called by optimizer
-   f.optimize();
+   f.optimize("val_graph no_conditional_skip");
    //
    // size_var
    // phantom variablem, independent variables, operator variables

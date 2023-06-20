@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set_libdir() {
    my_prefix="$1"
@@ -61,10 +61,14 @@ fi
 dir=`echo $1 | sed -e 's|/[^/]*$||'`
 file=`echo $1 | sed -e 's|.*/||'`
 extra="$2"
-if [ "$dir" == 'test_more/general/local' ]
+#
+# case where main program is in parent directory
+main=`echo *$dir | sed -e 's|.*/||' -e 's|$|.cpp|'`
+if [ ! -e "$dir/$main" ]
 then
-   dir='test_more/general'
-   file="local/$file"
+   subdir=`echo $dir | sed -e 's|.*/||'`
+   dir=`echo $dir | sed -e 's|/[^/]*$||'`
+   file="$subdir/$file"
 fi
 # ---------------------------------------------------------------------------
 # Check command line arguments
@@ -155,10 +159,10 @@ fi
 library_flags="$library_flags $cppad_lib_path -lpthread"
 #
 cd build
-if ! make cppad_lib
+if ! ninja cppad_lib
 then
-   echo 'test_one.sh: Error during make cppad_lib in build directory'
-   exit
+   echo 'test_one.sh: ninja cppad_lib failed: see erros above'
+   exit 1
 fi
 cd ..
 # --------------------------------------------------------------------------

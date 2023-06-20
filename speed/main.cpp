@@ -205,6 +205,12 @@ If it is false, this optimization will not be done.
 Note that this option is usually slower unless it is combined with the
 ``onetape`` option.
 
+val_graph
+=========
+If this option and optimize are present,
+CppAD will add the :code:`optimize@options@val_graph` option to
+the optimization of the operation sequence.
+
 atomic
 ======
 If this option is present,
@@ -399,7 +405,8 @@ namespace {
       "revsparsity",
       "subsparsity",
       "colpack",
-      "symmetric"
+      "symmetric",
+      "val_graph"
    };
    size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
    // ----------------------------------------------------------------

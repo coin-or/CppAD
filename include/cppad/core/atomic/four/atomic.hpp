@@ -172,6 +172,12 @@ private:
    work_struct* work_[CPPAD_MAX_NUM_THREADS];
    // -----------------------------------------------------
 public:
+   //
+   // atomic_index
+   // Needed by val_graph and not documented. Perhaps should be in
+   // include/cppad/core/atomic/four/devel/devel.xrst
+   size_t atomic_index(void) const
+   { return index_; }
    // =====================================================================
    // In User API
    // =====================================================================

@@ -2,7 +2,7 @@
 # define CPPAD_CPPAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file cppad.hpp
@@ -51,6 +51,11 @@
 // so user_ad.hpp must come before op.hpp
 # include <cppad/local/op.hpp>       // executes taped operations
 # include <cppad/core/ad_fun.hpp>   // ADFun objects
+//
+// Putting these includes in ad_fun.hpp leads to circular including; i.e,
+// a file needs to include itself and the include guard stops it.
+# include <cppad/local/val_graph/fun2val.hpp>
+# include <cppad/local/val_graph/val2fun.hpp>
 
 // ---------------------------------------------------------------------------
 // library routines that require the rest of CppAD

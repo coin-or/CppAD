@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin devel dev}
+{xrst_begin_parent devel dev}
 
 Developer Documentation
 #######################
@@ -17,7 +17,6 @@ Contents
    include/cppad/core/forward/devel.xrst
    include/cppad/local/sweep/dev_sweep.xrst
    include/cppad/local/sparse/dev_sparse.xrst
-   include/cppad/local/graph/dev_graph.xrst
    include/cppad/local/optimize/optimize_run.hpp
    speed/dev_speed.xrst
    xrst/devel/dynamic.xrst
@@ -36,3 +35,23 @@ Contents
 }
 
 {xrst_end devel}
+# ----------------------------------------------------------------------------
+{xrst_begin dev_graph dev}
+
+Developer AD Graph Documentation
+################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/graph/cpp_graph_itr.xrst
+   include/cppad/local/graph/cpp_graph_op.hpp
+   include/cppad/local/graph/json_lexer.xrst
+   include/cppad/local/graph/json_parser.hpp
+   include/cppad/local/graph/json_writer.hpp
+   include/cppad/local/graph/csrc_writer.hpp
+   cppad_lib/csrc_writer.cpp
+   include/cppad/local/val_graph/val_graph.xrst
+}
+
+{xrst_end dev_graph}

@@ -45,19 +45,19 @@ cmd="xrst \
 --group_list $group_list \
 "
 echo "$cmd"
-if ! $cmd >& >( tee check_xrst.$$ )
+if ! $cmd >& >( tee $HOME/trash/check_xrst.$$ )
 then
    echo 'check_xrst.sh: aboring due to xrst errors above'
-   rm check_xrst.$$
+   rm $HOME/trash/check_xrst.$$
    exit 1
 fi
-if grep '^warning:' check_xrst.$$ > /dev/null
+if grep '^warning:' $HOME/trash/check_xrst.$$ > /dev/null
 then
    echo 'check_xrst.sh: aboring due to xrst warnings above'
-   rm check_xrst.$$
+   rm $HOME/trash/check_xrst.$$
    exit 1
 fi
 # -----------------------------------------------------------------------------
-rm check_xrst.$$
+rm $HOME/trash/check_xrst.$$
 echo 'check_xrst.sh: OK'
 exit 0

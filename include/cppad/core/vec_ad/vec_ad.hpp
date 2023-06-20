@@ -416,7 +416,7 @@ public:
       CPPAD_ASSERT_KNOWN(
          Constant(*this),
          "VecAD: cannot use size_t indexing because this"
-         " VecAD vector is not a constant paraameter."
+         " VecAD vector is not a constant parameter."
       );
       CPPAD_ASSERT_KNOWN(
          i < length_,

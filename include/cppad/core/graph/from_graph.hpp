@@ -771,8 +771,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             // ay
             ay.resize(n_result);
             for(size_t i = 0; i < n_result; ++i)
-            {  ay[i].value_ = taylor_y[i];
-               ay[i].taddr_ = 0;
+            {  ay[i].value_ = nan; // not_used
+               ay[i].taddr_ = 0;   // not used
             }
          }
          if( record_dynamic ) rec.put_dyn_atomic(

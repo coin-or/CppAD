@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_DECLARE_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/configure.hpp>
@@ -12,13 +12,14 @@
 \file declare_ad.hpp CppAD forward declarations; i.e., before definition
 */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-
-template <class Base> class ADTape;
-template <class Base> class player;
-template <class Base> class recorder;
-
-} } // END_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local {
+   template <class Base> class ADTape;
+   template <class Base> class player;
+   template <class Base> class recorder;
+} }
+namespace CppAD { namespace local { namespace val_graph {
+   template <class Value> class tape_t;
+} } }
 
 namespace CppAD {
    // The conditional expression operator enum type
