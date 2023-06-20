@@ -28,7 +28,7 @@ PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
 PKG_CONFIG_PATH="$prefix/share/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH
 # -----------------------------------------------------------------------------
-addr_t_size_t='no'
+addr_t_type='int'
 verbose='no'
 standard='c++17'
 profile_speed='no'
@@ -51,7 +51,7 @@ do
       cat << EOF
 usage: bin/run_cmake.sh: \\
    [--help] \\
-   [--addr_t_size_t] \\
+   [--addr_t_<type>] \\
    [--verbose] \\
    [--c++11] \\
    [--profile_speed] \\
@@ -72,6 +72,7 @@ usage: bin/run_cmake.sh: \\
 The --help option just prints this message and exits.
 The value <package> above must be one of: cppad, boost, or eigen.
 The value <which> must be one of: odd, even, all, none.
+The value <type> must be one of: size_t, int, unsigned_int
 
 EOF
       exit 0
@@ -79,7 +80,15 @@ EOF
    case "$1" in
 
       --addr_t_size_t)
-      addr_t_size_t='yes'
+      addr_t_type='size_t'
+      ;;
+
+      --addr_t_int)
+      addr_t_type='int'
+      ;;
+
+      --addr_t_unsigned_int)
+      addr_t_type='unsigned int'
       ;;
 
       --verbose)
@@ -366,14 +375,8 @@ fi
 cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_debug_which=$debug_which"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"
-if [ "$addr_t_size_t" == 'yes' ]
-then
-   cmake_args="$cmake_args -D cppad_tape_id_type='size_t'"
-   cmake_args="$cmake_args -D cppad_tape_addr_type=size_t"
-else
-   cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
-   cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"
-fi
+cmake_args="$cmake_args -D cppad_tape_id_type='$addr_t_type'"
+cmake_args="$cmake_args -D cppad_tape_addr_type='$addr_t_type'"
 #
 echo_eval cmake $cmake_args ..
 #

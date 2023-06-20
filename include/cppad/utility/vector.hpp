@@ -126,8 +126,8 @@ Sizing
 
    ``vector`` < *Type* > *vec* ( *n* )
 
-where *n* is a ``size_t`` or ``int`` ,
-creates the vector *vec* with *n* elements and capacity
+where *n* is a ``size_t`` , ``unsigned int`` , or ``int`` .
+This creates the vector *vec* with *n* elements and capacity
 greater than or equal *n* .
 
 Initializer List
@@ -170,13 +170,11 @@ public:
    { }
    vector(size_t n) : capacity_(0), length_(0), data_(nullptr)
    {  resize(n); }
+   vector(unsigned int n) : capacity_(0), length_(0), data_(nullptr)
+   {  resize(n); }
    vector(int n) : capacity_(0), length_(0), data_(nullptr)
-   {  CPPAD_ASSERT_KNOWN(
-         n >= 0,
-         "CppAD::vector: attempt to give a vector with a negative size."
-      );
-      resize( size_t(n) );
-   }
+   {  resize(n); }
+   //
    vector(std::initializer_list<Type> list) :
    capacity_(0), length_(0), data_(nullptr)
    {  for(auto itr = list.begin(); itr != list.end(); ++itr)
@@ -214,7 +212,7 @@ Syntax
 
 n
 *
-is a size_t or an int specifying
+is a ``size_t`` , ``unsigned int`` , or ``int`` specifying
 the number of elements in the new version of the vector.
 
 resize
@@ -236,6 +234,8 @@ and then *vec.length_* and *vec* . ``capacity_`` are set to zero.
 ------------------------------------------------------------------------------
 */
 public:
+   void resize(unsigned int n)
+   {  resize( size_t(n) ); }
    void resize(int n)
    {  CPPAD_ASSERT_KNOWN(
          n >= 0,

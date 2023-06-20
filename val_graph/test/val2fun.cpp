@@ -331,7 +331,7 @@ bool csum_op(void)
    ok &= index_of_nan == n_ind;
    //
    // c[0], c[1]
-   Vector<addr_t> c(2);
+   Vector<double> c(2);
    c[0] = -2.0;
    c[1] = -3.0;
    addr_t c0 = tape.record_con_op( c[0] );
@@ -411,7 +411,7 @@ bool cexp_op(void)
    Vector<addr_t> dep_vec(2);
    //
    // c[0], c[1]
-   Vector<addr_t> c(2);
+   Vector<double> c(2);
    c[0] = -2.0;
    c[1] = -3.0;
    addr_t c0 = tape.record_con_op( c[0] );
