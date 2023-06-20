@@ -100,13 +100,18 @@ val_graph
 =========
 If the sub-string ``val_graph`` appears in *options* ,
 the value graph optimizer is used.
-This is a new CppAD operation sequence optimizer.
-Early testing indicates that it uses less memory and
-produces code that has similar speed to the old optimizer.
-For some large problems the new optimizer take longer but it produces
-faster code.
-The new optimizer has a much simpler implementation and this should make
-it easier to improve in the future.
+This is a new (experimental) CppAD operation sequence optimizer.
+
+#. The val_graph optimizer has a much simpler implementation.
+#. It has better developer documentation
+#. It has examples and tests at the val_graph level.
+   This makes it easy to change the val_graph optimizer.
+#. The optimized tape has very similar speed to the old optimizer; i.e.,
+   when the :ref:`speed_main@Global Options@onetape` option is present.
+   For some of the :ref:`speed-name` test case
+   the val_graph optimized tape is significantly faster.
+#. The val_graph optimizer take much longer to run.
+   This is probably due to the conversion to and from a val_graph.
 
 no_conditional_skip
 -------------------
