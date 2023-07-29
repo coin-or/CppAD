@@ -124,11 +124,17 @@ creates an empty vector no elements and capacity zero.
 Sizing
 ******
 
-   ``vector`` < *Type* > *vec* ( *n* )
+|  ``vector`` < *Type* > *vec* ( *n* )
+|  ``vector`` < *Type* > *vec* ( *n* , *value* )
 
 where *n* is a ``size_t`` , ``unsigned int`` , or ``int`` .
 This creates the vector *vec* with *n* elements and capacity
 greater than or equal *n* .
+
+Value
+=====
+If *value* is present, it is a *Type* object and all of the
+elements of the vector are given this value.
 
 Initializer List
 ****************
@@ -165,9 +171,12 @@ Source
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
+   // default
    vector(void) noexcept
    : capacity_(0), length_(0), data_(nullptr)
    { }
+   //
+   // sizing
    vector(size_t n) : capacity_(0), length_(0), data_(nullptr)
    {  resize(n); }
    vector(unsigned int n) : capacity_(0), length_(0), data_(nullptr)
@@ -175,11 +184,34 @@ public:
    vector(int n) : capacity_(0), length_(0), data_(nullptr)
    {  resize(n); }
    //
+   // sizing with value
+   vector(size_t n, const Type& value)
+   : capacity_(0), length_(0), data_(nullptr)
+   {  resize(n);
+      for(size_t i = 0; i < length_; ++i)
+         data_[i] = value;
+   }
+   vector(unsigned int n, const Type& value)
+   : capacity_(0), length_(0), data_(nullptr)
+   {  resize(n);
+      for(size_t i = 0; i < length_; ++i)
+         data_[i] = value;
+   }
+   vector(int n, const Type& value)
+   : capacity_(0), length_(0), data_(nullptr)
+   {  resize(n);
+      for(size_t i = 0; i < length_; ++i)
+         data_[i] = value;
+   }
+   //
+   // initializer list
    vector(std::initializer_list<Type> list) :
    capacity_(0), length_(0), data_(nullptr)
    {  for(auto itr = list.begin(); itr != list.end(); ++itr)
          this->push_back(*itr);
    }
+   //
+   // copy
    vector(const vector& other) : capacity_(0), length_(0), data_(nullptr)
    {  resize(other.length_);
       for(size_t i = 0; i < length_; i++)
@@ -353,6 +385,124 @@ public:
       for(size_t i = 0; i < length_; i++)
          data_[i] = other.data_[i];
       return *this;
+   }
+/*
+-------------------------------------------------------------------------------
+{xrst_begin cppad_vector_compare dev}
+
+Vector Class: Comparison Operators
+##################################
+
+Syntax
+******
+
+|  *result* = *vec* *op* *other*
+
+where *op* is one of the following: == , != , < , <= , > , >= .
+
+Prototype
+*********
+{xrst_literal ,
+   // BEGIN_EQUAL, // END_EQUAL
+   // BEGIN_NOT_EQUAL, // END_NOT_EQUAL
+   // BEGIN_LESS_THAN, // END_LESS_THAN
+   // BEGIN_LESS_OR_EQUAL, // END_LESS_OR_EQUAL
+   // BEGIN_GREATER_THAN, // END_GREATER_THAN
+   // BEGIN_GREATER_OR_EQUAL, // END_GREATER_OR_EQUAL
+}
+
+vec
+***
+is the left side for the comparison operation.
+
+other
+*****
+is the right side for the comparison operation.
+This vector must have the same size as *vec* .
+
+result
+******
+The *result* is true if the comparison
+
+|  *vec* [ *i* ] *op* *other [ *i* ]
+
+ture for all valid indices *i* .  Otherwise, the *result* is false
+
+{xrst_end cppad_vector_compare}
+-------------------------------------------------------------------------------
+*/
+// BEGIN_EQUAL
+public:
+   bool operator==(const vector& other) const
+// END_EQUAL
+   {  bool result = true;
+      CPPAD_ASSERT_KNOWN(
+         length_ == other.length_ ,
+         "CppAD::vector: vec == other: size of vectors is different"
+      );
+      for(size_t i = 0; i < length_; ++i)
+         result &= data_[i] == other.data_[i];
+      return result;
+   }
+// BEGIN_NOT_EQUAL
+   bool operator!=(const vector& other) const
+// END_NOT_EQUAL
+   {  bool result = true;
+      CPPAD_ASSERT_KNOWN(
+         length_ == other.length_ ,
+         "CppAD::vector: vec == other: size of vectors is different"
+      );
+      for(size_t i = 0; i < length_; ++i)
+         result &= data_[i] != other.data_[i];
+      return result;
+   }
+// BEGIN_LESS_THAN
+   bool operator<(const vector& other) const
+// END_LESS_THAN
+   {  bool result = true;
+      CPPAD_ASSERT_KNOWN(
+         length_ == other.length_ ,
+         "CppAD::vector: vec == other: size of vectors is different"
+      );
+      for(size_t i = 0; i < length_; ++i)
+         result &= data_[i] < other.data_[i];
+      return result;
+   }
+// BEGIN_LESS_OR_EQUAL
+   bool operator<=(const vector& other) const
+// END_LESS_OR_EQUAL
+   {  bool result = true;
+      CPPAD_ASSERT_KNOWN(
+         length_ == other.length_ ,
+         "CppAD::vector: vec == other: size of vectors is different"
+      );
+      for(size_t i = 0; i < length_; ++i)
+         result &= data_[i] <= other.data_[i];
+      return result;
+   }
+// BEGIN_GREATER_THAN
+   bool operator>(const vector& other) const
+// END_GREATER_THAN
+   {  bool result = true;
+      CPPAD_ASSERT_KNOWN(
+         length_ == other.length_ ,
+         "CppAD::vector: vec == other: size of vectors is different"
+      );
+      for(size_t i = 0; i < length_; ++i)
+         result &= data_[i] > other.data_[i];
+      return result;
+   }
+// BEGIN_GREATER_OR_EQUAL
+   bool operator>=(const vector& other) const
+// END_GREATER_OR_EQUAL
+   {  bool result = true;
+      CPPAD_ASSERT_KNOWN(
+         length_ == other.length_ ,
+         "CppAD::vector: vec == other: size of vectors is different"
+      );
+      for(size_t i = 0; i < length_; ++i)
+         result &= data_[i] >= other.data_[i];
+      return result;
    }
 /*
 -------------------------------------------------------------------------------

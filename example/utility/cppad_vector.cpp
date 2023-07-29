@@ -51,10 +51,13 @@ bool CppAD_vector(void)
    // check Simple Vector specifications
    CppAD::CheckSimpleVector< Scalar, vector<Scalar> >();
 
-   // check constructor with size_t and with an int
+   // check constructor with size_t, with int, and with value
    size_t two_s = 2;
    int    two_i = 2;
-   vector<Scalar> vec(2), other(two_s), another(two_i);
+   Scalar value = 5.0;
+   vector<Scalar> vec(2), other(two_s), another(two_i, value);
+   ok &= another[0] == 5.0;
+   ok &= another[1] == 5.0;
 
    // check resize with size_t and with int
    vec.resize(2);
@@ -70,10 +73,19 @@ bool CppAD_vector(void)
       ok &= vec[i] == another[i];
    }
 
+   // operator ==
+   ok &= vec == other;
+   ok &= other == another;
+
    // initializer constructor
-   vector<Scalar> yet_another = { 1.0, 2.0};
-   for(size_t i = 0; i < 2; ++i)
-      ok &= vec[i] == yet_another[i];
+   vector<Scalar> yet_another = { 1.0, 3.0};
+   ok &= yet_another.size() == 2;
+   ok &= yet_another[0] == 1.0;
+   ok &= yet_another[1] == 3.0;
+
+   // operator <=, >=
+   ok &= vec <= yet_another;
+   ok &= yet_another >= vec;
 
    // test of output
    std::string        correct= "{ 1, 2 }";

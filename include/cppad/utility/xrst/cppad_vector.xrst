@@ -68,9 +68,20 @@ and not the rest of CppAD, you should include
 Size Constructor
 ****************
 The size *n* in the constructor syntax below can be an
-``int`` (all simple vectors support ``size_t`` ):
+``int`` or ``unsigned int``
+(all simple vectors support ``size_t`` ):
 
    ``CppAD::vector<`` *Scalar* > *vec* ( *n* )
+
+Value
+=====
+The size constructor can specify a *value* to assign
+to all of the vector elements:
+
+   ``CppAD::vector<`` *Scalar* > *vec* ( *n* , *value* )
+
+where *value* is a *Scalar* object.
+
 
 Initializer Constructor
 ***********************
@@ -131,6 +142,20 @@ If the C++ compiler supports move semantic rvalues using the ``&&``
 syntax, then it will be used during the vector assignment statement.
 This means that return values and other temporaries are not be copied,
 but rather pointers are transferred.
+
+Comparison
+**********
+If *op* is == , != , < , <= , > , >= and
+*result* is a ``bool`` , and
+
+   *result* = *vec* *op* *other*
+
+*result* is true if the comparison
+
+   *vec* [ *i* ] *op* *other [ *i* ]
+
+is true for all valid indices *i* .
+Otherwise, the *result* is false
 
 Element Access
 **************

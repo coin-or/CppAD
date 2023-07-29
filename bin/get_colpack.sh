@@ -1,9 +1,9 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin get_colpack.sh} 
+# {xrst_begin get_colpack.sh}
 # {xrst_comment_ch #}
 #
 # Download and Install ColPack in Build Directory
@@ -69,16 +69,6 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 web_page='https://github.com/CSCsw/ColPack.git'
 cppad_dir=`pwd`
-# -----------------------------------------------------------------------------
-# libtoolize is brain dead and puts these files in cppad_dir
-for file in ltmain.sh test-driver
-do
-   if [ -e $cppad_dir/$file ]
-   then
-      echo "get_colpack.sh: did not expect $file in $cppad_dir"
-      exit 1
-   fi
-done
 # -----------------------------------------------------------------------------
 # n_job
 if which nproc > /dev/null
@@ -150,16 +140,5 @@ echo_eval ./configure \
 #
 echo_eval touch $cppad_dir/$configured_flag
 echo_eval make -j $n_job install
-# -----------------------------------------------------------------------------
-# libtoolize is brain dead and puts these files in cppad_dir
-for file in ltmain.sh test-driver
-do
-   if [ ! -e $cppad_dir/$file ]
-   then
-      echo "get_colpack.sh: expected libtooize to create $cppad_dir/$file"
-      exit 1
-   fi
-   rm $cppad_dir/$file
-done
 # -----------------------------------------------------------------------------
 echo "get_$package: OK"

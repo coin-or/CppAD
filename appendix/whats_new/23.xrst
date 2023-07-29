@@ -23,6 +23,11 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+07-29
+=====
+Add the CppAD vector :ref:`CppAD_vector@Comparison` operators
+and size with :ref:`CppAD_vector@Size Constructor@Value` constructor.
+
 06-20
 =====
 #. Add ``unsigned int`` as a valid type for the CppAD vector
