@@ -23,6 +23,13 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+08-06
+=====
+Add the cumulative summation operator to the :ref:`to_csrc-name` conversion.
+The cumulative summation operator can occur during optimization.
+Not having this operator seemed like a bug when NDEBUG was true
+because one got no warning that the operator did not get converted.
+
 07-29
 =====
 Add the CppAD vector :ref:`CppAD_vector@Comparison` operators

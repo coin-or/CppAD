@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/cppad.hpp>
 # include <cppad/utility/link_dll_lib.hpp>
@@ -602,6 +602,104 @@ bool discrete_case(void)
    return ok;
 }
 // ---------------------------------------------------------------------------
+bool csum_case(void)
+{  // ok
+   bool ok = true;
+   //
+   // AD
+   using CppAD::AD;
+   //
+   // nx, ax
+   size_t nx = 4;
+   CPPAD_TESTVECTOR( AD<double> ) ax(nx);
+   for(size_t j = 0; j < nx; ++j)
+      ax[j] = 0.0;
+   CppAD::Independent(ax);
+   //
+   // ny, ay
+   size_t ny = 2;
+   CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+   ay[0] = 0.0;
+   ay[1] = 0.0;
+   for(size_t j = 0; j < nx; ++j)
+   {  ay[0] += ax[j];
+      ay[1] -= ax[j];
+   }
+   //
+   // function_name
+   std::string function_name = "csum";
+   //
+   // f
+   CppAD::ADFun<double> f(ax, ay);
+   f.optimize();
+   f.function_name_set(function_name);
+   //
+   // library_name
+   std::string library_name = "test_to_csrc";
+   //
+   // dll_file
+   std::string dll_file = dll_file_name();
+   //
+   // csrc_files
+   CppAD::vector<std::string> csrc_files(1);
+   std::string type = "double";
+   std::stringstream ss;
+   f.to_csrc(ss, type);
+   csrc_files[0] = create_csrc_file(0, ss.str() );
+   //
+   // dll_file_str
+   std::map< std::string, std::string > options;
+   std::string err_msg = create_dll_lib(dll_file, csrc_files, options);
+   if( err_msg != "" )
+   {  std::cout << err_msg << "\n";
+      ok = false;
+      return ok;
+   }
+   //
+   // dll_linker
+   CppAD::link_dll_lib dll_linker(dll_file, err_msg);
+   //
+   // jit_double
+   using CppAD::jit_double;
+   //
+   // jit_function
+   jit_double jit_function = nullptr;
+   if( err_msg != "" )
+   {  std::cout << "dll_linker ctor error: " << err_msg << "\n";
+      ok = false;
+   }
+   else
+   {  // jit_function
+      std::string complete_name = "cppad_jit_" + function_name;
+      jit_function = reinterpret_cast<jit_double>(
+            dll_linker(complete_name, err_msg)
+      );
+      if( err_msg != "" )
+      {  std::cout << "dll_linker fun_ptr error: " << err_msg << "\n";
+         ok = false;
+      }
+   }
+   if( ok )
+   {  //
+      // ok
+      // no change
+      CppAD::vector<double> x(nx), y(ny);
+      for(size_t j = 0; j < nx; ++j)
+         x[j] = double(j+1);
+      y[0] = std::numeric_limits<double>::quiet_NaN();
+      y[1] = std::numeric_limits<double>::quiet_NaN();
+      size_t compare_change = 0;
+      int flag = jit_function(
+         nx, x.data(), ny, y.data(), &compare_change
+      );
+      ok &= flag == 0;
+      ok &= compare_change == 0;
+      ok &= y[0] == double(( nx * (nx + 1) )  / 2 );
+      ok &= y[1] == - double(( nx * (nx + 1) )  / 2 );
+   }
+   return ok;
+}
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 bool to_csrc(void)
@@ -610,5 +708,6 @@ bool to_csrc(void)
    ok     &= compare_cases();
    ok     &= atomic_case();
    ok     &= discrete_case();
+   ok     &= csum_case();
    return ok;
 }

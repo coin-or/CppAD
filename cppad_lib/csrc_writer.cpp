@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cpp_csrc_writer dev}
@@ -81,7 +81,7 @@ namespace {
       size_t         left_node    ,
       size_t         right_node   )
    {  os << "\t" + element("v", result_node) + " = ";
-      os << element("v", left_node) + op_csrc + " ";
+      os << element("v", left_node) + " " + op_csrc + " ";
       os << element("v", right_node) + ";\n";
    }
    //
@@ -105,6 +105,31 @@ namespace {
    {  os << "\t" + element("v", result_node) + " = ";
       os << op_csrc;
       os << "( " + element("v", arg_node) + " );\n";
+   }
+   //
+   // sum_operator
+   void sum_operator(
+      std::ostream&                os                  ,
+      size_t                       result_node         ,
+      const CppAD::vector<size_t>& arg_node            )
+   {  std::string rhs = "\t" + element("v", result_node) + " = ";
+      os << rhs;
+      if( arg_node.size() == 1 )
+      {  // can have subraction terms with no addition terms
+         os << "(float_point_t) 0;\n";
+         return;
+      }
+      for(size_t i = 0; i < arg_node.size(); ++i)
+      {  if( i % 5 == 0 && i != 0 )
+         {  os << "\n\t";
+            for(size_t j = 0;  j < rhs.size() - 4; ++j)
+               os << ' ';
+         }
+         if( 0 < i )
+            os << " + ";
+         os << element("v", arg_node[i]);
+      }
+      os << ";\n";
    }
    //
    // atomic_function
@@ -339,7 +364,7 @@ void CppAD::local::graph::csrc_writer(
       "\n"
       "\t// result nodes\n"
       "\t// set v[1+nx+nc+i] for i = 0, ..., n_result_node-1\n"
-      "\t//n_result_node = " + to_string(n_result_node) + "\n"
+      "\t// n_result_node = " + to_string(n_result_node) + "\n"
    ;
    //
    // result_node
@@ -439,6 +464,7 @@ void CppAD::local::graph::csrc_writer(
          // ---------------------------------------------------------------
          case atom4_graph_op:
          case discrete_graph_op:
+         case sum_graph_op:
          op_csrc = "";
          break;
 
@@ -527,9 +553,9 @@ void CppAD::local::graph::csrc_writer(
          break;
          //
          // discrete
+         case discrete_graph_op:
          CPPAD_ASSERT_UNKNOWN( arg_node.size() == 1 );
          CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-         case discrete_graph_op:
          {  size_t index         = str_index[0];
             string discrete_name = graph_obj.discrete_name_vec_get(index);
             discrete_function(os,
@@ -537,7 +563,14 @@ void CppAD::local::graph::csrc_writer(
             );
          }
          break;
-
+         //
+         // sum
+         case sum_graph_op:
+         CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+         sum_operator(os, result_node, arg_node);
+         break;
+         //
+         // default
          default:
          CPPAD_ASSERT_UNKNOWN(false);
          break;
