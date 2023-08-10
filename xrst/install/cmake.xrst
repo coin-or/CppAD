@@ -219,9 +219,11 @@ This value should be one of the valid CMake build types; e.g.,
 ``Release`` ,
 ``RelWithDebInfo`` ,
 ``MinSizeRel`` .
-If this value is specified,
+The value of this option is not case sensitive; e.g.,
+``Debug`` and ``debug`` yield the same result.
+If *cmake_build_type* is specified,
 :ref:`cmake@cppad_debug_which`
-must not be the empty string.
+must be the empty string.
 
 generator
 *********

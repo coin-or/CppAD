@@ -23,6 +23,11 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+08-09
+=====
+The :ref:`cmake@cmake_build_type` option was changed to not be case sensitive; e.g.,
+you can now use ``debug`` or ``Debug`` for this option.
+
 08-06
 =====
 Add the cumulative summation operator to the :ref:`to_csrc-name` conversion.

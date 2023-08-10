@@ -242,17 +242,22 @@ IF( CMAKE_BUILD_TYPE )
       MESSAGE(FATAL_ERROR
          "Both CMAKE_BUILD_TYPE and cppad_debug_which specified"
       )
-   ENDIF( NOT ${cppad_debug_which} STREQUAL "" )
-   IF(CMAKE_BUILD_TYPE MATCHES Debug)
+   ENDIF( )
+   STRING( TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_lower )
+   IF(cmake_build_type_lower MATCHES debug)
       SET(cppad_debug_which "debug_all")
-   ELSEIF(CMAKE_BUILD_TYPE MATCHES Release)
+   ELSEIF(cmake_build_type_lower MATCHES release)
       SET(cppad_debug_which "debug_none")
-   ELSEIF(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
+   ELSEIF(cmake_build_type_lower MATCHES relwithdebInfo)
       SET(cppad_debug_which "debug_none")
-   ELSEIF(CMAKE_BUILD_TYPE MATCHES MinSizeRel)
+   ELSEIF(cmake_build_type_lower MATCHES minsizerel)
       SET(cppad_debug_which "debug_none")
-   ENDIF()
-ELSE( CMAKE_BUILD_TYPE )
+   ELSE( )
+      MESSAGE(FATAL_ERROR
+         "Unknonw CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}"
+      )
+   ENDIF( )
+ELSE( ) # CMAKE_BUILD_TYPE
    IF( "${cppad_debug_which}" STREQUAL debug_all)
       SET(CMAKE_BUILD_TYPE Debug)
    ELSEIF( "${cppad_debug_which}" STREQUAL debug_none)
@@ -264,7 +269,7 @@ ELSE( CMAKE_BUILD_TYPE )
       SET(CMAKE_BUILD_TYPE Release)
       SET(debug_even_or_odd TRUE)
    ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
-ENDIF( CMAKE_BUILD_TYPE )
+ENDIF( ) # CMAKE_BUILD_TYPE
 IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
    IF( debug_even_or_odd )
       MESSAGE(FATAL_ERROR
