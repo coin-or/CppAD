@@ -197,9 +197,12 @@ Otherwise, this symbol should be zero.
 
 CPPAD_TAPE_ADDR_TYPE
 ********************
-Is the type used to store address on the tape. If not size_t, then
-<code>sizeof(CPPAD_TAPE_ADDR_TYPE) <= sizeof( size_t )</code>
-to conserve memory.
+Is the type used to store address on the tape.
+If it is not size_t, then
+{xrst_code cpp}
+   sizeof(CPPAD_TAPE_ADDR_TYPE) < sizeof( size_t )
+{xrst_code}
+can be used to conserve memory.
 This type must support std::numeric_limits,
 the <= operator,
 and conversion to size_t.
@@ -224,9 +227,12 @@ Is size_t the type the same as CPPAD_TAPE_ADDR_TYPE:
 
 CPPAD_TAPE_ID_TYPE
 ******************
-Is the type used to store tape identifiers. If not size_t, then
-<code>sizeof(CPPAD_TAPE_ID_TYPE) <= sizeof( size_t )</code>
-to conserve memory.
+Is the type used to store tape identifiers.
+If it is not size_t, then
+{xrst_code cpp}
+   sizeof(CPPAD_TAPE_ID_TYPE) < sizeof( size_t )
+{xrst_code}
+can be used to conserve memory.
 This type must support std::numeric_limits,
 the <= operator,
 and conversion to size_t.

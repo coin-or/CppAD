@@ -58,11 +58,12 @@ Restriction
 ***********
 This routine cannot be called in parallel mode or while
 there is a tape recording ``AD`` < *Base* > operations.
-If the following routines are used in parallel mode,
-they must be initialized separately:
 
 Other Routines
 **************
+If the following routines are used in parallel mode,
+they must be initialized separately:
+
 #. :ref:`thread_alloc, memory_leak <ta_parallel_setup-name>`
 #. :ref:`Rosen34 <Rosen34@Parallel Mode>`
 #. :ref:`Runge45 <Runge45@Parallel Mode>`
