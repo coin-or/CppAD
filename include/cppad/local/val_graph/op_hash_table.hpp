@@ -85,9 +85,13 @@ A collision occurs when two operators that do not match have the same hash code.
 // Tell pod_vector class that each size_setvec<addr_t>::pair_s_type is
 // plain old data and hence the corresponding constructor need not be called.
 namespace CppAD { namespace local {
+# if ! CPPAD_TAPE_ADDR_TYPE_IS_SIZE_T
+   // This pair gets defined in list_setvec.hpp for the type size_t.
+   // Would be better to have conditional compile depending of if defined.
    template <> inline bool
    is_pod< sparse::size_setvec<addr_t>::pair_s_type > (void)
    {  return true; }
+# endif
 } }
 
 namespace CppAD { namespace local { namespace val_graph {

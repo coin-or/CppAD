@@ -2,14 +2,11 @@
 # define CPPAD_CORE_BASE_COMPLEX_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/configure.hpp>
 # include <limits>
 # include <complex>
-
-// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# include <cppad/utility/thread_alloc.hpp>
 
 /*
 {xrst_begin base_complex.hpp}

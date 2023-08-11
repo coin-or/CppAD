@@ -124,6 +124,7 @@ Implementation
    include/cppad/local/val_graph/dyn_type.hpp
    include/cppad/local/val_graph/var_type.hpp
    include/cppad/local/val_graph/call_atomic.hpp
+   include/cppad/local/val_graph/enable_parallel.hpp
 }
 
 

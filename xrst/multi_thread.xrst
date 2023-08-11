@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin multi_thread}
 
@@ -50,17 +50,7 @@ One must first call
 :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 and then call :ref:`parallel_ad-name` before using ``AD`` types
 in :ref:`parallel<ta_in_parallel-name>` execution mode.
-
-Initialization
-**************
-The following routines must be called at least once before being used
-in parallel mode:
-:ref:`CheckSimpleVector<CheckSimpleVector@Parallel Mode>` ,
-:ref:`CheckNumericType<CheckNumericType@Parallel Mode>` ,
-:ref:`discrete functions<Discrete@Parallel Mode>` ,
-:ref:`Rosen34<Rosen34@Parallel Mode>` ,
-:ref:`Runge45<Runge45@Parallel Mode>` ,
-:ref:`cpp_graph_ctor<cpp_graph_ctor@Parallel Mode>` .
+In addition, see :ref:`parallel_ad@Other Routines` .
 
 Same Thread
 ***********

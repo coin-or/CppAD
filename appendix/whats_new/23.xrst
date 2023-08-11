@@ -15,6 +15,7 @@
    pacman
    mingw
    kokkos
+   initializations
 }
 
 Changes and Additions to CppAD During 2023
@@ -23,10 +24,23 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+08-10
+=====
+#. The :ref:`parallel_ad-name` routine was missing some initializations.
+   This has been fixed. In addition, a list of
+   :ref:`parallel_ad@Other Routines` ,
+   that must be initialized before using in parallel mode,
+   was included in the documentation.
+#. There was a bug introduce on :ref:`whats_new_23@mm-dd@06-20` when the
+   val_graph branch was merged into the master. To be more specific,
+   if :ref:`cmake@cppad_tape_addr_type` was ``size_t`` ,
+   a compile error occurred one of the ``is_pod`` definitions.
+   This has been fixed.
+
 08-09
 =====
-The :ref:`cmake@cmake_build_type` option was changed to not be case sensitive; e.g.,
-you can now use ``debug`` or ``Debug`` for this option.
+The :ref:`cmake@cmake_build_type` option was changed to not be case
+sensitive; e.g., you can now use ``debug`` or ``Debug`` for this option.
 
 08-06
 =====

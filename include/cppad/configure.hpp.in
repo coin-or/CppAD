@@ -2,7 +2,7 @@
 # define CPPAD_CONFIGURE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*!
@@ -211,6 +211,16 @@ This type is later defined as addr_t in the CppAD namespace.
 # define CPPAD_TAPE_ADDR_TYPE @cppad_tape_addr_type@
 /* {xrst_code}
 {xrst_spell_on}
+
+CPPAD_TAPE_ADDR_TYPE_IS_SIZE_T
+******************************
+Is size_t the type the same as CPPAD_TAPE_ADDR_TYPE:
+{xrst_spell_off}
+{xrst_code hpp} */
+# define CPPAD_TAPE_ADDR_TYPE_IS_SIZE_T @cppad_tape_addr_type_is_size_t@
+/* {xrst_code}
+{xrst_spell_off}
+
 
 CPPAD_TAPE_ID_TYPE
 ******************

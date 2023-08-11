@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_ERROR_HANDLER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -213,6 +213,8 @@ private:
    static Handler &Current(void)
    {  static bool first_call = true;
       static Handler current = Default;
+      // CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+      // code below is like macro above but works when NDEBUG defined
       if( first_call )
       {  if( local::set_get_in_parallel(0) )
          {  bool known       = false;

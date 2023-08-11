@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_NAN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin nan}
@@ -151,9 +151,6 @@ contains an example and test of this routine.
 
 # include <cstddef>
 # include <cppad/core/cppad_assert.hpp>
-
-// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# include <cppad/utility/thread_alloc.hpp>
 
 /*
 # define nan There must be a define for every CppAD undef

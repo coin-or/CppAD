@@ -58,12 +58,24 @@ Restriction
 ***********
 This routine cannot be called in parallel mode or while
 there is a tape recording ``AD`` < *Base* > operations.
+If the following routines are used in parallel mode,
+they must be initialized separately:
+
+Other Routines
+**************
+#. :ref:`thread_alloc, memory_leak <ta_parallel_setup-name>`
+#. :ref:`Rosen34 <Rosen34@Parallel Mode>`
+#. :ref:`Runge45 <Runge45@Parallel Mode>`
+#. :ref:`discrete <Discrete@Parallel Mode>`
+#. :ref:`atomic_one <atomic_one@afun@Parallel Mode>`
+
 
 {xrst_end parallel_ad}
 -----------------------------------------------------------------------------
 */
 
 # include <cppad/local/std_set.hpp>
+# include <cppad/local/val_graph/enable_parallel.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -85,12 +97,14 @@ void parallel_ad(void)
    );
 
    // ensure statics in following functions are initialized
-   elapsed_seconds();
-   ErrorHandler::Current();
-   local::NumArg(local::BeginOp);
-   local::NumRes(local::BeginOp);
-   local::one_element_std_set<size_t>();
-   local::two_element_std_set<size_t>();
+   ErrorHandler::Current();                // error_handler.hpp
+   elapsed_seconds();                      // elapsed_seconds.hpp
+   local::num_arg_dyn(local::abs_dyn);     // op_code_dyn.hpp
+   local::op_name_dyn(local::abs_dyn);     // op_code_dyn.hpp
+   local::NumArg(local::BeginOp);          // op_code_var.hpp
+   local::NumRes(local::BeginOp);          // op_code_var.hpp
+   local::one_element_std_set<size_t>();   // std_set.hpp
+   local::two_element_std_set<size_t>();   // std_set.hpp
 
    // the sparse_pack class has member functions with static data
    local::sparse::pack_setvec sp;
@@ -102,9 +116,12 @@ void parallel_ad(void)
    ++itr;                                  // has static data
 
    // statics that depend on the value of Base
-   AD<Base>::tape_id_ptr(0);
-   AD<Base>::tape_handle(0);
-   discrete<Base>::List();
+   AD<Base>::tape_id_ptr(0);                  // tape_link.hpp
+   AD<Base>::tape_handle(0);                  // tape_link.hpp
+   local::val_graph::enable_parallel<Base>(); // val_graph/*_op.hpp
+   discrete<Base>::List();                    // discrete.hpp
+
+   // check_simple_vector.hpp
    CheckSimpleVector< Base, CppAD::vector<Base> >();
    CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
 
