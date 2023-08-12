@@ -209,7 +209,7 @@ then
 fi
 echo_log_eval cp -r ../prefix build/prefix
 #
-# prefix is extracted from bin/get_optional in both cases
+# configure or cmake
 if [ "$use_configure" == 'yes' ]
 then
    builder='make'
@@ -230,9 +230,15 @@ else
       $package_vector
 fi
 echo_log_eval cd build
+#
+# n_job
+n_job=$(nproc)
+if [ "$n_job" -ge '5' ]
+then
+   let n_job="$n_job - 1"
+fi
 # -----------------------------------------------------------------------------
 # can comment out this make check to if only running tests below it
-n_job=$(nproc)
 cmd="$builder -j $n_job check"
 echo "$cmd >& check_all.tmp"
 echo "$cmd" > $top_srcdir/check_all.tmp

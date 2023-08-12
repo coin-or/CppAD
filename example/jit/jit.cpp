@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // CPPAD_HAS_* defines
@@ -20,10 +20,10 @@
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool atomic(void);
+extern bool compare_change(void);
 extern bool compile(void);
 extern bool dynamic(void);
 extern bool get_started(void);
-extern bool to_csrc(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -39,10 +39,10 @@ int main(void)
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( atomic,              "atomic"                );
+   Run( compare_change,      "compare_change"        );
    Run( compile,             "compile"               );
    Run( dynamic,             "dynamic"               );
    Run( get_started,         "get_started"           );
-   Run( to_csrc,             "to_csrc"               );
    // END_SORT_THIS_LINE_MINUS_1
 
    // check for memory leak

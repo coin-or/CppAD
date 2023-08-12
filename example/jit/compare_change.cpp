@@ -1,25 +1,13 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin jit_to_csrc.cpp}
-{xrst_spell
-   csrc
-}
+{xrst_begin jit_compare_change.cpp}
 
-C Source Code Corresponding to a Function: Example and Test
-###########################################################
-
-to_csrc
-*******
-The actual call to ``to_csrc`` is in the following section of the
-example below:
-{xrst_literal
-   // BEGIN_TO_CSRC
-   // END_TO_CSRC
-}
+The JIT compare_change Argument: Example and Test
+#################################################
 
 Source
 ******
@@ -28,7 +16,7 @@ Source
    // END C++
 }
 
-{xrst_end jit_to_csrc.cpp}
+{xrst_end jit_compare_change.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -46,7 +34,7 @@ Source
 # endif
 
 # include <cppad/cppad.hpp>
-bool to_csrc(void)
+bool compare_change(void)
 {  bool ok = true;
    //
    using CppAD::AD;
@@ -62,19 +50,20 @@ bool to_csrc(void)
    ax[0] = 0.0;
    ax[1] = 1.0;
    Independent(ax);
-   ay[0] = ax[0] + ax[1];
+   if( ax[0] < ax[1] )
+      ay[0] = ax[1] - ax[0];
+   else
+      ay[0] = ax[0] - ax[1];
    ADFun<double> f(ax, ay);
    f.function_name_set("f");
    //
    // csrc_file
    // created in std::filesystem::current_path
    std::string c_type    = "double";
-   std::string csrc_file = "to_csrc.c";
+   std::string csrc_file = "compare_change.c";
    std::ofstream ofs;
    ofs.open(csrc_file , std::ofstream::out);
-// BEGIN_TO_CSRC
    f.to_csrc(ofs, c_type);
-// END_TO_CSRC
    ofs.close();
    //
    // dll_file
@@ -114,16 +103,43 @@ bool to_csrc(void)
    // y = f(x)
    size_t compare_change = 0;
    std::vector<double> x(nx), y(ny);
-   x[0] = 0.3;
-   x[1] = 0.5;
+   x[0] = 0.1;
+   x[1] = 0.2;
    f_ptr(nx, x.data(), ny, y.data(), &compare_change);
    //
    // ok
+   // comparison same as when recorded (compare_change the same)
    ok &= compare_change == 0;
    //
    // ok
    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-   double check = x[0] + x[1];
+   double check = x[1] - x[0];
+   ok &= NearEqual(y[0], check, eps99, eps99);
+   //
+   // x, y, compare_change
+   x[0] = 0.5;
+   x[1] = 0.1;
+   f_ptr(nx, x.data(), ny, y.data(), &compare_change);
+   //
+   // ok
+   // comparison different from when recorded (compare_change increased)
+   ok &= compare_change == 1;
+   //
+   // ok
+   check = x[1] - x[0];
+   ok &= NearEqual(y[0], check, eps99, eps99);
+   //
+   // x, y, compare_change
+   x[0] = 1.0;
+   x[1] = 5.0;
+   f_ptr(nx, x.data(), ny, y.data(), &compare_change);
+   //
+   // ok
+   // comparison as as when recorded (compare_change the same)
+   ok &= compare_change == 1;
+   //
+   // ok
+   check = x[1] - x[0];
    ok &= NearEqual(y[0], check, eps99, eps99);
    //
    return ok;

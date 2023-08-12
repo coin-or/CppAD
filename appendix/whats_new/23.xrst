@@ -16,6 +16,7 @@
    mingw
    kokkos
    initializations
+   csrc
 }
 
 Changes and Additions to CppAD During 2023
@@ -23,6 +24,14 @@ Changes and Additions to CppAD During 2023
 
 mm-dd
 *****
+
+08-12
+=====
+There was a bug in the to_csrc :ref:`to_csrc@compare_change` argument.
+To be specific, it was not adding to the input value but rather
+reporting the number of changes during a call.
+This has been fixed and demonstrated in the
+:ref:`jit_compare_change.cpp-name` example.
 
 08-10
 =====

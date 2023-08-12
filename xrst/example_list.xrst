@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin list_all_examples}
 {xrst_spell
@@ -9,7 +9,6 @@
    cholesky
    conj
    cout
-   csrc
    dll
    erfc
    expm
@@ -221,10 +220,10 @@ List All (Except Deprecated) CppAD Examples
    jac_minor_det.cpp,:ref:`jac_minor_det.cpp-title`
    jacobian.cpp,:ref:`jacobian.cpp-title`
    jit_atomic.cpp,:ref:`jit_atomic.cpp-title`
+   jit_compare_change.cpp,:ref:`jit_compare_change.cpp-title`
    jit_compile.cpp,:ref:`jit_compile.cpp-title`
    jit_dynamic.cpp,:ref:`jit_dynamic.cpp-title`
    jit_get_started.cpp,:ref:`jit_get_started.cpp-title`
-   jit_to_csrc.cpp,:ref:`jit_to_csrc.cpp-title`
    json_add_op.cpp,:ref:`json_add_op.cpp-title`
    json_atom4_op.cpp,:ref:`json_atom4_op.cpp-title`
    json_atom_op.cpp,:ref:`json_atom_op.cpp-title`

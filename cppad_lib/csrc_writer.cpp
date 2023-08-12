@@ -327,7 +327,6 @@ void CppAD::local::graph::csrc_writer(
    os <<
       "\n"
       "\t// initialize\n"
-      "\t*compare_change = 0;\n"
       "\tv[0]            = NAN; // const \n"
    ;
    //

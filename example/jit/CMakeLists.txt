@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/git directory tests
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
    atomic.cpp
+   compare_change.cpp
    compile.cpp
    dynamic.cpp
    get_started.cpp
    jit.cpp
-   to_csrc.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
