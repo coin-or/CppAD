@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_LINK_DLL_LIB_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin link_dll_lib}
@@ -21,6 +21,8 @@ Syntax
 | # ``include <cppad/utility/link_dll_lib.hpp>``
 | ``link_dll_lib`` *dll_linker* ( *dll_file* , *err_msg* )
 | *fun_ptr* = *dll_linker* ( *function_name* , *err_msg* )
+|
+
 
 Prototype
 *********
@@ -32,8 +34,6 @@ Prototype
 dll_linker
 **********
 Is the dynamic link object that holds an in memory version of the library,
-It must not be deleted for as long as any *fun_ptr* return
-values is used.
 
 err_msg
 *******
@@ -52,6 +52,11 @@ fun_ptr
 *******
 Is a ``void*`` version of a pointer the function corresponding to
 *function_name* .
+
+Warning !!
+==========
+*fun_ptr* becomes invalid when the *dll_linker* destructor is called.
+
 {xrst_toc_hidden
    example/utility/dll_lib.cpp
 }

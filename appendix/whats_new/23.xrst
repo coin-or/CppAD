@@ -17,6 +17,8 @@
    kokkos
    initializations
    csrc
+   dll
+   linker
 }
 
 Changes and Additions to CppAD During 2023
@@ -27,11 +29,14 @@ mm-dd
 
 08-12
 =====
-There was a bug in the to_csrc :ref:`to_csrc@compare_change` argument.
-To be specific, it was not adding to the input value but rather
-reporting the number of changes during a call.
-This has been fixed and demonstrated in the
-:ref:`jit_compare_change.cpp-name` example.
+#. There was a bug in the to_csrc :ref:`to_csrc@compare_change` argument.
+   To be specific, it was not adding to the input value but rather
+   reporting the number of changes during a call.
+   This has been fixed and demonstrated in the
+   :ref:`jit_compare_change.cpp-name` example.
+#. A :ref:`link_dll_lib@fun_ptr@Warning !!` was added to the documentation
+   for function pointers created by the dll linker.
+   (This fact did not stand out as much in the previous documentation.)
 
 08-10
 =====
