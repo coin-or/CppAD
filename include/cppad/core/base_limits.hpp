@@ -35,7 +35,8 @@ for which the following preprocessor macro invocation suffices:
 | |tab| |tab| ``CPPAD_NUMERIC_LIMITS`` ( *Other* , *Base* )
 | |tab| }
 
-where the macro is defined by
+e.g., see :ref:`base_double.hpp@numeric_limits` for the type ``double`` .
+The macro ``CPPAD_NUMERIC_LIMITS`` is defined by
 {xrst_spell_off}
 {xrst_code cpp} */
 # define CPPAD_NUMERIC_LIMITS(Other, Base) \
@@ -53,6 +54,7 @@ template <> class numeric_limits<Base>\
    static Base infinity(void) \
    {  return static_cast<Base>( std::numeric_limits<Other>::infinity() ); }\
    static const int digits10 = std::numeric_limits<Other>::digits10;\
+   static const int max_digits10 = std::numeric_limits<Other>::max_digits10;\
 };
 /* {xrst_code}
 {xrst_spell_on}

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -78,16 +78,6 @@ namespace {
       return ok;
    }
    // -----------------------------------------------------------------
-   bool check_digits10(void)
-   {  bool ok     = true;
-      Float neg_log_eps =
-         - log10( CppAD::numeric_limits<Float>::epsilon() );
-      int ceil_neg_log_eps =
-         Integer( neg_log_eps );
-      ok &= ceil_neg_log_eps == CppAD::numeric_limits<Float>::digits10;
-      return ok;
-   }
-   // -----------------------------------------------------------------
    bool check_infinity(void)
    {  bool ok    = true;
       Float inf  = CppAD::numeric_limits<Float>::infinity();
@@ -99,6 +89,29 @@ namespace {
       ok        &= CppAD::isnan( tmp );
       return ok;
    }
+   // -----------------------------------------------------------------
+   bool check_digits10(void)
+   {  bool ok     = true;
+      Float neg_log_eps =
+         - log10( CppAD::numeric_limits<Float>::epsilon() );
+      int ceil_neg_log_eps =
+         Integer( neg_log_eps );
+      ok &= ceil_neg_log_eps == CppAD::numeric_limits<Float>::digits10;
+      return ok;
+   }
+   // -----------------------------------------------------------------
+   bool check_max_digits10(void)
+   {  bool ok          = true;
+      int max_digits10 = CppAD::numeric_limits<Float>::max_digits10;
+      Float pi         = 4.0 * atan( Float(1.0) );
+      //
+      std::stringstream ss;
+      ss << std::setprecision( max_digits10 ) << pi;
+      //
+      Float check = Float( std::atof( ss.str().c_str() ) );
+      ok         &= pi == check;
+      return ok;
+   }
 }
 
 bool num_limits(void)
@@ -108,8 +121,9 @@ bool num_limits(void)
    ok &= check_min();
    ok &= check_max();
    ok &= check_nan();
-   ok &= check_digits10();
    ok &= check_infinity();
+   ok &= check_digits10();
+   ok &= check_max_digits10();
 
    return ok;
 }

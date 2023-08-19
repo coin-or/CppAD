@@ -132,6 +132,10 @@ namespace Eigen {
       static int digits10(void)
       {  return CppAD::numeric_limits< CppAD::AD<Base> >::digits10; }
 
+      // number of decimal digits necessary to uniquely represent values.
+      static int max_digits10(void)
+      {  return CppAD::numeric_limits< CppAD::AD<Base> >::max_digits10; }
+
       // not a number
       static CppAD::AD<Base> quiet_NaN(void)
       {  return CppAD::numeric_limits< CppAD::AD<Base> >::quiet_NaN(); }

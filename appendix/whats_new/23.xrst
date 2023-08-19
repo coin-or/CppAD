@@ -27,6 +27,13 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+08-19
+=====
+Add :ref:`numeric_limits@max_digits10` to the AD numeric limits.
+If you define your own Base type, and you do not use the
+:ref:`base_limits@CPPAD_NUMERIC_LIMITS` macro,
+you will have to add ``max_digits10`` to your Base type's numeric limits.
+
 08-12
 =====
 #. There was a bug in the to_csrc :ref:`to_csrc@compare_change` argument.
