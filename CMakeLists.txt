@@ -197,6 +197,11 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
+#
+# cppad_static_lib
+command_line_arg(cppad_static_lib FALSE BOOL
+   "If true (false) the cppad library will be static (shared)"
+)
 # ----------------------------------------------------------------------------
 #
 # Ensure c++11 support
@@ -467,16 +472,26 @@ ENDIF( cppad_has_ipopt )
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
 #
-# cppad_lib_is_dynamic
-STRING( REGEX MATCH "^MSYS" is_msys        "${CMAKE_SYSTEM_NAME}" )
-STRING( REGEX MATCH "^CYGWIN" is_cygwin    "${CMAKE_SYSTEM_NAME}" )
+# is_cppad_lib_dynamic
+STRING( REGEX MATCH "^MSYS"    is_msys     "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^CYGWIN"  is_cygwin   "${CMAKE_SYSTEM_NAME}" )
 STRING( REGEX MATCH "^Windows" is_windows  "${CMAKE_SYSTEM_NAME}" )
 IF( is_msys OR is_cygwin OR is_windows )
-   MESSAGE( STATUS "Windows system so building static cppad_lib")
+   IF( NOT cppad_static_lib )
+      MESSAGE(WARNING
+"This systems uses windows dynamic libraries.
+The cppad library must be static for this case.
+Ignoring fact that cppad_static_lib is FALSE.
+"
+      )
+   ENDIF( )
    SET(is_cppad_lib_dynamic 0)
 ELSE( )
-   MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
-   SET(is_cppad_lib_dynamic 1)
+   IF( cppad_static_lib )
+      SET(is_cppad_lib_dynamic 0)
+   ELSE( )
+      SET(is_cppad_lib_dynamic 1)
+   ENDIF( )
 ENDIF( )
 print_variable(is_cppad_lib_dynamic)
 

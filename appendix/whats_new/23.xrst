@@ -27,6 +27,12 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+09-08
+=====
+#. Add the :ref:`cmake@cppad_static_lib` option to the install.
+#. Fix warning (on some newer compilers) when a :ref:`CppAD_vector@vectorBool`
+   constructor specified the number of elements using a signed integer.
+
 08-19
 =====
 Add :ref:`numeric_limits@max_digits10` to the AD numeric limits.

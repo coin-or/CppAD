@@ -44,6 +44,7 @@
    xml
    yyyy
    yyyymmdd
+   dlls
 }
 
 Using CMake to Configure CppAD
@@ -133,6 +134,7 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cppad_tape_id_type`` = *cppad_tape_id_type*                    \\
 | |tab| ``-D cppad_tape_addr_type`` = *cppad_tape_addr_type*                \\
 | |tab| ``-D cppad_debug_which`` = *cppad_debug_which*                      \\
+| |tab| ``-D cppad_static_lib`` = *cppad_static_lib*                        \\
 | |tab| \\
 | |tab| ..
 
@@ -206,7 +208,7 @@ all the test options with the command:
 cmake_verbose_makefile
 **********************
 This value should be either ``true`` or ``false`` .
-The default value, when it is not present, is ``NO`` .
+The default value, when it is not present, is ``false`` .
 If it is ``true`` , then the output of the ``make`` commands
 will include all of the files and flags used to run the compiler
 and linker. This can be useful for seeing how to compile and link
@@ -564,6 +566,15 @@ The value *cppad_debug_which* be one of the following:
 
 If ``CMAKE_BUILD_TYPE`` is specified on the command line,
 then *cppad_debug_which* must be the empty string (its default value).
+
+cppad_static_lib
+****************
+This value should be either ``true`` or ``false`` .
+The default value is ``false`` .
+If it is true (false), the cppad library will be a static (shared) library.
+If the target system uses windows dlls, this setting should be true.
+If it is false, a warning will be issued and it will be ignored.
+
 {xrst_toc_hidden
    bin/get_optional.sh
    xrst/install/adolc.xrst

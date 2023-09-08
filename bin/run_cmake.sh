@@ -1,8 +1,9 @@
-#! /bin/bash -e
+#! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
+set -e -u
 if [ ! -e "bin/run_cmake.sh" ]
 then
    echo "bin/run_cmake.sh: must be executed from its parent directory"
@@ -32,7 +33,9 @@ addr_t_type='int'
 verbose='no'
 standard='c++17'
 profile_speed='no'
+callgrind='no'
 clang='no'
+static='no'
 yes_adolc='yes'
 yes_colpack='yes'
 yes_eigen='yes'
@@ -44,7 +47,7 @@ yes_sacado='yes'
 yes_documentation='yes'
 testvector='boost'
 debug_which='debug_all'
-while [ "$1" != "" ]
+while [ "$#" != 0 ]
 do
    if [ "$1" == '--help' ]
    then
@@ -57,6 +60,7 @@ usage: bin/run_cmake.sh: \\
    [--profile_speed] \\
    [--callgrind] \\
    [--clang ] \\
+   [--static] \\
    [--no_adolc] \\
    [--no_colpack] \\
    [--no_eigen] \\
@@ -109,6 +113,10 @@ EOF
 
       --clang)
       clang='yes'
+      ;;
+
+      --static)
+      static='yes'
       ;;
 
       --no_adolc)
@@ -363,6 +371,12 @@ if [ "$clang" == 'yes' ]
 then
    cmake_args="$cmake_args -D CMAKE_C_COMPILER=clang"
    cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=clang++"
+fi
+#
+# static
+if [ "$static" == 'yes' ]
+then
+   cmake_args="$cmake_args -D cppad_static_lib=true"
 fi
 #
 # profile
