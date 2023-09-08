@@ -16,11 +16,14 @@ build:
       # build/html
       # The xsrst html_directory for this configuration is build/html.
       # Build the default (user_guide) and app (appendix) groups.
+      # Suppress spell warnings because readthdocs uses a different dictionry.
       - xrst 
          --page_source 
-         --html_theme furo 
+         --html_theme shphinx_book_theme 
          --group_list default app
          --index_page_name user_guide
+         --suppress_spell_warnings
+
       #
       # _readthedocs/html
       # The directory that Read the Docs uploads when commands is used.
