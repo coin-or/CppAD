@@ -19,7 +19,7 @@ build:
       # Suppress spell warnings because readthdocs uses a different dictionry.
       - xrst 
          --page_source 
-         --html_theme shphinx_book_theme 
+         --html_theme sphinx_book_theme 
          --group_list default app
          --index_page_name user_guide
          --suppress_spell_warnings
