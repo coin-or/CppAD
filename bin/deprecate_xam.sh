@@ -39,7 +39,8 @@ then
    rm $new_file
    git checkout $old_file
 fi
-echo_eval git mv $old_file $new_file
+echo "git mv $old_file $new_file"
+git mv $old_file $new_file
 # -----------------------------------------------------------------------------
 # change old directory
 old_dir=`echo $old_file | sed -e 's|/[^/]*$||'`
