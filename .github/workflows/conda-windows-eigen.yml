@@ -24,8 +24,10 @@ jobs:
     - name: Check location of Eigen directory
       shell: cmd /C CALL {0}
       run: |
-        echo dir %CONDA_PREFIX%\Library\include\Eigen
-             dir %CONDA_PREFIX%\Library\include\Eigen
+        mklink /d %CONDA_PREFIX%\Library\include\Eigen^
+                  %CONDA_PREFIX%\Library\inclue\eigen3\Eigen
+        echo dir %CONDA_PREFIX%\Library\include\Eigen\Core
+             dir %CONDA_PREFIX%\Library\include\Eigen\Core
 
     - name: Build and test CppAD with Eigen
       shell: cmd /C CALL {0}
