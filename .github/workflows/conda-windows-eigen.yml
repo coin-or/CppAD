@@ -25,7 +25,7 @@ jobs:
       shell: cmd /C CALL {0}
       run: |
         mklink /d %CONDA_PREFIX%\Library\include\Eigen^
-                  %CONDA_PREFIX%\Library\inclue\eigen3\Eigen
+                  %CONDA_PREFIX%\Library\include\eigen3\Eigen
         echo dir %CONDA_PREFIX%\Library\include\Eigen\Core
              dir %CONDA_PREFIX%\Library\include\Eigen\Core
 
