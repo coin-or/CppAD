@@ -386,8 +386,6 @@ inline void print_store_op(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_print_load_op dev}
-{xrst_spell
-}
 
 Printing Load Operators
 #######################
@@ -435,8 +433,6 @@ inline void print_load_op(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_print_vec_op dev}
-{xrst_spell
-}
 
 Printing New Dynamic Vector Operators
 #####################################

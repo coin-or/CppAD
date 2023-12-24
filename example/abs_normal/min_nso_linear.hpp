@@ -12,7 +12,6 @@
    dbl
    maxitr
    minimizer
-   nso
 }
 Non-Smooth Optimization Using Abs-normal Linear Approximations
 ##############################################################

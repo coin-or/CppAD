@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin qp_box.hpp}
-{xrst_spell
-   qp
-}
 
 qp_box Source Code
 ##################

@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cpp_csrc_writer dev}
-{xrst_spell
-   csrc
-}
 
 Converts Cpp Graph to C Source
 ##############################

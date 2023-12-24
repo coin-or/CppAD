@@ -7,7 +7,6 @@
 /*
 {xrst_begin RombergMul}
 {xrst_spell
-   romberg
    test test
 }
 

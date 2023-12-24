@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin ode_err_maxabs.cpp}
-{xrst_spell
-   maxabs
-}
 
 OdeErrControl: Example and Test Using Maxabs Argument
 #####################################################

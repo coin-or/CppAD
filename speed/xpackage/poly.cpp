@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin xpackage_poly.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: Second Derivative of a Polynomial
 #################################################

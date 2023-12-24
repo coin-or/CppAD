@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin min_nso_quad.cpp}
-{xrst_spell
-   nso
-}
 
 abs_normal min_nso_quad: Example and Test
 #########################################

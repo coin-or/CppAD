@@ -325,9 +325,6 @@ contains an example and test of this function.
 {xrst_end erf}
 -------------------------------------------------------------------------------
 {xrst_begin erfc}
-{xrst_spell
-   erfc
-}
 The Complementary Error Function: erfc
 ######################################
 
@@ -397,9 +394,6 @@ contains an example and test of this function.
 {xrst_end exp}
 -------------------------------------------------------------------------------
 {xrst_begin expm1}
-{xrst_spell
-   expm
-}
 The Exponential Function Minus One: expm1
 #########################################
 
@@ -680,9 +674,6 @@ contains an example and test of this function.
 {xrst_end tan}
 -------------------------------------------------------------------------------
 {xrst_begin tanh}
-{xrst_spell
-   tanh
-}
 
 The Hyperbolic Tangent Function: tanh
 #####################################

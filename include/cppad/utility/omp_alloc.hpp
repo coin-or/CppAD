@@ -369,9 +369,6 @@ or the current execution mode must be sequential
    {  thread_alloc::free_available(thread); }
 /* -----------------------------------------------------------------------
 {xrst_begin omp_inuse app}
-{xrst_spell
-   inuse
-}
 
 Amount of Memory a Thread is Currently Using
 ############################################

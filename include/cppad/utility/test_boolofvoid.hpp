@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin test_boolofvoid}
-{xrst_spell
-   boolofvoid
-}
 
 Object that Runs a Group of Tests
 #################################

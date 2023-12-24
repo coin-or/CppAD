@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin tanh.cpp}
-{xrst_spell
-   tanh
-}
 
 The AD tanh Function: Example and Test
 ######################################

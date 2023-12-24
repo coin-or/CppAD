@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin hes_lagrangian.cpp}
-{xrst_spell
-   lagrangian
-}
 
 {xrst_comment ! NOTE the title states that this example is used two places !}
 Hessian of Lagrangian and ADFun Default Constructor: Example and Test

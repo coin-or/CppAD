@@ -21,8 +21,6 @@
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op_enum2class dev}
-{xrst_spell
-}
 
 Mapping From Operator Enum To Class
 ###################################

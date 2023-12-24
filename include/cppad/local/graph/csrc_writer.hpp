@@ -11,9 +11,6 @@
 
 /*
 {xrst_begin csrc_writer dev}
-{xrst_spell
-   csrc
-}
 
 Prototype for csrc_writer
 #########################

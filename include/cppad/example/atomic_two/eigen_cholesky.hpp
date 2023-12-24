@@ -7,9 +7,6 @@
 
 /*
 {xrst_begin atomic_two_eigen_cholesky.hpp app}
-{xrst_spell
-   cholesky
-}
 
 atomic_two Eigen Cholesky Factorization Class
 #############################################

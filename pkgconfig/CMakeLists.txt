@@ -5,7 +5,7 @@
 # Construct cppad.pc from cppad.pc.in; see
 # http://people.freedesktop.org/~dbn/pkg-config-guide.html
 # -----------------------------------------------------------------------------
-# {xrst_begin pkgconfig} 
+# {xrst_begin pkgconfig}
 # {xrst_spell
 #     builddir
 #     cflags
@@ -14,7 +14,6 @@
 #     includedir
 #     libdir
 #     libs
-#     pkgconfig
 #     uninstalled
 # }
 # {xrst_comment_ch #}

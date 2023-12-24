@@ -5,7 +5,6 @@
 /*
 {xrst_begin qp_box.cpp}
 {xrst_spell
-   qp
    rl
 }
 

@@ -8,7 +8,6 @@
 /*
 {xrst_begin testvector}
 {xrst_spell
-   testvector
    ublas
 }
 

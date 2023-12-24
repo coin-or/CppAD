@@ -8,7 +8,6 @@
 {xrst_begin qp_interior}
 {xrst_spell
    maxitr
-   qp
    rl
    sout
    xout

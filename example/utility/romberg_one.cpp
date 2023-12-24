@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin romberg_one.cpp}
-{xrst_spell
-   romberg
-}
 
 One Dimensional Romberg Integration: Example and Test
 #####################################################

@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 {xrst_begin user_guide}
 {xrst_spell
-   github
    appveyor
    autodiff
-   templated
+   github
    posix
+   templated
 }
 
 cppad-20231223: CppAD User's Manual

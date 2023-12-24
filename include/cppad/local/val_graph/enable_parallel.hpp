@@ -21,8 +21,6 @@
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_enable_parallel dev}
-{xrst_spell
-}
 
 Enable val_graph Operators During Parallel Mode
 ###############################################

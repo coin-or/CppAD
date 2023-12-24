@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin romberg_mul.cpp}
-{xrst_spell
-   romberg
-}
 
 Multi-Dimensional Romberg Integration: Example and Test
 #######################################################

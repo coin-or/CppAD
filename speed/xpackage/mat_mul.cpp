@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin xpackage_mat_mul.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: Matrix Multiplication
 #####################################

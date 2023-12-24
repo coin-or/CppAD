@@ -6,19 +6,19 @@
 {xrst_begin whats_new_23 app}
 {xrst_spell
    autotools
-   usr
-   msys
-   cstdint
-   uintptr
-   trilinos
-   kludge
-   pacman
-   mingw
-   kokkos
-   initializations
    csrc
+   cstdint
    dll
+   initializations
+   kludge
+   kokkos
    linker
+   mingw
+   msys
+   pacman
+   trilinos
+   uintptr
+   usr
 }
 
 Changes and Additions to CppAD During 2023

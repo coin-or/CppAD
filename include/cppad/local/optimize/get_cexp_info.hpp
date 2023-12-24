@@ -15,7 +15,6 @@ namespace CppAD { namespace local { namespace optimize {
 /*!
 {xrst_begin optimize_get_cexp_info.hpp dev}
 {xrst_spell
-   cexp
    deallocate
    funap
    funav

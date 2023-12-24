@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin xpackage_det_lu.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: Gradient of Determinant Using Lu Factorization
 ##############################################################

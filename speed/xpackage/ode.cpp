@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin xpackage_ode.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: Ode
 ###################

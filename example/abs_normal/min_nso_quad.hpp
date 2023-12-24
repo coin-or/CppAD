@@ -12,7 +12,6 @@
    dbl
    maxitr
    minimizer
-   nso
    qp
 }
 Non-Smooth Optimization Using Abs-normal Quadratic Approximations

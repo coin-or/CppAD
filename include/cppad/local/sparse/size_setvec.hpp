@@ -549,7 +549,6 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin size_setvec_iterators dev}
 {xrst_spell
-   iterators
    typedef
 }
 
@@ -1672,9 +1671,6 @@ public:
 /*
 -------------------------------------------------------------------------------
 {xrst_begin size_setvec_const_iterator_dereference dev}
-{xrst_spell
-   dereference
-}
 
 class size_setvec_const_iterator: Dereference
 #############################################

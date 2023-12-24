@@ -16,7 +16,6 @@
 {xrst_begin to_csrc}
 {xrst_spell
    cdecl
-   csrc
    declspec
    dllimport
    multiplier

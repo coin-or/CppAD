@@ -62,7 +62,6 @@ Contents
 {xrst_begin val_csum_info dev}
 {xrst_spell
    struct
-   csum
 }
 
 Information for a Cumulative Summation
@@ -81,9 +80,6 @@ struct csum_info_t {
 {xrst_end val_csum_info}
 ------------------------------------------------------------------------------
 {xrst_begin val_replace_csum_op dev}
-{xrst_spell
-   csum
-}
 
 Replace An Operator with a Cumulative Summation
 ###############################################

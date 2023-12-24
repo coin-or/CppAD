@@ -10,7 +10,6 @@
 /*!
 {xrst_begin optimize_cexp_info dev}
 {xrst_spell
-   cexp
    cskip
    struct
 }

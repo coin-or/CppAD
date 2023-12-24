@@ -5,9 +5,6 @@
 # include "atomic_xam.hpp"
 /*
 {xrst_begin val_call_xam.cpp dev}
-{xrst_spell
-   xam
-}
 
 Function Value Operator Example
 ###############################

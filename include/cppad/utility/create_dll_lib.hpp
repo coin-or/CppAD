@@ -9,7 +9,6 @@
 {xrst_spell
    cl
    csrc
-   dll
    hc
    hs
    msg

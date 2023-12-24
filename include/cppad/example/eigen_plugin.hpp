@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*$
 {xrst_begin eigen_plugin.hpp}
-{xrst_spell
-   plugin
-}
 
 Source Code for eigen_plugin.hpp
 ################################

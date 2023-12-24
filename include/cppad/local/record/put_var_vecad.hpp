@@ -10,9 +10,6 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 ------------------------------------------------------------------------------
 {xrst_begin put_var_vecad_ind dev}
-{xrst_spell
-   vecad
-}
 
 Add One Index to End of Combined Variable VecAD Vector
 ######################################################
@@ -65,7 +62,6 @@ addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 {xrst_begin recorder_put_var_vecad dev}
 {xrst_spell
    taddr
-   vecad
 }
 Tape Initialization for a Variable VecAD Object
 ###############################################

@@ -120,7 +120,6 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_iterators dev}
 {xrst_spell
-   iterators
    typedef
 }
 
@@ -796,9 +795,6 @@ public:
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_const_iterator_dereference dev}
-{xrst_spell
-   dereference
-}
 
 class pack_setvec_const_iterator: Dereference
 #############################################

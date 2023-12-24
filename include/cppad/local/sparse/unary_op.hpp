@@ -208,7 +208,6 @@ void rev_hes_nl_unary_op(
 /*
 {xrst_begin for_hes_nl_unary_op dev}
 {xrst_spell
-   nl
    np
    numvar
 }

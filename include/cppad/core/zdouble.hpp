@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin zdouble app}
-{xrst_spell
-   zdouble
-}
 zdouble: An AD Base Type With Absolute Zero
 ###########################################
 

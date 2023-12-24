@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin xpackage_det_minor.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: Gradient of Determinant by Minor Expansion
 ##########################################################

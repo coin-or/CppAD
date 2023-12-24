@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin dll_lib.cpp}
-{xrst_spell
-   dll
-}
 
 dll_lib: Example and Test
 #########################

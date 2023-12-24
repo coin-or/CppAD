@@ -10,8 +10,6 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 -------------------------------------------------------------------------------
 {xrst_begin val_tape_option dev}
-{xrst_spell
-}
 
 Set an Option's Value
 #####################

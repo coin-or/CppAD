@@ -7,9 +7,6 @@
 
 /*
 {xrst_begin xpackage_sparse_hessian.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: Sparse Hessian
 ##############################

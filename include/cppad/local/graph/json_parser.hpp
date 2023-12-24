@@ -13,9 +13,6 @@
 
 /*
 {xrst_begin json_parser dev}
-{xrst_spell
-   parser
-}
 
 Json AD Graph Parser
 ####################

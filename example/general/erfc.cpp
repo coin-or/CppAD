@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin erfc.cpp}
-{xrst_spell
-   erfc
-}
 
 The AD erfc Function: Example and Test
 ######################################

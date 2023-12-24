@@ -1132,9 +1132,6 @@ to the system using :ref:`free_available<ta_free_available-name>` .
 
 /* -----------------------------------------------------------------------
 {xrst_begin ta_inuse}
-{xrst_spell
-   inuse
-}
 
 Amount of Memory a Thread is Currently Using
 ############################################

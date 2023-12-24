@@ -94,9 +94,6 @@ addr_t tape_t<Value>::set_ind(addr_t n_ind)
 /*
 -------------------------------------------------------------------------------
 {xrst_begin val_set_dep dev}
-{xrst_spell
-   dep
-}
 
 Setting the Dependent Variables
 ###############################
@@ -423,9 +420,6 @@ addr_t tape_t<Value>::record_call_op(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_record_csum_op dev}
-{xrst_spell
-   csum
-}
 
 Recording Cumulative Summation Operations
 #########################################
@@ -491,9 +485,6 @@ addr_t tape_t<Value>::record_csum_op(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_record_cexp_op dev}
-{xrst_spell
-   cexp
-}
 
 Recording Comparison Operations
 ###############################

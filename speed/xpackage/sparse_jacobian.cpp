@@ -7,9 +7,6 @@
 
 /*
 {xrst_begin xpackage_sparse_jacobian.cpp}
-{xrst_spell
-   xpackage
-}
 
 Xpackage Speed: sparse_jacobian
 ###############################

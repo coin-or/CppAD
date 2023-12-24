@@ -5,28 +5,26 @@
 # # ----------------------------------------------------------------------------
 # {xrst_begin configure app}
 # {xrst_spell
-#    adouble
-#    ansi
-#    badiff
-#    boostvector
-#    cl
-#    cxx
-#    cygdrive
-#    dist
-#    eigenvector
-#    italic
-#    linux
-#    msvc
-#    optionally
-#    postfix
-#    stdvector
-#    ublas
-#    usr
-#    Fortran
-#    nmake
-#    testvector
-#    github
-#    msys
+#     adouble
+#     ansi
+#     badiff
+#     boostvector
+#     cl
+#     cxx
+#     cygdrive
+#     dist
+#     eigenvector
+#     fortran
+#     italic
+#     linux
+#     msvc
+#     nmake
+#     optionally
+#     postfix
+#     stdvector
+#     testvector
+#     ublas
+#     usr
 # }
 # {xrst_comment_ch #}
 #

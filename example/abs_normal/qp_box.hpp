@@ -8,7 +8,6 @@
 {xrst_begin qp_box}
 {xrst_spell
    maxitr
-   qp
    rl
    xout
 }

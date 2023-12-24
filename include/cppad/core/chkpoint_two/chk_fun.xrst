@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin chkpoint_two_chk_fun}
-{xrst_spell
-   chk
-}
 
 Using Checkpoint Functions
 ##########################

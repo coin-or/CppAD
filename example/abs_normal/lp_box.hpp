@@ -7,7 +7,6 @@
 /*
 {xrst_begin lp_box}
 {xrst_spell
-   lp
    maxitr
    rl
    xout

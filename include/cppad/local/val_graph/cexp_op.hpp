@@ -13,7 +13,6 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_cexp_op dev}
 {xrst_spell
-   cexp
    xam
 }
 

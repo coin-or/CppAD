@@ -10,7 +10,6 @@
    ifdef
    ls
    txt
-   xpackage
 }
 
 Speed Test Example and Template for a New Package

@@ -13,7 +13,6 @@ namespace CppAD { namespace local { namespace optimize  {
 {xrst_spell
    addpv
    addvv
-   csum
    subpv
    subvp
    subvv

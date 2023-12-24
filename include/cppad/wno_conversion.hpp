@@ -7,9 +7,6 @@
 
 /*
 {xrst_begin wno_conversion}
-{xrst_spell
-   wno
-}
 
 Suppress Suspect Implicit Conversion Warnings
 #############################################
