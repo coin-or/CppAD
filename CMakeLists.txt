@@ -202,6 +202,11 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 command_line_arg(cppad_static_lib FALSE BOOL
    "If true (false) the cppad library will be static (shared)"
 )
+#
+# cppad_debug_and_release
+command_line_arg(cppad_debug_and_release TRUE BOOL
+   "If true the cppad library and tests will be able to mix debug and release"
+)
 # ----------------------------------------------------------------------------
 #
 # Ensure c++11 support
@@ -231,6 +236,13 @@ int main(void)
 )
 compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2017_ok )
 # ----------------------------------------------------------------------------
+#
+# cppad_debug_and_release_01
+IF (cppad_debug_and_release )
+   SET(cppad_debug_and_release_01 1 )
+ELSE (cppad_debug_and_release )
+   SET(cppad_debug_and_release_01 0 )
+ENDIF ( )
 #
 # cppad_debug_which
 # CMAKE_BUILD_TYPE
@@ -275,13 +287,18 @@ ELSE( ) # CMAKE_BUILD_TYPE
       SET(debug_even_or_odd TRUE)
    ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 ENDIF( ) # CMAKE_BUILD_TYPE
-IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
-   IF( debug_even_or_odd )
+IF( debug_even_or_odd )
+   IF ( NOT cppad_debug_and_release )
+      MESSAGE(FATAL_ERROR
+"cppad_debug_and_release is false and cppad_debug_wich = ${cppad_debug_which}"
+      )
+   ENDIF ( NOT cppad_debug_and_release )
+   IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
       MESSAGE(FATAL_ERROR
       "Cannot have cppad_debug_which equal ${cppad_debug_which} on Windows."
       )
-   ENDIF( debug_even_or_odd )
-ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+   ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+ENDIF( debug_even_or_odd )
 print_variable(CMAKE_SYSTEM_NAME)
 print_variable(cppad_debug_which)
 print_variable(CMAKE_BUILD_TYPE)

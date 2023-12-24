@@ -129,7 +129,7 @@ bool compare_change(void)
          AD<double>::abort_recording();
       }
    }
-# ifdef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
    if( missed_error )
    {  // This routine is compiled for debugging, but the routine that checks
       // operator indices was compiled for release.

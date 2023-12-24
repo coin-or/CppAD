@@ -15,9 +15,6 @@ file_list=`git ls-files '*.hpp' '*.in' |
    sed -n -e '/^include\/cppad\//p'`
 add_on_list='CG PY TMB MIXED'
 #
-# preprocessor symbol that may or may not be defined by user
-echo 'CPPAD_DEBUG_AND_RELEASE' > check_define.1
-#
 # preprocessor symbols in user API
 sed -n -e "/^# *undef /p" xrst/preprocessor.xrst | sed \
    -e "s/^# *undef  *\([A-Za-z0-9_]*\).*/\1/" > check_define.2

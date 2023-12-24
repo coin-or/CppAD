@@ -27,6 +27,13 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+12-24
+=====
+Change the ``CPPAD_DEBUG_AND_RELEASE`` compiler flag to the cmake
+:ref:`cmake@cppad_debug_and_release` configuration flag.
+This changed the default behavior for compiling the CppAD library
+so that it allows for mixing debug and release code.
+
 09-08
 =====
 #. Add the :ref:`cmake@cppad_static_lib` option to the install.

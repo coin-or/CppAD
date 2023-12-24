@@ -135,6 +135,7 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cppad_tape_addr_type`` = *cppad_tape_addr_type*                \\
 | |tab| ``-D cppad_debug_which`` = *cppad_debug_which*                      \\
 | |tab| ``-D cppad_static_lib`` = *cppad_static_lib*                        \\
+| |tab| ``-D cppad_debug_and_release`` = *cppad_debug_and_release*          \\
 | |tab| \\
 | |tab| ..
 
@@ -443,14 +444,6 @@ C++17
 In order for the compiler to take advantage of features that are in C++17
 ,but not in C++11, the *cppad_cxx_flags* must enable these features.
 
-debug and release
-=================
-The CppAD examples and tests decide which files to compile for debugging
-and which to compile for release. Hence debug and release flags should
-not be included in *cppad_cxx_flags* .
-See also the
-:ref:`preprocessor@Documented Here@CPPAD_DEBUG_AND_RELEASE`
-compiler flag (which should not be included in *cppad_cxx_flags* ).
 
 clang
 =====
@@ -569,11 +562,25 @@ then *cppad_debug_which* must be the empty string (its default value).
 
 cppad_static_lib
 ****************
-This value should be either ``true`` or ``false`` .
-The default value is ``false`` .
+This value should be either ``true`` or ``false`` and
+its default value is ``false`` .
 If it is true (false), the cppad library will be a static (shared) library.
 If the target system uses windows dlls, this setting should be true.
 If it is false, a warning will be issued and it will be ignored.
+
+cppad_debug_and_release
+***********************
+This value should be either ``true`` or ``false`` and its
+default value is ``true`` .
+If it is true,
+and the debug and release versions of CppAD can be mixed in the same program.
+This must be true if
+:ref:`cmake@cppad_debug_which` is ``debug_even`` or ``debug_odd`` .
+If ``NDEBUG`` is defined and *cppad_debug_and_release* is false,
+:ref:`thread_alloc-name` does more error checking.
+For programs that do a lot of memory allocation,
+this can take a significant amount of time.
+This is meant for testing CppAD and as a last resort when debugging.
 
 {xrst_toc_hidden
    bin/get_optional.sh

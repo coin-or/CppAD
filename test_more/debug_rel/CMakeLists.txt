@@ -17,13 +17,11 @@ ELSE( "${cppad_debug_which}" )
 ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
 #
 SET_SOURCE_FILES_PROPERTIES(
-   debug_rel.cpp debug.cpp PROPERTIES COMPILE_FLAGS
-   "${debug_flags} -DCPPAD_DEBUG_AND_RELEASE"
+   debug_rel.cpp debug.cpp PROPERTIES COMPILE_FLAGS "${debug_flags}"
 )
 #
 SET_SOURCE_FILES_PROPERTIES(
-   release.cpp PROPERTIES COMPILE_FLAGS
-   "${release_flags} -DCPPAD_DEBUG_AND_RELEASE"
+   release.cpp PROPERTIES COMPILE_FLAGS "${release_flags}"
 )
 
 # now that we have the properties, add the executable

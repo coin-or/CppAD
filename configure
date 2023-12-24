@@ -628,7 +628,6 @@ fi
 #
 # cppad_cxx_flags
 cppad_cxx_flags=$( echo " $cxx_flags " | sed -e 's| -g ||' )
-cppad_cxx_fags="$cppad_flags -D CPPAD_DEBUG_AND_RELEASE"
 #
 # cmake_install_libdirs
 cmake_install_libdirs='lib;lib64'
@@ -679,7 +678,8 @@ echo cmake \
    -D cppad_max_num_threads="$max_num_threads" \
    -D cppad_tape_id_type="$tape_id_type" \
    -D cppad_tape_addr_type="$tape_addr_type" \
-   -D cppad_debug_which='debug_none'
+   -D cppad_debug_which='debug_none' \
+   -D cppad_debug_and_release='true'
 #
 cmake \
    -U .+ \
@@ -713,7 +713,8 @@ cmake \
    -D cppad_max_num_threads="$max_num_threads" \
    -D cppad_tape_id_type="$tape_id_type" \
    -D cppad_tape_addr_type="$tape_addr_type" \
-   -D cppad_debug_which='debug_none'
+   -D cppad_debug_which='debug_none' \
+   -D cppad_debug_and_release='true'
 # ----------------------------------------------------------------------------
 echo 'configure: OK'
 exit 0

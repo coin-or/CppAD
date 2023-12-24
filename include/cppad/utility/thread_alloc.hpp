@@ -134,9 +134,9 @@ private:
       block_t root_available_[CPPAD_MAX_NUM_CAPACITY];
       /*!
       root of inuse list for this thread and each capacity
-      If NDEBUG or CPPAD_DEBUG_AND_RELEASE is defined, this memory is not
-      used, but it still helps to separate this structure from the structure
-      for the next thread.
+      If NDEBUG is defined or CPPAD_DEBUG_AND_RELEASE is true,
+      this memory is not used, but it still helps to separate
+      this structure from the structure for the next thread.
       */
       block_t root_inuse_[CPPAD_MAX_NUM_CAPACITY];
    };
@@ -788,7 +788,7 @@ Example
             first_trace = false;
       }
 
-# ifndef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
       // Root nodes for both lists. Note these are different for different
       // threads because tc_index is different for different threads.
       block_t* inuse_root     = info->root_inuse_ + c_index;
@@ -808,7 +808,7 @@ Example
          // return value for get_memory
          void* v_ptr = reinterpret_cast<void*>(node + 1);
 # ifndef NDEBUG
-# ifndef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
          // add node to inuse list
          node->next_           = inuse_root->next_;
          inuse_root->next_     = v_node;
@@ -844,7 +844,7 @@ Example
       void* v_ptr     = reinterpret_cast<void*>(node + 1);
 
 # ifndef NDEBUG
-# ifndef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
       // add node to inuse list
       node->next_       = inuse_root->next_;
       inuse_root->next_ = v_node;
@@ -943,7 +943,7 @@ Example
 
       thread_alloc_info* info = thread_info(thread);
 # ifndef NDEBUG
-# ifndef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
       // remove node from inuse list
       void* v_node         = reinterpret_cast<void*>(node);
       block_t* inuse_root  = info->root_inuse_ + c_index;

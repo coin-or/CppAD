@@ -13,11 +13,9 @@
 #
 # Case debug_even:
 # The files with an even (odd) index in source_list have debug (release) flags.
-# In addition the compiler flag -DCPPAD_DEBUG_AND_RELEASE is added.
 #
 # Case debug_odd:
 # The files with an odd (even) index in source_list have debug (release) flags.
-# In addition the compiler flag -DCPPAD_DEBUG_AND_RELEASE is added.
 #
 # Case debug_all, debug_none, or empty string:
 # The debug and release flags are not set by this routine.
@@ -62,12 +60,10 @@ FUNCTION(set_compile_flags program_name debug_which source_list)
          ENDIF( count_mod_2 )
       ENDFOREACH(source ${source_list})
       SET_SOURCE_FILES_PROPERTIES(
-         ${debug_list} PROPERTIES COMPILE_FLAGS
-         "${debug_flags} -D CPPAD_DEBUG_AND_RELEASE"
+         ${debug_list} PROPERTIES COMPILE_FLAGS "${debug_flags}"
       )
       SET_SOURCE_FILES_PROPERTIES(
-         ${release_list} PROPERTIES COMPILE_FLAGS
-         "${release_flags} -D CPPAD_DEBUG_AND_RELEASE"
+         ${release_list} PROPERTIES COMPILE_FLAGS "${release_flags}"
       )
       # IF( ${program_name} STREQUAL "..." )
       #   print_variable( ... )

@@ -341,10 +341,6 @@ done
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
 cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
-if [ "$debug_which" == 'debug_odd' ] || [ "$debug_which" == 'debug_even' ]
-then
-   cppad_cxx_flags="$cppad_cxx_flags -D CPPAD_DEBUG_AND_RELEASE"
-fi
 if [ "$callgrind" == 'yes' ]
 then
    if [ "$debug_which" != 'debug_none' ]
@@ -383,6 +379,12 @@ fi
 if [ "$profile_speed" == 'yes' ]
 then
    cmake_args="$cmake_args -D cppad_profile_flag=-pg"
+fi
+#
+# debug_and_release
+if [ "$debug_which" == 'debug_none' ]
+then
+   cmake_args = "$cmake_args -D cppad_debug_and_release=false"
 fi
 #
 # simple options

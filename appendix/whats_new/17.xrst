@@ -310,8 +310,7 @@ is lower triangular to the speed test
 =====
 
 #. Add the capability to compile so that CppAD debug and release mode
-   can be mixed; see
-   :ref:`preprocessor@Documented Here@CPPAD_DEBUG_AND_RELEASE` .
+   can be mixed using ``CPPAD_DEBUG_AND_RELEASE`` .
 #. Add the :ref:`cmake@cppad_debug_which` flags
    that determines which files are compiled for debugging versus release
    during the CppAD testing; see :ref:`cmake_check-name` .

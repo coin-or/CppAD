@@ -62,6 +62,17 @@ The second operand in a divide operation evaluated to zero at compile time.
 /* {xrst_code}
 {xrst_spell_on}
 
+CPPAD_DEBUG_AND_RELEASE
+***********************
+Starting with 2023-12-24,
+this flag is set by the cmake command; see
+:ref:`cmake@cppad_debug_and_release` .
+Before then, one would add -D CPPAD_DEBUG_AND_RELEASE
+when compiling CppAD code.
+{xrst_code hpp} */
+# define CPPAD_DEBUG_AND_RELEASE @cppad_debug_and_release_01@
+/* {xrst_code}
+
 CPPAD_USE_CPLUSPLUS_2011
 ************************
 Deprecated 2020-12-03:

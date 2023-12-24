@@ -4,7 +4,6 @@
 # ----------------------------------------------------------------------------
 {xrst_begin preprocessor}
 {xrst_spell
-   complier
    nullptr
 }
 
@@ -35,20 +34,6 @@ it is done as follows:
 
 Documented Here
 ***************
-
-CPPAD_DEBUG_AND_RELEASE
-=======================
-This flag is an exception because it is defined (or not) by the user
-during the inclusion of the CppAD header files; e.g., when using ``g++``
-one could put ``-D CPPAD_DEBUG_AND_RELEASE`` on the complier command line.
-If it is defined, less error checking is done and the
-debug and release versions of CppAD can be mixed in the same program.
-Of particular note is that :ref:`thread_alloc-name` does less error checking.
-For programs that do a lot of memory allocation,
-this can be a significant time savings when ``NDEBUG`` is defined.
-{xrst_comment
-# undef CPPAD_DEBUG_AND_RELEASE
-}
 
 CPPAD_NULL
 **********

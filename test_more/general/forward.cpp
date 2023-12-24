@@ -180,7 +180,7 @@ bool ForwardOlder(void)
 }
 
 # ifndef NDEBUG
-# ifndef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
 void my_error_handler(
    bool known           ,
    int  line            ,
@@ -239,7 +239,7 @@ bool Forward(void)
    ok &= ForwardCases< std::valarray  <double> >();
    ok &= ForwardOlder();
 # ifndef NDEBUG
-# ifndef CPPAD_DEBUG_AND_RELEASE
+# if CPPAD_DEBUG_AND_RELEASE
    // CppAD does not check for nan when NDEBUG is defined
    ok &= forward_nan();
 # endif

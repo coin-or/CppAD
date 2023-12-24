@@ -337,8 +337,7 @@ when using :ref:`chkpoint_two-name` function.
    :ref:`json_graph_op@sum` operator
    in :ref:`from_json-name` .
 #. Improve the documentation for mixing debug and release versions
-   of CppAD in the same program; see
-   :ref:`preprocessor@Documented Here@CPPAD_DEBUG_AND_RELEASE` .
+   of CppAD in the same program using ``CPPAD_DEBUG_AND_RELEASE`` .
 
 08-10
 =====
