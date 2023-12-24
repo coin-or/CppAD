@@ -183,16 +183,14 @@ list=$(
    -e '/check_doxygen.sh/d' \
    -e '/check_install.sh/d'
 )
-# ~/devel/check_copyright.sh not included in batch_edit branch
+#
 for check in $list
 do
-   if [ "$check" == 'bin/check_xrst.sh' ]
-   then
-      echo_log_eval $check +dev
-   else
-      echo_log_eval $check
-   fi
+   echo_log_eval $check
 done
+#
+# run_xrst.sh
+bin/run_xrst.sh +dev
 # ---------------------------------------------------------------------------
 # build/cppad-$version.tgz
 echo_log_eval bin/package.sh
