@@ -11,7 +11,7 @@
    templated
 }
 
-cppad-20231224: CppAD User's Manual
+cppad-20231227: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}
