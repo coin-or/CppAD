@@ -27,6 +27,10 @@ Changes and Additions to CppAD During 2023
 mm-dd
 *****
 
+12-27
+=====
+Fix link in :ref:`user_guide@Software Engineering` paragraph.
+
 12-24
 =====
 Change the ``CPPAD_DEBUG_AND_RELEASE`` compiler flag to the cmake
