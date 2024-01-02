@@ -135,7 +135,7 @@ See :ref:`Independent@abort_op_index` in the syntax
    ``Independent`` ( *x* , *abort_op_index* )
 
 {xrst_toc_hidden
-   example/general/compare_change.cpp
+   example/compare_change/compare_change.cpp
 }
 Example
 *******

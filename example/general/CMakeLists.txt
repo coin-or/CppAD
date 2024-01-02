@@ -49,7 +49,6 @@ SET(source_list
    change_param.cpp
    check_for_nan.cpp
    compare.cpp
-   compare_change.cpp
    complex_poly.cpp
    con_dyn_var.cpp
    cond_exp.cpp

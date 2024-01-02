@@ -79,6 +79,8 @@ fi
 # ---------------------------------------------------------------------------
 version=`version.sh get`
 # ---------------------------------------------------------------------------
+#
+# compiler
 random_01 compiler
 if [ "$random_01_compiler" == '0' ]
 then
@@ -87,9 +89,7 @@ else
    compiler='--clang'
 fi
 #
-# 3/2 time c++17 standard
-# 3/4 time use bin/run_cmake.sh
-# 1/4 time use bin/configure.sh
+# standard
 random_01 standard
 if [ "$random_01_standard" == '0' ]
 then
@@ -97,15 +97,29 @@ then
    if [ "$random_01_standard" == '0' ]
    then
       standard='--c++11'
-      use_configure='no'
    else
       standard='--c++17'
-      use_configure='yes'
    fi
 else
    standard='--c++17'
+fi
+#
+# use_configure
+random_01 use_configure
+if [ "$random_01_use_configure" == '0' ]
+then
+   random_01 use_configure
+   if [ "$random_01_use_configure" == '0' ]
+   then
+      use_configure='yes'
+   else
+      use_configure='no'
+   fi
+else
    use_configure='no'
 fi
+#
+
 #
 if [ "$build_type" == 'debug' ]
 then

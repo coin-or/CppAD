@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_24 app}
+{xrst_spell
+}
+
+new_24s and Additions to CppAD During 2024
+##########################################
+
+mm-dd
+*****
+
+01-02
+=====
+
+#. The :ref:`compare_change.cpp-name` example/test would sometimes fail
+   when :ref:`cmake@cppad_debug_which` was ``debug_even`` or
+   ``debug_odd`` (because it was compiled for debugging and including
+   a release version of a utility). This has been fixed by making this
+   example/test a separate program.
+
+#. The :ref:`CppAD_vector@vectorBool` constructor would generate a
+   warning when called with an ``int`` for the size of the vector
+   (on some compilers). This has been fixed.
+
+
+{xrst_end whats_new_24}

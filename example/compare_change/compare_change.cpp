@@ -8,6 +8,8 @@
 
 CompareChange and Re-Tape: Example and Test
 ###########################################
+This test is run as a separate program so that it does not
+mix debug and release versions of the template functions it calls.
 
 {xrst_literal
    // BEGIN C++
@@ -20,7 +22,10 @@ CompareChange and Re-Tape: Example and Test
 
 # include <cppad/cppad.hpp>
 
-namespace { // put this function in the empty namespace
+// empty namespace
+namespace {
+   //
+   // Minimum
    template <class Type>
    Type Minimum(const Type &x, const Type &y)
    {  // Use a comparison to compute the min(x, y)
@@ -29,6 +34,8 @@ namespace { // put this function in the empty namespace
          return x;
       return y;
    }
+   //
+   // error_info
    struct error_info {
       bool known;
       int  line;
@@ -36,6 +43,8 @@ namespace { // put this function in the empty namespace
       std::string exp;
       std::string msg;
    };
+   //
+   // error_handler
    void error_handler(
       bool        known       ,
       int         line        ,
@@ -53,7 +62,8 @@ namespace { // put this function in the empty namespace
    }
 
 }
-
+//
+// compare_change
 bool compare_change(void)
 {  bool ok = true;
    using CppAD::AD;
@@ -129,14 +139,6 @@ bool compare_change(void)
          AD<double>::abort_recording();
       }
    }
-# if CPPAD_DEBUG_AND_RELEASE
-   if( missed_error )
-   {  // This routine is compiled for debugging, but the routine that checks
-      // operator indices was compiled for release.
-      missed_error = false;
-      AD<double>::abort_recording();
-   }
-# endif
    ok &= ! missed_error;
 
    // set count to zero to demonstrate case where comparisons are not checked
@@ -172,5 +174,22 @@ bool compare_change(void)
    return ok;
 }
 
+// main program that runs this test
+int main(void)
+{  std::string group = "example/compare_change";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
+
+   // This line is used by test_one.sh
+
+   Run( compare_change,    "compare_change"   );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
+}
 
 // END C++
