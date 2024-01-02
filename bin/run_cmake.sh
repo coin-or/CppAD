@@ -382,9 +382,9 @@ then
 fi
 #
 # debug_and_release
-if [ "$debug_which" == 'debug_none' ]
+if [ "$debug_which" == 'debug_none' ] || [ "$debug_which" == 'debug_all' ]
 then
-   cmake_args = "$cmake_args -D cppad_debug_and_release=false"
+   cmake_args="$cmake_args -D cppad_debug_and_release=false"
 fi
 #
 # simple options

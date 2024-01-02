@@ -165,14 +165,19 @@ Source
 {xrst_spell_off}
 {xrst_code hpp}:
 */
+   // default
    vectorBool(void) : n_unit_(0), length_(0), data_(nullptr)
    { }
-   vectorBool(size_t n) : n_unit_(0), length_(n), data_(nullptr)
+   //
+   // sizing
+   vectorBool(size_t n) : n_unit_(0), length_(0), data_(nullptr)
    {  resize(n); }
-   vectorBool(int n) : n_unit_(0), length_(n), data_(nullptr)
+   vectorBool(int n) : n_unit_(0), length_(0), data_(nullptr)
    {  resize( size_t(n) ); }
-   vectorBool(unsigned int n) : n_unit_(0), length_(n), data_(nullptr)
+   vectorBool(unsigned int n) : n_unit_(0), length_(0), data_(nullptr)
    {  resize( size_t(n) ); }
+   //
+   // copy
    vectorBool(const vectorBool& other)
    : n_unit_(0), length_(0), data_(nullptr)
    {  resize(other.length_);
