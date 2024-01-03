@@ -10,7 +10,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 with_clang=''
-cpp_standard='-std=c++17'
+cpp_standard='c++17'
 while [ "$1" != '' ]
 do
    if [ "$1" == '--help' ]
@@ -19,7 +19,7 @@ do
 usage: bin/run_configure.sh \\
    [--help] \\
    [--with_clang] \\
-   [--std=c++yy]
+   [--c++yy]
 EOF
       exit 0
    fi
@@ -29,9 +29,8 @@ EOF
       with_clang='--with_clang'
       ;;
 
-      --std=c++*)
-      standard=$(echo "$1" | sed -e 's|^--std=c++||')
-      cpp_standard="-std=c++$standard"
+      --c++*)
+      cpp_standard=$(echo "$1" | sed -e 's|^--||')
       ;;
 
       *)
@@ -66,7 +65,7 @@ export PKG_CONFIG_PATH
 testvector='cppad'
 #
 # cppad_cxx_flags
-cppad_cxx_flags="$cpp_standard -Wall -pedantic-errors -Wshadow"
+cppad_cxx_flags="-std=$cpp_standard -Wall -pedantic-errors -Wshadow"
 cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
 #
 # ---------------------------------------------------------------------------

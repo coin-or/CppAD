@@ -119,8 +119,7 @@ else
    use_configure='no'
 fi
 #
-
-#
+# package_vector, debug_which
 if [ "$build_type" == 'debug' ]
 then
    package_vector='--cppad_vector'
@@ -167,10 +166,14 @@ debug_which     = $debug_which
 package_vector  = $package_vector
 use_configure   = $use_configure
 EOF
+#
+# compiler
 if [ "$compiler" == 'default' ]
 then
    compiler=''
 fi
+#
+# standard
 if [ "$standard" == '--c++17' ]
 then
    standard='' # default for run_cmake.sh and configure

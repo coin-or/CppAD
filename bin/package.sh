@@ -40,16 +40,8 @@ cd build/cppad-$version
 tar -xzf tar.tgz
 rm tar.tgz
 #
-# build/cppad-version/build/html
-cmd="xrst \
---local_toc \
---target html \
---html_theme sphinx_rtd_theme \
---index_page_name $index_page_name \
---group_list default app dev \
-"
-echo "$cmd"
-$cmd
+#  build/cppad-version/build/html
+bin/run_xrst.sh -dev
 #
 # build/cppad-$version.tgz
 cd ..
