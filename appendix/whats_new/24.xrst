@@ -13,6 +13,14 @@ new_24s and Additions to CppAD During 2024
 mm-dd
 *****
 
+01-03
+=====
+
+#. The change on :ref:`whats_new_23@mm-dd@12-24` 2023,
+   when :ref:`cmake@cppad_debug_and_release` was implemented,
+   was not done properly and might cause a mistaken assertion.
+   This has been fixed.
+
 01-02
 =====
 

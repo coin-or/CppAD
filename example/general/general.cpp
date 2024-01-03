@@ -259,7 +259,7 @@ int main(void)
    Run( unary_plus,        "unary_plus"       );
    Run( vec_ad,            "vec_ad"           );
    // END_SORT_THIS_LINE_MINUS_1
-# if CPPAD_DEBUG_AND_RELEASE
+# if ! CPPAD_DEBUG_AND_RELEASE
    Run( check_for_nan,     "check_for_nan"    );
 # endif
 # if CPPAD_HAS_ADOLC
