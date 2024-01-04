@@ -174,7 +174,7 @@ private:
    lists when this routine is called.
 
    \return
-   is the current informaiton pointer for this thread.
+   is the current information pointer for this thread.
    If clear is false, and the current pointer is nullptr,
    a new infromation record is allocated and its pointer returned.
    In this case, if info is the retured pointer,

@@ -129,7 +129,7 @@ void reverse_mulvv_op(
    {  --j;
       for(k = 0; k <= j; k++)
       {
-         // must use azmul becasue pz[j] = 0 may mean that this
+         // must use azmul because pz[j] = 0 may mean that this
          // component of the function was not selected.
          px[j-k] += azmul(pz[j], y[k]);
          py[k]   += azmul(pz[j], x[j-k]);
@@ -249,7 +249,7 @@ void reverse_mulpv_op(
    size_t j = d + 1;
    while(j)
    {  --j;
-      // must use azmul becasue pz[j] = 0 may mean that this
+      // must use azmul because pz[j] = 0 may mean that this
       // component of the function was not selected.
       py[j] += azmul(pz[j], x);
    }

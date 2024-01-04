@@ -33,7 +33,7 @@ fi
 dd=`version.sh get | sed -e 's|......\([0-9][0-9]\)|\1|' `
 if [ "$dd" != '01' ]
 then
-   echo 'tag_month.sh: verison does not correspond to first day of a month'
+   echo 'tag_month.sh: version does not correspond to first day of a month'
    exit 1
 fi
 # --------------------------------------------------------------------------

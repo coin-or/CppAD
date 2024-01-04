@@ -411,7 +411,7 @@ void CppAD::local::graph::csrc_writer(
          op_csrc = "-";
          break;
          // -------------------------------------------------------------
-         // comparision operators
+         // comparison operators
          // -------------------------------------------------------------
          case comp_eq_graph_op:
          op_csrc = "!="; // not eq
@@ -497,7 +497,7 @@ void CppAD::local::graph::csrc_writer(
          );
          break;
          //
-         // comparision operators
+         // comparison operators
          case comp_eq_graph_op:
          case comp_le_graph_op:
          case comp_lt_graph_op:

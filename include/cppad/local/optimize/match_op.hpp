@@ -282,7 +282,7 @@ bool match_op(
       exceed_collision_limit = true;
    }
    // No match was found. Add this operator to the set for this hash code
-   // Not using post_element becasue we need to iterate for
+   // Not using post_element because we need to iterate for
    // this code before adding another element for this code.
    hash_table_op.add_element(code, current);
    //

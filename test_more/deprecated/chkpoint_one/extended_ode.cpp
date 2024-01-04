@@ -350,7 +350,7 @@ bool extended_ode(void)
    a1vector ax1(n_), az1(n_), az1_x(n_ * n_);
    unpack(aext_ode_out, ax1, az1, az1_x);
    //
-   // We could record a complicated funciton of x and z_x(T, x) in f,
+   // We could record a complicated function of x and z_x(T, x) in f,
    // but make this example simpler we record x -> z_x(T, x).
    CppAD::ADFun<double> f(ax, az1_x);
    //

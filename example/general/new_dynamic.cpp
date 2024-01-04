@@ -98,7 +98,7 @@ bool new_dynamic(void)
    check *= dynamic[2] + x[1];
    ok  &= NearEqual(y[0] , check, eps, eps);
 
-   // use first order foward mode to compute partial of f w.r.t x[0]
+   // use first order forward mode to compute partial of f w.r.t x[0]
    CPPAD_TESTVECTOR(double) dx(nx), dy(ny);
    dx[0] = 1.0;
    dx[1] = 0.0;

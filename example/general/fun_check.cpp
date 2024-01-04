@@ -35,7 +35,7 @@ public:
    {  Vector y(n);
       size_t i;
       for(i = 0; i < n; i++)
-      {  // This operaiton sequence depends on x
+      {  // This operation sequence depends on x
          if( x[i] >= 0 )
             y[i] = exp(x[i]);
          else

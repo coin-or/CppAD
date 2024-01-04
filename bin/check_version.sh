@@ -93,7 +93,7 @@ s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
 #
 # user_guide.xrst
 s|[0-9]\\{8\\}[.][0-9]*|$version|
-s|documentation-[0-9]\\{8\\}|documentaiton-latest|
+s|documentation-[0-9]\\{8\\}|documentation-latest|
 s|stable-[0-9]\\{8\\}|latest|
 s|cppad-[0-9]\\{8\\}[0-9.]*|cppad-$stable|
 EOF

@@ -278,7 +278,7 @@ bool ode(void)
    a1vector ax1(n_), az1(n_);
    unpack(axz_out, ax1, az1);
    //
-   // We could record a complicated funciton of x and z(T, x) in f,
+   // We could record a complicated function of x and z(T, x) in f,
    // but make this example simpler we record x -> z(T, x).
    CppAD::ADFun<double> f(ax, az1);
    //

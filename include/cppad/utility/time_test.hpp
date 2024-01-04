@@ -164,7 +164,7 @@ or a function object type that supports the same syntax.
 \param test
 The function, or function object, that supports the operation
 test(repeat) where repeat is the number of times
-to repeat the tests operaiton that is being timed.
+to repeat the tests operation that is being timed.
 
 \param time_min
 is the minimum amount of time that test should take to preform
@@ -202,7 +202,7 @@ or a function object type that supports the same syntax.
 The function, or function object, that supports the operation
 test(size, repeat) where size
 is the size for this test and repeat is the number of times
-to repeat the tests operaiton that is being timed.
+to repeat the tests operation that is being timed.
 
 \param time_min
 is the minimum amount of time that test should take to preform
@@ -243,7 +243,7 @@ or a function object type that supports the same syntax.
 The function, or function object, that supports the operation
 test(size, repeat) where size
 is the size for this test and repeat is the number of times
-to repeat the tests operaiton that is being timed.
+to repeat the tests operation that is being timed.
 
 \param time_min
 is the minimum amount of time that test should take to preform

@@ -303,7 +303,7 @@ void get_dyn_previous(
                   hash_table_dyn.clear(code);
                }
                // Add this entry to hash table.
-               // Not using post_element becasue we need to iterate for
+               // Not using post_element because we need to iterate for
                // this code before adding another element for this code.
                hash_table_dyn.add_element(code, i_dyn);
             }
@@ -405,7 +405,7 @@ void get_dyn_previous(
                hash_table_dyn.clear(code);
             }
             // Add the entry to hash table
-            // Not using post_element becasue we need to iterate for
+            // Not using post_element because we need to iterate for
             // this code before adding another element for this code.
             hash_table_dyn.add_element(code, i_dyn);
          }

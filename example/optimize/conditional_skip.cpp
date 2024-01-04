@@ -50,7 +50,7 @@ namespace {
       // Note that the left and right operand in the CondExpLt comparison
       // are determined at this point. Hence the conditional skip operator
       // will be inserted here so that the operations mentioned below can
-      // also be skipped during zero order foward mode.
+      // also be skipped during zero order forward mode.
       if( options.find("no_conditional_skip") == std::string::npos )
          after.n_op += 1; // for conditional skip operation
 

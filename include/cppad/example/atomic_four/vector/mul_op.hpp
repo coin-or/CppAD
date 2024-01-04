@@ -157,7 +157,7 @@ void atomic_vector<Base>::reverse_mul(
          {  size_t u_index  =       i * q + (k-d);
             size_t v_index  = (m + i) * q + d;
             //
-            // must use azmul becasue py[y_index] = 0 may mean that this
+            // must use azmul because py[y_index] = 0 may mean that this
             // component of the function was not selected.
             px[u_index]    += CppAD::azmul( py[y_index] , tx[v_index] );
             px[v_index]    += CppAD::azmul( py[y_index] , tx[u_index] );

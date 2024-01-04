@@ -32,7 +32,7 @@ jobs:
     - name: Build and test CppAD with Eigen
       shell: cmd /C CALL {0}
       run: |
-        echo Use vcvarsall.bat to get proper verison of cmake
+        echo Use vcvarsall.bat to get proper version of cmake
         call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
         echo where camke
              where cmake

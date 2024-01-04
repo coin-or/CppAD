@@ -166,7 +166,7 @@ private:
          // call member_struct constructor
          new( member_[thread] ) member_struct;
          //
-         // The thread has a copy of corresponding informaiton.
+         // The thread has a copy of corresponding information.
          member_[thread]->g_  = g_;
          member_[thread]->ag_ = ag_;
       }

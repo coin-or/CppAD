@@ -2220,7 +2220,7 @@ bool atomic_both(void)
    CppAD::ADFun<double> f(ax, ay);
    //
    // Create a ckhpoint_two with name f(x; p).
-   // (This also creates an atomic_three fucntion with same name.)
+   // (This also creates an atomic_three function with same name.)
    bool internal_bool    = false;
    bool use_hes_sparsity = false;
    bool use_base2ad      = false;
@@ -2294,7 +2294,7 @@ bool atomic_dynamic(void)
    CppAD::ADFun<double> f(ax, ay);
    //
    // Create a ckhpoint_two with name f(x).
-   // (This also creates an atomic_three fucntion with same name.)
+   // (This also creates an atomic_three function with same name.)
    bool internal_bool    = false;
    bool use_hes_sparsity = false;
    bool use_base2ad      = false;

@@ -63,7 +63,7 @@ bool atom_op(void)
    ok &= f.size_dyn_ind() == 1;
    //
    // A ckhpoint_two function with name f(x; p) is derived from
-   // an atomic_three fucntion with the same name.
+   // an atomic_three function with the same name.
    bool internal_bool    = false;
    bool use_hes_sparsity = false;
    bool use_base2ad      = false;

@@ -142,7 +142,7 @@ size_t atomic_index(
    if( set_null & (index_in == 0) )
       return vec.size();
    //
-   // case were we are retreving informaiton for an atomic function
+   // case were we are retreving information for an atomic function
    if( 0 < index_in )
    {  CPPAD_ASSERT_UNKNOWN( index_in <= vec.size() )
       //

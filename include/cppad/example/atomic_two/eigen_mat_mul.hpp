@@ -192,7 +192,7 @@ op
          packed_arg[ 3 + n_left + i ] = right.data()[i];
       // ------------------------------------------------------------------
       // Packed version of result = left * right.
-      // This as an atomic_base funciton call that CppAD uses
+      // This as an atomic_base function call that CppAD uses
       // to store the atomic operation on the tape.
       CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
       (*this)(packed_arg, packed_result);

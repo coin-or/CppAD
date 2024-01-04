@@ -87,7 +87,7 @@ bool Sin(void)
    {
       double sinj = sinjp;
 
-      // compute j+1 derivative of sin funciton
+      // compute j+1 derivative of sin function
       if( j % 4 == 0 )
          sinjp = cos_u;
       else if( j % 4 == 1 )
@@ -186,7 +186,7 @@ bool Cos(void)
    {
       double cosj = cosjp;
 
-      // compute j+1 derivative of cos funciton
+      // compute j+1 derivative of cos function
       if( j % 4 == 0 )
          cosjp = -sin_u;
       else if( j % 4 == 1 )
@@ -281,7 +281,7 @@ bool Cosh(void)
    {
       double coshj = coshjp;
 
-      // compute j+1 derivative of cosh funciton
+      // compute j+1 derivative of cosh function
       if( j % 2 == 0 )
          coshjp = sinh_u;
       else
@@ -372,7 +372,7 @@ bool Sinh(void)
    {
       double sinhj = sinhjp;
 
-      // compute j+1 derivative of sinh funciton
+      // compute j+1 derivative of sinh function
       if( j % 2 == 0 )
          sinhjp = cosh_u;
       else

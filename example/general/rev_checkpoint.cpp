@@ -164,7 +164,7 @@ namespace {
       Y = F(X);
       f.Dependent(X, Y);
 
-      // a fucntion object with an almost empty operation sequence
+      // a function object with an almost empty operation sequence
       CppAD::Independent(X);
       empty.Dependent(X, X);
 

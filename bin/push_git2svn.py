@@ -102,7 +102,7 @@ cmd  = 'svn checkout '
 cmd +=  svn_repository + '/' + svn_branch_path + ' ' + svn_directory
 print_system(cmd)
 # ----------------------------------------------------------------------------
-# git hash code corresponding to verison in svn directory
+# git hash code corresponding to version in svn directory
 cmd           = 'svn info ' + svn_directory
 svn_info      = system(cmd)
 rev_pattern   = re.compile('Last Changed Rev: *([0-9]+)')
@@ -117,7 +117,7 @@ if match :
 else :
    svn_hash_code = None
 # -----------------------------------------------------------------------------
-# export the git verison of the directory
+# export the git version of the directory
 git_directory = work_directory + '/git'
 if os.path.isdir(git_directory) :
    cmd = 'rm -rf ' + git_directory

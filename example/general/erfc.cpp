@@ -46,7 +46,7 @@ bool erfc(void)
    // create f: x -> y and stop tape recording
    CppAD::ADFun<double> f(ax, ay);
 
-   // check relative erorr
+   // check relative error
    double erfc_x0 = 0.4795001221869534;
    ok &= NearEqual(ay[0] , erfc_x0,  0.,    4e-4);
    double tmp = std::max(1e-15, eps);

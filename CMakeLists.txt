@@ -95,7 +95,7 @@ IF( cppad_sparse_list )
 ENDIF( cppad_sparse_list )
 #
 IF( cppad_deprecated )
-   MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake comamnd" )
+   MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake command" )
 ENDIF( cppad_deprecated )
 #
 IF( cmake_install_prefix )

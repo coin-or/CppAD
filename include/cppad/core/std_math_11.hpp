@@ -721,7 +721,7 @@ Define AD<Base> standard math functions (using their Base versions)
 Defines function Name with argument type AD<Base> and tape operation Op
 
 The macro defines the function x.Name() where x has type AD<Base>.
-It then uses this funciton to define Name(x) where x has type
+It then uses this function to define Name(x) where x has type
 AD<Base> or VecAD_reference<Base>.
 
 If x is a variable, the tape unary operator Op is used

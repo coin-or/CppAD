@@ -165,7 +165,7 @@ void subgraph_sparsity(
          // independent variable entries correspond to sparsity pattern
          if( op == InvOp )
          {  CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-            // i_var is equal i_op becasue BeginOp and InvOp have 1 result
+            // i_var is equal i_op because BeginOp and InvOp have 1 result
             size_t i_var = i_op;       // tape index for this variable
             size_t i_ind = i_var - 1;  // user index for this variable
             CPPAD_ASSERT_UNKNOWN( random_itr.var2op(i_var) == i_op );

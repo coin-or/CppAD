@@ -119,7 +119,7 @@ is a pointer to the tape that is currently recording AD<Base> operations
 for the current thread (and it is not nullptr).
 
 \par Restrictions
-This routine should only be called if there is a tape recording operaitons
+This routine should only be called if there is a tape recording operations
 for the specified thread.
 */
 template <class Base>

@@ -589,7 +589,7 @@ typedef CppAD::vector<size_t>          SizeVector;
 typedef CppAD::vector<Ipopt::Number>   NumberVector;
 
 /*!
-Abstract base class user derives from to define the funcitons in the problem.
+Abstract base class user derives from to define the functions in the problem.
 */
 class cppad_ipopt_fg_info
 {

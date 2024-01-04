@@ -230,7 +230,7 @@ bool base2ad(void)
    a_vector ay_final;
    ay_final = taylor_ode(afun_g, order, nstep, adt, ay_ini);
 
-   // define differentiable fucntion object f(x) = y_final(x)
+   // define differentiable function object f(x) = y_final(x)
    // that computes its derivatives in double
    CppAD::ADFun<double> fun_f(ax, ay_final);
 

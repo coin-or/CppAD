@@ -99,7 +99,7 @@ bool rev_depend(void)
    ok   &= f.size_var() == 1 + n + 3 * m;
    //
    // optimize
-   // The atomic funciton rev_depend routine is called by optimizer
+   // The atomic function rev_depend routine is called by optimizer
    f.optimize("val_graph no_conditional_skip");
    //
    // size_var

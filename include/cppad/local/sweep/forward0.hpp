@@ -368,7 +368,7 @@ void forward0(
 
          case CExpOp:
          // Use the general case with d == 0
-         // (could create an optimzied verison for this case)
+         // (could create an optimzied version for this case)
          forward_cond_op_0(
             i_var, arg, num_par, parameter, J, taylor
          );

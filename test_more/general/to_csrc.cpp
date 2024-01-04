@@ -153,7 +153,7 @@ bool simple_cases(void)
    // eps99
    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
    //
-   // funciton_name
+   // function_name
    std::string function_name = "test_to_csrc";
    //
    // library_name
@@ -284,7 +284,7 @@ bool compare_cases(void)
    // AD, NearEqual
    using CppAD::AD;
    //
-   // funciton_name
+   // function_name
    std::string function_name = "test_to_csrc";
    //
    // library_name

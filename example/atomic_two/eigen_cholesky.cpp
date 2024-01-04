@@ -169,7 +169,7 @@ Constructor
    ok   &= NearEqual(y2[0], 0.0, eps, eps);
    ok   &= NearEqual(y2[1], 0.0, eps, eps);
    //
-   check = std::sqrt( x[2] - x[1] * x[1] / x[0] );  // funciton value
+   check = std::sqrt( x[2] - x[1] * x[1] / x[0] );  // function value
    check = - 1.0 / ( 4.0 * check * check * check ); // second derivative
    check = 0.5 * check;                             // taylor coefficient
    ok   &= NearEqual(y2[2], check, eps, eps);

@@ -239,7 +239,7 @@ bool mul_level_ode(void)
    a1vector a1y_final(n);
    a1y_final = taylor_ode(G, order, nstep, a1dt, a1y_ini);
 
-   // define differentiable fucntion object f : x -> y_final
+   // define differentiable function object f : x -> y_final
    // that computes its derivatives in double
    CppAD::ADFun<double> f(a1x, a1y_final);
 

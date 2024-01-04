@@ -13,7 +13,7 @@ namespace {
    using CppAD::AD;
    using CppAD::NearEqual;
    // ---------------------------------------------------------------------
-   // Used the check that fun is an idenity funciton
+   // Used the check that fun is an idenity function
    typedef AD<double> (*adfun)(const AD<double>&);
    bool check_identity(adfun identity, double argument)
    {

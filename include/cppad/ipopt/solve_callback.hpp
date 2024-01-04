@@ -596,7 +596,7 @@ public:
    }
    // -----------------------------------------------------------------------
    /*!
-   Evaluate the objective fucntion f(x).
+   Evaluate the objective function f(x).
 
    \param[in] n
    is the dimension of the argument space for f(x); i.e., must be equal nx_.

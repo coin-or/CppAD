@@ -100,7 +100,7 @@ namespace {
       value hun( Type(100) );
       value tmp( Type(0) );
 
-      // In complex case, this operaiton can result in (inf, 0)
+      // In complex case, this operation can result in (inf, 0)
       tmp.set( max2.get() * hun.get() );
 
       // In complex case, this operaiotn can result in (inf,-nan)

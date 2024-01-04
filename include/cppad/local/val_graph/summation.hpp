@@ -178,7 +178,7 @@ void tape_t<Value>::summation(void)
    Vector<addr_t> op_arg;
    //
    // csum_map
-   // informaiton for all the cumulative summation operations
+   // information for all the cumulative summation operations
    std::map<addr_t, csum_info_t> csum_map;
    //
    // sum_op

@@ -342,7 +342,7 @@ void sparse_load_op(
    Vector_set&         var_sparsity   ,
    Vector_set&         vecad_sparsity )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 

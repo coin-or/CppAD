@@ -172,7 +172,7 @@ std::string create_dll_lib(
       // compile c_file and put result in o_file
       flag = std::system( cmd.c_str() );
       if(  flag != 0 )
-      {  err_msg = "create_dll_lib: following system comamnd failed\n";
+      {  err_msg = "create_dll_lib: following system command failed\n";
          err_msg += cmd;
          return err_msg;
       }
@@ -191,7 +191,7 @@ std::string create_dll_lib(
 # endif
    flag = std::system( cmd.c_str() );
    if(  flag != 0 )
-   {  err_msg = "create_dll_lib: following system comamnd failed\n";
+   {  err_msg = "create_dll_lib: following system command failed\n";
       err_msg += cmd;
       return err_msg;
    }
@@ -200,7 +200,7 @@ std::string create_dll_lib(
    for(size_t i = 0; i < o_file_vec.size(); ++i)
    {  flag = std::remove( o_file_vec[i].c_str() );
       if(  flag != 0 )
-      {  err_msg = "create_dll_lib: following system comamnd failed\n";
+      {  err_msg = "create_dll_lib: following system command failed\n";
          err_msg += cmd;
          return err_msg;
       }

@@ -43,7 +43,7 @@ bool function_name(void)
    ay[0] = sin(ax[0]);
    f.Dependent(ax, ay);
 
-   // check fucntion name has not changed
+   // check function name has not changed
    ok &= f.function_name_get() == "empty_function";
 
    // now set a better name for this function

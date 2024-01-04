@@ -410,7 +410,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
       // initialize work row, col to be same as subset row, col
       row.resize(K);
       col.resize(K);
-      // cannot assign vectors becasue may be of different types
+      // cannot assign vectors because may be of different types
       // (SizeVector and CppAD::vector<size_t>)
       for(size_t k = 0; k < K; k++)
       {  row[k] = subset_row[k];
@@ -431,7 +431,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
       );
       //
       // execute coloring algorithm
-      // (we are using transpose becasue coloring groups rows, not columns)
+      // (we are using transpose because coloring groups rows, not columns)
       color.resize(n);
       if( coloring == "cppad.general" )
          local::color_general_cppad(internal_pattern, col, row, color);

@@ -9,7 +9,7 @@ build:
       # xrst
       - pip install xrst
       #
-      # This is only necessary if you need the most recent testing verison
+      # This is only necessary if you need the most recent testing version
       - pip uninstall -y xrst
       - pip install --index-url https://test.pypi.org/simple/ xrst
       #

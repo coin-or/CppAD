@@ -461,7 +461,7 @@ void atomic_lin_ode<Base>::reverse_one(
          ax_tmp[nnz + i] = az_all[p][i];
       //
       // az_all[p+1] = az( h*(p+1), x)
-      // This interface requires a separate atomic funciton call for each
+      // This interface requires a separate atomic function call for each
       // step in the Simpson's rule integration. Perhaps it would be more
       // efficient (but more complicated) to have an option whereby one call
       // that returns all the values in az_all expect for az_all[0].

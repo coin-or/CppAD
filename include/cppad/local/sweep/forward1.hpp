@@ -137,7 +137,7 @@ the i-th variable.
 
 \param compare_change_count
 Is the count value for changing number and op_index during
-zero order foward mode.
+zero order forward mode.
 
 \param compare_change_number
 If p is non-zero, this value is not changed, otherwise:

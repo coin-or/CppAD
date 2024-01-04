@@ -275,7 +275,7 @@ bool mul_level_adolc_ode(void)
    CPPAD_TESTVECTOR(a1type) a1y_final(n);
    a1y_final = taylor_ode_adolc(G, order, nstep, a1dt, a1y_ini);
 
-   // declare the differentiable fucntion f : x -> y_final
+   // declare the differentiable function f : x -> y_final
    // (corresponding to the tape of adouble operations)
    double* y_final = thread_alloc::create_array<double>(n, capacity);
    for(i = 0; i < n; i++)

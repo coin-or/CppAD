@@ -68,7 +68,7 @@ void forward_unary1_op(
    size_t cap_order   ,
    Base*  taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -143,7 +143,7 @@ void forward_unary1_op_dir(
    size_t cap_order   ,
    Base*  taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -185,7 +185,7 @@ void forward_unary1_op_0(
    size_t cap_order   ,
    Base*  taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -269,7 +269,7 @@ void reverse_unary1_op(
    size_t      nc_partial   ,
    Base*       partial      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -339,7 +339,7 @@ void forward_unary2_op(
    size_t cap_order   ,
    Base*  taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -422,7 +422,7 @@ void forward_unary2_op_dir(
    size_t cap_order   ,
    Base*  taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -469,7 +469,7 @@ void forward_unary2_op_0(
    size_t cap_order   ,
    Base*  taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -565,7 +565,7 @@ void reverse_unary2_op(
    size_t      nc_partial   ,
    Base*       partial      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 // =================== Binary operators with one result ====================
@@ -642,7 +642,7 @@ void forward_binary_op(
    size_t        cap_order  ,
    Base*         taylor     )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -736,7 +736,7 @@ void forward_binary_op_dir(
    size_t        cap_order  ,
    Base*         taylor     )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -794,7 +794,7 @@ void forward_binary_op_0(
    size_t        cap_order   ,
    Base*         taylor      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -906,7 +906,7 @@ void reverse_binary_op(
    size_t      nc_partial   ,
    Base*       partial      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 // ======================= Pow Function ===================================
@@ -991,7 +991,7 @@ void forward_pow_op(
    size_t        cap_order  ,
    Base*         taylor     )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
@@ -1098,7 +1098,7 @@ void forward_pow_op_dir(
    size_t        cap_order  ,
    Base*         taylor     )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
@@ -1164,7 +1164,7 @@ void forward_pow_op_0(
    size_t        cap_order  ,
    Base*         taylor     )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
@@ -1283,7 +1283,7 @@ void reverse_pow_op(
    size_t      nc_partial   ,
    Base*       partial      )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -1330,7 +1330,7 @@ is the forward mode Jacobian sparsity pattern for the variable x.
 
 \param rev_hes_sparsity
 The set with index i_z in in rev_hes_sparsity
-is the Hessian sparsity pattern for the fucntion G
+is the Hessian sparsity pattern for the function G
 where one of the partials derivative is with respect to z.
 \n
 \n
@@ -1352,7 +1352,7 @@ void reverse_sparse_hessian_unary_op(
    Vector_set&         for_jac_sparsity  ,
    Vector_set&         rev_hes_sparsity  )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 
@@ -1442,7 +1442,7 @@ void reverse_sparse_hessian_binary_op(
    Vector_set&       for_jac_sparsity   ,
    Vector_set&       rev_hes_sparsity   )
 {
-   // This routine is only for documentaiton, it should not be used
+   // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
 

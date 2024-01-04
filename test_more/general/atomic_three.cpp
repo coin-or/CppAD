@@ -15,7 +15,7 @@ namespace {                  // start empty namespace
 using CppAD::vector;         // abbreviate CppAD::vector using vector
 
 // ============================================================================
-// Testing dynamic parameters in atomic_three fucntions.
+// Testing dynamic parameters in atomic_three functions.
 // ============================================================================
 class dynamic_optimize : public CppAD::atomic_three<double> {
 public:

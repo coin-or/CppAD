@@ -561,7 +561,7 @@ and on output it corresponds to the function H.
 
 \param rev_hes_sparsity
 The set with index i_z in in rev_hes_sparsity
-is the Hessian sparsity pattern for the fucntion G
+is the Hessian sparsity pattern for the function G
 where one of the partials derivative is with respect to z.
 \n
 \n

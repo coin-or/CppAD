@@ -160,7 +160,7 @@ Determine the tape corresponding to this exeuction thread and then use
 <code>Dependent(tape, y)</code> to store this tapes recording in a function.
 
 \param x [in]
-The independent variable vector for this tape. This informaiton is
+The independent variable vector for this tape. This information is
 also stored in the tape so a check is done to make sure it is correct
 (if NDEBUG is not defined).
 

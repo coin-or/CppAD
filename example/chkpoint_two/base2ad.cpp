@@ -86,7 +86,7 @@ bool base2ad(void)
    f_chk(ay, az);
    CppAD::ADFun<double> h_fun(ax, az);
 
-   // Use base2ad to create and AD<double> verison of h
+   // Use base2ad to create and AD<double> version of h
    CppAD::ADFun< AD<double>, double> ah_fun = h_fun.base2ad();
 
    // start recording AD<Base> operations

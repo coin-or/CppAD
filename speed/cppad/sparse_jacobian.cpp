@@ -163,7 +163,7 @@ namespace {
          calc_sparsity(pattern, f);
          //
          // Use forward mode to compute the Jacobian
-         // (this caches informaiton in work),
+         // (this caches information in work),
          work.clear();
          n_color = f.sparse_jac_for(
             group_max, x, subset, pattern, coloring, work
@@ -281,7 +281,7 @@ bool link_sparse_jacobian(
       CppAD::uniform_01(n, x);
 
       if( global_option["subgraph"] )
-      {  // user reverse mode becasue forward not yet implemented
+      {  // user reverse mode because forward not yet implemented
          static_f.subgraph_jac_rev(x, static_subset);
       }
       else

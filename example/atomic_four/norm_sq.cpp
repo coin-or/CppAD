@@ -380,7 +380,7 @@ bool norm_sq(void)
    f.optimize("val_graph no_conditional_skip");
    //
    // ok
-   // check zero order forward mode (on optimized verison of f)
+   // check zero order forward mode (on optimized version of f)
    y     = f.Forward(0, x);
    check = 0.0;
    for(size_t j = 0; j < n; ++j)

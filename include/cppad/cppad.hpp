@@ -36,7 +36,7 @@
 // vectors used with CppAD
 # include <cppad/core/testvector.hpp>
 
-// Declare classes and fucntions that are used before defined
+// Declare classes and functions that are used before defined
 # include <cppad/local/declare_ad.hpp>
 
 // ---------------------------------------------------------------------------

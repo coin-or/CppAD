@@ -288,7 +288,7 @@ void for_hes(
          case InvOp:
          CPPAD_ASSERT_UNKNOWN( for_hes_sparse.number_elements(i_var) == 0 );
          if( select_domain[count_independent] )
-         {  // Not using post_element becasue only adding one element
+         {  // Not using post_element because only adding one element
             // per set
             for_hes_sparse.add_element(np1 + i_var, i_var);
          }

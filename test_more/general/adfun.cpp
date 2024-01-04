@@ -35,7 +35,7 @@ bool adfun_empty(void)
    ok &= inuse_1 < inuse_3;
    //
    // assigning to an empty function uses assignment to pod_vectors
-   // which just changes their lenght to zero
+   // which just changes their length to zero
    g = f;
    size_t inuse_4  = CppAD::thread_alloc::inuse(thread);
    ok &= inuse_3 == inuse_4;
