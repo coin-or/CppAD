@@ -72,7 +72,6 @@ stable_remote_hash=$(
 #
 if [ "$stable_local_hash" == '' ] && [ "$stable_remote_hash" == '' ]
 then
-   empty_hash='yes'
    echo "bin/new_release: local $stable_branch does not exist."
    echo 'Use the following to create it ?'
    echo "   git checkout -b $stable_branch master"
@@ -81,7 +80,6 @@ then
 fi
 if [ "$stable_local_hash" == '' ] && [ "$stable_remote_hash" != '' ]
 then
-   empty_hash='yes'
    echo "bin/new_release: local $stable_branch does not exist."
    echo 'Use the following to create it ?'
    echo "   git checkout -b $stable_branch origin/$stable_branch"
@@ -144,7 +142,6 @@ fi
 # stable_remote_hash
 if [ "$stable_remote_hash" == '' ]
 then
-   empty_hash='yes'
    echo "bin/new_release: remote $stable_branch does not exist."
    echo 'Use the following to create it ?'
    echo "   git push origin $stable_branch"
@@ -152,11 +149,35 @@ then
 fi
 if [ "$stable_local_hash" != "$stable_remote_hash" ]
 then
-   empty_hash='yes'
    echo "bin/new_release: local and remote $stable_branch differ."
    echo "local  $stable_local_hash"
    echo "remote $stable_remote_hash"
    echo 'try git push ?'
+   exit 1
+fi
+#
+# master_local_hash
+pattern=$(echo " *refs/heads/master" | sed -e 's|/|[/]|g')
+master_local_hash=$(
+   git show-ref master | \
+      sed -n -e "/$pattern/p" | \
+         sed -e "s|$pattern||"
+)
+#
+# master_remote_hash
+pattern=$(echo " *refs/remotes/origin/master" | sed -e 's|/|[/]|g')
+master_remote_hash=$(
+   git show-ref master | \
+      sed -n -e "/$pattern/p" | \
+         sed -e "s|$pattern||"
+)
+#
+if [ "$master_local_hash" != "$master_remote_hash" ]
+then
+   echo 'bin/new_release.sh: local and remote master differ'
+   echo "local  $master_local_hash"
+   echo "remote $master_remote_hash"
+   echo 'try git checkout master; git push'
    exit 1
 fi
 #
