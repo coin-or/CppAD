@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin get_cppadcg.sh} 
+# {xrst_begin get_cppadcg.sh}
 # {xrst_spell
 #     doxygen
 # }
@@ -142,10 +142,13 @@ then
    echo_eval git clone $web_page $package.git
 fi
 echo_eval cd $package.git
-# -----------------------------------------------------------------------------
+echo_eval git reset --hard
+echo_eval git checkout --quiet $git_hash
+#
+# cmake/FindCppAD.cmake
 # Modify FindCppAD.cmake so can use git repository
 # version of CppAD (not yet installed).
-cat << EOF > get_cppadcg.sed
+cat << EOF > temp.sed
 s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
    # This setting is used for testing before installing CppAD.\\
    # CPPAD_GIT_REPO is the a CppAD git repository. It is assumed that\\
@@ -185,11 +188,40 @@ s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
 \\
 ELSEIF (DEFINED CPPAD_HOME)|
 EOF
-echo_eval git reset --hard
-echo_eval git checkout --quiet $git_hash
 echo_eval git checkout  cmake/FindCppAD.cmake
-echo_eval sed -i cmake/FindCppAD.cmake -f get_cppadcg.sed
-echo_eval rm get_cppadcg.sed
+echo_eval sed -i cmake/FindCppAD.cmake -f temp.sed
+#
+# include/cppad/cg/base_float.hpp
+cat << EOF > temp.sed
+/template *<> *\$/! b skip
+: loop1
+N
+/\\n};\$/! b loop1
+#
+: loop2
+N
+/\\n}\$/! b loop2
+s|.*|CPPAD_NUMERIC_LIMITS(float, cg::CG<float>)|
+#
+: skip
+EOF
+echo_eval sed -i include/cppad/cg/base_float.hpp -f temp.sed
+#
+# include/cppad/cg/base_double.hpp
+cat << EOF > temp.sed
+/template *<> *\$/! b skip
+: loop1
+N
+/\\n};* *\$/! b loop1
+#
+: loop2
+N
+/\\n};* *\$/! b loop2
+s|.*|CPPAD_NUMERIC_LIMITS(double, cg::CG<double>)|
+#
+: skip
+EOF
+echo_eval sed -i include/cppad/cg/base_double.hpp -f temp.sed
 # -----------------------------------------------------------------------------
 #  make install
 if [ ! -e build ]
