@@ -53,7 +53,7 @@ then
    res=''
    while [ "$res" != 'ok' ] && [ "$res" != 'date' ] && [ "$res" != 'abort' ]
    do
-      echo "In CMakeLists.txt version=$version."
+      echo "In CMakeLists.txt version = $version"
       echo 'ok:    use this version.'
       echo 'date:  repalce this by the current date.'
       echo 'abort: if you whish to change the version in CMakeLists.txt.'
@@ -89,19 +89,19 @@ then
 cat << EOF > temp.sed
 #
 # CMakeLists.txt
-s|^SET( *cppad_version *"[0-9]*")|SET(cppad_version "$version")|
+s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
 #
 # user_guide.xrst
 s|[0-9]\\{8\\}[.][0-9]*|$version|
 s|documentation-[0-9]\\{8\\}|documentaiton-latest|
 s|stable-[0-9]\\{8\\}|latest|
-s|cppad-[0-9]\\{8\\}|cppad-$stable|
+s|cppad-[0-9]\\{8\\}[0-9.]*|cppad-$stable|
 EOF
 else
 cat << EOF > temp.sed
 #
 # CMakeLists.txt
-s|^SET( *cppad_version *"[0-9]*")|SET(cppad_version "$version")|
+s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
 #
 # user_guide.xrst
 s|cppad-[0-9]\\{8\\}|cppad-$version|

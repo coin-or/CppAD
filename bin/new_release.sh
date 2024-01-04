@@ -58,12 +58,12 @@ sed -i .coin-or/projDesc.xml \
 #
 key='releaseNumber'
 sed -i .coin-or/projDesc.xml \
-   -e "s|<$key>[0-9.]*</$key>|<$key>$stable_version.$release</$key>|"
+   -e "s|<$key>[0-9.]*</$key>|<$key>$tag</$key>|"
 #
 # user_guide.xrst
 sed -i user_guide.xrst \
-   -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g" \
-   -e "s|release-[0-9]\{8\}\.[0-9]*|release-$stable_version.$release|g" \
+   -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$tag|g" \
+   -e "s|release-[0-9]\{8\}\.[0-9]*|release-$tag|g" \
    -e "s|documentation-[0-9]\{8\}|documentation-$stable_version|g" \
    -e "s|stable-[0-9]\{8\}|stable-$stable_version|g" \
 #
@@ -123,7 +123,7 @@ fi
 #
 # CMakeLists.txt
 cat << EOF > temp.sed
-s|^SET( *cppad_version *"[0-9]*")|SET(cppad_version "$tag")|
+s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$tag")|
 EOF
 sed -i CMakeLists.txt -f temp.sed
 #
