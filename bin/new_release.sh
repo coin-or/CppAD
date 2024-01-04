@@ -5,7 +5,7 @@ set -e -u
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 stable_version='20240000' # date at which this stable branch started
-release='1'               # first release for each stable version is 0
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
