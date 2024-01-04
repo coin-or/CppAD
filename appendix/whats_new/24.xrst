@@ -21,6 +21,16 @@ mm-dd
    was not done properly and might cause a mistaken assertion.
    This has been fixed.
 
+#. Each *file_name* in the latest documentation was moved
+   (this is important if you have links to previous web pages):
+
+   .. list-table::
+
+      *  - Old Location
+         - ``https://cppad.readthedocs.io/``\ *file_name*
+      *  - New Location
+         - ``https://cppad.readthedocs.io/latest/``\ *file_name*
+
 01-02
 =====
 
