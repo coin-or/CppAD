@@ -198,10 +198,16 @@ then
 fi
 export LD_LIBRARY_PATH="$prefix/lib:$prefix/lib64"
 # ---------------------------------------------------------------------------
+#
+# check_version.sh
+# run this separate because it my be interactive
+echo_eval bin/check_version.sh
+#
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=$(
    ls bin/check_* | sed \
    -e '/check_all.sh/d' \
+   -e '/check_version.sh/d' \
    -e '/check_doxygen.sh/d' \
    -e '/check_install.sh/d'
 )
