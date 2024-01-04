@@ -130,7 +130,12 @@ sed -i CMakeLists.txt -f temp.sed
 # check_version.sh
 git show master:bin/check_version.sh > bin/check_version.sh
 chmod +x bin/check_version.sh
-bin/check_version.sh
+if ! bin/check_version.sh
+then
+   echo 'bin/check_version.sh changed version numbers'
+   echo "commit changes to $stable_branch branch ?"
+   exit 1
+fi
 #
 # git_status
 git_status=$(git status --porcelain)
