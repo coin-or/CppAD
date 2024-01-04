@@ -5,7 +5,7 @@ set -e -u
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 stable_version='20240000' # date at which this stable branch started
-release='0'               # first release for each stable version is 0
+release='1'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -121,30 +121,16 @@ then
    exit 1
 fi
 #
-# check version number
-ok='yes'
-check_one=`version.sh get`
-if [ "$check_one" != "$stable_version.$release" ]
-then
-   ok='no'
-fi
-if ! version.sh check > /dev/null
-then
-   ok='no'
-fi
-if [ "$ok" != 'yes' ]
-then
-cat << EOF
-bin/new_release.sh: version number is not correct in $stable_branch.
-Currently in $stable_branch branch, use following to fix it ?
-   git fetch
-   version.sh set $stable_version.$release
-   version.sh copy
-   version.sh check
-   Then check the chages to the $stable_branch branch and commit
+# CMakeLists.txt
+cat << EOF > temp.sed
+s|^SET( *cppad_version *"[0-9]*")|SET(cppad_version "$tag")|
 EOF
-   exit 1
-fi
+sed -i CMakeLists.txt -f temp.sed
+#
+# check_version.sh
+git show master:bin/check_version.sh > bin/check_version.sh
+chmod +x bin/check_version.sh
+bin/check_version.sh
 #
 # git_status
 git_status=$(git status --porcelain)
