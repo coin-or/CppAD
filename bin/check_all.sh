@@ -77,7 +77,12 @@ then
    echo_log_eval rm -r $HOME/prefix/cppad
 fi
 # ---------------------------------------------------------------------------
-version=`version.sh get`
+#
+# version
+version=$(
+   sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
+      sed -e 's|.*"\([^"]*\)".*|\1|'
+)
 # ---------------------------------------------------------------------------
 #
 # compiler
