@@ -4,7 +4,6 @@
 # ----------------------------------------------------------------------------
 {xrst_begin user_guide}
 {xrst_spell
-   appveyor
    autodiff
    github
    posix
@@ -19,11 +18,10 @@ cppad-20240103: CppAD User's Manual
 .. list-table::
    :widths: auto
 
-   * - `release <https://github.com/coin-or/CppAD/tags>`_
-     - `20240000.0 <https://github.com/coin-or/CppAD/archive/20240000.0.tar.gz>`_
+   * - `release-20240000.0 <https://github.com/coin-or/CppAD/archive/20240000.0.tar.gz>`_
+     - `documentation-20240000 <https://cppad.readthedocs.io/stable-20240000>`_
+     - `other releases <https://github.com/coin-or/CppAD/tags>`_
      - `github <https://github.com/coin-or/CppAD>`_
-     - `travis <https://travis-ci.org/coin-or/CppAD>`_
-     - `appveyor <https://ci.appveyor.com/project/bradbell/cppad>`_
      - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec>`_
 
 .. list-table::

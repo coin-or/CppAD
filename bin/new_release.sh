@@ -62,7 +62,10 @@ sed -i .coin-or/projDesc.xml \
 #
 # user_guide.xrst
 sed -i user_guide.xrst \
-   -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g"
+   -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g" \
+   -e "s|release-[0-9]\{8\}\.[0-9]*|release-$stable_version.$release|g" \
+   -e "s|documentation-[0-9]\{8\}|documentation-$stable_version|g" \
+   -e "s|stable-[0-9]\{8\}|stable-$stable_version|g" \
 #
 # stable_branch
 stable_branch=stable/$stable_version
