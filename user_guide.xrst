@@ -20,7 +20,7 @@ cppad-20240103: CppAD User's Manual
    :widths: auto
 
    * - `release <https://github.com/coin-or/CppAD/tags>`_
-     - `20230000.0 <https://github.com/coin-or/CppAD/archive/20230000.0.tar.gz>`_
+     - `20240000.0 <https://github.com/coin-or/CppAD/archive/20240000.0.tar.gz>`_
      - `github <https://github.com/coin-or/CppAD>`_
      - `travis <https://travis-ci.org/coin-or/CppAD>`_
      - `appveyor <https://ci.appveyor.com/project/bradbell/cppad>`_

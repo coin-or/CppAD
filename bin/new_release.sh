@@ -51,6 +51,19 @@ then
    exit 1
 fi
 #
+# .coin-or/projDesc.xml
+key='stableVersionNumber'
+sed -i .coin-or/projDesc.xml \
+   -e "s|<$key>[0-9]*</$key>|<$key>$stable_version</$key>|"
+#
+key='releaseNumber'
+sed -i .coin-or/projDesc.xml \
+   -e "s|<$key>[0-9.]*</$key>|<$key>$stable_version.$release</$key>|"
+#
+# user_guide.xrst
+sed -i user_guide.xrst \
+   -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g"
+#
 # stable_branch
 stable_branch=stable/$stable_version
 #
