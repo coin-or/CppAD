@@ -9,7 +9,7 @@ Second Order Forward Mode: Derivative Values
 
 Syntax
 ******
-*y2* = *f* . ``Forward`` (1, *x2* )
+*y2* = *f* . ``Forward`` (2, *x2* )
 
 Purpose
 *******
@@ -18,9 +18,8 @@ We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
 The result of the syntax above is that for
 *i* = 0 , ... , *m* ``-1`` ,
 
-   ``y2`` [ ``i`` ]
-
-:math:`= F_i^{(1)} (x0) * x2 + \frac{1}{2} x1^T * F_i^{(2)} (x0) * x1`
+y2 [i] =
+:math:`F_i^{(1)} (x0) * x2 + \frac{1}{2} x1^T * F_i^{(2)} (x0) * x1`
 
 where
 :math:`F^{(1)} (x0)` is the Jacobian of :math:`F`, and
@@ -117,6 +116,7 @@ and :math:`o( t^q ) * t^{-q} \rightarrow 0` as :math:`t \rightarrow 0`.
 For this special case, :math:`q = 2`,
 :math:`x^{(0)}` = *x0* ,
 :math:`x^{(1)}` = *x1* ,
+:math:`x^{(2)}` = *x2* ,
 :math:`X(t) = x^{(0)} + x^{(1)} t + x^{(2)} t^2`, and
 
 .. math::

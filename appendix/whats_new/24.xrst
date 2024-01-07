@@ -13,6 +13,14 @@ new_24s and Additions to CppAD During 2024
 mm-dd
 *****
 
+01-07
+=====
+The forward_two :ref:`forward_two@Syntax` was corrected.
+To be specific, 
+``Forward`` (1, *x2* ) was changed to ``Forward`` (2, *x2* ) .
+In addition, some other minor improvements were made to the
+forward_two documentation page.
+
 01-03
 =====
 
