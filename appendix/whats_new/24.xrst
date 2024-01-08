@@ -7,11 +7,17 @@
 {xrst_spell
 }
 
-new_24s and Additions to CppAD During 2024
+Changes and Additions to CppAD During 2024
 ##########################################
 
 mm-dd
 *****
+
+01-08
+=====
+On some systems ``unsigned int`` and ``size_t`` are the same type
+and this would cause a compile error in ``vector.hpp`` and
+``vector_bool.hpp`` . This has been fixed.
 
 01-07
 =====

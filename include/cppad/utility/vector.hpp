@@ -179,8 +179,10 @@ public:
    // sizing
    vector(size_t n) : capacity_(0), length_(0), data_(nullptr)
    {  resize(n); }
+# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
    vector(unsigned int n) : capacity_(0), length_(0), data_(nullptr)
    {  resize(n); }
+# endif
    vector(int n) : capacity_(0), length_(0), data_(nullptr)
    {  resize(n); }
    //
@@ -191,12 +193,14 @@ public:
       for(size_t i = 0; i < length_; ++i)
          data_[i] = value;
    }
+# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
    vector(unsigned int n, const Type& value)
    : capacity_(0), length_(0), data_(nullptr)
    {  resize(n);
       for(size_t i = 0; i < length_; ++i)
          data_[i] = value;
    }
+# endif
    vector(int n, const Type& value)
    : capacity_(0), length_(0), data_(nullptr)
    {  resize(n);
@@ -266,8 +270,10 @@ and then *vec.length_* and *vec* . ``capacity_`` are set to zero.
 ------------------------------------------------------------------------------
 */
 public:
+# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
    void resize(unsigned int n)
    {  resize( size_t(n) ); }
+# endif
    void resize(int n)
    {  CPPAD_ASSERT_KNOWN(
          n >= 0,

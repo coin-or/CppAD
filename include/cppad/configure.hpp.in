@@ -334,6 +334,13 @@ If true, the C complier is ``cl``
 /* {xrst_code}
 {xrst_spell_on}
 
+CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
+*********************************
+If true, ``unsigned int`` and ``size_t`` are the same type
+{xrst_code hpp} */
+# define CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T @cppad_is_same_unsigned_int_size_t@
+/* {xrst_code}
+
 {xrst_end configure.hpp}
 */
 // -------------------------------------------------

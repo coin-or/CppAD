@@ -10,9 +10,9 @@
    templated
 }
 
-{xrst_comment BEGIN: Before changing see bin/ new_release and check_version.sh}
+{xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20240104: CppAD User's Manual
+cppad-20240108: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}
@@ -26,7 +26,7 @@ cppad-20240104: CppAD User's Manual
      - `github <https://github.com/coin-or/CppAD>`_
      - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec>`_
 
-{xrst_comment END: Before changing see bin/ new_release and check_version.sh}
+{xrst_comment END: Before changing see new_release.sh and check_version.sh}
 
 .. list-table::
    :widths: auto
