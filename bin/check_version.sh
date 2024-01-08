@@ -92,10 +92,10 @@ cat << EOF > temp.sed
 s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
 #
 # user_guide.xrst
-s|[0-9]\\{8\\}[.][0-9]*|$version|
-s|documentation-[0-9]\\{8\\}|documentation-latest|
-s|stable-[0-9]\\{8\\}|latest|
-s|cppad-[0-9]\\{8\\}[0-9.]*|cppad-$stable|
+s|[0-9]\\{8\\}[.][0-9]*|$version|g
+s|documentation-[0-9]\\{8\\}|documentation-latest|g
+s|stable-[0-9]\\{8\\}|latest|g
+s|cppad-[0-9]\\{8\\}[0-9.]*|cppad-$stable|g
 EOF
 else
 cat << EOF > temp.sed
@@ -104,7 +104,7 @@ cat << EOF > temp.sed
 s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
 #
 # user_guide.xrst
-s|cppad-[0-9]\\{8\\}|cppad-$version|
+s|cppad-[0-9]\\{8\\}|cppad-$version|g
 EOF
 fi
 #
