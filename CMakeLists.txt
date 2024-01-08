@@ -16,7 +16,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20240000.0")
+SET(cppad_version "20240108")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -95,7 +95,7 @@ IF( cppad_sparse_list )
 ENDIF( cppad_sparse_list )
 #
 IF( cppad_deprecated )
-   MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake comamnd" )
+   MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake command" )
 ENDIF( cppad_deprecated )
 #
 IF( cmake_install_prefix )

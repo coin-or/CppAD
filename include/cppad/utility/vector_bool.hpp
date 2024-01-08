@@ -174,8 +174,10 @@ Source
    {  resize(n); }
    vectorBool(int n) : n_unit_(0), length_(0), data_(nullptr)
    {  resize( size_t(n) ); }
+# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
    vectorBool(unsigned int n) : n_unit_(0), length_(0), data_(nullptr)
    {  resize( size_t(n) ); }
+# endif
    //
    // copy
    vectorBool(const vectorBool& other)
@@ -237,6 +239,11 @@ the memory allocated for this vector is freed and
 */
 // BEGIN_RESIZE
 public:
+# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
+   void resize(unsigned int n)
+   {  resize( size_t(n) );
+   }
+# endif
    void resize(int n)
    {  CPPAD_ASSERT_KNOWN(
          n >= 0,

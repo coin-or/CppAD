@@ -173,6 +173,23 @@ int main(void)
 " )
 compile_source_test(${cmake_defined_ok} "${source}" cppad_has_tmpnam_s )
 # -----------------------------------------------------------------------------
+# cppad_is_same_unsigned_int_size_t
+#
+SET(source "
+# include <cstddef>
+# include <type_traits>
+int main(void)
+{  static_assert(
+      std::is_same<unsigned int, size_t>::value ,
+      \"message not needed with C++17 or later\"  
+   );
+   return 0;
+}
+" )
+compile_source_test(
+   ${cmake_defined_ok} "${source}" cppad_is_same_unsigned_int_size_t 
+)
+# -----------------------------------------------------------------------------
 # configure.hpp
 CONFIGURE_FILE(
    ${CMAKE_CURRENT_SOURCE_DIR}/configure.hpp.in
