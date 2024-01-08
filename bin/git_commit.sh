@@ -58,9 +58,11 @@ done
 # git_commit.log
 branch=$(git branch --show-current)
 cat << EOF > git_commit.log
-# Please enter the commit message for your changes. Lines starting with '#'
-# will be ignored. This commit will abort if the first line does not begin with
-# $branch: because $branch is the branch for this commit. 
+$branch:
+# Enter the commit message for your changes above. 
+# This commit will abort if the first line does not begin with "$branch:"
+# because $branch is the branch for this commit. 
+# Lines starting with '#' are not included in the message.
 # Below is a list of the files for this commit:
 EOF
 git status --porcelain | sed -e 's|^|# |' >> git_commit.log
@@ -68,9 +70,14 @@ $EDITOR git_commit.log
 sed -i git_commit.log -e '/^#/d'
 if ! head -1 git_commit.log | grep "^$branch:" > /dev/null  
 then
-   echo 'The first line in this commit message is:'
-   head -1 git_commit.log
-   echo "Aborting because it does not start with '$branch:'"
+   echo "Aborting because first line does not begin with $branch:"
+   echo 'See ./git_commit.log'
+   exit 1
+fi
+if ! head -1 git_commit.log | grep "^$branch:.*[^ \t]" > /dev/null  
+then
+   echo "Aborting because only white space follow $branch: in first line"
+   echo 'See ./git_commit.log'
    exit 1
 fi
 # -----------------------------------------------------------------------------
