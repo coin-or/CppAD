@@ -62,19 +62,32 @@ compile
 =======
 This is an abbreviated version of the compile command.
 It does not include the output file flag or output file name.
-If ``_MSC_VER`` is defined, the default value for this option is
-``cl /EHs /EHc /c /LD /TC``
-If ``_MSC_VER`` is not defined, the default value for this option is
-``gcc -c -fPIC`` .
+If :ref:`cmake-name` detects that this is the MSVC compiler,
+the default value for this option is
+
+   `cl /EHs /EHc /c /LD /TC``
+
+If cmake detects that this is the Clang or GNU compiler,
+the default value for this option is
+
+   *cppad_c_compiler_path* ``-c -fPIC``
+
+Here and below *cppad_c_compiler_path* is the path the C compiler
+(which is determined by cmake) .
+
 
 link
 ====
 This is an abbreviated version of the link command.
 It does not include the output file flag or output file name.
-If ``_MSC_VER`` is defined, the default value for this option is
-``link /DLL``
-If ``_MSC_VER`` is not defined, the default value for this option is
-``gcc -shared`` .
+In the MSVC case, the default for this option is
+
+   ``link /DLL``
+
+In the Clang or GNU case, the default for this option is
+
+   *cppad_c_compiler_path* ``-shared`` .
+
 
 err_msg
 *******
@@ -91,6 +104,7 @@ The file :ref:`dll_lib.cpp-name` contains an example and test of
 */
 # include <map>
 # include <cppad/local/temp_file.hpp>
+# include <cppad/configure.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
@@ -108,12 +122,15 @@ std::string create_dll_lib(
    string err_msg = "";
    //
    // compile, link
-# ifdef _MSC_VER
-   string compile = "cl /EHs /EHc /c /LD /TC";
-   string link    = "link /DLL";
-# else
-   string compile = "gcc -c -fPIC";
-   string link    = "gcc -shared";
+   string compile = "";
+   string  link   = "";
+# if CPPAD_C_COMPILER_MSVC
+   compile = "cl /EHs /EHc /c /LD /TC";
+   link    = "link /DLL";
+# endif
+# if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_CLANG
+   compile = CPPAD_C_COMPILER_PATH " -c -fPIC";
+   link    = CPPAD_C_COMPILER_PATH " -shared";
 # endif
    for( const auto& pair : options )
    {  const string& key = pair.first;

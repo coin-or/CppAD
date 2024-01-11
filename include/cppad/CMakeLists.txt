@@ -41,6 +41,10 @@ IF( "${count}" EQUAL "0")
 ELSEIF( "${count}" GREATER_EQUAL "2")
    MESSAGE(FATAL_ERROR "Found more than one C compiler")
 ENDIF()
+#
+# cppad_c_compiler_path
+SET(cppad_c_compiler_path "\"${CMAKE_C_COMPILER}\"")
+print_variable(cppad_c_compiler_path)
 # -----------------------------------------------------------------------------
 # compiler_has_conversion_warn
 SET( clang_or_gnu 0 )

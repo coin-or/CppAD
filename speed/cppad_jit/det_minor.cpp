@@ -28,7 +28,7 @@ extern std::map<std::string, bool> global_option;
 # define DLL_EXT ".so"
 # endif
 
-# if ! (CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC)
+# if ! (CPPAD_C_COMPILER_CLANG || CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC)
 bool link_det_minor(
    const std::string&         job      ,
    size_t                     size     ,
@@ -142,10 +142,10 @@ namespace {
       CppAD::vector< string > csrc_files(1);
       csrc_files[0] = csrc_file;
       std::map< string, string > dll_options;
-# ifdef _MSC_VER
+# if CPPAD_C_COMPILER_MSVC
       dll_options["compile"] = "cl /EHs /EHc /c /LD /TC /O2";
 # else
-      dll_options["compile"] = "gcc -c -fPIC -O2";
+      dll_options["compile"] = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
 # endif
       string err_msg =
          CppAD::create_dll_lib(dll_file, csrc_files, dll_options);

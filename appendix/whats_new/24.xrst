@@ -5,6 +5,7 @@
 
 {xrst_begin whats_new_24 app}
 {xrst_spell
+   dll
    svec
 }
 
@@ -13,6 +14,16 @@ Changes and Additions to CppAD During 2024
 
 mm-dd
 *****
+
+01-11
+=====
+Use the *cppad_c_compiler_path* detected by :ref:`cmake-name` 
+to run the C compiler for the Clang and GNU cases; see
+the `create_dll_lib`` defaults for
+:ref:`create_dll_lib@options@compile` and 
+:ref:`create_dll_lib@options@link` .
+This fixed using jit compilation where ``gcc`` or ``clang`` used
+an alias; e.g., ``cc`` .
 
 01-10
 =====

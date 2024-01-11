@@ -56,17 +56,17 @@ bool compile(void)
       compile = "cl /EHs /EHc /c /LD /TC /O2";
 # endif
 # if CPPAD_C_COMPILER_GNU
-   flag = std::system("gcc --version > temp");
+   flag = std::system(CPPAD_C_COMPILER_PATH " --version > temp");
    if( flag == 0 )
-      compile = "gcc -c -fPIC -O2";
+      compile = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
 # endif
 # if CPPAD_C_COMPILER_CLANG
 # ifndef __MINGW32__
    // clang: error: unsupported option '-fPIC' for target
    // 'x86_64-pc-windows-msys'
-   flag = std::system("clang --version > /dev/null");
+   flag = std::system(CPPAD_C_COMPILER_PATH " --version > /dev/null");
    if( flag == 0 )
-      compile = "clang -c -fPIC -O2";
+      compile = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
 # endif
 # endif
    //

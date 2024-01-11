@@ -304,8 +304,17 @@ replace it by ``noexcept`` .
 CPPAD_NDEBUG_NOEXCEPT
 =====================
 This preprocessor symbol is
-``noexcept`` when C++11 is available and ``NDEBUG`` is defined.
+``noexcept`` when ``NDEBUG`` is defined.
 Otherwise it is empty.
+
+CPPAD_C_COMPILER_PATH
+*********************
+This is the path to the C compiler as a C string; 
+i.e., surrounded by double quotes. 
+It can be used to run the C compiler; e.g. see for :ref:`create_dll_lib-name` .
+{xrst_code hpp} */
+# define CPPAD_C_COMPILER_PATH @cppad_c_compiler_path@
+/* {xrst_code}
 
 CPPAD_C_COMPILER_GNU
 ********************
