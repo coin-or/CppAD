@@ -56,6 +56,7 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_MIN_DOUBLE_CAPACITY
 # undef CPPAD_NDEBUG_NOEXCEPT
 # undef CPPAD_NOEXCEPT
+# undef CPPAD_PADDING_BLOCK_T
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
 # undef CPPAD_TAPE_ADDR_TYPE_IS_SIZE_T

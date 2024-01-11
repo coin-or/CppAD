@@ -22,24 +22,24 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
 # cppad_c_compiler_gnu
-IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" )
-   SET(cppad_c_compiler_gnu 1)
-ELSE()
-   SET(cppad_c_compiler_gnu 0)
-ENDIF()
-#
 # cppad_c_compiler_msvc
-IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" )
-   SET(cppad_c_compiler_msvc 1)
-ELSE()
-   SET(cppad_c_compiler_msvc 0)
-ENDIF()
-#
 # cppad_c_compiler_clang
-IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang" )
-   SET(cppad_c_compiler_clang 1)
-ELSE()
-   SET(cppad_c_compiler_clang 0)
+STRING(TOLOWER "${CMAKE_C_COMPILER_ID}" cmake_compiler_id_lower)
+SET(count 0)
+FOREACH(name gnu msvc clang)
+   STRING(FIND "${cmake_compiler_id_lower}" "${name}" index)
+   IF( "${index}" EQUAL "-1" )
+      SET(cppad_c_compiler_${name} 0)
+   ELSE()
+      SET(cppad_c_compiler_${name} 1)
+      MATH(EXPR count "${count}+1")
+   ENDIF()
+   print_variable( cppad_c_compiler_${name} )
+ENDFOREACH()
+IF( "${count}" EQUAL "0")
+   MESSAGE(STATUS "Did not find a C compiler to use for jit compilation" )
+ELSEIF( "${count}" GREATER_EQUAL "2")
+   MESSAGE(FATAL_ERROR "Found more than one C compiler")
 ENDIF()
 # -----------------------------------------------------------------------------
 # compiler_has_conversion_warn
@@ -189,6 +189,48 @@ int main(void)
 compile_source_test(
    ${cmake_defined_ok} "${source}" cppad_is_same_unsigned_int_size_t 
 )
+# -----------------------------------------------------------------------------
+# cppad_padding_block_t 
+#
+# See block_t in include/cppad/utility/thread_alloc.hpp before changing this.
+SET(source "
+# include <cstddef>
+int main(void)
+{  class block_t {
+      size_t extra_; size_t tc_index_; void* next_;
+   };
+   static_assert(
+      sizeof(block_t) % sizeof(double) == 0 ,
+      \"message not needed with C++17 or later\"  
+   );
+   return 0;
+}
+" )
+compile_source_test(
+   ${cmake_defined_ok} "${source}" first_block_t_mod_double_zero
+)
+IF( ${first_block_t_mod_double_zero} )
+   SET(cppad_padding_block_t "")
+ELSE()
+   SET(cppad_padding_block_t "void* note_used_;")
+ENDIF()
+SET(source "
+# include <cstddef>
+int main(void)
+{  class block_t {
+      size_t extra_; size_t tc_index_; void* next_; ${cppad_padding_block_t} 
+   };
+   static_assert(
+      sizeof(block_t) % sizeof(double) == 0 ,
+      \"message not needed with C++17 or later\"  
+   );
+   return 0;
+}
+" )
+compile_source_test(
+   ${cmake_defined_ok} "${source}" second_block_t_mod_double_zero
+)
+assert( second_block_t_mod_double_zero )
 # -----------------------------------------------------------------------------
 # configure.hpp
 CONFIGURE_FILE(

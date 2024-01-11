@@ -341,6 +341,14 @@ If true, ``unsigned int`` and ``size_t`` are the same type
 # define CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T @cppad_is_same_unsigned_int_size_t@
 /* {xrst_code}
 
+CPPAD_PADDING_BLOCK_T
+*********************
+Is a string used to define an object that pads the block_t structure
+so that its size is a multiple of the size of a double.
+{xrst_code hpp} */
+# define CPPAD_PADDING_BLOCK_T @cppad_padding_block_t@
+/* {xrst_code}
+
 {xrst_end configure.hpp}
 */
 // -------------------------------------------------

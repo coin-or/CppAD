@@ -109,6 +109,9 @@ private:
       size_t             tc_index_;
       /// pointer to the next memory allocation with the same tc_index_
       void*              next_;
+      ///
+      /// Calculated by include/cppad/CMakeLists.txt
+      CPPAD_PADDING_BLOCK_T
       // -----------------------------------------------------------------
       /// make default constructor private. It is only used by constructor
       /// for `root arrays below.

@@ -5,6 +5,7 @@
 
 {xrst_begin whats_new_24 app}
 {xrst_spell
+   svec
 }
 
 Changes and Additions to CppAD During 2024
@@ -12,6 +13,14 @@ Changes and Additions to CppAD During 2024
 
 mm-dd
 *****
+
+01-10
+=====
+#. Fix some problems with the install on 32 bit systems.
+   To be specific, the :ref:`thread_alloc-name` memory allocator
+   was not properly aligning doubles.
+#. Suppress the test of the ``svec_setvec`` class.
+   (The class has a bug and is not currently being used.)
 
 01-08
 =====
