@@ -12,7 +12,7 @@
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20240111: CppAD User's Manual
+cppad-20240112: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}

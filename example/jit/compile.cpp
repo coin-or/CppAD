@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -56,17 +56,17 @@ bool compile(void)
       compile = "cl /EHs /EHc /c /LD /TC /O2";
 # endif
 # if CPPAD_C_COMPILER_GNU
-   flag = std::system(CPPAD_C_COMPILER_PATH " --version > temp");
+   flag = std::system("gcc --version > temp");
    if( flag == 0 )
-      compile = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
+      compile = "gcc -c -fPIC -O2";
 # endif
 # if CPPAD_C_COMPILER_CLANG
 # ifndef __MINGW32__
    // clang: error: unsupported option '-fPIC' for target
    // 'x86_64-pc-windows-msys'
-   flag = std::system(CPPAD_C_COMPILER_PATH " --version > /dev/null");
+   flag = std::system("clang --version > /dev/null");
    if( flag == 0 )
-      compile = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
+      compile = "clang -c -fPIC -O2";
 # endif
 # endif
    //
@@ -97,7 +97,7 @@ bool compile(void)
    //
    // dll_file
    // created in std::filesystem::current_path
-   std::string dll_file = "compile" DLL_EXT;
+   std::string dll_file = "jit_compile" DLL_EXT;
    CPPAD_TESTVECTOR( std::string) csrc_files(1);
    csrc_files[0] = csrc_file;
    std::map< std::string, std::string > options;

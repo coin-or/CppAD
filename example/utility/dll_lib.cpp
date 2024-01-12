@@ -103,11 +103,10 @@ bool dll_lib(void)
 // BEGIN_OPTIONS
    // Example using options that are different from the default options
    std::map< std::string, std::string > options;
-# if CPPAD_C_COMPILER_MSVC
+# ifdef _MSC_VER
    options["compile"] = "cl /EHs /EHc /c /LD /TC /O2";
-# endif
-# if CPPAD_C_COMPILER_CLANG || CPPAD_C_COMPILER_GNU
-   options["compile"] = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
+# else
+   options["compile"] = "gcc -c -fPIC -O2";
 # endif
 // END_OPTIONS
    //
