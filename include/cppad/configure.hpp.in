@@ -226,12 +226,13 @@ This type is later defined as addr_t in the CppAD namespace.
 /* {xrst_code}
 {xrst_spell_on}
 
-CPPAD_TAPE_ADDR_TYPE_IS_SIZE_T
-******************************
-Is size_t the type the same as CPPAD_TAPE_ADDR_TYPE:
+CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
+***********************************
+Is size_t the type the same as CPPAD_TAPE_ADDR_TYPE.
 {xrst_spell_off}
 {xrst_code hpp} */
-# define CPPAD_TAPE_ADDR_TYPE_IS_SIZE_T @cppad_tape_addr_type_is_size_t@
+# define CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T \
+   @cppad_is_same_tape_addr_type_size_t@
 /* {xrst_code}
 {xrst_spell_off}
 

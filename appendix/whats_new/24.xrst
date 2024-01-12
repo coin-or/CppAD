@@ -15,6 +15,14 @@ Changes and Additions to CppAD During 2024
 mm-dd
 *****
 
+01-12
+*****
+#. There were some problems using the cmake C compiler for the
+   examples and tests of jit compliation, so that has been backed out for now.
+#. There was a mistake in detecting if size_t is the same as
+   :ref:`cmake@cppad_tape_addr_type`. This could cause a compile error
+   in `op_hash_table.hpp` and has been fixed.
+
 01-11
 =====
 Use the *cppad_c_compiler_path* detected by :ref:`cmake-name` 
@@ -22,8 +30,6 @@ to run the C compiler for the Clang and GNU cases; see
 the `create_dll_lib`` defaults for
 :ref:`create_dll_lib@options@compile` and 
 :ref:`create_dll_lib@options@link` .
-This fixed using jit compilation where ``gcc`` or ``clang`` used
-an alias; e.g., ``cc`` .
 
 01-10
 =====

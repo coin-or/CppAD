@@ -105,9 +105,6 @@ IF( cppad_eigenvector )
    ENDIF( NOT include_eigen )
 ENDIF( cppad_eigenvector )
 # -----------------------------------------------------------------------------
-# cppad_tape_addr_type_is_size_t
-check_match(cppad_tape_addr_type size_t cppad_tape_addr_type_is_size_t)
-# -----------------------------------------------------------------------------
 # cppad_has_gettimeofday
 #
 SET(source "
@@ -120,7 +117,7 @@ int main(void)
 )
 compile_source_test(${cmake_defined_ok} "${source}" cppad_has_gettimeofday)
 # -----------------------------------------------------------------------------
-# Warn user of the following types are signed:
+# Warn user if the following types are signed:
 #  cppad_tape_addr_type, cppad_tape_id_type
 FOREACH(cmake_var cppad_tape_id_type cppad_tape_addr_type )
    SET(source "
@@ -192,6 +189,23 @@ int main(void)
 " )
 compile_source_test(
    ${cmake_defined_ok} "${source}" cppad_is_same_unsigned_int_size_t 
+)
+# -----------------------------------------------------------------------------
+# cppad_is_same_tape_addr_type_size_t
+#
+SET(source "
+# include <cstddef>
+# include <type_traits>
+int main(void)
+{  static_assert(
+      std::is_same<${cppad_tape_addr_type}, size_t>::value ,
+      \"message not needed with C++17 or later\"  
+   );
+   return 0;
+}
+" )
+compile_source_test(
+   ${cmake_defined_ok} "${source}" cppad_is_same_tape_addr_type_size_t 
 )
 # -----------------------------------------------------------------------------
 # cppad_padding_block_t 
