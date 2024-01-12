@@ -18,7 +18,7 @@ mm-dd
 01-12
 *****
 #. There were some problems using the cmake C compiler for the
-   examples and tests of jit compliation, so that has been backed out for now.
+   examples and tests of jit compilation, so that has been backed out for now.
 #. There was a mistake in detecting if size_t is the same as
    :ref:`cmake@cppad_tape_addr_type`. This could cause a compile error
    in `op_hash_table.hpp` and has been fixed.

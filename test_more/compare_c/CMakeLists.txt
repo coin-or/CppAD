@@ -44,7 +44,11 @@ ENDIF( "${cppad_debug_which}" STREQUAL debug_all )
 # initialize check_test_more_compare_c
 SET(check_test_more_compare_c_depends "")
 #
-ADD_SUBDIRECTORY(c)
+# Microsofts C compiler does not seem to work as part of a C++ project
+STRING(FIND "${CMAKE_C_COMPILER_ID}" "MSVC" index)
+IF( "${index}" EQUAL "-1" )
+   ADD_SUBDIRECTORY(c)
+ENDIF( )
 ADD_SUBDIRECTORY(cpp)
 #
 # check_test_more_compare_c target
