@@ -30,7 +30,6 @@ extern bool get_started(void);
 int main(void)
 {  bool ok = true;
    //
-# if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
    std::string group = "example/jit";
    size_t      width = 20;
    CppAD::test_boolofvoid Run(group, width);
@@ -49,7 +48,6 @@ int main(void)
    bool memory_ok = CppAD::thread_alloc::free_all();
    // print summary at end
    ok = Run.summary(memory_ok);
-# endif
    //
    return static_cast<int>( ! ok );
 }
