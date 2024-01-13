@@ -40,13 +40,17 @@ jobs:
           cmake -D cppad_debug_which=$debug_which ..
       - name: run make check
         run: |
-          cd build
+          if [ "$RUNNER_OS" == "macOS" ]
+          then
+            export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+          fi
           if which nproc >& /dev/null
           then
               n_job=$(nproc)
           else
               n_job=$(sysctl -n hw.ncpu)
           fi
+          cd build
           echo "make -j $n_job check"
           make -j $n_job check
       - run: echo "job.status = ${{ job.status }}"

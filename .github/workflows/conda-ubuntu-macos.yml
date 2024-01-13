@@ -47,6 +47,10 @@ jobs:
     - name: Build CppAD
       shell: bash -l {0}
       run: |
+        if [ "$RUNNER_OS" == "macOS" ]
+        then
+          export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+        fi
         conda activate cppad
         echo $CONDA_PREFIX
 
