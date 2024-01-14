@@ -49,29 +49,19 @@ bool compile(void)
    //
    // compile
    std::string compile = "";
-   int flag;
-# if CPPAD_C_COMPILER_MSVC
-   flag = std::system("cl 1> nul 2> nul");
-   if( flag == 0 )
-      compile = "cl /EHs /EHc /c /LD /TC /O2";
+# if CPPAD_C_COMPILER_MSVC_FLAGS
+   if( std::system( CPPAD_C_COMPILER_PATH " 1> nul 2> nul") == 0 )
+      compile = CPPAD_C_COMPILER_PATH " /EHs /EHc /c /LD /TC /O2";
 # endif
-# if CPPAD_C_COMPILER_GNU
-   flag = std::system("gcc --version > temp");
-   if( flag == 0 )
-      compile = "gcc -c -fPIC -O2";
-# endif
-# if CPPAD_C_COMPILER_CLANG
-# ifndef __MINGW32__
-   // clang: error: unsupported option '-fPIC' for target
-   // 'x86_64-pc-windows-msys'
-   flag = std::system("clang --version > /dev/null");
-   if( flag == 0 )
-      compile = "clang -c -fPIC -O2";
-# endif
+# if CPPAD_C_COMPILER_GNU_FLAGS
+   if( std::system( CPPAD_C_COMPILER_PATH " --version > temp") == 0 )
+      compile = CPPAD_C_COMPILER_PATH " -c -fPIC -O2";
 # endif
    //
    if( compile == "" )
+   {  std::cout << ": cannot determine C compiler to use so skiping test: ";
       return ok;
+   }
    // std::cout << "compile = " << compile << "\n";
    //
    // nx, ny

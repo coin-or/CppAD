@@ -86,7 +86,7 @@ int main(void)
    Run( vectorBool,             "vectorBool" );
 // END_SORT_THIS_LINE_MINUS_1
 //
-# if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
+# if CPPAD_C_COMPILER_GNU_FLAGS || CPPAD_C_COMPILER_MSVC_FLAGS
 # if CPPAD_USE_CPLUSPLUS_2017
    Run( dll_lib,                "dll_lib" );
 # endif

@@ -21,30 +21,48 @@ SET(CMAKE_REQUIRED_FLAGS       "")
 SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
-# cppad_c_compiler_gnu
-# cppad_c_compiler_msvc
-# cppad_c_compiler_clang
-STRING(TOLOWER "${CMAKE_C_COMPILER_ID}" cmake_compiler_id_lower)
-SET(count 0)
-FOREACH(name gnu msvc clang)
-   STRING(FIND "${cmake_compiler_id_lower}" "${name}" index)
-   IF( "${index}" EQUAL "-1" )
-      SET(cppad_c_compiler_${name} 0)
-   ELSE()
-      SET(cppad_c_compiler_${name} 1)
-      MATH(EXPR count "${count}+1")
-   ENDIF()
-   print_variable( cppad_c_compiler_${name} )
-ENDFOREACH()
-IF( "${count}" EQUAL "0")
-   MESSAGE(STATUS "Did not find a C compiler to use for jit compilation" )
-ELSEIF( "${count}" GREATER_EQUAL "2")
-   MESSAGE(FATAL_ERROR "Found more than one C compiler")
-ENDIF()
 #
 # cppad_c_compiler_path
 SET(cppad_c_compiler_path "\"${CMAKE_C_COMPILER}\"")
 print_variable(cppad_c_compiler_path)
+#
+# c_compiler_msvc_clang
+STRING(REGEX MATCH ".*clang-cl.exe$" match ${cppad_c_compiler_path} )
+IF( "${match}" STREQUAL "" )
+   SET(c_compiler_msvc_clang 0)
+ELSE( )
+   SET(c_compiler_msvc_clang 1)
+ENDIF( )
+print_variable(c_compiler_msvc_clang)
+#
+# cmake_compiler_id_lower
+STRING(TOLOWER "${CMAKE_C_COMPILER_ID}" cmake_compiler_id_lower)
+#
+# cppad_c_compiler_msvc_flags
+STRING(FIND "${cmake_compiler_id_lower}" clang index)
+IF( ${c_compiler_msvc_clang} AND ( NOT "${index}" EQUAL "-1" ) )
+   SET(cppad_c_compiler_msvc_flags 1)
+ELSE( )
+   STRING(FIND "${cmake_compiler_id_lower}" msvc index)
+   IF( NOT "${index}" EQUAL "-1" )
+      SET(cppad_c_compiler_msvc_flags 1)
+   ELSE( )
+      SET(cppad_c_compiler_msvc_flags 0)
+   ENDIF( )
+ENDIF( )
+#
+# cppad_c_compiler_gnu_flags
+STRING(FIND "${cmake_compiler_id_lower}" clang index)
+IF( (NOT "${index}" EQUAL "-1" ) AND ( NOT ${c_compiler_msvc_clang} ) )
+   SET(cppad_c_compiler_gnu_flags 1)
+ELSE( )
+   STRING(FIND "${cmake_compiler_id_lower}" gnu index)
+   IF( NOT "${index}" EQUAL "-1" )
+      SET(cppad_c_compiler_gnu_flags 1)
+   ELSE( )
+      SET(cppad_c_compiler_gnu_flags 0)
+   ENDIF( )
+ENDIF( )
 # -----------------------------------------------------------------------------
 # compiler_has_conversion_warn
 SET( clang_or_gnu 0 )

@@ -124,11 +124,11 @@ std::string create_dll_lib(
    // compile, link
    string compile = "";
    string  link   = "";
-# if CPPAD_C_COMPILER_MSVC
-   compile = "cl /EHs /EHc /c /LD /TC";
+# if CPPAD_C_COMPILER_MSVC_FLAGS
+   compile = CPPAD_C_COMPILER_PATH " /EHs /EHc /c /LD /TC";
    link    = "link /DLL";
 # endif
-# if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_CLANG
+# if CPPAD_C_COMPILER_GNU_FLAGS
    compile = CPPAD_C_COMPILER_PATH " -c -fPIC";
    link    = CPPAD_C_COMPILER_PATH " -shared";
 # endif

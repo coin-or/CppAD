@@ -28,7 +28,7 @@ extern std::map<std::string, bool> global_option;
 # define DLL_EXT ".so"
 # endif
 
-# if ! (CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC)
+# if ! (CPPAD_C_COMPILER_GNU_FLAGS || CPPAD_C_COMPILER_MSVC_FLAGS )
 bool link_det_minor(
    const std::string&         job      ,
    size_t                     size     ,
@@ -267,7 +267,7 @@ bool link_det_minor(
    }
    return true;
 }
-# endif // CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
+# endif // CPPAD_C_COMPILER_GNU_FLAGS || CPPAD_C_COMPILER_MSVC_FLAGS
 /* {xrst_code}
 {xrst_spell_on}
 

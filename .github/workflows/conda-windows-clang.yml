@@ -57,11 +57,14 @@ jobs:
 
 
         :: Configure
+        # wd6316 is same as gnu -Wno-bitwise-instead-of-logical
+        # https://learn.microsoft.com/en-us/cpp/code-quality/c6316
         cmake ^
           -G "Visual Studio 16 2019" -T "ClangCl" ^
           -DCMAKE_GENERATOR_PLATFORM=x64 ^
           -DCMAKE_INSTALL_PREFIX=%CONDA_PREFIX%\Library ^
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ^
+          -Dcppad_cxx_flags="/wd6316" ^
           -Dcppad_static_lib=TRUE ^
           ..
 

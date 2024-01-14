@@ -152,7 +152,7 @@ that use ``to_csrc`` .
 */
 # include <cppad/local/graph/csrc_writer.hpp>
 
-# if CPPAD_C_COMPILER_MSVC 
+# if CPPAD_C_COMPILER_MSVC_FLAGS 
 # define CPPAD_FUN_TYPE __cdecl
 # define CPPAD_IMPORT   __declspec(dllimport)
 # else

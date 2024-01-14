@@ -317,30 +317,21 @@ It can be used to run the C compiler; e.g. see for :ref:`create_dll_lib-name` .
 # define CPPAD_C_COMPILER_PATH @cppad_c_compiler_path@
 /* {xrst_code}
 
-CPPAD_C_COMPILER_GNU
-********************
-If true, the C complier is ``gcc``
+CPPAD_C_COMPILER_GNU_FLAGS
+**************************
+If true, the C complier uses the same flags as ``gcc``
 {xrst_spell_off}
 {xrst_code hpp} */
-# define CPPAD_C_COMPILER_GNU @cppad_c_compiler_gnu@
+# define CPPAD_C_COMPILER_GNU_FLAGS @cppad_c_compiler_gnu_flags@
 /* {xrst_code}
 {xrst_spell_on}
 
-CPPAD_C_COMPILER_MSVC
-*********************
-If true, the C complier is ``cl``
+CPPAD_C_COMPILER_MSVC_FLAGS
+***************************
+If true, the C complier uses the same flags as ``cl``
 {xrst_spell_off}
 {xrst_code hpp} */
-# define CPPAD_C_COMPILER_MSVC @cppad_c_compiler_msvc@
-/* {xrst_code}
-{xrst_spell_on}
-
-CPPAD_C_COMPILER_CLANG
-**********************
-If true, the C complier is ``cl``
-{xrst_spell_off}
-{xrst_code hpp} */
-# define CPPAD_C_COMPILER_CLANG @cppad_c_compiler_clang@
+# define CPPAD_C_COMPILER_MSVC_FLAGS @cppad_c_compiler_msvc_flags@
 /* {xrst_code}
 {xrst_spell_on}
 
