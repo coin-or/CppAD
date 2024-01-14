@@ -27,8 +27,8 @@ SET(cppad_c_compiler_path "\"${CMAKE_C_COMPILER}\"")
 print_variable(cppad_c_compiler_path)
 #
 # c_compiler_msvc_clang
-STRING(REGEX MATCH ".*clang-cl.exe$" match ${cppad_c_compiler_path} )
-IF( "${match}" STREQUAL "" )
+STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${cppad_c_compiler_path}" )
+IF( "${match}" STREQUAL "${cppad_c_compiler_path}"  )
    SET(c_compiler_msvc_clang 0)
 ELSE( )
    SET(c_compiler_msvc_clang 1)
