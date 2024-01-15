@@ -11,8 +11,13 @@ SET(check_test_more_depends "")
 ADD_SUBDIRECTORY(deprecated)
 
 # compare_c tests
-ADD_SUBDIRECTORY(compare_c)
-
+# clange-cl.exe seems to be confused about C files and gives an erro message
+# saying that C++ forbids macroizing the keywords bool, true, and false.
+STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${CMAKE_C_COMPILER}" )
+IF( NOT "${match}" STREQUAL "${CMAKE_C_COMPILER}" ) 
+   ADD_SUBDIRECTORY(compare_c)
+ENDIF( )
+#
 # debug_rel tests
 IF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
    # Visual studio rejects mixing debug and release flags
