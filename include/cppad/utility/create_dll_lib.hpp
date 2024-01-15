@@ -144,6 +144,13 @@ std::string create_dll_lib(
       }
    }
    //
+   // check if we know how to create a dll with this compiler
+   if( compile == "" )
+   {  err_msg  = "Do not know how to create a dll using this C compiler\n";
+      err_msg += CPPAD_C_COMPILER_PATH;
+      return err_msg;
+   }
+   //
    // check the std::system function exists
    int flag = std::system(nullptr);
    if( flag == 0 )

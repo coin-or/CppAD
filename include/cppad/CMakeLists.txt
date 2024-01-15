@@ -23,15 +23,16 @@ SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
 #
 # cppad_c_compiler_path
+# is a copy of CMAKE_C_COMPILER with double quotes surrounding it.
 SET(cppad_c_compiler_path "\"${CMAKE_C_COMPILER}\"")
 print_variable(cppad_c_compiler_path)
 #
 # c_compiler_msvc_clang
-STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${cppad_c_compiler_path}" )
-IF( "${match}" STREQUAL "${cppad_c_compiler_path}"  )
-   SET(c_compiler_msvc_clang 0)
-ELSE( )
+STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${CMAKE_C_COMPILER}" )
+IF( "${match}" STREQUAL "${CMAKE_C_COMPILER}"  )
    SET(c_compiler_msvc_clang 1)
+ELSE( )
+   SET(c_compiler_msvc_clang 0)
 ENDIF( )
 print_variable(c_compiler_msvc_clang)
 #
@@ -39,30 +40,30 @@ print_variable(c_compiler_msvc_clang)
 STRING(TOLOWER "${CMAKE_C_COMPILER_ID}" cmake_compiler_id_lower)
 #
 # cppad_c_compiler_msvc_flags
-STRING(FIND "${cmake_compiler_id_lower}" clang index)
-IF( ${c_compiler_msvc_clang} AND ( NOT "${index}" EQUAL "-1" ) )
+# clang-cl.exe does not seem to support making dlls with /LD; see
+# https://discourse.llvm.org/t/clang-cl-exe-compiler-flags/76265
+# so only check for the Visual Studio C compiler.
+STRING(FIND "${cmake_compiler_id_lower}" msvc index)
+IF( NOT "${index}" EQUAL "-1" )
    SET(cppad_c_compiler_msvc_flags 1)
 ELSE( )
-   STRING(FIND "${cmake_compiler_id_lower}" msvc index)
-   IF( NOT "${index}" EQUAL "-1" )
-      SET(cppad_c_compiler_msvc_flags 1)
-   ELSE( )
-      SET(cppad_c_compiler_msvc_flags 0)
-   ENDIF( )
+   SET(cppad_c_compiler_msvc_flags 0)
 ENDIF( )
+print_variable( cppad_c_compiler_msvc_flags )
 #
 # cppad_c_compiler_gnu_flags
-STRING(FIND "${cmake_compiler_id_lower}" clang index)
-IF( (NOT "${index}" EQUAL "-1" ) AND ( NOT ${c_compiler_msvc_clang} ) )
-   SET(cppad_c_compiler_gnu_flags 1)
+IF( ${c_compiler_msvc_clang} )
+   SET(cppad_c_compiler_gnu_flags 0)
 ELSE( )
-   STRING(FIND "${cmake_compiler_id_lower}" gnu index)
-   IF( NOT "${index}" EQUAL "-1" )
-      SET(cppad_c_compiler_gnu_flags 1)
-   ELSE( )
+   STRING(FIND "${cmake_compiler_id_lower}" clang clang_index)
+   STRING(FIND "${cmake_compiler_id_lower}" gnu    gnu_index)
+   IF( "${clang_index}" EQUAL "-1"  AND "${gnu_index}" EQUAL "-1" ) 
       SET(cppad_c_compiler_gnu_flags 0)
+   ELSE( )
+      SET(cppad_c_compiler_gnu_flags 1)
    ENDIF( )
 ENDIF( )
+print_variable( cppad_c_compiler_gnu_flags )
 # -----------------------------------------------------------------------------
 # compiler_has_conversion_warn
 SET( clang_or_gnu 0 )
