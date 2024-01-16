@@ -40,7 +40,7 @@ print_variable(c_compiler_msvc_clang)
 STRING(TOLOWER "${CMAKE_C_COMPILER_ID}" cmake_compiler_id_lower)
 #
 # cppad_c_compiler_msvc_flags
-# clang-cl.exe does not seem to support making dlls with /LD; see
+# clang-cl.exe needs more work; see
 # https://discourse.llvm.org/t/clang-cl-exe-compiler-flags/76265
 # so only check for the Visual Studio C compiler.
 STRING(FIND "${cmake_compiler_id_lower}" msvc index)

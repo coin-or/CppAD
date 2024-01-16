@@ -66,7 +66,7 @@ It does not include the output file flag or output file name.
 If :ref:`cmake-name` detects that this is the MSVC compiler,
 the default value for this option is
 
-   `cl /EHs /EHc /c /LD /TC``
+   `cl /EHs /EHc /c /TC``
 
 If cmake detects that this is the Clang or GNU compiler,
 the default value for this option is
@@ -126,7 +126,7 @@ std::string create_dll_lib(
    string compile = "";
    string  link   = "";
 # if CPPAD_C_COMPILER_MSVC_FLAGS
-   compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /LD /TC";
+   compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /TC";
    link    = "link /DLL";
 # endif
 # if CPPAD_C_COMPILER_GNU_FLAGS

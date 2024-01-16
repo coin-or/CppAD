@@ -104,7 +104,7 @@ bool dll_lib(void)
    // Example using options that are different from the default options
    std::map< std::string, std::string > options;
 # ifdef _MSC_VER
-   options["compile"] = "cl /EHs /EHc /c /LD /TC /O2";
+   options["compile"] = "cl /EHs /EHc /c /TC /O2";
 # else
    options["compile"] = "gcc -c -fPIC -O2";
 # endif

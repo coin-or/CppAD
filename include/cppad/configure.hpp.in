@@ -8,6 +8,7 @@
 /*!
 {xrst_begin configure.hpp dev}
 {xrst_spell
+   cmd
    cl
    complier
    gettimeofday
@@ -310,7 +311,7 @@ Otherwise it is empty.
 
 CPPAD_C_COMPILER_CMD
 ********************
-This is the commmand that runs the C compiler as a C string; 
+This is the command that runs the C compiler as a C string; 
 i.e., surrounded by double quotes. 
 It can be used to run the C compiler; e.g. see for :ref:`create_dll_lib-name` .
 {xrst_code hpp} */

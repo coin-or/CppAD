@@ -51,7 +51,7 @@ bool compile(void)
    std::string compile = "";
 # if CPPAD_C_COMPILER_MSVC_FLAGS
    if( std::system( CPPAD_C_COMPILER_CMD " 1> nul 2> nul") == 0 )
-      compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /LD /TC /O2";
+      compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /TC /O2";
 # endif
 # if CPPAD_C_COMPILER_GNU_FLAGS
    if( std::system( CPPAD_C_COMPILER_CMD " --version > temp") == 0 )

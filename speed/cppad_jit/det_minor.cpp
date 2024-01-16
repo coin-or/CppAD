@@ -142,9 +142,10 @@ namespace {
       CppAD::vector< string > csrc_files(1);
       csrc_files[0] = csrc_file;
       std::map< string, string > dll_options;
-# ifdef _MSC_VER
-      dll_options["compile"] = "cl /EHs /EHc /c /LD /TC /O2";
-# else
+# if CPPAD_C_COMPILER_MSVC_FLAGS
+      dll_options["compile"] = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /TC /O2";
+# endif
+# if CPPAD_C_COMPILER_GNU_FLAGS
       dll_options["compile"] = "gcc -c -fPIC -O2";
 # endif
       string err_msg =
