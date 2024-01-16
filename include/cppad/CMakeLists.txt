@@ -40,12 +40,19 @@ print_variable(c_compiler_msvc_clang)
 STRING(TOLOWER "${CMAKE_C_COMPILER_ID}" cmake_compiler_id_lower)
 #
 # cppad_c_compiler_msvc_flags
-# clang-cl.exe needs more work; see
-# https://discourse.llvm.org/t/clang-cl-exe-compiler-flags/76265
-# so only check for the Visual Studio C compiler.
 STRING(FIND "${cmake_compiler_id_lower}" msvc index)
 IF( NOT "${index}" EQUAL "-1" )
    SET(cppad_c_compiler_msvc_flags 1)
+ELSEIF( ${c_compiler_msvc_clang} )
+   SET(cppad_c_compiler_msvc_flags 1)
+   #
+   STRING(FIND "${cmake_compiler_id_lower}" clang index)
+   IF( "${index}" EQUAL "-1" )
+      MESSAGE(FATAL_ERROR 
+         "Looks like MSVC compatible clang-cl.ext C compiler but"
+         "CMAKE_C_COMPILER_ID = ${CMAKE_C_COMPILER_ID}"
+      )
+   ENDIF( )
 ELSE( )
    SET(cppad_c_compiler_msvc_flags 0)
 ENDIF( )
