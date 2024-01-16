@@ -5,6 +5,7 @@
 
 {xrst_begin whats_new_24 app}
 {xrst_spell
+   cmd
    dll
    svec
 }
@@ -14,6 +15,11 @@ Changes and Additions to CppAD During 2024
 
 mm-dd
 *****
+
+01-16
+*****
+fix dll linking of jit code by changing *cppad_c_compiler_path* to
+*cppad_c_compiler_cmd* (spaces in the path were making commands fail).
 
 01-12
 *****

@@ -8,6 +8,7 @@
 {xrst_begin create_dll_lib}
 {xrst_spell
    cl
+   cmd
    csrc
    hc
    hs
@@ -70,10 +71,10 @@ the default value for this option is
 If cmake detects that this is the Clang or GNU compiler,
 the default value for this option is
 
-   *cppad_c_compiler_path* ``-c -fPIC``
+   *cppad_c_compiler_cmd* ``-c -fPIC``
 
-Here and below *cppad_c_compiler_path* is the path the C compiler
-(which is determined by cmake) .
+Here and below *cppad_c_compiler_cmd* is the command used to run
+the C compiler (which is determined by cmake) .
 
 
 link
@@ -86,7 +87,7 @@ In the MSVC case, the default for this option is
 
 In the Clang or GNU case, the default for this option is
 
-   *cppad_c_compiler_path* ``-shared`` .
+   *cppad_c_compiler_cmd* ``-shared`` .
 
 
 err_msg

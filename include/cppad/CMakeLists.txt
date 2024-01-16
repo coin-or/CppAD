@@ -22,10 +22,10 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
 #
-# cppad_c_compiler_path
-# is a copy of CMAKE_C_COMPILER with double quotes surrounding it.
-SET(cppad_c_compiler_path "\"${CMAKE_C_COMPILER}\"")
-print_variable(cppad_c_compiler_path)
+# cppad_c_compiler_cmd
+# is the command used to run the C compiler.
+STRING(REGEX REPLACE ".*[/\]" "" cppad_c_compiler_cmd "${CMAKE_C_COMPILER}")
+print_variable(cppad_c_compiler_cmd)
 #
 # c_compiler_msvc_clang
 STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${CMAKE_C_COMPILER}" )
