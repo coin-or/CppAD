@@ -32,7 +32,7 @@ int main(void)
    //
 # if ! (CPPAD_C_COMPILER_MSVC_FLAGS || CPPAD_C_COMPILER_GNU_FLAGS)
    std::cout << "Do not know how to use this C compiler to create a DLL\n";
-   std::cout << CPPAD_C_COMPILER_PATH << "\n";
+   std::cout << CPPAD_C_COMPILER_CMD << "\n";
    std::cout << "Skipping example/jit\n";
 # else
    std::string group = "example/jit";

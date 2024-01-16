@@ -125,12 +125,12 @@ std::string create_dll_lib(
    string compile = "";
    string  link   = "";
 # if CPPAD_C_COMPILER_MSVC_FLAGS
-   compile = CPPAD_C_COMPILER_PATH " /EHs /EHc /c /LD /TC";
+   compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /LD /TC";
    link    = "link /DLL";
 # endif
 # if CPPAD_C_COMPILER_GNU_FLAGS
-   compile = CPPAD_C_COMPILER_PATH " -c -fPIC";
-   link    = CPPAD_C_COMPILER_PATH " -shared";
+   compile = CPPAD_C_COMPILER_CMD " -c -fPIC";
+   link    = CPPAD_C_COMPILER_CMD " -shared";
 # endif
    for( const auto& pair : options )
    {  const string& key = pair.first;
@@ -147,7 +147,7 @@ std::string create_dll_lib(
    // check if we know how to create a dll with this compiler
    if( compile == "" )
    {  err_msg  = "Do not know how to create a dll using this C compiler\n";
-      err_msg += CPPAD_C_COMPILER_PATH;
+      err_msg += CPPAD_C_COMPILER_CMD;
       return err_msg;
    }
    //
