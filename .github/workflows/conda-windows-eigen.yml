@@ -49,6 +49,7 @@ jobs:
           -D CMAKE_BUILD_TYPE=release ^
           -G "NMake Makefiles" ^
           -D eigen_prefix=%eigen_prefix% ^
+          -D cppad_static_lib=TRUE ^
           ..
         REM Build and run tests.
         echo cmake --build . --target check

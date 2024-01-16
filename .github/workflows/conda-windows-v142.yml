@@ -60,6 +60,7 @@ jobs:
           -G "Visual Studio 16 2019" -T "v142" -DCMAKE_GENERATOR_PLATFORM=x64 ^
           -DCMAKE_INSTALL_PREFIX=%CONDA_PREFIX%\Library ^
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ^
+          -Dcppad_static_lib=TRUE ^
           ..
 
         :: Build, check and Install
