@@ -77,7 +77,6 @@ then
    echo_log_eval rm -r $HOME/prefix/cppad
 fi
 # ---------------------------------------------------------------------------
-#
 # version
 version=$(
    sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
@@ -198,11 +197,21 @@ then
 fi
 export LD_LIBRARY_PATH="$prefix/lib:$prefix/lib64"
 # ---------------------------------------------------------------------------
+# check_version
+if echo $version | grep '[0-9]\{4\}0000[.]' > /dev/null
+then
+   # special interactive case for stable versions.
+   echo_eval bin/check_version.sh
+else
+   echo_log_eval bin/check_version.sh
+fi
+# ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=$(
    ls bin/check_* | sed \
    -e '/check_all.sh/d' \
    -e '/check_doxygen.sh/d' \
+   -e '/version.sh/d' \
    -e '/check_install.sh/d'
 )
 #
