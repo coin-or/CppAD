@@ -33,6 +33,7 @@ latex_macro = [
    '\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }',
 ]
 
+# BEGIN_SORT_THIS_LINE_PLUS_3
 [project_dictionary]
 data = [ '''
    acos
@@ -57,16 +58,20 @@ data = [ '''
    checkpointing
    chkpoint
    cmake
+   col
    colpack
    compilers
+   cond
    config
    const
+   cos
    cpp
    cppad
    cppadcg
    ctor
    cygwin
    dd
+   det
    determinant
    dir
    dvector
@@ -78,6 +83,7 @@ data = [ '''
    eq
    eqnarray
    erf
+   eval
    exp
    fabs
    factorization
@@ -86,32 +92,42 @@ data = [ '''
    gt
    hes
    hpp
+   ident
    ifndef
    implementations
    ind
+   int
    ipopt
    iterator
    itr
    jac
    jit
    json
+   le
    lexer
    ll
    lt
+   lu
+   max
    microsoft
+   min
    mm
    mul
+   multi
    namespace
    nan
    nc
    nlp
    nowrap
+   num
    obj
+   ok
    omp
    op
    openmp
    operand
    optimizer
+   os
    pc
    pkg
    preprocessor
@@ -119,8 +135,11 @@ data = [ '''
    ptr
    rc
    rcv
+   rec
    recursion
    rel
+   res
+   resize
    retape
    runge
    sacado
@@ -133,8 +152,11 @@ data = [ '''
    sqrt
    std
    subgraph
+   taylor
    th
    unix
+   val
    var
    vec
 ''' ]
+# END_SORT_THIS_LINE_MINUS_2
