@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin get_fadbad.sh} 
+# {xrst_begin get_fadbad.sh}
 # {xrst_comment_ch #}
 #
 # Download and Install Fadbad in Build Directory

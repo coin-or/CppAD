@@ -94,4 +94,3 @@ CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
 
 # endif
 # endif
-

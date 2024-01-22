@@ -48,7 +48,7 @@ ELSEIF( ${c_compiler_msvc_clang} )
    #
    STRING(FIND "${cmake_compiler_id_lower}" clang index)
    IF( "${index}" EQUAL "-1" )
-      MESSAGE(FATAL_ERROR 
+      MESSAGE(FATAL_ERROR
          "Looks like MSVC compatible clang-cl.ext C compiler but"
          "CMAKE_C_COMPILER_ID = ${CMAKE_C_COMPILER_ID}"
       )
@@ -64,7 +64,7 @@ IF( ${c_compiler_msvc_clang} )
 ELSE( )
    STRING(FIND "${cmake_compiler_id_lower}" clang clang_index)
    STRING(FIND "${cmake_compiler_id_lower}" gnu    gnu_index)
-   IF( "${clang_index}" EQUAL "-1"  AND "${gnu_index}" EQUAL "-1" ) 
+   IF( "${clang_index}" EQUAL "-1"  AND "${gnu_index}" EQUAL "-1" )
       SET(cppad_c_compiler_gnu_flags 0)
    ELSE( )
       SET(cppad_c_compiler_gnu_flags 1)
@@ -208,13 +208,13 @@ SET(source "
 int main(void)
 {  static_assert(
       std::is_same<unsigned int, size_t>::value ,
-      \"message not needed with C++17 or later\"  
+      \"message not needed with C++17 or later\"
    );
    return 0;
 }
 " )
 compile_source_test(
-   ${cmake_defined_ok} "${source}" cppad_is_same_unsigned_int_size_t 
+   ${cmake_defined_ok} "${source}" cppad_is_same_unsigned_int_size_t
 )
 # -----------------------------------------------------------------------------
 # cppad_is_same_tape_addr_type_size_t
@@ -225,16 +225,16 @@ SET(source "
 int main(void)
 {  static_assert(
       std::is_same<${cppad_tape_addr_type}, size_t>::value ,
-      \"message not needed with C++17 or later\"  
+      \"message not needed with C++17 or later\"
    );
    return 0;
 }
 " )
 compile_source_test(
-   ${cmake_defined_ok} "${source}" cppad_is_same_tape_addr_type_size_t 
+   ${cmake_defined_ok} "${source}" cppad_is_same_tape_addr_type_size_t
 )
 # -----------------------------------------------------------------------------
-# cppad_padding_block_t 
+# cppad_padding_block_t
 #
 # See block_t in include/cppad/utility/thread_alloc.hpp before changing this.
 SET(source "
@@ -245,7 +245,7 @@ int main(void)
    };
    static_assert(
       sizeof(block_t) % sizeof(double) == 0 ,
-      \"message not needed with C++17 or later\"  
+      \"message not needed with C++17 or later\"
    );
    return 0;
 }
@@ -262,11 +262,11 @@ SET(source "
 # include <cstddef>
 int main(void)
 {  class block_t {
-      size_t extra_; size_t tc_index_; void* next_; ${cppad_padding_block_t} 
+      size_t extra_; size_t tc_index_; void* next_; ${cppad_padding_block_t}
    };
    static_assert(
       sizeof(block_t) % sizeof(double) == 0 ,
-      \"message not needed with C++17 or later\"  
+      \"message not needed with C++17 or later\"
    );
    return 0;
 }

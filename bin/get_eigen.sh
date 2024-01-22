@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin get_eigen.sh} 
+# {xrst_begin get_eigen.sh}
 # {xrst_comment_ch #}
 #
 # Download and Install Eigen in Build Directory

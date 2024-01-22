@@ -398,4 +398,3 @@ bool SinCos(void)
 {  bool ok = Sin() & Cos() & Cosh() & Sinh();
    return ok;
 }
-

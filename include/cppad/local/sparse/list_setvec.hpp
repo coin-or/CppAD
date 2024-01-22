@@ -20,7 +20,7 @@ namespace CppAD { namespace local { namespace sparse {
 The list_setvec Class
 #####################
 This class is a :ref:`SetVector-title` with elements of type ``size_t``.
-It is implemented using the template class 
+It is implemented using the template class
 :ref:`size_setvec-name` where the elements any positive integer type.
 {xrst_code cpp} */
 typedef size_setvec<size_t>                 list_setvec;

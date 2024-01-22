@@ -14,7 +14,7 @@ ADD_SUBDIRECTORY(deprecated)
 # clange-cl.exe seems to be confused about C files and gives an erro message
 # saying that C++ forbids macroizing the keywords bool, true, and false.
 STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${CMAKE_C_COMPILER}" )
-IF( NOT "${match}" STREQUAL "${CMAKE_C_COMPILER}" ) 
+IF( NOT "${match}" STREQUAL "${CMAKE_C_COMPILER}" )
    ADD_SUBDIRECTORY(compare_c)
 ENDIF( )
 #

@@ -31,10 +31,10 @@ fix dll linking of jit code by changing *cppad_c_compiler_path* to
 
 01-11
 =====
-Use the *cppad_c_compiler_path* detected by :ref:`cmake-name` 
+Use the *cppad_c_compiler_path* detected by :ref:`cmake-name`
 to run the C compiler for the Clang and GNU cases; see
 the `create_dll_lib`` defaults for
-:ref:`create_dll_lib@options@compile` and 
+:ref:`create_dll_lib@options@compile` and
 :ref:`create_dll_lib@options@link` .
 
 01-10
@@ -54,7 +54,7 @@ and this would cause a compile error in ``vector.hpp`` and
 01-07
 =====
 The forward_two :ref:`forward_two@Syntax` was corrected.
-To be specific, 
+To be specific,
 ``Forward`` (1, *x2* ) was changed to ``Forward`` (2, *x2* ) .
 In addition, some other minor improvements were made to the
 forward_two documentation page.

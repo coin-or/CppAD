@@ -3,8 +3,8 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# 
-# {xrst_begin get_optional.sh} 
+#
+# {xrst_begin get_optional.sh}
 # {xrst_spell
 #     ls
 # }

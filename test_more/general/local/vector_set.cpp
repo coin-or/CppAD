@@ -247,7 +247,7 @@ bool vector_set(void)
    ok     &= test_post<CppAD::local::sparse::pack_setvec>();
    ok     &= test_post<CppAD::local::sparse::list_setvec>();
 # ifdef CPPAD_DO_NOT_RUN_THIS_TEST
-   // 2DO: This class tested below is not currently being used. 
+   // 2DO: This class tested below is not currently being used.
    // This test is failing due to a bug.  To be specific, push_back on a vector
    // is invalidating some pointers.
    // We need to use a different temporary vector for these push_backs.

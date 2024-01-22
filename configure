@@ -142,7 +142,7 @@
 # In addition, nmake_ make files will be generated; i.e.,
 # you will use ``nmake`` instead of ``make`` to build, test, and install.
 # The resulting C++, C, and Fortran compiler orders work Coin-OR specific;
-# see 
+# see
 # `Building with Visual Studio in MSys2
 # <https://coin-or.github.io/user_introduction.html#building-with-visual-studio-in-msys2>`_ .
 #
