@@ -6,9 +6,9 @@
 {xrst_begin utility}
 {xrst_spell
    boolofvoid
-   debugger
    dll
    romberg
+   rosen
 }
 
 Some General Purpose Utilities

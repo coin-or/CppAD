@@ -8,9 +8,6 @@
 /*
 -------------------------------------------------------------------------------
 {xrst_begin Compare}
-{xrst_spell
-   operands
-}
 
 AD Binary Comparison Operators
 ##############################

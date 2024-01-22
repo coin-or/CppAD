@@ -7,9 +7,6 @@
 /*
 -------------------------------------------------------------------------------
 {xrst_begin type_var_op dev}
-{xrst_spell
-   operands
-}
 
 Types of Variable Operators
 ###########################

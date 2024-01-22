@@ -10,6 +10,7 @@
 {xrst_spell
    dep
    eabs
+   ef
    erel
    maxabs
    nstep

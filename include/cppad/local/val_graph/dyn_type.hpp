@@ -14,9 +14,6 @@ Types of Dynamic Parameter Operators
 {xrst_end type_dyn_op}
 -------------------------------------------------------------------------------
 {xrst_begin unary_dyn_op dev}
-{xrst_spell
-   operands
-}
 
 Is This a Binary Dynamic Parameter Operator
 ###########################################
@@ -81,9 +78,6 @@ inline bool unary_dyn_op(op_code_dyn dyn_op)
 /*
 -------------------------------------------------------------------------------
 {xrst_begin binary_dyn_op dev}
-{xrst_spell
-   operands
-}
 
 Is This a Binary Dynamic Parameter Operator
 ###########################################

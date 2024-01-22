@@ -9,7 +9,6 @@
 {xrst_begin unary_standard_math}
 {xrst_spell
    expm
-   tanh
 }
 
 The Unary Standard Math Functions

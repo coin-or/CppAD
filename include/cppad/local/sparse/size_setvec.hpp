@@ -203,9 +203,6 @@ private:
 /*
 ------------------------------------------------------------------------------
 {xrst_begin size_setvec_drop dev}
-{xrst_spell
-   decremented
-}
 class size_setvec private: Drop a Set No Longer Being Used
 ##########################################################
 
@@ -318,9 +315,6 @@ private:
 /*
 ------------------------------------------------------------------------------
 {xrst_begin size_setvec_get_data_index dev}
-{xrst_spell
-   decremented
-}
 
 class size_setvec private: Get a New List Pair
 ##############################################

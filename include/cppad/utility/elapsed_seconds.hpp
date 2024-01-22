@@ -7,6 +7,9 @@
 
 /*
 {xrst_begin elapsed_seconds}
+{xrst_spell
+   chrono
+}
 
 Returns Elapsed Number of Seconds
 #################################

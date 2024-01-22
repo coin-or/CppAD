@@ -5,9 +5,6 @@
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin get_optional.sh}
-# {xrst_spell
-#     ls
-# }
 # {xrst_comment_ch #}
 #
 # Download and Install The CppAD Optional Packages

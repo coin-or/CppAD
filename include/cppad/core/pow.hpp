@@ -7,9 +7,6 @@
 
 /*
 {xrst_begin pow}
-{xrst_spell
-   logarithms
-}
 
 The AD Power Function
 #####################

@@ -10,7 +10,7 @@
 /*
 {xrst_begin base_float.hpp}
 {xrst_spell
-   invocations
+   ge
    namespaces
 }
 

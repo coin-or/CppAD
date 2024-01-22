@@ -14,7 +14,6 @@ Define the CppAD error checking macros (all of which begin with CPPAD_ASSERT_)
 -------------------------------------------------------------------------------
 {xrst_begin cppad_assert}
 {xrst_spell
-   macros
    msg
 }
 

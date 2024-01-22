@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin atomic_three_tangent.cpp}
-{xrst_spell
-   tanh
-}
 
 Tan and Tanh as User Atomic Operations: Example and Test
 ########################################################

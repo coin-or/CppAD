@@ -13,8 +13,8 @@
    aty
    px
    py
-   superscripts
    tx
+   ty
 }
 
 Atomic Reverse Mode

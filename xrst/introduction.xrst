@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin Introduction}
 {xrst_spell
+   andreas
    griewank
-   truncation
 }
 
 An Introduction by Example to Algorithmic Differentiation

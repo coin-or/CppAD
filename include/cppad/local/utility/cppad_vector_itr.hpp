@@ -91,10 +91,6 @@ public:
 {xrst_end cppad_vector_itr_traits}
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_ctor dev}
-{xrst_spell
-   indirection
-   iterators
-}
 
 Vector Class Iterator Member Data and Constructors
 ##################################################
@@ -253,9 +249,6 @@ public:
 {xrst_end cppad_vector_itr_inc}
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_equal dev}
-{xrst_spell
-   iterators
-}
 
 Vector Class Iterator Equality Operators
 ########################################
@@ -336,9 +329,6 @@ public:
 {xrst_end cppad_vector_itr_element}
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_random dev}
-{xrst_spell
-   iterators
-}
 
 Vector Class Iterator Random Access
 ###################################

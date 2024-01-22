@@ -7,10 +7,10 @@
 {xrst_spell
    adouble
    autotools
+   chrono
+   inv
    makefile
    mingw
-   preforms
-   uninitialized
    valgrind
    wmisleading
    xam

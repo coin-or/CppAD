@@ -6,6 +6,9 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_for_sparse_jac app}
+{xrst_spell
+   na
+}
 
 Atomic Forward Jacobian Sparsity Patterns
 #########################################

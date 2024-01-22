@@ -6,7 +6,7 @@
 /*
 {xrst_begin multi_atomic_two_user app}
 {xrst_spell
-   iterate
+   au
 }
 
 Defines a atomic_two Operation that Computes Square Root

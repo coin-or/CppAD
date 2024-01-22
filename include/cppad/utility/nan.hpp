@@ -9,7 +9,6 @@
 {xrst_spell
    hasnan
    isnan
-   macros
 }
 
 Obtain Nan or Determine if a Value is Nan

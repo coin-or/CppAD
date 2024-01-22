@@ -8,7 +8,6 @@
 /*
 {xrst_begin base_require}
 {xrst_spell
-   commutative
    ostream
 }
 

@@ -5,11 +5,12 @@
 {xrst_begin json_graph_op}
 {xrst_spell
    cexp
+   comp
+   div
    erfc
    expm
+   neg
    notpos
-   operands
-   tanh
 }
 
 Json AD Graph Operator Definitions

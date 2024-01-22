@@ -9,9 +9,10 @@
 {xrst_spell
    atx
    aty
-   superscripts
    tx
+   ty
    vx
+   vy
 }
 
 Atomic Forward Mode

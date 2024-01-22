@@ -8,7 +8,6 @@
 {xrst_begin memory_leak app}
 {xrst_spell
    inuse
-   statics
 }
 
 Memory Leak Detection

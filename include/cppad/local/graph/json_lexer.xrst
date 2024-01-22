@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin json_lexer dev}
-{xrst_spell
-   lexical
-}
 
 Lexical Analysis Class for a Json AD Graph
 ##########################################

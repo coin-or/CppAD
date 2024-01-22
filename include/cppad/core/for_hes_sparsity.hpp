@@ -6,6 +6,10 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin for_hes_sparsity}
+{xrst_spell
+   andrea
+   walther
+}
 
 Forward Mode Hessian Sparsity Patterns
 ######################################

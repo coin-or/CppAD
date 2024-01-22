@@ -7,7 +7,6 @@
 {xrst_begin thread_test.cpp}
 {xrst_spell
    bthread
-   preforms
    pthreads
 }
 

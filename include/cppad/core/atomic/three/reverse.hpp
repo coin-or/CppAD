@@ -10,7 +10,6 @@
    aparameter
    apartial
    ataylor
-   superscripts
 }
 
 Atomic Function Reverse Mode

@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin abs_min_quad.cpp}
-{xrst_spell
-   minimizer
-}
 
 abs_min_quad: Example and Test
 ##############################

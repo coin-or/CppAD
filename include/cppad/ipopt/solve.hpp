@@ -8,19 +8,19 @@
 {xrst_begin ipopt_solve}
 {xrst_spell
    bvector
+   doesn
    fg
    gl
-   infeasibility
-   iterates
+   gu
    lagrange
    maxiter
    naninf
    ng
    nx
    rll
-   unrecoverable
    xl
    zl
+   zu
 }
 
 Use Ipopt to Solve a Nonlinear Programming Problem

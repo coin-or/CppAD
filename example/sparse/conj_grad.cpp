@@ -6,7 +6,7 @@
 /*
 {xrst_begin conj_grad.cpp}
 {xrst_spell
-   iterate
+   goto
 }
 
 Differentiate Conjugate Gradient Algorithm: Example and Test

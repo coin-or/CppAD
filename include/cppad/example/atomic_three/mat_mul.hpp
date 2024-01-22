@@ -11,6 +11,7 @@
    nr
    px
    tx
+   ty
 }
 
 Matrix Multiply as an Atomic Operation

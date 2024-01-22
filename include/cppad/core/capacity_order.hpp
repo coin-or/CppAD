@@ -8,6 +8,7 @@
 /*
 {xrst_begin capacity_order}
 {xrst_spell
+   pre
    xq
    yq
 }

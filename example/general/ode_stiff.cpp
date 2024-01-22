@@ -5,6 +5,9 @@
 
 /*
 {xrst_begin ode_stiff.cpp}
+{xrst_spell
+   rosen
+}
 
 A Stiff Ode: Example and Test
 #############################

@@ -9,8 +9,8 @@
    boostvector
    bthread
    builddir
-   caching
    cpl
+   del
    devel
    executables
    fedoraproject
@@ -18,21 +18,20 @@
    gpl
    hasnan
    initializer
-   instantiation
+   inv
    isnan
    libspeed
    makefile
    matlab
    omh
+   org
    pkgconfig
    prefixdir
    pthreads
    requirements requirements
-   simplification
+   rosen
    svn
-   tanh
    tgz
-   truncating
    undefine
    vcproj
    wshadow

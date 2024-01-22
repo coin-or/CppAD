@@ -10,7 +10,9 @@
    px
    py
    tx
+   ty
    vx
+   vy
 }
 
 Defining Atomic Functions: Second Generation
@@ -104,9 +106,6 @@ Contents
 {xrst_end atomic_two}
 -------------------------------------------------------------------------------
 {xrst_begin atomic_two_example app}
-{xrst_spell
-   scalars
-}
 
 Example Defining Atomic Functions: Second Generation
 ####################################################

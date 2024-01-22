@@ -22,9 +22,6 @@
 /*
 -------------------------------------------------------------------------------
 {xrst_begin det_of_minor_c app}
-{xrst_spell
-   factorial
-}
 
 Determinant of a Minor
 ######################
@@ -303,9 +300,6 @@ double det_by_minor(double* a, size_t m)
 {xrst_end det_by_minor_c}
 --------------------------------------------------------------------------
 {xrst_begin uniform_01_c app}
-{xrst_spell
-   variate
-}
 
 Simulate a [0,1] Uniform Random Variate
 #######################################

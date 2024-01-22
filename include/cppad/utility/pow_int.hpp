@@ -8,9 +8,6 @@
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pow_int}
-{xrst_spell
-   logarithms
-}
 
 The Integer Power Function
 ##########################

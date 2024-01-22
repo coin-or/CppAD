@@ -7,9 +7,7 @@
 /*
 {xrst_begin base_alloc.hpp}
 {xrst_spell
-   allocates
-   apposed
-   invocations
+   ge
    isnan
 }
 Example AD<Base> Where Base Constructor Allocates Memory

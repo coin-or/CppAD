@@ -6,10 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin abs_normal_fun}
-{xrst_spell
-   affine
-   approximations
-}
 
 Create An Abs-normal Representation of a Function
 #################################################

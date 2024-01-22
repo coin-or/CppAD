@@ -4,11 +4,15 @@
 # ----------------------------------------------------------------------------
 {xrst_begin example_abs_normal}
 {xrst_spell
+   andreas
    bernt
    griewank
+   jens
+   manuel
    radons
    streubel
    uwe
+   vol
 }
 
 Examples and Tests: Abs-normal Representation of Non-Smooth Functions

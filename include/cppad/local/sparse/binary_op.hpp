@@ -363,9 +363,9 @@ void rev_hes_pow_op(
 /*
 {xrst_begin sparse_for_hes_nl_binary_op dev}
 {xrst_spell
+   div
    np
    numvar
-   operands
 }
 
 Forward Hessian Sparsity for Nonlinear Binary Operators

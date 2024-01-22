@@ -8,13 +8,11 @@
    addon
    adouble
    aeps
-   allocates
    asctime
    autotools
+   chrono
    cskip
    datadir
-   destructed
-   dimensioned
    docdir
    erfc
    expm
@@ -25,12 +23,8 @@
    includedirs
    lcppad
    libdirs
-   multiplications
-   optionally
-   postfix
    sq
    src
-   statics
    unreferenced
    zdouble
 }

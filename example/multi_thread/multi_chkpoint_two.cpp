@@ -6,7 +6,7 @@
 /*
 {xrst_begin multi_chkpoint_two_algo}
 {xrst_spell
-   iterate
+   au
 }
 
 chkpoint_two Algorithm that Computes Square Root

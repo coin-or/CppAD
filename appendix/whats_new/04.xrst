@@ -8,24 +8,19 @@
    aclocal
    autoconf
    automake
-   automates
    dep
    deps
-   determinants
    dodds
    dsp
    executables
-   factorial
+   ext
    faq
    filename
-   gnu
    hess
-   italic
-   macros
+   mak
    makefile
    nmake
-   operands
-   subheadings
+   po
    ublas
    usr
    yy

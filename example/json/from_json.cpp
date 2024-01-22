@@ -4,6 +4,9 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin from_json.cpp}
+{xrst_spell
+   jason
+}
 
 Convert Jason Graph to an ADFun Object: Example and Test
 ########################################################

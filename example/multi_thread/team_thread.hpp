@@ -8,9 +8,7 @@
 {xrst_begin team_thread.hpp}
 {xrst_spell
    bthread
-   initializes
    pthreads
-   statically
 }
 Specifications for A Team of AD Threads
 #######################################

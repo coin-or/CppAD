@@ -144,6 +144,7 @@ void op_inc_arg_usage(
 {xrst_spell
    cexp
    dep
+   pri
    taddr
    vecad
 }

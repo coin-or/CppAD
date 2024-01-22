@@ -7,19 +7,18 @@
 {xrst_spell
    constructor constructor
    ddouble
-   differentiable
+   def
    dodds
    faq
    geq
-   gnu
    goddard
+   handel
    hess
    hilbert
    indvar
-   integrator
+   ini
    leq
-   predefined
-   temporaries
+   mak
    valarray
 }
 

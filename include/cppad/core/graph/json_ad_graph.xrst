@@ -4,11 +4,10 @@
 # ----------------------------------------------------------------------------
 {xrst_begin json_ad_graph}
 {xrst_spell
-   acyclic
+   jason
    np
    nx
    str
-   usages
 }
 
 Json Representation of an AD Graph

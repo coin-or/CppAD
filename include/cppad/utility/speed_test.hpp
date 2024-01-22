@@ -196,6 +196,7 @@ Vector speed_test(
 {xrst_spell
    cout
    ctime
+   inc
 }
 
 Run One Speed Test and Print Results

@@ -4,6 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin directory app}
 {xrst_spell
+   gen
    omh
    pkgconfig
 }

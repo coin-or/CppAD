@@ -12,7 +12,7 @@
 {xrst_begin base_complex.hpp}
 {xrst_spell
    complier
-   invocations
+   ge
    isnan
 }
 

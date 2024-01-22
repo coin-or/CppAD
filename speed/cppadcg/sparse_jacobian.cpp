@@ -4,6 +4,9 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppadcg_sparse_jacobian.cpp}
+{xrst_spell
+   gen
+}
 
 Cppadcg Speed: Sparse Jacobian
 ##############################

@@ -5,7 +5,6 @@
 
 {xrst_begin whats_new_21 app}
 {xrst_spell
-   conditionally
    cplusplus
    cxx
    isdigit
@@ -13,7 +12,6 @@
    libs
    ltmain
    msys
-   nans
    ocurred
    pkgconfig
    txt

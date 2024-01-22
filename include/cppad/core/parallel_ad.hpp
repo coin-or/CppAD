@@ -7,6 +7,7 @@
 /*
 {xrst_begin parallel_ad}
 {xrst_spell
+   rosen
    teardown
 }
 

@@ -16,13 +16,10 @@
    datadir
    docdir
    doxygen
-   extern
    forwardany
    forwardone
    forwardzero
-   notational
    omhelp
-   postfix
    uj
 }
 

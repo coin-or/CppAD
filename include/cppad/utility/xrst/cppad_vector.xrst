@@ -7,14 +7,11 @@
 {xrst_spell
    citr
    cout
-   debugger
    dereference
    endl
    initializer
-   iterators
    ostream
    rvalues
-   temporaries
    typename
 }
 

@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_mat_mul_rev_depend.cpp}
-{xrst_spell
-   multiplications
-}
 
 Atomic Matrix Multiply Reverse Dependency: Example and Test
 ###########################################################

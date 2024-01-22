@@ -21,6 +21,7 @@ Compute zero order forward mode Taylor coefficients.
 {xrst_spell
    cskip
    numvar
+   pri
 }
 Compute Zero Order Forward Mode Taylor Coefficients
 ###################################################

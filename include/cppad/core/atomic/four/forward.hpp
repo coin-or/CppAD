@@ -8,7 +8,6 @@
 {xrst_begin atomic_four_forward}
 {xrst_spell
    ataylor
-   superscripts
 }
 
 Atomic Function Forward Mode

@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin abs_eval.cpp}
-{xrst_spell
-   affine
-}
 
 abs_eval: Example and Test
 ##########################

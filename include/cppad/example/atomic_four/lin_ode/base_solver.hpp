@@ -6,6 +6,9 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_lin_ode_base_solver.hpp}
+{xrst_spell
+   rosen
+}
 
 Atomic Linear ODE: Example Implementation
 #########################################

@@ -9,10 +9,11 @@
 {xrst_spell
    px
    py
-   superscripts
    tvector
    tx
+   ty
    vx
+   vy
 }
 
 Defining Atomic Functions: First Generation

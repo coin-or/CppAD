@@ -8,16 +8,16 @@
    autotools
    bthread
    cholesky
-   conditionally
-   deprecate
    entires
+   goto
+   inv
    lepp
    mmdd
    omhelp
-   simplification
+   pos
    subgraphs
-   uninitialized
    usr
+   versa
    yy
 }
 

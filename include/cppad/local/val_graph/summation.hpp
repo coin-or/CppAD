@@ -13,6 +13,7 @@ namespace CppAD { namespace local { namespace val_graph {
 {xrst_spell
    csum
    dep
+   neg
 }
 
 Combine Multiple sum Operators into a csum Operator
@@ -80,6 +81,9 @@ struct csum_info_t {
 {xrst_end val_csum_info}
 ------------------------------------------------------------------------------
 {xrst_begin val_replace_csum_op dev}
+{xrst_spell
+   neg
+}
 
 Replace An Operator with a Cumulative Summation
 ###############################################

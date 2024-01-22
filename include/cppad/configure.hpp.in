@@ -8,8 +8,8 @@
 /*!
 {xrst_begin configure.hpp dev}
 {xrst_spell
-   cmd
    cl
+   cmd
    complier
    gettimeofday
    mkstemp

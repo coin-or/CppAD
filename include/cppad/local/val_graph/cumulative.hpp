@@ -8,6 +8,9 @@
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_op2csum dev}
+{xrst_spell
+   neg
+}
 
 Convert Add, Subtract, or Negative to Cumulative Summation
 ##########################################################

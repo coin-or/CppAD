@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin Poly}
-{xrst_spell
-   commutative
-}
 
 Evaluate a Polynomial or its Derivative
 #######################################

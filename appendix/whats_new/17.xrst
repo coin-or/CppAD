@@ -6,20 +6,15 @@
 {xrst_begin whats_new_17 app}
 {xrst_spell
    autotools
-   colorings
    deallocations
    doxydoc
    doxygen
-   iterate
-   iterating
    md
    perl
-   plugin
    readme
    subgraphs
    typedef
    uninitialised
-   uninitialized
    valgrind
    wconversion
    xq

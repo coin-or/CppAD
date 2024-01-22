@@ -10,7 +10,6 @@
 {xrst_spell
    long long
    ostringstream
-   withing
 }
 
 Convert Certain Types to a String

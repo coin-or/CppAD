@@ -7,21 +7,29 @@
    bthread
    cexp
    cholesky
+   comp
    conj
    cout
+   div
    dll
    erfc
    expm
+   ext
+   gen
    interp
+   inv
    lagrangian
+   lin
    lp
    maxabs
+   neg
    nso
    onetape
+   param
    qp
    romberg
+   rosen
    sq
-   tanh
 }
 
 List All (Except Deprecated) CppAD Examples

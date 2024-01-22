@@ -4,7 +4,9 @@
 # ----------------------------------------------------------------------------
 {xrst_begin include_deprecated app}
 {xrst_spell
+   del
    romberg
+   rosen
 }
 
 Deprecated Include Files

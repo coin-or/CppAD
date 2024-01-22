@@ -7,11 +7,6 @@
 
 /*
 {xrst_begin cppad_eigen.hpp}
-{xrst_spell
-   plugin
-   scalars
-   specializations
-}
 Enable Use of Eigen Linear Algebra Package with CppAD
 #####################################################
 

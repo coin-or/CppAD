@@ -10,7 +10,7 @@
 {xrst_begin numeric_limits}
 {xrst_spell
    isnan
-   specializations
+   na
 }
 
 Numeric Limits For an AD and Base Types

@@ -10,6 +10,7 @@
 /*
 {xrst_begin local_sweep_for_hes dev}
 {xrst_spell
+   inv
    numvar
 }
 

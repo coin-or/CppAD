@@ -14,6 +14,7 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin_parent val_vector_op dev}
 {xrst_spell
+   com
    xam
 }
 

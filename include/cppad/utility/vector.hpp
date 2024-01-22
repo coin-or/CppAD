@@ -395,6 +395,9 @@ public:
 /*
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_compare dev}
+{xrst_spell
+   ture
+}
 
 Vector Class: Comparison Operators
 ##################################

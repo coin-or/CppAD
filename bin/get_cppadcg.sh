@@ -6,6 +6,7 @@
 # {xrst_begin get_cppadcg.sh}
 # {xrst_spell
 #     doxygen
+#     gen
 # }
 # {xrst_comment_ch #}
 #

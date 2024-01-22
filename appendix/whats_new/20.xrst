@@ -5,17 +5,20 @@
 
 {xrst_begin whats_new_20 app}
 {xrst_spell
+   ar
    autotools
    callgrind
    cg
    cl
+   gen
    github
    gitlab
    libs
    msys
+   oct
    omh
    optionlist
-   uninitialized
+   un
 }
 
 Changes and Additions to CppAD During 2020

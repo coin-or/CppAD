@@ -8,12 +8,10 @@
 /*
 {xrst_begin LuSolve}
 {xrst_spell
-   determinants
    geq
    leq
    logdet
    signdet
-   specializations
 }
 
 Compute Determinant and Solve Linear Equations

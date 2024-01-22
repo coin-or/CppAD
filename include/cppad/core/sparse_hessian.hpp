@@ -8,7 +8,6 @@
 /*
 {xrst_begin sparse_hessian}
 {xrst_spell
-   recomputed
    valarray
 }
 

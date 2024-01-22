@@ -4,6 +4,9 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppadcg_det_minor.cpp}
+{xrst_spell
+   gen
+}
 
 cppadcg Speed: Gradient of Determinant by Minor Expansion
 #########################################################

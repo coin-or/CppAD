@@ -5,16 +5,13 @@
 
 {xrst_begin whats_new_18 app}
 {xrst_spell
+   addons
    enums
    in in
-   iterated
    kasper
    kristensen
    mingw
-   operands
-   specifiers
    tmb
-   uninstalled
    valgrind
    wconversion
    wfloat

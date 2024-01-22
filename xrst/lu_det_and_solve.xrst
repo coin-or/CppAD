@@ -4,9 +4,6 @@
 # ----------------------------------------------------------------------------
 
 {xrst_begin lu_det_and_solve}
-{xrst_spell
-   determinants
-}
 
 Compute Determinants and Solve Equations by LU Factorization
 ############################################################

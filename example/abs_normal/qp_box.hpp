@@ -9,6 +9,7 @@
 {xrst_spell
    maxitr
    rl
+   xin
    xout
 }
 abs_normal: Solve a Quadratic Program With Box Constraints

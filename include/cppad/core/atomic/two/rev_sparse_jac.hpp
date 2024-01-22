@@ -7,6 +7,7 @@
 /*
 {xrst_begin atomic_two_rev_sparse_jac app}
 {xrst_spell
+   na
    rt
    st
 }

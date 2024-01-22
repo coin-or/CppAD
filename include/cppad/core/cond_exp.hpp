@@ -9,7 +9,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin CondExp}
 {xrst_spell
-   deprecate
+   ge
 }
 
 AD Conditional Expressions

@@ -18,9 +18,6 @@ class json_lexer {
 /*
 -------------------------------------------------------------------------------
 {xrst_begin json_lexer_member_data dev}
-{xrst_spell
-   parsed
-}
 
 json lexer: Private Data
 ########################

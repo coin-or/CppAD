@@ -7,11 +7,8 @@
 /*
 {xrst_begin min_nso_quad}
 {xrst_spell
-   affine
-   approximations
    dbl
    maxitr
-   minimizer
    qp
 }
 Non-Smooth Optimization Using Abs-normal Quadratic Approximations

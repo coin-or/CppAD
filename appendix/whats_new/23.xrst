@@ -9,16 +9,16 @@
    csrc
    cstdint
    dll
-   initializations
    kludge
    kokkos
-   linker
+   lin
    mingw
    msys
    pacman
    trilinos
    uintptr
    usr
+   whithout
 }
 
 Changes and Additions to CppAD During 2023

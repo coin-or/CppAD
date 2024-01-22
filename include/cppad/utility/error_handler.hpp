@@ -8,7 +8,6 @@
 /*
 {xrst_begin ErrorHandler}
 {xrst_spell
-   destructed
    msg
    test test
 }

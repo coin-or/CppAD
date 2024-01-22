@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin det_of_minor}
-{xrst_spell
-   factorial
-}
 
 Determinant of a Minor
 ######################

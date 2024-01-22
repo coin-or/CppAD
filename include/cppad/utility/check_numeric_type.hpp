@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin CheckNumericType}
-{xrst_spell
-   preforms
-}
 
 Check NumericType Class Concept
 ###############################

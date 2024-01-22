@@ -11,7 +11,6 @@
    atrig
    codassign
    condassign
-   conditionals
    erfc
    expm
    valgrind

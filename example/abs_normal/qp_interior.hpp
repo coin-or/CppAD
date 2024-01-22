@@ -10,6 +10,7 @@
    maxitr
    rl
    sout
+   xin
    xout
    yout
 }

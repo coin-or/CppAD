@@ -168,7 +168,6 @@ public:
 ------------------------------------------------------------------------------
 {xrst_begin val_binary_op_derived dev}
 {xrst_spell
-   operands
    xam
 }
 

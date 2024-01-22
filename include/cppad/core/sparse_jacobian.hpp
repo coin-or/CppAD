@@ -13,7 +13,6 @@
 /*
 {xrst_begin sparse_jacobian}
 {xrst_spell
-   recomputed
    valarray
 }
 

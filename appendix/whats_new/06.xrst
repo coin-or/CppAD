@@ -11,28 +11,23 @@
    automake
    avector
    delem
-   determinants
+   div
    dw
-   generalizing
+   fy
    gprof
    kasper
    kristensen
    lagrangian
-   macros
    makefile
    memcheck
+   michael
    of of
    omh
-   operands
-   postfix
-   recalculation
    romberg
    rpm
+   sed
    speedtest
-   subgroups
    tautschnig
-   underquoted
-   uninitialized
    usr
    valgrind
    yy

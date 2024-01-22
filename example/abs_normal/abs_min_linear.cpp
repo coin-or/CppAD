@@ -5,10 +5,6 @@
 
 /*
 {xrst_begin abs_min_linear.cpp}
-{xrst_spell
-   affine
-   minimizer
-}
 
 abs_min_linear: Example and Test
 ################################

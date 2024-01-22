@@ -7,7 +7,6 @@
 {xrst_spell
    datadir
    debian
-   deprecate
    doxygen
    dw
    eigenvector
@@ -16,16 +15,14 @@
    includedir
    inorder
    libdir
-   linker
    lpthread
    lteuchos
    makefile
    pkgconfig
-   plugin
    posix
    src
-   statics
    stdbool
+   sys
    taddr
    trilinos
    txt

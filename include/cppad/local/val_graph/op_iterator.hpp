@@ -7,9 +7,6 @@
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_op_iterator dev}
-{xrst_spell
-   iterating
-}
 
 Class For Iterating Over Operators in a Value Tape
 ##################################################

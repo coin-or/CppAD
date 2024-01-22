@@ -7,7 +7,6 @@
 {xrst_spell
    np
    nz
-   trapezoidal
 }
 
 ODE Inverse Problem Definitions: Source Code

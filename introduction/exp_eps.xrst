@@ -166,9 +166,6 @@ Exercises
 {xrst_end exp_eps_for0}
 -----------------------------------------------------------------------------
 {xrst_begin exp_eps_for1}
-{xrst_spell
-   expansions
-}
 
 exp_eps: First Order Forward Sweep
 ##################################
@@ -325,7 +322,6 @@ Exercises
 {xrst_begin exp_eps_rev1}
 {xrst_spell
    forward forward
-   preform
    rcll
 }
 
@@ -647,9 +643,6 @@ Exercises
 {xrst_end exp_eps_rev1}
 -----------------------------------------------------------------------------
 {xrst_begin exp_eps_for2}
-{xrst_spell
-   expansions
-}
 
 exp_eps: Second Order Forward Mode
 ##################################
@@ -909,7 +902,6 @@ Exercises
 -----------------------------------------------------------------------------
 {xrst_begin exp_eps_rev2}
 {xrst_spell
-   preform
    rcll
 }
 

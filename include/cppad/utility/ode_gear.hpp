@@ -8,12 +8,11 @@
 /*
 {xrst_begin OdeGear}
 {xrst_spell
-   affine
    dep
-   interpolating
-   iterates
+   jan
    pp
    test test
+   vol
 }
 
 An Arbitrary Order Gear Method

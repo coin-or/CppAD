@@ -10,11 +10,9 @@
 #     builddir
 #     cflags
 #     datadir
-#     gnu
 #     includedir
 #     libdir
 #     libs
-#     uninstalled
 # }
 # {xrst_comment_ch #}
 #

@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin CheckSimpleVector}
-{xrst_spell
-   preforms
-}
 
 Check Simple Vector Concept
 ###########################

@@ -8,6 +8,7 @@
 {xrst_begin discrete_op dev}
 {xrst_spell
    ataylor
+   az
    tpv
 }
 

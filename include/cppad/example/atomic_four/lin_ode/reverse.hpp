@@ -10,6 +10,7 @@
    lagrangian
    lll
    nnz
+   simpson
 }
 
 Atomic Linear ODE Reverse Mode: Example Implementation

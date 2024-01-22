@@ -7,7 +7,6 @@
 /*
 {xrst_begin link_dll_lib}
 {xrst_spell
-   linker
    msg
 }
 

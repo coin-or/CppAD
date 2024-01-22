@@ -7,7 +7,10 @@
 /*
 {xrst_begin opt_val_hes app}
 {xrst_spell
+   bradley
+   james
    signdet
+   sy
    yy
 }
 

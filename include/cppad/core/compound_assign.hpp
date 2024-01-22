@@ -8,6 +8,9 @@
 /*
 -------------------------------------------------------------------------------
 {xrst_begin compound_assign}
+{xrst_spell
+   div
+}
 
 AD Compound Assignment Operators
 ################################

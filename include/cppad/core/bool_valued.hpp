@@ -7,6 +7,9 @@
 
 /*
 {xrst_begin bool_valued}
+{xrst_spell
+   ext
+}
 
 Bool Valued Operations and Functions with AD Arguments
 ######################################################

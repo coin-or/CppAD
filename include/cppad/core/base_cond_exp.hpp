@@ -7,6 +7,9 @@
 
 /*
 {xrst_begin base_cond_exp}
+{xrst_spell
+   ge
+}
 
 Base Type Requirements for Conditional Expressions
 ##################################################

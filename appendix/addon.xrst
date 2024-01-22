@@ -5,7 +5,10 @@
 {xrst_begin addon app}
 {xrst_spell
    adcomp
+   addons
    cg
+   ext
+   gen
    includedir
    laplace
    libcppad

@@ -11,7 +11,6 @@
    nnz
    nr
    ostream
-   scalars
 }
 Row and Column Index Sparsity Patterns
 ######################################

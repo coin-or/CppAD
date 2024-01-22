@@ -8,6 +8,7 @@
 {xrst_begin BenderQuad app}
 {xrst_spell
    avector
+   dy
    gx
    gxx
 }

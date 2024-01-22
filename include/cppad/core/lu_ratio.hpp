@@ -8,9 +8,8 @@
 /*
 {xrst_begin LuRatio app}
 {xrst_spell
+   ip
    jp
-   permuted
-   revaluate
    xk
 }
 

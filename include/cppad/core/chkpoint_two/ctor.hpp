@@ -8,7 +8,6 @@
 {xrst_begin chkpoint_two_ctor}
 {xrst_spell
    chk
-   destructed
 }
 
 Checkpoint Function Constructor

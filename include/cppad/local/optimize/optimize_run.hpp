@@ -28,6 +28,7 @@ namespace CppAD { namespace local { namespace optimize  {
 {xrst_begin optimize_run dev}
 {xrst_spell
    dep
+   pri
    substring
    taddr
 }

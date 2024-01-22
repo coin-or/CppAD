@@ -7,12 +7,9 @@
 /*
 {xrst_begin abs_min_linear}
 {xrst_spell
-   affine
    dbl
-   iterated
    lll
    maxitr
-   minimizer
 }
 abs_normal: Minimize a Linear Abs-normal Approximation
 ######################################################

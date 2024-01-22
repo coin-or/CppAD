@@ -16,10 +16,8 @@ First generation checkpoint functions.
 /*
 {xrst_begin chkpoint_one app}
 {xrst_spell
-   caching
-   destructed
+   algo
    inuse
-   recomputed
    sv
 }
 

@@ -181,9 +181,6 @@ contains an example and test of this function.
 {xrst_end atan}
 -------------------------------------------------------------------------------
 {xrst_begin atanh}
-{xrst_spell
-   tanh
-}
 The Inverse Hyperbolic Tangent Function: atanh
 ##############################################
 

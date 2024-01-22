@@ -15,13 +15,12 @@
 #     dist
 #     eigenvector
 #     fortran
-#     italic
+#     ip
 #     linux
 #     msvc
 #     nmake
-#     optionally
-#     postfix
 #     stdvector
+#     sys
 #     testvector
 #     ublas
 #     usr

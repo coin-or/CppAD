@@ -18,7 +18,6 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_call_op dev}
 {xrst_spell
-   iterate
    xam
 }
 

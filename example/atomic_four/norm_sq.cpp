@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin atomic_four_norm_sq.cpp}
-{xrst_spell
-   euclidean
-}
 
 Atomic Euclidean Norm Squared: Example and Test
 ###############################################

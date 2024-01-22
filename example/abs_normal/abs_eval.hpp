@@ -6,9 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin abs_eval}
-{xrst_spell
-   tilde
-}
 abs_normal: Evaluate First Order Approximation
 ##############################################
 

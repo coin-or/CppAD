@@ -25,12 +25,13 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
    funav
    funrp
    funrv
-   initializes
    ldp
    ldv
    opcode
+   pos
    powpv
    powvv
+   pri
    pv
    stpp
    stpv

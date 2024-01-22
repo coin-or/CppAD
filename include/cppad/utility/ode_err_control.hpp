@@ -9,6 +9,8 @@
 {xrst_begin OdeErrControl}
 {xrst_spell
    eabs
+   eb
+   ef
    erel
    maxabs
    nstep

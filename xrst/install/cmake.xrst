@@ -9,7 +9,6 @@
    autotools
    bitwise
    cl
-   colons
    cstdint
    cxx
    datadir
@@ -17,24 +16,22 @@
    docdir
    dylib
    exe
-   gnu
+   ext
    gprof
    grep
    hsc
    includedirs
    libcppad
    libdirs
-   linker
    makefile
    makefiles
    mingw
    mkdir
    msys
-   operands
-   optionally
    pacman
    pkgconfig
-   postfix
+   profiler
+   sed
    testvector
    txt
    uint

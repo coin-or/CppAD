@@ -6,31 +6,27 @@
 {xrst_begin whats_new_07 app}
 {xrst_spell
    adouble
-   apposed
    apx
    autoconf
    automake
-   deprecate
-   determinants
-   differentiable
+   del
+   dy
    executables
-   expansions
    gettimeofday
    ginac
+   handel
+   intro
+   inv
    isnan
    kipp
-   macros
    makefile
    makefiles
    omh
-   operands
-   postfix
-   preforming
    rpm
    tarballs
+   tay
    tgz
    threadprivate
-   transposes
    valgrind
    vcproj
    yyyymmdd

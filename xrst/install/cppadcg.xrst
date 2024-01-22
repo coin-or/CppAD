@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin cppadcg}
+{xrst_spell
+   gen
+}
 
 Including CppADCodeGen Examples and Tests
 #########################################

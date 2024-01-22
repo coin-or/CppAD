@@ -9,7 +9,6 @@
 {xrst_spell
    apartial
    ataylor
-   superscripts
 }
 
 Atomic Function Reverse Mode

@@ -9,9 +9,8 @@
 {xrst_begin LuFactor}
 {xrst_spell
    geq
+   ip
    jp
-   permuted
-   specializations
 }
 
 LU Factorization of A Square Matrix

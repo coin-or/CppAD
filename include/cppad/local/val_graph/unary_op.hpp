@@ -162,6 +162,7 @@ public:
 ------------------------------------------------------------------------------
 {xrst_begin val_unary_op_derived dev}
 {xrst_spell
+   neg
    xam
 }
 

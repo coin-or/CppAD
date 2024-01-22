@@ -18,7 +18,7 @@
    cdecl
    declspec
    dllimport
-   multiplier
+   ny
    typedef
    underbar
 }

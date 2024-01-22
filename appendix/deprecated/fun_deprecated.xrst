@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin fun_deprecated app}
-{xrst_spell
-   operands
-}
 
 ADFun Object Deprecated Member Functions
 ########################################

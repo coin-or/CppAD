@@ -9,7 +9,6 @@
 {xrst_spell
    aparameter
    ataylor
-   superscripts
 }
 
 Atomic Function Forward Mode
