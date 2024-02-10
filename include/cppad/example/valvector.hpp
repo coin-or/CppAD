@@ -71,7 +71,10 @@ public:
    valvector(const valvector& other) : vec_( other.vec_)
    { }
    valvector(valvector&& other)
-   {  vec_.swap( other.vec_ ); }  
+   {  vec_.swap( other.vec_ ); 
+   }  
+   valvector(std::initializer_list<value_type> list) : vec_(list)
+   { }
    //
    // assignments
    valvector& operator=(const valvector& other)
