@@ -25,6 +25,7 @@ ADD_SUBDIRECTORY(optimize)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(sparse)
 ADD_SUBDIRECTORY(utility)
+ADD_SUBDIRECTORY(valvector)
 # END_SORT_THIS_LINE_MINUS_1
 #
 # code_gen_fun examples
