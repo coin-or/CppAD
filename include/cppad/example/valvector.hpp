@@ -33,7 +33,8 @@
       return result; \
    }
 //
-# define VALVECTOR_BINARY_COMPARE_OP(op) \
+// Lexiographic Compare
+# define VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(op) \
    bool operator op(const valvector& other) const \
    {  bool result = true;   \
       if( size() == 1 ) \
@@ -49,8 +50,12 @@
             size() == other.size() , \
             "size error using " #op " operator" \
          ) \
-         for(size_t i = 0; i < size(); ++i) \
-            result &= vec_[i] op other.vec_[i]; \
+         size_t i = 0; \
+         while( i < size() && vec_[i] < other.vec_[i] ) \
+            ++i; \
+         if( i == size() ) \
+            --i; \
+         result = vec_[i] op other.vec_[i]; \
       } \
       return result; \
    }
@@ -144,12 +149,12 @@ public:
    VALVECTOR_BINARY_NUMERIC_OP(/)
    //
    // Compare operators
-   VALVECTOR_BINARY_COMPARE_OP(==)
-   VALVECTOR_BINARY_COMPARE_OP(!=)
-   VALVECTOR_BINARY_COMPARE_OP(<=)
-   VALVECTOR_BINARY_COMPARE_OP(>=)
-   VALVECTOR_BINARY_COMPARE_OP(<)
-   VALVECTOR_BINARY_COMPARE_OP(>)
+   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(==)
+   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(!=)
+   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(<=)
+   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(>=)
+   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(<)
+   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(>)
 };
 
 # if 0
