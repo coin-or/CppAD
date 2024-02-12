@@ -97,16 +97,7 @@
    }
 
 //
-// valvector
-class valvector;
-//
-// <<
-inline std::ostream& operator << 
-(std::ostream&  os , const valvector& a);
-//
 class valvector {
-   friend std::ostream& operator << 
-      (std::ostream&  os , const valvector& a);
 public:
    //
    // scalar_type, vector_type
@@ -178,6 +169,18 @@ public:
       return result;
    }
    //
+   // output
+   std::ostream& output(std::ostream& os)  const
+   {  os << "{ ";
+      for(size_t i = 0; i < vec_.size(); ++i)
+      {  os << vec_[i];
+         if( i + 1 < vec_.size() )
+            os << ", ";
+      }
+      os << " }";
+      return os;
+   }
+   //
    // Standard Math Fucntons
    VALVECTOR_STD_MATH_MEMBER(acos)
    VALVECTOR_STD_MATH_MEMBER(acosh)
@@ -244,15 +247,8 @@ namespace CppAD {
 // ostream << valvector
 inline std::ostream& operator << (
    std::ostream&    os , 
-   const valvector& a  )
-{  os << "{ ";
-   for(size_t i = 0; i < a.vec_.size(); ++i)
-   {  os << a.vec_[i];
-      if( i + 1 < a.vec_.size() )
-         os << ", ";
-   }
-   os << " }";
-   return os;
+   const valvector& v  )
+{  return v.output(os);
 }
 
 # if 0
