@@ -8,15 +8,7 @@
       assert( exp ); \
    }
 //
-# define VALVECTOR_ORDER_OPERATOR(op) \
-   void operator op(const valvector& other) const \
-   {  VALVECTOR_ASSERT_KNOWN( \
-         false, \
-         #op " ordered compare operators are not implemented" \
-      ); \
-   }
-//
-# define VALVECTOR_BINARY_OPERATOR(op) \
+# define VALVECTOR_BINARY_NUMERIC_OP(op) \
    valvector operator op(const valvector& other) const \
    {  valvector result;   \
       if( size() == 1 ) \
@@ -37,6 +29,28 @@
          result.vec_.resize( size() ); \
          for(size_t i = 0; i < size(); ++i) \
             result.vec_[i] = vec_[i] op other.vec_[i]; \
+      } \
+      return result; \
+   }
+//
+# define VALVECTOR_BINARY_COMPARE_OP(op) \
+   bool operator op(const valvector& other) const \
+   {  bool result = true;   \
+      if( size() == 1 ) \
+      {  for(size_t i = 0; i < other.size(); ++i) \
+            result &= vec_[0] op other.vec_[i]; \
+      } \
+      else if( other.size() == 1 ) \
+      {  for(size_t i = 0; i < size(); ++i) \
+            result &= vec_[i] op other.vec_[0]; \
+      } \
+      else \
+      {  VALVECTOR_ASSERT_KNOWN(  \
+            size() == other.size() , \
+            "size error using " #op " operator" \
+         ) \
+         for(size_t i = 0; i < size(); ++i) \
+            result &= vec_[i] op other.vec_[i]; \
       } \
       return result; \
    }
@@ -124,37 +138,18 @@ public:
    }
    //
    // Binary Operators
-   VALVECTOR_BINARY_OPERATOR(+)
-   VALVECTOR_BINARY_OPERATOR(-)
-   VALVECTOR_BINARY_OPERATOR(*)
-   VALVECTOR_BINARY_OPERATOR(/)
+   VALVECTOR_BINARY_NUMERIC_OP(+)
+   VALVECTOR_BINARY_NUMERIC_OP(-)
+   VALVECTOR_BINARY_NUMERIC_OP(*)
+   VALVECTOR_BINARY_NUMERIC_OP(/)
    //
    // Compare operators
-   bool operator ==(const valvector& other) const
-   {  bool       result = true;
-      if( size() == 1 )
-      {  for(size_t i = 0; i < other.size(); ++i)
-            result &= vec_[0] == other.vec_[i]; 
-      }
-      else if( other.size() == 1 )
-      {  for(size_t i = 0; i < size(); ++i)
-            result &= vec_[i] == other.vec_[0]; 
-      }
-      else if( size() != other.size() )
-         result = false;
-      else
-      {  for(size_t i = 0; i < size(); ++i)
-            result &= vec_[i] == other.vec_[i]; 
-      }
-      return result;
-   }
-   bool operator !=(const valvector& other) const
-   {  return ! ( *this == other );
-   }
-   VALVECTOR_ORDER_OPERATOR(<=)
-   VALVECTOR_ORDER_OPERATOR(>=)
-   VALVECTOR_ORDER_OPERATOR(<)
-   VALVECTOR_ORDER_OPERATOR(>)
+   VALVECTOR_BINARY_COMPARE_OP(==)
+   VALVECTOR_BINARY_COMPARE_OP(!=)
+   VALVECTOR_BINARY_COMPARE_OP(<=)
+   VALVECTOR_BINARY_COMPARE_OP(>=)
+   VALVECTOR_BINARY_COMPARE_OP(<)
+   VALVECTOR_BINARY_COMPARE_OP(>)
 };
 
 # if 0
