@@ -26,6 +26,12 @@ int main(void)
    check  = valvector( {3.0, 4.0, 5.0} );
    ok &= result == check;
    //
+   // compound assignment
+   result  = x[1];
+   result += x[0];
+   check   = valvector( {-1.0, 6.0, 7.0} );
+   ok &= result == check;
+   //
    std::cout << "result = " << result << "\n";
    std::cout << "check  = " << check << "\n";
    //

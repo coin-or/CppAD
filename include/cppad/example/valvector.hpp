@@ -23,7 +23,7 @@
    {  return x.fun(); \
    }
 //
-# define VALVECTOR_BINARY_NUMERIC_OP(op) \
+# define VALVECTOR_BINARY_NUMERIC_OP(op, compound_op) \
    valvector operator op(const valvector& other) const \
    {  valvector result;   \
       if( size() == 1 ) \
@@ -46,6 +46,27 @@
             result.vec_[i] = vec_[i] op other.vec_[i]; \
       } \
       return result; \
+   } \
+   valvector& operator compound_op(const valvector& other) \
+   {  if( size() == 1 ) \
+      {  scalar_type vec_0 = vec_[0]; \
+         resize( other.size() ); \
+         for(size_t i = 0; i < other.size(); ++i) \
+            vec_[i] = vec_0 op other.vec_[i]; \
+      } \
+      else if( other.size() == 1 ) \
+      {  for(size_t i = 0; i < size(); ++i) \
+            vec_[i] = vec_[i] op other.vec_[0]; \
+      } \
+      else \
+      {  VALVECTOR_ASSERT_KNOWN(  \
+            size() == other.size() , \
+            "size error using " #compound_op " operator" \
+         ) \
+         for(size_t i = 0; i < size(); ++i) \
+            vec_[i] = vec_[i] op other.vec_[i]; \
+      } \
+      return *this; \
    }
 //
 // Lexiographic Compare
@@ -181,10 +202,10 @@ public:
    VALVECTOR_STD_MATH_MEMBER(tanh)
    //
    // Binary Operators
-   VALVECTOR_BINARY_NUMERIC_OP(+)
-   VALVECTOR_BINARY_NUMERIC_OP(-)
-   VALVECTOR_BINARY_NUMERIC_OP(*)
-   VALVECTOR_BINARY_NUMERIC_OP(/)
+   VALVECTOR_BINARY_NUMERIC_OP(+, +=)
+   VALVECTOR_BINARY_NUMERIC_OP(-, -=)
+   VALVECTOR_BINARY_NUMERIC_OP(*, *=)
+   VALVECTOR_BINARY_NUMERIC_OP(/, /=)
    //
    // Compare operators
    VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(==)
