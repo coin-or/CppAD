@@ -3,20 +3,19 @@
 
 int main(void)
 {  //
-   // vector
-   typedef  valvector< std::vector<double> > base;
-   typedef  CppAD::AD<base>                  ad_base;
-   //
+   bool ok = true;
    // x
-   std::vector<base> x(2);
-   x[0] = base( {2.0} );
-   x[1] = base( {3.0, 4.0, 5.0} );
-   base z(x[0] * x[1]);
-   std::cout << "z = " << z << "\n";
+   std::vector<valvector> x(2);
+   x[0] = valvector( {2.0} );
+   x[1] = valvector( {3.0, 4.0, 5.0} );
+   valvector z(x[0] * x[1]);
+   valvector check( {6.0, 8.0, 10.0} );
+   ok &= z.isequal(check);
    //
-   std::vector<base> ax(x);
-   ad_base az(ax[0] * ax[1]);
-   std::cout << "az = " << az << "\n";
-   //
-   return 0;
+   if( ok )
+   {  std::cout << "valvector: OK\n";
+      return 0;
+   }
+   std::cout << "valvector: Error\n";
+   return 1;
 }
