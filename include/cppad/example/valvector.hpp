@@ -1,3 +1,4 @@
+# include <cmath>
 # include <iostream>
 # include <cassert>
 # include <cppad/utility/vector.hpp>
@@ -6,6 +7,20 @@
    if( ! (exp ) ) \
    {  std::cerr << "valvector: " << msg << "\n"; \
       assert( exp ); \
+   }
+//
+# define VALVECTOR_STD_MATH_MEMBER(fun) \
+   valvector fun(void) const \
+   {  valvector result; \
+      result.resize( size() ); \
+      for(size_t i = 0; i < size(); ++i) \
+         result.vec_[i] = std::fun( vec_[i] ); \
+      return result; \
+   }
+//
+# define VALVECTOR_STD_MATH_FUNCTION(fun) \
+   inline valvector fun(const valvector& x) \
+   {  return x.fun(); \
    }
 //
 # define VALVECTOR_BINARY_NUMERIC_OP(op) \
@@ -51,7 +66,7 @@
             "size error using " #op " operator" \
          ) \
          size_t i = 0; \
-         while( i < size() && vec_[i] < other.vec_[i] ) \
+         while( i < size() && vec_[i] == other.vec_[i] ) \
             ++i; \
          if( i == size() ) \
             --i; \
@@ -142,6 +157,29 @@ public:
       return result;
    }
    //
+   // Standard Math Fucntons
+   VALVECTOR_STD_MATH_MEMBER(acos)
+   VALVECTOR_STD_MATH_MEMBER(acosh)
+   VALVECTOR_STD_MATH_MEMBER(asin)
+   VALVECTOR_STD_MATH_MEMBER(asinh)
+   VALVECTOR_STD_MATH_MEMBER(atan)
+   VALVECTOR_STD_MATH_MEMBER(atanh)
+   VALVECTOR_STD_MATH_MEMBER(cos)
+   VALVECTOR_STD_MATH_MEMBER(cosh)
+   VALVECTOR_STD_MATH_MEMBER(erf)
+   VALVECTOR_STD_MATH_MEMBER(erfc)
+   VALVECTOR_STD_MATH_MEMBER(exp)
+   VALVECTOR_STD_MATH_MEMBER(expm1)
+   VALVECTOR_STD_MATH_MEMBER(fabs)
+   VALVECTOR_STD_MATH_MEMBER(log)
+   VALVECTOR_STD_MATH_MEMBER(log1p)
+   VALVECTOR_STD_MATH_MEMBER(log10)
+   VALVECTOR_STD_MATH_MEMBER(sin)
+   VALVECTOR_STD_MATH_MEMBER(sinh)
+   VALVECTOR_STD_MATH_MEMBER(sqrt)
+   VALVECTOR_STD_MATH_MEMBER(tan)
+   VALVECTOR_STD_MATH_MEMBER(tanh)
+   //
    // Binary Operators
    VALVECTOR_BINARY_NUMERIC_OP(+)
    VALVECTOR_BINARY_NUMERIC_OP(-)
@@ -156,6 +194,45 @@ public:
    VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(<)
    VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(>)
 };
+//
+// Numeric Unary Fucntions
+namespace CppAD {
+   VALVECTOR_STD_MATH_FUNCTION(acos)
+   VALVECTOR_STD_MATH_FUNCTION(acosh)
+   VALVECTOR_STD_MATH_FUNCTION(asin)
+   VALVECTOR_STD_MATH_FUNCTION(asinh)
+   VALVECTOR_STD_MATH_FUNCTION(atan)
+   VALVECTOR_STD_MATH_FUNCTION(atanh)
+   VALVECTOR_STD_MATH_FUNCTION(cos)
+   VALVECTOR_STD_MATH_FUNCTION(cosh)
+   VALVECTOR_STD_MATH_FUNCTION(erf)
+   VALVECTOR_STD_MATH_FUNCTION(erfc)
+   VALVECTOR_STD_MATH_FUNCTION(exp)
+   VALVECTOR_STD_MATH_FUNCTION(expm1)
+   VALVECTOR_STD_MATH_FUNCTION(fabs)
+   VALVECTOR_STD_MATH_FUNCTION(log)
+   VALVECTOR_STD_MATH_FUNCTION(log1p)
+   VALVECTOR_STD_MATH_FUNCTION(log10)
+   VALVECTOR_STD_MATH_FUNCTION(sin)
+   VALVECTOR_STD_MATH_FUNCTION(sinh)
+   VALVECTOR_STD_MATH_FUNCTION(sqrt)
+   VALVECTOR_STD_MATH_FUNCTION(tan)
+   VALVECTOR_STD_MATH_FUNCTION(tanh)
+}
+//
+// ostream << valvector
+inline std::ostream& operator << (
+   std::ostream&    os , 
+   const valvector& a  )
+{  os << "{ ";
+   for(size_t i = 0; i < a.vec_.size(); ++i)
+   {  os << a.vec_[i];
+      if( i + 1 < a.vec_.size() )
+         os << ", ";
+   }
+   os << " }";
+   return os;
+}
 
 # if 0
 // CondExp
@@ -216,17 +293,3 @@ namespace CppAD {
    {  return x == y; }
 }
 # endif
-//
-// ostream << valvector
-inline std::ostream& operator << (
-   std::ostream&    os , 
-   const valvector& a  )
-{  os << "{ ";
-   for(size_t i = 0; i < a.vec_.size(); ++i)
-   {  os << a.vec_[i];
-      if( i + 1 < a.vec_.size() )
-         os << ", ";
-   }
-   os << " }";
-   return os;
-}
