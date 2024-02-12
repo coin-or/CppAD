@@ -8,14 +8,14 @@
       assert( exp ); \
    }
 //
-# define VALVECTOR_BOOL_OPERATOR(op) \
+# define VALVECTOR_ORDER_OPERATOR(op) \
    void operator op(const valvector& other) const \
    {  VALVECTOR_ASSERT_KNOWN( \
          false, \
-         #op " compare operator is not yet implemented" \
+         #op " ordered compare operators are not implemented" \
       ); \
    }
-
+//
 # define VALVECTOR_BINARY_OPERATOR(op) \
    valvector operator op(const valvector& other) const \
    {  valvector result;   \
@@ -123,23 +123,6 @@ public:
       return result;
    }
    //
-   // isequal
-   bool isequal(const valvector& other) const
-   {  check_size_ok(other);
-      //  
-      bool result = true;
-      if( size() == 1 )
-         for(size_t i = 0; i < other.size(); ++i)
-            result &= vec_[0] == other.vec_[i]; 
-      else if( other.size() == 1 )
-         for(size_t i = 0; i < size(); ++i)
-            result &= vec_[i] == other.vec_[0]; 
-      else
-         for(size_t i = 0; i < size(); ++i)
-            result &= vec_[i] == other.vec_[i]; 
-      return result;
-   }
-   //
    // Binary Operators
    VALVECTOR_BINARY_OPERATOR(+)
    VALVECTOR_BINARY_OPERATOR(-)
@@ -168,10 +151,10 @@ public:
    bool operator !=(const valvector& other) const
    {  return ! ( *this == other );
    }
-   VALVECTOR_BOOL_OPERATOR(<=)
-   VALVECTOR_BOOL_OPERATOR(>=)
-   VALVECTOR_BOOL_OPERATOR(<)
-   VALVECTOR_BOOL_OPERATOR(>)
+   VALVECTOR_ORDER_OPERATOR(<=)
+   VALVECTOR_ORDER_OPERATOR(>=)
+   VALVECTOR_ORDER_OPERATOR(<)
+   VALVECTOR_ORDER_OPERATOR(>)
 };
 
 # if 0
