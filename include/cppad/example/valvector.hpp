@@ -70,33 +70,6 @@
       return *this; \
    }
 //
-// Lexiographic Compare
-# define VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(op) \
-   bool operator op(const valvector& other) const \
-   {  bool result = true;   \
-      if( size() == 1 ) \
-      {  for(size_t i = 0; i < other.size(); ++i) \
-            result &= vec_[0] op other.vec_[i]; \
-      } \
-      else if( other.size() == 1 ) \
-      {  for(size_t i = 0; i < size(); ++i) \
-            result &= vec_[i] op other.vec_[0]; \
-      } \
-      else \
-      {  VALVECTOR_ASSERT_KNOWN(  \
-            size() == other.size() , \
-            "size error using " #op " operator" \
-         ) \
-         size_t i = 0; \
-         while( i < size() && vec_[i] == other.vec_[i] ) \
-            ++i; \
-         if( i == size() ) \
-            --i; \
-         result = vec_[i] op other.vec_[i]; \
-      } \
-      return result; \
-   }
-//
 // valvector
 // Forward declare
 class valvector;  
@@ -133,17 +106,8 @@ public:
 private:
    // vec_
    vector_type vec_;
-   //
-   // check_size_ok
-   void check_size_ok(const valvector& other) const
-   {  VALVECTOR_ASSERT_KNOWN(
-         size() == other.size() || size() == 1 || other.size() == 1,
-         "sizes do not agree in a binary operation"
-      )
-   }
-   //
 public:
-   //
+   // -----------------------------------------------------------------------
    // constructors
    valvector(void)
    { }
@@ -158,7 +122,7 @@ public:
    }  
    valvector(std::initializer_list<scalar_type> list) : vec_(list)
    { }
-   //
+   // -----------------------------------------------------------------------
    // assignments
    valvector& operator=(const valvector& other)
    {  vec_ = other.vec_;
@@ -168,14 +132,17 @@ public:
    {  vec_.swap( other.vec_ ); 
       return *this;
    }
-   //
-   // size
-   size_t size(void) const
-   {  return vec_.size(); }
+   // -------------------------------------------------------------------------
    //
    // resize
    void resize(size_t n)
    {  vec_.resize(n); }
+   // -------------------------------------------------------------------------
+   // constant no argument members
+   //
+   // size
+   size_t size(void) const
+   {  return vec_.size(); }
    //
    // iszero
    bool iszero(void) const
@@ -195,29 +162,17 @@ public:
       return result;
    }
    //
-   // output
-   std::ostream& output(std::ostream& os)  const
-   {  os << "{ ";
-      for(size_t i = 0; i < vec_.size(); ++i)
-      {  os << vec_[i];
-         if( i + 1 < vec_.size() )
-            os << ", ";
-      }
-      os << " }";
-      return os;
-   }
-   //
    // unary operators
-   valvector operator+(void)
+   valvector operator+(void) const
    {  return *this; }
-   valvector operator-(void)
+   valvector operator-(void) const
    {  valvector result;
       result.resize( size() );
       for(size_t i = 0; i < size(); ++i)
          result.vec_[i] = - vec_[i];
       return result;
    }
-   //
+   // -------------------------------------------------------------------------
    // Standard Math Fucntons
    VALVECTOR_STD_MATH_MEMBER(acos)
    VALVECTOR_STD_MATH_MEMBER(acosh)
@@ -247,13 +202,29 @@ public:
    VALVECTOR_BINARY_NUMERIC_OP(*, *=)
    VALVECTOR_BINARY_NUMERIC_OP(/, /=)
    //
-   // Compare operators
-   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(==)
-   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(!=)
-   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(<=)
-   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(>=)
-   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(<)
-   VALVECTOR_LEXICOGRAPHIC_COMPARE_OP(>)
+   // operator ==, !=
+   bool operator==(const valvector& other) const
+   {  bool result = true;  
+      if( size() == 1 )
+      {  for(size_t i = 0; i < other.size(); ++i)
+            result &= vec_[0] == other.vec_[i]; 
+      }
+      return result;
+   }
+   bool operator!=(const valvector& other) const
+   {  return ! (*this == other); }
+   //
+   // output
+   std::ostream& output(std::ostream& os)  const
+   {  os << "{ ";
+      for(size_t i = 0; i < vec_.size(); ++i)
+      {  os << vec_[i];
+         if( i + 1 < vec_.size() )
+            os << ", ";
+      }
+      os << " }";
+      return os;
+   }
 };
 //
 // Numeric Unary Fucntions
