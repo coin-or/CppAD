@@ -41,6 +41,11 @@ int main(void)
    check  = valvector( {-1.0, -2.0, -3.0} );
    ok &= result == check;
    //
+   // unary operator
+   result = - x[1];
+   check  = valvector( {3.0, -4.0, -5.0} );
+   ok &= result == check;
+   //
    std::cout << "result = " << result << "\n";
    std::cout << "check  = " << check << "\n";
    //

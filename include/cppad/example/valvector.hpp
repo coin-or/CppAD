@@ -207,6 +207,17 @@ public:
       return os;
    }
    //
+   // unary operators
+   valvector operator+(void)
+   {  return *this; }
+   valvector operator-(void)
+   {  valvector result;
+      result.resize( size() );
+      for(size_t i = 0; i < size(); ++i)
+         result.vec_[i] = - vec_[i];
+      return result;
+   }
+   //
    // Standard Math Fucntons
    VALVECTOR_STD_MATH_MEMBER(acos)
    VALVECTOR_STD_MATH_MEMBER(acosh)
