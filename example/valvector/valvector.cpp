@@ -33,8 +33,8 @@ int main(void)
    ok &= result == check;
    //
    // conditional expression
-   valvector& left     = x[0];
-   valvector& right    = x[1];
+   valvector left      = x[0];
+   valvector right     = x[1];
    valvector if_true   = x[0] + x[1];
    valvector if_false  = x[0] - x[1];
    result = CppAD::CondExpGe(left, right, if_true, if_false);
@@ -45,6 +45,16 @@ int main(void)
    result = - x[1];
    check  = valvector( {3.0, -4.0, -5.0} );
    ok &= result == check;
+   //
+   // azmul
+   left   = valvector( {0.0, 2.0} );
+   right  = valvector( { std::numeric_limits<double>::quiet_NaN(), 3.0 } );
+   result = CppAD::azmul(left, right);
+   check  = valvector( {0.0, 6.0} );
+   ok &= result == check;
+   //
+   // EqualOpSeq
+   ok &= ! CppAD::EqualOpSeq( x[0], x[1] );
    //
    std::cout << "result = " << result << "\n";
    std::cout << "check  = " << check << "\n";

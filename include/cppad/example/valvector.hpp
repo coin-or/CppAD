@@ -85,8 +85,9 @@ namespace CppAD {
       const valvector&       exp_if_false 
    );
 }
-//
+// ============================================================================
 // valvector
+// ============================================================================
 class valvector {
    //
    // friend
@@ -138,7 +139,7 @@ public:
    void resize(size_t n)
    {  vec_.resize(n); }
    // -------------------------------------------------------------------------
-   // constant no argument members
+   // return_type function_or_operator(void) const
    //
    // size
    size_t size(void) const
@@ -172,7 +173,7 @@ public:
          result.vec_[i] = - vec_[i];
       return result;
    }
-   // -------------------------------------------------------------------------
+   // 
    // Standard Math Fucntons
    VALVECTOR_STD_MATH_MEMBER(acos)
    VALVECTOR_STD_MATH_MEMBER(acosh)
@@ -195,14 +196,15 @@ public:
    VALVECTOR_STD_MATH_MEMBER(sqrt)
    VALVECTOR_STD_MATH_MEMBER(tan)
    VALVECTOR_STD_MATH_MEMBER(tanh)
-   //
+   // -----------------------------------------------------------------------
    // Binary Operators
+   //
    VALVECTOR_BINARY_NUMERIC_OP(+, +=)
    VALVECTOR_BINARY_NUMERIC_OP(-, -=)
    VALVECTOR_BINARY_NUMERIC_OP(*, *=)
    VALVECTOR_BINARY_NUMERIC_OP(/, /=)
-   //
-   // operator ==, !=
+   // 
+   // ==, !=
    bool operator==(const valvector& other) const
    {  bool result = true;  
       if( size() == 1 )
@@ -214,6 +216,42 @@ public:
    bool operator!=(const valvector& other) const
    {  return ! (*this == other); }
    //
+   // azmul
+   valvector azmul(const valvector& other) const
+   {  valvector  result;  
+      scalar_type zero(0);
+      if( size() == 1 )
+      {  if( vec_[0] == zero )
+         {  result.resize(1);
+            result.vec_[0] = zero;
+         }
+         else
+         {  result.resize( other.size() );
+            for(size_t i = 0; i < other.size(); ++i)
+               result.vec_[i] = vec_[0] * other.vec_[i];
+         }
+      }
+      else if( other.size() == 1 )
+      {  result.resize( size() );
+         for(size_t i = 0; i < size(); ++i)
+            result.vec_[i] = vec_[i] * other.vec_[0];
+      }
+      else
+      {  VALVECTOR_ASSERT_KNOWN( 
+            size() == other.size() ,
+            "size error using azmul function"
+         )
+         result.vec_.resize( size() );
+         for(size_t i = 0; i < size(); ++i)
+         {  if( vec_[i] == zero )
+               result.vec_[i] = zero;
+            else
+               result.vec_[i] = vec_[i] * other.vec_[i];
+         }
+      }
+      return result;
+   }
+   // -----------------------------------------------------------------------
    // output
    std::ostream& output(std::ostream& os)  const
    {  os << "{ ";
@@ -226,6 +264,7 @@ public:
       return os;
    }
 };
+// ============================================================================
 //
 // Numeric Unary Fucntions
 namespace CppAD {
@@ -259,8 +298,10 @@ inline std::ostream& operator << (
 {  return v.output(os);
 }
 //
-// CondExpOp
+// CppAD namespace
 namespace CppAD {
+   //
+   // CondExpOp
    inline valvector CondExpOp(
       enum CompareOp         cop          ,
       const valvector&       left         ,
@@ -351,28 +392,37 @@ namespace CppAD {
       return result;
    }
    CPPAD_COND_EXP_REL(valvector)
-}
-
-# if 0
-//
-// Identical
-namespace CppAD {
-   template <class Vector>
-   inline bool IdenticalCon(const valvector<Vector> & x)
+   //
+   // EqualOpSeq
+   inline bool EqualOpSeq(const valvector& left, const valvector& right)
+   {  return left == right; }
+   //
+   // Identical
+   inline bool IdenticalCon(const valvector& x)
    {  return true; 
    }
-   template <class Vector>
-   inline bool IdenticalZero(const valvector<Vector> & x)
+   inline bool IdenticalZero(const valvector& x)
    {  return x.iszero(); 
    }
-   template <class Vector>
-   inline bool IdenticalOne(const valvector<Vector> & x)
+   inline bool IdenticalOne(const valvector& x)
    {  return x.isone(); 
    }
-   template <class Vector>
    inline bool IdenticalEqualCon(
-      const valvector<Vector> & x, 
-      const valvector<Vector> & y)
-   {  return x == y; }
+      const valvector& left  ,
+      const valvector& right )
+   {  return left == right; }
+   //
+   // azmul
+   inline valvector azmul(
+      const valvector& left  ,
+      const valvector& right )
+   {  return left.azmul(right); }
+   //
+   // Integer
+   inline int Integer(const valvector& x)
+   {  VALVECTOR_ASSERT_KNOWN(
+         false,
+         "Cannot use CppAD::Integer fucntion."
+      )
+   }
 }
-# endif
