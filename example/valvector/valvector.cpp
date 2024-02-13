@@ -32,6 +32,15 @@ int main(void)
    check   = valvector( {-1.0, 6.0, 7.0} );
    ok &= result == check;
    //
+   // conditional expression
+   valvector& left     = x[0];
+   valvector& right    = x[1];
+   valvector if_true   = x[0] + x[1];
+   valvector if_false  = x[0] - x[1];
+   result = CppAD::CondExpGe(left, right, if_true, if_false);
+   check  = valvector( {-1.0, -2.0, -3.0} );
+   ok &= result == check;
+   //
    std::cout << "result = " << result << "\n";
    std::cout << "check  = " << check << "\n";
    //

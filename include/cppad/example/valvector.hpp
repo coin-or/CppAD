@@ -2,6 +2,7 @@
 # include <iostream>
 # include <cassert>
 # include <cppad/utility/vector.hpp>
+# include <cppad/base_require.hpp>
 //
 # define VALVECTOR_ASSERT_KNOWN(exp, msg) \
    if( ! (exp ) ) \
@@ -95,9 +96,34 @@
       } \
       return result; \
    }
-
 //
+// valvector
+// Forward declare
+class valvector;  
+//
+// CondExpOp
+// Forward decalre
+namespace CppAD {
+   inline valvector CondExpOp(
+      enum CompareOp         cop          ,
+      const valvector&       left         ,
+      const valvector&       right        ,
+      const valvector&       exp_if_true  ,
+      const valvector&       exp_if_false 
+   );
+}
+//
+// valvector
 class valvector {
+   //
+   // friend
+   friend inline valvector CppAD::CondExpOp(
+      enum CppAD::CompareOp  cop          ,
+      const valvector&       left         ,
+      const valvector&       right        ,
+      const valvector&       exp_if_true  ,
+      const valvector&       exp_if_false 
+   );
 public:
    //
    // scalar_type, vector_type
@@ -250,44 +276,102 @@ inline std::ostream& operator << (
    const valvector& v  )
 {  return v.output(os);
 }
+//
+// CondExpOp
+namespace CppAD {
+   inline valvector CondExpOp(
+      enum CompareOp         cop          ,
+      const valvector&       left         ,
+      const valvector&       right        ,
+      const valvector&       exp_if_true  ,
+      const valvector&       exp_if_false )
+   {  //  
+      // result_size
+      size_t result_size = std::max(left.size(), right.size());
+      result_size        = std::max(result_size, exp_if_true.size());
+      result_size        = std::max(result_size, exp_if_false.size());
+      //
+      // size_ok
+      bool size_ok  = true;
+      size_ok &= left.size()         ==1 || left.size()         ==result_size;
+      size_ok &= right.size()        ==1 || right.size()        ==result_size;
+      size_ok &= exp_if_true.size()  ==1 || exp_if_true.size()  ==result_size;
+      size_ok &= exp_if_false.size() ==1 || exp_if_false.size() ==result_size;
+      VALVECTOR_ASSERT_KNOWN(
+         size_ok,
+         "argument sizes do not agree in conditional expression"
+      );
+      //
+      // result
+      valvector result;
+      result.resize(result_size);
+      //
+      // inc_left, inc_right, inc_true, inc_false
+      size_t inc_left  = size_t( left.size() != 1 );
+      size_t inc_right = size_t( right.size() != 1 );
+      size_t inc_true  = size_t( exp_if_true.size() != 1 );
+      size_t inc_false = size_t( exp_if_false.size() != 1 );
+      //
+      // index_left, index_right, index_true, index_false
+      size_t index_left  = 0;
+      size_t index_right = 0;
+      size_t index_true  = 0;
+      size_t index_false = 0;
+      for(size_t index_result = 0; index_result < result_size; ++index_result)
+      {  switch( cop )
+         {
+            case CompareLt:
+            if( left.vec_[index_left] < right.vec_[index_right] )
+               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            else
+               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+            break;
+   
+            case CompareLe:
+            if( left.vec_[index_left] <= right.vec_[index_right] )
+               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            else
+               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+            break;
+
+            case CompareEq:
+            if( left.vec_[index_left] == right.vec_[index_right] )
+               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            else
+               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+            break;
+   
+            case CompareGe:
+            if( left.vec_[index_left] >= right.vec_[index_right] )
+               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            else
+               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+            break;
+
+            case CompareGt:
+            if( left.vec_[index_left] > right.vec_[index_right] )
+               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            else
+               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+            break;
+   
+            default:
+            assert(false);
+            result.vec_[index_result] = exp_if_true.vec_[index_true];
+         }
+         // index_left, index_right, index_true, index_false
+         index_left  += inc_left;
+         index_right += inc_right;
+         index_true  += inc_true;
+         index_false += inc_false;
+      }
+      // result
+      return result;
+   }
+   CPPAD_COND_EXP_REL(valvector)
+}
 
 # if 0
-// CondExp
-template <class Vector>
-inline valvector<Vector> CondExp(
-const valvector<Vector>&       left         ,
-const valvector<Vector>&       right        ,
-const valvector<Vector>&       exp_if_true  ,
-const valvector<Vector>&       exp_if_false )
-{  VALVECTOR_ASSERT_KNOWN(
-      false,
-      "Conditional expressions not yet implemented"
-   );
-   // avoid compiler error
-   return valvector<Vector>();
-}
-//
-// CondExpRel for Rel = Lt, Le, Eq, Ge, Gt
-# define VALVECTOR_COND_EXP(Name) \
-   template <class Vector> \
-   inline valvector<Vector> CondExp##Name( \
-   const valvector<Vector>&       left         , \
-   const valvector<Vector>&       right        , \
-   const valvector<Vector>&       exp_if_true  , \
-   const valvector<Vector>&       exp_if_false ) \
-   {  VALVECTOR_ASSERT_KNOWN( \
-         false, \
-         "Conditional expressions not yet implemented" \
-      ); \
-      /* avoid compiler error */ \
-      return valvector<Vector>(); \
-   }
-VALVECTOR_COND_EXP(Lt)
-VALVECTOR_COND_EXP(Le)
-VALVECTOR_COND_EXP(Eq)
-VALVECTOR_COND_EXP(Ge)
-VALVECTOR_COND_EXP(Gt)
-# undef VALVECTOR_COND_EXP
 //
 // Identical
 namespace CppAD {
