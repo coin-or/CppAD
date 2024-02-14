@@ -20,7 +20,7 @@ mm-dd
 
 02-14
 =====
-There :ref:`optimize-name` routine could crash when
+The :ref:`optimize-name` routine could crash when
 checking if an operator with the same hash code was a match with the
 argument order switched (for add and multiply).
 This problem occurred during speed.py_ ,
