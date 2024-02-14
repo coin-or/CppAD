@@ -19,7 +19,7 @@ mm-dd
 *****
 
 02-14
-*****
+=====
 There :ref:`optimize-name` routine could crash when
 checking if an operator with the same hash code was a match with the
 argument order switched (for add and multiply).
@@ -33,12 +33,12 @@ see comment that starts with 2024-02-14 in
 .. _speed.py: https://dismod-at.readthedocs.io/user_speed.py.html
 
 01-16
-*****
+=====
 fix dll linking of jit code by changing *cppad_c_compiler_path* to
 *cppad_c_compiler_cmd* (spaces in the path were making commands fail).
 
 01-12
-*****
+=====
 #. There were some problems using the cmake C compiler for the
    examples and tests of jit compilation, so that has been backed out for now.
 #. There was a mistake in detecting if size_t is the same as
