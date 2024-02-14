@@ -8,6 +8,8 @@
    cmd
    dll
    svec
+   py
+   dismod
 }
 
 Changes and Additions to CppAD During 2024
@@ -15,6 +17,20 @@ Changes and Additions to CppAD During 2024
 
 mm-dd
 *****
+
+02-14
+*****
+There :ref:`optimize-name` routine could crash when
+checking if an operator with the same hash code was a match with the
+argument order switched (for add and multiply).
+This problem occurred during speed.py_ ,
+which is an example and test of dismod_at, which uses CppAD.
+This crash required a very special (and improbable) case that we
+were unable to reproduce in an automated regression test;
+see comment that starts with 2024-02-14 in
+`include/cppad/local/optimize/match_op.hpp` .
+
+.. _speed.py: https://dismod-at.readthedocs.io/user_speed.py.html
 
 01-16
 *****
