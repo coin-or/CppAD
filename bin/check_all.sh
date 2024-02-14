@@ -212,9 +212,11 @@ list=$(
    -e '/check_all.sh/d' \
    -e '/check_doxygen.sh/d' \
    -e '/version.sh/d' \
-   -e '/check_install.sh/d'
+   -e '/check_install.sh/d' \
+   -e '/check_invisible/d'
 )
 #
+echo_eval bin/check_invisible.sh
 for check in $list
 do
    echo_log_eval $check
