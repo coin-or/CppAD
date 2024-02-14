@@ -112,7 +112,7 @@ for file in $version_files
 do
    # check_version(file, temp.sed, version_ok)
    check_version $file
-done 
+done
 # ----------------------------------------------------------------------------
 if [ "$version_ok" == 'no' ]
 then
