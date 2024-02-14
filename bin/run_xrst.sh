@@ -53,6 +53,7 @@ fi
 # -----------------------------------------------------------------------------
 # xrst
 echo_eval xrst \
+--suppress_spell_warnings \
 --local_toc \
 --target html \
 --html_theme sphinx_rtd_theme \
