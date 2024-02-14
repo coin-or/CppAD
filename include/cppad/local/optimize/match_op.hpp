@@ -259,8 +259,15 @@ bool match_op(
       if( (! match) & ( (op == AddvvOp) | (op == MulvvOp) ) )
       {  // communative so check for reverse order match
          match  = op == op_c;
-         match &= arg_match[0] == var2previous_var[ arg_c[1] ];
-         match &= arg_match[1] == var2previous_var[ arg_c[0] ];
+         //
+         // 2024-02-14:
+         // If op_c is not AddvvOp or MulvvOp, its arguments may not be
+         // variables and the code below could attempt to access
+         // var2previous_var out of range. See whats_new_24@mm-dd@02-14.
+         if( match )
+         {  match &= arg_match[0] == var2previous_var[ arg_c[1] ];
+            match &= arg_match[1] == var2previous_var[ arg_c[0] ];
+         }
       }
       if( match )
       {  op_previous[current] = static_cast<addr_t>( candidate );
