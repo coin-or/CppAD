@@ -3,26 +3,58 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_24 app}
+{xrst_begin 2024 app}
 {xrst_spell
    cmd
    dll
    svec
+   py
+   dismod
+   yyyy
+   yy
 }
 
-Changes and Additions to CppAD During 2024
-##########################################
+Release Notes for 2024
+######################
 
 mm-dd
 *****
 
+02-21
+=====
+For each year, change the web page name ``whats_new_``\ *yy*
+to *yyyy* where *yy* and *yyyy* identify the year. In addition, change the
+title for these pages to Release Notes for the corresponding year.
+This breaks old links to these web pages.
+For example, the old link to the heading directly below was::
+
+   https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
+
+Its new link, which is much shorter, is::
+
+   https://cppad.readthedocs.io/latest/2024.html#mm-dd-02-14
+
+02-14
+=====
+The :ref:`optimize-name` routine could crash when
+checking if an operator with the same hash code was a match with the
+argument order switched (for add and multiply).
+This problem occurred during speed.py_ ,
+which is an example and test of dismod_at, which uses CppAD.
+This crash required a very special (and improbable) case that we
+were unable to reproduce in an automated regression test;
+see comment that starts with 2024-02-14 in
+`include/cppad/local/optimize/match_op.hpp` .
+
+.. _speed.py: https://dismod-at.readthedocs.io/user_speed.py.html
+
 01-16
-*****
+=====
 fix dll linking of jit code by changing *cppad_c_compiler_path* to
 *cppad_c_compiler_cmd* (spaces in the path were making commands fail).
 
 01-12
-*****
+=====
 #. There were some problems using the cmake C compiler for the
    examples and tests of jit compilation, so that has been backed out for now.
 #. There was a mistake in detecting if size_t is the same as
@@ -62,7 +94,7 @@ forward_two documentation page.
 01-03
 =====
 
-#. The change on :ref:`whats_new_23@mm-dd@12-24` 2023,
+#. The change on :ref:`2023@mm-dd@12-24` 2023,
    when :ref:`cmake@cppad_debug_and_release` was implemented,
    was not done properly and might cause a mistaken assertion.
    This has been fixed.
@@ -91,4 +123,4 @@ forward_two documentation page.
    (on some compilers). This has been fixed.
 
 
-{xrst_end whats_new_24}
+{xrst_end 2024}

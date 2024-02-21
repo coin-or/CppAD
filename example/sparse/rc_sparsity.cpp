@@ -14,7 +14,7 @@ Purpose
 This example show how to use row and column index sparsity patterns
 :ref:`sparse_rc-name` to compute sparse Jacobians and Hessians.
 This became the preferred way to represent sparsity on
-:ref:`2017-02-09<whats_new_17@mm-dd@02-09>` .
+:ref:`2017-02-09<2017@mm-dd@02-09>` .
 
 {xrst_literal
    // BEGIN C++

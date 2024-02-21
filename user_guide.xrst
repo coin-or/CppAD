@@ -13,7 +13,7 @@
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20240121: CppAD User's Manual
+cppad-20240221: CppAD User's Manual
 ###################################
 
 .. image:: {xrst_dir coin.png}
@@ -21,7 +21,7 @@ cppad-20240121: CppAD User's Manual
 .. list-table::
    :widths: auto
 
-   * - `release-20240000.2 <https://github.com/coin-or/CppAD/archive/20240000.2.tar.gz>`_
+   * - `release-20240000.3 <https://github.com/coin-or/CppAD/archive/20240000.3.tar.gz>`_
      - `documentation-20240000 <https://cppad.readthedocs.io/stable-20240000>`_
      - `other releases <https://github.com/coin-or/CppAD/tags>`_
      - `github <https://github.com/coin-or/CppAD>`_

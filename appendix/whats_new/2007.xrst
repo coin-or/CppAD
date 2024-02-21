@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_07 app}
+{xrst_begin 2007 app}
 {xrst_spell
    adouble
    apx
@@ -32,8 +32,8 @@
    yyyymmdd
 }
 
-Changes and Additions to CppAD During 2007
-##########################################
+Release Notes for 2007
+######################
 
 mm-dd
 *****
@@ -255,7 +255,7 @@ In addition, the discussion about how to run each of the
 speed tests was corrected to include the *seed* argument.
 
 The *postfix_dir* option
-was removed on :ref:`2006-12-05<whats_new_06@mm-dd@12-05>` but
+was removed on :ref:`2006-12-05<2006@mm-dd@12-05>` but
 it was not removed from the
 :ref:`configure@Configure`
 documentation.
@@ -553,7 +553,7 @@ operators has been grouped together.
 In addition, a
 compound assignment wish list item has been added
 (it was completed and removed with the
-:ref:`whats_new_07@mm-dd@05-26` update.)
+:ref:`2007@mm-dd@05-26` update.)
 
 05-24
 =====
@@ -709,7 +709,7 @@ in the :ref:`adolc_poly.cpp-name` documentation.
 
 Added an Introduction and
 :ref:`wish_list@Tracing` entry to the wish list.
-(The Introduction item was completed on :ref:`whats_new_07@mm-dd@03-31` .)
+(The Introduction item was completed on :ref:`2007@mm-dd@03-31` .)
 
 03-20
 =====
@@ -837,14 +837,14 @@ be compatible with automake version 1.10.
 
 02-03
 =====
-The change on :ref:`whats_new_07@mm-dd@02-01` had a new, saved as a static
+The change on :ref:`2007@mm-dd@02-01` had a new, saved as a static
 pointer, with no corresponding delete.
 This was not a bug, but it has been changed to avoid
 an error message when using CppAD with
 `valgrind <http://valgrind.org/>`_.
 
 The change to the ``pow`` function on
-:ref:`06-12-10<whats_new_06@mm-dd@12-10>` did not include the
+:ref:`06-12-10<2006@mm-dd@12-10>` did not include the
 necessary changes to the sparsity calculations.
 This has been fixed.
 
@@ -864,10 +864,10 @@ avoided by using a static pointer and the new operator in cppad/local/ad.hpp.
 01-29
 =====
 The copyright message was missing from some of the distribution files
-for some new files added on :ref:`06-12-15<whats_new_06@mm-dd@12-15>` .
+for some new files added on :ref:`06-12-15<2006@mm-dd@12-15>` .
 This resulted in the
 tarballs * . ``tgz`` and * . ``zip``
 not existing for a period of time.
 The automated tests have been extended so that this should not happen again.
 
-{xrst_end whats_new_07}
+{xrst_end 2007}

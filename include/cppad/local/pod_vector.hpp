@@ -110,7 +110,7 @@ public:
       /// element index, must be less than length
       size_t i
    )
-   {  CPPAD_ASSERT_UNKNOWN( i * sizeof(Type) < byte_length_ );
+   {  CPPAD_ASSERT_UNKNOWN( i < byte_length_ / sizeof(Type) );
       return data_[i];
    }
    /// non-constant element access; i.e., we can change this element value
@@ -119,14 +119,16 @@ public:
       /// element index, must be less than length and convertable to size_t
       Index i
    )
-   {  return (*this)[size_t(i)]; }
+   {  CPPAD_ASSERT_UNKNOWN( size_t(i)  < byte_length_ / sizeof(Type) );
+      return (*this)[size_t(i)];
+   }
    //  ----------------------------------------------------------------------
    /// constant element access; i.e., we cannot change this element value
    const Type& operator[](
       /// element index, must be less than length
       size_t i
    ) const
-   {  CPPAD_ASSERT_UNKNOWN( i * sizeof(Type) < byte_length_ );
+   {  CPPAD_ASSERT_UNKNOWN( i  < byte_length_ / sizeof(Type) );
       return data_[i];
    }
    /// constant element access; i.e., we cannot change this element value
@@ -135,7 +137,9 @@ public:
       /// element index, must be less than length and convertable to size_t
       Index i
    ) const
-   {  return (*this)[size_t(i)]; }
+   {  CPPAD_ASSERT_UNKNOWN( size_t(i)  < byte_length_ / sizeof(Type) );
+      return (*this)[size_t(i)];
+   }
    //  ----------------------------------------------------------------------
 
    /*!

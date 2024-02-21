@@ -262,7 +262,7 @@ the file ``cppad.hpp`` is installed in the location
 The default value for *cppad_prefix* is the value of
 *CMAKE_INSTALL_PREFIX* ; see the cmake documentation.
 (Before 2019-10-02 the default value was ``/usr`` ; see
-the heading 10-02 on :ref:`whats_new_19<whats_new_19@mm-dd@10-02>` .)
+the heading 10-02 on :ref:`2019<2019@mm-dd@10-02>` .)
 
 cppad_postfix
 *************

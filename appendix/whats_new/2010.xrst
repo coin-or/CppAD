@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_10 app}
+{xrst_begin 2010 app}
 {xrst_spell
    blas
    ifdef
@@ -16,8 +16,8 @@
    wshadow
 }
 
-Changes and Additions to CppAD During 2010
-##########################################
+Release Notes for 2010
+######################
 
 mm-dd
 *****
@@ -171,7 +171,7 @@ where a library is built.
 
 02-08
 =====
-A bug was introduced in the :ref:`whats_new_10@mm-dd@02-05`
+A bug was introduced in the :ref:`2010@mm-dd@02-05`
 change whereby the ``make`` command tried to build the
 ``libcppad_ipopt.a`` library even if ``IPOPT_DIR`` was
 not specified on the :ref:`configure@Configure` command line.
@@ -289,4 +289,4 @@ hence were removed for the :ref:`wish_list-name` :
 #. The vector of sets option has been added to sparsity calculations;
    see :ref:`glossary@Sparsity Pattern` .
 
-{xrst_end whats_new_10}
+{xrst_end 2010}

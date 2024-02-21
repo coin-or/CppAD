@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_17 app}
+{xrst_begin 2017 app}
 {xrst_spell
    autotools
    deallocations
@@ -20,8 +20,8 @@
    xq
 }
 
-Changes and Additions to CppAD During 2017
-##########################################
+Release Notes for 2017
+######################
 
 mm-dd
 *****
@@ -173,7 +173,7 @@ and the :ref:`wish_list@check_finite` entry was modified.
 #. There was a problem running :ref:`make check<cmake_check-name>`
    when :ref:`cmake@cppad_cxx_flags` was not specified.
    This has been fixed.
-   This was probably introduced on :ref:`whats_new_17@mm-dd@05-29` .
+   This was probably introduced on :ref:`2017@mm-dd@05-29` .
 
 08-29
 =====
@@ -194,7 +194,7 @@ wish list item.
 #. The :ref:`eigen_plugin.hpp-name` was put back in the
    :ref:`cppad_eigen.hpp-name` definitions.
    This makes CppAD incompatible with older versions of eigen; e.g., eigen-3.2.9.
-   The plugin was removed on :ref:`whats_new_17@mm-dd@05-12` .
+   The plugin was removed on :ref:`2017@mm-dd@05-12` .
 #. Fix some minor typos in the documentation.
    To be specific:
    The font, in the :ref:`sparse_rc-name` and :ref:`sparse_rcv-name` syntax,
@@ -600,4 +600,4 @@ instead of ``1e-10`` .
 Change computed assignment to
 :ref:`compound assignment<compound_assign-name>` .
 
-{xrst_end whats_new_17}
+{xrst_end 2017}

@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_14 app}
+{xrst_begin 2014 app}
 {xrst_spell
    autoconf
    automake
@@ -23,8 +23,8 @@
    uj
 }
 
-CppAD Changes and Additions During 2014
-#######################################
+Release Notes for 2014
+######################
 
 mm-dd
 *****
@@ -429,9 +429,9 @@ at the end of the directory name.
 
 01-10
 =====
-The change on :ref:`2013-12-27<whats_new_13@mm-dd@12-27>`
+The change on :ref:`2013-12-27<2013@mm-dd@12-27>`
 caused a conversion error in :ref:`atan2-name` when it was used with
 ``AD< AD<double> >`` arguments (and other similar cases).
 This has been fixed.
 
-{xrst_end whats_new_14}
+{xrst_end 2014}

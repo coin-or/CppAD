@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_23 app}
+{xrst_begin 2023 app}
 {xrst_spell
    autotools
    csrc
@@ -21,8 +21,8 @@
    whithout
 }
 
-Changes and Additions to CppAD During 2023
-##########################################
+Release Notes for 2023
+######################
 
 mm-dd
 *****
@@ -69,7 +69,7 @@ you will have to add ``max_digits10`` to your Base type's numeric limits.
    :ref:`parallel_ad@Other Routines` ,
    that must be initialized before using in parallel mode,
    was included in the documentation.
-#. There was a bug introduce on :ref:`whats_new_23@mm-dd@06-20` when the
+#. There was a bug introduce on :ref:`2023@mm-dd@06-20` when the
    val_graph branch was merged into the master. To be more specific,
    if :ref:`cmake@cppad_tape_addr_type` was ``size_t`` ,
    a compile error occurred one of the ``is_pod`` definitions.
@@ -230,7 +230,7 @@ The following atomic four ``rev_depend`` problems have been fixed.
 01-12
 =====
 Fix a problem with the documentation conversion on
-:ref:`whats_new_22@mm-dd@12-16` of 2022.
+:ref:`2022@mm-dd@12-16` of 2022.
 To be specific:
 ``name_1<`` *name_2* > was converted to ``name_1`` < *name_2* >
 
@@ -246,4 +246,4 @@ Print an error message and exit from the cmake command when a
 :ref:`cmake@package_prefix` does not contain any include directories
 or libraries.
 
-{xrst_end whats_new_23}
+{xrst_end 2023}
