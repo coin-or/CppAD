@@ -22,7 +22,7 @@ mm-dd
 
 02-21
 =====
-Change for each year change the web page name ``whats_new_``\ *yy*
+For each year, change the web page name ``whats_new_``\ *yy*
 to *yyyy* where *yy* and *yyyy* identify the year. In addition, change the
 title for these pages to Release Notes for the corresponding year.
 This breaks old links to these web pages.
