@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_11 app}
+{xrst_begin 2011 app}
 {xrst_spell
    automake
    boostvector
@@ -37,8 +37,8 @@
    wshadow
 }
 
-Changes and Additions to CppAD During 2011
-##########################################
+Release Notes for 2011
+######################
 
 mm-dd
 *****
@@ -629,7 +629,7 @@ Add the routine :ref:`parallel_ad-name` to fix bug when using
 
 05-29
 =====
-Fix bug (introduced on :ref:`whats_new_11@mm-dd@05-22` )
+Fix bug (introduced on :ref:`2011@mm-dd@05-22` )
 whereby constructor might not be called (but required) when the
 :ref:`base type<base_require-name>` is not plain old data.
 
@@ -877,4 +877,4 @@ release versions; i.e.,
 
 will not have this problem.
 
-{xrst_end whats_new_11}
+{xrst_end 2011}

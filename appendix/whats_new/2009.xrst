@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_09 app}
+{xrst_begin 2009 app}
 {xrst_spell
    apx
    autoconf
@@ -20,8 +20,8 @@
    valgrind
 }
 
-Changes and Additions to CppAD During 2009
-##########################################
+Release Notes for 2009
+######################
 
 mm-dd
 *****
@@ -32,7 +32,7 @@ The
 ``ADFun`` :ref:`fun_construct@Assignment Operator`
 was changed so that it now copies forward mode
 Taylor coefficients and sparsity pattern information.
-(This assignment operator was added on :ref:`whats_new_09@mm-dd@10-24` .)
+(This assignment operator was added on :ref:`2009@mm-dd@10-24` .)
 You can use :ref:`capacity_order-name` to delete the Taylor coefficients
 before copying them.
 Two new functions were added so that you can query and delete the
@@ -164,7 +164,7 @@ between vectors of sets and boolean vectors for representing
 =====
 The *packed* parameter for the sparsity routines
 :ref:`ForSparseJac-name` , :ref:`RevSparseJac-name` , and :ref:`RevSparseHes-name`
-(introduced on :ref:`whats_new_09@mm-dd@09-26` ) has been removed.
+(introduced on :ref:`2009@mm-dd@09-26` ) has been removed.
 It has been replaced by changing the argument and return values
 to be more versatile.
 To be specific, they can now represent sparsity
@@ -520,4 +520,4 @@ has been replaced by
 Made some minor improvements to the documentation in
 :ref:`fun_construct-name` .
 
-{xrst_end whats_new_09}
+{xrst_end 2009}

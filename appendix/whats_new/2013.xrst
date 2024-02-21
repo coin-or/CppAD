@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_13 app}
+{xrst_begin 2013 app}
 {xrst_spell
    alg
    algo
@@ -37,7 +37,7 @@ mm-dd
    (created when optional implicit constructor from any type was added).
    This has been fixed by adding the
    ``--with-implicit_ctor`` option
-   (later removed on :ref:`2017-02-10<whats_new_17@mm-dd@02-10>` .)
+   (later removed on :ref:`2017-02-10<2017@mm-dd@02-10>` .)
 
 12-27
 =====
@@ -68,7 +68,7 @@ option during the install procedure.
 Document fact that monthly versions
 of the CppAD compressed tar file last till the end of the year.
 This is no longer the case; see
-:ref:`whats_new_18@mm-dd@05-20` in whats new for 2018.
+:ref:`2018@mm-dd@05-20` in whats new for 2018.
 
 12-24
 =====
@@ -224,7 +224,7 @@ atomic forward examples.
    has been fixed.
    This corresponds to the change in the specifications for
    :ref:`CppAD::vector::resize<CppAD_vector@resize>` made on
-   :ref:`2012-07-30<whats_new_12@mm-dd@07-30>`
+   :ref:`2012-07-30<2012@mm-dd@07-30>`
 #. There was a bug during the
    :ref:`checking for nan<check_for_nan-name>` during
    :ref:`reverse-name` mode.
@@ -389,7 +389,7 @@ from the scalar type to an ``int`` and this is dangerous for AD types
    installed on your system, you can use this script
    to download and install a local copy for use when testing CppAD.
 
-{xrst_end whats_new_13}
+{xrst_end 2013}
 
 $subhead 04-20$$
 The example old_usead_1.cpp was added.

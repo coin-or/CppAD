@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_19 app}
+{xrst_begin 2019 app}
 {xrst_spell
    autotools
    bthread
@@ -21,8 +21,8 @@
    yy
 }
 
-Changes and Additions to CppAD During 2019
-##########################################
+Release Notes for 2019
+######################
 
 mm-dd
 *****
@@ -145,7 +145,7 @@ to the :ref:`Independent-name` function and changes some of the
 =====
 Add wish list item for converting dynamic parameters to variables
 and vice versa. This has since been completed;
-see :ref:`whats_new_19@mm-dd@12-12` above.
+see :ref:`2019@mm-dd@12-12` above.
 
 11-15
 =====
@@ -274,7 +274,7 @@ were added.
 #. Extend :ref:`to_json-name` to handle
    :ref:`json_graph_op@Atomic Functions` .
    This should have been included with the atomic function change
-   on :ref:`whats_new_19@mm-dd@08-17` .
+   on :ref:`2019@mm-dd@08-17` .
 #. Simplify the :ref:`json_atom_op.cpp-name` and add a call
    to :ref:`to_json-name` to this example.
 #. The ``string_vec`` field was removed from the definition of an
@@ -380,7 +380,7 @@ when using :ref:`chkpoint_two-name` function.
    | |tab| [ *n_string* , [ *first_string* , ..., *last_string*  ] ]
    | |tab| *n_string* , [ *first_string* , ..., *last_string*  ]
 
-   ( *string_vec* was removed on :ref:`whats_new_19@mm-dd@08-29` ).
+   ( *string_vec* was removed on :ref:`2019@mm-dd@08-29` ).
 #. Change Json :ref:`json_ad_graph@constant_vec`
    from first to second line below:
 
@@ -758,4 +758,4 @@ Merge in the ``chkpoint`` branch.
    :ref:`atomic_three_for_type@Dependency Analysis`
    and so its name was changed from ``type`` to ``for_type`` .
 
-{xrst_end whats_new_19}
+{xrst_end 2019}

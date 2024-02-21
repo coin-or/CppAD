@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_21 app}
+{xrst_begin 2021 app}
 {xrst_spell
    cplusplus
    cxx
@@ -18,8 +18,8 @@
    values values
 }
 
-Changes and Additions to CppAD During 2021
-##########################################
+Release Notes for 2021
+######################
 
 mm-dd
 *****
@@ -148,7 +148,7 @@ size of the vectors to be the same; see
 =====
 
 #. The change to the :ref:`pow(x,y)<pow-name>` function on
-   :ref:`whats_new_21@mm-dd@02-06` handled the case where *x* is zero.
+   :ref:`2021@mm-dd@02-06` handled the case where *x* is zero.
    The :ref:`pow_nan.cpp-name` example was modified to show when the new
    version of this function generates nans.
 #. Remove some uses of the deprecated
@@ -356,4 +356,4 @@ The example :ref:`pow_nan.cpp-name` was added.
    was recorded.
 #. Fix a bug in the :ref:`configure-name` building of ``cppad_lib`` .
 
-{xrst_end whats_new_21}
+{xrst_end 2021}

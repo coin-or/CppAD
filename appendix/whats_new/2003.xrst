@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_03 app}
+{xrst_begin 2003 app}
 {xrst_spell
    constructor constructor
    ddouble
@@ -22,8 +22,8 @@
    valarray
 }
 
-Changes and Additions to CppAD During 2003
-##########################################
+Release Notes for 2003
+######################
 
 mm-dd
 *****
@@ -83,7 +83,7 @@ following functions are no longer available:
 
 12-10
 =====
-The change on :ref:`whats_new_03@mm-dd@12-01` make the taping process simpler
+The change on :ref:`2003@mm-dd@12-01` make the taping process simpler
 if one does not directly access
 ``CppADCreateTape`` .
 The :ref:`examples<example-name>` were changed to not use
@@ -751,4 +751,4 @@ and is being released under the
 It is intended for use by a Unix system.
 A Microsoft release is intended in the near future.
 
-{xrst_end whats_new_03}
+{xrst_end 2003}

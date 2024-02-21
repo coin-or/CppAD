@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_04 app}
+{xrst_begin 2004 app}
 {xrst_spell
    aclocal
    autoconf
@@ -26,8 +26,8 @@
    yy
 }
 
-Changes and Additions to CppAD During 2004
-##########################################
+Release Notes for 2004
+######################
 
 mm-dd
 *****
@@ -59,7 +59,7 @@ make them more in line with the introduction to C++ AD book.
 11-17
 =====
 Changing to Autoconf and Automake on
-:ref:`whats_new_04@mm-dd@08-24` mistakenly forgot
+:ref:`2004@mm-dd@08-24` mistakenly forgot
 the ``-Wall`` compiler switch (all warnings).
 This has been added and the corresponding warnings
 have been fixed.
@@ -224,7 +224,7 @@ This was done by removing
 all uses of greater than and less than comparisons were removed.
 (``OdeRunge`` has been replaced by :ref:`Runge45-name` ).
 
-The changes on :ref:`whats_new_04@mm-dd@09-21` did not fix all
+The changes on :ref:`2004@mm-dd@09-21` did not fix all
 the file date and time problems; i.e., automake was still running
 in response to the :ref:`unix installation<configure-name>`
 ``make`` command.
@@ -782,7 +782,7 @@ computes the derivative of vector valued functions.
 
 03-04
 =====
-The bug reported on :ref:`whats_new_04@mm-dd@02-17` was present in all
+The bug reported on :ref:`2004@mm-dd@02-17` was present in all
 the operators. These have all been fixed and tests for all the operators
 have been added to the ``cppad/Test`` directory.
 
@@ -831,7 +831,7 @@ there is a restriction on the order of the derivatives that can be calculated.
 This restriction was documented in the user defined unary function
 :ref:`Forward-name`
 and :ref:`Reverse-name` .
-(These unary functions were removed on :ref:`whats_new_04@mm-dd@03-12` .)
+(These unary functions were removed on :ref:`2004@mm-dd@03-12` .)
 
 02-20
 =====
@@ -857,7 +857,7 @@ The :ref:`Theory-name` section has been completely changed so that
 it corresponds to the arbitrary order calculations.
 (Some of this change was made when the arbitrary forward mode
 interface was added on
-:ref:`04-02-15<whats_new_04@mm-dd@02-15>` .
+:ref:`04-02-15<2004@mm-dd@02-15>` .
 
 The directory ``cppad/Test`` has been added.
 It contains tests cases that are not intended as examples.
@@ -955,4 +955,4 @@ was changed to use
 This makes the interface to CppAD closer to the interface for
 `ADOLC <https://projects.coin-or.org/ADOL-C>`_.
 
-{xrst_end whats_new_04}
+{xrst_end 2004}

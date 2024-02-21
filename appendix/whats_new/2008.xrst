@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_08 app}
+{xrst_begin 2008 app}
 {xrst_spell
    fg
    speedtest
@@ -11,8 +11,8 @@
    tarballs
 }
 
-Changes and Additions to CppAD During 2008
-##########################################
+Release Notes for 2008
+######################
 
 mm-dd
 *****
@@ -374,7 +374,7 @@ This has been fixed by making all such member functions friends
 instead of members of ``AD<double>`` .
 
 Remove compound assignment entry from wish list
-(it was fixed on :ref:`2007-05-26<whats_new_07@mm-dd@05-26>` ).
+(it was fixed on :ref:`2007-05-26<2007@mm-dd@05-26>` ).
 Add an expression hashing entry to the :ref:`wish_list-name`
 (it has since been removed).
 Add Library and Scripting Languages to the wish list
@@ -413,4 +413,4 @@ Added a :ref:`sparse_hessian-name` routine and
 extended :ref:`Hessian-name` to allow for a weight vector *w*
 instead of just one component *l* .
 
-{xrst_end whats_new_08}
+{xrst_end 2008}

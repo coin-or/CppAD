@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_06 app}
+{xrst_begin 2006 app}
 {xrst_spell
    aclocal
    apx
@@ -34,8 +34,8 @@
    yyyymmdd
 }
 
-Changes and Additions to CppAD During 2006
-##########################################
+Release Notes for 2006
+######################
 
 mm-dd
 *****
@@ -255,7 +255,7 @@ All of the ``Makefile.am`` and ``Makefile`` files were changed
 to lower case; i.e., ``makefile.am`` and ``makefile`` .
 
 Fix compiler warning while compiling ``cppad/RombergOne/``
-(mistake occurred during :ref:`11-20<whats_new_06@mm-dd@11-29>` change).
+(mistake occurred during :ref:`11-20<2006@mm-dd@11-29>` change).
 
 11-30
 =====
@@ -286,7 +286,7 @@ referenced ``doc`` . This has been fixed.
 11-23
 =====
 A Version Numbering entry was added to the
-:ref:`wish_list-name` (this was completed on :ref:`whats_new_06@mm-dd@11-30` ).
+:ref:`wish_list-name` (this was completed on :ref:`2006@mm-dd@11-30` ).
 
 11-18
 =====
@@ -718,7 +718,7 @@ member function was added to :ref:`ADFun-name` objects.
 The ``var_size`` member function was changed to
 :ref:`fun_property@size_var`
 (this is not backward compatible, but ``var_size`` was just added on
-:ref:`whats_new_06@mm-dd@04-03` ).
+:ref:`2006@mm-dd@04-03` ).
 
 04-05
 =====
@@ -777,7 +777,7 @@ The following member functions of :ref:`ADFun-name` have been
 
 The wish list entry for Memory usage
 was updated on 04-01.
-The request was implemented on :ref:`whats_new_06@mm-dd@06-19`
+The request was implemented on :ref:`2006@mm-dd@06-19`
 and the entry was removed from the wish list.
 
 03-31
@@ -1087,4 +1087,4 @@ Make the following source code files easier to understand:
 ``RevSparseJac.h``
 (in the directory ``cppad/local`` ).
 
-{xrst_end whats_new_06}
+{xrst_end 2006}

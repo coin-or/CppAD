@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_20 app}
+{xrst_begin 2020 app}
 {xrst_spell
    ar
    autotools
@@ -21,8 +21,8 @@
    un
 }
 
-Changes and Additions to CppAD During 2020
-##########################################
+Release Notes for 2020
+######################
 
 mm-dd
 *****
@@ -369,4 +369,4 @@ under dynamic parameters in the wish list.
    install below the include directory.
    This has been fixed.
 
-{xrst_end whats_new_20}
+{xrst_end 2020}

@@ -263,7 +263,7 @@ bool match_op(
          // 2024-02-14:
          // If op_c is not AddvvOp or MulvvOp, its arguments may not be
          // variables and the code below could attempt to access
-         // var2previous_var out of range. See whats_new_24@mm-dd@02-14.
+         // var2previous_var out of range. See 2024@mm-dd@02-14.
          if( match )
          {  match &= arg_match[0] == var2previous_var[ arg_c[1] ];
             match &= arg_match[1] == var2previous_var[ arg_c[0] ];

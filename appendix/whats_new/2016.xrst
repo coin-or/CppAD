@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_16 app}
+{xrst_begin 2016 app}
 {xrst_spell
    adouble
    autotools
@@ -16,8 +16,8 @@
    xam
 }
 
-Changes and Additions to CppAD During 2016
-##########################################
+Release Notes for 2016
+######################
 
 mm-dd
 *****
@@ -317,7 +317,7 @@ in the ``atomic_two_mat_mul.cpp`` example / test.
 =====
 
 #. Move ``atomic_two_mat_mul.cpp`` to ``atomic_mat_mul_xam.cpp``
-   (moved back on :ref:`whats_new_16@mm-dd@03-21` .
+   (moved back on :ref:`2016@mm-dd@03-21` .
 #. Move ``atomic_matrix_mul.hpp`` to :ref:`atomic_three_mat_mul.hpp-name` .
 
 03-17
@@ -454,4 +454,4 @@ in the test ``test_more/chkpoint_one.cpp`` (the problem was in the test).
    to use member function version of ``sin`` function
    (as per Eigen's array class documentation).
 
-{xrst_end whats_new_16}
+{xrst_end 2016}

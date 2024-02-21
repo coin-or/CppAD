@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_12 app}
+{xrst_begin 2012 app}
 {xrst_spell
    datadir
    debian
@@ -269,7 +269,7 @@ This has been  fixed.
 =====
 
 #. Remove some remaining references to the old licenses CPL-1.0 and GPL-2.0;
-   see :ref:`whats_new_12@mm-dd@10-24` .
+   see :ref:`2012@mm-dd@10-24` .
 #. Remove out of date Microsoft project files from the distribution.
    The build system is being converted to use
    `cmake <http://www.cmake.org>`_ which builds these files automatically
@@ -341,7 +341,7 @@ see :ref:`speed_main@Speed Results` .
 10-02
 =====
 Fix another problem with Debian's ``/bin/sh`` shell executing
-``example/multi_thread/test.sh`` ; see :ref:`whats_new_12@mm-dd@03-17`
+``example/multi_thread/test.sh`` ; see :ref:`2012@mm-dd@03-17`
 
 09-24
 =====
@@ -435,7 +435,7 @@ Add  ``eigen_plugin.hpp`` so that
 an Eigen vector can be used as a
 :ref:`SimpleVector-name` .
 This has since been removed; see
-:ref:`2017-05-11<whats_new_17@mm-dd@05-12>` .
+:ref:`2017-05-11<2017@mm-dd@05-12>` .
 
 07-01
 =====
@@ -485,7 +485,7 @@ Increase the size and of the
 #. Add the :ref:`hold_memory<speed_main@Global Options@memory>` option
    to the speed test main program.
    This was changed to just ``memory`` ; see
-   :ref:`whats_new_12@mm-dd@10-03` .
+   :ref:`2012@mm-dd@10-03` .
 #. In :ref:`cppad_sparse_jacobian.cpp-name` ,
    change ``USE_BOOL_SPARSITY`` from true to false.
    In addition, change the number of non-zeros per row from about approximately
@@ -965,4 +965,4 @@ This has been fixed.
 
 for the previous
 
-{xrst_end whats_new_12}
+{xrst_end 2012}

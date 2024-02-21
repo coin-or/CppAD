@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin whats_new_18 app}
+{xrst_begin 2018 app}
 {xrst_spell
    addons
    enums
@@ -17,15 +17,15 @@
    wfloat
 }
 
-Changes and Additions to CppAD During 2018
-##########################################
+Release Notes for 2018
+######################
 
 mm-dd
 *****
 
 12-30
 =====
-On :ref:`whats_new_18@mm-dd@12-12` the directory
+On :ref:`2018@mm-dd@12-12` the directory
 ``cppad`` was moved to ``include/cppad`` .
 The ``make install`` step of the
 :ref:`install-name` instructions did not work after that.
@@ -137,7 +137,7 @@ the ``base2ad`` feature.
 =====
 There was a bug in the
 :ref:`checkpoint<chkpoint_one-name>` functions with multiple threads
-(see :ref:`whats_new_18@mm-dd@10-29` below).
+(see :ref:`2018@mm-dd@10-29` below).
 This has been fixed.
 
 10-31
@@ -265,7 +265,7 @@ and changed to use the same notation as :ref:`taylor_ode-name` .
    change 'independent dynamic parameters' to 'dynamic parameter'.
 #. The :ref:`cppad_eigen.hpp@eigen_vector` class was moved
    out of the global namespace to the CppAD namespace.
-   This class was recently introduced (:ref:`whats_new_18@mm-dd@08-12` )
+   This class was recently introduced (:ref:`2018@mm-dd@08-12` )
    and so this change to the API should be easy to fix in user code.
 
 08-19
@@ -330,7 +330,7 @@ using any index type that has a conversion to the type ``size_t`` .
 
 #. Fix a bug in the ``CppAD::local::pod_vector`` template class
    (not part of the user API) that wasted memory.
-   This bug was part of the :ref:`whats_new_18@mm-dd@06-04` change this year.
+   This bug was part of the :ref:`2018@mm-dd@06-04` change this year.
 #. Fix very recent bug in the optimization of dynamic parameters
    in :ref:`PrintFor-name` statements.
 #. Fix some ``valgrind`` warnings about use of values that have
@@ -348,7 +348,7 @@ The amount of memory in an operation sequence has changed; see
 Remove the restrictions on dynamic parameters.
 They can now be used anywhere except as indices and values in
 VecAD vectors.
-(This was fixed on :ref:`2019-01-06<whats_new_20@mm-dd@01-06>` .)
+(This was fixed on :ref:`2019-01-06<2020@mm-dd@01-06>` .)
 
 07-30
 =====
@@ -385,7 +385,7 @@ or equal 3.1 to greater than or equal 2.8.4.
 
 07-18
 =====
-Fix a bug (introduced on :ref:`whats_new_18@mm-dd@07-02` )
+Fix a bug (introduced on :ref:`2018@mm-dd@07-02` )
 in :ref:`optimize-name` routine when dynamic parameters are present.
 
 07-02
@@ -492,7 +492,7 @@ to report the memory before clearing the atomic functions; see the end of
 05-04
 =====
 The comparison operations were changed on
-:ref:`2015-01-20<whats_new_15@mm-dd@01-20>` when the
+:ref:`2015-01-20<2015@mm-dd@01-20>` when the
 :ref:`Independent@abort_op_index` option was added.
 This change caused a slow down CppAD
 because the :ref:`compare-name` operators used to not be recorded when
@@ -507,7 +507,7 @@ or the :ref:`Independent@abort_op_index` feature).
 The following was merged in from the ``reduce_tape`` branch:
 A change was made in the way CppAD iterated over the operation sequence
 when subgraph operations were first added; see the heading
-:ref:`whats_new_17@mm-dd@11-20` in whats new for 2017.
+:ref:`2017@mm-dd@11-20` in whats new for 2017.
 This caused CppAD to always use more memory for storing tapes.
 This has been fixed so this extra memory is only allocated when it is needed.
 In addition it can be freed; see
@@ -580,4 +580,4 @@ e.g., see the
 =====
 Add the utility function :ref:`sparse2eigen-name` .
 
-{xrst_end whats_new_18}
+{xrst_end 2018}
