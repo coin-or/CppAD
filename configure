@@ -1,7 +1,8 @@
-# #! /bin/bash -e
-# # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-# # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# # SPDX-FileContributor: 2003-23 Bradley M. Bell
+#! /usr/bin/env bash
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
+set -e -u
 # # ----------------------------------------------------------------------------
 # {xrst_begin configure app}
 # {xrst_spell
@@ -407,7 +408,7 @@ then
 usage: <path_to_configure>/configure \\
    [--help] \\
    [--prefix=<prefix_dir>] \\
-   [--with-bostvector] \\
+   [--with-boostvector] \\
    [--with-eigenvector] \\
    [--with-stdvector] \\
    [--enable-msvc] \\
@@ -458,7 +459,7 @@ sacado_dir='NOTFOUND'
 ipopt_dir='NOTFOUND'
 tape_addr_type='size_t'
 tape_id_type='size_t'
-while [ "$1" != '' ]
+while [ "$#" != 0 ]
 do
    case "$1" in
 
@@ -701,10 +702,10 @@ cmake \
    -D include_ipopt=$include_adolc \
    -D include_cppadcg=false \
    \
-   -D eigen_prefix="$eigen_prefix" \
+   -D eigen_prefix="$eigen_dir" \
    -D colpack_prefix='NOTFOUND' \
-   -D fadbad_prefix="$fadbad_prefix" \
-   -D sacado_prefix="$sacado_prefix" \
+   -D fadbad_prefix="$fadbad_dir" \
+   -D sacado_prefix="$sacado_dir" \
    \
    -D cppad_cxx_flags="$cxx_flags" \
    -D cppad_profile_flag='' \
