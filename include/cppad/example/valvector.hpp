@@ -14,7 +14,7 @@
    inline type fun(const valvector& x) \
    {  VALVECTOR_ASSERT_KNOWN( false, #fun " is not available" ) \
       return type(); \
-   }  
+   }
 //
 # define VALVECTOR_STD_MATH_MEMBER(fun) \
    valvector fun(void) const \
@@ -78,7 +78,7 @@
 //
 // valvector
 // Forward declare
-class valvector;  
+class valvector;
 //
 // CondExpOp
 // Forward decalre
@@ -88,7 +88,7 @@ namespace CppAD {
       const valvector&       left         ,
       const valvector&       right        ,
       const valvector&       exp_if_true  ,
-      const valvector&       exp_if_false 
+      const valvector&       exp_if_false
    );
 }
 // ============================================================================
@@ -102,7 +102,7 @@ class valvector {
       const valvector&       left         ,
       const valvector&       right        ,
       const valvector&       exp_if_true  ,
-      const valvector&       exp_if_false 
+      const valvector&       exp_if_false
    );
 public:
    //
@@ -130,8 +130,8 @@ public:
    valvector(const valvector& other) : vec_( other.vec_)
    { }
    valvector(valvector&& other)
-   {  vec_.swap( other.vec_ ); 
-   }  
+   {  vec_.swap( other.vec_ );
+   }
    valvector(std::initializer_list<scalar_type> list) : vec_(list)
    { }
    // -----------------------------------------------------------------------
@@ -141,7 +141,7 @@ public:
       return *this;
    }
    valvector& operator=(valvector&& other)
-   {  vec_.swap( other.vec_ ); 
+   {  vec_.swap( other.vec_ );
       return *this;
    }
    // -------------------------------------------------------------------------
@@ -161,7 +161,7 @@ public:
    {  bool        result = true;
       scalar_type zero   = 0;
       for(size_t i = 0; i < size(); ++i)
-         result &= vec_[i] == zero; 
+         result &= vec_[i] == zero;
       return result;
    }
    //
@@ -170,7 +170,7 @@ public:
    {  bool        result = true;
       scalar_type one    = 1;
       for(size_t i = 0; i < size(); ++i)
-         result &= vec_[i] == one; 
+         result &= vec_[i] == one;
       return result;
    }
    //
@@ -184,7 +184,7 @@ public:
          result.vec_[i] = - vec_[i];
       return result;
    }
-   // 
+   //
    // Standard Math Fucntons
    VALVECTOR_STD_MATH_MEMBER(acos)
    VALVECTOR_STD_MATH_MEMBER(acosh)
@@ -230,13 +230,25 @@ public:
    VALVECTOR_BINARY_NUMERIC_OP(-, -=)
    VALVECTOR_BINARY_NUMERIC_OP(*, *=)
    VALVECTOR_BINARY_NUMERIC_OP(/, /=)
-   // 
+   //
    // ==, !=
    bool operator==(const valvector& other) const
-   {  bool result = true;  
+   {  bool result = true;
       if( size() == 1 )
       {  for(size_t i = 0; i < other.size(); ++i)
-            result &= vec_[0] == other.vec_[i]; 
+            result &= vec_[0] == other.vec_[i];
+      }
+      else if( other.size() == 1 )
+      {  for(size_t i = 0; i < other.size(); ++i)
+            result &= vec_[i] == other.vec_[0];
+      }
+      else
+      {  VALVECTOR_ASSERT_KNOWN(
+            size() == other.size() ,
+            "size error using azmul function"
+         )
+         for(size_t i = 0; i < size(); ++i)
+            result &= vec_[i] == other.vec_[i];
       }
       return result;
    }
@@ -245,7 +257,7 @@ public:
    //
    // azmul
    valvector azmul(const valvector& other) const
-   {  valvector  result;  
+   {  valvector  result;
       scalar_type zero(0);
       if( size() == 1 )
       {  if( vec_[0] == zero )
@@ -264,7 +276,7 @@ public:
             result.vec_[i] = vec_[i] * other.vec_[0];
       }
       else
-      {  VALVECTOR_ASSERT_KNOWN( 
+      {  VALVECTOR_ASSERT_KNOWN(
             size() == other.size() ,
             "size error using azmul function"
          )
@@ -281,7 +293,7 @@ public:
    //
    // pow
    valvector pow(const valvector& other) const
-   {  valvector  result;  
+   {  valvector  result;
       if( size() == 1 )
       {  result.resize( other.size() );
          for(size_t i = 0; i < other.size(); ++i)
@@ -293,7 +305,7 @@ public:
             result.vec_[i] = std::pow(vec_[i], other.vec_[0] );
       }
       else
-      {  VALVECTOR_ASSERT_KNOWN( 
+      {  VALVECTOR_ASSERT_KNOWN(
             size() == other.size() ,
             "size error using pow function"
          )
@@ -303,7 +315,7 @@ public:
       }
       return result;
    }
-   
+
    // -----------------------------------------------------------------------
    // output
    std::ostream& output(std::ostream& os)  const
@@ -321,7 +333,7 @@ public:
 //
 // ostream << valvector
 inline std::ostream& operator << (
-   std::ostream&    os , 
+   std::ostream&    os ,
    const valvector& v  )
 {  return v.output(os);
 }
@@ -332,18 +344,21 @@ namespace CppAD {
    // numeric_limits
    CPPAD_NUMERIC_LIMITS(valvector::scalar_type, valvector)
    //
+   // to_string_struct
+   CPPAD_TO_STRING(valvector)
+   //
    // -----------------------------------------------------------------------
    // Unary operators and functions
    //
    // Identical
    inline bool IdenticalCon(const valvector& x)
-   {  return true; 
+   {  return true;
    }
    inline bool IdenticalZero(const valvector& x)
-   {  return x.iszero(); 
+   {  return x.iszero();
    }
    inline bool IdenticalOne(const valvector& x)
-   {  return x.isone(); 
+   {  return x.isone();
    }
    //
    // a
@@ -398,7 +413,7 @@ namespace CppAD {
    //
    // Binary functions
    inline valvector pow(
-      const valvector& left  , 
+      const valvector& left  ,
       const valvector& right )
    {  return left.pow(right); }
    //
@@ -418,7 +433,7 @@ namespace CppAD {
       const valvector&       right        ,
       const valvector&       exp_if_true  ,
       const valvector&       exp_if_false )
-   {  //  
+   {  //
       // result_size
       size_t result_size = std::max(left.size(), right.size());
       result_size        = std::max(result_size, exp_if_true.size());
@@ -459,7 +474,7 @@ namespace CppAD {
             else
                result.vec_[index_result] = exp_if_false.vec_[index_false];;
             break;
-   
+
             case CompareLe:
             if( left.vec_[index_left] <= right.vec_[index_right] )
                result.vec_[index_result] = exp_if_true.vec_[index_true];
@@ -473,7 +488,7 @@ namespace CppAD {
             else
                result.vec_[index_result] = exp_if_false.vec_[index_false];;
             break;
-   
+
             case CompareGe:
             if( left.vec_[index_left] >= right.vec_[index_right] )
                result.vec_[index_result] = exp_if_true.vec_[index_true];
@@ -487,7 +502,7 @@ namespace CppAD {
             else
                result.vec_[index_result] = exp_if_false.vec_[index_false];;
             break;
-   
+
             default:
             assert(false);
             result.vec_[index_result] = exp_if_true.vec_[index_true];

@@ -1,9 +1,14 @@
 # include <cppad/example/valvector.hpp>
 # include <cppad/cppad.hpp>
 
-int main(void)
-{  //
+namespace { // BEIGN_EMPYT_NAMESPACE
+
+//
+// check_base_require
+bool check_base_require(void)
+{  // ok
    bool ok = true;
+   //
    // x
    std::vector<valvector> x(2);
    //
@@ -77,8 +82,55 @@ int main(void)
    check  = valvector( {1.0, 4.0, 3.0} );
    ok &= result == check;
    //
-   std::cout << "result = " << result << "\n";
-   std::cout << "check  = " << check << "\n";
+   return ok;
+}
+//
+// check_ad
+# if 0
+bool check_ad(void)
+{  // ok
+   bool ok = true;
+   //
+   // ad_valvector
+   typedef CppAD::AD<valvector> ad_valvector;
+   //
+   // ax
+   CPPAD_TESTVECTOR( ad_valvector ) ax(2);
+   ax[0] = valvector( {1.0} );
+   ax[1] = valvector( {2.0} );
+   CppAD::Independent(ax);
+   //
+   // f
+   CPPAD_TESTVECTOR( ad_valvector ) ay(1);
+   ay[0] = ax[0] * ax[1];
+   CppAD::ADFun<valvector> f(ax, ay);
+   //
+   // x
+   CPPAD_TESTVECTOR( valvector ) x(2);
+   ax[0] = valvector( {1.0, 2.0, 3.0} );
+   ax[1] = valvector( {4.0, 3.0, 2.0} );
+   //
+   // y
+   CPPAD_TESTVECTOR( valvector ) y(1);
+   y = f.Forward(0, x);
+   //
+   // ok
+   valvector check;
+   check = valvector( {4.0, 6.0, 6.0} );
+   ok   &= y[0] == check;
+   std::cout << "y[0]  = " << y[0] << "\n";
+   std::cout << "check = " << check << "\n";
+   //
+   return ok;
+}
+# endif
+} // END_EMPTY_NAMESPACE
+//
+// main
+int main(void)
+{  // ok
+   bool ok = true;
+   ok     &= check_base_require();
    //
    if( ok )
    {  std::cout << "valvector: OK\n";
