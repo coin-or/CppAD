@@ -407,7 +407,7 @@ then
 usage: <path_to_configure>/configure \\
    [--help] \\
    [--prefix=<prefix_dir>] \\
-   [--with-bostvector] \\
+   [--with-boostvector] \\
    [--with-eigenvector] \\
    [--with-stdvector] \\
    [--enable-msvc] \\
