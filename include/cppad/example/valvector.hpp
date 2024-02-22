@@ -10,6 +10,12 @@
       assert( exp ); \
    }
 //
+# define VALVECTOR_UNARY_NOT_AVAILABLE(type, fun) \
+   inline type fun(const valvector& x) \
+   {  VALVECTOR_ASSERT_KNOWN( false, #fun " is not available" ) \
+      return type(); \
+   }  
+//
 # define VALVECTOR_STD_MATH_MEMBER(fun) \
    valvector fun(void) const \
    {  valvector result; \
@@ -112,8 +118,13 @@ public:
    // constructors
    valvector(void)
    { }
-   valvector(scalar_type s) : vec_(1)
-   {  vec_[0] = s; }
+   valvector(int s) : vec_(1)
+   {  vec_[0] = scalar_type(s); }
+   valvector(size_t s) : vec_(1)
+   {  vec_[0] = scalar_type(s); }
+   valvector(double s) : vec_(1)
+   {  vec_[0] = scalar_type(s); }
+   //
    valvector(const vector_type& vec) : vec_(vec)
    { }
    valvector(const valvector& other) : vec_( other.vec_)
@@ -419,10 +430,16 @@ namespace CppAD {
    {  return left.azmul(right); }
    //
    // Integer
-   inline int Integer(const valvector& x)
-   {  VALVECTOR_ASSERT_KNOWN(
-         false,
-         "Cannot use CppAD::Integer fucntion."
-      )
+   VALVECTOR_UNARY_NOT_AVAILABLE(int, Integer)
+   //
+   // Ordered
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanZero)
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanOrZero)
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanZero)
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanOrZero)
+   inline bool abs_geq(const valvector& x, const valvector& y)
+   {  VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
+      return bool();
    }
+
 }
