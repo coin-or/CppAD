@@ -319,7 +319,35 @@ public:
 };
 // ============================================================================
 //
+// ostream << valvector
+inline std::ostream& operator << (
+   std::ostream&    os , 
+   const valvector& v  )
+{  return v.output(os);
+}
+//
+// CppAD namespace
 namespace CppAD {
+   // -----------------------------------------------------------------------
+   // Unary operators and functions
+   //
+   // Identical
+   inline bool IdenticalCon(const valvector& x)
+   {  return true; 
+   }
+   inline bool IdenticalZero(const valvector& x)
+   {  return x.iszero(); 
+   }
+   inline bool IdenticalOne(const valvector& x)
+   {  return x.isone(); 
+   }
+   //
+   // a
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanZero)
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanOrZero)
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanZero)
+   VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanOrZero)
+   //
    // Unary function
    VALVECTOR_MEMBER2FUNCTION(acos)
    VALVECTOR_MEMBER2FUNCTION(acosh)
@@ -345,18 +373,40 @@ namespace CppAD {
    inline valvector abs(const valvector& x)
    {  return fabs(x); }
    VALVECTOR_MEMBER2FUNCTION(sign)
-}
-//
-// ostream << valvector
-inline std::ostream& operator << (
-   std::ostream&    os , 
-   const valvector& v  )
-{  return v.output(os);
-}
-//
-// CppAD namespace
-namespace CppAD {
+   // -----------------------------------------------------------------------
+   // Binary opeators and functins
    //
+   // EqualOpSeq
+   inline bool EqualOpSeq(const valvector& left, const valvector& right)
+   {  return left == right; }
+   //
+   // IdenticalEqualCond
+   inline bool IdenticalEqualCon(
+      const valvector& left  ,
+      const valvector& right )
+   {  return left == right; }
+   //
+   // azmul
+   inline valvector azmul(
+      const valvector& left  ,
+      const valvector& right )
+   {  return left.azmul(right); }
+   //
+   // Binary functions
+   inline valvector pow(
+      const valvector& left  , 
+      const valvector& right )
+   {  return left.pow(right); }
+   //
+   // Integer
+   VALVECTOR_UNARY_NOT_AVAILABLE(int, Integer)
+   //
+   // abs_geq
+   inline bool abs_geq(const valvector& x, const valvector& y)
+   {  VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
+      return bool();
+   }
+   // ------------------------------------------------------------------------
    // CondExpOp
    inline valvector CondExpOp(
       enum CompareOp         cop          ,
@@ -448,49 +498,5 @@ namespace CppAD {
       return result;
    }
    CPPAD_COND_EXP_REL(valvector)
-   //
-   // EqualOpSeq
-   inline bool EqualOpSeq(const valvector& left, const valvector& right)
-   {  return left == right; }
-   //
-   // Identical
-   inline bool IdenticalCon(const valvector& x)
-   {  return true; 
-   }
-   inline bool IdenticalZero(const valvector& x)
-   {  return x.iszero(); 
-   }
-   inline bool IdenticalOne(const valvector& x)
-   {  return x.isone(); 
-   }
-   inline bool IdenticalEqualCon(
-      const valvector& left  ,
-      const valvector& right )
-   {  return left == right; }
-   //
-   // azmul
-   inline valvector azmul(
-      const valvector& left  ,
-      const valvector& right )
-   {  return left.azmul(right); }
-   //
-   // Binary functions
-   inline valvector pow(
-      const valvector& left  , 
-      const valvector& right )
-   {  return left.pow(right); }
-   //
-   // Integer
-   VALVECTOR_UNARY_NOT_AVAILABLE(int, Integer)
-   //
-   // Ordered
-   VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanZero)
-   VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanOrZero)
-   VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanZero)
-   VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanOrZero)
-   inline bool abs_geq(const valvector& x, const valvector& y)
-   {  VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
-      return bool();
-   }
 
 }
