@@ -150,7 +150,7 @@ public:
    void resize(size_t n)
    {  vec_.resize(n); }
    // -------------------------------------------------------------------------
-   // return_type function_or_operator(void) const
+   // Unary operators and functions
    //
    // size
    size_t size(void) const
@@ -224,7 +224,7 @@ public:
       return result;
    }
    // -----------------------------------------------------------------------
-   // Binary Operators
+   // Binary Operators and functions
    //
    VALVECTOR_BINARY_NUMERIC_OP(+, +=)
    VALVECTOR_BINARY_NUMERIC_OP(-, -=)
@@ -278,6 +278,32 @@ public:
       }
       return result;
    }
+   //
+   // pow
+   valvector pow(const valvector& other) const
+   {  valvector  result;  
+      if( size() == 1 )
+      {  result.resize( other.size() );
+         for(size_t i = 0; i < other.size(); ++i)
+            result.vec_[i] = std::pow(vec_[0],  other.vec_[i] );
+      }
+      else if( other.size() == 1 )
+      {  result.resize( size() );
+         for(size_t i = 0; i < size(); ++i)
+            result.vec_[i] = std::pow(vec_[i], other.vec_[0] );
+      }
+      else
+      {  VALVECTOR_ASSERT_KNOWN( 
+            size() == other.size() ,
+            "size error using pow function"
+         )
+         result.vec_.resize( size() );
+         for(size_t i = 0; i < size(); ++i)
+            result.vec_[i] = std::pow( vec_[i] , other.vec_[i] );
+      }
+      return result;
+   }
+   
    // -----------------------------------------------------------------------
    // output
    std::ostream& output(std::ostream& os)  const
@@ -294,7 +320,7 @@ public:
 // ============================================================================
 //
 namespace CppAD {
-   // Standard Math Functions
+   // Unary function
    VALVECTOR_MEMBER2FUNCTION(acos)
    VALVECTOR_MEMBER2FUNCTION(acosh)
    VALVECTOR_MEMBER2FUNCTION(asin)
@@ -316,12 +342,8 @@ namespace CppAD {
    VALVECTOR_MEMBER2FUNCTION(sqrt)
    VALVECTOR_MEMBER2FUNCTION(tan)
    VALVECTOR_MEMBER2FUNCTION(tanh)
-   //
-   // abs
    inline valvector abs(const valvector& x)
    {  return fabs(x); }
-   //
-   // sign
    VALVECTOR_MEMBER2FUNCTION(sign)
 }
 //
@@ -451,6 +473,12 @@ namespace CppAD {
       const valvector& left  ,
       const valvector& right )
    {  return left.azmul(right); }
+   //
+   // Binary functions
+   inline valvector pow(
+      const valvector& left  , 
+      const valvector& right )
+   {  return left.pow(right); }
    //
    // Integer
    VALVECTOR_UNARY_NOT_AVAILABLE(int, Integer)

@@ -13,6 +13,9 @@ int main(void)
    // valvector( list_of_double )
    x[1] = valvector( {-3.0, 4.0, 5.0} );
    //
+   // EqualOpSeq
+   ok &= ! CppAD::EqualOpSeq( x[0], x[1] );
+   //
    // result, check
    valvector result, check;
    //
@@ -63,8 +66,12 @@ int main(void)
    check  = valvector( {3.0, 4.0, 5.0} );
    ok &= result == check;
    //
-   // EqualOpSeq
-   ok &= ! CppAD::EqualOpSeq( x[0], x[1] );
+   // pow
+   left   = valvector( {1.0, 2.0, 3.0} );
+   right  = valvector( {3.0, 2.0, 1.0} );
+   result = CppAD::pow(left, right);
+   check  = valvector( {1.0, 4.0, 3.0} );
+   ok &= result == check;
    //
    std::cout << "result = " << result << "\n";
    std::cout << "check  = " << check << "\n";
