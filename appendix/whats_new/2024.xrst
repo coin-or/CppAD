@@ -12,6 +12,10 @@
    dismod
    yyyy
    yy
+   usr
+   env
+   bostvector
+   boostvector
 }
 
 Release Notes for 2024
@@ -19,6 +23,18 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+02-22
+=====
+#. The shebang in the :ref:`configure-name` script was changed from
+   ``#! /bin/bash`` to ``#! /usr/bin/env bash`` .
+   This should make it work on more systems.
+#. The configure script :ref:`configure@eigen_dir` ,
+   *fadbad_dir* , and *sacado_dir*
+   directories were not being passed to the ``cmake`` .
+   This has been fixed.
+#. The configure ``--help`` option for using boost vectors
+   was corrected from  ``--with-bostvector`` to ``--with-boostvector`` .
 
 02-21
 =====
