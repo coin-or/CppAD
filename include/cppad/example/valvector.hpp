@@ -25,7 +25,7 @@
       return result; \
    }
 //
-# define VALVECTOR_STD_MATH_FUNCTION(fun) \
+# define VALVECTOR_MEMBER2FUNCTION(fun) \
    inline valvector fun(const valvector& x) \
    {  return x.fun(); \
    }
@@ -207,6 +207,22 @@ public:
    VALVECTOR_STD_MATH_MEMBER(sqrt)
    VALVECTOR_STD_MATH_MEMBER(tan)
    VALVECTOR_STD_MATH_MEMBER(tanh)
+   //
+   // sign
+   valvector sign(void) const
+   {  valvector result;
+      result.resize( size() );
+      scalar_type zero = scalar_type(0);
+      for(size_t i = 0; i < size(); ++i)
+      {  if( vec_[i] < zero )
+            result.vec_[i] = scalar_type(-1);
+         if( vec_[i] == zero )
+            result.vec_[i] = zero;
+         if( vec_[i] > zero )
+            result.vec_[i] = scalar_type(1);
+      }
+      return result;
+   }
    // -----------------------------------------------------------------------
    // Binary Operators
    //
@@ -277,29 +293,36 @@ public:
 };
 // ============================================================================
 //
-// Numeric Unary Fucntions
 namespace CppAD {
-   VALVECTOR_STD_MATH_FUNCTION(acos)
-   VALVECTOR_STD_MATH_FUNCTION(acosh)
-   VALVECTOR_STD_MATH_FUNCTION(asin)
-   VALVECTOR_STD_MATH_FUNCTION(asinh)
-   VALVECTOR_STD_MATH_FUNCTION(atan)
-   VALVECTOR_STD_MATH_FUNCTION(atanh)
-   VALVECTOR_STD_MATH_FUNCTION(cos)
-   VALVECTOR_STD_MATH_FUNCTION(cosh)
-   VALVECTOR_STD_MATH_FUNCTION(erf)
-   VALVECTOR_STD_MATH_FUNCTION(erfc)
-   VALVECTOR_STD_MATH_FUNCTION(exp)
-   VALVECTOR_STD_MATH_FUNCTION(expm1)
-   VALVECTOR_STD_MATH_FUNCTION(fabs)
-   VALVECTOR_STD_MATH_FUNCTION(log)
-   VALVECTOR_STD_MATH_FUNCTION(log1p)
-   VALVECTOR_STD_MATH_FUNCTION(log10)
-   VALVECTOR_STD_MATH_FUNCTION(sin)
-   VALVECTOR_STD_MATH_FUNCTION(sinh)
-   VALVECTOR_STD_MATH_FUNCTION(sqrt)
-   VALVECTOR_STD_MATH_FUNCTION(tan)
-   VALVECTOR_STD_MATH_FUNCTION(tanh)
+   // Standard Math Functions
+   VALVECTOR_MEMBER2FUNCTION(acos)
+   VALVECTOR_MEMBER2FUNCTION(acosh)
+   VALVECTOR_MEMBER2FUNCTION(asin)
+   VALVECTOR_MEMBER2FUNCTION(asinh)
+   VALVECTOR_MEMBER2FUNCTION(atan)
+   VALVECTOR_MEMBER2FUNCTION(atanh)
+   VALVECTOR_MEMBER2FUNCTION(cos)
+   VALVECTOR_MEMBER2FUNCTION(cosh)
+   VALVECTOR_MEMBER2FUNCTION(erf)
+   VALVECTOR_MEMBER2FUNCTION(erfc)
+   VALVECTOR_MEMBER2FUNCTION(exp)
+   VALVECTOR_MEMBER2FUNCTION(expm1)
+   VALVECTOR_MEMBER2FUNCTION(fabs)
+   VALVECTOR_MEMBER2FUNCTION(log)
+   VALVECTOR_MEMBER2FUNCTION(log1p)
+   VALVECTOR_MEMBER2FUNCTION(log10)
+   VALVECTOR_MEMBER2FUNCTION(sin)
+   VALVECTOR_MEMBER2FUNCTION(sinh)
+   VALVECTOR_MEMBER2FUNCTION(sqrt)
+   VALVECTOR_MEMBER2FUNCTION(tan)
+   VALVECTOR_MEMBER2FUNCTION(tanh)
+   //
+   // abs
+   inline valvector abs(const valvector& x)
+   {  return fabs(x); }
+   //
+   // sign
+   VALVECTOR_MEMBER2FUNCTION(sign)
 }
 //
 // ostream << valvector

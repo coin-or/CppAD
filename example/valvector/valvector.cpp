@@ -53,6 +53,16 @@ int main(void)
    check  = valvector( {0.0, 6.0} );
    ok &= result == check;
    //
+   // sign
+   result = CppAD::sign( x[1] );
+   check  = valvector( {-1.0, +1.0, +1.0} );
+   ok &= result == check;
+   //
+   // abs
+   result = CppAD::abs( x[1] );
+   check  = valvector( {3.0, 4.0, 5.0} );
+   ok &= result == check;
+   //
    // EqualOpSeq
    ok &= ! CppAD::EqualOpSeq( x[0], x[1] );
    //
