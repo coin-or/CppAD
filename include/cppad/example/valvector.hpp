@@ -328,6 +328,10 @@ inline std::ostream& operator << (
 //
 // CppAD namespace
 namespace CppAD {
+   //
+   // numeric_limits
+   CPPAD_NUMERIC_LIMITS(valvector::scalar_type, valvector)
+   //
    // -----------------------------------------------------------------------
    // Unary operators and functions
    //

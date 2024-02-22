@@ -16,6 +16,10 @@ int main(void)
    // EqualOpSeq
    ok &= ! CppAD::EqualOpSeq( x[0], x[1] );
    //
+   // numeric_limits
+   valvector nan = CppAD::numeric_limits<valvector>::quiet_NaN();
+   ok &= CppAD::isnan( nan );
+   //
    // result, check
    valvector result, check;
    //
