@@ -24,7 +24,7 @@ extern bool sparse_jacobian(void);
 
 // main program that runs all the tests
 int main(void)
-{  std::string group = "test_more/code_gen_fun";
+{  std::string group = "example/cppad_code_gen";
    size_t      width = 20;
    CppAD::test_boolofvoid Run(group, width);
 

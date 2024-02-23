@@ -193,12 +193,12 @@ a function (:ref:`sparse_jac_fun-name` ) or it's Jacobian to CppADCodeGen
 THis test indicates that both methods have similar setup
 and derivative calculation times.
 {xrst_toc_hidden
-   example/code_gen_fun/function.cpp
-   example/code_gen_fun/file.cpp
-   example/code_gen_fun/jacobian.cpp
-   example/code_gen_fun/jac_as_fun.cpp
-   example/code_gen_fun/sparse_jacobian.cpp
-   example/code_gen_fun/sparse_jac_as_fun.cpp
+   example/cppad_code_gen/function.cpp
+   example/cppad_code_gen/file.cpp
+   example/cppad_code_gen/jacobian.cpp
+   example/cppad_code_gen/jac_as_fun.cpp
+   example/cppad_code_gen/sparse_jacobian.cpp
+   example/cppad_code_gen/sparse_jac_as_fun.cpp
 }
 Examples
 ********
