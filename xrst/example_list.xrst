@@ -415,18 +415,33 @@ Contents
 
 {xrst_end General}
 -----------------------------------------------------------------------------
-{xrst_begin example_utility}
+{xrst_begin example_driver}
 
 Utility Routines used by CppAD Examples
 #######################################
 
 Contents
 ********
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   example/abs_normal/abs_normal.cpp
+   example/atomic_four/atomic_four.cpp
+   example/atomic_three/atomic_three.cpp
+   example/atomic_two/atomic_two.cpp
+   example/chkpoint_two/chkpoint_two.cpp
+   example/cppad_code_gen/cppad_code_gen.cpp
    example/general/general.cpp
-   speed/example/example.cpp
    example/general/lu_vec_ad.cpp
+   example/graph/graph.cpp
+   example/ipopt_solve/ipopt_solve.cpp
+   example/jit/jit.cpp
+   example/json/json.cpp
+   example/optimize/optimize.cpp
+   example/sparse/sparse.cpp
+   example/utility/utility.cpp
+   speed/example/example.cpp
 }
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
-{xrst_end example_utility}
+{xrst_end example_driver}
 -----------------------------------------------------------------------------

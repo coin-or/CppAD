@@ -16,6 +16,8 @@
    env
    bostvector
    boostvector
+   iostream
+   cassert
 }
 
 Release Notes for 2024
@@ -23,6 +25,13 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+02-23
+=====
+Include more of the example drivers in the documentation;
+see :ref:`example_driver-name` .
+In addition, remove unnecessary includes for ``iostream`` and
+``cassert`` from these drivers.
 
 02-22
 =====
