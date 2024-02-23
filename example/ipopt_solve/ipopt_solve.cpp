@@ -3,12 +3,6 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-// system include files used for I/O
-# include <iostream>
-
-// C style asserts
-# include <cassert>
-
 // ipopt solve include file
 # include <cppad/ipopt/solve.hpp>
 

@@ -9,9 +9,6 @@
 // system include files used for I/O
 # include <iostream>
 
-// C style asserts
-# include <cassert>
-
 // for thread_alloc
 # include <cppad/utility/thread_alloc.hpp>
 

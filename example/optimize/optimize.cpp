@@ -2,12 +2,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
-// system include files used for I/O
-# include <iostream>
-
-// C style asserts
-# include <cassert>
-
 // for thread_alloc
 # include <cppad/utility/thread_alloc.hpp>
 

@@ -25,12 +25,6 @@ To build this program and run its correctness tests see :ref:`cmake_check-name` 
 // CPPAD_HAS_* defines
 # include <cppad/configure.hpp>
 
-// system include files used for I/O
-# include <iostream>
-
-// C style asserts
-# include <cassert>
-
 // standard string
 # include <string>
 
