@@ -1,4 +1,4 @@
-# include <cppad/example/valvector.hpp>
+# include <cppad/example/valvector/class.hpp>
 # include <cppad/cppad.hpp>
 //
 // base_require
