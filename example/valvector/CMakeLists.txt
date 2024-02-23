@@ -4,7 +4,12 @@
 # ----------------------------------------------------------------------------
 # Build the example/valvector directory tests
 #
-SET(source_list valvector.cpp)
+# BEGIN_SORT_THIS_LINE_PLUS_2
+SET(source_list valvector.cpp
+   base_require.cpp
+   get_started.cpp
+)
+# END_SORT_THIS_LINE_MINUS_2
 #
 set_compile_flags( example_valvector "${cppad_debug_which}" "${source_list}" )
 #

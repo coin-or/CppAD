@@ -1,147 +1,72 @@
-# include <cppad/example/valvector.hpp>
-# include <cppad/cppad.hpp>
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
+/*
+{xrst_begin valvector.cpp}
 
-namespace { // BEIGN_EMPYT_NAMESPACE
+valvector Examples and Tests Driver
+###################################
 
-//
-// check_base_require
-bool check_base_require(void)
-{  // ok
-   bool ok = true;
-   //
-   // x
-   std::vector<valvector> x(2);
-   //
-   // valvector(double)
-   x[0] = valvector( 2.0 );
-   //
-   // valvector( list_of_double )
-   x[1] = valvector( {-3.0, 4.0, 5.0} );
-   //
-   // EqualOpSeq
-   ok &= ! CppAD::EqualOpSeq( x[0], x[1] );
-   //
-   // numeric_limits
-   valvector nan = CppAD::numeric_limits<valvector>::quiet_NaN();
-   ok &= CppAD::isnan( nan );
-   //
-   // result, check
-   valvector result, check;
-   //
-   // binary operator
-   result = x[0] * x[1];
-   check  = valvector( {-6.0, 8.0, 10.0} );
-   ok &= result == check;
-   //
-   // std::math
-   result = CppAD::fabs( x[1] );
-   check  = valvector( {3.0, 4.0, 5.0} );
-   ok &= result == check;
-   //
-   // compound assignment
-   result  = x[1];
-   result += x[0];
-   check   = valvector( {-1.0, 6.0, 7.0} );
-   ok &= result == check;
-   //
-   // conditional expression
-   valvector left      = x[0];
-   valvector right     = x[1];
-   valvector if_true   = x[0] + x[1];
-   valvector if_false  = x[0] - x[1];
-   result = CppAD::CondExpGe(left, right, if_true, if_false);
-   check  = valvector( {-1.0, -2.0, -3.0} );
-   ok &= result == check;
-   //
-   // unary operator
-   result = - x[1];
-   check  = valvector( {3.0, -4.0, -5.0} );
-   ok &= result == check;
-   //
-   // azmul
-   left   = valvector( {0.0, 2.0} );
-   right  = valvector( { std::numeric_limits<double>::quiet_NaN(), 3.0 } );
-   result = CppAD::azmul(left, right);
-   check  = valvector( {0.0, 6.0} );
-   ok &= result == check;
-   //
-   // sign
-   result = CppAD::sign( x[1] );
-   check  = valvector( {-1.0, +1.0, +1.0} );
-   ok &= result == check;
-   //
-   // abs
-   result = CppAD::abs( x[1] );
-   check  = valvector( {3.0, 4.0, 5.0} );
-   ok &= result == check;
-   //
-   // pow
-   left   = valvector( {1.0, 2.0, 3.0} );
-   right  = valvector( {3.0, 2.0, 1.0} );
-   result = CppAD::pow(left, right);
-   check  = valvector( {1.0, 4.0, 3.0} );
-   ok &= result == check;
-   //
-   return ok;
+Running These Tests
+*******************
+After executing the :ref:`cmake-name` command
+form the :ref:`download@Distribution Directory`,
+you can build and run these tests with the commands::
+
+   cd build
+   make check_example_valvector
+
+Note that your choice of :ref:`cmake@generator` may require using
+an different version of make; e.g., ``ninja`` .
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
 }
-//
-// check_ad
-bool check_ad(void)
-{  // ok
-   bool ok = true;
-   //
-   // ad_valvector
-   typedef CppAD::AD<valvector> ad_valvector;
-   //
-   // ax
-   CPPAD_TESTVECTOR( ad_valvector ) ax(2);
-   ax[0] = valvector( {1.0} );
-   ax[1] = valvector( {2.0} );
-   CppAD::Independent(ax);
-   //
-   // f
-   CPPAD_TESTVECTOR( ad_valvector ) ay(1);
-   ay[0] = ax[0] * ax[1];
-   CppAD::ADFun<valvector> f(ax, ay);
-   //
-   // x
-   CPPAD_TESTVECTOR( valvector ) x(2);
-   x[0] = valvector( {1.0, 2.0, 3.0} );
-   x[1] = valvector( {4.0, 3.0, 2.0} );
-   //
-   // y
-   CPPAD_TESTVECTOR( valvector ) y(1);
-   y = f.Forward(0, x);
-   //
-   // ok
-   valvector check;
-   check = valvector( {4.0, 6.0, 6.0} );
-   ok   &= y[0] == check;
-   //
-   //  dw
-   CPPAD_TESTVECTOR( valvector ) w(1), dw(2);
-   w[0] = valvector( 1.0 );
-   dw   = f.Reverse(1, w);
-   //
-   // ok
-   ok &= dw[0] == x[1];
-   ok &= dw[1] == x[0];
-   //
-   return ok;
-}
-} // END_EMPTY_NAMESPACE
-//
-// main
+
+{xrst_end valvector.cpp}
+-------------------------------------------------------------------------------
+*/
+// BEGIN C++
+
+// CPPAD_HAS_* defines
+# include <cppad/configure.hpp>
+
+// system include files used for I/O
+# include <iostream>
+
+// for thread_alloc
+# include <cppad/utility/thread_alloc.hpp>
+
+// test runner
+# include <cppad/utility/test_boolofvoid.hpp>
+
+// BEGIN_SORT_THIS_LINE_PLUS_1
+extern bool base_require(void);
+extern bool get_started(void);
+// END_SORT_THIS_LINE_MINUS_1
+
+// main program that runs all the tests
 int main(void)
-{  // ok
-   bool ok = true;
-   ok     &= check_base_require();
-   ok     &= check_ad();
+{  bool ok = true;
    //
-   if( ok )
-   {  std::cout << "valvector: OK\n";
-      return 0;
-   }
-   std::cout << "valvector: Error\n";
-   return 1;
+   std::string group = "example/valvector";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
+
+   // This line is used by test_one.sh
+
+   // BEGIN_SORT_THIS_LINE_PLUS_1
+   Run( base_require,        "base_require"          );
+   Run( get_started,         "get_started"           );
+   // END_SORT_THIS_LINE_MINUS_1
+
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }
+// END C++
