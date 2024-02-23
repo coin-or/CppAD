@@ -86,7 +86,6 @@ bool check_base_require(void)
 }
 //
 // check_ad
-# if 0
 bool check_ad(void)
 {  // ok
    bool ok = true;
@@ -107,8 +106,8 @@ bool check_ad(void)
    //
    // x
    CPPAD_TESTVECTOR( valvector ) x(2);
-   ax[0] = valvector( {1.0, 2.0, 3.0} );
-   ax[1] = valvector( {4.0, 3.0, 2.0} );
+   x[0] = valvector( {1.0, 2.0, 3.0} );
+   x[1] = valvector( {4.0, 3.0, 2.0} );
    //
    // y
    CPPAD_TESTVECTOR( valvector ) y(1);
@@ -118,12 +117,9 @@ bool check_ad(void)
    valvector check;
    check = valvector( {4.0, 6.0, 6.0} );
    ok   &= y[0] == check;
-   std::cout << "y[0]  = " << y[0] << "\n";
-   std::cout << "check = " << check << "\n";
    //
    return ok;
 }
-# endif
 } // END_EMPTY_NAMESPACE
 //
 // main
@@ -131,6 +127,7 @@ int main(void)
 {  // ok
    bool ok = true;
    ok     &= check_base_require();
+   ok     &= check_ad();
    //
    if( ok )
    {  std::cout << "valvector: OK\n";

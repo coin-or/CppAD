@@ -116,8 +116,8 @@ private:
 public:
    // -----------------------------------------------------------------------
    // constructors
-   valvector(void)
-   { }
+   valvector(void) : vec_(1)
+   {  vec_[0] = scalar_type(0); }
    valvector(int s) : vec_(1)
    {  vec_[0] = scalar_type(s); }
    valvector(size_t s) : vec_(1)
@@ -133,7 +133,11 @@ public:
    {  vec_.swap( other.vec_ );
    }
    valvector(std::initializer_list<scalar_type> list) : vec_(list)
-   { }
+   {  VALVECTOR_ASSERT_KNOWN(
+         vec_.size() != 0,
+         "Cannot create a valvector with size zero."
+      )
+   }
    // -----------------------------------------------------------------------
    // assignments
    valvector& operator=(const valvector& other)
@@ -148,7 +152,9 @@ public:
    //
    // resize
    void resize(size_t n)
-   {  vec_.resize(n); }
+   {  assert( n != 0 );   
+      vec_.resize(n); 
+   }
    // -------------------------------------------------------------------------
    // Unary operators and functions
    //
