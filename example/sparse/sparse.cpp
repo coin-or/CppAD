@@ -5,8 +5,8 @@
 /*
 {xrst_begin sparse.cpp}
 
-sparse Examples and Tests Driver
-################################
+Sparse AD Examples and Tests Driver
+###################################
 
 Running These Tests
 *******************

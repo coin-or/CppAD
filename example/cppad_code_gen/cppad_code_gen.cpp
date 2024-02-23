@@ -5,8 +5,8 @@
 /*
 {xrst_begin cppad_code_gen.cpp}
 
-cppad_code_gen Examples and Tests Driver
-########################################
+CppADCodeGen Examples and Tests Driver
+######################################
 
 Running These Tests
 *******************

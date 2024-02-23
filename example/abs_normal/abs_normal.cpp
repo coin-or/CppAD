@@ -5,8 +5,8 @@
 /*
 {xrst_begin abs_normal.cpp}
 
-abs_normal Examples and Tests Driver
-####################################
+Abs-Normal Form Examples and Tests Driver
+#########################################
 
 Running These Tests
 *******************

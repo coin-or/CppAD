@@ -2,16 +2,23 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
-
 /*
 {xrst_begin speed_example.cpp}
 
-Run the Speed Examples
-######################
+Speed Examples and Tests Driver
+###############################
 
-Running Tests
-*************
-To build this program and run its correctness tests see :ref:`cmake_check-name` .
+Running These Tests
+*******************
+After executing the :ref:`cmake-name` command
+form the :ref:`download@Distribution Directory`,
+you can build and run these tests with the commands::
+
+   cd build
+   make check_speed_example
+
+Note that your choice of :ref:`cmake@generator` may require using
+an different version of make; e.g., ``ninja`` .
 
 {xrst_literal
    // BEGIN C++
@@ -19,6 +26,7 @@ To build this program and run its correctness tests see :ref:`cmake_check-name` 
 }
 
 {xrst_end speed_example.cpp}
+-------------------------------------------------------------------------------
 */
 // BEGIN C++
 
