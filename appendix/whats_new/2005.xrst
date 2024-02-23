@@ -665,7 +665,7 @@ policy (see Section 2) was added to the distribution.
 06-24
 =====
 The ``List2Vector``
-:ref:`example utility<example_utility-name>` is no longer used and has
+example utility is no longer used and has
 been removed.
 
 06-18

@@ -28,9 +28,9 @@ ADD_SUBDIRECTORY(utility)
 ADD_SUBDIRECTORY(valvector)
 # END_SORT_THIS_LINE_MINUS_1
 #
-# code_gen_fun examples
+# cppad_code_gen examples
 IF( cppad_has_cppadcg )
-   ADD_SUBDIRECTORY(code_gen_fun)
+   ADD_SUBDIRECTORY(cppad_code_gen)
 ENDIF( cppad_has_cppadcg )
 #
 # ipopt_solve examples

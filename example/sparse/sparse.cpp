@@ -2,15 +2,36 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
+/*
+{xrst_begin sparse.cpp}
+
+Sparse AD Examples and Tests Driver
+###################################
+
+Running These Tests
+*******************
+After executing the :ref:`cmake-name` command
+form the :ref:`download@Distribution Directory`,
+you can build and run these tests with the commands::
+
+   cd build
+   make check_example_sparse
+
+Note that your choice of :ref:`cmake@generator` may require using
+an different version of make; e.g., ``ninja`` .
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end sparse.cpp}
+-------------------------------------------------------------------------------
+*/
+// BEGIN C++
 
 // CPPAD_HAS_* defines
 # include <cppad/configure.hpp>
-
-// system include files used for I/O
-# include <iostream>
-
-// C style asserts
-# include <cassert>
 
 // for thread_alloc
 # include <cppad/utility/thread_alloc.hpp>
@@ -102,3 +123,4 @@ int main(void)
    //
    return static_cast<int>( ! ok );
 }
+// END C++
