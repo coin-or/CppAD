@@ -118,6 +118,15 @@ bool check_ad(void)
    check = valvector( {4.0, 6.0, 6.0} );
    ok   &= y[0] == check;
    //
+   //  dw
+   CPPAD_TESTVECTOR( valvector ) w(1), dw(2);
+   w[0] = valvector( 1.0 );
+   dw   = f.Reverse(1, w);
+   //
+   // ok
+   ok &= dw[0] == x[1];
+   ok &= dw[1] == x[0];
+   //
    return ok;
 }
 } // END_EMPTY_NAMESPACE
