@@ -9,7 +9,9 @@
 # include <cassert>
 # include <cppad/utility/vector.hpp>
 # include <cppad/base_require.hpp>
-//
+// ============================================================================
+// Macros
+// ============================================================================
 # define CPPAD_VALVECTOR_ASSERT_KNOWN(exp, msg) \
    if( ! (exp ) ) \
    {  std::cerr << "valvector: " << msg << "\n"; \
@@ -81,6 +83,9 @@
       } \
       return *this; \
    }
+// ============================================================================
+// valvector
+// ============================================================================
 //
 // valvector
 // Forward declare
@@ -97,9 +102,6 @@ namespace CppAD {
       const valvector&       exp_if_false
    );
 }
-// ============================================================================
-// valvector
-// ============================================================================
 class valvector {
    //
    // friend
@@ -161,12 +163,17 @@ public:
       return *this;
    }
    // -------------------------------------------------------------------------
-   //
    // resize
    void resize(size_t n)
    {  assert( n != 0 );
       vec_.resize(n);
    }
+   // -------------------------------------------------------------------------
+   // data
+   vector_type& data(void)
+   {  return vec_; }
+   const vector_type& data(void) const
+   {  return vec_; }
    // -------------------------------------------------------------------------
    // Unary operators and functions
    //
@@ -347,7 +354,6 @@ public:
       return os;
    }
 };
-// ============================================================================
 //
 // ostream << valvector
 inline std::ostream& operator << (
@@ -355,8 +361,9 @@ inline std::ostream& operator << (
    const valvector& v  )
 {  return v.output(os);
 }
-//
+// ============================================================================
 // CppAD namespace
+// ============================================================================
 namespace CppAD {
    //
    // numeric_limits
@@ -536,6 +543,7 @@ namespace CppAD {
    }
    CPPAD_COND_EXP_REL(valvector)
 }
+// ===========================================================================
 
 # undef CPPAD_VALVECTOR_ASSERT_KNOWN
 # undef CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE

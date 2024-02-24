@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/valvector directory tests
 #
@@ -8,6 +8,7 @@
 SET(source_list valvector.cpp
    base_require.cpp
    get_started.cpp
+   sum_ad.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
