@@ -57,7 +57,8 @@ do
    if [ -e $file_name ]
    then
       sed \
-      -e 's|\(SPDX-FileContributor\): \([0-9]\{4\}\)[-0-9]* |\1: \2-24 |' \
+      -e 's|\(SPDX-FileContributor\): *\([0-9]\{4\}\)[-0-9]* |\1: \2-24 |' \
+      -e 's|\(SPDX-FileContributor\): 2024-24 |\1: 2024 |' \
       $file_name > temp.$$
       if diff $file_name temp.$$ > /dev/null
       then
