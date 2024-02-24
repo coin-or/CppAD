@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 set -e -u
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-22 Bradley M. Bell
+# SPDX-FileContributor: 2020-24 Bradley M. Bell
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/check_invisible.sh" ]
 then
