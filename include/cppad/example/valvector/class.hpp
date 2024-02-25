@@ -144,8 +144,8 @@ public:
       sj
    }
 
-   valvector Constructor
-   #####################
+   Constructor for a valvector
+   ###########################
    Creates a valvector (called *x* below).
 
    Syntax
@@ -233,8 +233,8 @@ public:
       valvectors
    }
 
-   valvector Resize
-   ################
+   Resize a valvector
+   ##################
    Sets the size of this valvector.
 
    Prototype
@@ -310,8 +310,8 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_size}
 
-   valvector Size
-   ##############
+   Size of a valvector
+   ###################
    Returns the number or elements in this valvector.
 
    Prototype
@@ -333,6 +333,56 @@ public:
          return 1;
       return vec_.size();
    }
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_element}
+
+   Accessing Elements of a valvector
+   #################################
+   Returns a reference to the specified element of this valvector.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_ELEMENT , // END_ELEMENT
+      // BEGIN_CONST_ELEMENT , // END_CONST_ELEMENT
+   }
+
+   j
+   *
+   This is the index of the element we are accessing.
+   If the size this valvector is one, *j* can have any value
+   and the return is the single element in this valvector.
+   Otherwise, *j* must be less than
+   :ref:`size<valvector_size-name>` (for this valvector)
+   and the return is the j-th element in this valvector.
+
+   
+   {xrst_end valvector_element}
+   ----------------------------------------------------------------------------
+   */
+   // BEGIN_ELEMENT
+   scalar_type& operator[](size_t j)
+   // END_ELEMENT
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || j < size(),
+         "size is not one and index is greater than or equal size"
+      );
+      if( size() == 1 )
+         return scalar_;
+      return vec_[j];
+   }
+   // BEGIN_CONST_ELEMENT
+   const scalar_type& operator[](size_t j) const
+   // END_CONST_ELEMENT
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || j < size(),
+         "size is not one and index is greater than or equal size"
+      );
+      if( size() == 1 )
+         return scalar_;
+      return vec_[j];
+   } 
    /*
    ----------------------------------------------------------------------------
    {xrst_begin valvector_unary_op}
@@ -365,28 +415,6 @@ public:
          result[i] = - (*this)[i];
       return result;
    }
-   // -----------------------------------------------------------------------
-   // Binary Operators and functions
-   //
-   // operator[]
-   scalar_type& operator[](size_t j)
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-         size() == 1 || j < size(),
-         "size is not one and index is greater than or equal size"
-      );
-      if( size() == 1 )
-         return scalar_;
-      return vec_[j];
-   }
-   const scalar_type& operator[](size_t j) const
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-         size() == 1 || j < size(),
-         "size is not one and index is greater than or equal size"
-      );
-      if( size() == 1 )
-         return scalar_;
-      return vec_[j];
-   } 
    //
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(+, +=)
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(-, -=)
