@@ -62,13 +62,13 @@ private:
          taylor_y[order].resize(1);
          //
          // vx, vy
-         const valvector::vector_type& vx = taylor_x[order].data();
-         valvector::vector_type&       vy = taylor_y[order].data();
+         const valvector& x = taylor_x[order];
+         valvector&       y = taylor_y[order];
          //
          // taylor_y[order] =  taylor_x[order]_0 + taylor_x[order]_1 + ...
-         vy[0] = scalar_type(0);
-         for(size_t j = 0; j < vx.size(); ++j)
-            vy[0] += vx[j];
+         y[0] = scalar_type(0);
+         for(size_t j = 0; j < x.size(); ++j)
+            y[0] += x[j];
       }
       //
       return ok;

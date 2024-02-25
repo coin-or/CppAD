@@ -209,12 +209,6 @@ public:
       vec_.resize(n);
    }
    // -------------------------------------------------------------------------
-   // data
-   vector_type& data(void)
-   {  return vec_; }
-   const vector_type& data(void) const
-   {  return vec_; }
-   // -------------------------------------------------------------------------
    // Unary operators and functions
    //
    // size
