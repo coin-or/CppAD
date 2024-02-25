@@ -60,7 +60,7 @@ We use *vector_type* to denote this type.
    {  valvector result; \
       result.resize( size() ); \
       for(size_t i = 0; i < size(); ++i) \
-         result.vec_[i] = std::fun( vec_[i] ); \
+         result[i] = std::fun( (*this)[i] ); \
       return result; \
    }
 //
@@ -71,47 +71,29 @@ We use *vector_type* to denote this type.
 //
 # define CPPAD_VALVECTOR_BINARY_NUMERIC_OP(op, compound_op) \
    valvector operator op(const valvector& other) const \
-   {  valvector result;   \
-      if( size() == 1 ) \
-      {  result.resize( other.size() ); \
-         for(size_t i = 0; i < other.size(); ++i) \
-            result.vec_[i] = vec_[0] op other.vec_[i]; \
-      } \
-      else if( other.size() == 1 ) \
-      {  result.resize( size() ); \
-         for(size_t i = 0; i < size(); ++i) \
-            result.vec_[i] = vec_[i] op other.vec_[0]; \
-      } \
-      else \
-      {  CPPAD_VALVECTOR_ASSERT_KNOWN(  \
-            size() == other.size() , \
-            "size error using " #op " operator" \
-         ) \
-         result.vec_.resize( size() ); \
-         for(size_t i = 0; i < size(); ++i) \
-            result.vec_[i] = vec_[i] op other.vec_[i]; \
-      } \
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(  \
+         size() == 1 || other.size() == 1 || size() == other.size() , \
+         "size error using " #op " operator" \
+      ) \
+      valvector result; \
+      result.resize( std::max( size(), other.size() ) );   \
+      for(size_t i = 0; i < result.size(); ++i) \
+         result[i] = (*this)[i] op other[i]; \
       return result; \
    } \
    valvector& operator compound_op(const valvector& other) \
-   {  if( size() == 1 ) \
-      {  scalar_type vec_0 = vec_[0]; \
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(  \
+         size() == 1 || other.size() == 1 || size() == other.size() , \
+         "size error using " #compound_op " operator" \
+      ) \
+      if( size() == 1 && 1 < other.size()) \
+      {  scalar_type vec_0 = (*this)[0]; \
          resize( other.size() ); \
-         for(size_t i = 0; i < other.size(); ++i) \
-            vec_[i] = vec_0 op other.vec_[i]; \
-      } \
-      else if( other.size() == 1 ) \
-      {  for(size_t i = 0; i < size(); ++i) \
-            vec_[i] = vec_[i] op other.vec_[0]; \
-      } \
-      else \
-      {  CPPAD_VALVECTOR_ASSERT_KNOWN(  \
-            size() == other.size() , \
-            "size error using " #compound_op " operator" \
-         ) \
          for(size_t i = 0; i < size(); ++i) \
-            vec_[i] = vec_[i] op other.vec_[i]; \
+            (*this)[i] = vec_0; \
       } \
+      for(size_t i = 0; i < size(); ++i) \
+         (*this)[i] compound_op other[i]; \
       return *this; \
    }
 // ============================================================================
@@ -183,19 +165,19 @@ public:
    */
    // default ctor
    valvector(void) : vec_(1)
-   {  vec_[0] = scalar_type(0); }
+   {  (*this)[0] = scalar_type(0); }
    //
    // ctor of scalar
    valvector(int s) : vec_(1)
-   {  vec_[0] = scalar_type(s); }
+   {  (*this)[0] = scalar_type(s); }
    valvector(long int s) : vec_(1)
-   {  vec_[0] = scalar_type(s); }
+   {  (*this)[0] = scalar_type(s); }
    valvector(double s) : vec_(1)
-   {  vec_[0] = scalar_type(s); }
+   {  (*this)[0] = scalar_type(s); }
    valvector(long double s) : vec_(1)
-   {  vec_[0] = scalar_type(s); }
+   {  (*this)[0] = scalar_type(s); }
    valvector(size_t s) : vec_(1)
-   {  vec_[0] = scalar_type(s); }
+   {  (*this)[0] = scalar_type(s); }
    //
    valvector(const vector_type& vec) : vec_(vec)
    { }
@@ -244,7 +226,7 @@ public:
    {  bool        result = true;
       scalar_type zero   = 0;
       for(size_t i = 0; i < size(); ++i)
-         result &= vec_[i] == zero;
+         result &= (*this)[i] == zero;
       return result;
    }
    //
@@ -253,7 +235,7 @@ public:
    {  bool        result = true;
       scalar_type one    = 1;
       for(size_t i = 0; i < size(); ++i)
-         result &= vec_[i] == one;
+         result &= (*this)[i] == one;
       return result;
    }
    //
@@ -264,7 +246,7 @@ public:
    {  valvector result;
       result.resize( size() );
       for(size_t i = 0; i < size(); ++i)
-         result.vec_[i] = - vec_[i];
+         result[i] = - (*this)[i];
       return result;
    }
    //
@@ -297,17 +279,37 @@ public:
       result.resize( size() );
       scalar_type zero = scalar_type(0);
       for(size_t i = 0; i < size(); ++i)
-      {  if( vec_[i] < zero )
-            result.vec_[i] = scalar_type(-1);
-         if( vec_[i] == zero )
-            result.vec_[i] = zero;
-         if( vec_[i] > zero )
-            result.vec_[i] = scalar_type(1);
+      {  if( (*this)[i] < zero )
+            result[i] = scalar_type(-1);
+         if( (*this)[i] == zero )
+            result[i] = zero;
+         if( (*this)[i] > zero )
+            result[i] = scalar_type(1);
       }
       return result;
    }
    // -----------------------------------------------------------------------
    // Binary Operators and functions
+   //
+   // operator[]
+   scalar_type& operator[](size_t j)
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || j < size(),
+         "size is not one and index is greater than or equal size"
+      );
+      if( size() == 1 )
+         j = 0;
+      return vec_[j];
+   }
+   const scalar_type& operator[](size_t j) const
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || j < size(),
+         "size is not one and index is greater than or equal size"
+      );
+      if( size() == 1 )
+         j = 0;
+      return vec_[j];
+   } 
    //
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(+, +=)
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(-, -=)
@@ -317,22 +319,12 @@ public:
    // ==, !=
    bool operator==(const valvector& other) const
    {  bool result = true;
-      if( size() == 1 )
-      {  for(size_t i = 0; i < other.size(); ++i)
-            result &= vec_[0] == other.vec_[i];
-      }
-      else if( other.size() == 1 )
-      {  for(size_t i = 0; i < other.size(); ++i)
-            result &= vec_[i] == other.vec_[0];
-      }
-      else
-      {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-            size() == other.size() ,
-            "size error using azmul function"
-         )
-         for(size_t i = 0; i < size(); ++i)
-            result &= vec_[i] == other.vec_[i];
-      }
+      CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || other.size() == 1 || size() == other.size() ,
+         "size error using == function"
+      )
+      for(size_t i = 0; i < size(); ++i)
+         result &= (*this)[i] == other[i];
       return result;
    }
    bool operator!=(const valvector& other) const
@@ -340,72 +332,41 @@ public:
    //
    // azmul
    valvector azmul(const valvector& other) const
-   {  valvector  result;
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || other.size() == 1 || size() == other.size() ,
+         "size error using azmul function"
+      )
       scalar_type zero(0);
-      if( size() == 1 )
-      {  if( vec_[0] == zero )
-         {  result.resize(1);
-            result.vec_[0] = zero;
-         }
-         else
-         {  result.resize( other.size() );
-            for(size_t i = 0; i < other.size(); ++i)
-               result.vec_[i] = vec_[0] * other.vec_[i];
-         }
-      }
-      else if( other.size() == 1 )
-      {  result.resize( size() );
-         for(size_t i = 0; i < size(); ++i)
-            result.vec_[i] = vec_[i] * other.vec_[0];
-      }
-      else
-      {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-            size() == other.size() ,
-            "size error using azmul function"
-         )
-         result.vec_.resize( size() );
-         for(size_t i = 0; i < size(); ++i)
-         {  if( vec_[i] == zero )
-               result.vec_[i] = zero;
-            else
-               result.vec_[i] = vec_[i] * other.vec_[i];
-         }
+      valvector  result;
+      result.vec_.resize( std::max( size(), other.size() ) );
+      for(size_t i = 0; i < result.size(); ++i)
+      {  if( (*this)[i] == zero )
+            result[i] = zero;
+          else
+            result[i] = (*this)[i] * other[i];
       }
       return result;
    }
    //
    // pow
    valvector pow(const valvector& other) const
-   {  valvector  result;
-      if( size() == 1 )
-      {  result.resize( other.size() );
-         for(size_t i = 0; i < other.size(); ++i)
-            result.vec_[i] = std::pow(vec_[0],  other.vec_[i] );
-      }
-      else if( other.size() == 1 )
-      {  result.resize( size() );
-         for(size_t i = 0; i < size(); ++i)
-            result.vec_[i] = std::pow(vec_[i], other.vec_[0] );
-      }
-      else
-      {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-            size() == other.size() ,
-            "size error using pow function"
-         )
-         result.vec_.resize( size() );
-         for(size_t i = 0; i < size(); ++i)
-            result.vec_[i] = std::pow( vec_[i] , other.vec_[i] );
-      }
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         size() == 1 || other.size() == 1 || size() == other.size() ,
+         "size error using pow function"
+      )
+      valvector  result;
+      result.vec_.resize( std::max( size(), other.size() ) );
+      for(size_t i = 0; i < size(); ++i)
+         result[i] = std::pow( (*this)[i] , other[i] );
       return result;
    }
-
    // -----------------------------------------------------------------------
    // output
    std::ostream& output(std::ostream& os)  const
    {  os << "{ ";
-      for(size_t i = 0; i < vec_.size(); ++i)
-      {  os << vec_[i];
-         if( i + 1 < vec_.size() )
+      for(size_t i = 0; i < size(); ++i)
+      {  os << (*this)[i];
+         if( i + 1 < size() )
             os << ", ";
       }
       os << " }";
@@ -537,64 +498,48 @@ namespace CppAD {
       valvector result;
       result.resize(result_size);
       //
-      // inc_left, inc_right, inc_true, inc_false
-      size_t inc_left  = size_t( left.size() != 1 );
-      size_t inc_right = size_t( right.size() != 1 );
-      size_t inc_true  = size_t( exp_if_true.size() != 1 );
-      size_t inc_false = size_t( exp_if_false.size() != 1 );
-      //
-      // index_left, index_right, index_true, index_false
-      size_t index_left  = 0;
-      size_t index_right = 0;
-      size_t index_true  = 0;
-      size_t index_false = 0;
-      for(size_t index_result = 0; index_result < result_size; ++index_result)
+      for(size_t i = 0; i < result_size; ++i)
       {  switch( cop )
          {
             case CompareLt:
-            if( left.vec_[index_left] < right.vec_[index_right] )
-               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            if( left[i] < right[i] )
+               result[i] = exp_if_true[i];
             else
-               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+               result[i] = exp_if_false[i];;
             break;
 
             case CompareLe:
-            if( left.vec_[index_left] <= right.vec_[index_right] )
-               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            if( left[i] <= right[i] )
+               result[i] = exp_if_true[i];
             else
-               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+               result[i] = exp_if_false[i];;
             break;
 
             case CompareEq:
-            if( left.vec_[index_left] == right.vec_[index_right] )
-               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            if( left[i] == right[i] )
+               result[i] = exp_if_true[i];
             else
-               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+               result[i] = exp_if_false[i];;
             break;
 
             case CompareGe:
-            if( left.vec_[index_left] >= right.vec_[index_right] )
-               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            if( left[i] >= right[i] )
+               result[i] = exp_if_true[i];
             else
-               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+               result[i] = exp_if_false[i];;
             break;
 
             case CompareGt:
-            if( left.vec_[index_left] > right.vec_[index_right] )
-               result.vec_[index_result] = exp_if_true.vec_[index_true];
+            if( left[i] > right[i] )
+               result[i] = exp_if_true[i];
             else
-               result.vec_[index_result] = exp_if_false.vec_[index_false];;
+               result[i] = exp_if_false[i];;
             break;
 
             default:
             assert(false);
-            result.vec_[index_result] = exp_if_true.vec_[index_true];
+            result[i] = exp_if_true[i];
          }
-         // index_left, index_right, index_true, index_false
-         index_left  += inc_left;
-         index_right += inc_right;
-         index_true  += inc_true;
-         index_false += inc_false;
       }
       // result
       return result;
