@@ -10,15 +10,16 @@
 // sum_ad_valvector
 class sum_ad_valvector : public CppAD::atomic_four<valvector> {
 public:
-   // scalar_type, vector_type
-   typedef valvector::scalar_type scalar_type;
-   typedef valvector::vector_type vector_type;
    //
    // ctor
    sum_ad_valvector(const std::string& name) :
    CppAD::atomic_four<valvector>(name)
    { }
 private:
+   //
+   // scalar_type
+   typedef valvector::scalar_type scalar_type;
+   //
    // for_type
    bool for_type(
       size_t                                     call_id     ,

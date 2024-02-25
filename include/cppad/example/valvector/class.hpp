@@ -24,12 +24,8 @@ The type ``valvector::scalar_type``
 is the type corresponding to each element of a valvector .
 We use *scalar_type* to denote this type.
 
-vector_type
-***********
-The type ``valvector::vector_type``
-is a vector type with element of *scalar_type* .
-We use *vector_type* to denote this type.
-
+Operations
+**********
 {xrst_toc_table}
 
 
@@ -126,28 +122,37 @@ class valvector {
    );
 public:
    //
-   // scalar_type, vector_type
+   // scalar_type
    typedef double                     scalar_type;
-   typedef CppAD::vector<scalar_type> vector_type;
    //
 private:
+   //
+   // vector_type
+   typedef CppAD::vector<scalar_type> vector_type;
+   //
    // vec_
    vector_type vec_;
+   //
    // scalar_
    scalar_type scalar_;
 public:
    // -----------------------------------------------------------------------
    /*
    {xrst_begin valvector_ctor}
+   {xrst_spell
+      initializer
+      sj
+   }
 
    valvector Constructor
    #####################
 
    Syntax
    ******
-   | ``valvector`` *v*
-   | ``valvector`` *v*( *s* )
-   | ``valvector`` *v*( *w* )
+   | ``valvector`` *x*
+   | ``valvector`` *x*( *s* )
+   | ``valvector`` *x*( *v* )
+   | ``valvector`` *x*( { *s0* , *s1* , ... } )
 
    Default
    *******
@@ -161,6 +166,19 @@ public:
    *scalar_type* ( *s* ), where
    *s* has type `int``, ``long int``, ``double``, ``long_double``
    or ``size_t`` .
+
+   Vector
+   ******
+   The vector constructor (argument is *v*) 
+   creates a copy of the valvector *v* .
+
+   List
+   ****
+   In the standard initializer list constructor 
+   ( argument is { *s0* , *s1* , .. } )
+   *s0* , *s1* , have valvector :ref:`valvector@scalar_type` .
+   This create a valvector with size equal the length of the list
+   and j-th element equal to *sj* . 
 
    {xrst_end valvector_ctor}
    */
@@ -187,7 +205,7 @@ public:
    {  vec_.swap( other.vec_ );
       scalar_ = other.scalar_;
    }
-   valvector(std::initializer_list<scalar_type> list)
+   valvector(std::initializer_list<scalar_type> list) : vec_(0)
    {  CPPAD_VALVECTOR_ASSERT_KNOWN(
          list.size() != 0,
          "Cannot create a valvector with size zero."
