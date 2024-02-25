@@ -365,66 +365,6 @@ public:
          result[i] = - (*this)[i];
       return result;
    }
-   // =========================================================================
-   // Unary operators and functions
-   // =========================================================================
-   //
-   // iszero
-   bool iszero(void) const
-   {  bool        result = true;
-      scalar_type zero   = 0;
-      for(size_t i = 0; i < size(); ++i)
-         result &= (*this)[i] == zero;
-      return result;
-   }
-   //
-   // isone
-   bool isone(void) const
-   {  bool        result = true;
-      scalar_type one    = 1;
-      for(size_t i = 0; i < size(); ++i)
-         result &= (*this)[i] == one;
-      return result;
-   }
-   //
-   // Standard Math Fucntons
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(acos)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(acosh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(asin)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(asinh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(atan)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(atanh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(cos)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(cosh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(erf)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(erfc)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(exp)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(expm1)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(fabs)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(log)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(log1p)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(log10)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(sin)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(sinh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(sqrt)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(tan)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(tanh)
-   //
-   // sign
-   valvector sign(void) const
-   {  valvector result;
-      result.resize( size() );
-      scalar_type zero = scalar_type(0);
-      for(size_t i = 0; i < size(); ++i)
-      {  if( (*this)[i] < zero )
-            result[i] = scalar_type(-1);
-         if( (*this)[i] == zero )
-            result[i] = zero;
-         if( (*this)[i] > zero )
-            result[i] = scalar_type(1);
-      }
-      return result;
-   }
    // -----------------------------------------------------------------------
    // Binary Operators and functions
    //
@@ -500,6 +440,66 @@ public:
       result.vec_.resize( std::max( size(), other.size() ) );
       for(size_t i = 0; i < size(); ++i)
          result[i] = std::pow( (*this)[i] , other[i] );
+      return result;
+   }
+   // =========================================================================
+   // Member functions not in user API
+   // =========================================================================
+   //
+   // iszero
+   bool iszero(void) const
+   {  bool        result = true;
+      scalar_type zero   = 0;
+      for(size_t i = 0; i < size(); ++i)
+         result &= (*this)[i] == zero;
+      return result;
+   }
+   //
+   // isone
+   bool isone(void) const
+   {  bool        result = true;
+      scalar_type one    = 1;
+      for(size_t i = 0; i < size(); ++i)
+         result &= (*this)[i] == one;
+      return result;
+   }
+   //
+   // Standard Math Fucntons
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(acos)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(acosh)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(asin)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(asinh)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(atan)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(atanh)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(cos)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(cosh)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(erf)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(erfc)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(exp)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(expm1)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(fabs)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(log)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(log1p)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(log10)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(sin)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(sinh)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(sqrt)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(tan)
+   CPPAD_VALVECTOR_STD_MATH_MEMBER(tanh)
+   //
+   // sign
+   valvector sign(void) const
+   {  valvector result;
+      result.resize( size() );
+      scalar_type zero = scalar_type(0);
+      for(size_t i = 0; i < size(); ++i)
+      {  if( (*this)[i] < zero )
+            result[i] = scalar_type(-1);
+         if( (*this)[i] == zero )
+            result[i] = zero;
+         if( (*this)[i] > zero )
+            result[i] = scalar_type(1);
+      }
       return result;
    }
    // -----------------------------------------------------------------------
