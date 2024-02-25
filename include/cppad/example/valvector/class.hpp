@@ -306,9 +306,6 @@ public:
       scalar_ = other.scalar_;
       return *this;
    }
-   // =========================================================================
-   // Unary operators and functions
-   // =========================================================================
    /*
    ----------------------------------------------------------------------------
    {xrst_begin valvector_size}
@@ -336,6 +333,41 @@ public:
          return 1;
       return vec_.size();
    }
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_unary_op}
+
+   valvector Unary Operators
+   #########################
+   Returns the element-by-element result of the unary operator for
+   this valvector.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_PLUS , END_PLUS
+      // BEGIN_MINUS , END_MINUS
+   }
+   
+   {xrst_end valvector_unary_op}
+   ----------------------------------------------------------------------------
+   */
+   // BEGIN_PLUS
+   valvector operator+(void) const
+   // END_PLUS
+   {  return *this; }
+   // BEGIN_MINUS
+   valvector operator-(void) const
+   // END_MINUS
+   {  valvector result;
+      result.resize( size() );
+      for(size_t i = 0; i < size(); ++i)
+         result[i] = - (*this)[i];
+      return result;
+   }
+   // =========================================================================
+   // Unary operators and functions
+   // =========================================================================
    //
    // iszero
    bool iszero(void) const
@@ -352,17 +384,6 @@ public:
       scalar_type one    = 1;
       for(size_t i = 0; i < size(); ++i)
          result &= (*this)[i] == one;
-      return result;
-   }
-   //
-   // unary operators
-   valvector operator+(void) const
-   {  return *this; }
-   valvector operator-(void) const
-   {  valvector result;
-      result.resize( size() );
-      for(size_t i = 0; i < size(); ++i)
-         result[i] = - (*this)[i];
       return result;
    }
    //
