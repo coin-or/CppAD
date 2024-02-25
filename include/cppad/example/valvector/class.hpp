@@ -136,8 +136,8 @@ private:
    // scalar_
    scalar_type scalar_;
 public:
-   // -----------------------------------------------------------------------
    /*
+   ---------------------------------------------------------------------------
    {xrst_begin valvector_ctor}
    {xrst_spell
       initializer
@@ -146,6 +146,7 @@ public:
 
    valvector Constructor
    #####################
+   Creates a valvector (called *x* below).
 
    Syntax
    ******
@@ -181,6 +182,7 @@ public:
    and j-th element equal to *sj* . 
 
    {xrst_end valvector_ctor}
+   ---------------------------------------------------------------------------
    */
    // default ctor
    valvector(void) : vec_(0), scalar_(0)
@@ -224,21 +226,46 @@ public:
          }
       }
    }
-   // -----------------------------------------------------------------------
-   // assignments
-   valvector& operator=(const valvector& other)
-   {  vec_    = other.vec_;
-      scalar_ = other.scalar_;
-      return *this;
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_resize}
+   {xrst_spell
+      valvectors
    }
-   valvector& operator=(valvector&& other)
-   {  vec_.swap( other.vec_ );
-      scalar_ = other.scalar_;
-      return *this;
+
+   valvector Resize
+   ################
+   Sets the size of this valvector.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_RESIZE , // END_RESIZE
    }
-   // -------------------------------------------------------------------------
-   // resize
+
+   Use
+   ***
+   This size of a valvector directly after its 
+   :ref:`constructor<valvector_ctor-name>` is always one.
+   This function must be used to create valvectors with other sizes.
+
+   n
+   *
+   The argument *n* must not be zero and specifies the number of elements
+   in the valvector.
+
+   Element Values
+   **************
+   Directly after this operation,
+   none of the element values are specified.
+   
+
+   {xrst_end valvector_resize}
+   ----------------------------------------------------------------------------
+   */
+   // BEGIN_RESIZE
    void resize(size_t n)
+   // END_RESIZE
    {  assert( n != 0 );
       if( n == size() )
          return;
@@ -247,11 +274,63 @@ public:
       else
          vec_.resize(n);
    }
-   // -------------------------------------------------------------------------
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_assign}
+
+   valvector Assignment Operator
+   #############################
+   Set the value of this valvector equal to another.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_ASSIGN_ONE , // END_ASSIGN_ONE
+      // BEGIN_ASSIGN_TWO , // END_ASSIGN_TWO
+   }
+   
+   {xrst_end valvector_assign}
+   ----------------------------------------------------------------------------
+   */
+   // BEGIN_ASSIGN_ONE
+   valvector& operator=(const valvector& other)
+   // END_ASSIGN_ONE
+   {  vec_    = other.vec_;
+      scalar_ = other.scalar_;
+      return *this;
+   }
+   // BEGIN_ASSIGN_TWO
+   valvector& operator=(valvector&& other)
+   // END_ASSIGN_TWO
+   {  vec_.swap( other.vec_ );
+      scalar_ = other.scalar_;
+      return *this;
+   }
+   // =========================================================================
    // Unary operators and functions
+   // =========================================================================
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_size}
+
+   valvector Size
+   ##############
+   Returns the number or elements in this valvector.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_SIZE , // END_SIZE
+   }
+
+
+   {xrst_end valvector_size}
+   ----------------------------------------------------------------------------
+   */
    //
-   // size
+   // BEGIN_SIZE
    size_t size(void) const
+   // END_SIZE
    {  assert( vec_.size() != 1 );
       if( vec_.size() == 0 )
          return 1;
@@ -376,7 +455,7 @@ public:
       //
       // left multiply by the constant zero is a special case
       scalar_type zero(0);
-      if( size() == 1 && scalar_ == zero )
+      if( iszero() )
          return *this;
       //
       valvector  result;
