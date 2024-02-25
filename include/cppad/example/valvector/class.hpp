@@ -4,6 +4,37 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
+/*
+{xrst_begin_parent valvector}
+{xrst_spell
+   pytorch
+   jax
+   numpy
+}
+
+valvector: An Example Machine Learning Base Class
+#################################################
+This CppAD Base class preforms numerical operations on vectors; e.g.,
+only one CppAD operation represents the element-by-element addition
+of two vectors. This is similar to the Pytorch Tensors or Jax Numpy Arrays.
+
+scalar_type
+***********
+The type ``valvector::scalar_type``
+is the type corresponding to each element of a valvector .
+We use *scalar_type* to denote this type.
+
+vector_type
+***********
+The type ``valvector::vector_type``
+is a vector type with element of *scalar_type* .
+We use *vector_type* to denote this type.
+
+{xrst_toc_table}
+
+
+{xrst_end valvector}
+*/
 # include <cmath>
 # include <iostream>
 # include <cassert>
@@ -123,6 +154,33 @@ private:
    vector_type vec_;
 public:
    // -----------------------------------------------------------------------
+   /*
+   {xrst_begin valvector_ctor}
+
+   valvector Constructor
+   #####################
+
+   Syntax
+   ******
+   | ``valvector`` *v*
+   | ``valvector`` *v*( *s* )
+   | ``valvector`` *v*( *w* )
+
+   Default
+   *******
+   The default constructor (no argument) 
+   creates the valvector *x* with one element that is equal to zero.
+
+   Scalar
+   ******
+   The scalar constructor (argument is *s* )
+   creates the valvector *x* with one element that is equal to
+   *scalar_type* ( *s* ), where
+   *s* has type `int``, ``long int``, ``double``, ``long_double``
+   or ``size_t`` .
+
+   {xrst_end valvector_ctor}
+   */
    // default ctor
    valvector(void) : vec_(1)
    {  vec_[0] = scalar_type(0); }
