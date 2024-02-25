@@ -87,10 +87,9 @@ We use *vector_type* to denote this type.
          "size error using " #compound_op " operator" \
       ) \
       if( size() == 1 && 1 < other.size()) \
-      {  scalar_type vec_0 = (*this)[0]; \
-         resize( other.size() ); \
+      {  vec_.resize( other.size() ); \
          for(size_t i = 0; i < size(); ++i) \
-            (*this)[i] = vec_0; \
+            vec_[i] = scalar_; \
       } \
       for(size_t i = 0; i < size(); ++i) \
          (*this)[i] compound_op other[i]; \
@@ -134,6 +133,8 @@ public:
 private:
    // vec_
    vector_type vec_;
+   // scalar_
+   scalar_type scalar_;
 public:
    // -----------------------------------------------------------------------
    /*
@@ -164,56 +165,80 @@ public:
    {xrst_end valvector_ctor}
    */
    // default ctor
-   valvector(void) : vec_(1)
-   {  (*this)[0] = scalar_type(0); }
+   valvector(void) : vec_(0), scalar_(0)
+   { }
    //
    // ctor of scalar
-   valvector(int s) : vec_(1)
-   {  (*this)[0] = scalar_type(s); }
-   valvector(long int s) : vec_(1)
-   {  (*this)[0] = scalar_type(s); }
-   valvector(double s) : vec_(1)
-   {  (*this)[0] = scalar_type(s); }
-   valvector(long double s) : vec_(1)
-   {  (*this)[0] = scalar_type(s); }
-   valvector(size_t s) : vec_(1)
-   {  (*this)[0] = scalar_type(s); }
-   //
-   valvector(const vector_type& vec) : vec_(vec)
+   valvector(size_t s) : vec_(0), scalar_( scalar_type(s) )
    { }
-   valvector(const valvector& other) : vec_( other.vec_)
+   valvector(int s) : vec_(0), scalar_( scalar_type(s) )
+   { }
+   valvector(long int s) : vec_(0), scalar_( scalar_type(s) )
+   { }
+   valvector(double s) : vec_(0), scalar_( scalar_type(s) )
+   { }
+   valvector(long double s) : vec_(0), scalar_( scalar_type(s) )
+   { }
+   //
+   valvector(const valvector& other) 
+   : vec_( other.vec_), scalar_( other.scalar_)
    { }
    valvector(valvector&& other)
    {  vec_.swap( other.vec_ );
+      scalar_ = other.scalar_;
    }
-   valvector(std::initializer_list<scalar_type> list) : vec_(list)
+   valvector(std::initializer_list<scalar_type> list)
    {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-         vec_.size() != 0,
+         list.size() != 0,
          "Cannot create a valvector with size zero."
       )
+      std::initializer_list<scalar_type>::iterator itr;
+      if( list.size() == 1 )
+      {  itr     = list.begin();
+         scalar_ = *itr;
+      }
+      else
+      {  vec_.resize( list.size() );
+         itr = list.begin(); 
+         for(size_t i = 0; i < vec_.size(); ++i)
+         {  vec_[i] = *itr;
+            ++itr;
+         }
+      }
    }
    // -----------------------------------------------------------------------
    // assignments
    valvector& operator=(const valvector& other)
-   {  vec_ = other.vec_;
+   {  vec_    = other.vec_;
+      scalar_ = other.scalar_;
       return *this;
    }
    valvector& operator=(valvector&& other)
    {  vec_.swap( other.vec_ );
+      scalar_ = other.scalar_;
       return *this;
    }
    // -------------------------------------------------------------------------
    // resize
    void resize(size_t n)
    {  assert( n != 0 );
-      vec_.resize(n);
+      if( n == size() )
+         return;
+      if( n == 1 )
+         vec_.clear();
+      else
+         vec_.resize(n);
    }
    // -------------------------------------------------------------------------
    // Unary operators and functions
    //
    // size
    size_t size(void) const
-   {  return vec_.size(); }
+   {  assert( vec_.size() != 1 );
+      if( vec_.size() == 0 )
+         return 1;
+      return vec_.size();
+   }
    //
    // iszero
    bool iszero(void) const
@@ -292,7 +317,7 @@ public:
          "size is not one and index is greater than or equal size"
       );
       if( size() == 1 )
-         j = 0;
+         return scalar_;
       return vec_[j];
    }
    const scalar_type& operator[](size_t j) const
@@ -301,7 +326,7 @@ public:
          "size is not one and index is greater than or equal size"
       );
       if( size() == 1 )
-         j = 0;
+         return scalar_;
       return vec_[j];
    } 
    //
@@ -315,7 +340,7 @@ public:
    {  bool result = true;
       CPPAD_VALVECTOR_ASSERT_KNOWN(
          size() == 1 || other.size() == 1 || size() == other.size() ,
-         "size error using == function"
+         "size error using == operator"
       )
       for(size_t i = 0; i < size(); ++i)
          result &= (*this)[i] == other[i];
@@ -330,7 +355,12 @@ public:
          size() == 1 || other.size() == 1 || size() == other.size() ,
          "size error using azmul function"
       )
+      //
+      // left multiply by the constant zero is a special case
       scalar_type zero(0);
+      if( size() == 1 && scalar_ == zero )
+         return *this;
+      //
       valvector  result;
       result.vec_.resize( std::max( size(), other.size() ) );
       for(size_t i = 0; i < result.size(); ++i)
