@@ -108,8 +108,8 @@ namespace CppAD {
       enum CompareOp         cop          ,
       const valvector&       left         ,
       const valvector&       right        ,
-      const valvector&       exp_if_true  ,
-      const valvector&       exp_if_false
+      const valvector&       if_true      ,
+      const valvector&       if_false
    );
 }
 class valvector {
@@ -119,8 +119,8 @@ class valvector {
       enum CppAD::CompareOp  cop          ,
       const valvector&       left         ,
       const valvector&       right        ,
-      const valvector&       exp_if_true  ,
-      const valvector&       exp_if_false
+      const valvector&       if_true      ,
+      const valvector&       if_false
    );
 public:
    //
@@ -744,25 +744,36 @@ namespace CppAD {
       return bool();
    }
    // ------------------------------------------------------------------------
-   // CondExpOp
+   /*
+   {xrst_begin valvector_condexp}
+
+   The valvector Conditional Expressions
+   #####################################
+
+   Syntax
+   ******
+   *result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
+
+   {xrst_end valvector_condexp}
+   */
    inline valvector CondExpOp(
       enum CompareOp         cop          ,
       const valvector&       left         ,
       const valvector&       right        ,
-      const valvector&       exp_if_true  ,
-      const valvector&       exp_if_false )
+      const valvector&       if_true      ,
+      const valvector&       if_false )
    {  //
       // result_size
       size_t result_size = std::max(left.size(), right.size());
-      result_size        = std::max(result_size, exp_if_true.size());
-      result_size        = std::max(result_size, exp_if_false.size());
+      result_size        = std::max(result_size, if_true.size());
+      result_size        = std::max(result_size, if_false.size());
       //
       // size_ok
       bool size_ok  = true;
-      size_ok &= left.size()         ==1 || left.size()         ==result_size;
-      size_ok &= right.size()        ==1 || right.size()        ==result_size;
-      size_ok &= exp_if_true.size()  ==1 || exp_if_true.size()  ==result_size;
-      size_ok &= exp_if_false.size() ==1 || exp_if_false.size() ==result_size;
+      size_ok &= left.size()     == 1 || left.size()     == result_size;
+      size_ok &= right.size()    == 1 || right.size()    == result_size;
+      size_ok &= if_true.size()  == 1 || if_true.size()  == result_size;
+      size_ok &= if_false.size() == 1 || if_false.size() == result_size;
       CPPAD_VALVECTOR_ASSERT_KNOWN(
          size_ok,
          "argument sizes do not agree in conditional expression"
@@ -777,42 +788,42 @@ namespace CppAD {
          {
             case CompareLt:
             if( left[i] < right[i] )
-               result[i] = exp_if_true[i];
+               result[i] = if_true[i];
             else
-               result[i] = exp_if_false[i];;
+               result[i] = if_false[i];;
             break;
 
             case CompareLe:
             if( left[i] <= right[i] )
-               result[i] = exp_if_true[i];
+               result[i] = if_true[i];
             else
-               result[i] = exp_if_false[i];;
+               result[i] = if_false[i];;
             break;
 
             case CompareEq:
             if( left[i] == right[i] )
-               result[i] = exp_if_true[i];
+               result[i] = if_true[i];
             else
-               result[i] = exp_if_false[i];;
+               result[i] = if_false[i];;
             break;
 
             case CompareGe:
             if( left[i] >= right[i] )
-               result[i] = exp_if_true[i];
+               result[i] = if_true[i];
             else
-               result[i] = exp_if_false[i];;
+               result[i] = if_false[i];;
             break;
 
             case CompareGt:
             if( left[i] > right[i] )
-               result[i] = exp_if_true[i];
+               result[i] = if_true[i];
             else
-               result[i] = exp_if_false[i];;
+               result[i] = if_false[i];;
             break;
 
             default:
             assert(false);
-            result[i] = exp_if_true[i];
+            result[i] = if_true[i];
          }
       }
       // result
