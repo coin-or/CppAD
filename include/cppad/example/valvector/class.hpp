@@ -722,10 +722,6 @@ namespace CppAD {
    // -----------------------------------------------------------------------
    // Binary opeators and functins
    //
-   // EqualOpSeq
-   inline bool EqualOpSeq(const valvector& left, const valvector& right)
-   {  return left == right; }
-   //
    // IdenticalEqualCond
    inline bool IdenticalEqualCon(
       const valvector& left  ,
@@ -746,13 +742,46 @@ namespace CppAD {
    // ------------------------------------------------------------------------
    /*
    {xrst_begin valvector_condexp}
-
+   {xrst_spell
+      ge
+      valvectors
+   }
+   
    The valvector Conditional Expressions
    #####################################
-
+   Computes element-by-element :ref:`CondExp-name` values where
+   the arguments are valvectors.
+   
    Syntax
    ******
    *result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
+
+   Discussion
+   **********
+   For each valid index *i* , this computes the result
+
+   | |tab| ``if`` ( *left* [ *i* ] *op* *right* [ *i* ]  )
+   | |tab| |tab| *result* [ *i* ] = *if_true* [ *i* ]
+   | |tab| ``else``
+   | |tab| |tab| *result* [ *i* ] = *if_false* [ *i* ]
+
+   where the relational *Rel* and the operator *op*
+   have the following correspondence:
+
+   .. csv-table::
+
+      *Rel* , ``Lt`` , ``Le`` , ``Eq`` , ``Ge`` , ``Gt``
+      *op*  ,  <     , <=     , ==     , >=     , >
+
+   Arguments
+   *********
+   All of the argument are ``const`` valvectors.
+
+   result
+   ******
+   The result has size equal to the maximum of the size of
+   *left* , *right* , *if_true* and *if_false* .
+   The size of each argument must be one, or the same as the size of *result*.
 
    {xrst_end valvector_condexp}
    */
@@ -896,6 +925,22 @@ Bool Operators
 **************
 The :ref:`base_member@Bool Operators` requirements are satisfied by
 :ref:`valvector_compare_op-name` .
+
+Conditional Expressions
+***********************
+The :ref:`base_cond_exp-name` requirements are satisfied by
+:ref:`valvector_condexp-name` .
+
+EqualOpSeq
+**********
+The :ref:`base_identical@EqualOpSeq` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   inline bool EqualOpSeq(const valvector& left, const valvector& right)
+   {  return left == right; }
+}
+/* {xrst_code}
+
 
 {xrst_end valvector_base_require}
 */
