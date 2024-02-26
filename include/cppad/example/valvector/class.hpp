@@ -836,13 +836,6 @@ We use the following macro to define the corresponding functions:
 }
 
 
-Numeric Type
-************
-The :ref:`NumericType-name` requirements are satisfied by the
-:ref:`valvector_ctor-name` , 
-:ref:`valvector_assign-name` , 
-:ref:`valvector_binary_op-name` , 
-:ref:`valvector_compound_op-name` .
 
 Output Operator
 ***************
@@ -867,6 +860,31 @@ namespace CppAD {
    {  return left.azmul(right); }
 }
 /* {xrst_code}
+
+Constructors
+************
+The :ref:`base_member@Constructors` requirements are satisfied by
+:ref:`valvector_ctor-name` .
+
+Unary Operators
+***************
+The :ref:`base_member@Unary Operators` requirements are satisfied by
+:ref:`valvector_unary_op-name` .
+
+Assignment Operators
+********************
+The :ref:`base_member@Assignment Operators` requirements are satisfied by
+:ref:`valvector_assign-name` and :ref:`valvector_compound_op-name` .
+
+Binary Operators
+****************
+The :ref:`base_member@Binary Operators` requirements are satisfied by
+:ref:`valvector_binary_op-name` .
+
+Bool Operators
+**************
+The :ref:`base_member@Bool Operators` requirements are satisfied by
+:ref:`valvector_compare_op-name` .
 
 {xrst_end valvector_base_require}
 */
