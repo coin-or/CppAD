@@ -29,9 +29,11 @@ mm-dd
 
 02-26
 =====
-Correct some errors in the numeric type
-:ref:`NumericType@Operators` table.
-(automatic conversion from omhelp to sphinx errors).
+#. Correct some errors in the numeric type
+   :ref:`NumericType@Operators` table.
+   (automatic conversion from omhelp to sphinx errors).
+#. The ``<=`` operator was removed from the base type requirements
+   :ref:`base_member@Bool Operators` .
 
 02-23
 =====

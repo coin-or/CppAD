@@ -81,7 +81,6 @@ Bool Operators
 For *op* equal to
 ``==`` ,
 ``!=`` ,
-``<=`` ,
 the following operation must be supported:
 
    *b* = *x* *op* *y*
