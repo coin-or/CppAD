@@ -46,10 +46,10 @@ Operations
    }
 //
 // BEGIN_NOT_AVAILABLE
-# define CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(type, fun) \
-   inline type fun(const valvector& x) \
+# define CPPAD_VALVECTOR_NOT_AVAILABLE(fun) \
+   inline bool fun(const valvector& x) \
    {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, #fun " is not available" ) \
-      return type(); \
+      return false; \
    }
 // END_NOT_AVAILABLE
 //
@@ -659,11 +659,6 @@ namespace CppAD {
    // -----------------------------------------------------------------------
    // Unary operators and functions
    //
-   // a
-   CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanZero)
-   CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanOrZero)
-   CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanZero)
-   CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(bool, LessThanOrZero)
    //
    // Unary function
    CPPAD_VALVECTOR_MEMBER2FUNCTION(acos)
@@ -886,16 +881,6 @@ Conditional Expressions
 The :ref:`base_cond_exp-name` requirements are satisfied by
 :ref:`valvector_condexp-name` .
 
-EqualOpSeq
-**********
-The :ref:`base_identical@EqualOpSeq` requirement is satisfied by:
-{xrst_code hpp} */
-namespace CppAD {
-   inline bool EqualOpSeq(const valvector& left, const valvector& right)
-   {  return left == right; }
-}
-/* {xrst_code}
-
 azmul
 *****
 The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by:
@@ -903,6 +888,16 @@ The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by:
 namespace CppAD {
    inline valvector azmul( const valvector& left  , const valvector& right )
    {  return left.azmul(right); }
+}
+/* {xrst_code}
+
+EqualOpSeq
+**********
+The :ref:`base_identical@EqualOpSeq` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   inline bool EqualOpSeq(const valvector& left, const valvector& right)
+   {  return left == right; }
 }
 /* {xrst_code}
 
@@ -918,12 +913,24 @@ namespace CppAD {
 }
 /* {xrst_code}
 
+Not Ordered
+***********
+The :ref:`base_ordered@Not Ordered` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   CPPAD_VALVECTOR_NOT_AVAILABLE(GreaterThanZero)
+   CPPAD_VALVECTOR_NOT_AVAILABLE(GreaterThanOrZero)
+   CPPAD_VALVECTOR_NOT_AVAILABLE(LessThanZero)
+   CPPAD_VALVECTOR_NOT_AVAILABLE(LessThanOrZero)
+}
+/* {xrst_code}
+
 
 {xrst_end valvector_base_require}
 */
 
 # undef CPPAD_VALVECTOR_ASSERT_KNOWN
-# undef CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE
+# undef CPPAD_VALVECTOR_NOT_AVAILABLE
 # undef CPPAD_VALVECTOR_STD_MATH_MEMBER
 # undef CPPAD_VALVECTOR_MEMBER2FUNCTION
 # undef CPPAD_VALVECTOR_BINARY_NUMERIC_OP
