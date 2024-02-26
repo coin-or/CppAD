@@ -26,6 +26,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+02-26
+=====
+Correct some errors in the numeric type
+:ref:`NumericType@Operators` table.
+(automatic conversion from omhelp to sphinx errors).
+
 02-23
 =====
 Include more of the example drivers in the documentation;
