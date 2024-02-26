@@ -70,49 +70,27 @@ may not be legal.
 
 Operators
 *********
-Suppose *x* , *y* and *z*
+Suppose *x* , *y* and *z* are
 *NumericType* objects where
 *x* and *y* may be ``const`` .
 In the result type column,
 *NumericType* can be replaced by any type that can
 be used just like a *NumericType* object.
 
-.. list-table::
+.. csv-table::
    :widths: auto
+   :header: Operation, Description, Result Type
 
-   * - **Operation**
-     - **Description**
-     - **Result Type**
-   * - + *x*
-     - unary plus
-     - *NumericType*
-   * - ``-`` *x*
-     - unary minus
-     - *NumericType*
-   * - *x* + *y*
-     - binary addition
-     - *NumericType*
-   * - *x* ``-`` *y*
-     - binary subtraction
-     - *NumericType*
-   * - *x* * *y*
-     - binary multiplication
-     - *NumericType*
-   * - *x* / *y*
-     - binary division
-     - *NumericType*
-   * - *z* += *y*
-     - compound assignment addition
-     - unspecified
-   * - *z* ``-`` = *y*
-     - compound assignment subtraction
-     - unspecified
-   * - *z* \\* = *y*
-     - compound assignment multiplication
-     - unspecified
-   * - *z* /= *y*
-     - compound assignment division
-     - unspecified
+   \+ *x*      , unary plus,                          *NumericType*
+   \- *x*      , unary minus,                         *NumericType*
+   *x* + *y*   , binary addition,                     *NumericType*
+   *x* - *y*   , binary subtraction,                  *NumericType*
+   *x* \* *y*  , binary multiplication,               *NumericType*
+   *x* / *y*   , compound assignment division,        *NumericType*
+   *z* += *y*  , compound assignment addition,        *NumericType*
+   *z* -= *y*  , compound assignment subtraction,     *NumericType*
+   *z* \*= *y* , compound assignment multiplication,  *NumericType*
+   *z* /= *y*  , compound assignment division,        *NumericType*
 
 Example
 *******
