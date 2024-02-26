@@ -34,8 +34,10 @@ the conditional result
 The relational *Rel* and comparison operator *Cop*
 above have the following correspondence:
 
-| |tab| *Rel* ``Lt   Le   Eq   Ge   Gt``
-| |tab| *Cop*     <   <=   ==   >=   >
+.. csv-table::
+
+   *Rel* , ``Lt`` , ``Le`` , ``Eq`` , ``Ge`` , ``Gt``
+   *Cop* ,  <     , <=     , ==     , >=     , >
 
 If *f* is the :ref:`ADFun-name` object corresponding to the
 AD operation sequence,
@@ -58,9 +60,9 @@ when comparing *left* and *right* .
 Type
 ****
 These functions are defined in the CppAD namespace for arguments of
-*Type* is ``float`` , ``double`` , or any type of the form
-``AD`` < *Base* > .
-(Note that all four arguments must have the same type.)
+*Type* is *Base* or ``AD`` < *Base* > .
+Note that all four arguments,
+*left* , *right*, *if_true* , *if_false* ,  must have the same type.
 
 left
 ****

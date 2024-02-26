@@ -31,7 +31,9 @@ mm-dd
 =====
 #. Correct some errors in the numeric type
    :ref:`NumericType@Operators` table.
-   (automatic conversion from omhelp to sphinx errors).
+   Also the table under :ref:`CondExp@Purpose` on the
+   conditional expression documentation.
+   (These were errors in the automatic conversion from omhelp to sphinx.)
 #. The ``<=`` operator was removed from the base type requirements
    :ref:`base_member@Bool Operators` .
 
