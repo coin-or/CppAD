@@ -45,11 +45,13 @@ Operations
       assert( exp ); \
    }
 //
+// BEGIN_NOT_AVAILABLE
 # define CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(type, fun) \
    inline type fun(const valvector& x) \
    {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, #fun " is not available" ) \
       return type(); \
    }
+// END_NOT_AVAILABLE
 //
 # define CPPAD_VALVECTOR_STD_MATH_MEMBER(fun) \
    valvector fun(void) const \
@@ -144,8 +146,8 @@ public:
       sj
    }
 
-   Constructor for a valvector
-   ###########################
+   The valvector Constructors
+   ##########################
    Creates a valvector (called *x* below).
 
    Syntax
@@ -158,7 +160,8 @@ public:
    Default
    *******
    The default constructor (no argument) 
-   creates the valvector *x* with one element that is equal to zero.
+   creates the valvector *x* with one element using the 
+   :ref:`valvector@scalar_type` default constructor.
 
    Scalar
    ******
@@ -278,8 +281,8 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_assign}
 
-   valvector Assignment Operator
-   #############################
+   The valvector Assignment Operator
+   #################################
    Set the value of this valvector equal to another.
 
    Prototype
@@ -387,8 +390,8 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_unary_op}
 
-   valvector Numeric Unary Operators
-   #################################
+   The valvector Numeric Unary Operators
+   #####################################
    Returns the element-by-element result of the unary operators for
    this valvector.
 
@@ -422,8 +425,8 @@ public:
       valvectors
    }
 
-   valvector Numeric Binary Operators
-   ##################################
+   The valvector Numeric Binary Operators
+   ######################################
    Returns a valvector that is the element-by-element result 
    of the numeric binary operators.
 
@@ -447,10 +450,10 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_compound_op}
 
-   valvector Numeric Compound  Operators
-   #####################################
+   The valvector Numeric Compound Assignment Operators
+   ###################################################
    Computes the element-by-element result 
-   of the numeric compound operators.
+   of the numeric compound assignment operators.
 
    Syntax
    ******
@@ -486,8 +489,8 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_compare_op}
 
-   valvector Compare Operators
-   ###########################
+   The valvector Compare Operators
+   ###############################
    Compares this valvector with another valvector.
 
    Prototype
@@ -625,11 +628,23 @@ public:
       return os;
    }
 };
-//
-// ostream << valvector
-inline std::ostream& operator << (
-   std::ostream&    os ,
-   const valvector& v  )
+/*
+{xrst_begin valvector_output}
+
+Outputting a valvector
+######################
+
+Prototype
+*********
+{xrst_literal ,
+   // BEGIN_OUTPUT , // END_OUTPUT
+}
+
+{xrst_end valvector_output}
+*/
+// BEGIN_OUTPUT
+inline std::ostream& operator << (std::ostream& os, const valvector& v)
+// END_OUTPUT
 {  return v.output(os);
 }
 // ============================================================================
@@ -797,6 +812,36 @@ namespace CppAD {
       return result;
    }
    CPPAD_COND_EXP_REL(valvector)
+   /*
+   {xrst_begin valvector_base_require}
+
+   The valvector Implementation of CppAD Base Type Requirements
+   ############################################################
+
+   Not Available
+   *************
+   Some of the base type requirements cannot be satisfied for a valvector.
+   We use the following macro to define the corresponding functions:
+   {xrst_literal ,
+      // BEGIN_NOT_AVAILABLE , // END_NOT_AVAILABLE
+   }
+   
+
+   Numeric Type
+   ************
+   The :ref:`NumericType-name` requirements are satisfied by the
+   :ref:`valvector_ctor-name` , 
+   :ref:`valvector_assign-name` , 
+   :ref:`valvector_binary_op-name` , 
+   :ref:`valvector_compound_op-name` .
+
+   Output Operator
+   ***************
+   The :ref:`base_require@Output Operator` requirement is satisfied by
+   :ref:`valvector_output-name` .
+
+   {xrst_end valvector_base_require}
+   */
 }
 // ===========================================================================
 
