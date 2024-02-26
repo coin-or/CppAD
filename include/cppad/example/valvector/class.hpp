@@ -387,9 +387,9 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_unary_op}
 
-   valvector Unary Operators
-   #########################
-   Returns the element-by-element result of the unary operator for
+   valvector Numeric Unary Operators
+   #################################
+   Returns the element-by-element result of the unary operators for
    this valvector.
 
    Prototype
@@ -415,14 +415,94 @@ public:
          result[i] = - (*this)[i];
       return result;
    }
-   //
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_binary_op}
+   {xrst_spell
+      valvectors
+   }
+
+   valvector Numeric Binary Operators
+   ##################################
+   Returns a valvector that is the element-by-element result 
+   of the numeric binary operators.
+
+   Syntax
+   ******
+   | *x* *op* *y*
+
+   op
+   **
+   The numeric binary operator *op* is 
+   ``+`` (addition) , 
+   ``-`` (subtraction), 
+   ``*`` (multiplication) , or 
+   ``/`` (division) .
+
+   x, y
+   ****
+   Both *x* and *y* are  ``const`` valvectors.
+
+   {xrst_end valvector_binary_op}
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_compound_op}
+
+   valvector Numeric Compound  Operators
+   #####################################
+   Computes the element-by-element result 
+   of the numeric compound operators.
+
+   Syntax
+   ******
+   | *y* *op* *x*
+
+   op
+   **
+   The compound operator *op* is 
+   ``+=`` (compound addition) , 
+   ``-=`` (compound subtraction), 
+   ``*=`` (compound multiplication) , or 
+   ``/=`` (compound division) .
+
+   x
+   *
+   The operand *x* is a ``const`` valvector.
+
+   y
+   *
+   The operand and result *y* is a valvector.
+
+   Return
+   ******
+   The value returned by each of these operators is a reference to *y* .
+
+   {xrst_end valvector_compound_op}
+   */
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(+, +=)
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(-, -=)
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(*, *=)
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(/, /=)
+   /*
+   ----------------------------------------------------------------------------
+   {xrst_begin valvector_compare_op}
+
+   valvector Compare Operators
+   ###########################
+   Compares this valvector with another valvector.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_EQUAL , // END_EQUAL
+      // BEGIN_NOT_EQUAL , // END_NOT_EQUAL
+   }
+
+   {xrst_end valvector_compare_op}
+   */
    //
-   // ==, !=
+   // BEGIN_EQUAL
    bool operator==(const valvector& other) const
+   // END_EQUAL
    {  bool result = true;
       CPPAD_VALVECTOR_ASSERT_KNOWN(
          size() == 1 || other.size() == 1 || size() == other.size() ,
@@ -432,8 +512,13 @@ public:
          result &= (*this)[i] == other[i];
       return result;
    }
+   // BEGIN_NOT_EQUAL
    bool operator!=(const valvector& other) const
+   // END_NOT_EQUAL
    {  return ! (*this == other); }
+   // =========================================================================
+   // Member functions not in user API
+   // =========================================================================
    //
    // azmul
    valvector azmul(const valvector& other) const
@@ -470,9 +555,6 @@ public:
          result[i] = std::pow( (*this)[i] , other[i] );
       return result;
    }
-   // =========================================================================
-   // Member functions not in user API
-   // =========================================================================
    //
    // iszero
    bool iszero(void) const
@@ -530,7 +612,7 @@ public:
       }
       return result;
    }
-   // -----------------------------------------------------------------------
+   // 
    // output
    std::ostream& output(std::ostream& os)  const
    {  os << "{ ";
