@@ -519,12 +519,25 @@ public:
    bool operator!=(const valvector& other) const
    // END_NOT_EQUAL
    {  return ! (*this == other); }
-   // =========================================================================
-   // Member functions not in user API
-   // =========================================================================
-   //
-   // azmul
+   /*
+   {xrst_begin valvector_azmul}
+   
+   The valvector Absolute Zero Multiply Routine
+   ############################################
+   Return the element-by-element absolute zero product of this valvector
+   times another; see :ref:`azmul-name` .
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_AZMUL , END_AZMUL
+   }
+
+   {xrst_end valvector_azmul}
+   */
+   // BEGIN_AZMUL
    valvector azmul(const valvector& other) const
+   // END_AZMUL
    {  CPPAD_VALVECTOR_ASSERT_KNOWN(
          size() == 1 || other.size() == 1 || size() == other.size() ,
          "size error using azmul function"
@@ -558,6 +571,9 @@ public:
          result[i] = std::pow( (*this)[i] , other[i] );
       return result;
    }
+   // =========================================================================
+   // Member functions not in user API
+   // =========================================================================
    //
    // iszero
    bool iszero(void) const
@@ -716,20 +732,11 @@ namespace CppAD {
       const valvector& right )
    {  return left == right; }
    //
-   // azmul
-   inline valvector azmul(
-      const valvector& left  ,
-      const valvector& right )
-   {  return left.azmul(right); }
-   //
    // Binary functions
    inline valvector pow(
       const valvector& left  ,
       const valvector& right )
    {  return left.pow(right); }
-   //
-   // Integer
-   CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(int, Integer)
    //
    // abs_geq
    inline bool abs_geq(const valvector& x, const valvector& y)
@@ -812,38 +819,57 @@ namespace CppAD {
       return result;
    }
    CPPAD_COND_EXP_REL(valvector)
-   /*
-   {xrst_begin valvector_base_require}
-
-   The valvector Implementation of CppAD Base Type Requirements
-   ############################################################
-
-   Not Available
-   *************
-   Some of the base type requirements cannot be satisfied for a valvector.
-   We use the following macro to define the corresponding functions:
-   {xrst_literal ,
-      // BEGIN_NOT_AVAILABLE , // END_NOT_AVAILABLE
-   }
-   
-
-   Numeric Type
-   ************
-   The :ref:`NumericType-name` requirements are satisfied by the
-   :ref:`valvector_ctor-name` , 
-   :ref:`valvector_assign-name` , 
-   :ref:`valvector_binary_op-name` , 
-   :ref:`valvector_compound_op-name` .
-
-   Output Operator
-   ***************
-   The :ref:`base_require@Output Operator` requirement is satisfied by
-   :ref:`valvector_output-name` .
-
-   {xrst_end valvector_base_require}
-   */
 }
 // ===========================================================================
+/*
+{xrst_begin valvector_base_require}
+
+The valvector Implementation of CppAD Base Type Requirements
+############################################################
+
+Not Available
+*************
+Some of the base type requirements cannot be satisfied for a valvector.
+We use the following macro to define the corresponding functions:
+{xrst_literal ,
+   // BEGIN_NOT_AVAILABLE , // END_NOT_AVAILABLE
+}
+
+
+Numeric Type
+************
+The :ref:`NumericType-name` requirements are satisfied by the
+:ref:`valvector_ctor-name` , 
+:ref:`valvector_assign-name` , 
+:ref:`valvector_binary_op-name` , 
+:ref:`valvector_compound_op-name` .
+
+Output Operator
+***************
+The :ref:`base_require@Output Operator` requirement is satisfied by
+:ref:`valvector_output-name` .
+
+Integer
+*******
+The :ref:`base_require@Integer` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   inline int Integer(const valvector& x) { return int( x[0] ); }
+}
+/* {xrst_code}
+
+azmul
+*****
+The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   inline valvector azmul( const valvector& left  , const valvector& right )
+   {  return left.azmul(right); }
+}
+/* {xrst_code}
+
+{xrst_end valvector_base_require}
+*/
 
 # undef CPPAD_VALVECTOR_ASSERT_KNOWN
 # undef CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE
