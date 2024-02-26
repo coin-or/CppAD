@@ -18,6 +18,7 @@
    boostvector
    iostream
    cassert
+   omhelp
 }
 
 Release Notes for 2024
