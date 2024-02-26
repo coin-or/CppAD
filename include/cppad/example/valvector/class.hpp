@@ -544,10 +544,10 @@ public:
       )
       //
       // left multiply by the constant zero is a special case
-      scalar_type zero(0);
-      if( iszero() )
+      if( (*this) == valvector(0) )
          return *this;
       //
+      scalar_type zero(0);
       valvector  result;
       result.vec_.resize( std::max( size(), other.size() ) );
       for(size_t i = 0; i < result.size(); ++i)
@@ -574,24 +574,6 @@ public:
    // =========================================================================
    // Member functions not in user API
    // =========================================================================
-   //
-   // iszero
-   bool iszero(void) const
-   {  bool        result = true;
-      scalar_type zero   = 0;
-      for(size_t i = 0; i < size(); ++i)
-         result &= (*this)[i] == zero;
-      return result;
-   }
-   //
-   // isone
-   bool isone(void) const
-   {  bool        result = true;
-      scalar_type one    = 1;
-      for(size_t i = 0; i < size(); ++i)
-         result &= (*this)[i] == one;
-      return result;
-   }
    //
    // Standard Math Fucntons
    CPPAD_VALVECTOR_STD_MATH_MEMBER(acos)
@@ -677,17 +659,6 @@ namespace CppAD {
    // -----------------------------------------------------------------------
    // Unary operators and functions
    //
-   // Identical
-   inline bool IdenticalCon(const valvector& x)
-   {  return true;
-   }
-   inline bool IdenticalZero(const valvector& x)
-   {  return x.iszero();
-   }
-   inline bool IdenticalOne(const valvector& x)
-   {  return x.isone();
-   }
-   //
    // a
    CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanZero)
    CPPAD_VALVECTOR_UNARY_NOT_AVAILABLE(bool, GreaterThanOrZero)
@@ -721,12 +692,6 @@ namespace CppAD {
    CPPAD_VALVECTOR_MEMBER2FUNCTION(sign)
    // -----------------------------------------------------------------------
    // Binary opeators and functins
-   //
-   // IdenticalEqualCond
-   inline bool IdenticalEqualCon(
-      const valvector& left  ,
-      const valvector& right )
-   {  return left == right; }
    //
    // Binary functions
    inline valvector pow(
@@ -891,16 +856,6 @@ namespace CppAD {
 }
 /* {xrst_code}
 
-azmul
-*****
-The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by:
-{xrst_code hpp} */
-namespace CppAD {
-   inline valvector azmul( const valvector& left  , const valvector& right )
-   {  return left.azmul(right); }
-}
-/* {xrst_code}
-
 Constructors
 ************
 The :ref:`base_member@Constructors` requirements are satisfied by
@@ -938,6 +893,28 @@ The :ref:`base_identical@EqualOpSeq` requirement is satisfied by:
 namespace CppAD {
    inline bool EqualOpSeq(const valvector& left, const valvector& right)
    {  return left == right; }
+}
+/* {xrst_code}
+
+azmul
+*****
+The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   inline valvector azmul( const valvector& left  , const valvector& right )
+   {  return left.azmul(right); }
+}
+/* {xrst_code}
+
+Identical
+*********
+{xrst_code hpp} */
+namespace CppAD {
+   inline bool IdenticalCon(const valvector& x)  {  return true; }
+   inline bool IdenticalZero(const valvector& x) {  return x == valvector(0); }
+   inline bool IdenticalOne(const valvector& x)  {  return x == valvector(1); }
+   inline bool IdenticalEqualCon(const valvector& x, const valvector& y)
+   {  return x == y; }
 }
 /* {xrst_code}
 
