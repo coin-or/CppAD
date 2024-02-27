@@ -48,6 +48,7 @@ extern bool base_require(void);
 extern bool ctor(void);
 extern bool get_started(void);
 extern bool resize(void);
+extern bool size(void);
 extern bool sum_ad(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -67,6 +68,7 @@ int main(void)
    Run( ctor,                "ctor"                  );
    Run( get_started,         "get_started"           );
    Run( resize,              "resize"                );
+   Run( size,                "size"                  );
    Run( sum_ad,              "sum_ad"                );
    // END_SORT_THIS_LINE_MINUS_1
 

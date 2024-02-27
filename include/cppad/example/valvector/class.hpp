@@ -346,6 +346,14 @@ public:
       // BEGIN_SIZE , // END_SIZE
    }
 
+   {xrst_toc_hidden
+      example/valvector/size.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_size.cpp-name` is an example and test of
+   valvector size.
+
 
    {xrst_end valvector_size}
    ----------------------------------------------------------------------------
