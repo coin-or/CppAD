@@ -514,45 +514,6 @@ public:
    bool operator!=(const valvector& other) const
    // END_NOT_EQUAL
    {  return ! (*this == other); }
-   /*
-   {xrst_begin valvector_azmul}
-   
-   The valvector Absolute Zero Multiply Routine
-   ############################################
-   Return the element-by-element absolute zero product of this valvector
-   times another; see :ref:`azmul-name` .
-
-   Prototype
-   *********
-   {xrst_literal ,
-      // BEGIN_AZMUL , END_AZMUL
-   }
-
-   {xrst_end valvector_azmul}
-   */
-   // BEGIN_AZMUL
-   valvector azmul(const valvector& other) const
-   // END_AZMUL
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-         size() == 1 || other.size() == 1 || size() == other.size() ,
-         "size error using azmul function"
-      )
-      //
-      // left multiply by the constant zero is a special case
-      if( (*this) == valvector(0) )
-         return *this;
-      //
-      scalar_type zero(0);
-      valvector  result;
-      result.vec_.resize( std::max( size(), other.size() ) );
-      for(size_t i = 0; i < result.size(); ++i)
-      {  if( (*this)[i] == zero )
-            result[i] = zero;
-          else
-            result[i] = (*this)[i] * other[i];
-      }
-      return result;
-   }
 };
 /*
 ------------------------------------------------------------------------------
@@ -728,12 +689,12 @@ namespace CppAD {
    and the size of *y* is not one,
    the size of *x* and *y* must be equal.
    
-
    z
    *
    The result *z* is a valvector with size equal to the maximum of the
    size of *x* and the size of *y* .
 
+   {xrst_end valvector_pow}
    */
    inline valvector pow(const valvector& x, const valvector& y)
    {  CPPAD_VALVECTOR_ASSERT_KNOWN(
@@ -744,6 +705,62 @@ namespace CppAD {
       result.resize( std::max( x.size(), y.size() ) );
       for(size_t i = 0; i < x.size(); ++i)
          result[i] = std::pow( x[i] , y[i] );
+      return result;
+   }
+   /*
+   --------------------------------------------------------------------------
+   {xrst_begin valvector_azmul}
+
+   The valvector Pow Function
+   ##########################
+
+   Syntax
+   ******
+   | *z* = ``CppAD::azmul`` ( *x* , *y* )
+
+   x
+   *
+   The argument *x* is a ``const`` valvector that is passed by reference.
+
+   y
+   *
+   The argument *y* is a ``const`` valvector that is passed by reference.
+   If the size of *x* is not one,
+   and the size of *y* is not one,
+   the size of *x* and *y* must be equal.
+
+   z
+   *
+   In the special where all the elements of *z* are zero,
+   the result *z* is a valvector with size one.
+   Otherwise, *z* is a valvector with size equal to the maximum of the
+   size of *x* and the size of *y* .
+
+   {xrst_end valvector_azmul}
+   */
+   inline valvector azmul(const valvector& x, const valvector& y)
+   {  typedef valvector::scalar_type scalar_type;
+      //  
+      CPPAD_VALVECTOR_ASSERT_KNOWN(
+         x.size() == 1 || y.size() == 1 || x.size() == y.size() ,
+         "size error using azmul function"
+      )
+      //
+      // special case
+      valvector vec_zero = valvector(0);
+      if( x == vec_zero )
+         return vec_zero;
+      //
+      // elememt-by-element
+      scalar_type scalar_zero(0);
+      valvector  result;
+      result.resize( std::max( x.size(), y.size() ) );
+      for(size_t i = 0; i < result.size(); ++i)
+      {  if( x[i] == scalar_zero )
+            result[i] = scalar_zero;
+          else
+            result[i] = x[i] * y[i];
+      }
       return result;
    }
    /*
@@ -928,17 +945,15 @@ Conditional Expressions
 The :ref:`base_cond_exp-name` requirements are satisfied by
 :ref:`valvector_condexp-name` .
 
-
+Standard Math
+*************
+The :ref:`base_std_math-name` requirements are satisfied by
+:ref:`valvector_unary_math-name` and :ref:`valvector_pow-name` .
 
 azmul
 *****
-The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by:
-{xrst_code hpp} */
-namespace CppAD {
-   inline valvector azmul( const valvector& left  , const valvector& right )
-   {  return left.azmul(right); }
-}
-/* {xrst_code}
+The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by
+:ref:`valvector_azmul-name` .
 
 EqualOpSeq
 **********
@@ -981,7 +996,6 @@ namespace CppAD {
 # undef CPPAD_VALVECTOR_ASSERT_KNOWN
 # undef CPPAD_VALVECTOR_NOT_AVAILABLE
 # undef CPPAD_VALVECTOR_UNARY_STD_MATH
-# undef CPPAD_VALVECTOR_MEMBER2FUNCTION
 # undef CPPAD_VALVECTOR_BINARY_NUMERIC_OP
 
 
