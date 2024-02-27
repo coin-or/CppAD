@@ -1,20 +1,17 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin download}
 {xrst_spell
-   gh
    github
    grep
    gz
-   htm
    january
-   mhelp
-   omhelp
    txt
    yyyy
+   dev
 }
 
 Download The CppAD Source Code
@@ -103,48 +100,25 @@ Compressed Archives
 ===================
 You can build a compressed archive, from a clone of the git repository,
 using the script ``bin/package.sh`` .
-These archives have the documentation in the ``doc`` directory
+These archives have the documentation in the ``build/html`` directory
 and do not have the ``git`` information.
 They are intended for re-distribution.
 
-Documentation
-=============
-The documentation at the web address
-https://coin-or.github.io/CppAD is for the
-most recent version of CppAD.
-You can get the documentation
-for an other versions of CppAD.
-To do so, in the distribution directory execute the following commands:
-::
-
-   git checkout gh-pages
-   git log > junk.log
-
-The file ``junk.log`` will contain the git *hash* codes
-for different version of the documentation along with the date.
-Select the *hash* for the version you are using, execute the command
-
-   ``git checkout`` *hash*
-
-You can then view documentation for version you are using by opening the file
-``doc/index.html`` in a web browser.
-
 Building Documentation
 ======================
-The documentation for CppAD can be built, from a clone of the git repository,
-using `OMhelp <http://www.seanet.com/~bradbell/omhelp/>`_.
-You will need to install the ``omhelp`` command so that
-::
+If you install `xrst <https://xrst.readthedocs.io>`_ ,
+you can build the documentation for CppAD,
+and include any changes you make.
+In the distribution directory execute the following command
 
-   which omhelp
+| |tab|   ``bin/run_xrst.sh`` *dev*
 
-shows it is in your path.
-Once you have done this,
-in the distribution directory execute the following command:
+where *dev* is ``-dev`` or ``+dev`` .
+If you use ``+dev`` the developer documentation will be included.
 
-   ``bin/run_omhelp.sh htm``
+You can then view documentation that you built by opening the
+following file in a web browser::
 
-You can then view documentation for version you are using by opening the file
-``doc/index.html`` in a web browser.
+   build/html/index.html
 
 {xrst_end download}

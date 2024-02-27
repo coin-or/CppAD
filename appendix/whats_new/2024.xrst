@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2024 app}
@@ -26,6 +26,15 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+02-27
+=====
+The omhelp package is not longer used by CppAD
+( see :ref:`2022@mm-dd@12-16` ) so the links to its documentation
+were removed.
+In addition, the instructions for
+:ref:`download@Git@Building Documentation` were out of date and have been
+fixed.
 
 02-26
 =====
