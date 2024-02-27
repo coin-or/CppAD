@@ -6,9 +6,11 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list valvector.cpp
+   assign.cpp
    base_require.cpp
    ctor.cpp
    get_started.cpp
+   resize.cpp
    sum_ad.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

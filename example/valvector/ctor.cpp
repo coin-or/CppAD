@@ -23,9 +23,12 @@ bool ctor(void)
 {  // scalar_type  
    typedef valvector::scalar_type scalar_type;
    //
-   //
    // ok
    bool ok = true;
+   //
+   // ok
+   valvector default_ctor;
+   ok &= default_ctor.size() == 1;
    //
    // ok
    valvector scalar_ctor( scalar_type(1) );

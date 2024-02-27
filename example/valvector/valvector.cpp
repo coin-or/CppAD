@@ -43,9 +43,11 @@ an different version of make; e.g., ``ninja`` .
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+extern bool assign(void);
 extern bool base_require(void);
 extern bool ctor(void);
 extern bool get_started(void);
+extern bool resize(void);
 extern bool sum_ad(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -60,9 +62,11 @@ int main(void)
    // This line is used by test_one.sh
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
+   Run( assign,              "assign"                );
    Run( base_require,        "base_require"          );
    Run( ctor,                "ctor"                  );
    Run( get_started,         "get_started"           );
+   Run( resize,              "resize"                );
    Run( sum_ad,              "sum_ad"                );
    // END_SORT_THIS_LINE_MINUS_1
 

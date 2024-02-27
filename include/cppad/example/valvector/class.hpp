@@ -26,7 +26,7 @@ We use *scalar_type* to denote this type.
 
 Example
 =======
-The file :ref:`valvector.cpp-name`` tests all of the valvector examples.
+The file :ref:`valvector.cpp-name` tests all of the valvector examples.
 
 Operations
 **********
@@ -195,7 +195,7 @@ public:
    ---------------------------------------------------------------------------
    */
    // default ctor
-   valvector(void) : vec_(0), scalar_(0)
+   valvector(void) : vec_(0), scalar_()
    { }
    //
    // ctor of scalar
@@ -268,6 +268,14 @@ public:
    **************
    Directly after this operation,
    none of the element values are specified.
+
+   {xrst_toc_hidden
+      example/valvector/resize.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_resize.cpp-name` is an example and test of
+   valvector resize.
    
 
    {xrst_end valvector_resize}
@@ -298,6 +306,14 @@ public:
       // BEGIN_ASSIGN_ONE , // END_ASSIGN_ONE
       // BEGIN_ASSIGN_TWO , // END_ASSIGN_TWO
    }
+
+   {xrst_toc_hidden
+      example/valvector/assign.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_assign.cpp-name` is an example and test of
+   valvector assignment.
    
    {xrst_end valvector_assign}
    ----------------------------------------------------------------------------
