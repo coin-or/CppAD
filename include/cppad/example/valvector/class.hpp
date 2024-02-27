@@ -656,11 +656,84 @@ namespace CppAD {
    // to_string_struct
    CPPAD_TO_STRING(valvector)
    //
-   // -----------------------------------------------------------------------
-   // Unary operators and functions
+   // 
+   // pow
+   inline valvector pow(
+      const valvector& left  ,
+      const valvector& right )
+   {  return left.pow(right); }
    //
+   // abs_geq
+   inline bool abs_geq(const valvector& x, const valvector& y)
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
+      return bool();
+   }
+   /*
+   --------------------------------------------------------------------------
+   {xrst_begin valvector_unary_math}
+   {xrst_spell
+      erfc
+      expm
+      signum
+   }
+
+   The valvector Unary Math Functions
+   ##################################
+
+   Syntax
+   ******
+   | *y* = *fun* ( *x* )
+
+   x
+   *
+   The argument *x* is a ``const`` valvector that is passed by reference.
+
+   y
+   *
+   The result *y* is a valvector with the same size as *x* .
+
+   fun
+   ***
+
+   Standard Math Functions
+   =======================
+   The function name *fun* can be any of the following:
+   ``acos``,
+   ``acosh``,
+   ``asin``,
+   ``asinh``,
+   ``atan``,
+   ``atanh``,
+   ``cos``,
+   ``cosh``,
+   ``erf``,
+   ``erfc``,
+   ``exp``,
+   ``expm1``,
+   ``fabs``,
+   ``log``,
+   ``log1p``,
+   ``log10``,
+   ``sin``,
+   ``sinh``,
+   ``sqrt``,
+   ``tan``,
+   ``tanh``
+
+   abs
+   ===
+   The function name *fun* can be ``abs`` ,
+   which acts the same as the standard function ``fabs`` .
+
+   sign
+   ====
+   The function name *fun* can be ``sign`` ,
+   which computes the sign (or signum) function.
+
+   {xrst_end valvector_unary_math}
+   */
    //
-   // Unary function
+   // standard math function
    CPPAD_VALVECTOR_MEMBER2FUNCTION(acos)
    CPPAD_VALVECTOR_MEMBER2FUNCTION(acosh)
    CPPAD_VALVECTOR_MEMBER2FUNCTION(asin)
@@ -682,25 +755,15 @@ namespace CppAD {
    CPPAD_VALVECTOR_MEMBER2FUNCTION(sqrt)
    CPPAD_VALVECTOR_MEMBER2FUNCTION(tan)
    CPPAD_VALVECTOR_MEMBER2FUNCTION(tanh)
+   //
+   // abs
    inline valvector abs(const valvector& x)
-   {  return fabs(x); }
+   {  return x.fabs(); }
+   //
+   // sign
    CPPAD_VALVECTOR_MEMBER2FUNCTION(sign)
-   // -----------------------------------------------------------------------
-   // Binary opeators and functins
-   //
-   // Binary functions
-   inline valvector pow(
-      const valvector& left  ,
-      const valvector& right )
-   {  return left.pow(right); }
-   //
-   // abs_geq
-   inline bool abs_geq(const valvector& x, const valvector& y)
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
-      return bool();
-   }
-   // ------------------------------------------------------------------------
    /*
+   ------------------------------------------------------------------------
    {xrst_begin valvector_condexp}
    {xrst_spell
       ge
@@ -880,6 +943,8 @@ Conditional Expressions
 ***********************
 The :ref:`base_cond_exp-name` requirements are satisfied by
 :ref:`valvector_condexp-name` .
+
+
 
 azmul
 *****
