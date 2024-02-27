@@ -44,6 +44,7 @@ an different version of make; e.g., ``ninja`` .
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool assign(void);
+extern bool azmul(void);
 extern bool base_require(void);
 extern bool binary_op(void);
 extern bool compare_op(void);
@@ -72,6 +73,7 @@ int main(void)
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( assign,              "assign"                );
+   Run( azmul,               "azmul"                 );
    Run( base_require,        "base_require"          );
    Run( binary_op,           "binary_op"             );
    Run( compare_op,         "compare_op"             );

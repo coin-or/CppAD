@@ -825,6 +825,14 @@ namespace CppAD {
    Otherwise, *z* is a valvector with size equal to the maximum of the
    size of *x* and the size of *y* .
 
+   {xrst_toc_hidden
+      example/valvector/azmul.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_azmul.cpp-name` is an example and test of the
+   valvector absolute zero multiply function.
+
    {xrst_end valvector_azmul}
    */
    inline valvector azmul(const valvector& x, const valvector& y)

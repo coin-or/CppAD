@@ -7,6 +7,7 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list valvector.cpp
    assign.cpp
+   azmul.cpp
    base_require.cpp
    binary_op.cpp
    compare_op.cpp
