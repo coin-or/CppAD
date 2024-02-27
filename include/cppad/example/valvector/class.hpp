@@ -53,18 +53,13 @@ Operations
    }
 // END_NOT_AVAILABLE
 //
-# define CPPAD_VALVECTOR_STD_MATH_MEMBER(fun) \
-   valvector fun(void) const \
+# define CPPAD_VALVECTOR_UNARY_STD_MATH(fun) \
+   inline valvector fun(const valvector &x) \
    {  valvector result; \
-      result.resize( size() ); \
-      for(size_t i = 0; i < size(); ++i) \
-         result[i] = std::fun( (*this)[i] ); \
+      result.resize( x.size() ); \
+      for(size_t i = 0; i < x.size(); ++i) \
+         result[i] = std::fun( x[i] ); \
       return result; \
-   }
-//
-# define CPPAD_VALVECTOR_MEMBER2FUNCTION(fun) \
-   inline valvector fun(const valvector& x) \
-   {  return x.fun(); \
    }
 //
 # define CPPAD_VALVECTOR_BINARY_NUMERIC_OP(op, compound_op) \
@@ -575,44 +570,6 @@ public:
    // Member functions not in user API
    // =========================================================================
    //
-   // Standard Math Fucntons
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(acos)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(acosh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(asin)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(asinh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(atan)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(atanh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(cos)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(cosh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(erf)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(erfc)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(exp)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(expm1)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(fabs)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(log)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(log1p)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(log10)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(sin)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(sinh)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(sqrt)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(tan)
-   CPPAD_VALVECTOR_STD_MATH_MEMBER(tanh)
-   //
-   // sign
-   valvector sign(void) const
-   {  valvector result;
-      result.resize( size() );
-      scalar_type zero = scalar_type(0);
-      for(size_t i = 0; i < size(); ++i)
-      {  if( (*this)[i] < zero )
-            result[i] = scalar_type(-1);
-         if( (*this)[i] == zero )
-            result[i] = zero;
-         if( (*this)[i] > zero )
-            result[i] = scalar_type(1);
-      }
-      return result;
-   }
    // 
    // output
    std::ostream& output(std::ostream& os)  const
@@ -734,34 +691,49 @@ namespace CppAD {
    */
    //
    // standard math function
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(acos)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(acosh)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(asin)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(asinh)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(atan)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(atanh)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(cos)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(cosh)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(erf)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(erfc)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(exp)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(expm1)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(fabs)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(log)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(log1p)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(log10)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(sin)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(sinh)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(sqrt)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(tan)
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(tanh)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(acos)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(acosh)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(asin)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(asinh)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(atan)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(atanh)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(cos)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(cosh)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(erf)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(erfc)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(exp)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(expm1)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(fabs)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(log)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(log1p)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(log10)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(sin)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(sinh)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(sqrt)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(tan)
+   CPPAD_VALVECTOR_UNARY_STD_MATH(tanh)
    //
    // abs
    inline valvector abs(const valvector& x)
-   {  return x.fabs(); }
+   {  return fabs(x); }
    //
    // sign
-   CPPAD_VALVECTOR_MEMBER2FUNCTION(sign)
+   inline valvector sign(const valvector& x)
+   {  typedef valvector::scalar_type scalar_type;  
+      //
+      valvector result;
+      result.resize( x.size() );
+      scalar_type zero = scalar_type(0);
+      for(size_t i = 0; i < x.size(); ++i)
+      {  if( x[i] < zero )
+            result[i] = scalar_type(-1);
+         if( x[i] == zero )
+            result[i] = zero;
+         if( x[i] > zero )
+            result[i] = scalar_type(1);
+      }
+      return result;
+   }
    /*
    ------------------------------------------------------------------------
    {xrst_begin valvector_condexp}
@@ -996,7 +968,7 @@ namespace CppAD {
 
 # undef CPPAD_VALVECTOR_ASSERT_KNOWN
 # undef CPPAD_VALVECTOR_NOT_AVAILABLE
-# undef CPPAD_VALVECTOR_STD_MATH_MEMBER
+# undef CPPAD_VALVECTOR_UNARY_STD_MATH
 # undef CPPAD_VALVECTOR_MEMBER2FUNCTION
 # undef CPPAD_VALVECTOR_BINARY_NUMERIC_OP
 
