@@ -7,6 +7,7 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list valvector.cpp
    base_require.cpp
+   ctor.cpp
    get_started.cpp
    sum_ad.cpp
 )

@@ -24,6 +24,10 @@ The type ``valvector::scalar_type``
 is the type corresponding to each element of a valvector .
 We use *scalar_type* to denote this type.
 
+Example
+=======
+The file :ref:`valvector.cpp-name`` tests all of the valvector examples.
+
 Operations
 **********
 {xrst_toc_table}
@@ -163,8 +167,8 @@ public:
    The scalar constructor (argument is *s* )
    creates the valvector *x* with one element that is equal to
    *scalar_type* ( *s* ), where
-   *s* has type `int``, ``long int``, ``double``, ``long_double``
-   or ``size_t`` .
+   *s* has type :ref:`valvector@scalar_type` ,
+   `int``, ``long int``, ``double``, ``long_double`` or ``size_t`` .
 
    Vector
    ******
@@ -178,6 +182,14 @@ public:
    *s0* , *s1* , have valvector :ref:`valvector@scalar_type` .
    This create a valvector with size equal the length of the list
    and j-th element equal to *sj* . 
+
+   {xrst_toc_hidden
+      example/valvector/ctor.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_ctor.cpp-name` is an example and test of these
+   constructors.
 
    {xrst_end valvector_ctor}
    ---------------------------------------------------------------------------

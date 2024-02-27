@@ -44,6 +44,7 @@ an different version of make; e.g., ``ninja`` .
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool base_require(void);
+extern bool ctor(void);
 extern bool get_started(void);
 extern bool sum_ad(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -60,6 +61,7 @@ int main(void)
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( base_require,        "base_require"          );
+   Run( ctor,                "ctor"                  );
    Run( get_started,         "get_started"           );
    Run( sum_ad,              "sum_ad"                );
    // END_SORT_THIS_LINE_MINUS_1
