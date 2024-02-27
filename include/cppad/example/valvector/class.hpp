@@ -628,12 +628,6 @@ inline std::ostream& operator << (std::ostream& os, const valvector& x)
 // CppAD namespace
 // ============================================================================
 namespace CppAD {
-   //
-   // abs_geq
-   inline bool abs_geq(const valvector& x, const valvector& y)
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
-      return bool();
-   }
    /*
    --------------------------------------------------------------------------
    {xrst_begin valvector_unary_math}
@@ -695,6 +689,14 @@ namespace CppAD {
    ====
    The function name *fun* can be ``sign`` ,
    which computes the sign (or signum) function.
+
+   {xrst_toc_hidden
+      example/valvector/unary_math.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_unary_math.cpp-name` is an example and test of the
+   valvector unary math functions.
 
    {xrst_end valvector_unary_math}
    */
@@ -966,6 +968,9 @@ namespace CppAD {
 // ===========================================================================
 /*
 {xrst_begin valvector_base_require}
+{xrst_spell
+   geq
+}
 
 The valvector Implementation of CppAD Base Type Requirements
 ############################################################
@@ -1078,6 +1083,12 @@ namespace CppAD {
    CPPAD_VALVECTOR_NOT_AVAILABLE(GreaterThanOrZero)
    CPPAD_VALVECTOR_NOT_AVAILABLE(LessThanZero)
    CPPAD_VALVECTOR_NOT_AVAILABLE(LessThanOrZero)
+   //
+   // abs_geq
+   inline bool abs_geq(const valvector& x, const valvector& y)
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
+      return bool();
+   }
 }
 /* {xrst_code}
 

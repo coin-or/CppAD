@@ -5,8 +5,8 @@
 /*
 {xrst_begin valvector_unary_op.cpp}
 
-Example and Test of valvector Element Access
-############################################
+Example and Test of valvector Unary Operators
+#############################################
 
 {xrst_literal
    // BEGIN C++

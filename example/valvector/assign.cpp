@@ -5,8 +5,8 @@
 /*
 {xrst_begin valvector_assign.cpp}
 
-Example and Test of valvector Resize
-####################################
+Example and Test of valvector Assignment Operator
+#################################################
 
 {xrst_literal
    // BEGIN C++

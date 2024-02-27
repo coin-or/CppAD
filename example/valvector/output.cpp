@@ -5,8 +5,8 @@
 /*
 {xrst_begin valvector_output.cpp}
 
-Example and Test of valvector Element Access
-############################################
+Example and Test of Outputting a valvector
+##########################################
 
 {xrst_literal
    // BEGIN C++

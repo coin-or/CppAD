@@ -5,8 +5,8 @@
 /*
 {xrst_begin valvector_size.cpp}
 
-Example and Test of valvector Resize
-####################################
+Example and Test of valvector Size
+##################################
 
 {xrst_literal
    // BEGIN C++

@@ -51,6 +51,7 @@ extern bool compound_op(void);
 extern bool ctor(void);
 extern bool element(void);
 extern bool get_started(void);
+extern bool math_unary(void);
 extern bool output(void);
 extern bool resize(void);
 extern bool size(void);
@@ -77,6 +78,7 @@ int main(void)
    Run( ctor,                "ctor"                  );
    Run( element,             "element"               );
    Run( get_started,         "get_started"           );
+   Run( math_unary,          "math_unary"            );
    Run( output,              "output"                );
    Run( resize,              "resize"                );
    Run( size,                "size"                  );

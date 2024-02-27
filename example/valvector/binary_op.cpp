@@ -5,8 +5,8 @@
 /*
 {xrst_begin valvector_binary_op.cpp}
 
-Example and Test of valvector Element Access
-############################################
+Example and Test of valvector Binary Operators
+##############################################
 
 {xrst_literal
    // BEGIN C++
