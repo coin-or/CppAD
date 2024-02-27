@@ -14,6 +14,7 @@ SET(source_list valvector.cpp
    resize.cpp
    size.cpp
    sum_ad.cpp
+   unary_op.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #

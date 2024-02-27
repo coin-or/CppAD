@@ -354,7 +354,6 @@ public:
    The file :ref:`valvector_size.cpp-name` is an example and test of
    valvector size.
 
-
    {xrst_end valvector_size}
    ----------------------------------------------------------------------------
    */
@@ -390,6 +389,14 @@ public:
       and the return is the single element in this valvector.
    #. If the size of this valvector is not one, *j* must be less than
       its size and the return is the j-th element in this valvector.
+
+   {xrst_toc_hidden
+      example/valvector/element.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_element.cpp-name` is an example and test of
+   valvector element access.
 
    {xrst_end valvector_element}
    ----------------------------------------------------------------------------
@@ -431,6 +438,14 @@ public:
       // BEGIN_PLUS , END_PLUS
       // BEGIN_MINUS , END_MINUS
    }
+
+   {xrst_toc_hidden
+      example/valvector/unary_op.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_unary_op.cpp-name` is an example and test of
+   valvector unary operators.
    
    {xrst_end valvector_unary_op}
    ----------------------------------------------------------------------------
