@@ -772,6 +772,14 @@ namespace CppAD {
    The result *z* is a valvector with size equal to the maximum of the
    size of *x* and the size of *y* .
 
+   {xrst_toc_hidden
+      example/valvector/pow.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_pow.cpp-name` is an example and test of the
+   valvector pow function.
+
    {xrst_end valvector_pow}
    */
    inline valvector pow(const valvector& x, const valvector& y)

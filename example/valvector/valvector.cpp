@@ -53,6 +53,7 @@ extern bool element(void);
 extern bool get_started(void);
 extern bool math_unary(void);
 extern bool output(void);
+extern bool pow(void);
 extern bool resize(void);
 extern bool size(void);
 extern bool sum_ad(void);
@@ -80,6 +81,7 @@ int main(void)
    Run( get_started,         "get_started"           );
    Run( math_unary,          "math_unary"            );
    Run( output,              "output"                );
+   Run( pow,                 "pow"                   );
    Run( resize,              "resize"                );
    Run( size,                "size"                  );
    Run( sum_ad,              "sum_ad"                );
