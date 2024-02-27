@@ -444,7 +444,7 @@ public:
    }
    Example
    =======
-   The file :ref:`valvector_unary_op.cpp-name` is an example and test of
+   The file :ref:`valvector_unary_op.cpp-name` is an example and test of the
    valvector unary operators.
    
    {xrst_end valvector_unary_op}
@@ -490,6 +490,14 @@ public:
    x, y
    ****
    Both *x* and *y* are  ``const`` valvectors.
+
+   {xrst_toc_hidden
+      example/valvector/binary_op.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_binary_op.cpp-name` is an example and test of the
+   valvector binary operators.
 
    {xrst_end valvector_binary_op}
    ----------------------------------------------------------------------------

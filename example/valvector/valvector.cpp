@@ -44,6 +44,7 @@ an different version of make; e.g., ``ninja`` .
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool assign(void);
+extern bool binary_op(void);
 extern bool base_require(void);
 extern bool ctor(void);
 extern bool element(void);
@@ -66,6 +67,7 @@ int main(void)
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( assign,              "assign"                );
+   Run( binary_op,           "binary_op"             );
    Run( base_require,        "base_require"          );
    Run( ctor,                "ctor"                  );
    Run( element,             "element"               );
