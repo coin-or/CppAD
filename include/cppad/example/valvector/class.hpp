@@ -547,12 +547,6 @@ inline std::ostream& operator << (std::ostream& os, const valvector& x)
 // ============================================================================
 namespace CppAD {
    //
-   // numeric_limits
-   CPPAD_NUMERIC_LIMITS(valvector::scalar_type, valvector)
-   //
-   // to_string_struct
-   CPPAD_TO_STRING(valvector)
-   //
    // abs_geq
    inline bool abs_geq(const valvector& x, const valvector& y)
    {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
@@ -710,9 +704,12 @@ namespace CppAD {
    /*
    --------------------------------------------------------------------------
    {xrst_begin valvector_azmul}
+   {xrst_spell
+      valvectors
+   }
 
-   The valvector Pow Function
-   ##########################
+   Absolute Zero Multiply of valvectors
+   ####################################
 
    Syntax
    ******
@@ -891,14 +888,6 @@ namespace CppAD {
 The valvector Implementation of CppAD Base Type Requirements
 ############################################################
 
-Not Available
-*************
-Some of the base type requirements cannot be satisfied for a valvector.
-We use the following macro to define the corresponding functions:
-{xrst_literal ,
-   // BEGIN_NOT_AVAILABLE , // END_NOT_AVAILABLE
-}
-
 
 
 Output Operator
@@ -955,6 +944,24 @@ azmul
 The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by
 :ref:`valvector_azmul-name` .
 
+numeric_limits
+**************
+The :ref:`base_limits-name` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   CPPAD_NUMERIC_LIMITS(valvector::scalar_type, valvector)
+}
+/* {xrst_code}
+
+to_string
+*********
+The :ref:`base_to_string-name` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   CPPAD_TO_STRING(valvector)
+}
+/* {xrst_code}
+
 EqualOpSeq
 **********
 The :ref:`base_identical@EqualOpSeq` requirement is satisfied by:
@@ -980,6 +987,9 @@ namespace CppAD {
 Not Ordered
 ***********
 The :ref:`base_ordered@Not Ordered` requirement is satisfied by:
+{xrst_literal ,
+   // BEGIN_NOT_AVAILABLE , // END_NOT_AVAILABLE
+}
 {xrst_code hpp} */
 namespace CppAD {
    CPPAD_VALVECTOR_NOT_AVAILABLE(GreaterThanZero)

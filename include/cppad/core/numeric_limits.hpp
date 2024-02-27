@@ -176,7 +176,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 File that defines CppAD numeric_limits for AD types
 */
 
-/// All tthese defaults correspond to errors
+/// All these defaults correspond to errors
 template <class Float>
 class numeric_limits {
 public:
