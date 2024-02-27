@@ -561,6 +561,14 @@ public:
       // BEGIN_NOT_EQUAL , // END_NOT_EQUAL
    }
 
+   {xrst_toc_hidden
+      example/valvector/compare_op.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_compare_op.cpp-name` is an example and test of the
+   valvector compare operators.
+
    {xrst_end valvector_compare_op}
    */
    //

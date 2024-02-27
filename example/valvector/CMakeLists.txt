@@ -9,6 +9,7 @@ SET(source_list valvector.cpp
    assign.cpp
    base_require.cpp
    binary_op.cpp
+   compare_op.cpp
    compound_op.cpp
    ctor.cpp
    element.cpp
