@@ -14,6 +14,7 @@ SET(source_list valvector.cpp
    ctor.cpp
    element.cpp
    get_started.cpp
+   output.cpp
    resize.cpp
    size.cpp
    sum_ad.cpp

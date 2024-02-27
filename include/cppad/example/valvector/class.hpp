@@ -602,6 +602,14 @@ Prototype
    // BEGIN_OUTPUT , // END_OUTPUT
 }
 
+{xrst_toc_hidden
+   example/valvector/output.cpp
+}
+Example
+=======
+The file :ref:`valvector_output.cpp-name` is an example and test of the
+valvector output.
+
 {xrst_end valvector_output}
 */
 // BEGIN_OUTPUT

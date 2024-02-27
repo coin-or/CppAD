@@ -51,6 +51,7 @@ extern bool compound_op(void);
 extern bool ctor(void);
 extern bool element(void);
 extern bool get_started(void);
+extern bool output(void);
 extern bool resize(void);
 extern bool size(void);
 extern bool sum_ad(void);
@@ -76,6 +77,7 @@ int main(void)
    Run( ctor,                "ctor"                  );
    Run( element,             "element"               );
    Run( get_started,         "get_started"           );
+   Run( output,              "output"                );
    Run( resize,              "resize"                );
    Run( size,                "size"                  );
    Run( sum_ad,              "sum_ad"                );
