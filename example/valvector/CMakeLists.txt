@@ -9,6 +9,7 @@ SET(source_list valvector.cpp
    assign.cpp
    base_require.cpp
    ctor.cpp
+   element.cpp
    get_started.cpp
    resize.cpp
    size.cpp

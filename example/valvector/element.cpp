@@ -3,23 +3,23 @@
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin valvector_size.cpp}
+{xrst_begin valvector_element.cpp}
 
-Example and Test of valvector Resize
-####################################
+Example and Test of valvector Element Access
+############################################
 
 {xrst_literal
    // BEGIN C++
    // END C++
 }
 
-{xrst_end valvector_size.cpp}
+{xrst_end valvector_element.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
 # include <cppad/example/valvector/class.hpp>
 //
-bool size(void)
+bool element(void)
 {  // scalar_type  
    typedef valvector::scalar_type scalar_type;
    //
@@ -30,8 +30,10 @@ bool size(void)
    // v, ok
    valvector v(3);
    ok &= v.size() == 1;
-   for(size_t i = 0; i < 10; ++i)
-      ok &= v[i] == scalar_type(3); 
+   for(size_t i = 0; i <= 10; ++i)
+      v[i] = scalar_type(i); 
+   ok &= v[0] == scalar_type(10);
+   ok &= v[1] == scalar_type(10);
    //
    // v
    v.resize(3);

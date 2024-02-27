@@ -385,13 +385,12 @@ public:
    j
    *
    This is the index of the element we are accessing.
-   If the size this valvector is one, *j* can have any value
-   and the return is the single element in this valvector.
-   Otherwise, *j* must be less than
-   :ref:`size<valvector_size-name>` (for this valvector)
-   and the return is the j-th element in this valvector.
 
-   
+   #. If the size this valvector is one, *j* can have any value
+      and the return is the single element in this valvector.
+   #. If the size of this valvector is not one, *j* must be less than
+      its size and the return is the j-th element in this valvector.
+
    {xrst_end valvector_element}
    ----------------------------------------------------------------------------
    */
