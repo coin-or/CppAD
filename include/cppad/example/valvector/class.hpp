@@ -553,37 +553,9 @@ public:
       }
       return result;
    }
-   //
-   // pow
-   valvector pow(const valvector& other) const
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
-         size() == 1 || other.size() == 1 || size() == other.size() ,
-         "size error using pow function"
-      )
-      valvector  result;
-      result.vec_.resize( std::max( size(), other.size() ) );
-      for(size_t i = 0; i < size(); ++i)
-         result[i] = std::pow( (*this)[i] , other[i] );
-      return result;
-   }
-   // =========================================================================
-   // Member functions not in user API
-   // =========================================================================
-   //
-   // 
-   // output
-   std::ostream& output(std::ostream& os)  const
-   {  os << "{ ";
-      for(size_t i = 0; i < size(); ++i)
-      {  os << (*this)[i];
-         if( i + 1 < size() )
-            os << ", ";
-      }
-      os << " }";
-      return os;
-   }
 };
 /*
+------------------------------------------------------------------------------
 {xrst_begin valvector_output}
 
 Outputting a valvector
@@ -598,9 +570,16 @@ Prototype
 {xrst_end valvector_output}
 */
 // BEGIN_OUTPUT
-inline std::ostream& operator << (std::ostream& os, const valvector& v)
+inline std::ostream& operator << (std::ostream& os, const valvector& x)
 // END_OUTPUT
-{  return v.output(os);
+{  os << "{ ";
+   for(size_t i = 0; i < x.size(); ++i)
+   {  os << x[i];
+      if( i + 1 < x.size() )
+         os << ", ";
+   }
+   os << " }";
+   return os;
 }
 // ============================================================================
 // CppAD namespace
@@ -612,13 +591,6 @@ namespace CppAD {
    //
    // to_string_struct
    CPPAD_TO_STRING(valvector)
-   //
-   // 
-   // pow
-   inline valvector pow(
-      const valvector& left  ,
-      const valvector& right )
-   {  return left.pow(right); }
    //
    // abs_geq
    inline bool abs_geq(const valvector& x, const valvector& y)
@@ -639,7 +611,7 @@ namespace CppAD {
 
    Syntax
    ******
-   | *y* = *fun* ( *x* )
+   | *y* = ``CppAD`` :: *fun* ( *x* )
 
    x
    *
@@ -732,6 +704,46 @@ namespace CppAD {
          if( x[i] > zero )
             result[i] = scalar_type(1);
       }
+      return result;
+   }
+   /*
+   --------------------------------------------------------------------------
+   {xrst_begin valvector_pow}
+
+   The valvector Pow Function
+   ##########################
+
+   Syntax
+   ******
+   | *z* = ``CppAD::pow`` ( *x* , *y* )
+
+   x
+   *
+   The argument *x* is a ``const`` valvector that is passed by reference.
+
+   y
+   *
+   The argument *y* is a ``const`` valvector that is passed by reference.
+   If the size of *x* is not one,
+   and the size of *y* is not one,
+   the size of *x* and *y* must be equal.
+   
+
+   z
+   *
+   The result *z* is a valvector with size equal to the maximum of the
+   size of *x* and the size of *y* .
+
+   */
+   inline valvector pow(const valvector& x, const valvector& y)
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         x.size() == 1 || y.size() == 1 || x.size() == y.size() ,
+         "size error using pow function"
+      )
+      valvector  result;
+      result.resize( std::max( x.size(), y.size() ) );
+      for(size_t i = 0; i < x.size(); ++i)
+         result[i] = std::pow( x[i] , y[i] );
       return result;
    }
    /*
