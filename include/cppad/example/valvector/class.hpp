@@ -532,6 +532,14 @@ public:
    ******
    The value returned by each of these operators is a reference to *y* .
 
+   {xrst_toc_hidden
+      example/valvector/compound_op.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_compound_op.cpp-name` is an example and test of the
+   valvector compound assignment operators.
+
    {xrst_end valvector_compound_op}
    */
    CPPAD_VALVECTOR_BINARY_NUMERIC_OP(+, +=)

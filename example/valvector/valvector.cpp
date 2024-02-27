@@ -46,6 +46,7 @@ an different version of make; e.g., ``ninja`` .
 extern bool assign(void);
 extern bool binary_op(void);
 extern bool base_require(void);
+extern bool compound_op(void);
 extern bool ctor(void);
 extern bool element(void);
 extern bool get_started(void);
@@ -69,6 +70,7 @@ int main(void)
    Run( assign,              "assign"                );
    Run( binary_op,           "binary_op"             );
    Run( base_require,        "base_require"          );
+   Run( compound_op,         "compound_op"           );
    Run( ctor,                "ctor"                  );
    Run( element,             "element"               );
    Run( get_started,         "get_started"           );
