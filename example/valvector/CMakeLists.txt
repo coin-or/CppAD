@@ -12,6 +12,7 @@ SET(source_list valvector.cpp
    binary_op.cpp
    compare_op.cpp
    compound_op.cpp
+   condexp.cpp
    ctor.cpp
    element.cpp
    get_started.cpp

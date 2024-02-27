@@ -904,6 +904,14 @@ namespace CppAD {
    *left* , *right* , *if_true* and *if_false* .
    The size of each argument must be one, or the same as the size of *result*.
 
+   {xrst_toc_hidden
+      example/valvector/condexp.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_condexp.cpp-name` is an example and test of the
+   valvector conditional expressions.
+
    {xrst_end valvector_condexp}
    */
    inline valvector CondExpOp(

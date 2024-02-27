@@ -49,6 +49,7 @@ extern bool base_require(void);
 extern bool binary_op(void);
 extern bool compare_op(void);
 extern bool compound_op(void);
+extern bool condexp(void);
 extern bool ctor(void);
 extern bool element(void);
 extern bool get_started(void);
@@ -78,6 +79,7 @@ int main(void)
    Run( binary_op,           "binary_op"             );
    Run( compare_op,         "compare_op"             );
    Run( compound_op,         "compound_op"           );
+   Run( condexp,             "condexp"               );
    Run( ctor,                "ctor"                  );
    Run( element,             "element"               );
    Run( get_started,         "get_started"           );
