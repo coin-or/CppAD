@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 # bash function that echos and executes a command
@@ -26,6 +26,8 @@ then
 fi
 if [ "$1" != '+dev' ] && [ "$1" != '-dev' ]
 then
+   # If you change this, you will also need to change the instructions on
+   # https://cppad.readthedocs.io/latest/download.html
    echo 'usage: bin/run_xrst.sh (+dev|-dev)'
    exit 1
 fi
