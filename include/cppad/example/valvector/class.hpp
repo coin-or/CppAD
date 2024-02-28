@@ -999,21 +999,11 @@ namespace CppAD {
 The valvector Implementation of CppAD Base Type Requirements
 ############################################################
 
-
-
 Output Operator
 ***************
 The :ref:`base_require@Output Operator` requirement is satisfied by
 :ref:`valvector_output-name` .
 
-Integer
-*******
-The :ref:`base_require@Integer` requirement is satisfied by:
-{xrst_code hpp} */
-namespace CppAD {
-   inline int Integer(const valvector& x) { return int( x[0] ); }
-}
-/* {xrst_code}
 
 Constructors
 ************
@@ -1055,8 +1045,20 @@ azmul
 The :ref:`base_require@Absolute Zero, azmul` requirement is satisfied by
 :ref:`valvector_azmul-name` .
 
+Features Implemented Here
+*************************
+
+Integer
+=======
+The :ref:`base_require@Integer` requirement is satisfied by:
+{xrst_code hpp} */
+namespace CppAD {
+   inline int Integer(const valvector& x) { return int( x[0] ); }
+}
+/* {xrst_code}
+
 numeric_limits
-**************
+==============
 The :ref:`base_limits-name` requirement is satisfied by:
 {xrst_code hpp} */
 namespace CppAD {
@@ -1065,7 +1067,7 @@ namespace CppAD {
 /* {xrst_code}
 
 to_string
-*********
+=========
 The :ref:`base_to_string-name` requirement is satisfied by:
 {xrst_code hpp} */
 namespace CppAD {
@@ -1074,7 +1076,7 @@ namespace CppAD {
 /* {xrst_code}
 
 EqualOpSeq
-**********
+==========
 The :ref:`base_identical@EqualOpSeq` requirement is satisfied by:
 {xrst_code hpp} */
 namespace CppAD {
@@ -1084,7 +1086,7 @@ namespace CppAD {
 /* {xrst_code}
 
 Identical
-*********
+=========
 {xrst_code hpp} */
 namespace CppAD {
    inline bool IdenticalCon(const valvector& x)  {  return true; }
@@ -1096,7 +1098,7 @@ namespace CppAD {
 /* {xrst_code}
 
 Not Ordered
-***********
+===========
 The :ref:`base_ordered@Not Ordered` requirement is satisfied by:
 {xrst_literal ,
    // BEGIN_NOT_AVAILABLE , // END_NOT_AVAILABLE
@@ -1115,6 +1117,14 @@ namespace CppAD {
    }
 }
 /* {xrst_code}
+
+{xrst_toc_hidden
+   example/valvector/base_require.cpp
+}
+Example
+=======
+The file :ref:`valvector_base_require.cpp-name` is an example and test of the
+valvector :ref:`valvector_base_require@Features Implemented Here` .
 
 
 {xrst_end valvector_base_require}
