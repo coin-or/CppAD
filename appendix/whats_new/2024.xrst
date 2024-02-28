@@ -27,6 +27,10 @@ Release Notes for 2024
 mm-dd
 *****
 
+02-28
+=====
+Add the :ref:`valvector-name` example base class.
+
 02-27
 =====
 The omhelp package is not longer used by CppAD
