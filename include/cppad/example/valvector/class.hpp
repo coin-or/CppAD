@@ -24,13 +24,21 @@ The type ``valvector::scalar_type``
 is the type corresponding to each element of a valvector .
 We use *scalar_type* to denote this type.
 
-Example
-=======
-The file :ref:`valvector.cpp-name` tests all of the valvector examples.
+Getting Started
+===============
+The file :ref:`valvector_get_started.cpp-name` is an example
+that computes derivatives using valvector as the base class.
+
+Other Examples
+==============
+The file :ref:`valvector.cpp-name` tests that all of the valvector examples
+git the expected results.
 
 Operations
 **********
-{xrst_toc_table}
+{xrst_toc_table
+   example/valvector/get_started.cpp
+}
 
 
 {xrst_end valvector}
@@ -158,8 +166,8 @@ public:
 
    Default
    *******
-   The default constructor (no argument) 
-   creates the valvector *x* with one element using the 
+   The default constructor (no argument)
+   creates the valvector *x* with one element using the
    :ref:`valvector@scalar_type` default constructor.
 
    Scalar
@@ -172,16 +180,16 @@ public:
 
    Vector
    ******
-   The vector constructor (argument is *v*) 
+   The vector constructor (argument is *v*)
    creates a copy of the valvector *v* .
 
    List
    ****
-   In the standard initializer list constructor 
+   In the standard initializer list constructor
    ( argument is { *s0* , *s1* , .. } )
    *s0* , *s1* , have valvector :ref:`valvector@scalar_type` .
    This create a valvector with size equal the length of the list
-   and j-th element equal to *sj* . 
+   and j-th element equal to *sj* .
 
    {xrst_toc_hidden
       example/valvector/ctor.cpp
@@ -210,7 +218,7 @@ public:
    valvector(long double s) : vec_(0), scalar_( scalar_type(s) )
    { }
    //
-   valvector(const valvector& other) 
+   valvector(const valvector& other)
    : vec_( other.vec_), scalar_( other.scalar_)
    { }
    valvector(valvector&& other)
@@ -229,7 +237,7 @@ public:
       }
       else
       {  vec_.resize( list.size() );
-         itr = list.begin(); 
+         itr = list.begin();
          for(size_t i = 0; i < vec_.size(); ++i)
          {  vec_[i] = *itr;
             ++itr;
@@ -255,7 +263,7 @@ public:
 
    Use
    ***
-   This size of a valvector directly after its 
+   This size of a valvector directly after its
    :ref:`constructor<valvector_ctor-name>` is always one.
    This function must be used to create valvectors with other sizes.
 
@@ -276,7 +284,7 @@ public:
    =======
    The file :ref:`valvector_resize.cpp-name` is an example and test of
    valvector resize.
-   
+
 
    {xrst_end valvector_resize}
    ----------------------------------------------------------------------------
@@ -314,7 +322,7 @@ public:
    =======
    The file :ref:`valvector_assign.cpp-name` is an example and test of
    valvector assignment.
-   
+
    {xrst_end valvector_assign}
    ----------------------------------------------------------------------------
    */
@@ -422,7 +430,7 @@ public:
       if( size() == 1 )
          return scalar_;
       return vec_[j];
-   } 
+   }
    /*
    ----------------------------------------------------------------------------
    {xrst_begin valvector_unary_op}
@@ -446,7 +454,7 @@ public:
    =======
    The file :ref:`valvector_unary_op.cpp-name` is an example and test of the
    valvector unary operators.
-   
+
    {xrst_end valvector_unary_op}
    ----------------------------------------------------------------------------
    */
@@ -472,7 +480,7 @@ public:
 
    The valvector Numeric Binary Operators
    ######################################
-   Returns a valvector that is the element-by-element result 
+   Returns a valvector that is the element-by-element result
    of the numeric binary operators.
 
    Syntax
@@ -481,10 +489,10 @@ public:
 
    op
    **
-   The numeric binary operator *op* is 
-   ``+`` (addition) , 
-   ``-`` (subtraction), 
-   ``*`` (multiplication) , or 
+   The numeric binary operator *op* is
+   ``+`` (addition) ,
+   ``-`` (subtraction),
+   ``*`` (multiplication) , or
    ``/`` (division) .
 
    x, y
@@ -505,7 +513,7 @@ public:
 
    The valvector Numeric Compound Assignment Operators
    ###################################################
-   Computes the element-by-element result 
+   Computes the element-by-element result
    of the numeric compound assignment operators.
 
    Syntax
@@ -514,10 +522,10 @@ public:
 
    op
    **
-   The compound operator *op* is 
-   ``+=`` (compound addition) , 
-   ``-=`` (compound subtraction), 
-   ``*=`` (compound multiplication) , or 
+   The compound operator *op* is
+   ``+=`` (compound addition) ,
+   ``-=`` (compound subtraction),
+   ``*=`` (compound multiplication) , or
    ``/=`` (compound division) .
 
    x
@@ -730,7 +738,7 @@ namespace CppAD {
    //
    // sign
    inline valvector sign(const valvector& x)
-   {  typedef valvector::scalar_type scalar_type;  
+   {  typedef valvector::scalar_type scalar_type;
       //
       valvector result;
       result.resize( x.size() );
@@ -766,7 +774,7 @@ namespace CppAD {
    If the size of *x* is not one,
    and the size of *y* is not one,
    the size of *x* and *y* must be equal.
-   
+
    z
    *
    The result *z* is a valvector with size equal to the maximum of the
@@ -837,7 +845,7 @@ namespace CppAD {
    */
    inline valvector azmul(const valvector& x, const valvector& y)
    {  typedef valvector::scalar_type scalar_type;
-      //  
+      //
       CPPAD_VALVECTOR_ASSERT_KNOWN(
          x.size() == 1 || y.size() == 1 || x.size() == y.size() ,
          "size error using azmul function"
@@ -867,12 +875,12 @@ namespace CppAD {
       ge
       valvectors
    }
-   
+
    The valvector Conditional Expressions
    #####################################
    Computes element-by-element :ref:`CondExp-name` values where
    the arguments are valvectors.
-   
+
    Syntax
    ******
    *result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )

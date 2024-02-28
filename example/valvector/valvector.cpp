@@ -58,7 +58,6 @@ extern bool output(void);
 extern bool pow(void);
 extern bool resize(void);
 extern bool size(void);
-extern bool sum_ad(void);
 extern bool unary_op(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -88,7 +87,6 @@ int main(void)
    Run( pow,                 "pow"                   );
    Run( resize,              "resize"                );
    Run( size,                "size"                  );
-   Run( sum_ad,              "sum_ad"                );
    Run( unary_op,            "unary_op"              );
    // END_SORT_THIS_LINE_MINUS_1
 

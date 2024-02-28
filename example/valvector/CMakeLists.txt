@@ -20,7 +20,6 @@ SET(source_list valvector.cpp
    pow.cpp
    resize.cpp
    size.cpp
-   sum_ad.cpp
    unary_math.cpp
    unary_op.cpp
 )

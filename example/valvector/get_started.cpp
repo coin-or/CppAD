@@ -4,8 +4,21 @@
 // ---------------------------------------------------------------------------
 # include <cppad/example/valvector/class.hpp>
 # include <cppad/cppad.hpp>
-//
-// get_started
+/*
+{xrst_begin valvector_get_started.cpp}
+
+Getting Started Using valvector as a CppAD Base Class
+#####################################################
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end valvector_get_started.cpp}
+-------------------------------------------------------------------------------
+*/
+// BEGIN C++
 bool get_started(void)
 {  // ok
    bool ok = true;
@@ -49,3 +62,4 @@ bool get_started(void)
    //
    return ok;
 }
+// END C++
