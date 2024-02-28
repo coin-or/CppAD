@@ -122,6 +122,9 @@ if which autoconf >& /dev/null
 then
    echo_eval libtoolize
    echo_eval autoreconf --install --force
+else
+   echo "Error: autoconf and libtool required for this script"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
