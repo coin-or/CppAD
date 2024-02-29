@@ -123,18 +123,16 @@ bool ad_split(void)
    //
    // g
    CPPAD_TESTVECTOR( ad_valvector ) adx(n), ady(m);
+   adx[0] = valvector( 1.0 );
    CppAD::Independent(ax);
-   ay = af.Forward(0, ax);
-   CppAD::ADFun<valvector> g(ax, ay);
+   af.Forward(0, ax);
+   ady = af.Forward(1, adx);
+   CppAD::ADFun<valvector> g(ax, ady);
    //
-   // y
-   y = g.Forward(0, x);
-   /*
-   // 2DO: This test is failing.
    // ok
+   y = g.Forward(0, x);
    for(size_t i = 0; i < m; ++i)
-      ok &= y[0][i] == x[0][i] * x[0][i];
-   */
+      ok &= y[i][0] == 2.0 * x[0][i];
    //
    return ok;
 }
