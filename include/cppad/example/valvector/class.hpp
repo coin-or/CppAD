@@ -1130,8 +1130,17 @@ namespace CppAD {
    //
    // abs_geq
    inline bool abs_geq(const valvector& x, const valvector& y)
-   {  CPPAD_VALVECTOR_ASSERT_KNOWN( false, "abs_geq is not available" )
-      return bool();
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN(
+         x.size() == 1 || y.size() == 1 || x.size() == y.size() ,
+         "size error in abs_geq functions"
+      )
+      size_t max_size = std::max( x.size(), y.size() );
+      valvector::scalar_type abs_x(0), abs_y(0);
+      for(size_t i = 0; i < max_size; ++i)
+      {  abs_x += fabs( x[i] );
+         abs_y += fabs( y[i] );
+      }
+      return abs_x >= abs_y;
    }
 }
 /* {xrst_code}

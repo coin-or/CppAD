@@ -135,12 +135,10 @@ bool ad_split(void)
       ok &= y[i][0] == 2.0 * x[0][i];
    //
    // ok
-   /* 2DO: Not yet working
    f.optimize();
    y = f.Forward(0, x);
    for(size_t i = 0; i < m; ++i)
       ok &= y[i][0] == x[0][i] * x[0][i];
-   */
    //
    return ok;
 }

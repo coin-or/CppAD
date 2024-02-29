@@ -258,7 +258,6 @@ private:
       //
       return ok;
    }
-   /*
    // ------------------------------------------------------------------------
    // rev_depend
    bool rev_depend(
@@ -274,7 +273,7 @@ private:
       size_t m = depend_y.size();
       //
 # ifndef NDEBUG
-      size_t n = select_x.size();
+      size_t n = depend_x.size();
       assert( call_id == 0 );
       assert( n == 1 );
 # endif
@@ -282,11 +281,10 @@ private:
       // depend_x
       depend_x[0] = false;
       for(size_t i = 0; i < m; ++i)
-         depend_x[0] != depend_y[i];
+         depend_x[0] |= depend_y[i];
       //
       return ok;
    }
-   */
 };
 
 class valvector_ad_split {
