@@ -2,7 +2,7 @@
 # define CPPAD_CORE_COND_EXP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -176,47 +176,9 @@ AD<Base> CondExpOp(
 
    // check first case where do not need to tape
    if( IdenticalCon(left) & IdenticalCon(right) )
-   {  switch( cop )
-      {
-         case CompareLt:
-         if( left.value_ < right.value_ )
-            result = if_true;
-         else
-            result = if_false;
-         break;
-
-         case CompareLe:
-         if( left.value_ <= right.value_ )
-            result = if_true;
-         else
-            result = if_false;
-         break;
-
-         case CompareEq:
-         if( left.value_ == right.value_ )
-            result = if_true;
-         else
-            result = if_false;
-         break;
-
-         case CompareGe:
-         if( left.value_ >= right.value_ )
-            result = if_true;
-         else
-            result = if_false;
-         break;
-
-         case CompareGt:
-         if( left.value_ > right.value_ )
-            result = if_true;
-         else
-            result = if_false;
-         break;
-
-         default:
-         CPPAD_ASSERT_UNKNOWN(0);
-         result = if_true;
-      }
+   {  result = CondExpOp(
+         cop, left.value_, right.value_, if_true.value_, if_false.value_
+      );
       return result;
    }
 

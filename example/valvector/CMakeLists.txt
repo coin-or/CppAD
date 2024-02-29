@@ -6,6 +6,7 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list valvector.cpp
+   ad_split.cpp
    assign.cpp
    azmul.cpp
    base_require.cpp

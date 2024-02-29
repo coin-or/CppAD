@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_FOUR_CALL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_call}
@@ -53,14 +53,15 @@ and this *afun* function call is implemented by the
 
 ax
 **
-The size of this vector determines *n* .
+This vector is ``const`` and passed by reference and
+its size determines *n* .
 It specifies vector :math:`x \in \B{R}^n`
 at which an ``AD`` < *Base* > version of
 :math:`y = g(x)` is to be evaluated.
 
 ay
 **
-The size of this vector determines *m* .
+This vector is passed by reference and its size determines *m* .
 The input values of its elements
 are not specified (must not matter).
 Upon return, it is an ``AD`` < *Base* > version of

@@ -28,10 +28,6 @@ bool azmul(void)
    // ok
    bool ok = true;
    //
-   // eps99
-   scalar_type eps99 = CppAD::numeric_limits<scalar_type>::epsilon();
-   eps99            *= scalar_type(99);
-   //
    // nan
    scalar_type nan   = CppAD::numeric_limits<scalar_type>::quiet_NaN();
    //

@@ -43,6 +43,7 @@ an different version of make; e.g., ``ninja`` .
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+extern bool ad_split(void);
 extern bool assign(void);
 extern bool azmul(void);
 extern bool base_require(void);
@@ -72,6 +73,7 @@ int main(void)
    // This line is used by test_one.sh
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
+   Run( ad_split,            "ad_split"              );
    Run( assign,              "assign"                );
    Run( azmul,               "azmul"                 );
    Run( base_require,        "base_require"          );
