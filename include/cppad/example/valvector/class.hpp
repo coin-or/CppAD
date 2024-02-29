@@ -101,35 +101,18 @@ Operations
          (*this)[i] compound_op other[i]; \
       return *this; \
    }
+# define CPPAD_VALVECTOR_BINARY_ORDER_OP(op) \
+   bool operator op(const valvector& other) const \
+   {  CPPAD_VALVECTOR_ASSERT_KNOWN( \
+         size() == 1 && other.size() == 1, \
+         "binary " #op " operator is only availble when both sizes are one" \
+      ) \
+      return (*this)[0] op other[0]; \
+   }
 // ============================================================================
 // valvector
 // ============================================================================
-//
-// valvector
-// Forward declare
-class valvector;
-//
-// CondExpOp
-// Forward decalre
-namespace CppAD {
-   inline valvector CondExpOp(
-      enum CompareOp         cop          ,
-      const valvector&       left         ,
-      const valvector&       right        ,
-      const valvector&       if_true      ,
-      const valvector&       if_false
-   );
-}
 class valvector {
-   //
-   // friend
-   friend inline valvector CppAD::CondExpOp(
-      enum CppAD::CompareOp  cop          ,
-      const valvector&       left         ,
-      const valvector&       right        ,
-      const valvector&       if_true      ,
-      const valvector&       if_false
-   );
 public:
    //
    // scalar_type
@@ -561,14 +544,39 @@ public:
 
    The valvector Compare Operators
    ###############################
-   Compares this valvector with another valvector.
 
-   Prototype
-   *********
-   {xrst_literal ,
-      // BEGIN_EQUAL , // END_EQUAL
-      // BEGIN_NOT_EQUAL , // END_NOT_EQUAL
-   }
+   Syntax
+   ******
+   | *y* *op* *x*
+
+   op
+   **
+
+   Equality Operators
+   ==================
+   == , !=
+
+   Ordered Operators
+   =================
+   < , <= , >= , >
+
+   x
+   *
+   The operand *x* is a ``const`` valvector.
+   If *op* is an equality operator,
+   *x* can have any size.
+   Otherwise it must be size one.
+
+   y
+   *
+   The operand *y* is a ``const`` valvector.
+   If *op* is an equality operator,
+   *y* can have any size.
+   Otherwise it must be size one.
+
+   Return
+   ******
+   The value returned by each of these operators is a bool
 
    {xrst_toc_hidden
       example/valvector/compare_op.cpp
@@ -581,9 +589,7 @@ public:
    {xrst_end valvector_compare_op}
    */
    //
-   // BEGIN_EQUAL
    bool operator==(const valvector& other) const
-   // END_EQUAL
    {  bool result = true;
       CPPAD_VALVECTOR_ASSERT_KNOWN(
          size() == 1 || other.size() == 1 || size() == other.size() ,
@@ -593,10 +599,13 @@ public:
          result &= (*this)[i] == other[i];
       return result;
    }
-   // BEGIN_NOT_EQUAL
    bool operator!=(const valvector& other) const
-   // END_NOT_EQUAL
-   {  return ! (*this == other); }
+   {  return ! (*this == other);
+   }
+   CPPAD_VALVECTOR_BINARY_ORDER_OP(<)
+   CPPAD_VALVECTOR_BINARY_ORDER_OP(<=)
+   CPPAD_VALVECTOR_BINARY_ORDER_OP(>=)
+   CPPAD_VALVECTOR_BINARY_ORDER_OP(>)
 };
 /*
 ------------------------------------------------------------------------------
@@ -1140,9 +1149,10 @@ valvector :ref:`valvector_base_require@Features Implemented Here` .
 */
 
 # undef CPPAD_VALVECTOR_ASSERT_KNOWN
-# undef CPPAD_VALVECTOR_NOT_AVAILABLE
 # undef CPPAD_VALVECTOR_UNARY_STD_MATH
+# undef CPPAD_VALVECTOR_BINARY_ORDER_OP
 # undef CPPAD_VALVECTOR_BINARY_NUMERIC_OP
+# undef CPPAD_VALVECTOR_NOT_AVAILABLE
 
 
 # endif

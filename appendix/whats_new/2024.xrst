@@ -19,6 +19,7 @@
    iostream
    cassert
    omhelp
+   valvector
 }
 
 Release Notes for 2024
@@ -26,6 +27,12 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+02-29
+=====
+Add the :ref:`valvector_compare_op@op@Ordered Operators`
+to the valvector class.
+This is needed to optimize tapes where the base type is valvector.
 
 02-28
 =====
