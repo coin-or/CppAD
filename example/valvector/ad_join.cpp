@@ -66,6 +66,14 @@ bool ad_join(void)
    for(size_t j = 0; j < n; ++j)
       ok &= z[0][j] == x[j][0] * x[j][0];
    //
+   // dw
+   CPPAD_TESTVECTOR( valvector ) w(m), dw(n);
+   w[0][0] = 1.0;
+   dw = f.Reverse(1, w);
+   //
+   // ok
+   for(size_t j = 0; j < n; ++j)
+      ok &= dw[0][j] == scalar_type(2) * x[0][j];
    return ok;
 }
 // END C++

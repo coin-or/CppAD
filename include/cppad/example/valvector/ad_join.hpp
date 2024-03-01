@@ -127,6 +127,41 @@ private:
       //
       return ok;
    }
+   // ------------------------------------------------------------------------
+   // reverse
+   bool reverse(
+      size_t                              call_id      ,
+      const CppAD::vector<bool>&          select_x     ,
+      size_t                              order_up     ,
+      const CppAD::vector<valvector>&     taylor_x     ,
+      const CppAD::vector<valvector>&     taylor_y     ,
+      CppAD::vector<valvector>&           partial_x    ,
+      const CppAD::vector<valvector>&     partial_y    ) override
+   {  //
+      // ok
+      bool ok = true;
+      //
+      // q, m
+      size_t q = order_up + 1;
+      size_t n = taylor_x.size() / q;
+      //
+# ifndef NDEBUG
+      size_t m = taylor_y.size() / q;
+      assert( call_id == 0 );
+      assert( m == 1 );
+      assert( n == select_x.size() );
+# endif
+      //
+      // partial_x
+      for(size_t k = 0; k < q; ++k)
+      {  assert( taylor_y[k].size() == n );
+         for(size_t j = 0; j < n; ++j)
+         {  partial_x[j * q + k].resize(1);
+            partial_x[j * q + k][0] = partial_y[k][j];
+         }
+      }
+      return ok;
+   }
 };
 
 class valvector_ad_join {
