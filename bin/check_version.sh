@@ -2,7 +2,7 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ $# != 0 ]
 then
@@ -46,31 +46,21 @@ version=$(
       sed -e 's|.*"\([^"]*\)".*|\1|'
 )
 #
-# version, release
-release='yes'
-if echo $version | grep '[0-9]\{4\}0000[.]' > /dev/null
+# branch
+branch=$(git branch | sed -n -e '/^[*]/p' | sed -e 's|^[*] *||')
+#
+# version
+if [ "$branch" == 'master' ]
 then
-   res=''
-   while [ "$res" != 'ok' ] && [ "$res" != 'date' ] && [ "$res" != 'abort' ]
-   do
-      echo "In CMakeLists.txt version = $version"
-      echo 'ok:    use this version.'
-      echo 'date:  repalce this by the current date.'
-      echo 'abort: if you whish to change the version in CMakeLists.txt.'
-      read -p '[ok/date/abort] ?' res
-   done
-   if [ "$res" == 'abort' ]
+   version=$( date +%Y%m%d )
+fi
+if echo $branch | grep '^stable/' > /dev/null
+then
+   if ! echo $version | grep '^[0-9]\{4\}0000[.]' > /dev/null
    then
+      echo 'check_version.sh: Stable version does not begin with yyyy0000.'
       exit 1
    fi
-   if [ "$res" == 'date' ]
-   then
-      release='no'
-      version=$( date +%Y%m%d )
-   fi
-else
-   release='no'
-   version=$( date +%Y%m%d )
 fi
 #
 # version_ok
@@ -83,7 +73,7 @@ version_files='
 '
 #
 # temp.sed
-if [ "$release" == 'yes' ]
+if echo $branch | grep '^stable/' > /dev/null
 then
    stable=$( echo $version | sed -e 's|[.][0-9]*$||' )
 cat << EOF > temp.sed
