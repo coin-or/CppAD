@@ -38,6 +38,7 @@ Operations
 **********
 {xrst_toc_table after
    include/cppad/example/valvector/ad_split.hpp
+   include/cppad/example/valvector/ad_join.hpp
    example/valvector/get_started.cpp
 }
 

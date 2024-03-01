@@ -22,11 +22,14 @@ Syntax
 | valvector_ad_split *asplit*
 | *asplit( *ax* , *ay_vec* )
 
+m
+*
+We use *m* to denote *ay_vec* .size()
 
 ax
 **
 This CppAD::AD<valvector> is ``const`` and passed by reference.
-The size *ax*.size()  must be equal to one or *ay_vec* .size() .
+The size *ax*.size()  must be equal to one or *m*
 
 ay_vec
 ******
