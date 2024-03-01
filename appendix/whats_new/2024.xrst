@@ -28,6 +28,14 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-01
+=====
+Fix bug in the optimizer :ref:`optimize@options@val_graph` option.
+To be more specific, the following assert could occur during the optimization::
+
+   vector: index greater than or equal vector size
+
+
 02-29
 =====
 Add the :ref:`valvector_compare_op@op@Ordered Operators`

@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_FUN2VAL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
@@ -619,7 +619,6 @@ void ADFun<Base, RecBase>::fun2val(
             compare_enum, left_index, right_index
          );
          CPPAD_ASSERT_UNKNOWN(val_index == 0); // no result for this operator
-         break;
       }
       // ----------------------------------------------------------------------
       else switch(var_op)

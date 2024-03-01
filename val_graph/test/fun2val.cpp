@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 # include <cppad/cppad.hpp>
 # include <cppad/local/val_graph/tape.hpp>
 # include "../atomic_xam.hpp"
@@ -221,7 +221,9 @@ bool comp_op(void)
    // f
    Vector< AD<double> > ay(1);
    if( ap[0] < ax[0] )
-      ay[0] = ax[0];
+      // 2024-03-01: Test for bug in val_graph/fun2val.hpp:
+      // changed from ay[0] = ax[0] to ay[0] = ax[0] * ax[0]
+      ay[0] = ax[0] * ax[0];
    else
       ay[0] = ap[0];
    CppAD::ADFun<double> f(ax, ay);
@@ -254,7 +256,7 @@ bool comp_op(void)
    // y, ok
    Vector<double> y(2);
    y[0] = val_vec[ dep_vec[0] ];
-   ok &= y[0] == x[0];
+   ok &= y[0] == x[0] * x[0];
    //
    // p, x
    p[0] = 6.0; // p[0] < x[0] is false
@@ -268,7 +270,7 @@ bool comp_op(void)
    //
    // y, ok
    y[0] = val_vec[ dep_vec[0] ];
-   ok &= y[0] == x[0];
+   ok &= y[0] == x[0] * x[0];
    //
    return ok;
 }
