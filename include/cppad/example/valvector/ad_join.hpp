@@ -162,6 +162,46 @@ private:
       }
       return ok;
    }
+   // ------------------------------------------------------------------------
+   // jac_sparsity
+   bool jac_sparsity(
+      size_t                                         call_id      ,
+      bool                                           dependency   ,
+      const CppAD::vector<bool>&                     ident_zero_x ,
+      const CppAD::vector<bool>&                     select_x     ,
+      const CppAD::vector<bool>&                     select_y     ,
+      CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out  ) override
+   {  //
+      // ok
+      bool ok = true;
+      //
+      // m, n
+      size_t m = select_y.size();
+      size_t n = select_x.size();
+      //
+      assert( call_id == 0 );
+      assert( m == 1 );
+      //
+      // nnz
+      size_t nnz = 0;
+      if( select_y[0] )
+      {  for(size_t j = 0; j < n; ++j)
+         {  if( select_x[j] )
+               ++nnz;
+         }
+      }
+      //
+      // pattern_out
+      pattern_out.resize(m, n, nnz);
+      size_t k = 0;
+      if( select_y[0] )
+      {  for(size_t j = 0; j < n; ++j)
+         {  if( select_x[j] )
+               pattern_out.set(k++, 0, j);
+         }
+      }
+      return ok;
+   }
 };
 
 class valvector_ad_join {

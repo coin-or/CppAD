@@ -23,6 +23,9 @@ bool ad_join(void)
 {  // ok
    bool ok = true;
    //
+   // sparsity_type
+   typedef CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > sparsity_type;
+   //
    // scalar_type
    typedef valvector::scalar_type scalar_type;
    //
@@ -74,6 +77,29 @@ bool ad_join(void)
    // ok
    for(size_t j = 0; j < n; ++j)
       ok &= dw[0][j] == scalar_type(2) * x[0][j];
+   //
+   // jac_pattern
+   sparsity_type identity_pattern(n, n, n);
+   for(size_t k = 0; k < n; ++k)
+      identity_pattern.set(k, k, k);
+   bool transpose     = false;
+   bool dependency    = false;
+   bool internal_bool = false;
+   sparsity_type jac_pattern;
+   f.for_jac_sparsity(
+      identity_pattern, transpose, dependency, internal_bool, jac_pattern
+   );
+   //
+   // ok
+   ok &= jac_pattern.nnz() == n;
+   ok &= jac_pattern.nr()  == m;
+   ok &= jac_pattern.nc()  == n;
+   CPPAD_TESTVECTOR(size_t) col_major = jac_pattern.col_major();
+   for(size_t k = 0; k < n; ++k)
+   {  ok &= jac_pattern.row()[k] == 0;
+      ok &= jac_pattern.col()[k] == k;
+   }
+   //
    return ok;
 }
 // END C++

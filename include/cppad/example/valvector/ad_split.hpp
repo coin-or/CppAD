@@ -211,12 +211,13 @@ private:
       // ok
       bool ok = true;
       //
-      // m
+      // m, n
       size_t m = select_y.size();
       size_t n = select_x.size();
       //
       assert( call_id == 0 );
       assert( n == 1 );
+      //
       // nnz
       size_t nnz = 0;
       if( select_x[0] )
