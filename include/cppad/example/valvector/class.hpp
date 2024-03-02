@@ -37,8 +37,7 @@ git the expected results.
 Operations
 **********
 {xrst_toc_table after
-   include/cppad/example/valvector/ad_split.hpp
-   include/cppad/example/valvector/ad_join.hpp
+   include/cppad/example/valvector/split_join.hpp
    example/valvector/get_started.cpp
 }
 

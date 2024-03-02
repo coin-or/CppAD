@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/example/valvector/ad_split.hpp>
+# include <cppad/example/valvector/split_join.hpp>
 # include <cppad/cppad.hpp>
 /*
 {xrst_begin valvector_ad_split.cpp}
@@ -134,6 +134,20 @@ bool ad_split(void)
    dy = g.Forward(0, x);
    for(size_t i = 0; i < m; ++i)
       ok &= dy[i][0] == 2.0 * x[0][i];
+   //
+   // h
+   CPPAD_TESTVECTOR( ad_valvector ) aw(m), adw(n);
+   for(size_t i = 0; i < m; ++i)
+      aw[i] = valvector( 1.0 );
+   CppAD::Independent(ax);
+   af.Forward(0, ax);
+   adw = af.Reverse(1, aw);
+   CppAD::ADFun<valvector> h(ax, adw);
+   //
+   // ok
+   dw = h.Forward(0, x);
+   for(size_t i = 0; i < m; ++i)
+      ok &= dw[0][i] == 2.0 * x[0][i];
    //
    // ok
    f.optimize();

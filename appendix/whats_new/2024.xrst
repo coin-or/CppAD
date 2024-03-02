@@ -28,6 +28,11 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-02
+=====
+Add the :ref:`valvector_ad_split-name` and :ref:`valvector_ad_join-name`
+examples.
+
 03-01
 =====
 Fix bug in the optimizer :ref:`optimize@options@val_graph` option.
