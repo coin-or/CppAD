@@ -94,10 +94,44 @@ bool ad_join(void)
    ok &= jac_pattern.nnz() == n;
    ok &= jac_pattern.nr()  == m;
    ok &= jac_pattern.nc()  == n;
-   CPPAD_TESTVECTOR(size_t) col_major = jac_pattern.col_major();
-   for(size_t k = 0; k < n; ++k)
-   {  ok &= jac_pattern.row()[k] == 0;
-      ok &= jac_pattern.col()[k] == k;
+   {  CPPAD_TESTVECTOR(size_t) col_major = jac_pattern.col_major();
+      const CPPAD_TESTVECTOR(size_t)& row = jac_pattern.row();
+      const CPPAD_TESTVECTOR(size_t)& col = jac_pattern.col();
+      for(size_t k = 0; k < n; ++k)
+      {  ok &= row[ col_major[k] ] == 0;
+         ok &= col[ col_major[k] ] == k;
+      }
+   }
+   //
+   // hes_pattern
+   internal_bool = false;
+   CPPAD_TESTVECTOR(bool) select_domain(n);
+   CPPAD_TESTVECTOR(bool) select_range(m);
+   select_range[0] = true;
+   for(size_t j = 0; j < n; ++j)
+      select_domain[j] = true;
+   sparsity_type hes_pattern;
+   f.for_hes_sparsity (
+      select_domain , select_range , internal_bool , hes_pattern
+   );
+   //
+   // ok
+   // The sparsity calculation does not distinguish between different elements
+   // of a valvector so the sparsity pattern fills in (this is not efficient).
+   ok &= hes_pattern.nnz() == n * n;
+   ok &= hes_pattern.nr()  == n;
+   ok &= hes_pattern.nc()  == n;
+   {  CPPAD_TESTVECTOR(size_t) col_major = hes_pattern.col_major();
+      const CPPAD_TESTVECTOR(size_t)& row = hes_pattern.row();
+      const CPPAD_TESTVECTOR(size_t)& col = hes_pattern.col();
+      size_t k = 0;
+      for(size_t j = 0; j < n; ++j)
+      {  for(size_t i = 0; i < n; ++i)
+         {  ok &= row[ col_major[k] ] == i;
+            ok &= col[ col_major[k] ] == j;
+            ++k;
+         }
+      }
    }
    //
    return ok;

@@ -255,6 +255,7 @@ private:
       //
       assert( call_id == 0 );
       assert( n == 1 );
+      assert( n == select_x.size() );
       //
       // pattern_out
       size_t nnz = 0;
