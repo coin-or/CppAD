@@ -130,9 +130,10 @@ bool ad_split(void)
    CppAD::ADFun<valvector> g(ax, ady);
    //
    // ok
-   y = g.Forward(0, x);
+   CPPAD_TESTVECTOR( valvector ) dy(m);
+   dy = g.Forward(0, x);
    for(size_t i = 0; i < m; ++i)
-      ok &= y[i][0] == 2.0 * x[0][i];
+      ok &= dy[i][0] == 2.0 * x[0][i];
    //
    // ok
    f.optimize();

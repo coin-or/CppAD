@@ -134,6 +134,25 @@ bool ad_join(void)
       }
    }
    //
+   // af
+   typedef CppAD::ADFun<ad_valvector, valvector> ad_fun_type;
+   ad_fun_type af = ad_fun_type( f.base2ad() );
+   //
+   // g
+   CPPAD_TESTVECTOR( ad_valvector ) adx(n), adz(m);
+   for(size_t j = 0; j < n; ++j)
+      adx[j] = valvector( 1.0 );
+   CppAD::Independent(ax);
+   af.Forward(0, ax);
+   adz = af.Forward(1, adx);
+   CppAD::ADFun<valvector> g(ax, adz);
+   //
+   // ok
+   CPPAD_TESTVECTOR( valvector ) dz(m);
+   dz = g.Forward(0, x);
+   for(size_t j = 0; j < n; ++j)
+      ok &= dz[0][j] == 2.0 * x[j][0];
+   //
    // ok
    f.optimize();
    z = f.Forward(0, x);

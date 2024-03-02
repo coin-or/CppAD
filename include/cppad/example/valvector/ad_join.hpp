@@ -128,6 +128,46 @@ private:
       return ok;
    }
    // ------------------------------------------------------------------------
+   // forward
+   bool forward(
+      size_t                                 call_id      ,
+      const CppAD::vector<bool>&             select_y     ,
+      size_t                                 order_low    ,
+      size_t                                 order_up     ,
+      const CppAD::vector<ad_valvector>&     ataylor_x    ,
+      CppAD::vector<ad_valvector>&           ataylor_y    ) override
+   {  //
+      // ok
+      bool ok = true;
+      //
+      // q, n
+      size_t q = order_up + 1;
+      size_t n = ataylor_x.size() / q;
+      //
+# ifndef NDEBUG
+      size_t m = ataylor_y.size() / q;
+      assert( call_id == 0 );
+      assert( m == 1 );
+      assert( m == select_y.size() );
+# endif
+      if( select_y[0] )
+      {  //
+         // ay_k
+         CppAD::vector<ad_valvector> ay_k(1);
+         CppAD::vector<ad_valvector> ax_k(n);
+         //
+         // ataylor_y
+         for(size_t k = order_low; k < q; ++k)
+         {  for(size_t j = 0; j < n; ++j)
+               ax_k[j] = ataylor_x[j * q + k];
+            (*this)(call_id, ax_k, ay_k);
+            ataylor_y[k] = ay_k[0];
+         }
+      }
+      //
+      return ok;
+   }
+   // ------------------------------------------------------------------------
    // reverse
    bool reverse(
       size_t                              call_id      ,
@@ -247,8 +287,8 @@ private:
 # endif
       //
       // depend_x
-      for(size_t i = 0; i < m; ++i)
-         depend_x[i] = depend_y[0];
+      for(size_t j = 0; j < n; ++j)
+         depend_x[j] = depend_y[0];
       //
       return ok;
    }
