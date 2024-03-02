@@ -13,6 +13,9 @@ build:
       - pip uninstall -y xrst
       - pip install --index-url https://test.pypi.org/simple/ xrst
       #
+      # This command prints the version of xrst that is being used
+      - xrst --version
+      #
       # build/html
       # The xsrst html_directory for this configuration is build/html.
       # Build the default (user_guide) and app (appendix) groups.
@@ -23,7 +26,6 @@ build:
          --group_list default app
          --index_page_name user_guide
          --suppress_spell_warnings
-
       #
       # _readthedocs/html
       # The directory that Read the Docs uploads when commands is used.
