@@ -134,6 +134,12 @@ bool ad_join(void)
       }
    }
    //
+   // ok
+   f.optimize();
+   z = f.Forward(0, x);
+   for(size_t j = 0; j < n; ++j)
+      ok &= z[0][j] == x[j][0] * x[j][0];
+   //
    return ok;
 }
 // END C++

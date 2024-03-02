@@ -226,6 +226,32 @@ private:
       //
       return ok;
    }
+   // ------------------------------------------------------------------------
+   // rev_depend
+   bool rev_depend(
+      size_t                                         call_id      ,
+      const CppAD::vector<bool>&                     ident_zero_x ,
+      CppAD::vector<bool>&                           depend_x     ,
+      const CppAD::vector<bool>&                     depend_y     ) override
+   {  //
+      // ok
+      bool ok = true;
+      //
+      // n
+      size_t n = depend_x.size();
+      //
+# ifndef NDEBUG
+      size_t m = depend_y.size();
+      assert( call_id == 0 );
+      assert( m == 1 );
+# endif
+      //
+      // depend_x
+      for(size_t i = 0; i < m; ++i)
+         depend_x[i] = depend_y[0];
+      //
+      return ok;
+   }
 };
 
 class valvector_ad_join {
