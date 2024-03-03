@@ -45,6 +45,7 @@ an different version of make; e.g., ``ninja`` .
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool ad_join(void);
 extern bool ad_split(void);
+extern bool ad_sum(void);
 extern bool assign(void);
 extern bool azmul(void);
 extern bool base_require(void);
@@ -76,6 +77,7 @@ int main(void)
    // BEGIN_SORT_THIS_LINE_PLUS_1
    Run( ad_join,             "ad_join"               );
    Run( ad_split,            "ad_split"              );
+   Run( ad_sum,              "ad_sum"                );
    Run( assign,              "assign"                );
    Run( azmul,               "azmul"                 );
    Run( base_require,        "base_require"          );

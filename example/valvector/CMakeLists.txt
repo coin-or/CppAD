@@ -8,6 +8,7 @@
 SET(source_list valvector.cpp
    ad_join.cpp
    ad_split.cpp
+   ad_sum.cpp
    assign.cpp
    azmul.cpp
    base_require.cpp
