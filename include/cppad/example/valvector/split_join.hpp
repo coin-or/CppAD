@@ -8,12 +8,11 @@
 {xrst_begin valvector_ad_split}
 {xrst_spell
    asplit
-   valvectors
 }
 
-Split A valvector Into a Vector of valvector
-############################################
-Split a valvector into a vector of valvectors each with size one.
+Split A AD valvector
+####################
+Split one AD<valvector> into a vector of AD<valvector> each with size one.
 
 Syntax
 ******
@@ -55,12 +54,9 @@ of this operation.
    valvectors
 }
 
-Join a Vector of valvectors Into One valvector
-##############################################
-Join a vector of valvectors each with size one, into one valvector.
-
-Under Construction
-******************
+Join a Vector of AD valvectors
+##############################
+Join a vector of AD<valvector>, each with size one, into one AD<valvector>.
 
 Syntax
 ******
