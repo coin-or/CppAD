@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/core/ad_fun.hpp>
@@ -64,33 +64,54 @@ The possible values for this argument are:
 JIT Functions
 *************
 
-| *flag* = ``cppad_jit_`` *function_name* (
-| |tab| *nu* , *u* , *ny* , *y* , *compare_change*
-| )
-| ``typedef int`` (* ``jit_`` *c_type* )(
+Function Type
+=============
+The function type ``jit_``\ *c_type* is defined in the CppAD namespace as:
+
+| ``typedef int`` (* ``jit_``\ *c_type* )(
 | |tab| ``size_t`` , ``const`` *type* * , ``size_t`` , *type* * , ``size_t`` *
 | )
 
 Here *type* is the same as *c_type* except that the
 underbar in ``long_double`` is replaced by a space.
-The function type ``jit_`` *c_type* is defined in the CppAD namespace.
 In the case of the Visual C++ compiler (``_MSC_VER`` is defined),
 ``__cdecl`` and ``__declspec(dllimport)`` are added to
 the function type definition.
 
+Syntax
+======
+| *flag* = ``cppad_jit_``\ *function_name* (
+| |tab| *nu* , *u* , *ny* , *y* , *compare_change*
+| )
+
+A corresponding function call evaluations zero order forward mode
+for the function *fun* and
+
+| *function_name* = *fun*\ ``.function_name_get`` ()
+
+see :ref:`function_name-name` .
+
+
 Atomic Callbacks
 ****************
 
-| *flag* = ``cppad_atomic_`` *function_name* (
-| |tab| *call_id* , *nu* , *u* , *ny* , *y* , *compare_change*
-| )
-| ``typedef int`` (* ``jit_`` *c_type* )(
+Function Type
+=============
+The function type ``atomic_``\ *c_type* is defined in the CppAD namespace.
+
+| ``typedef int`` (* ``atomic_`` *c_type* )(
 | |tab| ``size_t`` , ``size_t`` , ``const`` *type* * , ``size_t`` , *type* * , ``size_t`` *
 | )
 
-The function type ``atomic_`` *c_type* is defined in the CppAD namespace.
-The corresponding function evaluates zero order forward mode for the
-atomic function with the specified *function_name* .
+Syntax
+======
+| *flag* = ``cppad_atomic_``\ *atomic_name* (
+| |tab| *call_id* , *nu* , *u* , *ny* , *y* , *compare_change*
+| )
+
+A corresponding function call evaluates zero order forward mode for the
+atomic function with the specified *atomic_name* ; see
+atomic_four :ref:`atomic_four_ctor@atomic_four@name` .
 
 call_id
 *******
@@ -106,7 +127,7 @@ plus number of independent variables for the function *fun* .
 u
 *
 is a C vector of size *nu* containing the independent dynamic parameters
-and independent variables
+and independent variables.
 The independent dynamic parameter come first as in the same order as
 :ref:`Independent@dynamic` in the call to ``Independent``
 for this function.

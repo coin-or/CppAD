@@ -269,9 +269,9 @@ private:
 class valvector_ad_sum {
 private:
    typedef CppAD::AD<valvector> ad_valvector;
-   valvector_atom_sum         atomic_fun_;
+   valvector_atom_sum           atomic_fun_;
 public:
-   valvector_ad_sum(void) : atomic_fun_("valvector_atom_sum")
+   valvector_ad_sum(void) : atomic_fun_("valvector_ad_sum")
    { }
    void operator()(const ad_valvector&  ax, ad_valvector& ay)
    {  //

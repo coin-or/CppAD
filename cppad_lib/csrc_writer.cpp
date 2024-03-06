@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cpp_csrc_writer dev}
@@ -245,8 +245,8 @@ void CppAD::local::graph::csrc_writer(
       os << "extern int cppad_atomic_" + atomic_name + "(\n";
       os <<
          "\tsize_t               call_id           ,\n"
-         "\tsize_t               nx                ,\n"
-         "\tconst float_point_t* x                 ,\n"
+         "\tsize_t               nu                ,\n"
+         "\tconst float_point_t* u                 ,\n"
          "\tsize_t               ny                ,\n"
          "\tfloat_point_t*       y                 ,\n"
          "\tsize_t*              compare_change\n"
@@ -288,8 +288,8 @@ void CppAD::local::graph::csrc_writer(
       "int "
 # endif
       "cppad_jit_" + function_name + "(\n"
-      "\tsize_t               nx              ,\n"
-      "\tconst float_point_t* x               ,\n"
+      "\tsize_t               nu              ,\n"
+      "\tconst float_point_t* u               ,\n"
       "\tsize_t               ny              ,\n"
       "\tfloat_point_t*       y               ,\n"
       "\tsize_t*              compare_change  )\n"
@@ -308,12 +308,12 @@ void CppAD::local::graph::csrc_writer(
       "\tfloat_point_t v[" + to_string(n_node) + "];\n"
       "\tsize_t i;\n"
       "\n"
-      "\t// check nx, ny\n"
+      "\t// check nu, ny\n"
    ;
    //
    // nx
-   size_t nx = n_dynamic_ind + n_variable_ind;
-   os << "\tif( nx != " + to_string(nx) + ") return 1;\n";
+   size_t nu = n_dynamic_ind + n_variable_ind;
+   os << "\tif( nu != " + to_string(nu) + ") return 1;\n";
    //
    // ny
    size_t ny = n_dependent;
@@ -332,34 +332,34 @@ void CppAD::local::graph::csrc_writer(
    os <<
       "\n"
       "\t// independent variables\n"
-      "\t// set v[1+i] for i = 0, ..., nx-1\n"
-      "\tfor(i = 0; i < nx; ++i)\n"
-      "\t\tv[1+i] = x[i];\n"
+      "\t// set v[1+i] for i = 0, ..., nu-1\n"
+      "\tfor(i = 0; i < nu; ++i)\n"
+      "\t\tv[1+i] = u[i];\n"
    ;
    //
    // cosntants
-   // set v[1+nx+i] for i = 0, ..., nc-1
+   // set v[1+nu+i] for i = 0, ..., nc-1
    size_t nc = n_constant;
    os <<
       "\n"
       "\t// constants\n"
-      "\t// set v[1+nx+i] for i = 0, ..., nc-1\n"
+      "\t// set v[1+nu+i] for i = 0, ..., nc-1\n"
       "\t// nc = " + to_string(nc) + "\n"
    ;
    for(size_t i = 0; i < nc; ++i)
    {  double c_i = graph_obj.constant_vec_get(i);
       os <<
-         "\tv[1+nx+" + to_string(i) + "] = " + to_string(c_i) + ";\n"
+         "\tv[1+nu+" + to_string(i) + "] = " + to_string(c_i) + ";\n"
       ;
    }
    //
    // result nodes
-   // set v[1+nx+nc+i] for i = 0, ..., n_result_node-1
+   // set v[1+nu+nc+i] for i = 0, ..., n_result_node-1
    size_t n_result_node = n_node - first_result_node;
    os <<
       "\n"
       "\t// result nodes\n"
-      "\t// set v[1+nx+nc+i] for i = 0, ..., n_result_node-1\n"
+      "\t// set v[1+nu+nc+i] for i = 0, ..., n_result_node-1\n"
       "\t// n_result_node = " + to_string(n_result_node) + "\n"
    ;
    //

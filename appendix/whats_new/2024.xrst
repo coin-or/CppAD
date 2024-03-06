@@ -5,6 +5,8 @@
 
 {xrst_begin 2024 app}
 {xrst_spell
+   nx
+   csrc
    cmd
    dll
    svec
@@ -27,6 +29,18 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+03-06
+=====
+#. The ``to_csrc`` parameters :ref:`to_csrc@nu` and :ref:`to_csrc@u`
+   were denoted by ``nx`` and ``x`` in the generated source code.
+   This has been changed an now the generated source uses ``nu`` and ``u``
+   for these parameters.
+#. The :ref:`to_csrc-name` documentation was changed to use
+   *atomic_name* for the name of the atomic
+   (instead of reusing *function_name* which has another purpose).
+   In addition, :ref:`jit_atomic.cpp-name`
+   was also changed to use *atomic_name* .
 
 03-02
 =====
