@@ -30,6 +30,19 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-09
+=====
+The number of :ref:`parallel_ad@CheckSimpleVector` cases
+called by parallel_ad<Base>() was increased to include the following::
+
+   CheckSimpleVector< bool, CppAD::vectorBool >()
+   CheckSimpleVector< size_t, CppAD::vector<size_t> >()
+   CheckSimpleVector< Base, std::vector<Base> >()
+   CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >()
+
+In addition, the CheckSimpleVector :ref:`CheckSimpleVector@Parallel Mode`
+documentation and error message has been improved.
+
 03-06
 =====
 #. The ``to_csrc`` parameters :ref:`to_csrc@nu` and :ref:`to_csrc@u`

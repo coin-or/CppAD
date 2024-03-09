@@ -2,7 +2,7 @@
 # define CPPAD_CORE_PARALLEL_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin parallel_ad}
@@ -41,11 +41,11 @@ This routine does extra setup
 
 CheckSimpleVector
 *****************
-This routine has the side effect of calling the routines
-
-   ``CheckSimpleVector`` < *Type* , ``CppAD::vector<`` *Type* > >()
-
-where *Type* is *Base* and ``AD`` < *Base* > .
+This routine has the side effect of calling ``CheckSimpleVector``
+for an unspecified number of cases of
+:ref:`CheckSimpleVector@Vector` and :ref:`CheckSimpleVector@Scalar` .
+The set of these cases may increase in the future so that the user
+does not need to initialize them separately.
 
 Example
 *******
@@ -76,6 +76,8 @@ they must be initialized separately:
 -----------------------------------------------------------------------------
 */
 
+# include <vector>
+# include <cppad/utility/vector.hpp>
 # include <cppad/local/std_set.hpp>
 # include <cppad/local/val_graph/enable_parallel.hpp>
 
@@ -123,9 +125,15 @@ void parallel_ad(void)
    local::val_graph::enable_parallel<Base>(); // val_graph/*_op.hpp
    discrete<Base>::List();                    // discrete.hpp
 
-   // check_simple_vector.hpp
+   // Some check_simple_vector.hpp cases
+   //
+   CheckSimpleVector< bool, CppAD::vectorBool >();
+   CheckSimpleVector< size_t, CppAD::vector<size_t> >();
    CheckSimpleVector< Base, CppAD::vector<Base> >();
    CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
+   //
+   CheckSimpleVector< Base, std::vector<Base> >();
+   CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >();
 
 }
 

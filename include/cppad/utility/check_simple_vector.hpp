@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_CHECK_SIMPLE_VECTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin CheckSimpleVector}
@@ -12,12 +12,9 @@ Check Simple Vector Concept
 
 Syntax
 ******
-
-   # ``include <cppad/utility/check_simple_vector.hpp>``
-
-``CheckSimpleVector`` < *Scalar* , *Vector* >()
-
-``CheckSimpleVector`` < *Scalar* , *Vector* >( *x* , *y* )
+| # ``include <cppad/utility/check_simple_vector.hpp>``
+| ``CheckSimpleVector`` < *Scalar* , *Vector* >()
+| ``CheckSimpleVector`` < *Scalar* , *Vector* >( *x* , *y* )
 
 Purpose
 *******
@@ -28,6 +25,14 @@ a :ref:`SimpleVector-name` class with
 *Scalar* .
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
+
+Vector
+******
+is the vector type we are checking.
+
+Scalar
+******
+is the type corresponding to the elements of an *Vector* .
 
 x, y
 ****
@@ -70,9 +75,12 @@ if the CppAD include files.
 
 Parallel Mode
 *************
-The routine :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
-must be called before it
-can be used in :ref:`parallel<ta_in_parallel-name>` mode.
+This routine must be called before entering parallel mode
+because it has static variables that must be initialized.
+If it's first call is not in  parallel mode, and NDEBUG is not defined,
+you will get an assertion. Running in the debugger and going to the
+stack frame where CheckSimpleVector is called may help you determine
+what the value of *Scalar* and *Vector* need to be initialized.
 
 Example
 *******
@@ -112,10 +120,17 @@ namespace CppAD {
 
    template <class Scalar, class Vector>
    void CheckSimpleVector(const Scalar& x, const Scalar& y)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-      static size_t count;
+   {  //
+      // count
+      static size_t count = 0;
       if( count > 0  )
          return;
+      CPPAD_ASSERT_KNOWN(
+         ! CppAD::thread_alloc::in_parallel() ,
+         "In parallel mode and CheckSimpleVector was not previously called\n"
+         "with this Scalar and Vector type; see the heading\n"
+         "Parallel Mode in the CheckSimpleVector documentation."
+      );
       count++;
 
       // value_type must be type of elements of Vector
