@@ -1,5 +1,5 @@
 [project_name]
-data = 'cppad'
+data = 'CppAD'
 
 [directory]
 project_directory = '.'
