@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/check_all.sh' ]
 then
@@ -310,7 +310,7 @@ do
       #
       # all programs check the fast cases
       echo_log_eval $program a11c
-      echo_log_eval $program simple_ad
+      echo_log_eval $program get_started
       echo_log_eval $program team_example
    fi
 done

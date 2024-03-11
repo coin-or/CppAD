@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/multi_thread/bthread directory tests
 # Inherit build type from ../CMakeList.txt
@@ -20,7 +20,7 @@ SET(source_list ../thread_test.cpp
    ../multi_chkpoint_two.cpp
    ../multi_newton.cpp
    a11c_bthread.cpp
-   simple_ad_bthread.cpp
+   get_started.cpp
    team_bthread.cpp
 )
 set_compile_flags(
@@ -37,4 +37,4 @@ TARGET_LINK_LIBRARIES(example_multi_thread_bthread
 )
 
 # check_example_multi_thread_bthread
-add_check_executable(check_example_multi_thread bthread simple_ad)
+add_check_executable(check_example_multi_thread bthread get_started)

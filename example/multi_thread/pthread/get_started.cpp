@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin simple_ad_pthread.cpp}
+{xrst_begin pthread_get_started.cpp}
 
 A Simple pthread AD: Example and Test
 #####################################
@@ -21,7 +21,7 @@ Source Code
    // END C++
 }
 
-{xrst_end simple_ad_pthread.cpp}
+{xrst_end pthread_get_started.cpp}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -241,7 +241,7 @@ namespace {
       return ok;
    }
 }
-bool simple_ad(void)
+bool get_started(void)
 {  bool ok = true;
    size_t num_threads = NUMBER_THREADS;
 

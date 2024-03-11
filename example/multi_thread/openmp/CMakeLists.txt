@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/multi_thread/openmp directory tests
 # Inherit build type from ../CMakeList.txt
@@ -24,7 +24,7 @@ SET(source_list ../thread_test.cpp
    ../multi_chkpoint_two.cpp
    ../multi_newton.cpp
    a11c_openmp.cpp
-   simple_ad_openmp.cpp
+   get_started.cpp
    team_openmp.cpp
 )
 set_compile_flags( example_multi_thread_openmp "${cppad_debug_which}" "${source_list}" )
@@ -41,4 +41,4 @@ TARGET_LINK_LIBRARIES(
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 
 # check_example_multi_thread_openmp
-add_check_executable(check_example_multi_thread openmp simple_ad)
+add_check_executable(check_example_multi_thread openmp get_started)

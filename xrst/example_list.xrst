@@ -324,9 +324,9 @@ List All (Except Deprecated) CppAD Examples
    runge45_1.cpp,:ref:`runge45_1.cpp-title`
    runge_45.cpp,:ref:`runge_45.cpp-title`
    set_union.cpp,:ref:`set_union.cpp-title`
-   simple_ad_bthread.cpp,:ref:`simple_ad_bthread.cpp-title`
-   simple_ad_openmp.cpp,:ref:`simple_ad_openmp.cpp-title`
-   simple_ad_pthread.cpp,:ref:`simple_ad_pthread.cpp-title`
+   bthread_get_started.cpp,:ref:`bthread_get_started.cpp-title`
+   openmp_get_started.cpp,:ref:`openmp_get_started.cpp-title`
+   pthread_get_started.cpp,:ref:`pthread_get_started.cpp-title`
    simple_vector.cpp,:ref:`simple_vector.cpp-title`
    simplex_method.cpp,:ref:`simplex_method.cpp-title`
    simplex_method.hpp,:ref:`simplex_method.hpp-title`

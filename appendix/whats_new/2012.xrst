@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2012 app}
@@ -707,7 +707,7 @@ and then executed the commands
 
    make clean
    make pthread_test
-   valgrind --tool=helgrind ./pthread_test simple_ad
+   valgrind --tool=helgrind ./pthread_test get_started
 
 The following error message would result:
 
@@ -733,9 +733,9 @@ This has been fixed.
 =====
 
 #. Improve, the multi-threading examples
-   :ref:`simple_ad_openmp.cpp-name` ,
-   :ref:`simple_ad_bthread.cpp-name` , and
-   :ref:`simple_ad_pthread.cpp-name` .
+   :ref:`openmp_get_started.cpp-name` ,
+   :ref:`bthread_get_started.cpp-name` , and
+   :ref:`pthread_get_started.cpp-name` .
    This includes separating generic code that can be used for all applications
    from problem specific code.
 #. Add initialization of statics in
@@ -782,9 +782,9 @@ one should call :ref:`free_available<ta_free_available-name>` for all threads.
 =====
 
 #. Add the examples
-   :ref:`simple_ad_openmp.cpp-name` ,
-   :ref:`simple_ad_bthread.cpp-name`
-   and :ref:`simple_ad_pthread.cpp-name` .
+   :ref:`openmp_get_started.cpp-name` ,
+   :ref:`bthread_get_started.cpp-name`
+   and :ref:`pthread_get_started.cpp-name` .
 #. Fix bug in finding boost multi-threading library
    (due to fact that :ref:`configure@boost_dir`
    is not the prefix during the boost installation).
@@ -792,7 +792,7 @@ one should call :ref:`free_available<ta_free_available-name>` for all threads.
 03-02
 =====
 
-#. Change the name ``simple_ad.cpp`` to :ref:`team_example.cpp-name`
+#. Change the name ``get_started.cpp`` to :ref:`team_example.cpp-name`
 #. The multi-threading ``team_example.cpp`` example was changed to use
    :math:`f(x) = \sqrt{ x^2 }` instead of the function
    :math:`{\rm atan2} [ \sin(x) , \cos (x) ]`

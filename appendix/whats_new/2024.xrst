@@ -30,6 +30,14 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-11
+=====
+The multi-threading ``simple_ad`` examples where changed to
+``get_started`` ; see
+:ref:`openmp_get_started.cpp-name` ,
+:ref:`pthread_get_started.cpp-name` ,
+:ref:`bthread_get_started.cpp-name` .
+
 03-09
 =====
 The number of :ref:`parallel_ad@CheckSimpleVector` cases
