@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_MULTI_THREAD_TEAM_THREAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin team_thread.hpp}
@@ -72,7 +72,7 @@ thread number zero; i.e., it terminates the threads corresponding to
 
 team_name
 *********
-This routines returns a name that identifies this thread_team.
+This routines returns a name that identifies this threading system.
 The return value has prototype
 
    ``const char`` * *name*

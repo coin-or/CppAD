@@ -307,7 +307,7 @@ int main(int argc, char *argv[])
    cout << "cppad_version = '" << CPPAD_PACKAGE_STRING << "';" << endl;
 
    // put the team name in the output file
-   cout << "team_name     = '" << team_name() << "';" << endl;
+   cout << "thread_system = '" << team_name() << "';" << endl;
 
    // print command line as valid matlab/octave
    cout << "command       = '" << argv[0];

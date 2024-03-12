@@ -2,7 +2,7 @@
 # define CPPAD_CORE_TESTVECTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -88,6 +88,8 @@ is used (is not used) for ``CPPAD_TESTVECTOR`` .
 {xrst_end testvector}
 ------------------------------------------------------------------------
 */
+# include <cppad/configure.hpp>
+#
 # if CPPAD_CPPADVECTOR
 # define CPPAD_TESTVECTOR(Scalar) CppAD::vector< Scalar >
 # endif

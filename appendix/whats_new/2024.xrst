@@ -30,6 +30,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-12
+=====
+The :ref:`openmp_get_started.cpp-name` example was made simpler by
+directly using openmp instead of going through the
+:ref:`team_thread.hpp-name` interface.
+
 03-11
 =====
 The multi-threading ``simple_ad`` examples where changed to
