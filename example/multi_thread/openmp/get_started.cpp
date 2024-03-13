@@ -12,11 +12,6 @@
 Getting Started Using OpenMP With CppAD
 #######################################
 
-Purpose
-*******
-This example demonstrates how CppAD can be used in a
-OpenMP multi-threading environment.
-
 in_parallel
 ***********
 see :ref:`ta_parallel_setup@in_parallel` .
@@ -76,6 +71,7 @@ namespace {
    {  return static_cast<size_t>( omp_get_thread_num() );
    }
    //
+   // partial
    double partial(
       CppAD::ADFun<double>& f, size_t j, const d_vector& x
    )
