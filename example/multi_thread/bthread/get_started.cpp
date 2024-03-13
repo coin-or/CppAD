@@ -56,7 +56,8 @@ Source Code
 
 namespace {
    //
-   // d_vector, ad_vector, fun_vector
+   // b_vector, d_vector, ad_vector, fun_vector
+   typedef CPPAD_TESTVECTOR(bool)                    b_vector;
    typedef CPPAD_TESTVECTOR(double)                  d_vector;
    typedef CPPAD_TESTVECTOR( CppAD::AD<double> )    ad_vector;
    typedef CPPAD_TESTVECTOR( CppAD::ADFun<double> ) fun_vector;
@@ -102,13 +103,19 @@ namespace {
       CppAD::ADFun<double>* f_ptr          ,
       size_t                j_begin        ,
       size_t                j_end          ,
-      const                 d_vector& x    ,
-      d_vector&             Jac            )
+      const d_vector*       x_ptr          ,
+      d_vector*             Jac_ptr        ,
+      bool*                 ok_ptr         )
    {  //
+      // x, Jac, ok
+      const d_vector& x   = *x_ptr;
+      d_vector&       Jac = *Jac_ptr;
+      bool&           ok  = *ok_ptr;
+      //
       // thread_specific_data_
       if( thread_num != 0 )
       {  thread_specific_data_.reset(new size_t(thread_num) );
-         assert( thread_number() == thread_num );
+         ok &= thread_number() == thread_num;
       }
       //
       // Jac
@@ -138,22 +145,25 @@ bool get_started(void)
    CppAD::ADFun<double> fun;
    fun.Dependent(ax, ay);
    //
-   // num_threads, f_thread
+   // num_threads, f_thread, ok_thread
    size_t num_threads = 4;
    fun_vector f_thread(num_threads);
-   for(size_t i = 0; i < num_threads; ++i)
-      f_thread[i] = fun;
+   b_vector   ok_thread(num_threads);
+   for(size_t thread_num = 0; thread_num < num_threads; ++thread_num)
+   {  f_thread[thread_num] = fun;
+      ok_thread[thread_num] = true;
+   }
    //
    // x
    d_vector x(nx);
    for(size_t j = 0; j < nx; ++j)
-      ax[j] = 1.0 + 1.0 / double(j+1);
+      x[j] = 1.0 + 1.0 / double(j+1);
    //
    // thread_specific_data_
    // must be set for this thread before calling parall_setup or parallel_ad
    {  size_t thread_num = 0;
       thread_specific_data_.reset(new size_t(thread_num) );
-      assert( thread_number() == thread_num );
+      ok &= thread_number() == thread_num;
    }
    //
    // parallel_setup
@@ -180,26 +190,31 @@ bool get_started(void)
    //
    // sequential_execution_
    sequential_execution_ = false;
-   assert( in_parallel() );
+   ok &= in_parallel();
    //
    // Jac
    // Launch num_threads - 1 boost threads
    size_t j_begin = n_per_thread;
+   size_t j_end;
    for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
-   {  size_t j_end = j_begin + n_per_thread;
+   {  j_end = j_begin + n_per_thread;
       if( thread_num <= n_extra )
          ++j_end;
       CppAD::ADFun<double>* f_ptr  = &f_thread[thread_num];
+      bool*                 ok_ptr = &ok_thread[thread_num];
       thread_ptr[thread_num-1] = new boost::thread(
-         run_one_thread, thread_num, f_ptr, j_begin, j_end, x, Jac
+         run_one_thread, thread_num, f_ptr, j_begin, j_end, &x, &Jac, ok_ptr
       );
+      j_begin = j_end;
    }
+   ok &= j_end == nx;
    {  // run master thread's indices
       size_t thread_num = 0;
       j_begin           = 0;
-      size_t j_end      = j_begin + n_per_thread;
+      j_end             = j_begin + n_per_thread;
       CppAD::ADFun<double, double>* f_ptr  = &f_thread[thread_num];
-      run_one_thread(thread_num, f_ptr, j_begin, j_end, x, Jac);
+      bool*                         ok_ptr = &ok_thread[thread_num];
+      run_one_thread(thread_num, f_ptr, j_begin, j_end, &x, &Jac, ok_ptr);
    }
    // wait for boos threads to finish
    for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
@@ -207,14 +222,17 @@ bool get_started(void)
    //
    // sequential_execution_
    sequential_execution_ = true;
-   assert( ! in_parallel() );
+   ok &= ! in_parallel();
    //
    // hold_memory
    // free memory for other threads before this (the master thread)
-   assert( thread_number() == 0 );
+   ok &= thread_number() == 0;
    CppAD::thread_alloc::hold_memory(false);
-   for(size_t i = 1; i < num_threads; ++i)
-      CppAD::thread_alloc::free_available(i);
+   for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
+   {  CppAD::thread_alloc::free_available(thread_num);
+      ok &= ok_thread[thread_num];
+   }
+   ok &= ok_thread[0];
    CppAD::thread_alloc::free_available(0);
    //
    // j
@@ -224,7 +242,7 @@ bool get_started(void)
       double check = 1.0;
       for(size_t k = 0; k < nx; ++k)
          if(k != j)
-            check *= x[j];
+            check *= x[k];
       //
       // ok
       ok &= CppAD::NearEqual(Jac[j], check, eps99, eps99);

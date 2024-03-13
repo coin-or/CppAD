@@ -70,6 +70,7 @@ namespace {
       size_t                j_end;
       const d_vector*       x_ptr;
       d_vector*             Jac_ptr;
+      bool                  ok;
    } thread_info;
    typedef CPPAD_TESTVECTOR( thread_info ) thread_info_vector;
    //
@@ -113,7 +114,7 @@ namespace {
    // run_one_thread
    void* run_one_thread(void* thread_info_vptr)
    {  //
-      // thread_num, f_ptr, j_begin, j_end, x_ptr
+      // thread_num, f_ptr, j_begin, j_end, x_ptr, Jac_ptr, ok
       thread_info* thread_info_ptr =
          static_cast<thread_info*>(thread_info_vptr);
       size_t                thread_num = thread_info_ptr->thread_num;
@@ -122,16 +123,21 @@ namespace {
       size_t                j_end      = thread_info_ptr->j_end;
       const d_vector*       x_ptr      = thread_info_ptr->x_ptr;
       d_vector*             Jac_ptr    = thread_info_ptr->Jac_ptr;
-      //
-      // phtread_setspecific
-      if( thread_num != 0 )
-      {  int rc = pthread_setspecific(thread_specific_key_, &thread_num);
-         assert( rc == 0 );
-         assert( thread_number() == thread_num );
-      }
+      bool&                 ok         = thread_info_ptr->ok;
       //
       // Jac
       d_vector& Jac = *Jac_ptr;
+      //
+      // rc
+      int rc;
+      //
+      // phtread_setspecific, ok
+      if( thread_num != 0 )
+      rc  = pthread_setspecific(thread_specific_key_, &thread_num);
+      ok &= rc == 0;
+      ok &= thread_number() == thread_num;
+      //
+      // Jac
       for(size_t j = j_begin; j < j_end; ++j)
          Jac[j] = partial(*f_ptr, j, *x_ptr);
       //
@@ -169,7 +175,7 @@ bool get_started(void)
    // x
    d_vector x(nx);
    for(size_t j = 0; j < nx; ++j)
-      ax[j] = 1.0 + 1.0 / double(j+1);
+      x[j] = 1.0 + 1.0 / double(j+1);
    //
    // Jac
    d_vector Jac(nx);
@@ -180,9 +186,10 @@ bool get_started(void)
    //
    // thread_info_vec
    thread_info_vector thread_info_vec(num_threads);
-   size_t j_begin = n_per_thread;
+   size_t j_begin = 0;
+   size_t j_end;
    for(size_t thread_num = 0; thread_num < num_threads; ++thread_num)
-   {  size_t j_end = j_begin + n_per_thread;
+   {  j_end = j_begin + n_per_thread;
       if( thread_num < n_extra )
          ++j_end;
       //
@@ -192,24 +199,27 @@ bool get_started(void)
       thread_info_vec[thread_num].j_end      = j_end;
       thread_info_vec[thread_num].x_ptr      = &x;
       thread_info_vec[thread_num].Jac_ptr    = &Jac;
+      thread_info_vec[thread_num].ok         = true;
+      //
+      j_begin = j_end;
    }
+   ok &= j_end == nx;
    //
-   // thread_specific_key_
-   {  int rc = pthread_key_create(
-         &thread_specific_key_, thread_specific_destructor
-      );
-      assert( rc == 0 );
-   }
+   // rc
+   int rc;
+   //
+   // thread_specific_key_, ok
+   rc  = pthread_key_create(&thread_specific_key_, thread_specific_destructor);
+   ok &= rc == 0;
 
    //
-   // thread_setspecific
+   // thread_setspecific, ok
    // must be set for this thread before calling parall_setup or parallel_ad
-   {  int rc = pthread_setspecific(
+   rc = pthread_setspecific(
          thread_specific_key_, &thread_info_vec[0].thread_num
-      );
-      assert( rc == 0 );
-      assert( thread_number() == 0 );
-   }
+   );
+   ok &= rc == 0;
+   ok &= thread_number() == 0;
    //
    // parallel_setup
    CppAD::thread_alloc::parallel_setup(
@@ -226,54 +236,57 @@ bool get_started(void)
    // ptread_vec
    pthread_vector pthread_vec(num_threads - 1);
    //
-   // sequential_execution_
+   // sequential_execution_, ok
    sequential_execution_ = false;
-   assert( in_parallel() );
+   ok &= in_parallel();
    //
-   // Jac, pthread_vec
+   // Jac, pthread_vec, ok
    // Launch num_threads - 1 posix threads
    for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
-   {
-      pthread_attr_t* no_attr = nullptr;
-      int rc = pthread_create(
+   {  pthread_attr_t* no_attr = nullptr;
+      rc = pthread_create(
          &pthread_vec[thread_num-1],
          no_attr,
          run_one_thread,
          &thread_info_vec[thread_num]
       );
-      assert( rc == 0 );
+      ok &= rc == 0;
    }
    {  // run master thread's indices
       size_t thread_num = 0;
       run_one_thread(&thread_info_vec[thread_num]);
    }
-   // wait for boos threads to finish
+   // wait for other threads to finish
    for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
    {  void* no_status = nullptr;
-      int rc = pthread_join(pthread_vec[thread_num-1], &no_status);
-      assert( rc == 0 );
+      rc  = pthread_join(pthread_vec[thread_num-1], &no_status);
+      ok &= rc == 0;
    }
    //
-   // sequential_execution_
+   // sequential_execution_, ok
    sequential_execution_ = true;
-   assert( ! in_parallel() );
+   CppAD::thread_alloc::parallel_setup(1, nullptr, nullptr);
+   ok &= ! in_parallel();
    //
-   // hold_memory
+   // hold_memory, ok
    // free memory for other threads before this (the master thread)
-   assert( thread_number() == 0 );
+   ok &= thread_number() == 0;
    CppAD::thread_alloc::hold_memory(false);
-   for(size_t i = 1; i < num_threads; ++i)
-      CppAD::thread_alloc::free_available(i);
+   for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
+   {  ok &= thread_info_vec[thread_num].ok;
+      CppAD::thread_alloc::free_available(thread_num);
+   }
+   ok &= thread_info_vec[0].ok;
    CppAD::thread_alloc::free_available(0);
    //
-   // j
+   // ok
    for(size_t j = 0; j < nx; ++j)
    {  //
       // check
       double check = 1.0;
       for(size_t k = 0; k < nx; ++k)
          if(k != j)
-            check *= x[j];
+            check *= x[k];
       //
       // ok
       ok &= CppAD::NearEqual(Jac[j], check, eps99, eps99);
