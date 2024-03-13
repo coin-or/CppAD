@@ -3,7 +3,7 @@ set -e -u
 # ---------------------------------------------------------------------------
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ---------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -39,7 +39,7 @@ set -u
 # new files
 list=$(
    git status --porcelain | sed -n -e '/^?? /p' |  \
-      sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g' 
+      sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g'
 )
 for file in $list
 do
@@ -60,31 +60,35 @@ do
    fi
 done
 # -----------------------------------------------------------------------------
-# git_commit.log
+# temp.log
 branch=$(git branch --show-current)
-cat << EOF > git_commit.log
+cat << EOF > temp.log
 $branch:
-# Enter the commit message for your changes above.
-# This commit will abort if the first line does not begin with "$branch:"
-# because $branch is the branch for this commit.
-# Lines starting with '#' are not included in the message.
-# Below is a list of the files for this commit:
+# 1. Enter message for this commit above this line. 
+# 2. The message for the previous commit is in git_commit.log (if it exists).
+# 3. This commit will abort if the first line does not begin with "$branch:"
+#    because $branch is the branch for this commit.
+# 4. Lines starting with '#' are not included in the message.
+# 5. Below is a list of the files for this commit:
 EOF
-git status --porcelain | sed -e 's|^|# |' >> git_commit.log
-$EDITOR git_commit.log
-sed -i git_commit.log -e '/^#/d'
-if ! head -1 git_commit.log | grep "^$branch:" > /dev/null
+git status --porcelain | sed -e 's|^|# |' >> temp.log
+$EDITOR temp.log
+sed -i temp.log -e '/^#/d'
+if ! head -1 temp.log | grep "^$branch:" > /dev/null
 then
    echo "Aborting because first line does not begin with $branch:"
-   echo 'See ./git_commit.log'
+   echo 'See ./temp.log'
    exit 1
 fi
-if ! head -1 git_commit.log | grep "^$branch:.*[^ \t]" > /dev/null
+if ! head -1 temp.log | grep "^$branch:.*[^ \t]" > /dev/null
 then
    echo "Aborting because only white space follow $branch: in first line"
-   echo 'See ./git_commit.log'
+   echo 'See ./temp.log'
    exit 1
 fi
+#
+# git_commit.log
+mv temp.log git_commit.log
 # -----------------------------------------------------------------------------
 # git add
 echo_eval git add --all

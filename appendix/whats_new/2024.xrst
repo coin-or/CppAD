@@ -32,8 +32,10 @@ mm-dd
 
 03-13
 =====
-The :ref:`bthread_get_started.cpp-name` example was made simpler by
-directly using openmp instead of going through the
+The :ref:`bthread_get_started.cpp-name`
+and :ref:`pthread_get_started.cpp-name`
+examples were made simpler by
+directly using the threading system instead of going through the
 :ref:`team_thread.hpp-name` interface.
 
 03-12

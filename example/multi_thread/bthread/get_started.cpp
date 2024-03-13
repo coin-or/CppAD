@@ -64,8 +64,8 @@ namespace {
    //
    // thread_specific_data_
    void cleanup(size_t* thread_num)
-   {  delete thread_num;  
-      return; 
+   {  delete thread_num;
+      return;
    }
    boost::thread_specific_ptr<size_t> thread_specific_data_(cleanup);
    //
@@ -74,7 +74,7 @@ namespace {
    //
    // in_parallel
    bool in_parallel(void)
-   {  return ! sequential_execution_; } 
+   {  return ! sequential_execution_; }
    //
    // thread_number
    size_t thread_number(void)
@@ -99,11 +99,11 @@ namespace {
    // run_one_thread
    void run_one_thread(
       size_t                thread_num     ,
-      CppAD::ADFun<double>* f_ptr          , 
-      size_t                j_begin        , 
-      size_t                j_end          , 
+      CppAD::ADFun<double>* f_ptr          ,
+      size_t                j_begin        ,
+      size_t                j_end          ,
       const                 d_vector& x    ,
-      d_vector&             Jac            ) 
+      d_vector&             Jac            )
    {  //
       // thread_specific_data_
       if( thread_num != 0 )
@@ -150,7 +150,7 @@ bool get_started(void)
       ax[j] = 1.0 + 1.0 / double(j+1);
    //
    // thread_specific_data_
-   // must be set for this thread before calling parall_setup of parallel_ad
+   // must be set for this thread before calling parall_setup or parallel_ad
    {  size_t thread_num = 0;
       thread_specific_data_.reset(new size_t(thread_num) );
       assert( thread_number() == thread_num );
@@ -192,7 +192,7 @@ bool get_started(void)
       CppAD::ADFun<double>* f_ptr  = &f_thread[thread_num];
       thread_ptr[thread_num-1] = new boost::thread(
          run_one_thread, thread_num, f_ptr, j_begin, j_end, x, Jac
-      ); 
+      );
    }
    {  // run master thread's indices
       size_t thread_num = 0;
