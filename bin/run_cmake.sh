@@ -29,8 +29,7 @@ PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
 PKG_CONFIG_PATH="$prefix/share/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH
 # -----------------------------------------------------------------------------
-addr_t_type='int'
-verbose='no'
+verbose_make='no'
 standard='c++17'
 profile_speed='no'
 callgrind='no'
@@ -45,6 +44,7 @@ yes_cppad_jit='yes'
 yes_cppadcg='yes'
 yes_sacado='yes'
 yes_documentation='yes'
+addr_t_type='int'
 testvector='boost'
 debug_which='debug_all'
 while [ "$#" != 0 ]
@@ -54,8 +54,7 @@ do
       cat << EOF
 usage: bin/run_cmake.sh: \\
    [--help] \\
-   [--addr_t_<type>] \\
-   [--verbose] \\
+   [--verbose_make] \\
    [--c++11] \\
    [--profile_speed] \\
    [--callgrind] \\
@@ -71,6 +70,7 @@ usage: bin/run_cmake.sh: \\
    [--no_sacado] \\
    [--no_optional] \\
    [--no_documentation] \\
+   [--addr_t_<type>] \\
    [--<package>_vector] \\
    [--debug_<which>]
 The --help option just prints this message and exits.
@@ -83,20 +83,8 @@ EOF
    fi
    case "$1" in
 
-      --addr_t_size_t)
-      addr_t_type='size_t'
-      ;;
-
-      --addr_t_int)
-      addr_t_type='int'
-      ;;
-
-      --addr_t_unsigned_int)
-      addr_t_type='unsigned int'
-      ;;
-
-      --verbose)
-      verbose='yes'
+      --verbose_make)
+      verbose_make='yes'
       ;;
 
       --c++11)
@@ -166,6 +154,20 @@ EOF
       yes_documentation='no'
       ;;
 
+      # ----------------------------------------------------------------------
+      --addr_t_size_t)
+      addr_t_type='size_t'
+      ;;
+
+      --addr_t_int)
+      addr_t_type='int'
+      ;;
+
+      --addr_t_unsigned_int)
+      addr_t_type='unsigned int'
+      ;;
+
+      # ----------------------------------------------------------------------
       --cppad_vector)
       testvector='cppad'
       ;;
@@ -182,6 +184,7 @@ EOF
       testvector='std'
       ;;
 
+      # ----------------------------------------------------------------------
       --debug_odd)
       debug_which='debug_odd'
       ;;
@@ -198,6 +201,7 @@ EOF
       debug_which='debug_none'
       ;;
 
+      # ----------------------------------------------------------------------
       *)
       echo "$1 is an invalid option, try bin/run_cmake.sh --help"
       exit 1
@@ -223,14 +227,16 @@ if [ -e CMakeFiles ]
 then
    echo_eval rm -r CMakeFiles
 fi
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # clean all variables in cmake cache
-cmake_args='-U .+ -D cmake_defined_ok=FALSE -G Ninja'
-#
-if [ "$verbose" == 'yes' ]
+cmake_args='-U .+ -D cmake_defined_ok=FALSE'
+# -----------------------------------------------------------------------------
+# Generator
+if [ "$verbose_make" == 'yes' ]
 then
-   # echo each command that make executes
-   cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=YES"
+   cmake_args="$cmake_args  -G 'Unix Makefiles' -D CMAKE_VERBOSE_MAKEFILE=YES"
+else
+   cmake_args="$cmake_args  -G Ninja"
 fi
 # -----------------------------------------------------------------------------
 # cppad_prefix
@@ -341,14 +347,16 @@ done
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
 cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
-if [ "$callgrind" == 'yes' ]
+if [ "$debug_which" == 'debug_all' ]
 then
-   if [ "$debug_which" != 'debug_none' ]
-   then
-      echo 'run_cmake.sh: --callgrind requires --debug_none'
-      exit 1
-   fi
-   cppad_cxx_flags="$cppad_cxx_flags -g"
+   # CMAKE_CXX_FLAGS_DEBUG include -g so do not need it here
+   cppad_cxx_flags="$cppad_cxx_flags -O0"
+elif [ "$callgrind" == 'yes' ]
+then
+   # This is a quote from the Callgrind manual: 
+   # 'As with Cachegrind, you probably want to compile with debugging info 
+   # (the -g option) and with optimization turned on.'
+   cmake_args="$cmake_args -g"
 fi
 #
 # cppad_cxx_flags

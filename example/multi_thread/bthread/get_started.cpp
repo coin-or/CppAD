@@ -22,14 +22,8 @@ see :ref:`ta_parallel_setup@thread_num` .
 
 ADFun Constructor
 *****************
-This example uses the ``ADFun`` :ref:`fun_construct@Default Constructor` ; see
-the following text below::
-
-   CppAD::ADFun<double> fun;
-   fun.Dependent(ax, ay);
-
 If you use the :ref:`fun_construct@Sequence Constructor` for the original
-function, you it would need to clear the Taylor coefficient memory associated
+function, you will need to clear the Taylor coefficient memory associated
 with the function using :ref:`capacity_order-name` ; e.g. ::
 
    CppAD::ADFun fun(ax, ay);
@@ -39,6 +33,7 @@ If you do not free the Taylor coefficient memory in ``fun`` ,
 the function assignments will allocate corresponding memory for each
 function in ``fun_thread`` and, depending on what you do in parallel mode,
 you may attempt to free that memory using another thread.
+For example, try changing USE_DEFAULT_ADFUN_CONSTRUCTOR to 0.
 
 Source Code
 ***********
@@ -53,6 +48,8 @@ Source Code
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <boost/thread.hpp>
+
+# define USE_DEFAULT_ADFUN_CONSTRUCTOR 1
 
 namespace {
    //
@@ -108,19 +105,26 @@ namespace {
       bool*                 ok_ptr         )
    {  //
       // x, Jac, ok
-      const d_vector& x   = *x_ptr;
-      d_vector&       Jac = *Jac_ptr;
-      bool&           ok  = *ok_ptr;
+      CppAD::ADFun<double>& f   = *f_ptr;
+      const d_vector&       x   = *x_ptr;
+      d_vector&             Jac = *Jac_ptr;
+      bool&                 ok  = *ok_ptr;
       //
       // thread_specific_data_
+      // This sets up the thread_number fucntion for this thread.
       if( thread_num != 0 )
       {  thread_specific_data_.reset(new size_t(thread_num) );
          ok &= thread_number() == thread_num;
       }
       //
+      // f
+      // This will cause an assert if USE_DEFAULT_ADFUN_CONSTRUCTOR is 0.
+      // (The assert uses the thread_number function for this thread.)
+      f.capacity_order(0);
+      //
       // Jac
       for(size_t j = j_begin; j < j_end; ++j)
-         Jac[j] = partial(*f_ptr, j, x);
+         Jac[j] = partial(f, j, x);
    }
 }
 bool get_started(void)
@@ -142,8 +146,12 @@ bool get_started(void)
    ay[0] = ax[0];
    for(size_t j = 1; j < nx; ++j)
       ay[0] *= ax[j];
+# if USE_DEFAULT_ADFUN_CONSTRUCTOR
    CppAD::ADFun<double> fun;
    fun.Dependent(ax, ay);
+# else
+   CppAD::ADFun<double> fun(ax, ay);
+# endif
    //
    // num_threads, f_thread, ok_thread
    size_t num_threads = 4;

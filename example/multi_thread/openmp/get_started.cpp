@@ -22,14 +22,8 @@ see :ref:`ta_parallel_setup@thread_num` .
 
 ADFun Constructor
 *****************
-This example uses the ``ADFun`` :ref:`fun_construct@Default Constructor` ; see
-the following text below::
-
-   CppAD::ADFun<double> fun;
-   fun.Dependent(ax, ay);
-
 If you use the :ref:`fun_construct@Sequence Constructor` for the original
-function, you it would need to clear the Taylor coefficient memory associated
+function, you will need to clear the Taylor coefficient memory associated
 with the function using :ref:`capacity_order-name` ; e.g. ::
 
    CppAD::ADFun fun(ax, ay);
@@ -39,6 +33,7 @@ If you do not free the Taylor coefficient memory in ``fun`` ,
 the function assignments will allocate corresponding memory for each
 function in ``fun_thread`` and, depending on what you do in parallel mode,
 you may attempt to free that memory using another thread.
+For example, try changing USE_DEFAULT_ADFUN_CONSTRUCTOR to 0.
 
 Source Code
 ***********
@@ -53,6 +48,8 @@ Source Code
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <omp.h>
+
+# define USE_DEFAULT_ADFUN_CONSTRUCTOR 1
 
 namespace {
    //
@@ -75,7 +72,10 @@ namespace {
    double partial(
       CppAD::ADFun<double>& f, size_t j, const d_vector& x
    )
-   {  size_t nx = x.size();
+   {  //
+      f.capacity_order(0);
+      //  
+      size_t nx = x.size();
       d_vector dx(nx), dy(1);
       for(size_t k = 0; k < nx; ++k)
          dx[k] = 0.0;
@@ -104,8 +104,12 @@ bool get_started(void)
    ay[0] = ax[0];
    for(size_t j = 1; j < nx; ++j)
       ay[0] *= ax[j];
+# if USE_DEFAULT_ADFUN_CONSTRUCTOR
    CppAD::ADFun<double> fun;
    fun.Dependent(ax, ay);
+# else
+   CppAD::ADFun<double> fun(ax, ay);
+# endif
    //
    // num_threads, f_thread
    size_t num_threads = 4;
