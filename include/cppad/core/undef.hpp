@@ -2,7 +2,7 @@
 # define CPPAD_CORE_UNDEF_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -49,6 +49,7 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_HAS_MKSTEMP
 # undef CPPAD_HAS_TMPNAM_S
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+# undef CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
 # undef CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
 # undef CPPAD_LIB_EXPORT
 # undef CPPAD_MAX_NUM_CAPACITY
@@ -58,7 +59,6 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_PADDING_BLOCK_T
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
-# undef CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
 # undef CPPAD_TRACE_CAPACITY
 # undef CPPAD_TRACE_THREAD
 # undef CPPAD_TRACK_DEBUG

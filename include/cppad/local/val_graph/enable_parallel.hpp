@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_ENABLE_PARALLEL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 // BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/local/val_graph/base_op.hpp>
@@ -69,8 +69,8 @@ template <class Value> void enable_parallel(void)
    exp_op_t<Value>::get_instance();
    expm1_op_t<Value>::get_instance();
    load_op_t<Value>::get_instance();
-   log_op_t<Value>::get_instance();
    log1p_op_t<Value>::get_instance();
+   log_op_t<Value>::get_instance();
    mul_op_t<Value>::get_instance();
    neg_op_t<Value>::get_instance();
    pow_op_t<Value>::get_instance();

@@ -131,6 +131,7 @@ List All (Except Deprecated) CppAD Examples
    base_require.cpp,:ref:`base_require.cpp-title`
    bender_quad.cpp,:ref:`bender_quad.cpp-title`
    bool_fun.cpp,:ref:`bool_fun.cpp-title`
+   bthread_get_started.cpp,:ref:`bthread_get_started.cpp-title`
    capacity_order.cpp,:ref:`capacity_order.cpp-title`
    change_param.cpp,:ref:`change_param.cpp-title`
    check_for_nan.cpp,:ref:`check_for_nan.cpp-title`
@@ -287,6 +288,7 @@ List All (Except Deprecated) CppAD Examples
    ode_gear.cpp,:ref:`ode_gear.cpp-title`
    ode_gear_control.cpp,:ref:`ode_gear_control.cpp-title`
    ode_stiff.cpp,:ref:`ode_stiff.cpp-title`
+   openmp_get_started.cpp,:ref:`openmp_get_started.cpp-title`
    opt_val_hes.cpp,:ref:`opt_val_hes.cpp-title`
    optimize_compare_op.cpp,:ref:`optimize_compare_op.cpp-title`
    optimize_conditional_skip.cpp,:ref:`optimize_conditional_skip.cpp-title`
@@ -303,6 +305,7 @@ List All (Except Deprecated) CppAD Examples
    print_for_cout.cpp,:ref:`print_for_cout.cpp-title`
    print_for_string.cpp,:ref:`print_for_string.cpp-title`
    print_graph.cpp,:ref:`print_graph.cpp-title`
+   pthread_get_started.cpp,:ref:`pthread_get_started.cpp-title`
    qp_box.cpp,:ref:`qp_box.cpp-title`
    qp_box.hpp,:ref:`qp_box.hpp-title`
    qp_interior.cpp,:ref:`qp_interior.cpp-title`
@@ -324,9 +327,6 @@ List All (Except Deprecated) CppAD Examples
    runge45_1.cpp,:ref:`runge45_1.cpp-title`
    runge_45.cpp,:ref:`runge_45.cpp-title`
    set_union.cpp,:ref:`set_union.cpp-title`
-   bthread_get_started.cpp,:ref:`bthread_get_started.cpp-title`
-   openmp_get_started.cpp,:ref:`openmp_get_started.cpp-title`
-   pthread_get_started.cpp,:ref:`pthread_get_started.cpp-title`
    simple_vector.cpp,:ref:`simple_vector.cpp-title`
    simplex_method.cpp,:ref:`simplex_method.cpp-title`
    simplex_method.hpp,:ref:`simplex_method.hpp-title`

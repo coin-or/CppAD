@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_UNARY_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/print_op.hpp>
@@ -232,8 +232,8 @@ CPPAD_VAL_GRAPH_UNARY(erf,   erf);
 CPPAD_VAL_GRAPH_UNARY(erfc,  erfc);
 CPPAD_VAL_GRAPH_UNARY(exp,   exp);
 CPPAD_VAL_GRAPH_UNARY(expm1, expm1);
-CPPAD_VAL_GRAPH_UNARY(log1p, log1p);
 CPPAD_VAL_GRAPH_UNARY(log,   log);
+CPPAD_VAL_GRAPH_UNARY(log1p, log1p);
 CPPAD_VAL_GRAPH_UNARY(neg,   -);
 CPPAD_VAL_GRAPH_UNARY(sign,  sign);
 CPPAD_VAL_GRAPH_UNARY(sin,   sin);
