@@ -222,6 +222,7 @@ bool get_started(void)
    //
    // sequential_execution_
    sequential_execution_ = true;
+   CppAD::thread_alloc::parallel_setup(1, nullptr, nullptr);
    ok &= ! in_parallel();
    //
    // hold_memory

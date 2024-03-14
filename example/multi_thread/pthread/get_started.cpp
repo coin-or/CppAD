@@ -133,9 +133,10 @@ namespace {
       //
       // phtread_setspecific, ok
       if( thread_num != 0 )
-      rc  = pthread_setspecific(thread_specific_key_, &thread_num);
-      ok &= rc == 0;
-      ok &= thread_number() == thread_num;
+      {  rc  = pthread_setspecific(thread_specific_key_, &thread_num);
+         ok &= rc == 0;
+         ok &= thread_number() == thread_num;
+      }
       //
       // Jac
       for(size_t j = j_begin; j < j_end; ++j)

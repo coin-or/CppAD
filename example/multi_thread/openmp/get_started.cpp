@@ -120,7 +120,7 @@ bool get_started(void)
    //
    // parallel_setup
    omp_set_num_threads( int(num_threads) );
-   assert( ! in_parallel() );
+   ok &= ! in_parallel();
    CppAD::thread_alloc::parallel_setup(
       num_threads, in_parallel, thread_number
    );
@@ -144,8 +144,8 @@ bool get_started(void)
    //
    // hold_memory
    // free memory for other threads before this (the master thread)
-   assert( ! in_parallel() );
-   assert( thread_number() == 0 );
+   CppAD::thread_alloc::parallel_setup(1, nullptr, nullptr);
+   ok &= ! in_parallel();
    CppAD::thread_alloc::hold_memory(false);
    for(size_t i = 1; i < num_threads; ++i)
       CppAD::thread_alloc::free_available(i);
