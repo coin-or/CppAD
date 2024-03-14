@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin_parent devel dev}
 
 Developer Documentation
 #######################
 
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_4}
 Contents
 ********
 {xrst_toc_table
@@ -29,10 +30,12 @@ Contents
    include/cppad/local/op/unary_op.xrst
    include/cppad/local/op/binary_op.xrst
    include/cppad/local/op/discrete_op.hpp
+   include/cppad/local/set_get_in_parallel.hpp
    include/cppad/core/atomic/four/devel/devel.xrst
    cppad_lib/temp_file.cpp
    cppad_ipopt/example/ode1.xrst
 }
+{xrst_comment END_SORT_THIS_LINE_MNUS_2}
 
 {xrst_end devel}
 # ----------------------------------------------------------------------------

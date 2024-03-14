@@ -514,7 +514,7 @@ contain examples and tests that use this function.
       {  bool set = true;
          set_get_num_threads(num_threads);
          // emphasize that this routine is outside thread_alloc class
-         CppAD::local::set_get_in_parallel(nullptr, set);
+         CppAD::local::set_get_in_parallel(set, nullptr);
          set_get_thread_num(nullptr, set);
          return;
       }
@@ -554,7 +554,7 @@ contain examples and tests that use this function.
       {  bool set = true;
          set_get_num_threads(num_threads);
          // emphasize that this routine is outside thread_alloc class
-         CppAD::local::set_get_in_parallel(in_parallel, set);
+         CppAD::local::set_get_in_parallel(set, in_parallel);
          set_get_thread_num(thread_num, set);
       }
    }
@@ -629,7 +629,7 @@ Example
    /// other threads are currently executing.
    static bool in_parallel(void)
    {  // emphasize that this routine is outside thread_alloc class
-      return CppAD::local::set_get_in_parallel(0);
+      return CppAD::local::set_get_in_parallel();
    }
 /* -----------------------------------------------------------------------
 {xrst_begin ta_thread_num}
