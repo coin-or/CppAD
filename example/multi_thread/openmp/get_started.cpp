@@ -142,10 +142,14 @@ bool get_started(void)
    //
    // Jac
    ad_vector Jac(nx);
-   size_t j = 0;
+   //
+   // j
+   // OpenMP does not allow one to use a size_t here.
+   int int_j;
 # pragma omp parallel for
-   for(j = 0; j < nx; ++j)
-   {  size_t thread_num        = thread_number();
+   for(int_j = 0; int_j < int(nx); ++int_j)
+   {  size_t j                 = size_t(int_j);  
+      size_t thread_num        = thread_number();
       CppAD::ADFun<double>& f  = f_thread[thread_num];
       Jac[j] = partial(f, j, x);
    }
@@ -160,7 +164,7 @@ bool get_started(void)
    CppAD::thread_alloc::free_available(0);
    //
    // j
-   for(j = 0; j < nx; ++j)
+   for(size_t j = 0; j < int(nx); ++j)
    {  //
       // check
       double check = 1.0;
