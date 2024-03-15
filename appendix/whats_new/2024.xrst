@@ -36,6 +36,10 @@ mm-dd
    was not being called properly in some cases. This has been fixed.
    This would cause CppAD to not properly report some usage
    errors during parallel execution.
+#. Fixing the problem above exposed the fact that,
+   when mixing debug and release builds,
+   :ref:`CheckSimpleVector-name` must be defined.
+   This has also been fixed.
 #. The discussion, in the multi-threading get_started examples,
    about the :ref:`openmp_get_started.cpp@ADFun Constructor` was improved.
 #. The parallel_ad routine has been improved so that it initializes
