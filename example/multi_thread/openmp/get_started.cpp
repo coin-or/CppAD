@@ -75,7 +75,8 @@ namespace {
    double partial(
       CppAD::ADFun<double>& f, size_t j, const d_vector& x
    )
-   {  //
+   {  // f
+      // This will cause an assert if USE_DEFAULT_ADFUN_CONSTRUCTOR is 0.
       f.capacity_order(0);
       //
       size_t nx = x.size();
