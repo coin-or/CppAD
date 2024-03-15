@@ -30,7 +30,7 @@ Release Notes for 2024
 mm-dd
 *****
 
-03-14
+03-15
 =====
 #. The user's choice of :ref:`ta_parallel_setup@in_parallel` routine
    was not being called properly in some cases. This has been fixed.

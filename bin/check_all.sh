@@ -10,20 +10,20 @@ then
 fi
 if [ "$1" != 'mixed' ] && [ "$1" != 'debug' ] && [ "$1" != 'release' ]
 then
-   echo 'bin/check_all.sh: (mixed|debug|release) [verbose]'
+   echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
    exit 1
 fi
-if [ "$2" != '' ] && [ "$2" != 'verbose' ]
+if [ "$2" != '' ] && [ "$2" != 'verbose_make' ]
 then
-   echo 'bin/check_all.sh: (mixed|debug|release) [verbose]'
+   echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
    exit 1
 fi
 build_type="$1"
-if [ "$2" == 'verbose' ]
+if [ "$2" == 'verbose_make' ]
 then
-   verbose='--verbose'
+   verbose_make='--verbose_make'
 else
-   verbose=''
+   verbose_make=''
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -135,7 +135,7 @@ then
 else
    if [ "$build_type" != 'mixed' ]
    then
-      echo 'bin/run_cmake.sh: build_type program error'
+      echo 'bin/check_all.sh: build_type not debug release or mixed'
       exit 1
    fi
    random_01 debug_which
@@ -251,9 +251,14 @@ then
       echo_log_eval bin/run_configure.sh $standard
    fi
 else
-   builder='ninja'
+   if [ "$verbose_name" != '' ]
+   then
+      builder='make'
+   else
+      builder='ninja'
+   fi
    echo_log_eval bin/run_cmake.sh \
-      $verbose \
+      $verbose_make \
       --profile_speed \
       $compiler \
       $standard \

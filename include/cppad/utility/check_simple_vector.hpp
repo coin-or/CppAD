@@ -102,9 +102,18 @@ so *S* is not the same as *T* .
 # include <cppad/local/define.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 
+// CPPAD_CHECK_SIMPLE_VECTOR
+# ifndef NDEBUG
+# define CPPAD_CHECK_SIMPLE_VECTOR 1
+# elif CPPAD_DEBUG_AND_RELEASE
+# define CPPAD_CHECK_SIMPLE_VECTOR 1
+# else
+# define CPPAD_CHECK_SIMPLE_VECTOR 0
+# endif
+
 namespace CppAD {
 
-# ifdef NDEBUG
+# if ! CPPAD_CHECK_SIMPLE_VECTOR
    template <class Scalar, class Vector>
    inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
    { }
@@ -119,7 +128,7 @@ namespace CppAD {
    struct ok_if_S_same_as_T<T,T> { T value; };
 
    template <class Scalar, class Vector>
-   void CheckSimpleVector(const Scalar& x, const Scalar& y)
+   inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
    {  //
       // count
       static size_t count = 0;
@@ -194,8 +203,8 @@ namespace CppAD {
       Scalar y;
 
       // use assignment and not constructor
-      x = 0;
-      y = 1;
+      x = Scalar(0);
+      y = Scalar(1);
 
       CheckSimpleVector<Scalar, Vector>(x, y);
    }
@@ -204,4 +213,5 @@ namespace CppAD {
 
 } // end namespace CppAD
 
+# undef CPPAD_CHECK_SIMPLE_VECTOR
 # endif
