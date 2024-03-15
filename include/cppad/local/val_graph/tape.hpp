@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_TAPE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/op_iterator.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
@@ -169,6 +169,7 @@ Operations on Tape
 ******************
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   include/cppad/local/val_graph/compress.hpp
    include/cppad/local/val_graph/cumulative.hpp
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/fold_con.hpp
@@ -178,7 +179,6 @@ Operations on Tape
    include/cppad/local/val_graph/option.hpp
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/record_new.hpp
-   include/cppad/local/val_graph/compress.hpp
    include/cppad/local/val_graph/renumber.hpp
    include/cppad/local/val_graph/rev_depend.hpp
    include/cppad/local/val_graph/summation.hpp
@@ -510,6 +510,7 @@ public :
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/local/val_graph/compress.hpp>
 # include <cppad/local/val_graph/cumulative.hpp>
 # include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/fold_con.hpp>
@@ -518,7 +519,6 @@ public :
 # include <cppad/local/val_graph/option.hpp>
 # include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/record_new.hpp>
-# include <cppad/local/val_graph/compress.hpp>
 # include <cppad/local/val_graph/renumber.hpp>
 # include <cppad/local/val_graph/summation.hpp>
 // END_SORT_THIS_LINE_MINUS_1

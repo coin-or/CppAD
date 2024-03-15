@@ -41,18 +41,32 @@ This routine does extra setup
 
 CheckSimpleVector
 *****************
-This routine has the side effect of calling ``CheckSimpleVector``
-for an unspecified number of cases of
-:ref:`CheckSimpleVector@Vector` and :ref:`CheckSimpleVector@Scalar` .
-The set of these cases may increase in the future so that the user
-does not need to initialize them separately.
+This routine has the side effect of calling ``CheckSimpleVector`` for
+some of the possible
+:ref:`CheckSimpleVector@Scalar` and :ref:`CheckSimpleVector@Vector` cases.
+The set of these cases may increase in the future and currently includes
+the following:
+
+.. csv-table::
+   :header: Scalar, Vector
+
+   ``bool``          , ``CppAD::vectorBool``
+   ``size_t``        , ``CppAD::vector<size_t>``
+   *Base*            , *vector* < *Base* >
+   ``AD`` < *Base* > , *vector* ``AD`` < *Base* >
+
+Where *vector* above is
+``CppAD::vector`` ,
+``std::vector`` , and
+the :ref:`cppad_testvector-name` .
+
 
 Example
 *******
 The files
-:ref:`team_openmp.cpp-name` ,
-:ref:`team_bthread.cpp-name` , and
-:ref:`team_pthread.cpp-name` ,
+:ref:`openmp_get_started.cpp-name` ,
+:ref:`bthread_get_started.cpp-name` , and
+:ref:`pthread_get_started.cpp-name` ,
 contain examples and tests that implement this function.
 
 Restriction
@@ -60,11 +74,12 @@ Restriction
 This routine cannot be called in parallel mode or while
 there is a tape recording ``AD`` < *Base* > operations.
 
-Other Routines
-**************
-If the following routines are used in parallel mode,
-they must be initialized separately:
+Other Initialization
+********************
+If the following routines have static memory and must be called once
+before being used in parallel mode:
 
+#. :ref:`CheckSimpleVector <CheckSimpleVector@Parallel Mode>`
 #. :ref:`thread_alloc, memory_leak <ta_parallel_setup-name>`
 #. :ref:`Rosen34 <Rosen34@Parallel Mode>`
 #. :ref:`Runge45 <Runge45@Parallel Mode>`
@@ -134,6 +149,16 @@ void parallel_ad(void)
    //
    CheckSimpleVector< Base, std::vector<Base> >();
    CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >();
+   //
+# if CPPAD_BOOSTVECTOR
+   CheckSimpleVector< Base, boost::numeric::ublas::vector<Base> >();
+   CheckSimpleVector< AD<Base>, boost::numeric::ublas::vector< AD<Base> > >();
+# endif
+   //
+# if CPPAD_EIGENVECTOR
+   CheckSimpleVector< Base, CppAD::eigen_vector<Base> >();
+   CheckSimpleVector< AD<Base>, CppAD::eigen_vector< AD<Base> > > ();
+# endif
 
 }
 

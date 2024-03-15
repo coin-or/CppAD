@@ -30,10 +30,13 @@ with the function using :ref:`capacity_order-name` ; e.g. ::
    fun.capacity_order(0);
 
 If you do not free the Taylor coefficient memory in ``fun`` ,
-the function assignments will allocate corresponding memory for each
-function in ``fun_thread`` and, depending on what you do in parallel mode,
-you may attempt to free that memory using another thread.
-For example, try changing USE_DEFAULT_ADFUN_CONSTRUCTOR to 0.
+the function assignments will allocate zero order Taylor coefficients for each
+function in ``fun_thread`` using thread zero. Depending on what you do in
+parallel mode, you may attempt to free that memory using another thread.
+For example, if you change USE_DEFAULT_ADFUN_CONSTRUCTOR to 0, you will
+get the message::
+
+   Attempt to return memory for a different thread while in parallel mode
 
 Source Code
 ***********

@@ -49,12 +49,12 @@ flag
 */
 // BEGIN PROTOTYPE
 // flag = CppAD::local::set_get_inparallel( .. )
-static bool set_get_in_parallel(
+inline bool set_get_in_parallel(
    bool set                      = false   ,
    bool (*in_parallel_new)(void) = nullptr )
 // END PROTOTYPE
-{
-   static bool (*in_parallel_user)(void) = nullptr;
+{  typedef bool (*function_ptr)(void);
+   static function_ptr in_parallel_user = nullptr;
 
    if( set )
    {  in_parallel_user = in_parallel_new;

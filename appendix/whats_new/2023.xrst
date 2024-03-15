@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2023 app}
@@ -66,7 +66,7 @@ you will have to add ``max_digits10`` to your Base type's numeric limits.
 =====
 #. The :ref:`parallel_ad-name` routine was missing some initializations.
    This has been fixed. In addition, a list of
-   :ref:`parallel_ad@Other Routines` ,
+   :ref:`parallel_ad@Other Initialization` ,
    that must be initialized before using in parallel mode,
    was included in the documentation.
 #. There was a bug introduce on :ref:`2023@mm-dd@06-20` when the

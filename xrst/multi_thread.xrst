@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin multi_thread}
 
@@ -50,7 +50,7 @@ One must first call
 :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 and then call :ref:`parallel_ad-name` before using ``AD`` types
 in :ref:`parallel<ta_in_parallel-name>` execution mode.
-In addition, see :ref:`parallel_ad@Other Routines` .
+In addition, see :ref:`parallel_ad@Other Initialization` .
 
 Same Thread
 ***********

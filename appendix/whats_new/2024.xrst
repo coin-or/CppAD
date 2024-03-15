@@ -30,6 +30,17 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-14
+=====
+#. The user's choice of :ref:`ta_parallel_setup@in_parallel` routine
+   was not being called properly in some cases. This has been fixed.
+   This would cause CppAD to not properly report some usage
+   errors during parallel execution.
+#. The discussion, in the multi-threading get_started examples,
+   about the :ref:`openmp_get_started.cpp@ADFun Constructor` was improved.
+#. The parallel_ad routine has been improved so that it initializes
+   CheckSimpleVector for more cases; see :ref:`parallel_ad@CheckSimpleVector` .
+
 03-13
 =====
 The :ref:`bthread_get_started.cpp-name`
