@@ -14,15 +14,17 @@ Syntax
 ******
 *f* . ``Dependent`` ( *x* , *y* )
 
-Purpose
-*******
-Stop recording and the AD of *Base*
+Stop Recording
+**************
+The call stops the recording and the AD of *Base*
 :ref:`operation sequence<glossary@Operation@Sequence>`
 that started with the call
 
    ``Independent`` ( *x* )
 
-and store the operation sequence in *f* .
+Store Operation Sequence
+************************
+This call also stores the operation sequence in *f* .
 The operation sequence defines an
 :ref:`glossary@AD Function`
 

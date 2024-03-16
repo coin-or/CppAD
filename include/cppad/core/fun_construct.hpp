@@ -7,7 +7,7 @@
 /*
 {xrst_begin fun_construct}
 {xrst_spell
-   of of
+   versa
 }
 
 Construct an ADFun Object and Stop Recording
@@ -16,7 +16,7 @@ Construct an ADFun Object and Stop Recording
 Syntax
 ******
 
-| ``ADFun`` < *Base* > *f* ( *x* , *y* );
+| ``ADFun`` < *Base* > *f* ( *ax* , *ay* );
 | ``ADFun`` < *Base* > *f*
 | *f* . ``swap`` ( *g* )
 | ``f`` = ``g``
@@ -35,31 +35,31 @@ It can then be used to calculate derivatives of the corresponding
 
 where :math:`B` is the space corresponding to objects of type *Base* .
 
-x
-*
-If the argument *x* is present, it has prototype
+ax
+**
+If the argument *ax* is present, it has prototype
 
-   ``const`` *ADVector* & *x*
+   ``const`` *ADVector* & *ax*
 
 It must be the vector argument in the previous call to
 :ref:`Independent-name` .
 Neither its size, or any of its values, are allowed to change
 between calling
 
-   ``Independent`` ( *x* )
+   ``Independent`` ( *ax* )
 
 and
 
-   ``ADFun`` < *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *ax* , *ay* )
 
-y
-*
-If the argument *y* is present, it has prototype
+ay
+**
+If the argument *ay* is present, it has prototype
 
-   ``const`` *ADVector* & *y*
+   ``const`` *ADVector* & *ay*
 
-The sequence of operations that map *x*
-to *y* are stored in the ADFun object *f* .
+The sequence of operations that map *ax*
+to *ay* are stored in the ADFun object *f* .
 
 ADVector
 ********
@@ -84,38 +84,38 @@ returns the value zero (see :ref:`fun_property@size_var` ).
 
 Sequence Constructor
 ********************
-The sequence constructor
+The following constructor stores the current ``AD`` < *Base* > operation
+sequence in *f* :
 
-   ``ADFun`` < *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *ax* , *ay* )
 
-creates the ``AD`` < *Base* > object *f* ,
-stops the recording of AD of *Base* operations
-corresponding to the call
-
-   ``Independent`` ( *x* )
-
-and stores the corresponding operation sequence in the object *f* .
-It then stores the zero order Taylor coefficients
-(corresponding to the value of *x* ) in *f* .
-This is equivalent to the following steps using the default constructor:
+To be specific, it is equivalent to the following 
+steps using the default constructor:
 
 #. Create *f* with the default constructor
 
       ``ADFun`` < *Base* > *f* ;
 
-#. Stop the tape and storing the operation sequence using
+#. Stop the recording and store the operation sequence using
 
-      *f* . ``Dependent`` ( *x* , *y* );
+      *f* . ``Dependent`` ( *ax* , *ay* );
 
-   (see :ref:`Dependent-name` ).
+   see :ref:`Independent@Start Recording` ,
+   :ref:`Dependent@Stop Recording` , and
+   :ref:`Dependent@Store Operation Sequence` .
+
 #. Calculate the zero order Taylor coefficients for all
    the variables in the operation sequence using
 
-      *f* . ``Forward`` ( *p* , *x_p* )
+      *y* = *f* . ``Forward`` ( 0 , *x* )
 
-   with *p* equal to zero and the elements of *x_p*
-   equal to the corresponding elements of *x*
-   (see :ref:`Forward-name` ).
+   see :ref:`forward_zero-name`.
+   Here *x* and *y* are :ref:`simple vectors <SimpleVector-name>`
+   with elements of type *Base* and the elements of *x*
+   are equal to the corresponding elements in *ax*.
+
+#. If NDEBUG is not defined, *y* is checked to make sure it's elements are 
+   nearly equal to the corresponding values in *ay* .
 
 Copy Constructor
 ****************
@@ -132,8 +132,7 @@ swap
 ****
 The swap operation *f* . ``swap`` ( *g* ) exchanges the contents of
 the two ``ADFun`` < *Base* > functions; i.e.,
-*f* ( *g* ) before the swap is identical to
-*g* ( *f* ) after the swap.
+*f* before the swap is identical to *g* after the swap and vise versa.
 
 Assignment Operator
 *******************
@@ -150,8 +149,7 @@ and any information originally in *g* is lost.
 
 Move Semantics
 ==============
-In the special case where *f* is a temporary object
-(and enough C++11 features are supported by the compiler)
+In the special case where *f* is a temporary object,
 this assignment will use move semantics.
 This avoids the overhead of the copying all the information from
 *f* to *g* .
@@ -180,11 +178,11 @@ Parallel Mode
 The call to ``Independent`` ,
 and the corresponding call to
 
-   ``ADFun`` < *Base* > *f* ( *x* , *y* )
+   ``ADFun`` < *Base* > *f* ( *ax* , *ay* )
 
 or
 
-   *f* . ``Dependent`` ( *x* , *y* )
+   *f* . ``Dependent`` ( *ax* , *ay* )
 
 or :ref:`abort_recording-name` ,
 must be preformed by the same thread; i.e.,

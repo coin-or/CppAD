@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileCopyrightText: Bradley M. Bell  <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
@@ -29,6 +29,13 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+03-16
+=====
+The :ref:`ADFun constructor<fun_construct-name>` was changed to use
+*ax* instead of *x* , and *ay* instead of *y* , for AD values.
+In addition, the :ref:`fun_construct@Sequence Constructor` discussion
+was improved. 
 
 03-15
 =====
