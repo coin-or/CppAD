@@ -30,12 +30,17 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-19
+=====
+Fix broken links found using ``--external_links`` option to
+the ``xrst`` documentation generator.
+
 03-16
 =====
 The :ref:`ADFun constructor<fun_construct-name>` was changed to use
 *ax* instead of *x* , and *ay* instead of *y* , for AD values.
 In addition, the :ref:`fun_construct@Sequence Constructor` discussion
-was improved. 
+was improved.
 
 03-15
 =====

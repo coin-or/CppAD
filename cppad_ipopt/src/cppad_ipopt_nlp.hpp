@@ -2,7 +2,7 @@
 # define CPPAD_CPPAD_IPOPT_SRC_CPPAD_IPOPT_NLP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppad_ipopt_nlp app}
@@ -49,7 +49,7 @@ problems of the form
    \end{array}
 
 This is done using
- `Ipopt <https://coin-or.github.io/Ipopt>`_
+`Ipopt <https://coin-or.github.io/Ipopt>`_
 optimizer and
 `CppAD <https://www.coin-or.org/CppAD/>`_
 Algorithmic Differentiation package.
