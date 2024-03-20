@@ -50,7 +50,7 @@ problems of the form
    \end{array}
 
 This is done using
-`Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_
+`Ipopt <https://coin-or.github.io/Ipopt>`_
 optimizer and CppAD for the derivative and sparsity calculations.
 
 Include File

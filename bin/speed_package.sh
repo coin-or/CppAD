@@ -18,7 +18,7 @@ echo_eval() {
 git reset --hard
 package='cppadcg'
 include_file='cppad/cg/cg.hpp'
-home_page='https://github.com/joaoleal/CppADCodeGen.git'
+home_page='https://github.com/joaoleal/CppADCodeGen'
 # --------------------------------------------------------
 Package=`echo $package | sed -e 's|^.|\U&|'`
 PACKAGE=`echo $package | sed -e 's|^.*|\U&|'`
@@ -109,7 +109,7 @@ echo_eval sed -i $file -f speed_package.$$
 # omh/install/package_prefix
 short_name=`echo $include_file | sed -e 's|.*/||'`
 cat << EOF > speed_package.$$
-s|http://www.fadbad.com|$home_page|
+s|http://uning.dk/|$home_page|
 s|%fadbad_prefix%/%dir%/FADBAD++/badiff.h|%${package}_prefix%/%dir%/$include_file|
 s|badiff[.]h|$short_name|
 s|Fadbad|$Package|g

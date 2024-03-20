@@ -21,11 +21,11 @@ cppad-20240316: CppAD User's Manual
 .. list-table::
    :widths: auto
 
-   * - `release-20240000.4 <https://github.com/coin-or/CppAD/archive/20240000.4.tar.gz>`_
+   * - `release-20240000.4 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20240000.4>`_
      - `documentation-20240000 <https://cppad.readthedocs.io/stable-20240000>`_
      - `other releases <https://github.com/coin-or/CppAD/tags>`_
      - `github <https://github.com/coin-or/CppAD>`_
-     - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec>`_
+     - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/rawhide/f/cppad.spec>`_
 
 {xrst_comment END: Before changing see new_release.sh and check_version.sh}
 
@@ -40,11 +40,11 @@ cppad-20240316: CppAD User's Manual
      - `project manager <http://www.seanet.com/~bradbell>`_
 
 CppAD is distributed by
-`COIN-OR <http://www.coin-or.org>`_
+`COIN-OR <https://www.coin-or.org/>`_
 with the Eclipse Public License
-`EPL-2.0 <http://www.opensource.org/licenses/EPL-2.0>`_
+`EPL-2.0 <https://opensource.org/license/EPL-2.0>`_
 or the GNU General Public License
-`GPL-2.0 <http://www.opensource.org/licenses/GPL-2.0>`_ or later.
+`GPL-2.0 <https://opensource.org/license/GPL-2.0>`_ or later.
 
 Algorithmic Differentiation
 ***************************
@@ -53,9 +53,9 @@ computes derivative values from an algorithm that computes function values
 as *Algorithmic Differentiation* ,
 also referred to as *Automatic Differentiation* or just AD.
 A brief introduction to AD can be found in
-`wikipedia <http://en.wikipedia.org/wiki/Automatic_differentiation>`_.
+`wikipedia <https://en.wikipedia.org/wiki/Automatic_differentiation>`_.
 The web site
-`autodiff.org <http://www.autodiff.org>`_
+`autodiff.org <https://www.autodiff.org/>`_
 is dedicated to research about, and promoting the use of, AD.
 
 Features
@@ -170,7 +170,7 @@ Software Engineering
 ********************
 CppAD is developed using the software engineering procedures described
 on the project manager's
-`software <https://www.seanet.com/~bradbell/software.html>`_
+`software <http://www.seanet.com/~bradbell/software.html>`_
 web page.
 
 Testing
@@ -183,11 +183,11 @@ There is an extensive set of correctness tests; see :ref:`cmake_check-name` .
 Speed
 =====
 A set of programs for doing :ref:`speed-name` comparisons between
-`Adolc <https://projects.coin-or.org/ADOL-C>`_,
+`Adolc <https://github.com/coin-or/ADOL-C>`_,
 CppAD,
-`Fadbad <http://www.fadbad.com/>`_,
+`Fadbad <http://uning.dk//>`_,
 and
-`Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
+`Sacado <https://trilinos.github.io/sacado.html>`_
 are included.
 
 Utilities

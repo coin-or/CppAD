@@ -46,7 +46,7 @@ Exercises
 {xrst_spell_off}
 {xrst_code cpp} */
 
-# include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
+# include <cppad/cppad.hpp>  // https://www.coin-or.org/CppAD/
 # include "exp_2.hpp"        // second order exponential approximation
 bool exp_2_cppad(void)
 {  bool ok = true;

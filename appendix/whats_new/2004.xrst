@@ -303,9 +303,9 @@ during the :ref:`Unix installation<configure-name>` .
 The suggested compression program during
 Windows installation
 was changed from
-`7-zip <http://www.7-zip.org>`_
+`7-zip <https://7-zip.org/>`_
 to
-`WinZip <http://www.winzip.com>`_.
+`WinZip <https://www.winzip.com/en/>`_.
 
 08-27
 =====
@@ -953,6 +953,6 @@ The specifications for the routine ``FunForTwo``
 was changed to use
 :ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
 This makes the interface to CppAD closer to the interface for
-`ADOLC <https://projects.coin-or.org/ADOL-C>`_.
+`ADOLC <https://github.com/coin-or/ADOL-C>`_.
 
 {xrst_end 2004}

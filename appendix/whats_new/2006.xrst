@@ -211,7 +211,7 @@ This has been fixed.
 =====
 Fix bug in the
 subversion installation instructions; see
-`bug report <http://list.coin-or.org/pipermail/cppad/2006q4/000076.html>`_.
+`bug report <https://list.coin-or.org/pipermail/cppad/2006q4/000076.html>`_.
 
 The some of the automatically generated ``makefile.in`` files
 had an improper license statement in the GPL license version.
@@ -262,9 +262,9 @@ Fix compiler warning while compiling ``cppad/RombergOne/``
 Cygwin packages, and other system packages,
 should not have a dash in the version number.
 See
-`cygwin package file naming <http://cygwin.com/setup.html#naming>`_
+`cygwin package file naming <http://www.cygwin.com/packaging-package-files.html#naming>`_ .
 or, to quote the
-`rpm file naming convention <http://www.rpm.org/max-rpm/ch-rpm-file-format.html>`_
+`rpm file naming convention <http://ftp.rpm.org/max-rpm/ch-rpm-file-format.html>`_
 *The only restriction placed on the version is that*
 *it cannot contain a dash "-".*
 As per the acceptable package naming conventions for cygwin,
@@ -461,7 +461,7 @@ Some error message occurred while executing
    valgrind --tool=memcheck TestMore/TestMore
 
 These were not really bugs, but they have been fixed to avoid
-this conflict between CppAD and `valgrind <http://valgrind.org/>`_.
+this conflict between CppAD and `valgrind <https://valgrind.org/>`_.
 
 07-14
 =====
@@ -982,7 +982,7 @@ The :ref:`subtraction<ad_binary-name>` documentation and example have been impro
 
 There was a bug :ref:`RevTwo-name` that was not detected by the
 :ref:`rev_two.cpp-name` test. This bug was reported by
-`Kasper Kristensen <http://list.coin-or.org/pipermail/cppad/2006-February/000020.html>`_
+`Kasper Kristensen <https://list.coin-or.org/pipermail/cppad/2006-February/000020.html>`_
 A test was added ``TestMore/rev_two.cpp`` that detects this problem
 and the problem has been fixed.
 

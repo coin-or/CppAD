@@ -86,7 +86,7 @@ echo_eval() {
    eval $*
 }
 # -----------------------------------------------------------------------------
-web_page='https://github.com/joaoleal/CppADCodeGen.git'
+web_page='https://github.com/joaoleal/CppADCodeGen'
 cppad_repo=$(pwd)
 # -----------------------------------------------------------------------------
 # n_job

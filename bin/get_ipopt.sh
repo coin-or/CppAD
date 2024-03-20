@@ -20,7 +20,7 @@
 # Purpose
 # *******
 # If you are using Unix, this command will download and install
-# `Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_ in the
+# `Ipopt <https://coin-or.github.io/Ipopt/>`_ in the
 # CppAD ``build`` directory.
 #
 # Requirements

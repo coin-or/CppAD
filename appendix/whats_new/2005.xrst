@@ -179,7 +179,7 @@ and *i* has type ``size_t`` ,
 
 Add a Home icon,
 that links to the
-`CppAD home page <http://www.coin-or.org/CppAD/>`_,
+`CppAD home page <https://www.coin-or.org/CppAD/>`_,
 to the top left of the navigation frame
 (left frame) for each documentation section.
 
@@ -194,8 +194,7 @@ mentioned under :ref:`2005<2005@mm-dd@11-20>` below.
 
 The dates in this file used to correspond to
 local time for when the change was checked
-into the
-`subversion repository <http://projects.coin-or.org/CppAD/browser>`_.
+into the subversion repository. 
 From now on the dates in this file will correspond to the first
 version of CppAD where the change appears; i.e., the date in the
 unix and windows

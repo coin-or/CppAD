@@ -645,7 +645,7 @@ This reduced the overhead (increased the speed) for the
 =====
 
 #. Fix bug below in the new release
-   `20190200.1 <https://github.com/coin-or/CppAD/archive/20190200.1.tar.gz>`_.
+   `20190200.1 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20190200.1>`_.
 #. There was a problem locating the boost multi-threading library.
    To be specific, the
    :ref:`cmake@CMake Command` would report

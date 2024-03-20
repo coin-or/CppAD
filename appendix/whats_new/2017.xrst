@@ -578,7 +578,7 @@ to ``example/utility`` subdirectory.
 01-27
 =====
 Add a :ref:`addon-name` link to
-`cppad_swig <http://www.seanet.com/~bradbell/cppad_swig>`_,
+`cppad_swig <https://github.com/bradbell/cppad_swig>`_ ,
 a C++ AD object library and swig interface to Perl, Octave, and Python.
 
 01-19

@@ -93,7 +93,7 @@ the function
    ``CheckSimpleVector`` ( ``const`` *Scalar* & *x* , ``const`` *Scalar* & *y* )
 
 was not defined; see
-`bug report <http://list.coin-or.org/pipermail/cppad/2010q2/000166.html>`_.
+`bug report <https://list.coin-or.org/pipermail/cppad/2010q2/000166.html>`_.
 This has been fixed.
 
 04-28
@@ -125,7 +125,7 @@ that caused the following improper abort:
 This was fixed in the trunk.
 It was also fixed in the release with version number ``20100101.3``
 which can be downloaded from the CppAD
-`download directory <http://www.coin-or.org/download/source/CppAD/>`_.
+`download directory <https://www.coin-or.org/download/source/CppAD/>`_.
 
 04-01
 =====

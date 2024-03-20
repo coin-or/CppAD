@@ -71,10 +71,10 @@ Scripting Language
 It would be useful to make :ref:`addon-name` packages that
 connect CppAD to a scripting languages.
 The package
-`cppad_swig <https://bradbell.github.io/cppad_py>`_
-demonstrate how one could use swig to do this and
-`cppad_py <https://bradbell.github.io/cppad_py>`_
-is a preliminary version of such a connection to Python.
+`cppad_swig <https://github.com/bradbell/cppad_swig>`_
+demonstrates how one could use swig to do this and
+`cppad_py < https://cppad-py.readthedocs.io>`_
+is an example connection to Python.
 
 Sparsity
 ********
@@ -91,9 +91,7 @@ Given the
 :ref:`glossary@Sparsity Pattern` for a Jacobian or Hessian,
 a graph coloring algorithm is used to determine which row or columns
 can be evaluated at the same time; see
-`color_general.hpp <https://github.com/coin-or/CppAD/blob/master/cppad/local/color_general.hpp>`_
-and
-`color_symmertic.hpp <https://github.com/coin-or/CppAD/blob/master/cppad/local/color_symmetric.hpp>`_.
+``color_general.hpp`` and ``color_symmertic.hpp``
 
 Subgraphs
 =========

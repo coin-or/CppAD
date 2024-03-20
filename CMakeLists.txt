@@ -7,7 +7,7 @@
 # =============================================================================
 #
 # Set the minimum required version of cmake for this project.
-# see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
+# see https://cmake.org//pipermail/cmake/2013-January/053213.html
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 #
 # Only interpret if() arguments as variables or keywords when unquoted.

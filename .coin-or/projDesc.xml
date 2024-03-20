@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type = "text/xsl" href = "http://www.coin-or.org/projects/autoGen.xsl"?>
+<?xml-stylesheet type = "text/xsl" href = "https://www.coin-or.org//projects/autoGen.xsl"?>
 <projectData xmlns="coin-or.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="coin-or.org http://www.coin-or.org/projects/autoGen.xsd">
+    xsi:schemaLocation="coin-or.org https://www.coin-or.org//projects/autoGen.xsd">
 
 <!--
   This file is a template that you fill in to provide specific information
   about your project. For project Foo, it is used to generate the page
-  http://www.coin-or.org/projects/Foo.xml
+  https://www.coin-or.org//projects/Foo.xml
   Once the template is filled in and checked into your project's repository
   in the conf/ directory, it will be automatically parsed and displayed
   in a standard HTML format using XSLT.  When users follow the link to
   your project from the Projects page on the COIN Web site, the generated
   HTML is what they will see.  As an example, have a look at
-  http://www.coin-or.org/projects/Cbc.xml
+  https://www.coin-or.org//projects/Cbc.xml
   to see the result.
 
   The file is extensively commented to help you understand where to fill
@@ -121,7 +121,7 @@ A tool for differentiation of C++ functions.
       <!--                                                           -->
       <!-- Fill in your text below (outside this comment block).     -->
 
-<projectHomePage>http://www.coin-or.org/CppAD</projectHomePage>
+<projectHomePage>https://www.coin-or.org//CppAD</projectHomePage>
 
       <!-- Fill in the name of the license your project uses and a   -->
       <!-- link to its page on www.opensource.org. For example, if   -->
@@ -157,7 +157,7 @@ https://opensource.org/licenses/EPL-2.0
       <!--      <repoName>Ots</repoName>                             -->
       <!--<projectName>CppAD</projectName>                           -->
       <!--      <projectUrl>                                         -->
-      <!--        http://www.coin-or.org/Ots/index.html              -->
+      <!--        https://www.coin-or.org//Ots/index.html              -->
       <!--      </projectUrl>                                        -->
       <!--   </coinProject>                                          -->
       <!--                                                           -->
@@ -166,7 +166,7 @@ https://opensource.org/licenses/EPL-2.0
       <!-- The <repoName> element of <coinProject> is mandatory. If  -->
       <!-- you do not provide <projectName>, it is assumed to be the -->
       <!-- same as repoName. If you do not provide <projectUrl>, it  -->
-      <!-- is assumed to be http://www.coin-or.org/projects/Foo.xml  -->
+      <!-- is assumed to be https://www.coin-or.org//projects/Foo.xml  -->
       <!-- with `Foo' replaced by the value of <repoName>.           -->
       <!-- Add as many <coinProject> elements as you need below.     -->
 
@@ -211,7 +211,7 @@ https://opensource.org/licenses/EPL-2.0
 <otherLinkedPackages>
      <otherPackage>
           <packageName>ADOL-C</packageName>
-          <packageURL>https://projects.coin-or.org/ADOL-C</packageURL>
+          <packageURL>https://github.com/coin-or/ADOL-C</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
@@ -226,12 +226,12 @@ https://opensource.org/licenses/EPL-2.0
      </otherPackage>
      <otherPackage>
           <packageName>Eigen</packageName>
-          <packageURL>http://eigen.tuxfamily.org</packageURL>
+          <packageURL>https://eigen.tuxfamily.org/index.php?title=Main_Page</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
           <packageName>FADBAD</packageName>
-          <packageURL>http://www.fadbad.com</packageURL>
+          <packageURL>http://uning.dk/</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
@@ -281,7 +281,7 @@ https://opensource.org/licenses/EPL-2.0
       <!-- review and should have been reported to you. If not,  -->
       <!-- ask the person who handled your project submission.   -->
       <!-- If all else fails, see                                -->
-      <!-- http://www.coin-or.org/faqs.html#q18                  -->
+      <!-- https://www.coin-or.org//faqs.html#q18                  -->
       <!-- and make an informed guess. For example,              -->
       <!--                                                       -->
       <!--<maturityLevel>4</maturityLevel>                       -->
@@ -376,15 +376,15 @@ https://opensource.org/licenses/EPL-2.0
   <!-- <leftMenuLinks>                                                   -->
   <!--                                                                   -->
   <!--   <documentation>                                                 -->
-  <!--      http://www.coin-or.org/SYMPHONY/man-5.1                      -->
+  <!--      https://www.coin-or.org//SYMPHONY/man-5.1                      -->
   <!--   </documentation>                                                -->
   <!--                                                                   -->
   <!--   <sourceCodeDownload>                                            -->
-  <!--      http://www.coin-or.org/download/source/SYMPHONY              -->
+  <!--      https://www.coin-or.org//download/source/SYMPHONY              -->
   <!--   </sourceCodeDownload>                                           -->
   <!--                                                                   -->
   <!--   <binaryDownload>                                                -->
-  <!--      http://www.coin-or.org/download/binary/SYMPHONY              -->
+  <!--      https://www.coin-or.org//download/binary/SYMPHONY              -->
   <!--   </binaryDownload>                                               -->
   <!--                                                                   -->
   <!--   <mailingList>                                                   -->

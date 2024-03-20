@@ -240,7 +240,7 @@ detected by ``g++`` version ``4.6.1 20110908`` .
 =====
 
 #. Add the
-   `boost multi-threading <http://www.boost.org/doc/libs/1_47_0/doc/html/thread.html>`_
+   `boost multi-threading <https://www.boost.org/doc/libs/1_47_0/doc/html/thread.html>`_
    examples :ref:`a11c_bthread.cpp-name` and ``bthread_simple_ad.cpp`` .
 #. Improve documentation for
    :ref:`ta_parallel_setup@thread_num` argument
@@ -712,7 +712,7 @@ suppress the following Microsoft Visual Studio warning
 #. The Microsoft Visual Studio 2003 project files
    for the Windows examples and tests no longer worked because
    the current version of CppAD uses local types in template instantiation; see
-   `Compiler Error C2918 <http://msdn.microsoft.com/en-us/library/bh44f2cb(v=vs.71).aspx>`_.
+   `Compiler Error C2918 <https://www.microsoft.com/en-us/download/details.aspx?id=55979>`_.
    These project files were converted to Visual Studio 2008 where they do work
    (if you use a later version, Visual Studio should automatically
    convert them for you).
@@ -834,7 +834,7 @@ is stored has been moved from
 to
 *prefixdir* / ``share/pkgconfig/cppad.pc`` ;
 see
-`devel lists.fedoraproject.org <http://lists.fedoraproject.org/pipermail/devel/2011-January/147915.html>`_.
+`devel lists.fedoraproject.org <https://lists.fedoraproject.org/pipermail/devel/2011-January/147915.html>`_.
 
 01-16
 =====
@@ -857,7 +857,7 @@ The following have been fixed:
 =====
 There were some problems running ``make test`` in the releases
 
-   ``http://www.coin-or.org/download/source/CppAD/cppad-20110101.0.`` *license* . ``tgz``
+   ``https://www.coin-or.org/download/source/CppAD/cppad-20110101.0.`` *license* . ``tgz``
 
 where *license* is ``gpl`` or ``cpl`` .
 
@@ -873,7 +873,7 @@ These problems are fixed in the trunk
 and these fixes will be copied to the corresponding stable and
 release versions; i.e.,
 
-   ``http://www.coin-or.org/download/source/CppAD/cppad-20110101.1.`` *license* . ``tgz``
+   ``https://www.coin-or.org/download/source/CppAD/cppad-20110101.1.`` *license* . ``tgz``
 
 will not have this problem.
 

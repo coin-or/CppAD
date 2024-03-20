@@ -146,7 +146,7 @@ set -e -u
 # `Building with Visual Studio in MSys2
 # <https://coin-or.github.io/user_introduction.html#building-with-visual-studio-in-msys2>`_ .
 #
-# .. _nmake: https://learn.microsoft.com/en-us/cpp/build/reference/nmake-reference
+# .. _nmake: https://learn.microsoft.com/en-us/cpp/build/reference/nmake-reference?view=msvc-170
 #
 # --with-clang
 # ************
@@ -198,7 +198,7 @@ set -e -u
 # The default value for this directory is empty; i.e., there
 # is no adolc directory.
 # If you have
-# `ADOL-C <https://projects.coin-or.org/ADOL-C>`_
+# `ADOL-C <https://github.com/coin-or/ADOL-C>`_
 # installed on your system, you can
 # specify a value for *adolc_dir* in the
 # :ref:`configure@Configure` command line.
@@ -269,7 +269,7 @@ set -e -u
 # The default value for this directory is empty; i.e., there
 # is no eigen directory.
 # If you have
-# `Eigen <http://eigen.tuxfamily.org>`_
+# `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
 # installed on your system, you can
 # specify a value for *eigen_dir* .
 # It must be such that
@@ -286,7 +286,7 @@ set -e -u
 # The default value for this directory is empty; i.e., there
 # is no fadbad directory.
 # If you have
-# `Fadbad 2.1 <http://www.fadbad.com/>`_
+# `Fadbad 2.1 <http://uning.dk//>`_
 # installed on your system, you can
 # specify a value for *fadbad_dir* .
 # It must be such that
@@ -305,7 +305,7 @@ set -e -u
 # The default value for this directory is empty; i.e., there
 # is no ipopt directory.
 # If you have
-# `Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_
+# `Ipopt <https://coin-or.github.io/Ipopt>`_
 # installed on your system, you can
 # specify a value for *ipopt_dir* .
 # It must be such that
@@ -328,7 +328,7 @@ set -e -u
 # The default value for this directory is empty; i.e., there
 # is no sacado directory.
 # If you have
-# `Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
+# `Sacado <https://trilinos.github.io/sacado.html>`_
 # installed on your system, you can
 # specify a value for *sacado_dir* .
 # It must be such that

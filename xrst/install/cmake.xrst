@@ -53,7 +53,7 @@ The cmake program enables one to create a single set of scripts,
 called ``CMakeLists.txt`` ,
 that can be used to test and install a program on Unix, Microsoft, or
 Apple operating systems; see
-`install cmake <http://www.cmake.org/cmake/help/install.html>`_ .
+`cmake resources <https://cmake.org/resources/>_ .
 
 Build Directory
 ***************
@@ -148,7 +148,7 @@ Visual Studio
 =============
 
 #. Launch the Visual Studio
-   `developer command prompt <https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs>`_
+   `developer command prompt <https://learn.microsoft.com/en-us/visualstudio/ide/reference/command-prompt-powershell?view=vs-2022>`_
 #. Use the command
    ::
 
@@ -242,7 +242,7 @@ Below is a table with a few of the possible files
 .. _Ninja: https://en.wikipedia.org/wiki/Ninja_(build_system)
 
 Other generator choices are available; see the cmake
-`generators <http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators>`_ documentation.
+`generators <https://cmake.org//cmake/help/cmake2.6docs.html#section_Generators>`_ documentation.
 
 cppad_prefix
 ************

@@ -5,7 +5,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #! /bin/bash -e
-web_page='https://github.com/joaoleal/CppADCodeGen.git'
+web_page='https://github.com/joaoleal/CppADCodeGen'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {

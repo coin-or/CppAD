@@ -249,7 +249,7 @@ This makes it easier to add a new package,
 but it requires the prototype for
 ``compute_`` *test_name* to be the same for all packages.
 
-The `Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
+The `Sacado <https://trilinos.github.io/sacado.html>`_
 package was added to the list of :ref:`speed-name` tests.
 In addition, the discussion about how to run each of the
 speed tests was corrected to include the *seed* argument.
@@ -841,7 +841,7 @@ The change on :ref:`2007@mm-dd@02-01` had a new, saved as a static
 pointer, with no corresponding delete.
 This was not a bug, but it has been changed to avoid
 an error message when using CppAD with
-`valgrind <http://valgrind.org/>`_.
+`valgrind <https://valgrind.org/>`_.
 
 The change to the ``pow`` function on
 :ref:`06-12-10<2006@mm-dd@12-10>` did not include the

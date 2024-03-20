@@ -272,7 +272,7 @@ This has been  fixed.
    see :ref:`2012@mm-dd@10-24` .
 #. Remove out of date Microsoft project files from the distribution.
    The build system is being converted to use
-   `cmake <http://www.cmake.org>`_ which builds these files automatically
+   `cmake <https://cmake.org/>`_ which builds these files automatically
    and thereby keeps them up to date.
    This feature is not yet documented, but one can inspect the file
    ``bin/run_cmake.sh`` to see how to use ``cmake`` with CppAD.
@@ -442,7 +442,7 @@ This has since been removed; see
 
 #. Change :ref:`cppad_eigen.hpp-name`
    to match new specifications and example in eigen help files on
-   `customizing and extending eigen. <http://eigen.tuxfamily.org/dox/TopicCustomizingEigen.html>`_
+   `Using custom scalar types. <https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html>`_
 #. Fix bug whereby a newly constructed :ref:`VecAD-name` object was a
    :ref:`con_dyn_var@Variable` (instead of a parameter) directly after construction
    (when no previous :ref:`ADFun<fun_construct-name>` object had been created).
@@ -465,7 +465,7 @@ This has since been removed; see
 06-16
 =====
 Add the example :ref:`eigen_det.cpp-name` that uses the
-`Eigen <http://eigen.tuxfamily.org>`_
+`Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
 linear algebra package.
 
 06-15
@@ -760,7 +760,7 @@ Debian recently converted the default shell corresponding to
 (which caused ``example/multi_thread/test.sh`` to fail).
 This has been fixed.
 In general, Debian's policy is that ``bin/sh`` will be a
-`Posix Shell <http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html>`_.
+`Posix Shell <https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html>`_.
 
 03-11
 =====

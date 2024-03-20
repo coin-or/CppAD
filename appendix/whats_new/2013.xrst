@@ -157,7 +157,7 @@ The documentation for the class
 =====
 The script :ref:`get_adolc.sh-name` was added
 (for downloading and installing
-`ADOL-C <https://projects.coin-or.org/ADOL-C>`_) in the
+`ADOL-C <https://github.com/coin-or/ADOL-C>`_) in the
 ``build`` directory.
 Note that this local install of Adolc requires ColPack; see
 :ref:`get_colpack.sh-name` .
@@ -354,8 +354,8 @@ Multiple order forward mode is the first step in this direction.
 
 #. The scripts :ref:`get_eigen.sh-name` and :ref:`get_sacado.sh-name` were added.
    If you are using Unix, and you do not have
-   `Eigen <http://eigen.tuxfamily.org>`_ or
-   `Sacado <http://trilinos.sandia.gov/packages/sacado>`_
+   `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_ or
+   `Sacado <https://trilinos.github.io/sacado.html>`_
    installed on your system, you can use the corresponding script
    to download and install a local copy for use when testing CppAD.
 #. The code ``std::cout <<`` *X* ,
@@ -385,7 +385,7 @@ from the scalar type to an ``int`` and this is dangerous for AD types
    using AD to computed derivatives inside an atomic function.
 #. The script :ref:`get_fadbad.sh-name` has been added.
    If you are using Unix, and you do not have
-   `FADBAD <http://www.fadbad.com>`_
+   `FADBAD <http://uning.dk/>`_
    installed on your system, you can use this script
    to download and install a local copy for use when testing CppAD.
 
@@ -397,7 +397,7 @@ The example old_usead_1.cpp was added.
 $subhead 04-16$$
 The script $cref get_ipopt.sh$$ has been added.
 If you are using Unix, and you do not have
-$href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$
+$href%https://www.coin-or.org//projects/Ipopt.xml%Ipopt%$$
 installed on your system, you can use this script
 to download and install a local copy for use when testing CppAD.
 
@@ -490,7 +490,7 @@ and its first release $code cppad-20130000.0$$ is available
 for download at
 $pre
    $$
-$href%http://www.coin-or.org/download/source/CppAD/%$$
+$href%https://www.coin-or.org/download/source/CppAD/%$$
 $lnext
 Advance version number for trunk to $code 20130102$$.
 $lend

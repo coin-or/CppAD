@@ -40,11 +40,11 @@ the :ref:`cppad_vector-name` template class is used to define
 boost
 *****
 If *cppad_testvector* is *boost* ,
-`boost ublas vector <http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm>`_
+`boost ublas vector <https://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm>`_
 template class is used to define
 ``CPPAD_TESTVECTOR`` .
 In this case, the
-`cmake FindBoost <http://www.cmake.org/cmake/help/cmake2.6docs.html#module:FindBoost>`_
+`cmake FindBoost <https://cmake.org//cmake/help/cmake2.6docs.html#module:FindBoost>`_
 module must be able to automatically figure out where Boost is installed.
 
 eigen

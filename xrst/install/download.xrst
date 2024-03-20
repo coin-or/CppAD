@@ -106,7 +106,7 @@ They are intended for re-distribution.
 
 Building Documentation
 ======================
-If you install `xrst <https://xrst.readthedocs.io>`_ ,
+If you install `xrst <https://xrst.readthedocs.io/latest/>`_ ,
 you can build the documentation for CppAD,
 and include any changes you make.
 In the distribution directory execute the following command

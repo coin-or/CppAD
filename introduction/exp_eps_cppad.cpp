@@ -44,7 +44,7 @@ Exercises
 
 {xrst_spell_off}
 {xrst_code cpp} */
-# include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
+# include <cppad/cppad.hpp>  // https://www.coin-or.org/CppAD/
 # include "exp_eps.hpp"      // our example exponential function approximation
 bool exp_eps_cppad(void)
 {  bool ok = true;
