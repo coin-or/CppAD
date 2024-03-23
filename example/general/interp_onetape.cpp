@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -88,25 +88,25 @@ bool interp_onetape(void)
 
    // domain space vector
    size_t n = 1;
-   CPPAD_TESTVECTOR(AD<double>) X(n);
-   X[0] = .4 * ArgumentValue[1] + .6 * ArgumentValue[2];
+   CPPAD_TESTVECTOR(AD<double>) ax(n);
+   ax[0] = .4 * ArgumentValue[1] + .6 * ArgumentValue[2];
 
    // declare independent variables and start tape recording
-   CppAD::Independent(X);
+   CppAD::Independent(ax);
 
-   // evaluate piecewise linear interpolant at X[0]
-   AD<double> A = Argument(X[0]);
-   AD<double> F = Function(X[0]);
-   AD<double> S = Slope(X[0]);
-   AD<double> I = F + (X[0] - A) * S;
+   // evaluate piecewise linear interpolant at ax[0]
+   AD<double> ax_grid   = Argument(ax[0]);
+   AD<double> af_grid   = Function(ax[0]);
+   AD<double> as_grid   = Slope(ax[0]);
+   AD<double> ay_linear = af_grid + (ax[0] - ax_grid) * as_grid;
 
    // range space vector
    size_t m = 1;
-   CPPAD_TESTVECTOR(AD<double>) Y(m);
-   Y[0] = I;
+   CPPAD_TESTVECTOR(AD<double>) ay(m);
+   ay[0] = ay_linear;
 
-   // create f: X -> Y and stop tape recording
-   CppAD::ADFun<double> f(X, Y);
+   // create f: x -> ay and stop tape recording
+   CppAD::ADFun<double> f(ax, ay);
 
    // vectors for arguments to the function object f
    CPPAD_TESTVECTOR(double) x(n);   // argument values
@@ -114,13 +114,13 @@ bool interp_onetape(void)
    CPPAD_TESTVECTOR(double) dx(n);  // differentials in x space
    CPPAD_TESTVECTOR(double) dy(m);  // differentials in y space
 
-   // to check function value we use the fact that X[0] is between
+   // to check function value we use the fact that ax[0] is between
    // ArgumentValue[1] and ArgumentValue[2]
-   x[0]          = Value(X[0]);
+   x[0]          = Value(ax[0]);
    double delta  = ArgumentValue[2] - ArgumentValue[1];
    double check  = FunctionValue[2] * (x[0] - ArgumentValue[1]) / delta
                   + FunctionValue[1] * (ArgumentValue[2] - x[0]) / delta;
-   ok  &= NearEqual(Y[0], check, eps99, eps99);
+   ok  &= NearEqual(ay[0], check, eps99, eps99);
 
    // evaluate f where x has different value
    x[0]   = .7 * ArgumentValue[2] + .3 * ArgumentValue[3];
