@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four.cpp}
@@ -40,6 +40,7 @@ an different version of make; e.g., ``ninja`` .
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+extern bool bilinear(void);
 extern bool dynamic(void);
 extern bool forward(void);
 extern bool get_started(void);
@@ -55,6 +56,7 @@ int main(void)
    // This line is used by test_one.sh
 
    // BEGIN_SORT_THIS_LINE_PLUS_1
+   Run( bilinear,            "bilinear"       );
    Run( dynamic,             "dynamic"        );
    Run( forward,             "forward"        );
    Run( get_started,         "get_started"    );

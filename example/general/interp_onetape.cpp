@@ -14,7 +14,7 @@ Interpolation With Out Retaping: Example and Test
 
 See Also
 ********
-:ref:`interp_retape.cpp-name`
+:ref:`interp_retape.cpp-name` , :ref:`atomic_four_bilinear.cpp-name`
 
 {xrst_literal
    // BEGIN C++

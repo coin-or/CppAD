@@ -32,10 +32,11 @@ mm-dd
 
 03-23
 =====
-Change the upper case one letter variable names in the 
-:ref:`interp_onetape.cpp-name` example; to be specific,
-*X* -> *ax* and *Y* -> *ay* , *A* -> *ax_grid* , *F* -> *af_grid* ,
-*I* -> *ay_linear* .
+#. Change the upper case one letter variable names in the
+   :ref:`interp_onetape.cpp-name` example; to be specific,
+   *X* -> *ax* and *Y* -> *ay* , *A* -> *ax_grid* , *F* -> *af_grid* ,
+   *I* -> *ay_linear* .
+#. Add the :ref:`atomic_four_bilinear.cpp-name` example.
 
 03-19
 =====
