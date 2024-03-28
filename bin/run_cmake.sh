@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 if [ ! -e "bin/run_cmake.sh" ]
@@ -74,7 +74,7 @@ usage: bin/run_cmake.sh: \\
    [--<package>_vector] \\
    [--debug_<which>]
 The --help option just prints this message and exits.
-The value <package> above must be one of: cppad, boost, or eigen.
+The value <package> above must be one of: cppad, boost, eigen, or std.
 The value <which> must be one of: odd, even, all, none.
 The value <type> must be one of: size_t, int, unsigned_int
 
@@ -210,8 +210,17 @@ EOF
 done
 if [ "$standard" == 'c++11' ]
 then
-   # Scacdo will not build with c++11
-   yes_sacado='no'
+   # Scacdo and eigen cannot be used with c++11
+   if [ "$yes_eigen" == 'yes' ]
+   then
+      echo 'Cannot use eigen with c++11'
+      exit 1
+   fi
+   if [ "$yes_sacado" == 'yes' ]
+   then
+      echo 'Cannot use sacado with c++11'
+      exit 1
+   fi
 fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
@@ -353,8 +362,8 @@ then
    cppad_cxx_flags="$cppad_cxx_flags -O0"
 elif [ "$callgrind" == 'yes' ]
 then
-   # This is a quote from the Callgrind manual: 
-   # 'As with Cachegrind, you probably want to compile with debugging info 
+   # This is a quote from the Callgrind manual:
+   # 'As with Cachegrind, you probably want to compile with debugging info
    # (the -g option) and with optimization turned on.'
    cmake_args="$cmake_args -g"
 fi

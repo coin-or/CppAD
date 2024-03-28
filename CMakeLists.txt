@@ -16,7 +16,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20240324")
+SET(cppad_version "20240328")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -227,10 +227,19 @@ IF( NOT minimal_cplusplus  )
    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 ENDIF( NOT minimal_cplusplus  )
 #
+# use_cplusplus_2014_ok
+SET(source "
+int main(void)
+{  static_assert( __cplusplus >= 201302L , \"c++17 is supported\" );
+   return 0;
+}"
+)
+compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2014_ok )
+#
 # use_cplusplus_2017_ok
 SET(source "
 int main(void)
-{  static_assert( __cplusplus >= 201703 , \"c++17 is supported\" );
+{  static_assert( __cplusplus >= 201703L , \"c++17 is supported\" );
    return 0;
 }"
 )
@@ -314,6 +323,9 @@ SET(system_include TRUE)
 #
 # eigen
 IF( ${include_eigen} )
+   IF( NOT ${use_cplusplus_2014_ok} )
+      MESSAGE(FATAL_ERROR "include eigen is true but c++14 not supported")
+   ENDIF( )
    pkgconfig_info(eigen ${system_include})
    IF( DEFINED eigen_prefix )
       MESSAGE(FATAL_ERROR "include_eigen is true and eigen_prefix is defined")

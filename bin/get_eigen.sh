@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_eigen.sh}
 # {xrst_comment_ch #}
@@ -38,7 +38,9 @@
 # This will install the following version of Eigen
 # {xrst_spell_off}
 # {xrst_code sh}
-version='3.3.7'
+# This was the mater version on 2024-03-24
+# 'a39ade4ccf99df845ec85c580fbbb324f71952fa'
+version='a39ade4'
 # {xrst_code}
 # {xrst_spell_on}
 #

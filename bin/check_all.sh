@@ -151,7 +151,12 @@ else
    then
       package_vector='--boost_vector'
    else
-      package_vector='--eigen_vector'
+      if [ "$standard" == '--c++17' ]
+      then
+         package_vector='--eigen_vector'
+      else
+         package_vector='--std_vector'
+      fi
    fi
 fi
 cat << EOF
@@ -177,10 +182,13 @@ then
    compiler=''
 fi
 #
-# standard
+# standard, exclude_package
 if [ "$standard" == '--c++17' ]
 then
    standard='' # default for run_cmake.sh and configure
+   exclude_package=''
+else
+   exclude_package='--no_eigen --no_sacado'
 fi
 # ---------------------------------------------------------------------------
 # absoute prefix where optional packages are installed
@@ -263,6 +271,7 @@ else
       $compiler \
       $standard \
       $debug_which \
+      $exclude_package \
       $package_vector
 fi
 echo_log_eval cd build

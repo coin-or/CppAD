@@ -30,6 +30,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-28
+=====
+Change the get_eigen.sh
+:ref:`get_eigen.sh@Version` from 3.3.7 to the master branch on 2024-03-24; see
+`issue 200 <https://github.com/coin-or/CppAD/issues/200>`_ .
+Note that the new verison of eigen requires c++14 or higher.
+
 03-23
 =====
 #. Change the upper case one letter variable names in the

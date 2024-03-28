@@ -1,9 +1,14 @@
-{xrst_comment: This template file has the following parameters:
+{xrst_comment
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2024 Bradley M. Bell
+
+This template file has the following parameters:
 @Name@    : is the name of this threading system
 @####@    : is the underlining for the name of the threading system
-@DEFAULT@ : is macro a macro name. If it is 1 (0), 
+@DEFAULT@ : is macro a macro name. If it is 1 (0),
             the ADFun default ctor is used (is not used)
-@Dir@     : is the subdirectory of multi_thread that contins the source code 
+@Dir@     : is the subdirectory of multi_thread that contins the source code
             for this get_started.cpp
 }
 
