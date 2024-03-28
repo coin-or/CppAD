@@ -2,48 +2,19 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
-
 /*
 {xrst_begin bthread_get_started.cpp}
 {xrst_spell
    fun fun
 }
 
-Getting Started Using Boost Multi-Threading With CppAD
-######################################################
-
-in_parallel
-***********
-see :ref:`ta_parallel_setup@in_parallel` .
-
-thread_number
-*************
-see :ref:`ta_parallel_setup@thread_num` .
-
-ADFun Constructor
-*****************
-If you use the :ref:`fun_construct@Sequence Constructor` for the original
-function, you will need to clear the Taylor coefficient memory associated
-with the function using :ref:`capacity_order-name` ; e.g. ::
-
-   CppAD::ADFun fun(ax, ay);
-   fun.capacity_order(0);
-
-If you do not free the Taylor coefficient memory in ``fun`` ,
-the function assignments will allocate zero order Taylor coefficients for each
-function in ``fun_thread`` using thread zero. Depending on what you do in
-parallel mode, you may attempt to free that memory using another thread.
-For example, if you change USE_DEFAULT_ADFUN_CONSTRUCTOR to 0, you will
-get the message::
-
-   Attempt to return memory for a different thread while in parallel mode
-
-Source Code
-***********
-{xrst_literal
-   // BEGIN C++
-   // END C++
-}
+{xrst_template ,
+   example/multi_thread/get_started.xrst
+   @Name@    , Boost
+   @####@    , #####
+   @DEFAULT@ , USE_DEFAULT_ADFUN_CONSTRUCTOR
+   @Dir@     , bthread
+} 
 
 {xrst_end bthread_get_started.cpp}
 ------------------------------------------------------------------------------

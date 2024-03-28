@@ -28,7 +28,6 @@
    pkgconfig
    prefixdir
    pthreads
-   requirements requirements
    rosen
    svn
    tgz
