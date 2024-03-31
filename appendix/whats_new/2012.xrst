@@ -18,7 +18,6 @@
    lpthread
    lteuchos
    makefile
-   pkgconfig
    posix
    src
    stdbool

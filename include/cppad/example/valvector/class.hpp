@@ -7,9 +7,9 @@
 /*
 {xrst_begin_parent valvector}
 {xrst_spell
-   pytorch
    jax
    numpy
+   pytorch
 }
 
 valvector: An Example Machine Learning Base Class

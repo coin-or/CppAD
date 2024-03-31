@@ -29,7 +29,6 @@
    mkdir
    msys
    pacman
-   pkgconfig
    profiler
    sed
    testvector

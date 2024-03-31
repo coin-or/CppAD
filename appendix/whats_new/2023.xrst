@@ -6,12 +6,9 @@
 {xrst_begin 2023 app}
 {xrst_spell
    autotools
-   csrc
    cstdint
-   dll
    kludge
    kokkos
-   lin
    mingw
    msys
    pacman

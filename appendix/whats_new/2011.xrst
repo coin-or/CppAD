@@ -1,19 +1,18 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2011 app}
 {xrst_spell
    automake
    boostvector
-   bthread
    builddir
    cpl
-   del
    devel
    executables
    fedoraproject
+   for for
    geq
    gpl
    hasnan
@@ -25,7 +24,6 @@
    matlab
    omh
    org
-   pkgconfig
    prefixdir
    pthreads
    rosen
@@ -34,7 +32,6 @@
    undefine
    vcproj
    wshadow
-   for for
 }
 
 Release Notes for 2011
@@ -423,7 +420,7 @@ These changes are described below.
    Change the :ref:`include<base_require@Include Order>` file name to
    :ref:`base_require.hpp<base_require-name>` .
 #. 08-04:
-   Use :ref:`base_float.hpp-name` and 
+   Use :ref:`base_float.hpp-name` and
    :ref:`base_double.hpp-name` as additional examples
    for the :ref:`CondExp Base requirements<base_cond_exp-name>` .
 

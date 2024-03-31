@@ -5,23 +5,21 @@
 
 {xrst_begin 2024 app}
 {xrst_spell
-   nx
-   csrc
-   cmd
-   dll
-   svec
-   py
-   dismod
-   yyyy
-   yy
-   usr
-   env
-   bostvector
    boostvector
-   iostream
+   bostvector
    cassert
+   cmd
+   dismod
+   dll
+   env
+   iostream
+   nx
    omhelp
-   valvector
+   py
+   svec
+   usr
+   yy
+   yyyy
 }
 
 Release Notes for 2024

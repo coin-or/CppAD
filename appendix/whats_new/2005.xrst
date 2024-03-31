@@ -1,17 +1,15 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2005 app}
 {xrst_spell
-   del
    dlib
    dsp
    dsw
    dussault
    etc
-   ext
    ge
    gz
    jon
@@ -22,8 +20,6 @@
    pearce
    pierre
    pkzip
-   romberg
-   rosen
    scur
    sln
    typedef
@@ -194,7 +190,7 @@ mentioned under :ref:`2005<2005@mm-dd@11-20>` below.
 
 The dates in this file used to correspond to
 local time for when the change was checked
-into the subversion repository. 
+into the subversion repository.
 From now on the dates in this file will correspond to the first
 version of CppAD where the change appears; i.e., the date in the
 unix and windows
