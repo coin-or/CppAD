@@ -98,7 +98,7 @@ The argument has prototype
    ``const CppAD::vector<`` *Base* >& *x*
 
 and size is equal to the *n* .
-This is the :ref:`Value-name` value corresponding to the parameters in the
+This is the :ref:`Value-name`  corresponding to the parameters in the
 vector :ref:`atomic_two_afun@ax` (when the atomic function was called).
 To be specific, if
 

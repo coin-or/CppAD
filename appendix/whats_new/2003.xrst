@@ -664,7 +664,7 @@ i.e., multiple assignments.
 07-29
 =====
 If the
-:ref:`AD copy constructor<ad_ctor-name>` constructor or
+:ref:`AD copy constructor<ad_ctor-name>` or
 :ref:`assignment<ad_assign-name>` operator
 used an
 :ref:`glossary@Tape@Independent Variable`
@@ -678,7 +678,7 @@ a dependent variable in these cases.
 The ``AD`` < *Base* > data structure
 was changed to include a doubly linked list of variables.
 This enabled  the
-:ref:`AD copy constructor<ad_ctor-name>` constructor and
+:ref:`AD copy constructor<ad_ctor-name>` and
 :ref:`assignment<ad_assign-name>` operator
 to create multiple references to
 the same place in the tape.

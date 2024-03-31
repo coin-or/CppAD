@@ -240,8 +240,9 @@ are identically equal (actually the same variable).
    an error from an unknown source would be detected in the file ``to_graph.hpp`` .
 #. Make :ref:`unary_minus-name` an atomic operation,
    instead of using binary subtraction of zero minus the value being negated.
-   In addition, add it to the :ref:`json_graph unary operators<json_graph_op@Unary Operators>` and
-   the :ref:`graph_op_enum values<graph_op_enum@Enum Values>` values.
+   In addition, add it to the 
+   :ref:`json_graph unary operators<json_graph_op@Unary Operators>` and
+   the :ref:`graph_op_enum values<graph_op_enum@Enum Values>` .
 
 02-21
 =====

@@ -605,7 +605,7 @@ so the derivative of ``exp_eps`` ( *x* , *epsilon* )
 at *x* equal to .5 and *epsilon* equal .2 is
 1.5 in the *x* direction and zero in the *epsilon* direction.
 We also note that
-:ref:`forward<exp_eps_for1-name>` forward mode gave the
+:ref:`forward<exp_eps_for1-name>` mode gave the
 same result for the partial in the *x* direction.
 {xrst_toc_hidden
    introduction/exp_eps_rev1.cpp

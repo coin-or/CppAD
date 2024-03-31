@@ -157,7 +157,7 @@ in the case where *Float* corresponds to a real number.
 Float
 *****
 The type *Float* must satisfy the conditions
-for a :ref:`NumericType-name` type.
+for a :ref:`NumericType-name` .
 The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for any pair

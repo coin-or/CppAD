@@ -131,7 +131,7 @@ Float
 The type *Float* is defined as the type of the elements of
 :ref:`RombergMul@FloatVector` .
 The type *Float* must satisfy the conditions
-for a :ref:`NumericType-name` type.
+for a :ref:`NumericType-name` .
 The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
 In addition, if *x* and *y* are *Float* objects,

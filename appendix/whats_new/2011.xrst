@@ -34,6 +34,7 @@
    undefine
    vcproj
    wshadow
+   for for
 }
 
 Release Notes for 2011
@@ -422,9 +423,9 @@ These changes are described below.
    Change the :ref:`include<base_require@Include Order>` file name to
    :ref:`base_require.hpp<base_require-name>` .
 #. 08-04:
-   Use :ref:`base_float.hpp-name` and :ref:`base_double.hpp-name` as additional examples
-   for the :ref:`CondExp Base requirements<base_cond_exp-name>`
-   requirements.
+   Use :ref:`base_float.hpp-name` and 
+   :ref:`base_double.hpp-name` as additional examples
+   for the :ref:`CondExp Base requirements<base_cond_exp-name>` .
 
 08-03
 =====
