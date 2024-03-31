@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin openmp_get_started.cpp}
-{xrst_spell
-   fun fun
-}
 
 {xrst_template ,
    example/multi_thread/get_started.xrst

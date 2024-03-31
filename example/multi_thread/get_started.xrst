@@ -29,8 +29,10 @@ If you use the :ref:`fun_construct@Sequence Constructor` for the original
 function, you will need to clear the Taylor coefficient memory associated
 with the function using :ref:`capacity_order-name` ; e.g. ::
 
+   {xrst_spell_off}
    CppAD::ADFun fun(ax, ay);
    fun.capacity_order(0);
+   {xrst_spell_on}
 
 If you do not free the Taylor coefficient memory in ``fun`` ,
 the function assignments will allocate zero order Taylor coefficients for each

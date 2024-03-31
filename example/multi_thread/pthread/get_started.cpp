@@ -5,7 +5,6 @@
 /*
 {xrst_begin pthread_get_started.cpp}
 {xrst_spell
-   fun fun
    posix
 }
 
