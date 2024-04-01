@@ -6,9 +6,6 @@
 // --------------------------------------------------------------------------
 /*
 {xrst_begin val2fun_graph dev}
-{xrst_spell
-   val val
-}
 
 Create an ADFun Object Corresponding to a Value Graph
 #####################################################
