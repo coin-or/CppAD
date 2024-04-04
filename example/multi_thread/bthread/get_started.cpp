@@ -11,7 +11,7 @@
    @####@    , #####
    @DEFAULT@ , USE_DEFAULT_ADFUN_CONSTRUCTOR
    @Dir@     , bthread
-} 
+}
 
 {xrst_end bthread_get_started.cpp}
 ------------------------------------------------------------------------------
@@ -24,12 +24,16 @@
 
 namespace {
    //
-   // b_vector, d_vector, ad_vector, fun_vector
-   typedef CPPAD_TESTVECTOR(bool)                    b_vector;
+   // d_vector, ad_vector, fun_vector
    typedef CPPAD_TESTVECTOR(double)                  d_vector;
    typedef CPPAD_TESTVECTOR( CppAD::AD<double> )    ad_vector;
    typedef CPPAD_TESTVECTOR( CppAD::ADFun<double> ) fun_vector;
    typedef CPPAD_TESTVECTOR( boost::thread* )       bthread_vector;
+   //
+   // std::vector<bool> does not support the data method; see
+   // https://en.cppreference.com/w/cpp/container/vector_bool
+   // 'Does not necessarily store its elements as a contiguous array.'
+   typedef CppAD::vector<bool>                      b_vector;
    //
    // thread_specific_data_
    void cleanup(size_t* thread_num)

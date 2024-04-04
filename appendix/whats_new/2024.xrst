@@ -28,6 +28,14 @@ Release Notes for 2024
 mm-dd
 *****
 
+04-04
+=====
+The file example/multi_thread/bthread/get_started.cpp had an error
+when ``CPPAD_TESTVECTOR`` was :ref:`testvector@std::vector`
+(The elements of a standard vectors of bool may a single bits instead of
+a boolean value).
+The has been fixed.
+
 04-03
 =====
 #. Add the :ref:`valvector_llsq_obj.cpp-name` example.
