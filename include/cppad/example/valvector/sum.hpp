@@ -18,7 +18,7 @@ with size one.
 Syntax
 ******
 | valvector_ad_sum *asum*
-| *asum( *ax* , *ay* )
+| *asum* ( *ax* , *ay* )
 
 ax
 **
@@ -98,11 +98,8 @@ private:
       // taylor_y
       for(size_t k = order_low; k < q; ++k)
       {  //
-         scalar_type sum(0);
-         for(size_t i = 0; i < taylor_x[k].size(); ++i)
-            sum += taylor_x[k][i];
          taylor_y[k].resize(1);
-         taylor_y[k][0] = sum;
+         taylor_y[k][0] = taylor_x[k].sum();
       }
       return true;
    }

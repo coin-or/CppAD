@@ -56,11 +56,13 @@ extern bool condexp(void);
 extern bool ctor(void);
 extern bool element(void);
 extern bool get_started(void);
+extern bool llsq_obj(void);
 extern bool math_unary(void);
 extern bool output(void);
 extern bool pow(void);
 extern bool resize(void);
 extern bool size(void);
+extern bool sum(void);
 extern bool unary_op(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -88,11 +90,13 @@ int main(void)
    Run( ctor,                "ctor"                  );
    Run( element,             "element"               );
    Run( get_started,         "get_started"           );
+   Run( llsq_obj,            "llsq_obj"              );
    Run( math_unary,          "math_unary"            );
    Run( output,              "output"                );
    Run( pow,                 "pow"                   );
    Run( resize,              "resize"                );
    Run( size,                "size"                  );
+   Run( sum,                 "sum"                   );
    Run( unary_op,            "unary_op"              );
    // END_SORT_THIS_LINE_MINUS_1
 

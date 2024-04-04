@@ -40,6 +40,7 @@ Operations
    include/cppad/example/valvector/split_join.hpp
    include/cppad/example/valvector/sum.hpp
    example/valvector/get_started.cpp
+   example/valvector/llsq_obj.cpp
 }
 
 
@@ -361,6 +362,40 @@ public:
    }
    /*
    ----------------------------------------------------------------------------
+   {xrst_begin valvector_sum}
+
+   Sum elements of a valvector
+   ###########################
+   Returns the sum of the elements in this valvector.
+
+   Prototype
+   *********
+   {xrst_literal ,
+      // BEGIN_SUM , // END_SUM
+   }
+
+   {xrst_toc_hidden
+      example/valvector/sum.cpp
+   }
+   Example
+   =======
+   The file :ref:`valvector_sum.cpp-name` is an example and test of
+   valvector sum.
+
+   {xrst_end valvector_sum}
+   ----------------------------------------------------------------------------
+   */
+   //
+   // BEGIN_SUM
+   scalar_type sum(void) const
+   // END_SUM
+   {  scalar_type result = 0.0;
+      for(size_t i = 0; i < size(); ++i)
+         result += (*this)[i];
+      return result;
+   }
+   /*
+   ----------------------------------------------------------------------------
    {xrst_begin valvector_element}
 
    Accessing Elements of a valvector
@@ -634,13 +669,13 @@ valvector output.
 // BEGIN_OUTPUT
 inline std::ostream& operator << (std::ostream& os, const valvector& x)
 // END_OUTPUT
-{  os << "{ ";
+{  os << "{";
    for(size_t i = 0; i < x.size(); ++i)
    {  os << x[i];
       if( i + 1 < x.size() )
          os << ", ";
    }
-   os << " }";
+   os << "}";
    return os;
 }
 // ============================================================================

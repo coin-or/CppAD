@@ -19,10 +19,12 @@ SET(source_list valvector.cpp
    ctor.cpp
    element.cpp
    get_started.cpp
+   llsq_obj.cpp
    output.cpp
    pow.cpp
    resize.cpp
    size.cpp
+   sum.cpp
    unary_math.cpp
    unary_op.cpp
 )

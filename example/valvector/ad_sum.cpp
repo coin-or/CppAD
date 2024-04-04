@@ -7,8 +7,8 @@
 /*
 {xrst_begin valvector_ad_sum.cpp}
 
-Example and Test of Splitting a valvector
-#########################################
+Example and Test of Summing a valvector
+#######################################
 
 {xrst_literal
    // BEGIN C++

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <string>
 # include <sstream>
@@ -917,7 +917,7 @@ void printOpField(
    os << leader;
 
    // print the value into an internal buffer
-   buffer << std::setw( int(width) ) << value;
+   buffer << value;
    str = buffer.str();
 
    // length of the string

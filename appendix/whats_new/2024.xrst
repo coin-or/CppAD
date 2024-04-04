@@ -28,6 +28,19 @@ Release Notes for 2024
 mm-dd
 *****
 
+04-03
+=====
+#. Add the :ref:`valvector_llsq_obj.cpp-name` example.
+#. Add the :ref:`valvector_sum.cpp-name` member function.
+#. Fix the titles :ref:`valvector_ad_sum.cpp-title` and
+   :ref:`valvector_ad_join.cpp-name` .
+#. Add the following to :ref:`valvector_base_require.cpp-name` :
+   {xrst_code cpp}
+   x   = valvector( {0.0, 0.0} );
+   ok &= CppAD::IdenticalZero(x);
+   {xrst_code}
+
+
 03-28
 =====
 Change the get_eigen.sh

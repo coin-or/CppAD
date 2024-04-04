@@ -7,8 +7,8 @@
 /*
 {xrst_begin valvector_ad_join.cpp}
 
-Example and Test of Splitting a valvector
-#########################################
+Example and Test of Joining a valvector
+#######################################
 
 {xrst_literal
    // BEGIN C++

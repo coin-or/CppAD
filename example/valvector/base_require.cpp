@@ -49,7 +49,7 @@ bool base_require(void)
    std::string s;
    for(auto itr = string_x.begin(); itr != string_x.end(); ++itr)
       if( *itr != ' ')
-         s.push_back( *itr ); 
+         s.push_back( *itr );
    ok &= s == "{1,2}";
    //
    // ok
@@ -62,6 +62,9 @@ bool base_require(void)
    ok &= ! CppAD::IdenticalZero(x);
    ok &= ! CppAD::IdenticalOne(x);
    ok &= CppAD::IdenticalEqualCon(x, y);
+   //
+   x   = valvector( {0.0, 0.0} );
+   ok &= CppAD::IdenticalZero(x);
    //
    return ok;
 }
