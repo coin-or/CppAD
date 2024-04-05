@@ -58,13 +58,14 @@ do
       echo 'bin/git_commit.sh: aborting'
       exit 1
    fi
+   git add "$file"
 done
 # -----------------------------------------------------------------------------
 # temp.log
 branch=$(git branch --show-current)
 cat << EOF > temp.log
 $branch:
-# 1. Enter message for this commit above this line. 
+# 1. Enter message for this commit above this line.
 # 2. The message for the previous commit is in git_commit.log (if it exists).
 # 3. This commit will abort if the first line does not begin with "$branch:"
 #    because $branch is the branch for this commit.

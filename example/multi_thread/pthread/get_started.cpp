@@ -13,8 +13,7 @@
    @Name@    , Posix
    @####@    , #####
    @DEFAULT@ , USE_DEFAULT_ADFUN_CONSTRUCTOR
-   @Dir@     , pthread
-} 
+}
 
 {xrst_end pthread_get_started.cpp}
 ------------------------------------------------------------------------------

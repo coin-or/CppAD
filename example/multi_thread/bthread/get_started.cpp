@@ -10,7 +10,6 @@
    @Name@    , Boost
    @####@    , #####
    @DEFAULT@ , USE_DEFAULT_ADFUN_CONSTRUCTOR
-   @Dir@     , bthread
 }
 
 {xrst_end bthread_get_started.cpp}

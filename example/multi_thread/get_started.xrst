@@ -8,8 +8,9 @@ This template file has the following parameters:
 @####@    : is the underlining for the name of the threading system
 @DEFAULT@ : is macro a macro name. If it is 1 (0),
             the ADFun default ctor is used (is not used)
-@Dir@     : is the subdirectory of multi_thread that contins the source code
-            for this get_started.cpp
+
+This template uses // BEGIN C++ and // END C++
+for the limits of the sorce code in the page file for the get_started example.
 }
 
 Getting Started Using @Name@ Threads With CppAD
@@ -46,7 +47,6 @@ get the message::
 Source Code
 ***********
 {xrst_literal
-   example/multi_thread/@Dir@/get_started.cpp
    // BEGIN C++
    // END C++
 }

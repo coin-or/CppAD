@@ -11,8 +11,7 @@
    @Name@    , OpenMP
    @####@    , ######
    @DEFAULT@ , USE_DEFAULT_ADFUN_CONSTRUCTOR
-   @Dir@     , openmp
-} 
+}
 
 {xrst_end openmp_get_started.cpp}
 ------------------------------------------------------------------------------
@@ -117,7 +116,7 @@ bool get_started(void)
    int int_j;
 # pragma omp parallel for
    for(int_j = 0; int_j < int(nx); ++int_j)
-   {  size_t j                 = size_t(int_j);  
+   {  size_t j                 = size_t(int_j);
       size_t thread_num        = thread_number();
       CppAD::ADFun<double>& f  = f_thread[thread_num];
       Jac[j] = partial(f, j, x);
