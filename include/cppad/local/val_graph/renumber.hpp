@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RENUMBER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/op_hash_table.hpp>
 
@@ -11,7 +11,6 @@
 {xrst_begin val_tape_renumber dev}
 {xrst_spell
    dep
-   xam
 }
 
 Value Re-Numbering

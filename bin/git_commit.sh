@@ -37,28 +37,32 @@ fi
 set -u
 # -----------------------------------------------------------------------------
 # new files
+# convert spaces in file names to @@
 list=$(
    git status --porcelain | sed -n -e '/^?? /p' |  \
       sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g'
 )
 for file in $list
 do
+   # convert @@ in file names back to spaces
    file=$(echo $file | sed -e 's|@@| |g')
    res=''
    while [ "$res" != 'delete' ] && [ "$res" != 'add' ] && [ "$res" != 'abort' ]
    do
-      read -p "'$file' is uknown to git, [delete/add/abort] ?" res
+      read -p "'$file' is unknown to git, [delete/add/abort] ?" res
    done
    if [ "$res" == 'delete' ]
    then
+      # may be spaces in file name so do not use echo_eval
       echo "rm '$file'"
       rm "$file"
    elif [ "$res" == 'abort' ]
    then
       echo 'bin/git_commit.sh: aborting'
       exit 1
+   else
+      git add "$file"
    fi
-   git add "$file"
 done
 # -----------------------------------------------------------------------------
 # temp.log

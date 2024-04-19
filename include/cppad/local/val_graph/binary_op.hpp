@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_BINARY_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/base_op.hpp>
 # include <cppad/local/val_graph/print_op.hpp>
@@ -167,9 +167,6 @@ public:
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_binary_op_derived dev}
-{xrst_spell
-   xam
-}
 
 The Binary Value Operator Derived Classes
 #########################################

@@ -1252,9 +1252,6 @@ Example
    }
 /* -----------------------------------------------------------------------
 {xrst_begin ta_create_array}
-{xrst_spell
-   inuse
-}
 
 Allocate An Array and Call Default Constructor for its Elements
 ###############################################################
@@ -1378,7 +1375,6 @@ Example
 {xrst_begin ta_delete_array}
 {xrst_spell
    deallocate
-   inuse
 }
 
 Deallocate An Array and Call Destructor for its Elements
@@ -1460,9 +1456,6 @@ Example
    }
 /* -----------------------------------------------------------------------
 {xrst_begin ta_free_all}
-{xrst_spell
-   inuse
-}
 
 Free All Memory That Was Allocated for Use by thread_alloc
 ##########################################################

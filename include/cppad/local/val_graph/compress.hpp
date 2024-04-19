@@ -12,7 +12,6 @@ namespace CppAD { namespace local { namespace val_graph {
 {xrst_begin val_tape_compress dev}
 {xrst_spell
    dep
-   xam
 }
 
 Tape Compression
