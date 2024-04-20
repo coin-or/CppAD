@@ -2,8 +2,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/example/valvector/class.hpp>
-# include <cppad/cppad.hpp>
 /*
 {xrst_begin valvector_get_started.cpp}
 
@@ -19,6 +17,8 @@ Getting Started Using valvector as a CppAD Base Class
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <cppad/example/valvector/class.hpp>
+# include <cppad/cppad.hpp>
 bool get_started(void)
 {  // ok
    bool ok = true;

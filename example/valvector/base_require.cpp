@@ -2,7 +2,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/example/valvector/class.hpp>
 /*
 {xrst_begin valvector_base_require.cpp}
 
@@ -25,6 +24,7 @@ Source Code
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <cppad/example/valvector/class.hpp>
 //
 // base_require
 bool base_require(void)

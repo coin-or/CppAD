@@ -28,6 +28,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+04-20
+=====
+The ``# include`` commands were missing at the top of
+some of the valvector examples.
+This has been fixed; e.g., see ref:`valvector_get_started-name` .
+
 04-04
 =====
 The file example/multi_thread/bthread/get_started.cpp had an error

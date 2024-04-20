@@ -2,9 +2,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/example/valvector/sum.hpp>
-# include <cppad/example/valvector/class.hpp>
-# include <cppad/cppad.hpp>
 /*
 {xrst_begin valvector_llsq_obj.cpp}
 
@@ -20,6 +17,9 @@ Using valvector to Represent Linear Least Squares Objective
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <cppad/example/valvector/sum.hpp>
+# include <cppad/example/valvector/class.hpp>
+# include <cppad/cppad.hpp>
 bool llsq_obj(void)
 {  // ok
    bool ok = true;

@@ -2,8 +2,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/example/valvector/split_join.hpp>
-# include <cppad/cppad.hpp>
 /*
 {xrst_begin valvector_ad_split.cpp}
 
@@ -19,6 +17,8 @@ Example and Test of Splitting a valvector
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <cppad/example/valvector/split_join.hpp>
+# include <cppad/cppad.hpp>
 bool ad_split(void)
 {  // ok
    bool ok = true;

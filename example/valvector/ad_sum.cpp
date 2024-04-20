@@ -2,8 +2,6 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/example/valvector/sum.hpp>
-# include <cppad/cppad.hpp>
 /*
 {xrst_begin valvector_ad_sum.cpp}
 
@@ -19,6 +17,8 @@ Example and Test of Summing a valvector
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <cppad/example/valvector/sum.hpp>
+# include <cppad/cppad.hpp>
 bool ad_sum(void)
 {  // ok
    bool ok = true;
