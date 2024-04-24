@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set_libdir() {
    my_prefix="$1"
@@ -33,9 +33,9 @@ set_libdir() {
    then
       if [ "$LD_LIBRARY_PATH" == '' ]
       then
-         export LD_LIBRARY_PATH="$my_path"
+         LD_LIBRARY_PATH="$my_path"
       else
-         export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+         LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
       fi
    fi
 }
@@ -103,6 +103,7 @@ cwd=$(pwd)
 PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/share/pkgconfig"
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/lib/pkgconfig"
+export PKG_CONFIG_PATH
 # ---------------------------------------------------------------------------
 # initialize
 export LD_LIBRARY_PATH=''
@@ -210,9 +211,9 @@ if ! echo $LD_LIBRARY_PATH | grep "$my_path" > /dev/null
 then
    if [ "$LD_LIBRARY_PATH" == '' ]
    then
-      export LD_LIBRARY_PATH="$my_path"
+      LD_LIBRARY_PATH="$my_path"
    else
-      export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+      LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
    fi
 fi
 # --------------------------------------------------------------------------

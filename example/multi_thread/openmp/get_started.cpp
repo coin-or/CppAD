@@ -132,8 +132,9 @@ bool get_started(void)
    CppAD::thread_alloc::free_available(0);
    //
    // j
-   for(size_t j = 0; j < int(nx); ++j)
-   {  //
+   for(int_j = 0; int_j < int(nx); ++int_j)
+   {  size_t j = size_t(int_j);
+      //
       // check
       double check = 1.0;
       for(size_t k = 0; k < nx; ++k)

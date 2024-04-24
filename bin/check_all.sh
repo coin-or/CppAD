@@ -278,21 +278,15 @@ echo_log_eval cd build
 #
 # n_job
 n_job=$(nproc)
-if [ "$n_job" -ge '5' ]
-then
-   let n_job="$n_job - 1"
-fi
 # -----------------------------------------------------------------------------
-# can comment out this make check to if only running tests below it
-cmd="$builder -j $n_job check"
-echo "$cmd >& check_all.tmp"
-echo "$cmd" > $top_srcdir/check_all.tmp
-if ! $cmd >& $top_srcdir/check_all.tmp
-then
-   echo 'Command Failed:'
-fi
-echo 'Re-running Command'
-echo_log_eval $cmd
+#
+# build: example_jit
+# avoid *.so not found on some vitual systems (during parallelll build)
+cmd="nice -10 $builder -j $n_job"
+echo_log_eval $cmd example_jit
+#
+# build: check
+echo_log_eval $cmd check
 # ----------------------------------------------------------------------------
 # extra speed tests not run with different options
 #

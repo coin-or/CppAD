@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ $0 != 'bin/check_install.sh' ]
 then
@@ -29,6 +29,8 @@ do
    PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$prefix/$dir/pkgconfig"
    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$prefix/$dir"
 done
+export PKG_CONFIG_PATH
+export LD_LIBRARY_PATH
 # dir=$(pkg-config cppad --variable pcfiledir)
 # cat $dir/cppad.pc
 # -----------------------------------------------------------------------------
