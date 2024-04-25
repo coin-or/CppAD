@@ -16,7 +16,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20240424")
+SET(cppad_version "20240425")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -319,37 +319,44 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 )
 # -----------------------------------------------------------------------------
 # Optional package information
+# cppad_has_{package}, {package}_LINK_LIBRARIES, package INCLUDE_DIRECTORIES
+#
+# system_include
 SET(system_include TRUE)
 #
-# eigen
-IF( ${include_eigen} )
-   IF( NOT ${use_cplusplus_2014_ok} )
-      MESSAGE(FATAL_ERROR "include eigen is true but c++14 not supported")
-   ENDIF( )
-   pkgconfig_info(eigen ${system_include})
-   IF( DEFINED eigen_prefix )
-      MESSAGE(FATAL_ERROR "include_eigen is true and eigen_prefix is defined")
-   ENDIF( )
-ELSE( )
-   prefix_info(eigen ${system_include} )
-ENDIF( )
+# package = eigen
+pkgconfig_info(eigen ${system_include})
 #
-# adolc
+# package = adolc
 pkgconfig_info(adolc ${system_include})
 #
-# ipopt
+# package = ipopt
 pkgconfig_info(ipopt ${system_include})
 #
-# colpack_prefix
+# package = colpack
 prefix_info(colpack ${system_include} )
 #
-# sacado_prefix
+# package = sacado
 prefix_info(sacado ${system_include} )
 #
-# fadbad_prefix
+# package = fadbad
 prefix_info(fadbad ${system_include} )
 #
-# include_cpapdcg
+# check eigen
+IF( ${cppad_has_eigen} )
+   IF( NOT ${use_cplusplus_2014_ok} )
+      MESSAGE(FATAL_ERROR "include_eigen is true but c++14 not supported")
+   ENDIF( )
+ENDIF( )
+#
+# check sacado
+IF( ${cppad_has_sacado} )
+   IF( NOT ${use_cplusplus_2017_ok} )
+      MESSAGE(FATAL_ERROR "sacado_prefix is defined but c++17 not supported")
+   ENDIF( )
+ENDIF( )
+#
+# package = cppadcg
 SET( include_cppadcg FALSE CACHE BOOL "include cppadcg" )
 IF( include_cppadcg )
    #

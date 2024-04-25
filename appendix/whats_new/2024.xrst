@@ -28,6 +28,14 @@ Release Notes for 2024
 mm-dd
 *****
 
+04-25
+=====
+The :ref:`configure-name` script was changed to detect when
+the eigen package is requested and the compiler is not c++14 or greater.
+The :ref:`configure-name` and :ref:`cmake-name` scripts 
+were changed to detect when
+the sacado package is requested and the compiler is not c++17 or greater.
+
 04-20
 =====
 The ``# include`` commands were missing at the top of

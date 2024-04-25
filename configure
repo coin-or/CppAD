@@ -399,6 +399,10 @@ set -e -u
 #
 # {xrst_end configure}
 # ----------------------------------------------------------------------------
+function print_variable {
+   echo "$1 = ${!1}"
+}
+# ----------------------------------------------------------------------------
 #
 # --help
 if echo " $* " | grep ' --help ' > /dev/null
@@ -557,6 +561,29 @@ else
    fi
 fi
 #
+# cxx_standard_year
+if echo $cxx_flags | grep 'std=c++' > /dev/null
+then
+   cxx_standard_year=$(echo $cxx_flags | sed -e 's|.*std=c++\([0-9]*\).*|\1|')
+   print_variable cxx_standard_year
+   if [ "$cxx_standard_year"  -lt 14 ]
+   then
+      if [ "$eigen_dir" != 'NOTFOUND' ]
+      then
+         echo 'Eigen requires c++14 or greater'
+         exit 1
+      fi
+   fi
+   if [ "$cxx_standard_year"  -lt 17 ]
+   then
+      if [ "$sacado_dir" != 'NOTFOUND' ]
+      then
+         echo 'Sacado requires c++17 or greater'
+         exit 1
+      fi
+   fi
+fi
+#
 # cmake_cxx_compiler
 cmake_cxx_compiler=''
 if [ "$enable_msvc" == 'yes' ]
@@ -634,13 +661,18 @@ if [ -d '/usr/lib64' ]
 then
    cmake_install_libdirs='lib64;lib'
 fi
-#
-# CMakeCache.txt
-if [ -e CMakeCache.txt ]
-then
-   rm CMakeCache.txt
-fi
-echo
+list='
+   build.ninja
+   CMakeCache.txt
+   CMakeFiles
+'
+for name in $list
+do
+   if [ -e "$name" ]
+   then
+      echo_eval rm -r $name
+   fi
+done
 echo cmake \
    -U .+ \
    -S "$source_dir" \

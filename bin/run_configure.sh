@@ -1,8 +1,9 @@
-#! /bin/bash -e
+#! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
+set -e -u
 if [ ! -e "bin/run_configure.sh" ]
 then
    echo "bin/run_configure.sh: must be executed from its parent directory"
@@ -11,7 +12,7 @@ fi
 # -----------------------------------------------------------------------------
 with_clang=''
 cpp_standard='c++17'
-while [ "$1" != '' ]
+while [ "$#" != '0' ]
 do
    if [ "$1" == '--help' ]
    then
@@ -68,20 +69,27 @@ testvector='cppad'
 cppad_cxx_flags="-std=$cpp_standard -Wall -pedantic-errors -Wshadow"
 cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
 #
+# eigen_prefix, scaado_prefix
+cxx_standard_year=$(echo $cpp_standard | sed -e 's|c++||')
+if [ "$cxx_standard_year" -lt 14 ]
+then
+   eigen_prefix=''
+else
+   eigen_prefix="EIGEN_DIR=$prefix"
+fi
+if [ "$cxx_standard_year" -lt 17 ]
+then
+   scaado_prefix=''
+else
+   scaado_prefix="SACADO_DIR=$prefix"
+fi
+#
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then
    echo_eval mkdir build
 fi
 echo_eval cd build
-if [ -e CMakeCache.txt ]
-then
-   echo_eval rm CMakeCache.txt
-fi
-if [ -e CMakeFiles ]
-then
-   echo_eval rm -r CMakeFiles
-fi
 # -----------------------------------------------------------------------------
 ../configure \
    --prefix=$prefix \
@@ -95,6 +103,8 @@ fi
    FADBAD_DIR=$prefix \
    SACADO_DIR=$prefix \
    IPOPT_DIR=$prefix \
+   $eigen_prefix \
+   $scaado_prefix \
    TAPE_ADDR_TYPE=size_t \
    TAPE_ID_TYPE=size_t
 # ----------------------------------------------------------------------------
