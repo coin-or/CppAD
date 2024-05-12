@@ -28,11 +28,21 @@ Release Notes for 2024
 mm-dd
 *****
 
+05-01
+=====
+A bug in the use of base types that are not ordered
+(e.g., :ref:`complex <base_complex.hpp-name>` )
+was introduced on :ref:`2023@mm-dd@08-10` of 2023,
+when the val_graph branch was merged in the master branch.
+This has been fixed by requiring such base types to define the ordering
+compare operations as resulting in an error; see
+:ref:`base_cond_exp@CondExpTemplate@Not Ordered` .
+
 04-25
 =====
 The :ref:`configure-name` script was changed to detect when
 the eigen package is requested and the compiler is not c++14 or greater.
-The :ref:`configure-name` and :ref:`cmake-name` scripts 
+The :ref:`configure-name` and :ref:`cmake-name` scripts
 were changed to detect when
 the sacado package is requested and the compiler is not c++17 or greater.
 

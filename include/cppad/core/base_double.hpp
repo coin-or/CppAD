@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BASE_DOUBLE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/configure.hpp>
 # include <limits>
@@ -27,7 +27,7 @@ Hence its ``CondExpOp`` function is defined by
 {xrst_code cpp} */
 namespace CppAD {
    inline double CondExpOp(
-      enum CompareOp     cop          ,
+      enum CompareOp      cop          ,
       const double&       left         ,
       const double&       right        ,
       const double&       exp_if_true  ,

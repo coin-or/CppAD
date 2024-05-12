@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the test_more/general tests
 #
@@ -48,6 +48,7 @@ SET(source_list
    azmul.cpp
    base2ad.cpp
    base_alloc.cpp
+   base_complex.cpp
    bool_sparsity.cpp
    check_simple_vector.cpp
    chkpoint_one.cpp

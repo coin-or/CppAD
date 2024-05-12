@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BASE_COND_EXP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -87,9 +87,21 @@ a more involved *Base* type see
 
 Not Ordered
 ===========
-If the type *Base* does not support ordering,
-the ``CondExpOp`` function does not make sense.
-In this case one might (but need not) define ``CondExpOp`` as follows:
+If the type *Base* does not support ordering; i.e., does not support
+the ``<`` , ``<=`` , ``>=`` , or ``>`` operator they should be defined
+as resulting in error when used; e.g.
+
+| ``namespace CppAD`` {
+| |tab| ``inline bool operator<`` (
+| |tab| ``const`` *Base* & *left*          ,
+| |tab| ``const`` *Base* & *right*         )
+| |tab| {  // ``attempt to use < operator with`` *Base* ``arguments``
+| |tab| |tab| ``assert`` (0);
+| |tab| |tab| ``return`` false;
+| |tab| }
+| }
+
+Using the ``CondExpOp`` function does should also be defined a an error; e.g.,
 
 | ``namespace CppAD`` {
 | |tab| ``inline`` *Base* ``CondExpOp`` (

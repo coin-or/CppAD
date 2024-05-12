@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // CPPAD_HAS_* defines
@@ -71,6 +71,7 @@ extern bool azmul(void);
 extern bool base2ad(void);
 extern bool base_adolc(void);
 extern bool base_alloc_test(void);
+extern bool base_complex(void);
 extern bool bool_sparsity(void);
 extern bool check_simple_vector(void);
 extern bool chkpoint_one(void);
@@ -193,6 +194,7 @@ int main(void)
    Run( atomic_three,    "atomic_three"   );
    Run( azmul,           "azmul"          );
    Run( base2ad,         "base2ad"        );
+   Run( base_complex,    "base_complex"   );
    Run( bool_sparsity,   "bool_sparsity"  );
    Run( check_simple_vector, "check_simple_vector" );
    Run( chkpoint_one,    "chkpoint_one"   );
