@@ -28,7 +28,7 @@ Release Notes for 2024
 mm-dd
 *****
 
-05-01
+05-12
 =====
 A bug in the use of base types that are not ordered
 (e.g., :ref:`complex <base_complex.hpp-name>` )
