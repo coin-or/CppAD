@@ -21,7 +21,7 @@ jobs:
             distro: alpine_latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Checkout uraimo
         uses: uraimo/run-on-arch-action@v2
       - name: set debug_which
