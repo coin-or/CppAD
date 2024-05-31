@@ -22,10 +22,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-latest"]
+        # os: ["ubuntu-latest", "macos-latest"] 2024-04-26 macos-latest failing
+        # Error: No installed conda 'base' environment found ...; see
+        # https://github.com/coin-or/CppAD/actions/runs/8834404014/job/24281915299
+
+        os: ["ubuntu-latest"]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Checkout submodules
       run: |
