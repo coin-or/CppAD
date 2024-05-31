@@ -47,7 +47,7 @@ then
    echo "The tag $tag already exists"
    echo 'Use the follow commands to delete it ?'
    echo "   git tag -d $tag"
-   echo "   git push -delete origin $tag"
+   echo "   git push --delete origin $tag"
    exit 1
 fi
 #
