@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BASE_COMPLEX_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/configure.hpp>
 # include <limits>
@@ -12,7 +12,7 @@
 {xrst_begin base_complex.hpp}
 {xrst_spell
    complier
-   invocations
+   ge
    isnan
 }
 
@@ -44,13 +44,28 @@ in addition to including
 
 CondExpOp
 *********
-The type ``std::complex<double>`` does not supports the
-``<`` , ``<=`` , ``==`` , ``>=`` , and ``>`` operators; see
+The type ``std::complex<double>`` does not support the
+``<`` , ``<=`` , ``>=`` , and ``>`` operators; see
 :ref:`base_cond_exp@CondExpTemplate@Not Ordered` .
-Hence its ``CondExpOp`` function is defined by
+Hence these operators and ``CondExpOp`` function are defined by
 {xrst_spell_off}
 {xrst_code cpp} */
+# define CPPAD_TEMP(op)                                          \
+   inline bool operator op(                                      \
+      const std::complex<double>& left   ,                       \
+      const std::complex<double>& right  )                       \
+   {  CppAD::ErrorHandler::Call(                                 \
+         true     , __LINE__ , __FILE__ ,                        \
+         "std::complex<double> " #op " std::complex<double>" ,   \
+         "Error: std::complex is not an ordered type"            \
+      );                                                         \
+      return false;                                              \
+   }
 namespace CppAD {
+   CPPAD_TEMP(<)
+   CPPAD_TEMP(<=)
+   CPPAD_TEMP(>=)
+   CPPAD_TEMP(>)
    inline std::complex<double> CondExpOp(
       enum CppAD::CompareOp      cop        ,
       const std::complex<double> &left      ,
@@ -65,8 +80,10 @@ namespace CppAD {
       return std::complex<double>(0);
    }
 }
+# undef CPPAD_TEMP
 /* {xrst_code}
 {xrst_spell_on}
+
 
 CondExpRel
 **********
