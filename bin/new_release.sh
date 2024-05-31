@@ -159,7 +159,9 @@ then
    echo "bin/new_release: local and remote $stable_branch differ."
    echo "local  $stable_local_hash"
    echo "remote $stable_remote_hash"
-   echo 'try git push ?'
+   echo 'Use "git push" to fix this ?'
+   echo 'If so, check the result for the corresponding actions on'
+   echo 'https://github.com/coin-or/CppAD/actions'
    exit 1
 fi
 #
@@ -184,7 +186,7 @@ then
    echo 'bin/new_release.sh: local and remote master differ'
    echo "local  $master_local_hash"
    echo "remote $master_remote_hash"
-   echo 'try git checkout master; git push'
+   echo 'Use "git checkout master; git push" to fix this ?'
    exit 1
 fi
 #
@@ -196,7 +198,7 @@ do
 done
 if [ "$response" == 'check' ]
 then
-   bin/check_all.sh
+   bin/check_all.sh mixed
 else
    echo "git tag -a -m 'created by new_release.sh' $tag $stable_remote_hash"
    git tag -a -m 'created by new_release.sh' $tag $stable_remote_hash
