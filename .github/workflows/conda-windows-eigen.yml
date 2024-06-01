@@ -2,6 +2,7 @@ name: conda-windows-eigen
 on:
   push:
     branches:
+      - workflows
       - master
       - 'stable/*'
 
@@ -11,7 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: conda-incubator/setup-miniconda@v2
+    - uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: conda_env
 

@@ -4,6 +4,7 @@ on:
   pull_request:
   push:
     branches:
+      - workflows
       - master
       - 'stable/*'
 
@@ -35,7 +36,7 @@ jobs:
       run: |
         git submodule update --init
 
-    - uses: conda-incubator/setup-miniconda@v2
+    - uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: cppad
         auto-update-conda: true

@@ -3,6 +3,7 @@ on:
   pull_request:
   push:
     branches:
+      - workflows
       - master
       - 'stable/*'
 
@@ -27,7 +28,7 @@ jobs:
     - name: Checkout submodules
       run: |
         git submodule update --init
-    - uses: goanpeca/setup-miniconda@v1
+    - uses: conda-incubator/setup-miniconda@v3
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
