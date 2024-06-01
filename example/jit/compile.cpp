@@ -105,7 +105,7 @@ bool compile(void)
       return false;
    }
    //
-   // f_ptr
+   // void_ptr
    std::string function_name = "cppad_jit_f";
    void* void_ptr = dll_linker(function_name, err_msg);
    if( err_msg != "" )
