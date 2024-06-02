@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_cppadcg.sh}
 # {xrst_spell
@@ -47,10 +47,10 @@
 # This will install the commit of Cppadcg with the following git hash
 # {xrst_spell_off}
 # {xrst_code sh}
-git_hash='b5307ad'
+git_hash='fde3752'
 # {xrst_code}
 # {xrst_spell_on}
-# The date corresponding to this commit was 20201009.
+# The date corresponding to this commit was 2022-08-14.
 #
 # Configuration
 # *************
@@ -233,7 +233,7 @@ echo_eval cd build
 echo_eval cmake \
    -D CPPAD_GIT_REPO="$cppad_repo" \
    -D CMAKE_INSTALL_PREFIX=$prefix \
-   -D EIGNE_INCLUDE_DIR=$prefix/include \
+   -D EIGEN3_INCLUDE_DIR=$prefix/include \
    -D GOOGLETEST_GIT=ON \
    -D CREATE_DOXYGEN_DOC=OFF \
    ..
