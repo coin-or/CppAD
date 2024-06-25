@@ -144,7 +144,7 @@ bool llsq_obj(void)
    }
    //
    // ok
-   // reverse mode does not know that x[j] had size zero and represents
+   // reverse mode does not know that x[j] had size one and represents
    // a valvector of size n_data and with x[j][k] constant w.r.t k.
    for(size_t j = 0; j < nx; ++j)
    {  /*
