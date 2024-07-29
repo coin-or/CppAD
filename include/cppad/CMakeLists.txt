@@ -22,7 +22,7 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
 # cppad_system_is_darwin
-IF( "${CMake_SYSTEM_NAME}" STREQUAL "Darwin" )
+IF( "${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin" )
    SET(cppad_system_is_darwin 1)
 ELSE( )
    SET(cppad_system_is_darwin 0)
