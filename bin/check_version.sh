@@ -40,8 +40,8 @@ check_version() {
 }
 # -----------------------------------------------------------------------------
 #
-# version
-version=$(
+# this_version
+this_version=$(
    sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
       sed -e 's|.*"\([^"]*\)".*|\1|'
 )
@@ -49,18 +49,26 @@ version=$(
 # branch
 branch=$(git branch | sed -n -e '/^[*]/p' | sed -e 's|^[*] *||')
 #
-# version
+# this_version
 if [ "$branch" == 'master' ]
 then
-   version=$( date +%Y%m%d )
+   this_version=$( date +%Y%m%d )
 fi
+#
+# stable_version, release_version
 if echo $branch | grep '^stable/' > /dev/null
 then
-   if ! echo $version | grep '^[0-9]\{4\}0000[.]' > /dev/null
+   if ! echo $this_version | grep '^[0-9]\{4\}0000[.]' > /dev/null
    then
       echo 'check_version.sh: Stable version does not begin with yyyy0000.'
       exit 1
    fi
+   release_version="$this_version"
+   stable_version=$(echo $release_version | sed -e 's|[.][0-9]*$||')
+else
+   eval $(grep '^stable_version=' bin/new_release.sh)
+   eval $(grep '^release=' bin/new_release.sh)
+   release_version="$stable_version.$release"
 fi
 #
 # version_ok
@@ -73,30 +81,19 @@ version_files='
 '
 #
 # temp.sed
-if echo $branch | grep '^stable/' > /dev/null
-then
-   stable=$( echo $version | sed -e 's|[.][0-9]*$||' )
 cat << EOF > temp.sed
-#
 # CMakeLists.txt
-s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
+s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$this_version")|
 #
 # user_guide.xrst
-s|[0-9]\\{8\\}[.][0-9]*|$version|g
-s|documentation-[0-9]\\{8\\}|documentation-latest|g
-s|stable-[0-9]\\{8\\}|latest|g
-s|cppad-[0-9]\\{8\\}[0-9.]*|cppad-$stable|g
-EOF
-else
-cat << EOF > temp.sed
+s|cppad-[0-9]\\{8\\}[.]*[.0-9]*|cppad-$this_version|
 #
-# CMakeLists.txt
-s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$version")|
+s|release-[0-9]\\{8\\}\.[.0-9]*|release-$release_version|
+s|archive/[0-9]\\{8\\}\.[0-9]*|archive/$release_version|
 #
-# user_guide.xrst
-s|cppad-[0-9]\\{8\\}|cppad-$version|g
+s|documentation-[0-9]\\{8\\}|documentation-$stable_version|
+s|stable-[0-9]\\{8\\}|stable-$stable_version|
 EOF
-fi
 #
 for file in $version_files
 do
