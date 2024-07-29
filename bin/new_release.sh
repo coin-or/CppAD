@@ -62,10 +62,13 @@ sed -i .coin-or/projDesc.xml \
 #
 # user_guide.xrst
 sed -i user_guide.xrst \
-   -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$tag|g" \
-   -e "s|release-[0-9]\{8\}\.[0-9]*|release-$tag|g" \
-   -e "s|documentation-[0-9]\{8\}|documentation-$stable_version|g" \
-   -e "s|stable-[0-9]\{8\}|stable-$stable_version|g" \
+   -e "s|release-[0-9]\{8\}\.[0-9]*|release-$tag|" \
+   -e "s|archive/[0-9]\{8\}\.[0-9]*|archive/$tag|" \
+   -e "s|documentation-[0-9]\{8\}|documentation-$stable_version|" \
+   -e "s|stable-[0-9]\{8\}|stable-$stable_version|"
+echo 'The edits to user_guide.xrst are new.'
+echo 'If they are working correctly, remove this message and the exit 0 below.'
+exit 0
 #
 # stable_branch
 stable_branch=stable/$stable_version
@@ -120,6 +123,16 @@ then
    echo "branch $stable_branch does not exist"
    exit 1
 fi
+#
+# user_guide.xrst
+sed -i user_guide.xrst \
+   -e "s|release-[0-9]\{8\}\.[0-9]*|release-$tag|" \
+   -e "s|archive/[0-9]\{8\}\.[0-9]*|archive/$tag|" \
+   -e "s|documentation-[0-9]\{8\}|documentation-latest|" \
+   -e "s|stable-[0-9]\{8\}|latest/"
+echo 'The edits to user_guide.xrst are new.'
+echo 'If they are working correctly, remove this message and the exit 0 below.'
+exit 0
 #
 # CMakeLists.txt
 cat << EOF > temp.sed
