@@ -206,8 +206,9 @@ EOF
 done
 if [ "$standard" == 'c++11' ]
 then
-   # Scacdo will not build with c++11
+   # Scacdo and eigen will not build with c++11
    yes_sacado='no'
+   yes_eigen='no'
 fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]

@@ -50,7 +50,7 @@ One must first call
 :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 and then call :ref:`parallel_ad-name` before using ``AD`` types
 in :ref:`parallel<ta_in_parallel-name>` execution mode.
-In addition, see :ref:`parallel_ad@Other Routines` .
+In addition, see :ref:`parallel_ad@Other Initialization` .
 
 Same Thread
 ***********

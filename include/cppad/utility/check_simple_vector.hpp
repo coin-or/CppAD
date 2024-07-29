@@ -32,6 +32,14 @@ a :ref:`SimpleVector-name` class with
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
 
+Vector
+******
+is the vector type we are checking.
+
+Scalar
+******
+is the type corresponding to the elements of an *Vector* .
+
 x, y
 ****
 If the arguments *x* and *y* are present,
