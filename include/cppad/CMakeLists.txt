@@ -21,6 +21,14 @@ SET(CMAKE_REQUIRED_FLAGS       "")
 SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
+# cppad_system_is_darwin
+IF( "$CMake_SYSTEM_NAME" STREQUAL "Darwin" )
+   SET(cppad_system_is_darwin 1)
+ELSE( )
+   SET(cppad_system_is_darwin 0)
+ENDIF( )
+print_variable(cppad_system_is_darwin)
+# -----------------------------------------------------------------------------
 #
 # cppad_c_compiler_cmd
 # is the command used to run the C compiler.

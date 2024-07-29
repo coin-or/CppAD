@@ -19,7 +19,8 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
 # undef CPPAD_C_COMPILER_GNU_FLAGS           used by dll examples.
 # undef CPPAD_C_COMPILER_MSVC_FLAGS          used by dll examples.
-# undef CPPAD_C_COMPILER_CMD                used by dll examples.
+# undef CPPAD_C_COMPILER_CMD                 used by dll examples.
+# undef CPPAD_SYSTEM_IS_DARWIN        used by example/utility/cppad_vector.hpp
 
 // for conditional testing when implicit conversion is not present
 # undef CPPAD_DEPRECATED

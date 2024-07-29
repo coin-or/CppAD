@@ -25,6 +25,15 @@
 Preprocessor Symbols Set By CMake Command
 #########################################
 
+CPPAD_SYSTEM_IS_DARWIN
+**********************
+is this a Darwin system; i.e., macOC or OS X, etc.
+This seems to only needed for verison 20240000.6. 
+Use git grep CPPAD_SYSTEM_IS_DARWIN to see what it used for.
+{xrst_code hpp} */
+# define CPPAD_SYSTEM_IS_DARWIN @cppad_system_is_darwin@
+/* {xrst_code}
+
 CPPAD_COMPILER_HAS_CONVERSION_WARN
 **********************************
 is the compiler a variant of g++ and has conversion warnings
