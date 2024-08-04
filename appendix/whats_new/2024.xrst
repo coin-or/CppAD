@@ -28,6 +28,14 @@ Release Notes for 2024
 mm-dd
 *****
 
+08-04
+=====
+Standard threads were added to the multi-threading examples; see
+:ref:`a11c_sthread.cpp-name` , 
+:ref:`sthread_get_started.cpp-name`  ,
+:ref:`sthread_get_started.cpp-name`  ,
+:ref:`team_sthread.cpp-name` .
+
 05-12
 =====
 A bug in the use of base types that are not ordered

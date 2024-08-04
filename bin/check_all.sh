@@ -160,7 +160,7 @@ else
    fi
 fi
 cat << EOF
-tarball         = $cppad-$version.tgz
+tarball         = cppad-$version.tgz
 compiler        = $compiler
 standard        = $standard
 debug_which     = $debug_which
@@ -168,7 +168,7 @@ package_vector  = $package_vector
 use_configure   = $use_configure
 EOF
 cat << EOF >> $top_srcdir/check_all.log
-tarball         = $cppad-$version.tgz
+tarball         = cppad-$version.tgz
 compiler        = $compiler
 standard        = $standard
 debug_which     = $debug_which
@@ -303,7 +303,7 @@ echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
 # extra multi_thread tests
 program_list=''
 skip=''
-for threading in bthread openmp pthread
+for threading in bthread openmp pthread sthread
 do
    dir="example/multi_thread/$threading"
    if [ ! -e "$dir" ]

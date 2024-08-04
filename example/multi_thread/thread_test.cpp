@@ -6,7 +6,7 @@
 /*
 {xrst_begin thread_test.cpp}
 {xrst_spell
-   pthreads
+   posix
 }
 
 Run Multi-Threading Examples and Speed Tests
@@ -24,9 +24,9 @@ command.
 threading
 *********
 If the :ref:`cmake-name` command output indicates that
-``bthread`` , ``pthread`` , or ``openmp`` is available,
+``openmp``, ``bthread`` , ``pthread`` , or ``sthread`` is available,
 you can run the program below with *threading* equal to
-``bthread`` , ``pthread`` , or ``openmp`` respectively.
+``openmp``, ``bthread`` , ``pthread`` , or ``sthread`` respectively.
 
 program
 *******
@@ -66,9 +66,11 @@ as the *test_case* below.
    example/multi_thread/openmp/a11c_openmp.cpp
    example/multi_thread/bthread/a11c_bthread.cpp
    example/multi_thread/pthread/a11c_pthread.cpp
+   example/multi_thread/sthread/a11c_sthread.cpp
    example/multi_thread/openmp/get_started.cpp
    example/multi_thread/bthread/get_started.cpp
    example/multi_thread/pthread/get_started.cpp
+   example/multi_thread/sthread/get_started.cpp
    example/multi_thread/team_example.cpp
    example/multi_thread/harmonic.xrst
    example/multi_thread/multi_atomic_three.xrst
@@ -81,22 +83,23 @@ a11c
 ****
 The *test_case* ``a11c`` runs the examples
 :ref:`a11c_openmp.cpp-name` ,
-:ref:`a11c_bthread.cpp-name` , and
-:ref:`a11c_pthread.cpp-name` .
+:ref:`a11c_bthread.cpp-name` ,
+:ref:`a11c_pthread.cpp-name` , and
+:ref:`a11c_sthread.cpp-name` .
 These cases demonstrate simple multi-threading,
 without algorithmic differentiation, using
-OpenMP, boost threads and pthreads respectively.
+OpenMP, Boost Posix and Standard threads respectively.
 
 get_started
 ***********
 The *test_case* ``get_started`` runs the examples
 :ref:`openmp_get_started.cpp-name` ,
 :ref:`bthread_get_started.cpp-name` ,
-and
-:ref:`pthread_get_started.cpp-name` .
+:ref:`pthread_get_started.cpp-name` , and
+:ref:`sthread_get_started.cpp-name` .
 These cases demonstrate simple multi-threading,
 with algorithmic differentiation, using
-OpenMP, boost threads and pthreads respectively.
+OpenMP, Boost Posix and Standard threads respectively.
 
 team_example
 ************
@@ -214,6 +217,7 @@ systems through the common interface :ref:`team_thread.hpp-name` :
    team_openmp.cpp,:ref:`team_openmp.cpp-title`
    team_bthread.cpp,:ref:`team_bthread.cpp-title`
    team_pthread.cpp,:ref:`team_pthread.cpp-title`
+   team_sthread.cpp,:ref:`team_sthread.cpp-title`
 
 Source
 ******
@@ -286,7 +290,7 @@ int main(int argc, char *argv[])
    "./<program> multi_newton test_time max_threads \\\n"
    "   num_zero num_sub num_sum use_ad\\\n"
    "where <program> is example_multi_thread_<threading>\n"
-   "and <threading> is bthread, openmp, or pthread";
+   "and <threading> is openmp, bthread, pthread, or sthread";
 
    // command line argument values (assign values to avoid compiler warnings)
    size_t num_zero=0, num_sub=0, num_sum=0;

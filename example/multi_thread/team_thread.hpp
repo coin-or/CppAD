@@ -8,7 +8,8 @@
 {xrst_begin team_thread.hpp}
 {xrst_spell
    bthread
-   pthreads
+   sthread
+   posix
 }
 Specifications for A Team of AD Threads
 #######################################
@@ -22,12 +23,19 @@ Syntax
 | *ok* = ``team_destroy`` ()
 | *name* = ``team_name`` ()
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
 Purpose
 *******
 These routines start, use, and stop a team of threads that can
 be used with the CppAD type ``AD<double>`` .
-For example,
-these could be OpenMP threads, pthreads, or Boost threads to name a few.
+Examples are provided for
+OpenMP threads, Posix threads, Boost threads and Standard threads.
 
 Restrictions
 ************
@@ -42,9 +50,8 @@ when the master thread is the only thread that is running
 
 team_create
 ***********
-The argument
-*num_threads*  > 0 has type ``size_t``
-and specifies the number of threads in this team.
+The argument *num_threads*  > 0
+specifies the number of threads in this team.
 This initializes both ``AD<double>`` and ``team_work``
 to be used with *num_threads* .
 If *num_threads*  > 1 ,
@@ -55,8 +62,6 @@ team_work
 *********
 This routine may be called one or more times
 between the call to ``team_create`` and ``team_destroy`` .
-The argument *worker* has type
-``bool`` *worker* ( ``void`` ) .
 Each call to ``team_work`` runs *num_threads* versions
 of *worker* with the corresponding value of
 :ref:`thread_num<ta_thread_num-name>`
@@ -73,22 +78,19 @@ thread number zero; i.e., it terminates the threads corresponding to
 team_name
 *********
 This routines returns a name that identifies this threading system.
-The return value has prototype
-
-   ``const char`` * *name*
-
-and is a statically allocated ``'\0'`` terminated C string.
+The return value is a statically allocated ``'\0'`` terminated C string.
 
 ok
 **
-The return value *ok* has type ``bool`` .
-It is ``false`` if an error is detected during the
+The return value *ok*
+is ``false`` if an error is detected during the
 corresponding call.
 Otherwise it is ``true`` .
 {xrst_toc_hidden
    example/multi_thread/openmp/team_openmp.cpp
    example/multi_thread/bthread/team_bthread.cpp
    example/multi_thread/pthread/team_pthread.cpp
+   example/multi_thread/sthread/team_sthread.cpp
 }
 
 Example Use
@@ -106,6 +108,7 @@ Example implementations of these specifications can be found in the files:
    team_openmp.cpp,:ref:`team_openmp.cpp-title`
    team_bthread.cpp,:ref:`team_bthread.cpp-title`
    team_pthread.cpp,:ref:`team_pthread.cpp-title`
+   team_sthread.cpp,:ref:`team_sthread.cpp-title`
 
 Speed Test of Implementation
 ****************************
@@ -118,20 +121,15 @@ can be found in:
    harmonic.cpp,:ref:`harmonic.cpp-title`
    multi_newton.cpp,:ref:`multi_newton.cpp-title`
 
-Source
-******
-{xrst_spell_off}
-{xrst_code cpp} */
+{xrst_end team_thread.hpp}
+*/
 # include <cstddef> // for size_t
 
+// BEGIN PROTOTYPE
 extern bool team_create(size_t num_threads);
 extern bool team_work(void worker(void));
 extern bool team_destroy(void);
 extern const char* team_name(void);
-/* {xrst_code}
-{xrst_spell_on}
-
-{xrst_end team_thread.hpp}
-*/
+// END PROTOTYPE
 
 # endif
