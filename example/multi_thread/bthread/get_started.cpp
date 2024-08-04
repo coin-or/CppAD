@@ -23,7 +23,7 @@
 
 namespace {
    //
-   // d_vector, ad_vector, fun_vector
+   // d_vector, ad_vector, fun_vector, bthread_vector
    typedef CPPAD_TESTVECTOR(double)                  d_vector;
    typedef CPPAD_TESTVECTOR( CppAD::AD<double> )    ad_vector;
    typedef CPPAD_TESTVECTOR( CppAD::ADFun<double> ) fun_vector;
@@ -85,15 +85,15 @@ namespace {
       bool&                 ok  = *ok_ptr;
       //
       // thread_specific_data_
-      // This sets up the thread_number fucntion for this thread.
+      // This sets up the thread_number function for this thread.
       if( thread_num != 0 )
       {  thread_specific_data_.reset(new size_t(thread_num) );
          ok &= thread_number() == thread_num;
       }
       //
       // f
-      // This will cause an assert if USE_DEFAULT_ADFUN_CONSTRUCTOR is 0.
-      // (The assert uses the thread_number function for this thread.)
+      // This will cause an assert if Taylor coefficients were allocated
+      // by a different thread.
       f.capacity_order(0);
       //
       // Jac
@@ -124,6 +124,9 @@ bool get_started(void)
    CppAD::ADFun<double> fun;
    fun.Dependent(ax, ay);
 # else
+   // This allocates memory for first order Taylor coefficients using thread 0.
+   // An assert will occur at f.capacity_order(0) in run_one_thread when
+   // it is called by a different thread.
    CppAD::ADFun<double> fun(ax, ay);
 # endif
    //
@@ -198,7 +201,7 @@ bool get_started(void)
       bool*                         ok_ptr = &ok_thread[thread_num];
       run_one_thread(thread_num, f_ptr, j_begin, j_end, &x, &Jac, ok_ptr);
    }
-   // wait for boos threads to finish
+   // wait for other threads to finish
    for(size_t thread_num = 1; thread_num < num_threads; ++thread_num)
       thread_ptr[thread_num-1]->join();
    //

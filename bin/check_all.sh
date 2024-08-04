@@ -66,12 +66,6 @@ date | sed -e 's|^|date: |' > check_all.log
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
 # ---------------------------------------------------------------------------
-# circular shift program list and set program to first entry in list
-next_program() {
-   program_list=`echo "$program_list" | sed -e 's| *\([^ ]*\) *\(.*\)|\2 \1|'`
-   program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
-}
-# ---------------------------------------------------------------------------
 if [ -e "$HOME/prefix/cppad" ]
 then
    echo_log_eval rm -r $HOME/prefix/cppad
@@ -299,49 +293,10 @@ echo_eval speed/adolc/speed_adolc correct         432 onetape
 echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
 echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
 #
-# ----------------------------------------------------------------------------
-# extra multi_thread tests
-program_list=''
-skip=''
-for threading in bthread openmp pthread sthread
-do
-   dir="example/multi_thread/$threading"
-   if [ ! -e "$dir" ]
-   then
-      skip="$skip example_multi_thread_${threading}"
-   else
-      program="$dir/example_multi_thread_${threading}"
-      program_list="$program_list $program"
-      #
-      # redo this build in case it is commented out above
-      echo_log_eval $builder -j $n_job example_multi_thread_${threading}
-      #
-      # all programs check the fast cases
-      echo_log_eval $program a11c
-      echo_log_eval $program get_started
-      echo_log_eval $program team_example
-   fi
-done
-if [ "$program_list" != '' ]
-then
-   # test_time=1,max_thread=4,mega_sum=1
-   next_program
-   echo_log_eval $program harmonic 1 4 1
-   #
-   # test_time=1,max_thread=4,num_solve=100
-   next_program
-   echo_log_eval $program atomic_two 1 4 100
-   next_program
-   echo_log_eval $program atomic_three 1 4 100
-   next_program
-   echo_log_eval $program chkpoint_one 1 4 100
-   next_program
-   echo_log_eval $program chkpoint_two 1 4 100
-   #
-   # test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=50,use_ad=true
-   next_program
-   echo_log_eval $program multi_newton 2 4 20 30 50 true
-fi
+# bin/test_multi_thread.sh
+cd ..
+bin/test_multi_thread.sh $builder
+cd build
 #
 # print_for test
 program='example/print_for/example_print_for'

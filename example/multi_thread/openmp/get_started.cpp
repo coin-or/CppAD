@@ -44,7 +44,8 @@ namespace {
       CppAD::ADFun<double>& f, size_t j, const d_vector& x
    )
    {  // f
-      // This will cause an assert if USE_DEFAULT_ADFUN_CONSTRUCTOR is 0.
+      // This will cause an assert if Taylor coefficients were allocated
+      // by a different thread.
       f.capacity_order(0);
       //
       size_t nx = x.size();
@@ -80,6 +81,9 @@ bool get_started(void)
    CppAD::ADFun<double> fun;
    fun.Dependent(ax, ay);
 # else
+   // This allocates memory for first order Taylor coefficients using thread 0.
+   // An assert will occur at f.capacity_order(0) in run_one_thread when
+   // it is called by a different thread.
    CppAD::ADFun<double> fun(ax, ay);
 # endif
    //
