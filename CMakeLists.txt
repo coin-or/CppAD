@@ -110,13 +110,13 @@ IF( cmake_install_postfix )
    )
 ENDIF( cmake_install_postfix )
 #
-FOREACH(pkg adolc ipopt cppadcg)
+FOREACH(pkg adolc eigen ipopt cppadcg)
    IF( ${pkg}_prefix )
       MESSAGE(FATAL_ERROR
          "-D ${pkg}_prefix=value has been changed to -D include_${pkg}=true"
       )
    ENDIF( ${pkg}_prefix )
-ENDFOREACH(pkg adolc eigen ipopt)
+ENDFOREACH(pkg adolc eigen ipopt cppadcg)
 #
 IF( cmake_needs_dot_slash )
    MESSAGE(FATAL_ERROR

@@ -118,7 +118,6 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D include_ipopt`` = *true_or_false*                              \\
 | |tab| ``-D include_cppadcg`` = *true_or_false*                            \\
 | |tab| \\
-| |tab| ``-D eigen_prefix`` = *eigen_prefix*                                \\
 | |tab| ``-D colpack_prefix`` = *colpack_prefix*                            \\
 | |tab| ``-D fadbad_prefix`` = *fadbad_prefix*                              \\
 | |tab| ``-D sacado_prefix`` = *sacado_prefix*                              \\
@@ -372,19 +371,23 @@ include_adolc
 The :ref:`adolc-name` examples
 will be compiled and tested if ``include_adolc=true``
 is in the command line.
+In this case, ``adolc.pc`` must be in the ``PKG_CONFIG_PATH`` .
 
 include_eigen
 *************
 The :ref:`eigen-name` examples
 will be compiled and tested if ``include_eigen=true``
 is on the command line.
+In this case, ``eigen3.pc`` must be in the ``PKG_CONFIG_PATH`` .
 In addition, the :ref:`sparse2eigen-name` utility will be installed.
+
 
 include_ipopt
 *************
 The :ref:`ipopt-name` examples
 will be compiled and tested if ``include_ipopt=true``
 is on the command line.
+In this case, ``ipopt.pc`` must be in the ``PKG_CONFIG_PATH`` .
 In addition, :ref:`ipopt_solve-name` and :ref:`cppad_ipopt_nlp-name`
 will be installed.
 
@@ -399,12 +402,6 @@ the cppadcg package depends on cppad and using this option
 makes cppad depend on cppadcg.
 This option, and the script :ref:`get_cppadcg.sh-name` are only intended
 for testing purposes.
-
-eigen_prefix
-************
-This specifies the :ref:`eigen@eigen_prefix` .
-It must not be set when *include_eigen* is true
-(because ``pkg-config`` will be used to determine this information).
 
 package_prefix
 **************

@@ -19,15 +19,15 @@ do
       cat << EOF
 usage: bin/run_configure.sh \\
    [--help] \\
-   [--with_clang] \\
+   [--with-clang] \\
    [--c++yy]
 EOF
       exit 0
    fi
    case "$1" in
 
-      --with_clang)
-      with_clang='--with_clang'
+      --with-clang)
+      with_clang='--with-clang'
       ;;
 
       --c++*)

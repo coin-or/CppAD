@@ -228,14 +228,13 @@ then
    echo_eval mkdir build
 fi
 echo_eval cd build
-if [ -e CMakeCache.txt ]
-then
-   echo_eval rm CMakeCache.txt
-fi
-if [ -e CMakeFiles ]
-then
-   echo_eval rm -r CMakeFiles
-fi
+for name in CMakeCache.txt build.ninja Makefile
+do
+   if [ -e $name ]
+   then
+      echo_eval rm -r $name
+   fi
+done
 # -----------------------------------------------------------------------------
 # clean all variables in cmake cache
 cmake_args='-U .+ -D cmake_defined_ok=FALSE'

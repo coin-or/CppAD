@@ -28,6 +28,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+08-05
+=====
+The cmake ``-D eigen_prefix`` option was removed
+and ``PKG_CONFIG_PATH`` requirements were added for
+:ref:`cmake@include_eigen` (and the other packages).
+
 08-04
 =====
 Standard threading was added to the multi-threading examples; see

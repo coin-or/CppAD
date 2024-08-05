@@ -420,7 +420,7 @@ usage: <path_to_configure>/configure \\
    [POSTFIX_DIR=postfix_dir] \\
    [ADOLC_DIR=adolc_dir] \\
    [BOOST_DIR=boost_dir] \\
-   [EIGEN_DIR=eigne_dir] \\
+   [EIGEN_DIR=eigen_dir] \\
    [FADBAD_DIR=fadbad_dir] \\
    [SACADO_DIR=sacado_dir] \\
    [IPOPT_DIR=ipopt_dir] \\
@@ -637,20 +637,40 @@ then
    pwd
    exit 1
 fi
+PKG_CONFIG_PATH=''
 #
-# include_adolc
-include_adolc='false'
-if [ "$adolc_dir" != 'NOTFOUND' ]
-then
-   include_adolc='true'
-fi
-#
-# include_ipopt
-include_ipopt='false'
-if [ "$ipopt_dir" != 'NOTFOUND' ]
-then
-   include_ipopt='true'
-fi
+# include_$package, PKG_CONFIG_PATH
+for package in adolc eigen ipopt
+do
+   package_dir="${package}_dir"
+   if [ "${!package_dir}" != NOTFOUND ]
+   then
+      declare include_${package}='true'
+      pc_file="$package.pc"
+      if [ "$package" == eigen ]
+      then
+         pc_file='eigen3.pc'
+      fi
+      pc_path=$(find ${!package_dir} -name "$pc_file" | head -1)
+      if [ "$pc_path" == '' ]
+      then
+         echo "$package_dir = ${!package_dir}"
+         echo "But cannot find $pc_file below that directory"
+         exit 1
+      fi
+      pc_dir=$(echo $pc_path | sed -e "s|/$pc_file||")
+      if [ -z ${PKG_CONFIG_PATH+x} ]
+      then
+         export PKG_CONFIG_PATH="$pc_dir"
+      elif [ "$PKG_CONFIG_PATH" == '' ]
+      then
+         export PKG_CONFIG_PATH="$pc_dir"
+      else
+         PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$pc_dir"
+      fi
+   fi
+   print_variable PKG_CONFIG_PATH
+done
 #
 # cppad_cxx_flags
 cppad_cxx_flags=$( echo " $cxx_flags " | sed -e 's| -g ||' )
@@ -695,10 +715,10 @@ echo cmake \
    -D cmake_install_docdir=share/doc \
    \
    -D include_adolc=$include_adolc \
-   -D include_ipopt=$include_adolc \
+   -D include_eigen=$include_eigen \
+   -D include_ipopt=$include_ipopt \
    -D include_cppadcg=false \
    \
-   -D eigen_prefix="$eigen_dir" \
    -D colpack_prefix='NOTFOUND' \
    -D fadbad_prefix="$fadbad_dir" \
    -D sacado_prefix="$sacado_dir" \
@@ -730,11 +750,11 @@ cmake \
    -D cmake_install_docdir=share/doc \
    \
    -D include_adolc=$include_adolc \
+   -D include_eigen=$include_eigen \
    -D include_ipopt=$include_adolc \
    -D include_cppadcg=false \
    \
-   -D eigen_prefix="$eigen_dir" \
-   -D colpack_prefix='NOTFOUND' \
+   -D colpack_prefix="$adolc_dir" \
    -D fadbad_prefix="$fadbad_dir" \
    -D sacado_prefix="$sacado_dir" \
    \
