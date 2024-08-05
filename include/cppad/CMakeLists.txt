@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Configure the CppAD include file directory
 # -----------------------------------------------------------------------------
@@ -21,6 +21,17 @@ SET(CMAKE_REQUIRED_FLAGS       "")
 SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
+#
+# cppad_cxx_is_xcode
+STRING(REGEX MATCH
+   "/Applications/XCode_.*" cppad_cxx_is_xcode "${CMAKE_CXX_COMPILER}"
+)
+IF( "${cppad_cxx_is_xcode}" STREQUAL "" )
+   SET(cppad_cxx_is_xcode 0)
+ELSE ( )
+   SET(cppad_cxx_is_xcode 1)
+ENDIF ( )
+print_variable(cppad_cxx_is_xcode)
 #
 # cppad_c_compiler_cmd
 # is the command used to run the C compiler.

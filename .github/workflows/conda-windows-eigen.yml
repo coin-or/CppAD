@@ -40,15 +40,15 @@ jobs:
              mkdir build
         echo cd build
              cd build
-        echo set eigen_prefix=%CONDA_PREFIX%\Library
-             set eigen_prefix=%CONDA_PREFIX%\Library
-        echo Configure using eigen_prefix
+        echo set PGK_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
+             set PGK_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
+        echo run cmake
         cmake ^
           -D CMAKE_CXX_COMPILER=cl ^
           -D CMAKE_C_COMPILER=cl ^
           -D CMAKE_BUILD_TYPE=release ^
           -G "NMake Makefiles" ^
-          -D eigen_prefix=%eigen_prefix% ^
+          -D include_eigen=true ^
           -D cppad_static_lib=TRUE ^
           ..
         REM Build and run tests.
