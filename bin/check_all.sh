@@ -197,7 +197,6 @@ then
    echo 'Probably need to run bin/get_optional.sh'
    exit 1
 fi
-export LD_LIBRARY_PATH="$prefix/lib:$prefix/lib64"
 # ---------------------------------------------------------------------------
 # check_version
 if echo $version | grep '[0-9]\{4\}0000[.]' > /dev/null
@@ -316,12 +315,10 @@ else
    exit 1
 fi
 #
-# ---------------------------------------------------------------------------
-# check install
-echo_log_eval $builder install
+# bin/test_install.sh
 echo_log_eval cd ..
-echo_log_eval bin/check_install.sh
-# ---------------------------------------------------------------------------
+echo_log_eval bin/test_install.sh $builder
+#
 #
 echo "date >> check_all.log"
 date  | sed -e 's|^|date: |' >> $top_srcdir/check_all.log

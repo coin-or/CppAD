@@ -1,11 +1,38 @@
-#! /bin/bash -e
+#! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
+set -e -u
 # ----------------------------------------------------------------------------
-if [ $0 != 'bin/check_install.sh' ]
+# This sript name is 'test_*' instead of 'check_*' because it requires
+# that cmake has already cerated build/bukld.ninja or Makefile.
+program='bin/test_install.sh'
+if [ "$0" != "$program" ]
 then
-   echo 'bin/check_install.sh: must be executed from its parent directory'
+   echo "$program: must be executed from its parent directory"
+   exit 1
+fi
+if [ "$#" != 1 ]
+then
+   echo "usage: $program builder"
+   echo 'where builder is ninja or make'
+   exit 1
+fi
+builder="$1"
+if [ "$1" != 'ninja' ] && [ "$1" != 'make' ]
+then
+   echo "usage: $program builder"
+   echo 'where builder is ninja or make'
+   exit 1
+fi
+if [ "$builder" == 'ninja' ] && [ ! -e build/build.ninja ]
+then
+   echo "$program: builder is ninja and connot find build/build.ninja"
+   exit 1
+fi
+if [ "$builder" == 'make' ] && [ ! -e build/Makefile ]
+then
+   echo "$program: builder is make and connot file build/Makefile"
    exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -39,11 +66,16 @@ export LD_LIBRARY_PATH
 cflags=$(pkg-config cppad --cflags)
 libs=$(pkg-config cppad --libs)
 # -----------------------------------------------------------------------------
-if [ ! -e build/check_install ]
+# make install
+cd build
+$builder install
+#
+# test_install
+if [ ! -e test_install ]
 then
-   mkdir build/check_install
+   mkdir test_install
 fi
-cd build/check_install
+cd test_install
 # -----------------------------------------------------------------------------
 # CppAD get_started
 cp ../../example/get_started/get_started.cpp get_started.cpp
@@ -51,7 +83,7 @@ echo_eval g++ $cflags $libs get_started.cpp -o get_started
 echo 'CppAD: ./get_started'
 if ! ./get_started
 then
-   echo "check_install.sh: $(pwd)/get_started test failed."
+   echo "$program: $(pwd)/get_started test failed."
    exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -68,9 +100,9 @@ echo_eval g++ $cflags $libs get_started.cpp -o get_started
 echo 'ipopt_solve: ./get_started'
 if ! ./get_started
 then
-   echo "check_install.sh: $(pwd)/get_started test failed."
+   echo "$program: $(pwd)/get_started test failed."
    exit 1
 fi
 # -----------------------------------------------------------------------------
-echo 'check_install.sh: OK'
+echo "$program: OK"
 exit 0
