@@ -24,7 +24,7 @@ SET(CMAKE_REQUIRED_LIBRARIES   "")
 #
 # cppad_cxx_is_xcode
 STRING(REGEX MATCH
-   "/Applications/XCode_.*" cppad_cxx_is_xcode "${CMAKE_CXX_COMPILER}"
+   "/Applications/Xcode_.*" cppad_cxx_is_xcode "${CMAKE_CXX_COMPILER}"
 )
 IF( "${cppad_cxx_is_xcode}" STREQUAL "" )
    SET(cppad_cxx_is_xcode 0)
