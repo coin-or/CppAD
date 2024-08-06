@@ -643,8 +643,10 @@ PKG_CONFIG_PATH=''
 for package in adolc eigen ipopt
 do
    package_dir="${package}_dir"
-   if [ "${!package_dir}" != NOTFOUND ]
+   if [ "${!package_dir}" == NOTFOUND ]
    then
+      declare include_${package}='false'
+   else
       declare include_${package}='true'
       pc_file="$package.pc"
       if [ "$package" == eigen ]

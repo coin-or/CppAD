@@ -99,9 +99,7 @@ echo_eval cd build
    CXX_FLAGS="'$cppad_cxx_flags'" \
    ADOLC_DIR=$prefix \
    BOOST_DIR=$prefix \
-   EIGEN_DIR=$prefix \
    FADBAD_DIR=$prefix \
-   SACADO_DIR=$prefix \
    IPOPT_DIR=$prefix \
    $eigen_prefix \
    $scaado_prefix \
