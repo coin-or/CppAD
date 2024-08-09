@@ -15,19 +15,21 @@ jobs:
       with:
         activate-environment: conda_env
 
-    - name: Use conda to install eigen
+    - name: Use conda to install eigen and pkgconfig
       shell: cmd /C CALL {0}
       run: |
         echo conda install --yes eigen pkgconfig
              conda install --yes eigen pkgconfig
 
-    - name: Check location of Eigen directory
+    - name: Create and check Eigen link, check for eigen3.pc
       shell: cmd /C CALL {0}
       run: |
         mklink /d %CONDA_PREFIX%\Library\include\Eigen^
                   %CONDA_PREFIX%\Library\include\eigen3\Eigen
         echo dir %CONDA_PREFIX%\Library\include\Eigen\Core
              dir %CONDA_PREFIX%\Library\include\Eigen\Core
+        echo dir %CONDA_PREFIX%\Library\share\pkgconfig\eigen3.pc
+             dir %CONDA_PREFIX%\Library\share\pkgconfig\eigen3.pc
 
     - name: Build and test CppAD with Eigen
       shell: cmd /C CALL {0}
@@ -40,8 +42,8 @@ jobs:
              mkdir build
         echo cd build
              cd build
-        echo set PGK_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
-             set PGK_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
+        echo set PKG_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
+             set PKG_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
         echo run cmake
         cmake ^
           -D CMAKE_CXX_COMPILER=cl ^

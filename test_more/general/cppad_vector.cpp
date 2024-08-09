@@ -68,6 +68,7 @@ bool test_reverse(void)
    return ok;
 }
 
+# if ! defined(_MSC_VER) && ! CPPAD_CXX_IS_XCODE
 bool test_sort(void)
 {  // copy requires a random access iterator
    bool ok = true;
@@ -84,6 +85,7 @@ bool test_sort(void)
    //
    return ok;
 }
+# endif
 
 
 } // END_EMPTY_NAMESPACE
