@@ -62,6 +62,7 @@ Contents
    xrst/install/cmake.xrst
    xrst/install/cmake_check.xrst
    pkgconfig/CMakeLists.txt
+   bin/dos_build.bat
 }
 
 configure

@@ -28,6 +28,10 @@ Release Notes for 2024
 mm-dd
 *****
 
+08-08
+=====
+Add the :ref:`dos_build.bat-name` install example.
+
 08-05
 =====
 The cmake ``-D eigen_prefix`` option was removed
