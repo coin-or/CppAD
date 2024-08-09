@@ -1,4 +1,7 @@
 echo off
+rem SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+rem SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+rem SPDX-FileContributor: 2024 Bradley M. Bell
 rem --------------------------------------------------------------------------
 goto end_of_comment_block
 {xrst_begin dos_build.bat}
@@ -22,7 +25,7 @@ Other optional packages could be included in a similar fashion.
 
 Source
 ******
-{xrst_literal 
+{xrst_literal
    rem BEGIN SOURCE
    rem END SOURCE
 }
@@ -96,7 +99,7 @@ rem VCVARSALL_DIR
 python temp.py > temp
 set /p VCVARSALL_DIR=<temp
 echo VCVARSALL_DIR = %VCVARSALL_DIR%
-if exist "%VCVARSALL_DIR%\vcvarsall.bat" ( 
+if exist "%VCVARSALL_DIR%\vcvarsall.bat" (
    echo Found vcvarsall.bat in VCVARSALL_DIR
 ) else (
    echo Could not find vcvarsall.bat below MSVS_DIR

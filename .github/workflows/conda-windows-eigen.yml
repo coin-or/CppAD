@@ -18,8 +18,8 @@ jobs:
     - name: Use conda to install eigen
       shell: cmd /C CALL {0}
       run: |
-        echo conda install --yes eigen
-             conda install --yes eigen
+        echo conda install --yes eigen pkgconfig
+             conda install --yes eigen pkgconfig
 
     - name: Check location of Eigen directory
       shell: cmd /C CALL {0}

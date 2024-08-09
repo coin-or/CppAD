@@ -18,6 +18,7 @@
    py
    svec
    usr
+   xcode
    yy
    yyyy
 }
@@ -27,6 +28,12 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+08-09
+=====
+Suppress the testing of sort using CppAD vector iterators
+on MacOs with the Xcode C++ compiler; search for CPPAD_CXX_IS_XCODE in
+:ref:`cppad_vector.cpp-name` .
 
 08-08
 =====

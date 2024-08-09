@@ -144,8 +144,7 @@ bool CppAD_vector(void)
    const vector<Scalar> cvec = vec;
 
    // sort of vec (will reverse order of elements for this case)
-# ifndef _MSC_VER
-# if ! CPPAD_CXX_IS_XCODE
+# if ! defined(_MSC_VER) && ! CPPAD_CXX_IS_XCODE
    // 2DO: Determine why this test fails with Visual Studio 2019
    // and with Xcode version of AppleClang-15.0.0
    std::sort(vec.begin(), vec.end());
@@ -156,7 +155,6 @@ bool CppAD_vector(void)
    std::sort(other.data(), other.data() + other.size());
    for(size_t i = 0; i < n ; ++i)
       ok &= other[i] == Scalar(i + 1);
-# endif
 # endif
    // Incase the test above was not done
    for(size_t i = 0; i < n ; ++i)
