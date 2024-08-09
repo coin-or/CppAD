@@ -52,6 +52,7 @@ jobs:
           -G "NMake Makefiles" ^
           -D include_eigen=true ^
           -D cppad_static_lib=TRUE ^
+          -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus" ^
           ..
         REM Build and run tests.
         echo cmake --build . --target check
