@@ -13,6 +13,7 @@
    dll
    env
    iostream
+   nul
    nx
    omhelp
    py
@@ -31,9 +32,12 @@ mm-dd
 
 08-09
 =====
-Suppress the testing of sort using CppAD vector iterators
-on MacOs with the Xcode C++ compiler; search for CPPAD_CXX_IS_XCODE in
-:ref:`cppad_vector.cpp-name` .
+#. Suppress the testing of sort using CppAD vector iterators
+   on MacOs with the Xcode C++ compiler; search for CPPAD_CXX_IS_XCODE in
+   :ref:`cppad_vector.cpp-name` .
+#. The :ref:`jit_compile.cpp-name` example was hanging on some Windows
+   systems because they do not support writing to the``nul`` device.
+   This has been fixed by writing to temporary files.
 
 08-08
 =====
