@@ -12,8 +12,8 @@
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20240000: CppAD User's Manual
-###################################
+cppad-20240000.7: CppAD User's Manual
+#####################################
 
 .. image:: {xrst_dir coin.png}
 
