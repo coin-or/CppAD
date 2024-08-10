@@ -20,20 +20,10 @@
    unreferenced
    yyyy
    yyyymmdd
-   xcode
-   cxx
 }
 
 Preprocessor Symbols Set By CMake Command
 #########################################
-
-CPPAD_CXX_IS_XCODE
-******************
-The MacOS Xcode version of  AppleClang 15.0.0 is giving a strange error.
-This flag is used to suppress the corresponding test case:
-{xrst_code hpp} */
-# define CPPAD_CXX_IS_XCODE @cppad_cxx_is_xcode@
-/* {xrst_code}
 
 CPPAD_COMPILER_HAS_CONVERSION_WARN
 **********************************

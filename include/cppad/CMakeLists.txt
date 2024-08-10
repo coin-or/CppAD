@@ -22,17 +22,6 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
 #
-# cppad_cxx_is_xcode
-STRING(REGEX MATCH
-   "/Applications/Xcode_.*" cppad_cxx_is_xcode "${CMAKE_CXX_COMPILER}"
-)
-IF( "${cppad_cxx_is_xcode}" STREQUAL "" )
-   SET(cppad_cxx_is_xcode 0)
-ELSE ( )
-   SET(cppad_cxx_is_xcode 1)
-ENDIF ( )
-print_variable(cppad_cxx_is_xcode)
-#
 # cppad_c_compiler_cmd
 # is the command used to run the C compiler.
 STRING(REGEX REPLACE ".*[/\]" "" cppad_c_compiler_cmd "${CMAKE_C_COMPILER}")

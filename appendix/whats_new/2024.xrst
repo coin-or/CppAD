@@ -30,6 +30,16 @@ Release Notes for 2024
 mm-dd
 *****
 
+08-10
+=====
+There was a problem with :ref:`CppAD_vector@iterators` that caused
+the sort test in :ref:`cppad_vector.cpp-name` to fail when using
+Visual C++ on Windows or Xcode C++ on MacOS.
+To be specific, this was the case where the iterator needs to be ``const`` ,
+even though the value it points to is not ``const`` .
+This has been fixed.
+
+
 08-09
 =====
 #. Suppress the testing of sort using CppAD vector iterators

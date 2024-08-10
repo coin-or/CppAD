@@ -20,7 +20,6 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_C_COMPILER_GNU_FLAGS           used by dll examples.
 # undef CPPAD_C_COMPILER_MSVC_FLAGS          used by dll examples.
 # undef CPPAD_C_COMPILER_CMD                 used by dll examples.
-# undef CPPAD_CXX_IS_XCODE                   example/utility/cppad_vector.cpp
 
 // for conditional testing when implicit conversion is not present
 # undef CPPAD_DEPRECATED

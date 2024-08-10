@@ -61,7 +61,8 @@ value for ``CPPAD_CONST`` :
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {
 
-// so can be declared friend in cppad_vector_itr<Type>
+// const_cppad_vector_itr
+// declare here can be make it a friend in cppad_vector_itr<Type>
 template <class Type> class const_cppad_vector_itr;
 
 // ==========================================================================
@@ -175,12 +176,14 @@ public:
    : data_(nullptr), length_(nullptr), index_(0)
    { }
 # if CPPAD_CONST
+   // ctor
    const_cppad_vector_itr(
       const Type* const* data, const size_t* length, difference_type index
    ) noexcept
    : data_(data), length_(length), index_( difference_type(index) )
    { }
-   // ctor a const_iterator from an iterator
+   // ctor a const_iterator from an iterator. Here is were we need
+   //  const_cppad_vector_itr to be friend of cppad_vector_itr
    const_cppad_vector_itr(
       const cppad_vector_itr<Type>& non_const_other
    ) noexcept
@@ -189,6 +192,7 @@ public:
       index_      = non_const_other.index_;
    }
 # else
+   // ctor
    cppad_vector_itr(
       Type* const* data, const size_t* length, difference_type index
    ) noexcept
