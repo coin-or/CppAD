@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cstddef>
@@ -305,21 +305,21 @@ public:
    {  check_element();
       return (*data_)[index_];
    }
-   const Type& operator[](difference_type n)
+   const Type& operator[](difference_type n) const
    {  return *(*this + n);
    }
-   const Type& operator[](size_t n)
+   const Type& operator[](size_t n) const
    {  return *( *this + difference_type(n) );
    }
 # else
-   Type& operator*(void)
+   Type& operator*(void) const
    {  check_element();
       return (*data_)[index_];
    }
-   Type& operator[](difference_type n)
+   Type& operator[](difference_type n) const
    {  return *(*this + n);
    }
-   Type& operator[](size_t n)
+   Type& operator[](size_t n) const
    {  return *( *this + difference_type(n) );
    }
 # endif
@@ -427,14 +427,7 @@ public:
 template <class Type> CPPAD_VECTOR_ITR<Type> operator+(
    typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
    const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
-{  return
-   CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n + other.index_ );
-}
-template <class Type> CPPAD_VECTOR_ITR<Type> operator-(
-   typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
-   const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
-{  return
-   CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n - other.index_ );
+{  return other + n;
 }
 // END_BINARY_OP
 

@@ -68,7 +68,6 @@ bool test_reverse(void)
    return ok;
 }
 
-# if ! defined(_MSC_VER) && ! CPPAD_CXX_IS_XCODE
 bool test_sort(void)
 {  // copy requires a random access iterator
    bool ok = true;
@@ -85,7 +84,6 @@ bool test_sort(void)
    //
    return ok;
 }
-# endif
 
 
 } // END_EMPTY_NAMESPACE
@@ -96,11 +94,7 @@ bool cppad_vector(void)
    ok &= test_find();
    ok &= test_copy();
    ok &= test_reverse();
-# if ! defined(_MSC_VER) && ! CPPAD_CXX_IS_XCODE
-   // 2DO: Determine why this test fails with Visual Studio 2019
-   // and with Xcode version of AppleClang-15.0.0
    ok &= test_sort();
-# endif
    //
    return ok;
 }
