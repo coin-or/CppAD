@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cstddef>
@@ -61,7 +61,8 @@ value for ``CPPAD_CONST`` :
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {
 
-// so can be declared friend in cppad_vector_itr<Type>
+// const_cppad_vector_itr
+// declare here can be make it a friend in cppad_vector_itr<Type>
 template <class Type> class const_cppad_vector_itr;
 
 // ==========================================================================
@@ -91,10 +92,6 @@ public:
 {xrst_end cppad_vector_itr_traits}
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_ctor dev}
-{xrst_spell
-   indirection
-   iterators
-}
 
 Vector Class Iterator Member Data and Constructors
 ##################################################
@@ -179,12 +176,14 @@ public:
    : data_(nullptr), length_(nullptr), index_(0)
    { }
 # if CPPAD_CONST
+   // ctor
    const_cppad_vector_itr(
       const Type* const* data, const size_t* length, difference_type index
    ) noexcept
    : data_(data), length_(length), index_( difference_type(index) )
    { }
-   // ctor a const_iterator from an iterator
+   // ctor a const_iterator from an iterator. Here is were we need
+   //  const_cppad_vector_itr to be friend of cppad_vector_itr
    const_cppad_vector_itr(
       const cppad_vector_itr<Type>& non_const_other
    ) noexcept
@@ -193,6 +192,7 @@ public:
       index_      = non_const_other.index_;
    }
 # else
+   // ctor
    cppad_vector_itr(
       Type* const* data, const size_t* length, difference_type index
    ) noexcept
@@ -253,9 +253,6 @@ public:
 {xrst_end cppad_vector_itr_inc}
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_equal dev}
-{xrst_spell
-   iterators
-}
 
 Vector Class Iterator Equality Operators
 ########################################
@@ -312,21 +309,21 @@ public:
    {  check_element();
       return (*data_)[index_];
    }
-   const Type& operator[](difference_type n)
+   const Type& operator[](difference_type n) const
    {  return *(*this + n);
    }
-   const Type& operator[](size_t n)
+   const Type& operator[](size_t n) const
    {  return *( *this + difference_type(n) );
    }
 # else
-   Type& operator*(void)
+   Type& operator*(void) const
    {  check_element();
       return (*data_)[index_];
    }
-   Type& operator[](difference_type n)
+   Type& operator[](difference_type n) const
    {  return *(*this + n);
    }
-   Type& operator[](size_t n)
+   Type& operator[](size_t n) const
    {  return *( *this + difference_type(n) );
    }
 # endif
@@ -336,9 +333,6 @@ public:
 {xrst_end cppad_vector_itr_element}
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_random dev}
-{xrst_spell
-   iterators
-}
 
 Vector Class Iterator Random Access
 ###################################
@@ -437,14 +431,7 @@ public:
 template <class Type> CPPAD_VECTOR_ITR<Type> operator+(
    typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
    const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
-{  return
-   CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n + other.index_ );
-}
-template <class Type> CPPAD_VECTOR_ITR<Type> operator-(
-   typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
-   const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
-{  return
-   CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n - other.index_ );
+{  return other + n;
 }
 // END_BINARY_OP
 

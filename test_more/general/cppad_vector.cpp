@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // CppAD::vector tests
@@ -68,7 +68,6 @@ bool test_reverse(void)
    return ok;
 }
 
-# ifndef  _MSC_VER
 bool test_sort(void)
 {  // copy requires a random access iterator
    bool ok = true;
@@ -85,7 +84,6 @@ bool test_sort(void)
    //
    return ok;
 }
-# endif
 
 
 } // END_EMPTY_NAMESPACE
@@ -96,10 +94,7 @@ bool cppad_vector(void)
    ok &= test_find();
    ok &= test_copy();
    ok &= test_reverse();
-// 2DO: Determine out why this test fails with Visual Studio 2019
-# ifndef  _MSC_VER
    ok &= test_sort();
-# endif
    //
    return ok;
 }
