@@ -20,7 +20,7 @@ cppad-20240000: CppAD User's Manual
 .. list-table::
    :widths: auto
 
-   * - `release-20240000.6 <https://github.com/coin-or/CppAD/archive/20240000.6.tar.gz>`_
+   * - `release-20240000.7 <https://github.com/coin-or/CppAD/archive/20240000.7.tar.gz>`_
      - `documentation-latest <https://cppad.readthedocs.io/latest>`_
      - `other releases <https://github.com/coin-or/CppAD/tags>`_
      - `github <https://github.com/coin-or/CppAD>`_
