@@ -5,7 +5,7 @@ set -e -u
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 stable_version='20240000' # date at which this stable branch started
-release='6'               # first release for each stable version is 0
+release='7'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -66,9 +66,6 @@ sed -i user_guide.xrst \
    -e "s|archive/[0-9]\{8\}\.[0-9]*|archive/$tag|" \
    -e "s|documentation-[0-9]\{8\}|documentation-$stable_version|" \
    -e "s|stable-[0-9]\{8\}|stable-$stable_version|"
-echo 'The edits to user_guide.xrst are new.'
-echo 'If they are working correctly, remove this message and the exit 0 below.'
-exit 0
 #
 # stable_branch
 stable_branch=stable/$stable_version
@@ -129,10 +126,7 @@ sed -i user_guide.xrst \
    -e "s|release-[0-9]\{8\}\.[0-9]*|release-$tag|" \
    -e "s|archive/[0-9]\{8\}\.[0-9]*|archive/$tag|" \
    -e "s|documentation-[0-9]\{8\}|documentation-latest|" \
-   -e "s|stable-[0-9]\{8\}|latest/"
-echo 'The edits to user_guide.xrst are new.'
-echo 'If they are working correctly, remove this message and the exit 0 below.'
-exit 0
+   -e "s|stable-[0-9]\{8\}|latest|"
 #
 # CMakeLists.txt
 cat << EOF > temp.sed
