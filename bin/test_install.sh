@@ -58,17 +58,16 @@ do
 done
 export PKG_CONFIG_PATH
 export LD_LIBRARY_PATH
-# dir=$(pkg-config cppad --variable pcfiledir)
-# cat $dir/cppad.pc
-# -----------------------------------------------------------------------------
-# cflags
-# libs
-cflags=$(pkg-config cppad --cflags)
-libs=$(pkg-config cppad --libs)
 # -----------------------------------------------------------------------------
 # make install
 cd build
 $builder install
+# -----------------------------------------------------------------------------
+#
+# cflags
+# libs
+cflags=$(pkg-config cppad --cflags)
+libs=$(pkg-config cppad --libs)
 #
 # test_install
 if [ ! -e test_install ]
@@ -76,7 +75,7 @@ then
    mkdir test_install
 fi
 cd test_install
-# -----------------------------------------------------------------------------
+#
 # CppAD get_started
 cp ../../example/get_started/get_started.cpp get_started.cpp
 echo_eval g++ $cflags $libs get_started.cpp -o get_started
@@ -86,7 +85,7 @@ then
    echo "$program: $(pwd)/get_started test failed."
    exit 1
 fi
-# -----------------------------------------------------------------------------
+#
 # ipopt_solve get_started
 cp ../../example/ipopt_solve/get_started.cpp get_started.cpp
 cat << EOF >> get_started.cpp
