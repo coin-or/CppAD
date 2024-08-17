@@ -20,7 +20,7 @@ Example and Test of valvector Size
 # include <cppad/example/valvector/class.hpp>
 //
 bool size(void)
-{  // scalar_type  
+{  // scalar_type
    typedef valvector::scalar_type scalar_type;
    //
    //
@@ -31,7 +31,7 @@ bool size(void)
    valvector v(3);
    ok &= v.size() == 1;
    for(size_t i = 0; i < 10; ++i)
-      ok &= v[i] == scalar_type(3); 
+      ok &= v[i] == scalar_type(3);
    //
    // v
    v.resize(3);

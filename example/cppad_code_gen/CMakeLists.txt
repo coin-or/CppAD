@@ -16,7 +16,7 @@ SET(source_list
 # END_SORT_THIS_LINE_MINUS_2
 
 set_compile_flags(
-   example_cppad_code_gen "${cppad_debug_which}" "${source_list}" 
+   example_cppad_code_gen "${cppad_debug_which}" "${source_list}"
 )
 #
 ADD_EXECUTABLE(example_cppad_code_gen EXCLUDE_FROM_ALL ${source_list})

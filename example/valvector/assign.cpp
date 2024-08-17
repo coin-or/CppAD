@@ -20,7 +20,7 @@ Example and Test of valvector Assignment Operator
 # include <cppad/example/valvector/class.hpp>
 //
 bool assign(void)
-{  // scalar_type  
+{  // scalar_type
    typedef valvector::scalar_type scalar_type;
    //
    //

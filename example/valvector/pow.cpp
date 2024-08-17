@@ -40,8 +40,8 @@ bool pow(void)
    // ok
    ok &= x.size() == 3;
    for(size_t i = 0; i < x.size(); ++i)
-   {  scalar_type check = pow( x[i], y[i] ); 
-      ok &= CppAD::NearEqual( z[i], check, eps99, eps99); 
+   {  scalar_type check = pow( x[i], y[i] );
+      ok &= CppAD::NearEqual( z[i], check, eps99, eps99);
    }
    return ok;
 }

@@ -38,8 +38,8 @@ bool output(void)
    std::string q;
    for(auto itr = s.begin(); itr != s.end(); ++itr)
       if( *itr != ' ')
-         q.push_back( *itr ); 
-   // 
+         q.push_back( *itr );
+   //
    ok &= q == "{4,6,8}";
    //
    return ok;

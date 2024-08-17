@@ -40,8 +40,8 @@ bool math_unary(void)
    // ok
    v   = CppAD::sqrt(u);
    for(size_t i = 0; i < u.size(); ++i)
-      ok &= CppAD::NearEqual( v[i], sqrt(u[i]), eps99, eps99); 
-   
+      ok &= CppAD::NearEqual( v[i], sqrt(u[i]), eps99, eps99);
+
    //
    return ok;
 }

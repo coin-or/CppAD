@@ -20,7 +20,7 @@ Example and Test of valvector Element Access
 # include <cppad/example/valvector/class.hpp>
 //
 bool element(void)
-{  // scalar_type  
+{  // scalar_type
    typedef valvector::scalar_type scalar_type;
    //
    //
@@ -31,7 +31,7 @@ bool element(void)
    valvector v(3);
    ok &= v.size() == 1;
    for(size_t i = 0; i <= 10; ++i)
-      v[i] = scalar_type(i); 
+      v[i] = scalar_type(i);
    ok &= v[0] == scalar_type(10);
    ok &= v[1] == scalar_type(10);
    //

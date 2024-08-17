@@ -52,7 +52,7 @@ the fedora spec file may be of help; see
 
 xrst
 ****
-The `xrst <https://xrst.readthedocs.io/latest>`_ 
+The `xrst <https://xrst.readthedocs.io/latest>`_
 package is used to build the CppAD documentation.
 
 Contents

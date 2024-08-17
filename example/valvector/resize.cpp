@@ -20,7 +20,7 @@ Example and Test of valvector Resize
 # include <cppad/example/valvector/class.hpp>
 //
 bool resize(void)
-{  // scalar_type  
+{  // scalar_type
    typedef valvector::scalar_type scalar_type;
    //
    //
@@ -34,7 +34,7 @@ bool resize(void)
    // v
    v.resize(3);
    for(size_t i = 0; i < v.size(); ++i)
-      v[i] = scalar_type(i); 
+      v[i] = scalar_type(i);
    //
    // ok
    ok &= v.size() == 3;

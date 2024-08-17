@@ -20,7 +20,7 @@ Example and Test of valvector Constructors
 # include <cppad/example/valvector/class.hpp>
 //
 bool ctor(void)
-{  // scalar_type  
+{  // scalar_type
    typedef valvector::scalar_type scalar_type;
    //
    // ok

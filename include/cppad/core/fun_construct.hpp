@@ -89,7 +89,7 @@ sequence in *f* :
 
    ``ADFun`` < *Base* > *f* ( *ax* , *ay* )
 
-To be specific, it is equivalent to the following 
+To be specific, it is equivalent to the following
 steps using the default constructor:
 
 #. Create *f* with the default constructor
@@ -114,7 +114,7 @@ steps using the default constructor:
    with elements of type *Base* and the elements of *x*
    are equal to the corresponding elements in *ax*.
 
-#. If NDEBUG is not defined, *y* is checked to make sure it's elements are 
+#. If NDEBUG is not defined, *y* is checked to make sure it's elements are
    nearly equal to the corresponding values in *ay* .
 
 Copy Constructor
