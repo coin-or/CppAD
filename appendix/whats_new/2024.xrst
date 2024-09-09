@@ -13,6 +13,7 @@
    dll
    env
    iostream
+   isnan
    nul
    nx
    omhelp
@@ -32,7 +33,9 @@ mm-dd
 
 09-09
 =====
-The :ref:`cmake@CMake Command@Visual Studio` instructions were improved.
+#. The :ref:`cmake@CMake Command@Visual Studio` instructions were improved.
+#. ``CppAD`` was added before ``isnan`` , see the discussion of
+   :ref:`nan@std::isnan` .
 
 08-10
 =====

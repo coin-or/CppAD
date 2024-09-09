@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_RECORDER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/core/hash_code.hpp>
 # include <cppad/local/pod_vector.hpp>
@@ -541,7 +541,7 @@ addr_t recorder<Base>::put_con_par(const Base &par)
    // index zero is used to signify that a value is not a parameter;
    // i.e., it is a variable.
    if( all_par_vec_.size() == 0 )
-      CPPAD_ASSERT_UNKNOWN( isnan(par) );
+      CPPAD_ASSERT_UNKNOWN( CppAD::isnan(par) );
 # endif
    // ---------------------------------------------------------------------
    // check for a match with a previous parameter

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <stack>
@@ -329,7 +329,7 @@ bool optimize_run(
    rec->set_record_compare( compare_op );
 
    // copy parameters with index 0
-   CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] && isnan( play->GetPar(0) ) );
+   CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] && CppAD::isnan( play->GetPar(0) ) );
    rec->put_con_par( play->GetPar(0) );
    new_par[0] = 0;
 

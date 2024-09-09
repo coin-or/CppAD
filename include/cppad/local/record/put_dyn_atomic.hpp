@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_PUT_DYN_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/record/recorder.hpp>
 
@@ -133,7 +133,7 @@ void recorder<Base>::put_dyn_atomic(
 
          case variable_enum:
          arg = 0; // phantom parameter index
-         CPPAD_ASSERT_UNKNOWN( isnan( all_par_vec_[arg] ) )
+         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( all_par_vec_[arg] ) )
          break;
 
          default:

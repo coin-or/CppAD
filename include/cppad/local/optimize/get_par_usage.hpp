@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_PAR_USAGE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file get_cexp_info.hpp
@@ -438,7 +438,7 @@ void get_par_usage(
          type_x.resize(n);
          for(size_t j = 0; j < n; ++j)
          {  // parameter index zero is used for variable
-            CPPAD_ASSERT_UNKNOWN( isnan( all_par_vec[0] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( all_par_vec[0] ) );
             addr_t arg_j = dyn_par_arg[i_arg + 5 + j];
             parameter_x[j] = all_par_vec[arg_j];
             if( arg_j == 0 )

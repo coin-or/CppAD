@@ -2,7 +2,7 @@
 # define CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/core/ad_fun.hpp>
@@ -268,7 +268,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
    CPPAD_ASSERT_UNKNOWN( parameter.size() == 0 );
    addr_t i_par = rec.put_con_par(nan);
    CPPAD_ASSERT_UNKNOWN( i_par == 0 );
-   CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
+   CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_par] ) );
    //
    // Place the variable with index 0 in the tape
    CPPAD_ASSERT_NARG_NRES(local::BeginOp, 1, 1);
@@ -286,7 +286,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
       }
        else
       {  i_par = rec.put_dyn_par(nan, local::ind_dyn );
-         CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
+         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_par] ) );
          node_type.push_back(dynamic_enum);
          node2fun.push_back(i_par);
       }
@@ -297,7 +297,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
    for(size_t i = 0; i < n_variable_ind; ++i)
    {  if( var2dyn[i] )
       {  i_par = rec.put_dyn_par(nan, local::ind_dyn );
-         CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
+         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_par] ) );
          node_type.push_back(dynamic_enum);
          node2fun.push_back(i_par);
       }
@@ -530,7 +530,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {  i_result = rec.put_dyn_par(
                   nan, local::add_dyn, i_result, temporary[j]
                );
-               CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+               CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             }
          }
          else
@@ -975,112 +975,112 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
          {
             case abs_graph_op:
             i_result = rec.put_dyn_par(nan, local::abs_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case acosh_graph_op:
             i_result = rec.put_dyn_par(nan, local::acosh_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case asinh_graph_op:
             i_result = rec.put_dyn_par(nan, local::asinh_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case atanh_graph_op:
             i_result = rec.put_dyn_par(nan, local::atanh_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case erf_graph_op:
             i_result = rec.put_dyn_par(nan, local::erf_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case erfc_graph_op:
             i_result = rec.put_dyn_par(nan, local::erfc_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case expm1_graph_op:
             i_result = rec.put_dyn_par(nan, local::expm1_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case log1p_graph_op:
             i_result = rec.put_dyn_par(nan, local::log1p_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case acos_graph_op:
             i_result = rec.put_dyn_par(nan, local::acos_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case asin_graph_op:
             i_result = rec.put_dyn_par(nan, local::asin_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case atan_graph_op:
             i_result = rec.put_dyn_par(nan, local::atan_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case cosh_graph_op:
             i_result = rec.put_dyn_par(nan, local::cosh_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case cos_graph_op:
             i_result = rec.put_dyn_par(nan, local::cos_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case exp_graph_op:
             i_result = rec.put_dyn_par(nan, local::exp_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case log_graph_op:
             i_result = rec.put_dyn_par(nan, local::log_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case neg_graph_op:
             i_result = rec.put_dyn_par(nan, local::neg_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case sign_graph_op:
             i_result = rec.put_dyn_par(nan, local::sign_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case sinh_graph_op:
             i_result = rec.put_dyn_par(nan, local::sinh_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case sin_graph_op:
             i_result = rec.put_dyn_par(nan, local::sin_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case sqrt_graph_op:
             i_result = rec.put_dyn_par(nan, local::sqrt_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case tanh_graph_op:
             i_result = rec.put_dyn_par(nan, local::tanh_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case tan_graph_op:
             i_result = rec.put_dyn_par(nan, local::tan_dyn, arg[0] );
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             default:
@@ -1367,19 +1367,19 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             case add_graph_op:
             i_result =
                rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case azmul_graph_op:
             i_result =
                rec.put_dyn_par(nan, local::zmul_dyn, arg[0], arg[1]);
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case div_graph_op:
             i_result =
                rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case mul_graph_op:
@@ -1390,13 +1390,13 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             case pow_graph_op:
             i_result =
                rec.put_dyn_par(nan, local::pow_dyn, arg[0], arg[1]);
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             case sub_graph_op:
             i_result =
                rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
-            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[i_result] ) );
             break;
 
             default:

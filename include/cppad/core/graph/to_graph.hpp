@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/core/ad_fun.hpp>
@@ -113,7 +113,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    CPPAD_ASSERT_UNKNOWN( n_dynamic_ind <= n_dynamic );
    CPPAD_ASSERT_UNKNOWN( dyn_par_is.size() == n_parameter );
    CPPAD_ASSERT_UNKNOWN( n_parameter > 0 );
-   CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
+   CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[0] ) );
    CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
    // --------------------------------------------------------------------
    // par2node

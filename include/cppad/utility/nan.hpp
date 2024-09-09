@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_NAN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin nan}
@@ -18,17 +18,23 @@ Syntax
 ******
 
 | # ``include <cppad/utility/nan.hpp>``
-| *b* = ``isnan`` ( *s* )
+| *b* = ``CppAD::isnan`` ( *s* )
 
 *b* = ``hasnan`` ( *v* )
 
 Purpose
 *******
-It obtain and check for the value not a number ``nan`` .
+Check for the value not a number ``nan`` .
 The IEEE standard specifies that a floating point value *a*
 is ``nan`` if and only if the following returns true
 
    *a* != *a*
+
+std::isnan
+**********
+Some compilers; e.g. Visual Studio, result in an ambiguous error
+between ``CppAD::isnan`` and ``std::isnan`` unless you include the ``CppAD``
+before ``isnan`` (even when inside the CppAD namespace).
 
 Include
 *******
