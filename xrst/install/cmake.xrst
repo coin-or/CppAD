@@ -145,9 +145,13 @@ Use ``pacman`` to install
 Visual Studio
 =============
 
+#. Make sure you have a version of 
+   `git for windows <https://git-scm.com/download/win>`_ . 
+
 #. Launch the Visual Studio
-   `developer command prompt <https://learn.microsoft.com/en-us/visualstudio/ide/reference/command-prompt-powershell?view=vs-2022>`_
-#. Use the command
+   `developer command window <https://learn.microsoft.com/en-us/visualstudio/ide/reference/command-prompt-powershell?view=vs-2022>`_
+
+#. At the command prompt enter
    ::
 
       where cmake.exe
@@ -156,8 +160,15 @@ Visual Studio
    If not, download and install the win64-x64 version of the
    `cmake program <https://cmake.org/download/>`_.
    Make sure you select the box that adds ``cmake`` to your execution path.
-#. In the command window, change into the directory where the cppad git
-   repository is located and run the following commands.
+
+#. Download the CppAD repository, and make it the current directory,
+   using the following commands
+   {xrst_code bat}
+   clone https://github.com/coin-or/CppAD.git cppad.git
+   cd cppad.git
+   {xrst_code}
+
+#. Execute the following commands:
    {xrst_literal
       bin/build.bat
    }

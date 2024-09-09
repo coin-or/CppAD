@@ -30,6 +30,10 @@ Release Notes for 2024
 mm-dd
 *****
 
+09-09
+=====
+The :ref:`cmake@CMake Command@Visual Studio` instructions were improved.
+
 08-10
 =====
 There was a problem with :ref:`CppAD_vector@iterators` that caused

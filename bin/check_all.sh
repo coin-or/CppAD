@@ -275,7 +275,7 @@ n_job=$(nproc)
 #
 # build: example_jit
 # avoid *.so not found on some vitual systems (during parallelll build)
-cmd="nice -10 $builder -j $n_job"
+cmd="$builder -j $n_job"
 echo_log_eval $cmd example_jit
 #
 # build: check

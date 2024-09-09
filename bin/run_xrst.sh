@@ -54,7 +54,7 @@ else
 fi
 # -----------------------------------------------------------------------------
 # xrst
-echo_eval nice -10 xrst \
+echo_eval xrst \
 --local_toc \
 --target html \
 --html_theme sphinx_rtd_theme \

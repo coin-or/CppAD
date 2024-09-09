@@ -1,4 +1,4 @@
-rmdir /S build
+if exist build ( rmdir /S build )
 mkdir build
 cd build
 cmake ^
