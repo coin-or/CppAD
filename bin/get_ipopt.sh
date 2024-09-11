@@ -49,7 +49,7 @@ set -e -u
 # This will install the following version of Ipopt
 # {xrst_spell_off}
 # {xrst_code sh}
-ipopt_version='3.13.4'
+ipopt_version='3.14.16'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -119,6 +119,12 @@ then
    make -j $n_job install
    echo "get_ipopt.sh: OK"
    exit 0
+fi
+if ls external/Ipopt-*.configured > /dev/null
+then
+   echo_eval rm -rf external/Mumps.git
+   echo_eval rm -rf external/ASL.git
+   echo_eval rm external/Ipopt-*.configured
 fi
 #
 # prefix
@@ -207,10 +213,6 @@ cd ../..
 #
 # configured_flag
 cd ..
-if ls external/Ipopt-*.configured > /dev/null
-then
-   rm external/Ipopt-*.configured
-fi
 touch $configured_flag
 # ----------------------------------------------------------------------------
 echo 'get_ipopt.sh: OK'

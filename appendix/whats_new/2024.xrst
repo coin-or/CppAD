@@ -33,8 +33,9 @@ mm-dd
 
 09-11
 =====
-The :ref:`get_ipopt.sh@Source Directory` was changed from
-``external/Ipopt-``\ *version* to ``external/Ipopt,git`` .
+#. The :ref:`get_ipopt.sh@Source Directory` was changed from
+   ``external/Ipopt-``\ *version* to ``external/Ipopt,git`` .
+#. Advance get_ipopt :ref:`get_ipopt.sh@Version` from 3.13.2 to 3.14.16.
 
 09-09
 =====
