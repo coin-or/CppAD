@@ -19,18 +19,40 @@ else
    echo 'usage: bin/check_invisible [all]'
    exit 1
 fi
+#
+# sed
+source bin/grep_and_sed.sh
+#
+# invisible_and_tab_ok
+source bin/dev_settings.sh
 # ----------------------------------------------------------------------------
+#
+# sed.$$
+echo '#' > sed.$$
+for name in $no_copyright_list
+do
+   if [ -f $name ]
+   then
+      echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
+   elif [ -d $name ]
+   then
+      echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
+   else
+      echo "$name in no_copyright_list is not a file or directory"
+      exit 1
+   fi
+done
+#
 # file_list
 if [ "$all" == 'true' ]
 then
-   file_list=$(git ls-files | sed \
-      -e '/^uw_copy_040507.html$/d' \
-   )
+   file_list=$(git ls-files | $sed -f sed.$$)
 else
-   file_list=$(git status --porcelain | sed -e 's|^...||' \
-      -e '/^uw_copy_040507.html$/d' \
+   file_list=$(git status --porcelain | \
+      $sed -e '/^D/d' -e 's|^...||' | $sed -f sed.$$
    )
 fi
+# ----------------------------------------------------------------------------
 #
 # sed.$$
 cat << EOF > sed.$$
@@ -45,7 +67,7 @@ for file in $file_list
 do
    if [ -f "$file" ]
    then
-      sed -f sed.$$ $file > copy.$$
+      $sed -f sed.$$ $file > copy.$$
       if ! diff $file copy.$$ > diff.$$
       then
          echo "original (<) invisible white space removed (>)"
