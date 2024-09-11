@@ -31,6 +31,11 @@ Release Notes for 2024
 mm-dd
 *****
 
+09-11
+=====
+The :ref:`get_ipopt.sh@Source Directory` was changed from
+``external/Ipopt-``\ *version* to ``external/Ipopt,git`` .
+
 09-09
 =====
 #. The :ref:`cmake@CMake Command@Visual Studio` instructions were improved.
