@@ -25,8 +25,11 @@ fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
 # PKG_CONFIG_PATH
-PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
-PKG_CONFIG_PATH="$prefix/share/pkgconfig:$PKG_CONFIG_PATH"
+PKG_CONFIG_PATH="$prefix/share/pkgconfig"
+for libdir in lib lib64
+do
+   PKG_CONFIG_PATH+=":$prefix/$libdir/pkgconfig"
+done
 export PKG_CONFIG_PATH
 # -----------------------------------------------------------------------------
 verbose_make='no'
@@ -364,16 +367,18 @@ then
    # This is a quote from the Callgrind manual:
    # 'As with Cachegrind, you probably want to compile with debugging info
    # (the -g option) and with optimization turned on.'
-   cmake_args="$cmake_args -g"
+   cppad_cxx_flags+=" -g"
 fi
-#
-# cppad_cxx_flags
-# clang++ 14.05 is warnings on bitwise operations with logical operands.
-# These are used for speed, but maybe they do not help much ?
-if [ "$clang" == 'yes' ]
+if [ "$(uname)" == 'Darwin' ]
 then
-   cppad_cxx_flags="$cppad_cxx_flags -Wno-bitwise-instead-of-logical"
+   if which brew > /dev/null
+   then
+      cppad_cxx_flags+=" -I $(brew --prefix)/include"
+   fi
 fi
+# 2DO: clang++ 14.05 is generating a lot of warnings (we should fix these)
+cppad_cxx_flags+=" -Wno-bitwise-instead-of-logical"
+cppad_cxx_flags+=" -Wno-sign-conversion"
 #
 # cmake_args
 cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"

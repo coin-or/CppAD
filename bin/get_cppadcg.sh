@@ -47,10 +47,10 @@
 # This will install the commit of Cppadcg with the following git hash
 # {xrst_spell_off}
 # {xrst_code sh}
-git_hash='fde3752'
+git_hash='e15c57207ea42a9572e9ed44df1894e09f7ce67e'
 # {xrst_code}
 # {xrst_spell_on}
-# The date corresponding to this commit was 2022-08-14.
+# The date corresponding to this commit was 2024-06-16.
 #
 # Configuration
 # *************
@@ -80,11 +80,14 @@ then
    exit 1
 fi
 # -----------------------------------------------------------------------------
-# bash function that echos and executes a command
+# echo_eval
 echo_eval() {
    echo $*
    eval $*
 }
+#
+# grep, sed
+source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 web_page='https://github.com/joaoleal/CppADCodeGen'
 cppad_repo=$(pwd)
@@ -98,7 +101,7 @@ else
 fi
 # ----------------------------------------------------------------------------
 # prefix
-eval `grep '^prefix=' bin/get_optional.sh`
+eval `$grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
    prefix="$cppad_repo/$prefix"
@@ -190,39 +193,7 @@ s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
 ELSEIF (DEFINED CPPAD_HOME)|
 EOF
 echo_eval git checkout  cmake/FindCppAD.cmake
-echo_eval sed -i cmake/FindCppAD.cmake -f temp.sed
-#
-# include/cppad/cg/base_float.hpp
-cat << EOF > temp.sed
-/template *<> *\$/! b skip
-: loop1
-N
-/\\n};\$/! b loop1
-#
-: loop2
-N
-/\\n}\$/! b loop2
-s|.*|CPPAD_NUMERIC_LIMITS(float, cg::CG<float>)|
-#
-: skip
-EOF
-echo_eval sed -i include/cppad/cg/base_float.hpp -f temp.sed
-#
-# include/cppad/cg/base_double.hpp
-cat << EOF > temp.sed
-/template *<> *\$/! b skip
-: loop1
-N
-/\\n};* *\$/! b loop1
-#
-: loop2
-N
-/\\n};* *\$/! b loop2
-s|.*|CPPAD_NUMERIC_LIMITS(double, cg::CG<double>)|
-#
-: skip
-EOF
-echo_eval sed -i include/cppad/cg/base_double.hpp -f temp.sed
+echo_eval $sed -i -f temp.sed cmake/FindCppAD.cmake
 # -----------------------------------------------------------------------------
 #  make install
 if [ ! -e build ]

@@ -11,6 +11,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 with_clang=''
+with_verbose_make=''
 cpp_standard='c++17'
 while [ "$#" != '0' ]
 do
@@ -20,6 +21,7 @@ do
 usage: bin/run_configure.sh \\
    [--help] \\
    [--with-clang] \\
+   [--with-verbose_make] \\
    [--c++yy]
 EOF
       exit 0
@@ -28,6 +30,10 @@ EOF
 
       --with-clang)
       with_clang='--with-clang'
+      ;;
+
+      --with-verbose-make)
+      with_verbose_make='--with-verbose-make'
       ;;
 
       --c++*)
@@ -67,7 +73,17 @@ testvector='cppad'
 #
 # cppad_cxx_flags
 cppad_cxx_flags="-std=$cpp_standard -Wall -pedantic-errors -Wshadow"
-cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
+cppad_cxx_flags+=" -Wfloat-conversion -Wconversion"
+if [ "$(uname)" == 'Darwin' ]
+then
+   if which brew > /dev/null
+   then
+      cppad_cxx_flags+=" -I $(brew --prefix)/include"
+   fi
+fi
+# 2DO: clang++ 14.05 is generating a lot of warnings (we should fix these)
+cppad_cxx_flags+=" -Wno-bitwise-instead-of-logical"
+cppad_cxx_flags+=" -Wno-sign-conversion"
 #
 # eigen_prefix, scaado_prefix
 cxx_standard_year=$(echo $cpp_standard | sed -e 's|c++||')
@@ -94,6 +110,7 @@ echo_eval cd build
 ../configure \
    --prefix=$prefix \
    $with_clang \
+   $with_verbose_make \
    --with-stdvector \
    MAX_NUM_THREADS=32 \
    CXX_FLAGS="'$cppad_cxx_flags'" \

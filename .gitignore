@@ -9,6 +9,7 @@
 # create by bin/test_one.sh
 /test_one.cpp
 /test_one.exe
+/test_one.exe.dSYM/
 #
 # git commit script
 /git_commit.sh

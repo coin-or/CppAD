@@ -13,6 +13,7 @@
    dll
    env
    iostream
+   homebrew
    isnan
    nul
    nx
@@ -30,6 +31,17 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+09-13
+=====
+#. Make all of the get_optional.sh routines now works on MacOS with homebrew,
+   see :ref:`get_optional.sh@MacOS with Homebrew` .
+   Do not test :ref:`colpack_prefix-name` on MacOS
+   (there seems to be a problem with the ColPack install on that system).
+#. The :ref:`configure@--with-verbose-make` option was added to the
+   configure script. In addition, :ref:`configure-name` was mistakenly
+   requiring that ColPack was installed; see :ref:`colpack_prefix-name`.
+   This has been fixed.
 
 09-11
 =====

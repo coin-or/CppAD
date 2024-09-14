@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ "$0" != "bin/package.sh" ]
 then
@@ -12,16 +12,25 @@ echo_eval() {
      echo $*
      eval $*
 }
+# grep, sed
+source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 # index_page_name
 index_page_name=$(\
-   sed -n -e '/^ *--index_page_name*/p' .readthedocs.yaml | \
-   sed -e 's|^ *--index_page_name *||' \
+   $sed -n -e '/^ *--index_page_name*/p' .readthedocs.yaml | \
+   $sed -e 's|^ *--index_page_name *||' \
 )
 #
 # version
-version=`sed -n -e '/^SET( *cppad_version *"[0-9.]*"/p' CMakeLists.txt | \
-   sed -e 's|.*"\([^"]*\)".*|\1|'`
+version=`$sed -n -e '/^SET( *cppad_version *"[0-9.]*"/p' CMakeLists.txt | \
+   $sed -e 's|.*"\([^"]*\)".*|\1|'`
+#
+# prefix
+eval $($grep '^prefix' bin/get_optional.sh)
+if echo $prefix | $grep '^[^/]' > /dev/null
+then
+   prefix="$(pwd)/$prefix"
+fi
 #
 # build
 if [ ! -e 'build' ]
@@ -39,6 +48,9 @@ git ls-files -z | xargs -0 tar -czf build/cppad-$version/tar.tgz
 cd build/cppad-$version
 tar -xzf tar.tgz
 rm tar.tgz
+#
+# bin/get_optional
+$sed -i -e "s|^prefix=.*|prefix=$prefix|" bin/get_optional.sh
 #
 #  build/cppad-version/build/html
 bin/run_xrst.sh -dev

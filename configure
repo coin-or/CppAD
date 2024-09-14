@@ -61,6 +61,7 @@ set -e -u
 # | |tab| ``--with-`` *test* ``vector``                    \\
 # | |tab| ``--enable-msvc``                                \\
 # | |tab| ``--with-clang``                                 \\
+# | |tab| ``--with-verbose-make``                          \\
 # | |tab| ``MAX_NUM_THREADS`` = *max_num_threads*          \\
 # | |tab| ``CXX_FLAGS`` = *cxx_flags*                      \\
 # | |tab| ``POSTFIX_DIR`` = *postfix_dir*                  \\
@@ -152,6 +153,10 @@ set -e -u
 # If this flag is present, ``clang++`` ( ``clang`` )
 # will be used for the C++ (C) compiler.
 # This option cannot appear when the --enable-msvc option appears.
+#
+# --with-verbose-make
+# *******************
+# This will create verbose output during the make commands.
 #
 # max_num_threads
 # ***************
@@ -449,8 +454,9 @@ echo $0 $*
 #
 prefix="$HOME"
 testvector=''
-enable_msvc=''
-with_clang=''
+enable_msvc='no'
+with_clang='n0'
+with_verbose_make='no'
 max_num_threads='64'
 cxx_flags=''
 postfix_dir='NOTFOUND'
@@ -485,6 +491,10 @@ do
 
       --with-clang)
       with_clang='yes'
+      ;;
+
+      --with-verbose-make)
+      with_verbose_make='yes'
       ;;
 
       CXX_FLAGS=*)
@@ -700,7 +710,7 @@ echo cmake \
    -S "$source_dir" \
    -B . \
    \
-   -D CMAKE_VERBOSE_MAKEFILE=0 \
+   -D CMAKE_VERBOSE_MAKEFILE=$with_verbose_make \
    -G "'$type_makefile'" \
    \
    $cmake_cxx_compiler \
@@ -756,7 +766,7 @@ cmake \
    -D include_ipopt=$include_adolc \
    -D include_cppadcg=false \
    \
-   -D colpack_prefix="$adolc_dir" \
+   -D colpack_prefix='NOTFOUND' \
    -D fadbad_prefix="$fadbad_dir" \
    -D sacado_prefix="$sacado_dir" \
    \

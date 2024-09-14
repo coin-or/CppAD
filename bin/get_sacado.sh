@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_sacado.sh}
 # {xrst_spell
@@ -64,6 +64,9 @@ then
    echo "bin/get_$package.sh: must be executed from its parent directory"
    exit 1
 fi
+#
+# grep, sed
+source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -84,7 +87,7 @@ else
 fi
 # ----------------------------------------------------------------------------
 # prefix
-eval `grep '^prefix=' bin/get_optional.sh`
+eval `$grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
    prefix="$cppad_dir/$prefix"
@@ -126,9 +129,9 @@ then
    #
    # see https://github.com/trilinos/Trilinos/issues/11923
    file="$release_name/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp"
-   if ! grep '^#include <cstdint>' $file > /dev/null
+   if ! $grep '^#include <cstdint>' $file > /dev/null
    then
-      sed -i $file -e 's|#include <iosfwd>|&\n#include <cstdint>|'
+      $sed -i $file -e 's|#include <iosfwd>|&\n#include <cstdint>|'
    fi
 fi
 echo_eval cd $release_name

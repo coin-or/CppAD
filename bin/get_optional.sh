@@ -1,11 +1,18 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin get_optional.sh}
 # {xrst_comment_ch #}
+# {xrst_spell
+#     ggrep
+#     grep
+#     gsed
+#     homebrew
+#     sed
+# }
 #
 # Download and Install The CppAD Optional Packages
 # ################################################
@@ -59,6 +66,11 @@ prefix="build/prefix"
 # you should delete all the files listed by the following command:
 #
 #     ``ls external/`` * . ``configured``
+#
+# MacOS with Homebrew
+# *******************
+# If you are using MacOS with homebrew, get_optional requires
+# the gnu versions of grep and sed; i.e., ``ggrep`` and ``gsed`` .
 #
 # get_optional.log
 # ****************

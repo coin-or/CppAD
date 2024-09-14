@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ ! -e "bin/check_include_file.sh" ]
 then
@@ -9,6 +9,9 @@ then
    echo "bin/check_include_file.sh: $msg"
    exit 1
 fi
+#
+# $grep, sed
+source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 #
 echo "Checking difference between C++ include directives and file names."
@@ -18,19 +21,19 @@ then
    echo "bin/check_include_file.sh: unexpected check_include_file.1.$$"
    exit 1
 fi
-list=`git ls-files | sed -n \
+list=`git ls-files | $sed -n \
    -e '/\.cpp$/p' \
    -e '/\.hpp$/p'`
 for file in $list
 do
-   sed -n $file \
+   $sed -n $file \
       -e '/^# *include *<cppad\/cg\//d' \
       -e '/^# *include *<cppad\//p' \
       >> check_include_file.1.$$
 done
 #
 cat check_include_file.1.$$ | \
-   sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | \
+   $sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | \
    sort -u > check_include_file.2.$$
 #
 # The following files should never be included:
@@ -40,13 +43,13 @@ cat check_include_file.1.$$ | \
 #
 # The files cppad/configure.hpp and cppad/local/is_pod.hpp
 # are not in git repository (they are built during configuration)
-git ls-files | sed -n -e '/include\/cppad\/.*\.hpp$/p' | \
-   sed \
+git ls-files | $sed -n -e '/include\/cppad\/.*\.hpp$/p' | \
+   $sed \
       -e '1,1s|^|include/cppad/configure.hpp\n|' \
       -e '1,1s|^|include/cppad/local/is_pod.hpp\n|' \
       -e '/include\/cppad\/local\/op\/prototype_op.hpp/d' \
       -e '/include\/cppad\/example\/eigen_plugin.hpp/d' | \
-   sed -e 's|^include/||' | \
+   $sed -e 's|^include/||' | \
    sort -u > check_include_file.3.$$
 #
 different='no'
@@ -56,7 +59,7 @@ then
    different='yes'
    for file in `cat check_include_file.2.$$`
    do
-      if ! grep "$file" check_include_file.3.$$ > /dev/null
+      if ! $grep "$file" check_include_file.3.$$ > /dev/null
       then
          found='yes'
          echo "The file include/$file is unknown to git."
@@ -66,7 +69,7 @@ then
    done
    for file in `cat check_include_file.3.$$`
    do
-      if ! grep "$file" check_include_file.2.$$ > /dev/null
+      if ! $grep "$file" check_include_file.2.$$ > /dev/null
       then
          found='yes'
          echo "The included $file is no longer included."

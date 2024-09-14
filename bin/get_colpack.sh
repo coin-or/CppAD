@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_colpack.sh}
 # {xrst_comment_ch #}
@@ -120,21 +120,25 @@ echo_eval git checkout --quiet v$version
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-   echo_eval libtoolize
+   if which libtoolize >& /dev/null
+   then
+      echo_eval libtoolize
+   else
+      echo_eval glibtoolize
+   fi
    echo_eval autoreconf --install --force
 else
    echo "Error: autoconf and libtool required for this script"
    exit 1
 fi
 # -----------------------------------------------------------------------------
-system_name=`uname | sed -e 's|\(......\).*|\1|'`
-if [ "$system_name" == 'CYGWIN' ]
+if [[ "$(uname)" == CYGWIN* ]] || [ "$(uname)" == Darwin ]
 then
    lib_type='--enable-static --disable-shared'
    echo_eval ls -l ./configure
    echo_eval chmod +x ./configure
 else
-   lib_type='--enable-static --enable-shared'
+   lib_type='--disable-static --enable-shared'
 fi
 echo_eval ./configure \
    --prefix=$prefix \

@@ -1,4 +1,5 @@
-#! /bin/bash -e
+#! /usr/bin/env bash
+set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
@@ -8,22 +9,27 @@ then
    echo "bin/check_all.sh: must be executed from its parent directory"
    exit 1
 fi
+if [ "$#" != 1 ] && [ "$#" != 2 ]
+then
+   echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
+   exit 1
+fi
 if [ "$1" != 'mixed' ] && [ "$1" != 'debug' ] && [ "$1" != 'release' ]
 then
    echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
    exit 1
 fi
-if [ "$2" != '' ] && [ "$2" != 'verbose_make' ]
-then
-   echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
-   exit 1
-fi
 build_type="$1"
-if [ "$2" == 'verbose_make' ]
+verbose_make='no'
+if [ "$#" == 2 ]
 then
-   verbose_make='--verbose_make'
-else
-   verbose_make=''
+   if [ "$2" != '' ] && [ "$2" != 'verbose_make' ]
+   then
+      echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
+      exit 1
+   else
+      verbose_make='yes'
+   fi
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -184,6 +190,10 @@ then
 else
    exclude_package='--no_eigen --no_sacado'
 fi
+if [ "$(uname)" == 'Darwin' ]
+then
+   exclude_package+=' --no_colpack'
+fi
 # ---------------------------------------------------------------------------
 # absoute prefix where optional packages are installed
 eval `grep '^prefix=' bin/get_optional.sh`
@@ -245,21 +255,27 @@ echo_log_eval cp -r ../prefix build/prefix
 if [ "$use_configure" == 'yes' ]
 then
    builder='make'
+   configure_cmd="bin/run_configure.sh $standard"
    if [ "$compiler" == 'clang' ]
    then
-      echo_log_eval bin/run_configure.sh $standard --with_clang
-   else
-      echo_log_eval bin/run_configure.sh $standard
+      configure_cmd+=' --with-clang'
    fi
+   if [ "verbose_make" == 'yes' ]
+   then
+      conigure_cmd+=' --with-verbose-make'
+   fi
+   echo_log_eval $configure_cmd
 else
-   if [ "$verbose_name" != '' ]
+   if [ "$verbose_make" == 'yes' ]
    then
       builder='make'
+      verbose_flag='--verbose'
    else
       builder='ninja'
+      verbose_flag=''
    fi
    echo_log_eval bin/run_cmake.sh \
-      $verbose_make \
+      $verbose_flag \
       --profile_speed \
       $compiler \
       $standard \
@@ -270,7 +286,12 @@ fi
 echo_log_eval cd build
 #
 # n_job
-n_job=$(nproc)
+if which nproc >& /dev/null
+then
+   n_job=$(nproc)
+else
+   n_job=$(sysctl -n hw.ncpu)
+fi
 # -----------------------------------------------------------------------------
 #
 # build: example_jit
@@ -317,16 +338,16 @@ fi
 #
 # bin/test_install.sh
 echo_log_eval cd ..
-echo_log_eval bin/test_install.sh $builder
+if [ "$standard" == '' ]
+then
+   echo_log_eval bin/test_install.sh $builder --c++17
+else
+   echo_log_eval bin/test_install.sh $builder $standard
+fi
 #
 #
 echo "date >> check_all.log"
 date  | sed -e 's|^|date: |' >> $top_srcdir/check_all.log
-if [ "$skip" != '' ]
-then
-   echo_log_eval echo "check_all.sh: skip = $skip"
-   exit 1
-fi
 # ----------------------------------------------------------------------------
 echo "$0: OK" >> $top_srcdir/check_all.log
 echo "$0: OK"

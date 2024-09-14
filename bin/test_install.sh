@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
+set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
-set -e -u
 # ----------------------------------------------------------------------------
 # This sript name is 'test_*' instead of 'check_*' because it requires
 # that cmake has already cerated build/bukld.ninja or Makefile.
@@ -12,17 +12,18 @@ then
    echo "$program: must be executed from its parent directory"
    exit 1
 fi
-if [ "$#" != 1 ]
+if [ "$#" != 2 ]
 then
-   echo "usage: $program builder"
-   echo 'where builder is ninja or make'
+   echo "usage: $program builder standard"
+   echo 'builder:   is ninja or make'
+   echo 'standard:  is --c++yy where yy is the year for the C++ standard'
    exit 1
 fi
 builder="$1"
+standard="$2"
 if [ "$1" != 'ninja' ] && [ "$1" != 'make' ]
 then
-   echo "usage: $program builder"
-   echo 'where builder is ninja or make'
+   echo "$program: builder is not ninja or make"
    exit 1
 fi
 if [ "$builder" == 'ninja' ] && [ ! -e build/build.ninja ]
@@ -34,6 +35,11 @@ if [ "$builder" == 'make' ] && [ ! -e build/Makefile ]
 then
    echo "$program: builder is make and connot file build/Makefile"
    exit 1
+fi
+if ! echo "$standard" | grep '^--c++[0-9][0-9]' > /dev/null
+then
+   echo "$program: standard is not --c++yy where ecxh y is a deciman digit"
+   eiit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -64,9 +70,23 @@ cd build
 $builder install
 # -----------------------------------------------------------------------------
 #
+# rpath
+rpath=$(find $prefix -name 'libcppad_lib.*' | head -1 )
+rpath=$(echo $rpath | sed -e 's|/[^/]*$||')
+#
 # cflags
+cflags="$(echo $standard | sed -e 's|^--c++|-std=c++|')"
+if [ "$(uname)" == Darwin ]
+then
+   if which brew > /dev/null
+   then
+      # 2DO: This flag should be added automatically by pkg-config
+      cflags+=" -I $(brew --prefix)/include"
+   fi
+fi
+cflags+=" $(pkg-config cppad --cflags)"
+#
 # libs
-cflags=$(pkg-config cppad --cflags)
 libs=$(pkg-config cppad --libs)
 #
 # test_install
@@ -78,7 +98,7 @@ cd test_install
 #
 # CppAD get_started
 cp ../../example/get_started/get_started.cpp get_started.cpp
-echo_eval g++ $cflags $libs get_started.cpp -o get_started
+echo_eval g++ $cflags $libs -Wl,-rpath $rpath get_started.cpp -o get_started
 echo 'CppAD: ./get_started'
 if ! ./get_started
 then
@@ -95,7 +115,7 @@ int main(void)
    return 0;
 }
 EOF
-echo_eval g++ $cflags $libs get_started.cpp -o get_started
+echo_eval g++ $cflags $libs -Wl,-rpath $rpath get_started.cpp -o get_started
 echo 'ipopt_solve: ./get_started'
 if ! ./get_started
 then

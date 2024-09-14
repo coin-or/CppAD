@@ -19,11 +19,14 @@ then
    echo 'bin/check_version.sh: cannot find ./.git'
    exit 1
 fi
+#
+# grep, sed
+source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 #
 # check_version("$1", temp.sed, version_ok)
 check_version() {
-   sed "$1" -f temp.sed > temp.out
+   $sed "$1" -f temp.sed > temp.out
    if ! diff "$1" temp.out > /dev/null
    then
       version_ok='no'
@@ -42,12 +45,12 @@ check_version() {
 #
 # this_version
 this_version=$(
-   sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
-      sed -e 's|.*"\([^"]*\)".*|\1|'
+   $sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
+      $sed -e 's|.*"\([^"]*\)".*|\1|'
 )
 #
 # branch
-branch=$(git branch | sed -n -e '/^[*]/p' | sed -e 's|^[*] *||')
+branch=$(git branch | $sed -n -e '/^[*]/p' | $sed -e 's|^[*] *||')
 #
 # this_version
 if [ "$branch" == 'master' ]
@@ -56,18 +59,18 @@ then
 fi
 #
 # stable_version, release_version
-if echo $branch | grep '^stable/' > /dev/null
+if echo $branch | $grep '^stable/' > /dev/null
 then
-   if ! echo $this_version | grep '^[0-9]\{4\}0000[.]' > /dev/null
+   if ! echo $this_version | $grep '^[0-9]\{4\}0000[.]' > /dev/null
    then
       echo 'check_version.sh: Stable version does not begin with yyyy0000.'
       exit 1
    fi
    release_version="$this_version"
-   stable_version=$(echo $release_version | sed -e 's|[.][0-9]*$||')
+   stable_version=$(echo $release_version | $sed -e 's|[.][0-9]*$||')
 else
-   eval $(grep '^stable_version=' bin/new_release.sh)
-   eval $(grep '^release=' bin/new_release.sh)
+   eval $($grep '^stable_version=' bin/new_release.sh)
+   eval $($grep '^release=' bin/new_release.sh)
    release_version="$stable_version.$release"
 fi
 #
