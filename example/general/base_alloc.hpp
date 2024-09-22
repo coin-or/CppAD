@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base_alloc.hpp}
@@ -112,6 +112,9 @@ public:
    {  size_t cap;
       void* v  = CppAD::thread_alloc::get_memory(sizeof(double), cap);
       ptrdbl_  = static_cast<double*>(v);
+      //
+      // Avoid warning about possible use of uninitialized value
+      *ptrdbl_ = CppAD::numeric_limits<double>::quiet_NaN();
    }
    base_alloc(double dbl)
    {  size_t cap;

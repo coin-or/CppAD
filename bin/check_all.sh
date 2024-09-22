@@ -4,6 +4,7 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
+# build_type, verbose_makefile
 if [ "$0" != 'bin/check_all.sh' ]
 then
    echo "bin/check_all.sh: must be executed from its parent directory"
@@ -31,13 +32,18 @@ then
       verbose_make='yes'
    fi
 fi
-# -----------------------------------------------------------------------------
-# bash function that echos and executes a command
+#
+# top_srcdir
+top_srcdir=`pwd`
+echo "top_srcdir = $top_srcdir"
+#
+# echo_eval
 echo_eval() {
    echo $*
    eval $*
 }
-# -----------------------------------------------------------------------------
+#
+# echo_log_eval
 echo_log_eval() {
    echo "$* >& check_all.tmp"
    echo "$*" > $top_srcdir/check_all.tmp
@@ -47,16 +53,18 @@ echo_log_eval() {
       echo 'Error: see check_all.tmp'
       exit 1
    fi
-   # 1. If we don't have c++17 and mkstemp, then temp_file is not thread safe.
+   # 1.  If we don't have c++17 and mkstemp, then temp_file is not thread safe.
    #
-   # 2. If using clang, an improper compile time warning is generated at
-   #    forward.hpp:188 and reverse.hpp:151
+   # 2.  If using g++, an improper compile time warning is generated at
+   #     forward.hpp:188, reverse.hpp:151, independent.hpp:100-109,
+   #     base_alloc.hpp:143.
    #
-   # The two cases above are double checked using run time asserts.
    if sed $top_srcdir/check_all.tmp \
       -e '/temp_file.cpp:.*warning.*tmpnam/d' \
       -e '/forward.hpp:188:.*warning.*outside array bounds/d' \
       -e '/reverse.hpp:151:.*warning.*outside array bounds/d' \
+      -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
+      -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
       | grep ': *warning *:'
    then
       echo "The warnings above happened during the command: $*"
@@ -66,34 +74,31 @@ echo_log_eval() {
    echo '        cat check_all.tmp >> check_all.log'
    cat $top_srcdir/check_all.tmp >> $top_srcdir/check_all.log
 }
-echo_log() {
-   echo $*
-   echo $* >> $top_srcdir/check_all.log
-}
+#
+# random_01
 random_01() {
    set +e
    eval random_01_$1="`expr $RANDOM % 2`"
    eval echo "random_01_$1=\$random_01_$1"
    set -e
 }
-# -----------------------------------------------------------------------------
+#
+#  check_all.log
 # start new check_all.log
 echo "date > check_all.log"
 date | sed -e 's|^|date: |' > check_all.log
-top_srcdir=`pwd`
-echo "top_srcdir = $top_srcdir"
-# ---------------------------------------------------------------------------
+#
+# $HOME/prefix/cppad
 if [ -e "$HOME/prefix/cppad" ]
 then
    echo_log_eval rm -r $HOME/prefix/cppad
 fi
-# ---------------------------------------------------------------------------
+#
 # version
 version=$(
    sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
       sed -e 's|.*"\([^"]*\)".*|\1|'
 )
-# ---------------------------------------------------------------------------
 #
 # compiler
 random_01 compiler
@@ -205,7 +210,8 @@ if [ "$(uname)" == 'Darwin' ]
 then
    exclude_package+=' --no_colpack'
 fi
-# ---------------------------------------------------------------------------
+#
+# prefix
 # absoute prefix where optional packages are installed
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
@@ -218,7 +224,7 @@ then
    echo 'Probably need to run bin/get_optional.sh'
    exit 1
 fi
-# ---------------------------------------------------------------------------
+#
 # check_version
 if echo $version | grep '[0-9]\{4\}0000[.]' > /dev/null
 then
@@ -227,7 +233,8 @@ then
 else
    echo_log_eval bin/check_version.sh
 fi
-# ---------------------------------------------------------------------------
+#
+# bin/check_*.sh
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=$(
    ls bin/check_* | sed \
@@ -246,7 +253,7 @@ done
 #
 # run_xrst.sh
 bin/run_xrst.sh +dev
-# ---------------------------------------------------------------------------
+#
 # build/cppad-$version.tgz
 echo_log_eval bin/package.sh
 #
@@ -303,7 +310,6 @@ then
 else
    n_job=$(sysctl -n hw.ncpu)
 fi
-# -----------------------------------------------------------------------------
 #
 # build: example_jit
 # avoid *.so not found on some vitual systems (during parallelll build)
@@ -312,14 +318,14 @@ echo_log_eval $cmd example_jit
 #
 # build: check
 echo_log_eval $cmd check
-# ----------------------------------------------------------------------------
-# extra speed tests not run with different options
 #
+# speed/cppad/speed_cppad
 for option in onetape colpack optimize atomic memory boolsparsity
 do
    echo_eval speed/cppad/speed_cppad correct 432 $option
 done
 #
+# speed/adolc/speed_adolc
 echo_eval speed/adolc/speed_adolc correct         432 onetape
 echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
 echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
@@ -330,11 +336,9 @@ bin/test_multi_thread.sh $builder
 cd build
 #
 # print_for test
-program='example/print_for/example_print_for'
-#
 # redo this build in case it is commented out above
+program='example/print_for/example_print_for'
 echo_log_eval $builder -j $n_job example_print_for
-#
 echo_log_eval $program
 $program | sed -e '/^Test passes/,$d' > junk.1.$$
 $program | sed -e '1,/^Test passes/d' > junk.2.$$

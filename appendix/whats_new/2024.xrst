@@ -38,6 +38,8 @@ mm-dd
 Convert the bitwise operators & and | , when used with bool operands,
 to the logical operations && and ||; see ``bin/no_bitwise.sh``
 (this fixes many warnings).
+In addition, fix some other warnings and put some exceptions on
+``bin/check_all.sh`` for some warnings that seem to be incorrect.
 
 09-13
 =====

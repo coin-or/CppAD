@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_INDEPENDENT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 namespace CppAD { namespace local { //  BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
@@ -88,6 +88,7 @@ void ADTape<Base>::Independent(
 
    // Place independent dynamic parameters at beginning of parameter vector,
    // just after the nan at index zero.
+   CPPAD_ASSERT_UNKNOWN( Rec_.get_num_dynamic_ind() <= dynamic.size() );
    for(size_t j = 0; j < Rec_.get_num_dynamic_ind(); ++j)
    {  CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
       CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
