@@ -377,7 +377,6 @@ then
    fi
 fi
 # 2DO: clang++ 14.05 is generating a lot of warnings (we should fix these)
-cppad_cxx_flags+=" -Wno-bitwise-instead-of-logical"
 cppad_cxx_flags+=" -Wno-sign-conversion"
 #
 # cmake_args

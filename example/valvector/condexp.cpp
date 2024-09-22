@@ -23,14 +23,9 @@ Example and Test of valvector Conditional Expressions
 # include <cppad/utility/near_equal.hpp>
 //
 bool condexp(void)
-{  typedef valvector::scalar_type scalar_type;
-   //
+{  //
    // ok
    bool ok = true;
-   //
-   // eps99
-   scalar_type eps99 = CppAD::numeric_limits<scalar_type>::epsilon();
-   eps99            *= scalar_type(99);
    //
    // left, right, if_true, if_false
    valvector left     = valvector( {0, 1, 2, 3, 4} );

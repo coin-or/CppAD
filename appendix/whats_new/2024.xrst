@@ -5,6 +5,7 @@
 
 {xrst_begin 2024 app}
 {xrst_spell
+   bitwise
    boostvector
    bostvector
    cassert
@@ -31,6 +32,12 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+09-24
+=====
+Convert the bitwise operators & and | , when used with bool operands,
+to the logical operations && and ||; see ``bin/no_bitwise.sh``
+(this fixes many warnings).
 
 09-13
 =====

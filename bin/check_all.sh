@@ -47,9 +47,20 @@ echo_log_eval() {
       echo 'Error: see check_all.tmp'
       exit 1
    fi
-   if grep ': *warning *:"' $top_srcdir/check_all.tmp
+   # 1. If we don't have c++17 and mkstemp, then temp_file is not thread safe.
+   #
+   # 2. If using clang, an improper compile time warning is generated at
+   #    forward.hpp:188 and reverse.hpp:151
+   #
+   # The two cases above are double checked using run time asserts.
+   if sed $top_srcdir/check_all.tmp \
+      -e '/temp_file.cpp:.*warning.*tmpnam/d' \
+      -e '/forward.hpp:188:.*warning.*outside array bounds/d' \
+      -e '/reverse.hpp:151:.*warning.*outside array bounds/d' \
+      | grep ': *warning *:'
    then
-      echo 'Warning: see check_all.tmp'
+      echo "The warnings above happened during the command: $*"
+      echo "see the file $top_srcdir/check_all.tmp"
       exit 1
    fi
    echo '        cat check_all.tmp >> check_all.log'

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -222,7 +222,7 @@ namespace { // Begin empty namespace
       // compute sparsity pattern for V(x) = A(x)^T + H(x)^T
       v[0].clear();
       for(q = 0; q < p; q++)
-         if( A[q] | H[q] )
+         if( A[q] || H[q] )
             v[0].insert(q);
 
       return ok;
