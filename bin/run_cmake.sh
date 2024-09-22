@@ -376,8 +376,6 @@ then
       cppad_cxx_flags+=" -I $(brew --prefix)/include"
    fi
 fi
-# 2DO: clang++ 14.05 is generating a lot of warnings (we should fix these)
-cppad_cxx_flags+=" -Wno-sign-conversion"
 #
 # cmake_args
 cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
