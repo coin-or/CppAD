@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/optimize/hash_code.hpp>
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
@@ -194,7 +194,7 @@ bool match_op(
    size_t num_arg = NumArg(op);
    CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
    CPPAD_ASSERT_UNKNOWN(
-      (num_arg < 3) | ( (num_arg == 3) & (op == ErfOp || op == ErfcOp) )
+      (num_arg < 3) || ( (num_arg == 3) && (op == ErfOp || op == ErfcOp) )
    );
    //
    arg_is_variable(op, arg, variable);
@@ -210,7 +210,7 @@ bool match_op(
       std::numeric_limits<addr_t>::max(),
       std::numeric_limits<addr_t>::max()
    };
-   if( (op == AddvvOp) | (op == MulvvOp ) )
+   if( (op == AddvvOp) || (op == MulvvOp ) )
    {  // in special case where operator is commutative and operands are variables,
       // put lower index first so hash code does not depend on operator order
       CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
@@ -256,7 +256,7 @@ bool match_op(
             match &= arg_match[j] == arg_c[j];
          ++j;
       }
-      if( (! match) & ( (op == AddvvOp) | (op == MulvvOp) ) )
+      if( (! match) && ( (op == AddvvOp) || (op == MulvvOp) ) )
       {  // communative so check for reverse order match
          match  = op == op_c;
          //

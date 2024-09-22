@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_SUMMATION_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
@@ -368,7 +368,7 @@ void tape_t<Value>::summation(void)
                // second_operand
                bool second_operand = false;
                bool op_arg_equal_j = false;
-               if( (op_enum_j == add_op_enum) | (op_enum_j == sub_op_enum) )
+               if( (op_enum_j == add_op_enum) || (op_enum_j == sub_op_enum) )
                {  addr_t          arg_index_j = op2arg_index_[j_op];
                   addr_t          right_index = arg_vec_[arg_index_j + 1];
                   addr_t          left_index  = arg_vec_[arg_index_j + 0];

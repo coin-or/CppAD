@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHKPOINT_TWO_JAC_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -57,7 +57,7 @@ bool chkpoint_two<Base>::jac_sparsity(
    for(size_t k = 0; k < nnz; ++k)
    {  size_t i = row[k];
       size_t j = col[k];
-      if( select_x[j] & select_y[i] )
+      if( select_x[j] && select_y[i] )
          ++nnz_out;
    }
 
@@ -67,7 +67,7 @@ bool chkpoint_two<Base>::jac_sparsity(
    for(size_t k = 0; k < nnz; ++k)
    {  size_t i = row[k];
       size_t j = col[k];
-      if( select_x[j] & select_y[i] )
+      if( select_x[j] && select_y[i] )
          pattern_out.set(ell++, i, j);
    }
    CPPAD_ASSERT_UNKNOWN( ell == nnz_out );

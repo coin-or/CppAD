@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_DYN_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file get_cexp_info.hpp
@@ -365,7 +365,7 @@ void get_dyn_previous(
                dyn_previous[i_dyn] = addr_t( k_dyn );
             }
          }
-         if( (! match) & ( (op == add_dyn) | (op == mul_dyn) ) )
+         if( (! match) && ( (op == add_dyn) || (op == mul_dyn) ) )
          {  size_t num_arg = 2;
             std::swap( arg_match[0], arg_match[1] );
             opcode_t op_t    = opcode_t(op);

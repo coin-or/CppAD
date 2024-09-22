@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CSKIP_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -142,7 +142,7 @@ void forward_cskip_op_0(
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
       right = parameter[ arg[3] ];
    }
-   bool ok_to_skip = IdenticalCon(left) & IdenticalCon(right);
+   bool ok_to_skip = IdenticalCon(left) && IdenticalCon(right);
    if( ! ok_to_skip )
       return;
 

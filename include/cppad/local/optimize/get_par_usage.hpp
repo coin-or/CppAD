@@ -467,7 +467,7 @@ void get_par_usage(
          // transfer depend_x to par_usage
          for(size_t j = 0; j < n; ++j)
          {  size_t i_par = size_t( dyn_par_arg[i_arg + 5 + j] );
-            par_usage[i_par] = par_usage[i_par] | depend_x[j];
+            par_usage[i_par] = par_usage[i_par] || depend_x[j];
          }
       }
       else

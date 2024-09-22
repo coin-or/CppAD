@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_OP_HASH_TABLE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/sparse/size_setvec.hpp>
 # include <cppad/local/val_graph/tape.hpp>
@@ -247,7 +247,7 @@ public:
          addr_t     n_arg_j    = op_ptr_j->n_arg(arg_index_j, arg_vec);
          //
          // match
-         bool match = (op_enum == op_enum_j) & (n_arg == n_arg_j);
+         bool match = (op_enum == op_enum_j) && (n_arg == n_arg_j);
          if( match && op_enum == con_op_enum )
          {  //
             const Value& c = con_vec[ arg_vec[arg_index] ];

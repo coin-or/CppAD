@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_COLOR_GENERAL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/configure.hpp>
@@ -158,7 +158,7 @@ void color_general_cppad(
          size_t r = *c2r_itr;
          while( r != c2r_appear.end() )
          {  // if this is not the same row, forbid its color
-            if( (r < i) & (color[r] < m) )
+            if( (r < i) && (color[r] < m) )
                forbidden[ color[r] ] = true;
             r = *(++c2r_itr);
          }
@@ -179,7 +179,7 @@ void color_general_cppad(
          size_t r = *not_itr;
          while( r != not_appear.end() )
          {  // if this is not the same row, forbid its color
-            if( (r < i) & (color[r] < m) )
+            if( (r < i) && (color[r] < m) )
                forbidden[ color[r] ] = true;
             r = *(++not_itr);
          }

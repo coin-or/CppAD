@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_FOR_SPARSE_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_for_sparse_hes app}
@@ -304,7 +304,7 @@ bool atomic_base<Base>::for_sparse_hes(
    // modify hessian in calling routine
    for(size_t i = 0; i < n; i++)
    {  for(size_t j = 0; j < n; j++)
-      {  if( (x_index[i] > 0) & (x_index[j] > 0) )
+      {  if( (x_index[i] > 0) && (x_index[j] > 0) )
          {  bool flag = false;
             switch( sparsity_ )
             {  case pack_sparsity_enum:

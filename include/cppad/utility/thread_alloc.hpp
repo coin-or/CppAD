@@ -951,7 +951,7 @@ Example
       void* v_node         = reinterpret_cast<void*>(node);
       block_t* inuse_root  = info->root_inuse_ + c_index;
       block_t* previous    = inuse_root;
-      while( (previous->next_ != nullptr) & (previous->next_ != v_node) )
+      while( (previous->next_ != nullptr) && (previous->next_ != v_node) )
          previous = reinterpret_cast<block_t*>(previous->next_);
 
       // check that v_ptr is valid

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CON_DYN_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 ---------------------------------------------------------------------------
@@ -114,7 +114,7 @@ namespace CppAD {
    template <class Base>
    bool Dynamic(const AD<Base> &x)
    {  CPPAD_ASSERT_AD_TYPE( x );
-      if( (x.tape_id_ == 0) | (x.ad_type_ != dynamic_enum) )
+      if( (x.tape_id_ == 0) || (x.ad_type_ != dynamic_enum) )
          return false;
       //
       size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -124,7 +124,7 @@ namespace CppAD {
    template <class Base>
    bool Dynamic(const VecAD<Base> &x)
    {  CPPAD_ASSERT_AD_TYPE( x );
-      if( (x.tape_id_ == 0) | (x.ad_type_ != dynamic_enum) )
+      if( (x.tape_id_ == 0) || (x.ad_type_ != dynamic_enum) )
          return false;
       //
       size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -135,7 +135,7 @@ namespace CppAD {
    template <class Base>
    bool Parameter(const AD<Base> &x)
    {  CPPAD_ASSERT_AD_TYPE( x );
-      if( (x.tape_id_ == 0) | (x.ad_type_ == dynamic_enum) )
+      if( (x.tape_id_ == 0) || (x.ad_type_ == dynamic_enum) )
          return true;
       //
       size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -145,7 +145,7 @@ namespace CppAD {
    template <class Base>
    bool Parameter(const VecAD<Base> &x)
    {  CPPAD_ASSERT_AD_TYPE( x );
-      if( (x.tape_id_ == 0) | (x.ad_type_ == dynamic_enum) )
+      if( (x.tape_id_ == 0) || (x.ad_type_ == dynamic_enum) )
          return true;
       //
       size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -156,7 +156,7 @@ namespace CppAD {
    template <class Base>
    bool Variable(const AD<Base> &x)
    {  CPPAD_ASSERT_AD_TYPE( x );
-      if( (x.tape_id_ == 0) | (x.ad_type_ != variable_enum) )
+      if( (x.tape_id_ == 0) || (x.ad_type_ != variable_enum) )
          return false;
       //
       size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -166,7 +166,7 @@ namespace CppAD {
    template <class Base>
    bool Variable(const VecAD<Base> &x)
    {  CPPAD_ASSERT_AD_TYPE( x );
-      if( (x.tape_id_ == 0) | (x.ad_type_ != variable_enum) )
+      if( (x.tape_id_ == 0) || (x.ad_type_ != variable_enum) )
          return false;
       //
       size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);

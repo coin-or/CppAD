@@ -2,7 +2,7 @@
 # define CPPAD_TEST_MORE_DEPRECATED_OLD_MAT_MUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -214,11 +214,11 @@ $srccode%cpp% */
                for(middle = 0; middle < n_middle_; middle++)
                {  im_left  = left(i, middle, k);
                   mj_right = right(middle, j, k);
-                  nz_left  = vx[im_left]  | (tx[im_left] != 0.);
-                  nz_right = vx[mj_right] | (tx[mj_right]!= 0.);
+                  nz_left  = vx[im_left] || (tx[im_left] != 0.);
+                  nz_right = vx[mj_right] || (tx[mj_right]!= 0.);
                   // if not multiplying by the constant zero
                   if( nz_left & nz_right )
-                     var |= (vx[im_left] | vx[mj_right]);
+                     var |= (vx[im_left] || vx[mj_right]);
                }
                ij_result     = result(i, j, k);
                vy[ij_result] = var;
@@ -363,8 +363,8 @@ $srccode%cpp% */
                mj_right  = right(middle, j, k);
 
                // back propagate Jacobian sparsity
-               t[im_left]   = (t[im_left] | s[ij_result]);
-               t[mj_right]  = (t[mj_right] | s[ij_result]);
+               t[im_left]   = (t[im_left] || s[ij_result]);
+               t[mj_right]  = (t[mj_right] || s[ij_result]);
                // Visual Studio C++ 2008 warns unsafe mix of int and
                // bool if we use the following code directly above:
                // t[im_left]  |= s[ij_result];
@@ -379,7 +379,7 @@ $srccode%cpp% */
                // Check for case where the (i,j) result element
                // is in reverse Jacobian and both left and right
                // operands in multiplication are variables
-               if(s[ij_result] & (*vx_)[im_left] & (*vx_)[mj_right])
+               if(s[ij_result] && (*vx_)[im_left] && (*vx_)[mj_right])
                {  // v[im_left] = union( v[im_left], r[mj_right] )
                   v[im_left] = set_union(v[im_left], r[mj_right] );
                   // v[mj_right] = union( v[mj_right], r[im_left] )

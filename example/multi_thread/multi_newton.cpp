@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin multi_newton_common}
@@ -311,9 +311,9 @@ void multi_newton_worker(void)
          // check end of iterations
          if( fabs(fcur) <= epsilon_ )
             more_itr = false;
-         if( (xcur == xlow_i ) & (fcur * dfcur > 0.) )
+         if( (xcur == xlow_i ) && (fcur * dfcur > 0.) )
             more_itr = false;
-         if( (xcur == xup_i)   & (fcur * dfcur < 0.) )
+         if( (xcur == xup_i) && (fcur * dfcur < 0.) )
             more_itr = false;
 
          // next Newton iterate

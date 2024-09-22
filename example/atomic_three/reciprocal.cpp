@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -213,13 +213,13 @@ jac_sparsity
       size_t nr  = m;
       size_t nc  = n;
       size_t nnz = 0;
-      if( select_x[0] & select_y[0] )
+      if( select_x[0] && select_y[0] )
          ++nnz;
       pattern_out.resize(nr, nc, nnz);
 
       // set values in pattern_out
       size_t k = 0;
-      if( select_x[0] & select_y[0] )
+      if( select_x[0] && select_y[0] )
          pattern_out.set(k++, 0, 0);
       assert( k == nnz );
 
@@ -248,13 +248,13 @@ hes_sparsity
       size_t nr  = n;
       size_t nc  = n;
       size_t nnz = 0;
-      if( select_x[0] & select_y[0] )
+      if( select_x[0] && select_y[0] )
          ++nnz;
       pattern_out.resize(nr, nc, nnz);
 
       // set values in pattern_out
       size_t k = 0;
-      if( select_x[0] & select_y[0] )
+      if( select_x[0] && select_y[0] )
          pattern_out.set(k++, 0, 0);
       assert( k == nnz );
 

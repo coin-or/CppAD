@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 @begin atomic_two_set_sparsity.cpp@@
@@ -162,7 +162,7 @@ $srccode%cpp% */
          return true;
 
       // only the cross term between x[0] and x[1] is non-zero
-      if( ! ( r[0] & r[1] ) )
+      if( ! ( r[0] && r[1] ) )
          return true;
 
       // set the possibly non-zero terms in the hessian

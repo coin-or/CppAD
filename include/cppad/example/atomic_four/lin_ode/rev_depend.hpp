@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_REV_DEPEND_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_lin_ode_rev_depend.hpp}
@@ -121,7 +121,7 @@ bool atomic_lin_ode<Base>::rev_depend(
          //
          // depend_x
          // for propage dependency on A_{i,j}
-         if( depend_w[i] & ! depend_x[p] )
+         if( depend_w[i] && ! depend_x[p] )
          {  change      = true;
             depend_x[p] = true;
          }

@@ -454,7 +454,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
          // --------------------------------------------------------------
          // unary or binary
          default:
-         CPPAD_ASSERT_UNKNOWN((n_arg == 1) | (n_arg == 2));
+         CPPAD_ASSERT_UNKNOWN((n_arg == 1) || (n_arg == 2));
          //
          graph_obj.operator_vec_push_back( graph_op );
          for(size_t i = 0; i < n_arg; ++i)
@@ -915,7 +915,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
          // CSumOp
          case local::CSumOp:
          {  // does this case have subtraction terms
-            bool has_subtract = (arg[1] != arg[2]) | (arg[3] != arg[4]);
+            bool has_subtract = (arg[1] != arg[2]) || (arg[3] != arg[4]);
             //
             // var2node for this operator
             if( has_subtract )

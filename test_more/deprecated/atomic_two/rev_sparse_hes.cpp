@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 @begin atomic_two_rev_sparse_hes.cpp@@
@@ -126,7 +126,7 @@ $srccode%cpp% */
       // sparsity for second row of S(x) = f'(x) * R
       i = 1;
       for(size_t j = 0; j < q; j++)
-         s[ i * q + j ] = r[ 0 * q + j ] | r[ 1 * q + j];
+         s[ i * q + j ] = r[ 0 * q + j ] || r[ 1 * q + j];
 
       return true;
    }
@@ -219,7 +219,7 @@ $srccode%cpp% */
       if( s[0] )
       {  for(size_t j = 0; j < q; j++)
          {  // cannot use |= with vectorBool
-            v[ 2 * q + j ] = bool(v[ 2 * q + j ]) | bool(r[ 2 * q + j ]);
+            v[ 2 * q + j ] = bool(v[ 2 * q + j ]) || bool(r[ 2 * q + j ]);
          }
       }
       // ------------------------------------------------------------------
@@ -227,8 +227,8 @@ $srccode%cpp% */
       if( s[1] )
       {  for(size_t j = 0; j < q; j++)
          {  // cannot use |= with vectorBool
-            v[ 0 * q + j ] = bool(v[ 0 * q + j ]) | bool(r[ 1 * q + j ]);
-            v[ 1 * q + j ] = bool(v[ 1 * q + j ]) | bool(r[ 0 * q + j ]);
+            v[ 0 * q + j ] = bool(v[ 0 * q + j ]) || bool(r[ 1 * q + j ]);
+            v[ 1 * q + j ] = bool(v[ 1 * q + j ]) || bool(r[ 0 * q + j ]);
          }
       }
       return true;

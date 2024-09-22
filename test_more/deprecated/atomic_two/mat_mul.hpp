@@ -2,7 +2,7 @@
 # define CPPAD_TEST_MORE_DEPRECATED_ATOMIC_TWO_MAT_MUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -233,11 +233,11 @@ $srccode%cpp% */
                   size_t i_right = right(
                      ell, j, k, nk, nr_left, n_middle, nc_right
                   );
-                  bool   nz_left = vx[i_left] |(tx[i_left]  != 0.);
-                  bool  nz_right = vx[i_right]|(tx[i_right] != 0.);
+                  bool   nz_left = vx[i_left] || (tx[i_left]  != 0.);
+                  bool  nz_right = vx[i_right] || (tx[i_right] != 0.);
                   // if not multiplying by the constant zero
                   if( nz_left & nz_right )
-                        var |= bool(vx[i_left]) | bool(vx[i_right]);
+                        var |= bool(vx[i_left]) || bool(vx[i_right]);
                }
                size_t i_result = result(
                   i, j, k, nk, nr_left, n_middle, nc_right
@@ -570,7 +570,7 @@ $srccode%cpp% */
 
                // back propagate S(x) * f''(x) * R
                // (here is where we must check for cross terms)
-               if( s[i_result] & vx[i_left] & vx[i_right] )
+               if( s[i_result] && vx[i_left] && vx[i_right] )
                {  v[i_left]  = set_union(v[i_left],  r[i_right] );
                   v[i_right] = set_union(v[i_right], r[i_left]  );
                }
@@ -645,7 +645,7 @@ $srccode%cpp% */
 
                // back propagate S(x) * f''(x) * R
                // (here is where we must check for cross terms)
-               if( s[i_result] & vx[i_left] & vx[i_right] )
+               if( s[i_result] && vx[i_left] && vx[i_right] )
                {  for(p = 0; p < q; p++)
                   {  v[i_left * q + p]  |= bool( r[i_right * q + p] );
                      v[i_right * q + p] |= bool( r[i_left * q + p] );

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -62,7 +62,7 @@ namespace{
       // check that all the indices are different
       for(i = 0; i < size; i++)
       {  for(j = 0; j < size; j++)
-            ok &= (i == j) | (ind[i] != ind[j]);
+            ok &= (i == j) || (ind[i] != ind[j]);
       }
 
       // check for increasing order

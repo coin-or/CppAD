@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -216,7 +216,7 @@ AD<double> lu_vec_ad(
       {  itmp = ip[i] * N;
          for(j = p; j < N; j += 1.)
          {  assert(
-               (ip[i] < N) & (jp[j] < N)
+               (ip[i] < N) && (jp[j] < N)
             );
             index = itmp + jp[j];
             etmp  = Matrix[ index ];
@@ -230,7 +230,7 @@ AD<double> lu_vec_ad(
             jmax = CondExpGe(etmp, emax,    j, jmax);
          }
       }
-      assert( (imax < N) & (jmax < N) );
+      assert( (imax < N) && (jmax < N) );
 
 
       // switch rows so max absolute element is in row p

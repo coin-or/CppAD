@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CAPACITY_ORDER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -153,7 +153,7 @@ void ADFun<Base,RecBase>::capacity_order(size_t c, size_t r)
 {  // temporary indices
    size_t i, k, ell;
 
-   if( (c == cap_order_taylor_) & (r == num_direction_taylor_) )
+   if( (c == cap_order_taylor_) && (r == num_direction_taylor_) )
       return;
 
    if( c == 0 )
@@ -236,7 +236,7 @@ Othwerwise, num_direction_taylor_ is not modified.
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::capacity_order(size_t c)
 {  size_t r;
-   if( (c == 0) | (c == 1) )
+   if( (c == 0) || (c == 1) )
    {  r = c;
       capacity_order(c, r);
       return;

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin fun_construct}
@@ -446,7 +446,7 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
    }
    for(i = 0; i < m; i++)
    {  CPPAD_ASSERT_KNOWN(
-      CppAD::Parameter( y[i] ) | (y[i].tape_id_ == x[0].tape_id_) ,
+      CppAD::Parameter( y[i] ) || (y[i].tape_id_ == x[0].tape_id_) ,
       "ADFun<Base>: dependent vector contains variables for"
       "\na different tape than the independent variables."
       );

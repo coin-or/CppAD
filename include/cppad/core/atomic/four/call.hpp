@@ -112,7 +112,7 @@ void atomic_four<Base>::operator()(
 # ifndef NDEBUG
    bool ok = true;
    std::string msg = "atomic_four: call " + atomic_name() + " ";
-   if( (n == 0) | (m == 0) )
+   if( (n == 0) || (m == 0) )
    {  msg += "ax.size() or ay.size() is zero";
       CPPAD_ASSERT_KNOWN(false, msg.c_str() );
    }

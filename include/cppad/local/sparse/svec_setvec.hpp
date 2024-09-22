@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_SVEC_SETVEC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/define.hpp>
 # include <cppad/local/is_pod.hpp>
@@ -292,7 +292,7 @@ private:
       bool two_subset     = true;
       //
       size_t value_union = std::min(value_one, value_two);
-      while( (one_subset | two_subset) & (value_union < end_) )
+      while( (one_subset | two_subset) && (value_union < end_) )
       {  //
          if( value_one > value_union )
             two_subset = false;
@@ -496,7 +496,7 @@ private:
          value_right = right[current_right];
       //
       // merge
-      while( (value_left < end_) | (value_right < end_) )
+      while( (value_left < end_) || (value_right < end_) )
       {  if( value_left == value_right)
          {  // advance left so left and right are no longer equal
             ++current_left;
@@ -822,7 +822,7 @@ public:
       value_post   = *current_post;
       //
       // merge
-      while( (value_set < end_) | (current_post != last_post ) )
+      while( (value_set < end_) || (current_post != last_post ) )
       {  if( value_set == value_post )
          {  // advance left so left and right are no longer equal
             ++current_set;
@@ -1031,7 +1031,7 @@ public:
       CPPAD_ASSERT_UNKNOWN( end_        == other.end_   );
 
       // check if we are assigning a set to itself
-      if( (this == &other) & (this_target == other_source) )
+      if( (this == &other) && (this_target == other_source) )
          return;
 
       // number of elements that will be deleted by this operation
@@ -1164,7 +1164,7 @@ public:
 
 
       CPPAD_ASSERT_UNKNOWN( value_left < end_ && value_right < end_ );
-      while( (value_left < end_) | (value_right < end_) )
+      while( (value_left < end_) || (value_right < end_) )
       {  if( value_left == value_right )
          {  // advance right so left and right are no longer equal
             ++current_right;
@@ -1281,7 +1281,7 @@ public:
       size_t value_right   = other.data_[current_right];
       CPPAD_ASSERT_UNKNOWN( value_right < end_ );
 
-      while( (value_left < end_) & (value_right < end_) )
+      while( (value_left < end_) && (value_right < end_) )
       {  if( value_left == value_right )
          {  if( start == 0 )
             {  // this is the first element in the intersection

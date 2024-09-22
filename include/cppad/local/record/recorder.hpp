@@ -303,7 +303,7 @@ addr_t recorder<Base>::PutOp(OpCode op)
    );
    op_vec_[i]  = static_cast<opcode_t>(op);
    CPPAD_ASSERT_UNKNOWN( op_vec_.size() == i + 1 );
-   CPPAD_ASSERT_UNKNOWN( (op != LdpOp) & (op != LdvOp) );
+   CPPAD_ASSERT_UNKNOWN( (op != LdpOp) && (op != LdvOp) );
 
    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
    num_var_rec_ += NumRes(op);
@@ -360,7 +360,7 @@ addr_t recorder<Base>::PutLoadOp(OpCode op)
    );
    op_vec_[i]  = op;
    CPPAD_ASSERT_UNKNOWN( op_vec_.size() == i + 1 );
-   CPPAD_ASSERT_UNKNOWN( (op == LdpOp) | (op == LdvOp) );
+   CPPAD_ASSERT_UNKNOWN( (op == LdpOp) || (op == LdvOp) );
 
    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
    num_var_rec_ += NumRes(op);
@@ -553,7 +553,7 @@ addr_t recorder<Base>::put_con_par(const Base &par)
    size_t index = static_cast<size_t>( par_hash_table_[code] );
 
    // check if the old parameter matches the new one
-   if( (0 < index) & (index < all_par_vec_.size()) )
+   if( (0 < index) && (index < all_par_vec_.size()) )
    {  if( ! dyn_par_is_[index] )
          if( IdenticalEqualCon(all_par_vec_[index], par) )
             return static_cast<addr_t>( index );

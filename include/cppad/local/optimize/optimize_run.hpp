@@ -443,7 +443,7 @@ bool optimize_run(
             rec->put_dyn_arg_vec( arg_vec );
          }
       }
-      else if( par_usage[i_par] & (op != result_dyn) )
+      else if( par_usage[i_par] && (op != result_dyn) )
       {  size_t j_dyn = size_t( dyn_previous[i_dyn] );
          if( j_dyn != num_dynamic_par )
          {  size_t j_par = size_t( dyn_ind2par_ind[j_dyn] );

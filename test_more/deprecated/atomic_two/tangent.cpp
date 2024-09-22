@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -227,7 +227,7 @@ $srccode%cpp% */
 
       // sparsity for S(x)^T = f'(x)^T * R^T
       for(size_t j = 0; j < p; j++)
-         st[j] = rt[0 * p + j] | rt[1 * p + j];
+         st[j] = rt[0 * p + j] || rt[1 * p + j];
 
       return true;
    }
@@ -279,7 +279,7 @@ $srccode%cpp% */
       // so it is not necessary to vx.
 
       // sparsity for T(x) = S(x) * f'(x)
-      t[0] =  s[0] | s[1];
+      t[0] =  s[0] || s[1];
 
       // V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
       // U(x) = g''(y) * f'(x) * R
@@ -289,11 +289,11 @@ $srccode%cpp% */
       // of f'(x) may be non-zero;
       size_t j;
       for(j = 0; j < p; j++)
-         v[j] = u[ 0 * p + j ] | u[ 1 * p + j ];
+         v[j] = u[ 0 * p + j ] || u[ 1 * p + j ];
 
       // include forward Jacobian sparsity in Hessian sparsity
       // (note sparsty for f''(x) * R same as for R)
-      if( s[0] | s[1] )
+      if( s[0] || s[1] )
       {  for(j = 0; j < p; j++)
          {  // Visual Studio 2013 generates warning without bool below
             v[j] |= bool( r[j] );
@@ -328,7 +328,7 @@ $srccode%cpp% */
       // so it is not necessary to vx.
 
       // sparsity for T(x) = S(x) * f'(x)
-      t[0] =  s[0] | s[1];
+      t[0] =  s[0] || s[1];
 
       // V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
       // U(x) = g''(y) * f'(x) * R
@@ -340,7 +340,7 @@ $srccode%cpp% */
 
       // include forward Jacobian sparsity in Hessian sparsity
       // (note sparsty for f''(x) * R same as for R)
-      if( s[0] | s[1] )
+      if( s[0] || s[1] )
          v[0] = set_union(v[0], r[0]);
 
       return true;

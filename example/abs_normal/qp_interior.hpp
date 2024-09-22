@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ABS_NORMAL_QP_INTERIOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin qp_interior}
@@ -178,7 +178,7 @@ The derivative of :math:`F_\mu` is given by
    \left( \begin{array}{ccc}
    G       & C^T  & 0_{n,m} \\
    C       & 0    & I_{m,m} \\
-   0_{m,m} & D(s) & D(y)
+   0_{m,m} & D(s) && D(y)
    \end{array} \right)
 
 The Newton step solves the following equation for
@@ -209,7 +209,7 @@ It follows that
    \left( \begin{array}{ccc}
    G       & C^T  & 0_{n,m} \\
    C       & 0    & I_{m,m} \\
-   0_{m,m} & D(s) & D(y)
+   0_{m,m} & D(s) && D(y)
    \end{array} \right)
    \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
    =

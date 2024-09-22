@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ATOMIC_THREE_MAT_MUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -567,9 +567,9 @@ hes_sparsity
                   size_t i_right = right(
                      ell, j, k, nk, nr_left, n_middle, nc_right
                   );
-                  bool var_left   = select_x[i_left] &
+                  bool var_left   = select_x[i_left] &&
                      (type_x[i_left] == CppAD::variable_enum);
-                  bool var_right  = select_x[i_right] &
+                  bool var_right  = select_x[i_right] &&
                      (type_x[i_right] == CppAD::variable_enum);
                   if( var_left & var_right )
                         nnz += 2;
@@ -594,9 +594,9 @@ hes_sparsity
                   size_t i_right = right(
                      ell, j, k, nk, nr_left, n_middle, nc_right
                   );
-                  bool var_left   = select_x[i_left] &
+                  bool var_left   = select_x[i_left] &&
                      (type_x[i_left] == CppAD::variable_enum);
-                  bool var_right  = select_x[i_right] &
+                  bool var_right  = select_x[i_right] &&
                      (type_x[i_right] == CppAD::variable_enum);
                   if( var_left & var_right )
                   {  // Cannot possibly set the same (i_left, i_right)

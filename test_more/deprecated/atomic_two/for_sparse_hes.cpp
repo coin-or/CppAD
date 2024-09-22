@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 @begin atomic_two_for_sparse_hes.cpp@@
@@ -126,7 +126,7 @@ $srccode%cpp% */
       // sparsity for second row of S(x) = f'(x) * R
       i = 1;
       for(size_t j = 0; j < q; j++)
-         s[ i * q + j ] = r[ 0 * q + j ] | r[ 1 * q + j];
+         s[ i * q + j ] = r[ 0 * q + j ] || r[ 1 * q + j];
 
       return true;
    }
@@ -200,11 +200,11 @@ $srccode%cpp% */
          h[i] = false;
 
       // component (2, 2)
-      h[ 2 * n + 2 ] = s[0] & r[2];
+      h[ 2 * n + 2 ] = s[0] && r[2];
 
       // components (1, 0) and (0, 1)
-      h[ 1 * n + 0 ] = s[1] & r[0] & r[1];
-      h[ 0 * n + 1 ] = s[1] & r[0] & r[1];
+      h[ 1 * n + 0 ] = s[1] && r[0] && r[1];
+      h[ 0 * n + 1 ] = s[1] && r[0] && r[1];
 
       return true;
    }

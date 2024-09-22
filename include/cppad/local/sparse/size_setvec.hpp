@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_SIZE_SETVEC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
 /*
@@ -1243,7 +1243,7 @@ public:
       CPPAD_ASSERT_UNKNOWN( end_        == other.end_   );
 
       // check if we are assigning a set to itself
-      if( (this == &other) & (this_target == other_source) )
+      if( (this == &other) && (this_target == other_source) )
          return;
 
       // set depending on cases below
@@ -1362,7 +1362,7 @@ public:
       bool left_is_subset  = true;
       bool right_is_subset = true;
 
-      while( (value_left < end_) & (value_right < end_) )
+      while( (value_left < end_) && (value_right < end_) )
       {  if( value_left == value_right )
          {  // value is in both sets
             temporary_.push_back(value_left);
@@ -1478,7 +1478,7 @@ public:
       s_type start_right   = other.start_[other_right];
 
       // if left or right is empty, the result is empty
-      if( (start_left == 0) | (start_right == 0) )
+      if( (start_left == 0) || (start_right == 0) )
       {  clear(this_target);
          return;
       }
@@ -1504,7 +1504,7 @@ public:
       bool left_is_subset  = true;
       bool right_is_subset = true;
 
-      while( (value_left < end_) & (value_right < end_) )
+      while( (value_left < end_) && (value_right < end_) )
       {  if( value_left == value_right )
          {  // value is in both sets
             temporary_.push_back(value_left);

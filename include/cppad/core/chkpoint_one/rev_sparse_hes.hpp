@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHKPOINT_ONE_REV_SPARSE_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -82,7 +82,7 @@ bool checkpoint<Base>::rev_sparse_hes(
    for(size_t i = 0; i < n; i++)
    {  for(size_t k = 0; k < q; k++)
          // v[ i * q + k ] |= a[ i * q + k];
-         v[ i * q + k ] = bool(v[ i * q + k]) | bool(a[ i * q + k]);
+         v[ i * q + k ] = bool(v[ i * q + k]) || bool(a[ i * q + k]);
    }
    return ok;
 }

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cctype>
 # include <cppad/local/graph/json_lexer.hpp>
@@ -123,7 +123,7 @@ void json_lexer::check_next_char(char ch)
    if( index_ < json_.size() )
    {  token_.resize(1);
       token_[0] = json_[index_];
-      ok = (token_[0] == ch) | (ch == '\0');
+      ok = (token_[0] == ch) || (ch == '\0');
    }
    if( ! ok )
    {  std::string expected = "a character that is not white space";
@@ -241,8 +241,8 @@ void json_lexer::next_float(void)
    if( ok )
    {  char ch = json_[index_];
       ok = std::isdigit(ch);
-      ok |= (ch == '.') | (ch == '+') | (ch == '-');
-      ok |= (ch == 'e') | (ch == 'E');
+      ok |= (ch == '.') || (ch == '+') || (ch == '-');
+      ok |= (ch == 'e') || (ch == 'E');
    }
    if( ! ok )
    {  std::string expected_token = "floating point number";
@@ -260,8 +260,8 @@ void json_lexer::next_float(void)
       if( ok )
       {  char ch  = json_[index_ + 1];
          ok  = isdigit(ch);
-         ok |= (ch == '.') | (ch == '+') | (ch == '-');
-         ok |= (ch == 'e') | (ch == 'E');
+         ok |= (ch == '.') || (ch == '+') || (ch == '-');
+         ok |= (ch == 'e') || (ch == 'E');
       }
       if( ok )
          next_index();

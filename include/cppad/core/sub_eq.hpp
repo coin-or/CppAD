@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SUB_EQ_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 //  BEGIN CppAD namespace
@@ -54,7 +54,7 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
          CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
          CPPAD_ASSERT_UNKNOWN( ad_type_ == variable_enum);
       }
-      else if( (! dyn_right) & IdenticalZero(right.value_) )
+      else if( (! dyn_right) && IdenticalZero(right.value_) )
       {  // this = variable - 0
       }
       else

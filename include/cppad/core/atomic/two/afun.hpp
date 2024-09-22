@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_afun app}
@@ -101,7 +101,7 @@ void atomic_base<Base>::operator()(
 # ifndef NDEBUG
    bool ok;
    std::string msg = "atomic_base: " + atomic_name() + ".eval: ";
-   if( (n == 0) | (m == 0) )
+   if( (n == 0) || (m == 0) )
    {  msg += "ax.size() or ay.size() is zero";
       CPPAD_ASSERT_KNOWN(false, msg.c_str() );
    }

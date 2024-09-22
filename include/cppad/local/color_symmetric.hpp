@@ -5,7 +5,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -282,7 +282,7 @@ void color_symmetric_colpack(
       size_t j1 = col[k1];
       bool reflect = false;
       for(size_t i2 = 0; i2 < m; i2++)
-      if( (i1 != i2) & (color[i1]==color[i2]) )
+      if( (i1 != i2) && (color[i1]==color[i2]) )
       {  for(size_t k2 = 1; k2 <= adolc_pattern[i2][0]; k2++)
          {  size_t j2 = adolc_pattern[i2][k2];
             reflect |= (j1 == j2);

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_IDENTICAL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/define.hpp>
@@ -34,7 +34,7 @@ returns true iff x is identically a parameter.
 */
 template <class Base>
 bool IdenticalCon(const AD<Base> &x)
-{  return Constant(x) & IdenticalCon(x.value_); }
+{  return Constant(x) && IdenticalCon(x.value_); }
 // Zero ==============================================================
 /*!
 Determine if an AD<Base> is equal to zero,
@@ -49,7 +49,7 @@ returns true if and only if
 */
 template <class Base>
 bool IdenticalZero(const AD<Base> &x)
-{  return Constant(x) & IdenticalZero(x.value_); }
+{  return Constant(x) && IdenticalZero(x.value_); }
 // One ==============================================================
 /*!
 Determine if an AD<Base> is equal to one,
@@ -64,7 +64,7 @@ returns true if and only if
 */
 template <class Base>
 bool IdenticalOne(const AD<Base> &x)
-{  return Constant(x) & IdenticalOne(x.value_); }
+{  return Constant(x) && IdenticalOne(x.value_); }
 // Equal ===================================================================
 /*!
 Determine if two AD<Base> objects are equal,
@@ -84,7 +84,7 @@ template <class Base>
 bool IdenticalEqualCon
 (const AD<Base> &x, const AD<Base> &y)
 {  bool constant;
-   constant  = Constant(x) & Constant(y);
+   constant  = Constant(x) && Constant(y);
    return constant  & IdenticalEqualCon(x.value_, y.value_);
 }
 // ==========================================================================

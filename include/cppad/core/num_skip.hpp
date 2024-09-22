@@ -2,7 +2,7 @@
 # define CPPAD_CORE_NUM_SKIP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -104,7 +104,7 @@ size_t ADFun<Base,RecBase>::number_skip(void)
       {  if( cskip_op_[ itr.op_index() ] )
             num_var_skip += NumRes(op);
          //
-         if( (op == local::CSkipOp) | (op == local::CSumOp) )
+         if( (op == local::CSkipOp) || (op == local::CSumOp) )
             itr.correct_before_increment();
       }
    }

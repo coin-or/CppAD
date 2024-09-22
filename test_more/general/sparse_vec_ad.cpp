@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -105,7 +105,7 @@ bool sparse_vec_ad(void)
    Pxx = F.RevSparseHes(n, Hy);
    for(i = 0; i < n; i++)
    {  for(j = 0; j < n; j++)
-         ok &= (Pxx[i * n + j] == ( (i <= 1) & (j <= 1) ) );
+         ok &= (Pxx[i * n + j] == ( (i <= 1) && (j <= 1) ) );
    }
 
 

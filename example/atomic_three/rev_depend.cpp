@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -82,8 +82,8 @@ rev_depend
       ok     &= depend_y.size() == 3; // m
       if( ! ok )
          return false;
-      depend_x[0] = depend_y[0] | depend_y[1];
-      depend_x[1] = depend_y[1] | depend_y[2];
+      depend_x[0] = depend_y[0] || depend_y[1];
+      depend_x[1] = depend_y[1] || depend_y[2];
       depend_x[2] = depend_y[2];
       return true;
    }

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -221,7 +221,7 @@ namespace { // Begin empty namespace
 
       // back propagate Jacobian sparsity. If users code only uses z,
       // we could just set t[0] = s[0];
-      t[0] =  s[0] | s[1];
+      t[0] =  s[0] || s[1];
 
       // back propagate Hessian sparsity, ...
       v[0] = set_union(u[0], u[1]);

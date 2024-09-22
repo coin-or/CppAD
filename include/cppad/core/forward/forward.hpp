@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FORWARD_FORWARD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // documened after Forward but included here so easy to see
@@ -142,7 +142,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
    );
 
    // does taylor_ need more orders or fewer directions
-   if( (cap_order_taylor_ <= q) | (num_direction_taylor_ != 1) )
+   if( (cap_order_taylor_ <= q) || (num_direction_taylor_ != 1) )
    {  if( p == 0 )
       {  // no need to copy old values during capacity_order
          num_order_taylor_ = 0;

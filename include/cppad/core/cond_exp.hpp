@@ -175,7 +175,7 @@ AD<Base> CondExpOp(
    CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
    // check first case where do not need to tape
-   if( IdenticalCon(left) & IdenticalCon(right) )
+   if( IdenticalCon(left) && IdenticalCon(right) )
    {  result = CondExpOp(
          cop, left.value_, right.value_, if_true.value_, if_false.value_
       );

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AZMUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin azmul}
@@ -132,10 +132,10 @@ azmul(const AD<Base>& x, const AD<Base>& y)
          result.tape_id_ = tape_id;
          result.ad_type_ = variable_enum;
       }
-      else if( ( ! dyn_y ) & IdenticalZero( y.value_ ) )
+      else if( ( ! dyn_y ) && IdenticalZero( y.value_ ) )
       {  // result = variable * 0
       }
-      else if( ( ! dyn_y ) & IdenticalOne( y.value_ ) )
+      else if( ( ! dyn_y ) && IdenticalOne( y.value_ ) )
       {  // result = variable * 1
          result.make_variable(x.tape_id_, x.taddr_);
       }
@@ -159,10 +159,10 @@ azmul(const AD<Base>& x, const AD<Base>& y)
       }
    }
    else if( var_y )
-   {  if( ( ! dyn_x ) & IdenticalZero(x.value_) )
+   {  if( ( ! dyn_x ) && IdenticalZero(x.value_) )
       {  // result = 0 * variable
       }
-      else if( ( ! dyn_x ) & IdenticalOne( x.value_ ) )
+      else if( ( ! dyn_x ) && IdenticalOne( x.value_ ) )
       {  // result = 1 * variable
          result.make_variable(y.tape_id_, y.taddr_);
       }

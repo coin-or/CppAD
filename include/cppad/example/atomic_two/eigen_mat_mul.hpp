@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ATOMIC_TWO_EIGEN_MAT_MUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -595,7 +595,7 @@ for_sparse_hes
                   size_t i_left  = 3 + i * n_middle + ell;
                   // pack index for entry (ell, j) in right
                   size_t i_right = 3 + n_left + ell * nc_right + j;
-                  if( r[i_left] & r[i_right] )
+                  if( r[i_left] && r[i_right] )
                   {  h[i_left].insert(i_right);
                      h[i_right].insert(i_left);
                   }
@@ -676,7 +676,7 @@ rev_sparse_hes
                //
                // back propagate S_i(x) * f_i''(x) * R
                // (here is where we use vx to check for cross terms)
-               if( s[i_result] & vx[i_left] & vx[i_right] )
+               if( s[i_result] && vx[i_left] && vx[i_right] )
                {  v[i_left]  = CppAD::set_union(v[i_left],  r[i_right] );
                   v[i_right] = CppAD::set_union(v[i_right], r[i_left]  );
                }

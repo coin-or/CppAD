@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -452,7 +452,7 @@ void forward1(
          // -------------------------------------------------
 
          case EqpvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_eqpv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -463,7 +463,7 @@ void forward1(
          // -------------------------------------------------
 
          case EqvvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_eqvv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -579,7 +579,7 @@ void forward1(
          // -------------------------------------------------
 
          case LeppOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_lepp_op_0(
                compare_change_number, arg, parameter
             );
@@ -590,7 +590,7 @@ void forward1(
          // -------------------------------------------------
 
          case LepvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_lepv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -601,7 +601,7 @@ void forward1(
          // -------------------------------------------------
 
          case LevpOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_levp_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -612,7 +612,7 @@ void forward1(
          // -------------------------------------------------
 
          case LevvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_levv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -633,7 +633,7 @@ void forward1(
          // -------------------------------------------------
 
          case LtppOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_ltpp_op_0(
                compare_change_number, arg, parameter
             );
@@ -644,7 +644,7 @@ void forward1(
          // -------------------------------------------------
 
          case LtpvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_ltpv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -655,7 +655,7 @@ void forward1(
          // -------------------------------------------------
 
          case LtvpOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_ltvp_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -666,7 +666,7 @@ void forward1(
          // -------------------------------------------------
 
          case LtvvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_ltvv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -705,7 +705,7 @@ void forward1(
          // -------------------------------------------------
 
          case NepvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_nepv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -716,7 +716,7 @@ void forward1(
          // -------------------------------------------------
 
          case NevvOp:
-         if( ( p == 0 ) & ( compare_change_count > 0 ) )
+         if( ( p == 0 ) && ( compare_change_count > 0 ) )
          {  forward_nevv_op_0(
                compare_change_number, arg, parameter, J, taylor
             );
@@ -1074,7 +1074,7 @@ void forward1(
 # endif
    CPPAD_ASSERT_UNKNOWN( atom_state == start_atom );
 
-   if( (p == 0) & (compare_change_count == 0) )
+   if( (p == 0) && (compare_change_count == 0) )
       compare_change_number = 0;
    return;
 }

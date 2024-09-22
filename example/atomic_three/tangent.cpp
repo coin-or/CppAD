@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -244,11 +244,11 @@ hes_sparsity
 
       // number of non-zeros in sparsity pattern
       size_t nnz = 0;
-      if( select_x[0] & (select_y[0] | select_y[1]) )
+      if( select_x[0] && (select_y[0] || select_y[1]) )
          nnz = 1;
       // sparsity pattern
       pattern_out.resize(n, n, nnz);
-      if( select_x[0] & (select_y[0] | select_y[1]) )
+      if( select_x[0] && (select_y[0] || select_y[1]) )
          pattern_out.set(0, 0, 0);
 
       return true;

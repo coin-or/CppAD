@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin adolc_sparse_hessian.cpp}
@@ -168,7 +168,7 @@ bool link_sparse_hessian(
       size_t ind_ell  = ind[ell];
       size_t i        = size_t( cind[ind_ell] );
       size_t j        = size_t( rind[ind_ell] );
-      while( (r < i) | ( (r == i) & (c < j) ) )
+      while( (r < i) || ( (r == i) && (c < j) ) )
       {  // (r, c) not in Adolc sparsity pattern
          hessian[k++] = 0.0;
          if( k < row.size() )
@@ -180,7 +180,7 @@ bool link_sparse_hessian(
             c = n;
          }
       }
-      if( (r == i) & (c == j) )
+      if( (r == i) && (c == j) )
       {  // adolc value for (r, c)
          hessian[k++] = values[ind_ell];
          if( k < row.size() )

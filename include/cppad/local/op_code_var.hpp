@@ -1566,7 +1566,7 @@ void arg_is_variable(
       //
       is_variable.resize( num_arg );
       for(size_t i = 0; i < num_arg; ++i)
-         is_variable[i] = (5 <= i) & (i < size_t(arg[2]));
+         is_variable[i] = (5 <= i) && (i < size_t(arg[2]));
       break;
 
       case EqppOp:

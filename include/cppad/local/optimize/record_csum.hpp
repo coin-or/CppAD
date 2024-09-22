@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
@@ -137,12 +137,12 @@ struct_size_pair record_csum(
 # ifndef NDEBUG
    // one argument of this operator must have been csum connected to it
    bool ok = info.op == CSumOp;
-   if( (! ok) & (info.op != SubpvOp) & (info.op != AddpvOp) )
+   if( (! ok) && (info.op != SubpvOp) && (info.op != AddpvOp) )
    {  // first argument is a varialbe being added
       i_op = random_itr.var2op(size_t(info.arg[0]));
       ok  |= op_usage[i_op] == usage_t(csum_usage);
    }
-   if( (! ok) & (info.op != SubvpOp) )
+   if( (! ok) && (info.op != SubvpOp) )
    {  // second argument is a varialbe being added or subtracted
       i_op = random_itr.var2op(size_t(info.arg[1]));
       ok  |= op_usage[i_op] == usage_t(csum_usage);
@@ -230,7 +230,7 @@ struct_size_pair record_csum(
          // Begin op != CSumOp
          //
          // is this a subtraction operator
-         bool subtract = (op==SubpvOp) | (op==SubvpOp) | (op==SubvvOp);
+         bool subtract = (op==SubpvOp) || (op==SubvpOp) || (op==SubvvOp);
          //
          // is the i-th arguemnt a parameter
          CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );

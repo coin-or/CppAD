@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_three_hes_sparsity.cpp}
@@ -154,7 +154,7 @@ jac_sparsity
       // count number of non-zeros in sparsity pattern
       size_t nnz = 0;
       // row 0
-      if( select_y[0] & select_x[2] )
+      if( select_y[0] && select_x[2] )
          ++nnz;
       // row 1
       if( select_y[1] )
@@ -175,7 +175,7 @@ jac_sparsity
       size_t k = 0;
       //
       // y_0 depends and has possibly non-zeron partial w.r.t x_2
-      if( select_y[0] & select_x[2] )
+      if( select_y[0] && select_x[2] )
          pattern_out.set(k++, 0, 2);
       if( select_y[1] )
       {  // y_1 depends and has possibly non-zero partial w.r.t x_0
@@ -219,7 +219,7 @@ hes_sparsity
             ++nnz;
       }
       if( select_y[1] )
-      {  if( select_x[0] & select_x[1] )
+      {  if( select_x[0] && select_x[1] )
             nnz += 2;
       }
       //
@@ -233,7 +233,7 @@ hes_sparsity
       //
       // y[1] has possible non-zero second partial w.r.t. x[0], x[1]
       if( select_y[1] )
-      {  if( select_x[0] & select_x[1] )
+      {  if( select_x[0] && select_x[1] )
          {  pattern_out.set(k++, 0, 1);
             pattern_out.set(k++, 1, 0);
          }

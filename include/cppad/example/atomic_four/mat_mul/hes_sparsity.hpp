@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_HES_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_mat_mul_hes_sparsity.hpp}
@@ -69,7 +69,7 @@ bool atomic_mat_mul<Base>::hes_sparsity(
          if( select_y[ij] ) for(size_t k = 0; k < n_middle; ++k)
          {  size_t ik = i * n_middle + k;          // A_{i,k} = x[ik]
             size_t kj = offset + k * n_right + j;  // B_{k,j} = x[kj]
-            if( select_x[ik] & select_x[kj] )
+            if( select_x[ik] && select_x[kj] )
             {  // an (ik, kj) pair can only occur once in this loop
                pattern_out.push_back(ik, kj);
                pattern_out.push_back(kj, ik);

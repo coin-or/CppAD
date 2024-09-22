@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -69,7 +69,7 @@ $srccode%cpp% */
       // Variable information must always be implemented.
       // y_0 is a variable if and only if x_0 or x_1 is a variable.
       if( vx.size() > 0 )
-         vy[0] = vx[0] | vx[1];
+         vy[0] = vx[0] || vx[1];
 
       // Order zero forward mode must always be implemented.
       // y^0 = f( x^0 )

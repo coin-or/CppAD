@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -304,7 +304,7 @@ bool case_five(void)
    {  CPPAD_TESTVECTOR(bool) check(n * n);
       for(size_t i = 0; i < n; i++)
          for(size_t j = 0; j < n; j++)
-            check[i * n + j] = (i == index) & (j == index);
+            check[i * n + j] = (i == index) && (j == index);
       sparse_hessian_test(F, index, check);
    }
    //
@@ -367,7 +367,7 @@ bool case_six()
          {  // some gcc versions std::vector<bool> do not support |=
             // on elements (because they pack the bits).
             bool tmp         = Check[i * n + j];
-            Check[i * n + j] = tmp | (F2[i * n + k] & r[ k * n + j]);
+            Check[i * n + j] = tmp | (F2[i * n + k] && r[ k * n + j]);
          }
       }
    }

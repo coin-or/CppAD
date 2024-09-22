@@ -2,7 +2,7 @@
 # define CPPAD_CORE_DIV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 //  BEGIN CppAD namespace
@@ -54,7 +54,7 @@ AD<Base> operator / (const AD<Base> &left , const AD<Base> &right)
          result.tape_id_ = tape_id;
          result.ad_type_ = variable_enum;
       }
-      else if( (! dyn_right) & IdenticalOne(right.value_) )
+      else if( (! dyn_right) && IdenticalOne(right.value_) )
       {  // result = variable / 1
          result.make_variable(left.tape_id_, left.taddr_);
       }
@@ -76,7 +76,7 @@ AD<Base> operator / (const AD<Base> &left , const AD<Base> &right)
       }
    }
    else if( var_right )
-   {  if( (! dyn_left) & IdenticalZero(left.value_) )
+   {  if( (! dyn_left) && IdenticalZero(left.value_) )
       {  // result = 0 / variable
          result.value_ = Base(0.0); // incase right.value_ is zero or nan
       }

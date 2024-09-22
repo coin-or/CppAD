@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin stack_machine.cpp}
@@ -41,7 +41,7 @@ bool is_binary( const std::string &s )
 }
 bool is_variable( const std::string &s )
 {  char ch = s[0];
-   bool variable = ('a' <= ch) & (ch <= 'z');
+   bool variable = ('a' <= ch) && (ch <= 'z');
    return variable;
 }
 

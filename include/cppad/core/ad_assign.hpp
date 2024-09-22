@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_ASSIGN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -93,7 +93,7 @@ AD<Base>& AD<Base>::operator=(const Base &b)
 {  value_   = b;
    tape_id_ = 0;
    //
-   CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
+   CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) || Dynamic(*this) ) );
    return *this;
 }
 
@@ -128,7 +128,7 @@ template <class Base>
 template <class T>
 AD<Base>& AD<Base>::operator=(const T &t)
 {  *this = Base(t);
-   CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
+   CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) || Dynamic(*this) ) );
    return *this;
 }
 

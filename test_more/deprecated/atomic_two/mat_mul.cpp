@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -79,10 +79,10 @@ $srccode%cpp% */
    vector< AD<double> > atom_y(nr_left * nc_right);
    afun(atom_x, atom_y);
 
-   ok &= (atom_y[0] == x[0]*x[2] + x[1]*x[3]) & Variable(atom_y[0]);
-   ok &= (atom_y[1] == x[0]*7.   + x[1]*8.  ) & Variable(atom_y[1]);
-   ok &= (atom_y[2] ==   5.*x[2] +   6.*x[3]) & Variable(atom_y[2]);
-   ok &= (atom_y[3] ==   5.*7.   +   6.*8.  ) & Parameter(atom_y[3]);
+   ok &= (atom_y[0] == x[0]*x[2] + x[1]*x[3]) && Variable(atom_y[0]);
+   ok &= (atom_y[1] == x[0]*7.   + x[1]*8.  ) && Variable(atom_y[1]);
+   ok &= (atom_y[2] ==   5.*x[2] +   6.*x[3]) && Variable(atom_y[2]);
+   ok &= (atom_y[3] ==   5.*7.   +   6.*8.  ) && Parameter(atom_y[3]);
 
    // ------------------------------------------------------------------
    // define the function g : x -> atom_y
