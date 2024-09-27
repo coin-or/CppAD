@@ -33,6 +33,9 @@ then
    fi
 fi
 #
+# grep and sed
+source bin/grep_and_sed.sh
+#
 # top_srcdir
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
@@ -59,7 +62,7 @@ echo_log_eval() {
    #     forward.hpp:188, reverse.hpp:151, independent.hpp:100-109,
    #     base_alloc.hpp:143.
    #
-   if sed $top_srcdir/check_all.tmp \
+   if $sed $top_srcdir/check_all.tmp \
       -e '/temp_file.cpp:.*warning.*tmpnam/d' \
       -e '/forward.hpp:188:.*warning.*outside array bounds/d' \
       -e '/reverse.hpp:151:.*warning.*outside array bounds/d' \
@@ -86,7 +89,7 @@ random_01() {
 #  check_all.log
 # start new check_all.log
 echo "date > check_all.log"
-date | sed -e 's|^|date: |' > check_all.log
+date | $sed -e 's|^|date: |' > check_all.log
 #
 # $HOME/prefix/cppad
 if [ -e "$HOME/prefix/cppad" ]
@@ -96,8 +99,8 @@ fi
 #
 # version
 version=$(
-   sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
-      sed -e 's|.*"\([^"]*\)".*|\1|'
+   $sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
+      $sed -e 's|.*"\([^"]*\)".*|\1|'
 )
 #
 # compiler
@@ -213,7 +216,7 @@ fi
 #
 # prefix
 # absoute prefix where optional packages are installed
-eval `grep '^prefix=' bin/get_optional.sh`
+eval `$grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
    prefix="$(pwd)/$prefix"
@@ -226,7 +229,7 @@ then
 fi
 #
 # check_version
-if echo $version | grep '[0-9]\{4\}0000[.]' > /dev/null
+if echo $version | $grep '[0-9]\{4\}0000[.]' > /dev/null
 then
    # special interactive case for stable versions.
    echo_eval bin/check_version.sh
