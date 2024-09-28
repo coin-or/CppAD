@@ -45,11 +45,11 @@ bool link_mat_mul(
    typedef adouble    ADScalar;
    typedef ADScalar*  ADVector;
 
-   short tag  = 0;         // tape identifier
-   int   m    = 1;         // number of dependent variables
+   short tag  = 0;                // tape identifier
+   int   m    = 1;                // number of dependent variables
    int   n    = int(size * size); // number of independent variables
-   double f;             // function value
-   int j;                // temporary index
+   double f;                      // function value
+   int j;                         // temporary index
 
    // set up for thread_alloc memory allocator (fast and checks for leaks)
    using CppAD::thread_alloc; // the allocator
@@ -80,7 +80,7 @@ bool link_mat_mul(
       CppAD::uniform_01( size_t(n), mat);
 
       // declare independent variables
-      int   keep = 1; // keep forward mode results
+      int keep = 1; // keep forward mode results
       trace_on(tag, keep);
       for(j = 0; j < n; j++)
          X[j] <<= mat[j];
@@ -100,7 +100,7 @@ bool link_mat_mul(
       CppAD::uniform_01( size_t(n), mat);
 
       // declare independent variables
-      int   keep = 0; // do not keep forward mode results
+      int keep = 0; // do not keep forward mode results
       trace_on(tag, keep);
       for(j = 0; j < n; j++)
          X[j] <<= mat[j];

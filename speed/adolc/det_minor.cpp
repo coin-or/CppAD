@@ -37,7 +37,7 @@ namespace {
       CppAD::det_by_minor<adouble> a_det(size);
 
       // declare independent variables
-      int   keep = 1; // keep forward mode results
+      int keep = 1; // keep forward mode results
       trace_on(tag, keep);
       CppAD::vector<adouble> a_A(n);
       for(int j = 0; j < n; ++j)
@@ -85,7 +85,7 @@ bool link_det_minor(
    int n = int(size * size);
    //
    // tape identifier
-   short tag  = 0;
+   short tag = 0;
    //
    bool onetape = global_option["onetape"];
    // ----------------------------------------------------------------------
@@ -126,7 +126,7 @@ bool link_det_minor(
       CppAD::uniform_01( size_t(n), matrix);
 
       // evaluate the determinant at the new matrix value
-      int   keep = 1; // keep this forward mode result
+      int keep = 1; // keep this forward mode result
       double f;     // function result
       zos_forward(tag, m, n, keep, matrix.data(), &f);
 

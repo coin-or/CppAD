@@ -40,7 +40,7 @@ namespace {
    typedef vector<adouble>   a_vector;
    void setup(
       // inputs
-      short             tag     ,
+      short           tag     ,
       size_t          size    ,
       size_t          m       ,
       const s_vector& row     ,
@@ -55,7 +55,7 @@ namespace {
       double*&        values  )
    {  // independent variables
       CPPAD_ASSERT_UNKNOWN( size = x.size() );
-      int   keep = 0; // keep forward mode results
+      int keep = 0; // keep forward mode results
       trace_on(tag, keep);
       size_t n = size;
       a_vector a_x(n);

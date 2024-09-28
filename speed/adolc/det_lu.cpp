@@ -42,12 +42,12 @@ bool link_det_lu(
       return false;
    // -----------------------------------------------------
    // setup
-   short tag  = 0;         // tape identifier
-   int   keep = 1;         // keep forward mode results in buffer
-   int   m    = 1;         // number of dependent variables
+   short tag  = 0;                // tape identifier
+   int   keep = 1;                // keep forward mode results in buffer
+   int   m    = 1;                // number of dependent variables
    int   n    = int(size * size); // number of independent variables
-   double f;             // function value
-   int j;                // temporary index
+   double f;                      // function value
+   int j;                         // temporary index
 
    // set up for thread_alloc memory allocator (fast and checks for leaks)
    using CppAD::thread_alloc; // the allocator

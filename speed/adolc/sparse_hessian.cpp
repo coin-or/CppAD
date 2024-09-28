@@ -88,7 +88,7 @@ bool link_sparse_hessian(
       CppAD::uniform_01( size_t(n), x);
 
       // declare independent variables
-      int   keep = 0; // keep forward mode results
+      int keep = 0; // keep forward mode results
       trace_on(tag, keep);
       for(size_t j = 0; j < n; j++)
          a_x[j] <<= x[j];
@@ -124,7 +124,7 @@ bool link_sparse_hessian(
       CppAD::uniform_01( size_t(n), x);
 
       // declare independent variables
-      int   keep = 0; // keep forward mode results
+      int keep = 0; // keep forward mode results
       trace_on(tag, keep);
       for(size_t j = 0; j < n; j++)
          a_x[j] <<= x[j];

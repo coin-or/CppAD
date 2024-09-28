@@ -51,8 +51,8 @@ bool link_poly(
    int   keep = 0;  // do not keep forward mode results in buffer
    int   m    = 1;  // number of dependent variables
    int   n    = 1;  // number of independent variables
-   int d    = 2;  // highest derivative degree
-   double f;      // function value
+   int   d    = 2;  // highest derivative degree
+   double f;        // function value
 
    // set up for thread_alloc memory allocator (fast and checks for leaks)
    using CppAD::thread_alloc; // the allocator

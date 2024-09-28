@@ -51,11 +51,11 @@ bool link_ode(
    typedef CppAD::vector<double>  DblVector;
 
    size_t i, j;
-   short tag    = 0;       // tape identifier
-   int keep   = 0;       // do not keep forward mode results
-   size_t p   = 0;       // use ode to calculate function values
-   size_t n   = size;    // number of independent variables
-   size_t m   = n;       // number of dependent variables
+   short  tag    = 0;       // tape identifier
+   int    keep   = 0;       // do not keep forward mode results
+   size_t p      = 0;       // use ode to calculate function values
+   size_t n      = size;    // number of independent variables
+   size_t m      = n;       // number of dependent variables
    ADVector  X(n), Y(m); // independent and dependent variables
    DblVector f(m);       // function value
 
