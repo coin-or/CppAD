@@ -48,7 +48,7 @@ bool link_poly(
    size_t i;               // temporary index
    ADScalar   Z;           // domain space AD value
    ADScalar   P;           // range space AD value
-   unsigned int order = 2; // order of Taylor coefficients
+   int order = 2;          // order of Taylor coefficients
    Z.resize(order+1, false);
    P.resize(order+1, false);
 

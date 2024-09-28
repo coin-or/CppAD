@@ -71,7 +71,7 @@ bool link_ode(
       // return values with Y as the dependent variable vector
       for(i = 0; i < m; i++)
       {  for(j = 0; j < n; j++)
-            jacobian[ i * n + j ] = Y[i].dx(j);
+            jacobian[ i * n + j ] = Y[i].dx( int(j) );
       }
    }
    return true;
