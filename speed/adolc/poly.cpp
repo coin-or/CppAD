@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin adolc_poly.cpp}
@@ -47,10 +47,10 @@ bool link_poly(
    // -----------------------------------------------------
    // setup
    size_t i;
-   int tag  = 0;  // tape identifier
-   int keep = 0;  // do not keep forward mode results in buffer
-   int m    = 1;  // number of dependent variables
-   int n    = 1;  // number of independent variables
+   short tag  = 0;  // tape identifier
+   int   keep = 0;  // do not keep forward mode results in buffer
+   int   m    = 1;  // number of dependent variables
+   int   n    = 1;  // number of independent variables
    int d    = 2;  // highest derivative degree
    double f;      // function value
 

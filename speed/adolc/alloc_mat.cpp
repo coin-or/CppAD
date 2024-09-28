@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin adolc_alloc_mat}
@@ -44,7 +44,7 @@ and column *j* .
 
 double** adolc_alloc_mat(size_t m, size_t n)
 {  using CppAD::thread_alloc;
-   size_t size_min = m * n, size_out;
+   size_t size_min = size_t(m * n), size_out;
    double*  vec = thread_alloc::create_array<double>(size_min, size_out);
    double** mat = thread_alloc::create_array<double*>(size_min, size_out);
 

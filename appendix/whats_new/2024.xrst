@@ -33,6 +33,11 @@ Release Notes for 2024
 mm-dd
 *****
 
+09-28
+=====
+Fix some conversion warnings between ``size_t`` , ``int`` , and ``short``
+in the :ref:`speed_adolc-name` examples / tests.
+
 09-24
 =====
 Convert the bitwise operators & and | , when used with bool operands,

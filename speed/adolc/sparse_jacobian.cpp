@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cstring>
 # include <cppad/utility/vector.hpp>
@@ -40,7 +40,7 @@ namespace {
    typedef vector<adouble>   a_vector;
    void setup(
       // inputs
-      int             tag     ,
+      short             tag     ,
       size_t          size    ,
       size_t          m       ,
       const s_vector& row     ,
@@ -55,7 +55,7 @@ namespace {
       double*&        values  )
    {  // independent variables
       CPPAD_ASSERT_UNKNOWN( size = x.size() );
-      int keep = 0; // keep forward mode results
+      int   keep = 0; // keep forward mode results
       trace_on(tag, keep);
       size_t n = size;
       a_vector a_x(n);
@@ -85,9 +85,9 @@ namespace {
       //
       // Retrieve n_color using undocumented feature of sparsedrivers.cpp
       int same_pattern = 0;
-      n_color = sparse_jac(tag, int(m), int(n),
+      n_color = size_t( sparse_jac(tag, int(m), int(n),
          same_pattern, x.data(), &nnz, &rind, &cind, &values, options
-      );
+      ) );
    }
 
 }
@@ -127,7 +127,7 @@ bool link_sparse_jacobian(
    unsigned int*  static_cind     = nullptr;
    double*        static_values   = nullptr;
    // -----------------------------------------------------
-   int tag  = 0;
+   short tag  = 0;
    //
    // options that control sparse_jac
    int        options[4];
@@ -150,7 +150,7 @@ bool link_sparse_jacobian(
    // -----------------------------------------------------
    if( job == "setup" )
    {  // get a value for x
-      CppAD::uniform_01(n, x);
+      CppAD::uniform_01( size_t(n), x);
       //
       // record the tape and run coloring problem
       options[2] = -1;
@@ -175,7 +175,7 @@ bool link_sparse_jacobian(
    //
    while (repeat--)
    {  // choose a value for x
-      CppAD::uniform_01(n, x);
+      CppAD::uniform_01( size_t(n), x);
       //
       if ( ! onetape )
       {  // retape and calculate jacobian

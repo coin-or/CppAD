@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin adolc_det_lu.cpp}
@@ -42,10 +42,10 @@ bool link_det_lu(
       return false;
    // -----------------------------------------------------
    // setup
-   int tag  = 0;         // tape identifier
-   int keep = 1;         // keep forward mode results in buffer
-   int m    = 1;         // number of dependent variables
-   int n    = size*size; // number of independent variables
+   short tag  = 0;         // tape identifier
+   int   keep = 1;         // keep forward mode results in buffer
+   int   m    = 1;         // number of dependent variables
+   int   n    = int(size * size); // number of independent variables
    double f;             // function value
    int j;                // temporary index
 
@@ -63,25 +63,25 @@ bool link_det_lu(
    ADScalar   detA;
 
    // AD version of matrix
-   size_min    = n;
+   size_min    = size_t(n);
    ADVector A  = thread_alloc::create_array<ADScalar>(size_min, size_out);
 
    // vectors of reverse mode weights
-   size_min    = m;
+   size_min    = size_t(m);
    double* u   = thread_alloc::create_array<double>(size_min, size_out);
    u[0] = 1.;
 
    // vector with matrix value
-   size_min     = n;
+   size_min     = size_t(n);
    double* mat  = thread_alloc::create_array<double>(size_min, size_out);
 
    // vector to receive gradient result
-   size_min     = n;
+   size_min     = size_t(n);
    double* grad = thread_alloc::create_array<double>(size_min, size_out);
    // ------------------------------------------------------
    while(repeat--)
    {  // get the next matrix
-      CppAD::uniform_01(n, mat);
+      CppAD::uniform_01( size_t(n), mat);
 
       // declare independent variables
       trace_on(tag, keep);
