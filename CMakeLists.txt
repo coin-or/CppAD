@@ -16,7 +16,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20240928")
+SET(cppad_version "20241002")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -75,6 +75,9 @@ INCLUDE(cmake/set_compile_flags.cmake)
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
 #
+# eigen_info()
+INCLUDE(cmake/eigen_info.cmake)
+#
 # add_check_executable(parent_target short_name)
 INCLUDE(cmake/add_check_executable.cmake)
 # =============================================================================
@@ -123,6 +126,12 @@ IF( cmake_needs_dot_slash )
       "cmake_needs_dot_slash was removed; see release notes for 2023-06-01"
    )
 ENDIF( cmake_needs_dot_slash )
+#
+IF( include_eigen )
+   MESSAGE(FATAL_ERROR
+      "include_eigen was removed; see release notes for 2024-10-02"
+   )
+ENDIF( )
 # -----------------------------------------------------------------------------
 # Current Arguments
 #
@@ -325,7 +334,7 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 SET(system_include TRUE)
 #
 # package = eigen
-pkgconfig_info(eigen ${system_include})
+eigen_info()
 #
 # package = adolc
 pkgconfig_info(adolc ${system_include})
@@ -341,13 +350,6 @@ prefix_info(sacado ${system_include} )
 #
 # package = fadbad
 prefix_info(fadbad ${system_include} )
-#
-# check eigen
-IF( ${cppad_has_eigen} )
-   IF( NOT ${use_cplusplus_2014_ok} )
-      MESSAGE(FATAL_ERROR "include_eigen is true but c++14 not supported")
-   ENDIF( )
-ENDIF( )
 #
 # check sacado
 IF( ${cppad_has_sacado} )

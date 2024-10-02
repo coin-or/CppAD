@@ -60,6 +60,15 @@ Create ``build`` , a subdirectory of the
 :ref:`download@Distribution Directory` ,
 change into the ``build`` .
 
+Eigen
+*****
+If cppad finds Eigen,
+the  corresponding examples will be tested and the
+:ref:`sparse2eigen-name` utility will be installed; see :ref:`eigen-name` .
+The results of cppad's search for Eigen are reported in the output of
+the cmake command.
+
+
 CMake Command
 *************
 
@@ -114,7 +123,6 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cmake_defined_ok`` = *cmake_defined_ok*                        \\
 | |tab| \\
 | |tab| ``-D include_adolc`` = *true_or_false*                              \\
-| |tab| ``-D include_eigen`` = *true_or_false*                              \\
 | |tab| ``-D include_ipopt`` = *true_or_false*                              \\
 | |tab| ``-D include_cppadcg`` = *true_or_false*                            \\
 | |tab| \\
@@ -145,8 +153,8 @@ Use ``pacman`` to install
 Visual Studio
 =============
 
-#. Make sure you have a version of 
-   `git for windows <https://git-scm.com/download/win>`_ . 
+#. Make sure you have a version of
+   `git for windows <https://git-scm.com/download/win>`_ .
 
 #. Launch the Visual Studio
    `developer command window <https://learn.microsoft.com/en-us/visualstudio/ide/reference/command-prompt-powershell?view=vs-2022>`_
@@ -383,15 +391,6 @@ The :ref:`adolc-name` examples
 will be compiled and tested if ``include_adolc=true``
 is in the command line.
 In this case, ``adolc.pc`` must be in the ``PKG_CONFIG_PATH`` .
-
-include_eigen
-*************
-The :ref:`eigen-name` examples
-will be compiled and tested if ``include_eigen=true``
-is on the command line.
-In this case, ``eigen3.pc`` must be in the ``PKG_CONFIG_PATH`` .
-In addition, the :ref:`sparse2eigen-name` utility will be installed.
-
 
 include_ipopt
 *************

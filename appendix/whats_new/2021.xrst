@@ -246,7 +246,7 @@ are identically equal (actually the same variable).
 02-21
 =====
 Add specifications for what is conditionally installed by the
-:ref:`cmake@include_eigen` and
+:ref:`cmake@Eigen` and
 :ref:`cmake@include_ipopt` options.
 In addition, make it clearer that
 :ref:`cmake@include_cppadcg` should only be used for testing.

@@ -207,7 +207,7 @@ then
    standard='' # default for run_cmake.sh and configure
    exclude_package=''
 else
-   exclude_package='--no_eigen --no_sacado'
+   exclude_package='--no_sacado'
 fi
 if [ "$(uname)" == 'Darwin' ]
 then

@@ -166,7 +166,7 @@ instead of 0 or 1, this has been fixed.
 #. Use pkg-config to determine install prefix for
    adolc, eigen, ipopt, and cppadcg; see
    :ref:`cmake@include_adolc` ,
-   :ref:`cmake@include_eigen` ,
+   :ref:`cmake@Eigen` ,
    :ref:`cmake@include_ipopt` , and
    :ref:`cmake@include_cppadcg` .
 #. Fix warning that the variable ``not_used_rec_base`` was not initialized.
@@ -242,7 +242,7 @@ possibly uninitialized variable.
 If :ref:`cmake@include_ipopt` is on the cmake command line,
 :ref:`ipopt_solve-name` is automatically included by ``cppad/cppad.hpp`` .
 The :ref:`sparse2eigen-name` utility can still be used even
-if :ref:`cmake@include_eigen` is not specified on the cmake command line.
+if ``include_eigen`` is not specified on the cmake command line.
 
 05-26
 =====

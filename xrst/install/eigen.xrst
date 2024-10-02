@@ -17,6 +17,23 @@ Eigen Home Page
 ***************
 https://eigen.tuxfamily.org/index.php?title=Main_Page
 
+Finding Eigen
+*************
+These example and tests will be included
+and :ref:`sparse2eigen-name` will be installed if:
+
+#. Eigen is installed on your system
+
+#. c++14 or higher is supported by your compiler
+
+#. *PKG_CONFIG_PATH* is such that the following command
+   finds the location of the file eigen3.pc :
+   ``pkg-config eigen3 --path --print-errors``
+
+The output of the :ref:`cmake-name` command will report if these
+conditions are met.
+
+
 Examples and Tests
 ******************
 CppAD can include the following examples and tests that
@@ -36,20 +53,7 @@ use the linear algebra package Eigen:
 
 sparse2eigen
 ************
-The :ref:`sparse2eigen-name` utility will only be available if
-:ref:`cmake@include_eigen`
-is specified on the cmake command line.
 
-include_eigen
-*************
-If Eigen is installed on your system, you can
-specify ``include_eigen=true`` on the
-:ref:`cmake-name` command line.
-The value of *PKG_CONFIG_PATH* must be such that the command
-
-   ``pkg-config eigen3 --path --print-errors``
-
-finds the location of the file ``eigen3.pc`` .
 
 eigen_prefix
 ************

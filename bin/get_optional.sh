@@ -116,7 +116,7 @@ then
    echo_eval rm get_optional.err
 fi
 # -----------------------------------------------------------------------------
-list='colpack adolc eigen fadbad ipopt sacado cppadcg'
+list='colpack adolc fadbad ipopt sacado cppadcg'
 for package in $list
 do
    echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"

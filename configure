@@ -650,7 +650,7 @@ fi
 PKG_CONFIG_PATH=''
 #
 # include_$package, PKG_CONFIG_PATH
-for package in adolc eigen ipopt
+for package in adolc ipopt
 do
    package_dir="${package}_dir"
    if [ "${!package_dir}" == NOTFOUND ]
@@ -727,7 +727,6 @@ echo cmake \
    -D cmake_install_docdir=share/doc \
    \
    -D include_adolc=$include_adolc \
-   -D include_eigen=$include_eigen \
    -D include_ipopt=$include_ipopt \
    -D include_cppadcg=false \
    \
@@ -762,7 +761,6 @@ cmake \
    -D cmake_install_docdir=share/doc \
    \
    -D include_adolc=$include_adolc \
-   -D include_eigen=$include_eigen \
    -D include_ipopt=$include_adolc \
    -D include_cppadcg=false \
    \

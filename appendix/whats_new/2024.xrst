@@ -33,6 +33,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+10-02
+=====
+The *include_eigen* argument was removed from the :ref:`cmake-name` command
+because Eigen is available using most package managers;
+see :ref:`cmake@Eigen` .
+
 09-28
 =====
 Fix some conversion warnings between ``size_t`` , ``int`` , and ``short``
@@ -96,7 +102,7 @@ Add the :ref:`dos_build.bat-name` install example.
 =====
 The cmake ``-D eigen_prefix`` option was removed
 and ``PKG_CONFIG_PATH`` requirements were added for
-:ref:`cmake@include_eigen` (and the other packages).
+``include_eigen`` (and the other packages).
 
 08-04
 =====

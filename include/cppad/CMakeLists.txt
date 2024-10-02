@@ -124,11 +124,11 @@ IF( cppad_boostvector )
 ENDIF( cppad_boostvector )
 #
 IF( cppad_eigenvector )
-   IF( NOT include_eigen )
+   IF( NOT cppad_has_eigen )
       MESSAGE(FATAL_ERROR
-"cppad_testvector == eigen but eigen_prefix is not specified"
+"cppad_testvector == eigen but Eigen was not found or c++14 not supported"
       )
-   ENDIF( NOT include_eigen )
+   ENDIF( NOT cppad_has_eigen )
 ENDIF( cppad_eigenvector )
 # -----------------------------------------------------------------------------
 # cppad_has_gettimeofday

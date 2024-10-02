@@ -123,7 +123,7 @@ Was a colpack_prefix specified on the cmake command line.
 
 CPPAD_HAS_EIGEN
 ***************
-Was include_eigen=true on the cmake command line.
+Was Eigen found and c++14 is supported.
 {xrst_spell_off}
 {xrst_code hpp} */
 # define CPPAD_HAS_EIGEN @cppad_has_eigen@

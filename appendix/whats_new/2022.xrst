@@ -75,9 +75,11 @@ This has been fixed.
 07-16
 =====
 Add the option to configure eigen using ``eigen_prefix`` ,
-as well as with :ref:`cmake@include_eigen` .
-The ``eigen_prefix`` options was removed on
+as well as with ``include_eigen`` .
+The ``eigen_prefix`` option was removed on
 :ref:`2024-08-05 <2024@mm-dd@08-05>` .
+The ``include_eigen`` options was removed on
+:ref:`2024-10-02 <2024@mm-dd@10-02>` .
 
 07-14
 =====

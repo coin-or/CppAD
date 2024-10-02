@@ -40,7 +40,6 @@ clang='no'
 static='no'
 yes_adolc='yes'
 yes_colpack='yes'
-yes_eigen='yes'
 yes_ipopt='yes'
 yes_fadbad='yes'
 yes_cppad_jit='yes'
@@ -65,7 +64,6 @@ usage: bin/run_cmake.sh: \\
    [--static] \\
    [--no_adolc] \\
    [--no_colpack] \\
-   [--no_eigen] \\
    [--no_ipopt] \\
    [--no_fadbad] \\
    [--no_cppad_jit] \\
@@ -118,10 +116,6 @@ EOF
       yes_colpack='no'
       ;;
 
-      --no_eigen)
-      yes_eigen='no'
-      ;;
-
       --no_ipopt)
       yes_ipopt='no'
       ;;
@@ -145,7 +139,6 @@ EOF
       --no_optional)
       yes_adolc='no'
       yes_colpack='no'
-      yes_eigen='no'
       yes_ipopt='no'
       yes_cppadcg='no'
       yes_fadbad='no'
@@ -213,12 +206,7 @@ EOF
 done
 if [ "$standard" == 'c++11' ]
 then
-   # Scacdo and eigen cannot be used with c++11
-   if [ "$yes_eigen" == 'yes' ]
-   then
-      echo 'Cannot use eigen with c++11'
-      exit 1
-   fi
+   # Scacdo cannot be used with c++11
    if [ "$yes_sacado" == 'yes' ]
    then
       echo 'Cannot use sacado with c++11'
@@ -318,15 +306,6 @@ then
       exit 1
    fi
    prefix_list="$prefix_list colpack"
-fi
-if [ "$yes_eigen" == 'yes' ]
-then
-   if [ ! -e "$prefix/include/Eigen" ]
-   then
-      echo "Cannot find $prefix/include/Eigen"
-      exit 1
-   fi
-   include_list="$include_list eigen"
 fi
 if [ "$yes_ipopt" == 'yes' ]
 then

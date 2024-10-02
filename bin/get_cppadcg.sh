@@ -201,10 +201,13 @@ then
    echo_eval mkdir build
 fi
 echo_eval cd build
+if [ -e CMakeCache.txt ]
+then
+   rm CMakeCache.txt
+fi
 echo_eval cmake \
    -D CPPAD_GIT_REPO="$cppad_repo" \
    -D CMAKE_INSTALL_PREFIX=$prefix \
-   -D EIGEN3_INCLUDE_DIR=$prefix/include \
    -D GOOGLETEST_GIT=ON \
    -D CREATE_DOXYGEN_DOC=OFF \
    ..
