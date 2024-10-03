@@ -83,4 +83,5 @@ MACRO(pkgconfig_info package system_include)
       ENDIF( )
    ENDIF( )
    #
+   print_variable( cppad_has_${package} )
 ENDMACRO(pkgconfig_info)

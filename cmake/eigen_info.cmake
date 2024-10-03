@@ -24,7 +24,7 @@ MACRO(eigen_info)
    #
    #
    IF( NOT ${use_cplusplus_2014_ok} )
-      MESSAGE(MESSAGE "Eigen not supportedL: because c++14 not supported")
+      MESSAGE(STATUS "Eigen not supportedL: because c++14 not supported")
       SET(cppad_has_eigen 0)
    ELSE( )
       #
@@ -32,13 +32,14 @@ MACRO(eigen_info)
       pkg_check_modules(eigen QUIET eigen3 )
       #
       IF( eigen_FOUND )
-         MESSAGE(MESSAGE "Eigen found")
+         MESSAGE(STATUS "Eigen found")
          SET(cppad_has_eigen 1)
          INCLUDE_DIRECTORIES( SYSTEM ${eigen_INCLUDE_DIRS} )
       ELSE( )
-         MESSAGE(MESSAGE "Eigen not Found: eigen3.pc not in PKG_CONFIG_PATH")
+         MESSAGE(STATUS "Eigen not Found: eigen3.pc not in PKG_CONFIG_PATH")
          SET(cppad_has_eigen 0)
       ENDIF( )
    ENDIF( )
    #
+   print_variable( cppad_has_eigen )
 ENDMACRO(eigen_info)
