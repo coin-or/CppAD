@@ -66,8 +66,6 @@ set -e -u
 # | |tab| ``CXX_FLAGS`` = *cxx_flags*                      \\
 # | |tab| ``POSTFIX_DIR`` = *postfix_dir*                  \\
 # | |tab| ``ADOLC_DIR`` = *adolc_dir*                      \\
-# | |tab| ``BOOST_DIR`` = *boost_dir*                      \\
-# | |tab| ``EIGEN_DIR`` = *eigen_dir*                      \\
 # | |tab| ``FADBAD_DIR`` = *fadbad_dir*                    \\
 # | |tab| ``SADADO_DIR`` = *sacado_dir*                    \\
 # | |tab| ``IPOPT_DIR`` = *ipopt_dir*                      \\
@@ -129,11 +127,6 @@ set -e -u
 # | |tab| ``std::vector<`` *Scalar* >
 # | |tab| ``boost::numeric::ublas::vector<`` *Scalar* >
 # | |tab| ``Eigen::matrix<`` *Scalar* , ``Eigen::Dynamic`` , 1>
-#
-# See also,
-# :ref:`configure@boost_dir`
-# and
-# :ref:`configure@eigen_dir` .
 #
 # --enable-msvc
 # *************
@@ -250,40 +243,6 @@ set -e -u
 # For example,
 # if ``d:/adolc_base`` is the proper directory,
 # ``/cygdrive/d/adolc_base`` should be used for *adolc_dir* .
-#
-# boost_dir
-# *********
-# The default value for this directory is empty; i.e., there
-# is no boost directory.
-# If the command line argument
-#
-#    ``BOOST_DIR`` = *boost_dir*
-#
-# is present, it must be such that files
-#
-# | |tab| *boost_dir* / ``include/boost/numeric/ublas/vector.hpp``
-# | |tab| *boost_dir* / ``include/boost/thread.hpp``
-#
-# are present.
-# In this case, these files will be used by CppAD.
-# See also, :ref:`--with-boostvector<configure@--with-testvector>`
-#
-# eigen_dir
-# *********
-# The default value for this directory is empty; i.e., there
-# is no eigen directory.
-# If you have
-# `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-# installed on your system, you can
-# specify a value for *eigen_dir* .
-# It must be such that
-#
-#    *eigen_dir* / ``include/Eigen/Core``
-#
-# is a valid include file.
-# In this case CppAD will compile and test the Eigen examples; e.g.,
-# :ref:`eigen_array.cpp-name` .
-# See also, :ref:`--with-eigenvector<configure@--with-testvector>`
 #
 # fadbad_dir
 # **********
@@ -424,8 +383,6 @@ usage: <path_to_configure>/configure \\
    [CXX_FLAGS=cxx_flags] \\
    [POSTFIX_DIR=postfix_dir] \\
    [ADOLC_DIR=adolc_dir] \\
-   [BOOST_DIR=boost_dir] \\
-   [EIGEN_DIR=eigen_dir] \\
    [FADBAD_DIR=fadbad_dir] \\
    [SACADO_DIR=sacado_dir] \\
    [IPOPT_DIR=ipopt_dir] \\
@@ -461,8 +418,6 @@ max_num_threads='64'
 cxx_flags=''
 postfix_dir='NOTFOUND'
 adolc_dir='NOTFOUND'
-boost_dir='NOTFOUND'
-eigen_dir='NOTFOUND'
 fadbad_dir='NOTFOUND'
 sacado_dir='NOTFOUND'
 ipopt_dir='NOTFOUND'
@@ -511,14 +466,6 @@ do
 
       ADOLC_DIR=*)
       adolc_dir=$( echo $1 | sed -e 's|ADOLC_DIR=||' )
-      ;;
-
-      BOOST_DIR=*)
-      boost_dir=$( echo $1 | sed -e 's|BOOST_DIR=||' )
-      ;;
-
-      EIGEN_DIR=*)
-      eigen_dir=$( echo $1 | sed -e 's|EIGEN_DIR=||' )
       ;;
 
       FADBAD_DIR=*)
@@ -576,14 +523,6 @@ if echo $cxx_flags | grep 'std=c++' > /dev/null
 then
    cxx_standard_year=$(echo $cxx_flags | sed -e 's|.*std=c++\([0-9]*\).*|\1|')
    print_variable cxx_standard_year
-   if [ "$cxx_standard_year"  -lt 14 ]
-   then
-      if [ "$eigen_dir" != 'NOTFOUND' ]
-      then
-         echo 'Eigen requires c++14 or greater'
-         exit 1
-      fi
-   fi
    if [ "$cxx_standard_year"  -lt 17 ]
    then
       if [ "$sacado_dir" != 'NOTFOUND' ]

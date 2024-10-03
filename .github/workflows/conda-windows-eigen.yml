@@ -50,7 +50,6 @@ jobs:
           -D CMAKE_C_COMPILER=cl ^
           -D CMAKE_BUILD_TYPE=release ^
           -G "NMake Makefiles" ^
-          -D include_eigen=true ^
           -D cppad_static_lib=TRUE ^
           -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus" ^
           ..

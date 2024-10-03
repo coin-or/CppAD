@@ -106,7 +106,7 @@ preprocessor symbols that are in the CppAD API.
 11-21
 =====
 Separate :ref:`--with-boostvector<configure@--with-testvector>`
-for :ref:`configure@boost_dir` .
+for *boost_dir* .
 This enables one to specify *boost_dir* for
 :ref:`team_bthread.cpp-name` with out using boost vectors.
 

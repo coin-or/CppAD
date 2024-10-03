@@ -282,7 +282,7 @@ and warning
 09-23
 =====
 CppAD can optionally test its use with the external packages
-:ref:`eigen<get_eigen.sh-name>` ,
+eigen ,
 :ref:`ipopt<get_ipopt.sh-name>` , and
 :ref:`colpack<get_colpack.sh-name>` .
 In addition, it can compare its :ref:`speed-name` with the external AD packages

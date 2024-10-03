@@ -35,9 +35,11 @@ mm-dd
 
 10-02
 =====
-The *include_eigen* argument was removed from the :ref:`cmake-name` command
-because Eigen is available using most package managers;
-see :ref:`cmake@Eigen` .
+#. The *include_eigen* argument was removed from the :ref:`cmake-name` command
+   because Eigen is available using most package managers;
+   see :ref:`cmake@Eigen` .
+#. Remove *boost_dir* and *eigen_dir* from :ref:`configure-name` 
+   (they no longer have any effect).
 
 09-28
 =====
@@ -160,7 +162,7 @@ The has been fixed.
 03-28
 =====
 Change the get_eigen.sh
-:ref:`get_eigen.sh@Version` from 3.3.7 to the master branch on 2024-03-24; see
+version from 3.3.7 to the master branch on 2024-03-24; see
 `issue 200 <https://github.com/coin-or/CppAD/issues/200>`_ .
 Note that the new version of eigen requires c++14 or higher.
 
@@ -300,7 +302,7 @@ In addition, remove unnecessary includes for ``iostream`` and
 #. The shebang in the :ref:`configure-name` script was changed from
    ``#! /bin/bash`` to ``#! /usr/bin/env bash`` .
    This should make it work on more systems.
-#. The configure script :ref:`configure@eigen_dir` ,
+#. The configure script *eigen_dir* ,
    *fadbad_dir* , and *sacado_dir*
    directories were not being passed to the ``cmake`` .
    This has been fixed.

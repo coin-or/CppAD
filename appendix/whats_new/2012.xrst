@@ -631,12 +631,12 @@ Merged in changes from ``branches/sparse`` :
 
 04-19
 =====
-The :ref:`configure@boost_dir`
+The *boost_dir*
 configure command line value has been changed to be the corresponding
 prefix during the installation of boost.
 To be specific, it used to be that
-``boost_dir`` / *boost* was the boost include directory,
-now ``boost_dir`` / *include* is the boost include directory.
+*boost_dir* / *boost* was the boost include directory,
+now *boost_dir* / *include* is the boost include directory.
 This make it the same as the other directory arguments on the configure
 command line.
 In addition, it fixes some bugs in the detection of the boost
@@ -785,7 +785,7 @@ one should call :ref:`free_available<ta_free_available-name>` for all threads.
    :ref:`bthread_get_started.cpp-name`
    and :ref:`pthread_get_started.cpp-name` .
 #. Fix bug in finding boost multi-threading library
-   (due to fact that :ref:`configure@boost_dir`
+   (due to fact that *boost_dir*
    is not the prefix during the boost installation).
 
 03-02
@@ -839,7 +839,7 @@ is greater than one
 =====
 Make another attempt to fix linking with boost threads where the wrong
 version of the library is in the system include directory; i.e.,
-to have :ref:`configure@boost_dir` override the default
+to have *boost_dir* override the default
 library.
 
 01-27

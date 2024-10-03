@@ -25,7 +25,8 @@
 #
 # Requirements
 # ************
-# You must first use :ref:`get_eigen.sh-name` to download and install Eigen.
+# You must first use your package manager to install
+# :ref:`cmake@Eigen` .
 #
 # Distribution Directory
 # **********************

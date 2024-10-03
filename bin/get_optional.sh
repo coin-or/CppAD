@@ -88,7 +88,6 @@ prefix="build/prefix"
 #    bin/get_adolc.sh
 #    bin/get_cppadcg.sh
 #    bin/get_colpack.sh
-#    bin/get_eigen.sh
 #    bin/get_fadbad.sh
 #    bin/get_ipopt.sh
 #    bin/get_sacado.sh

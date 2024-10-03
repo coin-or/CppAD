@@ -82,17 +82,9 @@ then
    fi
 fi
 # 2DO: clang++ 14.05 is generating a lot of warnings (we should fix these)
-cppad_cxx_flags+=" -Wno-bitwise-instead-of-logical"
-cppad_cxx_flags+=" -Wno-sign-conversion"
 #
-# eigen_prefix, scaado_prefix
+# scaado_prefix
 cxx_standard_year=$(echo $cpp_standard | sed -e 's|c++||')
-if [ "$cxx_standard_year" -lt 14 ]
-then
-   eigen_prefix=''
-else
-   eigen_prefix="EIGEN_DIR=$prefix"
-fi
 if [ "$cxx_standard_year" -lt 17 ]
 then
    scaado_prefix=''
@@ -115,10 +107,8 @@ echo_eval cd build
    MAX_NUM_THREADS=32 \
    CXX_FLAGS="'$cppad_cxx_flags'" \
    ADOLC_DIR=$prefix \
-   BOOST_DIR=$prefix \
    FADBAD_DIR=$prefix \
    IPOPT_DIR=$prefix \
-   $eigen_prefix \
    $scaado_prefix \
    TAPE_ADDR_TYPE=size_t \
    TAPE_ID_TYPE=size_t
