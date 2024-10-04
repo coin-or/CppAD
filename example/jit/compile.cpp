@@ -55,7 +55,7 @@ bool compile(void)
       compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /TC /O2";
 # endif
 # if CPPAD_C_COMPILER_GNU_FLAGS
-   const char* cmd = " --version > temp";
+   const char* cmd = CPPAD_C_COMPILER_CMD " --version > temp";
    if( std::system(cmd) == 0 )
       compile = CPPAD_C_COMPILER_CMD " -c -fPIC -O2";
 # endif

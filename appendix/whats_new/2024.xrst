@@ -33,6 +33,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+10-04
+=====
+The :ref:`jit_compile.cpp-name` example line was missing 
+CPPAD_C_COMPILER_CMD in the line (this has been fixed)::
+
+   const char* cmd = CPPAD_C_COMPILER_CMD " --version > temp";
+
 10-02
 =====
 #. The *include_eigen* argument was removed from the :ref:`cmake-name` command
