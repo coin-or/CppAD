@@ -160,9 +160,23 @@ fi
 library_flags="$library_flags $cppad_lib_path -lpthread"
 #
 cd build
-if ! ninja cppad_lib
+if [ -e 'build.ninja' ] && [ -e 'Makefile' ]
 then
-   echo 'test_one.sh: ninja cppad_lib failed: see erros above'
+   echo "bin/test_one.sh: Both build.ninja and Makefile are in $(pwd)"
+   exit 1
+elif [ -e 'build.ninja' ]
+then
+   builder=ninja
+elif [ -e 'Makefile' ]
+then
+   builder=make
+else
+   echo "bin/test_one.sh: Neither build.ninja or Makefile is in $(pwd)"
+   exit 1
+fi
+if ! $builder cppad_lib
+then
+   echo "test_one.sh: $builder cppad_lib failed: see erros above"
    exit 1
 fi
 cd ..
