@@ -6,12 +6,12 @@
 /*
 {xrst_begin a11c_sthread.cpp}
 
-A Simple Boost Thread Example and Test
-######################################
+A Simple Standard Thread Example and Test
+#########################################
 
 Purpose
 *******
-This example just demonstrates Boost threads and does not use CppAD at all.
+This example just demonstrates standard threads and does not use CppAD at all.
 
 Source Code
 ***********

@@ -33,9 +33,14 @@ Release Notes for 2024
 mm-dd
 *****
 
+10-05
+=====
+Fix the title in :ref:`a11c_sthread.cpp-title`
+(Boost was changed to Standard).
+
 10-04
 =====
-The :ref:`jit_compile.cpp-name` example line was missing 
+The :ref:`jit_compile.cpp-name` example line was missing
 CPPAD_C_COMPILER_CMD in the line (this has been fixed)::
 
    const char* cmd = CPPAD_C_COMPILER_CMD " --version > temp";
@@ -45,7 +50,7 @@ CPPAD_C_COMPILER_CMD in the line (this has been fixed)::
 #. The *include_eigen* argument was removed from the :ref:`cmake-name` command
    because Eigen is available using most package managers;
    see :ref:`cmake@Eigen` .
-#. Remove *boost_dir* and *eigen_dir* from :ref:`configure-name` 
+#. Remove *boost_dir* and *eigen_dir* from :ref:`configure-name`
    (they no longer have any effect).
 
 09-28
