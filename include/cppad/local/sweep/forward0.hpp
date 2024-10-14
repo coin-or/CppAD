@@ -2,11 +2,13 @@
 # define CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
+
+# include <cppad/local/op_class/op_enum2instance.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -315,7 +317,9 @@ void forward0(
          // -------------------------------------------------
 
          case AddvvOp:
-         forward_addvv_op_0(i_var, arg, parameter, J, taylor);
+         op_enum2instance<Base>(AddvvOp)->forward_0(
+            i_var, arg, parameter, J, taylor
+         );
          break;
          // -------------------------------------------------
 

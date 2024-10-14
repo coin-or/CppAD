@@ -8,6 +8,8 @@
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
 
+# include <cppad/local/op_class/op_enum2instance.hpp>
+
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
 /*!
@@ -320,7 +322,9 @@ void forward1(
          // -------------------------------------------------
 
          case AddvvOp:
-         forward_addvv_op(p, q, i_var, arg, parameter, J, taylor);
+         op_enum2instance<Base>(AddvvOp)->forward(
+            p, q, i_var, arg, parameter, J, taylor
+         );
          break;
          // -------------------------------------------------
 
