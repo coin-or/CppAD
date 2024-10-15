@@ -7,17 +7,22 @@ set -e -u
 # ----------------------------------------------------------------------------
 # This is a temporrary script used for the conversion to operator class objects
 #
-# file
+# file_in
 # file where the original source code is located
-file=add_op.hpp
+file_in=add_op.hpp
 #
-# op_lower
-# lower case, mixed case, uppser case version of this operator.
-op_lower=addvv
-op_mixed=Addvv
-op_upper=ADDVV
+# OpCode
+# The OpCode for this operator
+OpCode=AddvvOp
 # ----------------------------------------------------------------------------
-git reset --hard
+#
+# op_lower, op_upper
+# lower case, upper case, name for this operator
+op_lower=$( echo $OpCode | sed -e 's|Op$||' | tr [A-Z] [a-z] )
+op_upper=$( echo $op_lower | tr [a-z] [A-Z] )
+#
+# file_out
+file_out=${op_lower}_op.hpp
 #
 # grep, sed
 source bin/grep_and_sed.sh
@@ -50,7 +55,7 @@ p
 EOF
 #
 # $dir/op_class/$op_lower
-$sed -n -f temp.sed $dir/op/$file > $dir/op_class//${op_lower}_op.hpp
+$sed -n -f temp.sed $dir/op/$file_in > $dir/op_class/$file_out
 #
 # temp.sed
 cat << EOF > temp.sed
@@ -75,13 +80,17 @@ public: \\
       return \\&instance;\\
    }\\
 |
+#
 \$,\$s|\$|\\n};\\
 }} // END namespace\\
 # endif|
+#
+s|  *\$||
+s|  *\\n|\\n|g
 EOF
 #
 # $dir/op_class/$op_lower
-$sed -f temp.sed -i $dir/op_class//${op_lower}_op.hpp
+$sed -f temp.sed -i $dir/op_class//$file_out
 #
 #
 echo 'temp.sh: OK'
