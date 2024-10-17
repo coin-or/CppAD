@@ -165,8 +165,17 @@ do
    cd $name.git
    if [ -e "./get.$name" ]
    then
+      #
       if [ ! -e "./get.$name.done" ]
       then
+         #
+         # ./get.$name
+         echo '2024-10-17'
+         echo 'wget is hanging in get.Mumps on fedora 40, so do not use it.'
+         set -e 's|^wgetcount=.*|wgetcount=0|' ./get.$name > temp.$$
+         mv temp.$$ ./get.$name
+         chmod +x ./get.$name
+         #
          echo_eval ./get.$name
          touch ./get.$name.done
       fi
