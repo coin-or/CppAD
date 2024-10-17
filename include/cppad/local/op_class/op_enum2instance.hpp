@@ -6,11 +6,11 @@
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/op_class/base_op.hpp>
-# include <cppad/local/op_class/addvv_op.hpp>
+# include <cppad/local/op_class/add_vv.hpp>
 //
-# define CPPAD_OP_CLASS_INSTANCE(lower, Mixed)\
-   case Mixed: \
-   result = lower##_op_t<Base>::get_instance(); \
+# define CPPAD_OP_CLASS_INSTANCE(op_lower, OpCode)\
+   case OpCode: \
+   result = op_lower##_t<Base>::get_instance(); \
    break;
 
 namespace CppAD { namespace local { // BEGIN namespace
@@ -25,7 +25,7 @@ base_op_t<Base>* op_enum2instance(OpCode op_enum)
       result = nullptr; // set in this case to avoid compiler warning
       break;
 
-      CPPAD_OP_CLASS_INSTANCE(addvv, AddvvOp)
+      CPPAD_OP_CLASS_INSTANCE(add_vv, AddvvOp)
    }
    return result;
 }
