@@ -35,8 +35,8 @@ Derived Documentation
 *********************
 {xrst_toc_table}
 
-Derived Classes
-***************
+Binary Operators
+****************
 
 .. csv-table::
    :header-rows: 1
