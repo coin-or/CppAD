@@ -323,6 +323,7 @@ void forward1(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         case SubpvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_enum2instance<Base>(op)->forward(
             p, q, i_var, arg, parameter, J, taylor
@@ -855,12 +856,6 @@ void forward1(
 
          case SubvvOp:
          forward_subvv_op(p, q, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case SubpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         forward_subpv_op(p, q, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

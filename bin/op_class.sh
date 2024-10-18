@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=add_op.hpp
+file_in=sub_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=AddpvOp
+OpCode=SubpvOp
 # ----------------------------------------------------------------------------
 #
 # op_old
@@ -103,6 +103,31 @@ sed -i $dir/op_class/op_enum2instance.hpp \
 -e "s|^// BEGIN_SORT.*|&\n# include <cppad/local/op_class/${op_lower}.hpp>|" \
 -e "s|^\(  *\)// BEGIN_SORT.*|&\n\1CPPAD_OP_CLASS_INSTANCE(${op_lower}, $OpCode)|"
 bin/sort.sh $dir/op_class/op_enum2instance.hpp
+#
+cat << EOF > temp.sed
+/case $OpCode:/! b one
+: loop
+N
+/\\n *\\/\\/ -*\\n *\$/ ! b loop
+d
+#
+: one
+s|^\\(  *\\)// BEGIN_SORT.*|&\n\1case $OpCode:|
+EOF
+#
+list='
+   forward0.hpp
+   forward1.hpp
+   forward2.hpp
+   reverse.hpp
+'
+for name in $list
+do
+   file="$dir/sweep/$name"
+   git checkout $file
+   sed -i $file -f temp.sed
+   bin/sort.sh $file
+done
 #
 echo "Must add ${op_lower} to csv-table in $dir/op_class/base_op.hpp"
 echo 'op_class.sh: OK'

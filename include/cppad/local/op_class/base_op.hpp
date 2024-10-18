@@ -45,6 +45,7 @@ Derived Classes
    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
    add_pv, parameter,  variable, z = x + y
    add_vv,  variable,  variable, z = x + y
+   sub_pv, parameter,  variable, z = x - y
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end base_op_t}
