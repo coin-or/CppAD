@@ -301,9 +301,10 @@ void reverse(
          );
          break;
          // --------------------------------------------------
-
+         // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         // END_SORT_THIS_LINE_MINUS_1
          op_enum2instance<Base>(op)->reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
          );

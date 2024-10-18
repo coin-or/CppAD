@@ -315,9 +315,10 @@ void forward0(
          forward_abs_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
-
+         // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         // END_SORT_THIS_LINE_MINUS_1
          op_enum2instance<Base>(op)->forward_0(
             i_var, arg, parameter, J, taylor
          );
