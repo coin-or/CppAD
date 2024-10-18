@@ -12,8 +12,8 @@ set -e -u
 file_in=add_op.hpp
 #
 # OpCode
-# The OpCode for this operator
-OpCode=Addvv
+# The OpCode for this operator (whith out the Op at the end)
+OpCode=AddpvOp
 # ----------------------------------------------------------------------------
 #
 # op_old
@@ -94,8 +94,16 @@ s|  *\\n|\\n|g
 EOF
 #
 # $dir/op_class/$file_out
-$sed -f temp.sed -i $dir/op_class//$file_out
+$sed -f temp.sed -i $dir/op_class/$file_out
+git add  $dir/op_class/$file_out
 #
+# $dir/op_class/op_enum2instance.hpp
+git checkout $dir/op_class/op_enum2instance.hpp
+sed -i $dir/op_class/op_enum2instance.hpp \
+-e "s|^// BEGIN_SORT.*|&\n# include <cppad/local/op_class/${op_lower}.hpp>|" \
+-e "s|^\(  *\)// BEGIN_SORT.*|&\n\1CPPAD_OP_CLASS_INSTANCE(${op_lower}, $OpCode)|"
+bin/sort.sh $dir/op_class/op_enum2instance.hpp
 #
+echo "Must add ${op_lower} to csv-table in $dir/op_class/base_op.hpp"
 echo 'op_class.sh: OK'
 exit 0

@@ -231,16 +231,11 @@ void forward2(
          break;
          // -------------------------------------------------
 
+         case AddpvOp:
          case AddvvOp:
-         op_enum2instance<Base>(AddvvOp)->forward_dir(
+         op_enum2instance<Base>(op)->forward_dir(
             q, r, i_var, arg, parameter, J, taylor
          );
-         break;
-         // -------------------------------------------------
-
-         case AddpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         forward_addpv_op_dir(q, r, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

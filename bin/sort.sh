@@ -122,6 +122,7 @@ do
    if [ $start_line -ge $stop_line ]
    then
       echo "start_line = $start_line >= stop_line = $stop_line "
+      rm sorted.$$
       exit 1
    fi
    #
@@ -129,6 +130,7 @@ do
    if [ $stop_line_previous -ge $start_line ]
    then
       echo "previous stop_line=$stop_line_previous >= start_line=$start_line"
+      rm sorted.$$
       exit 1
    fi
    stop_line_previous="$stop_line"

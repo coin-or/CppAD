@@ -6,7 +6,11 @@
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/op_class/base_op.hpp>
+
+// BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/local/op_class/add_pv.hpp>
 # include <cppad/local/op_class/add_vv.hpp>
+// END_SORT_THIS_LINE_MINUS_1
 //
 # define CPPAD_OP_CLASS_INSTANCE(op_lower, OpCode)\
    case OpCode: \
@@ -25,7 +29,10 @@ base_op_t<Base>* op_enum2instance(OpCode op_enum)
       result = nullptr; // set in this case to avoid compiler warning
       break;
 
+      // BEGIN_SORT_THIS_LINE_PLUS_1
+      CPPAD_OP_CLASS_INSTANCE(add_pv, AddpvOp)
       CPPAD_OP_CLASS_INSTANCE(add_vv, AddvvOp)
+      // END_SORT_THIS_LINE_MINUS_1
    }
    return result;
 }

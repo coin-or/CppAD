@@ -316,16 +316,11 @@ void forward0(
          break;
          // -------------------------------------------------
 
+         case AddpvOp:
          case AddvvOp:
-         op_enum2instance<Base>(AddvvOp)->forward_0(
+         op_enum2instance<Base>(op)->forward_0(
             i_var, arg, parameter, J, taylor
          );
-         break;
-         // -------------------------------------------------
-
-         case AddpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         forward_addpv_op_0(i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

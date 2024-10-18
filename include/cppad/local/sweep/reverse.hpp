@@ -302,16 +302,9 @@ void reverse(
          break;
          // --------------------------------------------------
 
-         case AddvvOp:
-         op_enum2instance<Base>(AddvvOp)->reverse(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
          case AddpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         reverse_addpv_op(
+         case AddvvOp:
+         op_enum2instance<Base>(op)->reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
