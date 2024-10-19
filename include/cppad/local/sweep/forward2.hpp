@@ -234,6 +234,7 @@ void forward2(
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:
+         case DivvpOp:
          case DivvvOp:
          case MulpvOp:
          case MulvvOp:
@@ -327,12 +328,6 @@ void forward2(
 
          case DisOp:
          forward_dis_op<RecBase>(p, q, r, i_var, arg, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case DivvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         forward_divvp_op_dir(q, r, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

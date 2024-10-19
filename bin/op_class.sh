@@ -13,7 +13,7 @@ file_in=div_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=DivpvOp
+OpCode=DivvpOp
 # ----------------------------------------------------------------------------
 #
 # op_old

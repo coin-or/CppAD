@@ -305,6 +305,7 @@ void reverse(
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:
+         case DivvpOp:
          case DivvvOp:
          case MulpvOp:
          case MulvvOp:
@@ -412,13 +413,6 @@ void reverse(
          break;
          // --------------------------------------------------
 
-         case DivvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         reverse_divvp_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
          case EndOp:
          CPPAD_ASSERT_UNKNOWN(
             i_op == play->num_op_rec() - 1
