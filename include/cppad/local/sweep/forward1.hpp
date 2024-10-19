@@ -325,6 +325,7 @@ void forward1(
          case AddvvOp:
          case SubpvOp:
          case SubvpOp:
+         case SubvvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_enum2instance<Base>(op)->forward(
             p, q, i_var, arg, parameter, J, taylor
@@ -852,11 +853,6 @@ void forward1(
                vec_ad2index.data()
             );
          }
-         break;
-         // -------------------------------------------------
-
-         case SubvvOp:
-         forward_subvv_op(p, q, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

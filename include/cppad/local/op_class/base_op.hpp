@@ -48,6 +48,7 @@ Binary Operators
    add_vv,  variable,  variable, z = x + y
    sub_pv, parameter,  variable, z = x - y
    sub_vp,  variable, parameter, z = x - y
+   sub_vv,  variable,  variable, z = x - y
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end base_op_t}

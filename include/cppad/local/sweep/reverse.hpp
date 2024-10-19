@@ -306,6 +306,7 @@ void reverse(
          case AddvvOp:
          case SubpvOp:
          case SubvpOp:
+         case SubvvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_enum2instance<Base>(op)->reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -606,13 +607,6 @@ void reverse(
          // -------------------------------------------------
 
          case StvvOp:
-         break;
-         // --------------------------------------------------
-
-         case SubvvOp:
-         reverse_subvv_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
          break;
          // --------------------------------------------------
 
