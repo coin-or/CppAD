@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=mul_op.hpp
+file_in=div_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=MulvvOp
+OpCode=DivvvOp
 # ----------------------------------------------------------------------------
 #
 # op_old

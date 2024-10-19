@@ -318,6 +318,7 @@ void forward0(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         case DivvvOp:
          case MulpvOp:
          case MulvvOp:
          case SubpvOp:
@@ -413,11 +414,6 @@ void forward0(
 
          case DisOp:
          forward_dis_op<RecBase>(p, q, r, i_var, arg, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case DivvvOp:
-         forward_divvv_op_0(i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 
