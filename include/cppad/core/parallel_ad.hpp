@@ -95,6 +95,7 @@ before being used in parallel mode:
 # include <cppad/utility/vector.hpp>
 # include <cppad/local/std_set.hpp>
 # include <cppad/local/val_graph/enable_parallel.hpp>
+# include <cppad/local/op_class/enable_parallel.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -138,6 +139,7 @@ void parallel_ad(void)
    AD<Base>::tape_id_ptr(0);                  // tape_link.hpp
    AD<Base>::tape_handle(0);                  // tape_link.hpp
    local::val_graph::enable_parallel<Base>(); // val_graph/*_op.hpp
+   local::op_class::enable_parallel<Base>();  // op_class operators
    discrete<Base>::List();                    // discrete.hpp
 
    // Some check_simple_vector.hpp cases

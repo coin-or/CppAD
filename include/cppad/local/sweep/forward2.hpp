@@ -8,7 +8,7 @@
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
 
-# include <cppad/local/op_class/op_enum2instance.hpp>
+# include <cppad/local/op_class/enum2instance.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -242,7 +242,7 @@ void forward2(
          case SubvpOp:
          case SubvvOp:
          // END_SORT_THIS_LINE_MINUS_1
-         op_enum2instance<Base>(op)->forward_dir(
+         op_class::enum2instance<Base>(op)->forward_dir(
             q, r, i_var, arg, parameter, J, taylor
          );
          break;
