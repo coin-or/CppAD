@@ -304,6 +304,7 @@ void reverse(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         case DivpvOp:
          case DivvvOp:
          case MulpvOp:
          case MulvvOp:
@@ -408,14 +409,6 @@ void reverse(
          case DisOp:
          // Derivative of discrete operation is zero so no
          // contribution passes through this operation.
-         break;
-         // --------------------------------------------------
-
-         case DivpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         reverse_divpv_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
          break;
          // --------------------------------------------------
 

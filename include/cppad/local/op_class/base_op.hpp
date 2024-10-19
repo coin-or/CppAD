@@ -49,6 +49,7 @@ Binary Operators
    mul_pv, parameter,  variable, z = x * y
    mul_vv,  variable,  variable, z = x * y
    sub_pv, parameter,  variable, z = x - y
+   div_pv, parameter,  variable, z = x / y
    sub_vp,  variable, parameter, z = x - y
    sub_vv,  variable,  variable, z = x - y
    div_vv,  variable,  variable, z = x / y
