@@ -305,6 +305,7 @@ void reverse(
          case AddpvOp:
          case AddvvOp:
          case SubpvOp:
+         case SubvpOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_enum2instance<Base>(op)->reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -614,14 +615,6 @@ void reverse(
          );
          break;
          // --------------------------------------------------
-
-         case SubvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         reverse_subvp_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // -------------------------------------------------
 
          case TanOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );

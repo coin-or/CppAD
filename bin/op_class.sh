@@ -13,7 +13,7 @@ file_in=sub_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=SubpvOp
+OpCode=SubvpOp
 # ----------------------------------------------------------------------------
 #
 # op_old

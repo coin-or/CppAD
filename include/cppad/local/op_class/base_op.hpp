@@ -8,6 +8,7 @@
 {xrst_begin_parent base_op_t dev}
 {xrst_spell
    pv
+   vp
    vv
 }
 
@@ -46,6 +47,7 @@ Binary Operators
    add_pv, parameter,  variable, z = x + y
    add_vv,  variable,  variable, z = x + y
    sub_pv, parameter,  variable, z = x - y
+   sub_vp,  variable, parameter, z = x - y
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end base_op_t}
