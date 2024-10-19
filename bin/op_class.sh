@@ -13,7 +13,7 @@ file_in=mul_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=MulpvOp
+OpCode=MulvvOp
 # ----------------------------------------------------------------------------
 #
 # op_old

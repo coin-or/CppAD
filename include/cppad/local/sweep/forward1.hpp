@@ -324,6 +324,7 @@ void forward1(
          case AddpvOp:
          case AddvvOp:
          case MulpvOp:
+         case MulvvOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -679,11 +680,6 @@ void forward1(
          }
          break;
          // -------------------------------------------------
-
-         case MulvvOp:
-         forward_mulvv_op(p, q, i_var, arg, parameter, J, taylor);
-         break;
-         // --------------------------------------------------
 
          case NegOp:
          forward_neg_op(p, q, i_var, size_t(arg[0]), J, taylor);

@@ -305,6 +305,7 @@ void reverse(
          case AddpvOp:
          case AddvvOp:
          case MulpvOp:
+         case MulvvOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -509,13 +510,6 @@ void reverse(
          );
          break;
          // --------------------------------------------------
-
-         case MulvvOp:
-         reverse_mulvv_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // -------------------------------------------------
 
          case NegOp:
          reverse_neg_op(

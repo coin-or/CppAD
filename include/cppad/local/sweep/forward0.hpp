@@ -319,6 +319,7 @@ void forward0(
          case AddpvOp:
          case AddvvOp:
          case MulpvOp:
+         case MulvvOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -626,11 +627,6 @@ void forward0(
                   compare_change_op_index = itr.op_index();
             }
          }
-         break;
-         // -------------------------------------------------
-
-         case MulvvOp:
-         forward_mulvv_op_0(i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 
