@@ -233,6 +233,7 @@ void forward2(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         case MulpvOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -415,12 +416,6 @@ void forward2(
          forward_log1p_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // ---------------------------------------------------
-
-         case MulpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         forward_mulpv_op_dir(q, r, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
 
          case MulvvOp:
          forward_mulvv_op_dir(q, r, i_var, arg, parameter, J, taylor);

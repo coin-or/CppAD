@@ -10,6 +10,7 @@
 // BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/local/op_class/add_pv.hpp>
 # include <cppad/local/op_class/add_vv.hpp>
+# include <cppad/local/op_class/mul_pv.hpp>
 # include <cppad/local/op_class/sub_pv.hpp>
 # include <cppad/local/op_class/sub_vp.hpp>
 # include <cppad/local/op_class/sub_vv.hpp>
@@ -35,6 +36,7 @@ base_op_t<Base>* op_enum2instance(OpCode op_enum)
       // BEGIN_SORT_THIS_LINE_PLUS_1
       CPPAD_OP_CLASS_INSTANCE(add_pv, AddpvOp)
       CPPAD_OP_CLASS_INSTANCE(add_vv, AddvvOp)
+      CPPAD_OP_CLASS_INSTANCE(mul_pv, MulpvOp)
       CPPAD_OP_CLASS_INSTANCE(sub_pv, SubpvOp)
       CPPAD_OP_CLASS_INSTANCE(sub_vp, SubvpOp)
       CPPAD_OP_CLASS_INSTANCE(sub_vv, SubvvOp)

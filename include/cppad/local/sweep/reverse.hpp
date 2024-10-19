@@ -304,6 +304,7 @@ void reverse(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         case MulpvOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -505,14 +506,6 @@ void reverse(
          case Log1pOp:
          reverse_log1p_op(
             d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
-         case MulpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         reverse_mulpv_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------

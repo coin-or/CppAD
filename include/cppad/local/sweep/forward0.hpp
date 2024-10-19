@@ -318,6 +318,7 @@ void forward0(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AddpvOp:
          case AddvvOp:
+         case MulpvOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -625,12 +626,6 @@ void forward0(
                   compare_change_op_index = itr.op_index();
             }
          }
-         break;
-         // -------------------------------------------------
-
-         case MulpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         forward_mulpv_op_0(i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

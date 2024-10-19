@@ -46,6 +46,7 @@ Binary Operators
    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
    add_pv, parameter,  variable, z = x + y
    add_vv,  variable,  variable, z = x + y
+   mul_pv, parameter,  variable, z = x * y
    sub_pv, parameter,  variable, z = x - y
    sub_vp,  variable, parameter, z = x - y
    sub_vv,  variable,  variable, z = x - y
