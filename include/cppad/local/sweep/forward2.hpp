@@ -238,6 +238,7 @@ void forward2(
          case DivvvOp:
          case MulpvOp:
          case MulvvOp:
+         case PowvpOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -421,12 +422,6 @@ void forward2(
          case PowpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          forward_powpv_op_dir(q, r, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case PowvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         forward_powvp_op_dir(q, r, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

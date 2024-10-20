@@ -328,6 +328,7 @@ void forward1(
          case DivvvOp:
          case MulpvOp:
          case MulvvOp:
+         case PowvpOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -720,12 +721,6 @@ void forward1(
          {  taylor[ i_var * J + i] = Base(0.0);
             i++;
          }
-         break;
-         // -------------------------------------------------
-
-         case PowvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         forward_powvp_op(p, q, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

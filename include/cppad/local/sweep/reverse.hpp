@@ -305,6 +305,7 @@ void reverse(
          case DivvvOp:
          case MulpvOp:
          case MulvvOp:
+         case PowvpOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -500,14 +501,6 @@ void reverse(
          case ParOp:
          break;
          // --------------------------------------------------
-
-         case PowvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         reverse_powvp_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // -------------------------------------------------
 
          case PowpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );

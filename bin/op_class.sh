@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=zmul_op.hpp
+file_in=pow_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=ZmulvvOp
+OpCode=PowvpOp
 # ----------------------------------------------------------------------------
 #
 # op_old
