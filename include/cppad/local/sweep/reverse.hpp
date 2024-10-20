@@ -206,10 +206,6 @@ void reverse(
    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
    enum_atom_state atom_state = end_atom; // proper initialization
 
-   // A vector with unspecified contents declared here so that operator
-   // routines do not need to re-allocate it
-   vector<Base> work;
-
    // temporary indices
    size_t j, ell;
 
@@ -508,7 +504,7 @@ void reverse(
          case PowvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          reverse_powvp_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial, work
+            d, i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // -------------------------------------------------

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_POW_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -633,8 +633,7 @@ void reverse_powvp_op(
    size_t        cap_order   ,
    const Base*   taylor      ,
    size_t        nc_partial  ,
-   Base*         partial     ,
-   CppAD::vector<Base>& work )
+   Base*         partial     )
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
@@ -660,7 +659,20 @@ void reverse_powvp_op(
    Base b0 = Base( 0.0 );
 
    // Place to hold px for this operator until conditional assigment at end
-   work.resize(nc_partial);
+   // Avoid allocaing memory when nc_partial is small
+# ifndef NDEBUG
+   CppAD::vector<Base> work(nc_partial);
+# else
+   Base*               work;
+   Base                small_work[2];
+   CppAD::vector<Base> large_work(0);
+   if( nc_partial < 3 )
+      work = small_work;
+   else
+   {  large_work.resize(nc_partial);
+      work = large_work.data();
+   }
+# endif
    for(size_t j = 0; j <= d; ++j)
       work[j] = px[j];
 
