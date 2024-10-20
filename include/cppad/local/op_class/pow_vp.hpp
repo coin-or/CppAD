@@ -7,7 +7,7 @@
 
 # include <cppad/local/op_class/base_op.hpp>
 
-namespace CppAD { namespace local { // BEGIN namespace
+namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
 template <class Base> class pow_vp_t : public base_op_t<Base>
 {
 public:
@@ -229,5 +229,5 @@ public:
          px[j] = CondExpEq(x[0], b0, b0, work[j]);
    }
 };
-}} // END namespace
+}}} // END namespace
 # endif

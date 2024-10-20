@@ -255,7 +255,7 @@ The partial derivative for the variable with index *i_z* is unspecified
 */
 
 // BEGIN NAMESPACE
-namespace CppAD { namespace local {
+namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 
 // BEGIN BASE_OP_T
@@ -306,6 +306,6 @@ public:
    // END REVERSE
 };
 
-}} // end namespace
+}}} // END namespace
 
 # endif

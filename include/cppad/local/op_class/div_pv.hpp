@@ -7,7 +7,7 @@
 
 # include <cppad/local/op_class/base_op.hpp>
 
-namespace CppAD { namespace local { // BEGIN namespace
+namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
 template <class Base> class div_pv_t : public base_op_t<Base>
 {
 public:
@@ -156,5 +156,5 @@ public:
       }
    }
 };
-}} // END namespace
+}}} // END namespace
 # endif
