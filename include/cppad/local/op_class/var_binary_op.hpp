@@ -17,9 +17,9 @@
 The Variable Binary Operator Class
 ##################################
 
-Syntax
-******
-| ``CppAD::local::op_class::var_binary_op_t`` *binary_op*
+var_binary_op
+*************
+| ``CppAD::local::op_class::var_binary_op_t`` *var_binary_op*
 
 Prototype
 *********
@@ -75,13 +75,13 @@ Forward Mode Variable Binary Operators
 
 Syntax
 ******
-| *binary_op* . ``forward_0`` (
+| *var_binary_op* . ``forward_0`` (
 | |tab| *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )
-| *binary_op* . ``forward`` (
+| *var_binary_op* . ``forward`` (
 | |tab| *p* , *q* , *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )
-| *binary_op* . ``forward_dir`` (
+| *var_binary_op* . ``forward_dir`` (
 | |tab| *q* , *r* , *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )
 
@@ -93,7 +93,7 @@ Prototype
 }
 
 {xrst_template ,
-   include/cppad/local/op_class/binary_op.xrst
+   include/cppad/local/op_class/var_binary_op.xrst
 }
 
 p
@@ -181,7 +181,7 @@ Reverse Mode Variable Binary Operators
 
 Syntax
 ******
-| *binary_op* . ``reverse`` (
+| *var_binary_op* . ``reverse`` (
 | *d* , *i_z* , *arg* , *parameter* , *cap_order* , *taylor* , *nc_partial* , *partial*
 | )
 
@@ -193,7 +193,7 @@ Prototype
 }
 
 {xrst_template ,
-   include/cppad/local/op_class/binary_op.xrst
+   include/cppad/local/op_class/var_binary_op.xrst
 }
 
 G

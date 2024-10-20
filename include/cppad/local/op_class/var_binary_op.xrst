@@ -1,16 +1,18 @@
-{xrst_comment 
+{xrst_comment
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
-This xrst template file does not have any parameters.  
-It documents the binary operator arguments that are the same for both 
+This xrst template file does not have any parameters.
+It documents the binary operator arguments that are the same for both
 forewad and reverse mode.
 }
+
 Derived Class Operator
 **********************
-The derived class operator corresponding to *base_op* has
-two arguments and one result.
+A binary operator corresponding to
+:ref:`var_binary_op_t@var_binary_op`
+has two arguments and one result.
 The last two characters in the name for a binary operator are
 ``p`` (for parameter) or ``v`` (for variable).
 For example the name ``add_vp`` corresponding to addition
