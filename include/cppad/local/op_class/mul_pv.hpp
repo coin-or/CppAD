@@ -5,10 +5,10 @@
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-# include <cppad/local/op_class/base_op.hpp>
+# include <cppad/local/op_class/binary_op.hpp>
 
 namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
-template <class Base> class mul_pv_t : public base_op_t<Base>
+template <class Base> class mul_pv_t : public binary_op_t<Base>
 {
 public:
    //

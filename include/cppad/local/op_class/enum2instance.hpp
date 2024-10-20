@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-# include <cppad/local/op_class/base_op.hpp>
+# include <cppad/local/op_class/binary_op.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/local/op_class/add_pv.hpp>
