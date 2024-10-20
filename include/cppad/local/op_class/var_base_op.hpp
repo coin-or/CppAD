@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OP_CLASS_BASE_OP_HPP
-# define CPPAD_LOCAL_OP_CLASS_BASE_OP_HPP
+# ifndef CPPAD_LOCAL_OP_CLASS_VAR_BASE_OP_HPP
+# define CPPAD_LOCAL_OP_CLASS_VAR_BASE_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
@@ -12,7 +12,7 @@ The Variable Operator Base Class
 
 Syntax
 ******
-| ``CppAD::local::op_class::base_op_t`` *base_op*
+| ``CppAD::local::op_class::var_base_op_t`` *base_op*
 
 Prototype
 *********
@@ -30,7 +30,7 @@ type *Base* .
 Derived Documentation
 *********************
 {xrst_toc_table
-   include/cppad/local/op_class/binary_op.hpp
+   include/cppad/local/op_class/var_binary_op.hpp
 }
 
 {xrst_end var_base_op_t}
@@ -42,7 +42,7 @@ namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 
 // BEGIN BASE_OP_T
-template <class Base> class base_op_t
+template <class Base> class var_base_op_t
 // END BASE_OP_T
 {
 public:

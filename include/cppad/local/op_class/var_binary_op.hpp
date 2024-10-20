@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OP_CLASS_BINARY_OP_HPP
-# define CPPAD_LOCAL_OP_CLASS_BINARY_OP_HPP
+# ifndef CPPAD_LOCAL_OP_CLASS_VAR_BINARY_OP_HPP
+# define CPPAD_LOCAL_OP_CLASS_VAR_BINARY_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
@@ -19,7 +19,7 @@ The Variable Binary Operator Class
 
 Syntax
 ******
-| ``CppAD::local::op_class::binary_op_t`` *binary_op*
+| ``CppAD::local::op_class::var_binary_op_t`` *binary_op*
 
 Prototype
 *********
@@ -253,14 +253,14 @@ The partial derivative for the variable with index *i_z* is unspecified
 {xrst_end var_binary_reverse}
 ------------------------------------------------------------------------------
 */
-# include <cppad/local/op_class/base_op.hpp>
+# include <cppad/local/op_class/var_base_op.hpp>
 
 // BEGIN NAMESPACE
 namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 
 // BEGIN BINARY_OP_T
-template <class Base> class binary_op_t : public base_op_t<Base>
+template <class Base> class var_binary_op_t : public var_base_op_t<Base>
 // END BINARY_OP_T
 {
 public:

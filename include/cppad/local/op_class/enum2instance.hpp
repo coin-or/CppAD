@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-# include <cppad/local/op_class/binary_op.hpp>
+# include <cppad/local/op_class/var_binary_op.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/local/op_class/add_pv.hpp>
@@ -30,9 +30,9 @@
 
 namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
 template <class Base>
-base_op_t<Base>* enum2instance(OpCode op_enum)
+var_base_op_t<Base>* enum2instance(OpCode op_enum)
 {  //
-   base_op_t<Base>* result;
+   var_base_op_t<Base>* result;
    switch(op_enum)
    {
       default:
