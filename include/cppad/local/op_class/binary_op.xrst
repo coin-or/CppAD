@@ -1,0 +1,67 @@
+{xrst_comment 
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+SPDX-FileContributor: 2024 Bradley M. Bell
+
+This xrst template file does not have any parameters.  
+It documents the binary operator arguments that are the same for both 
+forewad and reverse mode.
+}
+Derived Class Operator
+**********************
+The derived class operator corresponding to *base_op* has
+two arguments and one result.
+The last two characters in the name for a binary operator are
+``p`` (for parameter) or ``v`` (for variable).
+For example the name ``add_vp`` corresponding to addition
+with a variable on the left (first) and a parameter on the right (second).
+
+x
+*
+We use *x* to denote the first argument of this binary operation.
+This argument is a variable or a parameter depending on the operator.
+
+y
+*
+We use *y* to denote the second argument of this binary operation.
+This argument is a variable or a parameter depending on the operator.
+
+z
+*
+We use *z* to denote the result of this binary operation.
+The result is always a variable.
+
+i_z
+***
+is the variable index corresponding to the result for this operation;
+i.e. the row index in *taylor* corresponding to *z* .
+
+arg
+***
+is the vector of indices for this operator.
+
+i_x
+===
+We use *i_x* = *arg* [0] for the
+index corresponding to the first operand for this operator.
+If *x* is a parameter,
+*parameter* [ *i_x* ] is the corresponding value.
+If *x* is a variable,
+*i_x* is the row index in *taylor* corresponding to *x* .
+
+i_y
+===
+We use *i_y* = *arg* [0] for the
+index corresponding to the second operand for this operator.
+If *y* is a parameter,
+*parameter* [ *i_y* ] is the corresponding value.
+If *y* is a variable,
+*i_y* is the row index in *taylor* corresponding to *y* .
+
+parameter
+*********
+maps parameter indices to parameter values.
+
+cap_order
+*********
+is the maximum number of orders that will fit in *taylor* .
