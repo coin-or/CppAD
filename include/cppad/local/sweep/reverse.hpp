@@ -312,6 +312,8 @@ void reverse(
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
+         case ZmulpvOp:
+         case ZmulvvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_class::enum2instance<Base>(op)->reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -722,24 +724,9 @@ void reverse(
          break;
          // ------------------------------------------------------------
 
-         case ZmulpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         reverse_zmulpv_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
          case ZmulvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          reverse_zmulvp_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
-         case ZmulvvOp:
-         reverse_zmulvv_op(
             d, i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;

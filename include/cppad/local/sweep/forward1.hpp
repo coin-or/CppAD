@@ -331,6 +331,8 @@ void forward1(
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
+         case ZmulpvOp:
+         case ZmulvvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_class::enum2instance<Base>(op)->forward(
             p, q, i_var, arg, parameter, J, taylor
@@ -963,20 +965,9 @@ void forward1(
          break;
          // -------------------------------------------------
 
-         case ZmulpvOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         forward_zmulpv_op(p, q, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
-
          case ZmulvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          forward_zmulvp_op(p, q, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case ZmulvvOp:
-         forward_zmulvv_op(p, q, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

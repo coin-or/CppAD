@@ -11,6 +11,7 @@
    pv
    vp
    vv
+   zmul
 }
 
 The Operator Base Class
@@ -45,16 +46,19 @@ Binary Operators
 
    Class Name, x, y, z
    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
-   add_pv, parameter,  variable, z = x + y
-   add_vv,  variable,  variable, z = x + y
-   div_pv, parameter,  variable, z = x / y
-   div_vp,  variable, parameter, z = x / y
-   div_vv,  variable,  variable, z = x / y
-   mul_pv, parameter,  variable, z = x * y
-   mul_vv,  variable,  variable, z = x * y
-   sub_pv, parameter,  variable, z = x - y
-   sub_vp,  variable, parameter, z = x - y
-   sub_vv,  variable,  variable, z = x - y
+   add_pv,   parameter,  variable, z = x + y
+   add_vv,    variable,  variable, z = x + y
+   div_pv,   parameter,  variable, z = x / y
+   div_vp,    variable, parameter, z = x / y
+   div_vv,    variable,  variable, z = x / y
+   mul_pv,   parameter,  variable, z = x * y
+   mul_vv,    variable,  variable, z = x * y
+   sub_pv,   parameter,  variable, z = x - y
+   sub_vp,    variable, parameter, z = x - y
+   sub_vv,    variable,  variable, z = x - y
+   sub_vv,    variable,  variable, z = x - y
+   zmul_pv,  parameter,  variable, :ref:`azmul-name`
+   zmul_vv,  parameter,  variable, :ref:`azmul-name`
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end base_op_t}
