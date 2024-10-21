@@ -282,6 +282,7 @@ void reverse(
          case AddvvOp:
          case AsinOp:
          case AsinhOp:
+         case AtanhOp:
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
@@ -304,15 +305,6 @@ void reverse(
          // 1 + x * x, atan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
          reverse_atan_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // -------------------------------------------------
-
-         case AtanhOp:
-         // 1 - x * x, atanh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_atanh_op(
             d, i_var, size_t(arg[0]), J, Taylor, K, Partial
          );
          break;
