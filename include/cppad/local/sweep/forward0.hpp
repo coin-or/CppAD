@@ -328,6 +328,7 @@ void forward0(
          case ExpOp:
          case Expm1Op:
          case Log1pOp:
+         case LogOp:
          case MulpvOp:
          case MulvvOp:
          case PowvpOp:
@@ -507,11 +508,6 @@ void forward0(
                   compare_change_op_index = itr.op_index();
             }
          }
-         break;
-         // -------------------------------------------------
-
-         case LogOp:
-         forward_log_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

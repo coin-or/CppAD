@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=log1p_op.hpp
+file_in=log_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=Log1pOp
+OpCode=LogOp
 #
 # n_res
 # The number of results for this unary operator

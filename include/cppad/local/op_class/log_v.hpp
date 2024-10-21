@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OP_CLASS_LOG1P_V_HPP
-# define CPPAD_LOCAL_OP_CLASS_LOG1P_V_HPP
+# ifndef CPPAD_LOCAL_OP_CLASS_LOG_V_HPP
+# define CPPAD_LOCAL_OP_CLASS_LOG_V_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
@@ -8,14 +8,14 @@
 # include <cppad/local/op_class/var_unary_op.hpp>
 
 namespace CppAD { namespace local { // BEGIN namespace
-template <class Base> class log1p_v_t : public op_class::var_unary_op_t<Base>
+template <class Base> class log_v_t : public op_class::var_unary_op_t<Base>
 {
 public:
    //
    // get_instance
-   static log1p_v_t* get_instance(void)
+   static log_v_t* get_instance(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static log1p_v_t instance;
+      static log_v_t instance;
       return &instance;
    }
    //
@@ -36,8 +36,8 @@ public:
       size_t k;
 
       // check assumptions
-      CPPAD_ASSERT_UNKNOWN( NumArg(Log1pOp) == 1 );
-      CPPAD_ASSERT_UNKNOWN( NumRes(Log1pOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
       CPPAD_ASSERT_UNKNOWN( q < cap_order );
       CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -46,13 +46,13 @@ public:
       Base* z = taylor + i_z * cap_order;
 
       if( p == 0 )
-      {  z[0] = log1p( x[0] );
+      {  z[0] = log( x[0] );
          p++;
          if( q == 0 )
             return;
       }
       if ( p == 1 )
-      {  z[1] = x[1] / (Base(1.0) + x[0]);
+      {  z[1] = x[1] / x[0];
          p++;
       }
       for(size_t j = p; j <= q; j++)
@@ -62,7 +62,7 @@ public:
             z[j] -= Base(double(k)) * z[k] * x[j-k];
          z[j] /= Base(double(j));
          z[j] += x[j];
-         z[j] /= (Base(1.0) + x[0]);
+         z[j] /= x[0];
       }
    }
    //
@@ -78,8 +78,8 @@ public:
    {
 
       // check assumptions
-      CPPAD_ASSERT_UNKNOWN( NumArg(Log1pOp) == 1 );
-      CPPAD_ASSERT_UNKNOWN( NumRes(Log1pOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
       CPPAD_ASSERT_UNKNOWN( 0 < q );
       CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -93,7 +93,7 @@ public:
       {  z[m+ell] = Base(double(q)) * x[m+ell];
          for(size_t k = 1; k < q; k++)
             z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
-         z[m+ell] /= (Base(double(q)) + Base(double(q)) * x[0]);
+         z[m+ell] /= (Base(double(q)) * x[0]);
       }
    }
    //
@@ -107,15 +107,15 @@ public:
    {
 
       // check assumptions
-      CPPAD_ASSERT_UNKNOWN( NumArg(Log1pOp) == 1 );
-      CPPAD_ASSERT_UNKNOWN( NumRes(Log1pOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
       CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
       // Taylor coefficients corresponding to argument and result
       Base* x = taylor + size_t(arg[0]) * cap_order;
       Base* z = taylor + i_z * cap_order;
 
-      z[0] = log1p( x[0] );
+      z[0] = log( x[0] );
    }
    //
    // reverse
@@ -131,8 +131,8 @@ public:
    {  size_t j, k;
 
       // check assumptions
-      CPPAD_ASSERT_UNKNOWN( NumArg(Log1pOp) == 1 );
-      CPPAD_ASSERT_UNKNOWN( NumRes(Log1pOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+      CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
       CPPAD_ASSERT_UNKNOWN( d < cap_order );
       CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -144,12 +144,12 @@ public:
       const Base* z  = taylor  + i_z * cap_order;
       Base* pz       = partial + i_z * nc_partial;
 
-      Base inv_1px0 = Base(1.0) / (Base(1) + x[0]);
+      Base inv_x0 = Base(1.0) / x[0];
 
       j = d;
       while(j)
       {  // scale partial w.r.t z[j]
-         pz[j]   = azmul(pz[j]   , inv_1px0);
+         pz[j]   = azmul(pz[j]   , inv_x0);
 
          px[0]   -= azmul(pz[j], z[j]);
          px[j]   += pz[j];
@@ -163,7 +163,7 @@ public:
          }
          --j;
       }
-      px[0] += azmul(pz[0], inv_1px0);
+      px[0] += azmul(pz[0], inv_x0);
    }
 };
 }} // END namespace

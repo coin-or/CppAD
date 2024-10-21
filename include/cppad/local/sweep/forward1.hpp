@@ -333,6 +333,7 @@ void forward1(
          case ExpOp:
          case Expm1Op:
          case Log1pOp:
+         case LogOp:
          case MulpvOp:
          case MulvvOp:
          case PowvpOp:
@@ -561,11 +562,6 @@ void forward1(
             if( compare_change_count == compare_change_number )
                compare_change_op_index = itr.op_index();
          }
-         break;
-         // -------------------------------------------------
-
-         case LogOp:
-         forward_log_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 
