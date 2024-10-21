@@ -17,6 +17,7 @@
 # include <cppad/local/op_class/asinh_v.hpp>
 # include <cppad/local/op_class/atan_v.hpp>
 # include <cppad/local/op_class/atanh_v.hpp>
+# include <cppad/local/op_class/cosh_v.hpp>
 # include <cppad/local/op_class/div_pv.hpp>
 # include <cppad/local/op_class/div_vp.hpp>
 # include <cppad/local/op_class/div_vv.hpp>
@@ -57,6 +58,7 @@ var_base_op_t<Base>* enum2instance(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(asinh_v, AsinhOp)
       CPPAD_OP_CLASS_INSTANCE(atan_v, AtanOp)
       CPPAD_OP_CLASS_INSTANCE(atanh_v, AtanhOp)
+      CPPAD_OP_CLASS_INSTANCE(cosh_v, CoshOp)
       CPPAD_OP_CLASS_INSTANCE(div_pv, DivpvOp)
       CPPAD_OP_CLASS_INSTANCE(div_vp, DivvpOp)
       CPPAD_OP_CLASS_INSTANCE(div_vv, DivvvOp)

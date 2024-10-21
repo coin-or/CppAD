@@ -326,6 +326,7 @@ void forward1(
          case AsinhOp:
          case AtanOp:
          case AtanhOp:
+         case CoshOp:
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
@@ -357,13 +358,6 @@ void forward1(
          forward_cos_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // ---------------------------------------------------
-
-         case CoshOp:
-         // sinh(x), cosh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_cosh_op(p, q, i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
 
          case CSkipOp:
          if( p == 0 )
