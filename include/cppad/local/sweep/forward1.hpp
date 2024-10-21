@@ -330,6 +330,7 @@ void forward1(
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
+         case ExpOp:
          case Expm1Op:
          case MulpvOp:
          case MulvvOp:
@@ -428,11 +429,6 @@ void forward1(
          forward_erf_op(op, p, q, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
-
-         case ExpOp:
-         forward_exp_op(p, q, i_var, size_t(arg[0]), J, taylor);
-         break;
-         // ---------------------------------------------------
 
          case InvOp:
          CPPAD_ASSERT_NARG_NRES(op, 0, 1);

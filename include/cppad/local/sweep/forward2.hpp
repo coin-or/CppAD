@@ -240,6 +240,7 @@ void forward2(
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
+         case ExpOp:
          case Expm1Op:
          case MulpvOp:
          case MulvvOp:
@@ -300,11 +301,6 @@ void forward2(
          case ErfOp:
          case ErfcOp:
          forward_erf_op_dir(op, q, r, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case ExpOp:
-         forward_exp_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 
