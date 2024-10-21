@@ -332,6 +332,7 @@ void forward1(
          case DivvvOp:
          case ExpOp:
          case Expm1Op:
+         case Log1pOp:
          case MulpvOp:
          case MulvvOp:
          case PowvpOp:
@@ -565,11 +566,6 @@ void forward1(
 
          case LogOp:
          forward_log_op(p, q, i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case Log1pOp:
-         forward_log1p_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

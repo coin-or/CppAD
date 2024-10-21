@@ -290,6 +290,7 @@ void reverse(
          case DivvvOp:
          case ExpOp:
          case Expm1Op:
+         case Log1pOp:
          case MulpvOp:
          case MulvvOp:
          case PowvpOp:
@@ -408,13 +409,6 @@ void reverse(
 
          case LogOp:
          reverse_log_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
-         case Log1pOp:
-         reverse_log1p_op(
             d, i_var, size_t(arg[0]), J, Taylor, K, Partial
          );
          break;
