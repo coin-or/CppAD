@@ -75,6 +75,7 @@ Operators
    abs_v,   variable, absolute value of x
    acos_v,  variable, inverse cosine of x
    acosh_v, variable, inverse hyperbolic cosine of x
+   asinh_v, variable, inverse hyperbolic sine of x
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end var_unary_op_t}

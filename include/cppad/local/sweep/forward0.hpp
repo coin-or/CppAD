@@ -317,6 +317,7 @@ void forward0(
          case AcoshOp:
          case AddpvOp:
          case AddvvOp:
+         case AsinhOp:
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
@@ -339,13 +340,6 @@ void forward0(
          // sqrt(1 - x * x), asin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
          forward_asin_op_0(i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case AsinhOp:
-         // sqrt(1 + x * x), asinh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_asinh_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

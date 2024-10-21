@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=acosh_op.hpp
+file_in=asinh_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=AcoshOp
+OpCode=AsinhOp
 #
 # n_res
 # The number of results for this unary operator
@@ -112,6 +112,7 @@ s|^\\( *Base[*]\\) *taylor *)|\\1         taylor    )|
 s|^\\( *const Base[*]\\) *taylor *,|\\1   taylor    ,|
 s|^\\( *size_t\\) *nc_partial *,|\\1        nc_partial,|
 s|^\\( *Base[*]\\) *partial *)|\\1         partial   )|
+s|2[.]0 [*]|Base(2.0) *|
 EOF
 #
 # $dir/op_class/$file_out

@@ -280,6 +280,7 @@ void reverse(
          case AcoshOp:
          case AddpvOp:
          case AddvvOp:
+         case AsinhOp:
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
@@ -302,15 +303,6 @@ void reverse(
          // sqrt(1 - x * x), asin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
          reverse_asin_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
-         case AsinhOp:
-         // sqrt(1 + x * x), asinh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_asinh_op(
             d, i_var, size_t(arg[0]), J, Taylor, K, Partial
          );
          break;
