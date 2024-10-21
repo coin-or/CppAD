@@ -9,15 +9,15 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=cosh_op.hpp
+file_in=expm1_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=CoshOp
+OpCode=Expm1Op
 #
 # n_res
 # The number of results for this unary operator
-n_res=2
+n_res=1
 # ----------------------------------------------------------------------------
 #
 # op_old

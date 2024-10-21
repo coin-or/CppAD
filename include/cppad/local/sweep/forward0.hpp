@@ -325,6 +325,7 @@ void forward0(
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
+         case Expm1Op:
          case MulpvOp:
          case MulvvOp:
          case PowvpOp:
@@ -427,11 +428,6 @@ void forward0(
 
          case ExpOp:
          forward_exp_op_0(i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case Expm1Op:
-         forward_expm1_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

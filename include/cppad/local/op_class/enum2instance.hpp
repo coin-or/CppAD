@@ -21,6 +21,7 @@
 # include <cppad/local/op_class/div_pv.hpp>
 # include <cppad/local/op_class/div_vp.hpp>
 # include <cppad/local/op_class/div_vv.hpp>
+# include <cppad/local/op_class/expm1_v.hpp>
 # include <cppad/local/op_class/mul_pv.hpp>
 # include <cppad/local/op_class/mul_vv.hpp>
 # include <cppad/local/op_class/pow_vp.hpp>
@@ -62,6 +63,7 @@ var_base_op_t<Base>* enum2instance(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(div_pv, DivpvOp)
       CPPAD_OP_CLASS_INSTANCE(div_vp, DivvpOp)
       CPPAD_OP_CLASS_INSTANCE(div_vv, DivvvOp)
+      CPPAD_OP_CLASS_INSTANCE(expm1_v, Expm1Op)
       CPPAD_OP_CLASS_INSTANCE(mul_pv, MulpvOp)
       CPPAD_OP_CLASS_INSTANCE(mul_vv, MulvvOp)
       CPPAD_OP_CLASS_INSTANCE(pow_vp, PowvpOp)
