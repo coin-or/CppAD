@@ -73,7 +73,7 @@ Operators
    Class Name, x, z
    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
    abs_v,   variable, :math:`z = | x |`
-   {xrst_comment Remove this line when we have another unary function}
+   acos_v,  variable, :math:`z = \arccos (x)`
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end var_unary_op_t}

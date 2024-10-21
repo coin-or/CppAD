@@ -9,15 +9,15 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=abs_op.hpp
+file_in=acos_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=AbsOp
+OpCode=AcosOp
 #
 # n_res
 # The number of results for this unary operator
-n_res=1
+n_res=2
 # ----------------------------------------------------------------------------
 #
 # op_old
@@ -129,8 +129,7 @@ cat << EOF > temp.sed
 /case $OpCode:/! b one
 : loop
 N
-# /\\n *\\/\\/ -*\\n *\$/ ! b loop
-/\\n *\\/\\/ -*$/ ! b loop
+/\\n *\\/\\/ -*\\n *\$/ ! b loop
 d
 #
 : one

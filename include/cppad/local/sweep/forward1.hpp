@@ -318,6 +318,7 @@ void forward1(
       {
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AbsOp:
+         case AcosOp:
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:
@@ -335,13 +336,6 @@ void forward1(
          op_class::enum2instance<Base>(op)->forward(
             p, q, i_var, arg, parameter, J, taylor
          );
-         break;
-         // -------------------------------------------------
-
-         case AcosOp:
-         // sqrt(1 - x * x), acos(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_acos_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 
