@@ -280,6 +280,7 @@ void reverse(
          case AcoshOp:
          case AddpvOp:
          case AddvvOp:
+         case AsinOp:
          case AsinhOp:
          case DivpvOp:
          case DivvpOp:
@@ -295,15 +296,6 @@ void reverse(
          // END_SORT_THIS_LINE_MINUS_1
          op_class::enum2instance<Base>(op)->reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
-
-         case AsinOp:
-         // sqrt(1 - x * x), asin(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_asin_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
