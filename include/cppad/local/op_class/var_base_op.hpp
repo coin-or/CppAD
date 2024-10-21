@@ -27,9 +27,59 @@ is the base type for the operator; i.e., this operation was recorded
 using ``AD`` < *Base* > and computations by these operators are done using
 type *Base* .
 
+n_arg
+*****
+is the number of arguments for this operator:
+{xrst_literal
+   // BEGIN N_ARG
+   // END N_ARG
+}
+
+n_res
+*****
+is the number of results for this operator:
+{xrst_literal
+   // BEGIN N_RES
+   // END N_RES
+}
+
+forward_0
+*********
+can be used to compute zero order forward mode results:
+{xrst_literal
+   // BEGIN FORWARD_0
+   // END FORWARD_0
+}
+
+forward
+*******
+can be used to compute any order forward mode results:
+{xrst_literal
+   // BEGIN FORWARD_ANY
+   // END FORWARD_ANY
+}
+
+forward_dir
+***********
+can be used to compute any order forward mode results
+in multiple directions at the same time:
+{xrst_literal
+   // BEGIN FORWARD_DIR
+   // END FORWARD_DIR
+}
+
+reverse
+*******
+can be used to compute any order reverse mode results:
+{xrst_literal
+   // BEGIN REVERSE
+   // END REVERSE
+}
+
 Derived Documentation
 *********************
 {xrst_toc_table
+   include/cppad/local/op_class/var_unary_op.hpp
    include/cppad/local/op_class/var_binary_op.hpp
 }
 
@@ -46,16 +96,25 @@ template <class Base> class var_base_op_t
 // END BASE_OP_T
 {
 public:
-   // BEGIN FORWARD
-   // forward_0
+   //
+   // BEGIN N_ARG
+   virtual size_t n_arg(void) const = 0;
+   // END N_ARG
+   //
+   // BEGIN N_RES
+   virtual size_t n_res(void) const = 0;
+   // END N_RES
+   //
+   // BEGIN FORWARD_0
    virtual void forward_0(
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
       Base*         taylor      ) const = 0;
+   // END FORWARD_0
    //
-   // forward
+   // BEGIN FORWARD_ANY
    virtual void forward(
       size_t        p           ,
       size_t        q           ,
@@ -64,8 +123,9 @@ public:
       const Base*   parameter   ,
       size_t        cap_order   ,
       Base*         taylor      ) const = 0;
+   // END FORWARD_ANY
    //
-   // forward_dir
+   // BEGIN FORWARD_DIR
    virtual void forward_dir(
       size_t        q           ,
       size_t        r           ,
@@ -74,7 +134,7 @@ public:
       const Base*   parameter   ,
       size_t        cap_order   ,
       Base*         taylor      ) const = 0;
-   // END FORWARD
+   // END FORWARD_DIR
    //
    // BEGIN REVERSE
    virtual void reverse(

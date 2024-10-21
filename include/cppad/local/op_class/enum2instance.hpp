@@ -8,6 +8,7 @@
 # include <cppad/local/op_class/var_binary_op.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/local/op_class/abs_v.hpp>
 # include <cppad/local/op_class/add_pv.hpp>
 # include <cppad/local/op_class/add_vv.hpp>
 # include <cppad/local/op_class/div_pv.hpp>
@@ -41,6 +42,7 @@ var_base_op_t<Base>* enum2instance(OpCode op_enum)
       break;
 
       // BEGIN_SORT_THIS_LINE_PLUS_1
+      CPPAD_OP_CLASS_INSTANCE(abs_v, AbsOp)
       CPPAD_OP_CLASS_INSTANCE(add_pv, AddpvOp)
       CPPAD_OP_CLASS_INSTANCE(add_vv, AddvvOp)
       CPPAD_OP_CLASS_INSTANCE(div_pv, DivpvOp)

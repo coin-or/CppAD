@@ -9,11 +9,15 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=pow_op.hpp
+file_in=abs_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=PowvpOp
+OpCode=AbsOp
+#
+# n_res
+# The number of results for this unary operator
+n_res=1
 # ----------------------------------------------------------------------------
 #
 # op_old
@@ -22,7 +26,7 @@ op_old=$( echo $OpCode | sed -e 's|Op$||' | tr [A-Z] [a-z] )
 #
 # op_lower, op_upper
 # new version of the op code for this operator
-op_lower=$(echo $op_old | sed -e 's|[vp][vp]$|_&|')
+op_lower=$(echo $op_old | sed -e 's|$|_v|')
 op_upper=$( echo $op_lower | tr [a-z] [A-Z] )
 #
 # file_out
@@ -70,10 +74,10 @@ cat << EOF > temp.sed
 // SPDX-FileContributor: 2024 Bradley M. Bell\\
 // ----------------------------------------------------------------------------\\
 \\
-# include <cppad/local/op_class/base_op.hpp>\\
+# include <cppad/local/op_class/var_unary_op.hpp>\\
 \\
 namespace CppAD { namespace local { // BEGIN namespace\\
-template <class Base> class ${op_lower}_t : public base_op_t<Base> \\
+template <class Base> class ${op_lower}_t : public op_class::var_unary_op_t<Base> \\
 {\\
 public: \\
    //\\
@@ -83,14 +87,31 @@ public: \\
       static ${op_lower}_t instance;\\
       return \\&instance;\\
    }\\
+   //\\
+   // n_res\\
+   size_t n_res(void) const override\\
+   {  return $n_res; }\\
 |
 #
 \$,\$s|\$|\\n};\\
 }} // END namespace\\
 # endif|
 #
+s|^\\( *\\)size_t *i_x *,|\\1const addr_t* arg,\\n\\1const Base* parameter,|
+s|i_x|size_t(arg[0])|g
 s|  *\$||
 s|  *\\n|\\n|g
+s|^\\( *size_t\\) *d *,|\\1        d         ,|
+s|^\\( *size_t\\) *q *,|\\1        q         ,|
+s|^\\( *size_t\\) *r *,|\\1        r         ,|
+s|^\\( *size_t\\) *i_z *,|\\1        i_z       ,|
+s|^\\( *const addr_t[*]\\) *arg *,|\\1 arg       ,|
+s|\\(\\n *const Base[*]\\) *parameter *,|\\1   parameter ,|
+s|^\\( *size_t\\) *cap_order *,|\\1        cap_order ,|
+s|^\\( *Base[*]\\) *taylor *)|\\1         taylor    )|
+s|^\\( *const Base[*]\\) *taylor *,|\\1   taylor    ,|
+s|^\\( *size_t\\) *nc_partial *,|\\1        nc_partial,|
+s|^\\( *Base[*]\\) *partial *)|\\1         partial   )|
 EOF
 #
 # $dir/op_class/$file_out
@@ -108,7 +129,8 @@ cat << EOF > temp.sed
 /case $OpCode:/! b one
 : loop
 N
-/\\n *\\/\\/ -*\\n *\$/ ! b loop
+# /\\n *\\/\\/ -*\\n *\$/ ! b loop
+/\\n *\\/\\/ -*$/ ! b loop
 d
 #
 : one
@@ -129,6 +151,6 @@ do
    bin/sort.sh $file
 done
 #
-echo "Must add ${op_lower} to csv-table in $dir/op_class/base_op.hpp"
+echo "Must add ${op_lower} to csv-table in $dir/op_class/var_base_op.hpp"
 echo 'op_class.sh: OK'
 exit 0

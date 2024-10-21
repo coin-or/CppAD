@@ -5,28 +5,18 @@ SPDX-FileContributor: 2024 Bradley M. Bell
 
 This xrst template file does not have any parameters.
 It documents the binary operator arguments that are the same for both
-forewad and reverse mode.
+forward and reverse mode.
 }
-
-Derived Class Operator
-**********************
-A binary operator corresponding to
-:ref:`var_binary_op_t@var_binary_op`
-has two arguments and one result.
-The last two characters in the name for a binary operator are
-``p`` (for parameter) or ``v`` (for variable).
-For example the name ``add_vp`` corresponding to addition
-with a variable on the left (first) and a parameter on the right (second).
 
 x
 *
-We use *x* to denote the first argument of this binary operation.
-This argument is a variable or a parameter depending on the operator.
+We use *x* to denote the first operand of this binary operation.
+This operand is a variable or a parameter depending on the operator.
 
 y
 *
-We use *y* to denote the second argument of this binary operation.
-This argument is a variable or a parameter depending on the operator.
+We use *y* to denote the second operand of this binary operation.
+This operand is a variable or a parameter depending on the operator.
 
 z
 *

@@ -273,12 +273,6 @@ void reverse(
 # endif
       switch( op )
       {
-         case AbsOp:
-         reverse_abs_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
 
          case AcosOp:
          // sqrt(1 - x * x), acos(x)
@@ -298,6 +292,7 @@ void reverse(
          break;
          // --------------------------------------------------
          // BEGIN_SORT_THIS_LINE_PLUS_1
+         case AbsOp:
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:

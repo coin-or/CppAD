@@ -316,11 +316,8 @@ void forward1(
       // action depends on the operator
       switch( op )
       {
-         case AbsOp:
-         forward_abs_op(p, q, i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
          // BEGIN_SORT_THIS_LINE_PLUS_1
+         case AbsOp:
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:

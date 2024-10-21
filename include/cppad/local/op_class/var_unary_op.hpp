@@ -1,31 +1,24 @@
-# ifndef CPPAD_LOCAL_OP_CLASS_VAR_BINARY_OP_HPP
-# define CPPAD_LOCAL_OP_CLASS_VAR_BINARY_OP_HPP
+# ifndef CPPAD_LOCAL_OP_CLASS_VAR_UNARY_OP_HPP
+# define CPPAD_LOCAL_OP_CLASS_VAR_UNARY_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin_parent var_binary_op_t dev}
-{xrst_spell
-   div
-   pv
-   vp
-   vv
-   zmul
-}
+{xrst_begin_parent var_unary_op_t dev}
 
-The Variable Binary Operator Class
-##################################
+The Variable Unary Operator Class
+#################################
 
-Syntax
-******
-| ``CppAD::local::op_class::var_binary_op_t`` *var_binary_op*
+var_unary_op
+************
+| ``CppAD::local::op_class::var_unary_op_t`` *var_unary_op*
 
 Prototype
 *********
 {xrst_literal ,
    BEGIN NAMESPACE , END NAMESPACE
-   BEGIN BINARY_OP_T , END BINARY_OP_T
+   BEGIN UNARY_OP_T , END UNARY_OP_T
 }
 
 Base
@@ -36,16 +29,16 @@ type *Base* .
 
 Derived Operator Name
 *********************
-A derived class operator name corresponding to *var_binary_op*
-has two operands and one result.
-The last two characters in the name for the operator are
-``p`` (for parameter) or ``v`` (for variable).
-For example the name ``add_vp`` corresponding to addition
-with a variable on the left (first) and a parameter on the right (second).
+A derived class operator name corresponding to *var_unary_op*
+has one operand and one or two results.
+The last character in the name for a unary operator is
+``v`` (for variable).
+For example the name ``sin_v`` corresponding to the sine function
+of a variable.
 
 n_arg
 *****
-The number of arguments for a binary operator is two:
+The number of arguments for a unary operator is one:
 {xrst_literal
    // BEGIN N_ARG
    // END N_ARG
@@ -53,11 +46,19 @@ The number of arguments for a binary operator is two:
 
 n_res
 *****
-The number of results for a binary operand is one:
+The number of results for a unary operand is one or two:
 {xrst_literal
    // BEGIN N_RES
    // END N_RES
 }
+
+Auxiliary Result
+****************
+If a unary operator has two results, the second result
+does not correspond to the name of the operator and is called the
+auxiliary result. It is used to speed up computation of the derivatives.
+For example, the auxiliary result for ``sin_v``
+is the value of the cosine function at the same argument.
 
 Documentation
 *************
@@ -69,43 +70,31 @@ Operators
 .. csv-table::
    :header-rows: 1
 
-   Class Name, x, y, z
+   Class Name, x, z
    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
-   add_pv,   parameter,  variable, z = x + y
-   add_vv,    variable,  variable, z = x + y
-   div_pv,   parameter,  variable, z = x / y
-   div_vp,    variable, parameter, z = x / y
-   div_vv,    variable,  variable, z = x / y
-   mul_pv,   parameter,  variable, z = x * y
-   mul_vv,    variable,  variable, z = x * y
-   pow_vp,    variable, parameter, z = x ^ y
-   sub_pv,   parameter,  variable, z = x - y
-   sub_vp,    variable, parameter, z = x - y
-   sub_vv,    variable,  variable, z = x - y
-   sub_vv,    variable,  variable, z = x - y
-   zmul_pv,  parameter,  variable, :ref:`azmul-name`
-   zmul_vv,  parameter,  variable, :ref:`azmul-name`
+   abs_v,   variable, :math:`z = | x |`
+   {xrst_comment Remove this line when we have another unary function}
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
-{xrst_end var_binary_op_t}
+{xrst_end var_unary_op_t}
 # ----------------------------------------------------------------------------
-{xrst_begin var_binary_forward dev}
+{xrst_begin var_unary_forward dev}
 {xrst_spell
    tpv
 }
 
-Forward Mode Variable Binary Operators
-######################################
+Forward Mode Variable Unary Operators
+#####################################
 
 Syntax
 ******
-| *var_binary_op* . ``forward_0`` (
+| *var_unary_op* . ``forward_0`` (
 | |tab| *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )
-| *var_binary_op* . ``forward`` (
+| *var_unary_op* . ``forward`` (
 | |tab| *p* , *q* , *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )
-| *var_binary_op* . ``forward_dir`` (
+| *var_unary_op* . ``forward_dir`` (
 | |tab| *q* , *r* , *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )
 
@@ -117,7 +106,7 @@ Prototype
 }
 
 {xrst_template ,
-   include/cppad/local/op_class/var_binary_op.xrst
+   include/cppad/local/op_class/var_unary_op.xrst
 }
 
 p
@@ -183,26 +172,31 @@ Input
 
 #. If *x* is a variable,
    the Taylor coefficients for variable *x* up to order *q* .
-#. If *y* is a variable,
-   the Taylor coefficients for variable *y* up to order *q* .
 #. The Taylor coefficients for variable *z* up to order *p* ``-1`` .
+#. If this operator has an auxiliary result,
+   the Taylor coefficients for the variable with index *i_z* ``-1``
+   up to order *p* ``-1`` .
 
 Output
 ======
 The Taylor coefficients for variable *z*
 from order *p* up to order *q*
 (and in the case of ``forward_dir`` for all the *r* directions).
+If this operator has an auxiliary result,
+the Taylor coefficients for the variable with index *i_z* ``-1``
+up to order *q* .
 
-{xrst_end var_binary_forward}
+
+{xrst_end var_unary_forward}
 ------------------------------------------------------------------------------
-{xrst_begin var_binary_reverse dev}
+{xrst_begin var_unary_reverse dev}
 
-Reverse Mode Variable Binary Operators
-######################################
+Reverse Mode Variable Unary Operators
+#####################################
 
 Syntax
 ******
-| *var_binary_op* . ``reverse`` (
+| *var_unary_op* . ``reverse`` (
 | *d* , *i_z* , *arg* , *parameter* , *cap_order* , *taylor* , *nc_partial* , *partial*
 | )
 
@@ -214,8 +208,15 @@ Prototype
 }
 
 {xrst_template ,
-   include/cppad/local/op_class/var_binary_op.xrst
+   include/cppad/local/op_class/var_unary_op.xrst
 }
+
+y
+*
+If an operator has an auxiliary result, *y* is the variable index
+for the auxiliary result is *i_z* ``- 1`` .
+Otherwise, *y* is just a place holder and does not affect the
+value of H or G.
 
 G
 *
@@ -224,12 +225,13 @@ of the variables up to variable index *i_z* .
 
 H
 *
-We use :math:`H(y, x, w, \ldots )` to denote the scalar valued function
-of the variables up to variable index *i_z* ``-1`` defined by
+We use :math:`H(x, w, \ldots )` to denote the scalar valued function
+of the variables up to variable index *i_z* ``-1``
+(index *i_z* ``-2`` if this operator has an auxiliary variable) defined by
 
 .. math::
 
-   H(y, x, w, \ldots ) = G [ z(x, y), y, x, w, \ldots ) ]
+   H(x, w, \ldots ) = G [ z(x), y(x), x, w, \ldots ) ]
 
 d
 *
@@ -270,8 +272,12 @@ The array *partial* contains the
 partial derivatives of :math:`H(x, w, \ldots)`.
 The partial derivative for the variable with index *i_z* is unspecified
 (may have been used for temporary storage).
+If this operator has an auxiliary variable,
+The partial derivative for the variable with index *i_z* ``-1``
+is also unspecified.
 
-{xrst_end var_binary_reverse}
+
+{xrst_end var_unary_reverse}
 ------------------------------------------------------------------------------
 */
 # include <cppad/local/op_class/var_base_op.hpp>
@@ -280,9 +286,9 @@ The partial derivative for the variable with index *i_z* is unspecified
 namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 
-// BEGIN BINARY_OP_T
-template <class Base> class var_binary_op_t : public var_base_op_t<Base>
-// END BINARY_OP_T
+// BEGIN UNARY_OP_T
+template <class Base> class var_unary_op_t : public var_base_op_t<Base>
+// END UNARY_OP_T
 {
 public:
    //
@@ -291,7 +297,7 @@ public:
    // END N_ARG
    //
    // BEGIN N_RES
-   size_t n_res(void) const override { return 1; }
+   size_t n_res(void) const override = 0;
    // END N_RES
    //
    // BEGIN FORWARD
