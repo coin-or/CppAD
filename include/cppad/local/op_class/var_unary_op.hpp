@@ -72,8 +72,9 @@ Operators
 
    Class Name, x, z
    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
-   abs_v,   variable, :math:`z = | x |`
-   acos_v,  variable, :math:`z = \arccos (x)`
+   abs_v,   variable, absolute value of x
+   acos_v,  variable, inverse cosine of x
+   acosh_v, variable, inverse hyperbolic cosine of x
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end var_unary_op_t}

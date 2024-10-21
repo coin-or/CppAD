@@ -229,6 +229,7 @@ void forward2(
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AbsOp:
          case AcosOp:
+         case AcoshOp:
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:
@@ -246,13 +247,6 @@ void forward2(
          op_class::enum2instance<Base>(op)->forward_dir(
             q, r, i_var, arg, parameter, J, taylor
          );
-         break;
-         // -------------------------------------------------
-
-         case AcoshOp:
-         // sqrt(x * x - 1), acosh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_acosh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

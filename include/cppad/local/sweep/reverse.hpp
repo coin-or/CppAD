@@ -274,17 +274,10 @@ void reverse(
       switch( op )
       {
 
-         case AcoshOp:
-         // sqrt(x * x - 1), acosh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_acosh_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case AbsOp:
          case AcosOp:
+         case AcoshOp:
          case AddpvOp:
          case AddvvOp:
          case DivpvOp:
