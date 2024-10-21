@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=atanh_op.hpp
+file_in=atan_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=AtanhOp
+OpCode=AtanOp
 #
 # n_res
 # The number of results for this unary operator
