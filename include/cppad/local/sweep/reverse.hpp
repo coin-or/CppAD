@@ -297,6 +297,7 @@ void reverse(
          case NegOp:
          case PowvpOp:
          case SignOp:
+         case SinOp:
          case SinhOp:
          case SubpvOp:
          case SubvpOp:
@@ -434,14 +435,6 @@ void reverse(
          // no result so nothing to do
          break;
          // --------------------------------------------------
-
-         case SinOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_sin_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // -------------------------------------------------
 
          case SqrtOp:
          reverse_sqrt_op(

@@ -30,6 +30,7 @@
 # include <cppad/local/op_class/neg_v.hpp>
 # include <cppad/local/op_class/pow_vp.hpp>
 # include <cppad/local/op_class/sign_v.hpp>
+# include <cppad/local/op_class/sin_v.hpp>
 # include <cppad/local/op_class/sinh_v.hpp>
 # include <cppad/local/op_class/sub_pv.hpp>
 # include <cppad/local/op_class/sub_vp.hpp>
@@ -78,6 +79,7 @@ var_base_op_t<Base>* enum2instance(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(neg_v, NegOp)
       CPPAD_OP_CLASS_INSTANCE(pow_vp, PowvpOp)
       CPPAD_OP_CLASS_INSTANCE(sign_v, SignOp)
+      CPPAD_OP_CLASS_INSTANCE(sin_v, SinOp)
       CPPAD_OP_CLASS_INSTANCE(sinh_v, SinhOp)
       CPPAD_OP_CLASS_INSTANCE(sub_pv, SubpvOp)
       CPPAD_OP_CLASS_INSTANCE(sub_vp, SubvpOp)
