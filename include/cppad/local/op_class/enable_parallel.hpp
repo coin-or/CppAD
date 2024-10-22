@@ -27,6 +27,7 @@
 # include <cppad/local/op_class/mul_pv.hpp>
 # include <cppad/local/op_class/mul_vv.hpp>
 # include <cppad/local/op_class/neg_v.hpp>
+# include <cppad/local/op_class/pow_pv.hpp>
 # include <cppad/local/op_class/pow_vv.hpp>
 # include <cppad/local/op_class/sign_v.hpp>
 # include <cppad/local/op_class/sin_v.hpp>
@@ -65,6 +66,7 @@ template <class Base> void enable_parallel(void)
    mul_pv_t<Base>::get_instance();
    mul_vv_t<Base>::get_instance();
    neg_v_t<Base>::get_instance();
+   pow_pv_t<Base>::get_instance();
    pow_vv_t<Base>::get_instance();
    sign_v_t<Base>::get_instance();
    sin_v_t<Base>::get_instance();

@@ -13,7 +13,7 @@ file_in=pow_op.hpp
 #
 # OpCode
 # The OpCode for this operator
-OpCode=PowvvOp
+OpCode=PowpvOp
 #
 # n_res
 # The number of results for this operator
