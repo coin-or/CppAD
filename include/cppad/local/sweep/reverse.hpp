@@ -303,6 +303,7 @@ void reverse(
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
+         case TanOp:
          case TanhOp:
          case ZmulpvOp:
          case ZmulvvOp:
@@ -453,14 +454,6 @@ void reverse(
          case StvvOp:
          break;
          // --------------------------------------------------
-
-         case TanOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_tan_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // -------------------------------------------------
 
          case AFunOp:
          // start or end an atomic function call

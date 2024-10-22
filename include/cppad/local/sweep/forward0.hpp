@@ -340,6 +340,7 @@ void forward0(
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
+         case TanOp:
          case TanhOp:
          case ZmulpvOp:
          case ZmulvvOp:
@@ -676,13 +677,6 @@ void forward0(
             vec_ad2isvar.data(),
             vec_ad2index.data()
          );
-         break;
-         // -------------------------------------------------
-
-         case TanOp:
-         // tan(x)^2, tan(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_tan_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

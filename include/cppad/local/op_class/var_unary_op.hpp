@@ -6,6 +6,11 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin_parent var_unary_op_t dev}
+{xrst_spell
+   Euler
+   expm
+   neg
+}
 
 The Variable Unary Operator Class
 #################################
@@ -75,7 +80,22 @@ Operators
    abs_v,   variable, absolute value of x
    acos_v,  variable, inverse cosine of x
    acosh_v, variable, inverse hyperbolic cosine of x
+   asin_v,  variable, inverse sine of x
    asinh_v, variable, inverse hyperbolic sine of x
+   atan_v,  variable, inverse tangent of x
+   atanh_v, variable, inverse hyperbolic tangent of x
+   cosh_v,  variable, cosine of x
+   exp_v,   variable, Euler's number to the power x
+   expm1_v, variable, (Euler's number to the power x) minus one
+   log1p_v, variable, logarithm base Euler's number of (one plus x)
+   log_v,   variable, logarithm base Euler's number of x
+   neg_v,   variable, negative of x; i.e. -x
+   sign_v,  variable, :ref:`sign-name` of x
+   sin_v,   variable, sine of x
+   sinh_v,  variable, hyperbolic sine of x
+   sqrt_v,  variable, square root of x
+   tan_v,   variable, tangent of x
+   tanh_v,  variable, hyperbolic tangent of x
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end var_unary_op_t}
