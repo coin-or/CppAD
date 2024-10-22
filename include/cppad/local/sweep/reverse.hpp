@@ -294,6 +294,7 @@ void reverse(
          case LogOp:
          case MulpvOp:
          case MulvvOp:
+         case NegOp:
          case PowvpOp:
          case SubpvOp:
          case SubvpOp:
@@ -407,13 +408,6 @@ void reverse(
          case NevvOp:
          break;
          // -------------------------------------------------
-
-         case NegOp:
-         reverse_neg_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
 
          case ParOp:
          break;

@@ -27,6 +27,7 @@
 # include <cppad/local/op_class/log_v.hpp>
 # include <cppad/local/op_class/mul_pv.hpp>
 # include <cppad/local/op_class/mul_vv.hpp>
+# include <cppad/local/op_class/neg_v.hpp>
 # include <cppad/local/op_class/pow_vp.hpp>
 # include <cppad/local/op_class/sub_pv.hpp>
 # include <cppad/local/op_class/sub_vp.hpp>
@@ -72,6 +73,7 @@ var_base_op_t<Base>* enum2instance(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(log_v, LogOp)
       CPPAD_OP_CLASS_INSTANCE(mul_pv, MulpvOp)
       CPPAD_OP_CLASS_INSTANCE(mul_vv, MulvvOp)
+      CPPAD_OP_CLASS_INSTANCE(neg_v, NegOp)
       CPPAD_OP_CLASS_INSTANCE(pow_vp, PowvpOp)
       CPPAD_OP_CLASS_INSTANCE(sub_pv, SubpvOp)
       CPPAD_OP_CLASS_INSTANCE(sub_vp, SubvpOp)

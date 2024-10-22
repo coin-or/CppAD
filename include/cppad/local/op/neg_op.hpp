@@ -2,13 +2,13 @@
 # define CPPAD_LOCAL_OP_NEG_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-template <class Base>
 
 // See forward_unary1_op in developer documentation
+template <class Base>
 void forward_neg_op(
    size_t p           ,
    size_t q           ,

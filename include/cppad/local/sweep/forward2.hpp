@@ -246,6 +246,7 @@ void forward2(
          case LogOp:
          case MulpvOp:
          case MulvvOp:
+         case NegOp:
          case PowvpOp:
          case SubpvOp:
          case SubvpOp:
@@ -343,11 +344,6 @@ void forward2(
          case NepvOp:
          case NevvOp:
          CPPAD_ASSERT_UNKNOWN(q > 0 );
-         break;
-         // -------------------------------------------------
-
-         case NegOp:
-         forward_neg_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

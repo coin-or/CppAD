@@ -336,6 +336,7 @@ void forward1(
          case LogOp:
          case MulpvOp:
          case MulvvOp:
+         case NegOp:
          case PowvpOp:
          case SubpvOp:
          case SubvpOp:
@@ -606,11 +607,6 @@ void forward1(
             if( compare_change_count == compare_change_number )
                compare_change_op_index = itr.op_index();
          }
-         break;
-         // -------------------------------------------------
-
-         case NegOp:
-         forward_neg_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 
