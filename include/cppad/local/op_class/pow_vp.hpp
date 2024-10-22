@@ -17,6 +17,10 @@ public:
    OpCode op2enum(void) const override
    {  return PowvpOp; }
    //
+   // r_res
+   size_t n_res(void) const override
+   {  return 1; }
+   //
    // get_instance
    static pow_vp_t* get_instance(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;

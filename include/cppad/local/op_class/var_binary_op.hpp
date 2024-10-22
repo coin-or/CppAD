@@ -59,14 +59,20 @@ The number of arguments for a binary operator is two:
    // BEGIN N_ARG
    // END N_ARG
 }
-
 n_res
 *****
-The number of results for a binary operand is one:
+The number of results for a binary operand is one or three:
 {xrst_literal
    // BEGIN N_RES
    // END N_RES
 }
+
+Auxiliary Result
+****************
+Only the power operators, where the exponent is a variable,
+have three results.
+The second and third results and are called auxiliary results.
+They are used to make computation of the derivatives simpler.
 
 Documentation
 *************
@@ -195,12 +201,20 @@ Input
 #. If *y* is a variable,
    the Taylor coefficients for variable *y* up to order *q* .
 #. The Taylor coefficients for variable *z* up to order *p* ``-1`` .
+#. If this operator has auxiliary results,
+   the Taylor coefficients for the variables with indices *i_z* ``-1``
+   and *i_z* ``-2`` up to order *p* ``-1`` .
+
 
 Output
 ======
 The Taylor coefficients for variable *z*
-from order *p* up to order *q*
-(and in the case of ``forward_dir`` for all the *r* directions).
+from order *p* up to order *q*.
+If this operator has an auxiliary results,
+the Taylor coefficients for the variables with index *i_z* ``-1``
+and *i_z* ``-2`` up to order *q* .
+In the case of ``forward_dir`` for all the *r* directions are computed.
+
 
 {xrst_end var_binary_forward}
 ------------------------------------------------------------------------------
@@ -226,6 +240,14 @@ Prototype
    include/cppad/local/op_class/var_binary_op.xrst
 }
 
+u, v
+****
+If an operator has an auxiliary results, *u* ( *v* ) is the variable index
+for the auxiliary result is *i_z* ``- 1``  ( *i_z* ``-2`` ).
+Otherwise, *u* and *v* are just a place holders and do not affect the
+value of H or G.
+
+
 G
 *
 We use :math:`G(z, y, x, w, \ldots )` to denote a scalar valued function
@@ -234,11 +256,13 @@ of the variables up to variable index *i_z* .
 H
 *
 We use :math:`H(y, x, w, \ldots )` to denote the scalar valued function
-of the variables up to variable index *i_z* ``-1`` defined by
+of the variables up to variable index *i_z* ``-1``
+(index *i_z* ``-2`` if this operator has an auxiliary variables)
+defined by
 
 .. math::
 
-   H(y, x, w, \ldots ) = G [ z(x, y), y, x, w, \ldots ) ]
+   H(y, x, w, \ldots ) = G [ z(x, y), v(x, y), u(x, y), y, x, w, \ldots ) ]
 
 d
 *
@@ -303,7 +327,7 @@ public:
    // END N_ARG
    //
    // BEGIN N_RES
-   size_t n_res(void) const override { return 1; }
+   size_t n_res(void) const override = 0;
    // END N_RES
    //
    // BEGIN FORWARD
