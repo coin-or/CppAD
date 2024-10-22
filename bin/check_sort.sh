@@ -67,7 +67,7 @@ do
    fi
 done
 #
-if [ "$file_list" != '' ]
+if [ -e "temp.$$" ]
 then
    rm temp.$$
 fi

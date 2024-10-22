@@ -8,8 +8,8 @@
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/op_class/var_unary_op.hpp>
 
-namespace CppAD { namespace local { // BEGIN namespace
-template <class Base> class expm1_v_t : public op_class::var_unary_op_t<Base>
+namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
+template <class Base> class expm1_v_t : public var_unary_op_t<Base>
 {
 public:
    //
@@ -168,5 +168,5 @@ public:
       px[0] += pz[0] + azmul(pz[0], z[0]);
    }
 };
-}} // END namespace
+}}} // END namespace
 # endif
