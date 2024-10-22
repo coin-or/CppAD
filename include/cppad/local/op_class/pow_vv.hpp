@@ -39,7 +39,9 @@ public:
       const Base*   parameter   ,
       size_t        cap_order   ,
       Base*         taylor      ) const override
-   {
+   {  // arg_tmp
+      addr_t arg_tmp[1];
+      //
       // convert from final result to first result
       i_z -= 2; // 2 = NumRes(PowvvOp) - 1;
 
@@ -53,14 +55,17 @@ public:
       );
 
       // z_0 = log(x)
-      forward_log_op(p, q, i_z, size_t(arg[0]), cap_order, taylor);
-
+      log_v_t<Base>::get_instance()->forward(
+         p, q, i_z, arg, parameter, cap_order, taylor
+      );
+      //
       // z_1 = z_0 * y
       addr_t adr[2];
       adr[0] = addr_t( i_z );
       adr[1] = arg[1];
-      forward_mulvv_op(p, q, i_z+1, adr, parameter, cap_order, taylor);
-
+      mul_vv_t<Base>::get_instance()->forward(
+         p, q, i_z+1, adr, parameter, cap_order, taylor
+      );
       // z_2 = exp(z_1)
       // final result for zero order case is exactly the same as for Base
       if( p == 0 )
@@ -73,7 +78,11 @@ public:
          p++;
       }
       if( p <= q )
-         forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+      {  arg_tmp[0]  = addr_t( i_z + 1 );
+         exp_v_t<Base>::get_instance()->forward(
+            p, q, i_z+2, arg_tmp, parameter, cap_order, taylor
+         );
+      }
    }
    //
    // forward_dir
@@ -99,16 +108,23 @@ public:
       );
 
       // z_0 = log(x)
-      forward_log_op_dir(q, r, i_z, size_t(arg[0]), cap_order, taylor);
+      log_v_t<Base>::get_instance()->forward_dir(
+         q, r, i_z, arg, parameter, cap_order, taylor
+      );
 
       // z_1 = y * z_0
       addr_t adr[2];
       adr[0] = addr_t( i_z );
       adr[1] = arg[1];
-      forward_mulvv_op_dir(q, r, i_z+1, adr, parameter, cap_order, taylor);
+      mul_vv_t<Base>::get_instance()->forward_dir(
+         q, r, i_z+1, adr, parameter, cap_order, taylor
+      );
 
       // z_2 = exp(z_1)
-      forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
+      adr[0] = addr_t( i_z + 1 );
+      exp_v_t<Base>::get_instance()->forward_dir(
+         q, r, i_z+2, adr, parameter, cap_order, taylor
+      );
    }
    //
    // forward_0
@@ -149,7 +165,8 @@ public:
       const Base*   taylor      ,
       size_t        nc_partial  ,
       Base*         partial     ) const override
-   {
+   {  addr_t arg_tmp[2];
+
       // convert from final result to first result
       i_z -= 2; // NumRes(PowvvOp) - 1;
 
@@ -163,21 +180,21 @@ public:
       );
 
       // z_2 = exp(z_1)
-      reverse_exp_op(
-         d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
+      arg_tmp[0]  = addr_t( i_z + 1 );
+      exp_v_t<Base>::get_instance()->reverse(
+         d, i_z+2, arg_tmp, parameter, cap_order, taylor, nc_partial, partial
       );
 
       // z_1 = z_0 * y
-      addr_t adr[2];
-      adr[0] = addr_t( i_z );
-      adr[1] = arg[1];
-      reverse_mulvv_op(
-      d, i_z+1, adr, parameter, cap_order, taylor, nc_partial, partial
+      arg_tmp[0] = addr_t( i_z );
+      arg_tmp[1] = arg[1];
+      mul_vv_t<Base>::get_instance()->reverse(
+         d, i_z+1, arg_tmp, parameter, cap_order, taylor, nc_partial, partial
       );
 
       // z_0 = log(x)
-      reverse_log_op(
-         d, i_z, size_t(arg[0]), cap_order, taylor, nc_partial, partial
+      log_v_t<Base>::get_instance()->reverse(
+         d, i_z, arg, parameter, cap_order, taylor, nc_partial, partial
       );
    }
 };
