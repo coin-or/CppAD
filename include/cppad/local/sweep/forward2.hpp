@@ -236,6 +236,7 @@ void forward2(
          case AsinhOp:
          case AtanOp:
          case AtanhOp:
+         case CosOp:
          case CoshOp:
          case DivpvOp:
          case DivvpOp:
@@ -270,13 +271,6 @@ void forward2(
          forward_cond_op_dir(
             q, r, i_var, arg, num_par, parameter, J, taylor
          );
-         break;
-         // ---------------------------------------------------
-
-         case CosOp:
-         // sin(x), cos(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_cos_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // ---------------------------------------------------
 

@@ -15,6 +15,7 @@
 # include <cppad/local/op_class/asinh_v.hpp>
 # include <cppad/local/op_class/atan_v.hpp>
 # include <cppad/local/op_class/atanh_v.hpp>
+# include <cppad/local/op_class/cos_v.hpp>
 # include <cppad/local/op_class/cosh_v.hpp>
 # include <cppad/local/op_class/div_pv.hpp>
 # include <cppad/local/op_class/div_vp.hpp>
@@ -51,6 +52,7 @@ template <class Base> void enable_parallel(void)
    asinh_v_t<Base>::get_instance();
    atan_v_t<Base>::get_instance();
    atanh_v_t<Base>::get_instance();
+   cos_v_t<Base>::get_instance();
    cosh_v_t<Base>::get_instance();
    div_pv_t<Base>::get_instance();
    div_vp_t<Base>::get_instance();

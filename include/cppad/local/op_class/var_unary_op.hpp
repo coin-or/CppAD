@@ -84,7 +84,8 @@ Operators
    asinh_v, variable, inverse hyperbolic sine of x
    atan_v,  variable, inverse tangent of x
    atanh_v, variable, inverse hyperbolic tangent of x
-   cosh_v,  variable, cosine of x
+   cos_v,   variable, cosine of x
+   cosh_v,  variable, hyperbolic cosine of x
    exp_v,   variable, Euler's number to the power x
    expm1_v, variable, (Euler's number to the power x) minus one
    log1p_v, variable, logarithm base Euler's number of (one plus x)

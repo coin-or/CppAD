@@ -284,6 +284,7 @@ void reverse(
          case AsinhOp:
          case AtanOp:
          case AtanhOp:
+         case CosOp:
          case CoshOp:
          case DivpvOp:
          case DivvpOp:
@@ -346,14 +347,6 @@ void reverse(
             Taylor,
             K,
             Partial
-         );
-         break;
-         // --------------------------------------------------
-
-         case CosOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         reverse_cos_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------

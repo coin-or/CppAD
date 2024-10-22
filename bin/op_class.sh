@@ -9,15 +9,15 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=tan_op.hpp
+file_in=cos_op.hpp
 #
 # OpCode
 # The OpCode for this operator
-OpCode=TanOp
+OpCode=CosOp
 #
 # n_res
 # The number of results for this unary operator
-n_res=2
+n_res=3
 # ----------------------------------------------------------------------------
 #
 # op_old
