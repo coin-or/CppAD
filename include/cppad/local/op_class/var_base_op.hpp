@@ -30,7 +30,7 @@ type *Base* .
 op2enum
 *******
 is the enum value corresponding to this operator; i.e., the inverse of
-:ref:`var_enum2instance-name` .
+:ref:`var_enum2op-name` .
 {xrst_literal
    // BEGIN OP2ENUM
    // END OP2ENUM
@@ -88,7 +88,7 @@ can be used to compute any order reverse mode results:
 Derived Documentation
 *********************
 {xrst_toc_table
-   include/cppad/local/op_class/enum2instance.hpp
+   include/cppad/local/op_class/enum2op.hpp
    include/cppad/local/op_class/var_unary_op.hpp
    include/cppad/local/op_class/var_binary_op.hpp
 }

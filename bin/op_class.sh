@@ -119,12 +119,12 @@ EOF
 $sed -f temp.sed -i $dir/op_class/$file_out
 git add  $dir/op_class/$file_out
 #
-# $dir/op_class/enum2instance.hpp
-git checkout $dir/op_class/enum2instance.hpp
-$sed -i $dir/op_class/enum2instance.hpp \
+# $dir/op_class/enum2op.hpp
+git checkout $dir/op_class/enum2op.hpp
+$sed -i $dir/op_class/enum2op.hpp \
 -e "s|^// BEGIN_SORT.*|&\n# include <cppad/local/op_class/${op_lower}.hpp>|" \
 -e "s|^\(  *\)// BEGIN_SORT.*|&\n\1CPPAD_OP_CLASS_INSTANCE(${op_lower}, $OpCode)|"
-bin/sort.sh $dir/op_class/enum2instance.hpp
+bin/sort.sh $dir/op_class/enum2op.hpp
 #
 # temp.sed
 cat << EOF > temp.sed

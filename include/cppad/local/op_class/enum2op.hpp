@@ -1,29 +1,29 @@
-# ifndef CPPAD_LOCAL_OP_CLASS_ENUM2INSTANCE_HPP
-# define CPPAD_LOCAL_OP_CLASS_ENUM2INSTANCE_HPP
+# ifndef CPPAD_LOCAL_OP_CLASS_ENUM2OP_HPP
+# define CPPAD_LOCAL_OP_CLASS_ENUM2OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin var_enum2instance dev}
+{xrst_begin var_enum2op dev}
 
 Map a Variable Op Codes to a Base Class Instance
 ################################################
 
 Syntax
 ******
-| *var_base_op* = ``enum2instance`` ( *op_code* )
+| *var_base_op* = ``enum2op`` ( *op_code* )
 
 Prototype
 *********
 {xrst_literal ,
    // BEGIN NAMESPACE , // END NAMESPACE
-   // BEGIN ENUM2INSTANCE  , // END ENUM2INSTANCE
+   // BEGIN ENUM2OP  , // END ENUM2OP
 }
 
 
-{xrst_end var_enum2instance}
+{xrst_end var_enum2op}
 */
 
 # include <cppad/local/op_class/var_binary_op.hpp>
@@ -72,10 +72,10 @@ Prototype
 // BEGIN NAMESPACE
 namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
-// BEGIN ENUM2INSTANCE
+// BEGIN ENUM2OP
 template <class Base>
-var_base_op_t<Base>* enum2instance(OpCode op_enum)
-// END ENUM2INSTANCE
+var_base_op_t<Base>* enum2op(OpCode op_enum)
+// END ENUM2OP
 {
    //
    var_base_op_t<Base>* result;

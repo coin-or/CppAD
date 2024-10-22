@@ -29,7 +29,7 @@ public:
    //
    // n_res
    size_t n_res(void) const override
-   {  return 1; }
+   {  return 2; }
    //
    // forward
    void forward(

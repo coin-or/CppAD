@@ -44,7 +44,7 @@ of a variable.
 op2enum
 *******
 is the enum value corresponding to this operator; i.e., the inverse of
-:ref:`var_enum2instance-name` .
+:ref:`var_enum2op-name` .
 {xrst_literal
    // BEGIN OP2ENUM
    // END OP2ENUM
