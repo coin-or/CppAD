@@ -297,6 +297,7 @@ void reverse(
          case MulvvOp:
          case NegOp:
          case PowvpOp:
+         case PowvvOp:
          case SignOp:
          case SinOp:
          case SinhOp:
@@ -419,13 +420,6 @@ void reverse(
          );
          break;
          // -------------------------------------------------
-
-         case PowvvOp:
-         reverse_powvv_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
 
          case PriOp:
          // no result so nothing to do

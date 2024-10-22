@@ -9,14 +9,14 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=cos_op.hpp
+file_in=pow_op.hpp
 #
 # OpCode
 # The OpCode for this operator
-OpCode=CosOp
+OpCode=PowvvOp
 #
 # n_res
-# The number of results for this unary operator
+# The number of results for this operator
 n_res=3
 # ----------------------------------------------------------------------------
 #
@@ -26,7 +26,7 @@ op_old=$( echo $OpCode | sed -e 's|Op$||' | tr [A-Z] [a-z] )
 #
 # op_lower, op_upper
 # new version of the op code for this operator
-op_lower=$(echo $op_old | sed -e 's|$|_v|')
+op_lower=$(echo $op_old | sed -e 's|[vp][vp]$|_&|')
 op_upper=$( echo $op_lower | tr [a-z] [A-Z] )
 #
 # file_out
@@ -57,6 +57,7 @@ s|void [^)]*)|& const override|
 s|^|   |
 s|\\n|\\n   |g
 s|   \$||
+s|   \\n|\\n|g
 p
 #
 : end
@@ -74,45 +75,35 @@ cat << EOF > temp.sed
 // SPDX-FileContributor: 2024 Bradley M. Bell\\
 // ----------------------------------------------------------------------------\\
 \\
-# include <cppad/local/op_class/var_unary_op.hpp>\\
+# include <cppad/local/op_class/var_binary_op.hpp>\\
 \\
-namespace CppAD { namespace local { // BEGIN namespace\\
-template <class Base> class ${op_lower}_t : public op_class::var_unary_op_t<Base> \\
+namespace CppAD { namespace local { namespace op_class { // BEGIN namespace\\
+template <class Base> class ${op_lower}_t : public var_binary_op_t<Base> \\
 {\\
 public: \\
+   //\\
+   // op2enum\\
+   OpCode op2enum(void) const override\\
+   {  return $OpCode; }\\
+   //\\
+   // n_res\\
+   size_t n_res(void) const override\\
+   {  return $n_res; }\\
    //\\
    // get_instance\\
    static ${op_lower}_t* get_instance(void) \\
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \\
       static ${op_lower}_t instance;\\
+      CPPAD_ASSERT_NARG_NRES(\\
+         instance.op2enum(), instance.n_arg(), instance.n_res()\\
+      );\\
       return \\&instance;\\
    }\\
-   //\\
-   // n_res\\
-   size_t n_res(void) const override\\
-   {  return $n_res; }\\
 |
 #
 \$,\$s|\$|\\n};\\
-}} // END namespace\\
+}}} // END namespace\\
 # endif|
-#
-s|^\\( *\\)size_t *i_x *,|\\1const addr_t* arg,\\n\\1const Base* parameter,|
-s|i_x|size_t(arg[0])|g
-s|  *\$||
-s|  *\\n|\\n|g
-s|^\\( *size_t\\) *d *,|\\1        d         ,|
-s|^\\( *size_t\\) *q *,|\\1        q         ,|
-s|^\\( *size_t\\) *r *,|\\1        r         ,|
-s|^\\( *size_t\\) *i_z *,|\\1        i_z       ,|
-s|^\\( *const addr_t[*]\\) *arg *,|\\1 arg       ,|
-s|\\(\\n *const Base[*]\\) *parameter *,|\\1   parameter ,|
-s|^\\( *size_t\\) *cap_order *,|\\1        cap_order ,|
-s|^\\( *Base[*]\\) *taylor *)|\\1         taylor    )|
-s|^\\( *const Base[*]\\) *taylor *,|\\1   taylor    ,|
-s|^\\( *size_t\\) *nc_partial *,|\\1        nc_partial,|
-s|^\\( *Base[*]\\) *partial *)|\\1         partial   )|
-s|2[.]0 [*]|Base(2.0) *|
 EOF
 #
 # $dir/op_class/$file_out

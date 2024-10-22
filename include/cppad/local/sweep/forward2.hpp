@@ -249,6 +249,7 @@ void forward2(
          case MulvvOp:
          case NegOp:
          case PowvpOp:
+         case PowvvOp:
          case SignOp:
          case SinOp:
          case SinhOp:
@@ -357,11 +358,6 @@ void forward2(
          case PowpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          forward_powpv_op_dir(q, r, i_var, arg, parameter, J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case PowvvOp:
-         forward_powvv_op_dir(q, r, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

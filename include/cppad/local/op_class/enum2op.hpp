@@ -51,6 +51,7 @@ Prototype
 # include <cppad/local/op_class/mul_vv.hpp>
 # include <cppad/local/op_class/neg_v.hpp>
 # include <cppad/local/op_class/pow_vp.hpp>
+# include <cppad/local/op_class/pow_vv.hpp>
 # include <cppad/local/op_class/sign_v.hpp>
 # include <cppad/local/op_class/sin_v.hpp>
 # include <cppad/local/op_class/sinh_v.hpp>
@@ -109,6 +110,7 @@ var_base_op_t<Base>* enum2op(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(mul_vv, MulvvOp)
       CPPAD_OP_CLASS_INSTANCE(neg_v, NegOp)
       CPPAD_OP_CLASS_INSTANCE(pow_vp, PowvpOp)
+      CPPAD_OP_CLASS_INSTANCE(pow_vv, PowvvOp)
       CPPAD_OP_CLASS_INSTANCE(sign_v, SignOp)
       CPPAD_OP_CLASS_INSTANCE(sin_v, SinOp)
       CPPAD_OP_CLASS_INSTANCE(sinh_v, SinhOp)
