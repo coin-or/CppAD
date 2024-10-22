@@ -251,6 +251,7 @@ void forward2(
          case SignOp:
          case SinOp:
          case SinhOp:
+         case SqrtOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -370,11 +371,6 @@ void forward2(
 
          case PriOp:
          CPPAD_ASSERT_UNKNOWN(q > 0);
-         break;
-         // -------------------------------------------------
-
-         case SqrtOp:
-         forward_sqrt_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

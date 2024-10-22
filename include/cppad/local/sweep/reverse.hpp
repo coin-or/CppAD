@@ -299,6 +299,7 @@ void reverse(
          case SignOp:
          case SinOp:
          case SinhOp:
+         case SqrtOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -433,13 +434,6 @@ void reverse(
 
          case PriOp:
          // no result so nothing to do
-         break;
-         // --------------------------------------------------
-
-         case SqrtOp:
-         reverse_sqrt_op(
-            d, i_var, size_t(arg[0]), J, Taylor, K, Partial
-         );
          break;
          // --------------------------------------------------
 

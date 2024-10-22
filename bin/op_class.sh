@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=sin_op.hpp
+file_in=sqrt_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=SinOp
+OpCode=SqrtOp
 #
 # n_res
 # The number of results for this unary operator
