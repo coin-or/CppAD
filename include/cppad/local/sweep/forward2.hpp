@@ -248,6 +248,7 @@ void forward2(
          case MulvvOp:
          case NegOp:
          case PowvpOp:
+         case SignOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -367,13 +368,6 @@ void forward2(
 
          case PriOp:
          CPPAD_ASSERT_UNKNOWN(q > 0);
-         break;
-         // -------------------------------------------------
-
-         case SignOp:
-         // sign(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_sign_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 
