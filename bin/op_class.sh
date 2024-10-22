@@ -9,11 +9,11 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=sign_op.hpp
+file_in=sinh_op.hpp
 #
 # OpCode
 # The OpCode for this operator (whith out the Op at the end)
-OpCode=SignOp
+OpCode=SinhOp
 #
 # n_res
 # The number of results for this unary operator

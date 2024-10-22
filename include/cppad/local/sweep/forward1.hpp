@@ -339,6 +339,7 @@ void forward1(
          case NegOp:
          case PowvpOp:
          case SignOp:
+         case SinhOp:
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
@@ -682,13 +683,6 @@ void forward1(
          // cos(x), sin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
          forward_sin_op(p, q, i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case SinhOp:
-         // cosh(x), sinh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_sinh_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 
