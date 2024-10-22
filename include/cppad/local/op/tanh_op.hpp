@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_TANH_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -20,8 +20,8 @@ void forward_tanh_op(
    Base*  taylor      )
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(TanhOp) == 1 );
+   CPPAD_ASSERT_UNKNOWN( NumRes(TanhOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( q < cap_order );
    CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -60,8 +60,8 @@ void forward_tanh_op_dir(
    Base*  taylor      )
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(TanhOp) == 1 );
+   CPPAD_ASSERT_UNKNOWN( NumRes(TanhOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( 0 < q );
    CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -94,8 +94,8 @@ void forward_tanh_op_0(
    Base*  taylor      )
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(TanhOp) == 1 );
+   CPPAD_ASSERT_UNKNOWN( NumRes(TanhOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
    // Taylor coefficients corresponding to argument and result
@@ -120,8 +120,8 @@ void reverse_tanh_op(
    Base*       partial      )
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(TanhOp) == 1 );
+   CPPAD_ASSERT_UNKNOWN( NumRes(TanhOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( d < cap_order );
    CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

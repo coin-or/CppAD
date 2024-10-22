@@ -36,6 +36,7 @@
 # include <cppad/local/op_class/sub_pv.hpp>
 # include <cppad/local/op_class/sub_vp.hpp>
 # include <cppad/local/op_class/sub_vv.hpp>
+# include <cppad/local/op_class/tanh_v.hpp>
 # include <cppad/local/op_class/zmul_pv.hpp>
 # include <cppad/local/op_class/zmul_vv.hpp>
 // END_SORT_THIS_LINE_MINUS_1
@@ -86,6 +87,7 @@ var_base_op_t<Base>* enum2instance(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(sub_pv, SubpvOp)
       CPPAD_OP_CLASS_INSTANCE(sub_vp, SubvpOp)
       CPPAD_OP_CLASS_INSTANCE(sub_vv, SubvvOp)
+      CPPAD_OP_CLASS_INSTANCE(tanh_v, TanhOp)
       CPPAD_OP_CLASS_INSTANCE(zmul_pv, ZmulpvOp)
       CPPAD_OP_CLASS_INSTANCE(zmul_vv, ZmulvvOp)
       // END_SORT_THIS_LINE_MINUS_1

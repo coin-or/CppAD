@@ -345,6 +345,7 @@ void forward1(
          case SubpvOp:
          case SubvpOp:
          case SubvvOp:
+         case TanhOp:
          case ZmulpvOp:
          case ZmulvvOp:
          // END_SORT_THIS_LINE_MINUS_1
@@ -747,13 +748,6 @@ void forward1(
          // tan(x)^2, tan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
          forward_tan_op(p, q, i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case TanhOp:
-         // tanh(x)^2, tanh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-         forward_tanh_op(p, q, i_var, size_t(arg[0]), J, taylor);
          break;
          // -------------------------------------------------
 

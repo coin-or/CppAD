@@ -9,15 +9,15 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=sqrt_op.hpp
+file_in=tanh_op.hpp
 #
 # OpCode
-# The OpCode for this operator (whith out the Op at the end)
-OpCode=SqrtOp
+# The OpCode for this operator
+OpCode=TanhOp
 #
 # n_res
 # The number of results for this unary operator
-n_res=1
+n_res=2
 # ----------------------------------------------------------------------------
 #
 # op_old
@@ -121,11 +121,29 @@ git add  $dir/op_class/$file_out
 #
 # $dir/op_class/enum2instance.hpp
 git checkout $dir/op_class/enum2instance.hpp
-sed -i $dir/op_class/enum2instance.hpp \
+$sed -i $dir/op_class/enum2instance.hpp \
 -e "s|^// BEGIN_SORT.*|&\n# include <cppad/local/op_class/${op_lower}.hpp>|" \
 -e "s|^\(  *\)// BEGIN_SORT.*|&\n\1CPPAD_OP_CLASS_INSTANCE(${op_lower}, $OpCode)|"
 bin/sort.sh $dir/op_class/enum2instance.hpp
 #
+# temp.sed
+cat << EOF > temp.sed
+/BEGIN_SORT_[T]HIS_LINE_PLUS_/! b end
+N
+s|\\n# include.*|\\n# include <cppad/local/op_class/${op_lower}.hpp>&|
+s|\\n\\( *\\)[a-z_]*<Base>::get_instance();|\\n\\1${op_lower}_t<Base>::get_instance();&|
+#
+: end
+EOF
+#
+# $dir/op_class/enable_parallel.hpp
+file=$dir/op_class/enable_parallel.hpp
+git checkout $file
+$sed -i $file -f temp.sed
+bin/sort.sh $file
+
+#
+# temp.sed
 cat << EOF > temp.sed
 /case $OpCode:/! b one
 : loop
@@ -137,6 +155,7 @@ d
 s|^\\(  *\\)// BEGIN_SORT.*|&\n\1case $OpCode:|
 EOF
 #
+# $dir/sweep/ forward*.hpp, reverse.hpp
 list='
    forward0.hpp
    forward1.hpp
