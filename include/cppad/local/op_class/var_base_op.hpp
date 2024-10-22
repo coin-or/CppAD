@@ -27,6 +27,15 @@ is the base type for the operator; i.e., this operation was recorded
 using ``AD`` < *Base* > and computations by these operators are done using
 type *Base* .
 
+op2enum
+*******
+is the enum value corresponding to this operator; i.e., the inverse of
+:ref:`var_enum2instance-name` .
+{xrst_literal
+   // BEGIN OP2ENUM
+   // END OP2ENUM
+}
+
 n_arg
 *****
 is the number of arguments for this operator:
@@ -79,6 +88,7 @@ can be used to compute any order reverse mode results:
 Derived Documentation
 *********************
 {xrst_toc_table
+   include/cppad/local/op_class/enum2instance.hpp
    include/cppad/local/op_class/var_unary_op.hpp
    include/cppad/local/op_class/var_binary_op.hpp
 }
@@ -96,6 +106,10 @@ template <class Base> class var_base_op_t
 // END BASE_OP_T
 {
 public:
+   //
+   // BEGIN OP2ENUM
+   virtual OpCode op2enum(void) const = 0;
+   // END OP2ENUM
    //
    // BEGIN N_ARG
    virtual size_t n_arg(void) const = 0;

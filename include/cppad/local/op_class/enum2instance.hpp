@@ -5,6 +5,27 @@
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
+/*
+{xrst_begin var_enum2instance dev}
+
+Map a Variable Op Codes to a Base Class Instance
+################################################
+
+Syntax
+******
+| *var_base_op* = ``enum2instance`` ( *op_code* )
+
+Prototype
+*********
+{xrst_literal ,
+   // BEGIN NAMESPACE , // END NAMESPACE
+   // BEGIN ENUM2INSTANCE  , // END ENUM2INSTANCE
+}
+
+
+{xrst_end var_enum2instance}
+*/
+
 # include <cppad/local/op_class/var_binary_op.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
@@ -48,10 +69,15 @@
    result = op_lower##_t<Base>::get_instance(); \
    break;
 
-namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
+// BEGIN NAMESPACE
+namespace CppAD { namespace local { namespace op_class {
+// END NAMESPACE
+// BEGIN ENUM2INSTANCE
 template <class Base>
 var_base_op_t<Base>* enum2instance(OpCode op_enum)
-{  //
+// END ENUM2INSTANCE
+{
+   //
    var_base_op_t<Base>* result;
    switch(op_enum)
    {

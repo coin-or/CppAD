@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2024 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/op_class/var_binary_op.hpp>
 
 namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
@@ -12,10 +13,17 @@ template <class Base> class sub_pv_t : public var_binary_op_t<Base>
 {
 public:
    //
+   // op2enum
+   OpCode op2enum(void) const override
+   {  return SubpvOp; }
+   //
    // get_instance
    static sub_pv_t* get_instance(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
       static sub_pv_t instance;
+      CPPAD_ASSERT_NARG_NRES(
+         instance.op2enum(), instance.n_arg(), instance.n_res()
+      );
       return &instance;
    }
    //

@@ -43,6 +43,15 @@ The last two characters in the name for the operator are
 For example the name ``add_vp`` corresponding to addition
 with a variable on the left (first) and a parameter on the right (second).
 
+op2enum
+*******
+is the enum value corresponding to this operator; i.e., the inverse of
+:ref:`var_enum2instance-name` .
+{xrst_literal
+   // BEGIN OP2ENUM
+   // END OP2ENUM
+}
+
 n_arg
 *****
 The number of arguments for a binary operator is two:
@@ -285,6 +294,9 @@ template <class Base> class var_binary_op_t : public var_base_op_t<Base>
 // END BINARY_OP_T
 {
 public:
+   // BEGIN OP2ENUM
+   virtual OpCode op2enum(void) const override = 0;
+   // END OP2ENUM
    //
    // BEGIN N_ARG
    size_t n_arg(void) const override {  return 2; }

@@ -41,6 +41,15 @@ The last character in the name for a unary operator is
 For example the name ``sin_v`` corresponding to the sine function
 of a variable.
 
+op2enum
+*******
+is the enum value corresponding to this operator; i.e., the inverse of
+:ref:`var_enum2instance-name` .
+{xrst_literal
+   // BEGIN OP2ENUM
+   // END OP2ENUM
+}
+
 n_arg
 *****
 The number of arguments for a unary operator is one:
@@ -314,13 +323,16 @@ template <class Base> class var_unary_op_t : public var_base_op_t<Base>
 // END UNARY_OP_T
 {
 public:
+   // BEGIN OP2ENUM
+   virtual OpCode op2enum(void) const override = 0;
+   // END OP2ENUM
    //
    // BEGIN N_ARG
-   size_t n_arg(void) const override {  return 2; }
+   size_t n_arg(void) const override {  return 1; }
    // END N_ARG
    //
    // BEGIN N_RES
-   size_t n_res(void) const override = 0;
+   virtual size_t n_res(void) const override = 0;
    // END N_RES
    //
    // BEGIN FORWARD
