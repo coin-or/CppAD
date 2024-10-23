@@ -25,13 +25,6 @@ index_page_name=$(\
 version=`$sed -n -e '/^SET( *cppad_version *"[0-9.]*"/p' CMakeLists.txt | \
    $sed -e 's|.*"\([^"]*\)".*|\1|'`
 #
-# prefix
-eval $($grep '^prefix' bin/get_optional.sh)
-if echo $prefix | $grep '^[^/]' > /dev/null
-then
-   prefix="$(pwd)/$prefix"
-fi
-#
 # build
 if [ ! -e 'build' ]
 then
@@ -48,9 +41,6 @@ git ls-files -z | xargs -0 tar -czf build/cppad-$version/tar.tgz
 cd build/cppad-$version
 tar -xzf tar.tgz
 rm tar.tgz
-#
-# bin/get_optional
-$sed -i -e "s|^prefix=.*|prefix=$prefix|" bin/get_optional.sh
 #
 #  build/cppad-version/build/html
 bin/run_xrst.sh -dev
