@@ -30,7 +30,7 @@ i.e. the row index in *taylor* corresponding to *z* .
 
 arg
 ***
-is the vector of indices for this operator.
+is the vector of argument indices for this operator.
 
 i_x
 ===

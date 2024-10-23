@@ -357,6 +357,30 @@ void forward1(
             p, q, i_var, arg, parameter, J, taylor
          );
          break;
+
+         // BEGIN_SORT_THIS_LINE_PLUS_1
+         case EqppOp:
+         case EqpvOp:
+         case EqvvOp:
+         case LeppOp:
+         case LepvOp:
+         case LevpOp:
+         case LevvOp:
+         case LtppOp:
+         case LtpvOp:
+         case LtvpOp:
+         case LtvvOp:
+         case NeppOp:
+         case NepvOp:
+         case NevvOp:
+         // END_SORT_THIS_LINE_MINUS_1
+         if( p == 0 ) op_class::compare<Base>(
+            op, arg, parameter, J, taylor, itr.op_index(),
+            compare_change_count,
+            compare_change_number,
+            compare_change_op_index
+         );
+         break;
          // -------------------------------------------------
 
          case CExpOp:
@@ -392,40 +416,6 @@ void forward1(
          case EndOp:
          CPPAD_ASSERT_NARG_NRES(op, 0, 0);
          more_operators = false;
-         break;
-         // -------------------------------------------------
-
-         case EqppOp:
-         if( compare_change_count )
-         {  forward_eqpp_op_0(
-               compare_change_number, arg, parameter
-            );
-            {  if( compare_change_count == compare_change_number )
-                  compare_change_op_index = itr.op_index();
-            }
-         }
-         break;
-         // -------------------------------------------------
-
-         case EqpvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_eqpv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case EqvvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_eqvv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
          break;
          // -------------------------------------------------
 
@@ -521,128 +511,6 @@ void forward1(
             load_op2var.data(),
             taylor
          );
-         break;
-         // -------------------------------------------------
-
-         case LeppOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_lepp_op_0(
-               compare_change_number, arg, parameter
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LepvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_lepv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LevpOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_levp_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LevvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_levv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LtppOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_ltpp_op_0(
-               compare_change_number, arg, parameter
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LtpvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_ltpv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LtvpOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_ltvp_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case LtvvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_ltvv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case NeppOp:
-         if( compare_change_count )
-         {  forward_nepp_op_0(
-               compare_change_number, arg, parameter
-            );
-            {  if( compare_change_count == compare_change_number )
-                  compare_change_op_index = itr.op_index();
-            }
-         }
-         break;
-         // -------------------------------------------------
-
-         case NepvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_nepv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
-         break;
-         // -------------------------------------------------
-
-         case NevvOp:
-         if( ( p == 0 ) && ( compare_change_count > 0 ) )
-         {  forward_nevv_op_0(
-               compare_change_number, arg, parameter, J, taylor
-            );
-            if( compare_change_count == compare_change_number )
-               compare_change_op_index = itr.op_index();
-         }
          break;
          // -------------------------------------------------
 

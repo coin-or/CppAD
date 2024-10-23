@@ -88,9 +88,10 @@ can be used to compute any order reverse mode results:
 Derived Documentation
 *********************
 {xrst_toc_table
-   include/cppad/local/op_class/enum2op.hpp
    include/cppad/local/op_class/var_unary_op.hpp
    include/cppad/local/op_class/var_binary_op.hpp
+   include/cppad/local/op_class/enum2op.hpp
+   include/cppad/local/op_class/compare.hpp
 }
 
 {xrst_end var_base_op_t}
