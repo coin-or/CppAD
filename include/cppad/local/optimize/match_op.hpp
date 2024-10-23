@@ -78,7 +78,7 @@ increases with each call to match_op.
 erf
 ===
 The operators ``ErfOp`` and ``ErfcOp`` have
-three arguments, but only one true argument (the others are always the same).
+two arguments, but only one true argument (the others is always the same).
 
 hash_table_op
 *************
@@ -193,9 +193,7 @@ bool match_op(
    // num_arg
    size_t num_arg = NumArg(op);
    CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
-   CPPAD_ASSERT_UNKNOWN(
-      (num_arg < 3) || ( (num_arg == 3) && (op == ErfOp || op == ErfcOp) )
-   );
+   CPPAD_ASSERT_UNKNOWN( num_arg < 3 );
    //
    arg_is_variable(op, arg, variable);
    CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );

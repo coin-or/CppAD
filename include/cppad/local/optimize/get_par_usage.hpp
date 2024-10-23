@@ -270,6 +270,8 @@ void get_par_usage(
 
          // cases where only second argument is a parameter
          case DivvpOp:
+         case ErfOp:
+         case ErfcOp:
          case LevpOp:
          case LdpOp:
          case LtvpOp:
@@ -281,8 +283,6 @@ void get_par_usage(
          break;
 
          // cases where second and thrid arguments are parameters
-         case ErfOp:
-         case ErfcOp:
          case StppOp:
          CPPAD_ASSERT_UNKNOWN( 3 <= NumArg(op) )
          par_usage[arg[1]] = true;

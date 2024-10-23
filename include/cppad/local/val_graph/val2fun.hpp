@@ -300,9 +300,6 @@ void ADFun<Base, RecBase>::val2fun(
    for(size_t i = 1; i < val_con_vec.size(); ++i)
       rec_con_index[i] = rec.put_con_par( val_con_vec[i] );
    //
-   // zero_index
-   addr_t zero_index = rec.put_con_par( Base(0.0) );
-   //
    // two_sqrt_pi_index: 2 / sqrt(pi)
    addr_t two_sqrt_pi_index = rec.put_con_par(
       Base(1.0) / sqrt( atan( Base(1.0) ) )
@@ -447,9 +444,8 @@ void ADFun<Base, RecBase>::val2fun(
                // erf
                case local::val_graph::erf_op_enum:
                {  tmp_addr = rec.PutOp(local::ErfOp);
-                  CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
+                  CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 2 );
                   rec.PutArg( fun_arg[0] );
-                  rec.PutArg( zero_index );
                   rec.PutArg( two_sqrt_pi_index );
                }
                break;
@@ -457,9 +453,8 @@ void ADFun<Base, RecBase>::val2fun(
                // erfc
                case local::val_graph::erfc_op_enum:
                {  tmp_addr = rec.PutOp(local::ErfcOp);
-                  CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
+                  CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 2 );
                   rec.PutArg( fun_arg[0] );
-                  rec.PutArg( zero_index );
                   rec.PutArg( two_sqrt_pi_index );
                }
                break;

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -392,9 +392,8 @@ void for_hes(
 
          case ErfOp:
          case ErfcOp:
-         // arg[1] is always the parameter 0
-         // arg[2] is always the parameter 2 / sqrt(pi)
-         CPPAD_ASSERT_NARG_NRES(op, 3, 5);
+         // arg[1] is always the parameter 2 / sqrt(pi)
+         CPPAD_ASSERT_NARG_NRES(op, 2, 5);
          sparse::for_hes_nl_unary_op(
             np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
          );

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FOR_JAC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <set>
@@ -331,9 +331,8 @@ void for_jac(
 
          case ErfOp:
          case ErfcOp:
-         // arg[1] is always the parameter 0
-         // arg[0] is always the parameter 2 / sqrt(pi)
-         CPPAD_ASSERT_NARG_NRES(op, 3, 5);
+         // arg[1] is always the parameter 2 / sqrt(pi)
+         CPPAD_ASSERT_NARG_NRES(op, 2, 5);
          sparse::for_jac_unary_op(
             i_var, size_t(arg[0]), var_sparsity
          );

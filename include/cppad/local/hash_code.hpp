@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_HASH_CODE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/core/base_hash.hpp>
 /*!
@@ -217,7 +217,7 @@ unsigned short local_hash_code(
       case SqrtOp:
       case TanOp:
       case TanhOp:
-      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == ErfOp );
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == ErfOp || op == ErfcOp );
       v = reinterpret_cast<const unsigned short*>(arg + 0);
       i = short_addr_t;
       while(i--)

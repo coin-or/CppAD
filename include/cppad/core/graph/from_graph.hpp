@@ -835,16 +835,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
             case erf_graph_op:
             i_result = rec.PutOp(local::ErfOp);
-            CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
+            CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 2 );
             //
             // arg[0] = variable index for function argument
             rec.PutArg( arg[0] );
             //
-            // parameter[ arg[1] ] = 0.0
-            i_par = rec.put_con_par( Base(0.0) );
-            rec.PutArg( i_par );
-            //
-            // parameter[ arg[2] ] = 2 / sqrt(pi)
+            // parameter[ arg[1] ] = 2 / sqrt(pi)
             i_par = rec.put_con_par(Base(
                1.0 / std::sqrt( std::atan(1.0) )
             ));
@@ -854,16 +850,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
             case erfc_graph_op:
             i_result = rec.PutOp(local::ErfcOp);
-            CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
+            CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 2 );
             //
             // arg[0] = variable index for function argument
             rec.PutArg( arg[0] );
             //
-            // parameter[ arg[1] ] = 0.0
-            i_par = rec.put_con_par( Base(0.0) );
-            rec.PutArg( i_par );
-            //
-            // parameter[ arg[2] ] = 2 / sqrt(pi)
+            // parameter[ arg[1] ] = 2 / sqrt(pi)
             i_par = rec.put_con_par(Base(
                1.0 / std::sqrt( std::atan(1.0) )
             ));

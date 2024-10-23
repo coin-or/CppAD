@@ -594,8 +594,8 @@ inline size_t NumArg( OpCode op)
       /* EqppOp   */ 2,
       /* EqpvOp   */ 2,
       /* EqvvOp   */ 2,
-      /* ErfOp    */ 3,
-      /* ErfcOp   */ 3,
+      /* ErfOp    */ 2,
+      /* ErfcOp   */ 2,
       /* ExpOp    */ 1,
       /* Expm1Op  */ 1,
       /* FunapOp  */ 1,
@@ -1181,10 +1181,9 @@ void printOp(
 
       case ErfOp:
       case ErfcOp:
-      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-      // arg[1] points to the parameter 0
-      // arg[2] points to the parameter 2 / sqrt(pi)
-      printOpField(os, "  v=", arg[0], ncol);
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+      // arg[1] points to the parameter 2 / sqrt(pi)
+      printOpField(os, "  v=", arg[1], ncol);
       break;
 
       case ParOp:
@@ -1470,10 +1469,9 @@ void arg_is_variable(
 
       case ErfOp:
       case ErfcOp:
-      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
       is_variable[0] = true;
-      is_variable[1] = false; // parameter index corresponding to zero
-      is_variable[2] = false; // parameter index corresponding to one
+      is_variable[1] = false; // parameter index corresponding to 2 / sqrt(pi)
       break;
 
       // --------------------------------------------------------------------

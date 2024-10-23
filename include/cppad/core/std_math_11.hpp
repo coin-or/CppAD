@@ -2,7 +2,7 @@
 # define CPPAD_CORE_STD_MATH_11_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 -------------------------------------------------------------------------------
@@ -840,17 +840,13 @@ namespace CppAD {
             op = local::ErfcOp;
 
            // variable argument
-         CPPAD_ASSERT_UNKNOWN( local::NumArg(op) == 3 );
+         CPPAD_ASSERT_UNKNOWN( local::NumArg(op) == 2 );
 
          // arg[0] = argument to erf function
          tape->Rec_.PutArg(taddr_);
 
-         // arg[1] = zero
-         addr_t p  = tape->Rec_.put_con_par( Base(0.0) );
-         tape->Rec_.PutArg(p);
-
-         // arg[2] = 2 / sqrt(pi)
-         p = tape->Rec_.put_con_par(Base(
+         // arg[1] = 2 / sqrt(pi)
+         addr_t p = tape->Rec_.put_con_par(Base(
             1.0 / std::sqrt( std::atan(1.0) )
          ));
          tape->Rec_.PutArg(p);

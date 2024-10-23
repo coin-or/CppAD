@@ -3,12 +3,12 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/op/mul_op.hpp>
-# include <cppad/local/op/sub_op.hpp>
 # include <cppad/local/op/exp_op.hpp>
+# include <cppad/local/op/neg_op.hpp>
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -48,13 +48,10 @@ The auxillary results are called y_j have index i_z - j.
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
-arg[1]: is the parameter index corresponding to the value zero.
-\n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
-parameter[ arg[1] ] is the value zero,
-and parameter[ arg[2] ] is the value 2 / sqrt(pi).
+parameter[ arg[1] ] is the value 2 / sqrt(pi).
 
 \param cap_order
 maximum number of orders that will fit in the taylor array.
@@ -96,7 +93,7 @@ void forward_erf_op(
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
    CPPAD_ASSERT_UNKNOWN( q < cap_order );
    CPPAD_ASSERT_UNKNOWN( p <= q );
@@ -116,15 +113,13 @@ void forward_erf_op(
    forward_mulvv_op(p, q, i_z+0, addr, parameter, cap_order, taylor);
 
    // z_1 = - x * x
-   addr[0] = arg[1];           // zero
-   addr[1] = addr_t( i_z );    // z_0
-   forward_subpv_op(p, q, i_z+1, addr, parameter, cap_order, taylor);
+   forward_neg_op(p, q, i_z+1, i_z+0, cap_order, taylor);
 
    // z_2 = exp( - x * x )
    forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
-   addr[0] = arg[2];            // 2 / sqrt(pi)
+   addr[0] = arg[1];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
    forward_mulpv_op(p, q, i_z+3, addr, parameter, cap_order, taylor);
 
@@ -184,13 +179,10 @@ The auxillary results are called y_j have index i_z - j.
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
-arg[1]: is the parameter index corresponding to the value zero.
-\n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
-parameter[ arg[1] ] is the value zero,
-and parameter[ arg[2] ] is the value 2 / sqrt(pi).
+parameter[ arg[1] ] is the value 2 / sqrt(pi).
 
 \param cap_order
 maximum number of orders that will fit in the taylor array.
@@ -221,7 +213,7 @@ void forward_erf_op_0(
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
    CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
    CPPAD_ASSERT_UNKNOWN(
@@ -240,15 +232,13 @@ void forward_erf_op_0(
    forward_mulvv_op_0(i_z+0, addr, parameter, cap_order, taylor);
 
    // z_1 = - x * x
-   addr[0] = arg[1];       // zero
-   addr[1] = addr_t(i_z);  // z_0
-   forward_subpv_op_0(i_z+1, addr, parameter, cap_order, taylor);
+   forward_neg_op_0(i_z+1, i_z+0, cap_order, taylor);
 
    // z_2 = exp( - x * x )
    forward_exp_op_0(i_z+2, i_z+1, cap_order, taylor);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
-   addr[0] = arg[2];          // 2 / sqrt(pi)
+   addr[0] = arg[1];          // 2 / sqrt(pi)
    addr[1] = addr_t(i_z + 2); // z_2
    forward_mulpv_op_0(i_z+3, addr, parameter, cap_order, taylor);
 
@@ -292,13 +282,10 @@ The auxillary results have index i_z - j for j = 0 , ... , 4
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
-arg[1]: is the parameter index corresponding to the value zero.
-\n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
-parameter[ arg[1] ] is the value zero,
-and parameter[ arg[2] ] is the value 2 / sqrt(pi).
+parameter[ arg[1] ] is the value 2 / sqrt(pi).
 
 \param cap_order
 maximum number of orders that will fit in the taylor array.
@@ -350,7 +337,7 @@ void forward_erf_op_dir(
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
    CPPAD_ASSERT_UNKNOWN( q < cap_order );
    CPPAD_ASSERT_UNKNOWN( 0 < q );
@@ -370,15 +357,13 @@ void forward_erf_op_dir(
    forward_mulvv_op_dir(q, r, i_z+0, addr, parameter, cap_order, taylor);
 
    // z_1 = - x * x
-   addr[0] = arg[1];         // zero
-   addr[1] = addr_t( i_z );  // z_0
-   forward_subpv_op_dir(q, r, i_z+1, addr, parameter, cap_order, taylor);
+   forward_neg_op_dir(q, r, i_z+1, i_z+0, cap_order, taylor);
 
    // z_2 = exp( - x * x )
    forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
-   addr[0] = arg[2];            // 2 / sqrt(pi)
+   addr[0] = arg[1];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
    forward_mulpv_op_dir(q, r, i_z+3, addr, parameter, cap_order, taylor);
 
@@ -441,13 +426,10 @@ The auxillary results are called y_j have index i_z - j.
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
-arg[1]: is the parameter index corresponding to the value zero.
-\n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
-parameter[ arg[1] ] is the value zero,
-and parameter[ arg[2] ] is the value 2 / sqrt(pi).
+parameter[ arg[1] ] is the value 2 / sqrt(pi).
 
 \param cap_order
 maximum number of orders that will fit in the taylor array.
@@ -508,7 +490,7 @@ void reverse_erf_op(
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
    CPPAD_ASSERT_UNKNOWN( d < cap_order );
    CPPAD_ASSERT_UNKNOWN(
@@ -559,7 +541,7 @@ void reverse_erf_op(
    px[0] += sign * azmul(pz_4[0], z_3[0]);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
-   addr[0] = arg[2];            // 2 / sqrt(pi)
+   addr[0] = arg[1];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
    reverse_mulpv_op(
       d, i_z+3, addr, parameter, cap_order, taylor, nc_partial, partial
@@ -571,10 +553,8 @@ void reverse_erf_op(
    );
 
    // z_1 = - x * x
-   addr[0] = arg[1];           // zero
-   addr[1] = addr_t( i_z );    // z_0
-   reverse_subpv_op(
-      d, i_z+1, addr, parameter, cap_order, taylor, nc_partial, partial
+   reverse_neg_op(
+      d, i_z+1, i_z+0, cap_order, taylor, nc_partial, partial
    );
 
    // z_0 = x * x

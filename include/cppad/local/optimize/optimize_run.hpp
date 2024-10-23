@@ -698,12 +698,9 @@ bool optimize_run(
                new_arg[0] < new_var[random_itr.var2op(i_var)]
             );
             if( op == ErfOp || op == ErfcOp )
-            {  CPPAD_ASSERT_NARG_NRES(op, 3, 5);
+            {  CPPAD_ASSERT_NARG_NRES(op, 2, 5);
                // Error function is a special case
-               // second argument is always the parameter 0
-               // third argument is always the parameter 2 / sqrt(pi)
-               CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-               rec->PutArg( rec->put_con_par( Base(0.0) ) );
+               // second argument is always the parameter 2 / sqrt(pi)
                rec->PutArg( rec->put_con_par(
                   Base( 1.0 / std::sqrt( std::atan(1.0) ) )
                ) );
