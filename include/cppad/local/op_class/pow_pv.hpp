@@ -39,7 +39,9 @@ public:
       const Base*   parameter   ,
       size_t        cap_order   ,
       Base*         taylor      ) const override
-   {
+   {  // arg_tmp
+      addr_t arg_tmp[2];
+      //
       // convert from final result to first result
       i_z -= 2; // 2 = NumRes(PowpvOp) - 1;
 
@@ -50,9 +52,10 @@ public:
       CPPAD_ASSERT_UNKNOWN( p <= q );
 
       // Taylor coefficients corresponding to arguments and result
-      Base* z_0 = taylor + i_z    * cap_order;
+      Base* z_0 = taylor + i_z  * cap_order;
 
       // z_0 = log(x)
+      // even though z_0 is a parameter, put it in the taylor vector
       Base x    = parameter[ arg[0] ];
       size_t d;
       for(d = p; d <= q; d++)
@@ -70,14 +73,12 @@ public:
       );
 
       // z_1 = z_0 * y
-      addr_t adr[2];
-      // offset of z_i in taylor (as if it were a parameter); i.e., log(x)
-      adr[0] = addr_t( i_z * cap_order );
-      // offset of y in taylor (as a variable)
-      adr[1] = arg[1];
-
-      // Trick: use taylor both for the parameter vector and variable values
-      forward_mulpv_op(p, q, i_z+1, adr, taylor, cap_order, taylor);
+      // Trick: use taylor both for the parameter z_0 and variable y
+      arg_tmp[0] = addr_t( i_z * cap_order ); // offeset of z_0 in taylor
+      arg_tmp[1] = arg[1];                    // offset of y in taylor
+      mul_pv_t<Base>::get_instance()->forward(
+         p, q, i_z+1, arg_tmp, taylor, cap_order, taylor
+      );
 
       // z_2 = exp(z_1)
       // zero order case exactly same as Base type operation
@@ -88,7 +89,11 @@ public:
          p++;
       }
       if( p <= q )
-         forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+      {  arg_tmp[0]  = addr_t( i_z + 1 );
+         exp_v_t<Base>::get_instance()->forward(
+            p, q, i_z+2, arg_tmp, parameter, cap_order, taylor
+         );
+      }
    }
    //
    // forward_dir
@@ -100,7 +105,9 @@ public:
       const Base*   parameter   ,
       size_t        cap_order   ,
       Base*         taylor      ) const override
-   {
+   {  // arg_tmp
+      addr_t arg_tmp[2];
+      //
       // convert from final result to first result
       i_z -= 2; // 2 = NumRes(PowpvOp) - 1;
 
@@ -127,17 +134,18 @@ public:
       );
 
       // z_1 = z_0 * y
-      addr_t adr[2];
-      // offset of z_0 in taylor (as if it were a parameter); i.e., log(x)
-      adr[0] = addr_t( i_z * num_taylor_per_var );
-      // ofset of y in taylor (as a variable)
-      adr[1] = arg[1];
-
-      // Trick: use taylor both for the parameter vector and variable values
-      forward_mulpv_op_dir(q, r, i_z+1, adr, taylor, cap_order, taylor);
+      // Trick: use taylor both for the parameter z_0 and variable y
+      arg_tmp[0] = addr_t( i_z * num_taylor_per_var );
+      arg_tmp[1] = arg[1];
+      mul_pv_t<Base>::get_instance()->forward_dir(
+         q, r, i_z+1, arg_tmp, taylor, cap_order, taylor
+      );
 
       // z_2 = exp(z_1)
-      forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
+      arg_tmp[0] = addr_t( i_z + 1 );
+      exp_v_t<Base>::get_instance()->forward_dir(
+         q, r, i_z+2, arg_tmp, parameter, cap_order, taylor
+      );
    }
    //
    // forward_0
@@ -185,7 +193,10 @@ public:
       const Base*   taylor      ,
       size_t        nc_partial  ,
       Base*         partial     ) const override
-   {
+   {  //
+      // arg_tmp
+      addr_t arg_tmp[2];
+      //
       // convert from final result to first result
       i_z -= 2; // NumRes(PowpvOp) - 1;
 
@@ -196,8 +207,9 @@ public:
       CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
       // z_2 = exp(z_1)
-      reverse_exp_op(
-         d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
+      arg_tmp[0]  = addr_t( i_z + 1 );
+      exp_v_t<Base>::get_instance()->reverse(
+         d, i_z+2, arg_tmp, parameter, cap_order, taylor, nc_partial, partial
       );
 
       // 2DO: remove requirement that i_z * cap_order <= max addr_t value
@@ -208,12 +220,11 @@ public:
       );
 
       // z_1 = z_0 * y
-      addr_t adr[2];
-      adr[0] = addr_t( i_z * cap_order ); // offset of z_0[0] in taylor
-      adr[1] = arg[1];                    // index of y in taylor and partial
-      // use taylor both for parameter and variable values
-      reverse_mulpv_op(
-         d, i_z+1, adr, taylor, cap_order, taylor, nc_partial, partial
+      // use taylor both for parameter z_0 and variable y, z
+      arg_tmp[0] = addr_t( i_z * cap_order ); // offset of z_0[0] in taylor
+      arg_tmp[1] = arg[1];   // index of y in taylor and partial
+      mul_pv_t<Base>::get_instance()->reverse(
+         d, i_z+1, arg_tmp, taylor, cap_order, taylor, nc_partial, partial
       );
 
       // z_0 = log(x)
