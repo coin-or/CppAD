@@ -265,12 +265,8 @@ echo_log_eval cd build
 echo_log_eval tar -xzf cppad-$version.tgz
 echo_log_eval cd cppad-$version
 #
-# build/cppad-$version/build/prefix
-if [ ! -e build ]
-then
-   mkdir build
-fi
-echo_log_eval cp -r ../prefix build/prefix
+# build/cppad-$version/bin/get_optional.sh
+sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
 #
 # configure or cmake
 if [ "$use_configure" == 'yes' ]
