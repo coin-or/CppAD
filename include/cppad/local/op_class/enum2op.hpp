@@ -43,6 +43,8 @@ Prototype
 # include <cppad/local/op_class/div_pv.hpp>
 # include <cppad/local/op_class/div_vp.hpp>
 # include <cppad/local/op_class/div_vv.hpp>
+# include <cppad/local/op_class/erf_v.hpp>
+# include <cppad/local/op_class/erfc_v.hpp>
 # include <cppad/local/op_class/exp_v.hpp>
 # include <cppad/local/op_class/expm1_v.hpp>
 # include <cppad/local/op_class/log1p_v.hpp>
@@ -103,6 +105,8 @@ var_base_op_t<Base>* enum2op(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(div_pv, DivpvOp)
       CPPAD_OP_CLASS_INSTANCE(div_vp, DivvpOp)
       CPPAD_OP_CLASS_INSTANCE(div_vv, DivvvOp)
+      CPPAD_OP_CLASS_INSTANCE(erf_v, ErfOp)
+      CPPAD_OP_CLASS_INSTANCE(erfc_v, ErfcOp)
       CPPAD_OP_CLASS_INSTANCE(exp_v, ExpOp)
       CPPAD_OP_CLASS_INSTANCE(expm1_v, Expm1Op)
       CPPAD_OP_CLASS_INSTANCE(log1p_v, Log1pOp)

@@ -289,6 +289,8 @@ void reverse(
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
+         case ErfOp:
+         case ErfcOp:
          case ExpOp:
          case Expm1Op:
          case Log1pOp:
@@ -365,14 +367,6 @@ void reverse(
          );
          break;
 
-         // --------------------------------------------------
-
-         case ErfOp:
-         case ErfcOp:
-         reverse_erf_op(
-            op, d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
          // --------------------------------------------------
 
          case InvOp:

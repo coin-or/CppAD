@@ -327,6 +327,8 @@ void forward0(
          case DivpvOp:
          case DivvpOp:
          case DivvvOp:
+         case ErfOp:
+         case ErfcOp:
          case ExpOp:
          case Expm1Op:
          case Log1pOp:
@@ -412,12 +414,6 @@ void forward0(
          case EndOp:
          CPPAD_ASSERT_NARG_NRES(op, 0, 0);
          more_operators = false;
-         break;
-         // -------------------------------------------------
-
-         case ErfOp:
-         case ErfcOp:
-         forward_erf_op_0(op, i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 
