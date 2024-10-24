@@ -8,6 +8,7 @@
 {xrst_begin_parent var_unary_op_t dev}
 {xrst_spell
    Euler
+   erfc
    expm
    neg
 }
@@ -52,7 +53,8 @@ is the enum value corresponding to this operator; i.e., the inverse of
 
 n_arg
 *****
-The number of arguments for a unary operator is one:
+The number of arguments for a unary operator is usually one
+(but the erf and erfc functions are an exception):
 {xrst_literal
    // BEGIN N_ARG
    // END N_ARG
@@ -328,7 +330,7 @@ public:
    // END OP2ENUM
    //
    // BEGIN N_ARG
-   size_t n_arg(void) const override {  return 1; }
+   virtual size_t n_arg(void) const override = 0;
    // END N_ARG
    //
    // BEGIN N_RES

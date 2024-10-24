@@ -27,7 +27,11 @@ public:
       return &instance;
    }
    //
-   // n_res
+   //
+   // n_arg
+   size_t n_arg(void) const override
+   {  return 1; }
+
    size_t n_res(void) const override
    {  return 2; }
    //
