@@ -17,7 +17,7 @@ public:
    OpCode op2enum(void) const override
    {  return SubvvOp; }
    //
-   // r_res
+   // n_res
    size_t n_res(void) const override
    {  return 1; }
    //

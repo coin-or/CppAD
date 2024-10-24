@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // used by the sparse operators
@@ -26,7 +26,6 @@
 # include <cppad/local/op/csum_op.hpp>
 # include <cppad/local/op/discrete_op.hpp>
 # include <cppad/local/op/div_op.hpp>
-# include <cppad/local/op/erf_op.hpp>
 # include <cppad/local/op/exp_op.hpp>
 # include <cppad/local/op/expm1_op.hpp>
 # include <cppad/local/op/load_op.hpp>

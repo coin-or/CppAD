@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OP_ERF_OP_HPP
-# define CPPAD_LOCAL_OP_ERF_OP_HPP
+# ifndef CPPAD_LOCAL_OP_CLASS_ERF_HPP
+# define CPPAD_LOCAL_OP_CLASS_ERF_HPP
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
@@ -11,7 +11,7 @@
 # include <cppad/local/op/neg_op.hpp>
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace op_class {
 /*!
 \file erf_op.hpp
 Forward and reverse mode calculations for z = erf(x) or erfc(x).
@@ -567,5 +567,5 @@ void reverse_erf_op(
 }
 
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+}}} // END namespace
 # endif // CPPAD_ERF_OP_INCLUDED

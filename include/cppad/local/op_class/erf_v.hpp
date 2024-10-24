@@ -4,7 +4,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include <cppad/local/op/erf_op.hpp>
+# include <cppad/local/op_class/erf.hpp>
 
 // BEGIN NAMESPACE
 namespace CppAD { namespace local { namespace op_class {
