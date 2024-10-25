@@ -19,7 +19,7 @@ The Variable Binary Operator Class
 
 Syntax
 ******
-| ``CppAD::local::op_class::var_binary_op_t`` *var_binary_op*
+| ``CppAD::local::op_class::var_binary_op_t`` < *Base* >  *var_binary_op*
 
 Prototype
 *********
@@ -37,7 +37,8 @@ type *Base* .
 Derived Operator Name
 *********************
 A derived class operator name corresponding to *var_binary_op*
-has two operands and one result.
+has two operands and one primary result.
+(The pow_pv and pow_vv operators have two auxiliary results.)
 The last two characters in the name for the operator are
 ``p`` (for parameter) or ``v`` (for variable).
 For example the name ``add_vp`` corresponding to addition
@@ -54,14 +55,16 @@ is the enum value corresponding to this operator; i.e., the inverse of
 
 n_arg
 *****
-The number of arguments for a binary operator is two:
+The number of arguments for a binary operator is always two:
 {xrst_literal
    // BEGIN N_ARG
    // END N_ARG
 }
+
 n_res
 *****
-The number of results for a binary operand is one or three:
+The number of results for a binary operand is usually one,
+but the pow_pv and pow_vv operators are exceptions:
 {xrst_literal
    // BEGIN N_RES
    // END N_RES
@@ -74,8 +77,8 @@ have three results.
 The second and third results and are called auxiliary results.
 They are used to make computation of the derivatives simpler.
 
-Documentation
-*************
+Derivative Calculation
+**********************
 {xrst_toc_table}
 
 Operators
@@ -103,6 +106,69 @@ Operators
    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end var_binary_op_t}
+# ----------------------------------------------------------------------------
+{xrst_begin var_pow dev}
+{xrst_spell
+   pv
+   vv
+}
+
+The Power Function with Variable Exponent
+#########################################
+
+Syntax
+******
+| ``CppAD::local::op_class::pow_pv_t`` < *Base* > var_pow_op
+| ``CppAD::local::op_class::pow_vv_t`` < *Base* > var_pow_op
+
+Prototype
+*********
+
+pow_pv
+======
+{xrst_literal ,
+   include/cppad/local/op_class/pow_pv.hpp
+   BEGIN _NAMESPACE, END _NAMESPACE
+   BEGIN POW_PV_T , END POW_PV_T
+}
+
+pow_vv
+======
+{xrst_literal ,
+   include/cppad/local/op_class/pow_vv.hpp
+   BEGIN _NAMESPACE, END _NAMESPACE
+   BEGIN POW_VV_T , END POW_VV_T
+}
+
+Base
+****
+is the base type for the operator; i.e., this operation was recorded
+using ``AD`` < *Base* > and computations by these operators are done using
+type *Base* .
+
+
+op2enum
+*******
+is the enum value corresponding to this operator; i.e., the inverse of
+:ref:`var_enum2op-name` .
+
+n_res
+*****
+The number of results for the these operators and is always three:
+{xrst_literal ,
+   include/cppad/local/op_class/pow_vv.hpp
+   // BEGIN _N_RES , // END _N_RES
+}
+
+.. math::
+
+   z_0 &= \log( x )
+   \\
+   z_1 &= \log( x ) \cdot y
+   \\
+   z_2 & = \exp \left[ \log( x ) \cdot y \right]
+
+{xrst_end var_pow}
 # ----------------------------------------------------------------------------
 {xrst_begin var_binary_forward dev}
 {xrst_spell

@@ -7,8 +7,13 @@
 
 # include <cppad/local/op_class/var_binary_op.hpp>
 
-namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
+// BEGIN _NAMESPACE
+namespace CppAD { namespace local { namespace op_class {
+// END _NAMESPACE
+
+// BEGIN POW_PV_T
 template <class Base> class pow_pv_t : public var_binary_op_t<Base>
+// END POW_PV_T
 {
 public:
    //

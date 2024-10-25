@@ -10,9 +10,9 @@
 namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 
-// BEGIN ERF_V
-template <class Base> class erf_v_t : public var_base_op_t<Base>
-// END ERF_V
+// BEGIN ERF_V_T
+template <class Base> class erf_v_t : public var_unary_op_t<Base>
+// END ERF_V_T
 {
 public:
    //
@@ -20,13 +20,16 @@ public:
    OpCode op2enum(void) const override
    {  return ErfOp; }
    //
-   // n_arg
+   //
+   // BEGIN N_ARG
    size_t n_arg(void) const override
    {  return 2; }
+   // END N_ARG
    //
-   // r_res
+   // BEGIN N_RES
    size_t n_res(void) const override
    {  return 5; }
+   // END N_RES
    //
    // get_instance
    static erf_v_t* get_instance(void)

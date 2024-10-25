@@ -18,7 +18,7 @@ The Variable Unary Operator Class
 
 var_unary_op
 ************
-| ``CppAD::local::op_class::var_unary_op_t`` *var_unary_op*
+| ``CppAD::local::op_class::var_unary_op_t`` < *Base* > *var_unary_op*
 
 Prototype
 *********
@@ -36,7 +36,7 @@ type *Base* .
 Derived Operator Name
 *********************
 A derived class operator name corresponding to *var_unary_op*
-has one operand and one or two results.
+has one primary operand and one primary result.
 The last character in the name for a unary operator is
 ``v`` (for variable).
 For example the name ``sin_v`` corresponding to the sine function
@@ -54,7 +54,7 @@ is the enum value corresponding to this operator; i.e., the inverse of
 n_arg
 *****
 The number of arguments for a unary operator is usually one
-(but the erf and erfc functions are an exception):
+(but the erf and erfc functions are exceptions):
 {xrst_literal
    // BEGIN N_ARG
    // END N_ARG
@@ -62,23 +62,27 @@ The number of arguments for a unary operator is usually one
 
 n_res
 *****
-The number of results for a unary operand is one or two:
+The number of results for a unary operand is usually one or two
+(but the erf and erfc functions are exceptions):
 {xrst_literal
    // BEGIN N_RES
    // END N_RES
 }
 
-Auxiliary Result
-****************
-If a unary operator has two results, the second result
-does not correspond to the name of the operator and is called the
-auxiliary result. It is used to speed up computation of the derivatives.
+Auxiliary Results
+*****************
+If a unary operator has more than one result,
+the first result is called the primary result and the others are called
+auxiliary results.
+The auxiliary results. are used to speed up computation of the derivatives.
 For example, the auxiliary result for ``sin_v``
 is the value of the cosine function at the same argument.
 
-Documentation
-*************
-{xrst_toc_table}
+Derivative Calculation
+**********************
+{xrst_toc_table
+   include/cppad/local/op_class/erf.hpp
+}
 
 Operators
 *********
@@ -97,6 +101,8 @@ Operators
    atanh_v, variable, inverse hyperbolic tangent of x
    cos_v,   variable, cosine of x
    cosh_v,  variable, hyperbolic cosine of x
+   erf_v,   variable, error function of x
+   erfc_v,  variable, complementary error function of x
    exp_v,   variable, Euler's number to the power x
    expm1_v, variable, (Euler's number to the power x) minus one
    log1p_v, variable, logarithm base Euler's number of (one plus x)
@@ -114,6 +120,7 @@ Operators
 # ----------------------------------------------------------------------------
 {xrst_begin var_unary_forward dev}
 {xrst_spell
+   erfc
    tpv
 }
 
@@ -207,23 +214,28 @@ Input
 #. If *x* is a variable,
    the Taylor coefficients for variable *x* up to order *q* .
 #. The Taylor coefficients for variable *z* up to order *p* ``-1`` .
-#. If this operator has an auxiliary result,
-   the Taylor coefficients for the variable with index *i_z* ``-1``
-   up to order *p* ``-1`` .
+#. If this operator has auxiliary results,
+   the Taylor coefficients for the variable with index *i_z* - *j*
+   for *j* = 1 up to the number of auxiliary results,
+   and up to order *p* ``-1`` .
 
 Output
 ======
 The Taylor coefficients for variable *z*
 from order *p* up to order *q*
 (and in the case of ``forward_dir`` for all the *r* directions).
-If this operator has an auxiliary result,
-the Taylor coefficients for the variable with index *i_z* ``-1``
-up to order *q* .
+If this operator has an auxiliary results,
+the Taylor coefficients for the variable with index *i_z* - *j*
+for *j* = 1 up to the number of auxiliary results,
+and up to order *q* .
 
 
 {xrst_end var_unary_forward}
 ------------------------------------------------------------------------------
 {xrst_begin var_unary_reverse dev}
+{xrst_spell
+   erfc
+}
 
 Reverse Mode Variable Unary Operators
 #####################################
@@ -247,8 +259,8 @@ Prototype
 
 y
 *
-If an operator has an auxiliary result, *y* is the variable index
-for the auxiliary result is *i_z* ``- 1`` .
+If an operator has an auxiliary results,
+*y* is the vector of auxiliary results.
 Otherwise, *y* is just a place holder and does not affect the
 value of H or G.
 
@@ -260,8 +272,8 @@ of the variables up to variable index *i_z* .
 H
 *
 We use :math:`H(x, w, \ldots )` to denote the scalar valued function
-of the variables up to variable index *i_z* ``-1``
-(index *i_z* ``-2`` if this operator has an auxiliary variable) defined by
+of the variables up to variable index *i_z* - *n_res*
+where *n_res* is the number of results.
 
 .. math::
 
@@ -306,9 +318,10 @@ The array *partial* contains the
 partial derivatives of :math:`H(x, w, \ldots)`.
 The partial derivative for the variable with index *i_z* is unspecified
 (may have been used for temporary storage).
-If this operator has an auxiliary variable,
-The partial derivative for the variable with index *i_z* ``-1``
-is also unspecified.
+If this operator has an auxiliary variables,
+The partial derivative for the variable with index *i_z* - *j*``-1``
+for *j* < *n_res* is also unspecified.
+
 
 
 {xrst_end var_unary_reverse}

@@ -1,85 +1,113 @@
 # ifndef CPPAD_LOCAL_OP_CLASS_ERF_HPP
 # define CPPAD_LOCAL_OP_CLASS_ERF_HPP
-
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
+/*
+{xrst_begin var_erf dev}
+{xrst_spell
+   erfc
+}
+
+The Error Function and Its Complement
+#####################################
+
+Syntax
+******
+| ``CppAD::local::op_class::erf_v_t`` < *Base* >  *var_erf_op*
+| ``CppAD::local::op_class::erfc_v_t`` < *Base* >  *var_erf_op*
+
+Prototype
+*********
+
+erf_v
+=====
+{xrst_literal ,
+   include/cppad/local/op_class/erf_v.hpp
+   BEGIN NAMESPACE, END NAMESPACE
+   BEGIN ERF_V_T , END ERF_V_T
+}
+
+erfc_v
+======
+{xrst_literal ,
+   include/cppad/local/op_class/erfc_v.hpp
+   BEGIN NAMESPACE, END NAMESPACE
+   BEGIN ERFC_V_T , END ERFC_V_T
+}
+
+Base
+****
+is the base type for the operator; i.e., this operation was recorded
+using ``AD`` < *Base* > and computations by these operators are done using
+type *Base* .
+
+
+op2enum
+*******
+is the enum value corresponding to this operator; i.e., the inverse of
+:ref:`var_enum2op-name` .
+
+n_arg
+*****
+The number of arguments for the these operators and is always two,
+we use *x* to denote the first argument,
+the second argument is the constant 2 / sqrt(pi):
+{xrst_literal
+   include/cppad/local/op_class/erf_v.hpp
+   // BEGIN N_ARG
+   // END N_ARG
+}
+
+n_res
+*****
+The number of results for the these operators and is always five:
+{xrst_literal ,
+   include/cppad/local/op_class/erf_v.hpp
+   // BEGIN N_RES , // END N_RES
+}
+
+.. math::
+
+   z_0 &= x \cdot x
+   \\
+   z_1 &= - x \cdot x
+   \\
+   z_2 &= \exp ( - x \cdot x )
+   \\
+   z_3 &= \exp ( - x \cdot x ) \cdot 2 / \sqrt{\pi}
+   \\
+   z_3 &= \exp ( - x \cdot x ) \cdot 2 / \sqrt{\pi}
+
+For the error function operator erf_v, the last result is
+
+.. math::
+
+   z_4 = \int_0^x \R{d} t \exp ( - t \cdot t ) \cdot 2 / \sqrt{\pi}
+
+For the complementary error function operator erfc_v ,  the last result is
+
+.. math::
+
+   z_4 = 1 - \int_0^x \R{d} t \exp ( - t \cdot t ) \cdot 2 / \sqrt{\pi}
+
+
+
+
+{xrst_end var_erf}
+-----------------------------------------------------------------------------
+*/
 
 # include <cppad/local/op/mul_op.hpp>
 # include <cppad/local/op/exp_op.hpp>
 # include <cppad/local/op/neg_op.hpp>
 
 
-namespace CppAD { namespace local { namespace op_class {
-/*!
-\file erf_op.hpp
-Forward and reverse mode calculations for z = erf(x) or erfc(x).
-*/
+namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
 
-/*!
-Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.
-
-The C++ source code corresponding to this operation is one of
-\verbatim
-   z = erf(x)
-   z = erfc(x)
-\endverbatim
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type Base.
-
-\param op
-must be either ErfOp or ErfcOp and indicates if this is
-z = erf(x) or z = erfc(x).
-
-\param p
-lowest order of the Taylor coefficients that we are computing.
-
-\param q
-highest order of the Taylor coefficients that we are computing.
-
-\param i_z
-variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in taylor corresponding to z.
-The auxillary results are called y_j have index i_z - j.
-
-\param arg
-arg[0]: is the variable index corresponding to x.
-\n
-arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
-
-\param parameter
-parameter[ arg[1] ] is the value 2 / sqrt(pi).
-
-\param cap_order
-maximum number of orders that will fit in the taylor array.
-
-\param taylor
-\b Input:
-taylor [ size_t(arg[0]) * cap_order + k ]
-for k = 0 , ... , q,
-is the k-th order Taylor coefficient corresponding to x.
-\n
-\b Input:
-taylor [ i_z * cap_order + k ]
-for k = 0 , ... , p - 1,
-is the k-th order Taylor coefficient corresponding to z.
-\n
-\b Input:
-taylor [ ( i_z - j) * cap_order + k ]
-for k = 0 , ... , p-1,
-and j = 0 , ... , 4,
-is the k-th order Taylor coefficient corresponding to the j-th result for z.
-\n
-\b Output:
-taylor [ (i_z-j) * cap_order + k ],
-for k = p , ... , q,
-and j = 0 , ... , 4,
-is the k-th order Taylor coefficient corresponding to the j-th result for z.
-
-*/
+//
+// forward_erf_op
 template <class Base>
 void forward_erf_op(
    OpCode        op          ,
@@ -153,55 +181,8 @@ void forward_erf_op(
          z_4[j] += sign * (Base(double(k)) / base_j) * x[k] * z_3[j-k];
    }
 }
-
-/*!
-Zero order Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.
-
-The C++ source code corresponding to this operation one of
-\verbatim
-   z = erf(x)
-   z = erfc(x)
-\endverbatim
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type Base.
-
-\param op
-must be either ErfOp or ErfcOp and indicates if this is
-z = erf(x) or z = erfc(x).
-
-\param i_z
-variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in taylor corresponding to z.
-The auxillary results are called y_j have index i_z - j.
-
-\param arg
-arg[0]: is the variable index corresponding to x.
-\n
-arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
-
-\param parameter
-parameter[ arg[1] ] is the value 2 / sqrt(pi).
-
-\param cap_order
-maximum number of orders that will fit in the taylor array.
-
-\param taylor
-\b Input:
-taylor [ size_t(arg[0]) * cap_order + 0 ]
-is the zero order Taylor coefficient corresponding to x.
-\n
-\b Input:
-taylor [ i_z * cap_order + 0 ]
-is the zero order Taylor coefficient corresponding to z.
-\n
-\b Output:
-taylor [ (i_z-j) * cap_order + 0 ],
-for j = 0 , ... , 4,
-is the zero order Taylor coefficient for j-th result corresponding to z.
-
-*/
+//
+// forward_erf_op_0
 template <class Base>
 void forward_erf_op_0(
    OpCode        op          ,
@@ -250,80 +231,8 @@ void forward_erf_op_0(
    else
       z_4[0] = erfc(x[0]);
 }
-/*!
-Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.
-
-The C++ source code corresponding to this operation is one of
-\verbatim
-   z = erf(x)
-   z = erfc(x)
-\endverbatim
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type Base.
-
-\param op
-must be either ErfOp or ErfcOp and indicates if this is
-z = erf(x) or z = erfc(x).
-
-\param q
-order of the Taylor coefficients that we are computing.
-
-\param r
-number of directions for the Taylor coefficients that we afre computing.
-
-\param i_z
-variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in taylor corresponding to z.
-The auxillary results have index i_z - j for j = 0 , ... , 4
-(and include z).
-
-\param arg
-arg[0]: is the variable index corresponding to x.
-\n
-arg[1]: is  the parameter index correspodning to the value 2 / sqrt(pi).
-
-\param parameter
-parameter[ arg[1] ] is the value 2 / sqrt(pi).
-
-\param cap_order
-maximum number of orders that will fit in the taylor array.
-
-\par tpv
-We use the notation
-<code>tpv = (cap_order-1) * r + 1</code>
-which is the number of Taylor coefficients per variable
-
-\param taylor
-\b Input: If x is a variable,
-<code>taylor [ arg[0] * tpv + 0 ]</code>,
-is the zero order Taylor coefficient for all directions and
-<code>taylor [ arg[0] * tpv + (k-1)*r + ell + 1 ]</code>,
-for k = 1 , ... , q,
-ell = 0, ..., r-1,
-is the k-th order Taylor coefficient
-corresponding to x and the ell-th direction.
-\n
-\b Input:
-taylor [ (i_z - j) * tpv + 0 ]
-is the zero order Taylor coefficient for all directions and the
-j-th result for z.
-for k = 1 , ... , q-1,
-ell = 0, ... , r-1,
-<code>
-taylor[ (i_z - j) * tpv + (k-1)*r + ell + 1]
-</code>
-is the Taylor coefficient for the k-th order, ell-th direction,
-and j-th auzillary result.
-\n
-\b Output:
-taylor [ (i_z-j) * tpv + (q-1)*r + ell + 1 ],
-for ell = 0 , ... , r-1,
-is the Taylor coefficient for the q-th order, ell-th direction,
-and j-th auzillary result.
-
-*/
+//
+// forward_erf_op_dir
 template <class Base>
 void forward_erf_op_dir(
    OpCode        op          ,

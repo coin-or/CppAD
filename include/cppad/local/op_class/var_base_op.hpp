@@ -12,7 +12,7 @@ The Variable Operator Base Class
 
 Syntax
 ******
-| ``CppAD::local::op_class::var_base_op_t`` *base_op*
+| ``CppAD::local::op_class::var_base_op_t`` < *Base* > *base_op*
 
 Prototype
 *********

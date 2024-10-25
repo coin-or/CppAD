@@ -4,20 +4,20 @@ SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
 This xrst template file does not have any parameters.
-It documents the binary operator arguments that are the same for both
+It documents the unary operator arguments that are the same for both
 forward and reverse mode.
 }
 
 x
 *
-We use *x* to denote the operand of this unary operation
+We use *x* to denote the primary operand of this unary operation
 which is a variable.
 
 z
 *
 We use *z* to denote the primary result of this unary operation.
-Some unary operators have an extra result which we refer to as
-the auxiliary result.
+Some unary operators have an extra results which we refer to as
+the auxiliary results.
 For example, the sine operator has the value of the cosine function
 as an auxiliary result (to help with computation of derivatives).
 
@@ -25,25 +25,20 @@ i_z
 ***
 is the variable index corresponding to the primary result for this operation;
 i.e. the row index in *taylor* corresponding to *z* .
-If an operator has an auxiliary result, its variable index
-for the auxiliary result is *i_z* ``- 1`` .
+If an operator has an auxiliary result, the variable index
+for the *j*\ -th auxiliary result is *i_z* - *j* .
 
 arg
 ***
-is the vector of indices for this operator.
-
-i_x
-===
-We use *i_x* = *arg* [0] for the
-index corresponding to the first operand for this operator.
-Because *x* is a variable,
-*i_x* is the row index in *taylor* corresponding to *x* .
+is the vector of indices for this operator,
+*arg* [0] is the variable index corresponding to *x* .
 
 parameter
 *********
 maps parameter indices to parameter values.
-This argument is not used by unary operators and is only included
-so that they have the same calling sequence as other operators.
+This argument is only used by the :ref:`var_erf-name` unary operators.
+For the erf and erfc operators *arg* [1] is the index in *parameter*
+of the value  :math:` 2 / \sqrt{\pi}` .
 
 cap_order
 *********

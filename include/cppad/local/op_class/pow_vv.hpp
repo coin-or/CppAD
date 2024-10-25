@@ -7,8 +7,13 @@
 
 # include <cppad/local/op_class/var_binary_op.hpp>
 
-namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
+// BEGIN _NAMESPACE
+namespace CppAD { namespace local { namespace op_class {
+// END _NAMESPACE
+
+// BEGIN POW_VV_T
 template <class Base> class pow_vv_t : public var_binary_op_t<Base>
+// END POW_VV_T
 {
 public:
    //
@@ -16,9 +21,10 @@ public:
    OpCode op2enum(void) const override
    {  return PowvvOp; }
    //
-   // n_res
+   // BEGIN _N_RES
    size_t n_res(void) const override
    {  return 3; }
+   // END _N_RES
    //
    // get_instance
    static pow_vv_t* get_instance(void)

@@ -10,9 +10,9 @@
 namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 
-// BEGIN ERFC_V
-template <class Base> class erfc_v_t : public var_base_op_t<Base>
-// END ERFC_V
+// BEGIN ERFC_V_T
+template <class Base> class erfc_v_t : public var_unary_op_t<Base>
+// END ERFC_V_T
 {
 public:
    //
@@ -24,7 +24,7 @@ public:
    size_t n_arg(void) const override
    {  return 2; }
    //
-   // r_res
+   // n_res
    size_t n_res(void) const override
    {  return 5; }
    //
