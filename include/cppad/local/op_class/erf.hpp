@@ -98,10 +98,10 @@ For the complementary error function operator erfc_v ,  the last result is
 {xrst_end var_erf}
 -----------------------------------------------------------------------------
 */
-
-# include <cppad/local/op/mul_op.hpp>
-# include <cppad/local/op/exp_op.hpp>
-# include <cppad/local/op/neg_op.hpp>
+# include <cppad/local/op_class/mul_vv.hpp>
+# include <cppad/local/op_class/mul_pv.hpp>
+# include <cppad/local/op_class/neg_v.hpp>
+# include <cppad/local/op_class/exp_v.hpp>
 
 
 namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
@@ -138,19 +138,28 @@ void forward_erf_op(
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   forward_mulvv_op(p, q, i_z+0, addr, parameter, cap_order, taylor);
+   mul_vv_t<Base>::get_instance()->forward(
+      p, q, i_z+0, addr, parameter, cap_order, taylor
+   );
 
    // z_1 = - x * x
-   forward_neg_op(p, q, i_z+1, i_z+0, cap_order, taylor);
+   addr[0] = addr_t(i_z + 0);
+   neg_v_t<Base>::get_instance()->forward(
+      p, q, i_z+1, addr, parameter, cap_order, taylor
+   );
 
    // z_2 = exp( - x * x )
-   forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z + 1);
+   exp_v_t<Base>::get_instance()->forward(
+      p, q, i_z+2, addr, parameter, cap_order, taylor
+   );
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[1];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   forward_mulpv_op(p, q, i_z+3, addr, parameter, cap_order, taylor);
-
+   mul_pv_t<Base>::get_instance()->forward(
+      p, q, i_z+3, addr, parameter, cap_order, taylor
+   );
    // pointers to taylor coefficients for x , z_3, and z_4
    Base* x    = taylor + size_t(arg[0]) * cap_order;
    Base* z_3  = taylor + (i_z+3) * cap_order;
@@ -210,18 +219,28 @@ void forward_erf_op_0(
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   forward_mulvv_op_0(i_z+0, addr, parameter, cap_order, taylor);
+   mul_vv_t<Base>::get_instance()->forward_0(
+      i_z+0, addr, parameter, cap_order, taylor
+   );
 
    // z_1 = - x * x
-   forward_neg_op_0(i_z+1, i_z+0, cap_order, taylor);
+   addr[0] = addr_t(i_z + 0);
+   neg_v_t<Base>::get_instance()->forward_0(
+      i_z+1, addr, parameter, cap_order, taylor
+   );
 
    // z_2 = exp( - x * x )
-   forward_exp_op_0(i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z + 1);
+   exp_v_t<Base>::get_instance()->forward_0(
+      i_z+2, addr, parameter, cap_order, taylor
+   );
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[1];          // 2 / sqrt(pi)
    addr[1] = addr_t(i_z + 2); // z_2
-   forward_mulpv_op_0(i_z+3, addr, parameter, cap_order, taylor);
+   mul_pv_t<Base>::get_instance()->forward_0(
+      i_z+3, addr, parameter, cap_order, taylor
+   );
 
    // zero order Taylor coefficient for z_4
    Base* x    = taylor + size_t(arg[0]) * cap_order;
@@ -263,18 +282,28 @@ void forward_erf_op_dir(
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   forward_mulvv_op_dir(q, r, i_z+0, addr, parameter, cap_order, taylor);
+   mul_vv_t<Base>::get_instance()->forward_dir(
+      q, r, i_z+0, addr, parameter, cap_order, taylor
+   );
 
    // z_1 = - x * x
-   forward_neg_op_dir(q, r, i_z+1, i_z+0, cap_order, taylor);
+   addr[0] = addr_t(i_z + 0);
+   neg_v_t<Base>::get_instance()->forward_dir(
+      q, r, i_z+1, addr, parameter, cap_order, taylor
+   );
 
    // z_2 = exp( - x * x )
-   forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z + 1);
+   exp_v_t<Base>::get_instance()->forward_dir(
+      q, r, i_z+2, addr, parameter, cap_order, taylor
+   );
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[1];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   forward_mulpv_op_dir(q, r, i_z+3, addr, parameter, cap_order, taylor);
+   mul_pv_t<Base>::get_instance()->forward_dir(
+      q, r, i_z+3, addr, parameter, cap_order, taylor
+   );
 
    // pointers to taylor coefficients for x , z_3, and z_4
    size_t num_taylor_per_var = (cap_order - 1) * r + 1;
@@ -452,24 +481,26 @@ void reverse_erf_op(
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[1];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   reverse_mulpv_op(
+   mul_pv_t<Base>::get_instance()->reverse(
       d, i_z+3, addr, parameter, cap_order, taylor, nc_partial, partial
    );
 
    // z_2 = exp( - x * x )
-   reverse_exp_op(
-      d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
+   addr[0] = addr_t(i_z + 1);
+   exp_v_t<Base>::get_instance()->reverse(
+      d, i_z+2, addr, parameter, cap_order, taylor, nc_partial, partial
    );
 
    // z_1 = - x * x
-   reverse_neg_op(
-      d, i_z+1, i_z+0, cap_order, taylor, nc_partial, partial
+   addr[0] = addr_t(i_z + 0);
+   neg_v_t<Base>::get_instance()->reverse(
+      d, i_z+1, addr, parameter, cap_order, taylor, nc_partial, partial
    );
 
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   reverse_mulvv_op(
+   mul_vv_t<Base>::get_instance()->reverse(
       d, i_z+0, addr, parameter, cap_order, taylor, nc_partial, partial
    );
 
