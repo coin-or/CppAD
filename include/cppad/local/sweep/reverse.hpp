@@ -311,6 +311,7 @@ void reverse(
          case TanOp:
          case TanhOp:
          case ZmulpvOp:
+         case ZmulvpOp:
          case ZmulvvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_class::enum2op<Base>(op)->reverse(
@@ -556,14 +557,6 @@ void reverse(
             atom_state = arg_atom;
          break;
          // ------------------------------------------------------------
-
-         case ZmulvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         reverse_zmulvp_op(
-            d, i_var, arg, parameter, J, Taylor, K, Partial
-         );
-         break;
-         // --------------------------------------------------
 
          default:
          CPPAD_ASSERT_UNKNOWN(false);

@@ -9,15 +9,15 @@ set -e -u
 #
 # file_in
 # file where the original source code is located
-file_in=pow_op.hpp
+file_in=zmul_op.hpp
 #
 # OpCode
 # The OpCode for this operator
-OpCode=PowpvOp
+OpCode=ZmulvpOp
 #
 # n_res
 # The number of results for this operator
-n_res=3
+n_res=1
 # ----------------------------------------------------------------------------
 #
 # op_old
@@ -141,9 +141,15 @@ cat << EOF > temp.sed
 N
 /\\n *\\/\\/ -*\\n *\$/ ! b loop
 d
+b end
 #
 : one
-s|^\\(  *\\)// BEGIN_SORT.*|&\n\1case $OpCode:|
+/END_SORT_THIS_LINE/! b end
+N
+/op_class::enum2op<Base>/! b end
+s|^ *|&case $OpCode:\\n&|
+#
+: end
 EOF
 #
 # $dir/sweep/ forward*.hpp, reverse.hpp

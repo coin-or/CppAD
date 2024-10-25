@@ -38,6 +38,7 @@
 # include <cppad/local/op_class/sub_vv.hpp>
 # include <cppad/local/op_class/tan_v.hpp>
 # include <cppad/local/op_class/tanh_v.hpp>
+# include <cppad/local/op_class/zmul_vp.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 //
 
@@ -77,6 +78,7 @@ template <class Base> void enable_parallel(void)
    sub_vv_t<Base>::get_instance();
    tan_v_t<Base>::get_instance();
    tanh_v_t<Base>::get_instance();
+   zmul_vp_t<Base>::get_instance();
    // END_SORT_THIS_LINE_MINUS_1
 }
 }}} // END namespace

@@ -349,6 +349,7 @@ void forward0(
          case TanOp:
          case TanhOp:
          case ZmulpvOp:
+         case ZmulvpOp:
          case ZmulvvOp:
          // END_SORT_THIS_LINE_MINUS_1
          op_class::enum2op<Base>(op)->forward_0(
@@ -617,12 +618,6 @@ void forward0(
          atom_iy[atom_i++] = i_var;
          if( atom_i == atom_m )
             atom_state = end_atom;
-         break;
-         // -------------------------------------------------
-
-         case ZmulvpOp:
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         forward_zmulvp_op_0(i_var, arg, parameter, J, taylor);
          break;
          // -------------------------------------------------
 

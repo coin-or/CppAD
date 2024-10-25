@@ -65,6 +65,7 @@ Prototype
 # include <cppad/local/op_class/tan_v.hpp>
 # include <cppad/local/op_class/tanh_v.hpp>
 # include <cppad/local/op_class/zmul_pv.hpp>
+# include <cppad/local/op_class/zmul_vp.hpp>
 # include <cppad/local/op_class/zmul_vv.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 //
@@ -127,6 +128,7 @@ var_base_op_t<Base>* enum2op(OpCode op_enum)
       CPPAD_OP_CLASS_INSTANCE(tan_v, TanOp)
       CPPAD_OP_CLASS_INSTANCE(tanh_v, TanhOp)
       CPPAD_OP_CLASS_INSTANCE(zmul_pv, ZmulpvOp)
+      CPPAD_OP_CLASS_INSTANCE(zmul_vp, ZmulvpOp)
       CPPAD_OP_CLASS_INSTANCE(zmul_vv, ZmulvvOp)
       // END_SORT_THIS_LINE_MINUS_1
    }
