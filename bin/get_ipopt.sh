@@ -168,14 +168,6 @@ do
       #
       if [ ! -e "./get.$name.done" ]
       then
-         #
-         # ./get.$name
-         echo '2024-10-17'
-         echo 'wget is hanging in get.Mumps on fedora 40, so do not use it.'
-         set -e 's|^wgetcount=.*|wgetcount=0|' ./get.$name > temp.$$
-         mv temp.$$ ./get.$name
-         chmod +x ./get.$name
-         #
          echo_eval ./get.$name
          touch ./get.$name.done
       fi
@@ -184,7 +176,7 @@ do
 done
 #
 # Install ASL
-cd ASL.git/build
+echo_eval cd ASL.git/build
 echo_eval ../configure $configure_all
 echo_eval make -j $n_job install
 cd ../..
