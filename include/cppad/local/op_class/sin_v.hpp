@@ -57,7 +57,7 @@ public:
       Base* c = s      -       cap_order;
 
       // rest of this routine is identical for the following cases:
-      // forward_sin_op, forward_cos_op, forward_sinh_op, forward_cosh_op.
+      // sin_v.hpp, cos_v.hpp, sinh_v.hpp, cos_v.hpp_op.
       // (except that there is a sign difference for the hyperbolic case).
       size_t k;
       if( p == 0 )
@@ -102,7 +102,7 @@ public:
 
 
       // rest of this routine is identical for the following cases:
-      // forward_sin_op, forward_cos_op, forward_sinh_op, forward_cosh_op
+      // sin_v.hpp, cos_v.hpp, sinh_v.hpp, cos_v.hpp_op
       // (except that there is a sign difference for the hyperbolic case).
       size_t m = (q-1) * r + 1;
       for(size_t ell = 0; ell < r; ell++)
@@ -170,7 +170,7 @@ public:
 
 
       // rest of this routine is identical for the following cases:
-      // reverse_sin_op, reverse_cos_op, reverse_sinh_op, reverse_cosh_op.
+      // sin_v.hpp, cos_v.hpp, sinh_v.hpp, cos_v.hpp_op.
       size_t j = d;
       size_t k;
       while(j)
