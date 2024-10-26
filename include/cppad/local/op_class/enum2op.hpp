@@ -22,10 +22,17 @@ Prototype
    // BEGIN ENUM2OP  , // END ENUM2OP
 }
 
+Parallel Execution
+******************
+The first call to this routine initializes static data in this
+routine and in all of the ``get_instance`` functions corresponding
+to classes derived from :ref:`var_base_op_t-name`. 
+Hence the first call cannot be in parallel mode.
 
 {xrst_end var_enum2op}
 */
 
+# include <vector>
 # include <cppad/local/op_class/var_binary_op.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
@@ -69,72 +76,67 @@ Prototype
 # include <cppad/local/op_class/zmul_vv.hpp>
 // END_SORT_THIS_LINE_MINUS_1
 //
-# define CPPAD_OP_CLASS_INSTANCE(op_lower, OpCode)\
-   case OpCode: \
-   result = op_lower##_t<Base>::get_instance(); \
-   break;
-
 // BEGIN NAMESPACE
 namespace CppAD { namespace local { namespace op_class {
 // END NAMESPACE
 // BEGIN ENUM2OP
 template <class Base>
-var_base_op_t<Base>* enum2op(OpCode op_enum)
+inline var_base_op_t<Base>* enum2op(OpCode op_enum)
 // END ENUM2OP
-{
+{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
    //
-   var_base_op_t<Base>* result;
-   switch(op_enum)
-   {
-      default:
-      assert( false );
-      result = nullptr; // set in this case to avoid compiler warning
-      break;
+   // op_ptr
+   static var_base_op_t<Base>* op_ptr[NumberOp];
+   static bool first = true;
+   if( first )
+   {  first = false;
+      for(size_t i = 0; i < size_t(NumberOp); ++i)
+         op_ptr[i] = nullptr;
 
+      // op_ptr
       // BEGIN_SORT_THIS_LINE_PLUS_1
-      CPPAD_OP_CLASS_INSTANCE(abs_v, AbsOp)
-      CPPAD_OP_CLASS_INSTANCE(acos_v, AcosOp)
-      CPPAD_OP_CLASS_INSTANCE(acosh_v, AcoshOp)
-      CPPAD_OP_CLASS_INSTANCE(add_pv, AddpvOp)
-      CPPAD_OP_CLASS_INSTANCE(add_vv, AddvvOp)
-      CPPAD_OP_CLASS_INSTANCE(asin_v, AsinOp)
-      CPPAD_OP_CLASS_INSTANCE(asinh_v, AsinhOp)
-      CPPAD_OP_CLASS_INSTANCE(atan_v, AtanOp)
-      CPPAD_OP_CLASS_INSTANCE(atanh_v, AtanhOp)
-      CPPAD_OP_CLASS_INSTANCE(cos_v, CosOp)
-      CPPAD_OP_CLASS_INSTANCE(cosh_v, CoshOp)
-      CPPAD_OP_CLASS_INSTANCE(div_pv, DivpvOp)
-      CPPAD_OP_CLASS_INSTANCE(div_vp, DivvpOp)
-      CPPAD_OP_CLASS_INSTANCE(div_vv, DivvvOp)
-      CPPAD_OP_CLASS_INSTANCE(erf_v, ErfOp)
-      CPPAD_OP_CLASS_INSTANCE(erfc_v, ErfcOp)
-      CPPAD_OP_CLASS_INSTANCE(exp_v, ExpOp)
-      CPPAD_OP_CLASS_INSTANCE(expm1_v, Expm1Op)
-      CPPAD_OP_CLASS_INSTANCE(log1p_v, Log1pOp)
-      CPPAD_OP_CLASS_INSTANCE(log_v, LogOp)
-      CPPAD_OP_CLASS_INSTANCE(mul_pv, MulpvOp)
-      CPPAD_OP_CLASS_INSTANCE(mul_vv, MulvvOp)
-      CPPAD_OP_CLASS_INSTANCE(neg_v, NegOp)
-      CPPAD_OP_CLASS_INSTANCE(pow_pv, PowpvOp)
-      CPPAD_OP_CLASS_INSTANCE(pow_vp, PowvpOp)
-      CPPAD_OP_CLASS_INSTANCE(pow_vv, PowvvOp)
-      CPPAD_OP_CLASS_INSTANCE(sign_v, SignOp)
-      CPPAD_OP_CLASS_INSTANCE(sin_v, SinOp)
-      CPPAD_OP_CLASS_INSTANCE(sinh_v, SinhOp)
-      CPPAD_OP_CLASS_INSTANCE(sqrt_v, SqrtOp)
-      CPPAD_OP_CLASS_INSTANCE(sub_pv, SubpvOp)
-      CPPAD_OP_CLASS_INSTANCE(sub_vp, SubvpOp)
-      CPPAD_OP_CLASS_INSTANCE(sub_vv, SubvvOp)
-      CPPAD_OP_CLASS_INSTANCE(tan_v, TanOp)
-      CPPAD_OP_CLASS_INSTANCE(tanh_v, TanhOp)
-      CPPAD_OP_CLASS_INSTANCE(zmul_pv, ZmulpvOp)
-      CPPAD_OP_CLASS_INSTANCE(zmul_vp, ZmulvpOp)
-      CPPAD_OP_CLASS_INSTANCE(zmul_vv, ZmulvvOp)
+      op_ptr[ AbsOp ]     = abs_v_t<Base>::get_instance();
+      op_ptr[ AcosOp ]    = acos_v_t<Base>::get_instance();
+      op_ptr[ AcoshOp ]   = acosh_v_t<Base>::get_instance();
+      op_ptr[ AddpvOp ]   = add_pv_t<Base>::get_instance();
+      op_ptr[ AddvvOp ]   = add_vv_t<Base>::get_instance();
+      op_ptr[ AsinOp ]    = asin_v_t<Base>::get_instance();
+      op_ptr[ AsinhOp ]   = asinh_v_t<Base>::get_instance();
+      op_ptr[ AtanOp ]    = atan_v_t<Base>::get_instance();
+      op_ptr[ AtanhOp ]   = atanh_v_t<Base>::get_instance();
+      op_ptr[ CosOp ]     = cos_v_t<Base>::get_instance();
+      op_ptr[ CoshOp ]    = cosh_v_t<Base>::get_instance();
+      op_ptr[ DivpvOp ]   = div_pv_t<Base>::get_instance();
+      op_ptr[ DivvpOp ]   = div_vp_t<Base>::get_instance();
+      op_ptr[ DivvvOp ]   = div_vv_t<Base>::get_instance();
+      op_ptr[ ErfOp ]     = erf_v_t<Base>::get_instance();
+      op_ptr[ ErfcOp ]    = erfc_v_t<Base>::get_instance();
+      op_ptr[ ExpOp ]     = exp_v_t<Base>::get_instance();
+      op_ptr[ Expm1Op ]   = expm1_v_t<Base>::get_instance();
+      op_ptr[ Log1pOp ]   = log1p_v_t<Base>::get_instance();
+      op_ptr[ LogOp ]     = log_v_t<Base>::get_instance();
+      op_ptr[ MulpvOp ]   = mul_pv_t<Base>::get_instance();
+      op_ptr[ MulvvOp ]   = mul_vv_t<Base>::get_instance();
+      op_ptr[ NegOp ]     = neg_v_t<Base>::get_instance();
+      op_ptr[ PowpvOp ]   = pow_pv_t<Base>::get_instance();
+      op_ptr[ PowvpOp ]   = pow_vp_t<Base>::get_instance();
+      op_ptr[ PowvvOp ]   = pow_vv_t<Base>::get_instance();
+      op_ptr[ SignOp ]    = sign_v_t<Base>::get_instance();
+      op_ptr[ SinOp ]     = sin_v_t<Base>::get_instance();
+      op_ptr[ SinhOp ]    = sinh_v_t<Base>::get_instance();
+      op_ptr[ SqrtOp ]    = sqrt_v_t<Base>::get_instance();
+      op_ptr[ SubpvOp ]   = sub_pv_t<Base>::get_instance();
+      op_ptr[ SubvpOp ]   = sub_vp_t<Base>::get_instance();
+      op_ptr[ SubvvOp ]   = sub_vv_t<Base>::get_instance();
+      op_ptr[ TanOp ]     = tan_v_t<Base>::get_instance();
+      op_ptr[ TanhOp ]    = tanh_v_t<Base>::get_instance();
+      op_ptr[ ZmulpvOp ]  = zmul_pv_t<Base>::get_instance();
+      op_ptr[ ZmulvpOp ]  = zmul_vp_t<Base>::get_instance();
+      op_ptr[ ZmulvvOp ]  = zmul_vv_t<Base>::get_instance();
       // END_SORT_THIS_LINE_MINUS_1
    }
-   return result;
+   return op_ptr[ op_enum ];
 }
 }}} // END namespace
 
-# undef CPPAD_OP_CLASS_INSTANCE
 # endif
