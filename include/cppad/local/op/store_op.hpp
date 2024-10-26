@@ -143,7 +143,7 @@ corresponding to the value being stored.
 */
 // BEGIN_FORWARD_STORE_PP_OP_0
 template <class Base>
-void forward_store_pp_op_0(
+inline void forward_store_pp_op_0(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -167,7 +167,7 @@ void forward_store_pp_op_0(
    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 template <class Base>
-void forward_store_pv_op_0(
+inline void forward_store_pv_op_0(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -189,7 +189,7 @@ void forward_store_pv_op_0(
    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 template <class Base>
-void forward_store_vp_op_0(
+inline void forward_store_vp_op_0(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -213,7 +213,7 @@ void forward_store_vp_op_0(
    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 template <class Base>
-void forward_store_vv_op_0(
+inline void forward_store_vv_op_0(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -312,7 +312,7 @@ to the sparsity pattern for the vector v.
 \li i_v       < vecad_sparsity.n_set()
 */
 template <class Vector_set>
-void sparse_store_op(
+inline void sparse_store_op(
    OpCode         op             ,
    const addr_t*  arg            ,
    size_t         num_combined   ,
@@ -349,7 +349,7 @@ is this a dependency (or sparsity) calculation.
 \copydetails CppAD::local::sparse_store_op
 */
 template <class Vector_set>
-void forward_sparse_store_op(
+inline void forward_sparse_store_op(
    bool                dependency     ,
    OpCode              op             ,
    const addr_t*       arg            ,
@@ -405,7 +405,7 @@ is this a dependency (or sparsity) calculation.
 \copydetails CppAD::local::sparse_store_op
 */
 template <class Vector_set>
-void reverse_sparse_jacobian_store_op(
+inline void reverse_sparse_jacobian_store_op(
    bool               dependency      ,
    OpCode             op              ,
    const addr_t*      arg             ,
@@ -469,7 +469,7 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 */
 template <class Vector_set>
-void reverse_sparse_hessian_store_op(
+inline void reverse_sparse_hessian_store_op(
    OpCode             op           ,
    const addr_t*      arg          ,
    size_t             num_combined ,

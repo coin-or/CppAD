@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_PRINT_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -92,7 +92,7 @@ Contains the value of variables.
 \li if var is a parameter, arg[3] < num_par
 */
 template <class Base>
-void forward_pri_0(
+inline void forward_pri_0(
    std::ostream& s_out       ,
    const addr_t* arg         ,
    size_t        num_text    ,

@@ -109,7 +109,7 @@ namespace CppAD { namespace local { namespace op_class { // BEGIN namespace
 //
 // forward_erf_op
 template <class Base>
-void forward_erf_op(
+inline void forward_erf_op(
    OpCode        op          ,
    size_t        p           ,
    size_t        q           ,
@@ -193,7 +193,7 @@ void forward_erf_op(
 //
 // forward_erf_op_0
 template <class Base>
-void forward_erf_op_0(
+inline void forward_erf_op_0(
    OpCode        op          ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -253,7 +253,7 @@ void forward_erf_op_0(
 //
 // forward_erf_op_dir
 template <class Base>
-void forward_erf_op_dir(
+inline void forward_erf_op_dir(
    OpCode        op          ,
    size_t        q           ,
    size_t        r           ,
@@ -415,7 +415,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 
 */
 template <class Base>
-void reverse_erf_op(
+inline void reverse_erf_op(
    OpCode        op          ,
    size_t        d           ,
    size_t        i_z         ,

@@ -109,7 +109,7 @@ unecessary and can be skipped.
 This is both an input and an output.
 */
 template <class Base>
-void forward_cskip_op_0(
+inline void forward_cskip_op_0(
    size_t               i_z            ,
    const addr_t*        arg            ,
    size_t               num_par        ,
