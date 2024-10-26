@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_COMP_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -27,7 +27,7 @@ parameter[ arg[1] ] is the right operand.
 vector of parameter values.
 */
 template <class Base>
-void forward_lepp_op_0(
+inline void forward_lepp_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   )
@@ -63,7 +63,7 @@ number of Taylor coefficients allocated for each variable
 vector of taylor coefficients.
 */
 template <class Base>
-void forward_lepv_op_0(
+inline void forward_lepv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -100,7 +100,7 @@ number of Taylor coefficients allocated for each variable
 vector of taylor coefficients.
 */
 template <class Base>
-void forward_levp_op_0(
+inline void forward_levp_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -139,7 +139,7 @@ number of Taylor coefficients allocated for each variable
 vector of taylor coefficients.
 */
 template <class Base>
-void forward_levv_op_0(
+inline void forward_levv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -171,7 +171,7 @@ parameter[ arg[1] ] is the right operand.
 vector of parameter values.
 */
 template <class Base>
-void forward_ltpp_op_0(
+inline void forward_ltpp_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   )
@@ -192,7 +192,7 @@ Zero order forward mode comparison check that left < right
 \copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
-void forward_ltpv_op_0(
+inline void forward_ltpv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -215,7 +215,7 @@ Zero order forward mode comparison check that left < right
 \copydetails CppAD::local::forward_levp_op_0
 */
 template <class Base>
-void forward_ltvp_op_0(
+inline void forward_ltvp_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -238,7 +238,7 @@ Zero order forward mode comparison check that left < right
 \copydetails CppAD::local::forward_levv_op_0
 */
 template <class Base>
-void forward_ltvv_op_0(
+inline void forward_ltvv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -270,7 +270,7 @@ parameter[ arg[1] ] is the right operand.
 vector of parameter values.
 */
 template <class Base>
-void forward_eqpp_op_0(
+inline void forward_eqpp_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   )
@@ -291,7 +291,7 @@ Zero order forward mode comparison check that left == right
 \copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
-void forward_eqpv_op_0(
+inline void forward_eqpv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -314,7 +314,7 @@ Zero order forward mode comparison check that left == right
 \copydetails CppAD::local::forward_levv_op_0
 */
 template <class Base>
-void forward_eqvv_op_0(
+inline void forward_eqvv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -346,7 +346,7 @@ parameter[ arg[1] ] is the right operand.
 vector of parameter values.
 */
 template <class Base>
-void forward_nepp_op_0(
+inline void forward_nepp_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   )
@@ -367,7 +367,7 @@ Zero order forward mode comparison check that left != right
 \copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
-void forward_nepv_op_0(
+inline void forward_nepv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -390,7 +390,7 @@ Zero order forward mode comparison check that left != right
 \copydetails CppAD::local::forward_levv_op_0
 */
 template <class Base>
-void forward_nevv_op_0(
+inline void forward_nevv_op_0(
    size_t&       count       ,
    const addr_t* arg         ,
    const Base*   parameter   ,

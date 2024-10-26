@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_PARAMETER_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -11,7 +11,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 // See dev documentation: forward_unary_op
 template <class Base>
-void forward_par_op_0(
+inline void forward_par_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        num_par     ,

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_POW_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -23,7 +23,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-void forward_powvv_op(
+inline void forward_powvv_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -81,7 +81,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-void forward_powvv_op_dir(
+inline void forward_powvv_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -129,7 +129,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-void forward_powvv_op_0(
+inline void forward_powvv_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -171,7 +171,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-void reverse_powvv_op(
+inline void reverse_powvv_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -227,7 +227,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-void forward_powpv_op(
+inline void forward_powpv_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -300,7 +300,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-void forward_powpv_op_dir(
+inline void forward_powpv_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -361,7 +361,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-void forward_powpv_op_0(
+inline void forward_powpv_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -409,7 +409,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-void reverse_powpv_op(
+inline void reverse_powpv_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -468,7 +468,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-void forward_powvp_op(
+inline void forward_powvp_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -526,7 +526,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-void forward_powvp_op_dir(
+inline void forward_powvp_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -590,7 +590,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-void forward_powvp_op_0(
+inline void forward_powvp_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -625,7 +625,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-void reverse_powvp_op(
+inline void reverse_powvp_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,

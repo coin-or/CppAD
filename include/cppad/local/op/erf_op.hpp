@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/op/mul_op.hpp>
@@ -84,7 +84,7 @@ is the k-th order Taylor coefficient corresponding to the j-th result for z.
 
 */
 template <class Base>
-void forward_erf_op(
+inline void forward_erf_op(
    OpCode        op          ,
    size_t        p           ,
    size_t        q           ,
@@ -211,7 +211,7 @@ is the zero order Taylor coefficient for j-th result corresponding to z.
 
 */
 template <class Base>
-void forward_erf_op_0(
+inline void forward_erf_op_0(
    OpCode        op          ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -338,7 +338,7 @@ and j-th auzillary result.
 
 */
 template <class Base>
-void forward_erf_op_dir(
+inline void forward_erf_op_dir(
    OpCode        op          ,
    size_t        q           ,
    size_t        r           ,
@@ -495,7 +495,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 
 */
 template <class Base>
-void reverse_erf_op(
+inline void reverse_erf_op(
    OpCode        op          ,
    size_t        d           ,
    size_t        i_z         ,

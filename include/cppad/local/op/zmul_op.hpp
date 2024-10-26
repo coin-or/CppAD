@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_ZMUL_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -11,7 +11,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulvv_op(
+inline void forward_zmulvv_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -41,7 +41,7 @@ void forward_zmulvv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulvv_op_dir(
+inline void forward_zmulvv_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -74,7 +74,7 @@ void forward_zmulvv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulvv_op_0(
+inline void forward_zmulvv_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -96,7 +96,7 @@ void forward_zmulvv_op_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-void reverse_zmulvv_op(
+inline void reverse_zmulvv_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -137,7 +137,7 @@ void reverse_zmulvv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulpv_op(
+inline void forward_zmulpv_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -165,7 +165,7 @@ void forward_zmulpv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulpv_op_dir(
+inline void forward_zmulpv_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -195,7 +195,7 @@ void forward_zmulpv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulpv_op_0(
+inline void forward_zmulpv_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -219,7 +219,7 @@ void forward_zmulpv_op_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-void reverse_zmulpv_op(
+inline void reverse_zmulpv_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -253,7 +253,7 @@ void reverse_zmulpv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulvp_op(
+inline void forward_zmulvp_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -281,7 +281,7 @@ void forward_zmulvp_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulvp_op_dir(
+inline void forward_zmulvp_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -311,7 +311,7 @@ void forward_zmulvp_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-void forward_zmulvp_op_0(
+inline void forward_zmulvp_op_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -335,7 +335,7 @@ void forward_zmulvp_op_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-void reverse_zmulvp_op(
+inline void reverse_zmulvp_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,

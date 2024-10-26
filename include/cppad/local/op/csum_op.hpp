@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CSUM_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -84,7 +84,7 @@ for k = p , ... , q,
 is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
-void forward_csum_op(
+inline void forward_csum_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -207,7 +207,7 @@ is the q-th order Taylor coefficient corresponding to z
 for direction ell = 0 , ... , r-1.
 */
 template <class Base>
-void forward_csum_op_dir(
+inline void forward_csum_op_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -324,7 +324,7 @@ k-th order Taylor coefficient corresponding to y(i)
 */
 
 template <class Base>
-void reverse_csum_op(
+inline void reverse_csum_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -413,7 +413,7 @@ depends on.
 */
 
 template <class Vector_set>
-void forward_sparse_jacobian_csum_op(
+inline void forward_sparse_jacobian_csum_op(
    size_t           i_z         ,
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
@@ -487,7 +487,7 @@ On input it corresponds to G and on output it is undefined.
 */
 
 template <class Vector_set>
-void reverse_sparse_jacobian_csum_op(
+inline void reverse_sparse_jacobian_csum_op(
    size_t           i_z         ,
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
@@ -582,7 +582,7 @@ and on output it corresponds to the function H.
 */
 
 template <class Vector_set>
-void reverse_sparse_hessian_csum_op(
+inline void reverse_sparse_hessian_csum_op(
    size_t           i_z                 ,
    const addr_t*    arg                 ,
    bool*            rev_jacobian        ,

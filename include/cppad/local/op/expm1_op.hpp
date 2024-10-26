@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -11,7 +11,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 
 template <class Base>
-void forward_expm1_op(
+inline void forward_expm1_op(
    size_t p           ,
    size_t q           ,
    size_t i_z         ,
@@ -46,7 +46,7 @@ void forward_expm1_op(
 
 
 template <class Base>
-void forward_expm1_op_dir(
+inline void forward_expm1_op_dir(
    size_t q           ,
    size_t r           ,
    size_t i_z         ,
@@ -76,7 +76,7 @@ void forward_expm1_op_dir(
 }
 
 template <class Base>
-void forward_expm1_op_0(
+inline void forward_expm1_op_0(
    size_t i_z         ,
    size_t i_x         ,
    size_t cap_order   ,
@@ -95,7 +95,7 @@ void forward_expm1_op_0(
 }
 
 template <class Base>
-void reverse_expm1_op(
+inline void reverse_expm1_op(
    size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,

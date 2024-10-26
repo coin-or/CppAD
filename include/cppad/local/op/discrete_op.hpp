@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_DISCRETE_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin discrete_op dev}
@@ -124,7 +124,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 // ---------------------------------------------------------------------------
 // BEGIN_PROTOTYPE
 template <class RecBase>
-void forward_dis_op(
+inline void forward_dis_op(
    size_t        p           ,
    size_t        q           ,
    size_t        r           ,
@@ -155,7 +155,7 @@ void forward_dis_op(
 }
 // ---------------------------------------------------------------------------
 template <class RecBase>
-void forward_dis_op(
+inline void forward_dis_op(
    size_t        p           ,
    size_t        q           ,
    size_t        r           ,
