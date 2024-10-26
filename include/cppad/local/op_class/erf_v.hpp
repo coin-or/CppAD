@@ -70,12 +70,12 @@ public:
    }
    //
    // forward_0
-   void forward_0(
+   static void forward_0(
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const override
+      Base*         taylor      )
    {  forward_erf_op_0(
          ErfOp, i_z, arg, parameter, cap_order, taylor
       );

@@ -85,12 +85,12 @@ public:
    }
    //
    // forward_0
-   void forward_0(
+   static void forward_0(
       size_t        i_z       ,
       const addr_t* arg       ,
       const Base*   parameter ,
       size_t        cap_order ,
-      Base*         taylor    ) const override
+      Base*         taylor    )
    {
 
       // check assumptions

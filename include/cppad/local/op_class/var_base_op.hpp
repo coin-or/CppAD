@@ -121,12 +121,13 @@ public:
    // END N_RES
    //
    // BEGIN FORWARD_0
-   virtual void forward_0(
+   static void forward_0(
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const = 0;
+      Base*         taylor      )
+   { assert(false); }
    // END FORWARD_0
    //
    // BEGIN FORWARD_ANY

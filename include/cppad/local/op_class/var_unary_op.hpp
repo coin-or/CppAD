@@ -352,12 +352,13 @@ public:
    //
    // BEGIN FORWARD
    // forward_0
-   virtual void forward_0(
+   static void forward_0(
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const override = 0;
+      Base*         taylor      )
+   { assert(false); }
    //
    // forward
    virtual void forward(

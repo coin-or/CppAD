@@ -10,6 +10,44 @@
 
 # include <cppad/local/op_class/enum2op.hpp>
 # include <cppad/local/op_class/compare.hpp>
+# include <cppad/local/op_class/zmul_vv.hpp>
+# include <cppad/local/op_class/zmul_vp.hpp>
+# include <cppad/local/op_class/zmul_pv.hpp>
+# include <cppad/local/op_class/tanh_v.hpp>
+# include <cppad/local/op_class/tan_v.hpp>
+# include <cppad/local/op_class/sub_vv.hpp>
+# include <cppad/local/op_class/sub_vp.hpp>
+# include <cppad/local/op_class/sub_pv.hpp>
+# include <cppad/local/op_class/sqrt_v.hpp>
+# include <cppad/local/op_class/sinh_v.hpp>
+# include <cppad/local/op_class/sin_v.hpp>
+# include <cppad/local/op_class/sign_v.hpp>
+# include <cppad/local/op_class/pow_vv.hpp>
+# include <cppad/local/op_class/pow_vp.hpp>
+# include <cppad/local/op_class/pow_pv.hpp>
+# include <cppad/local/op_class/neg_v.hpp>
+# include <cppad/local/op_class/mul_vv.hpp>
+# include <cppad/local/op_class/mul_pv.hpp>
+# include <cppad/local/op_class/log_v.hpp>
+# include <cppad/local/op_class/log1p_v.hpp>
+# include <cppad/local/op_class/expm1_v.hpp>
+# include <cppad/local/op_class/exp_v.hpp>
+# include <cppad/local/op_class/erfc_v.hpp>
+# include <cppad/local/op_class/erf_v.hpp>
+# include <cppad/local/op_class/div_vv.hpp>
+# include <cppad/local/op_class/div_vp.hpp>
+# include <cppad/local/op_class/div_pv.hpp>
+# include <cppad/local/op_class/cosh_v.hpp>
+# include <cppad/local/op_class/cos_v.hpp>
+# include <cppad/local/op_class/atanh_v.hpp>
+# include <cppad/local/op_class/atan_v.hpp>
+# include <cppad/local/op_class/asinh_v.hpp>
+# include <cppad/local/op_class/asin_v.hpp>
+# include <cppad/local/op_class/add_vv.hpp>
+# include <cppad/local/op_class/add_pv.hpp>
+# include <cppad/local/op_class/acosh_v.hpp>
+# include <cppad/local/op_class/acos_v.hpp>
+# include <cppad/local/op_class/abs_v.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -312,50 +350,234 @@ void forward0(
       // action to take depends on the case
       switch( op )
       {
-         // BEGIN_SORT_THIS_LINE_PLUS_1
          case AbsOp:
-         case AcosOp:
-         case AcoshOp:
-         case AddpvOp:
-         case AddvvOp:
-         case AsinOp:
-         case AsinhOp:
-         case AtanOp:
-         case AtanhOp:
-         case CosOp:
-         case CoshOp:
-         case DivpvOp:
-         case DivvpOp:
-         case DivvvOp:
-         case ErfOp:
-         case ErfcOp:
-         case ExpOp:
-         case Expm1Op:
-         case Log1pOp:
-         case LogOp:
-         case MulpvOp:
-         case MulvvOp:
-         case NegOp:
-         case PowpvOp:
-         case PowvpOp:
-         case PowvvOp:
-         case SignOp:
-         case SinOp:
-         case SinhOp:
-         case SqrtOp:
-         case SubpvOp:
-         case SubvpOp:
-         case SubvvOp:
-         case TanOp:
-         case TanhOp:
-         case ZmulpvOp:
-         case ZmulvpOp:
-         case ZmulvvOp:
-         // END_SORT_THIS_LINE_MINUS_1
-         op_class::enum2op<Base>(op)->forward_0(
+         op_class::abs_v_t<Base>::forward_0(
             i_var, arg, parameter, J, taylor
          );
          break;
+
+         case AcosOp:
+         op_class::acos_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AcoshOp:
+         op_class::acosh_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AddpvOp:
+         op_class::add_pv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AddvvOp:
+         op_class::add_vv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AsinOp:
+         op_class::asin_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AsinhOp:
+         op_class::asinh_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AtanOp:
+         op_class::atan_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case AtanhOp:
+         op_class::atanh_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case CosOp:
+         op_class::cos_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case CoshOp:
+         op_class::cosh_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case DivpvOp:
+         op_class::div_pv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case DivvpOp:
+         op_class::div_vp_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case DivvvOp:
+         op_class::div_vv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case ErfOp:
+         op_class::erf_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case ErfcOp:
+         op_class::erfc_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case ExpOp:
+         op_class::exp_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case Expm1Op:
+         op_class::expm1_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case Log1pOp:
+         op_class::log1p_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case LogOp:
+         op_class::log_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case MulpvOp:
+         op_class::mul_pv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case MulvvOp:
+         op_class::mul_vv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case NegOp:
+         op_class::neg_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case PowpvOp:
+         op_class::pow_pv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case PowvpOp:
+         op_class::pow_vp_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case PowvvOp:
+         op_class::pow_vv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SignOp:
+         op_class::sign_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SinOp:
+         op_class::sin_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SinhOp:
+         op_class::sinh_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SqrtOp:
+         op_class::sqrt_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SubpvOp:
+         op_class::sub_pv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SubvpOp:
+         op_class::sub_vp_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case SubvvOp:
+         op_class::sub_vv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case TanOp:
+         op_class::tan_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case TanhOp:
+         op_class::tanh_v_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case ZmulpvOp:
+         op_class::zmul_pv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case ZmulvpOp:
+         op_class::zmul_vp_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
+         case ZmulvvOp:
+         op_class::zmul_vv_t<Base>::forward_0(
+            i_var, arg, parameter, J, taylor
+         );
+         break;
+
 
          // BEGIN_SORT_THIS_LINE_PLUS_1
          case EqppOp:

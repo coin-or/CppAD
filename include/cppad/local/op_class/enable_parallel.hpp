@@ -15,5 +15,4 @@ template <class Base> void enable_parallel(void)
 }
 }}} // END namespace
 
-# undef CPPAD_OP_CLASS_INSTANCE
 # endif
