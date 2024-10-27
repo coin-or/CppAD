@@ -97,12 +97,11 @@ if [ -e test_one.cpp ]
 then
    rm test_one.cpp
 fi
-original_dir=`pwd`
+top_srcdir=$(pwd)
 # ---------------------------------------------------------------------------
-cwd=$(pwd)
-PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
-PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/share/pkgconfig"
-PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/lib/pkgconfig"
+PKG_CONFIG_PATH="@cppad_prefix@/share/pkgconfig"
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH:@cppad_prefix@/lib/pkgconfig"
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH:@cppad_prefix@/lib64/pkgconfig"
 export PKG_CONFIG_PATH
 # ---------------------------------------------------------------------------
 # initialize
