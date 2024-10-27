@@ -42,14 +42,14 @@ public:
    }
    //
    // forward
-   void forward(
+   static void forward(
       size_t        p           ,
       size_t        q           ,
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const override
+      Base*         taylor      )
    {  forward_erf_op(
          ErfOp, p, q, i_z, arg, parameter, cap_order, taylor
       );

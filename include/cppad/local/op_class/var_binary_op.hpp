@@ -407,14 +407,15 @@ public:
    { assert(false); }
    //
    // forward
-   virtual void forward(
+   static void forward(
       size_t        p           ,
       size_t        q           ,
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const override = 0;
+      Base*         taylor      )
+   { assert(false); }
    //
    // forward_dir
    virtual void forward_dir(

@@ -131,14 +131,15 @@ public:
    // END FORWARD_0
    //
    // BEGIN FORWARD_ANY
-   virtual void forward(
+   static void forward(
       size_t        p           ,
       size_t        q           ,
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const = 0;
+      Base*         taylor      )
+   { assert(false); }
    // END FORWARD_ANY
    //
    // BEGIN FORWARD_DIR
