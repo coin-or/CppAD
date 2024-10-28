@@ -274,50 +274,234 @@ void reverse(
       switch( op )
       {
 
-         // BEGIN_SORT_THIS_LINE_PLUS_1
          case AbsOp:
-         case AcosOp:
-         case AcoshOp:
-         case AddpvOp:
-         case AddvvOp:
-         case AsinOp:
-         case AsinhOp:
-         case AtanOp:
-         case AtanhOp:
-         case CosOp:
-         case CoshOp:
-         case DivpvOp:
-         case DivvpOp:
-         case DivvvOp:
-         case ErfOp:
-         case ErfcOp:
-         case ExpOp:
-         case Expm1Op:
-         case Log1pOp:
-         case LogOp:
-         case MulpvOp:
-         case MulvvOp:
-         case NegOp:
-         case PowpvOp:
-         case PowvpOp:
-         case PowvvOp:
-         case SignOp:
-         case SinOp:
-         case SinhOp:
-         case SqrtOp:
-         case SubpvOp:
-         case SubvpOp:
-         case SubvvOp:
-         case TanOp:
-         case TanhOp:
-         case ZmulpvOp:
-         case ZmulvpOp:
-         case ZmulvvOp:
-         // END_SORT_THIS_LINE_MINUS_1
-         op_class::enum2op<Base>(op)->reverse(
+         op_class::abs_v_t<Base>::reverse(
             d, i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
+
+         case AcosOp:
+         op_class::acos_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AcoshOp:
+         op_class::acosh_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AddpvOp:
+         op_class::add_pv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AddvvOp:
+         op_class::add_vv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AsinOp:
+         op_class::asin_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AsinhOp:
+         op_class::asinh_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AtanOp:
+         op_class::atan_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case AtanhOp:
+         op_class::atanh_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case CosOp:
+         op_class::cos_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case CoshOp:
+         op_class::cosh_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case DivpvOp:
+         op_class::div_pv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case DivvpOp:
+         op_class::div_vp_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case DivvvOp:
+         op_class::div_vv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case ErfOp:
+         op_class::erf_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case ErfcOp:
+         op_class::erfc_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case ExpOp:
+         op_class::exp_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case Expm1Op:
+         op_class::expm1_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case Log1pOp:
+         op_class::log1p_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case LogOp:
+         op_class::log_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case MulpvOp:
+         op_class::mul_pv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case MulvvOp:
+         op_class::mul_vv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case NegOp:
+         op_class::neg_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case PowpvOp:
+         op_class::pow_pv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case PowvpOp:
+         op_class::pow_vp_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case PowvvOp:
+         op_class::pow_vv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SignOp:
+         op_class::sign_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SinOp:
+         op_class::sin_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SinhOp:
+         op_class::sinh_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SqrtOp:
+         op_class::sqrt_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SubpvOp:
+         op_class::sub_pv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SubvpOp:
+         op_class::sub_vp_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case SubvvOp:
+         op_class::sub_vv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case TanOp:
+         op_class::tan_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case TanhOp:
+         op_class::tanh_v_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case ZmulpvOp:
+         op_class::zmul_pv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case ZmulvpOp:
+         op_class::zmul_vp_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
+         case ZmulvvOp:
+         op_class::zmul_vv_t<Base>::reverse(
+            d, i_var, arg, parameter, J, Taylor, K, Partial
+         );
+         break;
+
          // --------------------------------------------------
 
          case BeginOp:

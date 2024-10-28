@@ -107,7 +107,7 @@ public:
    }
    //
    // reverse
-   void reverse(
+   static void reverse(
       size_t        d         ,
       size_t        i_z       ,
       const addr_t* arg       ,
@@ -115,7 +115,7 @@ public:
       size_t        cap_order ,
       const Base*   taylor    ,
       size_t        nc_partial,
-      Base*         partial   ) const override
+      Base*         partial   )
    {  size_t j;
 
       // check assumptions
