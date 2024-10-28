@@ -418,14 +418,15 @@ public:
    { assert(false); }
    //
    // forward_dir
-   virtual void forward_dir(
+   static void forward_dir(
       size_t        q           ,
       size_t        r           ,
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const override = 0;
+      Base*         taylor      )
+   { assert(false); }
    // END FORWARD
    //
    // BEGIN REVERSE

@@ -92,14 +92,14 @@ public:
    }
    //
    // forward_dir
-   void forward_dir(
+   static void forward_dir(
       size_t        q           ,
       size_t        r           ,
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const override
+      Base*         taylor      )
    {
       // convert from final result to first result
       i_z -= 2; // 2 = NumRes(PowvvOp) - 1

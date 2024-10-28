@@ -143,14 +143,15 @@ public:
    // END FORWARD_ANY
    //
    // BEGIN FORWARD_DIR
-   virtual void forward_dir(
+   static void forward_dir(
       size_t        q           ,
       size_t        r           ,
       size_t        i_z         ,
       const addr_t* arg         ,
       const Base*   parameter   ,
       size_t        cap_order   ,
-      Base*         taylor      ) const = 0;
+      Base*         taylor      )
+   { assert(false); }
    // END FORWARD_DIR
    //
    // BEGIN REVERSE
