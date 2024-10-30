@@ -4,6 +4,7 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
+#
 # build_type, verbose_makefile
 if [ "$0" != 'bin/check_all.sh' ]
 then
@@ -35,6 +36,10 @@ fi
 #
 # grep and sed
 source bin/grep_and_sed.sh
+#
+# LD_LIBRARY_PATH
+# all linking of dynamic libraries should use rpath
+export LD_LIBRARY_PATH=''
 #
 # top_srcdir
 top_srcdir=`pwd`
@@ -310,13 +315,8 @@ else
    n_job=$(sysctl -n hw.ncpu)
 fi
 #
-# build: example_jit
-# avoid *.so not found on some vitual systems (during parallelll build)
-cmd="$builder -j $n_job"
-echo_log_eval $cmd example_jit
-#
 # build: check
-echo_log_eval $cmd check
+echo_log_eval $builder -j $n_job check
 #
 # speed/cppad/speed_cppad
 for option in onetape colpack optimize atomic memory boolsparsity
