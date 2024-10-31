@@ -37,7 +37,7 @@ cat check_include_file.1.$$ | \
    sort -u > check_include_file.2.$$
 #
 # The following files should never be included:
-#  cppad/local/prototype_op.hpp
+#  cppad/local/var_op/prototype_op.hpp
 #  cppad/local/optimize/define_prototype.hpp
 # All other files should.
 #
@@ -47,7 +47,7 @@ git ls-files | $sed -n -e '/include\/cppad\/.*\.hpp$/p' | \
    $sed \
       -e '1,1s|^|include/cppad/configure.hpp\n|' \
       -e '1,1s|^|include/cppad/local/is_pod.hpp\n|' \
-      -e '/include\/cppad\/local\/op\/prototype_op.hpp/d' \
+      -e '/include\/cppad\/local\/var_op\/prototype_op.hpp/d' \
       -e '/include\/cppad\/example\/eigen_plugin.hpp/d' | \
    $sed -e 's|^include/||' | \
    sort -u > check_include_file.3.$$

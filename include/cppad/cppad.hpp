@@ -2,7 +2,7 @@
 # define CPPAD_CPPAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file cppad.hpp
@@ -49,7 +49,7 @@
 # include <cppad/core/user_ad.hpp>  // AD class methods available to the user
 // tape that tape for AD<Base> acts as a user of Base operations
 // so user_ad.hpp must come before op.hpp
-# include <cppad/local/op.hpp>       // executes taped operations
+# include <cppad/local/var_op/var_op.hpp>       // executes taped operations
 # include <cppad/core/ad_fun.hpp>   // ADFun objects
 //
 // Putting these includes in ad_fun.hpp leads to circular including; i.e,
