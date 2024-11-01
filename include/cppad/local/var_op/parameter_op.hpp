@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 
 
 // See dev documentation: forward_unary_op
@@ -30,5 +30,5 @@ inline void forward_par_op_0(
    z[0]  = parameter[ arg[0] ];
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*!
 \file prototype_op.hpp
 Documentation for generic cases (these generic cases are never used).
@@ -1447,5 +1447,5 @@ inline void reverse_sparse_hessian_binary_op(
 }
 
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

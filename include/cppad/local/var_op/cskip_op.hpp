@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*!
 \file cskip_op.hpp
 Zero order forward mode set which operations to skip.
@@ -188,5 +188,5 @@ inline void forward_cskip_op_0(
    }
    return;
 }
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

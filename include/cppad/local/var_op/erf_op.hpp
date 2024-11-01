@@ -11,7 +11,7 @@
 # include <cppad/local/var_op/exp_op.hpp>
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*!
 \file erf_op.hpp
 Forward and reverse mode calculations for z = erf(x) or erfc(x).
@@ -587,5 +587,5 @@ inline void reverse_erf_op(
 }
 
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif // CPPAD_ERF_OP_INCLUDED

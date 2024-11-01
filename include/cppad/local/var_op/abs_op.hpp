@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_unary_op
 template <class Base>
@@ -109,5 +109,5 @@ inline void reverse_abs_op(
       px[j] += sign(x[0]) * pz[j];
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

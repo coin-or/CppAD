@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 
 // --------------------------- Addvv -----------------------------------------
 
@@ -239,5 +239,5 @@ inline void reverse_addpv_op(
 }
 
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

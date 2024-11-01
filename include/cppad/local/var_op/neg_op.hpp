@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 template <class Base>
 
 // See forward_unary1_op in developer documentation
@@ -107,5 +107,5 @@ inline void reverse_neg_op(
 
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

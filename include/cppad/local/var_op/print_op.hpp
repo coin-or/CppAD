@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*!
 Print operation for parameters; i.e., op = PriOp.
 
@@ -136,5 +136,5 @@ inline void forward_pri_0(
       s_out << before << var << after;
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

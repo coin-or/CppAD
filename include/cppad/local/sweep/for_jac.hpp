@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FOR_JAC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <set>
@@ -256,7 +256,7 @@ void for_jac(
          // -------------------------------------------------
 
          case CSumOp:
-         forward_sparse_jacobian_csum_op(
+         var_op::forward_sparse_jacobian_csum_op(
             i_var, arg, var_sparsity
          );
          itr.correct_before_increment();
@@ -264,7 +264,7 @@ void for_jac(
          // -------------------------------------------------
 
          case CExpOp:
-         forward_sparse_jacobian_cond_op(
+         var_op::forward_sparse_jacobian_cond_op(
             dependency, i_var, arg, num_par, var_sparsity
          );
          break;
@@ -363,7 +363,7 @@ void for_jac(
          // -------------------------------------------------
 
          case LdpOp:
-         forward_sparse_load_op(
+         var_op::forward_sparse_load_op(
             dependency,
             op,
             i_var,
@@ -377,7 +377,7 @@ void for_jac(
          // -------------------------------------------------
 
          case LdvOp:
-         forward_sparse_load_op(
+         var_op::forward_sparse_load_op(
             dependency,
             op,
             i_var,
@@ -521,7 +521,7 @@ void for_jac(
          // -------------------------------------------------
 
          case StpvOp:
-         forward_sparse_store_op(
+         var_op::forward_sparse_store_op(
             dependency,
             op,
             arg,
@@ -535,7 +535,7 @@ void for_jac(
 
          case StvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-         forward_sparse_store_op(
+         var_op::forward_sparse_store_op(
             dependency,
             op,
             arg,
@@ -548,7 +548,7 @@ void for_jac(
          // -------------------------------------------------
 
          case StvvOp:
-         forward_sparse_store_op(
+         var_op::forward_sparse_store_op(
             dependency,
             op,
             arg,

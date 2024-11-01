@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_REV_JAC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -302,14 +302,14 @@ void rev_jac(
 
          case CSumOp:
          itr.correct_after_decrement(arg);
-         reverse_sparse_jacobian_csum_op(
+         var_op::reverse_sparse_jacobian_csum_op(
             i_var, arg, var_sparsity
          );
          break;
          // -------------------------------------------------
 
          case CExpOp:
-         reverse_sparse_jacobian_cond_op(
+         var_op::reverse_sparse_jacobian_cond_op(
             dependency, i_var, arg, num_par, var_sparsity
          );
          break;
@@ -399,7 +399,7 @@ void rev_jac(
          // -------------------------------------------------
 
          case LdpOp:
-         reverse_sparse_jacobian_load_op(
+         var_op::reverse_sparse_jacobian_load_op(
             dependency,
             op,
             i_var,
@@ -413,7 +413,7 @@ void rev_jac(
          // -------------------------------------------------
 
          case LdvOp:
-         reverse_sparse_jacobian_load_op(
+         var_op::reverse_sparse_jacobian_load_op(
             dependency,
             op,
             i_var,
@@ -553,7 +553,7 @@ void rev_jac(
          // -------------------------------------------------
 
          case StpvOp:
-         reverse_sparse_jacobian_store_op(
+         var_op::reverse_sparse_jacobian_store_op(
             dependency,
             op,
             arg,
@@ -568,7 +568,7 @@ void rev_jac(
          case StvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 3, 0);
          // storing a parameter only affects dependency
-         reverse_sparse_jacobian_store_op(
+         var_op::reverse_sparse_jacobian_store_op(
             dependency,
             op,
             arg,
@@ -581,7 +581,7 @@ void rev_jac(
          // -------------------------------------------------
 
          case StvvOp:
-         reverse_sparse_jacobian_store_op(
+         var_op::reverse_sparse_jacobian_store_op(
             dependency,
             op,
             arg,

@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*!
 \file cond_op.hpp
 Forward, reverse, and sparse operations for conditional expressions.
@@ -1306,5 +1306,5 @@ inline void reverse_sparse_hessian_cond_op(
    return;
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

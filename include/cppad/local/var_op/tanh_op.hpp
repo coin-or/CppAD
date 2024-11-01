@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 
 
 // See dev documentation: forward_unary_op
@@ -157,5 +157,5 @@ inline void reverse_tanh_op(
    px[0] += azmul(pz[0], Base(1.0) - y[0]);
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

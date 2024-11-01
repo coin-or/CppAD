@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*
  ------------------------------------------------------------------------------
 {xrst_begin load_op_var dev}
@@ -706,5 +706,5 @@ inline void reverse_sparse_hessian_load_op(
 }
 
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

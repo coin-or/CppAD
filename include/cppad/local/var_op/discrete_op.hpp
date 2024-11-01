@@ -119,7 +119,7 @@ NumArg(op) == 2, NumRes(op) == 1,  q < cap_order, 0 < r
 
 {xrst_end discrete_op}
 */
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 
 // ---------------------------------------------------------------------------
 // BEGIN_PROTOTYPE
@@ -184,5 +184,5 @@ inline void forward_dis_op(
          az[ (k-1) * r + 1 + ell ] = AD<RecBase>(0.0);
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif

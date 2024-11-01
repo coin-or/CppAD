@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { namespace local { namespace var_op {
 /*!
 \file pow_op.hpp
 Forward and reverse mode calculations for z = pow(x, y).
@@ -703,5 +703,5 @@ inline void reverse_powvp_op(
       px[j] = CondExpEq(x[0], b0, b0, work[j]);
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END namespace
 # endif
