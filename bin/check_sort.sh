@@ -31,7 +31,7 @@ then
 else
    file_list=$(\
       git status --porcelain | \
-      $sed -e '/^D/d' -e 's|^...||' -e 's|^.*-> *||' \
+         $sed -e '/^D/d' -e 's|^...||' -e 's|^.*-> *||' \
    )
 fi
 #
@@ -58,6 +58,7 @@ do
       then
          cat temp.$$
          echo 'check_sort.sh: Error'
+         rm temp.$$
          exit 1
       fi
       last_line=$(tail -1 temp.$$)
@@ -69,6 +70,10 @@ do
    fi
 done
 #
+if [ -e "temp.$$" ]
+then
+   rm temp.$$
+fi
 if [ "$ok" == 'no' ]
 then
    echo 'check_sort.sh: Some files have been sorted (run again to get OK).'

@@ -44,3 +44,9 @@ invisible_and_tab_ok='
    coin.png
    uw_copy_040507.html
 '
+#
+# check_commit
+# These files may have automatic changes that should not be commited.
+# Including them in this list gives one this option to abort their changes.
+check_commit='
+'

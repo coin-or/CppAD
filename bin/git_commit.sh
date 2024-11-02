@@ -29,6 +29,9 @@ fi
 #
 # grep, sed
 source bin/grep_and_sed.sh
+#
+# check_commit
+source bin/dev_settings.sh
 # -----------------------------------------------------------------------------
 # EDITOR
 set +u
@@ -38,6 +41,38 @@ then
    exit 1
 fi
 set -u
+# -----------------------------------------------------------------------------
+# check_commit
+echo 's|^...||' > temp.sed
+for name in $check_commit
+do
+   if [ -f $name ]
+   then
+      echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
+   elif [ -d $name ]
+   then
+      echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
+   else
+      echo "$name in check_commit is not a file or directory"
+      exit 1
+   fi
+done
+list=$(
+   git status --porcelain | $sed -n -f temp.sed
+)
+for file in $list
+do
+   res=''
+   while [ "$res" != 'revert' ] && [ "$res" != 'commit' ]
+   do
+      read -p "$file: Revert or commit changes [revert/commit] ?" res
+   done
+   if [ "$res" == 'revert' ]
+   then
+      git reset    $file
+      git checkout $file
+   fi
+done
 # -----------------------------------------------------------------------------
 # new files
 # convert spaces in file names to @@
