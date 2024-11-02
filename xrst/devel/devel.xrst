@@ -28,6 +28,7 @@ Contents
    include/cppad/local/sparse/dev_sparse.xrst
    include/cppad/local/sweep/dev_sweep.xrst
    include/cppad/local/var_op/binary_op.xrst
+   include/cppad/local/var_op/compare.hpp
    include/cppad/local/var_op/discrete_op.hpp
    include/cppad/local/var_op/unary_op.xrst
    include/cppad/utility/xrst/dev_utility.xrst
