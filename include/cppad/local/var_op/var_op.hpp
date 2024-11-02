@@ -18,7 +18,6 @@
 # include <cppad/local/var_op/asinh_op.hpp>
 # include <cppad/local/var_op/atan_op.hpp>
 # include <cppad/local/var_op/atanh_op.hpp>
-# include <cppad/local/var_op/comp_op.hpp>
 # include <cppad/local/var_op/cond_op.hpp>
 # include <cppad/local/var_op/cos_op.hpp>
 # include <cppad/local/var_op/cosh_op.hpp>

@@ -310,6 +310,27 @@ void forward0(
       // action to take depends on the case
       switch( op )
       {
+         case EqppOp:
+         case EqpvOp:
+         case EqvvOp:
+         case LeppOp:
+         case LepvOp:
+         case LevpOp:
+         case LevvOp:
+         case LtppOp:
+         case LtpvOp:
+         case LtvpOp:
+         case LtvvOp:
+         case NeppOp:
+         case NepvOp:
+         case NevvOp:
+         var_op::compare(op,
+            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
+            compare_change_number, compare_change_op_index
+         );
+         break;
+         // -------------------------------------------------
+
          case AbsOp:
          var_op::forward_abs_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
@@ -435,30 +456,6 @@ void forward0(
          break;
          // -------------------------------------------------
 
-         case EqppOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case EqpvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case EqvvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
          case ErfOp:
          case ErfcOp:
          var_op::forward_erf_op_0(op, i_var, arg, parameter, J, taylor);
@@ -510,37 +507,6 @@ void forward0(
          break;
          // -------------------------------------------------
 
-         case LeppOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-         case LepvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case LevpOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case LevvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
          case LogOp:
          var_op::forward_log_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
@@ -548,37 +514,6 @@ void forward0(
 
          case Log1pOp:
          var_op::forward_log1p_op_0(i_var, size_t(arg[0]), J, taylor);
-         break;
-         // -------------------------------------------------
-
-         case LtppOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-         case LtpvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case LtvpOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case LtvvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
          break;
          // -------------------------------------------------
 
@@ -593,34 +528,10 @@ void forward0(
          break;
          // -------------------------------------------------
 
-         case NeppOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
          case NegOp:
          var_op::forward_neg_op_0(i_var, size_t(arg[0]), J, taylor);
          break;
 
-         // -------------------------------------------------
-
-         case NepvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
-         // -------------------------------------------------
-
-         case NevvOp:
-         var_op::compare(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
-         );
-         break;
          // -------------------------------------------------
 
          case ParOp:
