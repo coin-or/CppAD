@@ -155,7 +155,7 @@ struct_size_pair record_csum(
    {  // get this summation operator
       info = stack.op_info.top();
       stack.op_info.pop();
-      OpCode        op      = info.op;
+      op_code_var   op      = info.op;
       const addr_t* arg     = info.arg;
       bool          add     = info.add;
       CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );

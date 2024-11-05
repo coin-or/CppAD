@@ -560,7 +560,7 @@ bool optimize_run(
    // -------------------------------------------------------------
    // information for current operator
    size_t          i_op;   // index
-   OpCode          op;     // operator
+   op_code_var     op;     // operator
    const addr_t*   arg;    // arguments
    size_t          i_var;  // variable index of primary (last) result
    //

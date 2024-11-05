@@ -176,7 +176,7 @@ void rev_hes(
    // skip the EndOp at the end of the recording
    play::const_sequential_iterator itr = play->end();
    // op_info
-   OpCode op;
+   op_code_var op;
    size_t i_var;
    const Addr*   arg;
    itr.op_info(op, arg, i_var);

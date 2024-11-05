@@ -81,7 +81,7 @@ namespace CppAD { namespace local { namespace var_op { // BEGIN namespace
 
 // BEGIN PROTOTYPE
 template <class Base> void compare(
-   OpCode        op_enum                 ,
+   op_code_var   op_enum                 ,
    const addr_t* arg                     ,
    const Base*   parameter               ,
    size_t        cap_order               ,

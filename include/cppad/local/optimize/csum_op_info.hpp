@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_CSUM_OP_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/op_code_var.hpp>
 # include <cppad/local/declare_ad.hpp> // defines addr_t
@@ -27,7 +27,7 @@ struct struct_csum_op_info {
    bool                add;
 
    /// Operator for which this old variable is the result, NumRes(op) > 0.
-   OpCode              op;
+   op_code_var         op;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

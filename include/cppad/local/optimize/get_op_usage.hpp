@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -13,7 +13,7 @@ namespace CppAD { namespace local { namespace optimize {
 
 /// Is this an addition or subtraction operator
 inline bool op_add_or_sub(
-   OpCode op ///< operator we are checking
+   op_code_var op ///< operator we are checking
 )
 {  bool result;
    switch(op)
@@ -113,7 +113,7 @@ void op_inc_arg_usage(
    op_usage[i_arg] = usage_t(yes_usage);
    if( check_csum )
    {  if( arg_usage == no_usage )
-      {  OpCode op_a = play->GetOp(i_arg);
+      {  op_code_var op_a = play->GetOp(i_arg);
          if( op_add_or_sub( op_a ) )
          {  op_usage[i_arg] = usage_t(csum_usage);
          }
@@ -276,7 +276,7 @@ void get_op_usage(
    );
    // -----------------------------------------------------------------------
    // information about current operator
-   OpCode        op;     // operator
+   op_code_var   op;     // operator
    const addr_t* arg;    // arguments
    size_t        i_op;   // operator index
    size_t        i_var;  // variable index of first result

@@ -139,9 +139,9 @@ public:
    void put_dyn_arg_vec(const pod_vector<addr_t>& arg);
 
    /// Put next operator in the operation sequence.
-   addr_t PutOp(OpCode op);
+   addr_t PutOp(op_code_var op);
    /// Put a vecad load operator in the operation sequence (special case)
-   addr_t PutLoadOp(OpCode op);
+   addr_t PutLoadOp(op_code_var op);
 
    // VecAD operations
    addr_t put_var_vecad_ind(addr_t vec_ind);
@@ -295,7 +295,7 @@ to the call.
 This index starts at zero after the default constructor.
 */
 template <class Base>
-addr_t recorder<Base>::PutOp(OpCode op)
+addr_t recorder<Base>::PutOp(op_code_var op)
 {  size_t i    = op_vec_.extend(1);
    CPPAD_ASSERT_KNOWN(
       (abort_op_index_ == 0) || (abort_op_index_ != i),
@@ -351,7 +351,7 @@ The return value for <code>num_var_load_rec()</code>
 increases by one after each call to this function.
 */
 template <class Base>
-addr_t recorder<Base>::PutLoadOp(OpCode op)
+addr_t recorder<Base>::PutLoadOp(op_code_var op)
 {  size_t i    = op_vec_.extend(1);
    CPPAD_ASSERT_KNOWN(
       (abort_op_index_ == 0) || (abort_op_index_ != i),

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_RANDOM_SETUP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -24,7 +24,7 @@ num_var is the number of variables in this operation sequence.
 
 \param op_vec
 The mapping
-<code>op = OpCode[ op_vec[op_index] ]</code>
+<code>op = op_code_var[ op_vec[op_index] ]</code>
 maps from operator index op_index to the operator op.
 
 \param arg_vec
@@ -70,7 +70,7 @@ void random_setup(
    CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == 0         );
    CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == 0         );
    CPPAD_ASSERT_UNKNOWN( var2op_vec->size() == 0         );
-   CPPAD_ASSERT_UNKNOWN( OpCode( op_vec[0] ) == BeginOp );
+   CPPAD_ASSERT_UNKNOWN( op_code_var( op_vec[0] ) == BeginOp );
    CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
    //
    size_t num_op     = op_vec.size();
@@ -89,7 +89,7 @@ void random_setup(
       (*op2var_vec)[i_op] = Addr( num_var );
 # endif
    for(size_t i_op = 0; i_op < num_op; ++i_op)
-   {  OpCode  op          = OpCode( op_vec[i_op] );
+   {  op_code_var op          = op_code_var( op_vec[i_op] );
       //
       // index of first argument for this operator
       (*op2arg_vec)[i_op]   = Addr( arg_index );

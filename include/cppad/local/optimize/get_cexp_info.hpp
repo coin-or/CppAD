@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/optimize/match_op.hpp>
@@ -169,7 +169,7 @@ void get_cexp_info(
       CPPAD_ASSERT_UNKNOWN(
          op_previous[i_op] == 0 || op_usage[i_op] == usage_t(yes_usage)
       );
-      OpCode        op;     // operator
+      op_code_var   op;     // operator
       const addr_t* arg;    // arguments
       size_t        i_var;  // variable index of first result
       random_itr.op_info(i_op, op, arg, i_var);

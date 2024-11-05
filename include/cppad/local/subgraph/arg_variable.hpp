@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SUBGRAPH_ARG_VARIABLE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/pod_vector.hpp>
@@ -49,7 +49,7 @@ void get_argument_variable(
    variable.resize(0);
    //
    // operator corresponding to i_op
-   OpCode        op;
+   op_code_var   op;
    const addr_t* op_arg;
    size_t        i_var;
    random_itr.op_info(i_op, op, op_arg, i_var);

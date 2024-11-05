@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SUBGRAPH_GET_REV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/pod_vector.hpp>
@@ -126,7 +126,7 @@ void subgraph_info::get_rev(
       //
       // There must be a result for this operator
 # ifndef NDEBUG
-      OpCode op = random_itr.get_op(i_op);
+      op_code_var op = random_itr.get_op(i_op);
       CPPAD_ASSERT_UNKNOWN(op == AFunOp || NumRes(op) > 0 );
 # endif
       //

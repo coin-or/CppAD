@@ -313,7 +313,7 @@ to the sparsity pattern for the vector v.
 */
 template <class Vector_set>
 inline void sparse_store_op(
-   OpCode         op             ,
+   op_code_var    op             ,
    const addr_t*  arg            ,
    size_t         num_combined   ,
    const size_t*  combined       ,
@@ -351,7 +351,7 @@ is this a dependency (or sparsity) calculation.
 template <class Vector_set>
 inline void forward_sparse_store_op(
    bool                dependency     ,
-   OpCode              op             ,
+   op_code_var         op             ,
    const addr_t*       arg            ,
    size_t              num_combined   ,
    const size_t*       combined       ,
@@ -407,7 +407,7 @@ is this a dependency (or sparsity) calculation.
 template <class Vector_set>
 inline void reverse_sparse_jacobian_store_op(
    bool               dependency      ,
-   OpCode             op              ,
+   op_code_var        op              ,
    const addr_t*      arg             ,
    size_t             num_combined    ,
    const size_t*      combined        ,
@@ -470,7 +470,7 @@ and on output it corresponds to the function H.
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_store_op(
-   OpCode             op           ,
+   op_code_var        op           ,
    const addr_t*      arg          ,
    size_t             num_combined ,
    const size_t*      combined     ,

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_RANDOM_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -97,10 +97,10 @@ public:
    */
    void op_info(
       size_t         op_index   ,
-      OpCode&        op         ,
+      op_code_var&   op         ,
       const addr_t*& op_arg     ,
       size_t&        var_index  ) const
-   {  op        = OpCode( (*op_vec_)[op_index] );
+   {  op        = op_code_var( (*op_vec_)[op_index] );
       op_arg    = (*op2arg_vec_)[op_index] + arg_vec_->data();
       var_index = (*op2var_vec_)[op_index];
       return;
@@ -128,8 +128,8 @@ public:
       return op_index;
    }
    /// get operator corresponding to operator index
-   OpCode get_op(size_t op_index) const
-   {  return OpCode( (*op_vec_)[op_index] );
+   op_code_var get_op(size_t op_index) const
+   {  return op_code_var( (*op_vec_)[op_index] );
    }
    /// number of operators
    size_t num_op(void) const

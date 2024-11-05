@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/subgraph/info.hpp>
@@ -90,7 +90,7 @@ void subgraph_info::init_rev(
 # endif
    bool begin_atomic_call = false;
    for(size_t i_op = 0; i_op < n_op_; ++i_op)
-   {  OpCode op = random_itr.get_op(i_op);
+   {  op_code_var op = random_itr.get_op(i_op);
       //
       // default value for this operator
       in_subgraph_[i_op] = depend_no;

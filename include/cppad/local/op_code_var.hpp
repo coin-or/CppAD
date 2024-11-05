@@ -57,8 +57,8 @@ typedef CPPAD_VEC_ENUM_TYPE opcode_t;
 /* {xrst_code}
 {xrst_spell_on}
 
-OpCode
-******
+op_code_var
+***********
 This enum type is used to distinguish different ``AD`` < *Base* >
 atomic operations.
 Each value in the enum type ends with the characters ``Op`` .
@@ -459,7 +459,7 @@ Source
 {xrst_spell_off}
 {xrst_code hpp} */
 // BEGIN_SORT_THIS_LINE_PLUS_2
-enum OpCode {
+enum op_code_var {
    AFunOp,   // see its heading above
    AbsOp,    // unary fabs
    AcosOp,   // unary acos
@@ -554,20 +554,20 @@ Operator for which we are fetching the number of arugments.
 
 \par NumArgTable
 this table specifes the number of arguments stored for each
-occurance of the operator that is the i-th value in the OpCode enum type.
-For example, for the first three OpCode enum values we have
+occurance of the operator that is the i-th value in the op_code_var enum type.
+For example, for the first three op_code_var enum values we have
 \verbatim
-OpCode   j   NumArgTable[j]  Meaning
+op_code_var j   NumArgTable[j]  Meaning
 AbsOp    0                1  index of variable we are taking absolute value of
 AcosOp   1                1  index of variable we are taking acos of
 AcoshOp  2                1  index of variable we are taking acosh of
 \endverbatim
 Note that the meaning of the arguments depends on the operator.
 */
-inline size_t NumArg( OpCode op)
+inline size_t NumArg( op_code_var op)
 {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
-   // agreement with OpCode is checked by bin/check_op_code.sh
+   // agreement with op_code_var is checked by bin/check_op_code.sh
    // BEGIN_SORT_THIS_LINE_PLUS_2
    static const size_t NumArgTable[] = {
       /* AFunOp   */ 4,
@@ -676,19 +676,19 @@ Operator for which we are fecching the number of results.
 
 \par NumResTable
 table specifes the number of varibles that result for each
-occurance of the operator that is the i-th value in the OpCode enum type.
-For example, for the first three OpCode enum values we have
+occurance of the operator that is the i-th value in the op_code_var enum type.
+For example, for the first three op_code_var enum values we have
 \verbatim
-OpCode   j   NumResTable[j]  Meaning
+op_code_var j   NumResTable[j]  Meaning
 AbsOp    0                1  variable that is the result of the absolute value
 AcosOp   1                2  acos(x) and sqrt(1-x*x) are required for this op
 AcoshOp  2                2  acosh(x) and sqrt(x*x-1) are required for this op
 \endverbatim
 */
-inline size_t NumRes(OpCode op)
+inline size_t NumRes(op_code_var op)
 {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
-   // agreement with OpCode is checked by bin/check_op_code.sh
+   // agreement with op_code_var is checked by bin/check_op_code.sh
    // BEGIN_SORT_THIS_LINE_PLUS_2
    static const size_t NumResTable[] = {
       /* AFunOp   */ 0,
@@ -786,8 +786,8 @@ name of the specified operation.
 \param op
 Operator for which we are fetching the name
 */
-inline std::string OpName(OpCode op)
-{  // agreement with OpCode is checked by bin/check_op_code.sh
+inline std::string OpName(op_code_var op)
+{  // agreement with op_code_var is checked by bin/check_op_code.sh
    // BEGIN_SORT_THIS_LINE_PLUS_2
    static const char *OpNameTable[] = {
       "AFunOp"  ,
@@ -965,7 +965,7 @@ is the index for the variable corresponding to the result of this operation
 (if NumRes(op) > 0).
 
 \param op
-The operator code (OpCode) for this operation.
+The operator code (op_code_var) for this operation.
 
 \param arg
 is the vector of argument indices for this operation
@@ -977,7 +977,7 @@ void printOp(
    const local::player<Base>* play,
    size_t                 i_op   ,
    size_t                 i_var  ,
-   OpCode                 op     ,
+   op_code_var            op     ,
    const addr_t*          arg    )
 {
    CPPAD_ASSERT_KNOWN(
@@ -1370,7 +1370,7 @@ and all the other is_variable values are false.
 */
 template <class Addr>
 void arg_is_variable(
-   OpCode            op          ,
+   op_code_var       op          ,
    const Addr*       arg         ,
    pod_vector<bool>& is_variable )
 {  size_t num_arg = NumArg(op);

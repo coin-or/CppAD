@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SUBGRAPH_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/random_iterator.hpp>
@@ -124,7 +124,7 @@ public:
       bool   ok   = true;
       size_t i_op = 0;
       while( i_op < n_op_ )
-      {  OpCode op = play->GetOp(i_op);
+      {  op_code_var op = play->GetOp(i_op);
          ok       &= map_user_op_[i_op] == addr_t( i_op );
          if( op == AFunOp )
          {  addr_t begin = addr_t( i_op );
@@ -249,9 +249,9 @@ public:
    \code
       OpCodce op_i = play->GetOp(i_op);
       size_t  j_op = map_user_op[i_op];
-      OpCode  op_j = play->GetOP(j_op);
+      op_code_var op_j = play->GetOP(j_op);
    \endcode
-   If op is a user OpCode, j_op is the index of the first operator
+   If op is a user op_code_var, j_op is the index of the first operator
    in the corresponding atomic function call and op_j == AFunOp.
    Otherwise j_op == i_op;
 
@@ -269,7 +269,7 @@ public:
       // set map_user_op for each operator
       for(size_t i_op = 0; i_op < n_op_; ++i_op)
       {  // this operator
-         OpCode op = play->GetOp(i_op);
+         op_code_var op = play->GetOp(i_op);
          //
          // value of map_user_op when op is not in atomic function call)
          map_user_op_[i_op] = addr_t( i_op );

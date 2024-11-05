@@ -473,7 +473,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
       var2node[i] = 0; // invalid node value
    //
    local::play::const_sequential_iterator itr  = play_.begin();
-   local::OpCode      var_op;
+   local::op_code_var var_op;
    const              addr_t* arg;
    size_t             i_var;
    pod_vector<bool>   is_var(2);

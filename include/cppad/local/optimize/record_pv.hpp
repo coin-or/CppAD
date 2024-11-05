@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_PV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file record_pv.hpp
@@ -47,7 +47,7 @@ struct_size_pair record_pv(
    recorder<Base>*                                    rec            )
 {
    // get_op_info
-   OpCode        op;
+   op_code_var   op;
    const addr_t* arg;
    size_t        i_var;
    random_itr.op_info(i_op, op, arg, i_var);

@@ -86,10 +86,10 @@ void ADFun<Base, RecBase>::fun2val(
    using local::val_graph::op_enum_t;
    op_enum_t number_op_enum = local::val_graph::number_op_enum;
    //
-   // op_code_dyn, number_dyn, OpCode
+   // op_code_dyn, number_dyn, op_code_var
    using local::op_code_dyn;
    op_code_dyn number_dyn = local::number_dyn;
-   using local::OpCode;
+   using local::op_code_var;
    //
    // pod_vector, opcode_t
    using local::pod_vector;
@@ -442,7 +442,7 @@ void ADFun<Base, RecBase>::fun2val(
    {  //
       //
       // itr, var_op, var_op_arg, i_var
-      local::OpCode    var_op;
+      local::op_code_var var_op;
       const            addr_t* var_op_arg;
       size_t           i_var;
       (++itr).op_info(var_op, var_op_arg, i_var);

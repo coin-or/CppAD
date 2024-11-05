@@ -185,7 +185,7 @@ bool match_op(
    CPPAD_ASSERT_UNKNOWN( current < num_op );
    //
    // op, arg, i_var
-   OpCode        op;
+   op_code_var   op;
    const addr_t* arg;
    size_t        i_var;
    random_itr.op_info(current, op, arg, i_var);
@@ -241,7 +241,7 @@ bool match_op(
       CPPAD_ASSERT_UNKNOWN( candidate < current );
       CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
       //
-      OpCode        op_c;
+      op_code_var   op_c;
       const addr_t* arg_c;
       size_t        i_var_c;
       random_itr.op_info(candidate, op_c, arg_c, i_var_c);

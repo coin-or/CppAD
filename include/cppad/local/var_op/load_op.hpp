@@ -334,7 +334,7 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 */
 template <class Vector_set, class Addr>
 inline void sparse_load_op(
-   OpCode              op             ,
+   op_code_var         op             ,
    size_t              i_z            ,
    const Addr*          arg           ,
    size_t              num_combined   ,
@@ -434,7 +434,7 @@ is set to the k-order Taylor coefficient for z in the ell-th direction.
 template <class Addr, class Base>
 inline void forward_load_op(
    const local::player<Base>* play,
-   OpCode               op                   ,
+   op_code_var          op                   ,
    size_t               p                    ,
    size_t               q                    ,
    size_t               r                    ,
@@ -566,7 +566,7 @@ the instruction corresponds to a parameter (not variable).
 */
 template <class Addr, class Base>
 inline void reverse_load_op(
-   OpCode         op          ,
+   op_code_var    op          ,
    size_t         d           ,
    size_t         i_z         ,
    const Addr*    arg         ,
@@ -604,7 +604,7 @@ is this a dependency (or sparsity) calculation.
 template <class Vector_set, class Addr>
 inline void forward_sparse_load_op(
    bool               dependency     ,
-   OpCode             op             ,
+   op_code_var        op             ,
    size_t             i_z            ,
    const Addr*        arg            ,
    size_t             num_combined   ,
@@ -638,7 +638,7 @@ is this a dependency (or sparsity) calculation.
 template <class Vector_set, class Addr>
 inline void reverse_sparse_jacobian_load_op(
    bool               dependency     ,
-   OpCode             op             ,
+   op_code_var        op             ,
    size_t             i_z            ,
    const Addr*        arg            ,
    size_t             num_combined   ,
@@ -681,7 +681,7 @@ and on output it corresponds to the function H.
 */
 template <class Vector_set, class Addr>
 inline void reverse_sparse_hessian_load_op(
-   OpCode             op             ,
+   op_code_var        op             ,
    size_t             i_z            ,
    const Addr*        arg            ,
    size_t             num_combined   ,

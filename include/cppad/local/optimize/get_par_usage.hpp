@@ -158,7 +158,7 @@ void get_par_usage(
    for(size_t i_op = 0; i_op < num_op; ++i_op)
    {
       // information about current operator
-      OpCode        op;     // operator
+      op_code_var   op;     // operator
       const addr_t* arg;    // arguments
       size_t        i_var;  // variable index of first result
       random_itr.op_info(i_op, op, arg, i_var);

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -226,7 +226,7 @@ void for_hes(
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
    // op_info
-   OpCode op;
+   op_code_var op;
    size_t i_var;
    const Addr*   arg;
    itr.op_info(op, arg, i_var);
@@ -603,7 +603,7 @@ void for_hes(
                   j = *(++itr_2);
                }
             }
-            OpCode op_tmp = FunrvOp;
+            op_code_var op_tmp = FunrvOp;
             if( k_var == 0 )
             {  op_tmp     = FunrpOp;
                arg_tmp[0] = atom_funrp[k];

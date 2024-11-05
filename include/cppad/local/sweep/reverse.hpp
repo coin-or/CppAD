@@ -215,7 +215,7 @@ void reverse(
 # if CPPAD_REVERSE_TRACE
    std::cout << std::endl;
 # endif
-   OpCode        op;
+   op_code_var   op;
    const Addr*   arg;
    size_t        i_var;
    play_itr.op_info(op, arg, i_var);

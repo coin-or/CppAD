@@ -73,7 +73,7 @@ size_t ADFun<Base,RecBase>::number_skip(void)
 
    // start playback
    local::play::const_sequential_iterator itr = play_.begin();
-   local::OpCode op;
+   local::op_code_var op;
    size_t        i_var;
    const addr_t* arg;
    itr.op_info(op, arg, i_var);

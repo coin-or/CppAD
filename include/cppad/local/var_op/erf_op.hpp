@@ -85,7 +85,7 @@ is the k-th order Taylor coefficient corresponding to the j-th result for z.
 */
 template <class Base>
 inline void forward_erf_op(
-   OpCode        op          ,
+   op_code_var   op          ,
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -212,7 +212,7 @@ is the zero order Taylor coefficient for j-th result corresponding to z.
 */
 template <class Base>
 inline void forward_erf_op_0(
-   OpCode        op          ,
+   op_code_var   op          ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -339,7 +339,7 @@ and j-th auzillary result.
 */
 template <class Base>
 inline void forward_erf_op_dir(
-   OpCode        op          ,
+   op_code_var   op          ,
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -496,7 +496,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 */
 template <class Base>
 inline void reverse_erf_op(
-   OpCode        op          ,
+   op_code_var   op          ,
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,

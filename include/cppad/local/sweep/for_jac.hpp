@@ -156,7 +156,7 @@ void for_jac(
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
    // op_info
-   OpCode op;
+   op_code_var op;
    size_t i_var;
    const Addr*   arg;
    itr.op_info(op, arg, i_var);
@@ -759,7 +759,7 @@ void for_jac(
             {  z_value[j] = true;
                j = *(++itr);
             }
-            OpCode op_tmp = FunrvOp;
+            op_code_var op_tmp = FunrvOp;
             if( j_var == 0 )
             {  op_tmp     = FunrpOp;
                arg_tmp[0] = atom_funrp[i];

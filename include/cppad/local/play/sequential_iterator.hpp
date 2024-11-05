@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_SEQUENTIAL_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -50,7 +50,7 @@ private:
    size_t                    var_index_;
 
    /// value of current operator; i.e. op_ = *op_cur_
-   OpCode                    op_;
+   op_code_var               op_;
 public:
    /// default constructor
    const_sequential_iterator(void) :
@@ -95,8 +95,8 @@ public:
    It must be zero or op_vec_->size() - 1.
 
    \par Assumptions
-   - OpCode(op_vec_[0]) == BeginOp
-   - OpCode(op_vec_[op_vec_->size() - 1]) == EndOp
+   - op_code_var(op_vec_[0]) == BeginOp
+   - op_code_var(op_vec_[op_vec_->size() - 1]) == EndOp
    */
    const_sequential_iterator(
       size_t                                num_var    ,
@@ -119,7 +119,7 @@ public:
          //
          // BeginOp
          op_cur_    = op_begin_;
-         op_        = OpCode( *op_cur_ );
+         op_        = op_code_var( *op_cur_ );
          CPPAD_ASSERT_UNKNOWN( op_ == BeginOp );
          CPPAD_ASSERT_NARG_NRES(op_, 1, 1);
       }
@@ -134,7 +134,7 @@ public:
          //
          // EndOp
          op_cur_    = op_end_ - 1;
-         op_        = OpCode( *op_cur_ );
+         op_        = op_code_var( *op_cur_ );
          CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
          CPPAD_ASSERT_NARG_NRES(op_, 0, 0);
       }
@@ -149,7 +149,7 @@ public:
       //
       // next operator
       ++op_cur_;
-      op_ = OpCode( *op_cur_ );
+      op_ = op_code_var( *op_cur_ );
       //
       // last result for next operator
       var_index_ += NumRes(op_);
@@ -194,7 +194,7 @@ public:
       //
       // next operator
       --op_cur_;
-      op_ = OpCode( *op_cur_ );
+      op_ = op_code_var( *op_cur_ );
       //
       // first argument for next operator
       arg_ -= NumArg(op_);
@@ -257,7 +257,7 @@ public:
    is not sepcified and could have any value.
    */
    void op_info(
-      OpCode&        op         ,
+      op_code_var&   op         ,
       const addr_t*& arg        ,
       size_t&        var_index  ) const
    {  // op

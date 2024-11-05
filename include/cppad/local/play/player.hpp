@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_PLAYER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/addr_enum.hpp>
@@ -240,7 +240,7 @@ public:
 # else
    void check_inv_op(size_t n_ind) const
    {  play::const_sequential_iterator itr = begin();
-      OpCode        op;
+      op_code_var   op;
       const addr_t* op_arg;
       size_t        var_index;
       itr.op_info(op, op_arg, var_index);
@@ -267,7 +267,7 @@ public:
 # else
    void check_variable_dag(void) const
    {  play::const_sequential_iterator itr = begin();
-      OpCode        op;
+      op_code_var   op;
       const addr_t* op_arg;
       size_t        var_index;
       itr.op_info(op, op_arg, var_index);
@@ -629,8 +629,8 @@ public:
    \param i
    the index of the operator in recording
    */
-   OpCode GetOp (size_t i) const
-   {  return OpCode(op_vec_[i]); }
+   op_code_var GetOp (size_t i) const
+   {  return op_code_var(op_vec_[i]); }
 
    /*!
    \brief

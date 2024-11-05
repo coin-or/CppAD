@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_HASH_CODE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/core/base_hash.hpp>
 /*!
@@ -113,7 +113,7 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 template <class Base>
 unsigned short local_hash_code(
-   OpCode        op      ,
+   op_code_var   op      ,
    const addr_t* arg     ,
    size_t        npar    ,
    const Base*   par     )

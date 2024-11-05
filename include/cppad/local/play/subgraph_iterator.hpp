@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_SUBGRAPH_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/random_iterator.hpp>
@@ -108,7 +108,7 @@ public:
    is not sepcified and could have any value.
    */
    void op_info(
-      OpCode&        op         ,
+      op_code_var&   op         ,
       const addr_t*& op_arg     ,
       size_t&        var_index  ) const
    {  // op

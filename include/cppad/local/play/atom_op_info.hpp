@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_ATOM_OP_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -40,7 +40,7 @@ Is a pointer to this atomic function.
 // MUSTDO: change return to void once all sweeps switch to use call_atomic.
 template <class Base>
 atomic_base<Base>* atom_op_info(
-   const OpCode     op         ,
+   const op_code_var op         ,
    const addr_t*    op_arg     ,
    size_t&          atom_index ,
    size_t&          call_id    ,

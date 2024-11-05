@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SUBGRAPH_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/pod_vector.hpp>
@@ -156,7 +156,7 @@ void subgraph_sparsity(
       {  size_t i_op = size_t( subgraph[k] );
          //
          // operator corresponding to this index
-         OpCode op = play->GetOp(i_op);
+         op_code_var op = play->GetOp(i_op);
          //
          // This version of the subgraph only has first AFunOp
          // for each atomic functionc all.
