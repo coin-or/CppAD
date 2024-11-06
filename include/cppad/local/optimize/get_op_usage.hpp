@@ -146,7 +146,6 @@ void op_inc_arg_usage(
    dep
    pri
    taddr
-   vecad
 }
 
 Use Reverse Activity Analysis to Get Usage Information for Each Operator

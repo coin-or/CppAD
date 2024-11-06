@@ -7,62 +7,39 @@
 
 namespace CppAD { namespace local { namespace var_op {
 /*
-{xrst_begin var_store_0 dev}
+{xrst_begin_parent var_store_op dev}
 {xrst_spell
-   isvar
    stpp
    stpv
    stvp
    stvv
-   numvar
 }
+
 Store an Element of a Variable VecAD Vector
 ###########################################
 
-See Also
-********
-op_code_var :ref:`op_code_var@Store` .
-
-Prototype
-*********
-{xrst_literal
-   // BEGIN_FORWARD_STORE_0
-   // END_FORWARD_STORE_0
-}
-
-Notation
-********
-
-Syntax
-======
+User Syntax
+***********
 | *v* [ *x* ] = *y*
 
 v
-=
-is the :ref:`VecAD-name` vector for this operation.
+*
+is the :ref:`VecAD-name` vector for this store operation.
+This vector is a variable after the store.
+if this is a StppOp operation, *v* is a variable before the store.
 
 x
-=
-is the index for this operation.
+*
+is the index for this store.
 
 y
-=
-is the value being stored by this operation
-
-i_vec
-=====
-We use *i_vec* to denote the ``size_t`` value
-corresponding to *x* .
-
-n_all
-=====
-This is the number of values in the single array that includes
-all the vectors together with the size of each vector.
+*
+is the value being stored.
 
 Base
 ****
 base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
+using AD<Base> and computations by these operators done using type Base.
 
 op_code
 *******
@@ -77,13 +54,21 @@ op_code
    StvpOp, variable,  parameter
    StvvOp, variable,  variable
 
+num_vecad_ind
+*************
+is the size of the single array that includes
+all the VecAD vectors together with the size of each vector.
+
 arg
 ***
 
 arg[0]
 ======
-is the offset of this VecAD vector relative to the beginning
-of the *vec_ad2isvar* and *vec_ad2index* arrays.
+this argument is the offset of the vector *v*
+relative to the beginning of the single array
+that contains all VecAD elements and sizes.
+This offset corresponds to the first element of *v* and not its size
+which comes just before the first element.
 
 arg[1]
 ======
@@ -95,6 +80,30 @@ arg[2]
 If *y* is a parameter (variable), arg[2] is the parameter index
 (variable index) to *y* .
 
+{xrst_end var_store_op}
+------------------------------------------------------------------------------
+{xrst_begin var_store_forward_0 dev}
+{xrst_spell
+   isvar
+   numvar
+}
+
+Zero Order Forward Store an Element of a VecAD Vector
+#####################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_STORE_0
+   // END_FORWARD_STORE_0
+}
+
+op_code, num_vecad_ind, arg
+***************************
+see :ref:`var_store_op@op_code` ,
+:ref:`var_store_op@num_vecad_ind` ,
+:ref:`var_store_op@arg` .
+
 numvar
 ******
 is the number of variables in this recording.
@@ -105,8 +114,7 @@ is the number of parameters in this recording.
 
 parameter
 *********
-This is the vector of parameters for this recording which has size
-*num_par* .
+This is the vector of parameters for this recording which has size *num_par* .
 
 cap_order
 *********
@@ -116,24 +124,28 @@ taylor
 ******
 Is the matrix of Taylor coefficients for all the variables.
 
+i_vec
+*****
+We use *i_vec* to denote the ``size_t`` value corresponding to
+:ref:`var_store_op@x` .
+
 vec_ad2isvar
 ************
-This vector has size *n_all* and
-the input values of its elements does not matter.
+This vector has size :ref:`var_store_op@num_vecad_ind` .
+The input values of its elements does not matter.
 If the value being stored is a parameter (variable),
-*vec_ad2isvar* [ *arg* [0] + *i_vec*  ]
-is set to false (true).
+*vec_ad2isvar* [ *arg* [0] + *i_vec*  ] is set to false (true).
 
 vec_ad2index
 ************
-This array has size *n_all*
-and the input value of its elements does not matter.
+This vector has size *num_vecad_ind* .
+The input value of its elements does not matter.
 If the value being stored is a parameter (variable),
 *vec_ad2index* [ *arg* [0] + *i_vec*  ]
 is set to the parameter (variable) index
 corresponding to the value being stored.
 
-{xrst_end var_store_0}
+{xrst_end var_store_forward_0}
 */
 // BEGIN_FORWARD_STORE_0
 template <class Base>
@@ -149,8 +161,7 @@ inline void forward_store_0(
    pod_vector<size_t>&  vec_ad2index   )
 // END_FORWARD_STORE_0
 {  //
-   CPPAD_ASSERT_UNKNOWN( NumArg(op_code) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(op_code) == 0 );
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == vec_ad2index.size() )
    //
@@ -164,6 +175,9 @@ inline void forward_store_0(
    switch(op_code)
    {  //
       default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+      //
       case StppOp:
       i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
       isvar = false;
@@ -196,143 +210,110 @@ inline void forward_store_0(
    vec_ad2isvar[ arg[0] + i_vec ]  = isvar;
    vec_ad2index[ arg[0] + i_vec ]  = index;
 }
-// ---------------------------------------------------------------------------
 /*
-==============================================================================
-<!-- define preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-   v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-   i_v_x = vec_ad2index[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
-==============================================================================
-*/
-/*!
-Shared documnetation for sparsity operations corresponding to
-op = StpvOp or StvvOp (not called).
+------------------------------------------------------------------------------
+{xrst_begin var_store_forward_sparse dev}
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+Forward Sparsity for Store a VecAD Element
+##########################################
 
-\param op
-is the code corresponding to this operator;
-i.e., StpvOp, StvpOp, or StvvOp.
-
-\param arg
-\n
- arg[0]
-is the offset corresponding to this VecAD vector in the combined array.
-\n
-\n
- arg[2]
-\n
-The set with index arg[2] in var_sparsity
-is the sparsity pattern corresponding to y.
-(Note that arg[2] > 0 because y is a variable.)
-
-\param num_combined
-is the total number of elements in the VecAD address array.
-
-\param combined
- combined [ arg[0] - 1 ]
-is the index of the set in vecad_sparsity corresponding
-to the sparsity pattern for the vector v.
-We use the notation i_v below which is defined by
-\verbatim
-   i_v = combined[ arg[0] - 1 ]
-\endverbatim
-
-\param var_sparsity
-The set  with index arg[2] in var_sparsity
-is the sparsity pattern for y.
-This is an input for forward mode operations.
-For reverse mode operations:
-The sparsity pattern for v is added to the spartisy pattern for y.
-
-\param vecad_sparsity
-The set with index i_v in vecad_sparsity
-is the sparsity pattern for v.
-This is an input for reverse mode operations.
-For forward mode operations, the sparsity pattern for y is added
-to the sparsity pattern for the vector v.
-
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 0
-\li 0 <  arg[0]
-\li arg[0] < num_combined
-\li arg[2] < var_sparsity.n_set()
-\li i_v       < vecad_sparsity.n_set()
-*/
-template <class Vector_set>
-inline void sparse_store_op(
-   op_code_var    op             ,
-   const addr_t*  arg            ,
-   size_t         num_combined   ,
-   const size_t*  combined       ,
-   Vector_set&    var_sparsity   ,
-   Vector_set&    vecad_sparsity )
-{
-   // This routine is only for documentation, it should not be used
-   CPPAD_ASSERT_UNKNOWN( false );
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_STORE_SPARSE
+   // END_FORWARD_STORE_SPARSE
 }
 
+op_code, num_vecad_ind, arg
+***************************
+see :ref:`var_store_op@op_code` ,
+:ref:`var_store_op@num_vecad_ind` ,
+:ref:`var_store_op@arg` .
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+dependency
+**********
+If true (false) we are including (are not including)
+dependencies that have derivative zero in the sparsity pattern.
+For example, the :ref:`Discrete-name` functions have derivative zero,
+but the value depends on its argument.
+
+vecad_ind
+*********
+We use the notation *i_v* defined by
+
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+
+var_sparsity
+************
+If :ref:`var_store_op@y` is a variable,
+the sets with index arg[2] in *var_sparsity* is the sparsity pattern for *y* .
+Otherwise, *y* is a parameter and its sparsity pattern is empty
 
 
-/*!
-Forward mode sparsity operations for StpvOp and StvvOp
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the sparsity pattern for the vector *v*.
+The sparsity pattern for *y* is added
+to the sparsity pattern for *v* .
+If *dependency* is true and *x* is a variable,
+the sparsity pattern for *x* is also added to the sparsity pattern for *v*.
 
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-   v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-   i_v_x = vec_ad2index[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
-
-\param dependency
-is this a dependency (or sparsity) calculation.
-
-\copydetails CppAD::local::sparse_store_op
+{xrst_end var_store_forward_sparse}
 */
+// BEGIN_FORWARD_STORE_SPARSE
 template <class Vector_set>
-inline void forward_sparse_store_op(
-   bool                dependency     ,
-   op_code_var         op             ,
-   const addr_t*       arg            ,
-   size_t              num_combined   ,
-   const size_t*       combined       ,
-   Vector_set&         var_sparsity   ,
-   Vector_set&         vecad_sparsity )
-{
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+inline void forward_store_sparse(
+   op_code_var               op_code        ,
+   size_t                    num_vecad_ind  ,
+   const addr_t*             arg            ,
+   bool                      dependency     ,
+   const pod_vector<size_t>& vecad_ind      ,
+   Vector_set&               var_sparsity   ,
+   Vector_set&               vecad_sparsity )
+// END_FORWARD_STORE_SPARSE
+{  //
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-   size_t i_v = combined[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
-
-   if( dependency & ( (op == StvvOp) || (op == StvpOp) ) )
-      vecad_sparsity.binary_union(i_v, i_v, size_t(arg[1]), var_sparsity);
-
-   if( (op == StpvOp) || (op == StvvOp ) )
+   //
+   switch(op_code)
+   {  //
+      default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+      //
+      case StppOp:
+      break;
+      //
+      case StpvOp:
       vecad_sparsity.binary_union(i_v, i_v, size_t(arg[2]), var_sparsity);
-
+      break;
+      //
+      case StvpOp:
+      if( dependency )
+         vecad_sparsity.binary_union(i_v, i_v, size_t(arg[1]), var_sparsity);
+      break;
+      //
+      case StvvOp:
+      if( dependency )
+         vecad_sparsity.binary_union(i_v, i_v, size_t(arg[1]), var_sparsity);
+      vecad_sparsity.binary_union(i_v, i_v, size_t(arg[2]), var_sparsity);
+      break;
+   }
    return;
 }
 

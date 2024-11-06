@@ -13,7 +13,6 @@ namespace CppAD { namespace local { namespace var_op {
 {xrst_spell
    isvar
    pv
-   vecad
 }
 Accessing an Element in a Variable VecAD Vector
 ###############################################

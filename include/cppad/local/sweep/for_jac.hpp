@@ -514,46 +514,15 @@ void for_jac(
          // -------------------------------------------------
 
          case StppOp:
-         CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-         // if both arguments are parameters does not affect sparsity
-         // or dependency
-         break;
-         // -------------------------------------------------
-
          case StpvOp:
-         var_op::forward_sparse_store_op(
-            dependency,
-            op,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            var_sparsity,
-            vecad_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case StvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-         var_op::forward_sparse_store_op(
-            dependency,
-            op,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            var_sparsity,
-            vecad_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case StvvOp:
-         var_op::forward_sparse_store_op(
-            dependency,
+         var_op::forward_store_sparse(
             op,
-            arg,
             num_vecad_ind,
-            vecad_ind.data(),
+            arg,
+            dependency,
+            vecad_ind,
             var_sparsity,
             vecad_sparsity
          );
