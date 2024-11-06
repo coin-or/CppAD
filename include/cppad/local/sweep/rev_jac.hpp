@@ -547,46 +547,15 @@ void rev_jac(
          // -------------------------------------------------
 
          case StppOp:
-         // does not affect sparsity or dependency when both are parameters
-         CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-         break;
-         // -------------------------------------------------
-
          case StpvOp:
-         var_op::reverse_sparse_jacobian_store_op(
-            dependency,
-            op,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            var_sparsity,
-            vecad_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case StvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-         // storing a parameter only affects dependency
-         var_op::reverse_sparse_jacobian_store_op(
-            dependency,
-            op,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            var_sparsity,
-            vecad_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case StvvOp:
-         var_op::reverse_sparse_jacobian_store_op(
-            dependency,
+         var_op::store_reverse_jac(
             op,
-            arg,
             num_vecad_ind,
-            vecad_ind.data(),
+            arg,
+            dependency,
+            vecad_ind,
             var_sparsity,
             vecad_sparsity
          );

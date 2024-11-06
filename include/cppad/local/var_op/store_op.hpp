@@ -214,14 +214,14 @@ inline void forward_store_0(
 ------------------------------------------------------------------------------
 {xrst_begin var_store_forward_jac dev}
 
-Forward Sparsity for Store a VecAD Element
-##########################################
+Forward Jacobian Sparsity for Store a VecAD Element
+###################################################
 
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FORWARD_STORE_SPARSE
-   // END_FORWARD_STORE_SPARSE
+   // BEGIN_STORE_FORWARD_JAC
+   // END_STORE_FORWARD_JAC
 }
 
 op_code, num_vecad_ind, arg
@@ -269,7 +269,7 @@ the sparsity pattern for *x* is also added to the sparsity pattern for *v*.
 
 {xrst_end var_store_forward_jac}
 */
-// BEGIN_FORWARD_STORE_SPARSE
+// BEGIN_STORE_FORWARD_JAC
 template <class Vector_set>
 inline void store_forward_jac(
    op_code_var               op_code        ,
@@ -277,9 +277,9 @@ inline void store_forward_jac(
    const addr_t*             arg            ,
    bool                      dependency     ,
    const pod_vector<size_t>& vecad_ind      ,
-   Vector_set&               var_sparsity   ,
+   const Vector_set&         var_sparsity   ,
    Vector_set&               vecad_sparsity )
-// END_FORWARD_STORE_SPARSE
+// END_STORE_FORWARD_JAC
 {  //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -320,59 +320,110 @@ inline void store_forward_jac(
    }
    return;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_store_reverse_jac dev}
 
-/*!
-Reverse mode sparsity operations for StpvOp, StvpOp, and StvvOp
+Reverse Jacobian Sparsity for Store a VecAD Element
+###################################################
 
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-   v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-   i_v_x = vec_ad2index[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_REVERCE_JAC
+   // END_STORE_REVERCE_JAC
+}
 
-This routine is given the sparsity patterns for
-G(v[x], y , w , u ... ) and it uses them to compute the
-sparsity patterns for
-\verbatim
-   H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
-\endverbatim
+op_code, num_vecad_ind, arg
+***************************
+see :ref:`var_store_op@op_code` ,
+:ref:`var_store_op@num_vecad_ind` ,
+:ref:`var_store_op@arg` .
 
-\param dependency
-is this a dependency (or sparsity) calculation.
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
 
-\copydetails CppAD::local::sparse_store_op
+dependency
+**********
+If true (false) we are including (are not including)
+dependencies that have derivative zero in the sparsity pattern.
+For example, the :ref:`Discrete-name` functions have derivative zero,
+but the value depends on its argument.
+
+vecad_ind
+*********
+We use the notation *i_v* defined by
+
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+
+var_sparsity
+************
+If :ref:`var_store_op@y` is a variable,
+the sparsity pattern for *v* is added to the sparsity pattern for *y*.
+If *dependency* is true and *x* is a variable,
+the sparsity pattern for *v* is also added to the sparsity pattern for *x*.
+
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the sparsity pattern for the vector *v*.
+
+{xrst_end var_store_reverse_jac}
 */
+// BEGIN_STORE_REVERCE_JAC
 template <class Vector_set>
-inline void reverse_sparse_jacobian_store_op(
-   bool               dependency      ,
-   op_code_var        op              ,
-   const addr_t*      arg             ,
-   size_t             num_combined    ,
-   const size_t*      combined        ,
-   Vector_set&        var_sparsity    ,
-   Vector_set&        vecad_sparsity  )
-{
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+inline void store_reverse_jac(
+   op_code_var               op_code        ,
+   size_t                    num_vecad_ind  ,
+   const addr_t*             arg            ,
+   bool                      dependency     ,
+   const pod_vector<size_t>& vecad_ind      ,
+   Vector_set&               var_sparsity   ,
+   const Vector_set&         vecad_sparsity )
+// END_STORE_REVERCE_JAC
+{  //
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-   size_t i_v = combined[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
-
-   if( dependency & ( (op == StvpOp) || (op == StvvOp) ) )
-      var_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_v, vecad_sparsity);
-   if( (op == StpvOp) || (op == StvvOp) )
-      var_sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_v, vecad_sparsity);
-
+   //
+   // i_x, i_y
+   size_t i_x = size_t( arg[1] );
+   size_t i_y = size_t( arg[2] );
+   //
+   switch(op_code)
+   {  //
+      default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+      //
+      case StppOp:
+      break;
+      //
+      case StpvOp:
+      var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
+      break;
+      //
+      case StvpOp:
+      if( dependency )
+         var_sparsity.binary_union(i_x, i_x, i_v, vecad_sparsity);
+      break;
+      //
+      case StvvOp:
+      if( dependency )
+         var_sparsity.binary_union(i_x, i_x, i_v, vecad_sparsity);
+      var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
+      break;
+   }
    return;
 }
 
