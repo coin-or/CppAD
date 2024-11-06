@@ -530,41 +530,18 @@ void rev_hes(
          // -------------------------------------------------
 
          case StppOp:
-         // sparsity cannot propagate through a parameter
-         CPPAD_ASSERT_NARG_NRES(op, 3, 0)
-         break;
-         // -------------------------------------------------
-
          case StpvOp:
-         var_op::reverse_sparse_hessian_store_op(
-            op,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            rev_hes_sparse,
-            vecad_sparse,
-            RevJac,
-            vecad_jac.data()
-         );
-         break;
-         // -------------------------------------------------
-
          case StvpOp:
-         // sparsity cannot propagate through a parameter
-         CPPAD_ASSERT_NARG_NRES(op, 3, 0)
-         break;
-         // -------------------------------------------------
-
          case StvvOp:
-         var_op::reverse_sparse_hessian_store_op(
+         var_op::store_reverse_hes(
             op,
             arg,
             num_vecad_ind,
-            vecad_ind.data(),
+            vecad_ind,
             rev_hes_sparse,
             vecad_sparse,
             RevJac,
-            vecad_jac.data()
+            vecad_jac
          );
          break;
          // -------------------------------------------------

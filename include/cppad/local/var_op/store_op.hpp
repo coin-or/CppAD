@@ -244,6 +244,7 @@ but the value depends on its argument.
 
 vecad_ind
 *********
+is a vector with size *num_vec_ind* .
 We use the notation *i_v* defined by
 
 |tab| *i_v* = vecad_ind[ arg[0] - 1 ]
@@ -330,8 +331,8 @@ Reverse Jacobian Sparsity for Store a VecAD Element
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_REVERCE_JAC
-   // END_STORE_REVERCE_JAC
+   // BEGIN_STORE_REVERSE_JAC
+   // END_STORE_REVERSE_JAC
 }
 
 op_code, num_vecad_ind, arg
@@ -354,6 +355,7 @@ but the value depends on its argument.
 
 vecad_ind
 *********
+is a vector with size *num_vec_ind* .
 We use the notation *i_v* defined by
 
 |tab| *i_v* = vecad_ind[ arg[0] - 1 ]
@@ -375,7 +377,7 @@ is the sparsity pattern for the vector *v*.
 
 {xrst_end var_store_reverse_jac}
 */
-// BEGIN_STORE_REVERCE_JAC
+// BEGIN_STORE_REVERSE_JAC
 template <class Vector_set>
 inline void store_reverse_jac(
    op_code_var               op_code        ,
@@ -385,7 +387,7 @@ inline void store_reverse_jac(
    const pod_vector<size_t>& vecad_ind      ,
    Vector_set&               var_sparsity   ,
    const Vector_set&         vecad_sparsity )
-// END_STORE_REVERCE_JAC
+// END_STORE_REVERSE_JAC
 {  //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -426,68 +428,110 @@ inline void store_reverse_jac(
    }
    return;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_store_reverse_hes dev}
 
-/*!
-Reverse mode sparsity operations for StpvOp and StvvOp
+Reverse Hessian Sparsity for Store a VecAD Element
+##################################################
 
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-   v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-   i_v_x = vec_ad2index[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_REVERSE_HES
+   // END_STORE_REVERSE_HES
+}
 
-This routine is given the sparsity patterns for
-G(v[x], y , w , u ... )
-and it uses them to compute the sparsity patterns for
-\verbatim
-   H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
-\endverbatim
+op_code, num_vecad_ind, arg
+***************************
+see :ref:`var_store_op@op_code` ,
+:ref:`var_store_op@num_vecad_ind` ,
+:ref:`var_store_op@arg` .
 
-\copydetails CppAD::local::sparse_store_op
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
 
-\param var_jacobian
- var_jacobian[ arg[2] ]
-is false (true) if the Jacobian of G with respect to y is always zero
-(may be non-zero).
+vecad_ind
+*********
+is a vector with size *num_vec_ind* .
+We use the notation *i_v* defined by
 
-\param vecad_jacobian
- vecad_jacobian[i_v]
-is false (true) if the Jacobian with respect to x is always zero
-(may be non-zero).
-On input, it corresponds to the function G,
-and on output it corresponds to the function H.
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+It is also the index of the hessian
+sparsity pattern for *v* in *vecad_sparsity*.
+
+var_sparsity
+************
+If :ref:`var_store_op@y` is a variable,
+the hessian sparsity pattern for *v* is added to the
+hessian sparsity pattern for *y*.
+
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the hessian sparsity pattern for the vector *v*.
+
+var_rev_jac
+***********
+If the scalar function we are computing the Hessian sparsity of
+has a non-zero partial w.r.t. *v*,
+and *y* is a variable, *var_rev_jac* [ *i_y* ] is set to true.
+This is because the scalar function has non-zero partial w.r.t. *y* .
+
+vecad_rev_jac
+*************
+the *i_v* component of this vector is true ,
+if the scalar function has non-zero partial w.r.t *v*.
+
+{xrst_end var_store_reverse_hes}
 */
+// BEGIN_STORE_REVERSE_HES
 template <class Vector_set>
-inline void reverse_sparse_hessian_store_op(
-   op_code_var        op           ,
-   const addr_t*      arg          ,
-   size_t             num_combined ,
-   const size_t*      combined     ,
-   Vector_set&        var_sparsity ,
-   Vector_set&        vecad_sparsity ,
-   bool*              var_jacobian   ,
-   bool*              vecad_jacobian )
+inline void store_reverse_hes(
+   op_code_var               op_code        ,
+   const addr_t*             arg            ,
+   size_t                    num_vecad_ind  ,
+   const pod_vector<size_t>& vecad_ind      ,
+   Vector_set&               var_sparsity   ,
+   const Vector_set&         vecad_sparsity ,
+   bool*                     var_rev_jac    ,
+   const pod_vector<bool>&   vecad_rev_jac  )
+// END_STORE_REVERSE_HES
 {
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-   size_t i_v = combined[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
-
-   var_sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_v, vecad_sparsity);
-
-   var_jacobian[ arg[2] ] |= vecad_jacobian[i_v];
-
+   //
+   // i_y
+   size_t i_y = size_t( arg[2] );
+   //
+   switch(op_code)
+   {  //
+      default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+      //
+      case StpvOp:
+      case StvvOp:
+      var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
+      var_rev_jac[i_y] |= vecad_rev_jac[i_v];
+      break;
+      //
+      case StppOp:
+      case StvpOp:
+      break;
+   }
+   //
    return;
 }
 
