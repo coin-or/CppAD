@@ -7,69 +7,52 @@
 
 namespace CppAD { namespace local { namespace var_op {
 /*
-{xrst_begin store_op_var dev}
+{xrst_begin var_store_0 dev}
 {xrst_spell
    isvar
-   pv
-   vp
-   vv
+   stpp
+   stpv
+   stvp
+   stvv
+   numvar
 }
-Changing an Element in a Variable VecAD Vector
-##############################################
+Store an Element of a Variable VecAD Vector
+###########################################
 
 See Also
 ********
-:ref:`op_code_var store<op_code_var@Store>` .
-
-Syntax
-******
-
-| ``forward_store_`` *IV* _ ``op_0`` (
-| |tab| *i_z* ,
-| |tab| *arg* ,
-| |tab| *num_par* ,
-| |tab| *parameter* ,
-| |tab| *cap_order* ,
-| |tab| *taylor* ,
-| |tab| *vec_ad2isvar* ,
-| |tab| *vec_ad2index*
-| )
-
-where the index type *I* and the value being stored type *V*
-are ``p`` (for parameter) or ``v`` (for variable).
+op_code_var :ref:`op_code_var@Store` .
 
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FORWARD_STORE_PP_OP_0
-   // END_FORWARD_STORE_PP_OP_0
+   // BEGIN_FORWARD_STORE_0
+   // END_FORWARD_STORE_0
 }
-The prototype for
-``forward_store_pv_op_0`` ,
-``forward_store_vp_op_0`` , and
-``forward_store_vv_op_0`` ,
-are the same except for the function name.
 
 Notation
 ********
 
+Syntax
+======
+| *v* [ *x* ] = *y*
+
 v
 =
-We use *v* to denote the :ref:`VecAD-name` vector for this operation.
+is the :ref:`VecAD-name` vector for this operation.
 
 x
 =
-We use *x* to denote the ``AD`` < ``Base`` >
-index for this operation.
+is the index for this operation.
+
+y
+=
+is the value being stored by this operation
 
 i_vec
 =====
 We use *i_vec* to denote the ``size_t`` value
 corresponding to *x* .
-
-n_load
-======
-This is the number of load instructions in this recording.
 
 n_all
 =====
@@ -81,9 +64,18 @@ Base
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-i_z
-***
-is the AD variable index corresponding to the result of this load operation.
+op_code
+*******
+
+.. csv-table::
+   :widths: auto
+   :header-rows: 1
+
+   op_code, x, y
+   StppOp, parameter, parameter
+   StpvOp, parameter, variable
+   StvpOp, variable,  parameter
+   StvvOp, variable,  variable
 
 arg
 ***
@@ -95,15 +87,17 @@ of the *vec_ad2isvar* and *vec_ad2index* arrays.
 
 arg[1]
 ======
-If this is
-``forward_load_p_op_0`` (``forward_load_v_op_0`` )
-*arg* [1] is the parameter index (variable index)
-corresponding to :ref:`load_op_var@Notation@i_vec` .
+If *x* is a parameter (variable), arg[1] is the parameter index
+(variable index) to *x* .
 
 arg[2]
 ======
-Is the index of this VecAD load instruction in the
-*load_op2var* array.
+If *y* is a parameter (variable), arg[2] is the parameter index
+(variable index) to *y* .
+
+numvar
+******
+is the number of variables in this recording.
 
 num_par
 *******
@@ -139,101 +133,67 @@ If the value being stored is a parameter (variable),
 is set to the parameter (variable) index
 corresponding to the value being stored.
 
-{xrst_end store_op_var}
+{xrst_end var_store_0}
 */
-// BEGIN_FORWARD_STORE_PP_OP_0
+// BEGIN_FORWARD_STORE_0
 template <class Base>
-inline void forward_store_pp_op_0(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   ,
-   const Base*    taylor      ,
+inline void forward_store_0(
+   op_code_var    op_code        ,
+   const addr_t*  arg            ,
+   size_t         numvar         ,
+   size_t         num_par        ,
+   const Base*    parameter      ,
+   size_t         cap_order      ,
+   const Base*    taylor         ,
    bool*          vec_ad2isvar   ,
    size_t*        vec_ad2index   )
-// END_FORWARD_STORE_PP_OP_0
-{  addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+// END_FORWARD_STORE_0
+{  //
+   CPPAD_ASSERT_UNKNOWN( NumArg(op_code) == 3 );
+   CPPAD_ASSERT_UNKNOWN( NumRes(op_code) == 0 );
+   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+   //
+   // index
+   size_t index = size_t( arg[2] );
+   //
+   // i_vec, isvar
+   // assign here to avoid compiler warning for default case
+   addr_t i_vec = std::numeric_limits<addr_t>::max();
+   bool   isvar = false;
+   switch(op_code)
+   {  //
+      default:
+      case StppOp:
+      i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+      isvar = false;
+      break;
+      //
+      case StpvOp:
+      i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+      isvar = true;
+      break;
+      //
+      case StvpOp:
+      i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+      isvar = false;
+      break;
+      //
+      case StvvOp:
+      i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+      isvar = true;
+      break;
+   }
+   //
    CPPAD_ASSERT_KNOWN(
       size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
-      "VecAD: zero order forward dynamic parameter index out of range"
+      "VecAD: zero order forward index out of range"
    );
-   CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-
-   vec_ad2isvar[ arg[0] + i_vec ]  = false;
-   vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
-template <class Base>
-inline void forward_store_pv_op_0(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   ,
-   const Base*    taylor      ,
-   bool*          vec_ad2isvar   ,
-   size_t*        vec_ad2index   )
-{  addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
-   CPPAD_ASSERT_KNOWN(
-      size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
-      "VecAD: zero order forward dynamic parameter index out of range"
-   );
-   CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-
-   vec_ad2isvar[ arg[0] + i_vec ]  = true;
-   vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
-template <class Base>
-inline void forward_store_vp_op_0(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   size_t         cap_order   ,
-   const Base*    taylor      ,
-   bool*          vec_ad2isvar   ,
-   size_t*        vec_ad2index   )
-{
-   addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-   CPPAD_ASSERT_KNOWN(
-      size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
-      "VecAD: zero order forward variable index out of range"
-   );
-
-   CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-
-   vec_ad2isvar[ arg[0] + i_vec ]  = false;
-   vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
-template <class Base>
-inline void forward_store_vv_op_0(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   size_t         cap_order   ,
-   const Base*    taylor      ,
-   bool*          vec_ad2isvar   ,
-   size_t*        vec_ad2index   )
-{
-   addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-   CPPAD_ASSERT_KNOWN(
-      size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
-      "VecAD: index during zero order forward sweep is out of range"
-   );
-
-   CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-
-   vec_ad2isvar[ arg[0] + i_vec ]  = true;
-   vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
+   CPPAD_ASSERT_UNKNOWN( isvar || index < num_par );
+   CPPAD_ASSERT_UNKNOWN( ! isvar || index < numvar );
+   //
+   // vec_ad2isvar, vec_ad2index
+   vec_ad2isvar[ arg[0] + i_vec ]  = isvar;
+   vec_ad2index[ arg[0] + i_vec ]  = index;
 }
 // ---------------------------------------------------------------------------
 /*

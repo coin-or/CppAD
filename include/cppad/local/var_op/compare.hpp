@@ -23,7 +23,7 @@ is the base type for the operator; i.e., this operation was recorded
 using ``AD`` < *Base* > and computations by these operators are done using
 type *Base* .
 
-op_enum
+op_code
 *******
 is the enum value for the comparison operator that we are implementing.
 
@@ -81,7 +81,7 @@ namespace CppAD { namespace local { namespace var_op { // BEGIN namespace
 
 // BEGIN PROTOTYPE
 template <class Base> void compare(
-   op_code_var   op_enum                 ,
+   op_code_var   op_code                 ,
    const addr_t* arg                     ,
    const Base*   parameter               ,
    size_t        cap_order               ,
@@ -93,7 +93,7 @@ template <class Base> void compare(
 // END PROTOTYPE
 {  //
    // n_arg, n_res
-   CPPAD_ASSERT_NARG_NRES(op_enum, 2, 0);
+   CPPAD_ASSERT_NARG_NRES(op_code, 2, 0);
    //
    // special case
    if( compare_change_count == 0 )
@@ -101,7 +101,7 @@ template <class Base> void compare(
    //
    // x, y
    Base x, y;
-   switch(op_enum)
+   switch(op_code)
    {  //
       // pp
       case EqppOp:
@@ -144,7 +144,7 @@ template <class Base> void compare(
       y = CppAD::numeric_limits<Base>::quiet_NaN();
    }
    bool change;
-   switch(op_enum)
+   switch(op_code)
    {  //
       case EqppOp:
       case EqpvOp:

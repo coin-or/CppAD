@@ -592,51 +592,15 @@ void forward0(
          // -------------------------------------------------
 
          case StppOp:
-         var_op::forward_store_pp_op_0(
-            i_var,
-            arg,
-            num_par,
-            parameter,
-            J,
-            taylor,
-            vec_ad2isvar.data(),
-            vec_ad2index.data()
-         );
-         break;
-         // -------------------------------------------------
-
          case StpvOp:
-         var_op::forward_store_pv_op_0(
-            i_var,
+         case StvpOp:
+         case StvvOp:
+         var_op::forward_store_0(
+            op,
             arg,
+            numvar,
             num_par,
             parameter,
-            J,
-            taylor,
-            vec_ad2isvar.data(),
-            vec_ad2index.data()
-         );
-         break;
-         // -------------------------------------------------
-
-         case StvpOp:
-         var_op::forward_store_vp_op_0(
-            i_var,
-            arg,
-            num_par,
-            J,
-            taylor,
-            vec_ad2isvar.data(),
-            vec_ad2index.data()
-         );
-         break;
-         // -------------------------------------------------
-
-         case StvvOp:
-         var_op::forward_store_vv_op_0(
-            i_var,
-            arg,
-            num_par,
             J,
             taylor,
             vec_ad2isvar.data(),
