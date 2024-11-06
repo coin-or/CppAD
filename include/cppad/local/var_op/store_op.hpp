@@ -290,6 +290,10 @@ inline void store_forward_jac(
    size_t i_v = vecad_ind[ arg[0] - 1 ];
    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
    //
+   // i_x, i_y
+   size_t i_x = size_t( arg[1] );
+   size_t i_y = size_t( arg[2] );
+   //
    switch(op_code)
    {  //
       default:
@@ -300,18 +304,18 @@ inline void store_forward_jac(
       break;
       //
       case StpvOp:
-      vecad_sparsity.binary_union(i_v, i_v, size_t(arg[2]), var_sparsity);
+      vecad_sparsity.binary_union(i_v, i_v, i_y, var_sparsity);
       break;
       //
       case StvpOp:
       if( dependency )
-         vecad_sparsity.binary_union(i_v, i_v, size_t(arg[1]), var_sparsity);
+         vecad_sparsity.binary_union(i_v, i_v, i_x, var_sparsity);
       break;
       //
       case StvvOp:
       if( dependency )
-         vecad_sparsity.binary_union(i_v, i_v, size_t(arg[1]), var_sparsity);
-      vecad_sparsity.binary_union(i_v, i_v, size_t(arg[2]), var_sparsity);
+         vecad_sparsity.binary_union(i_v, i_v, i_x, var_sparsity);
+      vecad_sparsity.binary_union(i_v, i_v, i_y, var_sparsity);
       break;
    }
    return;
