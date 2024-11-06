@@ -138,20 +138,21 @@ corresponding to the value being stored.
 // BEGIN_FORWARD_STORE_0
 template <class Base>
 inline void forward_store_0(
-   op_code_var    op_code        ,
-   const addr_t*  arg            ,
-   size_t         numvar         ,
-   size_t         num_par        ,
-   const Base*    parameter      ,
-   size_t         cap_order      ,
-   const Base*    taylor         ,
-   bool*          vec_ad2isvar   ,
-   size_t*        vec_ad2index   )
+   op_code_var          op_code        ,
+   const addr_t*        arg            ,
+   size_t               numvar         ,
+   size_t               num_par        ,
+   const Base*          parameter      ,
+   size_t               cap_order      ,
+   const Base*          taylor         ,
+   pod_vector<bool>&    vec_ad2isvar   ,
+   pod_vector<size_t>&  vec_ad2index   )
 // END_FORWARD_STORE_0
 {  //
    CPPAD_ASSERT_UNKNOWN( NumArg(op_code) == 3 );
    CPPAD_ASSERT_UNKNOWN( NumRes(op_code) == 0 );
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+   CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == vec_ad2index.size() )
    //
    // index
    size_t index = size_t( arg[2] );

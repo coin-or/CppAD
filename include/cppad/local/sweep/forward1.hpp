@@ -670,8 +670,8 @@ void forward1(
                parameter,
                J,
                taylor,
-               vec_ad2isvar.data(),
-               vec_ad2index.data()
+               vec_ad2isvar,
+               vec_ad2index
             );
          }
          break;
