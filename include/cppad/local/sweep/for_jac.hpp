@@ -517,7 +517,7 @@ void for_jac(
          case StpvOp:
          case StvpOp:
          case StvvOp:
-         var_op::forward_store_sparse(
+         var_op::store_forward_jac(
             op,
             num_vecad_ind,
             arg,

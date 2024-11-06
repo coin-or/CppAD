@@ -212,7 +212,7 @@ inline void forward_store_0(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_store_forward_sparse dev}
+{xrst_begin var_store_forward_jac dev}
 
 Forward Sparsity for Store a VecAD Element
 ##########################################
@@ -267,11 +267,11 @@ to the sparsity pattern for *v* .
 If *dependency* is true and *x* is a variable,
 the sparsity pattern for *x* is also added to the sparsity pattern for *v*.
 
-{xrst_end var_store_forward_sparse}
+{xrst_end var_store_forward_jac}
 */
 // BEGIN_FORWARD_STORE_SPARSE
 template <class Vector_set>
-inline void forward_store_sparse(
+inline void store_forward_jac(
    op_code_var               op_code        ,
    size_t                    num_vecad_ind  ,
    const addr_t*             arg            ,
