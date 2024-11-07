@@ -478,22 +478,9 @@ void forward0(
          // ---------------------------------------------------
 
          case LdpOp:
-         var_op::forward_load_p_op_0(
-            play,
-            i_var,
-            arg,
-            parameter,
-            J,
-            taylor,
-            vec_ad2isvar.data(),
-            vec_ad2index.data(),
-            load_op2var.data()
-         );
-         break;
-         // -------------------------------------------------
-
          case LdvOp:
-         var_op::forward_load_v_op_0(
+         var_op::forward_load_0(
+            op,
             play,
             i_var,
             arg,

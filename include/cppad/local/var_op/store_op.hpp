@@ -165,8 +165,8 @@ inline void forward_store_0(
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == vec_ad2index.size() )
    //
-   // index
-   size_t index = size_t( arg[2] );
+   // i_y
+   size_t i_y = size_t( arg[2] );
    //
    // i_vec, isvar
    // assign here to avoid compiler warning for default case
@@ -181,21 +181,25 @@ inline void forward_store_0(
       case StppOp:
       i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
       isvar = false;
+      CPPAD_ASSERT_UNKNOWN( i_y < num_par );
       break;
       //
       case StpvOp:
       i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
       isvar = true;
+      CPPAD_ASSERT_UNKNOWN( i_y < numvar );
       break;
       //
       case StvpOp:
       i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
       isvar = false;
+      CPPAD_ASSERT_UNKNOWN( i_y < num_par );
       break;
       //
       case StvvOp:
       i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
       isvar = true;
+      CPPAD_ASSERT_UNKNOWN( i_y < numvar );
       break;
    }
    //
@@ -203,12 +207,10 @@ inline void forward_store_0(
       size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
       "VecAD: zero order forward index out of range"
    );
-   CPPAD_ASSERT_UNKNOWN( isvar || index < num_par );
-   CPPAD_ASSERT_UNKNOWN( ! isvar || index < numvar );
    //
    // vec_ad2isvar, vec_ad2index
    vec_ad2isvar[ arg[0] + i_vec ]  = isvar;
-   vec_ad2index[ arg[0] + i_vec ]  = index;
+   vec_ad2index[ arg[0] + i_vec ]  = i_y;
 }
 /*
 ------------------------------------------------------------------------------

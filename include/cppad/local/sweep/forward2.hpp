@@ -371,8 +371,8 @@ void forward2(
          case LdpOp:
          case LdvOp:
          var_op::forward_load_op(
-            play,
             op,
+            play,
             p,
             q,
             r,

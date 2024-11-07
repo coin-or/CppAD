@@ -483,50 +483,10 @@ void forward1(
          // -------------------------------------------------
 
          case LdpOp:
-         if( p == 0 )
-         {  var_op::forward_load_p_op_0(
-               play,
-               i_var,
-               arg,
-               parameter,
-               J,
-               taylor,
-               vec_ad2isvar.data(),
-               vec_ad2index.data(),
-               load_op2var.data()
-            );
-            if( p < q ) var_op::forward_load_op(
-               play,
-               op,
-               p+1,
-               q,
-               r,
-               J,
-               i_var,
-               arg,
-               load_op2var.data(),
-               taylor
-            );
-         }
-         else
-            var_op::forward_load_op(
-            play,
-            op,
-            p,
-            q,
-            r,
-            J,
-            i_var,
-            arg,
-            load_op2var.data(),
-            taylor
-         );
-         break;
-         // -------------------------------------------------
-
          case LdvOp:
          if( p == 0 )
-         {  var_op::forward_load_v_op_0(
+         {  var_op::forward_load_0(
+               op,
                play,
                i_var,
                arg,
@@ -538,8 +498,8 @@ void forward1(
                load_op2var.data()
             );
             if( p < q ) var_op::forward_load_op(
-               play,
                op,
+               play,
                p+1,
                q,
                r,
@@ -552,8 +512,8 @@ void forward1(
          }
          else
             var_op::forward_load_op(
-            play,
             op,
+            play,
             p,
             q,
             r,
@@ -842,7 +802,7 @@ void forward1(
          // -------------------------------------------------
 
          default:
-         CPPAD_ASSERT_UNKNOWN(0);
+         CPPAD_ASSERT_UNKNOWN(false);
       }
 # if CPPAD_FORWARD1_TRACE
       if( atom_trace )
