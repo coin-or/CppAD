@@ -85,7 +85,6 @@ If *y* is a parameter (variable), arg[2] is the parameter index
 {xrst_begin var_store_forward_0 dev}
 {xrst_spell
    isvar
-   numvar
 }
 
 Zero Order Forward Store an Element of a VecAD Vector
@@ -104,8 +103,8 @@ see :ref:`var_store_op@op_code` ,
 :ref:`var_store_op@num_vecad_ind` ,
 :ref:`var_store_op@arg` .
 
-numvar
-******
+num_var
+*******
 is the number of variables in this recording.
 
 num_par
@@ -128,6 +127,7 @@ i_vec
 *****
 We use *i_vec* to denote the ``size_t`` value corresponding to
 :ref:`var_store_op@x` .
+If *x* is a parameter (variable) this is a parameter (variable) index.
 
 vec_ad2isvar
 ************
@@ -152,7 +152,7 @@ template <class Base>
 inline void forward_store_0(
    op_code_var          op_code        ,
    const addr_t*        arg            ,
-   size_t               numvar         ,
+   size_t               num_var        ,
    size_t               num_par        ,
    const Base*          parameter      ,
    size_t               cap_order      ,
@@ -187,7 +187,7 @@ inline void forward_store_0(
       case StpvOp:
       i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
       isvar = true;
-      CPPAD_ASSERT_UNKNOWN( i_y < numvar );
+      CPPAD_ASSERT_UNKNOWN( i_y < num_var );
       break;
       //
       case StvpOp:
@@ -199,7 +199,7 @@ inline void forward_store_0(
       case StvvOp:
       i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
       isvar = true;
-      CPPAD_ASSERT_UNKNOWN( i_y < numvar );
+      CPPAD_ASSERT_UNKNOWN( i_y < num_var );
       break;
    }
    //

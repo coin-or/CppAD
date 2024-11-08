@@ -9,115 +9,119 @@
 namespace CppAD { namespace local { namespace var_op {
 /*
  ------------------------------------------------------------------------------
-{xrst_begin load_op_var dev}
+{xrst_begin_parent var_load_op dev}
 {xrst_spell
-   isvar
-   pv
+   ldp
+   ldv
 }
-Accessing an Element in a Variable VecAD Vector
-###############################################
 
-See Also
-********
-:ref:`op_code_var load<op_code_var@Load>` .
+Access an Element in a Variable VecAD Vector
+############################################
 
-Syntax
-******
+User Syntax
+***********
+| *z* = *v* [ *x* ]
 
-| ``forward_load_`` *I* _ ``op_0`` (
-| |tab| *play* ,
-| |tab| *i_z* ,
-| |tab| *arg* ,
-| |tab| *parameter* ,
-| |tab| *cap_order* ,
-| |tab| *taylor* ,
-| |tab| *vec_ad2isvar* ,
-| |tab| *vec_ad2index* ,
-| |tab| *load_op2var*
-| )
-
-where the index type *I* is ``p`` (for parameter)
-or ``v`` (for variable).
-
-Prototype
-*********
-{xrst_literal
-   // BEGIN_FORWARD_LOAD_P_OP_0
-   // END_FORWARD_LOAD_P_OP_0
-}
-The prototype for ``forward_load_v_op_0`` is the same
-except for the function name.
-
-Notation
-********
 
 v
-=
-We use *v* to denote the :ref:`VecAD-name` vector for this operation.
+*
+is the :ref:`VecAD-name` vector for this load operation.
+If this vector is a constant before the load,
+the index *x* is a variable and it is a variable after the load.
 
 x
-=
-We use *x* to denote the ``AD`` < ``Base`` >
-index for this operation.
+*
+is the index for this load.
 
-i_vec
-=====
-We use *i_vec* to denote the ``size_t`` value
-corresponding to *x* .
+y
+*
+is the value that was stored in *v* [ *x* ] prior to this load.
 
-n_load
-======
-This is the number of load instructions in this recording; i.e.,
-*play* ``->num_var_load_rec`` () .
-
-n_all
-=====
-This is the number of values in the single array that includes
-all the vectors together with the size of each vector; i.e.,
-*play* ``->num_var_vecad_ind_rec`` () .
-
-Addr
-****
-Is the type used for address on this tape.
+z
+*
+is the new variable created by this load.
+(This new variable is like a copy of *y* .)
 
 Base
 ****
 base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
+using AD<Base> and computations by these operators done using type Base.
 
-play
-****
-is the tape that this operation appears in.
-This is for error detection and not used when NDEBUG is defined.
+op_code
+*******
+
+.. csv-table::
+   :widths: auto
+   :header-rows: 1
+
+   op_code, x, z
+   LdpOp, parameter, variable
+   LdvOp, variable, variable
 
 i_z
 ***
-is the AD variable index corresponding to the result of this load operation.
+is the variable index corresponding to *z* .
+
+num_vecad_ind
+*************
+is the size of the single array that includes
+all the VecAD vectors together with the size of each vector.
 
 arg
 ***
 
 arg[0]
 ======
-is the offset of this VecAD vector relative to the beginning
-of the *vec_ad2isvar* and *vec_ad2index* arrays.
+this argument is the offset of the vector *v*
+relative to the beginning of the single array
+that contains all VecAD elements and sizes.
+This offset corresponds to the first element of *v* and not its size
+which comes just before the first element.
 
 arg[1]
 ======
-If this is
-``forward_load_p_op_0`` (``forward_load_v_op_0`` )
-*arg* [1] is the parameter index (variable index)
-corresponding to :ref:`load_op_var@Notation@i_vec` .
+If *x* is a parameter (variable), arg[1] is the parameter index
+(variable index) to *x* .
 
 arg[2]
 ======
-Is the index of this VecAD load instruction in the
-*load_op2var* array.
+Is the number of this VecAD load instruction that came before this one.
+
+{xrst_end var_load_op}
+-------------------------------------------------------------------------------
+{xrst_begin var_load_forward_0 dev}
+{xrst_spell
+   isvar
+}
+
+Zero Order Forward Load an Element of a VecAD Vector
+####################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_LOAD_0
+   // END_FORWARD_LOAD_0
+}
+
+op_code, i_z, num_vecad_ind, arg
+********************************
+see :ref:`var_load_op@op_code` ,
+see :ref:`var_load_op@i_z` ,
+:ref:`var_load_op@num_vecad_ind` ,
+:ref:`var_load_op@arg` .
+
+num_var
+*******
+is the number of variables in this recording.
+
+num_par
+*******
+is the number of parameters in this recording.
 
 parameter
 *********
-This is the vector of parameters for this recording which has size
-*play* ``->num_par_rec`` () .
+This is the vector of parameters for this recording which has size *num_par* .
 
 cap_order
 *********
@@ -125,77 +129,54 @@ number of columns in the matrix containing the Taylor coefficients.
 
 taylor
 ******
-Is the matrix of Taylor coefficients.
+Is the matrix of Taylor coefficients for all the variables.
 
-Input
-=====
-In the ``forward_load_v_op_0`` case,
+i_vec
+*****
+We use *i_vec* to denote the ``size_t`` value corresponding to
+:ref:`var_load_op@x` .
+If *x* is a parameter (variable) this is a parameter (variable) index.
 
-   *size_t* ( ``taylor`` [ ``arg`` [1] * *cap_order*  + 0 ] )
-
-is the index in this VecAD vector.
-
-Output
-======
-*taylor* [ *i_z* * *cap_order*  + 0 ]
-is set to the zero order Taylor coefficient for the result of this operator.
 
 vec_ad2isvar
 ************
-This vector has size *n_all* .
-If *vec_ad2isvar* [ *arg* [0] + *i_vec*  ] is false (true),
-the vector element is parameter (variable).
-
-i_pv
-====
-If this element is a parameter (variable),
-
-   *i_pv* = *vec_ad2index* [ *arg* [0] + *i_vec*  ]
-
-is the corresponding parameter (variable) index;
+This vector has size :ref:`var_load_op@num_vecad_ind` .
+If the value being loaded is a parameter (variable),
+*vec_ad2isvar* [ *arg* [0] + *i_vec*  ] is false (true).
 
 vec_ad2index
 ************
-This array has size *n_all*
-The value *vec_ad2index* [ *arg* [0] ``- 1`` ]
-is the number of elements in the user vector containing this load.
-*vec_ad2index* [ *i_pv* ] is the variable or
-parameter index for this element,
+This vector has size *num_vecad_ind* .
+If the value being loaded is a parameter (variable),
+*vec_ad2index* [ *arg* [0] + *i_vec*  ]
+is set to the parameter (variable) index
+corresponding to the value being loaded.
+If we are loading a parameter into the variable *z*,
+only its zero order Taylor coefficient is non-zero.
 
-load_op2var
-***********
-is a vector with size *n_load* .
-The input value of its elements does not matter.
-If the result of this load is a variable,
 
-   *load_op2var* [ *arg* [2]] = *i_pv*
-
-Otherwise,
-
-   *load_op2var* [ *arg* [2]] = 0
-
-{xrst_end load_op_var}
+{xrst_end var_load_forward_0}
 */
-// BEGIN_FORWARD_LOAD_P_OP_0
+// BEGIN_FORWARD_LOAD_0
 template <class Base>
 inline void forward_load_0(
-   op_code_var    op_code          ,
-   const local::player<Base>* play ,
-   size_t         i_z              ,
-   const addr_t*  arg              ,
-   const Base*    parameter        ,
-   size_t         cap_order        ,
-   Base*          taylor           ,
-   const bool*    vec_ad2isvar     ,
-   const size_t*  vec_ad2index     ,
-   addr_t*        load_op2var      )
-// END_FORWARD_LOAD_P_OP_0
+   op_code_var                op_code          ,
+   size_t                     i_z              ,
+   size_t                     num_vec_ind      ,
+   const addr_t*              arg              ,
+   size_t                     num_var          ,
+   size_t                     num_par          ,
+   const Base*                parameter        ,
+   size_t                     cap_order        ,
+   Base*                      taylor           ,
+   const pod_vector<bool>&    vec_ad2isvar     ,
+   const pod_vector<size_t>&  vec_ad2index     ,
+   pod_vector<addr_t>&        load_op2var      )
+// END_FORWARD_LOAD_0
 {  CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN(
-      size_t( std::numeric_limits<addr_t>::max() ) >= i_z
-   );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_var_load_rec() );
+   CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == num_vec_ind );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < load_op2var.size() );
    //
    // i_vec
    // assign here to avoid compiler warning for default case
@@ -207,12 +188,12 @@ inline void forward_load_0(
       break;
       //
       case LdpOp:
-      CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < play->num_par_rec() );
+      CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
       i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
       break;
       //
       case LdvOp:
-      CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < play->num_var_rec() );
+      CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_var );
       i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
       break;
    }
@@ -221,9 +202,7 @@ inline void forward_load_0(
       size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
       "VecAD: dynamic parmaeter index out or range during zero order forward"
    );
-   CPPAD_ASSERT_UNKNOWN(
-      size_t(arg[0] + i_vec) < play->num_var_vecad_ind_rec()
-   );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < num_vec_ind );
    //
    // i_y, isvar
    size_t i_y    = vec_ad2index[ arg[0] + i_vec ];
@@ -240,7 +219,7 @@ inline void forward_load_0(
       z[0]      = y[0];
    }
    else
-   {  CPPAD_ASSERT_UNKNOWN( i_y < play->num_par_rec()  );
+   {  CPPAD_ASSERT_UNKNOWN( i_y < num_par  );
       load_op2var[ arg[2] ] = 0;
       Base y    = parameter[i_y];
       z[0]      = y;
@@ -329,7 +308,7 @@ for k = p , ... , q,
 <code>taylor[ i_z * tpv + (k-1)*r+1+ell ]</code>
 is set to the k-order Taylor coefficient for z in the ell-th direction.
 */
-template <class Addr, class Base>
+template <class Base>
 inline void forward_load_op(
    op_code_var          op_code              ,
    const local::player<Base>* play,
@@ -338,8 +317,8 @@ inline void forward_load_op(
    size_t               r                    ,
    size_t               cap_order            ,
    size_t               i_z                  ,
-   const Addr*          arg                  ,
-   const Addr*          load_op2var       ,
+   const addr_t*        arg                  ,
+   const addr_t*        load_op2var       ,
           Base*          taylor               )
 {
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
@@ -467,17 +446,17 @@ the instruction corresponds to a parameter (not variable).
 \li d < cap_order
 \li size_t(arg[2]) < i_z
 */
-template <class Addr, class Base>
+template <class Base>
 inline void reverse_load_op(
    op_code_var    op_code     ,
    size_t         d           ,
    size_t         i_z         ,
-   const Addr*    arg         ,
+   const addr_t*  arg         ,
    size_t         cap_order   ,
    const Base*    taylor      ,
    size_t         nc_partial  ,
    Base*          partial     ,
-   const Addr*          load_op2var )
+   const addr_t*        load_op2var )
 {  //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( d < cap_order );
@@ -505,12 +484,12 @@ is this a dependency (or sparsity) calculation.
 
 \copydetails CppAD::local::sparse_load_op
 */
-template <class Vector_set, class Addr>
+template <class Vector_set>
 inline void forward_sparse_load_op(
    bool               dependency     ,
    op_code_var        op             ,
    size_t             i_z            ,
-   const Addr*        arg            ,
+   const addr_t*      arg            ,
    size_t             num_combined   ,
    const size_t*      combined       ,
    Vector_set&        var_sparsity   ,
@@ -539,12 +518,12 @@ is this a dependency (or sparsity) calculation.
 
 \copydetails CppAD::local::sparse_load_op
 */
-template <class Vector_set, class Addr>
+template <class Vector_set>
 inline void reverse_sparse_jacobian_load_op(
    bool               dependency     ,
    op_code_var        op             ,
    size_t             i_z            ,
-   const Addr*        arg            ,
+   const addr_t*      arg            ,
    size_t             num_combined   ,
    const size_t*      combined       ,
    Vector_set&        var_sparsity   ,
@@ -583,11 +562,11 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 */
-template <class Vector_set, class Addr>
+template <class Vector_set>
 inline void reverse_sparse_hessian_load_op(
    op_code_var        op             ,
    size_t             i_z            ,
-   const Addr*        arg            ,
+   const addr_t*      arg            ,
    size_t             num_combined   ,
    const size_t*      combined       ,
    Vector_set&        var_sparsity   ,

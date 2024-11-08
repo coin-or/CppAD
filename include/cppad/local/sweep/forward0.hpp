@@ -165,7 +165,7 @@ Specifies *RecBase* for this call.
 {xrst_end sweep_forward0}
 */
 
-template <class Addr, class Base, class RecBase>
+template <class Base, class RecBase>
 void forward0(
    const local::player<Base>* play,
    std::ostream&              s_out,
@@ -175,7 +175,7 @@ void forward0(
    size_t                     J,
    Base*                      taylor,
    bool*                      cskip_op,
-   pod_vector<Addr>&          load_op2var,
+   pod_vector<addr_t>&        load_op2var,
    size_t                     compare_change_count,
    size_t&                    compare_change_number,
    size_t&                    compare_change_op_index,
@@ -260,7 +260,7 @@ void forward0(
    // op_info
    op_code_var op;
    size_t i_var;
-   const Addr*   arg;
+   const addr_t* arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
    //
@@ -481,15 +481,17 @@ void forward0(
          case LdvOp:
          var_op::forward_load_0(
             op,
-            play,
             i_var,
+            play->num_var_vecad_ind_rec(),
             arg,
+            numvar,
+            num_par,
             parameter,
             J,
             taylor,
-            vec_ad2isvar.data(),
-            vec_ad2index.data(),
-            load_op2var.data()
+            vec_ad2isvar,
+            vec_ad2index,
+            load_op2var
          );
          break;
          // -------------------------------------------------
