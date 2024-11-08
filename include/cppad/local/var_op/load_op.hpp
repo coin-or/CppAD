@@ -104,9 +104,11 @@ Prototype
    // END_FORWARD_LOAD_0
 }
 
-op_code, i_z, num_vecad_ind, arg
-********************************
-see :ref:`var_load_op@op_code` ,
+Base, op_code, i_z, num_vecad_ind, arg
+**************************************
+see
+:ref:`var_load_op@Base` ,
+:ref:`var_load_op@op_code` ,
 see :ref:`var_load_op@i_z` ,
 :ref:`var_load_op@num_vecad_ind` ,
 :ref:`var_load_op@arg` .
@@ -137,23 +139,24 @@ We use *i_vec* to denote the ``size_t`` value corresponding to
 :ref:`var_load_op@x` .
 If *x* is a parameter (variable) this is a parameter (variable) index.
 
+y
+*
+We use *y* to denote the previous value stored at index *x* in *v*;
+see :ref:`var_store_op@y` .
 
 vec_ad2isvar
 ************
 This vector has size :ref:`var_load_op@num_vecad_ind` .
-If the value being loaded is a parameter (variable),
+If *y* is a parameter (variable),
 *vec_ad2isvar* [ *arg* [0] + *i_vec*  ] is false (true).
 
 vec_ad2index
 ************
 This vector has size *num_vecad_ind* .
-If the value being loaded is a parameter (variable),
+If *y* a parameter (variable),
 *vec_ad2index* [ *arg* [0] + *i_vec*  ]
-is set to the parameter (variable) index
+is the parameter (variable) index
 corresponding to the value being loaded.
-If we are loading a parameter into the variable *z*,
-only its zero order Taylor coefficient is non-zero.
-
 
 {xrst_end var_load_forward_0}
 */
@@ -226,107 +229,99 @@ inline void forward_load_0(
    }
 }
 /*!
-Forward mode, except for zero order, for op = LdpOp or op = LdvOp
+{xrst_begin var_load_forward_nonzero dev}
 
+Nonzero Order Forward Load an Element of a VecAD Vector
+#######################################################
 
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-   v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-   i_pv = vec_ad2index[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_LOAD_NONZERO
+   // END_FORWARD_LOAD_NONZERO
+}
 
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
+Base, op_code, i_z, arg
+***********************
+see
+:ref:`var_load_op@Base` ,
+:ref:`var_load_op@op_code` ,
+see :ref:`var_load_op@i_z` ,
+:ref:`var_load_op@arg` .
 
-\param play
-is the tape that this operation appears in.
-This is for error detection and not used when NDEBUG is defined.
-
-\param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
-
-\param p
+p
+*
 is the lowest order of the Taylor coefficient that we are computing.
 
-\param q
+q
+*
 is the highest order of the Taylor coefficient that we are computing.
 
-\param r
+r
+*
 is the number of directions for the Taylor coefficients that we
 are computing.
 
-\param cap_order
+cap_order
+*********
 number of columns in the matrix containing the Taylor coefficients.
 
-\par tpv
-We use the notation
-<code>tpv = (cap_order-1) * r + 1</code>
-which is the number of Taylor coefficients per variable
+y
+*
+We use *y* to denote the previous value stored at index *x* in *v*;
+see :ref:`var_store_op@y` .
 
-\param i_z
-is the AD variable index corresponding to the variable z.
+load_op2var
+***********
+maps the load operator index *arg* [2] to the
+index corresponding to *y* for this load operation.
+If the case where the index is zero,
+*y* is a parameter; i.e., *y* is not a variable.
 
-\param arg
-arg[2]
-Is the index of this vecad load instruction in the load_op2var array.
+taylor
+******
 
-\param load_op2var
-is a vector with size play->num_var_load_rec().
-It contains the variable index corresponding to each load instruction.
-In the case where the index is zero,
-the instruction corresponds to a parameter (not variable).
+num_taylor_per_var
+******************
+We use the notation num_taylor_per_var = (cap_order-1) * r + 1 .
 
-\par i_var
-We use the notation
-\verbatim
-   i_var = size_t( load_op2var[ arg[2] ] )
-\endverbatim
-
-\param taylor
-\n
 Input
-\n
-If <code>i_var > 0</code>, v[x] is a variable and
-for k = 1 , ... , q
-<code>taylor[ i_var * tpv + (k-1)*r+1+ell ]</code>
-is the k-th order coefficient for v[x] in the ell-th direction,
-\n
-\n
+=====
+#. For k = 0, ..., q,
+   taylor[ i_z * num_taylor_per_var + (k-1)*r+1+ell
+   is the k-th order coefficient for *z* in the ell-th direction,
+#. For k = 0, ..., q,
+   taylor[ i_y * num_taylor_per_var + (k-1)*r+1+ell
+   is the k-th order coefficient for *y* in the ell-th direction,
+
 Output
-\n
-for k = p , ... , q,
-<code>taylor[ i_z * tpv + (k-1)*r+1+ell ]</code>
-is set to the k-order Taylor coefficient for z in the ell-th direction.
+======
+for k = p, ..., q,
+taylor[ i_z * num_taylor_per_var + (k-1)*r+1+ell ]
+is set to the k-th order coefficient for *z* in the ell-th direction.
+
+{xrst_end var_load_forward_nonzero}
 */
+// BEGIN_FORWARD_LOAD_NONZERO
 template <class Base>
-inline void forward_load_op(
-   op_code_var          op_code              ,
-   const local::player<Base>* play,
-   size_t               p                    ,
-   size_t               q                    ,
-   size_t               r                    ,
-   size_t               cap_order            ,
-   size_t               i_z                  ,
-   const addr_t*        arg                  ,
-   const addr_t*        load_op2var       ,
-          Base*          taylor               )
+inline void forward_load_nonzero(
+   op_code_var                   op_code     ,
+   size_t                        i_z         ,
+   const addr_t*                 arg         ,
+   size_t                        p           ,
+   size_t                        q           ,
+   size_t                        r           ,
+   size_t                        cap_order   ,
+   const pod_vector<addr_t>&     load_op2var ,
+   Base*                         taylor      )
+// END_FORWARD_LOAD_NONZERO
 {
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( q < cap_order );
    CPPAD_ASSERT_UNKNOWN( 0 < r);
    CPPAD_ASSERT_UNKNOWN( 0 < p);
    CPPAD_ASSERT_UNKNOWN( p <= q );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_var_load_rec() );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < load_op2var.size() );
    //
    // i_y
    size_t i_y = size_t( load_op2var[ arg[2] ] );

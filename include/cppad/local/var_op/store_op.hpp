@@ -97,9 +97,11 @@ Prototype
    // END_FORWARD_STORE_0
 }
 
-op_code, num_vecad_ind, arg
-***************************
-see :ref:`var_store_op@op_code` ,
+Base, op_code, num_vecad_ind, arg
+*********************************
+see
+:ref:`var_store_op@Base` ,
+:ref:`var_store_op@op_code` ,
 :ref:`var_store_op@num_vecad_ind` ,
 :ref:`var_store_op@arg` .
 

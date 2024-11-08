@@ -370,16 +370,15 @@ void forward2(
 
          case LdpOp:
          case LdvOp:
-         var_op::forward_load_op(
+         var_op::forward_load_nonzero(
             op,
-            play,
+            i_var,
+            arg,
             p,
             q,
             r,
             J,
-            i_var,
-            arg,
-            load_op2var.data(),
+            load_op2var,
             taylor
          );
          break;
