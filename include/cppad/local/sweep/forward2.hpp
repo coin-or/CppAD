@@ -370,7 +370,7 @@ void forward2(
 
          case LdpOp:
          case LdvOp:
-         var_op::forward_load_nonzero(
+         var_op::load_forward_nonzero(
             op,
             i_var,
             arg,

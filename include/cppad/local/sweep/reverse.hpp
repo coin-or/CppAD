@@ -466,18 +466,12 @@ void reverse(
          // --------------------------------------------------
 
          case LdpOp:
-         var_op::reverse_load_op(
-         op, d, i_var, arg, J, Taylor, K, Partial, load_op2var.data()
+         case LdvOp:
+         var_op::load_reverse(
+            op, i_var, arg, d, load_op2var, J, K, Partial
          );
          break;
          // -------------------------------------------------
-
-         case LdvOp:
-         var_op::reverse_load_op(
-         op, d, i_var, arg, J, Taylor, K, Partial, load_op2var.data()
-         );
-         break;
-         // --------------------------------------------------
 
          case EqppOp:
          case EqpvOp:

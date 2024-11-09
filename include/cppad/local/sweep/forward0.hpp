@@ -479,7 +479,7 @@ void forward0(
 
          case LdpOp:
          case LdvOp:
-         var_op::forward_load_0(
+         var_op::load_forward_0(
             op,
             i_var,
             play->num_var_vecad_ind_rec(),

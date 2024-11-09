@@ -485,7 +485,7 @@ void forward1(
          case LdpOp:
          case LdvOp:
          if( p == 0 )
-         {  var_op::forward_load_0(
+         {  var_op::load_forward_0(
                op,
                i_var,
                play->num_var_vecad_ind_rec(),
@@ -499,7 +499,7 @@ void forward1(
                vec_ad2index,
                load_op2var
             );
-            if( p < q ) var_op::forward_load_nonzero(
+            if( p < q ) var_op::load_forward_nonzero(
                op,
                i_var,
                arg,
@@ -512,7 +512,7 @@ void forward1(
             );
          }
          else
-            var_op::forward_load_nonzero(
+            var_op::load_forward_nonzero(
             op,
             i_var,
             arg,

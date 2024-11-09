@@ -35,7 +35,8 @@ is the index for this load.
 
 y
 *
-is the value that was stored in *v* [ *x* ] prior to this load.
+is the value that was stored in *v* [ *x* ] prior to this load;
+see :ref:`var_store_op@y` .
 
 z
 *
@@ -100,8 +101,8 @@ Zero Order Forward Load an Element of a VecAD Vector
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FORWARD_LOAD_0
-   // END_FORWARD_LOAD_0
+   // BEGIN_LOAD_FORWARD_0
+   // END_LOAD_FORWARD_0
 }
 
 Base, op_code, i_z, num_vecad_ind, arg
@@ -139,10 +140,6 @@ We use *i_vec* to denote the ``size_t`` value corresponding to
 :ref:`var_load_op@x` .
 If *x* is a parameter (variable) this is a parameter (variable) index.
 
-y
-*
-We use *y* to denote the previous value stored at index *x* in *v*;
-see :ref:`var_store_op@y` .
 
 vec_ad2isvar
 ************
@@ -160,9 +157,9 @@ corresponding to the value being loaded.
 
 {xrst_end var_load_forward_0}
 */
-// BEGIN_FORWARD_LOAD_0
+// BEGIN_LOAD_FORWARD_0
 template <class Base>
-inline void forward_load_0(
+inline void load_forward_0(
    op_code_var                op_code          ,
    size_t                     i_z              ,
    size_t                     num_vec_ind      ,
@@ -175,7 +172,7 @@ inline void forward_load_0(
    const pod_vector<bool>&    vec_ad2isvar     ,
    const pod_vector<size_t>&  vec_ad2index     ,
    pod_vector<addr_t>&        load_op2var      )
-// END_FORWARD_LOAD_0
+// END_LOAD_FORWARD_0
 {  CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == num_vec_ind );
@@ -228,7 +225,8 @@ inline void forward_load_0(
       z[0]      = y;
    }
 }
-/*!
+/*
+------------------------------------------------------------------------------
 {xrst_begin var_load_forward_nonzero dev}
 
 Nonzero Order Forward Load an Element of a VecAD Vector
@@ -237,8 +235,8 @@ Nonzero Order Forward Load an Element of a VecAD Vector
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FORWARD_LOAD_NONZERO
-   // END_FORWARD_LOAD_NONZERO
+   // BEGIN_LOAD_FORWARD_NONZERO
+   // END_LOAD_FORWARD_NONZERO
 }
 
 Base, op_code, i_z, arg
@@ -268,8 +266,7 @@ number of columns in the matrix containing the Taylor coefficients.
 
 y
 *
-We use *y* to denote the previous value stored at index *x* in *v*;
-see :ref:`var_store_op@y` .
+see :ref:`var_load_op@y`
 
 load_op2var
 ***********
@@ -302,9 +299,9 @@ is set to the k-th order coefficient for *z* in the ell-th direction.
 
 {xrst_end var_load_forward_nonzero}
 */
-// BEGIN_FORWARD_LOAD_NONZERO
+// BEGIN_LOAD_FORWARD_NONZERO
 template <class Base>
-inline void forward_load_nonzero(
+inline void load_forward_nonzero(
    op_code_var                   op_code     ,
    size_t                        i_z         ,
    const addr_t*                 arg         ,
@@ -314,7 +311,7 @@ inline void forward_load_nonzero(
    size_t                        cap_order   ,
    const pod_vector<addr_t>&     load_op2var ,
    Base*                         taylor      )
-// END_FORWARD_LOAD_NONZERO
+// END_LOAD_FORWARD_NONZERO
 {
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( q < cap_order );
@@ -352,106 +349,92 @@ inline void forward_load_nonzero(
       }
    }
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_load_reverse dev}
 
-/*!
-Reverse mode for op = LdpOp or LdvOp.
+Reverse Mode Load an Element of a VecAD Vector
+##############################################
 
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-   v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-   i_pv = vec_ad2index[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_REVERSE
+   // END_LOAD_REVERSE
+}
 
-This routine is given the partial derivatives of a function
-G(z , y[x] , w , u ... )
-and it uses them to compute the partial derivatives of
-\verbatim
-   H( y[x] , w , u , ... ) = G[ z( y[x] ) , y[x] , w , u , ... ]
-\endverbatim
+Base, op_code, i_z, arg
+***********************
+see
+:ref:`var_load_op@Base` ,
+:ref:`var_load_op@op_code` ,
+see :ref:`var_load_op@i_z` ,
+:ref:`var_load_op@arg` .
 
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+y
+*
+see :ref:`var_load_op@y`
 
-\param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
-
-\param d
+d
+*
 highest order the Taylor coefficient that we are computing the partial
 derivative with respect to.
 
-\param i_z
-is the AD variable index corresponding to the variable z.
+cap_order
+*********
+number of columns in the matrix containing the Taylor coefficients.
 
-\param arg
- arg[2]
-Is the index of this vecad load instruction in the
-load_op2var array.
+nc_partial
+**********
+number of columns in the matrix containing all the partial derivatives.
 
-\param cap_order
-number of columns in the matrix containing the Taylor coefficients
-(not used).
+load_op2var
+***********
+This vector maps the load instruction index *arg* [2] to the corresponding
+*y* variable index.
+If this index is zero, *y* is a parameter (not a variable).
 
-\param taylor
-matrix of Taylor coefficients (not used).
+partial
+*******
+We use :math:`G(z, y, \ldots )` to denote a scalar valued function of the
+variables up to variable index *i_z*  and define
 
-\param nc_partial
-number of colums in the matrix containing all the partial derivatives
-(not used if arg[2] is zero).
+.. math::
 
-\param partial
-If arg[2] is zero, y[x] is a parameter
-and no values need to be modified; i.e., partial is not used.
-Otherwise, y[x] is a variable and:
-\n
-\n
- partial [ i_z * nc_partial + k ]
-for k = 0 , ... , d
-is the partial derivative of G
-with respect to the k-th order Taylor coefficient for z.
-\n
-\n
-If arg[2] is not zero,
- partial [ arg[2] * nc_partial + k ]
-for k = 0 , ... , d
-is the partial derivative with respect to
-the k-th order Taylor coefficient for x.
-On input, it corresponds to the function G,
-and on output it corresponds to the the function H.
+   H(y, \ldots ) = G [ z(y), y, \ldots )
 
-\param load_op2var
-is a vector with size play->num_var_load_rec().
-It contains the variable index corresponding to each load instruction.
-In the case where the index is zero,
-the instruction corresponds to a parameter (not variable).
+On input, *partial* contains the partial derivatives of *G*
+with respect to the Taylor coefficient of the corresponding variables.
+On output, it contains the partial derivatives of *H*
+with respect to the Taylor coefficient of the corresponding variables.
 
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 1
-\li d < cap_order
-\li size_t(arg[2]) < i_z
+If *y* is a parameter,
+nothing is modified by this call to ``reverse_load_op`` .
+Otherwise, let *i_y* be the variable index corresponding to *y*; i.e.
+
+| |tab| *i_y* = *load_op2var* [ *arg* [2] ]
+
+For k = 0 , ... , d the k-th order Taylor coefficient for *z*
+is added to the k-th order Taylor coefficient for *y*; i.e.,
+
+|tab|
+*partial* [ *i_y* * *nc_partial* + *k* ] +=
+*partial* [ *i_z* * *nc_partial* + *k* ]
+
+{xrst_end var_load_reverse}
 */
+// BEGIN_LOAD_REVERSE
 template <class Base>
-inline void reverse_load_op(
-   op_code_var    op_code     ,
-   size_t         d           ,
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         cap_order   ,
-   const Base*    taylor      ,
-   size_t         nc_partial  ,
-   Base*          partial     ,
-   const addr_t*        load_op2var )
+inline void load_reverse(
+   op_code_var               op_code     ,
+   size_t                    i_z         ,
+   const addr_t*             arg         ,
+   size_t                    d           ,
+   const pod_vector<addr_t>& load_op2var ,
+   size_t                    cap_order   ,
+   size_t                    nc_partial  ,
+   Base*                     partial     )
+// END_LOAD_REVERSE
 {  //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( d < cap_order );
