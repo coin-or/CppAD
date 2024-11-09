@@ -97,6 +97,13 @@ Prototype
    // END_STORE_FORWARD_0
 }
 
+v, x, y
+*******
+see
+:ref:`var_store_op@v` ,
+:ref:`var_store_op@x` ,
+:ref:`var_store_op@y`
+
 Base, op_code, num_vecad_ind, arg
 *********************************
 see
@@ -228,6 +235,13 @@ Prototype
    // END_STORE_FORWARD_JAC
 }
 
+v, x, y
+*******
+see
+:ref:`var_store_op@v` ,
+:ref:`var_store_op@x` ,
+:ref:`var_store_op@y`
+
 op_code, num_vecad_ind, arg
 ***************************
 see :ref:`var_store_op@op_code` ,
@@ -260,7 +274,7 @@ var_sparsity
 ************
 If :ref:`var_store_op@y` is a variable,
 the sets with index arg[2] in *var_sparsity* is the sparsity pattern for *y* .
-Otherwise, *y* is a parameter and its sparsity pattern is empty
+Otherwise, *y* is a parameter and its sparsity pattern for *y* is empty
 
 
 vecad_sparsity
@@ -338,6 +352,13 @@ Prototype
    // BEGIN_STORE_REVERSE_JAC
    // END_STORE_REVERSE_JAC
 }
+
+v, x, y
+*******
+see
+:ref:`var_store_op@v` ,
+:ref:`var_store_op@x` ,
+:ref:`var_store_op@y`
 
 op_code, num_vecad_ind, arg
 ***************************
@@ -445,6 +466,13 @@ Prototype
    // BEGIN_STORE_REVERSE_HES
    // END_STORE_REVERSE_HES
 }
+
+v, x, y
+*******
+see
+:ref:`var_store_op@v` ,
+:ref:`var_store_op@x` ,
+:ref:`var_store_op@y`
 
 op_code, num_vecad_ind, arg
 ***************************

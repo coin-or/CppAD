@@ -105,12 +105,20 @@ Prototype
    // END_LOAD_FORWARD_0
 }
 
+v, x, y, z
+**********
+see
+:ref:`var_load_op@v` ,
+:ref:`var_load_op@x` ,
+:ref:`var_load_op@y` ,
+:ref:`var_load_op@z`
+
 Base, op_code, i_z, num_vecad_ind, arg
 **************************************
 see
 :ref:`var_load_op@Base` ,
 :ref:`var_load_op@op_code` ,
-see :ref:`var_load_op@i_z` ,
+ref:`var_load_op@i_z` ,
 :ref:`var_load_op@num_vecad_ind` ,
 :ref:`var_load_op@arg` .
 
@@ -239,12 +247,20 @@ Prototype
    // END_LOAD_FORWARD_NONZERO
 }
 
+v, x, y, z
+**********
+see
+:ref:`var_load_op@v` ,
+:ref:`var_load_op@x` ,
+:ref:`var_load_op@y` ,
+:ref:`var_load_op@z`
+
 Base, op_code, i_z, arg
 ***********************
 see
 :ref:`var_load_op@Base` ,
 :ref:`var_load_op@op_code` ,
-see :ref:`var_load_op@i_z` ,
+:ref:`var_load_op@i_z` ,
 :ref:`var_load_op@arg` .
 
 p
@@ -363,12 +379,20 @@ Prototype
    // END_LOAD_REVERSE
 }
 
+v, x, y, z
+**********
+see
+:ref:`var_load_op@v` ,
+:ref:`var_load_op@x` ,
+:ref:`var_load_op@y` ,
+:ref:`var_load_op@z`
+
 Base, op_code, i_z, arg
 ***********************
 see
 :ref:`var_load_op@Base` ,
 :ref:`var_load_op@op_code` ,
-see :ref:`var_load_op@i_z` ,
+:ref:`var_load_op@i_z` ,
 :ref:`var_load_op@arg` .
 
 y
@@ -452,38 +476,100 @@ inline void load_reverse(
          py[j]   += pz[j];
    }
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_load_forward_jac dev}
 
+Forward Jacobian Sparsity for Store a VecAD Element
+###################################################
 
-/*!
-Forward mode sparsity operations for LdpOp and LdvOp
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_FORWARD_JAC
+   // END_LOAD_FORWARD_JAC
+}
 
-\param dependency
-is this a dependency (or sparsity) calculation.
+v, x, y, z
+**********
+see
+:ref:`var_load_op@v` ,
+:ref:`var_load_op@x` ,
+:ref:`var_load_op@y` ,
+:ref:`var_load_op@z`
 
-\copydetails CppAD::local::sparse_load_op
+op_code, num_vecad_ind, arg
+***************************
+see :ref:`var_load_op@op_code` ,
+:ref:`var_load_op@num_vecad_ind` ,
+:ref:`var_load_op@arg` .
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+dependency
+**********
+If true (false) we are including (are not including)
+dependencies that have derivative zero in the sparsity pattern.
+For example, the :ref:`Discrete-name` functions have derivative zero,
+but the value depends on its argument.
+
+vecad_ind
+*********
+is a vector with size *num_vec_ind* .
+We use the notation *i_v* defined by
+
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+
+var_sparsity
+************
+The sparsity pattern for *z*
+is set equal to the sparsity pattern for *v.
+If *dependency* is true, and *x* is a variable,
+the sparsity pattern for *x* is added to the sparsity pattern for *z*.
+
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the sparsity pattern for the vector *v*.
+
+{xrst_end var_load_forward_jac}
 */
+// BEGIN_LOAD_FORWARD_JAC
 template <class Vector_set>
-inline void forward_sparse_load_op(
-   bool               dependency     ,
-   op_code_var        op             ,
-   size_t             i_z            ,
-   const addr_t*      arg            ,
-   size_t             num_combined   ,
-   const size_t*      combined       ,
-   Vector_set&        var_sparsity   ,
-   Vector_set&        vecad_sparsity )
+inline void load_forward_jac(
+   op_code_var               op_code        ,
+   size_t                    num_vecad_ind  ,
+   size_t                    i_z            ,
+   const addr_t*             arg            ,
+   bool                      dependency     ,
+   const pod_vector<size_t>& vecad_ind      ,
+   Vector_set&               var_sparsity   ,
+   const Vector_set&         vecad_sparsity )
+// END_LOAD_FORWARD_JAC
 {
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-   size_t i_v = combined[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-
+   //
+   // var_sparsity[i_z]
    var_sparsity.assignment(i_z, i_v, vecad_sparsity);
-   if( dependency & (op == LdvOp) )
-      var_sparsity.binary_union(i_z, i_z, size_t(arg[1]), var_sparsity);
-
+   //
+   // var_sparsity[i_z]
+   if( dependency & (op_code == LdvOp) )
+   {  size_t i_x = size_t( arg[1] );
+      var_sparsity.binary_union(i_z, i_z, i_x, var_sparsity);
+   }
    return;
 }
 
