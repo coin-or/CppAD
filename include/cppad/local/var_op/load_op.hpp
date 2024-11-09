@@ -666,49 +666,104 @@ inline void load_reverse_jac(
    }
    return;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_load_reverse_hes dev}
 
+Reverse Hessian Sparsity for Load a VecAD Element
+#################################################
 
-/*!
-Reverse mode Hessian sparsity operations for LdpOp and LdvOp
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_REVERSE_HES
+   // END_STORE_REVERSE_HES
+}
 
-\copydetails CppAD::local::sparse_load_op
+v, x, y, z
+**********
+see
+:ref:`var_load_op@v` ,
+:ref:`var_load_op@x` ,
+:ref:`var_load_op@y` ,
+:ref:`var_load_op@z`
 
-\param var_jacobian
- var_jacobian[i_z]
-is false (true) if the Jacobian of G with respect to z is always zero
-(many be non-zero).
+op_code, num_vecad_ind, i_z, arg
+********************************
+see :ref:`var_load_op@op_code` ,
+:ref:`var_load_op@num_vecad_ind` ,
+:ref:`var_load_op@i_z` ,
+:ref:`var_load_op@arg` .
 
-\param vecad_jacobian
- vecad_jacobian[i_v]
-is false (true) if the Jacobian with respect to x is always zero
-(may be non-zero).
-On input, it corresponds to the function G,
-and on output it corresponds to the function H.
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
 
+vecad_ind
+*********
+is a vector with size *num_vec_ind* .
+We use the notation *i_v* defined by
+
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+It is also the index of the hessian
+sparsity pattern for *v* in *vecad_sparsity*.
+
+var_sparsity
+************
+The set with index *i_z* in *var_sparsity
+is the hessian sparsity pattern for the variable *z*.
+
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the hessian sparsity pattern for the vector *v*.
+The sparsity pattern for *z* is added to the sparsity pattern for *v* .
+
+var_rev_jac
+***********
+If the scalar function has non-zero partial w.r.t *z* ,
+the *i_z* component of this vector is true.
+
+vecad_rev_jac
+*************
+If the scalar function has non-zero partial w.r.t *z* ,
+the *i_v* component of *vecad_rev_jac* is set to true.
+
+{xrst_end var_load_reverse_hes}
 */
+// BEGIN_STORE_REVERSE_HES
 template <class Vector_set>
-inline void reverse_sparse_hessian_load_op(
-   op_code_var        op             ,
-   size_t             i_z            ,
-   const addr_t*      arg            ,
-   size_t             num_combined   ,
-   const size_t*      combined       ,
-   Vector_set&        var_sparsity   ,
-   Vector_set&        vecad_sparsity ,
-   bool*              var_jacobian   ,
-   bool*              vecad_jacobian )
+inline void load_reverse_hes(
+   op_code_var               op_code        ,
+   const addr_t*             arg            ,
+   size_t                    num_vecad_ind  ,
+   size_t                    i_z            ,
+   const pod_vector<size_t>& vecad_ind      ,
+   const Vector_set&         var_sparsity   ,
+   Vector_set&               vecad_sparsity ,
+   const bool*               var_rev_jac    ,
+   pod_vector<bool>&         vecad_rev_jac  )
+// END_STORE_REVERSE_HES
 {
-   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-   size_t i_v = combined[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-
+   //
+   // vecad_sparsity[i_v]
    vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
-
-   vecad_jacobian[i_v] |= var_jacobian[i_z];
-
+   //
+   // vecad_rev_jac[iv]
+   vecad_rev_jac[i_v] |= var_rev_jac[i_z];
+   //
    return;
 }
 

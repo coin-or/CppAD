@@ -382,31 +382,17 @@ void rev_hes(
          // -------------------------------------------------
 
          case LdpOp:
-         var_op::reverse_sparse_hessian_load_op(
-            op,
-            i_var,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            rev_hes_sparse,
-            vecad_sparse,
-            RevJac,
-            vecad_jac.data()
-         );
-         break;
-         // -------------------------------------------------
-
          case LdvOp:
-         var_op::reverse_sparse_hessian_load_op(
+         var_op::load_reverse_hes(
             op,
-            i_var,
             arg,
             num_vecad_ind,
-            vecad_ind.data(),
+            i_var,
+            vecad_ind,
             rev_hes_sparse,
             vecad_sparse,
             RevJac,
-            vecad_jac.data()
+            vecad_jac
          );
          break;
          // -------------------------------------------------
