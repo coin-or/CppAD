@@ -93,8 +93,8 @@ Zero Order Forward Store an Element of a VecAD Vector
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FORWARD_STORE_0
-   // END_FORWARD_STORE_0
+   // BEGIN_STORE_FORWARD_0
+   // END_STORE_FORWARD_0
 }
 
 Base, op_code, num_vecad_ind, arg
@@ -149,9 +149,9 @@ corresponding to the value being stored.
 
 {xrst_end var_store_forward_0}
 */
-// BEGIN_FORWARD_STORE_0
+// BEGIN_STORE_FORWARD_0
 template <class Base>
-inline void forward_store_0(
+inline void store_forward_0(
    op_code_var          op_code        ,
    const addr_t*        arg            ,
    size_t               num_var        ,
@@ -161,7 +161,7 @@ inline void forward_store_0(
    const Base*          taylor         ,
    pod_vector<bool>&    vec_ad2isvar   ,
    pod_vector<size_t>&  vec_ad2index   )
-// END_FORWARD_STORE_0
+// END_STORE_FORWARD_0
 {  //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );

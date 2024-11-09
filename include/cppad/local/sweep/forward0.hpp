@@ -584,7 +584,7 @@ void forward0(
          case StpvOp:
          case StvpOp:
          case StvvOp:
-         var_op::forward_store_0(
+         var_op::store_forward_0(
             op,
             arg,
             numvar,

@@ -622,7 +622,7 @@ void forward1(
          case StvpOp:
          case StvvOp:
          if( p == 0 )
-         {  var_op::forward_store_0(
+         {  var_op::store_forward_0(
                op,
                arg,
                numvar,
