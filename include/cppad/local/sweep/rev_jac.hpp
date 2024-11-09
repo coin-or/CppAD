@@ -399,27 +399,14 @@ void rev_jac(
          // -------------------------------------------------
 
          case LdpOp:
-         var_op::reverse_sparse_jacobian_load_op(
-            dependency,
-            op,
-            i_var,
-            arg,
-            num_vecad_ind,
-            vecad_ind.data(),
-            var_sparsity,
-            vecad_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case LdvOp:
-         var_op::reverse_sparse_jacobian_load_op(
-            dependency,
+         var_op::load_reverse_jac(
             op,
+            num_vecad_ind,
             i_var,
             arg,
-            num_vecad_ind,
-            vecad_ind.data(),
+            dependency,
+            vecad_ind,
             var_sparsity,
             vecad_sparsity
          );

@@ -467,7 +467,7 @@ void reverse(
 
          case LdpOp:
          case LdvOp:
-         var_op::load_reverse(
+         var_op::load_reverse_op(
             op, i_var, arg, d, load_op2var, J, K, Partial
          );
          break;
