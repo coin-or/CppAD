@@ -63,13 +63,14 @@ echo_log_eval() {
    fi
    # 1.  If we don't have c++17 and mkstemp, then temp_file is not thread safe.
    #
-   # 2.  If using g++, an improper compile time warning is generated at
-   #     forward.hpp:188, reverse.hpp:151, independent.hpp:100-109,
+   # 2.  If using g++ -O3 -DNDEBUG -Wall,
+   #     an improper compile time warning is generated at:
+   #     forward.hpp:187, reverse.hpp:151, independent.hpp:100-109,
    #     base_alloc.hpp:143.
    #
    if $sed $top_srcdir/check_all.tmp \
       -e '/temp_file.cpp:.*warning.*tmpnam/d' \
-      -e '/forward.hpp:188:.*warning.*outside array bounds/d' \
+      -e '/forward.hpp:187:.*warning.*outside array bounds/d' \
       -e '/reverse.hpp:151:.*warning.*outside array bounds/d' \
       -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
       -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
@@ -190,6 +191,7 @@ standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
 use_configure   = $use_configure
+verbose_make    = $verbose_make
 EOF
 cat << EOF >> $top_srcdir/check_all.log
 tarball         = cppad-$version.tgz
@@ -198,6 +200,7 @@ standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
 use_configure   = $use_configure
+verbose_make    = $verbose_make
 EOF
 #
 # compiler
