@@ -410,8 +410,7 @@ Setup thread_alloc For Use in Multi-Threading Environment
 
 Syntax
 ******
-
-   ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* )
+| ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* )
 
 Purpose
 *******

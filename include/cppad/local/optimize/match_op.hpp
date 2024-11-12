@@ -18,7 +18,6 @@ Search for a Previous Operator that Matches Current Operator
 
 Syntax
 ******
-
 | *exceed_collision_limit* = ``match_op`` (
 | |tab| ``collision_limit`` ,
 | |tab| ``random_itr`` ,

@@ -16,8 +16,7 @@ Using The CppAD Test Vector Template Class
 
 Syntax
 ******
-
-   ``CPPAD_TESTVECTOR`` ( *Scalar* )
+| ``CPPAD_TESTVECTOR`` ( *Scalar* )
 
 Choice
 ******

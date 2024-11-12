@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_TEST_BOOLOFVOID_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin test_boolofvoid}
@@ -12,12 +12,10 @@ Object that Runs a Group of Tests
 
 Syntax
 ******
-
 | # ``include <cppad/utility/test_boolofvoid.hpp>``
 | ``test_boolofvoid`` *Run* ( *group* , *width* )
 | *Run* ( *test* , *name* )
-
-*ok* = *Run* . ``summary`` ( *memory_ok* )
+| *ok* = *Run* . ``summary`` ( *memory_ok* )
 
 Purpose
 *******

@@ -27,7 +27,6 @@ Information for Each Conditional Expression
 
 Syntax
 ******
-
 | ``get_cexp_info`` (
 | |tab| *play* ,
 | |tab| *random_itr* ,

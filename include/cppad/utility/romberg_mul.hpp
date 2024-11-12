@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_ROMBERG_MUL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin RombergMul}
@@ -15,12 +15,9 @@ Multi-dimensional Romberg Integration
 
 Syntax
 ******
-
-   # ``include <cppad/utility/romberg_mul.hpp>``
-
-``RombergMul`` < *Fun* , *SizeVector* , *FloatVector* , *m* > *R*
-
-*r* = *R* ( *F* , *a* , *b* , *n* , *p* , *e* )
+| # ``include <cppad/utility/romberg_mul.hpp>``
+| ``RombergMul`` < *Fun* , *SizeVector* , *FloatVector* , *m* > *R*
+| *r* = *R* ( *F* , *a* , *b* , *n* , *p* , *e* )
 
 Description
 ***********

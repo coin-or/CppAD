@@ -16,7 +16,6 @@ Specifications for A Team of AD Threads
 
 Syntax
 ******
-
 | ``include`` ``"team_thread.hpp"``
 | *ok* = ``team_create`` ( *num_threads* )
 | *ok* = ``team_work`` ( *worker* )

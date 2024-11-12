@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/core/ad_fun.hpp>
@@ -21,8 +21,7 @@ Json AD Graph Corresponding to an ADFun Object
 
 Syntax
 ******
-
-   *json* = *fun* . ``to_json`` ()
+| *json* = *fun* . ``to_json`` ()
 
 Prototype
 *********

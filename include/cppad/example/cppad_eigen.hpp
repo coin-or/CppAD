@@ -12,9 +12,7 @@ Enable Use of Eigen Linear Algebra Package with CppAD
 
 Syntax
 ******
-
-   # ``include <cppad/example/cppad_eigen.hpp>``
-
+| # ``include <cppad/example/cppad_eigen.hpp>``
 {xrst_toc_hidden
    include/cppad/example/eigen_plugin.hpp
    example/general/eigen_array.cpp

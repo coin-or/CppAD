@@ -20,7 +20,6 @@ Solve a Quadratic Program Using Interior Point Method
 
 Syntax
 ******
-
 | *ok* = ``qp_interior`` (
 | *level* , *c* , *C* , *g* , *G* , *epsilon* , *maxitr* , *xin* , *xout* , *yout* , *sout*
 | )

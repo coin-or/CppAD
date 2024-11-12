@@ -30,7 +30,6 @@ Use :ref:`chkpoint_two-name` instead.
 
 Syntax
 ******
-
 | ``checkpoint`` < *Base* > *atom_fun* (
 | |tab| *name* , *algo* , *ax* , *ay* , *sparsity* , *optimize*
 | )

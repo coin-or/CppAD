@@ -12,7 +12,6 @@ Create an ADFun Object Corresponding to a Value Graph
 
 Syntax
 ******
-
 | |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``val2fun`` ( *val_tape* , *dyn_ind* , *var_ind* )
 | |tab| *fun* . ``val2fun`` ( *val_tape* , *dyn_ind* , *var_ind* , *use_val* )

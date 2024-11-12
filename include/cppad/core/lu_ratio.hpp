@@ -18,9 +18,8 @@ LU Factorization of A Square Matrix and Stability Calculation
 
 Syntax
 ******
-``# include <cppad/cppad.hpp>``
-
-*sign* = ``LuRatio`` ( *ip* , *jp* , *LU* , *ratio* )
+| ``# include <cppad/cppad.hpp>``
+| *sign* = ``LuRatio`` ( *ip* , *jp* , *LU* , *ratio* )
 
 Description
 ***********

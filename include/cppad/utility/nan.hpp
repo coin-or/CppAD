@@ -16,11 +16,9 @@ Obtain Nan or Determine if a Value is Nan
 
 Syntax
 ******
-
 | # ``include <cppad/utility/nan.hpp>``
 | *b* = ``CppAD::isnan`` ( *s* )
-
-*b* = ``hasnan`` ( *v* )
+| *b* = ``hasnan`` ( *v* )
 
 Purpose
 *******

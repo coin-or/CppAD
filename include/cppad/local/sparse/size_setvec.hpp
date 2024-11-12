@@ -167,7 +167,7 @@ class size_setvec private: Number of References to a Set
 
 Syntax
 ******
-*count* = *vec* . ``reference_count`` ( *i* )
+| *count* = *vec* . ``reference_count`` ( *i* )
 
 vec
 ***

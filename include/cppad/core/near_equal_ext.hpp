@@ -2,7 +2,7 @@
 # define CPPAD_CORE_NEAR_EQUAL_EXT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin near_equal_ext}
@@ -12,7 +12,7 @@ Compare AD and Base Objects for Nearly Equal
 
 Syntax
 ******
-*b* = ``NearEqual`` ( *x* , *y* , *r* , *a* )
+| *b* = ``NearEqual`` ( *x* , *y* , *r* , *a* )
 
 Purpose
 *******

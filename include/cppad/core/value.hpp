@@ -13,7 +13,7 @@ Convert From an AD Type to its Base Type
 
 Syntax
 ******
-*b* = ``Value`` ( *x* )
+| *b* = ``Value`` ( *x* )
 
 See Also
 ********

@@ -12,7 +12,6 @@ Atomic Function Jacobian Sparsity Patterns
 
 Syntax
 ******
-
 | *ok* = *afun* . ``jac_sparsity`` (
 | |tab| *parameter_x* , *type_x* , *dependency* , *select_x* , *select_y* , *pattern_out*
 | )

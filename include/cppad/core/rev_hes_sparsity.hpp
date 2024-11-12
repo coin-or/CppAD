@@ -12,7 +12,6 @@ Reverse Mode Hessian Sparsity Patterns
 
 Syntax
 ******
-
 | *f* . ``rev_hes_sparsity`` (
 | |tab| *select_range* , *transpose* , *internal_bool* , *pattern_out*
 | )

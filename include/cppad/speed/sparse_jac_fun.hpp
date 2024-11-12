@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_SPARSE_JAC_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin sparse_jac_fun}
@@ -15,10 +15,8 @@ Evaluate a Function That Has a Sparse Jacobian
 
 Syntax
 ******
-
-   # ``include <cppad/speed/sparse_jac_fun.hpp>``
-
-``sparse_jac_fun`` ( *m* , *n* , *x* , *row* , *col* , *p* , *fp* )
+| # ``include <cppad/speed/sparse_jac_fun.hpp>``
+| ``sparse_jac_fun`` ( *m* , *n* , *x* , *row* , *col* , *p* , *fp* )
 
 Purpose
 *******

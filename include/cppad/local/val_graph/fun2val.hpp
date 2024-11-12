@@ -13,7 +13,6 @@ Create a Value Graph Corresponding to an ADFun Object
 
 Syntax
 ******
-
 | |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``fun2val`` ( *val_tape* )
 

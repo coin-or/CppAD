@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_IO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -16,7 +16,7 @@ AD Input Stream Operator
 
 Syntax
 ******
-*is* >> *x*
+| *is* >> *x*
 
 Purpose
 *******

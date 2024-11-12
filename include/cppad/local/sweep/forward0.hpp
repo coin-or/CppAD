@@ -29,7 +29,6 @@ Compute Zero Order Forward Mode Taylor Coefficients
 
 Syntax
 ******
-
 | ``forward0`` (
 | |tab| *play* ,
 | |tab| *s_out* ,

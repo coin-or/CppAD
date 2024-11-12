@@ -13,7 +13,7 @@ Inverse Cosine Function: acos
 
 Syntax
 ******
-*y* = ``acos`` ( *x* )
+| *y* = ``acos`` ( *x* )
 
 x, y
 ****

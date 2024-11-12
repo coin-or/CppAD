@@ -12,7 +12,7 @@ Choosing the CppAD Test Vector Template Class
 
 Syntax
 ******
-``CPPAD_TESTVECTOR`` ( *Scalar* ) *vec*
+| ``CPPAD_TESTVECTOR`` ( *Scalar* ) *vec*
 
 Example Simple Vector
 *********************

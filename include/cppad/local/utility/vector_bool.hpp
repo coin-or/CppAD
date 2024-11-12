@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_UTILITY_VECTOR_BOOL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cstddef>
@@ -17,7 +17,6 @@ vectorBoolElement Class
 
 Syntax
 ******
-
 | ``local::utility::vectorBoolElement`` *element* ( *unit* , *mask* )
 | ``local::utility::vectorBoolElement`` *element* ( *other* )
 | *value* = *element*

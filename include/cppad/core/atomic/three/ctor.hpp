@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_THREE_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_three_ctor}
@@ -12,7 +12,6 @@ Atomic Function Constructor
 
 Syntax
 ******
-
 | ``class`` *atomic_user* : ``public CppAD::atomic_three<`` *Base* > {
 | ``public:``
 | |tab| *atomic_user* ( *ctor_arg_list* ) : ``CppAD::atomic_three<`` *Base* >( *name* )

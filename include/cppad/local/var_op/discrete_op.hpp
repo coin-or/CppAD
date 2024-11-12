@@ -17,7 +17,6 @@ Forward Mode Result for Discrete Functions
 
 Syntax
 ******
-
 | ``forward_dis_op`` (
 | |tab| *p* , *q* , *r* , *i_z* , *arg* , *cap_order* , *taylor*
 | ) ``forward_dis_op`` (

@@ -12,7 +12,6 @@ Atomic Linear ODE: Example Implementation
 
 Syntax
 ******
-
 | *lin_ode* . ``base_solver`` (
 | |tab| *r* , *step* , *pattern* , *transpose* , *x* , *y*
 | )

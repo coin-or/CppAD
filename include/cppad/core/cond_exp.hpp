@@ -17,7 +17,7 @@ AD Conditional Expressions
 
 Syntax
 ******
-*result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
+| *result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
 
 Purpose
 *******

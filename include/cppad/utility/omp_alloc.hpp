@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_OMP_ALLOC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/utility/thread_alloc.hpp>
 # ifdef _OPENMP
@@ -25,7 +25,6 @@ and :ref:`thread_alloc:num_threads<ta_num_threads-name>` instead.
 
 Syntax
 ******
-
 | # ``include <cppad/utility/omp_alloc.hpp>``
 | ``omp_alloc::set_max_num_threads`` ( *number* )
 | *number* = ``omp_alloc::get_max_num_threads`` ()

@@ -15,7 +15,7 @@ AD Assignment Operator
 
 Syntax
 ******
-*y* = *x*
+| *y* = *x*
 
 Purpose
 *******

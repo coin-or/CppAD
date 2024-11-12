@@ -38,7 +38,6 @@ Convert a player object to an optimized recorder object
 
 Syntax
 ******
-
 | *exceed_collision_limit* = ``local::optimize::optimize_run`` (
 | |tab| ``options`` , ``n`` , ``dep_taddr`` , ``play`` , ``rec``
 | )

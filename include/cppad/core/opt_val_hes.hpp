@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OPT_VAL_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin opt_val_hes app}
@@ -19,7 +19,7 @@ Jacobian and Hessian of Optimal Values
 
 Syntax
 ******
-*signdet* = ``opt_val_hes`` ( *x* , *y* , *fun* , *jac* , *hes* )
+| *signdet* = ``opt_val_hes`` ( *x* , *y* , *fun* , *jac* , *hes* )
 
 See Also
 ********

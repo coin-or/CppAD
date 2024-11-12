@@ -12,7 +12,7 @@ Stop Recording and Store Operation Sequence
 
 Syntax
 ******
-*f* . ``Dependent`` ( *x* , *y* )
+| *f* . ``Dependent`` ( *x* , *y* )
 
 Stop Recording
 **************

@@ -16,7 +16,6 @@ Reverse Mode Using Subgraphs
 
 Syntax
 ******
-
 | *f* . ``subgraph_reverse`` ( *select_domain* )
 | *f* . ``subgraph_reverse`` ( *q* , *ell* , *col* , *dw* )
 | *f* . ``clear_subgraph`` ()

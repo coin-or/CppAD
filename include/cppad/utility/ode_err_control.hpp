@@ -28,7 +28,6 @@ An Error Controller for ODE Solvers
 
 Syntax
 ******
-
 | # ``include <cppad/utility/ode_err_control.hpp>``
 | *xf* = ``OdeErrControl`` ( *method* , *ti* , *tf* , *xi* ,
 | |tab| ``smin`` , ``smax`` , ``scur`` , ``eabs`` , ``erel`` , ``ef`` , ``maxabs`` , ``nstep``  )

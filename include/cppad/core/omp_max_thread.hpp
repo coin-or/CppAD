@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OMP_MAX_THREAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin omp_max_thread app}
@@ -20,8 +20,7 @@ to set the number of threads.
 
 Syntax
 ******
-
-   ``AD`` < *Base* >:: ``omp_max_thread`` ( *number* )
+| ``AD`` < *Base* >:: ``omp_max_thread`` ( *number* )
 
 Purpose
 *******

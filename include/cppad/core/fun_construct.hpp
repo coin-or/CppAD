@@ -15,7 +15,6 @@ Construct an ADFun Object and Stop Recording
 
 Syntax
 ******
-
 | ``ADFun`` < *Base* > *f* ( *ax* , *ay* );
 | ``ADFun`` < *Base* > *f*
 | *f* . ``swap`` ( *g* )

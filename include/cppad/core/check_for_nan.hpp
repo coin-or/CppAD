@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHECK_FOR_NAN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin check_for_nan}
@@ -14,7 +14,6 @@ Check an ADFun Object For Nan Results
 
 Syntax
 ******
-
 | *f* . ``check_for_nan`` ( *b* )
 | *b* = *f* . ``check_for_nan`` ()
 | ``get_check_for_nan`` ( *vec* , *file* )

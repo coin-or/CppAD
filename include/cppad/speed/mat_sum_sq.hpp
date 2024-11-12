@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_MAT_SUM_SQ_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin mat_sum_sq}
@@ -12,10 +12,8 @@ Sum Elements of a Matrix Times Itself
 
 Syntax
 ******
-
-   # ``include <cppad/speed/mat_sum_sq.hpp>``
-
-*mat_sum_sq* ( ``n`` , ``x`` , ``y`` , ``z`` )
+| # ``include <cppad/speed/mat_sum_sq.hpp>``
+| *mat_sum_sq* ( ``n`` , ``x`` , ``y`` , ``z`` )
 
 Purpose
 *******

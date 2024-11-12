@@ -16,7 +16,7 @@ Atomic Forward Hessian Sparsity Patterns
 
 Syntax
 ******
-*ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* , *x* )
+| *ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* , *x* )
 
 Deprecated 2016-06-27
 *********************

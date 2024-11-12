@@ -15,7 +15,7 @@ Absolute Zero Multiplication
 
 Syntax
 ******
-*z* = ``azmul`` ( *x* , *y* )
+| *z* = ``azmul`` ( *x* , *y* )
 
 Purpose
 *******

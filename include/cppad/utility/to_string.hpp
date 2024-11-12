@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_TO_STRING_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -17,10 +17,8 @@ Convert Certain Types to a String
 
 Syntax
 ******
-
-   # ``include <cppad/utility/to_string.hpp>``
-
-*s* = ``to_string`` ( *value* ) .
+| # ``include <cppad/utility/to_string.hpp>``
+| *s* = ``to_string`` ( *value* ) .
 
 See Also
 ********

@@ -16,7 +16,6 @@ Lu Factor and Solve with Recorded Pivoting
 
 Syntax
 ******
-
 | ``int lu_vec_ad`` (
 | |tab| ``size_t`` *n* ,
 | |tab| ``size_t`` *m* ,

@@ -17,10 +17,8 @@ Evaluate a Function Defined in Terms of an ODE
 
 Syntax
 ******
-
-   # ``include <cppad/speed/ode_evaluate.hpp>``
-
-``ode_evaluate`` ( *x* , *p* , *fp* )
+| # ``include <cppad/speed/ode_evaluate.hpp>``
+| ``ode_evaluate`` ( *x* , *p* , *fp* )
 
 Purpose
 *******

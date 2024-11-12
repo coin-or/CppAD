@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_COND_EXP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/record/recorder.hpp>
 
@@ -15,7 +15,6 @@ Record a Variable or Dynamic Parameter Conditional Expression
 
 Syntax
 ******
-
 | *rec* . ``cond_exp`` (
 | |tab| *tape_id* , *cop* , *result* , *left* , *right* , *if_true* , *if_false*
 | )

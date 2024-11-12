@@ -2,7 +2,7 @@
 # define CPPAD_CORE_INDEPENDENT_INDEPENDENT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/independent.hpp>
 
@@ -20,7 +20,7 @@ This implements :ref:`Independent-name` with all the possible arguments present.
 
 Syntax
 ******
-``Independent`` ( *x* , *abort_op_index* , *record_compare* , *dynamic* )
+| ``Independent`` ( *x* , *abort_op_index* , *record_compare* , *dynamic* )
 
 Prototype
 *********

@@ -16,7 +16,6 @@ Forward Mode Hessian Sparsity Patterns
 
 Syntax
 ******
-
 | *f* . ``for_hes_sparsity`` (
 | |tab| *select_domain* , *select_range* , *internal_bool* , *pattern_out*
 | )

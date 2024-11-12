@@ -28,7 +28,6 @@ Use Ipopt to Solve a Nonlinear Programming Problem
 
 Syntax
 ******
-
 | # ``include <cppad/ipopt/solve.hpp>``
 | ``ipopt::solve`` (
 | |tab| *options* , *xi* , *xl* , *xu* , *gl* , *gu* , *fg_eval* , *solution*

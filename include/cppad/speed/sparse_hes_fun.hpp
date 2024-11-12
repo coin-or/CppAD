@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_SPARSE_HES_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin sparse_hes_fun}
@@ -15,10 +15,8 @@ Evaluate a Function That Has a Sparse Hessian
 
 Syntax
 ******
-
-   # ``include <cppad/speed/sparse_hes_fun.hpp>``
-
-``sparse_hes_fun`` ( *n* , *x* , *row* , *col* , *p* , *fp* )
+| # ``include <cppad/speed/sparse_hes_fun.hpp>``
+| ``sparse_hes_fun`` ( *n* , *x* , *row* , *col* , *p* , *fp* )
 
 Purpose
 *******

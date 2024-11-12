@@ -87,7 +87,6 @@ Set Up Multi-Threaded Newton Method
 
 Syntax
 ******
-
 | *ok* = ``multi_newton_setup`` (
 | |tab| *num_sub* , *xlow* , *xup* , *epsilon* , *max_itr* , *num_threads*
 | )

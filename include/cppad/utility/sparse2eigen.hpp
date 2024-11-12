@@ -16,10 +16,8 @@ Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix
 
 Syntax
 ******
-
-   # ``include <cppad/utility/sparse2eigen.hpp>``
-
-``sparse2eigen`` ( *source* , *destination* )
+| # ``include <cppad/utility/sparse2eigen.hpp>``
+| ``sparse2eigen`` ( *source* , *destination* )
 
 Prototype
 *********

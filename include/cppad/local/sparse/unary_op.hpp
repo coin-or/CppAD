@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
@@ -217,7 +217,6 @@ Forward Hessian Sparsity for Non-linear Unary Operators
 
 Syntax
 ******
-
 | ``local::for_hes_nl_unary_op`` (
 | |tab| *np1* , *numvar* , *i_v* , *for_sparsity*
 | )

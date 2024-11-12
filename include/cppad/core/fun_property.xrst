@@ -10,7 +10,6 @@ ADFun Function Properties
 
 Syntax
 ******
-
 | *n* = *f* . ``Domain`` ()
 | *m* = *f* . ``Range`` ()
 | *p* = *f* . ``Parameter`` ( *i* )

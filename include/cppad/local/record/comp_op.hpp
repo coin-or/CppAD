@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_COMP_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/record/recorder.hpp>
 
@@ -19,8 +19,7 @@ Put Compare Operators in Recording
 
 Syntax
 ******
-
-   *rec* . ``put_comp_`` *rel* ( *aleft* , *aright* , *result* )
+| *rec* . ``put_comp_`` *rel* ( *aleft* , *aright* , *result* )
 
 rel
 ===

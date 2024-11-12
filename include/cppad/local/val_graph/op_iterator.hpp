@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_OP_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
@@ -13,7 +13,6 @@ Class For Iterating Over Operators in a Value Tape
 
 Syntax
 ******
-
 | |tab| ``op_iterator`` < *Value* > *op_itr* ( *tape* , *op_index* )
 | |tab| *op_itr* . ``op_ptr`` ()
 | |tab| *op_itr* . ``arg_index`` ()

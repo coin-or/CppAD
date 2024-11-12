@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_REV_SPARSE_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_rev_sparse_hes app}
@@ -16,7 +16,7 @@ Atomic Reverse Hessian Sparsity Patterns
 
 Syntax
 ******
-*ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* , *x* )
+| *ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* , *x* )
 
 Deprecated 2016-06-27
 *********************

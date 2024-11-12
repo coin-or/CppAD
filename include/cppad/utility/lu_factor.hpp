@@ -18,10 +18,8 @@ LU Factorization of A Square Matrix
 
 Syntax
 ******
-
-   # ``include <cppad/utility/lu_factor.hpp>``
-
-*sign* = ``LuFactor`` ( *ip* , *jp* , *LU* )
+| # ``include <cppad/utility/lu_factor.hpp>``
+| *sign* = ``LuFactor`` ( *ip* , *jp* , *LU* )
 
 Description
 ***********

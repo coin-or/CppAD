@@ -23,7 +23,6 @@ Reverse Mode Jacobian Sparsity Patterns
 
 Syntax
 ******
-
 | ``local::sweep::rev_jac`` (
 | |tab| *play*               ,
 | |tab| *dependency*         ,

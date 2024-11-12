@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/utility/near_equal.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
@@ -124,7 +124,7 @@ This function is in the global namespace, not the CppAD namespace.
 
 Syntax
 ******
-``info_spares_hessian`` ( *size* , *n_color* )
+| ``info_spares_hessian`` ( *size* , *n_color* )
 
 size
 ****

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two app}
@@ -25,7 +25,6 @@ Use :ref:`atomic_three-name` instead.
 
 Syntax
 ******
-
 | *atomic_user* *afun* ( *ctor_arg_list* )
 | *afun* ( *ax* , *ay* )
 | *ok* = *afun* . ``forward`` ( *p* , *q* , *vx* , *vy* , *tx* , *ty* )

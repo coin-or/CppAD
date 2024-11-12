@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_TIME_TEST_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -13,7 +13,6 @@ Determine Amount of Time to Execute a Test
 
 Syntax
 ******
-
 | # ``include <cppad/utility/time_test.hpp>``
 | *time* = ``time_test`` ( *test_fun* , *time_min* )
 | *time* = ``time_test`` ( *test_fun* , *time_min* , *test_size* )

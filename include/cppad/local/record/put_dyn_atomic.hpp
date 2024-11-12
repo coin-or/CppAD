@@ -18,7 +18,6 @@ Put a Dynamic Parameter Atomic Call Operator in Recording
 
 Syntax
 ******
-
 | *rec* . ``put_dyn_atomic`` (
 | |tab| *tape_id* , *atomic_index* , *call_id* , *type_x* , *type_y* , *ax* , *ay*
 | )

@@ -13,7 +13,7 @@ Variable Forward Unary Operators
 
 Syntax
 ******
-``forward_`` *name* _ ``op`` ( *p* , *q* , *i_z* , *i_x* , *cap_order* , *taylor* )
+| ``forward_`` *name* _ ``op`` ( *p* , *q* , *i_z* , *i_x* , *cap_order* , *taylor* )
 
 Assumption
 **********

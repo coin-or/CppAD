@@ -18,7 +18,7 @@ Controlling Taylor Coefficients Memory Allocation
 
 Syntax
 ******
-*f* . ``capacity_order`` ( *c* )
+| *f* . ``capacity_order`` ( *c* )
 
 See Also
 ========

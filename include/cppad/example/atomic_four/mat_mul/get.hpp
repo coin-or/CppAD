@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_GET_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_mat_mul_get.hpp}
@@ -12,7 +12,7 @@ atomic_mat_mul Get Routine: Example Implementation
 
 Syntax
 ******
-``mat_mul`` . *get* ( ``call_id`` , ``n_left`` , ``n_middle`` , ``n_right`` )
+| ``mat_mul`` . *get* ( ``call_id`` , ``n_left`` , ``n_middle`` , ``n_right`` )
 
 Prototype
 *********

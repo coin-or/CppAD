@@ -2,7 +2,7 @@
 # define CPPAD_CORE_REV_TWO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -16,7 +16,7 @@ Reverse Mode Second Partial Derivative Driver
 
 Syntax
 ******
-*ddw* = *f* . ``RevTwo`` ( *x* , *i* , *j* )
+| *ddw* = *f* . ``RevTwo`` ( *x* , *i* , *j* )
 
 Purpose
 *******

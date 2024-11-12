@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_ctor app}
@@ -12,7 +12,6 @@ Atomic Function Constructor
 
 Syntax
 ******
-
 | *atomic_user afun* ( *ctor_arg_list* )
 | ``atomic_base`` < *Base* >( *name* , *sparsity* )
 

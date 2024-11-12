@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BASE_HASH_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base_hash}
@@ -16,7 +16,7 @@ Base Type Requirements for Hash Coding Values
 
 Syntax
 ******
-*code* = ``hash_code`` ( *x* )
+| *code* = ``hash_code`` ( *x* )
 
 Purpose
 *******

@@ -12,7 +12,6 @@ Calling an Atomic Function
 
 Syntax
 ******
-
 | *afun* ( *ax* , *ay* )
 | *ay* = *afun* ( *call_id* , *ax* , *ay* )
 

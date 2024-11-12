@@ -2,7 +2,7 @@
 # define CPPAD_CORE_EQUAL_OP_SEQ_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -14,7 +14,7 @@ Check if Two Value are Identically Equal
 
 Syntax
 ******
-*b* = ``EqualOpSeq`` ( *x* , *y* )
+| *b* = ``EqualOpSeq`` ( *x* , *y* )
 
 Purpose
 *******

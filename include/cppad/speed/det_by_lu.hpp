@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_DET_BY_LU_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin det_by_lu}
@@ -12,7 +12,6 @@ Determinant Using Expansion by Lu Factorization
 
 Syntax
 ******
-
 | # ``include <cppad/speed/det_by_lu.hpp>``
 | ``det_by_lu`` < *Scalar* > *det* ( *n* )
 | *d* = *det* ( *a* )

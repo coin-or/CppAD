@@ -10,8 +10,7 @@ Converts Cpp Graph to C Source
 
 Syntax
 ******
-``csrc_writer(%os%, %graph_obj%, %c_type%)``
-``%``
+| ``csrc_writer`` ( *os* , *graph_obj* , *c_type* )
 
 Prototype
 *********

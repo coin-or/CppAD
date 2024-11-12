@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -20,7 +20,6 @@ Get Mapping From Op to Previous Op That is Equivalent
 
 Syntax
 ******
-
 | *exceed_collision_limit* = ``get_op_previous`` (
 | |tab| *collision_limit* ,
 | |tab| *play* ,

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_VEC_AD_VEC_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
@@ -14,7 +14,6 @@ VecAD: Prints Error Message If A Compound Assignment Is Used
 
 Syntax
 ******
-
 | ``CPPAD_VEC_AD_COMP_ASSIGN`` ( *cop* )
 | ``ref cop right``
 

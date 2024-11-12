@@ -10,7 +10,6 @@ Adolc Test Utility: Allocate and Free Memory For a Matrix
 
 Syntax
 ******
-
 | *mat* = ``adolc_alloc_mat`` ( *m* , *n* )
 | *adolc_free_mat* ( ``mat`` )
 

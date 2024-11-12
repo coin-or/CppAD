@@ -28,8 +28,7 @@ C Source Code Corresponding to an ADFun Object
 
 Syntax
 ******
-
-   *fun* . ``to_csrc`` ( *os* , *c_type* )
+| *fun* . ``to_csrc`` ( *os* , *c_type* )
 
 Prototype
 *********

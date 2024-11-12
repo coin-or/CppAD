@@ -19,13 +19,13 @@ Vector Class Iterator Preprocessor Definitions
 
 Syntax
 ******
-::
-
-   # define CPPAD_CONST 0
-   # include <cppad/local/utility/cppad_vector_itr.hpp>
-   # undef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
-   # define CPPAD_CONST 1
-   # include <cppad/local/utility/cppad_vector_itr.hpp>
+{xrst_code cpp}
+# define CPPAD_CONST 0
+# include <cppad/local/utility/cppad_vector_itr.hpp>
+# undef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
+# define CPPAD_CONST 1
+# include <cppad/local/utility/cppad_vector_itr.hpp>
+{xrst_code}
 
 Beginning of cppad_vector_itr.hpp
 *********************************

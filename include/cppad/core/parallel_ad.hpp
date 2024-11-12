@@ -16,7 +16,7 @@ Enable AD Calculations During Parallel Mode
 
 Syntax
 ******
-``parallel_ad`` < *Base* >()
+| ``parallel_ad`` < *Base* >()
 
 Purpose
 *******

@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_LU_SOLVE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -19,10 +19,8 @@ Compute Determinant and Solve Linear Equations
 
 Syntax
 ******
-
-   # ``include <cppad/utility/lu_solve.hpp>``
-
-*signdet* = ``LuSolve`` ( *n* , *m* , *A* , *B* , *X* , *logdet* )
+| # ``include <cppad/utility/lu_solve.hpp>``
+| *signdet* = ``LuSolve`` ( *n* , *m* , *A* , *B* , *X* , *logdet* )
 
 Description
 ***********

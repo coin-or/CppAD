@@ -26,8 +26,7 @@ Multiple orders, one direction, forward mode Taylor coefficients
 
 Syntax
 ******
-
-   *yq* = *f* . ``Forward`` ( *q* , *xq* , *s*  )
+| *yq* = *f* . ``Forward`` ( *q* , *xq* , *s*  )
 
 Prototype
 *********

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_FOUR_JAC_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/core/atomic/four/devel/jac_sparsity.hpp>
 
@@ -14,8 +14,8 @@ Atomic Function Jacobian Sparsity Patterns
 
 Syntax
 ******
-You can define one or the other of the following callbacks,
-but you should not define both.
+| You can define one or the other of the following callbacks,
+| but you should not define both.
 
 Preferred
 =========

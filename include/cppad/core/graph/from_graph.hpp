@@ -18,7 +18,6 @@ ADFun Object Corresponding to a CppAD Graph
 
 Syntax
 ******
-
 | |tab| ``cpp_graph`` *graph_obj*
 | |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``from_graph`` ( *graph_obj* )

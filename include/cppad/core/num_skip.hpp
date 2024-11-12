@@ -13,7 +13,7 @@ Number of Variables that Can be Skipped
 
 Syntax
 ******
-*n* = *f* . ``number_skip`` ()
+| *n* = *f* . ``number_skip`` ()
 
 See Also
 ========

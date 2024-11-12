@@ -17,7 +17,6 @@ Replacing the CppAD Error Handler
 
 Syntax
 ******
-
 | # ``include <cppad/utility/error_handler.hpp>``
 | ``ErrorHandler`` *info* ( *handler* )
 | ``ErrorHandler::Call`` ( *known* , *line* , *file* , *exp* , *msg* )

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FUN_CHECK_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -13,10 +13,11 @@ Check an ADFun Sequence of Operations
 
 Syntax
 ******
-*ok* = ``FunCheck`` ( *f* , *g* , *x* , *r* , *a* )
+| *ok* = ``FunCheck`` ( *f* , *g* , *x* , *r* , *a* )
 
-**See Also**
-:ref:`CompareChange-name`
+See Also
+********
+:ref:`FunCheck-name`
 
 Purpose
 *******

@@ -12,7 +12,7 @@ Using AD Version of Atomic Function
 
 Syntax
 ******
-*afun* ( *ax* , *ay* )
+| *afun* ( *ax* , *ay* )
 
 Purpose
 *******

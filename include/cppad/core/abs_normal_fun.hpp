@@ -12,7 +12,7 @@ Create An Abs-normal Representation of a Function
 
 Syntax
 ******
-*f* . ``abs_normal_fun`` ( *g* , *a* )
+| *f* . ``abs_normal_fun`` ( *g* , *a* )
 
 f
 *

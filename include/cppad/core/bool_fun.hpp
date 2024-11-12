@@ -2,7 +2,7 @@
 # define CPPAD_CORE_BOOL_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -13,14 +13,12 @@ AD Boolean Functions
 
 Syntax
 ******
-
 | ``CPPAD_BOOL_UNARY`` ( *Base* , *unary_name* )
 | *b* = *unary_name* ( *u* )
 | *b* = *unary_name* ( *x* )
 | ``CPPAD_BOOL_BINARY`` ( *Base* , *binary_name* )
 | *b* = *binary_name* ( *u* , *v* )
-
-*b* = *binary_name* ( *x* , *y* )
+| *b* = *binary_name* ( *x* , *y* )
 
 Purpose
 *******

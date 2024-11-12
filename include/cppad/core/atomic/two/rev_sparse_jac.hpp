@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_TWO_REV_SPARSE_JAC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_rev_sparse_jac app}
@@ -17,8 +17,7 @@ Atomic Reverse Jacobian Sparsity Patterns
 
 Syntax
 ******
-
-   *ok* = *afun* . ``rev_sparse_jac`` ( *q* , *rt* , *st* , *x* )
+| *ok* = *afun* . ``rev_sparse_jac`` ( *q* , *rt* , *st* , *x* )
 
 Deprecated 2016-06-27
 *********************

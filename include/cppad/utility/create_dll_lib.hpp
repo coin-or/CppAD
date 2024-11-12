@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_CREATE_DLL_LIB_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin create_dll_lib}
@@ -20,7 +20,6 @@ Create a Dynamic Link Library
 
 Syntax
 ******
-
 | # ``include <cppad/utility/create_dll_lib.hpp>``
 | *err_msg* = ``create_dll_lib`` ( *dll_file* , *csrc_files* , *options* )
 

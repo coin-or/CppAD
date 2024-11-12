@@ -16,7 +16,6 @@ Printing AD Values During Forward Mode
 
 Syntax
 ******
-
 | *f* . ``Forward`` (0, *x* )
 | *f* . ``Forward`` (0, *x* , *s* )
 | ``PrintFor`` ( *before* , *value* )

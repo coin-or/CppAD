@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_DET_GRAD_33_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin det_grad_33}
@@ -12,10 +12,8 @@ Check Gradient of Determinant of 3 by 3 matrix
 
 Syntax
 ******
-
-   # ``include <cppad/speed/det_grad_33.hpp>``
-
-*ok* = ``det_grad_33`` ( *x* , *g* )
+| # ``include <cppad/speed/det_grad_33.hpp>``
+| *ok* = ``det_grad_33`` ( *x* , *g* )
 
 Purpose
 *******

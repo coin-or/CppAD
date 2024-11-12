@@ -13,7 +13,6 @@ Variable Forward Binary Operators
 
 Syntax
 ******
-
 | ``forward_`` *name* _ ``op`` (
 | |tab| *p* , *q* , *i_z* , *arg* , *parameter* *cap_order* , *taylor*
 | )

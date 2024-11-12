@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_ODE_GEAR_CONTROL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -28,7 +28,6 @@ An Error Controller for Gear's Ode Solvers
 
 Syntax
 ******
-
 | # ``include <cppad/utility/ode_gear_control.hpp>``
 | *xf* = ``OdeGearControl`` ( *F* , *M* , *ti* , *tf* , *xi* ,
 | |tab| ``smin`` , ``smax`` , ``sini`` , ``eabs`` , ``erel`` , ``ef`` , ``maxabs`` , ``nstep``  )

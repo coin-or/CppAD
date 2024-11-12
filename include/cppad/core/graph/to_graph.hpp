@@ -19,7 +19,6 @@ Create a C++ AD Graph Corresponding to an ADFun Object
 
 Syntax
 ******
-
 | |tab| ``cpp_graph`` *graph_obj*
 | |tab| ``ADFun`` < *Base* > *fun*
 | |tab| *fun* . ``to_graph`` ( *graph_obj* )

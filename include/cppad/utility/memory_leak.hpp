@@ -17,11 +17,9 @@ You should instead use the routine :ref:`ta_free_all-name` .
 
 Syntax
 ******
-
 | # ``include <cppad/utility/memory_leak.hpp>``
 | ``flag`` = ``memory_leak`` ()
-
-*flag* = *memory_leak* ( *add_static* )
+| *flag* = *memory_leak* ( *add_static* )
 
 Purpose
 *******

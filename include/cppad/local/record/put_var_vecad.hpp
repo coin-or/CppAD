@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_PUT_VAR_VECAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/record/recorder.hpp>
 
@@ -16,7 +16,7 @@ Add One Index to End of Combined Variable VecAD Vector
 
 Syntax
 ******
-*offset* = *rec* . ``put_var_vecad_ind`` ( *vec_ind* )
+| *offset* = *rec* . ``put_var_vecad_ind`` ( *vec_ind* )
 
 Prototype
 *********

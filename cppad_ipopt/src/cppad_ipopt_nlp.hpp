@@ -25,7 +25,6 @@ This interface to Ipopt is deprecated, use :ref:`ipopt_solve-name` instead.
 
 Syntax
 ******
-
 | # ``include`` ``"cppad_ipopt_nlp.hpp"``
 | ``cppad_ipopt_solution`` *solution* ;
 | ``cppad_ipopt_nlp`` *cppad_nlp* (

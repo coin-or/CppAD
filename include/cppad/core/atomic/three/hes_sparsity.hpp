@@ -12,7 +12,6 @@ Atomic Function Hessian Sparsity Patterns
 
 Syntax
 ******
-
 | *ok* = *afun* . ``hes_sparsity`` (
 | |tab| *parameter_x* , *type_x* , *select_x* , *select_y* , *pattern_out*
 | )

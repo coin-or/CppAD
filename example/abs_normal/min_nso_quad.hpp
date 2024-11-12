@@ -15,7 +15,6 @@ Non-Smooth Optimization Using Abs-normal Quadratic Approximations
 
 Syntax
 ******
-
 | *ok* = ``min_nso_quad`` (
 | |tab| *level* , *f* , *g* , *a* , *epsilon* , *maxitr* , *b_in* , *x_in* , *x_out*
 | )

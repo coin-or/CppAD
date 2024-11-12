@@ -16,7 +16,6 @@ abs_normal: Minimize a Linear Abs-normal Approximation
 
 Syntax
 ******
-
 | *ok* = ``abs_min_quad`` (
 | |tab| *level* , *n* , *m* , *s* ,
 | |tab| *g_hat* , *g_jac* , *hessian* , *bound* , *epsilon* , *maxitr* , *delta_x*

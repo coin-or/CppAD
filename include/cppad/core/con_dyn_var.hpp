@@ -14,7 +14,6 @@ Constant, Dynamic, Parameter, and Variable
 
 Syntax
 ******
-
 | *b* = ``Constant`` ( *x* )
 | *b* = ``Dynamic`` ( *x* )
 | *b* = ``Parameter`` ( *x* )

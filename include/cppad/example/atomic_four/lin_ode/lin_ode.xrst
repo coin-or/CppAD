@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin atomic_four_lin_ode}
 {xrst_spell
@@ -15,7 +15,6 @@ Atomic First Order Linear ODE Method: Example Implementation
 
 Syntax
 ******
-
 | ``atomic_lin_ode`` *ode* ( *name* )
 | *call_id* = *lin_ode* . ``set`` ( *r* , *step* , *pattern* , *transpose* )
 | *lin_ode* . ``get`` ( *call_id* , *r* , *step* , *pattern* , *transpose* )

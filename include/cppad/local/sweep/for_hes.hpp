@@ -19,7 +19,6 @@ Forward Mode Hessian Sparsity Patterns
 
 Syntax
 ******
-
 | ``local::sweep::for_hes`` (
 | |tab| *play*               ,
 | |tab| *n*                  ,
