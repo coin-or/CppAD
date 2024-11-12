@@ -494,7 +494,7 @@ bool jac_sparsity_test_function(CppAD::ADFun<double>& fun)
       size_t nr = 5, nc = 5, nnz = 0;
       sparse_rc pattern_check(nr, nc, nnz);
       for(size_t i = 0; i < nr; ++i)
-      {  // values in v depend on x_2 and x_3  
+      {  // values in v depend on x_2 and x_3
          pattern_check.push_back(i, 2);
          pattern_check.push_back(i, 3);
          if( dependency )
@@ -537,6 +537,63 @@ bool jac_sparsity_test_function(CppAD::ADFun<double>& fun)
    return ok;
 }
 
+bool hes_sparsity_test_function(CppAD::ADFun<double>& fun)
+{  //
+   // ok
+   bool ok = true;
+   //
+   // size_vector
+   typedef CppAD::vector<size_t> size_vector;
+   //
+   // sparse_rc
+   typedef CppAD::sparse_rc<size_vector> sparse_rc;
+   //
+   // pattern_check
+   size_t nr = 5, nc = 5, nnz = 0;
+   sparse_rc pattern_check(nr, nc, nnz);
+   for(int r : {2, 3} )
+   {  for(int c : {2, 3} )
+         pattern_check.push_back(size_t(r), size_t(c));
+   }
+   //
+   // pattern_eye
+   nr = 5, nc = 5, nnz = 5;
+   sparse_rc pattern_eye(nr, nc, nnz);
+   for(size_t k = 0; k < nr; ++k)
+      pattern_eye.set(k, k, k);
+   //
+   // pattern_jac
+   sparse_rc pattern_jac;
+   bool dependency    = false;
+   bool transpose     = false;
+   bool internal_bool = false;
+   fun.for_jac_sparsity(
+      pattern_eye, transpose, dependency, internal_bool, pattern_jac
+   );
+   //
+   // select_range
+   CPPAD_TESTVECTOR(bool) select_range(5);
+   for(size_t i = 0; i < 5; ++i)
+      select_range[i] = false;
+   //
+   // i
+   for(size_t i = 0; i < 5; ++i)
+   {  //
+      // pattern_hes
+      sparse_rc pattern_hes;
+      select_range[i] = true;
+      fun.rev_hes_sparsity(
+         select_range, transpose, internal_bool, pattern_hes
+      );
+      select_range[i] = false;
+      //
+      // ok
+      ok &= pattern_hes == pattern_check;
+   }
+   //
+   return ok;
+}
+
 } // END empty namespace
 
 bool VecAD(void)
@@ -553,6 +610,7 @@ bool VecAD(void)
    ok &= forward_zero_test_function(fun, x);
    ok &= forward_one_test_function(fun, x);
    ok &= jac_sparsity_test_function(fun);
+   ok &= hes_sparsity_test_function(fun);
    //
    return ok;
 }

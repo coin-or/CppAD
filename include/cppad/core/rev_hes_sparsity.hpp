@@ -2,7 +2,7 @@
 # define CPPAD_CORE_REV_HES_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin rev_hes_sparsity}
@@ -106,7 +106,7 @@ Sparsity for Entire Hessian
 ***************************
 Suppose that :math:`R` is the :math:`n \times n` identity matrix.
 In this case, *pattern_out* is a sparsity pattern for
-:math:`(s^\R{T} F) F^{(2)} ( x )`.
+:math:`(s^\R{T} F)^{(2)} ( x )`.
 
 Example
 *******
