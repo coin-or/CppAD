@@ -476,6 +476,67 @@ bool forward_one_test_function(
    return ok;
 }
 
+bool jac_sparsity_test_function(CppAD::ADFun<double>& fun)
+{  //
+   // ok
+   bool ok = true;
+   //
+   // size_vector
+   typedef CppAD::vector<size_t> size_vector;
+   //
+   // sparse_rc
+   typedef CppAD::sparse_rc<size_vector> sparse_rc;
+   //
+   // dependency
+   for(bool dependency : {false, true})
+   {  //
+      // pattern_check
+      size_t nr = 5, nc = 5, nnz = 0;
+      sparse_rc pattern_check(nr, nc, nnz);
+      for(size_t i = 0; i < nr; ++i)
+      {  // values in v depend on x_2 and x_3  
+         pattern_check.push_back(i, 2);
+         pattern_check.push_back(i, 3);
+         if( dependency )
+         {  // indices in v depend on x_0 and x_1
+            pattern_check.push_back(i, 0);
+            pattern_check.push_back(i, 1);
+            if( i == 4 )
+            {  // y_4 depends on x_4 as an index in v
+               pattern_check.push_back(i, 4);
+            }
+         }
+      }
+      //
+      // pattern_eye
+      nr = 5, nc = 5, nnz = 5;
+      sparse_rc pattern_eye(nr, nc, nnz);
+      for(size_t k = 0; k < nr; ++k)
+         pattern_eye.set(k, k, k);
+      //
+      // pattern_jac
+      sparse_rc pattern_jac;
+      bool transpose     = false;
+      bool internal_bool = false;
+      fun.for_jac_sparsity(
+         pattern_eye, transpose, dependency, internal_bool, pattern_jac
+      );
+      //
+      // ok
+      ok &= pattern_jac == pattern_check;
+      //
+      // pattern_jac
+      fun.rev_jac_sparsity(
+         pattern_eye, transpose, dependency, internal_bool, pattern_jac
+      );
+      //
+      // ok
+      ok &= pattern_jac == pattern_check;
+   }
+   //
+   return ok;
+}
+
 } // END empty namespace
 
 bool VecAD(void)
@@ -488,8 +549,10 @@ bool VecAD(void)
    // fun, x
    CppAD::ADFun<double>     fun = get_test_function();
    CPPAD_TESTVECTOR(double) x   = get_test_function_x();
+   //
    ok &= forward_zero_test_function(fun, x);
    ok &= forward_one_test_function(fun, x);
+   ok &= jac_sparsity_test_function(fun);
    //
    return ok;
 }
