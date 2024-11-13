@@ -676,8 +676,8 @@ Reverse Hessian Sparsity for Load a VecAD Element
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_REVERSE_HES
-   // END_STORE_REVERSE_HES
+   // BEGIN_LOAD_REVERSE_HES
+   // END_LOAD_REVERSE_HES
 }
 
 v, x, y, z
@@ -735,7 +735,7 @@ the *i_v* component of *vecad_rev_jac* is set to true.
 
 {xrst_end var_load_reverse_hes}
 */
-// BEGIN_STORE_REVERSE_HES
+// BEGIN_LOAD_REVERSE_HES
 template <class Vector_set>
 inline void load_reverse_hes(
    op_code_var               op_code        ,
@@ -747,7 +747,7 @@ inline void load_reverse_hes(
    Vector_set&               vecad_sparsity ,
    const bool*               var_rev_jac    ,
    pod_vector<bool>&         vecad_rev_jac  )
-// END_STORE_REVERSE_HES
+// END_LOAD_REVERSE_HES
 {
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -763,6 +763,99 @@ inline void load_reverse_hes(
    //
    // vecad_rev_jac[iv]
    vecad_rev_jac[i_v] |= var_rev_jac[i_z];
+   //
+   return;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_load_forward_hes dev}
+
+Forward Hessian Sparsity for Load a VecAD Element
+#################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_FORWARD_HES
+   // END_LOAD_FORWARD_HES
+}
+
+v, x, y, z
+**********
+see
+:ref:`var_load_op@v` ,
+:ref:`var_load_op@x` ,
+:ref:`var_load_op@y` ,
+:ref:`var_load_op@z`
+
+op_code, num_vecad_ind, i_z, arg
+********************************
+see :ref:`var_load_op@op_code` ,
+:ref:`var_load_op@num_vecad_ind` ,
+:ref:`var_load_op@i_z` ,
+:ref:`var_load_op@arg` .
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+n
+*
+is the number of independent variables on the tape.
+
+vecad_ind
+*********
+is a vector with size *num_vec_ind* .
+We use the notation *i_v* defined by
+
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+It is also the index of the hessian
+sparsity pattern for *v* in *vecad_sparsity*.
+
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the forward Jacobian sparsity pattern for the vector *v*.
+
+for_hes_sparse
+**************
+see :ref:`local_sweep_for_hes@for_hes_sparse` .
+
+{xrst_end var_load_forward_hes}
+*/
+// BEGIN_LOAD_FORWARD_HES
+template <class Vector_set>
+inline void load_forward_hes(
+   op_code_var               op_code        ,
+   const addr_t*             arg            ,
+   size_t                    num_vecad_ind  ,
+   size_t                    i_z            ,
+   size_t                    n              ,
+   const pod_vector<size_t>& vecad_ind      ,
+   const Vector_set&         vecad_sparsity ,
+   Vector_set&               for_hes_sparse )
+// END_LOAD_FORWARD_HES
+{
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
+   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
+   //
+   // np1
+   size_t np1 = n + 1;
+   CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end() == np1 );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+   //
+   // for_hes_sparse
+   // set Jacobian sparsity for variable with index i_z
+   for_hes_sparse.assignment(np1 + i_z, i_v, vecad_sparsity);
    //
    return;
 }

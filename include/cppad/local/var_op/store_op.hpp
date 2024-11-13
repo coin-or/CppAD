@@ -566,6 +566,123 @@ inline void store_reverse_hes(
    //
    return;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_store_forward_hes dev}
+
+Forward Hessian Sparsity for Store a VecAD Element
+##################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_FORWARD_HES
+   // END_STORE_FORWARD_HES
+}
+
+v, x, y
+*******
+see
+:ref:`var_store_op@v` ,
+:ref:`var_store_op@x` ,
+:ref:`var_store_op@y`
+
+op_code, num_vecad_ind, arg
+***************************
+see :ref:`var_store_op@op_code` ,
+:ref:`var_store_op@num_vecad_ind` ,
+:ref:`var_store_op@arg` .
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+vecad_ind
+*********
+is a vector with size *num_vec_ind* .
+We use the notation *i_v* defined by
+
+|tab| *i_v* = vecad_ind[ arg[0] - 1 ]
+
+This is the index of the VecAD vector and is less than the number of
+VecAD vectors in the recording.
+It is also the index of the hessian
+sparsity pattern for *v* in *vecad_sparsity*.
+
+var_sparsity
+************
+If :ref:`var_store_op@y` is a variable,
+the hessian sparsity pattern for *v* is added to the
+hessian sparsity pattern for *y*.
+
+vecad_sparsity
+**************
+The set with index *i_v* in *vecad_sparsity
+is the hessian sparsity pattern for the vector *v*.
+
+var_rev_jac
+***********
+If the scalar function we are computing the Hessian sparsity of
+has a non-zero partial w.r.t. *v*,
+and *y* is a variable, *var_rev_jac* [ *i_y* ] is set to true.
+This is because the scalar function has non-zero partial w.r.t. *y* .
+
+vecad_rev_jac
+*************
+the *i_v* component of this vector is true ,
+if the scalar function has non-zero partial w.r.t *v*.
+
+{xrst_end var_store_forward_hes}
+*/
+// BEGIN_STORE_FORWARD_HES
+template <class Vector_set>
+inline void store_forward_hes(
+   op_code_var               op_code        ,
+   const addr_t*             arg            ,
+   size_t                    num_vecad_ind  ,
+   size_t                    n              ,
+   const pod_vector<size_t>& vecad_ind      ,
+   Vector_set&               vecad_sparsity ,
+   const Vector_set&         for_hes_sparse )
+// END_STORE_FORWARD_HES
+{
+   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
+   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+   CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
+   //
+   // np1
+   size_t np1 = n + 1;
+   CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end() == np1 );
+   //
+   // i_v
+   size_t i_v = vecad_ind[ arg[0] - 1 ];
+   CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+   //
+   // i_y
+   size_t i_y = size_t( arg[2] );
+   //
+   switch(op_code)
+   {  //
+      default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+      //
+      // vecad_sparsity
+      // set Jacobian sparsity for vector with index i_v
+      case StpvOp:
+      case StvvOp:
+      vecad_sparsity.binary_union(i_v, i_v, np1 + i_y, for_hes_sparse);
+      break;
+      //
+      case StppOp:
+      case StvpOp:
+      break;
+   }
+   //
+   return;
+}
 
 } } } // END namespace
 # endif

@@ -34,6 +34,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+11-13
+=====
+The :ref:`for_hes_sparsity-name` and :ref:`ForSparseHes-name` routines
+did not handle the :ref:`VecAD-name` load and store operations properly.
+This has been fixed.
+
 11-12
 =====
 Remove extra unintended white space below Syntax headings

@@ -571,19 +571,36 @@ bool hes_sparsity_test_function(CppAD::ADFun<double>& fun)
       pattern_eye, transpose, dependency, internal_bool, pattern_jac
    );
    //
+   // select_domain
+   CPPAD_TESTVECTOR(bool) select_domain(5);
+   for(size_t i = 0; i < 5; ++i)
+      select_domain[i] = true;
+   //
    // select_range
    CPPAD_TESTVECTOR(bool) select_range(5);
    for(size_t i = 0; i < 5; ++i)
       select_range[i] = false;
    //
+   // pattern_hes
+   sparse_rc pattern_hes;
+   //
    // i
    for(size_t i = 0; i < 5; ++i)
    {  //
       // pattern_hes
-      sparse_rc pattern_hes;
       select_range[i] = true;
       fun.rev_hes_sparsity(
          select_range, transpose, internal_bool, pattern_hes
+      );
+      select_range[i] = false;
+      //
+      // ok
+      ok &= pattern_hes == pattern_check;
+      //
+      // pattern_hes
+      select_range[i] = true;
+      fun.for_hes_sparsity(
+         select_domain, select_range, internal_bool, pattern_hes
       );
       select_range[i] = false;
       //
