@@ -73,9 +73,9 @@ SET(source_list
    expm1.cpp
    extern_value.cpp
    fabs.cpp
+   for_hes_sparsity.cpp
    for_hess.cpp
-   for_sparse_hes.cpp
-   for_sparse_jac.cpp
+   for_jac_sparsity.cpp
    forward.cpp
    forward_dir.cpp
    forward_order.cpp

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -136,7 +136,7 @@ bool test_one()
 
 } // End of empty namespace
 
-bool for_sparse_hes(void)
+bool for_hes_sparsity(void)
 {  bool ok = true;
 
    ok &= test_one();

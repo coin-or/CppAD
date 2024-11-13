@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -127,9 +127,9 @@ bool bool_case()
    BaseVector h( n * n );
    h = f.SparseHessian(x, w);
    /*
-      [ 2 1 0 ]
+       [ 2 1 0 ]
    h = [ 1 2 0 ]
-         [ 0 0 2 ]
+       [ 0 0 2 ]
    */
    BaseVector check(n * n);
    check[0] = 2.; check[1] = 1.; check[2] = 0.;
@@ -194,9 +194,9 @@ bool set_case()
    BaseVector h( n * n );
    h = f.SparseHessian(x, w);
    /*
-      [ 2 1 0 ]
+       [ 2 1 0 ]
    h = [ 1 2 0 ]
-         [ 0 0 2 ]
+       [ 0 0 2 ]
    */
    BaseVector check(n * n);
    check[0] = 2.; check[1] = 1.; check[2] = 0.;
