@@ -19,6 +19,7 @@ Contents
    include/cppad/core/discrete/devel.xrst
    include/cppad/core/forward/devel.xrst
    include/cppad/core/independent/devel.xrst
+   include/cppad/core/vec_ad/vec_ad.hpp
    include/cppad/local/atomic_index.hpp
    include/cppad/local/is_pod.hpp
    include/cppad/local/op_code_var.hpp
@@ -34,7 +35,6 @@ Contents
    include/cppad/utility/xrst/dev_utility.xrst
    speed/dev_speed.xrst
    xrst/devel/dynamic.xrst
-   xrst/devel/vec_ad.xrst
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 

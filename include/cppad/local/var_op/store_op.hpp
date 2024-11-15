@@ -18,6 +18,10 @@ namespace CppAD { namespace local { namespace var_op {
 Store an Element of a Variable VecAD Vector
 ###########################################
 
+StppOp, StpvOp, StvpOp, StvvOp
+******************************
+are the op codes for these operators.
+
 User Syntax
 ***********
 | *v* [ *x* ] = *y*

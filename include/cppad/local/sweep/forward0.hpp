@@ -128,10 +128,8 @@ load_op2var
 ***********
 Is a vector with size *play* ``->num_var_load_rec`` () .
 The input value of the elements does not matter.
-Upon return,
-*load_op2var* [ *i* ]
-is the variable corresponding to the *i*-th variable VecAD
-:ref:`op_code_var@Load` operator.
+Upon return, *load_op2var* [ *i* ]
+is the variable index corresponding to the *i*-th variable VecAD load operator.
 Note that even though the VecAD vector is a variable, the load
 can correspond to an element that is a parameter in which case
 *load_op2var* [ *i* ] is zero.
@@ -420,7 +418,7 @@ void forward0(
          // -------------------------------------------------
 
          case CSumOp:
-         var_op::forward_csum_op(
+         var_op::csum_forward_op(
             0, 0, i_var, arg, num_par, parameter, J, taylor
          );
          itr.correct_before_increment();

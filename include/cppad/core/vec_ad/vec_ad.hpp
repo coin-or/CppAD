@@ -7,6 +7,17 @@
 # include <cppad/local/pod_vector.hpp>
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
 /*
+{xrst_begin_parent dev_vec_ad dev}
+
+Developer Documentation for VecAD Operations
+############################################
+
+Contents
+********
+{xrst_toc_table
+}
+
+{xrst_end dev_vec_ad}
  ------------------------------------------------------------------------------
 {xrst_begin vec_ad_comp_assign dev}
 VecAD: Prints Error Message If A Compound Assignment Is Used

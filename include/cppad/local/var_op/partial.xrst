@@ -1,0 +1,35 @@
+{xrst_comment
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+SPDX-FileContributor: 2024 Bradley M. Bell
+
+This template file has the following parameters:
+   @x, y@   : arguments to this function for this operator; i.e.,  z(x, y)
+}
+
+nc_partial
+**********
+is the number of columns (also number of orders) in the matrix containing
+the partial derivatives with respect to the Taylor coefficients.
+
+partial
+*******
+The partial derivative with respect to the order *k* Taylor coefficient
+for the variable with index *j* is::
+
+   partial[ j * nc_partial + k ]
+
+We use :math:`G( z, @x, y@, \ldots )` to denote a scalar valued function
+of the taylor coefficients of the variables with index less than or
+equal the variable index for *z* .
+We define :math:`H( @x, y@, \ldots )` by
+
+.. math::
+
+   H( @x, y@, \cdots ) = G [ z(@x, y@), @x, y@, \cdots ]
+
+On input, *partial* contains the partial derivatives of *G*
+with respect to the Taylor coefficients of the arguments to *G* .
+On output, *partial* contains the partial derivatives of *H*
+with respect to the Taylor coefficients of the arguments to *H* .
+If @x, y@ is a parameter, it does not have Taylor coefficients.

@@ -255,59 +255,7 @@ The is the total number operators that might be skipped; i.e., *n* + *m* .
 {xrst_comment ------------------------------------------------------------- }
 CSumOp
 ******
-Is a cumulative summation operator
-which has one result variable.
-
-arg[0]
-======
-is the index of the parameter that initializes the summation.
-
-arg[1]
-======
-argument index that flags the end of the addition variables,
-we use the notation *k* = *arg* [1] below.
-
-arg[2]
-======
-argument index that flags the end of the subtraction variables,
-we use the notation *ell* = *arg* [2] below.
-
-arg[3]
-======
-argument index that flags the end of the addition dynamic parameters,
-we use the notation *m* = *arg* [3] below.
-
-arg[4]
-======
-argument index that flags the end of the subtraction dynamic parameters,
-we use the notation *n* = *arg* [4] below.
-
-arg[5+i]
-========
-for *i* = 0, ..., *k* ``-6`` ,
-this is the index of the *i*-th variable to be added in the summation.
-
-arg[k+i]
-========
-for *i* = 0, ..., *ell* ``-`` *k* ``-1`` ,
-this is the index of the *i*-th variable to be subtracted in the summation.
-
-arg[ell+i]
-==========
-for *i* = 0, ..., *m* ``-`` *ell* ``-1`` , this is the index of the
-*i*-th dynamic parameter to be added in the summation.
-
-arg[m+i]
-========
-for *i* = 0, ..., *n* ``-`` *m* ``-1`` , this is the index of the
-*i*-th dynamic parameter to be subtracted in the summation.
-
-arg[n]
-======
-This is equal to *n* .
-Note that there are *n* +1 arguments to this operator
-and having this value at the end enable reverse model to know how far
-to back up to get to the start of this operation.
+see :ref:`var_csum_op@CSumOp`
 
 {xrst_comment ------------------------------------------------------------- }
 DisOp
@@ -325,93 +273,16 @@ arg[1]
 variable index corresponding to the argument for this function call.
 
 {xrst_comment ------------------------------------------------------------- }
-Load
-****
-The load operators create a new variable corresponding to
-*vec* [ *ind* ] where *vec* is a :ref:`VecAD-name` vector
-and *ind* is an ``AD`` < *Base* > .
-For these operators either *vec* or *ind* is a variable
-and there is one variable result.
 
-LdpOp
-=====
-This load is used for an index *ind* that is a parameter.
-
-LdvOp
-=====
-This load is used for an index *ind* that is a variable.
-
-arg[0]
-======
-is the offset of this VecAD vector
-relative to the beginning of the single array
-that contains all VecAD elements for all the VecAD vectors.
-This corresponds to the first element of this vector and not its size
-(which comes just before the first element).
-
-arg[1]
-======
-is the index in this VecAD vector for this load operation.
-For the ``LdpOp`` (``LdvOp`` ) operator this is the
-parameter index (variable index) corresponding to *ind* .
-
-arg[2]
-======
-is the index of this VecAD load operation in the set of all
-the load operations in this recording.
-This includes both dynamic parameter and variable loads.
-It is used to map load operations to corresponding
-dynamic parameters and variables.
+LdpOp, LdvOp
+============
+see :ref:`var_load_op@LdpOp, LdvOp`
 
 {xrst_comment ------------------------------------------------------------- }
-Store
-*****
-The store operators store information corresponding to
-*vec* [ *ind* ] = ``right`` where *vec* is a :ref:`VecAD-name` vector
-and *ind* is an ``AD`` < *Base* > .
-For these operators either *vec* , *ind* , or *right*
-is a variable and there is no result.
 
-StppOp
-======
-This store is used when *ind* and *right* are parameters.
-
-StpvOp
-======
-This store is used when *ind* is a parameter
-and *right* is a variable.
-
-StvpOp
-======
-This store is used when *ind* is a variable
-and *right* is a parameter.
-
-StvvOp
-======
-This store is used when *index* and *right* are variables.
-
-arg[0]
-======
-is the offset of this VecAD vector
-relative to the beginning of the single array
-that contains all VecAD elements for all the VecAD vectors.
-This corresponds to the first element of this vector and not its size
-(which comes just before the first element).
-
-arg[1]
-======
-is the index in this VecAD vector for this store operation.
-For the ``StppOp`` and ``StpvOp`` cases
-this is the parameter index corresponding to *ind* .
-For the ``StvpOp`` and ``StvvOp`` cases,
-this is the variable index corresponding to *ind* .
-
-arg[2]
-======
-For the ``StppOp`` and ``StvpOp`` cases,
-this is the parameter index corresponding to *right* .
-For the ``StpvOp`` and ``StvvOp`` cases,
-this is the variable index corresponding to *right* .
+StppOp, StpvOp, StvpOp, StvvOp
+==============================
+see :ref:`var_store_op@StppOp, StpvOp, StvpOp, StvvOp`
 
 {xrst_comment ------------------------------------------------------------- }
 ParOp
@@ -453,6 +324,12 @@ arg[4]
 is the text index corresponding to *after* .
 
 {xrst_comment ------------------------------------------------------------- }
+
+{xrst_toc_table
+   include/cppad/local/var_op/load_op.hpp
+   include/cppad/local/var_op/store_op.hpp
+   include/cppad/local/var_op/csum_op.hpp
+}
 
 Source
 ******

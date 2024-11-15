@@ -18,6 +18,10 @@ namespace CppAD { namespace local { namespace var_op {
 Access an Element in a Variable VecAD Vector
 ############################################
 
+LdpOp, LdvOp
+************
+are the op codes for these operators.
+
 User Syntax
 ***********
 | *z* = *v* [ *x* ]
@@ -408,29 +412,17 @@ cap_order
 *********
 number of columns in the matrix containing the Taylor coefficients.
 
-nc_partial
-**********
-number of columns in the matrix containing all the partial derivatives.
-
 load_op2var
 ***********
 This vector maps the load instruction index *arg* [2] to the corresponding
 *y* variable index.
 If this index is zero, *y* is a parameter (not a variable).
 
-partial
-*******
-We use :math:`G(z, y, \ldots )` to denote a scalar valued function of the
-variables up to variable index *i_z*  and define
-
-.. math::
-
-   H(y, \ldots ) = G [ z(y), y, \ldots )
-
-On input, *partial* contains the partial derivatives of *G*
-with respect to the Taylor coefficient of the corresponding variables.
-On output, it contains the partial derivatives of *H*
-with respect to the Taylor coefficient of the corresponding variables.
+{xrst_comment H(y, ...) = G[ z(y), y, ...) }
+{xrst_template ;
+   include/cppad/local/var_op/partial.xrst
+   @x, y@  ; y
+}
 
 If *y* is a parameter,
 nothing is modified by this call to ``reverse_load_op`` .

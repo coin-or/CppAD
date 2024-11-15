@@ -45,8 +45,8 @@ and the reverse Jacobian sparsity pattern for the dependent variables,
 ``for_hes`` computes the Hessian sparsity pattern for all the independent
 variables.
 
-Tracing
-*******
+CPPAD_FOR_HES_TRACE
+*******************
 This value is either zero or one.  Zero is the normal operational value.
 If it is one, a trace of Jacobian and Hessian sparsity result for every
 operation for every ``for_hes`` sweep is printed.

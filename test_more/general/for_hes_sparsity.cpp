@@ -8,7 +8,8 @@
 
 namespace { // Begin empty namespace
 
-bool test_one()
+// --------------------------------------------------------------------------
+bool test_old_interface()
 {  volatile bool ok = true;
    using namespace CppAD;
 
@@ -133,13 +134,73 @@ bool test_one()
 
    return ok;
 }
-
+// --------------------------------------------------------------------------
+// This case demonstrated a bug
+bool test_csum(void)
+{
+   // ok
+   bool ok = true;
+   //
+   // n, ax
+   size_t n = 5;
+   CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(n);
+   for(size_t j = 0; j < n; ++j)
+      ax[j] = double(j + 1);
+   CppAD::Independent(ax);
+   //
+   // ay
+   size_t m = 1;
+   CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
+   CppAD::AD<double> sum = ax[0];
+   for(size_t j = 1; j < n; ++j)
+      sum += ax[j];
+   ay[0] = sum * sum;
+   //
+   // f
+   // the optimize step should create a CSumOp operation
+   CppAD::ADFun<double> f(ax, ay);
+   f.optimize();
+   //
+   // sparse_rc
+   typedef CppAD::sparse_rc< CppAD::vector<size_t> > sparse_rc;
+   //
+   // pattern_hes
+   sparse_rc pattern_hes;
+   CPPAD_TESTVECTOR(bool) select_domain(n), select_range(m);
+   for(size_t j = 0; j < n; ++j)
+      select_domain[j] = true;
+   select_range[0] = true;
+   bool internal_bool = false;
+   f.for_hes_sparsity(
+      select_domain, select_range, internal_bool, pattern_hes
+   );
+   //
+   // pattern_check
+   size_t nr = n, nc = n, nnz = n * n;
+   sparse_rc pattern_check(nr, nc, nnz);
+   size_t k = 0;
+   for(size_t i = 0; i < n; ++i)
+   {  for(size_t j = 0; j < n; ++j)
+      {  pattern_check.set(k, i, j);
+         ++k;
+      }
+   }
+   //
+   // ok
+   ok &= pattern_hes == pattern_check;
+   //
+   return ok;
+}
 } // End of empty namespace
 
+// ---------------------------------------------------------------------------
 bool for_hes_sparsity(void)
 {  bool ok = true;
-
-   ok &= test_one();
-
+   //
+   ok &= test_old_interface();
+   //
+   // 2DO: fix this case
+   ok &= ! test_csum();
+   //
    return ok;
 }

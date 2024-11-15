@@ -311,7 +311,7 @@ void forward2(
          // -------------------------------------------------
 
          case CSumOp:
-         var_op::forward_csum_op_dir(
+         var_op::csum_forward_dir(
             q, r, i_var, arg, num_par, parameter, J, taylor
          );
          itr.correct_before_increment();

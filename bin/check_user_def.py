@@ -20,10 +20,15 @@ def main() :
          'bin/check_user_def.py must execute from its parent directory'
       )
    #
+   # dev_doc_symbol_list
+   dev_doc_symbol_list=[
+      'CPPAD_VEC_AD_COMP_ASSIGN',
+      'CPPAD_FOR_HES_TRACE',
+   ]
+   #
    # exclude_list
    exclude_list = [
       'include/cppad/configure.hpp.in',
-      'include/cppad/core/vec_ad/vec_ad.hpp',
       'configure',
 ]
 
@@ -46,8 +51,6 @@ def main() :
    file_tmp = list()
    for file in file_list :
       exclude = file in exclude_list
-      if file.startswith('include/cppad/local/') :
-         exclude = exclude or file.endswith('/hpp')
       if not exclude :
          file_tmp.append(file)
    file_list = file_tmp
@@ -91,9 +94,11 @@ def main() :
          if len(symbol) == len(underline) :
             if underline == len(symbol) * underline[0] :
                if symbol not in undef_list :
-                  error = True
+                     if symbol not in dev_doc_symbol_list :
+                        error = True
          if error :
-            msg  = f'{file}: {symbol} appears in this file\n'
+            msg  = f'{file}:\n'
+            msg += f'Documentation for {symbol} appears in this file '
             msg += 'but it is supposed to be in the user API.'
             sys.exit(msg)
          #
