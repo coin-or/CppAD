@@ -403,11 +403,6 @@ y
 *
 see :ref:`var_load_op@y`
 
-d
-*
-highest order the Taylor coefficient that we are computing the partial
-derivative with respect to.
-
 cap_order
 *********
 number of columns in the matrix containing the Taylor coefficients.
@@ -418,9 +413,9 @@ This vector maps the load instruction index *arg* [2] to the corresponding
 *y* variable index.
 If this index is zero, *y* is a parameter (not a variable).
 
-{xrst_comment H(y, ...) = G[ z(y), y, ... ] }
+{xrst_comment document n_order, partial}
 {xrst_template ;
-   include/cppad/local/var_op/partial.xrst
+   include/cppad/local/var_op/reverse.xrst
    @x, y@  ; y
 }
 

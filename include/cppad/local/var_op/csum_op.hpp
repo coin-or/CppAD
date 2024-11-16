@@ -410,14 +410,9 @@ see
 :ref:`var_csum_op@i_z` ,
 :ref:`var_csum_op@arg`
 
-d
-*
-order the highest order Taylor coefficient that we are computing
-the partial derivatives with respect to.
-
-{xrst_comment H(x, y, ...) = G[ z(x, y), x, y, ... ] }
+{xrst_comment document n_order, partial}
 {xrst_template ;
-   include/cppad/local/var_op/partial.xrst
+   include/cppad/local/var_op/reverse.xrst
    @x, y@  ; x, y, u, v
 }
 
@@ -680,7 +675,7 @@ inline void csum_reverse_hes(
 ------------------------------------------------------------------------------
 {xrst_begin var_csum_forward_hes dev}
 
-Reverse Hessian Sparsity for Cumulative Summation
+Forward Hessian Sparsity for Cumulative Summation
 #################################################
 
 Prototype

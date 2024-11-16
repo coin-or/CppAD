@@ -3,22 +3,25 @@ SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
+This xrst template file documents the following reverse mode arguments:
+   n_order, partial
+
 This template file has the following parameters:
-   @x, y@   : arguments (without parenthesis) to function for this operator;
-              e.g., if 'x , y' funciton is 'z(x, y)' .
+@x, y@   : The arguments, without parenthesis, in function for this operator;
+           e.g., if @x, y@ is replaced by 'x , y', the funciton is 'z(x, y)' .
 }
 
-nc_partial
-**********
-is the number of columns (also number of orders) in the matrix containing
-the partial derivatives with respect to the Taylor coefficients.
+n_order
+*******
+is the number of Taylor coefficient orders that we are
+computing the partial derivatives with respect to.
 
 partial
 *******
 The partial derivative with respect to the order *k* Taylor coefficient
 for the variable with index *j* is::
 
-   partial[ j * nc_partial + k ]
+   partial[ j * n_order + k ]
 
 We use :math:`G( z, @x, y@, \ldots )` to denote a scalar valued function
 of the taylor coefficients of the variables with index less than or
@@ -33,4 +36,5 @@ On input, *partial* contains the partial derivatives of *G*
 with respect to the Taylor coefficients of the arguments to *G* .
 On output, *partial* contains the partial derivatives of *H*
 with respect to the Taylor coefficients of the arguments to *H* .
-If @x, y@ is a parameter, it does not have Taylor coefficients.
+We only compute partials with respect to variables; i.e.,
+no partials are computed with respect to the parameters in @x, y@ .
