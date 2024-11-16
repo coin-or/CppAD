@@ -84,19 +84,18 @@ inline void forward_sign_op_0(
 // See dev documentation: reverse_unary_op
 template <class Base>
 inline void reverse_sign_op(
-   size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
 {
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // nothing to do because partials of sign are zero
    return;

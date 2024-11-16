@@ -172,30 +172,29 @@ and the argument parameter is not used.
 
 template <class Base>
 inline void reverse_powvv_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
 {
+   //
    // convert from final result to first result
    i_z -= 2; // NumRes(PowvvOp) - 1;
 
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
    CPPAD_ASSERT_UNKNOWN(
       size_t( std::numeric_limits<addr_t>::max() ) >= i_z
    );
 
    // z_2 = exp(z_1)
    reverse_exp_op(
-      d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
+      i_z+2, i_z+1, cap_order, taylor, n_order, partial
    );
 
    // z_1 = z_0 * y
@@ -203,12 +202,12 @@ inline void reverse_powvv_op(
    adr[0] = addr_t( i_z );
    adr[1] = arg[1];
    reverse_mulvv_op(
-   d, i_z+1, adr, parameter, cap_order, taylor, nc_partial, partial
+   i_z+1, adr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_0 = log(x)
    reverse_log_op(
-      d, i_z, size_t(arg[0]), cap_order, taylor, nc_partial, partial
+      i_z, size_t(arg[0]), cap_order, taylor, n_order, partial
    );
 }
 
@@ -410,27 +409,26 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void reverse_powpv_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
 {
+   //
    // convert from final result to first result
    i_z -= 2; // NumRes(PowpvOp) - 1;
 
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // z_2 = exp(z_1)
    reverse_exp_op(
-      d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
+      i_z+2, i_z+1, cap_order, taylor, n_order, partial
    );
 
    // 2DO: remove requirement that i_z * cap_order <= max addr_t value
@@ -446,7 +444,7 @@ inline void reverse_powpv_op(
    adr[1] = arg[1];                    // index of y in taylor and partial
    // use taylor both for parameter and variable values
    reverse_mulpv_op(
-      d, i_z+1, adr, taylor, cap_order, taylor, nc_partial, partial
+      i_z+1, adr, taylor, cap_order, taylor, n_order, partial
    );
 
    // z_0 = log(x)
@@ -626,21 +624,20 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void reverse_powvp_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     ,
    CppAD::vector<Base>& work )
 {
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
    CPPAD_ASSERT_UNKNOWN(
       size_t( std::numeric_limits<addr_t>::max() ) >= i_z
    );
@@ -653,19 +650,19 @@ inline void reverse_powvp_op(
    const Base  y = parameter[ arg[1] ];
 
    // Partial derivatives corresponding to arguments and result
-   Base* px = partial + size_t(arg[0]) * nc_partial;
-   Base* pz = partial + i_z * nc_partial;
+   Base* px = partial + size_t(arg[0]) * n_order;
+   Base* pz = partial + i_z * n_order;
 
    // Special solution when x[0] is zero
    Base b0 = Base( 0.0 );
 
    // Place to hold px for this operator until conditional assigment at end
-   work.resize(nc_partial);
-   for(size_t j = 0; j <= d; ++j)
+   work.resize(n_order);
+   for(size_t j = 0; j < n_order; ++j)
       work[j] = px[j];
 
    // reverse z^j for j = d, ..., 1
-   size_t j = d;
+   size_t j = n_order - 1;
    while(j)
    {  // j
       Base bj = Base( double(j) );
@@ -699,7 +696,7 @@ inline void reverse_powvp_op(
    // reverse z^0
    work[0] += azmul(pz[0], y * z[0] / x[0]);
    //
-   for(j = 0; j <=d; ++j)
+   for(j = 0; j < n_order; ++j)
       px[j] = CondExpEq(x[0], b0, b0, work[j]);
 }
 

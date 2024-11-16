@@ -89,25 +89,25 @@ inline void forward_subvv_op_0(
 // See dev documentation: reverse_binary_op
 template <class Base>
 inline void reverse_subvv_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // Partial derivatives corresponding to arguments and result
-   Base* px = partial + size_t(arg[0]) * nc_partial;
-   Base* py = partial + size_t(arg[1]) * nc_partial;
-   Base* pz = partial + i_z    * nc_partial;
+   Base* px = partial + size_t(arg[0]) * n_order;
+   Base* py = partial + size_t(arg[1]) * n_order;
+   Base* pz = partial + i_z    * n_order;
 
    // number of indices to access
    size_t i = d + 1;
@@ -206,24 +206,24 @@ inline void forward_subpv_op_0(
 // See dev documentation: reverse_binary_op
 template <class Base>
 inline void reverse_subpv_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // Partial derivatives corresponding to arguments and result
-   Base* py = partial + size_t(arg[1]) * nc_partial;
-   Base* pz = partial + i_z    * nc_partial;
+   Base* py = partial + size_t(arg[1]) * n_order;
+   Base* pz = partial + i_z    * n_order;
 
    // number of indices to access
    size_t i = d + 1;
@@ -322,24 +322,24 @@ inline void forward_subvp_op_0(
 // See dev documentation: reverse_binary_op
 template <class Base>
 inline void reverse_subvp_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // Partial derivatives corresponding to arguments and result
-   Base* px = partial + size_t(arg[0]) * nc_partial;
-   Base* pz = partial + i_z    * nc_partial;
+   Base* px = partial + size_t(arg[0]) * n_order;
+   Base* pz = partial + i_z    * n_order;
 
    // number of indices to access
    size_t i = d + 1;

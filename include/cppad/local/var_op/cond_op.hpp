@@ -783,14 +783,14 @@ is the k-th order Taylor coefficient corresponding to y_j.
 for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 
-\param nc_partial
+\param n_order
 number of columns in the matrix containing the Taylor coefficients.
 
 \param partial
 \b Input:
 For j = 0, 1, 2, 3 and k = 0 , ... , d,
 if y_j is a variable then
- partial [ arg[2+j] * nc_partial + k ]
+ partial [ arg[2+j] * n_order + k ]
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 \n
@@ -802,23 +802,25 @@ with respect to the k-th order Taylor coefficient corresponding to z.
 \b Output:
 For j = 0, 1, 2, 3 and k = 0 , ... , d,
 if y_j is a variable then
- partial [ arg[2+j] * nc_partial + k ]
+ partial [ arg[2+j] * n_order + k ]
 is the partial derivative of H( y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 
 */
 template <class Base>
 inline void reverse_cond_op(
-   size_t         d           ,
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
    const Base*    parameter   ,
    size_t         cap_order   ,
    const Base*    taylor      ,
-   size_t         nc_partial  ,
+   size_t         n_order     ,
    Base*          partial     )
-{  Base y_0, y_1;
+{  // d
+   size_t d = n_order - 1;
+   //
+   Base y_0, y_1;
    Base zero(0);
    Base* pz;
    Base* py_2;
@@ -829,7 +831,7 @@ inline void reverse_cond_op(
    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
-   pz = partial + i_z * nc_partial + 0;
+   pz = partial + i_z * n_order + 0;
    if( arg[1] & 1 )
    {
       y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
@@ -848,7 +850,7 @@ inline void reverse_cond_op(
    }
    if( arg[1] & 4 )
    {
-      py_2 = partial + size_t(arg[4]) * nc_partial;
+      py_2 = partial + size_t(arg[4]) * n_order;
       size_t j = d + 1;
       while(j--)
       {  py_2[j] += CondExpOp(
@@ -862,7 +864,7 @@ inline void reverse_cond_op(
    }
    if( arg[1] & 8 )
    {
-      py_3 = partial + size_t(arg[5]) * nc_partial;
+      py_3 = partial + size_t(arg[5]) * n_order;
       size_t j = d + 1;
       while(j--)
       {  py_3[j] += CondExpOp(

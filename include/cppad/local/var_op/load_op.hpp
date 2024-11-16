@@ -434,8 +434,8 @@ For k = 0 , ... , d the k-th order Taylor coefficient for *z*
 is added to the k-th order Taylor coefficient for *y*; i.e.,
 
 |tab|
-*partial* [ *i_y* * *nc_partial* + *k* ] +=
-*partial* [ *i_z* * *nc_partial* + *k* ]
+*partial* [ *i_y* * *n_order* + *k* ] +=
+*partial* [ *i_z* * *n_order* + *k* ]
 
 {xrst_end var_load_reverse_op}
 */
@@ -445,15 +445,17 @@ inline void load_reverse_op(
    op_code_var               op_code     ,
    size_t                    i_z         ,
    const addr_t*             arg         ,
-   size_t                    d           ,
    const pod_vector<addr_t>& load_op2var ,
    size_t                    cap_order   ,
-   size_t                    nc_partial  ,
+   size_t                    n_order     ,
    Base*                     partial     )
 // END_LOAD_REVERSE_OP
-{  //
+{  // d
+   size_t d = n_order - 1;
+   //
+   //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
    // i_y
    size_t i_y = size_t( load_op2var[ arg[2] ] );
    CPPAD_ASSERT_UNKNOWN( i_y < i_z );
@@ -461,8 +463,8 @@ inline void load_reverse_op(
    // py
    if( i_y > 0 )
    {
-      Base* pz   = partial + i_z * nc_partial;
-      Base* py   = partial + i_y * nc_partial;
+      Base* pz   = partial + i_z * n_order;
+      Base* py   = partial + i_y * n_order;
       size_t j = d + 1;
       while(j--)
          py[j]   += pz[j];

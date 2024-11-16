@@ -228,26 +228,26 @@ is the k-th order Taylor coefficient corresponding to x.
 for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 
-\param nc_partial
+\param n_order
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: partial [ i_x * nc_partial + k ]
+\b Input: partial [ i_x * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Input: partial [ i_z * nc_partial + k ]
+\b Input: partial [ i_z * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for z.
 \n
-\b Output: partial [ i_x * nc_partial + k ]
+\b Output: partial [ i_x * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of H( x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: partial [ i_z * nc_partial + k ]
+\b Output: partial [ i_z * n_order + k ]
 for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
@@ -257,18 +257,19 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li NumRes(op) == 1
 \li i_x < i_z
 \li d < cap_order
-\li d < nc_partial
+\li d < n_order
 */
 template <class Base>
 inline void reverse_unary1_op(
-   size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -518,32 +519,32 @@ for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to
 the auxillary variable y.
 
-\param nc_partial
+\param n_order
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: partial [ i_x * nc_partial + k ]
+\b Input: partial [ i_x * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of
 G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient for x.
 \n
-\b Input: partial [ i_z * nc_partial + k ]
+\b Input: partial [ i_z * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for z.
 \n
-\b Input: partial [ ( i_z - 1) * nc_partial + k ]
+\b Input: partial [ ( i_z - 1) * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the auxillary variable y.
 \n
-\b Output: partial [ i_x * nc_partial + k ]
+\b Output: partial [ i_x * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of H( x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: partial [ ( i_z - j ) * nc_partial + k ]
+\b Output: partial [ ( i_z - j ) * n_order + k ]
 for j = 0 , 1 , and for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
@@ -553,18 +554,19 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li NumRes(op) == 2
 \li i_x + 1 < i_z
 \li d < cap_order
-\li d < nc_partial
+\li d < n_order
 */
 template <class Base>
 inline void reverse_unary2_op(
-   size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -853,37 +855,37 @@ If y is a variable, taylor [ arg[1] * cap_order + k ]
 for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to y.
 
-\param nc_partial
+\param n_order
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: partial [ i_z * nc_partial + k ]
+\b Input: partial [ i_z * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of
 G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient for z.
 \n
-\b Input: If x is a variable, partial [ arg[0] * nc_partial + k ]
+\b Input: If x is a variable, partial [ arg[0] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Input: If y is a variable, partial [ arg[1] * nc_partial + k ]
+\b Input: If y is a variable, partial [ arg[1] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the auxillary variable y.
 \n
-\b Output: If x is a variable, partial [ arg[0] * nc_partial + k ]
+\b Output: If x is a variable, partial [ arg[0] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: If y is a variable, partial [ arg[1] * nc_partial + k ]
+\b Output: If y is a variable, partial [ arg[1] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for y.
 \n
-\b Output: partial [ i_z * nc_partial + k ]
+\b Output: partial [ i_z * n_order + k ]
 for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
@@ -893,19 +895,20 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li If x is a variable, arg[0] < i_z
 \li If y is a variable, arg[1] < i_z
 \li d < cap_order
-\li d < nc_partial
+\li d < n_order
 */
 template <class Base>
 inline void reverse_binary_op(
-   size_t      d            ,
    size_t      i_z          ,
    addr_t*     arg          ,
    const Base* parameter    ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -1230,37 +1233,37 @@ If y is a variable, taylor [ arg[1] * cap_order + k ]
 for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to y.
 
-\param nc_partial
+\param n_order
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: partial [ (i_z - 2 + j) * nc_partial + k ]
+\b Input: partial [ (i_z - 2 + j) * n_order + k ]
 for j = 0, 1, 2, and k = 0 , ... , d
 is the partial derivative of
 G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient for z_j.
 \n
-\b Input: If x is a variable, partial [ arg[0] * nc_partial + k ]
+\b Input: If x is a variable, partial [ arg[0] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Input: If y is a variable, partial [ arg[1] * nc_partial + k ]
+\b Input: If y is a variable, partial [ arg[1] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the auxillary variable y.
 \n
-\b Output: If x is a variable, partial [ arg[0] * nc_partial + k ]
+\b Output: If x is a variable, partial [ arg[0] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: If y is a variable, partial [ arg[1] * nc_partial + k ]
+\b Output: If y is a variable, partial [ arg[1] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for y.
 \n
-\b Output: partial [ ( i_z - j ) * nc_partial + k ]
+\b Output: partial [ ( i_z - j ) * n_order + k ]
 for j = 0 , 1 , 2 and for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
@@ -1270,19 +1273,20 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li If x is a variable, arg[0] < i_z - 2
 \li If y is a variable, arg[1] < i_z - 2
 \li d < cap_order
-\li d < nc_partial
+\li d < n_order
 */
 template <class Base>
 inline void reverse_pow_op(
-   size_t      d            ,
    size_t      i_z          ,
    addr_t*     arg          ,
    const Base* parameter    ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }

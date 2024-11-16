@@ -426,24 +426,25 @@ the partial derivatives with respect to.
 // BEGIN_CSUM_REVERSE_OP
 template <class Base>
 inline void csum_reverse_op(
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
 // END_CSUM_REVERSE_OP
-{  //
+{  // d
+   size_t d = n_order - 1;
+   //
+   //
    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
    //
    // pz, dp1
-   Base* pz = partial + i_z * nc_partial;
+   Base* pz = partial + i_z * n_order;
    size_t dp1 = d + 1;
    //
    // addition variables
    for(addr_t i = 5; i < arg[1]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* px = partial + size_t(arg[i]) * nc_partial;
+      Base* px = partial + size_t(arg[i]) * n_order;
       size_t k = dp1;
       while(k--)
          px[k] += pz[k];
@@ -452,7 +453,7 @@ inline void csum_reverse_op(
    // subtraction varables
    for(addr_t i = arg[1]; i < arg[2]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* px = partial + size_t(arg[i]) * nc_partial;
+      Base* px = partial + size_t(arg[i]) * n_order;
       size_t k = dp1;
       while(k--)
          px[k] -= pz[k];

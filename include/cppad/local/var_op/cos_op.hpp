@@ -115,31 +115,31 @@ inline void forward_cos_op_0(
 // See dev documentation: reverse_unary_op
 template <class Base>
 inline void reverse_cos_op(
-   size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(CosOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(CosOp) == 2 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // Taylor coefficients and partials corresponding to argument
    const Base* x  = taylor  + i_x * cap_order;
-   Base* px       = partial + i_x * nc_partial;
+   Base* px       = partial + i_x * n_order;
 
    // Taylor coefficients and partials corresponding to first result
    const Base* c  = taylor  + i_z * cap_order; // called z in doc
-   Base* pc       = partial + i_z * nc_partial;
+   Base* pc       = partial + i_z * n_order;
 
    // Taylor coefficients and partials corresponding to auxillary result
    const Base* s  = c  - cap_order; // called y in documentation
-   Base* ps       = pc - nc_partial;
+   Base* ps       = pc - n_order;
 
 
    // rest of this routine is identical for the following cases:

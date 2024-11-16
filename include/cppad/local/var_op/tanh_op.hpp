@@ -111,31 +111,31 @@ inline void forward_tanh_op_0(
 // See dev documentation: reverse_unary_op
 template <class Base>
 inline void reverse_tanh_op(
-   size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // Taylor coefficients and partials corresponding to argument
    const Base* x  = taylor  + i_x * cap_order;
-   Base* px       = partial + i_x * nc_partial;
+   Base* px       = partial + i_x * n_order;
 
    // Taylor coefficients and partials corresponding to first result
    const Base* z  = taylor  + i_z * cap_order; // called z in doc
-   Base* pz       = partial + i_z * nc_partial;
+   Base* pz       = partial + i_z * n_order;
 
    // Taylor coefficients and partials corresponding to auxillary result
    const Base* y  = z  - cap_order; // called y in documentation
-   Base* py       = pz - nc_partial;
+   Base* py       = pz - n_order;
 
 
    size_t j = d;

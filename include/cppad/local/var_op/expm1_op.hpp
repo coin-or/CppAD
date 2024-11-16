@@ -96,27 +96,27 @@ inline void forward_expm1_op_0(
 
 template <class Base>
 inline void reverse_expm1_op(
-   size_t      d            ,
    size_t      i_z          ,
    size_t      i_x          ,
    size_t      cap_order    ,
    const Base* taylor       ,
-   size_t      nc_partial   ,
+   size_t      n_order      ,
    Base*       partial      )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(Expm1Op) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(Expm1Op) == 1 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
-   CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
 
    // Taylor coefficients and partials corresponding to argument
    const Base* x  = taylor  + i_x * cap_order;
-   Base* px       = partial + i_x * nc_partial;
+   Base* px       = partial + i_x * n_order;
 
    // Taylor coefficients and partials corresponding to result
    const Base* z  = taylor  + i_z * cap_order;
-   Base* pz       = partial + i_z * nc_partial;
+   Base* pz       = partial + i_z * n_order;
 
    // If pz is zero, make sure this operation has no effect
    // (zero times infinity or nan would be non-zero).

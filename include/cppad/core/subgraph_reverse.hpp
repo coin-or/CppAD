@@ -404,7 +404,6 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
       play_.end_subgraph(random_itr, &subgraph);
    //
    local::sweep::reverse(
-      q - 1,
       n,
       num_var_tape_,
       &play_,

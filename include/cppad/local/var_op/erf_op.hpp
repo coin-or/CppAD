@@ -464,31 +464,31 @@ and for j = 0 , ... , 4,
 is the k-th order Taylor coefficient corresponding to the j-th result
 for this operation.
 
-\param nc_partial
+\param n_order
 number of columns in the matrix containing all the partial derivatives
 
 \param partial
 \b Input:
-partial [ size_t(arg[0]) * nc_partial + k ]
+partial [ size_t(arg[0]) * n_order + k ]
 for k = 0 , ... , d,
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
 \b Input:
-partial [ (i_z - j) * nc_partial + k ]
+partial [ (i_z - j) * n_order + k ]
 for k = 0 , ... , d,
 and for j = 0 , ... , 4,
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the j-th result of this operation.
 \n
 \b Output:
-partial [ size_t(arg[0]) * nc_partial + k ]
+partial [ size_t(arg[0]) * n_order + k ]
 for k = 0 , ... , d,
 is the partial derivative of H( x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
 \b Output:
-partial [ (i_z-j) * nc_partial + k ]
+partial [ (i_z-j) * n_order + k ]
 for k = 0 , ... , d,
 and for j = 0 , ... , 4,
 may be used as work space; i.e., may change in an unspecified manner.
@@ -497,20 +497,21 @@ may be used as work space; i.e., may change in an unspecified manner.
 template <class Base>
 inline void reverse_erf_op(
    op_code_var   op          ,
-   size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    const Base*   taylor      ,
-   size_t        nc_partial  ,
+   size_t        n_order     ,
    Base*         partial     )
-{
+{  // d
+   size_t d = n_order - 1;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
-   CPPAD_ASSERT_UNKNOWN( d < cap_order );
+   CPPAD_ASSERT_UNKNOWN( n_order <= cap_order );
    CPPAD_ASSERT_UNKNOWN(
       size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
    );
@@ -520,7 +521,7 @@ inline void reverse_erf_op(
 
    // If pz is zero, make sure this operation has no effect
    // (zero times infinity or nan would be non-zero).
-   Base* pz  = partial + i_z * nc_partial;
+   Base* pz  = partial + i_z * n_order;
    bool skip(true);
    for(size_t i_d = 0; i_d <= d; i_d++)
       skip &= IdenticalZero(pz[i_d]);
@@ -532,14 +533,14 @@ inline void reverse_erf_op(
 
    // Taylor coefficients and partials corresponding to x
    const Base* x  = taylor  + size_t(arg[0]) * cap_order;
-   Base* px       = partial + size_t(arg[0]) * nc_partial;
+   Base* px       = partial + size_t(arg[0]) * n_order;
 
    // Taylor coefficients and partials corresponding to z_3
    const Base* z_3  = taylor  + (i_z+3) * cap_order;
-   Base* pz_3       = partial + (i_z+3) * nc_partial;
+   Base* pz_3       = partial + (i_z+3) * n_order;
 
    // Taylor coefficients and partials corresponding to z_4
-   Base* pz_4 = partial + (i_z+4) * nc_partial;
+   Base* pz_4 = partial + (i_z+4) * n_order;
 
    // sign
    Base sign(1.0);
@@ -562,26 +563,26 @@ inline void reverse_erf_op(
    addr[0] = arg[2];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
    reverse_mulpv_op(
-      d, i_z+3, addr, parameter, cap_order, taylor, nc_partial, partial
+      i_z+3, addr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_2 = exp( - x * x )
    reverse_exp_op(
-      d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
+      i_z+2, i_z+1, cap_order, taylor, n_order, partial
    );
 
    // z_1 = - x * x
    addr[0] = arg[1];           // zero
    addr[1] = addr_t( i_z );    // z_0
    reverse_subpv_op(
-      d, i_z+1, addr, parameter, cap_order, taylor, nc_partial, partial
+      i_z+1, addr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
    reverse_mulvv_op(
-      d, i_z+0, addr, parameter, cap_order, taylor, nc_partial, partial
+      i_z+0, addr, parameter, cap_order, taylor, n_order, partial
    );
 
 }

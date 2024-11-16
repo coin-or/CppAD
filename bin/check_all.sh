@@ -66,20 +66,39 @@ echo_log_eval() {
    # 2.  If using g++ -O3 -DNDEBUG -Wall,
    #     an improper compile time warning is generated at:
    #     forward.hpp:187, reverse.hpp:151, independent.hpp:100-109,
-   #     base_alloc.hpp:143.
+   #     base_alloc.hpp:143, abs_min_quad.hpp:424 .
    #
-   if $sed $top_srcdir/check_all.tmp \
-      -e '/temp_file.cpp:.*warning.*tmpnam/d' \
-      -e '/forward.hpp:187:.*warning.*outside array bounds/d' \
-      -e '/reverse.hpp:151:.*warning.*outside array bounds/d' \
-      -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
-      -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
-      | grep ': *warning *:'
+   # warning
+   warning='no'
+   if [ "$compiler" == '--clang' ]
+   then
+      if $sed $top_srcdir/check_all.tmp \
+         -e '/temp_file.cpp:.*warning.*tmpnam/d' \
+         | grep ': *warning *:'
+      then
+         warning='yes'
+      fi
+   else
+      if $sed $top_srcdir/check_all.tmp \
+         -e '/temp_file.cpp:.*warning.*tmpnam/d' \
+         -e '/forward.hpp:187:.*warning.*outside array bounds/d' \
+         -e '/reverse.hpp:151:.*warning.*outside array bounds/d' \
+         -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
+         -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
+         -e '/abs_min_quad.hpp:424:.*bound.*exceeds maximum/d' \
+         | grep ': *warning *:'
+      then
+         warning='yes'
+      fi
+   fi
+   if [ "$warning" == 'yes' ]
    then
       echo "The warnings above happened during the command: $*"
       echo "see the file $top_srcdir/check_all.tmp"
       exit 1
    fi
+   #
+   # check_all.log
    echo '        cat check_all.tmp >> check_all.log'
    cat $top_srcdir/check_all.tmp >> $top_srcdir/check_all.log
 }
@@ -342,11 +361,11 @@ cd build
 program='example/print_for/example_print_for'
 echo_log_eval $builder -j $n_job example_print_for
 echo_log_eval $program
-$program | sed -e '/^Test passes/,$d' > junk.1.$$
-$program | sed -e '1,/^Test passes/d' > junk.2.$$
-if diff junk.1.$$ junk.2.$$
+$program | sed -e '/^Test passes/,$d' > temp.1.$$
+$program | sed -e '1,/^Test passes/d' > temp.2.$$
+if diff temp.1.$$ temp.2.$$
 then
-   rm junk.1.$$ junk.2.$$
+   rm temp.1.$$ temp.2.$$
    echo_log_eval echo "print_for: OK"
 else
    echo_log_eval echo "print_for: Error"
