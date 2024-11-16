@@ -256,7 +256,7 @@ void for_jac(
          // -------------------------------------------------
 
          case CSumOp:
-         var_op::forward_sparse_jacobian_csum_op(
+         var_op::csum_forward_jac(
             i_var, arg, var_sparsity
          );
          itr.correct_before_increment();

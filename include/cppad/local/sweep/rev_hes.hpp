@@ -287,7 +287,7 @@ void rev_hes(
 
          case CSumOp:
          itr.correct_after_decrement(arg);
-         var_op::reverse_sparse_hessian_csum_op(
+         var_op::csum_reverse_hes(
             i_var, arg, RevJac, rev_hes_sparse
          );
          break;

@@ -72,22 +72,22 @@ is the index of the constant parameter *s* in the parameter vector.
 arg[1]
 ======
 is the index in arg of the end of the addition variables; i.e.,
-*n1* = arg[1] - 5 and
+*n1* = arg[1] - 5 .
 
 arg[2]
 ======
 is the index in arg of the end of the subtraction variables; i.e.,
-*n2* = arg[2] - arg[1] and
+*n2* = arg[2] - arg[1] .
 
 arg[3]
 ======
 is the index in arg of the end of the addition dynamic parameters; i.e.,
-*n3* = arg[3] - arg[2] and
+*n3* = arg[3] - arg[2] .
 
 arg[4]
 ======
 is the index in arg of the end of the subtraction dynamic parameters; i.e.,
-*n4* = arg[4] - arg[3] and
+*n4* = arg[4] - arg[3] .
 
 arg[5+j]
 ========
@@ -381,251 +381,210 @@ inline void csum_forward_dir(
          z[ell] -= x[ell];
    }
 }
-/*!
-Compute reverse mode Taylor coefficients for result of op = CsumOp.
+/*
+---------------------------------------------------------------------------
+{xrst_begin var_csum_reverse_op dev}
 
-This operation is
-\verbatim
-   z = q + x(0) + ... + x(m-1) - y(0) - ... - y(n-1).
-   H(y, x, w, ...) = G[ z(x, y), y, x, w, ... ]
-\endverbatim
+Reverse Mode Cumulative Summation Operation
+###########################################
 
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
-Base.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CSUM_REVERSE_OP
+   // END_CSUM_REVERSE_OP
+}
 
-\param d
+x, y, u, v, z
+*************
+see
+:ref:`var_csum_op@x` ,
+:ref:`var_csum_op@y` ,
+:ref:`var_csum_op@u` ,
+:ref:`var_csum_op@v` ,
+:ref:`var_csum_op@z`
+
+i_z, arg
+********
+see
+:ref:`var_csum_op@i_z` ,
+:ref:`var_csum_op@arg`
+
+d
+*
 order the highest order Taylor coefficient that we are computing
 the partial derivatives with respect to.
 
-\param i_z
-variable index corresponding to the result for this operation;
-i.e. the row index in taylor corresponding to z.
+{xrst_comment H(x, y, ...) = G[ z(x, y), x, y, ... ] }
+{xrst_template ;
+   include/cppad/local/var_op/partial.xrst
+   @x, y@  ; x, y, u, v
+}
 
-\param arg
--- arg[0]
-parameter[arg[0]] is the parameter value s in this cummunative summation.
-
--- arg[1]
-end in arg of addition variables in summation.
-arg[5] , ... , arg[arg[1]-1] correspond to x(0), ... , x(m-1)
-
--- arg[2]
-end in arg of subtraction variables in summation.
-arg[arg[1]] , ... , arg[arg[2]-1] correspond to y(0), ... , y(n-1)
-
--- arg[3]
-end in arg of addition dynamic parameters in summation.
-
--- arg[4]
-end in arg of subtraction dynamic parameters in summation.
-
-\param nc_partial
-number of columns in the matrix containing all the partial derivatives.
-
-\param partial
-\b Input: partial [ arg[5+i] * nc_partial + k ]
-for i = 0, ..., m-1
-and k = 0 , ... , d
-is the partial derivative of G(z, y, x, w, ...) with respect to the
-k-th order Taylor coefficient corresponding to x(i)
-\n
-\b Input: partial [ arg[arg[1]+1] * nc_partial + k ]
-for i = 0, ..., n-1
-and k = 0 , ... , d
-is the partial derivative of G(z, y, x, w, ...) with respect to the
-k-th order Taylor coefficient corresponding to y(i)
-\n
-\b Input: partial [ i_z * nc_partial + k ]
-for i = 0, ..., n-1
-and k = 0 , ... , d
-is the partial derivative of G(z, y, x, w, ...) with respect to the
-k-th order Taylor coefficient corresponding to z.
-\n
-\b Output: partial [ arg[5+i] * nc_partial + k ]
-for i = 0, ..., m-1
-and k = 0 , ... , d
-is the partial derivative of H(y, x, w, ...) with respect to the
-k-th order Taylor coefficient corresponding to x(i)
-\n
-\b Output: partial [ arg[arg[1]+1] * nc_partial + k ]
-for i = 0, ..., n-1
-and k = 0 , ... , d
-is the partial derivative of H(y, x, w, ...) with respect to the
-k-th order Taylor coefficient corresponding to y(i)
+{xrst_end var_csum_reverse_op}
 */
-
+// BEGIN_CSUM_REVERSE_OP
 template <class Base>
-inline void reverse_csum_op(
+inline void csum_reverse_op(
    size_t        d           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        nc_partial  ,
    Base*         partial     )
-{
-   // check assumptions
+// END_CSUM_REVERSE_OP
+{  //
    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( d < nc_partial );
-
-   // Taylor coefficients and partial derivative corresponding to result
+   //
+   // pz, dp1
    Base* pz = partial + i_z * nc_partial;
-   Base* px;
-   size_t d1 = d + 1;
-   for(size_t i = 5; i < size_t(arg[1]); ++i)
+   size_t dp1 = d + 1;
+   //
+   // addition variables
+   for(addr_t i = 5; i < arg[1]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      px    = partial + size_t(arg[i]) * nc_partial;
-      size_t k = d1;
+      Base* px = partial + size_t(arg[i]) * nc_partial;
+      size_t k = dp1;
       while(k--)
          px[k] += pz[k];
    }
-   for(size_t i = size_t(arg[1]); i < size_t(arg[2]); ++i)
+   //
+   // subtraction varables
+   for(addr_t i = arg[1]; i < arg[2]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      px    = partial + size_t(arg[i]) * nc_partial;
-      size_t k = d1;
+      Base* px = partial + size_t(arg[i]) * nc_partial;
+      size_t k = dp1;
       while(k--)
          px[k] -= pz[k];
    }
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_csum_forward_jac dev}
 
+Forward Jacobian Sparsity for Cumulative Summation
+##################################################
 
-/*!
-Forward mode Jacobian sparsity pattern for CSumOp operator.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CSUM_FORWARD_JAC
+   // END_CSUM_FORWARD_JAC
+}
 
-This operation is
-\verbatim
-   z = q + x(0) + ... + x(m-1) - y(0) - ... - y(n-1).
-\endverbatim
+x, y, u, v, z
+*************
+see
+:ref:`var_csum_op@x` ,
+:ref:`var_csum_op@y` ,
+:ref:`var_csum_op@u` ,
+:ref:`var_csum_op@v` ,
+:ref:`var_csum_op@z`
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+i_z, arg
+********
+see
+:ref:`var_csum_op@i_z` ,
+:ref:`var_csum_op@arg`
 
-\param i_z
-variable index corresponding to the result for this operation;
-i.e. the index in sparsity corresponding to z.
+Vector_set
+**********
+is the type used for vectors of sets.
+It must satisfy the :ref:`SetVector-name` concept.
 
-\param arg
--- arg[0]
-parameter[arg[0]] is the parameter value s in this cummunative summation.
+i_z
 
--- arg[1]
-end in arg of addition variables in summation.
-arg[5] , ... , arg[arg[1]-1] correspond to x(0), ... , x(m-1)
+sparsity
+********
 
--- arg[2]
-end in arg of subtraction variables in summation.
-arg[arg[1]] , ... , arg[arg[2]-1] correspond to y(0), ... , y(n-1)
+Input
+=====
+For k = 0 , ... , i_z - 1,
+the set with index k in *sparsity*
+identifies which independent variables the variable with index k depends on.
 
--- arg[3]
-end in arg of addition dynamic parameters in summation.
+Output
+======
+The set with index i_z in *sparsity*
+identifies which independent variables the variable *z* depends on.
 
--- arg[4]
-end in arg of subtraction dynamic parameters in summation.
-
-\param sparsity
-\b Input:
-For i = 0, ..., m-1,
-the set with index arg[5+i] in sparsity
-is the sparsity bit pattern for x(i).
-This identifies which of the independent variables the variable
-x(i) depends on.
-\n
-\b Input:
-For i = 0, ..., n-1,
-the set with index arg[2+arg[0]+i] in sparsity
-is the sparsity bit pattern for x(i).
-This identifies which of the independent variables the variable
-y(i) depends on.
-\n
-\b Output:
-The set with index i_z in sparsity
-is the sparsity bit pattern for z.
-This identifies which of the independent variables the variable z
-depends on.
+{xrst_end var_csum_forward_jac}
 */
-
+// BEGIN_CSUM_FORWARD_JAC
 template <class Vector_set>
-inline void forward_sparse_jacobian_csum_op(
+inline void csum_forward_jac(
    size_t           i_z         ,
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
-{  sparsity.clear(i_z);
-
-   for(size_t i = 5; i < size_t(arg[2]); ++i)
+// END_CSUM_FORWARD_JAC
+{  //
+   // sparsity
+   sparsity.clear(i_z);
+   //
+   // addition and subtraction variables
+   for(addr_t i = 5; i < arg[2]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
       sparsity.binary_union(
-         i_z        , // index in sparsity for result
-         i_z        , // index in sparsity for left operand
-         size_t(arg[i]), // index for right operand
-         sparsity     // sparsity vector for right operand
+         i_z            , // index in sparsity for result
+         i_z            , // index in sparsity for left operand
+         size_t(arg[i]) , // index for right operand
+         sparsity         // sparsity vector for right operand
       );
    }
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_csum_reverse_jac dev}
 
-/*!
-Reverse mode Jacobian sparsity pattern for CSumOp operator.
+Reverse Jacobian Sparsity for Cumulative Summation
+##################################################
 
-This operation is
-\verbatim
-   z = q + x(0) + ... + x(m-1) - y(0) - ... - y(n-1).
-   H(y, x, w, ...) = G[ z(x, y), y, x, w, ... ]
-\endverbatim
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CSUM_REVERSE_JAC
+   // END_CSUM_REVERSE_JAC
+}
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+x, y, u, v, z
+*************
+see
+:ref:`var_csum_op@x` ,
+:ref:`var_csum_op@y` ,
+:ref:`var_csum_op@u` ,
+:ref:`var_csum_op@v` ,
+:ref:`var_csum_op@z`
 
-\param i_z
-variable index corresponding to the result for this operation;
-i.e. the index in sparsity corresponding to z.
+i_z, arg
+********
+see
+:ref:`var_csum_op@i_z` ,
+:ref:`var_csum_op@arg`
 
-\param arg
--- arg[0]
-parameter[arg[0]] is the parameter value s in this cummunative summation.
+Vector_set
+**********
+is the type used for vectors of sets.
+It must satisfy the :ref:`SetVector-name` concept.
 
--- arg[1]
-end in arg of addition variables in summation.
-arg[5] , ... , arg[arg[1]-1] correspond to x(0), ... , x(m-1)
 
--- arg[2]
-end in arg of subtraction variables in summation.
-arg[arg[1]] , ... , arg[arg[2]-1] correspond to y(0), ... , y(n-1)
+sparsity
+********
+The set with index *i_z* is the sparsity pattern for *z* .
+This sparsity pattern is added th the sparsity pattern for the
+variables in the vectors *x* and *y* .
 
--- arg[3]
-end in arg of addition dynamic parameters in summation.
-
--- arg[4]
-end in arg of subtraction dynamic parameters in summation.
-
-\param sparsity
-For i = 0, ..., m-1,
-the set with index arg[5+i] in sparsity
-is the sparsity bit pattern for x(i).
-This identifies which of the dependent variables depend on x(i).
-On input, the sparsity patter corresponds to G,
-and on ouput it corresponds to H.
-\n
-For i = 0, ..., m-1,
-the set with index arg[2+arg[0]+i] in sparsity
-is the sparsity bit pattern for y(i).
-This identifies which of the dependent variables depend on y(i).
-On input, the sparsity patter corresponds to G,
-and on ouput it corresponds to H.
-\n
-\b Input:
-The set with index i_z in sparsity
-is the sparsity bit pattern for z.
-On input it corresponds to G and on output it is undefined.
+{xrst_end var_csum_reverse_jac}
 */
-
+// BEGIN_CSUM_REVERSE_JAC
 template <class Vector_set>
-inline void reverse_sparse_jacobian_csum_op(
+inline void csum_reverse_jac(
    size_t           i_z         ,
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
+// END_CSUM_REVERSE_JAC
 {
-   for(size_t i = 5; i < size_t(arg[2]); ++i)
+   // addition and subtraction variables
+   for(addr_t i = 5; i < arg[2]; ++i)
    {
       CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
       sparsity.binary_union(
@@ -636,102 +595,132 @@ inline void reverse_sparse_jacobian_csum_op(
       );
    }
 }
-/*!
-Reverse mode Hessian sparsity pattern for CSumOp operator.
+/*
+{xrst_begin var_csum_reverse_hes dev}
 
-This operation is
-\verbatim
-   z = q + x(0) + ... + x(m-1) - y(0) - ... - y(n-1).
-   H(y, x, w, ...) = G[ z(x, y), y, x, w, ... ]
-\endverbatim
+Reverse Hessian Sparsity for Cumulative Summation
+#################################################
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CSUM_REVERSE_HES
+   // END_CSUM_REVERSE_HES
+}
 
-\param i_z
-variable index corresponding to the result for this operation;
-i.e. the index in sparsity corresponding to z.
+x, y, u, v, z
+*************
+see
+:ref:`var_csum_op@x` ,
+:ref:`var_csum_op@y` ,
+:ref:`var_csum_op@u` ,
+:ref:`var_csum_op@v` ,
+:ref:`var_csum_op@z`
 
-\param arg
--- arg[0]
-parameter[arg[0]] is the parameter value s in this cummunative summation.
+i_z, arg
+********
+see
+:ref:`var_csum_op@i_z` ,
+:ref:`var_csum_op@arg`
 
--- arg[1]
-end in arg of addition variables in summation.
-arg[5] , ... , arg[arg[1]-1] correspond to x(0), ... , x(m-1)
+G, H
+****
+We use *G* to denote the scalar function we are computing the
+sparsity pattern for as a function of the variables up to and including *z* .
+We use *H* for the function with *z* replaced by its operator; i.e.::
 
--- arg[2]
-end in arg of subtraction variables in summation.
-arg[arg[1]] , ... , arg[arg[2]-1] correspond to y(0), ... , y(n-1)
+   H(x, y, u, v, ...) = G[ z(x, y, u, v) , x, y, u, v, ... ]
 
--- arg[3]
-end in arg of addition dynamic parameters in summation.
+Vector_set
+**********
+is the type used for vectors of sets.
+It must satisfy the :ref:`SetVector-name` concept.
 
--- arg[4]
-end in arg of subtraction dynamic parameters in summation.
+rev_jacobian
+************
+#. If rev_jacobian[i_z] is true (false),
+   *G* may depend (does not depend) on *z* .
 
-\param rev_jacobian
-rev_jacobian[i_z]
-is all false (true) if the Jabobian of G with respect to z must be zero
-(may be non-zero).
-\n
-\n
-For i = 0, ..., m-1
-rev_jacobian[ arg[5+i] ]
-is all false (true) if the Jacobian with respect to x(i)
-is zero (may be non-zero).
-On input, it corresponds to the function G,
-and on output it corresponds to the function H.
-\n
-\n
-For i = 0, ..., n-1
-rev_jacobian[ arg[2+arg[0]+i] ]
-is all false (true) if the Jacobian with respect to y(i)
-is zero (may be non-zero).
-On input, it corresponds to the function G,
-and on output it corresponds to the function H.
+#. If *j* is the index of an addition variable in the vector *x* or *y* ,
+   and *G* may depend on *z* ,
+   rev_jacobian[j] is set to true.
 
-\param rev_hes_sparsity
-The set with index i_z in in rev_hes_sparsity
-is the Hessian sparsity pattern for the function G
-where one of the partials derivative is with respect to z.
-\n
-\n
-For i = 0, ..., m-1
-The set with index arg[5+i] in rev_hes_sparsity
-is the Hessian sparsity pattern
-where one of the partials derivative is with respect to x(i).
-On input, it corresponds to the function G,
-and on output it corresponds to the function H.
-\n
-\n
-For i = 0, ..., n-1
-The set with index arg[2+arg[0]+i] in rev_hes_sparsity
-is the Hessian sparsity pattern
-where one of the partials derivative is with respect to y(i).
-On input, it corresponds to the function G,
-and on output it corresponds to the function H.
+rev_hes_sparsity
+****************
+On input, *rev_hes_sparsity*
+contains the Hessian sparsity pattern for the function *G* .
+On output, it contains the Hessian sparsity pattern for the function *H* .
+
+{xrst_end var_csum_reverse_hes}
 */
-
+// BEGIN_CSUM_REVERSE_HES
 template <class Vector_set>
-inline void reverse_sparse_hessian_csum_op(
+inline void csum_reverse_hes(
    size_t           i_z                 ,
    const addr_t*    arg                 ,
    bool*            rev_jacobian        ,
    Vector_set&      rev_hes_sparsity    )
-{
-   for(size_t i = 5; i < size_t(arg[2]); ++i)
+// END_CSUM_REVERSE_HES
+{  //
+   // addition and subtraction variables
+   for(addr_t i = 5; i < arg[2]; ++i)
    {
       CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
       rev_hes_sparsity.binary_union(
-      size_t(arg[i]), // index in sparsity for result
-      size_t(arg[i]), // index in sparsity for left operand
-      i_z                , // index for right operand
-      rev_hes_sparsity     // sparsity vector for right operand
+         size_t(arg[i])     , // index in sparsity for result
+         size_t(arg[i])     , // index in sparsity for left operand
+         i_z                , // index for right operand
+         rev_hes_sparsity     // sparsity vector for right operand
       );
       rev_jacobian[arg[i]] |= rev_jacobian[i_z];
    }
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_csum_forward_hes dev}
+
+Reverse Hessian Sparsity for Cumulative Summation
+#################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CSUM_FORWARD_HES
+   // END_CSUM_FORWARD_HES
+}
+
+x, y, u, v, z
+*************
+see
+:ref:`var_csum_op@x` ,
+:ref:`var_csum_op@y` ,
+:ref:`var_csum_op@u` ,
+:ref:`var_csum_op@v` ,
+:ref:`var_csum_op@z`
+
+i_z, arg
+********
+see
+:ref:`var_csum_op@i_z` ,
+:ref:`var_csum_op@arg`
+
+Vector_set
+**********
+is the type used for vectors of sets.
+It must satisfy the :ref:`SetVector-name` concept.
+
+{xrst_end var_csum_forward_hes}
+*/
+// BEGIN_CSUM_FORWARD_HES
+template <class Vector_set>
+inline void load_forward_hes(
+   const addr_t*             arg            ,
+   size_t                    i_z            ,
+   const Vector_set&         var_sparsity   ,
+   const bool*               var_rev_jac    )
+// END_CSUM_FORWARD_HES
+{
+
 }
 
 } } } // END namespace

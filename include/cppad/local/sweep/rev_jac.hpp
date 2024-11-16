@@ -301,7 +301,7 @@ void rev_jac(
 
          case CSumOp:
          itr.correct_after_decrement(arg);
-         var_op::reverse_sparse_jacobian_csum_op(
+         var_op::csum_reverse_jac(
             i_var, arg, var_sparsity
          );
          break;

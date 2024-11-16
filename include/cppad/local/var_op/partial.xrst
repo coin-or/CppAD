@@ -4,7 +4,8 @@ SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
 This template file has the following parameters:
-   @x, y@   : arguments to this function for this operator; i.e.,  z(x, y)
+   @x, y@   : arguments (without parenthesis) to function for this operator;
+              e.g., if 'x , y' funciton is 'z(x, y)' .
 }
 
 nc_partial

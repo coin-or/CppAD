@@ -365,7 +365,7 @@ void reverse(
 
          case CSumOp:
          play_itr.correct_after_decrement(arg);
-         var_op::reverse_csum_op(
+         var_op::csum_reverse_op(
             d, i_var, arg, K, Partial
          );
          // end of a cumulative summation

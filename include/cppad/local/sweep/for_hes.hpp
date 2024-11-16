@@ -265,7 +265,6 @@ void for_hes(
          // operators that must always be included
          case EndOp:
          case CSkipOp:
-         case CSumOp:
          case AFunOp:
          case FunapOp:
          case FunavOp:
@@ -282,6 +281,12 @@ void for_hes(
          case InvOp:
          if( ! include )
             ++count_independent;
+         break;
+
+         // itr
+         case CSumOp:
+         if( ! include )
+            itr.correct_before_increment();
          break;
 
          // default

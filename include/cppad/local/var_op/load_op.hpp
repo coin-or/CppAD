@@ -418,7 +418,7 @@ This vector maps the load instruction index *arg* [2] to the corresponding
 *y* variable index.
 If this index is zero, *y* is a parameter (not a variable).
 
-{xrst_comment H(y, ...) = G[ z(y), y, ...) }
+{xrst_comment H(y, ...) = G[ z(y), y, ... ] }
 {xrst_template ;
    include/cppad/local/var_op/partial.xrst
    @x, y@  ; y
