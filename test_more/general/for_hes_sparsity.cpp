@@ -198,9 +198,7 @@ bool for_hes_sparsity(void)
 {  bool ok = true;
    //
    ok &= test_old_interface();
-   //
-   // 2DO: fix this case
-   ok &= ! test_csum();
+   ok &= test_csum();
    //
    return ok;
 }

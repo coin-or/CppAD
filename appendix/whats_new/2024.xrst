@@ -34,6 +34,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+11-16
+=====
+The :ref:`for_hes_sparsity-name` and :ref:`ForSparseHes-name` routines
+did not handle the cumulative summation operators properly.
+These operators sum more than two variables or dynamic parameters at a time
+and may be created during ADFun :ref:`optimization <optimize-name>` .
+
 11-13
 =====
 The :ref:`for_hes_sparsity-name` and :ref:`ForSparseHes-name` routines

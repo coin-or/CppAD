@@ -705,18 +705,43 @@ Vector_set
 is the type used for vectors of sets.
 It must satisfy the :ref:`SetVector-name` concept.
 
+n
+*
+is the number of independent variables on the tape.
+
+for_hes_sparse
+**************
+see :ref:`local_sweep_for_hes@for_hes_sparse` .
+
 {xrst_end var_csum_forward_hes}
 */
 // BEGIN_CSUM_FORWARD_HES
 template <class Vector_set>
-inline void load_forward_hes(
+inline void csum_forward_hes(
    const addr_t*             arg            ,
    size_t                    i_z            ,
-   const Vector_set&         var_sparsity   ,
-   const bool*               var_rev_jac    )
+   size_t                    n              ,
+   Vector_set&               for_hes_sparse )
 // END_CSUM_FORWARD_HES
-{
-
+{  //
+   // np1
+   size_t np1 = n + 1;
+   //
+   // for_hes_sparse
+   for_hes_sparse.clear(np1 + i_z);
+   //
+   // addition and subtraction variables
+   for(addr_t i = 5; i < arg[2]; ++i)
+   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+      //
+      // linear functions only modify forward Jacobian sparsity
+      for_hes_sparse.binary_union(
+         np1 + i_z            , // index in sparsity for result
+         np1 + i_z            , // index in sparsity for left operand
+         np1 + size_t(arg[i]) , // index for right operand
+         for_hes_sparse         // sparsity vector for right operand
+      );
+   }
 }
 
 } } } // END namespace

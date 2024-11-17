@@ -8,6 +8,7 @@
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/var_op/load_op.hpp>
 # include <cppad/local/var_op/store_op.hpp>
+# include <cppad/local/var_op/csum_op.hpp>
 
 /*
 {xrst_begin local_sweep_for_hes dev}
@@ -182,19 +183,17 @@ void for_hes(
    //
    CPPAD_ASSERT_UNKNOWN( numvar > 0 );
    //
-   // vecad_sparsity contains a sparsity pattern for each VecAD object.
-   // vecad_ind maps a VecAD index (beginning of the VecAD object)
-   // to the index for the corresponding set in vecad_sparsity.
+   // vecad_sparsity: forward Jacobian sparsity pattern for each VecAD object.
+   // vecad_ind: maps the VecAD index at beginning of the VecAD object
+   //            to the index for the corresponding set in vecad_sparsity.
    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
    size_t num_vecad_vec   = play->num_var_vecad_rec();
    SetVector vecad_sparsity;
    pod_vector<size_t> vecad_ind;
-   pod_vector<bool>   vecad_jac;
    if( num_vecad_vec > 0 )
    {  size_t length;
       vecad_sparsity.resize(num_vecad_vec, np1);
       vecad_ind.extend(num_vecad_ind);
-      vecad_jac.extend(num_vecad_vec);
       size_t j  = 0;
       for(size_t i = 0; i < num_vecad_vec; i++)
       {  // length of this VecAD
@@ -206,8 +205,6 @@ void for_hes(
             vecad_ind[j+k] = num_vecad_vec;
          // start of next VecAD
          j       += length + 1;
-         // initialize this vector's reverse jacobian value
-         vecad_jac[i] = false;
       }
       CPPAD_ASSERT_UNKNOWN( j == play->num_var_vecad_ind_rec() );
    }
@@ -409,6 +406,7 @@ void for_hes(
          // -------------------------------------------------
 
          case CSumOp:
+         var_op::csum_forward_hes(arg, i_var, n, for_hes_sparse);
          itr.correct_before_increment();
          break;
          // -------------------------------------------------
