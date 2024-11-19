@@ -48,9 +48,6 @@ inline void sign_forward_dir(
    size_t        cap_order   ,
    Base*         taylor      )
 {  //
-   // i_x
-   size_t i_x = size_t(arg[0]);
-   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
