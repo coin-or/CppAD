@@ -135,7 +135,7 @@ bool test_old_interface()
    return ok;
 }
 // --------------------------------------------------------------------------
-// This case demonstrated a bug
+// This case demonstrated a bug that was fixed on 2024-11-16.
 bool test_csum(void)
 {
    // ok
