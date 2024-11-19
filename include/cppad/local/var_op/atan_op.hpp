@@ -86,12 +86,15 @@ inline void forward_atan_op_dir(
 
 // See dev documentation: forward_unary_op
 template <class Base>
-inline void forward_atan_op_0(
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void atan_forward_0(
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(AtanOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(AtanOp) == 2 );

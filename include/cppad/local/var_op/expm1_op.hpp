@@ -76,12 +76,15 @@ inline void forward_expm1_op_dir(
 }
 
 template <class Base>
-inline void forward_expm1_op_0(
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void expm1_forward_0(
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(Expm1Op) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(Expm1Op) == 1 );

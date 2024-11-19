@@ -11,7 +11,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_unary_op
 template <class Base>
-inline void forward_par_op_0(
+inline void par_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        num_par     ,

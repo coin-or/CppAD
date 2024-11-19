@@ -66,7 +66,7 @@ inline void forward_subvv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subvv_op_0(
+inline void subvv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -181,7 +181,7 @@ inline void forward_subpv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subpv_op_0(
+inline void subpv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -297,7 +297,7 @@ inline void forward_subvp_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subvp_op_0(
+inline void subvp_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

@@ -69,7 +69,7 @@ inline void forward_addvv_op_dir(
 // See dev documentation: forward_unary_op
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_addvv_op_0(
+inline void addvv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -185,7 +185,7 @@ inline void forward_addpv_op_dir(
 // See dev documentation: forward_unary_op
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_addpv_op_0(
+inline void addpv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

@@ -82,7 +82,7 @@ inline void forward_divvv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_divvv_op_0(
+inline void divvv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -227,7 +227,7 @@ inline void forward_divpv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_divpv_op_0(
+inline void divpv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -364,7 +364,7 @@ inline void forward_divvp_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_divvp_op_0(
+inline void divvp_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

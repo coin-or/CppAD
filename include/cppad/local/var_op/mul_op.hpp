@@ -74,7 +74,7 @@ inline void forward_mulvv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_mulvv_op_0(
+inline void mulvv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -198,7 +198,7 @@ inline void forward_mulpv_op_dir(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_mulpv_op_0(
+inline void mulpv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

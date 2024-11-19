@@ -211,7 +211,7 @@ is the zero order Taylor coefficient for j-th result corresponding to z.
 
 */
 template <class Base>
-inline void forward_erf_op_0(
+inline void erf_forward_0(
    op_code_var   op          ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -237,20 +237,21 @@ inline void forward_erf_op_0(
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   forward_mulvv_op_0(i_z+0, addr, parameter, cap_order, taylor);
+   mulvv_forward_0(i_z+0, addr, parameter, cap_order, taylor);
 
    // z_1 = - x * x
    addr[0] = arg[1];       // zero
    addr[1] = addr_t(i_z);  // z_0
-   forward_subpv_op_0(i_z+1, addr, parameter, cap_order, taylor);
+   subpv_forward_0(i_z+1, addr, parameter, cap_order, taylor);
 
    // z_2 = exp( - x * x )
-   forward_exp_op_0(i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z+1);
+   exp_forward_0(i_z+2, addr, cap_order, taylor);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[2];          // 2 / sqrt(pi)
    addr[1] = addr_t(i_z + 2); // z_2
-   forward_mulpv_op_0(i_z+3, addr, parameter, cap_order, taylor);
+   mulpv_forward_0(i_z+3, addr, parameter, cap_order, taylor);
 
    // zero order Taylor coefficient for z_4
    Base* x    = taylor + size_t(arg[0]) * cap_order;

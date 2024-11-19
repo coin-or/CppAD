@@ -60,12 +60,15 @@ inline void forward_neg_op_dir(
 // See forward_unary1_op_0 in developer documentation
 // See dev documentation: forward_unary_op
 template <class Base>
-inline void forward_neg_op_0(
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void neg_forward_0(
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
 
    // check assumptions
    CPPAD_ASSERT_NARG_NRES( NegOp, 1, 1 );

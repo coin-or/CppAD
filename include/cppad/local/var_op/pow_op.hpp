@@ -129,7 +129,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_powvv_op_0(
+inline void powvv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -360,7 +360,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_powpv_op_0(
+inline void powpv_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -588,7 +588,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_powvp_op_0(
+inline void powvp_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

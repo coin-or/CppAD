@@ -625,7 +625,7 @@ is the zero order Taylor coefficient corresponding to y_j.
 is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
-inline void forward_cond_op_0(
+inline void cond_forward_0(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,

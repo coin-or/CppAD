@@ -417,7 +417,7 @@ void forward1(
 
          case CSkipOp:
          if( p == 0 )
-         {  var_op::forward_cskip_op_0(
+         {  var_op::cskip_forward_0(
                i_var, arg, num_par, parameter, J, taylor, cskip_op
             );
          }
@@ -555,7 +555,7 @@ void forward1(
          case ParOp:
          i = p;
          if( i == 0 )
-         {  var_op::forward_par_op_0(
+         {  var_op::par_forward_0(
                i_var, arg, num_par, parameter, J, taylor
             );
             i++;

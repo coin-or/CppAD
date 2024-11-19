@@ -179,12 +179,15 @@ is the zero order Taylor coefficient corresponding to z.
 \li 0 < cap_order
 */
 template <class Base>
-inline void forward_unary1_op_0(
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void unary1_forward_0(
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -464,12 +467,15 @@ the autillary result y.
 \li j < cap_order
 */
 template <class Base>
-inline void forward_unary2_op_0(
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void unary2_forward_0(
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -789,7 +795,7 @@ is the zero order Taylor coefficient corresponding to z.
 \li NumRes(op) == 1
 */
 template <class Base>
-inline void forward_binary_op_0(
+inline void binary_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -1160,7 +1166,7 @@ is the zero order Taylor coefficient corresponding to z_j.
 \li If y is a variable, arg[1] < i_z - 2
 */
 template <class Base>
-inline void forward_pow_op_0(
+inline void pow_forward_0(
    size_t        i_z        ,
    const addr_t* arg        ,
    const Base*   parameter  ,
