@@ -34,6 +34,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+11-19
+=====
+Fix the :ref:`configure@--with-clang` and :ref:`configure@--with-verbose-make`
+options did not have any effect in the configure script. 
+This has been fixed.
+
 11-16
 =====
 The :ref:`for_hes_sparsity-name` and :ref:`ForSparseHes-name` routines

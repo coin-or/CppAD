@@ -3,6 +3,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 set -e -u
+echo $0 $*
 # # ----------------------------------------------------------------------------
 # {xrst_begin configure app}
 # {xrst_spell
@@ -58,7 +59,7 @@ set -e -u
 # | ../ ``configure`` \\
 # | |tab| ``--help``                                       \\
 # | |tab| ``--prefix`` = *prefix_dir*                      \\
-# | |tab| ``--with-`` *test* ``vector``                    \\
+# | |tab| ``--with-`` *package* ``vector``                 \\
 # | |tab| ``--enable-msvc``                                \\
 # | |tab| ``--with-clang``                                 \\
 # | |tab| ``--with-verbose-make``                          \\
@@ -110,11 +111,14 @@ set -e -u
 #
 #    / ``usr/local/include/cppad``
 #
-# --with-testvector
-# *****************
+# --with-<package>vector
+# **********************
 # The :ref:`CPPAD_TESTVECTOR<testvector-name>`
 # template class is used for many of the CppAD examples and tests.
-# The default for this template class is ``CppAD::vector<`` *Scalar* > .
+# The default for this template class is
+#
+#  |tab| ``CppAD::vector<`` *Scalar* > .
+#
 # If one, and only one, of the following command line arguments is specified:
 # ::
 #
@@ -375,10 +379,10 @@ then
 usage: <path_to_configure>/configure \\
    [--help] \\
    [--prefix=<prefix_dir>] \\
-   [--with-boostvector] \\
-   [--with-eigenvector] \\
-   [--with-stdvector] \\
+   [--with-<package>vector] \\
    [--enable-msvc] \\
+   [--with-clang]  \\
+   [--with-verbose-make] \\
    [MAX_NUM_THREADS=max_num_threads] \\
    [CXX_FLAGS=cxx_flags] \\
    [POSTFIX_DIR=postfix_dir] \\
@@ -388,10 +392,10 @@ usage: <path_to_configure>/configure \\
    [IPOPT_DIR=ipopt_dir] \\
    [TAPE_ADDR_TYPE=tape_addr_type] \\
    [TAPE_ID_TYPE=tape_id_type]
-
 The --help option just prints this message and exits.
+<package> is one of he following: boost, eigen, std
+
 EOF
-   echo 'configure: OK'
    exit 0
 fi
 # ----------------------------------------------------------------------------
@@ -407,10 +411,9 @@ first_executable() {
    done
 }
 # ----------------------------------------------------------------------------
-echo $0 $*
 #
 prefix="$HOME"
-testvector=''
+testvector='cppad'
 enable_msvc='no'
 with_clang='n0'
 with_verbose_make='no'
@@ -431,33 +434,36 @@ do
       prefix=$( echo $1 | sed -e 's|^--prefix=||' )
       ;;
 
-      --with-boostvector | --with-eigenvector | --with-stdvector)
-      if [ "$testvector" != '' ]
-      then
-         echo 'configure: Cannot specify more than one test vector'
-         exit 1
-      fi
-      testvector=$( echo $1 | sed -e 's|^--with-||' -e 's|vector$||')
+      --with-boostvector)
+      testvector='boost'
       ;;
 
-      --enable-msvc)
-      enable_msvc='yes'
+      --with-eigenvector)
+      testvector='eigen'
+      ;;
+
+      --with-stdvector)
+      testvector='std'
       ;;
 
       --with-clang)
       with_clang='yes'
       ;;
 
+      --enable-msvc)
+      enable_msvc='yes'
+      ;;
+
       --with-verbose-make)
       with_verbose_make='yes'
       ;;
 
-      CXX_FLAGS=*)
-      cxx_flags=$( echo $1 | sed -e 's|CXX_FLAGS=||' )
-      ;;
-
       MAX_NUM_THREADS=*)
       max_num_threads=$( echo $1 | sed -e 's|MAX_NUM_THREADS=||' )
+      ;;
+
+      CXX_FLAGS=*)
+      cxx_flags=$( echo $1 | sed -e 's|CXX_FLAGS=||' )
       ;;
 
       POSTFIX_DIR=*)
@@ -495,10 +501,6 @@ do
    esac
    shift
 done
-if [ "$testvector" == '' ]
-then
-   testvector='cppad'
-fi
 if [ "$with_clang" == 'yes' ] && [ "$enable_msvc" == 'yes' ]
 then
    echo 'configure: cannot specify both --enable-mcvc and --with-clang'
@@ -652,7 +654,6 @@ echo cmake \
    -D CMAKE_VERBOSE_MAKEFILE=$with_verbose_make \
    -G "'$type_makefile'" \
    \
-   $cmake_cxx_compiler \
    $cmake_c_compiler \
    $cmake_fortran_compiler \
    \
@@ -687,8 +688,11 @@ cmake \
    -S "$source_dir" \
    -B . \
    \
-   -D CMAKE_VERBOSE_MAKEFILE=0 \
+   -D CMAKE_VERBOSE_MAKEFILE=$with_verbose_make \
    -G "$type_makefile" \
+   \
+   $cmake_cxx_compiler \
+   $cmake_fortran_compiler \
    \
    -D cppad_prefix="$prefix" \
    -D cppad_postfix="$postfix_dir" \

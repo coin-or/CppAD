@@ -4,6 +4,8 @@
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
+echo $0 $*
+# ----------------------------------------------------------------------------
 if [ ! -e "bin/run_configure.sh" ]
 then
    echo "bin/run_configure.sh: must be executed from its parent directory"
@@ -13,6 +15,7 @@ fi
 with_clang=''
 with_verbose_make=''
 cpp_standard='c++17'
+with_vector=''
 while [ "$#" != '0' ]
 do
    if [ "$1" == '--help' ]
@@ -20,24 +23,44 @@ do
       cat << EOF
 usage: bin/run_configure.sh \\
    [--help] \\
-   [--with-clang] \\
-   [--with-verbose_make] \\
-   [--c++yy]
+   [--clang] \\
+   [--verbose_make] \\
+   [--c++<yy> ] \\
+   [--<package>_vector]
+The value yy is two decimal digits specifying the C++ standard year.
+The value <package> must be one of: cppad, boost, eigen, std.
+
 EOF
       exit 0
    fi
    case "$1" in
 
-      --with-clang)
+      --clang)
       with_clang='--with-clang'
       ;;
 
-      --with-verbose-make)
+      --verbose_make)
       with_verbose_make='--with-verbose-make'
       ;;
 
       --c++*)
       cpp_standard=$(echo "$1" | sed -e 's|^--||')
+      ;;
+
+      --cppad_vector)
+      with_vector=''
+      ;;
+
+      --boost_vector)
+      with_vector='--with-boostvector'
+      ;;
+
+      --eigen_vector)
+      with_vector='--with-eigenvector'
+      ;;
+
+      --std_vector)
+      with_vector='--with-stdvector'
       ;;
 
       *)
@@ -67,9 +90,6 @@ echo "prefix=$prefix"
 PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
 PKG_CONFIG_PATH="$prefix/share/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH
-#
-# testvector
-testvector='cppad'
 #
 # cppad_cxx_flags
 cppad_cxx_flags="-std=$cpp_standard -Wall -pedantic-errors -Wshadow"
@@ -103,7 +123,7 @@ echo_eval cd build
    --prefix=$prefix \
    $with_clang \
    $with_verbose_make \
-   --with-stdvector \
+   $with_vector \
    MAX_NUM_THREADS=32 \
    CXX_FLAGS="'$cppad_cxx_flags'" \
    ADOLC_DIR=$prefix \

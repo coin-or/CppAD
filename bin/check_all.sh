@@ -203,6 +203,12 @@ else
       fi
    fi
 fi
+#
+# debug_which
+if [ "$use_configure" == 'yes' ]
+then
+   debug_which='--debug_none'
+fi
 cat << EOF
 tarball         = cppad-$version.tgz
 compiler        = $compiler
@@ -295,32 +301,36 @@ echo_log_eval cd cppad-$version
 # build/cppad-$version/bin/get_optional.sh
 sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
 #
-# configure or cmake
+# builder
 if [ "$use_configure" == 'yes' ]
 then
    builder='make'
-   configure_cmd="bin/run_configure.sh $standard"
-   if [ "$compiler" == 'clang' ]
-   then
-      configure_cmd+=' --with-clang'
-   fi
-   if [ "verbose_make" == 'yes' ]
-   then
-      conigure_cmd+=' --with-verbose-make'
-   fi
-   echo_log_eval $configure_cmd
+elif [ "$verbose_make" == 'yes' ]
+then
+   builder='make'
 else
-   if [ "$verbose_make" == 'yes' ]
-   then
-      builder='make'
-      verbose_flag='--verbose'
-   else
-      builder='ninja'
-      verbose_flag=''
-   fi
+   builder='ninja'
+fi
+#
+# verbose_flag
+if [ "$verbose_make" == 'yes' ]
+then
+   verbose_flag='--verbose_make'
+else
+   verbose_flag=''
+fi
+#
+# configure or cmake
+if [ "$use_configure" == 'yes' ]
+then
+   echo_log_eval bin/run_configure.sh \
+      $verbose_flag \
+      $compiler \
+      $standard \
+      $package_vector
+else
    echo_log_eval bin/run_cmake.sh \
       $verbose_flag \
-      --profile_speed \
       $compiler \
       $standard \
       $debug_which \

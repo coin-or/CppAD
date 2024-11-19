@@ -4,6 +4,8 @@
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
+echo $0 $*
+# ----------------------------------------------------------------------------
 if [ ! -e "bin/run_cmake.sh" ]
 then
    echo "bin/run_cmake.sh: must be executed from its parent directory"
@@ -15,22 +17,6 @@ echo_eval() {
    echo $*
    eval $*
 }
-# -----------------------------------------------------------------------------
-# prefix
-eval `grep '^prefix=' bin/get_optional.sh`
-if [[ "$prefix" =~ ^[^/] ]]
-then
-   prefix="$(pwd)/$prefix"
-fi
-echo "prefix=$prefix"
-# -----------------------------------------------------------------------------
-# PKG_CONFIG_PATH
-PKG_CONFIG_PATH="$prefix/share/pkgconfig"
-for libdir in lib lib64
-do
-   PKG_CONFIG_PATH+=":$prefix/$libdir/pkgconfig"
-done
-export PKG_CONFIG_PATH
 # -----------------------------------------------------------------------------
 verbose_make='no'
 standard='c++17'
@@ -213,6 +199,22 @@ then
       exit 1
    fi
 fi
+# -----------------------------------------------------------------------------
+# prefix
+eval `grep '^prefix=' bin/get_optional.sh`
+if [[ "$prefix" =~ ^[^/] ]]
+then
+   prefix="$(pwd)/$prefix"
+fi
+echo "prefix=$prefix"
+# -----------------------------------------------------------------------------
+# PKG_CONFIG_PATH
+PKG_CONFIG_PATH="$prefix/share/pkgconfig"
+for libdir in lib lib64
+do
+   PKG_CONFIG_PATH+=":$prefix/$libdir/pkgconfig"
+done
+export PKG_CONFIG_PATH
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then
