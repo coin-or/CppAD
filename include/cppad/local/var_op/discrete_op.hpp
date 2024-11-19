@@ -123,7 +123,7 @@ namespace CppAD { namespace local { namespace var_op {
 // ---------------------------------------------------------------------------
 // BEGIN_PROTOTYPE
 template <class RecBase>
-inline void forward_dis_op(
+inline void dis_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        r           ,
@@ -154,7 +154,7 @@ inline void forward_dis_op(
 }
 // ---------------------------------------------------------------------------
 template <class RecBase>
-inline void forward_dis_op(
+inline void dis_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        r           ,

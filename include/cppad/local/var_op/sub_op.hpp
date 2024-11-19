@@ -11,7 +11,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subvv_op(
+inline void subvv_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -122,7 +122,7 @@ inline void reverse_subvv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subpv_op(
+inline void subpv_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -237,7 +237,7 @@ inline void reverse_subpv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subvp_op(
+inline void subvp_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,

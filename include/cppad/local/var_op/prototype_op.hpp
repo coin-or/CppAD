@@ -60,14 +60,17 @@ is the k-th order Taylor coefficient corresponding to z.
 \li p <= q
 */
 template <class Base>
-inline void forward_unary1_op(
+inline void unary1_forward_op(
    size_t p           ,
    size_t q           ,
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -335,14 +338,17 @@ the autillary result y.
 \li p <= q
 */
 template <class Base>
-inline void forward_unary2_op(
+inline void unary2_forward_op(
    size_t p           ,
    size_t q           ,
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -641,7 +647,7 @@ is the k-th order Taylor coefficient corresponding to z.
 \li p <=  q
 */
 template <class Base>
-inline void forward_binary_op(
+inline void binary_forward_op(
    size_t        p          ,
    size_t        q          ,
    size_t        i_z        ,
@@ -991,7 +997,7 @@ is the k-th order Taylor coefficient corresponding to z_j.
 \li p <= q
 */
 template <class Base>
-inline void forward_pow_op(
+inline void pow_forward_op(
    size_t        p          ,
    size_t        q          ,
    size_t        i_z        ,

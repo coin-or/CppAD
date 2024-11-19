@@ -426,7 +426,7 @@ void forward0(
          // -------------------------------------------------
 
          case DisOp:
-         var_op::forward_dis_op<RecBase>(p, q, r, i_var, arg, J, taylor);
+         var_op::dis_forward_op<RecBase>(p, q, r, i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 

@@ -280,7 +280,7 @@ is the k-th order Taylor coefficient corresponding to z.
 
 */
 template <class Base>
-inline void forward_cond_op(
+inline void cond_forward_op(
    size_t         p           ,
    size_t         q           ,
    size_t         i_z         ,

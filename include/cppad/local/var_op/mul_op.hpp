@@ -11,7 +11,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_mulvv_op(
+inline void mulvv_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -140,7 +140,7 @@ inline void reverse_mulvv_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_mulpv_op(
+inline void mulpv_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,

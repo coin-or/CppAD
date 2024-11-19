@@ -84,7 +84,7 @@ is the k-th order Taylor coefficient corresponding to the j-th result for z.
 
 */
 template <class Base>
-inline void forward_erf_op(
+inline void erf_forward_op(
    op_code_var   op          ,
    size_t        p           ,
    size_t        q           ,
@@ -113,20 +113,21 @@ inline void forward_erf_op(
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   forward_mulvv_op(p, q, i_z+0, addr, parameter, cap_order, taylor);
+   mulvv_forward_op(p, q, i_z+0, addr, parameter, cap_order, taylor);
 
    // z_1 = - x * x
    addr[0] = arg[1];           // zero
    addr[1] = addr_t( i_z );    // z_0
-   forward_subpv_op(p, q, i_z+1, addr, parameter, cap_order, taylor);
+   subpv_forward_op(p, q, i_z+1, addr, parameter, cap_order, taylor);
 
    // z_2 = exp( - x * x )
-   forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z+1);
+   exp_forward_op(p, q, i_z+2, addr, cap_order, taylor);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[2];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   forward_mulpv_op(p, q, i_z+3, addr, parameter, cap_order, taylor);
+   mulpv_forward_op(p, q, i_z+3, addr, parameter, cap_order, taylor);
 
    // pointers to taylor coefficients for x , z_3, and z_4
    Base* x    = taylor + size_t(arg[0]) * cap_order;

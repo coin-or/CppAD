@@ -23,7 +23,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_powvv_op(
+inline void powvv_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -45,13 +45,13 @@ inline void forward_powvv_op(
    );
 
    // z_0 = log(x)
-   forward_log_op(p, q, i_z, size_t(arg[0]), cap_order, taylor);
+   log_forward_op(p, q, i_z, arg, cap_order, taylor);
 
    // z_1 = z_0 * y
-   addr_t adr[2];
-   adr[0] = addr_t( i_z );
-   adr[1] = arg[1];
-   forward_mulvv_op(p, q, i_z+1, adr, parameter, cap_order, taylor);
+   addr_t addr[2];
+   addr[0] = addr_t( i_z );
+   addr[1] = arg[1];
+   mulvv_forward_op(p, q, i_z+1, addr,  parameter, cap_order, taylor);
 
    // z_2 = exp(z_1)
    // final result for zero order case is exactly the same as for Base
@@ -65,7 +65,9 @@ inline void forward_powvv_op(
       p++;
    }
    if( p <= q )
-      forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+   {  addr[0] = addr_t(i_z+1);
+      exp_forward_op(p, q, i_z+2, addr, cap_order, taylor);
+   }
 }
 /*!
 Multiple directions forward mode Taylor coefficients for op = PowvvOp.
@@ -106,10 +108,10 @@ inline void forward_powvv_op_dir(
    forward_log_op_dir(q, r, i_z, size_t(arg[0]), cap_order, taylor);
 
    // z_1 = y * z_0
-   addr_t adr[2];
-   adr[0] = addr_t( i_z );
-   adr[1] = arg[1];
-   forward_mulvv_op_dir(q, r, i_z+1, adr, parameter, cap_order, taylor);
+   addr_t addr[2];
+   addr[0] = addr_t( i_z );
+   addr[1] = arg[1];
+   forward_mulvv_op_dir(q, r, i_z+1, addr,  parameter, cap_order, taylor);
 
    // z_2 = exp(z_1)
    forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
@@ -198,11 +200,11 @@ inline void reverse_powvv_op(
    );
 
    // z_1 = z_0 * y
-   addr_t adr[2];
-   adr[0] = addr_t( i_z );
-   adr[1] = arg[1];
+   addr_t addr[2];
+   addr[0] = addr_t( i_z );
+   addr[1] = arg[1];
    reverse_mulvv_op(
-   i_z+1, adr, parameter, cap_order, taylor, n_order, partial
+   i_z+1, addr,  parameter, cap_order, taylor, n_order, partial
    );
 
    // z_0 = log(x)
@@ -226,7 +228,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_powpv_op(
+inline void powpv_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -265,14 +267,14 @@ inline void forward_powpv_op(
    );
 
    // z_1 = z_0 * y
-   addr_t adr[2];
+   addr_t addr[2];
    // offset of z_i in taylor (as if it were a parameter); i.e., log(x)
-   adr[0] = addr_t( i_z * cap_order );
+   addr[0] = addr_t( i_z * cap_order );
    // offset of y in taylor (as a variable)
-   adr[1] = arg[1];
+   addr[1] = arg[1];
 
    // Trick: use taylor both for the parameter vector and variable values
-   forward_mulpv_op(p, q, i_z+1, adr, taylor, cap_order, taylor);
+   mulpv_forward_op(p, q, i_z+1, addr,  taylor, cap_order, taylor);
 
    // z_2 = exp(z_1)
    // zero order case exactly same as Base type operation
@@ -283,7 +285,9 @@ inline void forward_powpv_op(
       p++;
    }
    if( p <= q )
-      forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+   {  addr[0] = addr_t(i_z+1);
+      exp_forward_op(p, q, i_z+2, addr, cap_order, taylor);
+   }
 }
 /*!
 Multiple directions forward mode Taylor coefficients for op = PowpvOp.
@@ -334,14 +338,14 @@ inline void forward_powpv_op_dir(
    );
 
    // z_1 = z_0 * y
-   addr_t adr[2];
+   addr_t addr[2];
    // offset of z_0 in taylor (as if it were a parameter); i.e., log(x)
-   adr[0] = addr_t( i_z * num_taylor_per_var );
+   addr[0] = addr_t( i_z * num_taylor_per_var );
    // ofset of y in taylor (as a variable)
-   adr[1] = arg[1];
+   addr[1] = arg[1];
 
    // Trick: use taylor both for the parameter vector and variable values
-   forward_mulpv_op_dir(q, r, i_z+1, adr, taylor, cap_order, taylor);
+   forward_mulpv_op_dir(q, r, i_z+1, addr,  taylor, cap_order, taylor);
 
    // z_2 = exp(z_1)
    forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
@@ -439,12 +443,12 @@ inline void reverse_powpv_op(
    );
 
    // z_1 = z_0 * y
-   addr_t adr[2];
-   adr[0] = addr_t( i_z * cap_order ); // offset of z_0[0] in taylor
-   adr[1] = arg[1];                    // index of y in taylor and partial
+   addr_t addr[2];
+   addr[0] = addr_t( i_z * cap_order ); // offset of z_0[0] in taylor
+   addr[1] = arg[1];                    // index of y in taylor and partial
    // use taylor both for parameter and variable values
    reverse_mulpv_op(
-      i_z+1, adr, taylor, cap_order, taylor, n_order, partial
+      i_z+1, addr,  taylor, cap_order, taylor, n_order, partial
    );
 
    // z_0 = log(x)
@@ -466,7 +470,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_powvp_op(
+inline void powvp_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
