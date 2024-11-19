@@ -61,8 +61,8 @@ is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
 inline void unary1_forward_op(
-   size_t p           ,
-   size_t q           ,
+   size_t        p           ,
+   size_t        q           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
@@ -138,14 +138,17 @@ corresponding to z and the ell-th direction.
 \li q < cap_order
 */
 template <class Base>
-inline void forward_unary1_op_dir(
-   size_t q           ,
-   size_t r           ,
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void unary1_forward_dir(
+   size_t        q           ,
+   size_t        r           ,
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -339,8 +342,8 @@ the autillary result y.
 */
 template <class Base>
 inline void unary2_forward_op(
-   size_t p           ,
-   size_t q           ,
+   size_t        p           ,
+   size_t        q           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
@@ -424,14 +427,17 @@ corresponding to z and the ell-th direction.
 \li q < cap_order
 */
 template <class Base>
-inline void forward_unary2_op_dir(
-   size_t q           ,
-   size_t r           ,
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void unary2_forward_dir(
+   size_t        q           ,
+   size_t        r           ,
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -741,7 +747,7 @@ corresponding to z and the ell-th direction.
 \li 0 < q <  cap_order
 */
 template <class Base>
-inline void forward_binary_op_dir(
+inline void binary_forward_dir(
    size_t        q          ,
    size_t        r          ,
    size_t        i_z        ,
@@ -1104,7 +1110,7 @@ for the ell-th direction.
 \li q < cap_order
 */
 template <class Base>
-inline void forward_pow_op_dir(
+inline void pow_forward_dir(
    size_t        q          ,
    size_t        r          ,
    size_t        i_z        ,

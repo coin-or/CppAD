@@ -83,7 +83,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_powvv_op_dir(
+inline void powvv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -105,16 +105,17 @@ inline void forward_powvv_op_dir(
    );
 
    // z_0 = log(x)
-   forward_log_op_dir(q, r, i_z, size_t(arg[0]), cap_order, taylor);
+   log_forward_dir(q, r, i_z, arg, cap_order, taylor);
 
    // z_1 = y * z_0
    addr_t addr[2];
    addr[0] = addr_t( i_z );
    addr[1] = arg[1];
-   forward_mulvv_op_dir(q, r, i_z+1, addr,  parameter, cap_order, taylor);
+   mulvv_forward_dir(q, r, i_z+1, addr,  parameter, cap_order, taylor);
 
    // z_2 = exp(z_1)
-   forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z+1);
+   exp_forward_dir(q, r, i_z+2, addr, cap_order, taylor);
 }
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = PowvvOp.
@@ -303,7 +304,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_powpv_op_dir(
+inline void powpv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -345,10 +346,11 @@ inline void forward_powpv_op_dir(
    addr[1] = arg[1];
 
    // Trick: use taylor both for the parameter vector and variable values
-   forward_mulpv_op_dir(q, r, i_z+1, addr,  taylor, cap_order, taylor);
+   mulpv_forward_dir(q, r, i_z+1, addr,  taylor, cap_order, taylor);
 
    // z_2 = exp(z_1)
-   forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
+   addr[0] = addr_t(i_z+1);
+   exp_forward_dir(q, r, i_z+2, addr, cap_order, taylor);
 }
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = PowpvOp.
@@ -528,7 +530,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_powvp_op_dir(
+inline void powvp_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,

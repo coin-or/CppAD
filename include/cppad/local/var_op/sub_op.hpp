@@ -37,7 +37,7 @@ inline void subvv_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subvv_op_dir(
+inline void subvv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -153,7 +153,7 @@ inline void subpv_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subpv_op_dir(
+inline void subpv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -268,7 +268,7 @@ inline void subvp_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_subvp_op_dir(
+inline void subvp_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,

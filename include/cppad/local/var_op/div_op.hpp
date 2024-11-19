@@ -45,7 +45,7 @@ inline void divvv_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_divvv_op_dir(
+inline void divvv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -193,7 +193,7 @@ inline void divpv_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_divpv_op_dir(
+inline void divpv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -330,7 +330,7 @@ inline void divvp_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_divvp_op_dir(
+inline void divvp_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,

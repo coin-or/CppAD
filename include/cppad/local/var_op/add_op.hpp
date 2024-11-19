@@ -39,7 +39,7 @@ inline void addvv_forward_op(
 // See dev documentation: forward_unary_op
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_addvv_op_dir(
+inline void addvv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -157,7 +157,7 @@ inline void addpv_forward_op(
 // See dev documentation: forward_unary_op
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_addpv_op_dir(
+inline void addpv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,

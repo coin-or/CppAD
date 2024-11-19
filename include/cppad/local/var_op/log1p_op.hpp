@@ -10,8 +10,8 @@ namespace CppAD { namespace local { namespace var_op {
 
 template <class Base>
 inline void log1p_forward_op(
-   size_t p           ,
-   size_t q           ,
+   size_t        p           ,
+   size_t        q           ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
@@ -54,14 +54,17 @@ inline void log1p_forward_op(
 }
 
 template <class Base>
-inline void forward_log1p_op_dir(
-   size_t q           ,
-   size_t r           ,
-   size_t i_z         ,
-   size_t i_x         ,
-   size_t cap_order   ,
-   Base*  taylor      )
-{
+inline void log1p_forward_dir(
+   size_t        q           ,
+   size_t        r           ,
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
 
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(Log1pOp) == 1 );

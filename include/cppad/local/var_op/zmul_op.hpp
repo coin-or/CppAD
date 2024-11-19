@@ -41,7 +41,7 @@ inline void zmulvv_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_zmulvv_op_dir(
+inline void zmulvv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -165,7 +165,7 @@ inline void zmulpv_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_zmulpv_op_dir(
+inline void zmulpv_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -281,7 +281,7 @@ inline void zmulvp_forward_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void forward_zmulvp_op_dir(
+inline void zmulvp_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,

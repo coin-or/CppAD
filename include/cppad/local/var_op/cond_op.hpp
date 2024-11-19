@@ -474,7 +474,7 @@ is the q-th order Taylor coefficient corresponding to z
 in the ell-th direction.
 */
 template <class Base>
-inline void forward_cond_op_dir(
+inline void cond_forward_dir(
    size_t         q           ,
    size_t         r           ,
    size_t         i_z         ,
