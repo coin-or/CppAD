@@ -81,7 +81,7 @@ void random_setup(
    op2var_vec->resize( num_op );
    var2op_vec->resize( num_var  );
 # ifndef NDEBUG
-   // value of var2op for auxillary variables is num_op (invalid)
+   // value of var2op for auxiliary variables is num_op (invalid)
    for(size_t i_var = 0; i_var < num_var; ++i_var)
       (*var2op_vec)[i_var] = Addr( num_op );
    // value of op2var is num_var (invalid) when NumRes(op) = 0

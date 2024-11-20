@@ -96,7 +96,7 @@ private:
 
    /// Mapping from primary variable index to corresponding operator index.
    /// This is used to traverse sub-graphs of the operation sequence.
-   /// This value is valid (invalid) for primary (auxillary) variables.
+   /// This value is valid (invalid) for primary (auxiliary) variables.
    pod_vector<unsigned char> var2op_vec_;
 
 public:

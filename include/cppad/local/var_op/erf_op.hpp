@@ -43,7 +43,7 @@ highest order of the Taylor coefficients that we are computing.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary results are called y_j have index i_z - j.
+The auxiliary results are called y_j have index i_z - j.
 
 \param arg
 arg[0]: is the variable index corresponding to x.
@@ -180,7 +180,7 @@ z = erf(x) or z = erfc(x).
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary results are called y_j have index i_z - j.
+The auxiliary results are called y_j have index i_z - j.
 
 \param arg
 arg[0]: is the variable index corresponding to x.
@@ -288,7 +288,7 @@ number of directions for the Taylor coefficients that we afre computing.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary results have index i_z - j for j = 0 , ... , 4
+The auxiliary results have index i_z - j for j = 0 , ... , 4
 (and include z).
 
 \param arg
@@ -439,7 +439,7 @@ the partial derivatives with respect to.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary results are called y_j have index i_z - j.
+The auxiliary results are called y_j have index i_z - j.
 
 \param arg
 arg[0]: is the variable index corresponding to x.

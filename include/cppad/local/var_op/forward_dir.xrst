@@ -37,7 +37,7 @@ the variable with index j, the order k, and the direction with index ell.
 
 n_res
 =====
-If this is a unary operator and it has an auxillary result,
+If this is a unary operator and it has an auxiliary result,
 *n_res* is two.
 Other *n_res* is one; see :ref:`var_unary_op@n_res` .
 

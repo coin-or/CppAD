@@ -8,7 +8,6 @@
    autoconf
    automake
    autotools
-   auxillary
    bthread
    cmath
    complier
@@ -318,9 +317,9 @@ This is only a notational change to make the arguments easier to remember.
    mention that it is equal to the number of colors determined by the
    :ref:`sparse_jacobian@work@color_method` .
 #. The :ref:`speed_cppad-name` tests were simplified by removing the printing
-   of auxillary information related to the
+   of auxiliary information related to the
    :ref:`speed_main@Global Options@optimize` option.
-   Future auxillary information will be passed back in a manner similar to
+   Future auxiliary information will be passed back in a manner similar to
    :ref:`link_sparse_jacobian@n_color` for the sparse jacobian test.
 #. :ref:`CppAD_vector@Assignment@Move Semantics`
    were added to the ``CppAD::vector`` assignment operator.

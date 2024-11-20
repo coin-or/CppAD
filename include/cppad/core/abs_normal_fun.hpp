@@ -556,7 +556,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
          case SqrtOp:
          case TanOp:
          case TanhOp:
-         // some of these operators have an auxillary result; e.g.,
+         // some of these operators have an auxiliary result; e.g.,
          // sine and cosine are computed togeather.
          CPPAD_ASSERT_UNKNOWN( NumArg(op) ==  1 );
          CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 || NumRes(op) == 2 );

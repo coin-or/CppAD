@@ -7,7 +7,6 @@
 /*
 {xrst_begin atomic_four_lin_ode_get.hpp}
 {xrst_spell
-   auxillary
 }
 
 atomic_lin_ode Get Routine: Example Implementation
@@ -31,12 +30,12 @@ Prototype
 
 Purpose
 *******
-Retrieves the auxillary information for a an atomic operation that computes
+Retrieves the auxiliary information for a an atomic operation that computes
 the solution of a linear ODE.
 
 call_id
 *******
-This input argument identifies the auxillary information for this ODE.
+This input argument identifies the auxiliary information for this ODE.
 
 r
 *

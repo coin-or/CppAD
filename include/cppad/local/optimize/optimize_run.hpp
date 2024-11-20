@@ -708,7 +708,7 @@ bool optimize_run(
                ) );
             }
             else
-            {  // some of these operators have an auxillary result;
+            {  // some of these operators have an auxiliary result;
                // e.g. sine and cosine are computed together.
                CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
                CPPAD_ASSERT_UNKNOWN( NumRes(op) ==1 || NumRes(op) == 2 );

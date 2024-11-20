@@ -4,7 +4,6 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_unary_op dev}
 {xrst_spell
-   auxillary
    erfc
    expm
    neg
@@ -28,7 +27,7 @@ is the argument to this operator which must be a variable.
 z
 *
 is the primary result for this operator which is also a variable.
-Some unary operators have an auxillary result;
+Some unary operators have an auxiliary result;
 see :ref:`var_unary_op@n_res` below.
 
 Base
@@ -73,9 +72,9 @@ is the variable index corresponding to *z* .
 
 n_res
 *****
-is 2 (1) for unary operators that have (do not have) an auxillary result.
-If an operator has an auxillary result, the variable index for the
-auxillary result is *i_z* - 1 .
+is 2 (1) for unary operators that have (do not have) an auxiliary result.
+If an operator has an auxiliary result, the variable index for the
+auxiliary result is *i_z* - 1 .
 
 arg
 ***
@@ -196,7 +195,6 @@ The Taylor coefficients up to order *q* for variables with index
 ------------------------------------------------------------------------------
 {xrst_begin var_unary_forward_dir dev}
 {xrst_spell
-   auxillary
 }
 
 Multiple Direction Forward Unary Operators

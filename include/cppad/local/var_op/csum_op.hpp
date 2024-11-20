@@ -243,7 +243,6 @@ inline void csum_forward_op(
 /*
 {xrst_begin var_csum_forward_dir dev}
 {xrst_spell
-   auxillary
 }
 
 Multiple Direction Forward Mode Cumulative Summation Operation

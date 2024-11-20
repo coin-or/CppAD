@@ -149,7 +149,7 @@ inline void cosh_reverse_op(
    const Base* c  = taylor  + i_z * cap_order; // called z in doc
    Base* pc       = partial + i_z * n_order;
 
-   // Taylor coefficients and partials corresponding to auxillary result
+   // Taylor coefficients and partials corresponding to auxiliary result
    const Base* s  = c  - cap_order; // called y in documentation
    Base* ps       = pc - n_order;
 

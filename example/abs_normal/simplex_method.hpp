@@ -137,10 +137,10 @@ bool simplex_method(
    // variables (columns) in the Tableau:
    // x: the original primary variables with size n
    // s: slack variables, one for each equation
-   // a: auxillary variables, one for each negative right hand size
+   // a: auxiliary variables, one for each negative right hand size
    // r: right hand size for equations
    //
-   // Determine number of auxillary variables
+   // Determine number of auxiliary variables
    size_t na = 0;
    for(size_t i = 0; i < ne; i++)
    {  if( b[i] > 0.0 )
@@ -164,7 +164,7 @@ bool simplex_method(
 
    // For i = 0 , ... , m-1, place the Equations
    // sum_j A_{i,j} * x_j + b_i <= 0 in Tableau
-   na = 0; // use as index of next auxillary variable
+   na = 0; // use as index of next auxiliary variable
    for(size_t i = 0; i < ne; i++)
    {  if( b[i] > 0.0)
       {  // convert to - sum_j A_{i,j} x_j - b_i >= 0
@@ -172,7 +172,7 @@ bool simplex_method(
             T[i * nc + j] = - A[i * nx + j];
          // slack variable has negative coefficient
          T[i * nc + (nx + i)] = -1.0;
-         // auxillary variable is basic for this constraint
+         // auxiliary variable is basic for this constraint
          T[i * nc + (nx + ne + na)] = 1.0;
          basic[nx + ne + na]        = true;
          // right hand side
@@ -205,8 +205,8 @@ bool simplex_method(
    for(size_t j = 0; j < na; j++)
       T[(ne + 1) * nc + (nx + ne + j)] = -1.0;
    //
-   // fix auxillary objective so coefficients in w
-   // for auxillary variables are zero
+   // fix auxiliary objective so coefficients in w
+   // for auxiliary variables are zero
    for(size_t k = 0; k < na; k++)
    {  size_t ja  = nx + ne + k;
       size_t ia  = ne;
@@ -228,7 +228,7 @@ bool simplex_method(
    // index of current objective
    size_t iobj = ne;  // original objective z
    if( na > 0 )
-      iobj = ne + 1; // auxillary objective w
+      iobj = ne + 1; // auxiliary objective w
    //
    // simplex interations
    for(size_t itr = 0; itr < maxitr; itr++)
@@ -254,7 +254,7 @@ bool simplex_method(
       {  CppAD::abs_print_mat("x", nx, 1, xout);
          std::cout << "itr = " << itr;
          if( iobj > ne )
-            std::cout << ", auxillary objective w = ";
+            std::cout << ", auxiliary objective w = ";
          else
             std::cout << ", objective z = ";
          std::cout << T[iobj * nc + (nc - 1)] << "\n";
@@ -263,7 +263,7 @@ bool simplex_method(
       // number of variables depends on objective
       size_t nv = nx + ne;   // (x, s)
       if( iobj == ne + 1 )
-      {  // check if we have solved the auxillary problem
+      {  // check if we have solved the auxiliary problem
          bool done = true;
          for(size_t k = 0; k < na; k++)
             if( basic[nx + ne + k] )
@@ -312,7 +312,7 @@ bool simplex_method(
          }
       }
       if( imin == ne )
-      {  // not auxillary objective
+      {  // not auxiliary objective
          CPPAD_ASSERT_UNKNOWN( iobj == ne );
          if( level > 0 ) std::cout
             << "end simplex_method: objective is unbounded below\n";

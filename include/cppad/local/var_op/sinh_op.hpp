@@ -150,7 +150,7 @@ inline void sinh_reverse_op(
    const Base* s  = taylor  + i_z * cap_order; // called z in doc
    Base* ps       = partial + i_z * n_order;
 
-   // Taylor coefficients and partials corresponding to auxillary result
+   // Taylor coefficients and partials corresponding to auxiliary result
    const Base* c  = s  - cap_order; // called y in documentation
    Base* pc       = ps - n_order;
 

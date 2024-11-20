@@ -157,7 +157,7 @@ inline void asinh_reverse_op(
    const Base* z  = taylor  + i_z * cap_order;
    Base* pz       = partial + i_z * n_order;
 
-   // Taylor coefficients and partials corresponding to auxillary result
+   // Taylor coefficients and partials corresponding to auxiliary result
    const Base* b  = z  - cap_order; // called y in documentation
    Base* pb       = pz - n_order;
 

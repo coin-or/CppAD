@@ -305,7 +305,7 @@ highest order of the Taylor coefficients that we are computing.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary result is called y has index i_z - 1.
+The auxiliary result is called y has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
@@ -325,7 +325,7 @@ is the k-th order Taylor coefficient corresponding to z.
 \n
 \b Input: <code>taylor [ ( i_z - 1) * cap_order + k ]</code>
 for k = 0 , ... , p-1,
-is the k-th order Taylor coefficient corresponding to the auxillary result y.
+is the k-th order Taylor coefficient corresponding to the auxiliary result y.
 \n
 \b Output: <code>taylor [ i_z * cap_order + k ]</code>,
 for k = p , ... , q,
@@ -377,7 +377,7 @@ number of directions for Taylor coefficients that we are computing.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary result is called y has index i_z - 1.
+The auxiliary result is called y has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
@@ -414,7 +414,7 @@ is the zero order Taylor coefficient for all directions and
 for k = 1 , ... , q-1,
 ell = 0, ..., r-1,
 is the k-th order Taylor coefficient
-corresponding to the auxillary result y and the ell-th direction.
+corresponding to the auxiliary result y and the ell-th direction.
 \n
 \b Output:
 <code>taylor [ i_z * tpv + (q-1)*r + ell + 1]</code>,
@@ -455,7 +455,7 @@ using AD< Base > and computations by this routine are done using type
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor corresponding to z.
-The auxillary result is called y and has index i_z - 1.
+The auxiliary result is called y and has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
@@ -517,7 +517,7 @@ we are computing the partial derivatives with respect to.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in taylor to z.
-The auxillary result is called y and has index i_z - 1.
+The auxiliary result is called y and has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operation;
@@ -538,7 +538,7 @@ is the k-th order Taylor coefficient corresponding to z.
  taylor [ ( i_z - 1) * cap_order + k ]
 for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to
-the auxillary variable y.
+the auxiliary variable y.
 
 \param n_order
 number of colums in the matrix containing all the partial derivatives.
@@ -558,7 +558,7 @@ the k-th order Taylor coefficient for z.
 \b Input: partial [ ( i_z - 1) * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
-the k-th order Taylor coefficient for the auxillary variable y.
+the k-th order Taylor coefficient for the auxiliary variable y.
 \n
 \b Output: partial [ i_x * n_order + k ]
 for k = 0 , ... , d
@@ -897,7 +897,7 @@ the k-th order Taylor coefficient for x.
 \b Input: If y is a variable, partial [ arg[1] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
-the k-th order Taylor coefficient for the auxillary variable y.
+the k-th order Taylor coefficient for the auxiliary variable y.
 \n
 \b Output: If x is a variable, partial [ arg[0] * n_order + k ]
 for k = 0 , ... , d
@@ -1275,7 +1275,7 @@ the k-th order Taylor coefficient for x.
 \b Input: If y is a variable, partial [ arg[1] * n_order + k ]
 for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
-the k-th order Taylor coefficient for the auxillary variable y.
+the k-th order Taylor coefficient for the auxiliary variable y.
 \n
 \b Output: If x is a variable, partial [ arg[0] * n_order + k ]
 for k = 0 , ... , d

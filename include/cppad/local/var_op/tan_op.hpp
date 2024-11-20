@@ -146,7 +146,7 @@ inline void tan_reverse_op(
    const Base* z  = taylor  + i_z * cap_order; // called z in doc
    Base* pz       = partial + i_z * n_order;
 
-   // Taylor coefficients and partials corresponding to auxillary result
+   // Taylor coefficients and partials corresponding to auxiliary result
    const Base* y  = z  - cap_order; // called y in documentation
    Base* py       = pz - n_order;
 

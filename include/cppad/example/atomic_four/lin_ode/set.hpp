@@ -7,7 +7,6 @@
 /*
 {xrst_begin atomic_four_lin_ode_set.hpp}
 {xrst_spell
-   auxillary
 }
 
 atomic_lin_ode Set Routine: Example Implementation
@@ -31,7 +30,7 @@ Prototype
 
 Purpose
 *******
-Stores the auxillary information for a an atomic operation that computes
+Stores the auxiliary information for a an atomic operation that computes
 the solution of a linear ODE.
 
 r
