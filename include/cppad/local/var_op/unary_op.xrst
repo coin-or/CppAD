@@ -9,8 +9,8 @@
    neg
 }
 
-Unary Operators
-###############
+Unary Variable Operators
+########################
 All these operators have the same prototype and could be implemented as
 virtual functions for a unary base case.
 Compilers can not optimize across virtual function calls and testing indicates
@@ -18,7 +18,7 @@ that a virtual function implementation is significant slower.
 
 User Syntax
 ***********
-| *z* = *Op* ( *x* )
+| *z* = *Fun* ( *x* )
 
 x
 *
@@ -35,14 +35,14 @@ Base
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by these operators done using type Base.
 
-Op
-**
+Fun
+***
 
 .. csv-table::
    :widths: auto
    :header-rows: 1
 
-   op_code,   Op,        z
+   op_code,    Fun,      z
    AbsOp,     fabs,      absolute value of *x*
    AcosOp,    acos,      inverse cosine of *x*
    AcoshOp,   acosh,     inverse hyperbolic cosine of *x*
@@ -91,20 +91,20 @@ Prototype
 *********
 {xrst_code cpp}
 template <class Base>
-inline void Op_forward_0(
+inline void Fun_forward_0(
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
 {xrst_code}
 
-Base, x, z, Op, i_z, n_res, arg
-*******************************
+Base, x, z, Fun, i_z, n_res, arg
+********************************
 see
 :ref:`var_unary_op@Base` ,
 :ref:`var_unary_op@x` ,
 :ref:`var_unary_op@z` ,
-:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@Fun` ,
 :ref:`var_unary_op@i_z` ,
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
@@ -140,7 +140,7 @@ Prototype
 *********
 {xrst_code cpp}
 template <class Base>
-inline void Op_forward_op(
+inline void Fun_forward_op(
    size_t        p           ,
    size_t        q           ,
    size_t        i_z         ,
@@ -149,13 +149,13 @@ inline void Op_forward_op(
    Base*         taylor      )
 {xrst_code}
 
-Base, x, z, Op, i_z, n_res, arg
-*******************************
+Base, x, z, Fun, i_z, n_res, arg
+********************************
 see
 :ref:`var_unary_op@Base` ,
 :ref:`var_unary_op@x` ,
 :ref:`var_unary_op@z` ,
-:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@Fun` ,
 :ref:`var_unary_op@i_z` ,
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
@@ -166,7 +166,7 @@ is lowest order of the Taylor coefficient that we are computing.
 
 q
 *
-is highest order of the Taylor coefficient that we are computing and
+is highest order of the Taylor coefficient that we are computing,
 *p* <= *q* .
 
 cap_order
@@ -204,7 +204,7 @@ Prototype
 *********
 {xrst_code cpp}
 template <class Base>
-inline void Op_forward_dir(
+inline void Fun_forward_dir(
    size_t        q           ,
    size_t        r           ,
    size_t        i_z         ,
@@ -213,13 +213,13 @@ inline void Op_forward_dir(
    Base*         taylor      )
 {xrst_code}
 
-Base, x, z, Op, i_z, n_res, arg
-*******************************
+Base, x, z, Fun, i_z, n_res, arg
+********************************
 see
 :ref:`var_unary_op@Base` ,
 :ref:`var_unary_op@x` ,
 :ref:`var_unary_op@z` ,
-:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@Fun` ,
 :ref:`var_unary_op@i_z` ,
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
@@ -248,7 +248,7 @@ Prototype
 *********
 {xrst_code cpp}
 template <class Base>
-inline void Op_reverse_op(
+inline void Fun_reverse_op(
    size_t        i_z          ,
    const addr_t* arg          ,
    size_t        cap_order    ,
@@ -257,13 +257,13 @@ inline void Op_reverse_op(
    Base*         partial      )
 {xrst_code}
 
-Base, x, z, Op, i_z, n_res, arg
-*******************************
+Base, x, z, Fun, i_z, n_res, arg
+********************************
 see
 :ref:`var_unary_op@Base` ,
 :ref:`var_unary_op@x` ,
 :ref:`var_unary_op@z` ,
-:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@Fun` ,
 :ref:`var_unary_op@i_z` ,
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`

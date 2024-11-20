@@ -75,13 +75,15 @@ Unary
 *****
 see :ref:`var_unary_op-name`
 
-Binary And Compare
-******************
-An operator commented as binary or compare below
-has two arguments.
-If it is a compare operator it has no result variables
+Binary
+******
+see :ref:`var_binary_op-name`
+
+Compare
+*******
+An operator commented as compare below
+has two arguments and no result
 (the result is true or false but not a variable).
-Otherwise, it has one result variable.
 These operators use the following convention for the operator ending
 and the left argument (arg[0]) and right argument (arg[1]):
 
@@ -325,6 +327,7 @@ is the text index corresponding to *after* .
 
 {xrst_toc_table
    include/cppad/local/var_op/unary_op.xrst
+   include/cppad/local/var_op/binary_op.xrst
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp
    include/cppad/local/var_op/csum_op.hpp
