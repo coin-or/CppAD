@@ -299,7 +299,7 @@ taylor
 ******
 
 num_taylor_per_var
-******************
+==================
 We use the notation num_taylor_per_var = (cap_order-1) * r + 1 .
 
 Input

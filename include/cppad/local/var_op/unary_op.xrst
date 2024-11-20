@@ -2,398 +2,289 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-/*
-{xrst_begin forward_unary_op dev}
+{xrst_begin_parent var_unary_op dev}
 {xrst_spell
    auxillary
+   erfc
+   expm
+   neg
 }
 
-Variable Forward Unary Operators
-################################
+Unary Operators
+###############
+All these operators have the same prototype and could be implemented as
+virtual functions for a unary base case.
+Compilers can not optimize across virtual function calls and testing indicates
+that a virtual function implementation is significant slower.
 
-Syntax
-******
-| ``forward_`` *name* _ ``op`` ( *p* , *q* , *i_z* , *i_x* , *cap_order* , *taylor* )
-
-Assumption
-**********
-The operator corresponding to *name* has one argument and one result.
-
-Notation
-********
+User Syntax
+***********
+| *z* = *Op* ( *x* )
 
 x
-=
-We use *x* to denote the argument of this unary operation.
+*
+is the argument to this operator which must be a variable.
 
 z
-=
-We use *z* to denote the primary result of this unary operation.
-If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
-we call the other the auxillary result.
+*
+is the primary result for this operator which is also a variable.
+Some unary operators have an auxillary result;
+see :ref:`var_unary_op@n_res` below.
 
 Base
 ****
-is the base type for the operator; i.e., this operation was recorded
-using ``AD`` < *Base* > and computations by this routine are done using
-type *Base* .
+base type for the operator; i.e., this operation was recorded
+using AD<Base> and computations by these operators done using type Base.
+
+Op
+**
+
+.. csv-table::
+   :widths: auto
+   :header-rows: 1
+
+   op_code,   Op,        z
+   AbsOp,     fabs,      absolute value of *x*
+   AcosOp,    acos,      inverse cosine of *x*
+   AcoshOp,   acosh,     inverse hyperbolic cosine of *x*
+   AsinOp,    asin,      inverse sine of *x*
+   AsinhOp,   asinh,     inverse hyperbolic sine of *x*
+   AtanOp,    atan,      inverse tangent  of *x*
+   AtanhOp,   atanh,     inverse hyperbolic tangent of *x*
+   CosOp,     cos,       cosine of *x*
+   CoshOp,    cosh,      hyperbolic cosine of *x*
+   ErfOp,     erf,       error function of *x*
+   ErfcOp,    erfc,      complementary error function of *x*
+   ExpOp,     exp,       exponential of *x*
+   Expm1Op,   expm1,     exponential of *x* minus one
+   Log1pOp,   log1p,     logarithm of 1 + *x*
+   LogOp,     log,       logarithm of *x*
+   NegOp,     negative,  minus *x*
+   SignOp,    sign,      sign of *x*
+   SinOp,     sin,       sine of *x*
+   SinhOp,    sinh,      hyperbolic sine of *x*
+   SqrtOp,    sqrt,      square root of *x*
+   TanOp,     tan,       tangent of *x*
+   TanhOp,    tanh,      hyperbolic tangent of *x*
+
+i_z
+***
+is the variable index corresponding to *z* .
+
+n_res
+*****
+is 2 (1) for unary operators that have (do not have) an auxillary result.
+If an operator has an auxillary result, the variable index for the
+auxillary result is *i_z* - 1 .
+
+arg
+***
+*arg* [0] is the variable index corresponding to *x* .
+
+{xrst_end var_unary_op}
+------------------------------------------------------------------------------
+{xrst_begin var_unary_forward_0 dev}
+
+Zero Order Forward Unary Variable Operators
+###########################################
+
+Prototype
+*********
+{xrst_code cpp}
+template <class Base>
+inline void Op_forward_0(
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{xrst_code}
+
+Base, x, z, Op, i_z, n_res, arg
+*******************************
+see
+:ref:`var_unary_op@Base` ,
+:ref:`var_unary_op@x` ,
+:ref:`var_unary_op@z` ,
+:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@i_z` ,
+:ref:`var_unary_op@n_res` ,
+:ref:`var_unary_op@arg`
+
+cap_order
+*********
+number of columns in the matrix containing the Taylor coefficients.
+
+taylor
+******
+The Taylor coefficient corresponding to variable *i* and order *k* is
+
+   *taylor* [ *i* * *cap_order* + *k*  ]
+
+Input
+=====
+The zero order Taylor coefficients
+for variables with index *i* less than *i_z* - *n_res* .
+
+Output
+======
+The zero order Taylor coefficients for variables with index
+*i_z* and *i_z* - *n_res* .
+
+{xrst_end var_unary_forward_0}
+------------------------------------------------------------------------------
+{xrst_begin var_unary_forward_op dev}
+
+General Forward Unary Variable Operators
+########################################
+
+Prototype
+*********
+{xrst_code cpp}
+template <class Base>
+inline void Op_forward_op(
+   size_t        p           ,
+   size_t        q           ,
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{xrst_code}
+
+Base, x, z, Op, i_z, n_res, arg
+*******************************
+see
+:ref:`var_unary_op@Base` ,
+:ref:`var_unary_op@x` ,
+:ref:`var_unary_op@z` ,
+:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@i_z` ,
+:ref:`var_unary_op@n_res` ,
+:ref:`var_unary_op@arg`
 
 p
 *
-This argument has type ``size_t`` and
 is lowest order of the Taylor coefficient that we are computing.
 
 q
 *
-The argument *q >* = *p* has type ``size_t`` and
-is highest order of the Taylor coefficient that we are computing.
-
-i_z
-***
-This argument has type ``size_t`` and
-is the variable index corresponding to the primary result for this operation;
-i.e. the row index in taylor corresponding to *z* .
-If this operator has an auxillary result, its variable index is
-*i_z* ``- 1`` .
-
-i_x
-***
-This argument has type ``size_t`` and
-is variable index corresponding to the argument for this operator;
-i.e. the row index in taylor corresponding to ``x`` .
+is highest order of the Taylor coefficient that we are computing and
+*p* <= *q* .
 
 cap_order
 *********
-This argument has type ``size_t`` and
-is the maximum number of orders that will fit in *taylor* .
+number of columns in the matrix containing the Taylor coefficients.
 
 taylor
 ******
-This argument has type *Base* * .
-The Taylor coefficient corresponding to
-variable *i* and order *k* is
+The Taylor coefficient corresponding to variable *i* and order *k* is
 
    *taylor* [ *i* * *cap_order* + *k*  ]
 
-.
-
 Input
 =====
-
-#. The Taylor coefficients for variable *i_x* up to order *q* .
-#. The Taylor coefficients for variable *i_z* up to order *p* ``-1`` .
-#. If this operator has an auxillary result,
-   the Taylor coefficients for variable *i_z* ``-1``
-   up to order *p* ``-1`` .
+#. The Taylor coefficients up to order *q*
+   for variables with index *i* less than *i_z* - *n_res* .
+#. The Taylor coefficients up to order *p* - 1
+   for variables with index *i_z* and *i_z* - *n_res* .
 
 Output
 ======
-The Taylor coefficients for variable *i_z* up to order *q* .
+The Taylor coefficients up to order *q* for variables with index
+*i_z* and *i_z* - *n_res* .
 
-{xrst_end forward_unary_op}
+{xrst_end var_unary_forward_op}
 ------------------------------------------------------------------------------
-{xrst_begin forward_unary_op_dir dev}
+{xrst_begin var_unary_forward_dir dev}
 {xrst_spell
    auxillary
-   tpv
 }
 
 Multiple Direction Forward Unary Operators
 ##########################################
 
-Syntax
-******
-``forward_`` *name* _ ``op`` ( *q* , *r* , *i_z* , *i_x* , *cap_order* , *taylor* )
+Prototype
+*********
+{xrst_code cpp}
+template <class Base>
+inline void Op_forward_dir(
+   size_t        q           ,
+   size_t        r           ,
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   size_t        cap_order   ,
+   Base*         taylor      )
+{xrst_code}
 
-Assumption
-**********
-The operator corresponding to *name* has one argument and one result.
-
-Notation
-********
-
-x
-=
-We use *x* to denote the argument of this unary operation.
-
-z
-=
-We use *z* to denote the primary result of this unary operation.
-If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
-we call the other the auxillary result.
-
-Base
-****
-is the base type for the operator; i.e., this operation was recorded
-using ``AD`` < *Base* > and computations by this routine are done using
-type *Base* .
+Base, x, z, Op, i_z, n_res, arg
+*******************************
+see
+:ref:`var_unary_op@Base` ,
+:ref:`var_unary_op@x` ,
+:ref:`var_unary_op@z` ,
+:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@i_z` ,
+:ref:`var_unary_op@n_res` ,
+:ref:`var_unary_op@arg`
 
 q
 *
-This argument has type ``size_t`` and
-is the order of the Taylor coefficients that we are computing.
-Furthermore *q*  > 0 and *q* < *cap_order* .
+order of the Taylor coefficients that we are computing.
 
 r
 *
-This argument has type ``size_t`` and
-is number of directions for Taylor coefficients that we are computing.
+number of directions that we are computing the Taylor coefficient for.
 
-i_z
-***
-This argument has type ``size_t`` and
-is the variable index corresponding to the primary result for this operation;
-i.e. the row index in taylor corresponding to *z* .
-If this operator has an auxillary result, its variable index is
-*i_z* ``- 1`` .
-
-i_x
-***
-This argument has type ``size_t`` and
-is variable index corresponding to the argument for this operator;
-i.e. the row index in taylor corresponding to ``x`` .
-
-cap_order
-*********
-This argument has type ``size_t`` and
-is the maximum number of orders that will fit in *taylor* .
-The zero order Taylor coefficient for a variable
-is the same for all directions.  We use the notation
-
-   *tpv* = ( *cap_order* ``- 1`` ) * ``r`` + 1
-
-which is the number of Taylor coefficients per variable.
-
-taylor
-******
-This argument has type *Base* * .
-The zero order Taylor coefficient for variable *i* is
-
-   *taylor* [ *i* * *tpv*  + 0 ]
-
-.
-For *k > 0* ,
-and *ell* = 0 , .. , *r-1* ,
-The Taylor coefficient for variable *i* ,
-order *k* , and direction *ell* is
-
-   *taylor* [ *i* * *tpv* + ( *k* ``- 1`` ) * *r* + *ell*  + 1 ]
-
-.
-
-Input
-*****
-
-#. The Taylor coefficients for variable *i_x* up to order *q*
-   and all *r* directions.
-#. The Taylor coefficients for variable *i_z* up to order *q-1*
-   and all *r* directions.
-#. If this operator has an auxillary result,
-   the Taylor coefficients for variable *i_z* ``-1``
-   up to order *q* ``-1`` .
-
-Output
-******
-The Taylor coefficients for variable *i_z* up to order *q*
-and all *r* directions.
-
-{xrst_end forward_unary_op_dir}
--------------------------------------------------------------------------------
-/*
-{xrst_begin forward_unary_op_0 dev}
-{xrst_spell
-   auxillary
+{xrst_comment document cap_order, taylor}
+{xrst_template ,
+   include/cppad/local/var_op/forward_dir.xrst
 }
 
-Zero Order Forward Unary Operators
-##################################
-
-Syntax
-******
-``forward_`` *name* _ ``op_0`` ( *i_z* , *i_x* , *cap_order* , *taylor* )
-
-Assumption
-**********
-The operator corresponding to *name* has one argument and one result.
-
-Notation
-********
-
-x
-=
-We use *x* to denote the argument of this unary operation.
-
-z
-=
-We use *z* to denote the primary result of this unary operation.
-If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
-we call the other the auxillary result.
-
-Base
-****
-is the base type for the operator; i.e., this operation was recorded
-using ``AD`` < *Base* > and computations by this routine are done using
-type *Base* .
-
-i_z
-***
-This argument has type ``size_t`` and
-is the variable index corresponding to the primary result for this operation;
-i.e. the row index in taylor corresponding to *z* .
-If this operator has an auxillary result, its variable index is
-*i_z* ``- 1`` .
-
-i_x
-***
-This argument has type ``size_t`` and
-is variable index corresponding to the argument for this operator;
-i.e. the row index in taylor corresponding to ``x`` .
-
-cap_order
-*********
-The argument *cap_order*  > 0 has type ``size_t`` and
-is the maximum number of orders that will fit in *taylor* .
-
-taylor
-******
-This argument has type *Base* * .
-The Taylor coefficient corresponding to
-variable *i* and order *k* is
-
-   *taylor* [ *i* * *cap_order* + *k*  ]
-
-.
-
-Input
-=====
-The zero order Taylor coefficients for variable *i_x* .
-
-Output
-======
-The zero order Taylor coefficients for variable *i_z* .
-If this operator has an auxillary result,
-the Taylor coefficient for variable *i_z* ``-1`` .
-
-{xrst_end forward_unary_op_0}
+{xrst_end var_unary_forward_dir}
 ------------------------------------------------------------------------------
-/*
-{xrst_begin reverse_unary_op dev}
-{xrst_spell
-   auxillary
-}
+{xrst_begin var_unary_reverse_op dev}
 
-Reverse Unary Operators
-#######################
+Reverse Mode Unary Operators
+############################
 
-Syntax
-******
+Prototype
+*********
+{xrst_code cpp}
+template <class Base>
+inline void Op_reverse_op(
+   size_t        i_z          ,
+   const addr_t* arg          ,
+   size_t        cap_order    ,
+   const Base*   taylor       ,
+   size_t        n_order      ,
+   Base*         partial      )
+{xrst_code}
 
-| ``reverse_`` *name* _ ``op`` (
-| |tab| *d* , *i_z* , *i_x* , *cap_order* , *taylor* , *nc_partial* , *partial*
-| )
-
-Assumption
-**********
-The operator corresponding to *name* has one argument and one result.
-
-Notation
-********
-
-x
-=
-We use *x* to denote the argument of this unary operation.
-
-z
-=
-We use *z* to denote the primary result of this unary operation.
-If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
-we call the other the auxillary result.
-
-G
-=
-We use :math:`G(z, x, w, \ldots )` to denote a scalar valued function of the
-variables up to variable index *i_z* .
-
-H
-=
-We use :math:`H(x, w, \ldots )` to denote the scalar valued function of the
-variables up to variable index *i_z* ``-1`` defined by
-
-.. math::
-
-   H(x, w, \ldots ) = G [ z(x), x, w, \ldots ) ]
-
-Base
-****
-is the base type for the operator; i.e., this operation was recorded
-using ``AD`` < *Base* > and computations by this routine are done using
-type *Base* .
-
-d
-*
-This argument has type ``size_t`` and
-is this highest order Taylor coefficient that we are computing
-partial derivatives with respect to.
-Furthermore *d* < *cap_order* and *d* < *nc_partial* .
-
-i_z
-***
-This argument has type ``size_t`` and
-is the variable index corresponding to the primary result for this operation;
-i.e. the row index in taylor corresponding to *z* .
-If this operator has an auxillary result, its variable index is
-*i_z* ``- 1`` .
-
-i_x
-***
-This argument has type ``size_t`` and
-is variable index corresponding to the argument for this operator;
-i.e. the row index in taylor corresponding to ``x`` .
-Furthermore *i_x* < *i_z* .
+Base, x, z, Op, i_z, n_res, arg
+*******************************
+see
+:ref:`var_unary_op@Base` ,
+:ref:`var_unary_op@x` ,
+:ref:`var_unary_op@z` ,
+:ref:`var_unary_op@Op` ,
+:ref:`var_unary_op@i_z` ,
+:ref:`var_unary_op@n_res` ,
+:ref:`var_unary_op@arg`
 
 cap_order
 *********
-This argument has type ``size_t`` and
-is the maximum number of orders that will fit in *taylor* .
+number of columns in the matrix containing the Taylor coefficients.
 
 taylor
 ******
-This argument has type ``const`` *Base* * .
-The Taylor coefficient corresponding to
-variable *i* and order *k* is
+The Taylor coefficient corresponding to variable *i* and order *k* is
 
    *taylor* [ *i* * *cap_order* + *k*  ]
 
-.
+{xrst_comment document n_order, partial}
+{xrst_template ;
+   include/cppad/local/var_op/reverse.xrst
+   @x, y@ ; x
+}
 
-nc_partial
-**********
-This argument has type ``size_t`` and
-is the number of columns in the partial array.
-
-partial
-*******
-This argument has type *Base* * .
-The partial derivative w.r.t. variable *i* and
-Taylor coefficient order *k* is
-
-   *partial* [ *i* * *nc_partial* + ``k`` ]
-
-for *k* = 0 , ..., *d* .
-
-Input
-=====
-For variable *i* = 0 ,..., *i_z* ,
-*partial* contains the
-partial derivatives of :math:`G(z, x, w, \ldots)`.
-
-Output
-======
-The array *partial* contains the
-partial derivatives of :math:`H(x, w, \ldots)`.
-The partial derivative for variable *i_z* is unspecified.
-If this operator has an auxillary result,
-The partial derivative for variable *i_z* ``- 1`` is unspecified.
-
-{xrst_end reverse_unary_op}
+{xrst_end var_unary_reverse_op}
 ------------------------------------------------------------------------------

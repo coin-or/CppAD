@@ -73,9 +73,7 @@ represented using the type ``addr_t`` .
 
 Unary
 *****
-An operator commented as unary below
-has one argument (arg[0]) and it is a variable index.
-All of these operators have one result variable.
+see :ref:`var_unary_op-name`
 
 Binary And Compare
 ******************
@@ -326,6 +324,7 @@ is the text index corresponding to *after* .
 {xrst_comment ------------------------------------------------------------- }
 
 {xrst_toc_table
+   include/cppad/local/var_op/unary_op.xrst
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp
    include/cppad/local/var_op/csum_op.hpp

@@ -243,7 +243,7 @@ inline void csum_forward_op(
 /*
 {xrst_begin var_csum_forward_dir dev}
 {xrst_spell
-   cpv
+   auxillary
 }
 
 Multiple Direction Forward Mode Cumulative Summation Operation
@@ -287,45 +287,10 @@ parameter
 *********
 is the parameter vector for this operation sequence.
 
-cap_order
-*********
-number of columns in the matrix containing all the Taylor coefficients.
-
-taylor
-******
-
-cpv
-===
-For each variable there is one Taylor coefficient of order zero
-and *r* coefficients for orders greater than zero.
-The taylor coefficients capacity per variable is::
-
-   cpv = (cap_order - 1) * r + 1
-
-(j, k, ell)
-===========
-For j a variable index, k an order, and ell a direction index::
-
-   if k == 0
-      (j, k, ell) = j * cpv + (k-1) * r
-   else
-      (j, k, ell) = j * cpv + (k-1) * r + 1 + ell
-
-The value taylor[ (j, k, ell) ] is the
-Taylor coefficient corresponding to
-the variable with index j, the order k, and the direction with index ell.
-
-
-Input
-=====
-#. For j = 0, ..., i_z-1, k = 0 , ... , q, ell = 0 , ... , r-1,
-   taylor [ (j, k, ell) ]
-#. For k = 0 , ... , q-1, ell = 0 , ... , r-1,
-   taylor [ (i_z, k, ell) ]
-
-Output
-======
-For ell = 0, ... , r-1, taylor [ (i_z, q, ell) ]
+{xrst_comment cap_order, taylor}
+{xrst_template ,
+   include/cppad/local/var_op/forward_dir.xrst
+}
 
 
 {xrst_end var_csum_forward_dir}

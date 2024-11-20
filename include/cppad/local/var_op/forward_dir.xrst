@@ -1,0 +1,55 @@
+{xrst_comment
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+SPDX-FileContributor: 2024 Bradley M. Bell
+
+This xrst template file documents the multiple directrion forward arguments:
+   cap_order, taylor
+}
+
+cap_order
+*********
+number of columns in the matrix containing all the Taylor coefficients.
+
+taylor
+******
+
+per_variable
+============
+For each variable there is one Taylor coefficient of order zero
+and *r* coefficients for orders greater than zero.
+The taylor coefficients capacity per variable is::
+
+   per_variable = (cap_order - 1) * r + 1
+
+(j, k, ell)
+===========
+For j a variable index, k an order, and ell a direction index::
+
+   if k == 0
+      (j, k, ell) = j * per_variable + (k-1) * r
+   else
+      (j, k, ell) = j * per_variable + (k-1) * r + 1 + ell
+
+The value taylor[ (j, k, ell) ] is the
+Taylor coefficient corresponding to
+the variable with index j, the order k, and the direction with index ell.
+
+n_res
+=====
+If this is a unary operator and it has an auxillary result,
+*n_res* is two.
+Other *n_res* is one; see :ref:`var_unary_op@n_res` .
+
+Input
+=====
+#. For j = 0, ..., i_z-n_res, k = 0 , ... , q, ell = 0 , ... , r-1,
+   taylor [ (j, k, ell) ]
+#. For k = 0 , ... , q-1, ell = 0 , ... , r-1,
+   taylor [ (i_z, k, ell) ]
+   (if n_res is two,  taylor [ (i_z-1, k, ell) ] is also an input).
+
+Output
+======
+For ell = 0, ... , r-1, taylor [ (i_z, q, ell) ].
+If n_res is two, taylor[ (i_z-1, q, ell) ] is also an output.
