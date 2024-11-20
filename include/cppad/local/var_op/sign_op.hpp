@@ -89,15 +89,14 @@ inline void sign_forward_0(
 
 // See dev documentation: reverse_unary_op
 template <class Base>
-inline void reverse_sign_op(
-   size_t      i_z          ,
-   size_t      i_x          ,
-   size_t      cap_order    ,
-   const Base* taylor       ,
-   size_t      n_order      ,
-   Base*       partial      )
-{
-   //
+inline void sign_reverse_op(
+   size_t        i_z          ,
+   const addr_t* arg          ,
+   size_t        cap_order    ,
+   const Base*   taylor       ,
+   size_t        n_order      ,
+   Base*         partial      )
+{  //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );

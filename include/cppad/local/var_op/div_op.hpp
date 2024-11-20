@@ -104,7 +104,7 @@ inline void divvv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_divvv_op(
+inline void divvv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -251,7 +251,7 @@ inline void divpv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_divpv_op(
+inline void divpv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -388,7 +388,7 @@ inline void divvp_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_divvp_op(
+inline void divvp_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

@@ -88,7 +88,7 @@ inline void subvv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_subvv_op(
+inline void subvv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -205,7 +205,7 @@ inline void subpv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_subpv_op(
+inline void subpv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -321,7 +321,7 @@ inline void subvp_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_subvp_op(
+inline void subvp_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

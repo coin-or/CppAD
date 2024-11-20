@@ -104,14 +104,17 @@ inline void expm1_forward_0(
 }
 
 template <class Base>
-inline void reverse_expm1_op(
-   size_t      i_z          ,
-   size_t      i_x          ,
-   size_t      cap_order    ,
-   const Base* taylor       ,
-   size_t      n_order      ,
-   Base*       partial      )
-{  // d
+inline void expm1_reverse_op(
+   size_t        i_z          ,
+   const addr_t* arg          ,
+   size_t        cap_order    ,
+   const Base*   taylor       ,
+   size_t        n_order      ,
+   Base*         partial      )
+{  // d  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    size_t d = n_order - 1;
    //
    // check assumptions

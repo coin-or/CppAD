@@ -498,7 +498,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 
 */
 template <class Base>
-inline void reverse_erf_op(
+inline void erf_reverse_op(
    op_code_var   op          ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -565,26 +565,27 @@ inline void reverse_erf_op(
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[2];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   reverse_mulpv_op(
+   mulpv_reverse_op(
       i_z+3, addr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_2 = exp( - x * x )
-   reverse_exp_op(
-      i_z+2, i_z+1, cap_order, taylor, n_order, partial
+   addr[0] = addr_t(i_z + 1);
+   exp_reverse_op(
+      i_z+2, addr, cap_order, taylor, n_order, partial
    );
 
    // z_1 = - x * x
    addr[0] = arg[1];           // zero
    addr[1] = addr_t( i_z );    // z_0
-   reverse_subpv_op(
+   subpv_reverse_op(
       i_z+1, addr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   reverse_mulvv_op(
+   mulvv_reverse_op(
       i_z+0, addr, parameter, cap_order, taylor, n_order, partial
    );
 

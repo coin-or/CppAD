@@ -808,7 +808,7 @@ with respect to the k-th order Taylor coefficient corresponding to y_j.
 
 */
 template <class Base>
-inline void reverse_cond_op(
+inline void cond_reverse_op(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,

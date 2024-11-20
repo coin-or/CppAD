@@ -92,7 +92,7 @@ inline void addvv_forward_0(
 // See dev documentation: reverse_unary_op
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_addvv_op(
+inline void addvv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -210,7 +210,7 @@ inline void addpv_forward_0(
 // See dev documentation: reverse_unary_op
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_addpv_op(
+inline void addpv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

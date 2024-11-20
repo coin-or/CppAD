@@ -269,14 +269,17 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void reverse_unary1_op(
-   size_t      i_z          ,
-   size_t      i_x          ,
-   size_t      cap_order    ,
-   const Base* taylor       ,
-   size_t      n_order      ,
-   Base*       partial      )
-{  // d
+inline void unary1_reverse_op(
+   size_t        i_z          ,
+   const addr_t* arg          ,
+   size_t        cap_order    ,
+   const Base*   taylor       ,
+   size_t        n_order      ,
+   Base*         partial      )
+{  // d  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    size_t d = n_order - 1;
    //
    // This routine is only for documentation, it should not be used
@@ -575,14 +578,17 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void reverse_unary2_op(
-   size_t      i_z          ,
-   size_t      i_x          ,
-   size_t      cap_order    ,
-   const Base* taylor       ,
-   size_t      n_order      ,
-   Base*       partial      )
-{  // d
+inline void unary2_reverse_op(
+   size_t        i_z          ,
+   const addr_t* arg          ,
+   size_t        cap_order    ,
+   const Base*   taylor       ,
+   size_t        n_order      ,
+   Base*         partial      )
+{  // d  //
+   // i_x
+   size_t i_x = size_t(arg[0]);
+   //
    size_t d = n_order - 1;
    //
    // This routine is only for documentation, it should not be used
@@ -916,7 +922,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void reverse_binary_op(
+inline void binary_reverse_op(
    size_t      i_z          ,
    addr_t*     arg          ,
    const Base* parameter    ,
@@ -1294,7 +1300,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void reverse_pow_op(
+inline void pow_reverse_op(
    size_t      i_z          ,
    addr_t*     arg          ,
    const Base* parameter    ,

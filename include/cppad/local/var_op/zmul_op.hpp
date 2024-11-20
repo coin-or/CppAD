@@ -96,7 +96,7 @@ inline void zmulvv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_zmulvv_op(
+inline void zmulvv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -219,7 +219,7 @@ inline void zmulpv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_zmulpv_op(
+inline void zmulpv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -335,7 +335,7 @@ inline void zmulvp_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_zmulvp_op(
+inline void zmulvp_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

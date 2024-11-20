@@ -96,7 +96,7 @@ inline void mulvv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_mulvv_op(
+inline void mulvv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -222,7 +222,7 @@ inline void mulpv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void reverse_mulpv_op(
+inline void mulpv_reverse_op(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
