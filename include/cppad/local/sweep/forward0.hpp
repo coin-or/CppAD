@@ -8,6 +8,7 @@
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
 # include <cppad/local/var_op/compare.hpp>
+# include <cppad/local/var_op/atomic_op.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -215,22 +216,11 @@ void forward0(
    }
 
    // information used by atomic function operators
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
-   const size_t need_y    = size_t( variable_enum );
    const size_t order_low = p;
    const size_t order_up  = q;
 
-   // vectors used by atomic function operators
-   vector<Base>         atom_par_x;  // argument parameter values
-   vector<ad_type_enum> atom_type_x; // argument type
-   vector<Base>         atom_tx;     // argument vector Taylor coefficients
-   vector<Base>         atom_ty;     // result vector Taylor coefficients
-   vector<size_t>       atom_iy;     // variable indices for result vector
-   vector<bool>         atom_sy;     // select_y for this atomic function
-   //
-   // information defined by atomic function operators
-   size_t atom_index=0, atom_id=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-   enum_atom_state atom_state = start_atom; // proper initialization
+   // work space used by atomic funcions
+   var_op::atomic_op_work<Base> atom_work;
 
    // length of the parameter vector (used by CppAD assert macros)
    const size_t num_par = play->num_par_rec();
@@ -249,7 +239,9 @@ void forward0(
 
 # if CPPAD_FORWARD0_TRACE
    // flag as to when to trace atomic function values
-   bool atom_trace            = false;
+   bool atom_trace  = true;
+# else
+   bool atom_trace  = false;
 # endif
 
    // skip the BeginOp at the beginning of the recording
@@ -264,7 +256,6 @@ void forward0(
 # if CPPAD_FORWARD0_TRACE
    std::cout << std::endl;
 # endif
-   bool flag; // a temporary flag to use in switch cases
    bool more_operators = true;
    while(more_operators)
    {
@@ -278,7 +269,7 @@ void forward0(
          {
             case AFunOp:
             {  // get information for this atomic function call
-               CPPAD_ASSERT_UNKNOWN( atom_state == start_atom );
+               size_t atom_index, atom_id, atom_m, atom_n;
                play::atom_op_info<Base>(
                   op, arg, atom_index, atom_id, atom_m, atom_n
                );
@@ -628,101 +619,24 @@ void forward0(
 
          case AFunOp:
          // start or end an atomic function call
-         flag = atom_state == start_atom;
-         play::atom_op_info<RecBase>(
-            op, arg, atom_index, atom_id, atom_m, atom_n
+         var_op::atomic_forward_0<Base, RecBase>(
+            itr,
+            taylor,
+            play,
+            parameter,
+            J,
+            order_low,
+            order_up,
+            atom_trace,
+            atom_work
          );
-         if( flag )
-         {  atom_state = arg_atom;
-            atom_i     = 0;
-            atom_j     = 0;
-            //
-            atom_par_x.resize(atom_n);
-            atom_type_x.resize(atom_n);
-            atom_tx.resize(atom_n);
-            atom_ty.resize(atom_m);
-            atom_iy.resize(atom_m);
-            atom_sy.resize(atom_m);
-         }
-         else
-         {  CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
-            CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-            atom_state = start_atom;
-            //
-            for(size_t i = 0; i < atom_m; ++i)
-               atom_sy[i] = atom_iy[i] != 0;
-            //
-            // call atomic function for this operation
-            call_atomic_forward<Base, RecBase>(
-               atom_par_x, atom_type_x, need_y, atom_sy,
-               order_low, order_up, atom_index, atom_id, atom_tx, atom_ty
-            );
-            for(size_t i = 0; i < atom_m; ++i)
-               if( atom_iy[i] > 0 )
-                  taylor[ atom_iy[i] * J + 0 ] = atom_ty[i];
-# if CPPAD_FORWARD0_TRACE
-            atom_trace = true;
-# endif
-         }
          break;
 
          case FunapOp:
-         // parameter argument for an atomic function
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-         CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-         CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
-         CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-         //
-         if( dyn_par_is[ arg[0] ] )
-            atom_type_x[atom_j] = dynamic_enum;
-         else
-            atom_type_x[atom_j] = constant_enum;
-         atom_par_x[atom_j] = parameter[ arg[0] ];
-         atom_tx[atom_j++]  = parameter[ arg[0] ];
-         //
-         if( atom_j == atom_n )
-         {  // call atomic function for this operation
-            atom_state = ret_atom;
-         }
-         break;
-
          case FunavOp:
-         // variable argument for an atomic function
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-         CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-         CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
-         //
-         atom_type_x[atom_j] = variable_enum;
-         atom_par_x[atom_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
-         atom_tx[atom_j++]   = taylor[ size_t(arg[0]) * J + 0 ];
-         //
-         if( atom_j == atom_n )
-            atom_state = ret_atom;
-         break;
-
          case FunrpOp:
-         // parameter result for an atomic function
-         CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
-         CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-         CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-         atom_iy[atom_i++] = 0;
-         if( atom_i == atom_m )
-            atom_state = end_atom;
-         break;
-
          case FunrvOp:
-         // variable result for an atomic function
-         CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-         CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
-         CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-         atom_iy[atom_i++] = i_var;
-         if( atom_i == atom_m )
-            atom_state = end_atom;
+         CPPAD_ASSERT_UNKNOWN( false );
          break;
          // -------------------------------------------------
 
@@ -748,34 +662,8 @@ void forward0(
       }
 # if CPPAD_FORWARD0_TRACE
       size_t  d  = 0;
-      if( atom_trace )
-      {  atom_trace = false;
-
-         CPPAD_ASSERT_UNKNOWN( op == AFunOp );
-         CPPAD_ASSERT_UNKNOWN( NumArg(FunrvOp) == 0 );
-         for(size_t i = 0; i < atom_m; i++) if( atom_iy[i] > 0 )
-         {  size_t i_tmp   = (itr.op_index() + i) - atom_m;
-            printOp<Base, RecBase>(
-               std::cout,
-               play,
-               i_tmp,
-               atom_iy[i],
-               FunrvOp,
-               nullptr
-            );
-            Base* Z_tmp = taylor + atom_iy[i] * J;
-            printOpResult(
-               std::cout,
-               d + 1,
-               Z_tmp,
-               0,
-               (Base *) nullptr
-            );
-            std::cout << std::endl;
-         }
-      }
       Base*           Z_tmp   = taylor + i_var * J;
-      if( op != FunrvOp )
+      if( op != AFunOp )
       {
          printOp<Base, RecBase>(
             std::cout,
@@ -799,7 +687,6 @@ void forward0(
 # else
    }
 # endif
-   CPPAD_ASSERT_UNKNOWN( atom_state == start_atom );
 
    return;
 }

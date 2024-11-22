@@ -110,48 +110,16 @@ To be specific, they compute
 {xrst_comment ------------------------------------------------------------- }
 AFunOp
 ******
-This operator appears at the start and end of every atomic function call.
-This operator has no results variables.
+see :ref:`var_atomic_op@AFunOp`
 
-arg[0]
-======
-This is the :ref:`atomic_index-name` for this function.
+FunapOp, FunavOp
+****************
+see :ref:`var_atomic_op@FunapOp, FunavOp`
 
-arg[1]
-======
-This is the :ref:`atomic_four_call@call_id` information.
-It is also he :ref:`atomic_one@id`
-for atomic one functions which have been deprecated.
+FunrpOp, FunrvOp
+****************
+see :ref:`var_atomic_op@FunrpOp, FunrvOp`
 
-arg[2]
-======
-is the number of arguments to this atomic function.
-We use the notation *n* = *arg* [2] below.
-
-arg[3]
-======
-is the number of results for this atomic function.
-We use the notation *m* = *arg* [3] below.
-
-Arguments
-=========
-There are *n* operators after the first ``AFunOp`` ,
-one for each argument.
-If the *j*-th argument is a parameter (variable)
-the corresponding operator is ``FunapOp`` ( ``FunavOp`` ), and
-the corresponding operator argument is a parameter index (variable index).
-These operators have no result variables.
-
-Results
-=======
-There are *m* operators after the last argument operator
-one for each result.
-If the *i*-th result is a parameter (variable)
-the corresponding operator is ``FunrpOp`` ( ``FunrvOp`` ).
-In the parameter case, there is one argument and it is the parameter index,
-and not result variables.
-In the variable case, there are no arguments and one result variable.
-The index for the new variable with the next possible index.
 
 {xrst_comment ------------------------------------------------------------- }
 BeginOp
@@ -331,6 +299,7 @@ is the text index corresponding to *after* .
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp
    include/cppad/local/var_op/csum_op.hpp
+   include/cppad/local/var_op/atomic_op.hpp
 }
 
 Source
