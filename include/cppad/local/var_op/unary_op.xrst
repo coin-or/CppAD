@@ -141,8 +141,8 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
@@ -160,12 +160,12 @@ see
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
 
-p
-*
+order_low
+*********
 is lowest order of the Taylor coefficient that we are computing.
 
-q
-*
+order_up
+********
 is highest order of the Taylor coefficient that we are computing,
 *p* <= *q* .
 
@@ -205,8 +205,8 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
@@ -224,12 +224,12 @@ see
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
 
-q
-*
+order_up
+********
 order of the Taylor coefficients that we are computing.
 
-r
-*
+n_dir
+*****
 number of directions that we are computing the Taylor coefficient for.
 
 {xrst_comment document cap_order, taylor}

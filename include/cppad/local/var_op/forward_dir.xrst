@@ -20,16 +20,16 @@ For each variable there is one Taylor coefficient of order zero
 and *r* coefficients for orders greater than zero.
 The taylor coefficients capacity per variable is::
 
-   per_variable = (cap_order - 1) * r + 1
+   per_variable = (cap_order - 1) * n_dir + 1
 
 (j, k, ell)
 ===========
 For j a variable index, k an order, and ell a direction index::
 
    if k == 0
-      (j, k, ell) = j * per_variable + (k-1) * r
+      (j, k, ell) = j * per_variable + (k-1) * n_dir
    else
-      (j, k, ell) = j * per_variable + (k-1) * r + 1 + ell
+      (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
 
 The value taylor[ (j, k, ell) ] is the
 Taylor coefficient corresponding to
@@ -43,13 +43,24 @@ Other *n_res* is one; see :ref:`var_unary_op@n_res` .
 
 Input
 =====
-#. For j = 0, ..., i_z-n_res, k = 0 , ... , q, ell = 0 , ... , r-1,
-   taylor [ (j, k, ell) ]
-#. For k = 0 , ... , q-1, ell = 0 , ... , r-1,
-   taylor [ (i_z, k, ell) ]
-   (if n_res is two,  taylor [ (i_z-1, k, ell) ] is also an input).
+::
+
+   for j = 0, ..., i_z - n_res,
+      for k = 0 , ... , order_up
+         for ell = 0 , ... , n_dir - 1
+            taylor [ (j, k, ell) ] is an input
+
+   for k = 0 , ... , order_up - 1
+      for ell = 0 , ... , n_dir - 1
+         taylor [ (i_z, k, ell) ] is an input
+         if n_res == 2
+            taylor [ (i_z - 1, k, ell) ] is an input
 
 Output
 ======
-For ell = 0, ... , r-1, taylor [ (i_z, q, ell) ].
-If n_res is two, taylor[ (i_z-1, q, ell) ] is also an output.
+::
+
+   for ell = 0, ... , n_dir - 1
+      taylor [ (i_z, q, ell) ] is an output
+      if n_res == 2
+         taylor[ (i_z - 1, order_up, ell) ] is an output.

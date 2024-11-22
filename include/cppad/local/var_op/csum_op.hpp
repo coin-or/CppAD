@@ -145,12 +145,12 @@ see
 :ref:`var_csum_op@i_z` ,
 :ref:`var_csum_op@arg`
 
-p
-*
+order_low
+*********
 lowest order of the Taylor coefficient that we are computing.
 
-q
-*
+order_up
+********
 highest order of the Taylor coefficient that we are computing.
 
 num_par
@@ -170,26 +170,28 @@ taylor
 
 Input
 =====
-#. For j = 0, ..., i_z-1, and k = 0 , ... , q,
-   taylor [ j * cap_order + k ]
-   is the k-th order Taylor coefficient corresponding to the variable
-   with index *j* .
-#. For k = 0 , ... , q-1,
-   taylor [ i_z * cap_order + k ]
-   is the k-th order Taylor coefficient corresponding to z.
+::
+
+   for j = 0, ..., i_z - 1
+      for k = 0 , ... , order_up
+         taylor [ j * cap_order + k ] is an input
+
+   for  k = 0 , ... , order_up - 1
+      taylor [ i_z * cap_order + k ] is an input
 
 Output
 ======
-For k = p , ... , q, taylor [ i_z * cap_order + k ]
-is the k-th order Taylor coefficient corresponding to z.
+::
+   for k = order_low , ... , order_up
+      taylor [ i_z * cap_order + k ] is an output
 
 {xrst_end var_csum_forward_op}
 */
 // BEGIN_CSUM_FORWARD_OP
 template <class Base>
 inline void csum_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        num_par     ,
@@ -200,8 +202,8 @@ inline void csum_forward_op(
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( q < cap_order );
-   CPPAD_ASSERT_UNKNOWN( p <= q );
+   CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
+   CPPAD_ASSERT_UNKNOWN( order_low <= order_up );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
    CPPAD_ASSERT_UNKNOWN(
       arg[arg[4]] == arg[4]
@@ -212,31 +214,31 @@ inline void csum_forward_op(
    //
    // z
    Base* z = taylor + i_z    * cap_order;
-   for(size_t k = p; k <= q; k++)
+   for(size_t k = order_low; k <= order_up; k++)
       z[k] = zero;
    //
-   if( p == 0 )
+   if( order_low == 0 )
    {  // constant parameter
-      z[p] = parameter[ arg[0] ];
+      z[order_low] = parameter[ arg[0] ];
       // addition dynamic parameters
       for(addr_t i = arg[2]; i < arg[3]; ++i)
-         z[p] += parameter[ arg[i] ];
+         z[order_low] += parameter[ arg[i] ];
       // subtraction dynamic parameters
       for(addr_t i = arg[3]; i < arg[4]; ++i)
-         z[p] -= parameter[ arg[i] ];
+         z[order_low] -= parameter[ arg[i] ];
    }
    // addition variables
    for(addr_t i = 5; i < arg[1]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
       Base* x = taylor + size_t(arg[i]) * cap_order;
-      for(size_t k = p; k <= q; k++)
+      for(size_t k = order_low; k <= order_up; k++)
          z[k] += x[k];
    }
    // subtraction variables
    for(addr_t i = arg[1]; i < arg[2]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
       Base* x = taylor + size_t(arg[i]) * cap_order;
-      for(size_t k = p; k <= q; k++)
+      for(size_t k = order_low; k <= order_up; k++)
          z[k] -= x[k];
    }
 }
@@ -270,12 +272,12 @@ see
 :ref:`var_csum_op@i_z` ,
 :ref:`var_csum_op@arg`
 
-q
-*
+order_up
+********
 order of the Taylor coefficient that we are computing.
 
-r
-*
+n_dir
+*****
 number of directions that we are computing the Taylor coefficient for.
 
 num_par
@@ -291,14 +293,13 @@ is the parameter vector for this operation sequence.
    include/cppad/local/var_op/forward_dir.xrst
 }
 
-
 {xrst_end var_csum_forward_dir}
 */
 // BEGIN_CSUM_FORWARD_DIR
 template <class Base>
 inline void csum_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        num_par     ,
@@ -308,8 +309,8 @@ inline void csum_forward_dir(
 // END_CSUM_FORWARD_DIR
 {
    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( q < cap_order );
-   CPPAD_ASSERT_UNKNOWN( 0 < q );
+   CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
+   CPPAD_ASSERT_UNKNOWN( 0 < order_up );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
    CPPAD_ASSERT_UNKNOWN(
       arg[arg[4]] == arg[4]
@@ -318,30 +319,30 @@ inline void csum_forward_dir(
    // zero
    Base zero(0);
    //
-   // cpv
-   size_t cpv = (cap_order-1) * r + 1;
+   // per_variable
+   size_t per_variable = (cap_order-1) * n_dir + 1;
    //
    // m
-   size_t m                  = (q-1)*r + 1;
+   size_t m = (order_up - 1) * n_dir + 1;
    //
    // z
-   Base* z = taylor + i_z * cpv + m;
-   for(size_t ell = 0; ell < r; ell++)
+   Base* z = taylor + i_z * per_variable + m;
+   for(size_t ell = 0; ell < n_dir; ell++)
       z[ell] = zero;
    //
    // addition variables
    for(addr_t i = 5; i < arg[1]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* x = taylor + size_t(arg[i]) * cpv + m;
-      for(size_t ell = 0; ell < r; ell++)
+      Base* x = taylor + size_t(arg[i]) * per_variable + m;
+      for(size_t ell = 0; ell < n_dir; ell++)
          z[ell] += x[ell];
    }
    //
    // subtraction variables
    for(addr_t i = arg[1]; i < arg[2]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* x = taylor + size_t(arg[i]) * cpv + m;
-      for(size_t ell = 0; ell < r; ell++)
+      Base* x = taylor + size_t(arg[i]) * per_variable + m;
+      for(size_t ell = 0; ell < n_dir; ell++)
          z[ell] -= x[ell];
    }
 }
