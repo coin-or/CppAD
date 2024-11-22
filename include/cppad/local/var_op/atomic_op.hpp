@@ -79,24 +79,30 @@ FunrpOp, FunrvOp
 // atomic_op_work
 template <class Base>
 struct atomic_op_work {
+   // parameter_x, taylor_x, type_x, taylor_y, index_y, select_y
    CppAD::vector<Base>           parameter_x;
    CppAD::vector<Base>           taylor_x;
    CppAD::vector<ad_type_enum>   type_x;
+   //
    CppAD::vector<Base>           taylor_y;
    CppAD::vector<size_t>         index_y;
    CppAD::vector<bool>           select_y;
-   void resize(size_t m, size_t n)
-   {  parameter_x.resize(n);
-      taylor_x.resize(n);
+   //
+   // resize
+   void resize(size_t m, size_t n, size_t n_order)
+   {
+      parameter_x.resize(n);
+      taylor_x.resize(n * n_order);
       type_x.resize(n);
-      taylor_y.resize(m);
+      //
+      taylor_y.resize(m * n_order);
       index_y.resize(m);
       select_y.resize(m);
    }
 };
 
 template <class Base, class RecBase>
-void atomic_forward_0(
+void atomic_forward_op(
    play::const_sequential_iterator& itr        ,
    Base*                            taylor     ,
    const player<Base>*              play       ,
@@ -112,6 +118,9 @@ void atomic_forward_0(
    //
    // dyn_par_is
    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   //
+   // n_order
+   size_t n_order = order_up + 1;
    //
    // op_code, i_var, arg
    op_code_var   op_code;
@@ -133,7 +142,7 @@ void atomic_forward_0(
    play::atom_op_info<RecBase>(op_code, arg, atom_index, call_id, m, n);
    //
    // parameter_x, taylor_x, type_x, taylor_y, index_y, select_y
-   work.resize(m, n);
+   work.resize(m, n, n_order);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<Base>&         taylor_x(    work.taylor_x );
    vector<ad_type_enum>& type_x(      work.type_x );
@@ -168,8 +177,10 @@ void atomic_forward_0(
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
-         parameter_x[j]  = parameter[ arg[0] ];
-         taylor_x[j]     = parameter[ arg[0] ];
+         parameter_x[j]             = parameter[ arg[0] ];
+         taylor_x[j * n_order + 0]  = parameter[ arg[0] ];
+         for(size_t k = 1; k < n_order; ++k)
+            taylor_x[j * n_order + k] = Base(0.0);
          break;
          //
          // FunavOp
@@ -178,7 +189,9 @@ void atomic_forward_0(
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_var_rec() );
          type_x[j]       = variable_enum;
          parameter_x[j]  = CppAD::numeric_limits<Base>::quiet_NaN();
-         taylor_x[j]     = taylor[ size_t(arg[0]) * cap_order  + 0 ];
+         for(size_t k = 0; k < n_order; ++k)
+            taylor_x[j * n_order + k] =
+               taylor[ size_t(arg[0]) * cap_order  + k ];
          break;
       }
    }
@@ -202,6 +215,10 @@ void atomic_forward_0(
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
          index_y[i]  = 0;
          select_y[i] = false;
+         if( 0 < order_low )
+            taylor_y[i * n_order + 0] = parameter[ arg[0] ];
+         for(size_t k = 1; k < order_low; ++k)
+            taylor_y[i * n_order + k] = Base(0.0);
          if( trace )
          {  printOp<Base, RecBase>(
                std::cout, play, itr.op_index(), i_var, op_code, arg
@@ -216,6 +233,8 @@ void atomic_forward_0(
          CPPAD_ASSERT_UNKNOWN( 0 < i_var );
          index_y[i]  = i_var;
          select_y[i] = true;
+         for(size_t k = 0; k < order_low; ++k)
+            taylor_y[i * n_order + k] = taylor[i_var * cap_order + k];
          break;
       }
    }
@@ -242,8 +261,8 @@ void atomic_forward_0(
    // taylor
    for(size_t i = 0; i < m; ++i)
    {  if( index_y[i] > 0 )
-      {  taylor[ index_y[i] * cap_order  + 0 ] = taylor_y[i];
-         assert( taylor_y[i] == taylor_y[i] );
+      {  for(size_t k = order_low; k < n_order; ++k)
+            taylor[ index_y[i] * cap_order  + k ] = taylor_y[i * n_order + k];
          if( trace )
          {  const addr_t* null_addr = static_cast<addr_t*>( nullptr );
             printOp<Base, RecBase>(
@@ -252,7 +271,7 @@ void atomic_forward_0(
             Base* yi_ptr          = taylor + index_y[i] * cap_order + 0;
             const Base* null_base = static_cast<Base*>( nullptr );
             printOpResult<Base>(
-               std::cout, order_up + 1, yi_ptr, 0, null_base
+               std::cout, n_order, yi_ptr, 0, null_base
             );
             std::cout << std::endl;
          }

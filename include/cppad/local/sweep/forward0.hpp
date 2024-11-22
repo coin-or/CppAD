@@ -618,8 +618,8 @@ void forward0(
          // -------------------------------------------------
 
          case AFunOp:
-         // start or end an atomic function call
-         var_op::atomic_forward_0<Base, RecBase>(
+         // start of an atomic function call
+         var_op::atomic_forward_op<Base, RecBase>(
             itr,
             taylor,
             play,
