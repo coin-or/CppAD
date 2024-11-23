@@ -34,6 +34,21 @@ Release Notes for 2024
 mm-dd
 *****
 
+11-23
+=====
+In the :ref:`atomic_four_norm_sq.cpp-name` example,
+remove dead code in its forward routine.
+To be specific, remove::
+
+   // Assume we are not using forward mode with order > 1
+   assert( ! ok );
+   return ok;
+
+Also in its reverse routine,
+improve the comment about the relation between G and H; to be specific::
+
+   // H( {x_j^k} ) = G[ F( {x_j^k} ), {x_j^k} ]
+
 11-19
 =====
 Fix the :ref:`configure@--with-clang` and :ref:`configure@--with-verbose-make`

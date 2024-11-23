@@ -150,7 +150,7 @@ namespace {
          {  // x_0^0
             double xj0 = tx[ j * q + 0];
             //
-            // H = G( F( { x_j^k } ) )
+            // H( {x_j^k} ) = G[ F( {x_j^k} ), {x_j^k} ]
             double dF = 2.0 * xj0; // partial F w.r.t x_j^0
             double dG = py[0];     // partial of G w.r.t. y[0]
             double dH = dG * dF;   // partial of H w.r.t. x_j^0

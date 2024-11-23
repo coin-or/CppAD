@@ -124,7 +124,7 @@ see
 
 cap_order
 *********
-number of columns in the matrix containing the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 taylor
 ******
@@ -185,7 +185,7 @@ is highest order of the Taylor coefficient that we are computing,
 
 cap_order
 *********
-number of columns in the matrix containing the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 taylor
 ******
@@ -284,7 +284,7 @@ see
 
 cap_order
 *********
-number of columns in the matrix containing the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 taylor
 ******

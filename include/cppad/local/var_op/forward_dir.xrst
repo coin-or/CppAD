@@ -13,7 +13,7 @@ number of directions that we are computing the Taylor coefficient for.
 
 cap_order
 *********
-number of columns in the matrix containing all the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 taylor
 ******
@@ -21,7 +21,7 @@ taylor
 per_variable
 ============
 For each variable there is one Taylor coefficient of order zero
-and *r* coefficients for orders greater than zero.
+and *n_dir* coefficients for orders greater than zero.
 The taylor coefficients capacity per variable is::
 
    per_variable = (cap_order - 1) * n_dir + 1

@@ -140,7 +140,7 @@ This is the vector of parameters for this recording which has size *num_par* .
 
 cap_order
 *********
-number of columns in the matrix containing the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 taylor
 ******
@@ -282,7 +282,7 @@ are computing.
 
 cap_order
 *********
-number of columns in the matrix containing the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 y
 *
@@ -405,7 +405,7 @@ see :ref:`var_load_op@y`
 
 cap_order
 *********
-number of columns in the matrix containing the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 load_op2var
 ***********

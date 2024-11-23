@@ -15,6 +15,7 @@ namespace CppAD { namespace local { namespace var_op {
    funav
    funrp
    funrv
+   nv
 }
 
 Atomic Function Call Operators
@@ -73,9 +74,103 @@ FunrpOp, FunrvOp
    The new variable, created by this operator, gets its values from
    the corresponding result of the function.
 
-{xrst_end var_atomic_op}
-*/
+nv
+**
+We use *nv* to denote the number of variables created by this function call.
+This is equal to the number of FunrvOp operators in function call.
 
+i_z
+***
+We use *i_z* to denote the index of the last variable
+created by this function call.
+
+
+{xrst_end var_atomic_op}
+-------------------------------------------------------------------------------
+{xrst_begin var_atomic_forward_op dev}
+{xrst_spell
+   nv
+}
+
+Any Order Forward Atomic Function Call
+######################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_FORWARD_OP
+   // END_ATOMIC_FORWARD_OP
+}
+
+
+nv
+**
+see
+:ref:`var_atomic_op@nv`
+
+
+itr
+***
+is an iterator for the recording in *play* .
+On input (output), the operator corresponding to *itr* is the first (second)
+:ref:`var_atomic_op@AfunOp` for this function call.
+
+taylor
+******
+
+Input
+=====
+::
+
+   for j = 0, ..., i_z - nv
+      for k = 0 , ... , order_up
+         taylor [ j * cap_order + k ] is an input
+
+   for j = i_z , ... , i_z - nv + 1
+      for  k = 0 , ... , order_up - 1
+         taylor [ j * cap_order + k ] is an input
+
+Output
+======
+::
+
+   for j = i_z , ... , i_z - nv + 1
+      for k = order_low , ... , order_up
+         taylor [ i_z * cap_order + k ] is an output
+
+play
+****
+is a player for the recording that contains the operation sequence
+that contains this atomic function call.
+
+parameter
+*********
+is the parameter vector for this operation sequence.
+
+cap_order
+*********
+is the number of orders that can fit in *taylor* .
+
+order_low
+*********
+lowest order of the Taylor coefficient that we are computing.
+
+order_up
+********
+highest order of the Taylor coefficient that we are computing.
+
+trace
+*****
+if *trace* is true (false) a trace of the evaluation of this
+atomic function call is (is not) printed.
+
+work
+****
+is unspecified work space.
+It passed as an argument to reduce memory allocations.
+
+{xrst_end var_atomic_forward_op}
+*/
 // atomic_op_work
 template <class Base>
 struct atomic_op_work {
@@ -106,6 +201,7 @@ struct atomic_op_work {
 };
 
 
+// BEGIN_ATOMIC_FORWARD_OP
 template <class Base, class RecBase>
 void atomic_forward_op(
    play::const_sequential_iterator& itr        ,
@@ -117,6 +213,7 @@ void atomic_forward_op(
    size_t                           order_up   ,
    bool                             trace      ,
    atomic_op_work<Base>&            work       )
+// END_ATOMIC_FORWARD_OP
 {  //
    // vector
    using CppAD::vector;
@@ -287,7 +384,127 @@ void atomic_forward_op(
    //
    return;
 }
+/*
+-----------------------------------------------------------------------------
+{xrst_begin var_atomic_forward_dir dev}
+{xrst_spell
+   nv
+}
 
+Multiple Direction Forward Atomic Function Call
+###############################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_FORWARD_DIR
+   // END_ATOMIC_FORWARD_DIR
+}
+
+
+nv, i_z
+*******
+see
+:ref:`var_atomic_op@nv` ,
+:ref:`var_atomic_op@i_z`
+
+
+itr
+***
+see atomic_forward_op :ref:`var_atomic_forward_op@itr`
+
+play
+****
+see atomic_forward_op :ref:`var_atomic_forward_op@play`
+
+parameter
+*********
+see atomic_forward_op :ref:`var_atomic_forward_op@parameter`
+
+cap_order
+*********
+see atomic_forward_op :ref:`var_atomic_forward_op@cap_order`
+
+order_low
+*********
+see atomic_forward_op :ref:`var_atomic_forward_op@order_low`
+
+order_up
+********
+see atomic_forward_op :ref:`var_atomic_forward_op@order_up`
+
+trace
+*****
+see atomic_forward_op :ref:`var_atomic_forward_op@trace`
+
+work
+****
+see atomic_forward_op :ref:`var_atomic_forward_op@work`
+
+n_dir
+*****
+is the number of directions we are computing during this
+forward mode pass.
+If *n_dir* is one, The inputs and outputs for ``atomic_forward_dir``
+are the same as for ``atomic_forward_op`` with out the *n_dir* argument.
+
+
+taylor
+******
+
+per_variable
+============
+For each variable there is one Taylor coefficient of order zero
+and *n_dir* coefficients for orders greater than zero.
+The taylor coefficients capacity per variable is::
+
+   per_variable = (cap_order - 1) * n_dir + 1
+
+(j, k, ell)
+===========
+For variable index j, order k, and direction index ell::
+
+   if k == 0
+      (j, k, ell) = j * per_variable
+   else
+      (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
+
+The value taylor[ (j, k, ell) ] is the
+Taylor coefficient corresponding to
+the variable with index j, the order k, and the direction with index ell.
+
+n_dir = 1
+=========
+If *n_dir* is equal to one then *ell* is zero and::
+
+   (j, k, ell) = j * cap_order + k
+
+
+Input
+=====
+::
+
+   for j = 0, ..., i_z - nv,
+      for k = 0 , ... , order_up
+         for ell = 0 , ... , n_dir - 1
+            taylor [ (j, k, ell) ] is an input
+
+   for j = i_z, ... , i_z - nv + 1
+      for k = 0 , ... , order_up - 1
+         for ell = 0 , ... , n_dir - 1
+            taylor [ (j, k, ell) ] is an input
+
+Output
+======
+::
+
+   for j = i_z, ... , i_z - nv + 1
+      for ell = 0, ... , n_dir - 1
+         taylor [ (j, order_up, ell) ] is an output
+
+{xrst_end var_atomic_forward_dir}
+*/
+// BEGIN_ATOMIC_FORWARD_DIR
 template <class Base, class RecBase>
 void atomic_forward_dir(
    play::const_sequential_iterator& itr        ,
@@ -300,6 +517,7 @@ void atomic_forward_dir(
    size_t                           n_dir      ,
    bool                             trace      ,
    atomic_op_work<Base>&            work       )
+// END_ATOMIC_FORWARD_DIR
 {  //
    // vector
    using CppAD::vector;

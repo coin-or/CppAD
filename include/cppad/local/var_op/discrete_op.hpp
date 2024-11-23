@@ -78,7 +78,7 @@ i.e. the row index in *taylor* or *ataylor* corresponding to x.
 
 cap_order
 *********
-maximum number of orders that will fit in the taylor array.
+is the maximum number of orders that can fit in *taylor* .
 
 tpv
 ***

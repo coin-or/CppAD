@@ -163,7 +163,7 @@ is the parameter vector for this operation sequence.
 
 cap_order
 *********
-number of columns in the matrix containing all the Taylor coefficients.
+is the maximum number of orders that can fit in *taylor* .
 
 taylor
 ******
@@ -182,6 +182,7 @@ Input
 Output
 ======
 ::
+
    for k = order_low , ... , order_up
       taylor [ i_z * cap_order + k ] is an output
 
