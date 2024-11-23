@@ -122,12 +122,12 @@ The Taylor coefficient corresponding to variable *i* and order *k* is
 Input
 =====
 The zero order Taylor coefficients
-for variables with index *i* less than *i_z* - *n_res* .
+for variables with index *i* less than or equal *i_z* - *n_res* .
 
 Output
 ======
 The zero order Taylor coefficients for variables with index
-*i_z* and *i_z* - *n_res* .
+*i_z* and *i_z* - *n_res* + 1.
 
 {xrst_end var_unary_forward_0}
 ------------------------------------------------------------------------------
@@ -181,15 +181,15 @@ The Taylor coefficient corresponding to variable *i* and order *k* is
 
 Input
 =====
-#. The Taylor coefficients up to order *q*
-   for variables with index *i* less than *i_z* - *n_res* .
-#. The Taylor coefficients up to order *p* - 1
-   for variables with index *i_z* and *i_z* - *n_res* .
+#. The Taylor coefficients up to order *order_up*
+   for variables with index *i* less than or equal *i_z* - *n_res* .
+#. The Taylor coefficients up to order *order_low* - 1
+   for variables with index *i_z* and *i_z* - *n_res* + 1 .
 
 Output
 ======
-The Taylor coefficients up to order *q* for variables with index
-*i_z* and *i_z* - *n_res* .
+The Taylor coefficients up to order *order_up* for variables with index
+*i_z* and *i_z* - *n_res* + 1.
 
 {xrst_end var_unary_forward_op}
 ------------------------------------------------------------------------------
@@ -228,11 +228,7 @@ order_up
 ********
 order of the Taylor coefficients that we are computing.
 
-n_dir
-*****
-number of directions that we are computing the Taylor coefficient for.
-
-{xrst_comment document cap_order, taylor}
+{xrst_comment document n_dir, cap_order, taylor}
 {xrst_template ,
    include/cppad/local/var_op/forward_dir.xrst
 }

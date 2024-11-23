@@ -276,10 +276,6 @@ order_up
 ********
 order of the Taylor coefficient that we are computing.
 
-n_dir
-*****
-number of directions that we are computing the Taylor coefficient for.
-
 num_par
 *******
 is the number of parameters in parameter.
@@ -288,7 +284,7 @@ parameter
 *********
 is the parameter vector for this operation sequence.
 
-{xrst_comment cap_order, taylor}
+{xrst_comment n_dir, cap_order, taylor}
 {xrst_template ,
    include/cppad/local/var_op/forward_dir.xrst
 }
@@ -299,11 +295,11 @@ is the parameter vector for this operation sequence.
 template <class Base>
 inline void csum_forward_dir(
    size_t        order_up    ,
-   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        num_par     ,
    const Base*   parameter   ,
+   size_t        n_dir       ,
    size_t        cap_order   ,
    Base*         taylor      )
 // END_CSUM_FORWARD_DIR

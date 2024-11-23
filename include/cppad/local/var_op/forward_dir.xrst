@@ -7,6 +7,10 @@ This xrst template file documents the multiple directrion forward arguments:
    cap_order, taylor
 }
 
+n_dir
+*****
+number of directions that we are computing the Taylor coefficient for.
+
 cap_order
 *********
 number of columns in the matrix containing all the Taylor coefficients.
@@ -24,16 +28,23 @@ The taylor coefficients capacity per variable is::
 
 (j, k, ell)
 ===========
-For j a variable index, k an order, and ell a direction index::
+For variable index j, order k, and direction index ell::
 
    if k == 0
-      (j, k, ell) = j * per_variable + (k-1) * n_dir
+      (j, k, ell) = j * per_variable
    else
       (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
 
 The value taylor[ (j, k, ell) ] is the
 Taylor coefficient corresponding to
 the variable with index j, the order k, and the direction with index ell.
+
+n_dir = 1
+=========
+If *n_dir* is equal to one then *ell* is zero and::
+
+   (j, k, ell) = j * cap_order + k
+
 
 n_res
 =====
@@ -61,6 +72,6 @@ Output
 ::
 
    for ell = 0, ... , n_dir - 1
-      taylor [ (i_z, q, ell) ] is an output
+      taylor [ (i_z, order_up, ell) ] is an output
       if n_res == 2
          taylor[ (i_z - 1, order_up, ell) ] is an output.

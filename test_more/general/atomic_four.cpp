@@ -1,7 +1,152 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <cppad/cppad.hpp>
+# include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>
+
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+// atomic_norm_sq
+class atomic_norm_sq : public CppAD::atomic_four<double> {
+public:
+   atomic_norm_sq(const std::string& name) :
+   CppAD::atomic_four<double>(name)
+   { }
+// END CONSTRUCTOR
+private:
+   // BEGIN FOR_TYPE
+   bool for_type(
+      size_t                                     call_id     ,
+      const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
+      CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
+   {  assert( call_id == 0 );       // default value
+      assert(type_y.size() == 1 );  // m
+      //
+      // type_y
+      size_t n     = type_x.size();
+      type_y[0] = CppAD::constant_enum;
+      for(size_t j = 0; j < n; ++j)
+         type_y[0] = std::max(type_y[0], type_x[j]);
+      return true;
+   }
+   // END FOR_TYPE
+   // BEGIN FORWARD
+   bool forward(
+      size_t                             call_id     ,
+      const CppAD::vector<bool>&         select_y    ,
+      size_t                             order_low   ,
+      size_t                             order_up    ,
+      const CppAD::vector<double>&       tx          ,
+      CppAD::vector<double>&             ty          ) override
+   {
+      size_t q = order_up + 1;
+      size_t n = tx.size() / q;
+# ifndef NDEBUG
+      size_t m = ty.size() / q;
+      assert( call_id == 0 );
+      assert( m == 1 );
+      assert( m == select_y.size() );
+# endif
+      // ok
+      bool ok = order_up <= 1 && order_low <= order_up;
+      if ( ! ok )
+         return ok;
+      //
+      // sum = x_0^0 * x_0^0 + x_1^0 * x_1^0 + ...
+      double sum = 0.0;
+      for(size_t j = 0; j < n; ++j)
+      {  double xj0 = tx[ j * q + 0];
+         sum       += xj0 * xj0;
+      }
+      //
+      // ty[0] = sum
+      if( order_low <= 0 )
+         ty[0] = sum;
+      if( order_up < 1 )
+         return ok;
+
+      // sum = x_0^0 * x_0^1 + x_1^0 ^ x_1^1 + ...
+      sum   = 0.0;
+      for(size_t j = 0; j < n; ++j)
+      {  double xj0 = tx[ j * q + 0];
+         double xj1 = tx[ j * q + 1];
+         sum       += xj0 * xj1;
+      }
+      // ty[1] = 2.0 * sum
+      assert( order_up == 1 );
+      ty[1] = 2.0 * sum;
+      return ok;
+   }
+};
+
+// forward_dir
+bool forward_dir(void)
+{  // ok, eps
+   bool ok    = true;
+   double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+   //
+   // atom_norm_sq
+   atomic_norm_sq afun("atomic_norm_sq");
+   //
+   // n, m
+   size_t n = 2;
+   size_t m = 1;
+   //
+   // x
+   CPPAD_TESTVECTOR(double) x(n);
+   for(size_t j = 0; j < n; ++j)
+      x[j] = 1.0 / (double(j) + 1.0);
+   //
+   // ax
+   CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(n);
+   for(size_t j = 0; j < n; ++j)
+      ax[j] = x[j];
+   CppAD::Independent(ax);
+   //
+   // ay
+   CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
+   afun(ax, ay);
+   //
+   // f
+   CppAD::ADFun<double> f;
+   f.Dependent (ax, ay);
+   //
+   // check
+   double check = 0.0;
+   for(size_t j = 0; j < n; ++j)
+      check += x[j] * x[j];
+   //
+   // ok
+   // check ay[0]
+   ok &= CppAD::NearEqual( Value(ay[0]) , check,  eps, eps);
+   //
+   // ok
+   // check zero order forward mode
+   CPPAD_TESTVECTOR(double) y(m);
+   y   = f.Forward(0, x);
+   ok &= CppAD::NearEqual(y[0] , check,  eps, eps);
+   //
+   // y1
+   // first order forward mode partial w.r.t. each component of x
+   size_t r = n;
+   CPPAD_TESTVECTOR(double) x1(n * r), y1(m * r);
+   for(size_t j = 0; j < n; ++j)
+   {  for(size_t ell = 0; ell < r; ++ell)
+      {  x1[j * r + ell] = 0.0;
+         if( ell == j )
+            x1[j * r + ell] = 1.0;
+      }
+   }
+   y1     = f.Forward(1, r, x1);
+   //
+   // ok
+   for(size_t j = 0; j < n; ++j)
+      ok &= CppAD::NearEqual(y1[j] , 2.0 * x[j],  eps, eps);
+   //
+   return ok;
+}
+
 /*
 \{xrst_begin atomic_four_lin_ode_rev_depend.cpp}
 {xrst_spell
@@ -64,10 +209,6 @@ Source
 
 \{xrst_end atomic_four_lin_ode_rev_depend.cpp}
 */
-# include <cppad/cppad.hpp>
-# include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>
-
-namespace { // BEGIN_EMPTY_NAMESPACE
 
 template <class Scalar, class Vector>
 Vector Y(Scalar t, const Vector& x)
@@ -208,6 +349,7 @@ bool rev_depend(void)
 
 bool atomic_four(void)
 {  bool ok = true;
+   ok     &= forward_dir();
    ok     &= rev_depend();
    return ok;
 }

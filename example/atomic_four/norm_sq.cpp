@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -117,10 +117,6 @@ namespace {
          // ty[1] = 2.0 * sum
          assert( order_up == 1 );
          ty[1] = 2.0 * sum;
-         return ok;
-
-         // Assume we are not using forward mode with order > 1
-         assert( ! ok );
          return ok;
       }
       // END FORWARD

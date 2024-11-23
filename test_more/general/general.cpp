@@ -66,6 +66,7 @@ extern bool assign(void);
 extern bool atan(void);
 extern bool atan2(void);
 extern bool atanh(void);
+extern bool atomic_four(void);
 extern bool atomic_three(void);
 extern bool azmul(void);
 extern bool base2ad(void);
@@ -191,6 +192,7 @@ int main(void)
    Run( atan,            "atan"           );
    Run( atan2,           "atan2"          );
    Run( atanh,           "atanh"          );
+   Run( atomic_four,     "atomic_four"    );
    Run( atomic_three,    "atomic_three"   );
    Run( azmul,           "azmul"          );
    Run( base2ad,         "base2ad"        );
