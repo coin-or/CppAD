@@ -110,7 +110,7 @@ Specifies RecBase for this call.
 
 */
 
-template <class Addr, class Base, class RecBase>
+template <class Base, class RecBase>
 void forward2(
    const local::player<Base>*  play,
    const size_t                q,
@@ -120,7 +120,7 @@ void forward2(
    const size_t                J,
    Base*                       taylor,
    const bool*                 cskip_op,
-   const pod_vector<Addr>&     load_op2var,
+   const pod_vector<addr_t>&   load_op2var,
    const RecBase&              not_used_rec_base
 )
 {
@@ -157,7 +157,7 @@ void forward2(
    // op_info
    op_code_var op;
    size_t i_var;
-   const Addr*   arg;
+   const addr_t*   arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FORWARD2_TRACE
