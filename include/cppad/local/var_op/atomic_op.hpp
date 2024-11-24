@@ -198,41 +198,61 @@ struct atomic_op_work {
    //
    // resize
    void resize(size_t m, size_t n, size_t n_order, sweep_type sweep)
-   {
+   {  //
       // parameter_x, type_x
       parameter_x.resize(n);
       type_x.resize(n);
       //
-      // taylor_x, taylor_y
-      taylor_x.resize(n * n_order);
-      taylor_y.resize(m * n_order);
-      //
-      // partial_x, partial_y
-      if( sweep == reverse_op_sweep )
-      {  partial_x.resize(n * n_order);
-         partial_y.resize(m * n_order);
-      }
-      //
-      // index_x
-      if( sweep == forward_dir_sweep || sweep == reverse_op_sweep )
-         index_x.resize(n);
-      else
+      switch( sweep )
+      {
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+         // ------------------------------------------------------------------
+         // forward_op_sweep
+         case forward_op_sweep:
+         taylor_x.resize(n * n_order);
+         taylor_y.resize(m * n_order);
+         //
+         partial_x.resize(0);
+         partial_y.resize(0);
+         //
          index_x.resize(0);
-      //
-      // index_y
-      if( sweep == forward_op_sweep || sweep == forward_dir_sweep )
          index_y.resize(m);
-      else
-         index_y.resize(0);
-      //
-      // variable_x, variable_y
-      if( sweep == reverse_op_sweep )
-      {  variable_x.resize(n);
-         variable_y.resize(0);
-      }
-      else
-      {  variable_x.resize(0);
+         //
+         variable_x.resize(0);
          variable_y.resize(m);
+         break;
+         // ------------------------------------------------------------------
+         // forward_dir_sweep
+         case forward_dir_sweep:
+         taylor_x.resize(n * n_order);
+         taylor_y.resize(m * n_order);
+         //
+         partial_x.resize(0);
+         partial_y.resize(0);
+         //
+         index_x.resize(n);
+         index_y.resize(m);
+         //
+         variable_x.resize(0);
+         variable_y.resize(m);
+         break;
+         // ------------------------------------------------------------------
+         // reverse_op_sweep
+         case reverse_op_sweep:
+         taylor_x.resize(n * n_order);
+         taylor_y.resize(m * n_order);
+         //
+         partial_x.resize(n * n_order);
+         partial_y.resize(m * n_order);
+         //
+         index_x.resize(n);
+         index_y.resize(0);
+         //
+         variable_x.resize(n);
+         variable_y.resize(0);
+         break;
       }
    }
 };
