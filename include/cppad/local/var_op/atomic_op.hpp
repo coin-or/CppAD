@@ -171,32 +171,60 @@ It passed as an argument to reduce memory allocations.
 
 {xrst_end var_atomic_forward_op}
 */
+enum sweep_type {
+   forward_op_sweep,
+   forward_dir_sweep,
+   reverse_op_sweep
+};
+
 // atomic_op_work
 template <class Base>
 struct atomic_op_work {
    // parameter_x, taylor_x, type_x, taylor_y, index_y, variable_y
    CppAD::vector<Base>           parameter_x;
-   CppAD::vector<Base>           taylor_x;
    CppAD::vector<ad_type_enum>   type_x;
-   CppAD::vector<size_t>         index_x;
    //
+   CppAD::vector<Base>           taylor_x;
    CppAD::vector<Base>           taylor_y;
+   //
+   CppAD::vector<size_t>         index_x;
    CppAD::vector<size_t>         index_y;
+   //
+   CppAD::vector<bool>           variable_x;
    CppAD::vector<bool>           variable_y;
    //
    // resize
-   void resize(size_t m, size_t n, size_t n_order, bool multiple_direction)
+   void resize(size_t m, size_t n, size_t n_order, sweep_type sweep)
    {
+      // parameter_x, type_x
       parameter_x.resize(n);
-      taylor_x.resize(n * n_order);
       type_x.resize(n);
       //
+      // taylor_x, taylor_y
+      taylor_x.resize(n * n_order);
       taylor_y.resize(m * n_order);
-      index_y.resize(m);
-      variable_y.resize(m);
       //
-      if( multiple_direction )
+      // index_x
+      if( sweep == forward_dir_sweep || sweep == reverse_op_sweep )
          index_x.resize(n);
+      else
+         index_x.resize(0);
+      //
+      // index_y
+      if( sweep == forward_op_sweep || sweep == forward_dir_sweep )
+         index_y.resize(m);
+      else
+         index_y.resize(0);
+      //
+      // variable_x, variable_y
+      if( sweep == reverse_op_sweep )
+      {  variable_x.resize(n);
+         variable_y.resize(0);
+      }
+      else
+      {  variable_x.resize(0);
+         variable_y.resize(m);
+      }
    }
 };
 
@@ -243,16 +271,16 @@ void atomic_forward_op(
    size_t atom_index, call_id, m, n;
    play::atom_op_info<RecBase>(op_code, arg, atom_index, call_id, m, n);
    //
-   // parameter_x, taylor_x, type_x, taylor_y, index_y, variable_y
-   bool multiple_direction = false;
-   work.resize(m, n, n_order, multiple_direction);
+   // parameter_x, type_x, taylor_x, taylor_y, index_y, variable_y
+   work.resize(m, n, n_order, forward_op_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
-   vector<Base>&         taylor_x(    work.taylor_x );
-   vector<ad_type_enum>& type_x(      work.type_x );
+   vector<ad_type_enum>& type_x( work.type_x );
    //
-   vector<Base>&         taylor_y(    work.taylor_y );
-   vector<size_t>&       index_y(     work.index_y );
-   vector<bool>&         variable_y(  work.variable_y );
+   vector<Base>&         taylor_x( work.taylor_x );
+   vector<Base>&         taylor_y( work.taylor_y );
+   //
+   vector<size_t>&       index_y( work.index_y );
+   vector<bool>&         variable_y( work.variable_y );
    //
    // j
    for(size_t j = 0; j < n; ++j)
@@ -557,17 +585,18 @@ void atomic_forward_dir(
    size_t atom_index, call_id, m, n;
    play::atom_op_info<RecBase>(op_code, arg, atom_index, call_id, m, n);
    //
-   // parameter_x, taylor_x, type_x, index_x, taylor_y, index_y, variable_y
-   bool multiple_direction = true;
-   work.resize(m, n, n_order, multiple_direction);
+   // parameter_x, type_x, taylor_x, taylor_y, index_x, index_y, variable_y
+   work.resize(m, n, n_order, forward_dir_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
-   vector<Base>&         taylor_x(    work.taylor_x );
-   vector<ad_type_enum>& type_x(      work.type_x );
-   vector<size_t>&       index_x(     work.index_x );
+   vector<ad_type_enum>& type_x( work.type_x );
    //
-   vector<Base>&         taylor_y(    work.taylor_y );
-   vector<size_t>&       index_y(     work.index_y );
-   vector<bool>&         variable_y(  work.variable_y );
+   vector<Base>&         taylor_x( work.taylor_x );
+   vector<Base>&         taylor_y( work.taylor_y );
+   //
+   vector<size_t>&       index_x( work.index_x );
+   vector<size_t>&       index_y( work.index_y );
+   vector<bool>&         variable_y(work.variable_y );
+
    //
    // j
    for(size_t j = 0; j < n; ++j)
