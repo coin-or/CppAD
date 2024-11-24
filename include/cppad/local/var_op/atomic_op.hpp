@@ -767,6 +767,99 @@ void atomic_forward_dir(
 }
 /*
 -------------------------------------------------------------------------------
+{xrst_begin var_atomic_reverse_op dev}
+{xrst_spell
+   nv
+}
+
+Reverse Atomic Function Call
+############################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_REVERSE_OP
+   // END_ATOMIC_REVERSE_OP
+}
+
+nv, i_z
+*******
+see
+:ref:`var_atomic_op@nv` ,
+:ref:`var_atomic_op@i_z`
+
+Iterator
+********
+this template parameter is either
+``play::subgraph_iterator`` or
+``play::const_sequential_iterator`` .
+
+itr
+***
+is an iterator for the recording in *play* .
+On input (output), the operator corresponding to *itr* is the second (first)
+:ref:`var_atomic_op@AfunOp` for this function call.
+
+taylor
+******
+The Taylor coefficient for the variable with index j and order k is::
+
+   taylor[ j * cap_order + k ]
+
+play
+****
+see atomic_forward_op :ref:`var_atomic_forward_op@play`
+
+parameter
+*********
+see atomic_forward_op :ref:`var_atomic_forward_op@parameter`
+
+cap_order
+*********
+see atomic_forward_op :ref:`var_atomic_forward_op@cap_order`
+
+n_order
+*******
+is the number of Taylor coefficient orders that we are
+computing the partial derivatives with respect to.
+
+trace
+*****
+see atomic_forward_op :ref:`var_atomic_forward_op@trace`
+
+work
+****
+see atomic_forward_op :ref:`var_atomic_forward_op@work`
+
+
+partial
+*******
+The partial derivative with respect to the order *k* Taylor coefficient
+for the variable with index *j* is::
+
+   partial[ j * n_order + k ]
+
+We use :math:`y(x)` to denote the atomic function call
+as a mapping from the vector *x* to the vector *y* .
+We use :math:`G( y, x, \ldots )` to denote a scalar valued function
+of the taylor coefficients of the variables with index less than or
+equal *i_z* ; i.e., the last variable in the vector *y* .
+We define :math:`H(x, \ldots )` by
+
+.. math::
+
+   H(x, \cdots ) = G [ y(x), x, \cdots ]
+
+On input, *partial* contains the partial derivatives of *G*
+with respect to the Taylor coefficients of the arguments to *G* .
+On output, *partial* contains the partial derivatives of *H*
+with respect to the Taylor coefficients of the arguments to *H* .
+We only have partials with respect to variables; i.e.,
+*partial* does not included derivatives with respect to
+the parameters in *x* or *y* .
+~
+
+{xrst_end var_atomic_reverse_op}
 */
 // BEGIN_ATOMIC_REVERSE_OP
 template <class Base, class RecBase, class Iterator>
