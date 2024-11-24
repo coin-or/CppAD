@@ -187,6 +187,9 @@ struct atomic_op_work {
    CppAD::vector<Base>           taylor_x;
    CppAD::vector<Base>           taylor_y;
    //
+   CppAD::vector<Base>           partial_x;
+   CppAD::vector<Base>           partial_y;
+   //
    CppAD::vector<size_t>         index_x;
    CppAD::vector<size_t>         index_y;
    //
@@ -203,6 +206,12 @@ struct atomic_op_work {
       // taylor_x, taylor_y
       taylor_x.resize(n * n_order);
       taylor_y.resize(m * n_order);
+      //
+      // partial_x, partial_y
+      if( sweep == reverse_op_sweep )
+      {  partial_x.resize(n * n_order);
+         partial_y.resize(m * n_order);
+      }
       //
       // index_x
       if( sweep == forward_dir_sweep || sweep == reverse_op_sweep )
@@ -750,6 +759,204 @@ void atomic_forward_dir(
                std::cout, n_order, yi_ptr, 0, null_base
             );
             std::cout << std::endl;
+         }
+      }
+   }
+   //
+   return;
+}
+/*
+-------------------------------------------------------------------------------
+*/
+// BEGIN_ATOMIC_REVERSE_OP
+template <class Base, class RecBase, class Iterator>
+void atomic_reverse_op(
+   Iterator&                        itr        ,
+   Base*                            partial    ,
+   const Base*                      taylor     ,
+   const player<Base>*              play       ,
+   const Base*                      parameter  ,
+   size_t                           cap_order  ,
+   size_t                           n_order    ,
+   bool                             trace      ,
+   atomic_op_work<Base>&            work       )
+// END_ATOMIC_REVERSE_OP
+{  CPPAD_ASSERT_UNKNOWN( 0 < n_order );
+   //
+   // vector
+   using CppAD::vector;
+   //
+   // dyn_par_is
+   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   //
+   // n_order
+   size_t order_up = n_order - 1;
+   //
+   // op_code, i_var, arg
+   op_code_var   op_code;
+   size_t        i_var;
+   const addr_t* arg;
+   itr.op_info(op_code, arg, i_var);
+   CPPAD_ASSERT_UNKNOWN( op_code == AFunOp );
+   CPPAD_ASSERT_NARG_NRES(op_code, 4, 0);
+   //
+   if( trace )
+   {  printOp<Base, RecBase>(
+         std::cout, play, itr.op_index(), i_var, op_code, arg
+      );
+      std::cout << std::endl;
+   }
+   //
+   // atom_index, call_id, m, n
+   size_t atom_index, call_id, m, n;
+   play::atom_op_info<RecBase>(op_code, arg, atom_index, call_id, m, n);
+   //
+   // parameter_x, type_x,
+   // taylor_x, taylor_y, partial_x, partial_y, variable_x, index_x
+   work.resize(m, n, n_order, reverse_op_sweep);
+   vector<Base>&         parameter_x( work.parameter_x );
+   vector<ad_type_enum>& type_x( work.type_x );
+   //
+   vector<Base>&         taylor_x( work.taylor_x );
+   vector<Base>&         taylor_y( work.taylor_y );
+   //
+   vector<Base>&         partial_x( work.partial_x );
+   vector<Base>&         partial_y( work.partial_y );
+   //
+   vector<bool>&         variable_x( work.variable_x );
+   vector<size_t>&       index_x( work.index_x );
+   //
+   // i
+   for(size_t ip1 = m; ip1 > 0; --ip1)
+   {  size_t i = ip1 - 1;
+      //
+      // op_code, arg, i_var
+      (--itr).op_info(op_code, arg, i_var);
+      if( trace )
+      {  printOp<Base, RecBase>(
+            std::cout, play, itr.op_index(), i_var, op_code, arg
+         );
+      }
+      //
+      // taylor_y, partial_y
+      switch(op_code)
+      {  //
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+         //
+         // FunrpOp
+         case FunrpOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         taylor_y[i * n_order + 0]  = parameter[ arg[0] ];
+         partial_y[i * n_order + 0] = Base(0.0);
+         for(size_t k = 1; k < n_order; ++k)
+         {  partial_y[i * n_order + k] = Base(0.0);
+            taylor_y[ i * n_order + k] = Base(0.0);
+         }
+         break;
+         //
+         // FunrvOp
+         case FunrvOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 0, 1);
+         CPPAD_ASSERT_UNKNOWN( 0 < i_var );
+         for(size_t k = 0; k < n_order; ++k)
+         {  taylor_y[ i * n_order + k] = taylor[i_var * cap_order + k];
+            partial_y[i * n_order + k] = partial[i_var * n_order + k];
+         }
+         if( trace )
+         {  const Base* t_ptr = taylor + i_var * cap_order;
+            const Base* p_ptr = partial + i_var * n_order;
+            printOpResult(
+               std::cout,
+               n_order,
+               t_ptr,
+               n_order,
+               p_ptr
+            );
+         }
+         break;
+      }
+      if( trace )
+         std::cout << std::endl;
+   }
+   //
+   // j
+   for(size_t jp1 = n; jp1 > 0; --jp1)
+   {  size_t j = jp1 - 1;
+      //
+      // op_code, arg, i_var
+      (--itr).op_info(op_code, arg, i_var);
+      if( trace )
+      {  printOp<Base, RecBase>(
+            std::cout, play, itr.op_index(), i_var, op_code, arg
+         );
+         std::cout << std::endl;
+      }
+      //
+      // variable_x, type_x
+      switch(op_code)
+      {  //
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+         //
+         // FunapOp
+         case FunapOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         variable_x[j] = false;
+         index_x[j]    = size_t( arg[0] );
+         if( dyn_par_is[ arg[0] ] )
+            type_x[j]    = dynamic_enum;
+         else
+            type_x[j]    = constant_enum;
+         parameter_x[j]             = parameter[ arg[0] ];
+         taylor_x[j * n_order + 0]  = parameter[ arg[0] ];
+         for(size_t k = 1; k < n_order; ++k)
+            taylor_x[j * n_order + k] = Base(0.0);
+         break;
+         //
+         // FunavOp
+         case FunavOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_var_rec() );
+         variable_x[j]   = true;
+         index_x[j]      = size_t( arg[0] );
+         type_x[j]       = variable_enum;
+         parameter_x[j]  = CppAD::numeric_limits<Base>::quiet_NaN();
+         for(size_t k = 0; k < n_order; ++k)
+            taylor_x[j * n_order + k] =
+               taylor[ size_t(arg[0]) * cap_order  + k ];
+         break;
+      }
+   }
+   //
+   // op_code
+   (--itr).op_info(op_code, arg, i_var);
+   CPPAD_ASSERT_UNKNOWN( op_code == AFunOp );
+   //
+   // partial_y
+   sweep::call_atomic_reverse<Base, RecBase>(
+      parameter_x,
+      type_x,
+      variable_x,
+      order_up,
+      atom_index,
+      call_id,
+      taylor_x,
+      taylor_y,
+      partial_x,
+      partial_y
+   );
+   //
+   // taylor
+   for(size_t j = 0; j < n; ++j)
+   {  if( variable_x[j] )
+      {  for(size_t k = 0; k < n_order; ++k)
+         {  size_t index = index_x[j] * n_order + k;
+            partial[index] += partial_x[j * n_order + k];
          }
       }
    }
