@@ -78,7 +78,7 @@ corresponds to the set with index i in var_sparsity.
 Specifies RecBase for this call.
 */
 
-template <class Addr, class Base, class Vector_set, class RecBase>
+template <class Base, class Vector_set, class RecBase>
 void for_jac(
    const local::player<Base>* play,
    bool                       dependency        ,
@@ -156,9 +156,9 @@ void for_jac(
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
    // op_info
-   op_code_var op;
-   size_t i_var;
-   const Addr*   arg;
+   op_code_var   op;
+   size_t        i_var;
+   const addr_t* arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
    //

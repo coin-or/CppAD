@@ -39,11 +39,6 @@ Prototype
    // END_PROTOTYPE
 }
 
-Addr
-****
-Is the type used to record address on this tape
-This is allows for smaller tapes when address are smaller.
-
 Base
 ****
 this operation sequence was recorded using ``AD`` < *Base* > .
@@ -119,7 +114,7 @@ Specifies *RecBase* for this call.
 namespace CppAD { namespace local { namespace sweep {
 
 // BEGIN_PROTOTYPE
-template <class Addr, class Base, class Vector_set, class RecBase>
+template <class Base, class Vector_set, class RecBase>
 void rev_jac(
    const local::player<Base>* play               ,
    bool                       dependency         ,
@@ -191,9 +186,9 @@ void rev_jac(
    // skip the EndOp at the end of the recording
    play::const_sequential_iterator itr = play->end();
    // op_info
-   op_code_var op;
-   size_t i_var;
-   const Addr*   arg;
+   op_code_var   op;
+   size_t        i_var;
+   const addr_t* arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_JAC_TRACE

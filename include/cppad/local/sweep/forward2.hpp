@@ -155,8 +155,8 @@ void forward2(
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
    // op_info
-   op_code_var op;
-   size_t i_var;
+   op_code_var     op;
+   size_t          i_var;
    const addr_t*   arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );

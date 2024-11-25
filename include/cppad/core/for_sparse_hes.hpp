@@ -219,7 +219,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
    // compute reverse sparsity pattern for dependency analysis
    // (note that we are only want non-zero derivatives not true dependency)
    bool dependency = false;
-   local::sweep::rev_jac<addr_t>(
+   local::sweep::rev_jac(
       &play_,
       dependency,
       n,
@@ -232,7 +232,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
    for_hes_pattern.resize(n+1+num_var_tape_, n+1);
    //
    // compute the Hessian sparsity patterns
-   local::sweep::for_hes<addr_t>(
+   local::sweep::for_hes(
       &play_,
       n,
       num_var_tape_,
@@ -347,7 +347,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
    // compute reverse sparsity pattern for dependency analysis
    // (note that we are only want non-zero derivatives not true dependency)
    bool dependency = false;
-   local::sweep::rev_jac<addr_t>(
+   local::sweep::rev_jac(
       &play_,
       dependency,
       n,
@@ -361,7 +361,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
    for_hes_pattern.resize(n+1+num_var_tape_, n+1);
    //
    // compute the Hessian sparsity patterns
-   local::sweep::for_hes<addr_t>(
+   local::sweep::for_hes(
       &play_,
       n,
       num_var_tape_,
@@ -513,7 +513,7 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
    for_hes_pattern.resize(n+1+num_var_tape_, n+1);
 
    // compute Hessian sparsity pattern for all variables
-   local::sweep::for_hes<addr_t>(
+   local::sweep::for_hes(
       &play_,
       n,
       num_var_tape_,

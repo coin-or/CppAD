@@ -57,11 +57,6 @@ the corresponding index is (is not) in the set.
 # define CPPAD_FOR_HES_TRACE 0
 /* {xrst_code}
 
-Addr
-****
-Is the type used to record address on this tape
-This is allows for smaller tapes when address are smaller.
-
 Base
 ****
 The operation sequence in *play* was recorded using
@@ -155,7 +150,7 @@ This argument is only used to specify the type *RecBase* for this call.
 namespace CppAD { namespace local { namespace sweep {
 
 // BEGIN PROTOTYPE
-template <class Addr, class Base, class SetVector, class RecBase>
+template <class Base, class SetVector, class RecBase>
 void for_hes(
    const local::player<Base>* play                ,
    size_t                     n                   ,
@@ -232,9 +227,9 @@ void for_hes(
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
    // op_info
-   op_code_var op;
-   size_t i_var;
-   const Addr*   arg;
+   op_code_var   op;
+   size_t        i_var;
+   const addr_t* arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FOR_HES_TRACE
