@@ -358,8 +358,8 @@ public:
    template <class InternalSparsity>
    bool rev_sparse_jac(
       const vector<Base>&        x            ,
-      const local::pod_vector<size_t>& x_index ,
-      const local::pod_vector<size_t>& y_index ,
+      const vector<size_t>&            x_index ,
+      const vector<size_t>&            y_index ,
       InternalSparsity&          var_sparsity
    );
    // deprecated versions

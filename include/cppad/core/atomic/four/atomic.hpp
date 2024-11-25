@@ -266,8 +266,8 @@ public:
       size_t                           call_id      ,
       bool                             dependency   ,
       const vector<bool>&              ident_zero_x ,
-      const local::pod_vector<size_t>& x_index      ,
-      const local::pod_vector<size_t>& y_index      ,
+      const vector<size_t>&            x_index      ,
+      const vector<size_t>&            y_index      ,
       InternalSparsity&                var_sparsity
    );
    // deprecated version of this callback

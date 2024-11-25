@@ -166,8 +166,8 @@ void rev_jac(
    // work space used by AFunOp.
    vector<Base>         atom_x;  // value of parameter arguments to function
    vector<ad_type_enum> type_x;  // argument types
-   pod_vector<size_t>   atom_ix; // variable indices for argument vector
-   pod_vector<size_t>   atom_iy; // variable indices for result vector
+   vector<size_t> atom_ix; // variable indices for argument vector
+   vector<size_t> atom_iy; // variable indices for result vector
    //
    // information set by atomic forward (initialization to avoid warnings)
    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;

@@ -345,8 +345,8 @@ public:
       bool                             dependency   ,
       const vector<Base>&              parameter_x  ,
       const vector<ad_type_enum>&      type_x       ,
-      const local::pod_vector<size_t>& x_index      ,
-      const local::pod_vector<size_t>& y_index      ,
+      const vector<size_t>&            x_index      ,
+      const vector<size_t>&            y_index      ,
       InternalSparsity&                var_sparsity
    );
    // ------------------------------------------------------------

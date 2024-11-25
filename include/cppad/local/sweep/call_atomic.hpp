@@ -577,8 +577,8 @@ void call_atomic_rev_jac_sparsity(
    bool                         dependency    ,
    const vector<Base>&          parameter_x   ,
    const vector<ad_type_enum>&  type_x        ,
-   const pod_vector<size_t>&    x_index       ,
-   const pod_vector<size_t>&    y_index       ,
+   const vector<size_t>&        x_index       ,
+   const vector<size_t>&        y_index       ,
    InternalSparsity&            var_sparsity  )
 // END_REV_JAC_SPARSITY
 {  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
