@@ -8,7 +8,94 @@
 // BEGIN_CPPAD_LOCAL_VAR_OP_NAMESPACE
 namespace CppAD { namespace local { namespace var_op {
 
+// sweep_type
+enum sweep_type {
+   forward_op_sweep,
+   forward_dir_sweep,
+   reverse_op_sweep
+};
+
+// atomic_op_work
+template <class Base>
+struct atomic_op_work {
+   // parameter_x, taylor_x, type_x, taylor_y, index_y, variable_y
+   CppAD::vector<Base>           parameter_x;
+   CppAD::vector<ad_type_enum>   type_x;
+   //
+   CppAD::vector<Base>           taylor_x;
+   CppAD::vector<Base>           taylor_y;
+   //
+   CppAD::vector<Base>           partial_x;
+   CppAD::vector<Base>           partial_y;
+   //
+   CppAD::vector<size_t>         index_x;
+   CppAD::vector<size_t>         index_y;
+   //
+   CppAD::vector<bool>           variable_x;
+   CppAD::vector<bool>           variable_y;
+   //
+   // resize
+   void resize(size_t m, size_t n, size_t n_order, sweep_type sweep)
+   {  //
+      // parameter_x, type_x
+      parameter_x.resize(n);
+      type_x.resize(n);
+      //
+      switch( sweep )
+      {
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+         // ------------------------------------------------------------------
+         // forward_op_sweep
+         case forward_op_sweep:
+         taylor_x.resize(n * n_order);
+         taylor_y.resize(m * n_order);
+         //
+         partial_x.resize(0);
+         partial_y.resize(0);
+         //
+         index_x.resize(0);
+         index_y.resize(m);
+         //
+         variable_x.resize(0);
+         variable_y.resize(m);
+         break;
+         // ------------------------------------------------------------------
+         // forward_dir_sweep
+         case forward_dir_sweep:
+         taylor_x.resize(n * n_order);
+         taylor_y.resize(m * n_order);
+         //
+         partial_x.resize(0);
+         partial_y.resize(0);
+         //
+         index_x.resize(n);
+         index_y.resize(m);
+         //
+         variable_x.resize(0);
+         variable_y.resize(m);
+         break;
+         // ------------------------------------------------------------------
+         // reverse_op_sweep
+         case reverse_op_sweep:
+         taylor_x.resize(n * n_order);
+         taylor_y.resize(m * n_order);
+         //
+         partial_x.resize(n * n_order);
+         partial_y.resize(m * n_order);
+         //
+         index_x.resize(n);
+         index_y.resize(0);
+         //
+         variable_x.resize(n);
+         variable_y.resize(0);
+         break;
+      }
+   }
+};
 /*
+------------------------------------------------------------------------------
 {xrst_begin var_atomic_op dev}
 {xrst_spell
    funap
@@ -171,91 +258,6 @@ It passed as an argument to reduce memory allocations.
 
 {xrst_end var_atomic_forward_op}
 */
-enum sweep_type {
-   forward_op_sweep,
-   forward_dir_sweep,
-   reverse_op_sweep
-};
-
-// atomic_op_work
-template <class Base>
-struct atomic_op_work {
-   // parameter_x, taylor_x, type_x, taylor_y, index_y, variable_y
-   CppAD::vector<Base>           parameter_x;
-   CppAD::vector<ad_type_enum>   type_x;
-   //
-   CppAD::vector<Base>           taylor_x;
-   CppAD::vector<Base>           taylor_y;
-   //
-   CppAD::vector<Base>           partial_x;
-   CppAD::vector<Base>           partial_y;
-   //
-   CppAD::vector<size_t>         index_x;
-   CppAD::vector<size_t>         index_y;
-   //
-   CppAD::vector<bool>           variable_x;
-   CppAD::vector<bool>           variable_y;
-   //
-   // resize
-   void resize(size_t m, size_t n, size_t n_order, sweep_type sweep)
-   {  //
-      // parameter_x, type_x
-      parameter_x.resize(n);
-      type_x.resize(n);
-      //
-      switch( sweep )
-      {
-         default:
-         CPPAD_ASSERT_UNKNOWN(false);
-         break;
-         // ------------------------------------------------------------------
-         // forward_op_sweep
-         case forward_op_sweep:
-         taylor_x.resize(n * n_order);
-         taylor_y.resize(m * n_order);
-         //
-         partial_x.resize(0);
-         partial_y.resize(0);
-         //
-         index_x.resize(0);
-         index_y.resize(m);
-         //
-         variable_x.resize(0);
-         variable_y.resize(m);
-         break;
-         // ------------------------------------------------------------------
-         // forward_dir_sweep
-         case forward_dir_sweep:
-         taylor_x.resize(n * n_order);
-         taylor_y.resize(m * n_order);
-         //
-         partial_x.resize(0);
-         partial_y.resize(0);
-         //
-         index_x.resize(n);
-         index_y.resize(m);
-         //
-         variable_x.resize(0);
-         variable_y.resize(m);
-         break;
-         // ------------------------------------------------------------------
-         // reverse_op_sweep
-         case reverse_op_sweep:
-         taylor_x.resize(n * n_order);
-         taylor_y.resize(m * n_order);
-         //
-         partial_x.resize(n * n_order);
-         partial_y.resize(m * n_order);
-         //
-         index_x.resize(n);
-         index_y.resize(0);
-         //
-         variable_x.resize(n);
-         variable_y.resize(0);
-         break;
-      }
-   }
-};
 
 
 // BEGIN_ATOMIC_FORWARD_OP
