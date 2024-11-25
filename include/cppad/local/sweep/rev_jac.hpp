@@ -623,32 +623,34 @@ void rev_jac(
          CPPAD_ASSERT_UNKNOWN(0);
       }
 # if CPPAD_REV_JAC_TRACE
-      for(j = 0; j < limit; j++)
-         z_value[j] = false;
-      typename Vector_set::const_iterator itr(var_sparsity, i_var);
-      j = *itr;
-      while( j < limit )
-      {  z_value[j] = true;
-         j          = *(++itr);
+      if( op != AFunOp )
+      {  for(j = 0; j < limit; j++)
+            z_value[j] = false;
+         typename Vector_set::const_iterator itr_sparse(var_sparsity, i_var);
+         j = *itr_sparse;
+         while( j < limit )
+         {  z_value[j] = true;
+            j          = *(++itr_sparse);
+         }
+         printOp<Base, RecBase>(
+            std::cout,
+            play,
+            itr.op_index(),
+            i_var,
+            op,
+            arg
+         );
+         // Note that sparsity for FunrvOp are computed before call to
+         // atomic function so no need to delay printing (as in forward mode)
+         if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+            std::cout,
+            0,
+            (CppAD::vectorBool *) nullptr,
+            1,
+            &z_value
+         );
+         std::cout << std::endl;
       }
-      printOp<Base, RecBase>(
-         std::cout,
-         play,
-         itr.op_index(),
-         i_var,
-         op,
-         arg
-      );
-      // Note that sparsity for FunrvOp are computed before call to
-      // atomic function so no need to delay printing (as in forward mode)
-      if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
-         std::cout,
-         0,
-         (CppAD::vectorBool *) nullptr,
-         1,
-         &z_value
-      );
-      std::cout << std::endl;
    }
    std::cout << std::endl;
 # else

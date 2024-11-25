@@ -1386,6 +1386,42 @@ inline void atomic_reverse_jac(
          break;
       }
    }
+   if( trace )
+   {  size_t end = var_sparsity.end();
+      CppAD::vectorBool this_row(end);
+      const addr_t* arg_null = static_cast<addr_t*>(nullptr);
+      for(size_t ip1 = m; ip1 > 0; --ip1)
+      {  size_t i = ip1 - 1;
+         if( index_y[i] > 0 )
+         {  for(size_t j = 0; j < end; ++j)
+               this_row[j] = false;
+            //
+            typedef typename Vector_set::const_iterator itr_sparse_t;
+            itr_sparse_t itr_sparse(var_sparsity, index_y[i]);
+            size_t j = *itr_sparse;
+            while( j < end )
+            {  this_row[j] = true;
+               j = *(++itr_sparse);
+            }
+            printOp<Base, RecBase>(
+               std::cout,
+               play,
+               itr.op_index() + i,
+               index_y[i],
+               FunrvOp,
+               arg_null
+            );
+            printOpResult(
+               std::cout,
+               1,
+               &this_row,
+               0,
+               (CppAD::vectorBool *) nullptr
+            );
+            std::cout << std::endl;
+         }
+      }
+   }
    //
    // j
    for(size_t jp1 = n; jp1 > 0; --jp1)
@@ -1445,41 +1481,6 @@ inline void atomic_reverse_jac(
       index_y,
       var_sparsity
    );
-   //
-   if( trace )
-   {  size_t end = var_sparsity.end();
-      CppAD::vectorBool this_row(end);
-      addr_t            arg_tmp[1];
-      for(size_t i = 0; i < m; ++i)
-      {  size_t j_var = index_y[i];
-         for(size_t j = 0; j < end; ++j)
-            this_row[j] = false;
-         typename Vector_set::const_iterator itr_sparse(var_sparsity, j_var);
-         size_t j = *itr_sparse;
-         while( j < end )
-         {  this_row[j] = true;
-            j = *(++itr_sparse);
-         }
-         if( 0 < j_var )
-         {  printOp<Base, RecBase>(
-               std::cout,
-               play,
-               itr.op_index() - m + i,
-               j_var,
-               FunrvOp,
-               arg_tmp
-            );
-            printOpResult(
-               std::cout,
-               1,
-               &this_row,
-               0,
-               (CppAD::vectorBool *) nullptr
-            );
-            std::cout << std::endl;
-         }
-      }
-   }
    return;
 }
 
