@@ -220,6 +220,19 @@ work
 is unspecified work space.
 It passed as an argument to reduce memory allocations.
 
+G and H
+*******
+We use :math:`y(x)` to denote the atomic function call
+as a mapping from the vector *x* to the vector *y* .
+We use :math:`G( y, x, \ldots )` to denote a scalar valued function
+of the taylor coefficients of the variables with index less than or
+equal *i_z* ; i.e., the last variable in the vector *y* .
+We define :math:`H(x, \ldots )` by
+
+.. math::
+
+   H(x, \cdots ) = G [ y(x), x, \cdots ]
+
 {xrst_end var_atomic_op}
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_forward_op dev}
@@ -846,6 +859,11 @@ see
 :ref:`var_atomic_op@trace` ,
 :ref:`var_atomic_op@work`
 
+G and H
+*******
+see
+:ref:`var_atomic_op@G and H`
+
 cap_order
 *********
 see atomic_forward_op :ref:`var_atomic_forward_op@cap_order`
@@ -867,17 +885,6 @@ The partial derivative with respect to the order *k* Taylor coefficient
 for the variable with index *j* is::
 
    partial[ j * n_order + k ]
-
-We use :math:`y(x)` to denote the atomic function call
-as a mapping from the vector *x* to the vector *y* .
-We use :math:`G( y, x, \ldots )` to denote a scalar valued function
-of the taylor coefficients of the variables with index less than or
-equal *i_z* ; i.e., the last variable in the vector *y* .
-We define :math:`H(x, \ldots )` by
-
-.. math::
-
-   H(x, \cdots ) = G [ y(x), x, \cdots ]
 
 On input, *partial* contains the partial derivatives of *G*
 with respect to the Taylor coefficients of the arguments to *G* .
@@ -1310,7 +1317,55 @@ inline void atomic_forward_jac(
    return;
 }
 /*
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+{xrst_begin var_atomic_reverse_jac dev}
+{xrst_spell
+   nv
+}
+
+Reverse Jacobian Sparsity Atomic Function Call
+##############################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_REVERSE_JAC
+   // END_ATOMIC_REVERSE_JAC
+}
+
+nv, i_z
+*******
+see
+:ref:`var_atomic_op@nv` ,
+:ref:`var_atomic_op@i_z`
+
+itr, play, parameter, trace, work
+*********************************
+see
+:ref:`var_atomic_op@itr` ,
+:ref:`var_atomic_op@play` ,
+:ref:`var_atomic_op@parameter` ,
+:ref:`var_atomic_op@trace` ,
+:ref:`var_atomic_op@work`
+
+G and H
+*******
+see
+:ref:`var_atomic_op@G and H`
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+var_sparsity
+************
+On input, *var_sparsity* contains the sparsity pattern for
+:math:`G [ y, x, \cdots ]` .
+On output it contains the sparsity pattern for
+:math:`H ( x, \cdots )` .
+
+{xrst_end var_atomic_reverse_jac}
 */
 // BEGIN_ATOMIC_REVERSE_JAC
 template <class Vector_set, class Base, class RecBase>
