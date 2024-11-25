@@ -187,6 +187,38 @@ i_z
 We use *i_z* to denote the index of the last variable
 created by this function call.
 
+itr
+***
+is an iterator for the recording in *play* .
+
+Forward Mode
+============
+On input (output), the operator corresponding to *itr* is the first (second)
+:ref:`var_atomic_op@AfunOp` for this function call.
+
+Reverse Mode
+============
+On input (output), the operator corresponding to *itr* is the second (first)
+:ref:`var_atomic_op@AfunOp` for this function call.
+
+play
+****
+is a player for the recording that contains the operation sequence
+that contains this atomic function call.
+
+parameter
+*********
+is the parameter vector for this operation sequence.
+
+trace
+*****
+if *trace* is true (false) a trace of the evaluation of this
+atomic function call is (is not) printed.
+
+work
+****
+is unspecified work space.
+It passed as an argument to reduce memory allocations.
 
 {xrst_end var_atomic_op}
 -------------------------------------------------------------------------------
@@ -206,17 +238,33 @@ Prototype
 }
 
 
-nv
-**
+nv, i_z
+*******
 see
-:ref:`var_atomic_op@nv`
+:ref:`var_atomic_op@nv` ,
+:ref:`var_atomic_op@i_z`
 
+itr, play, parameter, trace, work
+*********************************
+see
+:ref:`var_atomic_op@itr` ,
+:ref:`var_atomic_op@play` ,
+:ref:`var_atomic_op@parameter` ,
+:ref:`var_atomic_op@trace` ,
+:ref:`var_atomic_op@work`
 
-itr
-***
-is an iterator for the recording in *play* .
-On input (output), the operator corresponding to *itr* is the first (second)
-:ref:`var_atomic_op@AfunOp` for this function call.
+cap_order
+*********
+is the number of orders that can fit in *taylor* .
+
+order_low
+*********
+lowest order of the Taylor coefficient that we are computing.
+
+order_up
+********
+highest order of the Taylor coefficient that we are computing.
+
 
 taylor
 ******
@@ -241,37 +289,6 @@ Output
       for k = order_low , ... , order_up
          taylor [ i_z * cap_order + k ] is an output
 
-play
-****
-is a player for the recording that contains the operation sequence
-that contains this atomic function call.
-
-parameter
-*********
-is the parameter vector for this operation sequence.
-
-cap_order
-*********
-is the number of orders that can fit in *taylor* .
-
-order_low
-*********
-lowest order of the Taylor coefficient that we are computing.
-
-order_up
-********
-highest order of the Taylor coefficient that we are computing.
-
-trace
-*****
-if *trace* is true (false) a trace of the evaluation of this
-atomic function call is (is not) printed.
-
-work
-****
-is unspecified work space.
-It passed as an argument to reduce memory allocations.
-
 {xrst_end var_atomic_forward_op}
 */
 
@@ -280,14 +297,14 @@ It passed as an argument to reduce memory allocations.
 template <class Base, class RecBase>
 void atomic_forward_op(
    play::const_sequential_iterator& itr        ,
-   Base*                            taylor     ,
    const player<Base>*              play       ,
    const Base*                      parameter  ,
+   bool                             trace      ,
+   atomic_op_work<Base>&            work       ,
    size_t                           cap_order  ,
    size_t                           order_low  ,
    size_t                           order_up   ,
-   bool                             trace      ,
-   atomic_op_work<Base>&            work       )
+   Base*                            taylor     )
 // END_ATOMIC_FORWARD_OP
 {  //
    // vector
@@ -483,18 +500,14 @@ see
 :ref:`var_atomic_op@nv` ,
 :ref:`var_atomic_op@i_z`
 
-
-itr
-***
-see atomic_forward_op :ref:`var_atomic_forward_op@itr`
-
-play
-****
-see atomic_forward_op :ref:`var_atomic_forward_op@play`
-
-parameter
-*********
-see atomic_forward_op :ref:`var_atomic_forward_op@parameter`
+itr, play, parameter, trace, work
+*********************************
+see
+:ref:`var_atomic_op@itr` ,
+:ref:`var_atomic_op@play` ,
+:ref:`var_atomic_op@parameter` ,
+:ref:`var_atomic_op@trace` ,
+:ref:`var_atomic_op@work`
 
 cap_order
 *********
@@ -507,14 +520,6 @@ see atomic_forward_op :ref:`var_atomic_forward_op@order_low`
 order_up
 ********
 see atomic_forward_op :ref:`var_atomic_forward_op@order_up`
-
-trace
-*****
-see atomic_forward_op :ref:`var_atomic_forward_op@trace`
-
-work
-****
-see atomic_forward_op :ref:`var_atomic_forward_op@work`
 
 n_dir
 *****
@@ -583,15 +588,15 @@ Output
 template <class Base, class RecBase>
 void atomic_forward_dir(
    play::const_sequential_iterator& itr        ,
-   Base*                            taylor     ,
    const player<Base>*              play       ,
    const Base*                      parameter  ,
+   bool                             trace      ,
+   atomic_op_work<Base>&            work       ,
    size_t                           cap_order  ,
    size_t                           order_low  ,
    size_t                           order_up   ,
    size_t                           n_dir      ,
-   bool                             trace      ,
-   atomic_op_work<Base>&            work       )
+   Base*                            taylor     )
 // END_ATOMIC_FORWARD_DIR
 {  //
    // vector
@@ -820,37 +825,26 @@ Prototype
    // END_ATOMIC_REVERSE_OP
 }
 
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
 Iterator
 ********
 this template parameter is either
 ``play::subgraph_iterator`` or
 ``play::const_sequential_iterator`` .
 
-itr
-***
-is an iterator for the recording in *play* .
-On input (output), the operator corresponding to *itr* is the second (first)
-:ref:`var_atomic_op@AfunOp` for this function call.
+nv, i_z
+*******
+see
+:ref:`var_atomic_op@nv` ,
+:ref:`var_atomic_op@i_z`
 
-taylor
-******
-The Taylor coefficient for the variable with index j and order k is::
-
-   taylor[ j * cap_order + k ]
-
-play
-****
-see atomic_forward_op :ref:`var_atomic_forward_op@play`
-
-parameter
-*********
-see atomic_forward_op :ref:`var_atomic_forward_op@parameter`
+itr, play, parameter, trace, work
+*********************************
+see
+:ref:`var_atomic_op@itr` ,
+:ref:`var_atomic_op@play` ,
+:ref:`var_atomic_op@parameter` ,
+:ref:`var_atomic_op@trace` ,
+:ref:`var_atomic_op@work`
 
 cap_order
 *********
@@ -861,14 +855,11 @@ n_order
 is the number of Taylor coefficient orders that we are
 computing the partial derivatives with respect to.
 
-trace
-*****
-see atomic_forward_op :ref:`var_atomic_forward_op@trace`
+taylor
+******
+The Taylor coefficient for the variable with index j and order k is::
 
-work
-****
-see atomic_forward_op :ref:`var_atomic_forward_op@work`
-
+   taylor[ j * cap_order + k ]
 
 partial
 *******
@@ -903,14 +894,14 @@ the parameters in *x* or *y* .
 template <class Base, class RecBase, class Iterator>
 void atomic_reverse_op(
    Iterator&                        itr        ,
-   Base*                            partial    ,
-   const Base*                      taylor     ,
    const player<Base>*              play       ,
    const Base*                      parameter  ,
+   bool                             trace      ,
+   atomic_op_work<Base>&            work       ,
    size_t                           cap_order  ,
    size_t                           n_order    ,
-   bool                             trace      ,
-   atomic_op_work<Base>&            work       )
+   const Base*                      taylor     ,
+   Base*                            partial    )
 // END_ATOMIC_REVERSE_OP
 {  CPPAD_ASSERT_UNKNOWN( 0 < n_order );
    //
@@ -1096,17 +1087,70 @@ void atomic_reverse_op(
 }
 /*
 -------------------------------------------------------------------------------
+{xrst_begin var_atomic_forward_jac dev}
+{xrst_spell
+   nv
+}
+
+Forward Jacobian Sparsity Atomic Function Call
+##############################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_FORWARD_JAC
+   // END_ATOMIC_FORWARD_JAC
+}
+
+nv, i_z
+*******
+see
+:ref:`var_atomic_op@nv` ,
+:ref:`var_atomic_op@i_z`
+
+itr, play, parameter, trace, work
+*********************************
+see
+:ref:`var_atomic_op@itr` ,
+:ref:`var_atomic_op@play` ,
+:ref:`var_atomic_op@parameter` ,
+:ref:`var_atomic_op@trace` ,
+:ref:`var_atomic_op@work`
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+var_sparsity
+************
+
+Input
+=====
+::
+
+   for j = 0, ..., i_z - nv
+      The set with index j in var_sparsity 
+
+Output
+======
+::
+
+   for j = i_z , ... , i_z - nv + 1
+      The set with index j in var_sparsity 
+
+{xrst_end var_atomic_forward_jac}
 */
 // BEGIN_ATOMIC_FORWARD_JAC
 template <class Vector_set, class Base, class RecBase>
 inline void atomic_forward_jac(
    play::const_sequential_iterator& itr          ,
-   Vector_set&                      var_sparsity ,
    const player<Base>*              play         ,
-   bool                             dependency   ,
    const Base*                      parameter    ,
    bool                             trace        ,
-   atomic_op_work<Base>&            work         )
+   atomic_op_work<Base>&            work         ,
+   bool                             dependency   ,
+   Vector_set&                      var_sparsity )
 // END_ATOMIC_FORWARD_JAC
 {
    // vector

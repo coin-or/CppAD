@@ -661,14 +661,14 @@ void forward1(
          // start of an atomic function call
          var_op::atomic_forward_op<Base, RecBase>(
             itr,
-            taylor,
             play,
             parameter,
+            atom_trace,
+            atom_work,
             J,
             order_low,
             order_up,
-            atom_trace,
-            atom_work
+            taylor
          );
          break;
 

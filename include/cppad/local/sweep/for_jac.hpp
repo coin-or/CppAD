@@ -550,12 +550,12 @@ void for_jac(
          case AFunOp:
          var_op:: atomic_forward_jac<Vector_set, Base, RecBase>(
             itr,
-            var_sparsity,
             play,
-            dependency,
             parameter,
             atom_trace,
-            atom_work
+            atom_work,
+            dependency,
+            var_sparsity
          );
          break;
 

@@ -633,14 +633,14 @@ void reverse(
          case AFunOp:
          var_op::atomic_reverse_op<Base, RecBase, Iterator>(
             play_itr,
-            Partial,
-            Taylor,
             play,
             parameter,
+            atom_trace,
+            atom_work,
             J,
             K,
-            atom_trace,
-            atom_work
+            Taylor,
+            Partial
          );
          break;
 
