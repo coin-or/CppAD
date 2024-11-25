@@ -1130,14 +1130,14 @@ Input
 ::
 
    for j = 0, ..., i_z - nv
-      The set with index j in var_sparsity 
+      The set with index j in var_sparsity
 
 Output
 ======
 ::
 
    for j = i_z , ... , i_z - nv + 1
-      The set with index j in var_sparsity 
+      The set with index j in var_sparsity
 
 {xrst_end var_atomic_forward_jac}
 */
@@ -1263,6 +1263,179 @@ inline void atomic_forward_jac(
    //
    // varsparsity
    sweep::call_atomic_for_jac_sparsity<Base,RecBase>(
+      atom_index,
+      call_id,
+      dependency,
+      parameter_x,
+      type_x,
+      index_x,
+      index_y,
+      var_sparsity
+   );
+   //
+   if( trace )
+   {  size_t end = var_sparsity.end();
+      CppAD::vectorBool this_row(end);
+      addr_t            arg_tmp[1];
+      for(size_t i = 0; i < m; ++i)
+      {  size_t j_var = index_y[i];
+         for(size_t j = 0; j < end; ++j)
+            this_row[j] = false;
+         typename Vector_set::const_iterator itr_sparse(var_sparsity, j_var);
+         size_t j = *itr_sparse;
+         while( j < end )
+         {  this_row[j] = true;
+            j = *(++itr_sparse);
+         }
+         if( 0 < j_var )
+         {  printOp<Base, RecBase>(
+               std::cout,
+               play,
+               itr.op_index() - m + i,
+               j_var,
+               FunrvOp,
+               arg_tmp
+            );
+            printOpResult(
+               std::cout,
+               1,
+               &this_row,
+               0,
+               (CppAD::vectorBool *) nullptr
+            );
+            std::cout << std::endl;
+         }
+      }
+   }
+   return;
+}
+/*
+-----------------------------------------------------------------------------
+*/
+// BEGIN_ATOMIC_REVERSE_JAC
+template <class Vector_set, class Base, class RecBase>
+inline void atomic_reverse_jac(
+   play::const_sequential_iterator& itr          ,
+   const player<Base>*              play         ,
+   const Base*                      parameter    ,
+   bool                             trace        ,
+   atomic_op_work<Base>&            work         ,
+   bool                             dependency   ,
+   Vector_set&                      var_sparsity )
+// END_ATOMIC_REVERSE_JAC
+{
+   // vector
+   using CppAD::vector;
+   //
+   // dyn_par_is
+   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   //
+   // op_code, i_var, arg
+   op_code_var   op_code;
+   size_t        i_var;
+   const addr_t* arg;
+   itr.op_info(op_code, arg, i_var);
+   CPPAD_ASSERT_UNKNOWN( op_code == AFunOp );
+   CPPAD_ASSERT_NARG_NRES(op_code, 4, 0);
+   //
+   if( trace )
+   {  printOp<Base, RecBase>(
+         std::cout, play, itr.op_index(), i_var, op_code, arg
+      );
+      std::cout << std::endl;
+   }
+   //
+   // atom_index, call_id, m, n
+   size_t atom_index, call_id, m, n;
+   play::atom_op_info<RecBase>(op_code, arg, atom_index, call_id, m, n);
+   //
+   // parameter_x, type_x, index_x, index_y
+   size_t n_order = 0;
+   work.resize(m, n, n_order, for_jac_sweep);
+   vector<Base>&         parameter_x( work.parameter_x );
+   vector<ad_type_enum>& type_x( work.type_x );
+   vector<size_t>&       index_x( work.index_x );
+   vector<size_t>&       index_y( work.index_y );
+   //
+   // i
+   for(size_t ip1 = m; ip1 > 0; --ip1)
+   {  size_t i = ip1 - 1;
+      //
+      // op_code, arg, i_var
+      (--itr).op_info(op_code, arg, i_var);
+      //
+      // index_y
+      switch(op_code)
+      {  //
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+         //
+         // FunrpOp
+         case FunrpOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         index_y[i]       = 0;  // special variable index used for parameters
+         break;
+         //
+         // FunavOp
+         case FunrvOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 0, 1);
+         CPPAD_ASSERT_UNKNOWN( 0 < i_var );
+         index_y[i]    = i_var;
+         break;
+      }
+   }
+   //
+   // j
+   for(size_t jp1 = n; jp1 > 0; --jp1)
+   {  size_t j = jp1 - 1;
+      //
+      // op_code, arg, i_var
+      (--itr).op_info(op_code, arg, i_var);
+      if( trace )
+      {  printOp<Base, RecBase>(
+            std::cout, play, itr.op_index(), i_var, op_code, arg
+         );
+         std::cout << std::endl;
+      }
+      //
+      // type_x, parameter_x, index_x
+      switch(op_code)
+      {  //
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+         //
+         // FunapOp
+         case FunapOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         if( dyn_par_is[ arg[0] ] )
+            type_x[j]    = dynamic_enum;
+         else
+            type_x[j]    = constant_enum;
+         parameter_x[j]  = parameter[ arg[0] ];
+         index_x[j]      = 0; // special variable index used for parameters
+         break;
+         //
+         // FunavOp
+         case FunavOp:
+         CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_var_rec() );
+         type_x[j]       = variable_enum;
+         parameter_x[j]  = CppAD::numeric_limits<Base>::quiet_NaN();
+         index_x[j]      = size_t(arg[0]);
+         break;
+      }
+   }
+   //
+   // op_code
+   (--itr).op_info(op_code, arg, i_var);
+   CPPAD_ASSERT_UNKNOWN( op_code == AFunOp );
+   //
+   // varsparsity
+   sweep::call_atomic_rev_jac_sparsity<Base,RecBase>(
       atom_index,
       call_id,
       dependency,
