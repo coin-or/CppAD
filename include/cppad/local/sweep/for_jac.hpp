@@ -78,7 +78,7 @@ corresponds to the set with index i in var_sparsity.
 Specifies RecBase for this call.
 */
 
-template <class Base, class Vector_set, class RecBase>
+template <class Vector_set, class Base, class RecBase>
 void for_jac(
    const local::player<Base>* play,
    bool                       dependency        ,
@@ -126,49 +126,38 @@ void for_jac(
       CPPAD_ASSERT_UNKNOWN( j == play->num_var_vecad_ind_rec() );
    }
 
-   // --------------------------------------------------------------
-   // work space used by AFunOp.
-   vector<Base>         atom_x;  //// value of parameter arguments to function
-   vector<ad_type_enum> type_x;  // argument types
-   vector<size_t> atom_ix; // variable index (on tape) for each argument
-   vector<size_t> atom_iy; // variable index (on tape) for each result
+   // work space used by atomic funcions
+   var_op::atomic_op_work<Base> atom_work;
    //
-   // information set by atomic forward (initialization to avoid warnings)
-   size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-   // information set by atomic forward (necessary initialization)
-   enum_atom_state atom_state = start_atom;
-   // --------------------------------------------------------------
    //
    // pointer to the beginning of the parameter vector
    // (used by atomic functions)
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
    const Base* parameter = play->GetPar();
    //
-   // which parametes are dynamic
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
-   //
 # if CPPAD_FOR_JAC_TRACE
-   vector<size_t>    atom_funrp; // parameter index for FunrpOp operators
    std::cout << std::endl;
    CppAD::vectorBool z_value(limit);
+   bool atom_trace = true;
+# else
+   bool atom_trace = false;
 # endif
 
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
    // op_info
-   op_code_var   op;
-   size_t        i_var;
-   const addr_t* arg;
+   op_code_var op;
+   size_t i_var;
+   const addr_t*   arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
    //
    bool more_operators = true;
    while(more_operators)
-   {  bool flag; // temporary for use in switch cases.
-
+   {  //
       // this op
       (++itr).op_info(op, arg, i_var);
-
+      //
       // rest of information depends on the case
       switch( op )
       {
@@ -559,113 +548,22 @@ void for_jac(
          // -------------------------------------------------
 
          case AFunOp:
-         // start or end an atomic function call
-         CPPAD_ASSERT_UNKNOWN(
-            atom_state == start_atom || atom_state == end_atom
+         var_op:: atomic_forward_jac<Vector_set, Base, RecBase>(
+            itr,
+            var_sparsity,
+            play,
+            dependency,
+            parameter,
+            atom_trace,
+            atom_work
          );
-         flag = atom_state == start_atom;
-         play::atom_op_info<RecBase>(
-            op, arg, atom_index, atom_old, atom_m, atom_n
-         );
-         if( flag )
-         {  atom_state = arg_atom;
-            atom_i     = 0;
-            atom_j     = 0;
-            //
-            atom_x.resize( atom_n );
-            type_x.resize( atom_n );
-            atom_ix.resize( atom_n );
-            atom_iy.resize( atom_m );
-# if CPPAD_FOR_JAC_TRACE
-            atom_funrp.resize( atom_m );
-# endif
-         }
-         else
-         {  CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
-            CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-            atom_state = start_atom;
-            //
-            call_atomic_for_jac_sparsity<Base,RecBase>(
-               atom_index,
-               atom_old,
-               dependency,
-               atom_x,
-               type_x,
-               atom_ix,
-               atom_iy,
-               var_sparsity
-            );
-         }
          break;
 
          case FunapOp:
-         // parameter argument for an atomic function
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-         CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-         CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
-         CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-         //
-         atom_x[atom_j]  = parameter[arg[0]];
-         // argument type
-         if( dyn_par_is[arg[0]] )
-            type_x[atom_j] = dynamic_enum;
-         else
-            type_x[atom_j] = constant_enum;
-         atom_ix[atom_j] = 0; // special variable used for parameters
-         //
-         ++atom_j;
-         if( atom_j == atom_n )
-            atom_state = ret_atom;
-         break;
-
          case FunavOp:
-         // variable argument for an atomic function
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-         CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-         CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
-         //
-         // argument variables not avaiable during sparsity calculations
-         atom_x[atom_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
-         type_x[atom_j]  = variable_enum;
-         atom_ix[atom_j] = size_t(arg[0]); // variable for this argument
-         //
-         ++atom_j;
-         if( atom_j == atom_n )
-            atom_state = ret_atom;
-         break;
-
          case FunrpOp:
-         // parameter result for an atomic function
-         CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
-         CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-         CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-         //
-         atom_iy[atom_i] = 0; // special value for parameters
-# if CPPAD_FOR_JAC_TRACE
-         // remember argument for delayed tracing
-         atom_funrp[atom_i] = arg[0];
-# endif
-         ++atom_i;
-         if( atom_i == atom_m )
-            atom_state = end_atom;
-         break;
-
          case FunrvOp:
-         // variable result for an atomic function
-         CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-         CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
-         CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-         //
-         atom_iy[atom_i] = i_var; // variable index for this result
-         //
-         ++atom_i;
-         if( atom_i == atom_m )
-            atom_state = end_atom;
+         CPPAD_ASSERT_UNKNOWN( false );
          break;
          // -------------------------------------------------
 
@@ -697,48 +595,6 @@ void for_jac(
          CPPAD_ASSERT_UNKNOWN(0);
       }
 # if CPPAD_FOR_JAC_TRACE
-      if( op == AFunOp && atom_state == start_atom )
-      {  // print operators that have been delayed
-         CPPAD_ASSERT_UNKNOWN( atom_m == atom_iy.size() );
-         CPPAD_ASSERT_UNKNOWN( itr.op_index() > atom_m );
-         CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
-         CPPAD_ASSERT_NARG_NRES(FunrvOp, 0, 1);
-         addr_t arg_tmp[1];
-         for(i = 0; i < atom_m; i++)
-         {  size_t j_var = atom_iy[i];
-            // value for this variable
-            for(j = 0; j < limit; j++)
-               z_value[j] = false;
-            typename Vector_set::const_iterator itr(var_sparsity, j_var);
-            j = *itr;
-            while( j < limit )
-            {  z_value[j] = true;
-               j = *(++itr);
-            }
-            op_code_var op_tmp = FunrvOp;
-            if( j_var == 0 )
-            {  op_tmp     = FunrpOp;
-               arg_tmp[0] = atom_funrp[i];
-            }
-            // j_var is zero when there is no result.
-            printOp<Base, RecBase>(
-               std::cout,
-               play,
-               itr.op_index() - atom_m + i,
-               j_var,
-               op_tmp,
-               arg_tmp
-            );
-            if( j_var > 0 ) printOpResult(
-               std::cout,
-               1,
-               &z_value,
-               0,
-               (CppAD::vectorBool *) nullptr
-            );
-            std::cout << std::endl;
-         }
-      }
       // value for this variable
       for(j = 0; j < limit; j++)
          z_value[j] = false;
@@ -748,10 +604,7 @@ void for_jac(
       {  z_value[j] = true;
          j = *(++itr);
       }
-      // must delay print for these cases till after atomic function call
-      bool delay_print = op == FunrpOp;
-      delay_print     |= op == FunrvOp;
-      if( ! delay_print )
+      if( op != AFunOp )
       {    printOp<Base, RecBase>(
             std::cout,
             play,
