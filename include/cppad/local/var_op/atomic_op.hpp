@@ -1249,7 +1249,7 @@ inline void atomic_forward_jac(
                play,
                itr.op_index() - m + i,
                j_var,
-               op_code,
+               FunrvOp,
                arg_tmp
             );
             printOpResult(

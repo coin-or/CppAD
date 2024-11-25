@@ -595,17 +595,17 @@ void for_jac(
          CPPAD_ASSERT_UNKNOWN(0);
       }
 # if CPPAD_FOR_JAC_TRACE
-      // value for this variable
-      for(j = 0; j < limit; j++)
-         z_value[j] = false;
-      typename Vector_set::const_iterator itr(var_sparsity, i_var);
-      j = *itr;
-      while( j < limit )
-      {  z_value[j] = true;
-         j = *(++itr);
-      }
       if( op != AFunOp )
-      {    printOp<Base, RecBase>(
+      {  // value for this variable
+         for(j = 0; j < limit; j++)
+            z_value[j] = false;
+         typename Vector_set::const_iterator sparse_itr(var_sparsity, i_var);
+         j = *sparse_itr;
+         while( j < limit )
+         {  z_value[j] = true;
+            j = *(++sparse_itr);
+         }
+         printOp<Base, RecBase>(
             std::cout,
             play,
             itr.op_index(),
@@ -613,7 +613,7 @@ void for_jac(
             op,
             arg
          );
-         if( NumRes(op) > 0 && (! delay_print) ) printOpResult(
+         if( NumRes(op) > 0 ) printOpResult(
             std::cout,
             1,
             &z_value,
@@ -622,12 +622,8 @@ void for_jac(
          );
          std::cout << std::endl;
       }
-   }
-   std::cout << std::endl;
-# else
-   }
 # endif
-
+   }
    return;
 }
 
