@@ -74,8 +74,8 @@ bool atomic_four<Base>::for_jac_sparsity(
    size_t                           call_id      ,
    bool                             dependency   ,
    const vector<bool>&              ident_zero_x ,
-   const local::pod_vector<size_t>& x_index      ,
-   const local::pod_vector<size_t>& y_index      ,
+   const vector<size_t>&            x_index      ,
+   const vector<size_t>&            y_index      ,
    InternalSparsity&                var_sparsity )
 // END_FOR_JAC_SPARSITY
 {  typedef typename InternalSparsity::const_iterator iterator;

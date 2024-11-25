@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_CALL_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/atomic_index.hpp>
@@ -415,8 +415,8 @@ void call_atomic_for_jac_sparsity(
    bool                         dependency    ,
    const vector<Base>&          parameter_x   ,
    const vector<ad_type_enum>&  type_x        ,
-   const pod_vector<size_t>&    x_index       ,
-   const pod_vector<size_t>&    y_index       ,
+   const vector<size_t>&        x_index       ,
+   const vector<size_t>&        y_index       ,
    InternalSparsity&            var_sparsity  )
 // END_FOR_JAC_SPARSITY
 {  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );

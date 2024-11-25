@@ -130,8 +130,8 @@ void for_jac(
    // work space used by AFunOp.
    vector<Base>         atom_x;  //// value of parameter arguments to function
    vector<ad_type_enum> type_x;  // argument types
-   pod_vector<size_t>   atom_ix; // variable index (on tape) for each argument
-   pod_vector<size_t>   atom_iy; // variable index (on tape) for each result
+   vector<size_t> atom_ix; // variable index (on tape) for each argument
+   vector<size_t> atom_iy; // variable index (on tape) for each result
    //
    // information set by atomic forward (initialization to avoid warnings)
    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;

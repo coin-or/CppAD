@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_FOUR_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_define}
@@ -257,8 +257,8 @@ public:
       size_t                           call_id      ,
       bool                             dependency   ,
       const vector<bool>&              ident_zero_x ,
-      const local::pod_vector<size_t>& x_index      ,
-      const local::pod_vector<size_t>& y_index      ,
+      const vector<size_t>&            x_index      ,
+      const vector<size_t>&            y_index      ,
       InternalSparsity&                var_sparsity
    );
    template <class InternalSparsity>
