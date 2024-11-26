@@ -13,10 +13,10 @@ enum sweep_type {
    forward_op_sweep,
    forward_dir_sweep,
    reverse_op_sweep,
-   for_jac_sweep,
-   rev_jac_sweep,
-   for_hes_sweep,
-   rev_hes_sweep
+   forward_jac_sweep,
+   reverse_jac_sweep,
+   forward_hes_sweep,
+   reverse_hes_sweep
 };
 
 // atomic_op_work
@@ -96,11 +96,12 @@ struct atomic_op_work {
          variable_y.resize(0);
          break;
          // ------------------------------------------------------------------
-         // for_jac_sweep, rev_jac_sweep, for_hes_sweep, rev_hes_sweep
-         case for_jac_sweep:
-         case rev_jac_sweep:
-         case for_hes_sweep:
-         case rev_hes_sweep:
+         // forward_jac_sweep, reverse_jac_sweep
+         // forward_hes_sweep, reverse_hes_sweep
+         case forward_jac_sweep:
+         case reverse_jac_sweep:
+         case forward_hes_sweep:
+         case reverse_hes_sweep:
          taylor_x.resize(0);
          taylor_y.resize(0);
          //
@@ -1193,7 +1194,7 @@ inline void atomic_forward_jac(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, for_jac_sweep);
+   work.resize(m, n, n_order, forward_jac_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
@@ -1384,7 +1385,7 @@ inline void atomic_reverse_jac(
    bool                             dependency   ,
    Vector_set&                      var_sparsity )
 // END_ATOMIC_REVERSE_JAC
-{
+{  //
    // vector
    using CppAD::vector;
    //
@@ -1412,7 +1413,7 @@ inline void atomic_reverse_jac(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, rev_jac_sweep);
+   work.resize(m, n, n_order, reverse_jac_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
@@ -1580,6 +1581,54 @@ G and H
 *******
 see
 :ref:`var_atomic_op@G and H`
+
+num_var
+*******
+We use the notation *num_var* for the number of variables on the tape
+(including the phantom variable at index zero); i.e.::
+``play->num_var_rec()`` .
+
+for_jac_sparsity
+****************
+The set with index *j* is the forward Jacobian sparsity
+pattern for the variable with index *j*.
+
+rev_jac_include
+***************
+If the *j* element of this vector is true,
+the variable with index *j* is included in the Hessian,
+or affects the value of a variable that is included in the Hessian.
+
+Input
+=====
+::
+
+   for j = num_var, ... , i_z + 1
+      rev_jac_include[j] is an input
+
+Output
+======
+::
+
+   for j = i_z , ... , i_z - nv + 1
+      rev_jac_include[j] is an output
+
+rev_hes_sparsity
+****************
+On input (output), this is the sparsity pattern for *G* ( *H* ).
+For each variable index *j* ,
+*rev_hes_sparsity* [ *j* ] is the set of indices
+that may have non-zero cross partials with variable index *j* .
+
+Example
+=======
+If the indices in the sets correspond to the independent variables,
+then *rev_hes_sparsity* ``.end()`` is the number of independent variables.
+For *j* a variable index between 1 and the number of independent variables,
+*j* - 1 is the corresponding independent variable index.
+(The index *j* = 0 corresponds to the phantom variable at the beginning
+of the tape. )
+
 {xrst_end var_atomic_reverse_hes}
 */
 // BEGIN_ATOMIC_REVERSE_HES
@@ -1594,7 +1643,11 @@ inline void atomic_reverse_hes(
    bool*                            rev_jac_include   ,
    Vector_set&                      rev_hes_sparsity  )
 // END_ATOMIC_REVERSE_HES
-{
+{  //
+   CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_set() == play->num_var_rec() );
+   CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.n_set() == play->num_var_rec() );
+   CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.end()   == rev_hes_sparsity.end() );
+   //
    // vector
    using CppAD::vector;
    //
@@ -1622,7 +1675,7 @@ inline void atomic_reverse_hes(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, for_jac_sweep);
+   work.resize(m, n, n_order, reverse_hes_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
