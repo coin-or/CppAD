@@ -153,25 +153,14 @@ void rev_hes(
    }
 
    // ----------------------------------------------------------------------
-   // work space used by AFunOp.
-   vector<Base>         atom_x;  // value of parameter arguments to function
-   vector<ad_type_enum> type_x;  // argument types
-   vector<size_t> atom_ix; // variable indices for argument vector
-   vector<size_t> atom_iy; // variable indices for result vector
    //
-   // information set by atomic forward (initialization to avoid warnings)
-   size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-   // information set by atomic forward (necessary initialization)
-   enum_atom_state atom_state = end_atom; // proper initialization
-   // ----------------------------------------------------------------------
+   // work space used by atomic funcions
+   var_op::atomic_op_work<Base> atom_work;
    //
    // pointer to the beginning of the parameter vector
    // (used by atomic functions
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
    const Base* parameter = play->GetPar();
-   //
-   // which parametes are dynamic
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
    //
    // skip the EndOp at the end of the recording
    play::const_sequential_iterator itr = play->end();
@@ -185,11 +174,13 @@ void rev_hes(
    std::cout << std::endl;
    CppAD::vectorBool zf_value(limit);
    CppAD::vectorBool zh_value(limit);
+   bool atom_trace = true;
+# else
+   bool atom_trace = false;
 # endif
    bool more_operators = true;
    while(more_operators)
-   {  bool flag; // temporary for use in switch cases
-      //
+   {  //
       // next op
       (--itr).op_info(op, arg, i_var);
 
@@ -575,105 +566,23 @@ void rev_hes(
          // -------------------------------------------------
 
          case AFunOp:
-         // start or end an atomic function call
-         CPPAD_ASSERT_UNKNOWN(
-            atom_state == start_atom || atom_state == end_atom
+         var_op::atomic_reverse_hes<Vector_set, Base, RecBase>(
+            itr,
+            play,
+            parameter,
+            atom_trace,
+            atom_work,
+            for_jac_sparse,
+            RevJac,
+            rev_hes_sparse
          );
-         flag = atom_state == end_atom;
-         play::atom_op_info<RecBase>(
-            op, arg, atom_index, atom_old, atom_m, atom_n
-         );
-         if( flag )
-         {  atom_state = ret_atom;
-            atom_i     = atom_m;
-            atom_j     = atom_n;
-            //
-            atom_x.resize(atom_n);
-            type_x.resize(atom_n);
-            atom_ix.resize(atom_n);
-            atom_iy.resize(atom_m);
-         }
-         else
-         {  CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-            CPPAD_ASSERT_UNKNOWN( atom_j == 0 );
-            atom_state = end_atom;
-            //
-            // call atomic function for this operation
-            call_atomic_rev_hes_sparsity<Base,RecBase>(
-               atom_index, atom_old, atom_x, type_x, atom_ix, atom_iy,
-               for_jac_sparse, RevJac, rev_hes_sparse
-            );
-         }
          break;
 
          case FunapOp:
-         // parameter argument in an atomic operation sequence
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-         CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-         CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
-         CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-         //
-         --atom_j;
-         // argument parameter value
-         atom_x[atom_j] = parameter[arg[0]];
-         // argument type
-         if( dyn_par_is[arg[0]] )
-            type_x[atom_j] = dynamic_enum;
-         else
-            type_x[atom_j] = constant_enum;
-         // special variable index used for parameters
-         atom_ix[atom_j] = 0;
-         //
-         if( atom_j == 0 )
-            atom_state = start_atom;
-         break;
-
          case FunavOp:
-         // variable argument in an atomic operation sequence
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-         CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
-         CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
-         //
-         --atom_j;
-         // argument variables not available during sparsity calculations
-         atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-         type_x[atom_j] = variable_enum;
-         // variable index for this argument
-         atom_ix[atom_j] = size_t(arg[0]);
-         //
-         if( atom_j == 0 )
-            atom_state = start_atom;
-         break;
-
          case FunrpOp:
-         // parameter result for an atomic function
-         CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
-         CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-         CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-         //
-         --atom_i;
-         atom_iy[atom_i] = 0; // special variable used for parameters
-         //
-         if( atom_i == 0 )
-            atom_state = arg_atom;
-         break;
-
          case FunrvOp:
-         // variable result for an atomic function
-         CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-         CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
-         CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
-         CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-         //
-         --atom_i;
-         atom_iy[atom_i] = i_var; // variable for this result
-         //
-         if( atom_i == 0 )
-            atom_state = arg_atom;
+         CPPAD_ASSERT_UNKNOWN(false);
          break;
          // -------------------------------------------------
 
