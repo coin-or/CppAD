@@ -465,8 +465,8 @@ public:
    template <class InternalSparsity>
    bool rev_sparse_hes(
       const vector<Base>&              x                ,
-      const local::pod_vector<size_t>& x_index          ,
-      const local::pod_vector<size_t>& y_index          ,
+      const vector<size_t>&            x_index          ,
+      const vector<size_t>&            y_index          ,
       const InternalSparsity&          for_jac_sparsity ,
       bool*                            rev_jac_flag     ,
       InternalSparsity&                rev_hes_sparsity

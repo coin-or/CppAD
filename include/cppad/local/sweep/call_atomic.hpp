@@ -997,8 +997,8 @@ void call_atomic_rev_hes_sparsity(
    size_t                       call_id           ,
    const vector<Base>&          parameter_x       ,
    const vector<ad_type_enum>&  type_x            ,
-   const pod_vector<size_t>&    x_index           ,
-   const pod_vector<size_t>&    y_index           ,
+   const vector<size_t>&        x_index           ,
+   const vector<size_t>&        y_index           ,
    const InternalSparsity&      for_jac_sparsity  ,
    bool*                        rev_jac_flag      ,
    InternalSparsity&            rev_hes_sparsity  )
