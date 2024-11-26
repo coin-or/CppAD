@@ -615,40 +615,42 @@ void rev_hes(
          CPPAD_ASSERT_UNKNOWN(0);
       }
 # if CPPAD_REV_HES_TRACE
-      for(j = 0; j < limit; j++)
-      {  zf_value[j] = false;
-         zh_value[j] = false;
+      if( op != AFunOp )
+      {  for(j = 0; j < limit; j++)
+         {  zf_value[j] = false;
+            zh_value[j] = false;
+         }
+         typename Vector_set::const_iterator itr_jac(for_jac_sparse, i_var);
+         j = *itr_jac;
+         while( j < limit )
+         {  zf_value[j] = true;
+            j = *(++itr_jac);
+         }
+         typename Vector_set::const_iterator itr_hes(rev_hes_sparse, i_var);
+         j = *itr_hes;
+         while( j < limit )
+         {  zh_value[j] = true;
+            j = *(++itr_hes);
+         }
+         printOp<Base, RecBase>(
+            std::cout,
+            play,
+            itr.op_index(),
+            i_var,
+            op,
+            arg
+         );
+         // should also print RevJac[i_var], but printOpResult does not
+         // yet allow for this
+         if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+            std::cout,
+            1,
+            &zf_value,
+            1,
+            &zh_value
+         );
+         std::cout << std::endl;
       }
-      typename Vector_set::const_iterator itr_jac(for_jac_sparse, i_var);
-      j = *itr_jac;
-      while( j < limit )
-      {  zf_value[j] = true;
-         j = *(++itr_jac);
-      }
-      typename Vector_set::const_iterator itr_hes(rev_hes_sparse, i_var);
-      j = *itr_hes;
-      while( j < limit )
-      {  zh_value[j] = true;
-         j = *(++itr_hes);
-      }
-      printOp<Base, RecBase>(
-         std::cout,
-         play,
-         itr.op_index(),
-         i_var,
-         op,
-         arg
-      );
-      // should also print RevJac[i_var], but printOpResult does not
-      // yet allow for this
-      if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
-         std::cout,
-         1,
-         &zf_value,
-         1,
-         &zh_value
-      );
-      std::cout << std::endl;
    }
    std::cout << std::endl;
 # else

@@ -1774,20 +1774,29 @@ inline void atomic_reverse_hes(
    if( trace )
    {  typedef typename Vector_set::const_iterator itr_sparse_t;
       size_t end = rev_hes_sparsity.end();
-      CppAD::vectorBool this_row(end);
+      CppAD::vectorBool jac_row(end), hes_row(end);
       addr_t            arg_tmp[1];
       for(size_t i = 0; i < m; ++i)
       {  size_t j_var = index_y[i];
-         for(size_t j = 0; j < end; ++j)
-            this_row[j] = false;
-         itr_sparse_t itr_sparse(rev_hes_sparsity, j_var);
-         size_t j = *itr_sparse;
-         while( j < end )
-         {  this_row[j] = true;
-            j = *(++itr_sparse);
-         }
-         if( 0 < j_var )
-         {  printOp<Base, RecBase>(
+         if( 0 < j_var)
+         { 
+            for(size_t j = 0; j < end; ++j)
+            {  jac_row[j]  = false;
+               hes_row[j]  = false;
+            }
+            itr_sparse_t itr_jac(for_jac_sparsity, j_var);
+            size_t j = *itr_jac;
+            while( j < end )
+            {  jac_row[j] = true;
+               j = *(++itr_jac);
+            }
+            itr_sparse_t itr_hes(rev_hes_sparsity, j_var);
+            j = *itr_hes;
+            while( j < end )
+            {  hes_row[j] = true;
+               j = *(++itr_hes);
+            }
+            printOp<Base, RecBase>(
                std::cout,
                play,
                itr.op_index() - m + i,
@@ -1798,9 +1807,9 @@ inline void atomic_reverse_hes(
             printOpResult(
                std::cout,
                1,
-               &this_row,
-               0,
-               (CppAD::vectorBool *) nullptr
+               &jac_row,
+               1,
+               &hes_row
             );
             std::cout << std::endl;
          }
