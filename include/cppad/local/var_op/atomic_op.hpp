@@ -13,7 +13,10 @@ enum sweep_type {
    forward_op_sweep,
    forward_dir_sweep,
    reverse_op_sweep,
-   for_jac_sweep
+   for_jac_sweep,
+   rev_jac_sweep,
+   for_hes_sweep,
+   rev_hes_sweep
 };
 
 // atomic_op_work
@@ -93,8 +96,11 @@ struct atomic_op_work {
          variable_y.resize(0);
          break;
          // ------------------------------------------------------------------
-         // for_jac_sweep
+         // for_jac_sweep, rev_jac_sweep, for_hes_sweep, rev_hes_sweep
          case for_jac_sweep:
+         case rev_jac_sweep:
+         case for_hes_sweep:
+         case rev_hes_sweep:
          taylor_x.resize(0);
          taylor_y.resize(0);
          //
@@ -1406,7 +1412,7 @@ inline void atomic_reverse_jac(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, for_jac_sweep);
+   work.resize(m, n, n_order, rev_jac_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
