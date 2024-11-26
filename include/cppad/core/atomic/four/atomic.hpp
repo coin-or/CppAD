@@ -291,8 +291,8 @@ public:
    bool for_hes_sparsity(
       size_t                           call_id          ,
       const vector<bool>&              ident_zero_x     ,
-      const local::pod_vector<size_t>& x_index          ,
-      const local::pod_vector<size_t>& y_index          ,
+      const vector<size_t>&            x_index          ,
+      const vector<size_t>&            y_index          ,
       size_t                           np1              ,
       size_t                           numvar           ,
       const InternalSparsity&          rev_jac_sparsity ,
