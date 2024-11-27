@@ -415,7 +415,7 @@ If this index is zero, *y* is a parameter (not a variable).
 
 {xrst_comment document n_order, partial}
 {xrst_template ;
-   include/cppad/local/var_op/reverse.xrst
+   include/cppad/local/var_op/template/reverse.xrst
    @x, y@  ; y
 }
 

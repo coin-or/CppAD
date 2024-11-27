@@ -287,7 +287,7 @@ is the parameter vector for this operation sequence.
 
 {xrst_comment n_dir, cap_order, taylor}
 {xrst_template ,
-   include/cppad/local/var_op/forward_dir.xrst
+   include/cppad/local/var_op/template/forward_dir.xrst
 }
 
 {xrst_end var_csum_forward_dir}
@@ -374,7 +374,7 @@ see
 
 {xrst_comment document n_order, partial}
 {xrst_template ;
-   include/cppad/local/var_op/reverse.xrst
+   include/cppad/local/var_op/template/reverse.xrst
    @x, y@  ; x, y, u, v
 }
 
