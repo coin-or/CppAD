@@ -1854,6 +1854,41 @@ Vector_set
 is the type used for vectors of sets. It must satisfy the
 :ref:`SetVector-name` concept.
 
+n_independent_p1
+****************
+is the number of independent variables (in the tape) plus one.
+
+rev_jac_sparsity
+****************
+is the reverse Jacobian sparsity pattern for the scalar valued
+function that the Hessian sparsity is being computed for.
+Zero is the only possible element in each set; 
+i.e.. *ref_jac_sparsity* .end() == 1 .
+If the set with index *j* is empty, 
+the derivative of the function w.r.t the variable with index *j* is zero.
+
+for_hes_sparsity
+****************
+On input, all the linear and nonlinear interactions up to the
+arguments to the atomic function have been take into account.
+Upon return, the linear and nonlinear interactions in
+the atomic function have been take into account.
+
+Hessian Sparsity
+================
+For *j* equal 1 to *n_independent_p1* - 1,
+if *i* is in set with index *j* ,
+the Hessian may have a non-zero partial with respect to the
+independent variables with indices ( *i* - 1, *j* - 1 ) .
+Note that the index zero is not used because it corresponds to the
+phantom variable on the tape.
+
+Jacobian Sparsity
+=================
+If *i* is in the set with index *n_independent_p1* + *j* ,
+the variable with index *j* may have a non-zero partial with resect to the
+independent variable with index *i* - 1 .
+
 {xrst_end var_atomic_forward_hes}
 */
 // BEGIN_ATOMIC_FORWARD_HES
@@ -1868,7 +1903,8 @@ inline void atomic_forward_hes(
    const Vector_set&                rev_jac_sparsity ,
    Vector_set&                      for_hes_sparsity )
 // END_ATOMIC_FORWARD_HES
-{  CPPAD_ASSERT_UNKNOWN( n_independent_p1 = for_hes_sparsity.end() );
+{  CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
+   CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == n_independent_p1 );
    //
    // vector
    using CppAD::vector;
