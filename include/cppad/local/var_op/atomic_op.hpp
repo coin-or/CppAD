@@ -125,7 +125,6 @@ struct atomic_op_work {
    funav
    funrp
    funrv
-   nv
 }
 
 Atomic Function Call Operators
@@ -184,62 +183,6 @@ FunrpOp, FunrvOp
    The new variable, created by this operator, gets its values from
    the corresponding result of the function.
 
-nv
-**
-We use *nv* to denote the number of variables created by this function call.
-This is equal to the number of FunrvOp operators in function call.
-
-i_z
-***
-We use *i_z* to denote the index of the last variable
-created by this function call.
-
-itr
-***
-is an iterator for the recording in *play* .
-
-Forward Mode
-============
-On input (output), the operator corresponding to *itr* is the first (second)
-:ref:`var_atomic_op@AfunOp` for this function call.
-
-Reverse Mode
-============
-On input (output), the operator corresponding to *itr* is the second (first)
-:ref:`var_atomic_op@AfunOp` for this function call.
-
-play
-****
-is a player for the recording that contains the operation sequence
-that contains this atomic function call.
-
-parameter
-*********
-is the parameter vector for this operation sequence.
-
-trace
-*****
-if *trace* is true (false) a trace of the evaluation of this
-atomic function call is (is not) printed.
-
-work
-****
-is unspecified work space.
-It passed as an argument to reduce memory allocations.
-
-G and H
-*******
-We use :math:`y(x)` to denote the atomic function call
-as a mapping from the vector *x* to the vector *y* .
-We use :math:`G( y, x, \ldots )` to denote a scalar valued function
-of the taylor coefficients of the variables with index less than or
-equal *i_z* ; i.e., the last variable in the vector *y* .
-We define :math:`H(x, \ldots )` by
-
-.. math::
-
-   H(x, \cdots ) = G [ y(x), x, \cdots ]
-
 {xrst_end var_atomic_op}
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_forward_op dev}
@@ -257,21 +200,13 @@ Prototype
    // END_ATOMIC_FORWARD_OP
 }
 
-
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
+{xrst_comment document:
+   nv, iz, itr, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , forward
+}
 
 cap_order
 *********
@@ -513,21 +448,13 @@ Prototype
    // END_ATOMIC_FORWARD_DIR
 }
 
-
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
+{xrst_comment document:
+   nv, iz, itr, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , forward
+}
 
 cap_order
 *********
@@ -851,25 +778,13 @@ this template parameter is either
 ``play::subgraph_iterator`` or
 ``play::const_sequential_iterator`` .
 
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
-
-G and H
-*******
-see
-:ref:`var_atomic_op@G and H`
+{xrst_comment document:
+   nv, iz, G and H, itr, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , reverse
+}
 
 cap_order
 *********
@@ -1116,20 +1031,13 @@ Prototype
    // END_ATOMIC_FORWARD_JAC
 }
 
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
+{xrst_comment document:
+   nv, iz, itr, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , forward
+}
 
 Vector_set
 **********
@@ -1340,25 +1248,13 @@ Prototype
    // END_ATOMIC_REVERSE_JAC
 }
 
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
-
-G and H
-*******
-see
-:ref:`var_atomic_op@G and H`
+{xrst_comment document:
+   nv, iz, itr, G and H, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , reverse
+}
 
 Vector_set
 **********
@@ -1562,25 +1458,13 @@ Prototype
    // END_ATOMIC_REVERSE_HES
 }
 
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
-
-G and H
-*******
-see
-:ref:`var_atomic_op@G and H`
+{xrst_comment document:
+   nv, iz, itr, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , reverse
+}
 
 num_var
 *******
@@ -1834,20 +1718,13 @@ Prototype
    // END_ATOMIC_FORWARD_HES
 }
 
-nv, i_z
-*******
-see
-:ref:`var_atomic_op@nv` ,
-:ref:`var_atomic_op@i_z`
-
-itr, play, parameter, trace, work
-*********************************
-see
-:ref:`var_atomic_op@itr` ,
-:ref:`var_atomic_op@play` ,
-:ref:`var_atomic_op@parameter` ,
-:ref:`var_atomic_op@trace` ,
-:ref:`var_atomic_op@work`
+{xrst_comment document:
+   nv, iz, itr, play, parameter, trace, work
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/atomic_op.xrst
+   @mode@ , forward
+}
 
 Vector_set
 **********
@@ -1862,9 +1739,9 @@ rev_jac_sparsity
 ****************
 is the reverse Jacobian sparsity pattern for the scalar valued
 function that the Hessian sparsity is being computed for.
-Zero is the only possible element in each set; 
+Zero is the only possible element in each set;
 i.e.. *ref_jac_sparsity* .end() == 1 .
-If the set with index *j* is empty, 
+If the set with index *j* is empty,
 the derivative of the function w.r.t the variable with index *j* is zero.
 
 for_hes_sparsity
@@ -2068,7 +1945,7 @@ inline void atomic_forward_hes(
       for(size_t i = 0; i < np1; ++i)
       {  hes[i].resize(np1);
          for(size_t j = 0; j < np1; ++j)
-            hes[i][j] = false;  
+            hes[i][j] = false;
          itr_sparse_t itr_hes(for_hes_sparsity, i);
          size_t j = *itr_hes;
          while( j < np1 )

@@ -1,0 +1,75 @@
+{xrst_comment
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+SPDX-FileContributor: 2024 Bradley M. Bell
+
+This xrst template file has the following parameters:
+   @mode@   Must be either forward or reverse.
+
+It doucments the following:
+      nv, iz, G and H, itr, play, parameter, trace, work
+}
+
+Notation
+********
+
+nv
+==
+We use *nv* to denote the number of variables created by this function call.
+Which is also equal to the number of
+{xrst_spell_off}
+``FunrvOp``
+{xrst_spell_on}
+operators in function call.
+
+i_z
+===
+We use *i_z* to denote the index of the last variable
+created by this function call.
+
+{xrst_suspend @mode@ != reverse}
+G and H
+=======
+We use :math:`y(x)` to denote the atomic function call
+as a mapping from the vector *x* to the vector *y* .
+We use :math:`G( y, x, \ldots )` to denote a scalar valued function
+of the taylor coefficients of the variables with index less than or
+equal *i_z* ; i.e., the last variable in the vector *y* .
+We define :math:`H(x, \ldots )` by
+
+.. math::
+
+   H(x, \cdots ) = G [ y(x), x, \cdots ]
+
+{xrst_resume}
+
+itr
+***
+is an iterator for the recording in *play* .
+{xrst_suspend @mode@ != forward}
+On input (output), the operator corresponding to *itr* is the first (second)
+:ref:`var_atomic_op@AfunOp` for this function call.
+{xrst_resume}
+{xrst_suspend @mode@ != reverse}
+On input (output), the operator corresponding to *itr* is the second (first)
+:ref:`var_atomic_op@AfunOp` for this function call.
+{xrst_resume}
+
+play
+****
+is a player for the recording that contains the operation sequence
+that contains this atomic function call.
+
+parameter
+*********
+is the parameter vector for this operation sequence.
+
+trace
+*****
+if *trace* is true (false) a trace of the evaluation of this
+atomic function call is (is not) printed.
+
+work
+****
+is unspecified work space.
+It passed as an argument to reduce memory allocations.
