@@ -110,7 +110,7 @@ Otherwise it has no elements.
 for_hes_sparse
 **************
 This is a sparsity pattern with *n* + 1 + *numvar* sets
-the end value *n* + 1 .
+and end value *n* + 1 .
 On input, all of the sets are empty.
 On output, it contains the two sparsity patterns described below:
 
@@ -222,10 +222,7 @@ void for_hes(
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FOR_HES_TRACE
-   vector<Addr> atom_funrp; // parameter index for FunrpOp operators
    std::cout << std::endl;
-   CppAD::vectorBool zf_value(np1);
-   CppAD::vectorBool zh_value(np1 * np1);
    bool atom_trace = true;
 # else
    bool atom_trace = false;
@@ -516,84 +513,9 @@ void for_hes(
          CPPAD_ASSERT_UNKNOWN(0);
       }
 # if CPPAD_FOR_HES_TRACE
-      typedef typename SetVector::const_iterator const_iterator;
-      if( op == AFunOp && atom_state == start_atom )
-      {  // print operators that have been delayed
-         CPPAD_ASSERT_UNKNOWN( atom_m == atom_iy.size() );
-         CPPAD_ASSERT_UNKNOWN( itr.op_index() > atom_m );
-         CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
-         CPPAD_ASSERT_NARG_NRES(FunrvOp, 0, 1);
-         addr_t arg_tmp[1];
-         for(size_t k = 0; k < atom_m; k++)
-         {  size_t k_var = atom_iy[k];
-            // value for this variable
-            for(size_t i = 0; i < np1; i++)
-            {  zf_value[i] = false;
-               for(size_t j = 0; j < np1; j++)
-                  zh_value[i * np1 + j] = false;
-            }
-            const_iterator itr_1(for_hes_sparse, np1 + i_var);
-            size_t j = *itr_1;
-            while( j < np1 )
-            {  zf_value[j] = true;
-               j = *(++itr_1);
-            }
-            for(size_t i = 0; i < np1; i++)
-            {  const_iterator itr_2(for_hes_sparse, i);
-               j = *itr_2;
-               while( j < np1 )
-               {  zh_value[i * np1 + j] = true;
-                  j = *(++itr_2);
-               }
-            }
-            op_code_var op_tmp = FunrvOp;
-            if( k_var == 0 )
-            {  op_tmp     = FunrpOp;
-               arg_tmp[0] = atom_funrp[k];
-            }
-            // k_var is zero when there is no result
-            printOp<Base, RecBase>(
-               std::cout,
-               play,
-               itr.op_index() - atom_m + k,
-               k_var,
-               op_tmp,
-               arg_tmp
-            );
-            if( k_var > 0 ) printOpResult(
-               std::cout,
-               1,
-               &zf_value,
-               1,
-               &zh_value
-            );
-            std::cout << std::endl;
-         }
-      }
-      for(size_t i = 0; i < np1; i++)
-      {  zf_value[i] = false;
-         for(size_t j = 0; j < np1; j++)
-            zh_value[i * np1 + j] = false;
-      }
-      const_iterator itr_1(for_hes_sparse, np1 + i_var);
-      size_t j = *itr_1;
-      while( j < np1 )
-      {  zf_value[j] = true;
-         j = *(++itr_1);
-      }
-      for(size_t i = 0; i < np1; i++)
-      {  const_iterator itr_2(for_hes_sparse, i);
-         j = *itr_2;
-         while( j < np1 )
-         {  zh_value[i * np1 + j] = true;
-            j = *(++itr_2);
-         }
-      }
-      // must delay print for these cases till after atomic function call
-      bool delay_print = op == FunrpOp;
-      delay_print     |= op == FunrvOp;
-      if( ! delay_print )
-      {    printOp<Base, RecBase>(
+      if( op != AFunOp )
+      {  //  
+         printOp<Base, RecBase>(
             std::cout,
             play,
             itr.op_index(),
@@ -601,14 +523,50 @@ void for_hes(
             op,
             arg
          );
-         if( NumRes(op) > 0 && (! delay_print) ) printOpResult(
-            std::cout,
-            1,
-            &zf_value,
-            1,
-            &zh_value
-         );
-         std::cout << std::endl;
+         //
+         if( NumRes(op) > 0 )
+         {  typedef typename SetVector::const_iterator itr_sparse_t;
+            CPPAD_ASSERT_UNKNOWN( np1 == for_hes_sparse.end() );
+            CppAD::vectorBool jac_row(np1);
+            for(size_t j = 0; j < np1; ++j)
+               jac_row[j] = false;
+            itr_sparse_t itr_jac(for_hes_sparse, np1 + i_var);
+            {  size_t j = *itr_jac;
+               while( j < np1 )
+               {  jac_row[j] = true;
+                  j = *(++itr_jac);
+               }
+            }
+            printOpResult(
+               std::cout,
+               1,
+               &jac_row,
+               0,
+               (CppAD::vectorBool *) nullptr
+            );
+            std::cout << std::endl;
+            //
+            CppAD::vector< CppAD::vectorBool > hes(np1);
+            for(size_t i = 0; i < np1; ++i)
+            {  hes[i].resize(np1);
+               for(size_t j = 0; j < np1; ++j)
+                  hes[i][j] = false;  
+               itr_sparse_t itr_hes(for_hes_sparse, i);
+               size_t j = *itr_hes;
+               while( j < np1 )
+               {  hes[i][j] = true;
+                  j = *(++itr_hes);
+               }
+            }
+            printOpResult(
+               std::cout,
+               np1,
+               hes.data(),
+               0,
+               (CppAD::vectorBool *) nullptr
+            );
+            std::cout << std::endl;
+         }
       }
    }
    std::cout << std::endl;

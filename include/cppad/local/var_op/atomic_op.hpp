@@ -1868,7 +1868,8 @@ inline void atomic_forward_hes(
    const Vector_set&                rev_jac_sparsity ,
    Vector_set&                      for_hes_sparsity )
 // END_ATOMIC_FORWARD_HES
-{
+{  CPPAD_ASSERT_UNKNOWN( n_independent_p1 = for_hes_sparsity.end() );
+   //
    // vector
    using CppAD::vector;
    //
@@ -1993,22 +1994,23 @@ inline void atomic_forward_hes(
    );
    //
    if( trace )
-   {  size_t end = rev_jac_sparsity.end();
-      CppAD::vectorBool this_row(end);
+   {  typedef typename Vector_set::const_iterator itr_sparse_t;
+      size_t np1 = n_independent_p1;
+      CPPAD_ASSERT_UNKNOWN( np1 == for_hes_sparsity.end() );
+      CppAD::vectorBool jac_row(np1);
       addr_t            arg_tmp[1];
       for(size_t i = 0; i < m; ++i)
       {  size_t j_var = index_y[i];
-         for(size_t j = 0; j < end; ++j)
-            this_row[j] = false;
-         typename Vector_set::const_iterator
-            itr_sparse(rev_jac_sparsity, j_var);
-         size_t j = *itr_sparse;
-         while( j < end )
-         {  this_row[j] = true;
-            j = *(++itr_sparse);
-         }
          if( 0 < j_var )
-         {  printOp<Base, RecBase>(
+         {  for(size_t j = 0; j < np1; ++j)
+               jac_row[j] = false;
+            itr_sparse_t itr_jac(for_hes_sparsity, np1 + j_var);
+            size_t j = *itr_jac;
+            while( j < np1 )
+            {  jac_row[j] = true;
+               j = *(++itr_jac);
+            }
+            printOp<Base, RecBase>(
                std::cout,
                play,
                itr.op_index() - m + i,
@@ -2019,13 +2021,33 @@ inline void atomic_forward_hes(
             printOpResult(
                std::cout,
                1,
-               &this_row,
+               &jac_row,
                0,
                (CppAD::vectorBool *) nullptr
             );
             std::cout << std::endl;
          }
       }
+      CppAD::vector< CppAD::vectorBool > hes(np1);
+      for(size_t i = 0; i < np1; ++i)
+      {  hes[i].resize(np1);
+         for(size_t j = 0; j < np1; ++j)
+            hes[i][j] = false;  
+         itr_sparse_t itr_hes(for_hes_sparsity, i);
+         size_t j = *itr_hes;
+         while( j < np1 )
+         {  hes[i][j] = true;
+            j = *(++itr_hes);
+         }
+      }
+      printOpResult(
+         std::cout,
+         np1,
+         hes.data(),
+         0,
+         (CppAD::vectorBool *) nullptr
+      );
+      std::cout << std::endl;
    }
    return;
 }
