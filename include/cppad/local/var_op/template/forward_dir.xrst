@@ -45,7 +45,6 @@ If *n_dir* is equal to one then *ell* is zero and::
 
    (j, k, ell) = j * cap_order + k
 
-
 n_res
 =====
 If this is a unary operator and it has an auxiliary result,

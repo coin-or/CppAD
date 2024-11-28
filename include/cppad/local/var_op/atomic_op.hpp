@@ -186,9 +186,6 @@ FunrpOp, FunrvOp
 {xrst_end var_atomic_op}
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_forward_op dev}
-{xrst_spell
-   nv
-}
 
 Any Order Forward Atomic Function Call
 ######################################
@@ -201,7 +198,7 @@ Prototype
 }
 
 {xrst_comment document:
-   nv, iz, itr, play, parameter, trace, work
+   n_res, iz, itr, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst
@@ -228,11 +225,11 @@ Input
 =====
 ::
 
-   for j = 0, ..., i_z - nv
+   for j = 0, ..., i_z - n_res
       for k = 0 , ... , order_up
          taylor [ j * cap_order + k ] is an input
 
-   for j = i_z , ... , i_z - nv + 1
+   for j = i_z , ... , i_z - n_res + 1
       for  k = 0 , ... , order_up - 1
          taylor [ j * cap_order + k ] is an input
 
@@ -240,7 +237,7 @@ Output
 ======
 ::
 
-   for j = i_z , ... , i_z - nv + 1
+   for j = i_z , ... , i_z - n_res + 1
       for k = order_low , ... , order_up
          taylor [ i_z * cap_order + k ] is an output
 
@@ -434,9 +431,6 @@ void atomic_forward_op(
 /*
 -----------------------------------------------------------------------------
 {xrst_begin var_atomic_forward_dir dev}
-{xrst_spell
-   nv
-}
 
 Multiple Direction Forward Atomic Function Call
 ###############################################
@@ -449,7 +443,7 @@ Prototype
 }
 
 {xrst_comment document:
-   nv, iz, itr, play, parameter, trace, work
+   n_res, iz, itr, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst
@@ -511,12 +505,12 @@ Input
 =====
 ::
 
-   for j = 0, ..., i_z - nv,
+   for j = 0, ..., i_z - n_res,
       for k = 0 , ... , order_up
          for ell = 0 , ... , n_dir - 1
             taylor [ (j, k, ell) ] is an input
 
-   for j = i_z, ... , i_z - nv + 1
+   for j = i_z, ... , i_z - n_res + 1
       for k = 0 , ... , order_up - 1
          for ell = 0 , ... , n_dir - 1
             taylor [ (j, k, ell) ] is an input
@@ -525,7 +519,7 @@ Output
 ======
 ::
 
-   for j = i_z, ... , i_z - nv + 1
+   for j = i_z, ... , i_z - n_res + 1
       for ell = 0, ... , n_dir - 1
          taylor [ (j, order_up, ell) ] is an output
 
@@ -758,9 +752,6 @@ void atomic_forward_dir(
 /*
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_reverse_op dev}
-{xrst_spell
-   nv
-}
 
 Reverse Atomic Function Call
 ############################
@@ -779,7 +770,7 @@ this template parameter is either
 ``play::const_sequential_iterator`` .
 
 {xrst_comment document:
-   nv, iz, G and H, itr, play, parameter, trace, work
+   n_res, iz, G and H, itr, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst
@@ -1017,9 +1008,6 @@ void atomic_reverse_op(
 /*
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_forward_jac dev}
-{xrst_spell
-   nv
-}
 
 Forward Jacobian Sparsity Atomic Function Call
 ##############################################
@@ -1032,7 +1020,7 @@ Prototype
 }
 
 {xrst_comment document:
-   nv, iz, itr, play, parameter, trace, work
+   n_res, iz, itr, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst
@@ -1051,14 +1039,14 @@ Input
 =====
 ::
 
-   for j = 0, ..., i_z - nv
+   for j = 0, ..., i_z - n_res
       The set with index j in var_sparsity
 
 Output
 ======
 ::
 
-   for j = i_z , ... , i_z - nv + 1
+   for j = i_z , ... , i_z - n_res + 1
       The set with index j in var_sparsity
 
 {xrst_end var_atomic_forward_jac}
@@ -1234,9 +1222,6 @@ inline void atomic_forward_jac(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin var_atomic_reverse_jac dev}
-{xrst_spell
-   nv
-}
 
 Reverse Jacobian Sparsity Atomic Function Call
 ##############################################
@@ -1249,7 +1234,7 @@ Prototype
 }
 
 {xrst_comment document:
-   nv, iz, itr, G and H, play, parameter, trace, work
+   n_res, iz, itr, G and H, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst
@@ -1444,9 +1429,6 @@ inline void atomic_reverse_jac(
 /*
 ------------------------------------------------------------------------------
 {xrst_begin var_atomic_reverse_hes dev}
-{xrst_spell
-   nv
-}
 
 Reverse Hessian Sparsity Atomic Function Call
 #############################################
@@ -1459,7 +1441,7 @@ Prototype
 }
 
 {xrst_comment document:
-   nv, iz, itr, play, parameter, trace, work
+   n_res, iz, itr, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst
@@ -1494,7 +1476,7 @@ Output
 ======
 ::
 
-   for j = i_z , ... , i_z - nv + 1
+   for j = i_z , ... , i_z - n_res + 1
       rev_jac_include[j] is an output
 
 rev_hes_sparsity
@@ -1704,9 +1686,6 @@ inline void atomic_reverse_hes(
 /*
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_forward_hes dev}
-{xrst_spell
-   nv
-}
 
 Forward Hessian Sparsity Atomic Function Call
 #############################################
@@ -1719,7 +1698,7 @@ Prototype
 }
 
 {xrst_comment document:
-   nv, iz, itr, play, parameter, trace, work
+   n_res, iz, itr, play, parameter, trace, work
 }
 {xrst_template ,
    include/cppad/local/var_op/template/atomic_op.xrst

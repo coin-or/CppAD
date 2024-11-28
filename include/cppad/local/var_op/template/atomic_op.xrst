@@ -7,15 +7,15 @@ This xrst template file has the following parameters:
    @mode@   Must be either forward or reverse.
 
 It doucments the following:
-      nv, iz, G and H, itr, play, parameter, trace, work
+      n_res, iz, G and H, itr, play, parameter, trace, work
 }
 
 Notation
 ********
 
-nv
-==
-We use *nv* to denote the number of variables created by this function call.
+n_res
+=====
+We use *n_res* to denote the number of variables created by this function call.
 Which is also equal to the number of
 {xrst_spell_off}
 ``FunrvOp``
