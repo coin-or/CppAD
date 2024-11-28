@@ -6,122 +6,49 @@
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { namespace var_op {
-/*!
-\file cexp_op.hpp
-Forward, reverse, and sparse operations for conditional expressions.
-*/
-
-/*!
-Shared documentation for conditional expressions (not called).
-
-<!-- define conditional_exp_op -->
-The C++ source code coresponding to this operation is
-\verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
-\endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
-
-\param i_z
-is the AD variable index corresponding to the variable z.
-
-\param arg
-\n
- arg[0]
-is static cast to size_t from the enum type
-\verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
-\endverbatim
-for this operation.
-Note that arg[0] cannot be equal to CompareNe.
-\n
-\n
- arg[1] & 1
-\n
-If this is zero, y_0 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 2
-\n
-If this is zero, y_1 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 4
-\n
-If this is zero, y_2 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 8
-\n
-If this is zero, y_3 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[2 + j ] for j = 0, 1, 2, 3
-\n
-is the index corresponding to y_j.
-
-\param num_par
-is the total number of values in the vector parameter.
-
-\param parameter
-For j = 0, 1, 2, 3,
-if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
-
-\param cap_order
-number of columns in the matrix containing the Taylor coefficients.
-
-\par Checked Assertions
-\li NumArg(CExpOp) == 6
-\li NumRes(CExpOp) == 1
-\li arg[0] < static_cast<size_t> ( CompareNe )
-\li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
-\li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-<!-- end conditional_exp_op -->
-*/
-template <class Base>
-inline void conditional_exp_op(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   )
-{  // This routine is only for documentation, it should never be used
-   CPPAD_ASSERT_UNKNOWN( false );
+/*
+{xrst_begin_parent var_cexp_op dev}
+{xrst_spell
+   Ge
 }
 
-/*!
-Shared documentation for conditional expression sparse operations (not called).
+The Variable Conditional Expression Operator
+############################################
 
-<!-- define sparse_conditional_exp_op -->
-The C++ source code coresponding to this operation is
-\verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
-\endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
+User Syntax
+***********
+| *z* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+*Rel*
+is Lt, Le, Eq, Ge, Gt or Ne .
 
-\param i_z
-is the AD variable index corresponding to the variable z.
+left
+****
+is the left operand for the comparison.
 
-\param arg
-\n
- arg[0]
-is static cast to size_t from the enum type
-\verbatim
+right
+*****
+is the right operand for the comparison.
+
+if_true
+*******
+is the value assigned to *z* if the comparison result is true.
+
+if_false
+********
+is the value assigned to *z* if the comparison result is false.
+
+z
+*
+is the variable that results from the comparison.
+
+arg
+***
+
+arg[0]
+======
+is static cast to addr_t from the enum type::
+
    enum CompareOp {
       CompareLt,
       CompareLe,
@@ -130,155 +57,123 @@ is static cast to size_t from the enum type
       CompareGt,
       CompareNe
    }
-\endverbatim
-for this operation.
-Note that arg[0] cannot be equal to CompareNe.
-\n
-\n
- arg[1] & 1
-\n
-If this is zero, y_0 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 2
-\n
-If this is zero, y_1 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 4
-\n
-If this is zero, y_2 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 8
-\n
-If this is zero, y_3 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[2 + j ] for j = 0, 1, 2, 3
-\n
-is the index corresponding to y_j.
 
-\param num_par
-is the total number of values in the vector parameter.
+.. csv-table::
+   :widths: auto
+   :header-rows: 1
 
-\par Checked Assertions
-\li NumArg(CExpOp) == 6
-\li NumRes(CExpOp) == 1
-\li arg[0] < static_cast<size_t> ( CompareNe )
-\li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
-\li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-<!-- end sparse_conditional_exp_op -->
-*/
-template <class Vector_set>
-inline void sparse_conditional_exp_op(
-   size_t         i_z           ,
-   const addr_t*  arg           ,
-   size_t         num_par       )
-{  // This routine is only for documentation, it should never be used
-   CPPAD_ASSERT_UNKNOWN( false );
+   Rel, CompareOp
+   Lt,  CompareLt
+   Le,  CompareLe
+   Eq,  CompareEq
+   Ge,  CompareGe
+   Gt,  CompareGt
+   Ne,  CompareNe
+
+The operator corresponding to Ne does not appear because that case
+is converted to the Eq case by switching *if_true* and *if_false* .
+Thus it must hold that::
+
+   arg[0] < addr_t(CompareNe)
+
+arg[1]
+======
+The first four bits of this value are used as flags; see below.
+
+arg[2]
+======
+If arg[1] & 1 is zero (is one) ,
+arg[2] is the parameter (variable) index corresponding to *left*
+
+arg[3]
+======
+If arg[1] & 2 is zero (is one) ,
+arg[3] is the parameter (variable) index corresponding to *right*
+
+arg[4]
+======
+If arg[1] & 4 is zero (is one) ,
+arg[4] is the parameter (variable) index corresponding to *if_true*
+
+arg[5]
+======
+If arg[1] & 8 is zero (is one) ,
+arg[5] is the parameter (variable) index corresponding to *if_false*
+
+{xrst_end var_cexp_op}
+------------------------------------------------------------------------------
+{xrst_begin var_cexp_forward_op dev}
+
+Forward Conditional Expression Variable Operator
+################################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CEXP_FORWARD_OP
+   // END_CEXP_FORWARD_OP
 }
 
-/*!
-Compute forward mode Taylor coefficients for op = CExpOp.
+z, arg
+======
+see
+:ref:`var_cexp_op@z` ,
+:ref:`var_cexp_op@arg`
 
-<!-- replace conditional_exp_op -->
-The C++ source code coresponding to this operation is
-\verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
-\endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
-
-\tparam Base
+Base
+****
 base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+using AD< Base > and computations by this routine are done using type Base.
 
-\param i_z
-is the AD variable index corresponding to the variable z.
+i_z
+***
+is the variable index corresponding to the variable *z* .
 
-\param arg
-\n
- arg[0]
-is static cast to size_t from the enum type
-\verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
-\endverbatim
-for this operation.
-Note that arg[0] cannot be equal to CompareNe.
-\n
-\n
- arg[1] & 1
-\n
-If this is zero, y_0 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 2
-\n
-If this is zero, y_1 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 4
-\n
-If this is zero, y_2 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[1] & 8
-\n
-If this is zero, y_3 is a parameter. Otherwise it is a variable.
-\n
-\n
- arg[2 + j ] for j = 0, 1, 2, 3
-\n
-is the index corresponding to y_j.
+num_par
+*******
+is the total number of values in the *parameter* vector.
 
-\param num_par
-is the total number of values in the vector parameter.
+parameter
+*********
+maps parameter indices to parameter values .
 
-\param parameter
-For j = 0, 1, 2, 3,
-if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
+cap_order
+*********
+is the maximum number of orders that can fit in *taylor* .
 
-\param cap_order
-number of columns in the matrix containing the Taylor coefficients.
+order_low
+*********
+is the lowest order of the Taylor coefficient of that we are computing.
 
-\par Checked Assertions
-\li NumArg(CExpOp) == 6
-\li NumRes(CExpOp) == 1
-\li arg[0] < static_cast<size_t> ( CompareNe )
-\li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
-\li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-<!-- end conditional_exp_op -->
+order_up
+********
+is the highest order of the Taylor coefficient that we are computing.
 
-\param p
-is the lowest order of the Taylor coefficient of z that we are computing.
+taylor
+******
 
-\param q
-is the highest order of the Taylor coefficient of z that we are computing.
+Input
+=====
+::
 
-\param taylor
-\b Input:
-For j = 0, 1, 2, 3 and k = 0 , ... , q,
-if y_j is a variable then
-<code>taylor [ arg[2+j] * cap_order + k ]</code>
-is the k-th order Taylor coefficient corresponding to y_j.
-\n
-\b Input: <code>taylor [ i_z * cap_order + k ]</code>
-for k = 0 , ... , p-1,
-is the k-th order Taylor coefficient corresponding to z.
-\n
-\b Output: <code>taylor [ i_z * cap_order + k ]</code>
-for k = p , ... , q,
-is the k-th order Taylor coefficient corresponding to z.
+   for j = 0, ..., i_z - 1
+      for k = 0 , ... , order_up
+         taylor [ j * cap_order + k ] is an input
 
+   for  k = 0 , ... , order_up - 1
+      taylor [ i_z * cap_order + k ] is an input
+
+Output
+======
+::
+
+   for k = order_low , ... , order_up
+      taylor [ i_z * cap_order + k ] is an output
+
+
+{xrst_end var_cexp_forward_op}
 */
+// BEGIN_CEXP_FORWARD_OP
 template <class Base>
 inline void cexp_forward_op(
    size_t         p           ,
@@ -289,6 +184,7 @@ inline void cexp_forward_op(
    const Base*    parameter   ,
    size_t         cap_order   ,
    Base*          taylor      )
+// END_CEXP_FORWARD_OP
 {  Base y_0, y_1, y_2, y_3;
    Base zero(0);
    Base* z = taylor + i_z * cap_order;

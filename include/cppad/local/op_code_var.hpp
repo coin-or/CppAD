@@ -132,43 +132,10 @@ indicate that a value is not a variable.
 for indicate an parameter.
 
 {xrst_comment ------------------------------------------------------------- }
+
 CExpOp
 ******
-This is a :ref:`conditional expression<condexp-name>` ; i.e., the corresponding
-source code is
-
-   *result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false*
-
-This operator has one variable result.
-
-arg[0]
-======
-This is a :ref:`base_cond_exp@CompareOp` value corresponding
-to :ref:`condexp@Rel` above.  ( *Rel* = ``Ne`` is not possible).
-
-arg[1]
-======
-The first four bits of this integer are used as flags; see below.
-
-arg[2]
-======
-If arg[1] & 1 is true (false),
-this is the variable index (parameter index) corresponding to *left* .
-
-arg[3]
-======
-If arg[1] & 2 is true (false),
-this is the variable index (parameter index) corresponding to *right* .
-
-arg[4]
-======
-If arg[1] & 4 is true (false),
-this is the variable index (parameter index) corresponding to *if_true* .
-
-arg[5]
-======
-If arg[1] & 8 is true (false),
-this is the variable index (parameter index) corresponding to *if_false* .
+see:ref:`var_atomic_op@CExpOp`
 
 {xrst_comment ------------------------------------------------------------- }
 CSkipOp
@@ -293,14 +260,17 @@ is the text index corresponding to *after* .
 
 {xrst_comment ------------------------------------------------------------- }
 
+// BEGIN_SORT_THIS_LINE_PLUS_2
 {xrst_toc_table
-   include/cppad/local/var_op/unary_op.xrst
+   include/cppad/local/var_op/atomic_op.hpp
    include/cppad/local/var_op/binary_op.xrst
+   include/cppad/local/var_op/cexp_op.hpp
+   include/cppad/local/var_op/csum_op.hpp
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp
-   include/cppad/local/var_op/csum_op.hpp
-   include/cppad/local/var_op/atomic_op.hpp
+   include/cppad/local/var_op/unary_op.xrst
 }
+// END_SORT_THIS_LINE_MINUS_2
 
 Source
 ******

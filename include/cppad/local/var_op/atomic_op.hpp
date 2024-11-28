@@ -119,7 +119,7 @@ struct atomic_op_work {
 };
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_atomic_op dev}
+{xrst_begin_parent var_atomic_op dev}
 {xrst_spell
    funap
    funav
