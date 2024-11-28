@@ -145,13 +145,12 @@ see
 :ref:`var_csum_op@i_z` ,
 :ref:`var_csum_op@arg`
 
-order_low
-*********
-lowest order of the Taylor coefficient that we are computing.
-
-order_up
-********
-highest order of the Taylor coefficient that we are computing.
+{xrst_comment document:
+   cap_order, order_low, order_up, taylor
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/forward_op.xrst
+}
 
 num_par
 *******
@@ -160,31 +159,6 @@ is the number of parameters in parameter.
 parameter
 *********
 is the parameter vector for this operation sequence.
-
-cap_order
-*********
-is the maximum number of orders that can fit in *taylor* .
-
-taylor
-******
-
-Input
-=====
-::
-
-   for j = 0, ..., i_z - 1
-      for k = 0 , ... , order_up
-         taylor [ j * cap_order + k ] is an input
-
-   for  k = 0 , ... , order_up - 1
-      taylor [ i_z * cap_order + k ] is an input
-
-Output
-======
-::
-
-   for k = order_low , ... , order_up
-      taylor [ i_z * cap_order + k ] is an output
 
 {xrst_end var_csum_forward_op}
 */

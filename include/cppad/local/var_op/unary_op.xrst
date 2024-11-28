@@ -160,36 +160,13 @@ see
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
 
-order_low
-*********
-is lowest order of the Taylor coefficient that we are computing.
+{xrst_comment document:
+   cap_order, order_low, order_up, taylor
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/forward_op.xrst
+}
 
-order_up
-********
-is highest order of the Taylor coefficient that we are computing,
-*p* <= *q* .
-
-cap_order
-*********
-is the maximum number of orders that can fit in *taylor* .
-
-taylor
-******
-The Taylor coefficient corresponding to variable *i* and order *k* is
-
-   *taylor* [ *i* * *cap_order* + *k*  ]
-
-Input
-=====
-#. The Taylor coefficients up to order *order_up*
-   for variables with index *i* less than or equal *i_z* - *n_res* .
-#. The Taylor coefficients up to order *order_low* - 1
-   for variables with index *i_z* and *i_z* - *n_res* + 1 .
-
-Output
-======
-The Taylor coefficients up to order *order_up* for variables with index
-*i_z* and *i_z* - *n_res* + 1.
 
 {xrst_end var_unary_forward_op}
 ------------------------------------------------------------------------------

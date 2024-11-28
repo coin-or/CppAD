@@ -205,41 +205,12 @@ Prototype
    @mode@ , forward
 }
 
-cap_order
-*********
-is the number of orders that can fit in *taylor* .
-
-order_low
-*********
-lowest order of the Taylor coefficient that we are computing.
-
-order_up
-********
-highest order of the Taylor coefficient that we are computing.
-
-
-taylor
-******
-
-Input
-=====
-::
-
-   for j = 0, ..., i_z - n_res
-      for k = 0 , ... , order_up
-         taylor [ j * cap_order + k ] is an input
-
-   for j = i_z , ... , i_z - n_res + 1
-      for  k = 0 , ... , order_up - 1
-         taylor [ j * cap_order + k ] is an input
-
-Output
-======
-::
-
-   for j = i_z , ... , i_z - n_res + 1
-      for k = order_low , ... , order_up
-         taylor [ i_z * cap_order + k ] is an output
+{xrst_comment document:
+   cap_order, order_low, order_up, taylor
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/forward_op.xrst
+}
 
 {xrst_end var_atomic_forward_op}
 */

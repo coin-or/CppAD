@@ -1,0 +1,48 @@
+{xrst_comment
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+SPDX-FileContributor: 2024 Bradley M. Bell
+
+This xrst template file documents the multiple orders forward arguments:
+   order_low, order_up, cap_order, taylor
+}
+
+cap_order
+*********
+is the maximum number of orders that can fit in *taylor* .
+
+order_low
+*********
+is the lowest order Taylor coefficient that we are computing.
+
+order_up
+********
+is the highest order Taylor coefficient that we are computing.
+
+taylor
+******
+The Taylor coefficient corresponding to variable *j* and order *k* is
+
+   *taylor* [ *j* * *cap_order* + *k*  ]
+
+The number of new variables that result from this operator is *n_res* .
+
+Input
+=====
+::
+
+   for j = 0, ..., i_z - n_res
+      for k = 0 , ... , order_up
+         taylor [ j * cap_order + k ] is an input
+
+   for j = i_z - n_res + 1 , ... , i_z
+      for  k = 0 , ... , order_up - 1
+         taylor [ j * cap_order + k ] is an input
+
+Output
+======
+::
+
+   for j = i_z - n_res + 1 , ... , i_z
+      for k = order_low , ... , order_up
+         taylor [ i_z * cap_order + k ] is an output
