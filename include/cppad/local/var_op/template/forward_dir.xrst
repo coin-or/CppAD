@@ -3,7 +3,10 @@ SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
-This xrst template file documents the multiple directrion forward arguments:
+This xrst template file is intended to help document 
+multiple direction forward mode for all operators.
+}
+{xrst_comment document:
    n_dir, cap_order, order_up, taylor
 }
 

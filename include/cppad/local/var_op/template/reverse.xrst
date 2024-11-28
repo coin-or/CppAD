@@ -3,12 +3,13 @@ SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
-This xrst template file documents the following reverse mode arguments:
-   n_order, partial
-
-This template file has the following parameters:
+This xrst template file is intended to help document
+reverse mode for all operators. It has the following parameters:
 @x, y@   : The arguments, without parenthesis, in function for this operator;
            e.g., if @x, y@ is replaced by 'x , y', the funciton is 'z(x, y)' .
+}
+{xrst_comment document:
+   n_order, partial
 }
 
 n_order

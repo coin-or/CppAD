@@ -3,8 +3,11 @@ SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
-This xrst template file documents the multiple orders forward arguments:
-   order_low, order_up, cap_order, taylor
+This xrst template file is intended to help document 
+multiple order forward mode for all operators.
+}
+{xrst_comment document:
+   cap_order, order_low, order_up, taylor
 }
 
 cap_order
