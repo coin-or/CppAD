@@ -380,7 +380,7 @@ void forward0(
          case CExpOp:
          // Use the general case with d == 0
          // (could create an optimzied version for this case)
-         var_op::cond_forward_0(
+         var_op::cexp_forward_0(
             i_var, arg, num_par, parameter, J, taylor
          );
          break;

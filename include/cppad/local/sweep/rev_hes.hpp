@@ -285,7 +285,7 @@ void rev_hes(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::reverse_sparse_hessian_cond_op(
+         var_op::cexp_reverse_hes(
             i_var, arg, num_par, RevJac, rev_hes_sparse
          );
          break;

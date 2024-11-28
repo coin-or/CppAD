@@ -384,7 +384,7 @@ void forward1(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cond_forward_op(
+         var_op::cexp_forward_op(
             p, q, i_var, arg, num_par, parameter, J, taylor
          );
          break;

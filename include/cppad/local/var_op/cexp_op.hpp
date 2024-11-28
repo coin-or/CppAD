@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_VAR_OP_COND_OP_HPP
-# define CPPAD_LOCAL_VAR_OP_COND_OP_HPP
+# ifndef CPPAD_LOCAL_VAR_OP_CEXP_OP_HPP
+# define CPPAD_LOCAL_VAR_OP_CEXP_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
@@ -7,7 +7,7 @@
 
 namespace CppAD { namespace local { namespace var_op {
 /*!
-\file cond_op.hpp
+\file cexp_op.hpp
 Forward, reverse, and sparse operations for conditional expressions.
 */
 
@@ -280,7 +280,7 @@ is the k-th order Taylor coefficient corresponding to z.
 
 */
 template <class Base>
-inline void cond_forward_op(
+inline void cexp_forward_op(
    size_t         p           ,
    size_t         q           ,
    size_t         i_z         ,
@@ -474,7 +474,7 @@ is the q-th order Taylor coefficient corresponding to z
 in the ell-th direction.
 */
 template <class Base>
-inline void cond_forward_dir(
+inline void cexp_forward_dir(
    size_t         q           ,
    size_t         r           ,
    size_t         i_z         ,
@@ -625,7 +625,7 @@ is the zero order Taylor coefficient corresponding to y_j.
 is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
-inline void cond_forward_0(
+inline void cexp_forward_0(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -808,7 +808,7 @@ with respect to the k-th order Taylor coefficient corresponding to y_j.
 
 */
 template <class Base>
-inline void cond_reverse_op(
+inline void cexp_reverse_op(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -977,7 +977,7 @@ This identifies which of the independent variables the variable z
 depends on.
 */
 template <class Vector_set>
-inline void forward_sparse_jacobian_cond_op(
+inline void cexp_forward_jac(
    bool               dependency    ,
    size_t             i_z           ,
    const addr_t*      arg           ,
@@ -1118,7 +1118,7 @@ This identifies which of the dependent variables depend on the variable z.
 On input and output, this pattern corresponds to the function G.
 */
 template <class Vector_set>
-inline void reverse_sparse_jacobian_cond_op(
+inline void cexp_reverse_jac(
    bool                dependency    ,
    size_t              i_z           ,
    const addr_t*       arg           ,
@@ -1275,7 +1275,7 @@ On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_cond_op(
+inline void cexp_reverse_hes(
    size_t               i_z           ,
    const addr_t*        arg           ,
    size_t               num_par       ,

@@ -267,7 +267,7 @@ void forward2(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cond_forward_dir(
+         var_op::cexp_forward_dir(
             q, r, i_var, arg, num_par, parameter, J, taylor
          );
          break;

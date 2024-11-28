@@ -360,7 +360,7 @@ void reverse(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cond_reverse_op(
+         var_op::cexp_reverse_op(
             i_var,
             arg,
             num_par,

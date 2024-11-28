@@ -253,7 +253,7 @@ void for_jac(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::forward_sparse_jacobian_cond_op(
+         var_op::cexp_forward_jac(
             dependency, i_var, arg, num_par, var_sparsity
          );
          break;
