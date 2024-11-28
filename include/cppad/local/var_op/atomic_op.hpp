@@ -1033,7 +1033,8 @@ inline void atomic_forward_jac(
    bool                             dependency   ,
    Vector_set&                      var_sparsity )
 // END_ATOMIC_FORWARD_JAC
-{
+{  //
+   //
    // vector
    using CppAD::vector;
    //
@@ -1238,6 +1239,7 @@ inline void atomic_reverse_jac(
    Vector_set&                      var_sparsity )
 // END_ATOMIC_REVERSE_JAC
 {  //
+   //
    // vector
    using CppAD::vector;
    //
@@ -1481,6 +1483,7 @@ inline void atomic_reverse_hes(
    Vector_set&                      rev_hes_sparsity  )
 // END_ATOMIC_REVERSE_HES
 {  //
+   //
    CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_set() == play->num_var_rec() );
    CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.n_set() == play->num_var_rec() );
    CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.end()   == rev_hes_sparsity.end() );
@@ -1731,6 +1734,7 @@ inline void atomic_forward_hes(
    Vector_set&                      for_hes_sparsity )
 // END_ATOMIC_FORWARD_HES
 {  CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
+   //
    CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == n_independent_p1 );
    //
    // vector

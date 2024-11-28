@@ -174,6 +174,7 @@ inline void store_forward_0(
    pod_vector<size_t>&  vec_ad2index   )
 // END_STORE_FORWARD_0
 {  //
+   //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == vec_ad2index.size() )
@@ -304,6 +305,7 @@ inline void store_forward_jac(
    Vector_set&               vecad_sparsity )
 // END_STORE_FORWARD_JAC
 {  //
+   //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
@@ -418,6 +420,7 @@ inline void store_reverse_jac(
    const Vector_set&         vecad_sparsity )
 // END_STORE_REVERSE_JAC
 {  //
+   //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
@@ -538,7 +541,8 @@ inline void store_reverse_hes(
    bool*                     var_rev_jac    ,
    const pod_vector<bool>&   vecad_rev_jac  )
 // END_STORE_REVERSE_HES
-{
+{  //
+   //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
@@ -650,7 +654,8 @@ inline void store_forward_hes(
    Vector_set&               vecad_sparsity ,
    const Vector_set&         for_hes_sparse )
 // END_STORE_FORWARD_HES
-{
+{  //
+   //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );

@@ -24,14 +24,17 @@ and the argument parameter is not used.
 
 template <class Base>
 inline void powvv_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // convert from final result to first result
    i_z -= 2; // 2 = NumRes(PowvvOp) - 1;
 
@@ -84,14 +87,17 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void powvv_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // convert from final result to first result
    i_z -= 2; // 2 = NumRes(PowvvOp) - 1
 
@@ -138,7 +144,8 @@ inline void powvv_forward_0(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{  //
+   //
    // convert from final result to first result
    i_z -= 2; // NumRes(PowvvOp) - 1;
 
@@ -182,7 +189,8 @@ inline void powvv_reverse_op(
    const Base*   taylor      ,
    size_t        n_order     ,
    Base*         partial     )
-{
+{  //
+   //
    //
    // convert from final result to first result
    i_z -= 2; // NumRes(PowvvOp) - 1;
@@ -231,14 +239,17 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void powpv_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // convert from final result to first result
    i_z -= 2; // 2 = NumRes(PowpvOp) - 1;
 
@@ -306,14 +317,17 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void powpv_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // convert from final result to first result
    i_z -= 2; // 2 = NumRes(PowpvOp) - 1;
 
@@ -373,7 +387,8 @@ inline void powpv_forward_0(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{  //
+   //
    // convert from final result to first result
    i_z -= 2; // NumRes(PowpvOp) - 1;
 
@@ -423,7 +438,8 @@ inline void powpv_reverse_op(
    const Base*   taylor      ,
    size_t        n_order     ,
    Base*         partial     )
-{
+{  //
+   //
    //
    // convert from final result to first result
    i_z -= 2; // NumRes(PowpvOp) - 1;
@@ -475,14 +491,17 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void powvp_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
@@ -533,14 +552,17 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void powvp_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
@@ -602,7 +624,8 @@ inline void powvp_forward_0(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{  //
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
@@ -640,7 +663,8 @@ inline void powvp_reverse_op(
    size_t        n_order     ,
    Base*         partial     ,
    CppAD::vector<Base>& work )
-{
+{  //
+   //
    //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );

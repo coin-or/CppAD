@@ -102,6 +102,7 @@ inline void forward_pri_0(
    size_t        cap_order   ,
    const Base*   taylor      )
 {  Base pos, var;
+   //
    const char* before;
    const char* after;
    CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);

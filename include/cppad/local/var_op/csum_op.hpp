@@ -174,7 +174,8 @@ inline void csum_forward_op(
    size_t        cap_order   ,
    Base*         taylor      )
 // END_CSUM_FORWARD_OP
-{
+{  //
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
@@ -278,7 +279,8 @@ inline void csum_forward_dir(
    size_t        cap_order   ,
    Base*         taylor      )
 // END_CSUM_FORWARD_DIR
-{
+{  //
+   //
    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
    CPPAD_ASSERT_UNKNOWN( 0 < order_up );
@@ -363,6 +365,7 @@ inline void csum_reverse_op(
    Base*         partial     )
 // END_CSUM_REVERSE_OP
 {  // d
+   //
    size_t d = n_order - 1;
    //
    //
@@ -450,6 +453,7 @@ inline void csum_forward_jac(
    Vector_set&      sparsity    )
 // END_CSUM_FORWARD_JAC
 {  //
+   //
    // sparsity
    sparsity.clear(i_z);
    //
@@ -514,7 +518,8 @@ inline void csum_reverse_jac(
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
 // END_CSUM_REVERSE_JAC
-{
+{  //
+   //
    // addition and subtraction variables
    for(addr_t i = 5; i < arg[2]; ++i)
    {
@@ -594,6 +599,7 @@ inline void csum_reverse_hes(
    Vector_set&      rev_hes_sparsity    )
 // END_CSUM_REVERSE_HES
 {  //
+   //
    // addition and subtraction variables
    for(addr_t i = 5; i < arg[2]; ++i)
    {
@@ -660,6 +666,7 @@ inline void csum_forward_hes(
    Vector_set&               for_hes_sparse )
 // END_CSUM_FORWARD_HES
 {  //
+   //
    // np1
    size_t np1 = n + 1;
    //

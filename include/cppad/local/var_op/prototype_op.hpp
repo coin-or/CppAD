@@ -61,13 +61,16 @@ is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
 inline void unary1_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
-{  //
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -139,13 +142,16 @@ corresponding to z and the ell-th direction.
 */
 template <class Base>
 inline void unary1_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
-{  //
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -191,6 +197,7 @@ inline void unary1_forward_0(
    size_t        cap_order   ,
    Base*         taylor      )
 {  //
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -277,6 +284,7 @@ inline void unary1_reverse_op(
    size_t        n_order      ,
    Base*         partial      )
 {  // d  //
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -345,13 +353,16 @@ the autillary result y.
 */
 template <class Base>
 inline void unary2_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
-{  //
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -431,13 +442,16 @@ corresponding to z and the ell-th direction.
 */
 template <class Base>
 inline void unary2_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
-{  //
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -488,6 +502,7 @@ inline void unary2_forward_0(
    size_t        cap_order   ,
    Base*         taylor      )
 {  //
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -586,6 +601,7 @@ inline void unary2_reverse_op(
    size_t        n_order      ,
    Base*         partial      )
 {  // d  //
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -660,14 +676,17 @@ is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
 inline void binary_forward_op(
-   size_t        p          ,
-   size_t        q          ,
+   size_t        order_low  ,
+   size_t        order_up   ,
    size_t        i_z        ,
    const addr_t* arg        ,
    const Base*   parameter  ,
    size_t        cap_order  ,
    Base*         taylor     )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -754,14 +773,17 @@ corresponding to z and the ell-th direction.
 */
 template <class Base>
 inline void binary_forward_dir(
-   size_t        q          ,
-   size_t        r          ,
+   size_t        order_up   ,
+   size_t        n_dir      ,
    size_t        i_z        ,
    const addr_t* arg        ,
    const Base*   parameter  ,
    size_t        cap_order  ,
    Base*         taylor     )
-{
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -819,7 +841,8 @@ inline void binary_forward_0(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{  //
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -931,6 +954,7 @@ inline void binary_reverse_op(
    size_t      n_order      ,
    Base*       partial      )
 {  // d
+   //
    size_t d = n_order - 1;
    //
    // This routine is only for documentation, it should not be used
@@ -1010,14 +1034,17 @@ is the k-th order Taylor coefficient corresponding to z_j.
 */
 template <class Base>
 inline void pow_forward_op(
-   size_t        p          ,
-   size_t        q          ,
+   size_t        order_low  ,
+   size_t        order_up   ,
    size_t        i_z        ,
    const addr_t* arg        ,
    const Base*   parameter  ,
    size_t        cap_order  ,
    Base*         taylor     )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -1117,14 +1144,17 @@ for the ell-th direction.
 */
 template <class Base>
 inline void pow_forward_dir(
-   size_t        q          ,
-   size_t        r          ,
+   size_t        order_up   ,
+   size_t        n_dir      ,
    size_t        i_z        ,
    const addr_t* arg        ,
    const Base*   parameter  ,
    size_t        cap_order  ,
    Base*         taylor     )
-{
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -1190,7 +1220,8 @@ inline void pow_forward_0(
    const Base*   parameter  ,
    size_t        cap_order  ,
    Base*         taylor     )
-{
+{  //
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -1309,6 +1340,7 @@ inline void pow_reverse_op(
    size_t      n_order      ,
    Base*       partial      )
 {  // d
+   //
    size_t d = n_order - 1;
    //
    // This routine is only for documentation, it should not be used
@@ -1379,7 +1411,8 @@ inline void reverse_sparse_hessian_unary_op(
    bool*               rev_jacobian      ,
    Vector_set&         for_jac_sparsity  ,
    Vector_set&         rev_hes_sparsity  )
-{
+{  //
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -1469,7 +1502,8 @@ inline void reverse_sparse_hessian_binary_op(
    bool*             jac_reverse        ,
    Vector_set&       for_jac_sparsity   ,
    Vector_set&       rev_hes_sparsity   )
-{
+{  //
+   //
    // This routine is only for documentation, it should not be used
    CPPAD_ASSERT_UNKNOWN( false );
 }

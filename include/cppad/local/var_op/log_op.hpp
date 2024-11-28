@@ -10,13 +10,16 @@ namespace CppAD { namespace local { namespace var_op {
 // See dev documentation: forward_unary_op
 template <class Base>
 inline void log_forward_op(
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
-{  //
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -56,13 +59,16 @@ inline void log_forward_op(
 // See dev documentation: forward_unary_op
 template <class Base>
 inline void log_forward_dir(
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    Base*         taylor      )
-{  //
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -95,6 +101,7 @@ inline void log_forward_0(
    size_t        cap_order   ,
    Base*         taylor      )
 {  //
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //
@@ -122,6 +129,7 @@ inline void log_reverse_op(
    size_t        n_order      ,
    Base*         partial      )
 {  // d  //
+   //
    // i_x
    size_t i_x = size_t(arg[0]);
    //

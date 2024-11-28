@@ -18,7 +18,8 @@ inline void par_forward_0(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{  //
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
    CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );

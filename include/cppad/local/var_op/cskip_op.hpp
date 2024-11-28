@@ -117,7 +117,8 @@ inline void cskip_forward_0(
    size_t               cap_order      ,
    Base*                taylor         ,
    bool*                cskip_op       )
-{
+{  //
+   //
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < size_t(CompareNe) );
    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 

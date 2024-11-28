@@ -124,15 +124,19 @@ namespace CppAD { namespace local { namespace var_op {
 // BEGIN_PROTOTYPE
 template <class RecBase>
 inline void dis_forward_op(
-   size_t        p           ,
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    RecBase*      taylor      )
 // END_PROTOTYPE
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
@@ -155,14 +159,18 @@ inline void dis_forward_op(
 // ---------------------------------------------------------------------------
 template <class RecBase>
 inline void dis_forward_op(
-   size_t        p           ,
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        cap_order   ,
    AD<RecBase>*  ataylor     )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
    CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );

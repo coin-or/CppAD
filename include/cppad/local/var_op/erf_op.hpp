@@ -86,14 +86,17 @@ is the k-th order Taylor coefficient corresponding to the j-th result for z.
 template <class Base>
 inline void erf_forward_op(
    op_code_var   op          ,
-   size_t        p           ,
-   size_t        q           ,
+   size_t        order_low   ,
+   size_t        order_up    ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // p, q
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
@@ -219,7 +222,8 @@ inline void erf_forward_0(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{  //
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
@@ -342,14 +346,17 @@ and j-th auzillary result.
 template <class Base>
 inline void erf_forward_dir(
    op_code_var   op          ,
-   size_t        q           ,
-   size_t        r           ,
+   size_t        order_up    ,
+   size_t        n_dir       ,
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-{
+{   // q, r
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
@@ -508,6 +515,7 @@ inline void erf_reverse_op(
    size_t        n_order     ,
    Base*         partial     )
 {  // d
+   //
    size_t d = n_order - 1;
    //
    // check assumptions

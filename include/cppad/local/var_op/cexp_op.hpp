@@ -149,8 +149,8 @@ maps parameter indices to parameter values .
 // BEGIN_CEXP_FORWARD_OP
 template <class Base>
 inline void cexp_forward_op(
-   size_t         p           ,
-   size_t         q           ,
+   size_t         order_low   ,
+   size_t         order_up    ,
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -159,6 +159,9 @@ inline void cexp_forward_op(
    Base*          taylor      )
 // END_CEXP_FORWARD_OP
 {  Base y_0, y_1, y_2, y_3;
+   size_t p = order_low;
+   size_t q = order_up;
+   //
    Base zero(0);
    Base* z = taylor + i_z * cap_order;
 
@@ -344,8 +347,8 @@ in the ell-th direction.
 */
 template <class Base>
 inline void cexp_forward_dir(
-   size_t         q           ,
-   size_t         r           ,
+   size_t         order_up    ,
+   size_t         n_dir       ,
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,
@@ -353,6 +356,9 @@ inline void cexp_forward_dir(
    size_t         cap_order   ,
    Base*          taylor      )
 {  Base y_0, y_1, y_2, y_3;
+   size_t q = order_up;
+   size_t r = n_dir;
+   //
    Base zero(0);
    size_t num_taylor_per_var = (cap_order-1) * r + 1;
    Base* z = taylor + i_z * num_taylor_per_var;
@@ -502,6 +508,7 @@ inline void cexp_forward_0(
    size_t         cap_order   ,
    Base*          taylor      )
 {  Base y_0, y_1, y_2, y_3;
+   //
    Base* z;
 
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
@@ -687,6 +694,7 @@ inline void cexp_reverse_op(
    size_t         n_order     ,
    Base*          partial     )
 {  // d
+   //
    size_t d = n_order - 1;
    //
    Base y_0, y_1;
@@ -852,7 +860,8 @@ inline void cexp_forward_jac(
    const addr_t*      arg           ,
    size_t             num_par       ,
    Vector_set&        sparsity      )
-{
+{  //
+   //
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
@@ -993,7 +1002,8 @@ inline void cexp_reverse_jac(
    const addr_t*       arg           ,
    size_t              num_par       ,
    Vector_set&         sparsity      )
-{
+{  //
+   //
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
@@ -1150,7 +1160,8 @@ inline void cexp_reverse_hes(
    size_t               num_par       ,
    bool*                jac_reverse   ,
    Vector_set&          hes_sparsity  )
-{
+{  //
+   //
 
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
