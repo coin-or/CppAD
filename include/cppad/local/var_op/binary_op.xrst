@@ -216,11 +216,7 @@ see
 :ref:`var_binary_op@arg` ,
 :ref:`var_binary_op@parameter`
 
-order_up
-********
-order of the Taylor coefficients that we are computing.
-
-{xrst_comment document n_dir, cap_order, taylor}
+{xrst_comment document n_dir, cap_order, order_up, taylor}
 {xrst_template ,
    include/cppad/local/var_op/template/forward_dir.xrst
 }

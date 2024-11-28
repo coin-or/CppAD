@@ -248,10 +248,6 @@ see
 :ref:`var_csum_op@i_z` ,
 :ref:`var_csum_op@arg`
 
-order_up
-********
-order of the Taylor coefficient that we are computing.
-
 num_par
 *******
 is the number of parameters in parameter.
@@ -260,7 +256,9 @@ parameter
 *********
 is the parameter vector for this operation sequence.
 
-{xrst_comment n_dir, cap_order, taylor}
+{xrst_comment
+   n_dir, cap_order, order_up, taylor
+}
 {xrst_template ,
    include/cppad/local/var_op/template/forward_dir.xrst
 }

@@ -132,7 +132,6 @@ void forward2(
    size_t p = q;
 
    // information used by atomic function operators
-   const size_t order_low = p;
    const size_t order_up  = q;
    const size_t n_dir     = r;
 
@@ -514,7 +513,6 @@ void forward2(
             atom_trace,
             atom_work,
             J,
-            order_low,
             order_up,
             n_dir,
             taylor

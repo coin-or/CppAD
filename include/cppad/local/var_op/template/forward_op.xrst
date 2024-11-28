@@ -25,7 +25,10 @@ The Taylor coefficient corresponding to variable *j* and order *k* is
 
    *taylor* [ *j* * *cap_order* + *k*  ]
 
-The number of new variables that result from this operator is *n_res* .
+
+n_res
+=====
+is the number of results (that are variables) for this operator.
 
 Input
 =====

@@ -201,11 +201,8 @@ see
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
 
-order_up
-********
-order of the Taylor coefficients that we are computing.
 
-{xrst_comment document n_dir, cap_order, taylor}
+{xrst_comment document n_dir, cap_order, order_up, taylor}
 {xrst_template ,
    include/cppad/local/var_op/template/forward_dir.xrst
 }

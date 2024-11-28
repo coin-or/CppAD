@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 SPDX-FileContributor: 2024 Bradley M. Bell
 
 This xrst template file documents the multiple directrion forward arguments:
-   n_dir, cap_order, taylor
+   n_dir, cap_order, order_up, taylor
 }
 
 n_dir
@@ -14,6 +14,10 @@ number of directions that we are computing the Taylor coefficient for.
 cap_order
 *********
 is the maximum number of orders that can fit in *taylor* .
+
+order_up
+********
+is the order of the Taylor coefficients that are computed by this call.
 
 taylor
 ******
@@ -47,9 +51,7 @@ If *n_dir* is equal to one then *ell* is zero and::
 
 n_res
 =====
-If this is a unary operator and it has an auxiliary result,
-*n_res* is two.
-Other *n_res* is one; see :ref:`var_unary_op@n_res` .
+is the number of results (that are variables) for this operator.
 
 Input
 =====
@@ -60,17 +62,15 @@ Input
          for ell = 0 , ... , n_dir - 1
             taylor [ (j, k, ell) ] is an input
 
-   for k = 0 , ... , order_up - 1
-      for ell = 0 , ... , n_dir - 1
-         taylor [ (i_z, k, ell) ] is an input
-         if n_res == 2
-            taylor [ (i_z - 1, k, ell) ] is an input
+   for j = i_z - n_res + 1, ..., i_z
+      for k = 0 , ... , order_up - 1
+         for ell = 0 , ... , n_dir - 1
+            taylor [ (j, k, ell) ] is an input
 
 Output
 ======
 ::
 
-   for ell = 0, ... , n_dir - 1
-      taylor [ (i_z, order_up, ell) ] is an output
-      if n_res == 2
-         taylor[ (i_z - 1, order_up, ell) ] is an output.
+   for j = i_z - n_res + 1, ..., i_z
+      for ell = 0 , ... , n_dir - 1
+         taylor [ (j, order_up, ell) ] is an output

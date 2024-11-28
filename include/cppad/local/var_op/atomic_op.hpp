@@ -420,79 +420,13 @@ Prototype
    include/cppad/local/var_op/template/atomic_op.xrst
    @mode@ , forward
 }
+{xrst_comment document:
+   n_dir, cap_order, order_up, taylor
+}
+{xrst_template ,
+   include/cppad/local/var_op/template/forward_dir.xrst
+}
 
-cap_order
-*********
-see atomic_forward_op :ref:`var_atomic_forward_op@cap_order`
-
-order_low
-*********
-see atomic_forward_op :ref:`var_atomic_forward_op@order_low`
-
-order_up
-********
-see atomic_forward_op :ref:`var_atomic_forward_op@order_up`
-
-n_dir
-*****
-is the number of directions we are computing during this
-forward mode pass.
-If *n_dir* is one, The inputs and outputs for ``atomic_forward_dir``
-are the same as for ``atomic_forward_op`` with out the *n_dir* argument.
-
-
-taylor
-******
-
-per_variable
-============
-For each variable there is one Taylor coefficient of order zero
-and *n_dir* coefficients for orders greater than zero.
-The taylor coefficients capacity per variable is::
-
-   per_variable = (cap_order - 1) * n_dir + 1
-
-(j, k, ell)
-===========
-For variable index j, order k, and direction index ell::
-
-   if k == 0
-      (j, k, ell) = j * per_variable
-   else
-      (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
-
-The value taylor[ (j, k, ell) ] is the
-Taylor coefficient corresponding to
-the variable with index j, the order k, and the direction with index ell.
-
-n_dir = 1
-=========
-If *n_dir* is equal to one then *ell* is zero and::
-
-   (j, k, ell) = j * cap_order + k
-
-
-Input
-=====
-::
-
-   for j = 0, ..., i_z - n_res,
-      for k = 0 , ... , order_up
-         for ell = 0 , ... , n_dir - 1
-            taylor [ (j, k, ell) ] is an input
-
-   for j = i_z, ... , i_z - n_res + 1
-      for k = 0 , ... , order_up - 1
-         for ell = 0 , ... , n_dir - 1
-            taylor [ (j, k, ell) ] is an input
-
-Output
-======
-::
-
-   for j = i_z, ... , i_z - n_res + 1
-      for ell = 0, ... , n_dir - 1
-         taylor [ (j, order_up, ell) ] is an output
 
 {xrst_end var_atomic_forward_dir}
 */
@@ -505,12 +439,14 @@ void atomic_forward_dir(
    bool                             trace      ,
    atomic_op_work<Base>&            work       ,
    size_t                           cap_order  ,
-   size_t                           order_low  ,
    size_t                           order_up   ,
    size_t                           n_dir      ,
    Base*                            taylor     )
 // END_ATOMIC_FORWARD_DIR
 {  //
+   // order_low
+   size_t order_low = order_up;
+   //
    // vector
    using CppAD::vector;
    //
