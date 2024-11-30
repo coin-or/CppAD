@@ -137,11 +137,9 @@ parameter
 *********
 maps parameter indices to parameter values .
 
-{xrst_comment document:
-   cap_order, order_low, order_up, taylor
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/forward_op.xrst
+   headers: cap_order, order_low, order_up, taylor
 }
 
 {xrst_end var_cexp_forward_op}

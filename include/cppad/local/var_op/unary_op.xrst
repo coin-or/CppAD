@@ -160,11 +160,9 @@ see
 :ref:`var_unary_op@n_res` ,
 :ref:`var_unary_op@arg`
 
-{xrst_comment document:
-   cap_order, order_low, order_up, taylor
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/forward_op.xrst
+   headers: cap_order, order_low, order_up, taylor
 }
 
 

@@ -145,11 +145,9 @@ see
 :ref:`var_csum_op@i_z` ,
 :ref:`var_csum_op@arg`
 
-{xrst_comment document:
-   cap_order, order_low, order_up, taylor
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/forward_op.xrst
+   headers: cap_order, order_low, order_up, taylor
 }
 
 num_par

@@ -203,12 +203,9 @@ Prototype
 
    @mode@ ; forward
 }
-
-{xrst_comment document:
-   cap_order, order_low, order_up, taylor
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/forward_op.xrst
+   headers: cap_order, order_low, order_up, taylor
 }
 
 {xrst_end var_atomic_forward_op}
