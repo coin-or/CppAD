@@ -197,12 +197,11 @@ Prototype
    // END_ATOMIC_FORWARD_OP
 }
 
-{xrst_comment document:
-   n_res, iz, itr, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , forward
+   headers: n_res, i_z, itr, play, parameter, trace, work
+
+   @mode@ ; forward
 }
 
 {xrst_comment document:
@@ -413,13 +412,13 @@ Prototype
    // END_ATOMIC_FORWARD_DIR
 }
 
-{xrst_comment document:
-   n_res, iz, itr, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , forward
+   headers: n_res, i_z, itr, play, parameter, trace, work
+
+   @mode@ ; forward
 }
+
 {xrst_comment document:
    n_dir, cap_order, order_up, taylor
 }
@@ -676,12 +675,12 @@ this template parameter is either
 ``play::subgraph_iterator`` or
 ``play::const_sequential_iterator`` .
 
-{xrst_comment document:
-   n_res, iz, G and H, itr, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , reverse
+   headers: n_res, i_z, itr, play, parameter, trace, work
+   headers if @mode@ is reverse: G and H
+
+   @mode@ ; reverse
 }
 
 cap_order
@@ -926,12 +925,11 @@ Prototype
    // END_ATOMIC_FORWARD_JAC
 }
 
-{xrst_comment document:
-   n_res, iz, itr, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , forward
+   headers: n_res, i_z, itr, play, parameter, trace, work
+
+   @mode@ ; forward
 }
 
 Vector_set
@@ -1141,12 +1139,12 @@ Prototype
    // END_ATOMIC_REVERSE_JAC
 }
 
-{xrst_comment document:
-   n_res, iz, itr, G and H, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , reverse
+   headers: n_res, i_z, itr, play, parameter, trace, work
+   headers if @mode@ is reverse: G and H
+
+   @mode@ ; reverse
 }
 
 Vector_set
@@ -1349,12 +1347,12 @@ Prototype
    // END_ATOMIC_REVERSE_HES
 }
 
-{xrst_comment document:
-   n_res, iz, itr, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , reverse
+   headers: n_res, i_z, itr, play, parameter, trace, work
+   headers if @mode@ is reverse: G and H
+
+   @mode@ ; reverse
 }
 
 num_var
@@ -1607,12 +1605,11 @@ Prototype
    // END_ATOMIC_FORWARD_HES
 }
 
-{xrst_comment document:
-   n_res, iz, itr, play, parameter, trace, work
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/atomic_op.xrst
-   @mode@ , forward
+   headers: n_res, i_z, itr, play, parameter, trace, work
+
+   @mode@ ; forward
 }
 
 Vector_set
