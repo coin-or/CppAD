@@ -418,12 +418,9 @@ Prototype
 
    @mode@ ; forward
 }
-
-{xrst_comment document:
-   n_dir, cap_order, order_up, taylor
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/forward_dir.xrst
+   headers: n_dir, cap_order, order_up, taylor
 }
 
 

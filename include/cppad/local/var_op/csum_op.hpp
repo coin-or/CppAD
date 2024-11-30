@@ -256,11 +256,9 @@ parameter
 *********
 is the parameter vector for this operation sequence.
 
-{xrst_comment
-   n_dir, cap_order, order_up, taylor
-}
-{xrst_template ,
+{xrst_template ;
    include/cppad/local/var_op/template/forward_dir.xrst
+   headers: n_dir, cap_order, order_up, taylor
 }
 
 {xrst_end var_csum_forward_dir}
