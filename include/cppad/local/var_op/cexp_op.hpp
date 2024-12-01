@@ -47,29 +47,12 @@ arg
 
 arg[0]
 ======
-is static cast to addr_t from the enum type::
-
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
-
-.. csv-table::
-   :widths: auto
-   :header-rows: 1
-
-   Rel, CompareOp
-   Lt,  CompareLt
-   Le,  CompareLe
-   Eq,  CompareEq
-   Ge,  CompareGe
-   Gt,  CompareGt
-   Ne,  CompareNe
-
+is static cast to addr_t from the enum type
+{xrst_literal
+   include/cppad/local/declare_ad.hpp
+   // BEGIN_COMPARE_OP
+   // END_COMPARE_OP
+}
 The operator corresponding to Ne does not appear because that case
 is converted to the Eq case by switching *if_true* and *if_false* .
 Thus it must hold that::

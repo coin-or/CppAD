@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_DECLARE_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/configure.hpp>
@@ -22,15 +22,17 @@ namespace CppAD { namespace local { namespace val_graph {
 } } }
 
 namespace CppAD {
-   // The conditional expression operator enum type
+   // BEGIN_COMPARE_OP
    enum CompareOp
-   {  CompareLt, // less than
-      CompareLe, // less than or equal
-      CompareEq, // equal
-      CompareGe, // greater than or equal
-      CompareGt, // greater than
-      CompareNe  // not equal
+   {  // operator // Rel: description
+      CompareLt,  //  Lt: less than
+      CompareLe,  //  Le: less than or equal
+      CompareEq,  //  Eq: equal
+      CompareGe,  //  Ge: greater than or equal
+      CompareGt,  //  Gt: greater than
+      CompareNe   //  Ne: not equal
    };
+   // END_COMPARE_OP
 
    // simple typedefs
    typedef CPPAD_TAPE_ADDR_TYPE addr_t;
