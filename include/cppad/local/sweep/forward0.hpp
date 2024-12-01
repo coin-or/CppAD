@@ -7,7 +7,7 @@
 
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
-# include <cppad/local/var_op/compare.hpp>
+# include <cppad/local/var_op/compare_op.hpp>
 # include <cppad/local/var_op/atomic_op.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
@@ -312,7 +312,7 @@ void forward0(
          case NeppOp:
          case NepvOp:
          case NevvOp:
-         var_op::compare(op,
+         var_op::compare_forward_op(op,
             arg, parameter, J, taylor, itr.op_index(), compare_change_count,
             compare_change_number, compare_change_op_index
          );

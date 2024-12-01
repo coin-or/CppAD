@@ -20,7 +20,6 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 {xrst_begin op_code_var dev}
 {xrst_spell
-   addpv
    funap
    funav
    funrp
@@ -32,13 +31,11 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
    powpv
    powvv
    pri
-   pv
    stpp
    stpv
    stvp
    stvv
-   vp
-   vv
+
 }
 
 Variable Op Codes
@@ -71,32 +68,37 @@ We use the notation *arg* [ ``i`` ] below
 for the *i*-th operator argument which is a position integer
 represented using the type ``addr_t`` .
 
+{xrst_comment ------------------------------------------------------------- }
 Unary
 *****
 see :ref:`var_unary_op-name`
 
+{xrst_comment ------------------------------------------------------------- }
 Binary
 ******
 see :ref:`var_binary_op-name`
 
-Compare
-*******
-An operator commented as compare below
-has two arguments and no result
-(the result is true or false but not a variable).
-These operators use the following convention for the operator ending
-and the left argument (arg[0]) and right argument (arg[1]):
+{xrst_comment ------------------------------------------------------------- }
+{xrst_spell_off}
 
-.. csv-table::
-   :widths: auto
+EqppOp, LeppOp, LtppOp, NeppOp
+******************************
+see :ref:`var_compare_op@op_code@EqppOp, LeppOp, LtppOp, NeppOp`
 
-   *Ending*,*Left*,*Right*
-   ``pvOp``,parameter index,variable index
-   ``vpOp``,variable index,parameter index
-   ``vvOp``,variable index,variable index
+EqpvOp, LepvOp, LtpvOp, NepvOp
+******************************
+see :ref:`var_compare_op@op_code@EqpvOp, LepvOp, LtpvOp, NepvOp`
 
-For example, ``AddpvOp`` represents the addition operator where the left
-operand is a parameter and the right operand is a variable.
+LevpOp, LtvpOp
+**************
+see :ref:`var_compare_op@op_code@LevpOp, LtvpOp`
+
+EqvvOp, LevvOp, LtvvOp, NevvOp
+******************************
+see :ref:`var_compare_op@op_code@EqvvOp, LevvOp, LtvvOp, NevvOp`
+
+{xrst_spell_on}
+{xrst_comment ------------------------------------------------------------- }
 
 Pow
 ===
@@ -265,6 +267,7 @@ is the text index corresponding to *after* .
    include/cppad/local/var_op/atomic_op.hpp
    include/cppad/local/var_op/binary_op.xrst
    include/cppad/local/var_op/cexp_op.hpp
+   include/cppad/local/var_op/compare_op.hpp
    include/cppad/local/var_op/csum_op.hpp
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp

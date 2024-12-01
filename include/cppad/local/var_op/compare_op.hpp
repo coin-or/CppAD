@@ -1,20 +1,104 @@
-# ifndef CPPAD_LOCAL_VAR_OP_COMPARE_HPP
-# define CPPAD_LOCAL_VAR_OP_COMPARE_HPP
+# ifndef CPPAD_LOCAL_VAR_OP_COMPARE_OP_HPP
+# define CPPAD_LOCAL_VAR_OP_COMPARE_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ---------------------------------------------------------------------------
 /*
-{xrst_begin var_compare dev}
+{xrst_begin_parent var_compare_op dev}
+{xrst_spell
+   eqpp
+   lepp
+   ltpp
+   nepp
+   eqpv
+   lepv
+   ltpv
+   nepv
+   levp
+   ltvp
+   eqvv
+   levv
+   ltvv
+   nevv
+}
 
-Implement Comparison Operators
-##############################
+Comparison Operators
+####################
+
+User Syntax
+***********
+*z* = *x* *op* *y*
+
+x
+*
+is the left operand for this comparison.
+
+y
+*
+is the right operand for this comparison.
+
+z
+*
+is he result for this operator which is a boolean
+(not a variable or parameter).
+
+op
+**
+is one of the following: ==, <=, <, != .
+The >= and > comparisons are folded into <= and < by switching *x* and *y* .
+
+op_code
+*******
+
+EqppOp, LeppOp, LtppOp, NeppOp
+==============================
+These operators implement ==. <=, <, and != for the case where
+both *x* and *y* are parameters.
+
+EqpvOp, LepvOp, LtpvOp, NepvOp
+==============================
+These operators implement ==. <=, <, and != for the case where
+*x* is a parameter and *y* is a variable.
+
+LevpOp, LtvpOp
+==============
+These operators implement <= and < for the case where
+*x* is a variable and *y* is a parameter.
+The == and != operators are folded into EqpvOp and NepvOp by
+switching *x* and *y* .
+
+EqvvOp, LevvOp, LtvvOp, NevvOp
+==============================
+These operators implement ==. <=, <, and != for the case where
+both *x* and *y* are variables.
+
+arg
+***
+
+arg[0]
+======
+If *x* is a variable (parameter)
+*arg* [0] is the variable index (parameter index) corresponding to *x* .
+
+arg[1]
+======
+If *y* is a variable (parameter)
+*arg* [1] is the variable index (parameter index) corresponding to *y* .
+
+{xrst_end var_compare_op}
+
+-------------------------------------------------------------------------------
+{xrst_begin var_compare_forward_op dev}
+
+Forward Comparison Operators
+############################
 
 Prototype
 *********
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+   // BEGIN_COMPARE_FORWARD_OP
+   // END_COMPARE_FORWARD_OP
 }
 
 Base
@@ -23,15 +107,9 @@ is the base type for the operator; i.e., this operation was recorded
 using ``AD`` < *Base* > and computations by these operators are done using
 type *Base* .
 
-op_code
-*******
-is the enum value for the comparison operator that we are implementing.
-
-arg
-***
-is the vector of argument indices for this operator.
-All the comparison operators have two arguments and the corresponding
-indices are *arg*\ [0] and *arg*\ [1] .
+op_code, arg
+************
+see :ref:`var_compare_op@op_code`
 
 parameter
 *********
@@ -71,7 +149,7 @@ Otherwise, if this operator comparison has changed (is no longer true), and
 the new value of *compare_change_number* is equal to *compare_change_count* ,
 *compare_change_op_index* is set equal to *this_op_index* .
 
-{xrst_end var_compare}
+{xrst_end var_compare_forward_op}
 */
 
 # include <cppad/local/op_code_var.hpp>
@@ -79,8 +157,8 @@ the new value of *compare_change_number* is equal to *compare_change_count* ,
 
 namespace CppAD { namespace local { namespace var_op { // BEGIN namespace
 
-// BEGIN PROTOTYPE
-template <class Base> void compare(
+// BEGIN_COMPARE_FORWARD_OP
+template <class Base> void compare_forward_op(
    op_code_var   op_code                 ,
    const addr_t* arg                     ,
    const Base*   parameter               ,
@@ -90,7 +168,7 @@ template <class Base> void compare(
    size_t        compare_change_count    ,
    size_t&       compare_change_number   ,
    size_t&       compare_change_op_index )
-// END PROTOTYPE
+// END_COMPARE_FORWARD_OP
 {  //
    // n_arg, n_res
    CPPAD_ASSERT_NARG_NRES(op_code, 2, 0);
