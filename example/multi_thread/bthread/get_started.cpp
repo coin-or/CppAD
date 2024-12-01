@@ -7,6 +7,10 @@
 
 {xrst_template ,
    example/multi_thread/get_started.xrst
+   title: Getting Started Using @Name@ Threads With CppAD
+   start source code after: // <space> BEGIN_C++
+   end source code before:  // <space> END_C++
+
    @Name@    , Boost
    @####@    , #####
    @DEFAULT@ , USE_DEFAULT_ADFUN_CONSTRUCTOR
@@ -15,7 +19,7 @@
 {xrst_end bthread_get_started.cpp}
 ------------------------------------------------------------------------------
 */
-// BEGIN C++
+// BEGIN_C++
 # include <cppad/cppad.hpp>
 # include <boost/thread.hpp>
 
@@ -235,4 +239,4 @@ bool get_started(void)
    }
    return ok;
 }
-// END C++
+// END_C++

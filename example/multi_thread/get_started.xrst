@@ -3,14 +3,18 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2024 Bradley M. Bell
 
-This template file has the following parameters:
-@Name@    : is the name of this threading system
-@####@    : is the underlining for the name of the threading system
-@DEFAULT@ : is macro a macro name. If it is 1 (0),
-            the ADFun default ctor is used (is not used)
+This file is intended to help document the multi threading get_started examples
 
-This template uses // BEGIN C++ and // END C++
-for the limits of the sorce code in the page file for the get_started example.
+It has the following xrst template comments:
+   title: Getting Started Using @Name@ Threads With CppAD
+   start source code after: // <space> BEGIN_C++
+   end source code before:  // <space> END_C++
+
+It has the following xrst template replacements
+   @Name@    : is the name of this threading system
+   @####@    : is the underlining for the name of the threading system
+   @DEFAULT@ : is macro a macro name. If it is 1 (0),
+               the ADFun default ctor is used (is not used)
 }
 
 Getting Started Using @Name@ Threads With CppAD
@@ -47,6 +51,6 @@ get the message::
 Source Code
 ***********
 {xrst_literal
-   // BEGIN C++
-   // END C++
+   // BEGIN_C++
+   // END_C++
 }
