@@ -418,9 +418,10 @@ This vector maps the load instruction index *arg* [2] to the corresponding
 *y* variable index.
 If this index is zero, *y* is a parameter (not a variable).
 
-{xrst_comment document n_order, partial}
 {xrst_template ;
-   include/cppad/local/var_op/template/reverse.xrst
+   include/cppad/local/var_op/template/reverse_op.xrst
+   headers: n_order, partial
+
    @x, y@  ; y
 }
 

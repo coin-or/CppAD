@@ -245,9 +245,10 @@ The Taylor coefficient corresponding to variable *i* and order *k* is
 
    *taylor* [ *i* * *cap_order* + *k*  ]
 
-{xrst_comment document n_order, partial}
 {xrst_template ;
-   include/cppad/local/var_op/template/reverse.xrst
+   include/cppad/local/var_op/template/reverse_op.xrst
+   headers: n_order, partial
+
    @x, y@ ; x
 }
 
