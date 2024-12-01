@@ -5,11 +5,11 @@ SPDX-FileContributor: 2024 Bradley M. Bell
 
 This file is intended to help document of all the atomic_op routines.
 
-It has the following xrst_template comments:
+It has the following xrst template comments:
    headers: n_res, i_z, itr, play, parameter, trace, work
    headers if @mode@ is reverse: G and H
 
-It has the following xrst_template replacements:
+It has the following xrst template replacements:
    @mode@ : Must be either forward or reverse.
 }
 

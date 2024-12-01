@@ -6,10 +6,10 @@ SPDX-FileContributor: 2024 Bradley M. Bell
 This file is intended to help document the multiple order forward Taylor
 computation for all operators.
 
-It has the following xrst_template comments:
+It has the following xrst template comments:
    headers: cap_order, order_low, order_up, taylor
 
-It does not have any xrst_template replacements:
+It does not have any xrst template replacements:
 }
 
 cap_order
