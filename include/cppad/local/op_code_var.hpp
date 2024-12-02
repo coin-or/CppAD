@@ -28,14 +28,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
    ldv
    opcode
    pos
-   powpv
-   powvv
    pri
-   stpp
-   stpv
-   stvp
-   stvv
-
 }
 
 Variable Op Codes
@@ -100,16 +93,6 @@ see :ref:`var_compare_op@op_code@EqvvOp, LevvOp, LtvvOp, NevvOp`
 {xrst_spell_on}
 {xrst_comment ------------------------------------------------------------- }
 
-Pow
-===
-The binary ``pow`` ( *x* , *y* ) operators PowpvOp, PowvvOp are
-special because they have three variable results instead of one.
-To be specific, they compute
-``log`` ( *x* ) ,
-``log`` ( *x* ) * *y* ,
-``exp`` ( ``log`` ( *x* ) * *y* )
-
-{xrst_comment ------------------------------------------------------------- }
 AFunOp
 ******
 see :ref:`var_atomic_op@AFunOp`
@@ -173,11 +156,13 @@ LdpOp, LdvOp
 see :ref:`var_load_op@LdpOp, LdvOp`
 
 {xrst_comment ------------------------------------------------------------- }
+{xrst_spell_off}
 
 StppOp, StpvOp, StvpOp, StvvOp
 ==============================
 see :ref:`var_store_op@StppOp, StpvOp, StvpOp, StvvOp`
 
+{xrst_spell_on}
 {xrst_comment ------------------------------------------------------------- }
 ParOp
 *****
@@ -292,9 +277,9 @@ enum op_code_var {
    NevvOp,   // ...
    ParOp,    // see its heading above
    PowpvOp,  // see its heading above
-   PowvpOp,  // binary
-   PowvvOp,  // see its heading above
-   PriOp,    // see its heading above
+   PowvpOp,  // binary pow
+   PowvvOp,  // ..
+   PriOp,    // ..
    SignOp,   // unary sign
    SinOp,    // unary sin
    SinhOp,   // unary sinh

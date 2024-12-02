@@ -17,6 +17,10 @@
    zmulpv
    zmulvp
    zmulvv
+   powpv
+   powvp
+   powvv
+   delim
 }
 
 Binary Operators
@@ -28,7 +32,7 @@ that a virtual function implementation is significant slower.
 
 User Syntax
 ***********
-| *z* = *Fun* ( *x* , *y* )
+| *z* = *fun* ( *x* , *y* )
 | *z* = *x* *Op* *y*
 
 x
@@ -41,7 +45,9 @@ is a parameter or variable and is the second argument for this operator.
 
 z
 *
-is the result for this operator which is also a variable.
+is the primary result for this operator which is also a variable.
+The PowvpOp and PowvvOp operators has a two auxiliary results;
+see :ref:`var_binary_op@n_res` below.
 
 Base
 ****
@@ -54,25 +60,36 @@ Fun
 .. csv-table::
    :widths: auto
    :header-rows: 1
+   :delim: ;
 
-   op_code,      Fun,  Op,         x,         y,  z
-   AddpvOp,    addpv,   \+, parameter,  variable,  *x* + *y*
-   AddvvOp,    addvv,   \+,  variable,  variable,  *x* + *y*
-   DivpvOp,    divpv,   \/, parameter,  variable,  *x* / *y*
-   DivvpOp,    divvp,   \/,  variable, parameter,  *x* / *y*
-   DivvvOp,    divvv,   \/,  variable,  variable,  *x* / *y*
-   MulpvOp,    mulpv,   \*, parameter,  variable,  *x* * *y*
-   MulvvOp,    mulvv,   \*,  variable,  variable,  *x* * *y*
-   SubpvOp,    subpv,   \-, parameter,  variable,  *x* - *y*
-   SubvpOp,    subvp,   \-,  variable, parameter,  *x* - *y*
-   SubvvOp,    subvv,   \-,  variable,  variable,  *x* - *y*
-   ZmulpvOp,   zmulpv,  \-, parameter,  variable,  azmul( *x* , *y* )
-   ZmulvpOp,   zmulvp,  \-,  variable, parameter,  azmul( *x* , *y* )
-   ZmulvvOp,   zmulvv,  \-,  variable,  variable,  azmul( *x* , *y* )
+   op_code;      Fun;     fun; Op;         x;         y;  z
+   AddpvOp;    addpv;        ; \+; parameter;  variable;  *x* + *y*
+   AddvvOp;    addvv;        ; \+;  variable;  variable;  *x* + *y*
+   DivpvOp;    divpv;        ; \/; parameter;  variable;  *x* / *y*
+   DivvpOp;    divvp;        ; \/;  variable; parameter;  *x* / *y*
+   DivvvOp;    divvv;        ; \/;  variable;  variable;  *x* / *y*
+   MulpvOp;    mulpv;        ; \*; parameter;  variable;  *x* * *y*
+   MulvvOp;    mulvv;        ; \*;  variable;  variable;  *x* * *y*
+   SubpvOp;    subpv;        ; \-; parameter;  variable;  *x* - *y*
+   SubvpOp;    subvp;        ; \-;  variable; parameter;  *x* - *y*
+   SubvvOp;    subvv;        ; \-;  variable;  variable;  *x* - *y*
+   PowpvOp;    zmulpv;    pow;   ; parameter;  variable;    pow( *x* , *y* )
+   PowvpOp;    zmulvp;    pow;   ;  variable; parameter;    pow( *x* , *y* )
+   PowvvOp;    zmulvv;    pow;   ;  variable;  variable;    pow( *x* , *y* )
+   ZmulpvOp;   zmulpv;  azmul;   ; parameter;  variable;  azmul( *x* , *y* )
+   ZmulvpOp;   zmulvp;  azmul;   ;  variable; parameter;  azmul( *x* , *y* )
+   ZmulvvOp;   zmulvv;  azmul;   ;  variable;  variable;  azmul( *x* , *y* )
 
 i_z
 ***
 is the variable index corresponding to *z* .
+
+n_res
+*****
+is the number of results that are variables.
+This is 1 for all the binary operators except for PowpvOp and PowvvOp.
+For the PowpvOp and PowvvOP operators, *n_res* is 3
+and the variable indices of the auxiliary results are *i_z* - 1 and *i_z* - 2.
 
 arg
 ***
@@ -98,6 +115,14 @@ maps parameter indices to parameter values.
 Zero Order Forward Binary Variable Operators
 ############################################
 
+x, y, z, n_res
+**************
+see
+:ref:`var_binary_op@x` ,
+:ref:`var_binary_op@y` ,
+:ref:`var_binary_op@z` ,
+:ref:`var_binary_op@n_res`
+
 Prototype
 *********
 {xrst_code cpp}
@@ -110,13 +135,10 @@ inline void Fun_forward_0(
    Base*         taylor      )
 {xrst_code}
 
-Base, x, y, z, Fun, i_z, arg, parameter
-***************************************
+Base, Fun, i_z, arg, parameter
+******************************
 see
 :ref:`var_binary_op@Base` ,
-:ref:`var_binary_op@x` ,
-:ref:`var_binary_op@y` ,
-:ref:`var_binary_op@z` ,
 :ref:`var_binary_op@Fun` ,
 :ref:`var_binary_op@i_z` ,
 :ref:`var_binary_op@arg` ,
@@ -135,11 +157,12 @@ The Taylor coefficient corresponding to variable *i* and order *k* is
 Input
 =====
 The zero order Taylor coefficients
-for variables with index *i* less than *i_z* .
+for variables with index *i* less than or equal *i_z* - *n_res* .
 
 Output
 ======
-The zero order Taylor coefficients for variables with index *i_z* .
+The zero order Taylor coefficients for variables with index
+*i_z* - *n_res* , .. , *i_z* .
 
 {xrst_end var_binary_forward_0}
 ------------------------------------------------------------------------------
@@ -147,6 +170,14 @@ The zero order Taylor coefficients for variables with index *i_z* .
 
 General Forward Binary Variable Operators
 #########################################
+
+x, y, z, n_res
+**************
+see
+:ref:`var_binary_op@x` ,
+:ref:`var_binary_op@y` ,
+:ref:`var_binary_op@z` ,
+:ref:`var_binary_op@n_res`
 
 Prototype
 *********
@@ -162,13 +193,10 @@ inline void Fun_forward_op(
    Base*         taylor      )
 {xrst_code}
 
-Base, x, y, z, Fun, i_z, arg, parameter
-***************************************
+Base, Fun, i_z, arg, parameter
+******************************
 see
 :ref:`var_binary_op@Base` ,
-:ref:`var_binary_op@x` ,
-:ref:`var_binary_op@y` ,
-:ref:`var_binary_op@z` ,
 :ref:`var_binary_op@Fun` ,
 :ref:`var_binary_op@i_z` ,
 :ref:`var_binary_op@arg` ,
@@ -188,6 +216,14 @@ see
 Multiple Direction Forward Binary Operators
 ###########################################
 
+x, y, z, n_res
+**************
+see
+:ref:`var_binary_op@x` ,
+:ref:`var_binary_op@y` ,
+:ref:`var_binary_op@z` ,
+:ref:`var_binary_op@n_res`
+
 Prototype
 *********
 {xrst_code cpp}
@@ -202,13 +238,10 @@ inline void Fun_forward_dir(
    Base*         taylor      )
 {xrst_code}
 
-Base, x, y, z, Fun, i_z, arg, parameter
-***************************************
+Base, Fun, i_z, arg, parameter
+******************************
 see
 :ref:`var_binary_op@Base` ,
-:ref:`var_binary_op@x` ,
-:ref:`var_binary_op@y` ,
-:ref:`var_binary_op@z` ,
 :ref:`var_binary_op@Fun` ,
 :ref:`var_binary_op@i_z` ,
 :ref:`var_binary_op@arg` ,
@@ -226,6 +259,14 @@ see
 Reverse Mode Binary Operators
 #############################
 
+x, y, z, n_res
+**************
+see
+:ref:`var_binary_op@x` ,
+:ref:`var_binary_op@y` ,
+:ref:`var_binary_op@z` ,
+:ref:`var_binary_op@n_res`
+
 Prototype
 *********
 {xrst_code cpp}
@@ -240,13 +281,10 @@ inline void Fun_reverse_op(
    Base*         partial      )
 {xrst_code}
 
-Base, x, y, z, Fun, i_z, arg, parameter
-***************************************
+Base, Fun, i_z, arg, parameter
+******************************
 see
 :ref:`var_binary_op@Base` ,
-:ref:`var_binary_op@x` ,
-:ref:`var_binary_op@y` ,
-:ref:`var_binary_op@z` ,
 :ref:`var_binary_op@Fun` ,
 :ref:`var_binary_op@i_z` ,
 :ref:`var_binary_op@arg` ,
@@ -264,8 +302,8 @@ The Taylor coefficient corresponding to variable *i* and order *k* is
 
 {xrst_template ;
    include/cppad/local/var_op/template/reverse_op.xrst
-
    headers: n_order, partial
+
    @x, y@ ; x
 }
 
