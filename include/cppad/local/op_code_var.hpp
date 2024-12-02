@@ -137,59 +137,16 @@ for indicate an parameter.
 
 CExpOp
 ******
-see:ref:`var_atomic_op@CExpOp`
+see :ref:`var_cexp_op@CExpOp`
 
 {xrst_comment ------------------------------------------------------------- }
+
 CSkipOp
 *******
-The conditional skip operator (used to skip operations that depend on false
-branches to conditional expressions).
-This operator has not result variables.
-
-arg[0]
-======
-This is a :ref:`base_cond_exp@CompareOp` value corresponding
-to this conditional skip.
-
-arg[1]
-======
-The first two bits of this integer are used as flags; see below.
-
-arg[2]
-======
-If arg[1] & 1 is true (false),
-this is the variable index (parameter index) corresponding to *left* .
-
-arg[3]
-======
-If arg[1] & 2 is true (false),
-this is the variable index (parameter index) corresponding to *right* .
-
-arg[4]
-======
-is the number of operations to skip if the comparison is true.
-We use the notation *n* = *arg* [4] below.
-
-arg[5]
-======
-is the number of operations to skip if the comparison is false.
-We use the notation *m* = *arg* [5] below.
-
-arg[6+i]
-========
-For *i* = 0, ..., *n* ``-1`` , this is the index
-of an operator that can be skipped if the comparison is true.
-
-arg[6+n+i]
-==========
-For *i* = 0, ..., *m* ``-1`` , this is the index
-of an operator that can be skipped if the comparison is false.
-
-arg[6+n+m]
-==========
-The is the total number operators that might be skipped; i.e., *n* + *m* .
+see :ref:`var_cskip_op@CSkipOp` .
 
 {xrst_comment ------------------------------------------------------------- }
+
 CSumOp
 ******
 see :ref:`var_csum_op@CSumOp`
@@ -268,6 +225,7 @@ is the text index corresponding to *after* .
    include/cppad/local/var_op/binary_op.xrst
    include/cppad/local/var_op/cexp_op.hpp
    include/cppad/local/var_op/compare_op.hpp
+   include/cppad/local/var_op/cskip_op.hpp
    include/cppad/local/var_op/csum_op.hpp
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp

@@ -7,107 +7,137 @@
 
 namespace CppAD { namespace local { namespace var_op {
 /*!
-\file cskip_op.hpp
-Zero order forward mode set which operations to skip.
-*/
+{xrst_begin_parent var_cskip_op dev}
 
-/*!
-Zero order forward mode execution of op = CSkipOp.
+The Conditional Skip Operator
+#############################
+{xrst_spell
+   ge
+}
 
-\par Parameters and Variables
-The terms parameter and variable depend on if we are referring to its
-AD<Base> or Base value.
-We use Base parameter and Base variable to refer to the
-correspond Base value.
-We use AD<Base> parameter and AD<Base> variable to refer to the
-correspond AD<Base> value.
+CSkipOp
+*******
+is the op code for this operator.
 
-\tparam Base
-base type for the operator; i.e., this operation was recorded
+User Syntax
+***********
+| *z* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
+
+Rel
+***
+is Lt, Le, Eq, Ge, or Gt .
+
+arg
+***
+
+arg[0]
+======
+Is the comparison operator for this conditional skip
+as a static cast from CompareOp to addr_t :
+{xrst_literal
+   include/cppad/local/declare_ad.hpp
+   // BEGIN_COMPARE_OP
+   // END_COMPARE_OP
+}
+Note that arg[0] cannot be equal to CompareNe; i.e.
+the last enum value CompareNe will not appear.
+
+arg[1]
+======
+The first two bits of this value are used as flags; see below.
+
+arg[2]
+======
+If arg[1] & 1 is zero (is one) ,
+arg[2] is the parameter (variable) index corresponding to *left* .
+
+arg[3]
+======
+If arg[1] & 2 is zero (is one) ,
+arg[3] is the parameter (variable) index corresponding to *right* .
+
+arg[4]
+======
+is the number of operations to skip if the comparison result is true
+and the left and right operands are
+:ref:`base_identical@Identical@IdenticalCon` .
+
+arg[5]
+======
+is the number of operations to skip if the comparison result is false
+and the left and right operands are identically constant.
+
+arg[6+i]
+========
+For i = 0 , ... , arg[4] - 1,
+arg[6 + i] is the index of an operation to skip if the comparison
+is identically true.
+
+arg[6+arg[4]+i]
+===============
+For i = 0 , ... , arg[5] - 1,
+arg[6 + i] is the index of an operation to skip if the comparison
+is identically false.
+
+arg[6+arg[4]+arg[5]]
+====================
+is the total number operators that might be skipped;
+i.e., arg[4] + arg[5] .
+
+{xrst_end var_cskip_op}
+------------------------------------------------------------------------------
+{xrst_begin var_cskip_forward_0 dev}
+
+Zero Order Forward Conditional Skip Operator
+############################################
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CSKIP_FORWARD_0
+   // END_CSKIP_FORWARD_0
+}
+
+Base
+****
+Base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-\param i_z
+i_z
+***
 variable index corresponding to the result of the previous operation.
-This is used for error checking. To be specific,
-the left and right operands for the CExpOp operation must have indexes
-less than or equal this value.
+This is only used for error checking. To be specific,
+if the left and right operand for the conditional expression is a variable,
+its index must be less than or equal this value.
 
-\param arg [in]
-\n
- arg[0]
-is static cast to size_t from the enum type
-\verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
-\endverbatim
-for this operation.
-Note that arg[0] cannot be equal to CompareNe.
-\n
-\n
- arg[1] & 1
-\n
-If this is zero, left is an AD<Base> parameter.
-Otherwise it is an AD<Base> variable.
-\n
-\n
- arg[1] & 2
-\n
-If this is zero, right is an AD<Base> parameter.
-Otherwise it is an AD<Base> variable.
-\n
- arg[2]
-is the index corresponding to left in comparison.
-\n
- arg[3]
-is the index corresponding to right in comparison.
-\n
- arg[4]
-is the number of operations to skip if the comparison result is true.
-\n
- arg[5]
-is the number of operations to skip if the comparison result is false.
-\n
-<tt>arg[5+i]</tt>
-for <tt>i = 1 , ... , arg[4]</tt> are the operations to skip if the
-comparison result is true and both left and right are
-identically Base parameters.
-\n
-<tt>arg[5+arg[4]+i]</tt>
-for <tt>i = 1 , ... , arg[5]</tt> are the operations to skip if the
-comparison result is false and both left and right are
-identically Base parameters.
+num_par
+*******
+is the total number of values in the *parameter* vector.
 
-\param num_par [in]
-is the total number of values in the vector parameter.
+parameter
+*********
+maps parameter indices to parameter values.
 
-\param parameter [in]
-If left is an AD<Base> parameter,
-<code>parameter [ arg[2] ]</code> is its value.
-If right is an AD<Base> parameter,
-<code>parameter [ arg[3] ]</code> is its value.
+cap_order
+*********
+is the maximum number of orders that can fit in *taylor* .
 
-\param cap_order [in]
-number of columns in the matrix containing the Taylor coefficients.
+taylor
+******
+For *j* <= *i_z* ,
+the Taylor coefficient corresponding to variable *j* and order zero is
 
-\param taylor [in]
-If left is an AD<Base> variable,
-<code>taylor [ size_t(arg[2]) * cap_order + 0 ]</code>
-is the zeroth order Taylor coefficient corresponding to left.
-If right is an AD<Base> variable,
-<code>taylor [ size_t(arg[3]) * cap_order + 0 ]</code>
-is the zeroth order Taylor coefficient corresponding to right.
+   *taylor* [ *j* * *cap_order* + 0  ]
 
-\param cskip_op [in,out]
+cskip_op
+********
 is vector specifying which operations are at this point are know to be
-unecessary and can be skipped.
-This is both an input and an output.
+unnecessary and can be skipped. This is both an input and an output; i.e.,
+the call may add more true values to *cskip_op* .
+
+{xrst_end var_cskip_forward_0}
 */
+// BEGIN_CSKIP_FORWARD_0
 template <class Base>
 inline void cskip_forward_0(
    size_t               i_z            ,
@@ -117,11 +147,12 @@ inline void cskip_forward_0(
    size_t               cap_order      ,
    Base*                taylor         ,
    bool*                cskip_op       )
+// END_CSKIP_FORWARD_0
 {  //
    //
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < size_t(CompareNe) );
    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
+   //
    Base left, right;
    if( arg[1] & 1 )
    {  // If variable arg[2] <= i_z, it has already been computed,

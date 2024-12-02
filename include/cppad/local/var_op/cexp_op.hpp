@@ -15,11 +15,16 @@ namespace CppAD { namespace local { namespace var_op {
 The Variable Conditional Expression Operator
 ############################################
 
+CExpOp
+******
+is the op code for this operator.
+
 User Syntax
 ***********
 | *z* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false* )
 
-*Rel*
+Rel
+***
 is Lt, Le, Eq, Ge, Gt or Ne .
 
 left
