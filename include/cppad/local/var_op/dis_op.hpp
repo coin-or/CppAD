@@ -1,11 +1,11 @@
-# ifndef CPPAD_LOCAL_VAR_OP_DISCRETE_OP_HPP
-# define CPPAD_LOCAL_VAR_OP_DISCRETE_OP_HPP
+# ifndef CPPAD_LOCAL_VAR_OP_DIS_OP_HPP
+# define CPPAD_LOCAL_VAR_OP_DIS_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin discrete_op dev}
+{xrst_begin dis_op dev}
 {xrst_spell
    ataylor
    az
@@ -116,7 +116,7 @@ Asserts
 *******
 NumArg(op) == 2, NumRes(op) == 1,  q < cap_order, 0 < r
 
-{xrst_end discrete_op}
+{xrst_end dis_op}
 */
 namespace CppAD { namespace local { namespace var_op {
 

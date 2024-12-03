@@ -23,7 +23,7 @@
 # include <cppad/local/var_op/cosh_op.hpp>
 # include <cppad/local/var_op/cskip_op.hpp>
 # include <cppad/local/var_op/csum_op.hpp>
-# include <cppad/local/var_op/discrete_op.hpp>
+# include <cppad/local/var_op/dis_op.hpp>
 # include <cppad/local/var_op/div_op.hpp>
 # include <cppad/local/var_op/erf_op.hpp>
 # include <cppad/local/var_op/exp_op.hpp>

@@ -28,7 +28,7 @@ Contents
    include/cppad/local/set_get_in_parallel.hpp
    include/cppad/local/sparse/dev_sparse.xrst
    include/cppad/local/sweep/dev_sweep.xrst
-   include/cppad/local/var_op/discrete_op.hpp
+   include/cppad/local/var_op/dis_op.hpp
    include/cppad/utility/xrst/dev_utility.xrst
    speed/dev_speed.xrst
    xrst/devel/dynamic.xrst
