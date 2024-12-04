@@ -149,7 +149,7 @@ void forward2(
    const Base* parameter = play->GetPar();
 
    // temporary indices
-   size_t i, k, ell;
+   size_t i;
 
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();
@@ -412,9 +412,9 @@ void forward2(
          // -------------------------------------------------
 
          case ParOp:
-         k = i_var*(J-1)*r + i_var + (q-1)*r + 1;
-         for(ell = 0; ell < r; ell++)
-            taylor[k + ell] = Base(0.0);
+         var_op::par_forward_dir(
+            q, r, i_var, arg, num_par, parameter, J, taylor
+         );
          break;
          // -------------------------------------------------
 
