@@ -33,7 +33,7 @@
 # include <cppad/local/var_op/log1p_op.hpp>
 # include <cppad/local/var_op/mul_op.hpp>
 # include <cppad/local/var_op/neg_op.hpp>
-# include <cppad/local/var_op/parameter_op.hpp>
+# include <cppad/local/var_op/par_op.hpp>
 # include <cppad/local/var_op/pow_op.hpp>
 # include <cppad/local/var_op/print_op.hpp>
 # include <cppad/local/var_op/sign_op.hpp>
