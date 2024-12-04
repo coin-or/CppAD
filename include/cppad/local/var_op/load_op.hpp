@@ -102,13 +102,6 @@ Is the number of this VecAD load instruction that came before this one.
 Zero Order Forward Load an Element of a VecAD Vector
 ####################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_FORWARD_0
-   // END_LOAD_FORWARD_0
-}
-
 v, x, y, z
 **********
 see
@@ -116,6 +109,14 @@ see
 :ref:`var_load_op@x` ,
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_FORWARD_0
+   // END_LOAD_FORWARD_0
+}
+
 
 Base, op_code, i_z, num_vecad_ind, arg
 **************************************
@@ -245,13 +246,6 @@ inline void load_forward_0(
 Nonzero Order Forward Load an Element of a VecAD Vector
 #######################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_FORWARD_NONZERO
-   // END_LOAD_FORWARD_NONZERO
-}
-
 v, x, y, z
 **********
 see
@@ -259,6 +253,14 @@ see
 :ref:`var_load_op@x` ,
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_FORWARD_NONZERO
+   // END_LOAD_FORWARD_NONZERO
+}
+
 
 Base, op_code, i_z, arg
 ***********************
@@ -284,10 +286,6 @@ are computing.
 cap_order
 *********
 is the maximum number of orders that can fit in *taylor* .
-
-y
-*
-see :ref:`var_load_op@y`
 
 load_op2var
 ***********
@@ -381,13 +379,6 @@ inline void load_forward_nonzero(
 Reverse Mode Load an Element of a VecAD Vector
 ##############################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_REVERSE_OP
-   // END_LOAD_REVERSE_OP
-}
-
 v, x, y, z
 **********
 see
@@ -396,6 +387,13 @@ see
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_REVERSE_OP
+   // END_LOAD_REVERSE_OP
+}
+
 Base, op_code, i_z, arg
 ***********************
 see
@@ -403,10 +401,6 @@ see
 :ref:`var_load_op@op_code` ,
 :ref:`var_load_op@i_z` ,
 :ref:`var_load_op@arg` .
-
-y
-*
-see :ref:`var_load_op@y`
 
 cap_order
 *********
@@ -479,13 +473,6 @@ inline void load_reverse_op(
 Forward Jacobian Sparsity for Store a VecAD Element
 ###################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_FORWARD_JAC
-   // END_LOAD_FORWARD_JAC
-}
-
 v, x, y, z
 **********
 see
@@ -493,6 +480,13 @@ see
 :ref:`var_load_op@x` ,
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_FORWARD_JAC
+   // END_LOAD_FORWARD_JAC
+}
 
 op_code, num_vecad_ind, arg
 ***************************
@@ -576,13 +570,6 @@ inline void load_forward_jac(
 Reverse Jacobian Sparsity for Load a VecAD Element
 ##################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_REVERSE_JAC
-   // END_LOAD_REVERSE_JAC
-}
-
 v, x, y, z
 **********
 see
@@ -590,6 +577,13 @@ see
 :ref:`var_load_op@x` ,
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_REVERSE_JAC
+   // END_LOAD_REVERSE_JAC
+}
 
 op_code, num_vecad_ind, arg
 ***************************
@@ -671,13 +665,6 @@ inline void load_reverse_jac(
 Reverse Hessian Sparsity for Load a VecAD Element
 #################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_REVERSE_HES
-   // END_LOAD_REVERSE_HES
-}
-
 v, x, y, z
 **********
 see
@@ -685,6 +672,13 @@ see
 :ref:`var_load_op@x` ,
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_REVERSE_HES
+   // END_LOAD_REVERSE_HES
+}
 
 op_code, num_vecad_ind, i_z, arg
 ********************************
@@ -772,13 +766,6 @@ inline void load_reverse_hes(
 Forward Hessian Sparsity for Load a VecAD Element
 #################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_LOAD_FORWARD_HES
-   // END_LOAD_FORWARD_HES
-}
-
 v, x, y, z
 **********
 see
@@ -786,6 +773,13 @@ see
 :ref:`var_load_op@x` ,
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_LOAD_FORWARD_HES
+   // END_LOAD_FORWARD_HES
+}
 
 op_code, num_vecad_ind, i_z, arg
 ********************************

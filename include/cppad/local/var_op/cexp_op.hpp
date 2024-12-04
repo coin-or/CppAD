@@ -95,6 +95,11 @@ arg[5] is the parameter (variable) index corresponding to *if_false*
 Any Order Forward Conditional Expression Variable Operator
 ##########################################################
 
+z
+*
+see
+:ref:`var_cexp_op@z`
+
 Prototype
 *********
 {xrst_literal
@@ -102,10 +107,9 @@ Prototype
    // END_CEXP_FORWARD_OP
 }
 
-z, arg
-======
+arg
+***
 see
-:ref:`var_cexp_op@z` ,
 :ref:`var_cexp_op@arg`
 
 Base

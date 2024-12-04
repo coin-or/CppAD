@@ -94,19 +94,19 @@ If *y* is a parameter (variable), arg[2] is the parameter index
 Zero Order Forward Store an Element of a VecAD Vector
 #####################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_STORE_FORWARD_0
-   // END_STORE_FORWARD_0
-}
-
 v, x, y
 *******
 see
 :ref:`var_store_op@v` ,
 :ref:`var_store_op@x` ,
 :ref:`var_store_op@y`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_FORWARD_0
+   // END_STORE_FORWARD_0
+}
 
 Base, op_code, num_vecad_ind, arg
 *********************************
@@ -233,19 +233,19 @@ inline void store_forward_0(
 Forward Jacobian Sparsity for Store a VecAD Element
 ###################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_STORE_FORWARD_JAC
-   // END_STORE_FORWARD_JAC
-}
-
 v, x, y
 *******
 see
 :ref:`var_store_op@v` ,
 :ref:`var_store_op@x` ,
 :ref:`var_store_op@y`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_FORWARD_JAC
+   // END_STORE_FORWARD_JAC
+}
 
 op_code, num_vecad_ind, arg
 ***************************
@@ -352,19 +352,19 @@ inline void store_forward_jac(
 Reverse Jacobian Sparsity for Store a VecAD Element
 ###################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_STORE_REVERSE_JAC
-   // END_STORE_REVERSE_JAC
-}
-
 v, x, y
 *******
 see
 :ref:`var_store_op@v` ,
 :ref:`var_store_op@x` ,
 :ref:`var_store_op@y`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_REVERSE_JAC
+   // END_STORE_REVERSE_JAC
+}
 
 op_code, num_vecad_ind, arg
 ***************************
@@ -467,19 +467,19 @@ inline void store_reverse_jac(
 Reverse Hessian Sparsity for Store a VecAD Element
 ##################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_STORE_REVERSE_HES
-   // END_STORE_REVERSE_HES
-}
-
 v, x, y
 *******
 see
 :ref:`var_store_op@v` ,
 :ref:`var_store_op@x` ,
 :ref:`var_store_op@y`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_REVERSE_HES
+   // END_STORE_REVERSE_HES
+}
 
 op_code, num_vecad_ind, arg
 ***************************
@@ -581,19 +581,19 @@ inline void store_reverse_hes(
 Forward Hessian Sparsity for Store a VecAD Element
 ##################################################
 
-Prototype
-*********
-{xrst_literal
-   // BEGIN_STORE_FORWARD_HES
-   // END_STORE_FORWARD_HES
-}
-
 v, x, y
 *******
 see
 :ref:`var_store_op@v` ,
 :ref:`var_store_op@x` ,
 :ref:`var_store_op@y`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_STORE_FORWARD_HES
+   // END_STORE_FORWARD_HES
+}
 
 op_code, num_vecad_ind, arg
 ***************************
