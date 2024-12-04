@@ -35,7 +35,7 @@
 # include <cppad/local/var_op/neg_op.hpp>
 # include <cppad/local/var_op/par_op.hpp>
 # include <cppad/local/var_op/pow_op.hpp>
-# include <cppad/local/var_op/print_op.hpp>
+# include <cppad/local/var_op/pri_op.hpp>
 # include <cppad/local/var_op/sign_op.hpp>
 # include <cppad/local/var_op/sin_op.hpp>
 # include <cppad/local/var_op/sinh_op.hpp>

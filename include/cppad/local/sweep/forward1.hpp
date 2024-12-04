@@ -566,7 +566,7 @@ void forward1(
          // -------------------------------------------------
 
          case PriOp:
-         if( (p == 0) & print ) var_op::forward_pri_0(s_out,
+         if( (p == 0) & print ) var_op::pri_forward_0(s_out,
             arg, num_text, text, num_par, parameter, J, taylor
          );
          break;

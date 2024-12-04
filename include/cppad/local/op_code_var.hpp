@@ -27,7 +27,6 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
    ldp
    ldv
    opcode
-   pos
    pri
 }
 
@@ -161,33 +160,10 @@ ParOp
 see :ref:`var_par_op@ParOp`
 
 {xrst_comment ------------------------------------------------------------- }
+
 PriOp
 *****
-This operator implements the :ref:`PrintFor-name` command
-
-   ``PrintFor`` ( *pos* , *before* , *value* , *after* )
-
-arg[0]
-======
-The first two bits of this integer are used as flags; see below.
-
-arg[1]
-======
-If arg[1] & 1 is true (false),
-this is the variable index (parameter index) corresponding to *pos* .
-
-arg[2]
-======
-is the text index corresponding to *before* .
-
-arg[3]
-======
-If arg[1] & 2 is true (false),
-this is the variable index (parameter index) corresponding to *value* .
-
-arg[4]
-======
-is the text index corresponding to *after* .
+see :ref:`var_pri_op@PriOp`
 
 {xrst_comment ------------------------------------------------------------- }
 
@@ -202,6 +178,7 @@ is the text index corresponding to *after* .
    include/cppad/local/var_op/dis_op.hpp
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/par_op.hpp
+   include/cppad/local/var_op/pri_op.hpp
    include/cppad/local/var_op/store_op.hpp
    include/cppad/local/var_op/unary_op.xrst
 }
