@@ -5,125 +5,151 @@
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin dis_op dev}
-{xrst_spell
-   ataylor
-   az
-   tpv
-}
+{xrst_begin_parent var_dis_op dev}
 
-Forward Mode Result for Discrete Functions
-##########################################
+Variable Discrete Operator
+##########################
 
-Syntax
-******
-| ``forward_dis_op`` (
-| |tab| *p* , *q* , *r* , *i_z* , *arg* , *cap_order* , *taylor*
-| ) ``forward_dis_op`` (
-| |tab| *p* , *q* , *r* , *i_z* , *arg* , *cap_order* , *ataylor*
-| )
-
-Prototype
-*********
-{xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
-}
-
-Usage
+DisOp
 *****
-The C++ source code corresponding to this operation is
+is the op code for this operator.
 
-   *az* = *f* ( *ax* )
+User Syntax
+***********
+| *z* = *name* ( *x* )
 
-where *f* is a piecewise constant function and it's derivative is
-always calculated as zero.
+name
+****
+is the :ref:`Discrete@name` of he discrete function.
 
-RecBase
-*******
-Is the Base type when this function was recorded; i.e.,
-*ax* and *az* have type ``AD`` < *RecBase* > .
-
-p
+x
 *
-is the lowest order Taylor coefficient that will be calculated.
+is the argument for this discrete function.
 
-q
+z
 *
-is the highest order Taylor coefficient that will be calculated.
-
-r
-*
-is the number of directions, for each order,
-that will be calculated (except for order zero which only has one direction).
-
-i_z
-***
-variable index corresponding to the result for this operation;
-i.e. the row index in *taylor* or *ataylor* corresponding to
-*z* .
+is the new variable created by this function evaluation.
+(Note that this is called :ref:`Discrete@y` is the user documentation
+for discrete functions.)
 
 arg
 ***
 
 arg[0]
 ======
-is the index, in the order of the discrete functions defined by the user,
-for this discrete function.
+is the index that identifies this discrete function.
 
 arg[1]
 ======
-variable index corresponding to the argument for this operator;
-i.e. the row index in *taylor* or *ataylor* corresponding to x.
+variable index corresponding to the argument for this function call.
+
+
+{xrst_end var_dis_op}
+------------------------------------------------------------------------------
+{xrst_begin dis_forward_dir dev}
+{xrst_spell
+   ataylor
+   tpv
+}
+
+Forward Mode Result for Discrete Functions
+##########################################
+
+name, x, z, arg
+***************
+see
+:ref:`var_dis_op@name` ,
+:ref:`var_dis_op@x` ,
+:ref:`var_dis_op@z` ,
+:ref:`var_dis_op@arg`
+
+Prototype
+*********
+
+RecBase
+=======
+{xrst_literal
+   // BEGIN_DIS_FORWARD_OP
+   // END_DIS_FORWARD_OP
+}
+
+AD<RecBase>
+===========
+{xrst_literal
+   // BEGIN_AD_DIS_FORWARD_OP
+   // END_AD_DIS_FORWARD_OP
+}
+
+RecBase
+*******
+Is the Base type when this function was recorded; i.e.,
+:ref:`Discrete@ax` and :ref:`Discrete@ay` have type ``AD`` < *RecBase* > .
+
+order_low
+*********
+is the lowest order Taylor coefficient that will be calculated.
+
+order_up
+********
+is the highest order Taylor coefficient that will be calculated.
+
+n_dir
+*****
+is the number of directions, for each order,
+that will be calculated (except for order zero which only has one direction).
+
+i_z
+***
+variable index corresponding to the result for this operation;
+i.e. the row index in *taylor* or *ataylor* corresponding to *z* .
 
 cap_order
 *********
-is the maximum number of orders that can fit in *taylor* .
+is the maximum number of orders that can fit in *taylor* or *ataylor* .
 
 tpv
 ***
 We use the notation
 
-   *tpv* = ( *cap_order* ``-1`` ) * *r*  + 1
+   *tpv* = ( *cap_order* - 1 ) * *n_dir*  + 1
 
 which is the number of Taylor coefficients per variable
 
 taylor
 ******
-The type of this parameter is *RecBase* .
 
 Input
 =====
-The value taylor[ arg[1] * tpv + 0 ]
-is the zero order Taylor coefficient corresponding to x.
+The zero order Taylor coefficient corresponding to x::
+
+   taylor[ arg[1] * tpv + 0 ]
 
 Output
 ======
-If *p* is zero,
-taylor[ i_z * tpv + 0 ]
+If *order_low* is zero::
+
+   taylor[ i_z * tpv + 0 ]
+
 is the zero order Taylor coefficient corresponding to z.
-For k = max(p, 1), ... , q,
-taylor[ i_z * tpv + (k-1)*r + 1 + ell ]
-is the k-th order Taylor coefficient corresponding to z
-(which is zero).
+For k = max(order_low, 1), ... , order_up,
+
+   taylor[ i_z * tpv + (k-1)*n_dir + 1 + ell ]
+
+is the k-th order Taylor coefficient corresponding to z (which is zero).
 
 ataylor
 *******
-The type of this parameter is ``AD`` < *RecBase* > .
-Otherwise, it has the same description as *taylor* .
+This has the same description as *taylor* except that its type is
+``AD`` < *RecBase* > instead of *RecBase* .
 
-Asserts
-*******
-NumArg(op) == 2, NumRes(op) == 1,  q < cap_order, 0 < r
-
-{xrst_end dis_op}
+{xrst_end dis_forward_dir}
 */
 namespace CppAD { namespace local { namespace var_op {
 
 // ---------------------------------------------------------------------------
-// BEGIN_PROTOTYPE
+// BEGIN_DIS_FORWARD_OP
 template <class RecBase>
-inline void dis_forward_op(
+inline void dis_forward_dir(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        n_dir       ,
@@ -131,7 +157,7 @@ inline void dis_forward_op(
    const addr_t* arg         ,
    size_t        cap_order   ,
    RecBase*      taylor      )
-// END_PROTOTYPE
+// END_DIS_FORWARD_OP
 {   // p, q
    size_t p = order_low;
    size_t q = order_up;
@@ -157,8 +183,9 @@ inline void dis_forward_op(
          z[ (k-1) * r + 1 + ell ] = RecBase(0.0);
 }
 // ---------------------------------------------------------------------------
+// BEGIN_AD_DIS_FORWARD_OP
 template <class RecBase>
-inline void dis_forward_op(
+inline void dis_forward_dir(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        n_dir       ,
@@ -166,6 +193,7 @@ inline void dis_forward_op(
    const addr_t* arg         ,
    size_t        cap_order   ,
    AD<RecBase>*  ataylor     )
+// END_AD_DIS_FORWARD_OP
 {   // p, q
    size_t p = order_low;
    size_t q = order_up;

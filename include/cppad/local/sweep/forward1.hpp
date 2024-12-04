@@ -423,7 +423,7 @@ void forward1(
          // -------------------------------------------------
 
          case DisOp:
-         var_op::dis_forward_op<RecBase>(p, q, r, i_var, arg, J, taylor);
+         var_op::dis_forward_dir<RecBase>(p, q, r, i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 

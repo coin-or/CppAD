@@ -135,19 +135,10 @@ CSumOp
 see :ref:`var_csum_op@CSumOp`
 
 {xrst_comment ------------------------------------------------------------- }
+
 DisOp
 *****
-Call to a user defined :ref:`discrete-name` function.
-This operator has one result variable.
-
-arg[0]
-======
-is the index, in the order of the functions defined by the user,
-for this discrete function.
-
-arg[1]
-======
-variable index corresponding to the argument for this function call.
+see :ref:`var_dis_op@DisOp`
 
 {xrst_comment ------------------------------------------------------------- }
 
@@ -212,6 +203,7 @@ is the text index corresponding to *after* .
    include/cppad/local/var_op/compare_op.hpp
    include/cppad/local/var_op/cskip_op.hpp
    include/cppad/local/var_op/csum_op.hpp
+   include/cppad/local/var_op/dis_op.hpp
    include/cppad/local/var_op/load_op.hpp
    include/cppad/local/var_op/store_op.hpp
    include/cppad/local/var_op/unary_op.xrst
