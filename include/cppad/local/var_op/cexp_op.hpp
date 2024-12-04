@@ -92,8 +92,8 @@ arg[5] is the parameter (variable) index corresponding to *if_false*
 ------------------------------------------------------------------------------
 {xrst_begin var_cexp_forward_op dev}
 
-Forward Conditional Expression Variable Operator
-################################################
+Any Order Forward Conditional Expression Variable Operator
+##########################################################
 
 Prototype
 *********

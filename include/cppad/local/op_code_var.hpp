@@ -155,14 +155,10 @@ see :ref:`var_store_op@StppOp, StpvOp, StvpOp, StvvOp`
 
 {xrst_spell_on}
 {xrst_comment ------------------------------------------------------------- }
-ParOp
-*****
-This operator has one result that is equal to a parameter
-(not that all the derivatives for this result will be zero).
 
-arg[0]
-======
-Is the index of the parameter that determines the value of the variable.
+ParOp
+=====
+see :ref:`var_par_op@ParOp`
 
 {xrst_comment ------------------------------------------------------------- }
 PriOp
@@ -205,6 +201,7 @@ is the text index corresponding to *after* .
    include/cppad/local/var_op/csum_op.hpp
    include/cppad/local/var_op/dis_op.hpp
    include/cppad/local/var_op/load_op.hpp
+   include/cppad/local/var_op/par_op.hpp
    include/cppad/local/var_op/store_op.hpp
    include/cppad/local/var_op/unary_op.xrst
 }

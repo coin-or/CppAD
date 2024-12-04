@@ -168,8 +168,8 @@ The zero order Taylor coefficients for variables with index
 ------------------------------------------------------------------------------
 {xrst_begin var_binary_forward_op dev}
 
-General Forward Binary Variable Operators
-#########################################
+Any Order Forward Binary Variable Operators
+###########################################
 
 x, y, z, n_res
 **************

@@ -138,8 +138,8 @@ The zero order Taylor coefficients for variables with index
 ------------------------------------------------------------------------------
 {xrst_begin var_unary_forward_op dev}
 
-General Forward Unary Variable Operators
-########################################
+Any Order Forward Unary Variable Operators
+##########################################
 
 x, z, n_res
 ***********

@@ -542,17 +542,9 @@ void forward1(
          // -------------------------------------------------
 
          case ParOp:
-         i = p;
-         if( i == 0 )
-         {  var_op::par_forward_0(
-               i_var, arg, num_par, parameter, J, taylor
-            );
-            i++;
-         }
-         while(i <= q)
-         {  taylor[ i_var * J + i] = Base(0.0);
-            i++;
-         }
+         var_op::par_forward_op(
+            p, q, i_var, arg, num_par, parameter, J, taylor
+         );
          break;
          // -------------------------------------------------
 

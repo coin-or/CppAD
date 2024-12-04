@@ -120,8 +120,8 @@ to back up to get to the start of this operation.
 -----------------------------------------------------------------------------
 {xrst_begin var_csum_forward_op dev}
 
-Forward Mode Cumulative Summation Operation
-###########################################
+Any Order Forward Cumulative Summation Operation
+################################################
 
 Prototype
 *********
