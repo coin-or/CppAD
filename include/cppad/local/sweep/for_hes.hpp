@@ -377,7 +377,7 @@ void for_hes(
          case Expm1Op:
          case Log1pOp:
          CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
-         sparse::for_hes_nl_unary_op(
+         var_op::one_var_for_hes_nl(
             np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
          );
          break;
@@ -404,7 +404,7 @@ void for_hes(
 
          case DivpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::for_hes_nl_unary_op(
+         var_op::one_var_for_hes_nl(
             np1, numvar, i_var, size_t(arg[1]), for_hes_sparse
          );
          break;
@@ -421,7 +421,7 @@ void for_hes(
          // arg[1] is always the parameter 0
          // arg[2] is always the parameter 2 / sqrt(pi)
          CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-         sparse::for_hes_nl_unary_op(
+         var_op::one_var_for_hes_nl(
             np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
          );
          break;
@@ -457,7 +457,7 @@ void for_hes(
 
          case PowpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         sparse::for_hes_nl_unary_op(
+         var_op::one_var_for_hes_nl(
             np1, numvar, i_var, size_t(arg[1]), for_hes_sparse
          );
          break;
@@ -465,7 +465,7 @@ void for_hes(
 
          case PowvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::for_hes_nl_unary_op(
+         var_op::one_var_for_hes_nl(
             np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
          );
          break;
@@ -514,7 +514,7 @@ void for_hes(
       }
 # if CPPAD_FOR_HES_TRACE
       if( op != AFunOp )
-      {  //  
+      {  //
          printOp<Base, RecBase>(
             std::cout,
             play,
@@ -550,7 +550,7 @@ void for_hes(
             for(size_t i = 0; i < np1; ++i)
             {  hes[i].resize(np1);
                for(size_t j = 0; j < np1; ++j)
-                  hes[i][j] = false;  
+                  hes[i][j] = false;
                itr_sparse_t itr_hes(for_hes_sparse, i);
                size_t j = *itr_hes;
                while( j < np1 )

@@ -177,6 +177,7 @@ see :ref:`var_pri_op@PriOp`
    include/cppad/local/var_op/csum_op.hpp
    include/cppad/local/var_op/dis_op.hpp
    include/cppad/local/var_op/load_op.hpp
+   include/cppad/local/var_op/one_var.hpp
    include/cppad/local/var_op/par_op.hpp
    include/cppad/local/var_op/pri_op.hpp
    include/cppad/local/var_op/store_op.hpp

@@ -189,7 +189,7 @@ void rev_hes(
       {
          case AbsOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -205,7 +205,7 @@ void rev_hes(
 
          case AddpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[1]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -214,7 +214,7 @@ void rev_hes(
          case AcosOp:
          // sqrt(1 - x * x), acos(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -223,7 +223,7 @@ void rev_hes(
          case AcoshOp:
          // sqrt(x * x - 1), acosh(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -232,7 +232,7 @@ void rev_hes(
          case AsinOp:
          // sqrt(1 - x * x), asin(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -241,7 +241,7 @@ void rev_hes(
          case AsinhOp:
          // sqrt(1 + x * x), asinh(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -250,7 +250,7 @@ void rev_hes(
          case AtanOp:
          // 1 + x * x, atan(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -259,7 +259,7 @@ void rev_hes(
          case AtanhOp:
          // 1 - x * x, atanh(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -294,7 +294,7 @@ void rev_hes(
          case CosOp:
          // sin(x), cos(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -303,7 +303,7 @@ void rev_hes(
          case CoshOp:
          // sinh(x), cosh(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -325,7 +325,7 @@ void rev_hes(
 
          case DivpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[1]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -333,7 +333,7 @@ void rev_hes(
 
          case DivvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -344,7 +344,7 @@ void rev_hes(
          // arg[1] is always the parameter 0
          // arg[2] is always the parameter 2 / sqrt(pi)
          CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -352,7 +352,7 @@ void rev_hes(
 
          case ExpOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -360,7 +360,7 @@ void rev_hes(
 
          case Expm1Op:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -409,7 +409,7 @@ void rev_hes(
          case LogOp:
          case NegOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -417,7 +417,7 @@ void rev_hes(
 
          case Log1pOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -425,7 +425,7 @@ void rev_hes(
 
          case MulpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[1]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -447,7 +447,7 @@ void rev_hes(
 
          case PowpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[1]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -455,7 +455,7 @@ void rev_hes(
 
          case PowvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -483,7 +483,7 @@ void rev_hes(
          case SinOp:
          // cos(x), sin(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -492,7 +492,7 @@ void rev_hes(
          case SinhOp:
          // cosh(x), sinh(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -500,7 +500,7 @@ void rev_hes(
 
          case SqrtOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -533,7 +533,7 @@ void rev_hes(
 
          case SubpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[1]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -541,7 +541,7 @@ void rev_hes(
 
          case SubvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -550,7 +550,7 @@ void rev_hes(
          case TanOp:
          // tan(x)^2, tan(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -559,7 +559,7 @@ void rev_hes(
          case TanhOp:
          // tanh(x)^2, tanh(x)
          CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         sparse::rev_hes_nl_unary_op(
+         var_op::one_var_rev_hes_nl(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -588,7 +588,7 @@ void rev_hes(
 
          case ZmulpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[1]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -596,7 +596,7 @@ void rev_hes(
 
          case ZmulvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_lin_unary_op(
+         var_op::one_var_rev_hes_lin(
          i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;

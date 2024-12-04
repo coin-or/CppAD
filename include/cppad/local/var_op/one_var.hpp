@@ -1,12 +1,12 @@
-# ifndef CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
-# define CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
+# ifndef CPPAD_LOCAL_VAR_OP_ONE_VAR_HPP
+# define CPPAD_LOCAL_VAR_OP_ONE_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
-namespace CppAD { namespace local { namespace sparse {
+namespace CppAD { namespace local { namespace var_op {
 /*!
 \file sparse_unary_op.hpp
 Forward and reverse mode sparsity patterns for unary operators.
@@ -57,7 +57,7 @@ depends on.
 */
 
 template <class Vector_set>
-void for_jac_unary_op(
+void one_var_for_jac(
    size_t            i_z           ,
    size_t            i_x           ,
    Vector_set&       sparsity      )
@@ -118,7 +118,7 @@ is the sparsity bit pattern for H with respect to the variable x.
 */
 
 template <class Vector_set>
-void rev_jac_unary_op(
+void one_var_rev_jac(
    size_t     i_z                     ,
    size_t     i_x                     ,
    Vector_set&            sparsity    )
@@ -147,7 +147,7 @@ where op is a C++ binary operator and q is a parameter.
 \copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
-void rev_hes_lin_unary_op(
+void one_var_rev_hes_lin(
    size_t              i_z               ,
    size_t              i_x               ,
    bool*               rev_jacobian      ,
@@ -184,7 +184,7 @@ where q is a parameter.
 \copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
-void rev_hes_nl_unary_op(
+void one_var_rev_hes_nl(
    size_t              i_z               ,
    size_t              i_x               ,
    bool*               rev_jacobian      ,
@@ -287,7 +287,7 @@ after including the function :math:`w(x)`.
 */
 // BEGIN_for_hes_nl_unary_op
 template <class Vector_set>
-void for_hes_nl_unary_op(
+void one_var_for_hes_nl(
    size_t              np1            ,
    size_t              numvar         ,
    size_t              i_w            ,

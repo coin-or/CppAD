@@ -42,7 +42,7 @@
 # include <cppad/local/var_op/sqrt_op.hpp>
 # include <cppad/local/var_op/sub_op.hpp>
 # include <cppad/local/sparse/binary_op.hpp>
-# include <cppad/local/sparse/unary_op.hpp>
+# include <cppad/local/var_op/one_var.hpp>
 # include <cppad/local/var_op/store_op.hpp>
 # include <cppad/local/var_op/tan_op.hpp>
 # include <cppad/local/var_op/tanh_op.hpp>
