@@ -58,7 +58,7 @@ Fun
    Expm1Op,   expm1,     exponential of *x* minus one
    Log1pOp,   log1p,     logarithm of 1 + *x*
    LogOp,     log,       logarithm of *x*
-   NegOp,     negative,  minus *x*
+   NegOp,     -,         minus *x*
    SignOp,    sign,      sign of *x*
    SinOp,     sin,       sine of *x*
    SinhOp,    sinh,      hyperbolic sine of *x*

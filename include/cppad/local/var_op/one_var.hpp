@@ -7,126 +7,164 @@
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace var_op {
-/*!
-\file sparse_unary_op.hpp
-Forward and reverse mode sparsity patterns for unary operators.
+
+/*
+{xrst_begin_parent var_one_var dev}
+
+Sparsity Calculations for Operators With One Variable
+#####################################################
+
+Unary Operators
+***************
+| *z* = *Fun* ( *x* )
+
+See :ref:`var_unary_op@Fun` for unary operators
+for some of the possible values of *Fun* and the corresponding operators.
+
+Binary Operators
+****************
+| *z* = *fun* ( *x* , *y* )
+| *z* = *x*  *Op* *y*
+
+
+See :ref:`var_binary_op@Fun` for binary operators,
+restricted to the case where just *x* or just *y* is a variable,
+for some of the possible values of *Fun* and the corresponding operators.
+
+x
+*
+is the first operand for this operator .
+
+y
+*
+is the second operand for this operator
+
+z
+*
+is the primary result for this operator.
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+i_z
+***
+is the variable index corresponding to *z* .
+
+i_v
+***
+is the variable index corresponding to the argument that is a variable.
+
+{xrst_end var_one_var}
+------------------------------------------------------------------------------
+{xrst_begin var_one_var_for_jac dev}
+
+Forward Jacobian Sparsity for One Variable Argument Operators
+#############################################################
+
+x, y, z
+*******
+see
+:ref:`var_one_var@x` ,
+:ref:`var_one_var@y` ,
+:ref:`var_one_var@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ONE_VAR_FOR_JAC
+   // END_ONE_VAR_FOR_JAC
+}
+
+Vector_set, i_z, i_v
+********************
+see
+:ref:`var_one_var@Vector_set` ,
+:ref:`var_one_var@i_z` ,
+:ref:`var_one_var@i_v`
+
+sparsity
+********
+
+Input
+=====
+for *j* < *i_z*  and *j* not an auxiliary result,
+the set with index *j* in *sparsity* is
+the Jacobian sparsity for the variable with index *j* .
+
+Output
+======
+The set with index *i_z* in *sparsity* is
+the Jacobian sparsity for the variable *z* .
+
+{xrst_end var_one_var_for_jac}
 */
-
-
-/*!
-Forward mode Jacobian sparsity pattern for all unary operators.
-
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = fun(x)
-\endverbatim
-where fun is a C++ unary function, or it has the form
-\verbatim
-   z = x op q
-\endverbatim
-where op is a C++ binary unary operator and q is a parameter.
-
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
-
-\param i_z
-variable index corresponding to the result for this operation;
-i.e., z.
-
-\param i_x
-variable index corresponding to the argument for this operator;
-i.e., x.
-
-
-\param sparsity
-\b Input: The set with index arg[0] in sparsity
-is the sparsity bit pattern for x.
-This identifies which of the independent variables the variable x
-depends on.
-\n
-\n
-\b Output: The set with index i_z in sparsity
-is the sparsity bit pattern for z.
-This identifies which of the independent variables the variable z
-depends on.
-\n
-
-\par Checked Assertions:
-\li i_x < i_z
-*/
-
+// BEGIN_ONE_VAR_FOR_JAC
 template <class Vector_set>
 void one_var_for_jac(
    size_t            i_z           ,
-   size_t            i_x           ,
+   size_t            i_v           ,
    Vector_set&       sparsity      )
+// END_ONE_VAR_FOR_JAC
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
 
-   sparsity.assignment(i_z, i_x, sparsity);
+   sparsity.assignment(i_z, i_v, sparsity);
 }
-/*!
-Reverse mode Jacobian sparsity pattern for all unary operators.
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_one_var_rev_jac dev}
 
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = fun(x)
-\endverbatim
-where fun is a C++ unary function, or it has the form
-\verbatim
-   z = x op q
-\endverbatim
-where op is a C++ bianry operator and q is a parameter.
+Reverse Jacobian Sparsity for One Variable Argument Operators
+#############################################################
 
-This routine is given the sparsity patterns
-for a function G(z, y, ... )
-and it uses them to compute the sparsity patterns for
-\verbatim
-   H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
-\endverbatim
+x, y, z
+*******
+see
+:ref:`var_one_var@x` ,
+:ref:`var_one_var@y` ,
+:ref:`var_one_var@z`
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ONE_VAR_REV_JAC
+   // END_ONE_VAR_REV_JAC
+}
 
+Vector_set, i_z, i_v
+********************
+see
+:ref:`var_one_var@Vector_set` ,
+:ref:`var_one_var@i_z` ,
+:ref:`var_one_var@i_v`
 
-\param i_z
-variable index corresponding to the result for this operation;
-i.e. the row index in sparsity corresponding to z.
+sparsity
+********
+Use z(v) to denote the variable *z* as a function of the variable *v*
+and define H in terms of G by::
 
-\param i_x
-variable index corresponding to the argument for this operator;
-i.e. the row index in sparsity corresponding to x.
+   H( v , u , ... ) = G[ z(v) , u , ... ]
 
-\param sparsity
-\b Input:
-The set with index i_z in sparsity
-is the sparsity bit pattern for G with respect to the variable z.
-\n
-\b Input:
-The set with index i_x in sparsity
-is the sparsity bit pattern for G with respect to the variable x.
-\n
-\b Output:
-The set with index i_x in sparsity
-is the sparsity bit pattern for H with respect to the variable x.
+On input, *sparsity* is a sparsity pattern for the Jacobian of *G* .
+Upon return, *sparsity* is a sparsity pattern for the Jacobian of *H* .
 
-\par Checked Assertions:
-\li i_x < i_z
+{xrst_end var_one_var_rev_jac}
 */
-
+// BEGIN_ONE_VAR_REV_JAC
 template <class Vector_set>
 void one_var_rev_jac(
-   size_t     i_z                     ,
-   size_t     i_x                     ,
-   Vector_set&            sparsity    )
+   size_t            i_z         ,
+   size_t            i_v         ,
+   Vector_set&       sparsity    )
+// END_ONE_VAR_REV_JAC
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
 
-   sparsity.binary_union(i_x, i_x, i_z, sparsity);
+   sparsity.binary_union(i_v, i_v, i_z, sparsity);
 
    return;
 }
