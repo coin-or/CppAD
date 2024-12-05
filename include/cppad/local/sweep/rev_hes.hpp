@@ -187,7 +187,38 @@ void rev_hes(
 
       // rest of information depends on the case
       switch( op )
-      {
+      {  //
+         // non-linear operators with one primary result
+         // and where the first argument is the only variable
+         case AcosOp:
+         case AcoshOp:
+         case AsinOp:
+         case AsinhOp:
+         case AtanOp:
+         case AtanhOp:
+         case CosOp:
+         case CoshOp:
+         case ErfOp:
+         case ErfcOp:
+         case ExpOp:
+         case Expm1Op:
+         case LogOp:
+         case Log1pOp:
+         case PowvpOp:
+         case SinOp:
+         case SinhOp:
+         case SqrtOp:
+         case TanOp:
+         case TanhOp:
+         CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
+         non_linear = true;
+         var_op::one_var_rev_hes(
+            i_var, size_t(arg[0]), non_linear,
+            RevJac, for_jac_sparse, rev_hes_sparse
+         );
+         break;
+
+         // -------------------------------------------------
          case AbsOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
          non_linear = false;
@@ -211,72 +242,6 @@ void rev_hes(
          non_linear = false;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case AcosOp:
-         // sqrt(1 - x * x), acos(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case AcoshOp:
-         // sqrt(x * x - 1), acosh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case AsinOp:
-         // sqrt(1 - x * x), asin(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case AsinhOp:
-         // sqrt(1 + x * x), asinh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case AtanOp:
-         // 1 + x * x, atan(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case AtanhOp:
-         // 1 - x * x, atanh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -307,27 +272,6 @@ void rev_hes(
          );
          break;
          // ---------------------------------------------------
-
-         case CosOp:
-         // sin(x), cos(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // ---------------------------------------------------
-
-         case CoshOp:
-         // sinh(x), cosh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
          // -------------------------------------------------
 
          case DisOp:
@@ -357,39 +301,6 @@ void rev_hes(
          case DivvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case ErfOp:
-         case ErfcOp:
-         // arg[1] is always the parameter 0
-         // arg[2] is always the parameter 2 / sqrt(pi)
-         CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case ExpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case Expm1Op:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = true;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[0]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
@@ -437,20 +348,9 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case LogOp:
          case NegOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case Log1pOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = true;
+         non_linear = false;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[0]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
@@ -492,16 +392,6 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case PowvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
          case PowvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
          sparse::rev_hes_pow_op(
@@ -518,38 +408,6 @@ void rev_hes(
          case SignOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1);
          // Derivative is identiaclly zero
-         break;
-         // -------------------------------------------------
-
-         case SinOp:
-         // cos(x), sin(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case SinhOp:
-         // cosh(x), sinh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case SqrtOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
          break;
          // -------------------------------------------------
 
@@ -591,28 +449,6 @@ void rev_hes(
          case SubvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case TanOp:
-         // tan(x)^2, tan(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case TanhOp:
-         // tanh(x)^2, tanh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-         non_linear = true;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[0]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
