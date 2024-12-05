@@ -194,11 +194,52 @@ void rev_jac(
 
       // rest of information depends on the case
       switch( op )
-      {
+      {  //
+         // operators with one primary result and
+         // where the first argument is the only variable
          case AbsOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+         case AcosOp:
+         case AcoshOp:
+         case AsinOp:
+         case AsinhOp:
+         case AtanOp:
+         case AtanhOp:
+         case CosOp:
+         case CoshOp:
+         case DivvpOp:
+         case ErfOp:
+         case ErfcOp:
+         case ExpOp:
+         case Expm1Op:
+         case LogOp:
+         case NegOp:
+         case Log1pOp:
+         case PowvpOp:
+         case SinOp:
+         case SinhOp:
+         case SqrtOp:
+         case SubvpOp:
+         case TanOp:
+         case TanhOp:
+         case ZmulvpOp:
+         CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
          var_op::one_var_rev_jac(
             i_var, size_t(arg[0]), var_sparsity
+         );
+         break;
+         // -------------------------------------------------
+
+         // operators with one primary result and
+         // where the second argument is the only variable
+         case AddpvOp:
+         case DivpvOp:
+         case MulpvOp:
+         case PowpvOp:
+         case SubpvOp:
+         case ZmulpvOp:
+         CPPAD_ASSERT_UNKNOWN( 1 < NumArg(op) );
+         var_op::one_var_rev_jac(
+            i_var, size_t(arg[1]), var_sparsity
          );
          break;
          // -------------------------------------------------
@@ -207,68 +248,6 @@ void rev_jac(
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
          sparse::rev_jac_binary_op(
             i_var, arg, var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AddpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[1]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AcosOp:
-         // sqrt(1 - x * x), acos(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AcoshOp:
-         // sqrt(x * x - 1), acosh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AsinOp:
-         // sqrt(1 - x * x), asin(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AsinhOp:
-         // sqrt(1 + x * x), asinh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AtanOp:
-         // 1 + x * x, atan(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case AtanhOp:
-         // 1 - x * x, atanh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
          );
          break;
          // -------------------------------------------------
@@ -299,24 +278,6 @@ void rev_jac(
          break;
          // ---------------------------------------------------
 
-         case CosOp:
-         // sin(x), cos(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // ---------------------------------------------------
-
-         case CoshOp:
-         // sinh(x), cosh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case DisOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
          // derivative is identically zero but dependency is not
@@ -330,49 +291,6 @@ void rev_jac(
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
          sparse::rev_jac_binary_op(
             i_var, arg, var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case DivpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[1]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case DivvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case ErfOp:
-         case ErfcOp:
-         // arg[1] is always the parameter 0
-         // arg[0] is always the parameter 2 / sqrt(pi)
-         CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case ExpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case Expm1Op:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
          );
          break;
          // -------------------------------------------------
@@ -415,31 +333,6 @@ void rev_jac(
          break;
          // -------------------------------------------------
 
-         case LogOp:
-         case NegOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case Log1pOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case MulpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[1]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case MulvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
          sparse::rev_jac_binary_op(
@@ -451,21 +344,6 @@ void rev_jac(
          case ParOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 
-         break;
-         // -------------------------------------------------
-
-         case PowvpOp:
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case PowpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[1]), var_sparsity
-         );
          break;
          // -------------------------------------------------
 
@@ -486,32 +364,6 @@ void rev_jac(
          CPPAD_ASSERT_NARG_NRES(op, 1, 1);
          // derivative is identically zero but dependency is not
          if( dependency ) var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case SinOp:
-         // cos(x), sin(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case SinhOp:
-         // cosh(x), sinh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case SqrtOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-         var_op::one_var_rev_jac(
             i_var, size_t(arg[0]), var_sparsity
          );
          break;
@@ -541,40 +393,6 @@ void rev_jac(
          break;
          // -------------------------------------------------
 
-         case SubpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[1]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case SubvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case TanOp:
-         // tan(x)^2, tan(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case TanhOp:
-         // tanh(x)^2, tanh(x)
-         CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
          case AFunOp:
          var_op::atomic_reverse_jac<Vector_set, Base, RecBase>(
             itr,
@@ -592,22 +410,6 @@ void rev_jac(
          case FunrpOp:
          case FunrvOp:
          CPPAD_ASSERT_UNKNOWN( false );
-         break;
-         // -------------------------------------------------
-
-         case ZmulpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[1]), var_sparsity
-         );
-         break;
-         // -------------------------------------------------
-
-         case ZmulvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         var_op::one_var_rev_jac(
-            i_var, size_t(arg[0]), var_sparsity
-         );
          break;
          // -------------------------------------------------
 
