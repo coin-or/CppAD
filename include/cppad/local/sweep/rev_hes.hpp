@@ -188,6 +188,22 @@ void rev_hes(
       // rest of information depends on the case
       switch( op )
       {  //
+         // linear operators with one primary result
+         // and where the first argument is the only variable
+         case AbsOp:
+         case DivvpOp:
+         case NegOp:
+         case SubvpOp:
+         case ZmulvpOp:
+         CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
+         non_linear = false;
+         var_op::one_var_rev_hes(
+            i_var, size_t(arg[0]), non_linear,
+            RevJac, for_jac_sparse, rev_hes_sparse
+         );
+         break;
+         // -------------------------------------------------
+
          // non-linear operators with one primary result
          // and where the first argument is the only variable
          case AcosOp:
@@ -212,16 +228,6 @@ void rev_hes(
          case TanhOp:
          CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
          non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-
-         // -------------------------------------------------
-         case AbsOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = false;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[0]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
@@ -298,16 +304,6 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case DivvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
          case InvOp:
          CPPAD_ASSERT_NARG_NRES(op, 0, 1)
          // Z is already defined
@@ -347,15 +343,6 @@ void rev_hes(
          CPPAD_ASSERT_NARG_NRES(op, 2, 0);
          break;
          // -------------------------------------------------
-
-         case NegOp:
-         CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
          // -------------------------------------------------
 
          case MulpvOp:
@@ -446,16 +433,6 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case SubvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
          case AFunOp:
          var_op::atomic_reverse_hes<Vector_set, Base, RecBase>(
             itr,
@@ -482,16 +459,6 @@ void rev_hes(
          non_linear = false;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
-         case ZmulvpOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
