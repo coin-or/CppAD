@@ -235,20 +235,35 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case AddvvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::rev_hes_addsub_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
+         // linear and non-liner operators with one primary result
+         // and where the second argument is the only variable
          case AddpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
+         case MulpvOp:
+         case SubpvOp:
+         case ZmulpvOp:
+         CPPAD_ASSERT_UNKNOWN( 1 < NumArg(op) );
          non_linear = false;
          var_op::one_var_rev_hes(
             i_var, size_t(arg[1]), non_linear,
             RevJac, for_jac_sparse, rev_hes_sparse
+         );
+         break;
+
+         case PowpvOp:
+         case DivpvOp:
+         CPPAD_ASSERT_UNKNOWN( 1 < NumArg(op) );
+         non_linear = true;
+         var_op::one_var_rev_hes(
+            i_var, size_t(arg[1]), non_linear,
+            RevJac, for_jac_sparse, rev_hes_sparse
+         );
+         break;
+         // -------------------------------------------------
+
+         case AddvvOp:
+         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
+         sparse::rev_hes_addsub_op(
+         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -294,16 +309,6 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case DivpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
          case InvOp:
          CPPAD_ASSERT_NARG_NRES(op, 0, 1)
          // Z is already defined
@@ -343,17 +348,6 @@ void rev_hes(
          CPPAD_ASSERT_NARG_NRES(op, 2, 0);
          break;
          // -------------------------------------------------
-         // -------------------------------------------------
-
-         case MulpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
 
          case MulvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
@@ -365,17 +359,6 @@ void rev_hes(
 
          case ParOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-
-         break;
-         // -------------------------------------------------
-
-         case PowpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         non_linear = true;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
          break;
          // -------------------------------------------------
 
@@ -423,16 +406,6 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case SubpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
          case AFunOp:
          var_op::atomic_reverse_hes<Vector_set, Base, RecBase>(
             itr,
@@ -451,16 +424,6 @@ void rev_hes(
          case FunrpOp:
          case FunrvOp:
          CPPAD_ASSERT_UNKNOWN(false);
-         break;
-         // -------------------------------------------------
-
-         case ZmulpvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = false;
-         var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
-            RevJac, for_jac_sparse, rev_hes_sparse
-         );
          break;
          // -------------------------------------------------
 
