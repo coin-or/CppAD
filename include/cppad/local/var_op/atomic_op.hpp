@@ -1391,9 +1391,9 @@ Example
 =======
 If the indices in the sets correspond to the independent variables,
 then *rev_hes_sparsity* ``.end()`` is the number of independent variables.
-For *j* a variable index between 1 and the number of independent variables,
-*j* - 1 is the corresponding independent variable index.
-(The index *j* = 0 corresponds to the phantom variable at the beginning
+For *i* a variable index between 1 and the number of independent variables,
+*i* - 1 is the corresponding independent variable index.
+(The index *i* = 0 corresponds to the phantom variable at the beginning
 of the tape. )
 
 {xrst_end var_atomic_reverse_hes}

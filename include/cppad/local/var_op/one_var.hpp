@@ -169,77 +169,116 @@ void one_var_rev_jac(
    return;
 }
 // ---------------------------------------------------------------------------
-/*!
-Reverse mode Hessian sparsity pattern for linear unary operators.
+/*
+{xrst_begin var_one_var_rev_hes dev}
 
-The C++ source code corresponding to this operation is
-\verbatim
-      z = fun(x)
-\endverbatim
-where fun is a linear functions; e.g. abs, or
-\verbatim
-   z = x op q
-\endverbatim
-where op is a C++ binary operator and q is a parameter.
+Reverse Jacobian Sparsity for One Variable Argument Operators
+#############################################################
 
-\copydetails CppAD::local::reverse_sparse_hessian_unary_op
-*/
-template <class Vector_set>
-void one_var_rev_hes_lin(
-   size_t              i_z               ,
-   size_t              i_x               ,
-   bool*               rev_jacobian      ,
-   const Vector_set&   for_jac_sparsity  ,
-   Vector_set&         rev_hes_sparsity  )
-{
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+x, y, z
+*******
+see
+:ref:`var_one_var@x` ,
+:ref:`var_one_var@y` ,
+:ref:`var_one_var@z`
 
-   // check for no effect
-   if( ! rev_jacobian[i_z] )
-      return;
+G and H
+*******
+Use :math:`z(v)` to denote the variable *z* as a function of the variable *v* .
+We use :math:`G( z, v, \ldots )` to denote a function of the variables
+up to and including *z* .
+We define :math:`H(v, \ldost)` by
 
-   rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
+.. math::
 
-   rev_jacobian[i_x] = true;
-   return;
+   H(v, \cdots ) = G [ z(v) , v , \cdots ]
+
+num_var
+*******
+We use the notation *num_var* for the number of variables on the tape
+(including the phantom variable at index zero).
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ONE_VAR_REV_HES
+   // END_ONE_VAR_REV_HES
 }
 
-/*!
-Reverse mode Hessian sparsity pattern for non-linear unary operators.
+Vector_set, i_z, i_v
+********************
+see
+:ref:`var_one_var@Vector_set` ,
+:ref:`var_one_var@i_z` ,
+:ref:`var_one_var@i_v`
 
-The C++ source code corresponding to this operation is
-\verbatim
-      z = fun(x)
-\endverbatim
-where fun is a non-linear functions; e.g. sin. or
-\verbatim
-   z = q / x
-\endverbatim
-where q is a parameter.
+non_linear
+**********
+This argument is true (false) if the :math:`z(v)` may have non-zero
+second derivative (must have zero second derivative).
 
+for_jac_sparsity
+****************
+The set with index *j* is the forward Jacobian sparsity
+pattern for the variable with index *j*.
 
-\copydetails CppAD::local::reverse_sparse_hessian_unary_op
+rev_jac_include
+***************
+If the *j* element of this vector is true,
+the variable with index *j* is included in the Hessian,
+or affects the value of a variable that is included in the Hessian.
+
+Input
+=====
+::
+
+   for j = num_var, ... , i_z + 1
+      rev_jac_include[j] is an input
+
+Output
+======
+rev_jac_include[i_z] is an output
+
+rev_hes_sparsity
+****************
+On input (output), this is the sparsity pattern for *G* ( *H* ).
+For each variable index *j* ,
+*rev_hes_sparsity* [ *j* ] is the set of indices
+that may have non-zero cross partials with variable index *j* .
+
+Example
+=======
+If the indices in the sets correspond to the independent variables,
+then *rev_hes_sparsity* ``.end()`` is the number of independent variables.
+For *i* a variable index between 1 and the number of independent variables,
+*i* - 1 is the corresponding independent variable index.
+(The index *i* = 0 corresponds to the phantom variable at the beginning
+of the tape. )
+{xrst_end var_one_var_rev_hes}
 */
+// BEGIN_ONE_VAR_REV_HES
 template <class Vector_set>
-void one_var_rev_hes_nl(
+void one_var_rev_hes(
    size_t              i_z               ,
-   size_t              i_x               ,
+   size_t              i_v               ,
+   bool                non_linear        ,
    bool*               rev_jacobian      ,
    const Vector_set&   for_jac_sparsity  ,
    Vector_set&         rev_hes_sparsity  )
+// END_ONE_VAR_REV_HES
 {
    // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
 
    // check for no effect
    if( ! rev_jacobian[i_z] )
       return;
 
-   rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
-   rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
+   rev_hes_sparsity.binary_union(i_v, i_v, i_z, rev_hes_sparsity);
+   if( non_linear )
+      rev_hes_sparsity.binary_union(i_v, i_v, i_v, for_jac_sparsity);
 
-   rev_jacobian[i_x] = true;
+   rev_jacobian[i_v] = true;
    return;
 }
 // ---------------------------------------------------------------------------
