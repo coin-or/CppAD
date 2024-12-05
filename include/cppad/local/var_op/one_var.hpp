@@ -283,112 +283,111 @@ void one_var_rev_hes(
 }
 // ---------------------------------------------------------------------------
 /*
-{xrst_begin for_hes_nl_unary_op dev}
+{xrst_begin var_one_var_for_hes dev}
 {xrst_spell
-   np
-   numvar
 }
 
-Forward Hessian Sparsity for Non-linear Unary Operators
-#######################################################
+Forward Hessian Sparsity for One Variable Argument Operators
+############################################################
 
-Syntax
-******
-| ``local::for_hes_nl_unary_op`` (
-| |tab| *np1* , *numvar* , *i_v* , *for_sparsity*
-| )
+x, y, z
+*******
+see
+:ref:`var_one_var@x` ,
+:ref:`var_one_var@y` ,
+:ref:`var_one_var@z`
 
 Prototype
 *********
 {xrst_literal
-   // BEGIN_for_hes_nl_unary_op
-   // END_for_hes_nl_unary_op
+   // BEGIN_ONE_VAR_FOR_HES
+   // END_ONE_VAR_FOR_HES
 }
 
-C++ Source
+Vector_set, i_z, i_v
+********************
+see
+:ref:`var_one_var@Vector_set` ,
+:ref:`var_one_var@i_z` ,
+:ref:`var_one_var@i_v`
+
+non_linear
 **********
-The C++ source code corresponding to this operation is
+This argument is true (false) if the :math:`z(v)` may have non-zero
+second derivative (must have zero second derivative).
 
-   *w* = *fun* ( *v*  )
 
-where *fun* is a non-linear function.
+n_independent_p1
+****************
+is the number of independent variables (in the tape) plus one.
 
-np1
-***
-This is the number of independent variables plus one;
-i.e. size of *x* plus one.
-
-numvar
-******
-This is the total number of variables in the tape.
-
-i_w
-***
-is the index of the variable corresponding to the result *w* .
-
-i_v
-***
-is the index of the variable corresponding to the argument *v* .
+num_var
+*******
+This is the total number of variables in the tape 
+(counting the phantom variable at index zero).
 
 for_sparsity
 ************
-We have the conditions *np1* = *for_sparsity* . ``end`` ()
-and *for_sparsity* . ``n_set`` () = *np1* + *numvar* .
+On input, all the linear and nonlinear interactions up to the
+arguments to the atomic function have been take into account.
+Upon return, the linear and nonlinear interactions in
+the atomic function have been take into account.
 
-Input Jacobian Sparsity
-=======================
-For *i* = 0, ..., *i_w* ``-1`` ,
-the *np1* + *i* row of *for_sparsity* is the Jacobian sparsity
-for the *i*-th variable. These values do not change.
-Note that *i* =0 corresponds to a parameter and
-the corresponding Jacobian sparsity is empty.
+Hessian Sparsity
+================
+For *j* equal 1 to *n_independent_p1* - 1,
+if *i* is in set with index *j* ,
+the Hessian may have a non-zero partial with respect to the
+independent variables with indices ( *i* - 1, *j* - 1 ) .
+Note that the index zero is not used because it corresponds to the
+phantom variable on the tape.
 
-Input Hessian Sparsity
-======================
-For *j* =1, ..., *n* ,
-the *j*-th row of *for_sparsity* is the Hessian sparsity
-before including the function :math:`w(x)`.
+Jacobian Sparsity
+=================
+If *i* is in the set with index *n_independent_p1* + *j* ,
+the variable with index *j* may have a non-zero partial with resect to the
+independent variable with index *i* - 1 .
 
-Output Jacobian Sparsity
-========================
-the *i_w* row of *for_sparsity* is the Jacobian sparsity
-for the variable *w* .
-
-Output Hessian Sparsity
-=======================
-For *j* =1, ..., *n* ,
-the *j*-th row of *for_sparsity* is the Hessian sparsity
-after including the function :math:`w(x)`.
-
-{xrst_end for_hes_nl_unary_op}
+{xrst_end var_one_var_for_hes}
 */
-// BEGIN_for_hes_nl_unary_op
+// BEGIN_ONE_VAR_FOR_HES
 template <class Vector_set>
-void one_var_for_hes_nl(
-   size_t              np1            ,
-   size_t              numvar         ,
-   size_t              i_w            ,
-   size_t              i_v            ,
-   Vector_set&         for_sparsity   )
-// END_for_hes_nl_unary_op
-{  CPPAD_ASSERT_UNKNOWN( i_v < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_w < numvar );
+void one_var_for_hes(
+   size_t              n_independent_p1 ,
+   size_t              num_var          ,
+   size_t              i_z              ,
+   size_t              i_v              ,
+   bool                non_linear       ,
+   Vector_set&         for_sparsity     )
+// END_ONE_VAR_FOR_HES
+{  // np1
+   size_t np1 = n_independent_p1;
+   //  
+   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
+   CPPAD_ASSERT_UNKNOWN( i_v < num_var );
    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
    CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
 
-   // set Jacobian sparsity J(i_w)
-   for_sparsity.assignment(np1 + i_w, np1 + i_v, for_sparsity);
+   // for_sparsity
+   // set Jacobian sparsity for z
+   for_sparsity.assignment(np1 + i_z, np1 + i_v, for_sparsity);
 
-   // set of independent variables that v depends on
-   typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
-
-   // loop over independent variables with non-zero partial for v
-   size_t i_x = *itr;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(i_v)
-      for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
-      i_x = *(++itr);
+   //
+   if( non_linear )
+   {  // itr
+      // set of independent variables that v depends on
+      typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
+      //
+      // i_x
+      // loop over independent variables that v has non-zero partials w.r.t.
+      size_t i_x = *itr;
+      while( i_x < np1 )
+      {  // for_sparsity
+         // union of Hessian sparsity for x and Jacobian sparsity for v
+         for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
+         i_x = *(++itr);
+      }
    }
    return;
 }
