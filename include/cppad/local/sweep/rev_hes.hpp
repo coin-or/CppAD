@@ -180,7 +180,7 @@ void rev_hes(
 # endif
    bool more_operators = true;
    while(more_operators)
-   {  bool non_linear;
+   {  bool linear[3];
       //
       // next op
       (--itr).op_info(op, arg, i_var);
@@ -196,9 +196,9 @@ void rev_hes(
          case SubvpOp:
          case ZmulvpOp:
          CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
-         non_linear = false;
+         linear[0] = true;
          var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
+            i_var, size_t(arg[0]), linear,
             RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -227,9 +227,9 @@ void rev_hes(
          case TanOp:
          case TanhOp:
          CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_rev_hes(
-            i_var, size_t(arg[0]), non_linear,
+            i_var, size_t(arg[0]), linear,
             RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -242,9 +242,9 @@ void rev_hes(
          case SubpvOp:
          case ZmulpvOp:
          CPPAD_ASSERT_UNKNOWN( 1 < NumArg(op) );
-         non_linear = false;
+         linear[0] = true;
          var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
+            i_var, size_t(arg[1]), linear,
             RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
@@ -252,9 +252,9 @@ void rev_hes(
          case PowpvOp:
          case DivpvOp:
          CPPAD_ASSERT_UNKNOWN( 1 < NumArg(op) );
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_rev_hes(
-            i_var, size_t(arg[1]), non_linear,
+            i_var, size_t(arg[1]), linear,
             RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;

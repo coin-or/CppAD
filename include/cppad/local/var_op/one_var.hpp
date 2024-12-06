@@ -212,10 +212,10 @@ see
 :ref:`var_one_var@i_z` ,
 :ref:`var_one_var@i_v`
 
-non_linear
-**********
-This argument is true (false) if the :math:`z(v)` may have non-zero
-second derivative (must have zero second derivative).
+linear[0]
+*********
+This value is true (false) if the :math:`z(v)` must have zero
+second derivative (may have zero second derivative).
 
 for_jac_sparsity
 ****************
@@ -261,7 +261,7 @@ template <class Vector_set>
 void one_var_rev_hes(
    size_t              i_z               ,
    size_t              i_v               ,
-   bool                non_linear        ,
+   bool*               linear            ,
    bool*               rev_jacobian      ,
    const Vector_set&   for_jac_sparsity  ,
    Vector_set&         rev_hes_sparsity  )
@@ -275,7 +275,7 @@ void one_var_rev_hes(
       return;
 
    rev_hes_sparsity.binary_union(i_v, i_v, i_z, rev_hes_sparsity);
-   if( non_linear )
+   if( ! linear[0] )
       rev_hes_sparsity.binary_union(i_v, i_v, i_v, for_jac_sparsity);
 
    rev_jacobian[i_v] = true;
@@ -311,10 +311,11 @@ see
 :ref:`var_one_var@i_z` ,
 :ref:`var_one_var@i_v`
 
-non_linear
-**********
-This argument is true (false) if the :math:`z(v)` may have non-zero
-second derivative (must have zero second derivative).
+
+linear[0]
+*********
+This value is true (false) if the :math:`z(v)` must have zero
+second derivative (may have zero second derivative).
 
 
 n_independent_p1
@@ -357,7 +358,7 @@ void one_var_for_hes(
    size_t              num_var          ,
    size_t              i_z              ,
    size_t              i_v              ,
-   bool                non_linear       ,
+   bool*               linear           ,
    Vector_set&         for_sparsity     )
 // END_ONE_VAR_FOR_HES
 {  // np1
@@ -374,7 +375,7 @@ void one_var_for_hes(
    for_sparsity.assignment(np1 + i_z, np1 + i_v, for_sparsity);
 
    //
-   if( non_linear )
+   if( ! linear[0] )
    {  // itr
       // set of independent variables that v depends on
       typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);

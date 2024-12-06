@@ -230,7 +230,7 @@ void for_hes(
    bool   more_operators = true;
    size_t count_independent = 0;
    while(more_operators)
-   {  bool non_linear;
+   {  bool linear[3];
     
       // next op
       (++itr).op_info(op, arg, i_var);
@@ -307,9 +307,9 @@ void for_hes(
          case DivvpOp:
          case SubvpOp:
          case ZmulvpOp:
-         non_linear = false;
+         linear[0] = true;
          var_op::one_var_for_hes(
-            np1, numvar, i_var, size_t(arg[0]), non_linear, for_hes_sparse
+            np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
 
@@ -319,9 +319,9 @@ void for_hes(
          case AddpvOp:
          case MulpvOp:
          case SubpvOp:
-         non_linear = false;
+         linear[0] = true;
          var_op::one_var_for_hes(
-            np1, numvar, i_var, size_t(arg[1]), non_linear, for_hes_sparse
+            np1, numvar, i_var, size_t(arg[1]), linear, for_hes_sparse
          );
          break;
 
@@ -380,9 +380,9 @@ void for_hes(
          case Expm1Op:
          case Log1pOp:
          CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[0]), non_linear, for_hes_sparse
+               np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -408,9 +408,9 @@ void for_hes(
 
          case DivpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[1]), non_linear, for_hes_sparse
+               np1, numvar, i_var, size_t(arg[1]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -426,9 +426,9 @@ void for_hes(
          // arg[1] is always the parameter 0
          // arg[2] is always the parameter 2 / sqrt(pi)
          CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[0]), non_linear, for_hes_sparse
+               np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -463,18 +463,18 @@ void for_hes(
 
          case PowpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[1]), non_linear, for_hes_sparse
+               np1, numvar, i_var, size_t(arg[1]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
 
          case PowvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         non_linear = true;
+         linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[0]), non_linear, for_hes_sparse
+               np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
