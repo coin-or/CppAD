@@ -246,7 +246,7 @@ void rev_jac(
 
          case AddvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         sparse::rev_jac_binary_op(
+         var_op::two_var_rev_jac(
             i_var, arg, var_sparsity
          );
          break;
@@ -289,7 +289,7 @@ void rev_jac(
 
          case DivvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         sparse::rev_jac_binary_op(
+         var_op::two_var_rev_jac(
             i_var, arg, var_sparsity
          );
          break;
@@ -335,7 +335,7 @@ void rev_jac(
 
          case MulvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         sparse::rev_jac_binary_op(
+         var_op::two_var_rev_jac(
             i_var, arg, var_sparsity
          );
          break;
@@ -349,7 +349,7 @@ void rev_jac(
 
          case PowvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-         sparse::rev_jac_binary_op(
+         var_op::two_var_rev_jac(
             i_var, arg, var_sparsity
          );
          break;
@@ -387,7 +387,7 @@ void rev_jac(
 
          case SubvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         sparse::rev_jac_binary_op(
+         var_op::two_var_rev_jac(
             i_var, arg, var_sparsity
          );
          break;
@@ -415,7 +415,7 @@ void rev_jac(
 
          case ZmulvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-         sparse::rev_jac_binary_op(
+         var_op::two_var_rev_jac(
             i_var, arg, var_sparsity
          );
          break;

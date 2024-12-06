@@ -10,7 +10,6 @@ Developer Sparse Documentation
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/sparse/binary_op.hpp
    include/cppad/local/sparse/setvector.xrst
 }
 

@@ -231,7 +231,7 @@ void for_hes(
    size_t count_independent = 0;
    while(more_operators)
    {  bool linear[3];
-    
+
       // next op
       (++itr).op_info(op, arg, i_var);
 
@@ -400,7 +400,7 @@ void for_hes(
 
          case DivvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::for_hes_div_op(
+         var_op::for_hes_div_op(
             np1, numvar, i_var, arg, for_hes_sparse
          );
          break;
@@ -455,7 +455,7 @@ void for_hes(
 
          case MulvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::for_hes_mul_op(
+         var_op::for_hes_mul_op(
             np1, numvar, i_var, arg, for_hes_sparse
          );
          break;
@@ -481,7 +481,7 @@ void for_hes(
 
          case PowvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         sparse::for_hes_pow_op(
+         var_op::for_hes_pow_op(
             np1, numvar, i_var, arg, for_hes_sparse
          );
          break;
@@ -510,7 +510,7 @@ void for_hes(
 
          case ZmulvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         sparse::for_hes_mul_op(
+         var_op::for_hes_mul_op(
             np1, numvar, i_var, arg, for_hes_sparse
          );
          break;

@@ -181,6 +181,7 @@ see :ref:`var_pri_op@PriOp`
    include/cppad/local/var_op/par_op.hpp
    include/cppad/local/var_op/pri_op.hpp
    include/cppad/local/var_op/store_op.hpp
+   include/cppad/local/var_op/two_var.hpp
    include/cppad/local/var_op/unary_op.xrst
 }
 // END_SORT_THIS_LINE_MINUS_2

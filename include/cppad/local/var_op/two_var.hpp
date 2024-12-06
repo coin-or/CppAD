@@ -1,12 +1,12 @@
-# ifndef CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
-# define CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
+# ifndef CPPAD_LOCAL_VAR_OP_TWO_VAR_HPP
+# define CPPAD_LOCAL_VAR_OP_TWO_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
-namespace CppAD { namespace local { namespace sparse {
+namespace CppAD { namespace local { namespace var_op {
 // END_DECLARE_NAMESPACE
 
 /*!
@@ -73,7 +73,7 @@ depends on.
 */
 
 template <class Vector_set>
-void for_jac_binary_op(
+void two_var_for_jac(
    size_t            i_z           ,
    const addr_t*     arg           ,
    Vector_set&       sparsity      )
@@ -149,7 +149,7 @@ and on output it corresponds to H.
 \li arg[1] < i_z
 */
 template <class Vector_set>
-void rev_jac_binary_op(
+void two_var_rev_jac(
    size_t              i_z           ,
    const addr_t*       arg           ,
    Vector_set&         sparsity      )
