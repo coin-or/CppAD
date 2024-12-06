@@ -214,8 +214,8 @@ see
 
 linear[0]
 *********
-This value is true (false) if the :math:`z(v)` must have zero
-second derivative (may have zero second derivative).
+This value is true (false) if the :math:`z(v)`
+must have zero second derivative (may have non-zero second derivative).
 
 for_jac_sparsity
 ****************
@@ -314,8 +314,8 @@ see
 
 linear[0]
 *********
-This value is true (false) if the :math:`z(v)` must have zero
-second derivative (may have zero second derivative).
+This value is true (false) if the :math:`z(v)`
+must have zero second derivative (may have non-zero second derivative).
 
 
 n_independent_p1
@@ -324,7 +324,7 @@ is the number of independent variables (in the tape) plus one.
 
 num_var
 *******
-This is the total number of variables in the tape 
+This is the total number of variables in the tape
 (counting the phantom variable at index zero).
 
 for_sparsity
@@ -363,7 +363,7 @@ void one_var_for_hes(
 // END_ONE_VAR_FOR_HES
 {  // np1
    size_t np1 = n_independent_p1;
-   //  
+   //
    CPPAD_ASSERT_UNKNOWN( i_v < i_z );
    CPPAD_ASSERT_UNKNOWN( i_v < num_var );
    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );

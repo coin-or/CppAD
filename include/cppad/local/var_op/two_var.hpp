@@ -9,74 +9,104 @@
 namespace CppAD { namespace local { namespace var_op {
 // END_DECLARE_NAMESPACE
 
-/*!
-\file sparse_binary_op.hpp
-Forward and reverse mode sparsity patterns for binary operators.
+/*
+{xrst_begin_parent var_two_var dev}
+
+Sparsity Calculations for Operators With Two Variables
+######################################################
+
+Binary Operators
+****************
+| *z* = *fun* ( *x* , *y* )
+| *z* = *x*  *Op* *y*
+
+See :ref:`var_binary_op@Fun` for binary operators,
+restricted to the case where both *x* and *y* are variables,
+for some of the possible values of *Fun* and the corresponding operators.
+
+x
+*
+is the first operand for this operator .
+
+y
+*
+is the second operand for this operator
+
+z
+*
+is the primary result for this operator.
+
+Vector_set
+**********
+is the type used for vectors of sets. It must satisfy the
+:ref:`SetVector-name` concept.
+
+i_z
+***
+is the variable index corresponding to *z* .
+
+arg
+***
+
+arg[0]
+======
+is the variable index corresponding to x.
+
+arg[1]
+======
+is the variable index corresponding to y.
+
+{xrst_end var_two_var}
+------------------------------------------------------------------------------
+{xrst_begin var_two_var_for_jac dev}
+
+Forward Jacobian Sparsity for Two Variable Argument Operators
+#############################################################
+
+x, y, z
+*******
+see
+:ref:`var_two_var@x` ,
+:ref:`var_two_var@y` ,
+:ref:`var_two_var@z`
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_TWO_VAR_FOR_JAC
+   // END_TWO_VAR_FOR_JAC
+}
+
+Vector_set, i_z, arg
+********************
+see
+:ref:`var_two_var@Vector_set` ,
+:ref:`var_two_var@i_z` ,
+:ref:`var_two_var@arg`
+
+sparsity
+********
+
+Input
+=====
+for *j* < *i_z*  and *j* not an auxiliary result,
+the set with index *j* in *sparsity* is
+the Jacobian sparsity for the variable with index *j* .
+
+Output
+======
+The set with index *i_z* in *sparsity* is
+the Jacobian sparsity for the variable *z* .
+
+{xrst_end var_two_var_for_jac}
 */
-
-
-/*!
-Forward mode Jacobian sparsity pattern for all binary operators.
-
-The C++ source code corresponding to a binary operation has the form
-\verbatim
-   z = fun(x, y)
-\endverbatim
-where fun is a C++ binary function and both x and y are variables,
-or it has the form
-\verbatim
-   z = x op y
-\endverbatim
-where op is a C++ binary unary operator and both x and y are variables.
-
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
-
-\param i_z
-variable index corresponding to the result for this operation;
-i.e., z.
-
-\param arg
- arg[0]
-variable index corresponding to the left operand for this operator;
-i.e., x.
-\n
-\n arg[1]
-variable index corresponding to the right operand for this operator;
-i.e., y.
-
-\param sparsity
-\b Input:
-The set with index arg[0] in sparsity
-is the sparsity bit pattern for x.
-This identifies which of the independent variables the variable x
-depends on.
-\n
-\n
-\b Input:
-The set with index arg[1] in sparsity
-is the sparsity bit pattern for y.
-This identifies which of the independent variables the variable y
-depends on.
-\n
-\n
-\b Output:
-The set with index i_z in sparsity
-is the sparsity bit pattern for z.
-This identifies which of the independent variables the variable z
-depends on.
-
-\par Checked Assertions:
-\li arg[0] < i_z
-\li arg[1] < i_z
-*/
-
+// BEGIN_TWO_VAR_FOR_JAC
 template <class Vector_set>
 void two_var_for_jac(
    size_t            i_z           ,
    const addr_t*     arg           ,
    Vector_set&       sparsity      )
+// END_TWO_VAR_FOR_JAC
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
@@ -86,73 +116,53 @@ void two_var_for_jac(
 
    return;
 }
+/*
+------------------------------------------------------------------------------
+{xrst_begin var_two_var_rev_jac dev}
 
-/*!
-Reverse mode Jacobian sparsity pattern for all binary operators.
+Reverse Jacobian Sparsity for Two Variable Argument Operators
+#############################################################
 
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = fun(x, y)
-\endverbatim
-where fun is a C++ unary function and x and y are variables,
-or it has the form
-\verbatim
-   z = x op y
-\endverbatim
-where op is a C++ bianry operator and x and y are variables.
+x, y, z
+*******
+see
+:ref:`var_two_var@x` ,
+:ref:`var_two_var@y` ,
+:ref:`var_two_var@z`
 
-This routine is given the sparsity patterns
-for a function G(z, y, x, ... )
-and it uses them to compute the sparsity patterns for
-\verbatim
-   H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
-\endverbatim
+Prototype
+*********
+{xrst_literal
+   // BEGIN_TWO_VAR_REV_JAC
+   // END_TWO_VAR_REV_JAC
+}
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse::pack_setvec or sparse::list_setvec.
+Vector_set, i_z, arg
+********************
+see
+:ref:`var_two_var@Vector_set` ,
+:ref:`var_two_var@i_z` ,
+:ref:`var_two_var@arg`
 
-\param i_z
-variable index corresponding to the result for this operation;
-i.e., z.
+sparsity
+********
+Use z(x, y) to denote the variable *z* as a function of the variables
+*x* , *y* , and define H in terms of G by::
 
-\param arg
- arg[0]
-variable index corresponding to the left operand for this operator;
-i.e., x.
+   H( x, y, ... ) = G[ z(x, y) , x, y, ... ]
 
-\n
-\n arg[1]
-variable index corresponding to the right operand for this operator;
-i.e., y.
+On input, *sparsity* is a sparsity pattern for the Jacobian of *G* .
+Upon return, *sparsity* is a sparsity pattern for the Jacobian of *H* .
 
-\param sparsity
-The set with index i_z in sparsity
-is the sparsity pattern for z corresponding ot the function G.
-\n
-\n
-The set with index arg[0] in sparsity
-is the sparsity pattern for x.
-On input, it corresponds to the function G,
-and on output it corresponds to H.
-\n
-\n
-The set with index arg[1] in sparsity
-is the sparsity pattern for y.
-On input, it corresponds to the function G,
-and on output it corresponds to H.
-\n
-\n
-
-\par Checked Assertions:
-\li arg[0] < i_z
-\li arg[1] < i_z
+{xrst_end var_two_var_rev_jac}
 */
+// BEGIN_TWO_VAR_REV_JAC
 template <class Vector_set>
 void two_var_rev_jac(
    size_t              i_z           ,
    const addr_t*       arg           ,
    Vector_set&         sparsity      )
+// END_TWO_VAR_REV_JAC
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
@@ -361,124 +371,176 @@ void rev_hes_pow_op(
 }
 // ---------------------------------------------------------------------------
 /*
-{xrst_begin sparse_for_hes_nl_binary_op dev}
+{xrst_begin var_two_var_for_hes dev}
 {xrst_spell
-   div
-   np
-   numvar
 }
 
-Forward Hessian Sparsity for Nonlinear Binary Operators
-#######################################################
+Forward Hessian Sparsity for Two Variable Argument Operators
+############################################################
 
-Namespace
+x, y, z
+*******
+see
+:ref:`var_two_var@x` ,
+:ref:`var_two_var@y` ,
+:ref:`var_two_var@z`
+
+Prototype
 *********
 {xrst_literal
-   // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
-   // END_DECLARE_NAMESPACE
+   // BEGIN_TWO_VAR_FOR_HES
+   // END_TWO_VAR_FOR_HES
 }
 
-for_hes_mul_op
-**************
+Vector_set, i_z, arg
+********************
+see
+:ref:`var_two_var@Vector_set` ,
+:ref:`var_two_var@i_z` ,
+:ref:`var_two_var@arg`
 
-Syntax
-======
-``for_hes_mul_op`` ( *i_v* , *np1* , *numvar* , *for_sparsity* )
 
-Prototype
-=========
-{xrst_literal
-   // BEGIN_for_hes_mul_op
-   // END_for_hes_mul_op
-}
-
-for_hes_div_op
-**************
-
-Syntax
-======
-``for_hes_div_op`` ( *i_v* , *np1* , *numvar* , *for_sparsity* )
-
-Prototype
-=========
-{xrst_literal
-   // BEGIN_for_hes_div_op
-   // END_for_hes_div_op
-}
-
-for_hes_pow_op
-**************
-
-Syntax
-======
-``for_hes_pow_op`` ( *i_v* , *np1* , *numvar* , *for_sparsity* )
-
-Prototype
-=========
-{xrst_literal
-   // BEGIN_for_hes_pow_op
-   // END_for_hes_pow_op
-}
-
-C++ Source
-**********
-The C++ source code corresponding to this operation is
-
-| |tab| |tab| *w* = *v0* * *v1*
-| |tab| |tab| *w* = *v0* / *v1*
-| |tab| |tab| *w* = ``pow`` ( *v0* , *v1* )
-
-np1
-***
-This is the number of independent variables plus one;
-i.e. size of *x* plus one.
-
-numvar
+linear
 ******
-This is the total number of variables in the tape.
 
-i_w
-***
-is the index of the variable corresponding to the result *w* .
+linear[0]
+=========
+This value is true (false) if the :math:`z(x, y)`
+must have zero second partial derivative with respect to *x*
+(may have non-zero second partial).
 
-arg
-***
-is the index of the argument vector for the nonlinear binary operation; i.e.,
-*arg* [0] , *arg* [1] are the left and right operands; i.e.,
-corresponding to *v0* , *v1* .
+linear[1]
+=========
+This value is true (false) if the :math:`z(x, y)`
+must have zero second partial derivative with respect to *y*
+(may have non-zero second partial).
+
+linear[3]
+=========
+This value is true (false) if the :math:`z(x, y)`
+must have zero cross partial derivative
+(may have non-zero cross partial).
+
+n_independent_p1
+****************
+is the number of independent variables (in the tape) plus one.
+
+num_var
+*******
+This is the total number of variables in the tape
+(counting the phantom variable at index zero).
 
 for_sparsity
 ************
-We have the conditions *np1* = *for_sparsity* . ``end`` ()
-and *for_sparsity* . ``n_set`` () = *np1* + *numvar* .
+On input, all the linear and nonlinear interactions up to the
+arguments to the atomic function have been take into account.
+Upon return, the linear and nonlinear interactions in
+the atomic function have been take into account.
 
-Input Jacobian Sparsity
-=======================
-For *i* = 0, ..., *i_w* ``-1`` ,
-the *np1* + *i* row of *for_sparsity* is the Jacobian sparsity
-for the *i*-th variable. These values do not change.
-Note that *i* =0 corresponds to a parameter and
-the corresponding Jacobian sparsity is empty.
+Hessian Sparsity
+================
+For *j* equal 1 to *n_independent_p1* - 1,
+if *i* is in set with index *j* ,
+the Hessian may have a non-zero partial with respect to the
+independent variables with indices ( *i* - 1, *j* - 1 ) .
+Note that the index zero is not used because it corresponds to the
+phantom variable on the tape.
 
-Input Hessian Sparsity
-======================
-For *j* =1, ..., *n* ,
-the *j*-th row of *for_sparsity* is the Hessian sparsity
-before including the function :math:`w(x)`.
+Jacobian Sparsity
+=================
+If *i* is in the set with index *n_independent_p1* + *j* ,
+the variable with index *j* may have a non-zero partial with resect to the
+independent variable with index *i* - 1 .
 
-Output Jacobian Sparsity
-========================
-the *i_w* row of *for_sparsity* is the Jacobian sparsity
-for the variable *w* .
-
-Output Hessian Sparsity
-=======================
-For *j* =1, ..., *n* ,
-the *j*-th row of *for_sparsity* is the Hessian sparsity
-after including the function :math:`w(x)`.
-
-{xrst_end sparse_for_hes_nl_binary_op}
+{xrst_end var_two_var_for_hes}
 */
+// BEGIN_TWO_VAR_FOR_HES
+template <class Vector_set>
+void two_var_for_hes(
+   size_t        n_independent_p1    ,
+   size_t        num_var             ,
+   size_t        i_z                 ,
+   const addr_t* arg                 ,
+   bool*         linear              ,
+   Vector_set&   for_sparsity        )
+// END_TWO_VAR_FOR_HES
+{  //
+   // np1, i_x, i_y, linear_x, linear_y, linear_xy
+   size_t np1 = n_independent_p1;
+   size_t i_x = size_t( arg[0] );
+   size_t i_y = size_t( arg[1] );
+   bool linear_x  = linear[0];
+   bool linear_y  = linear[1];
+   bool linear_xy = linear[3];
+   //
+   CPPAD_ASSERT_UNKNOWN( i_x < i_z  && i_y < i_z );
+   CPPAD_ASSERT_UNKNOWN( i_z < num_var );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
+   //
+   //
+   // for_sparsity
+   // Jacobian sparsity for z
+   for_sparsity.binary_union(np1 + i_z, np1 + i_x, np1 + i_y, for_sparsity);
+   //
+   //
+   if( ! linear_x )
+   {  //
+      // itr_x
+      typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
+      size_t i_u = *itr_x;
+      while( i_u < np1 )
+      {  // x depends on the independent variable u
+         //
+         // for_sparsity
+         // update Hessian term with one parital w.r.t u other w.r.t
+         // independent variables that x depends on
+         if( ! linear_y )
+            for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+      }
+   }
+   if( ! linear_y )
+   {  //
+      // itr_y
+      typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
+      size_t i_u = *itr_y;
+      while( i_u < np1 )
+      {  // y depends on the independent variable u
+         //
+         // for_sparsity
+         // update Hessian term with one parital w.r.t u other w.r.t
+         // independent variables that y depends on
+         for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+      }
+   }
+   if( ! linear_xy )
+   {  //
+      // itr_x
+      typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
+      size_t i_u = *itr_x;
+      while( i_u < np1 )
+      {  // x depends on the independent variable u
+         //
+         // for_sparsity
+         // update Hessian term with one parital w.r.t u other w.r.t
+         // independent variables that y depends on
+         for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+      }
+      //
+      // itr_y
+      typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
+      i_u = *itr_y;
+      while( i_u < np1 )
+      {  // y depends on the independent variable u
+         //
+         // for_sparsity
+         // update Hessian term with one parital w.r.t u other w.r.t
+         // independent variables that x depends on
+         for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+      }
+   }
+}
 // BEGIN_for_hes_mul_op
 template <class Vector_set>
 void for_hes_mul_op(

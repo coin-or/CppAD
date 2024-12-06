@@ -302,7 +302,6 @@ void for_hes(
 
          // -------------------------------------------------
          // linear operators where arg[0] is the only variable
-         // only assign Jacobian term J(i_var)
          case AbsOp:
          case DivvpOp:
          case SubvpOp:
@@ -315,7 +314,6 @@ void for_hes(
 
          // -------------------------------------------------
          // linear operators where arg[1] is the only variable
-         // only assign Jacobian term J(i_var)
          case AddpvOp:
          case MulpvOp:
          case SubpvOp:
@@ -360,7 +358,7 @@ void for_hes(
          break;
 
          // ------------------------------------------------------
-         // nonlinear unary operators
+         // nonlinear operators where arg[0] is the only variable
          case AcosOp:
          case AsinOp:
          case AtanOp:
@@ -379,7 +377,9 @@ void for_hes(
          case AtanhOp:
          case Expm1Op:
          case Log1pOp:
-         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
+         case ErfOp:
+         case ErfcOp:
+         CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) )
          linear[0] = false;
          var_op::one_var_for_hes(
                np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
@@ -405,7 +405,7 @@ void for_hes(
          );
          break;
          // -------------------------------------------------
-
+         // nonlinear operators where arg[1] is the only variable
          case DivpvOp:
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          linear[0] = false;
@@ -419,19 +419,6 @@ void for_hes(
          CPPAD_ASSERT_NARG_NRES(op, 0, 0);
          more_operators = false;
          break;
-         // -------------------------------------------------
-
-         case ErfOp:
-         case ErfcOp:
-         // arg[1] is always the parameter 0
-         // arg[2] is always the parameter 2 / sqrt(pi)
-         CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-         linear[0] = false;
-         var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
 
          // -------------------------------------------------
          // logical comparison operators
