@@ -325,14 +325,13 @@ void for_hes(
 
          // -------------------------------------------------
          // linear operators where arg[0] and arg[1] are variables
-         // only assign Jacobian term J(i_var)
          case AddvvOp:
          case SubvvOp:
-         for_hes_sparse.binary_union(
-            np1 + i_var          ,
-            np1 + size_t(arg[0]) ,
-            np1 + size_t(arg[1]) ,
-            for_hes_sparse
+         linear[0] = true;
+         linear[1] = true;
+         linear[2] = true;
+         var_op::two_var_for_hes(
+            np1, numvar, i_var, arg, linear, for_hes_sparse
          );
          break;
 
@@ -399,9 +398,12 @@ void for_hes(
          // -------------------------------------------------
 
          case DivvvOp:
+         linear[0] = true;
+         linear[1] = false;
+         linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::for_hes_div_op(
-            np1, numvar, i_var, arg, for_hes_sparse
+         var_op::two_var_for_hes(
+            np1, numvar, i_var, arg, linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -441,9 +443,13 @@ void for_hes(
          // -------------------------------------------------
 
          case MulvvOp:
+         case ZmulvvOp:
+         linear[0] = true;
+         linear[1] = true;
+         linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::for_hes_mul_op(
-            np1, numvar, i_var, arg, for_hes_sparse
+         var_op::two_var_for_hes(
+            np1, numvar, i_var, arg, linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -467,9 +473,12 @@ void for_hes(
          // -------------------------------------------------
 
          case PowvvOp:
+         linear[0] = false;
+         linear[1] = false;
+         linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         var_op::for_hes_pow_op(
-            np1, numvar, i_var, arg, for_hes_sparse
+         var_op::two_var_for_hes(
+            np1, numvar, i_var, arg, linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -493,15 +502,6 @@ void for_hes(
          case FunrvOp:
          CPPAD_ASSERT_UNKNOWN( false );
          break;
-         // -------------------------------------------------
-
-         case ZmulvvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::for_hes_mul_op(
-            np1, numvar, i_var, arg, for_hes_sparse
-         );
-         break;
-
          // -------------------------------------------------
 
          default:

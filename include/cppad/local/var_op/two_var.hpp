@@ -471,7 +471,7 @@ void two_var_for_hes(
    size_t i_y = size_t( arg[1] );
    bool linear_x  = linear[0];
    bool linear_y  = linear[1];
-   bool linear_xy = linear[3];
+   bool linear_xy = linear[2];
    //
    CPPAD_ASSERT_UNKNOWN( i_x < i_z  && i_y < i_z );
    CPPAD_ASSERT_UNKNOWN( i_z < num_var );
@@ -487,7 +487,7 @@ void two_var_for_hes(
    //
    if( ! linear_x )
    {  //
-      // itr_x
+      // itr_x, i_u
       typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
       size_t i_u = *itr_x;
       while( i_u < np1 )
@@ -496,13 +496,15 @@ void two_var_for_hes(
          // for_sparsity
          // update Hessian term with one parital w.r.t u other w.r.t
          // independent variables that x depends on
-         if( ! linear_y )
-            for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+         for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+         //
+         // i_u
+         i_u = *(++itr_x);
       }
    }
    if( ! linear_y )
    {  //
-      // itr_y
+      // itr_y, i_u
       typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
       size_t i_u = *itr_y;
       while( i_u < np1 )
@@ -512,11 +514,14 @@ void two_var_for_hes(
          // update Hessian term with one parital w.r.t u other w.r.t
          // independent variables that y depends on
          for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+         //
+         // i_u
+         i_u = *(++itr_y);
       }
    }
    if( ! linear_xy )
    {  //
-      // itr_x
+      // itr_x, i_u
       typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
       size_t i_u = *itr_x;
       while( i_u < np1 )
@@ -526,9 +531,12 @@ void two_var_for_hes(
          // update Hessian term with one parital w.r.t u other w.r.t
          // independent variables that y depends on
          for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+         //
+         // i_u
+         i_u = *(++itr_x);
       }
       //
-      // itr_y
+      // itr_y, i_u
       typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
       i_u = *itr_y;
       while( i_u < np1 )
@@ -538,152 +546,11 @@ void two_var_for_hes(
          // update Hessian term with one parital w.r.t u other w.r.t
          // independent variables that x depends on
          for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+         //
+         // i_u
+         i_u = *(++itr_y);
       }
    }
-}
-// BEGIN_for_hes_mul_op
-template <class Vector_set>
-void for_hes_mul_op(
-   size_t              np1           ,
-   size_t              numvar        ,
-   size_t              i_w           ,
-   const addr_t*       arg           ,
-   Vector_set&         for_sparsity  )
-// END_for_hes_mul_op
-{  //
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
-   //
-   size_t i_v0 = size_t(arg[0]);
-   size_t i_v1 = size_t(arg[1]);
-   CPPAD_ASSERT_UNKNOWN( i_v0 < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_v1 < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_w  < numvar );
-
-   // set Jacobian sparsity J(i_w)
-   for_sparsity.binary_union(np1 + i_w, np1 + i_v0, np1 + i_v1, for_sparsity);
-
-   // --------------------------------------------------
-   // set of independent variables that v0 depends on
-   typename Vector_set::const_iterator itr_0(for_sparsity, i_v0 + np1);
-
-   // loop over independent variables non-zero partial for v0
-   size_t i_x = *itr_0;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(v1)
-      for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
-      i_x = *(++itr_0);
-   }
-   // --------------------------------------------------
-   // set of independent variables that v1 depends on
-   typename Vector_set::const_iterator itr_1(for_sparsity, i_v1 + np1);
-
-   // loop over independent variables with non-zero partial for v1
-   i_x = *itr_1;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(v0)
-      for_sparsity.binary_union(i_x, i_x, i_v0 + np1, for_sparsity);
-      i_x = *(++itr_1);
-   }
-   return;
-}
-// BEGIN_for_hes_div_op
-template <class Vector_set>
-void for_hes_div_op(
-   size_t              np1           ,
-   size_t              numvar        ,
-   size_t              i_w           ,
-   const addr_t*       arg           ,
-   Vector_set&         for_sparsity  )
-// END_for_hes_div_op
-{  //
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
-   //
-   size_t i_v0 = size_t(arg[0]);
-   size_t i_v1 = size_t(arg[1]);
-   CPPAD_ASSERT_UNKNOWN( i_v0 < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_v1 < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_w  < numvar );
-
-   // set Jacobian sparsity J(i_w)
-   for_sparsity.binary_union(np1 + i_w, np1 + i_v0, np1 + i_v1, for_sparsity);
-
-   // --------------------------------------------------
-   // set of independent variables that v0 depends on
-   typename Vector_set::const_iterator itr_0(for_sparsity, i_v0 + np1);
-
-   // loop over independent variables non-zero partial for v0
-   size_t i_x = *itr_0;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(v1)
-      for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
-      i_x = *(++itr_0);
-   }
-   // --------------------------------------------------
-   // set of independent variables that v1 depends on
-   typename Vector_set::const_iterator itr_1(for_sparsity, i_v1 + np1);
-
-   // loop over independent variables with non-zero partial for v1
-   i_x = *itr_1;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(v0)
-      for_sparsity.binary_union(i_x, i_x, i_v0 + np1, for_sparsity);
-      // N(i_x) = N(i_x) union J(v1)
-      for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
-      i_x = *(++itr_1);
-   }
-   return;
-}
-// BEGIN_for_hes_pow_op
-template <class Vector_set>
-void for_hes_pow_op(
-   size_t              np1           ,
-   size_t              numvar        ,
-   size_t              i_w           ,
-   const addr_t*       arg           ,
-   Vector_set&         for_sparsity  )
-// END_for_hes_pow_op
-{  //
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
-   //
-   size_t i_v0 = size_t(arg[0]);
-   size_t i_v1 = size_t(arg[1]);
-   CPPAD_ASSERT_UNKNOWN( i_v0 < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_v1 < i_w );
-   CPPAD_ASSERT_UNKNOWN( i_w  < numvar );
-
-   // set Jacobian sparsity J(i_w)
-   for_sparsity.binary_union(np1 + i_w, np1 + i_v0, np1 + i_v1, for_sparsity);
-
-   // --------------------------------------------------
-   // set of independent variables that v0 depends on
-   typename Vector_set::const_iterator itr_0(for_sparsity, i_v0 + np1);
-
-   // loop over independent variables non-zero partial for v0
-   size_t i_x = *itr_0;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(v0)
-      for_sparsity.binary_union(i_x, i_x, i_v0 + np1, for_sparsity);
-      // N(i_x) = N(i_x) union J(v1)
-      for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
-      i_x = *(++itr_0);
-   }
-   // --------------------------------------------------
-   // set of independent variables that v1 depends on
-   typename Vector_set::const_iterator itr_1(for_sparsity, i_v1 + np1);
-
-   // loop over independent variables with non-zero partial for v1
-   i_x = *itr_1;
-   while( i_x < np1 )
-   {  // N(i_x) = N(i_x) union J(v0)
-      for_sparsity.binary_union(i_x, i_x, i_v0 + np1, for_sparsity);
-      // N(i_x) = N(i_x) union J(v1)
-      for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
-      i_x = *(++itr_1);
-   }
-   return;
 }
 // ---------------------------------------------------------------------------
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
