@@ -174,202 +174,6 @@ void two_var_rev_jac(
    return;
 }
 // ---------------------------------------------------------------------------
-/*!
-Reverse mode Hessian sparsity pattern for add and subtract operators.
-
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = x op y
-\endverbatim
-where op is + or - and x, y are variables.
-
-\copydetails CppAD::local::reverse_sparse_hessian_binary_op
-*/
-template <class Vector_set>
-void rev_hes_addsub_op(
-   size_t               i_z                ,
-   const addr_t*        arg                ,
-   bool*                jac_reverse        ,
-   const Vector_set&    for_jac_sparsity   ,
-   Vector_set&          rev_hes_sparsity   )
-{
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-
-   // check for no effect
-   if( ! jac_reverse[i_z] )
-      return;
-
-   // propagate hessian sparsity from i_z to arg[0] and arg[1]
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
-   );
-
-   jac_reverse[arg[0]] = true;
-   jac_reverse[arg[1]] = true;
-
-   return;
-}
-
-/*!
-Reverse mode Hessian sparsity pattern for multiplication operator.
-
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = x * y
-\endverbatim
-where x and y are variables.
-
-\copydetails CppAD::local::reverse_sparse_hessian_binary_op
-*/
-template <class Vector_set>
-void rev_hes_mul_op(
-   size_t               i_z                ,
-   const addr_t*        arg                ,
-   bool*                jac_reverse        ,
-   const Vector_set&    for_jac_sparsity   ,
-   Vector_set&          rev_hes_sparsity   )
-{
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-
-   // check for no effect
-   if( ! jac_reverse[i_z] )
-      return;
-
-   // progagate hessian sparsity from i_z to arg[0] and arg[1]
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
-   );
-
-   // new hessian sparsity terms between i_z and arg[0], arg[1]
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity
-   );
-
-   jac_reverse[arg[0]] = true;
-   jac_reverse[arg[1]] = true;
-   return;
-}
-
-/*!
-Reverse mode Hessian sparsity pattern for division operator.
-
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = x / y
-\endverbatim
-where x and y are variables.
-
-\copydetails CppAD::local::reverse_sparse_hessian_binary_op
-*/
-template <class Vector_set>
-void rev_hes_div_op(
-   size_t               i_z                ,
-   const addr_t*        arg                ,
-   bool*                jac_reverse        ,
-   const Vector_set&    for_jac_sparsity   ,
-   Vector_set&          rev_hes_sparsity   )
-{
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-
-   // check for no effect
-   if( ! jac_reverse[i_z] )
-      return;
-
-   // propagate hessian sparsity from i_z to arg[0] and arg[1]
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
-   );
-
-   // new hessian sparsity terms between i_z and arg[0], arg[1]
-   rev_hes_sparsity.binary_union(
-         size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-         size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-         size_t(arg[1]), size_t(arg[1]), size_t(arg[1]), for_jac_sparsity
-   );
-
-   jac_reverse[arg[0]] = true;
-   jac_reverse[arg[1]] = true;
-   return;
-}
-
-/*!
-Reverse mode Hessian sparsity pattern for power function.
-
-The C++ source code corresponding to a unary operation has the form
-\verbatim
-   z = pow(x, y)
-\endverbatim
-where x and y are variables.
-
-\copydetails CppAD::local::reverse_sparse_hessian_binary_op
-*/
-template <class Vector_set>
-void rev_hes_pow_op(
-   size_t               i_z                ,
-   const addr_t*        arg                ,
-   bool*                jac_reverse        ,
-   const Vector_set&    for_jac_sparsity   ,
-   Vector_set&          rev_hes_sparsity   )
-{
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-
-   // check for no effect
-   if( ! jac_reverse[i_z] )
-      return;
-
-   // propigate hessian sparsity from i_z to arg[0] and arg[1]
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
-   );
-
-   // new hessian sparsity terms between i_z and arg[0], arg[1]
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), size_t(arg[0]), for_jac_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity
-   );
-   rev_hes_sparsity.binary_union(
-      size_t(arg[1]), size_t(arg[1]), size_t(arg[1]), for_jac_sparsity
-   );
-
-   // I cannot think of a case where this is necessary, but it including
-   // it makes it like the other cases.
-   jac_reverse[arg[0]] = true;
-   jac_reverse[arg[1]] = true;
-   return;
-}
-// ---------------------------------------------------------------------------
 /*
 {xrst_begin var_two_var_for_hes dev}
 {xrst_spell
@@ -415,7 +219,7 @@ This value is true (false) if the :math:`z(x, y)`
 must have zero second partial derivative with respect to *y*
 (may have non-zero second partial).
 
-linear[3]
+linear[2]
 =========
 This value is true (false) if the :math:`z(x, y)`
 must have zero cross partial derivative
@@ -565,6 +369,157 @@ void two_var_for_hes(
          i_u = *(++itr_y);
       }
    }
+}
+// ---------------------------------------------------------------------------
+/*
+{xrst_begin var_two_var_rev_hes dev}
+
+Reverse Jacobian Sparsity for Two Variable Argument Operators
+#############################################################
+
+x, y, z
+*******
+see
+:ref:`var_two_var@x` ,
+:ref:`var_two_var@y` ,
+:ref:`var_two_var@z`
+
+G and H
+*******
+Use z(x, y) to denote the variable *z* as a function of the variables
+*x* , *y* , and define H in terms of G by::
+
+   H( x, y, ... ) = G[ z(x, y) , x, y, ... ]
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_TWO_VAR_REV_HES
+   // END_TWO_VAR_REV_HES
+}
+
+Vector_set, i_z, arg
+********************
+see
+:ref:`var_two_var@Vector_set` ,
+:ref:`var_two_var@i_z` ,
+:ref:`var_two_var@arg`
+
+linear
+******
+
+linear[0]
+=========
+This value is true (false) if the :math:`z(x, y)`
+must have zero second partial derivative with respect to *x*
+(may have non-zero second partial).
+
+linear[1]
+=========
+This value is true (false) if the :math:`z(x, y)`
+must have zero second partial derivative with respect to *y*
+(may have non-zero second partial).
+
+linear[2]
+=========
+This value is true (false) if the :math:`z(x, y)`
+must have zero cross partial derivative
+(may have non-zero cross partial).
+
+n_independent_p1
+****************
+is the number of independent variables (in the tape) plus one.
+
+num_var
+*******
+This is the total number of variables in the tape
+(counting the phantom variable at index zero).
+
+for_jac_sparsity
+****************
+The set with index *j* is the forward Jacobian sparsity
+pattern for the variable with index *j*.
+
+rev_jac_include
+***************
+If the *j* element of this vector is true,
+the variable with index *j* is included in the Hessian,
+or affects the value of a variable that is included in the Hessian.
+
+Input
+=====
+::
+
+   for j = num_var, ... , i_z + 1
+      rev_jac_include[j] is an input
+
+Output
+======
+rev_jac_include[i_z] is an output
+
+rev_hes_sparsity
+****************
+On input (output), this is the sparsity pattern for *G* ( *H* ).
+For each variable index *j* ,
+*rev_hes_sparsity* [ *j* ] is the set of indices
+that may have non-zero cross partials with variable index *j* .
+
+Example
+=======
+If the indices in the sets correspond to the independent variables,
+then *rev_hes_sparsity* ``.end()`` is the number of independent variables.
+For *i* a variable index between 1 and the number of independent variables,
+*i* - 1 is the corresponding independent variable index.
+(The index *i* = 0 corresponds to the phantom variable at the beginning
+of the tape. )
+{xrst_end var_two_var_rev_hes}
+*/
+// BEGIN_TWO_VAR_REV_HES
+template <class Vector_set>
+void two_var_rev_hes(
+   size_t              i_z               ,
+   const addr_t*       arg               ,
+   bool*               linear            ,
+   bool*               rev_jacobian      ,
+   const Vector_set&   for_jac_sparsity  ,
+   Vector_set&         rev_hes_sparsity  )
+// END_TWO_VAR_REV_HES
+{  //
+   // check for nothing to do
+   if( ! rev_jacobian[i_z] )
+      return;
+   //
+   // i_x, i_y, linear_x, linear_y, linear_xy
+   size_t i_x = size_t( arg[0] );
+   size_t i_y = size_t( arg[1] );
+   bool linear_x  = linear[0];
+   bool linear_y  = linear[1];
+   bool linear_xy = linear[2];
+   //
+   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   CPPAD_ASSERT_UNKNOWN( i_y < i_z );
+   //
+   // rev_hes_sparsity
+   // propagate form z to x and y
+   rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
+   rev_hes_sparsity.binary_union(i_y, i_y, i_z, rev_hes_sparsity);
+   //
+   if( ! linear_x )
+   {  rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
+      rev_hes_sparsity.binary_union(i_y, i_y, i_x, for_jac_sparsity);
+   }
+   if( ! linear_y )
+   {  rev_hes_sparsity.binary_union(i_x, i_x, i_y, for_jac_sparsity);
+      rev_hes_sparsity.binary_union(i_y, i_y, i_y, for_jac_sparsity);
+   }
+   if( ! linear_xy )
+   {  rev_hes_sparsity.binary_union(i_x, i_x, i_y, for_jac_sparsity);
+      rev_hes_sparsity.binary_union(i_y, i_y, i_x, for_jac_sparsity);
+   }
+   //
+   // rev_jacobian
+   rev_jacobian[i_x] = true;
+   rev_jacobian[i_y] = true;
 }
 // ---------------------------------------------------------------------------
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE

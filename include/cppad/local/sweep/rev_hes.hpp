@@ -261,9 +261,12 @@ void rev_hes(
          // -------------------------------------------------
 
          case AddvvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::rev_hes_addsub_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+         case SubvvOp:
+         linear[0] = true;
+         linear[1] = true;
+         linear[2] = true;
+         var_op::two_var_rev_hes(
+            i_var, arg, linear, RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -292,7 +295,6 @@ void rev_hes(
             i_var, arg, num_par, RevJac, rev_hes_sparse
          );
          break;
-         // ---------------------------------------------------
          // -------------------------------------------------
 
          case DisOp:
@@ -302,9 +304,12 @@ void rev_hes(
          // -------------------------------------------------
 
          case DivvvOp:
+         linear[0] = true;
+         linear[1] = false;
+         linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::rev_hes_div_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+         var_op::two_var_rev_hes(
+            i_var, arg, linear, RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -350,9 +355,13 @@ void rev_hes(
          // -------------------------------------------------
 
          case MulvvOp:
+         case ZmulvvOp:
+         linear[0] = true;
+         linear[1] = true;
+         linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::rev_hes_mul_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+         var_op::two_var_rev_hes(
+            i_var, arg, linear, RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -363,9 +372,12 @@ void rev_hes(
          // -------------------------------------------------
 
          case PowvvOp:
+         linear[0] = false;
+         linear[1] = false;
+         linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-         var_op::rev_hes_pow_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+         var_op::two_var_rev_hes(
+            i_var, arg, linear, RevJac, for_jac_sparse, rev_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -398,14 +410,6 @@ void rev_hes(
          break;
          // -------------------------------------------------
 
-         case SubvvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::rev_hes_addsub_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-         // -------------------------------------------------
-
          case AFunOp:
          var_op::atomic_reverse_hes<Vector_set, Base, RecBase>(
             itr,
@@ -425,15 +429,6 @@ void rev_hes(
          case FunrvOp:
          CPPAD_ASSERT_UNKNOWN(false);
          break;
-         // -------------------------------------------------
-
-         case ZmulvvOp:
-         CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-         var_op::rev_hes_mul_op(
-         i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
-         );
-         break;
-
          // -------------------------------------------------
 
          default:
