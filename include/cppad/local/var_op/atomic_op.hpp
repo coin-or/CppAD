@@ -185,7 +185,7 @@ FunrpOp, FunrvOp
 
 {xrst_end var_atomic_op}
 -------------------------------------------------------------------------------
-{xrst_begin var_atomic_forward_op dev}
+{xrst_begin var_atomic_forward_any dev}
 
 Any Order Forward Atomic Function Call
 ######################################
@@ -193,8 +193,8 @@ Any Order Forward Atomic Function Call
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ATOMIC_FORWARD_OP
-   // END_ATOMIC_FORWARD_OP
+   // BEGIN_ATOMIC_FORWARD_ANY
+   // END_ATOMIC_FORWARD_ANY
 }
 
 {xrst_template ;
@@ -208,13 +208,13 @@ Prototype
    headers: cap_order, order_low, order_up, taylor
 }
 
-{xrst_end var_atomic_forward_op}
+{xrst_end var_atomic_forward_any}
 */
 
 
-// BEGIN_ATOMIC_FORWARD_OP
+// BEGIN_ATOMIC_FORWARD_ANY
 template <class Base, class RecBase>
-void atomic_forward_op(
+void atomic_forward_any(
    play::const_sequential_iterator& itr        ,
    const player<Base>*              play       ,
    const Base*                      parameter  ,
@@ -224,7 +224,7 @@ void atomic_forward_op(
    size_t                           order_low  ,
    size_t                           order_up   ,
    Base*                            taylor     )
-// END_ATOMIC_FORWARD_OP
+// END_ATOMIC_FORWARD_ANY
 {  //
    // vector
    using CppAD::vector;
@@ -651,7 +651,7 @@ void atomic_forward_dir(
 }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin var_atomic_reverse_op dev}
+{xrst_begin var_atomic_reverse dev}
 
 Reverse Atomic Function Call
 ############################
@@ -659,8 +659,8 @@ Reverse Atomic Function Call
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ATOMIC_REVERSE_OP
-   // END_ATOMIC_REVERSE_OP
+   // BEGIN_ATOMIC_REVERSE
+   // END_ATOMIC_REVERSE
 }
 
 Iterator
@@ -679,7 +679,7 @@ this template parameter is either
 
 cap_order
 *********
-see atomic_forward_op :ref:`var_atomic_forward_op@cap_order`
+see atomic_forward_any :ref:`var_atomic_forward_any@cap_order`
 
 n_order
 *******
@@ -708,11 +708,11 @@ We only have partials with respect to variables; i.e.,
 the parameters in *x* or *y* .
 ~
 
-{xrst_end var_atomic_reverse_op}
+{xrst_end var_atomic_reverse}
 */
-// BEGIN_ATOMIC_REVERSE_OP
+// BEGIN_ATOMIC_REVERSE
 template <class Base, class RecBase, class Iterator>
-void atomic_reverse_op(
+void atomic_reverse(
    Iterator&                        itr        ,
    const player<Base>*              play       ,
    const Base*                      parameter  ,
@@ -722,7 +722,7 @@ void atomic_reverse_op(
    size_t                           n_order    ,
    const Base*                      taylor     ,
    Base*                            partial    )
-// END_ATOMIC_REVERSE_OP
+// END_ATOMIC_REVERSE
 {  CPPAD_ASSERT_UNKNOWN( 0 < n_order );
    //
    // vector

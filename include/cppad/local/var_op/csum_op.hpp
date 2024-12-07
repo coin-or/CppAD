@@ -118,7 +118,7 @@ to back up to get to the start of this operation.
 
 {xrst_end var_csum_op}
 -----------------------------------------------------------------------------
-{xrst_begin var_csum_forward_op dev}
+{xrst_begin var_csum_forward_any dev}
 
 Any Order Forward Cumulative Summation Operation
 ################################################
@@ -126,8 +126,8 @@ Any Order Forward Cumulative Summation Operation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FORWARD_OP
-   // END_CSUM_FORWARD_OP
+   // BEGIN_CSUM_FORWARD_ANY
+   // END_CSUM_FORWARD_ANY
 }
 
 x, y, u, v, z
@@ -158,11 +158,11 @@ parameter
 *********
 is the parameter vector for this operation sequence.
 
-{xrst_end var_csum_forward_op}
+{xrst_end var_csum_forward_any}
 */
-// BEGIN_CSUM_FORWARD_OP
+// BEGIN_CSUM_FORWARD_ANY
 template <class Base>
-inline void csum_forward_op(
+inline void csum_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -171,7 +171,7 @@ inline void csum_forward_op(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-// END_CSUM_FORWARD_OP
+// END_CSUM_FORWARD_ANY
 {  //
    //
    // check assumptions
@@ -315,7 +315,7 @@ inline void csum_forward_dir(
 }
 /*
 ---------------------------------------------------------------------------
-{xrst_begin var_csum_reverse_op dev}
+{xrst_begin var_csum_reverse dev}
 
 Reverse Mode Cumulative Summation Operation
 ###########################################
@@ -323,8 +323,8 @@ Reverse Mode Cumulative Summation Operation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_REVERSE_OP
-   // END_CSUM_REVERSE_OP
+   // BEGIN_CSUM_REVERSE
+   // END_CSUM_REVERSE
 }
 
 x, y, u, v, z
@@ -349,16 +349,16 @@ see
    @x, y@  ; x, y, u, v
 }
 
-{xrst_end var_csum_reverse_op}
+{xrst_end var_csum_reverse}
 */
-// BEGIN_CSUM_REVERSE_OP
+// BEGIN_CSUM_REVERSE
 template <class Base>
-inline void csum_reverse_op(
+inline void csum_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    size_t        n_order     ,
    Base*         partial     )
-// END_CSUM_REVERSE_OP
+// END_CSUM_REVERSE
 {  // d
    //
    size_t d = n_order - 1;

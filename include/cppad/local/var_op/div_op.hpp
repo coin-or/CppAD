@@ -11,7 +11,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void divvv_forward_op(
+inline void divvv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -111,7 +111,7 @@ inline void divvv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void divvv_reverse_op(
+inline void divvv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -162,7 +162,7 @@ inline void divvv_reverse_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void divpv_forward_op(
+inline void divpv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -266,7 +266,7 @@ inline void divpv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void divpv_reverse_op(
+inline void divpv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -316,7 +316,7 @@ inline void divpv_reverse_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void divvp_forward_op(
+inline void divvp_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -411,7 +411,7 @@ inline void divvp_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void divvp_reverse_op(
+inline void divvp_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

@@ -90,7 +90,7 @@ arg[5] is the parameter (variable) index corresponding to *if_false*
 
 {xrst_end var_cexp_op}
 ------------------------------------------------------------------------------
-{xrst_begin var_cexp_forward_op dev}
+{xrst_begin var_cexp_forward_any dev}
 
 Any Order Forward Conditional Expression Variable Operator
 ##########################################################
@@ -103,8 +103,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CEXP_FORWARD_OP
-   // END_CEXP_FORWARD_OP
+   // BEGIN_CEXP_FORWARD_ANY
+   // END_CEXP_FORWARD_ANY
 }
 
 arg
@@ -134,11 +134,11 @@ maps parameter indices to parameter values .
    headers: cap_order, order_low, order_up, taylor
 }
 
-{xrst_end var_cexp_forward_op}
+{xrst_end var_cexp_forward_any}
 */
-// BEGIN_CEXP_FORWARD_OP
+// BEGIN_CEXP_FORWARD_ANY
 template <class Base>
-inline void cexp_forward_op(
+inline void cexp_forward_any(
    size_t         order_low   ,
    size_t         order_up    ,
    size_t         i_z         ,
@@ -147,7 +147,7 @@ inline void cexp_forward_op(
    const Base*    parameter   ,
    size_t         cap_order   ,
    Base*          taylor      )
-// END_CEXP_FORWARD_OP
+// END_CEXP_FORWARD_ANY
 {  Base y_0, y_1, y_2, y_3;
    size_t p = order_low;
    size_t q = order_up;
@@ -674,7 +674,7 @@ with respect to the k-th order Taylor coefficient corresponding to y_j.
 
 */
 template <class Base>
-inline void cexp_reverse_op(
+inline void cexp_reverse(
    size_t         i_z         ,
    const addr_t*  arg         ,
    size_t         num_par     ,

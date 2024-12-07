@@ -374,7 +374,7 @@ inline void load_forward_nonzero(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_load_reverse_op dev}
+{xrst_begin var_load_reverse dev}
 
 Reverse Mode Load an Element of a VecAD Vector
 ##############################################
@@ -390,8 +390,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_LOAD_REVERSE_OP
-   // END_LOAD_REVERSE_OP
+   // BEGIN_LOAD_REVERSE
+   // END_LOAD_REVERSE
 }
 
 Base, op_code, i_z, arg
@@ -432,11 +432,11 @@ is added to the k-th order Taylor coefficient for *y*; i.e.,
 *partial* [ *i_y* * *n_order* + *k* ] +=
 *partial* [ *i_z* * *n_order* + *k* ]
 
-{xrst_end var_load_reverse_op}
+{xrst_end var_load_reverse}
 */
-// BEGIN_LOAD_REVERSE_OP
+// BEGIN_LOAD_REVERSE
 template <class Base>
-inline void load_reverse_op(
+inline void load_reverse(
    op_code_var               op_code     ,
    size_t                    i_z         ,
    const addr_t*             arg         ,
@@ -444,7 +444,7 @@ inline void load_reverse_op(
    size_t                    cap_order   ,
    size_t                    n_order     ,
    Base*                     partial     )
-// END_LOAD_REVERSE_OP
+// END_LOAD_REVERSE
 {  // d
    //
    size_t d = n_order - 1;

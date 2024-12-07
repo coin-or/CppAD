@@ -11,7 +11,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void subvv_forward_op(
+inline void subvv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -95,7 +95,7 @@ inline void subvv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void subvv_reverse_op(
+inline void subvv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -130,7 +130,7 @@ inline void subvv_reverse_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void subpv_forward_op(
+inline void subpv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -220,7 +220,7 @@ inline void subpv_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void subpv_reverse_op(
+inline void subpv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -253,7 +253,7 @@ inline void subpv_reverse_op(
 
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void subvp_forward_op(
+inline void subvp_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -344,7 +344,7 @@ inline void subvp_forward_0(
 
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void subvp_reverse_op(
+inline void subvp_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

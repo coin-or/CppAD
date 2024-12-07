@@ -12,7 +12,7 @@ namespace CppAD { namespace local { namespace var_op {
 // See dev documentation: forward_unary_op
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void addvv_forward_op(
+inline void addvv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -99,7 +99,7 @@ inline void addvv_forward_0(
 // See dev documentation: reverse_unary_op
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void addvv_reverse_op(
+inline void addvv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -134,7 +134,7 @@ inline void addvv_reverse_op(
 // See dev documentation: forward_unary_op
 // See dev documentation: forward_binary_op
 template <class Base>
-inline void addpv_forward_op(
+inline void addpv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -225,7 +225,7 @@ inline void addpv_forward_0(
 // See dev documentation: reverse_unary_op
 // See dev documentation: reverse_binary_op
 template <class Base>
-inline void addpv_reverse_op(
+inline void addpv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

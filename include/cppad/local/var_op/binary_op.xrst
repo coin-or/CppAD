@@ -166,7 +166,7 @@ The zero order Taylor coefficients for variables with index
 
 {xrst_end var_binary_forward_0}
 ------------------------------------------------------------------------------
-{xrst_begin var_binary_forward_op dev}
+{xrst_begin var_binary_forward_any dev}
 
 Any Order Forward Binary Variable Operators
 ###########################################
@@ -183,7 +183,7 @@ Prototype
 *********
 {xrst_code cpp}
 template <class Base>
-inline void Fun_forward_op(
+inline void Fun_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -207,7 +207,7 @@ see
    headers: cap_order, order_low, order_up, taylor
 }
 
-{xrst_end var_binary_forward_op}
+{xrst_end var_binary_forward_any}
 ------------------------------------------------------------------------------
 {xrst_begin var_binary_forward_dir dev}
 {xrst_spell
@@ -254,7 +254,7 @@ see
 
 {xrst_end var_binary_forward_dir}
 ------------------------------------------------------------------------------
-{xrst_begin var_binary_reverse_op dev}
+{xrst_begin var_binary_reverse dev}
 
 Reverse Mode Binary Operators
 #############################
@@ -271,7 +271,7 @@ Prototype
 *********
 {xrst_code cpp}
 template <class Base>
-inline void Fun_reverse_op(
+inline void Fun_reverse(
    size_t        i_z          ,
    const addr_t* arg          ,
    const Base*   parameter    ,
@@ -307,5 +307,5 @@ The Taylor coefficient corresponding to variable *i* and order *k* is
    @x, y@ ; x
 }
 
-{xrst_end var_binary_reverse_op}
+{xrst_end var_binary_reverse}
 ------------------------------------------------------------------------------

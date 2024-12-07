@@ -263,7 +263,7 @@ void reverse(
       switch( op )
       {
          case AbsOp:
-         var_op::abs_reverse_op(
+         var_op::abs_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -272,7 +272,7 @@ void reverse(
          case AcosOp:
          // sqrt(1 - x * x), acos(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::acos_reverse_op(
+         var_op::acos_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -281,14 +281,14 @@ void reverse(
          case AcoshOp:
          // sqrt(x * x - 1), acosh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::acosh_reverse_op(
+         var_op::acosh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case AddvvOp:
-         var_op::addvv_reverse_op(
+         var_op::addvv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -296,7 +296,7 @@ void reverse(
 
          case AddpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         var_op::addpv_reverse_op(
+         var_op::addpv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -305,7 +305,7 @@ void reverse(
          case AsinOp:
          // sqrt(1 - x * x), asin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::asin_reverse_op(
+         var_op::asin_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -314,7 +314,7 @@ void reverse(
          case AsinhOp:
          // sqrt(1 + x * x), asinh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::asinh_reverse_op(
+         var_op::asinh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -323,7 +323,7 @@ void reverse(
          case AtanOp:
          // 1 + x * x, atan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::atan_reverse_op(
+         var_op::atan_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -332,7 +332,7 @@ void reverse(
          case AtanhOp:
          // 1 - x * x, atanh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::atanh_reverse_op(
+         var_op::atanh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -352,7 +352,7 @@ void reverse(
 
          case CSumOp:
          play_itr.correct_after_decrement(arg);
-         var_op::csum_reverse_op(
+         var_op::csum_reverse(
             i_var, arg, K, Partial
          );
          // end of a cumulative summation
@@ -360,7 +360,7 @@ void reverse(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cexp_reverse_op(
+         var_op::cexp_reverse(
             i_var,
             arg,
             num_par,
@@ -375,7 +375,7 @@ void reverse(
 
          case CosOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::cos_reverse_op(
+         var_op::cos_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -383,7 +383,7 @@ void reverse(
 
          case CoshOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::cosh_reverse_op(
+         var_op::cosh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -396,7 +396,7 @@ void reverse(
          // --------------------------------------------------
 
          case DivvvOp:
-         var_op::divvv_reverse_op(
+         var_op::divvv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -404,7 +404,7 @@ void reverse(
 
          case DivpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         var_op::divpv_reverse_op(
+         var_op::divpv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -412,7 +412,7 @@ void reverse(
 
          case DivvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         var_op::divvp_reverse_op(
+         var_op::divvp_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -427,21 +427,21 @@ void reverse(
 
          case ErfOp:
          case ErfcOp:
-         var_op::erf_reverse_op(
+         var_op::erf_reverse(
             op, i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case ExpOp:
-         var_op::exp_reverse_op(
+         var_op::exp_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case Expm1Op:
-         var_op::expm1_reverse_op(
+         var_op::expm1_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -453,7 +453,7 @@ void reverse(
 
          case LdpOp:
          case LdvOp:
-         var_op::load_reverse_op(
+         var_op::load_reverse(
             op, i_var, arg, load_op2var, J, K, Partial
          );
          break;
@@ -477,14 +477,14 @@ void reverse(
          // -------------------------------------------------
 
          case LogOp:
-         var_op::log_reverse_op(
+         var_op::log_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case Log1pOp:
-         var_op::log1p_reverse_op(
+         var_op::log1p_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -492,21 +492,21 @@ void reverse(
 
          case MulpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         var_op::mulpv_reverse_op(
+         var_op::mulpv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case MulvvOp:
-         var_op::mulvv_reverse_op(
+         var_op::mulvv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // -------------------------------------------------
 
          case NegOp:
-         var_op::neg_reverse_op(
+         var_op::neg_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -518,7 +518,7 @@ void reverse(
 
          case PowvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         var_op::powvp_reverse_op(
+         var_op::powvp_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial, work
          );
          break;
@@ -526,14 +526,14 @@ void reverse(
 
          case PowpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         var_op::powpv_reverse_op(
+         var_op::powpv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // -------------------------------------------------
 
          case PowvvOp:
-         var_op::powvv_reverse_op(
+         var_op::powvv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -546,7 +546,7 @@ void reverse(
 
          case SignOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::sign_reverse_op(
+         var_op::sign_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -554,7 +554,7 @@ void reverse(
 
          case SinOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::sin_reverse_op(
+         var_op::sin_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -562,14 +562,14 @@ void reverse(
 
          case SinhOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::sinh_reverse_op(
+         var_op::sinh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case SqrtOp:
-         var_op::sqrt_reverse_op(
+         var_op::sqrt_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -592,7 +592,7 @@ void reverse(
          // --------------------------------------------------
 
          case SubvvOp:
-         var_op::subvv_reverse_op(
+         var_op::subvv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -600,7 +600,7 @@ void reverse(
 
          case SubpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         var_op::subpv_reverse_op(
+         var_op::subpv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -608,7 +608,7 @@ void reverse(
 
          case SubvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         var_op::subvp_reverse_op(
+         var_op::subvp_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -616,7 +616,7 @@ void reverse(
 
          case TanOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::tan_reverse_op(
+         var_op::tan_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
@@ -624,14 +624,14 @@ void reverse(
 
          case TanhOp:
          CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-         var_op::tanh_reverse_op(
+         var_op::tanh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case AFunOp:
-         var_op::atomic_reverse_op<Base, RecBase, Iterator>(
+         var_op::atomic_reverse<Base, RecBase, Iterator>(
             play_itr,
             play,
             parameter,
@@ -654,7 +654,7 @@ void reverse(
 
          case ZmulpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-         var_op::zmulpv_reverse_op(
+         var_op::zmulpv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
@@ -662,14 +662,14 @@ void reverse(
 
          case ZmulvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-         var_op::zmulvp_reverse_op(
+         var_op::zmulvp_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;
          // --------------------------------------------------
 
          case ZmulvvOp:
-         var_op::zmulvv_reverse_op(
+         var_op::zmulvv_reverse(
             i_var, arg, parameter, J, Taylor, K, Partial
          );
          break;

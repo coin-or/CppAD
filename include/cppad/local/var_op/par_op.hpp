@@ -105,7 +105,7 @@ inline void par_forward_0(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_par_forward_op dev}
+{xrst_begin var_par_forward_any dev}
 
 Any Order Forward Create a Variable From a Parameter
 ####################################################
@@ -118,8 +118,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PAR_FORWARD_OP
-   // END_PAR_FORWARD_OP
+   // BEGIN_PAR_FORWARD_ANY
+   // END_PAR_FORWARD_ANY
 }
 
 i_z, arg
@@ -141,11 +141,11 @@ maps parameter indices to parameter values .
    headers: cap_order, order_low, order_up, taylor
 }
 
-{xrst_end var_par_forward_op}
+{xrst_end var_par_forward_any}
 */
-// BEGIN_PAR_FORWARD_OP
+// BEGIN_PAR_FORWARD_ANY
 template <class Base>
-inline void par_forward_op(
+inline void par_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -154,7 +154,7 @@ inline void par_forward_op(
    const Base*   parameter   ,
    size_t        cap_order   ,
    Base*         taylor      )
-// END_PAR_FORWARD_OP
+// END_PAR_FORWARD_ANY
 {  //
    //
    // check assumptions

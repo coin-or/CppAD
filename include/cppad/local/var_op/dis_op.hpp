@@ -69,15 +69,15 @@ Prototype
 RecBase
 =======
 {xrst_literal
-   // BEGIN_DIS_FORWARD_OP
-   // END_DIS_FORWARD_OP
+   // BEGIN_DIS_FORWARD_ANY
+   // END_DIS_FORWARD_ANY
 }
 
 AD<RecBase>
 ===========
 {xrst_literal
-   // BEGIN_AD_DIS_FORWARD_OP
-   // END_AD_DIS_FORWARD_OP
+   // BEGIN_AD_DIS_FORWARD_ANY
+   // END_AD_DIS_FORWARD_ANY
 }
 
 RecBase
@@ -147,7 +147,7 @@ This has the same description as *taylor* except that its type is
 namespace CppAD { namespace local { namespace var_op {
 
 // ---------------------------------------------------------------------------
-// BEGIN_DIS_FORWARD_OP
+// BEGIN_DIS_FORWARD_ANY
 template <class RecBase>
 inline void dis_forward_dir(
    size_t        order_low   ,
@@ -157,7 +157,7 @@ inline void dis_forward_dir(
    const addr_t* arg         ,
    size_t        cap_order   ,
    RecBase*      taylor      )
-// END_DIS_FORWARD_OP
+// END_DIS_FORWARD_ANY
 {   // p, q
    size_t p = order_low;
    size_t q = order_up;
@@ -183,7 +183,7 @@ inline void dis_forward_dir(
          z[ (k-1) * r + 1 + ell ] = RecBase(0.0);
 }
 // ---------------------------------------------------------------------------
-// BEGIN_AD_DIS_FORWARD_OP
+// BEGIN_AD_DIS_FORWARD_ANY
 template <class RecBase>
 inline void dis_forward_dir(
    size_t        order_low   ,
@@ -193,7 +193,7 @@ inline void dis_forward_dir(
    const addr_t* arg         ,
    size_t        cap_order   ,
    AD<RecBase>*  ataylor     )
-// END_AD_DIS_FORWARD_OP
+// END_AD_DIS_FORWARD_ANY
 {   // p, q
    size_t p = order_low;
    size_t q = order_up;

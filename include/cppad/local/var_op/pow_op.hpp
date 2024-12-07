@@ -23,7 +23,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void powvv_forward_op(
+inline void powvv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -48,13 +48,13 @@ inline void powvv_forward_op(
    );
 
    // z_0 = log(x)
-   log_forward_op(p, q, i_z, arg, cap_order, taylor);
+   log_forward_any(p, q, i_z, arg, cap_order, taylor);
 
    // z_1 = z_0 * y
    addr_t addr[2];
    addr[0] = addr_t( i_z );
    addr[1] = arg[1];
-   mulvv_forward_op(p, q, i_z+1, addr,  parameter, cap_order, taylor);
+   mulvv_forward_any(p, q, i_z+1, addr,  parameter, cap_order, taylor);
 
    // z_2 = exp(z_1)
    // final result for zero order case is exactly the same as for Base
@@ -69,7 +69,7 @@ inline void powvv_forward_op(
    }
    if( p <= q )
    {  addr[0] = addr_t(i_z+1);
-      exp_forward_op(p, q, i_z+2, addr, cap_order, taylor);
+      exp_forward_any(p, q, i_z+2, addr, cap_order, taylor);
    }
 }
 /*!
@@ -181,7 +181,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void powvv_reverse_op(
+inline void powvv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -206,19 +206,19 @@ inline void powvv_reverse_op(
    // z_2 = exp(z_1)
    addr_t addr[2];
    addr[0] = addr_t(i_z + 1);
-   exp_reverse_op(
+   exp_reverse(
       i_z+2, addr, cap_order, taylor, n_order, partial
    );
 
    // z_1 = z_0 * y
    addr[0] = addr_t( i_z );
    addr[1] = arg[1];
-   mulvv_reverse_op(
+   mulvv_reverse(
    i_z+1, addr,  parameter, cap_order, taylor, n_order, partial
    );
 
    // z_0 = log(x)
-   log_reverse_op(
+   log_reverse(
       i_z, arg, cap_order, taylor, n_order, partial
    );
 }
@@ -238,7 +238,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void powpv_forward_op(
+inline void powpv_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -287,7 +287,7 @@ inline void powpv_forward_op(
    addr[1] = arg[1];
 
    // Trick: use taylor both for the parameter vector and variable values
-   mulpv_forward_op(p, q, i_z+1, addr,  taylor, cap_order, taylor);
+   mulpv_forward_any(p, q, i_z+1, addr,  taylor, cap_order, taylor);
 
    // z_2 = exp(z_1)
    // zero order case exactly same as Base type operation
@@ -299,7 +299,7 @@ inline void powpv_forward_op(
    }
    if( p <= q )
    {  addr[0] = addr_t(i_z+1);
-      exp_forward_op(p, q, i_z+2, addr, cap_order, taylor);
+      exp_forward_any(p, q, i_z+2, addr, cap_order, taylor);
    }
 }
 /*!
@@ -430,7 +430,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void powpv_reverse_op(
+inline void powpv_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,
@@ -452,7 +452,7 @@ inline void powpv_reverse_op(
    // z_2 = exp(z_1)
    addr_t addr[2];
    addr[0] = addr_t(i_z + 1);
-   exp_reverse_op(
+   exp_reverse(
       i_z+2, addr, cap_order, taylor, n_order, partial
    );
 
@@ -467,7 +467,7 @@ inline void powpv_reverse_op(
    addr[0] = addr_t( i_z * cap_order ); // offset of z_0[0] in taylor
    addr[1] = arg[1];                    // index of y in taylor and partial
    // use taylor both for parameter and variable values
-   mulpv_reverse_op(
+   mulpv_reverse(
       i_z+1, addr,  taylor, cap_order, taylor, n_order, partial
    );
 
@@ -490,7 +490,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void powvp_forward_op(
+inline void powvp_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -654,7 +654,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void powvp_reverse_op(
+inline void powvp_reverse(
    size_t        i_z         ,
    const addr_t* arg         ,
    const Base*   parameter   ,

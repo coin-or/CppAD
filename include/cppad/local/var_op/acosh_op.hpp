@@ -12,7 +12,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 // See dev documentation: forward_unary_op
 template <class Base>
-inline void acosh_forward_op(
+inline void acosh_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -138,7 +138,7 @@ inline void acosh_forward_0(
 
 // See dev documentation: reverse_unary_op
 template <class Base>
-inline void acosh_reverse_op(
+inline void acosh_reverse(
    size_t        i_z          ,
    const addr_t* arg          ,
    size_t        cap_order    ,

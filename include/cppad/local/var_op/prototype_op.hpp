@@ -60,7 +60,7 @@ is the k-th order Taylor coefficient corresponding to z.
 \li p <= q
 */
 template <class Base>
-inline void unary1_forward_op(
+inline void unary1_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -276,7 +276,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void unary1_reverse_op(
+inline void unary1_reverse(
    size_t        i_z          ,
    const addr_t* arg          ,
    size_t        cap_order    ,
@@ -352,7 +352,7 @@ the autillary result y.
 \li p <= q
 */
 template <class Base>
-inline void unary2_forward_op(
+inline void unary2_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -593,7 +593,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void unary2_reverse_op(
+inline void unary2_reverse(
    size_t        i_z          ,
    const addr_t* arg          ,
    size_t        cap_order    ,
@@ -675,7 +675,7 @@ is the k-th order Taylor coefficient corresponding to z.
 \li p <=  q
 */
 template <class Base>
-inline void binary_forward_op(
+inline void binary_forward_any(
    size_t        order_low  ,
    size_t        order_up   ,
    size_t        i_z        ,
@@ -945,7 +945,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void binary_reverse_op(
+inline void binary_reverse(
    size_t      i_z          ,
    addr_t*     arg          ,
    const Base* parameter    ,
@@ -1033,7 +1033,7 @@ is the k-th order Taylor coefficient corresponding to z_j.
 \li p <= q
 */
 template <class Base>
-inline void pow_forward_op(
+inline void pow_forward_any(
    size_t        order_low  ,
    size_t        order_up   ,
    size_t        i_z        ,
@@ -1331,7 +1331,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li d < n_order
 */
 template <class Base>
-inline void pow_reverse_op(
+inline void pow_reverse(
    size_t      i_z          ,
    addr_t*     arg          ,
    const Base* parameter    ,

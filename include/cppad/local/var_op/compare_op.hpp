@@ -89,7 +89,7 @@ If *y* is a variable (parameter)
 {xrst_end var_compare_op}
 
 -------------------------------------------------------------------------------
-{xrst_begin var_compare_forward_op dev}
+{xrst_begin var_compare_forward_any dev}
 
 Forward Comparison Operators
 ############################
@@ -97,8 +97,8 @@ Forward Comparison Operators
 Prototype
 *********
 {xrst_literal
-   // BEGIN_COMPARE_FORWARD_OP
-   // END_COMPARE_FORWARD_OP
+   // BEGIN_COMPARE_FORWARD_ANY
+   // END_COMPARE_FORWARD_ANY
 }
 
 Base
@@ -149,7 +149,7 @@ Otherwise, if this operator comparison has changed (is no longer true), and
 the new value of *compare_change_number* is equal to *compare_change_count* ,
 *compare_change_op_index* is set equal to *this_op_index* .
 
-{xrst_end var_compare_forward_op}
+{xrst_end var_compare_forward_any}
 */
 
 # include <cppad/local/op_code_var.hpp>
@@ -157,8 +157,8 @@ the new value of *compare_change_number* is equal to *compare_change_count* ,
 
 namespace CppAD { namespace local { namespace var_op { // BEGIN namespace
 
-// BEGIN_COMPARE_FORWARD_OP
-template <class Base> void compare_forward_op(
+// BEGIN_COMPARE_FORWARD_ANY
+template <class Base> void compare_forward_any(
    op_code_var   op_code                 ,
    const addr_t* arg                     ,
    const Base*   parameter               ,
@@ -168,7 +168,7 @@ template <class Base> void compare_forward_op(
    size_t        compare_change_count    ,
    size_t&       compare_change_number   ,
    size_t&       compare_change_op_index )
-// END_COMPARE_FORWARD_OP
+// END_COMPARE_FORWARD_ANY
 {  //
    // n_arg, n_res
    CPPAD_ASSERT_NARG_NRES(op_code, 2, 0);

@@ -312,7 +312,7 @@ void forward0(
          case NeppOp:
          case NepvOp:
          case NevvOp:
-         var_op::compare_forward_op(op,
+         var_op::compare_forward_any(op,
             arg, parameter, J, taylor, itr.op_index(), compare_change_count,
             compare_change_number, compare_change_op_index
          );
@@ -409,7 +409,7 @@ void forward0(
          // -------------------------------------------------
 
          case CSumOp:
-         var_op::csum_forward_op(
+         var_op::csum_forward_any(
             0, 0, i_var, arg, num_par, parameter, J, taylor
          );
          itr.correct_before_increment();
@@ -619,7 +619,7 @@ void forward0(
 
          case AFunOp:
          // start of an atomic function call
-         var_op::atomic_forward_op<Base, RecBase>(
+         var_op::atomic_forward_any<Base, RecBase>(
             itr,
             play,
             parameter,

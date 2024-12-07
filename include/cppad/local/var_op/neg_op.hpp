@@ -9,7 +9,7 @@ namespace CppAD { namespace local { namespace var_op {
 template <class Base>
 
 // See forward_unary1_op in developer documentation
-inline void neg_forward_op(
+inline void neg_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -97,7 +97,7 @@ inline void neg_forward_0(
 // See reverse_unary1_op in developer documentation
 // See dev documentation: reverse_unary_op
 template <class Base>
-inline void neg_reverse_op(
+inline void neg_reverse(
    size_t        i_z          ,
    const addr_t* arg          ,
    size_t        cap_order    ,

@@ -84,7 +84,7 @@ is the k-th order Taylor coefficient corresponding to the j-th result for z.
 
 */
 template <class Base>
-inline void erf_forward_op(
+inline void erf_forward_any(
    op_code_var   op          ,
    size_t        order_low   ,
    size_t        order_up    ,
@@ -116,21 +116,21 @@ inline void erf_forward_op(
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   mulvv_forward_op(p, q, i_z+0, addr, parameter, cap_order, taylor);
+   mulvv_forward_any(p, q, i_z+0, addr, parameter, cap_order, taylor);
 
    // z_1 = - x * x
    addr[0] = arg[1];           // zero
    addr[1] = addr_t( i_z );    // z_0
-   subpv_forward_op(p, q, i_z+1, addr, parameter, cap_order, taylor);
+   subpv_forward_any(p, q, i_z+1, addr, parameter, cap_order, taylor);
 
    // z_2 = exp( - x * x )
    addr[0] = addr_t(i_z+1);
-   exp_forward_op(p, q, i_z+2, addr, cap_order, taylor);
+   exp_forward_any(p, q, i_z+2, addr, cap_order, taylor);
 
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[2];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   mulpv_forward_op(p, q, i_z+3, addr, parameter, cap_order, taylor);
+   mulpv_forward_any(p, q, i_z+3, addr, parameter, cap_order, taylor);
 
    // pointers to taylor coefficients for x , z_3, and z_4
    Base* x    = taylor + size_t(arg[0]) * cap_order;
@@ -505,7 +505,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 
 */
 template <class Base>
-inline void erf_reverse_op(
+inline void erf_reverse(
    op_code_var   op          ,
    size_t        i_z         ,
    const addr_t* arg         ,
@@ -573,27 +573,27 @@ inline void erf_reverse_op(
    // z_3 = (2 / sqrt(pi)) * exp( - x * x )
    addr[0] = arg[2];            // 2 / sqrt(pi)
    addr[1] = addr_t( i_z + 2 ); // z_2
-   mulpv_reverse_op(
+   mulpv_reverse(
       i_z+3, addr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_2 = exp( - x * x )
    addr[0] = addr_t(i_z + 1);
-   exp_reverse_op(
+   exp_reverse(
       i_z+2, addr, cap_order, taylor, n_order, partial
    );
 
    // z_1 = - x * x
    addr[0] = arg[1];           // zero
    addr[1] = addr_t( i_z );    // z_0
-   subpv_reverse_op(
+   subpv_reverse(
       i_z+1, addr, parameter, cap_order, taylor, n_order, partial
    );
 
    // z_0 = x * x
    addr[0] = arg[0]; // x
    addr[1] = arg[0]; // x
-   mulvv_reverse_op(
+   mulvv_reverse(
       i_z+0, addr, parameter, cap_order, taylor, n_order, partial
    );
 

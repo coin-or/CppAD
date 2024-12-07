@@ -11,7 +11,7 @@ namespace CppAD { namespace local { namespace var_op {
 
 
 template <class Base>
-inline void expm1_forward_op(
+inline void expm1_forward_any(
    size_t        order_low   ,
    size_t        order_up    ,
    size_t        i_z         ,
@@ -111,7 +111,7 @@ inline void expm1_forward_0(
 }
 
 template <class Base>
-inline void expm1_reverse_op(
+inline void expm1_reverse(
    size_t        i_z          ,
    const addr_t* arg          ,
    size_t        cap_order    ,
