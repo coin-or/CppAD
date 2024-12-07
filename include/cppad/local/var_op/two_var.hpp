@@ -494,9 +494,15 @@ void two_var_for_hes(
       {  // x depends on the independent variable u
          //
          // for_sparsity
-         // update Hessian term with one parital w.r.t u other w.r.t
-         // independent variables that x depends on
-         for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+         // update Hessian term with one parital w.r.t u
+         if( ! linear_xy )
+         {  // other independent variables that z depends on
+            for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
+         }
+         else
+         {  // other independent variables that x depends on
+            for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+         }
          //
          // i_u
          i_u = *(++itr_x);
@@ -511,15 +517,21 @@ void two_var_for_hes(
       {  // y depends on the independent variable u
          //
          // for_sparsity
-         // update Hessian term with one parital w.r.t u other w.r.t
-         // independent variables that y depends on
-         for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+         // update Hessian term with one parital w.r.t u
+         if( ! linear_xy )
+         {  // other independent variables that z depends on
+            for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
+         }
+         else
+         {  // other independent variables that y depends on
+            for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+         }
          //
          // i_u
          i_u = *(++itr_y);
       }
    }
-   if( ! linear_xy )
+   if( (! linear_xy) && linear_x )
    {  //
       // itr_x, i_u
       typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
@@ -535,10 +547,12 @@ void two_var_for_hes(
          // i_u
          i_u = *(++itr_x);
       }
-      //
+   }
+   if( (! linear_xy) && linear_y )
+   {  //
       // itr_y, i_u
       typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
-      i_u = *itr_y;
+      size_t i_u = *itr_y;
       while( i_u < np1 )
       {  // y depends on the independent variable u
          //
