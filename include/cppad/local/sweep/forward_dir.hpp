@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_SWEEP_FORWARD2_HPP
-# define CPPAD_LOCAL_SWEEP_FORWARD2_HPP
+# ifndef CPPAD_LOCAL_SWEEP_FORWARD_DIR_HPP
+# define CPPAD_LOCAL_SWEEP_FORWARD_DIR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-24 Bradley M. Bell
@@ -12,7 +12,7 @@
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
 /*!
-\file sweep/forward2.hpp
+\file sweep/forward_dir.hpp
 Compute one Taylor coefficient for each direction requested.
 */
 
@@ -111,7 +111,7 @@ Specifies RecBase for this call.
 */
 
 template <class Base, class RecBase>
-void forward2(
+void forward_dir(
    const local::player<Base>*  play,
    const size_t                q,
    const size_t                r,

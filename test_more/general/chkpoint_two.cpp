@@ -298,7 +298,7 @@ namespace {
       CppAD::ADFun<double> f(ax, ay);
 
       // run case that skips the second call to afun
-      // (can use trace in forward0sweep.hpp to see this).
+      // (can use trace in sweep/forward_0.hpp to see this).
       vector<double> x(2), y_before(1), y_after(1);
       x[0]      = 1.0;
       x[1]      = 2.0;

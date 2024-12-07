@@ -853,9 +853,9 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // non-user interfaces
-# include <cppad/local/sweep/forward0.hpp>
-# include <cppad/local/sweep/forward1.hpp>
-# include <cppad/local/sweep/forward2.hpp>
+# include <cppad/local/sweep/forward_0.hpp>
+# include <cppad/local/sweep/forward_any.hpp>
+# include <cppad/local/sweep/forward_dir.hpp>
 # include <cppad/local/sweep/reverse.hpp>
 # include <cppad/local/sweep/for_jac.hpp>
 # include <cppad/local/sweep/rev_jac.hpp>

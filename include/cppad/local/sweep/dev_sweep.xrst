@@ -10,7 +10,7 @@ Developer Sweep Documentation
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/sweep/forward0.hpp
+   include/cppad/local/sweep/forward_0.hpp
    include/cppad/local/sweep/for_hes.hpp
    include/cppad/local/sweep/rev_jac.hpp
    include/cppad/local/sweep/call_atomic.hpp
