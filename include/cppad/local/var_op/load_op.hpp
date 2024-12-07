@@ -468,7 +468,7 @@ inline void load_reverse_op(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_load_forward_jac dev}
+{xrst_begin var_load_for_jac dev}
 
 Forward Jacobian Sparsity for Store a VecAD Element
 ###################################################
@@ -484,8 +484,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_LOAD_FORWARD_JAC
-   // END_LOAD_FORWARD_JAC
+   // BEGIN_LOAD_FOR_JAC
+   // END_LOAD_FOR_JAC
 }
 
 op_code, num_vecad_ind, arg
@@ -528,11 +528,11 @@ vecad_sparsity
 The set with index *i_v* in *vecad_sparsity
 is the sparsity pattern for the vector *v*.
 
-{xrst_end var_load_forward_jac}
+{xrst_end var_load_for_jac}
 */
-// BEGIN_LOAD_FORWARD_JAC
+// BEGIN_LOAD_FOR_JAC
 template <class Vector_set>
-inline void load_forward_jac(
+inline void load_for_jac(
    op_code_var               op_code        ,
    size_t                    num_vecad_ind  ,
    size_t                    i_z            ,
@@ -541,7 +541,7 @@ inline void load_forward_jac(
    const pod_vector<size_t>& vecad_ind      ,
    Vector_set&               var_sparsity   ,
    const Vector_set&         vecad_sparsity )
-// END_LOAD_FORWARD_JAC
+// END_LOAD_FOR_JAC
 {  //
    //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
@@ -565,7 +565,7 @@ inline void load_forward_jac(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_load_reverse_jac dev}
+{xrst_begin var_load_rev_jac dev}
 
 Reverse Jacobian Sparsity for Load a VecAD Element
 ##################################################
@@ -581,8 +581,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_LOAD_REVERSE_JAC
-   // END_LOAD_REVERSE_JAC
+   // BEGIN_LOAD_REV_JAC
+   // END_LOAD_REV_JAC
 }
 
 op_code, num_vecad_ind, arg
@@ -626,11 +626,11 @@ The sparsity pattern for *z* is added to the sparsity pattern
 with index *i_v* in *vecad_sparsity ( the sparsity pattern for *v* ).
 
 
-{xrst_end var_load_reverse_jac}
+{xrst_end var_load_rev_jac}
 */
-// BEGIN_LOAD_REVERSE_JAC
+// BEGIN_LOAD_REV_JAC
 template <class Vector_set>
-inline void load_reverse_jac(
+inline void load_rev_jac(
    op_code_var               op_code        ,
    size_t                    num_vecad_ind  ,
    size_t                    i_z            ,
@@ -639,7 +639,7 @@ inline void load_reverse_jac(
    const pod_vector<size_t>& vecad_ind      ,
    Vector_set&               var_sparsity   ,
    Vector_set&               vecad_sparsity )
-// END_LOAD_REVERSE_JAC
+// END_LOAD_REV_JAC
 {  //
    //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
@@ -660,7 +660,7 @@ inline void load_reverse_jac(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_load_reverse_hes dev}
+{xrst_begin var_load_rev_hes dev}
 
 Reverse Hessian Sparsity for Load a VecAD Element
 #################################################
@@ -676,8 +676,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_LOAD_REVERSE_HES
-   // END_LOAD_REVERSE_HES
+   // BEGIN_LOAD_REV_HES
+   // END_LOAD_REV_HES
 }
 
 op_code, num_vecad_ind, i_z, arg
@@ -725,11 +725,11 @@ vecad_rev_jac
 If the scalar function has non-zero partial w.r.t *z* ,
 the *i_v* component of *vecad_rev_jac* is set to true.
 
-{xrst_end var_load_reverse_hes}
+{xrst_end var_load_rev_hes}
 */
-// BEGIN_LOAD_REVERSE_HES
+// BEGIN_LOAD_REV_HES
 template <class Vector_set>
-inline void load_reverse_hes(
+inline void load_rev_hes(
    op_code_var               op_code        ,
    const addr_t*             arg            ,
    size_t                    num_vecad_ind  ,
@@ -739,7 +739,7 @@ inline void load_reverse_hes(
    Vector_set&               vecad_sparsity ,
    const bool*               var_rev_jac    ,
    pod_vector<bool>&         vecad_rev_jac  )
-// END_LOAD_REVERSE_HES
+// END_LOAD_REV_HES
 {  //
    //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);
@@ -761,7 +761,7 @@ inline void load_reverse_hes(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_load_forward_hes dev}
+{xrst_begin var_load_for_hes dev}
 
 Forward Hessian Sparsity for Load a VecAD Element
 #################################################
@@ -777,8 +777,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_LOAD_FORWARD_HES
-   // END_LOAD_FORWARD_HES
+   // BEGIN_LOAD_FOR_HES
+   // END_LOAD_FOR_HES
 }
 
 op_code, num_vecad_ind, i_z, arg
@@ -818,11 +818,11 @@ for_hes_sparse
 **************
 see :ref:`local_sweep_for_hes@for_hes_sparse` .
 
-{xrst_end var_load_forward_hes}
+{xrst_end var_load_for_hes}
 */
-// BEGIN_LOAD_FORWARD_HES
+// BEGIN_LOAD_FOR_HES
 template <class Vector_set>
-inline void load_forward_hes(
+inline void load_for_hes(
    op_code_var               op_code        ,
    const addr_t*             arg            ,
    size_t                    num_vecad_ind  ,
@@ -831,7 +831,7 @@ inline void load_forward_hes(
    const pod_vector<size_t>& vecad_ind      ,
    const Vector_set&         vecad_sparsity ,
    Vector_set&               for_hes_sparse )
-// END_LOAD_FORWARD_HES
+// END_LOAD_FOR_HES
 {  //
    //
    CPPAD_ASSERT_NARG_NRES(op_code, 3, 1);

@@ -390,7 +390,7 @@ inline void csum_reverse_op(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_csum_forward_jac dev}
+{xrst_begin var_csum_for_jac dev}
 
 Forward Jacobian Sparsity for Cumulative Summation
 ##################################################
@@ -398,8 +398,8 @@ Forward Jacobian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FORWARD_JAC
-   // END_CSUM_FORWARD_JAC
+   // BEGIN_CSUM_FOR_JAC
+   // END_CSUM_FOR_JAC
 }
 
 x, y, u, v, z
@@ -438,15 +438,15 @@ Output
 The set with index i_z in *sparsity*
 identifies which independent variables the variable *z* depends on.
 
-{xrst_end var_csum_forward_jac}
+{xrst_end var_csum_for_jac}
 */
-// BEGIN_CSUM_FORWARD_JAC
+// BEGIN_CSUM_FOR_JAC
 template <class Vector_set>
-inline void csum_forward_jac(
+inline void csum_for_jac(
    size_t           i_z         ,
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
-// END_CSUM_FORWARD_JAC
+// END_CSUM_FOR_JAC
 {  //
    //
    // sparsity
@@ -465,7 +465,7 @@ inline void csum_forward_jac(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_csum_reverse_jac dev}
+{xrst_begin var_csum_rev_jac dev}
 
 Reverse Jacobian Sparsity for Cumulative Summation
 ##################################################
@@ -473,8 +473,8 @@ Reverse Jacobian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_REVERSE_JAC
-   // END_CSUM_REVERSE_JAC
+   // BEGIN_CSUM_REV_JAC
+   // END_CSUM_REV_JAC
 }
 
 x, y, u, v, z
@@ -504,15 +504,15 @@ The set with index *i_z* is the sparsity pattern for *z* .
 This sparsity pattern is added th the sparsity pattern for the
 variables in the vectors *x* and *y* .
 
-{xrst_end var_csum_reverse_jac}
+{xrst_end var_csum_rev_jac}
 */
-// BEGIN_CSUM_REVERSE_JAC
+// BEGIN_CSUM_REV_JAC
 template <class Vector_set>
-inline void csum_reverse_jac(
+inline void csum_rev_jac(
    size_t           i_z         ,
    const addr_t*    arg         ,
    Vector_set&      sparsity    )
-// END_CSUM_REVERSE_JAC
+// END_CSUM_REV_JAC
 {  //
    //
    // addition and subtraction variables
@@ -528,7 +528,7 @@ inline void csum_reverse_jac(
    }
 }
 /*
-{xrst_begin var_csum_reverse_hes dev}
+{xrst_begin var_csum_rev_hes dev}
 
 Reverse Hessian Sparsity for Cumulative Summation
 #################################################
@@ -536,8 +536,8 @@ Reverse Hessian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_REVERSE_HES
-   // END_CSUM_REVERSE_HES
+   // BEGIN_CSUM_REV_HES
+   // END_CSUM_REV_HES
 }
 
 x, y, u, v, z
@@ -583,16 +583,16 @@ On input, *rev_hes_sparsity*
 contains the Hessian sparsity pattern for the function *G* .
 On output, it contains the Hessian sparsity pattern for the function *H* .
 
-{xrst_end var_csum_reverse_hes}
+{xrst_end var_csum_rev_hes}
 */
-// BEGIN_CSUM_REVERSE_HES
+// BEGIN_CSUM_REV_HES
 template <class Vector_set>
-inline void csum_reverse_hes(
+inline void csum_rev_hes(
    size_t           i_z                 ,
    const addr_t*    arg                 ,
    bool*            rev_jacobian        ,
    Vector_set&      rev_hes_sparsity    )
-// END_CSUM_REVERSE_HES
+// END_CSUM_REV_HES
 {  //
    //
    // addition and subtraction variables
@@ -610,7 +610,7 @@ inline void csum_reverse_hes(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_csum_forward_hes dev}
+{xrst_begin var_csum_for_hes dev}
 
 Forward Hessian Sparsity for Cumulative Summation
 #################################################
@@ -618,8 +618,8 @@ Forward Hessian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FORWARD_HES
-   // END_CSUM_FORWARD_HES
+   // BEGIN_CSUM_FOR_HES
+   // END_CSUM_FOR_HES
 }
 
 x, y, u, v, z
@@ -650,16 +650,16 @@ for_hes_sparse
 **************
 see :ref:`local_sweep_for_hes@for_hes_sparse` .
 
-{xrst_end var_csum_forward_hes}
+{xrst_end var_csum_for_hes}
 */
-// BEGIN_CSUM_FORWARD_HES
+// BEGIN_CSUM_FOR_HES
 template <class Vector_set>
-inline void csum_forward_hes(
+inline void csum_for_hes(
    const addr_t*             arg            ,
    size_t                    i_z            ,
    size_t                    n              ,
    Vector_set&               for_hes_sparse )
-// END_CSUM_FORWARD_HES
+// END_CSUM_FOR_HES
 {  //
    //
    // np1

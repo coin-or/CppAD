@@ -844,7 +844,7 @@ This identifies which of the independent variables the variable z
 depends on.
 */
 template <class Vector_set>
-inline void cexp_forward_jac(
+inline void cexp_for_jac(
    bool               dependency    ,
    size_t             i_z           ,
    const addr_t*      arg           ,
@@ -986,7 +986,7 @@ This identifies which of the dependent variables depend on the variable z.
 On input and output, this pattern corresponds to the function G.
 */
 template <class Vector_set>
-inline void cexp_reverse_jac(
+inline void cexp_rev_jac(
    bool                dependency    ,
    size_t              i_z           ,
    const addr_t*       arg           ,
@@ -1144,7 +1144,7 @@ On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 */
 template <class Vector_set>
-inline void cexp_reverse_hes(
+inline void cexp_rev_hes(
    size_t               i_z           ,
    const addr_t*        arg           ,
    size_t               num_par       ,

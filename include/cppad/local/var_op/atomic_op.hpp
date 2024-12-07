@@ -13,10 +13,10 @@ enum sweep_type {
    forward_op_sweep,
    forward_dir_sweep,
    reverse_op_sweep,
-   forward_jac_sweep,
-   reverse_jac_sweep,
-   forward_hes_sweep,
-   reverse_hes_sweep
+   for_jac_sweep,
+   rev_jac_sweep,
+   for_hes_sweep,
+   rev_hes_sweep
 };
 
 // atomic_op_work
@@ -96,12 +96,12 @@ struct atomic_op_work {
          variable_y.resize(0);
          break;
          // ------------------------------------------------------------------
-         // forward_jac_sweep, reverse_jac_sweep
-         // forward_hes_sweep, reverse_hes_sweep
-         case forward_jac_sweep:
-         case reverse_jac_sweep:
-         case forward_hes_sweep:
-         case reverse_hes_sweep:
+         // for_jac_sweep, rev_jac_sweep
+         // for_hes_sweep, rev_hes_sweep
+         case for_jac_sweep:
+         case rev_jac_sweep:
+         case for_hes_sweep:
+         case rev_hes_sweep:
          taylor_x.resize(0);
          taylor_y.resize(0);
          //
@@ -907,7 +907,7 @@ void atomic_reverse_op(
 }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin var_atomic_forward_jac dev}
+{xrst_begin var_atomic_for_jac dev}
 
 Forward Jacobian Sparsity Atomic Function Call
 ##############################################
@@ -915,8 +915,8 @@ Forward Jacobian Sparsity Atomic Function Call
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ATOMIC_FORWARD_JAC
-   // END_ATOMIC_FORWARD_JAC
+   // BEGIN_ATOMIC_FOR_JAC
+   // END_ATOMIC_FOR_JAC
 }
 
 {xrst_template ;
@@ -948,11 +948,11 @@ Output
    for j = i_z , ... , i_z - n_res + 1
       The set with index j in var_sparsity
 
-{xrst_end var_atomic_forward_jac}
+{xrst_end var_atomic_for_jac}
 */
-// BEGIN_ATOMIC_FORWARD_JAC
+// BEGIN_ATOMIC_FOR_JAC
 template <class Vector_set, class Base, class RecBase>
-inline void atomic_forward_jac(
+inline void atomic_for_jac(
    play::const_sequential_iterator& itr          ,
    const player<Base>*              play         ,
    const Base*                      parameter    ,
@@ -960,7 +960,7 @@ inline void atomic_forward_jac(
    atomic_op_work<Base>&            work         ,
    bool                             dependency   ,
    Vector_set&                      var_sparsity )
-// END_ATOMIC_FORWARD_JAC
+// END_ATOMIC_FOR_JAC
 {  //
    //
    // vector
@@ -990,7 +990,7 @@ inline void atomic_forward_jac(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, forward_jac_sweep);
+   work.resize(m, n, n_order, for_jac_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
@@ -1121,7 +1121,7 @@ inline void atomic_forward_jac(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_atomic_reverse_jac dev}
+{xrst_begin var_atomic_rev_jac dev}
 
 Reverse Jacobian Sparsity Atomic Function Call
 ##############################################
@@ -1129,8 +1129,8 @@ Reverse Jacobian Sparsity Atomic Function Call
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ATOMIC_REVERSE_JAC
-   // END_ATOMIC_REVERSE_JAC
+   // BEGIN_ATOMIC_REV_JAC
+   // END_ATOMIC_REV_JAC
 }
 
 {xrst_template ;
@@ -1153,11 +1153,11 @@ On input, *var_sparsity* contains the sparsity pattern for
 On output it contains the sparsity pattern for
 :math:`H ( x, \cdots )` .
 
-{xrst_end var_atomic_reverse_jac}
+{xrst_end var_atomic_rev_jac}
 */
-// BEGIN_ATOMIC_REVERSE_JAC
+// BEGIN_ATOMIC_REV_JAC
 template <class Vector_set, class Base, class RecBase>
-inline void atomic_reverse_jac(
+inline void atomic_rev_jac(
    play::const_sequential_iterator& itr          ,
    const player<Base>*              play         ,
    const Base*                      parameter    ,
@@ -1165,7 +1165,7 @@ inline void atomic_reverse_jac(
    atomic_op_work<Base>&            work         ,
    bool                             dependency   ,
    Vector_set&                      var_sparsity )
-// END_ATOMIC_REVERSE_JAC
+// END_ATOMIC_REV_JAC
 {  //
    //
    // vector
@@ -1195,7 +1195,7 @@ inline void atomic_reverse_jac(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, reverse_jac_sweep);
+   work.resize(m, n, n_order, rev_jac_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
@@ -1329,7 +1329,7 @@ inline void atomic_reverse_jac(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin var_atomic_reverse_hes dev}
+{xrst_begin var_atomic_rev_hes dev}
 
 Reverse Hessian Sparsity Atomic Function Call
 #############################################
@@ -1337,8 +1337,8 @@ Reverse Hessian Sparsity Atomic Function Call
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ATOMIC_REVERSE_HES
-   // END_ATOMIC_REVERSE_HES
+   // BEGIN_ATOMIC_REV_HES
+   // END_ATOMIC_REV_HES
 }
 
 {xrst_template ;
@@ -1396,11 +1396,11 @@ For *i* a variable index between 1 and the number of independent variables,
 (The index *i* = 0 corresponds to the phantom variable at the beginning
 of the tape. )
 
-{xrst_end var_atomic_reverse_hes}
+{xrst_end var_atomic_rev_hes}
 */
-// BEGIN_ATOMIC_REVERSE_HES
+// BEGIN_ATOMIC_REV_HES
 template <class Vector_set, class Base, class RecBase>
-inline void atomic_reverse_hes(
+inline void atomic_rev_hes(
    play::const_sequential_iterator& itr               ,
    const player<Base>*              play              ,
    const Base*                      parameter         ,
@@ -1409,7 +1409,7 @@ inline void atomic_reverse_hes(
    const Vector_set&                for_jac_sparsity  ,
    bool*                            rev_jac_include   ,
    Vector_set&                      rev_hes_sparsity  )
-// END_ATOMIC_REVERSE_HES
+// END_ATOMIC_REV_HES
 {  //
    //
    CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_set() == play->num_var_rec() );
@@ -1443,7 +1443,7 @@ inline void atomic_reverse_hes(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, reverse_hes_sweep);
+   work.resize(m, n, n_order, rev_hes_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );
@@ -1587,7 +1587,7 @@ inline void atomic_reverse_hes(
 }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin var_atomic_forward_hes dev}
+{xrst_begin var_atomic_for_hes dev}
 
 Forward Hessian Sparsity Atomic Function Call
 #############################################
@@ -1595,8 +1595,8 @@ Forward Hessian Sparsity Atomic Function Call
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ATOMIC_FORWARD_HES
-   // END_ATOMIC_FORWARD_HES
+   // BEGIN_ATOMIC_FOR_HES
+   // END_ATOMIC_FOR_HES
 }
 
 {xrst_template ;
@@ -1646,11 +1646,11 @@ If *i* is in the set with index *n_independent_p1* + *j* ,
 the variable with index *j* may have a non-zero partial with resect to the
 independent variable with index *i* - 1 .
 
-{xrst_end var_atomic_forward_hes}
+{xrst_end var_atomic_for_hes}
 */
-// BEGIN_ATOMIC_FORWARD_HES
+// BEGIN_ATOMIC_FOR_HES
 template <class Vector_set, class Base, class RecBase>
-inline void atomic_forward_hes(
+inline void atomic_for_hes(
    play::const_sequential_iterator& itr              ,
    const player<Base>*              play             ,
    const Base*                      parameter        ,
@@ -1659,7 +1659,7 @@ inline void atomic_forward_hes(
    size_t                           n_independent_p1 ,
    const Vector_set&                rev_jac_sparsity ,
    Vector_set&                      for_hes_sparsity )
-// END_ATOMIC_FORWARD_HES
+// END_ATOMIC_FOR_HES
 {  CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
    //
    CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == n_independent_p1 );
@@ -1691,7 +1691,7 @@ inline void atomic_forward_hes(
    //
    // parameter_x, type_x, index_x, index_y
    size_t n_order = 0;
-   work.resize(m, n, n_order, forward_hes_sweep);
+   work.resize(m, n, n_order, for_hes_sweep);
    vector<Base>&         parameter_x( work.parameter_x );
    vector<ad_type_enum>& type_x( work.type_x );
    vector<size_t>&       index_x( work.index_x );

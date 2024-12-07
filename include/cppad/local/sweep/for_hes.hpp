@@ -339,7 +339,7 @@ void for_hes(
          // VecAD load operators
          case LdvOp:
          case LdpOp:
-         var_op::load_forward_hes(
+         var_op::load_for_hes(
             op, arg, num_vecad_ind, i_var, n,
             vecad_ind, vecad_sparsity, for_hes_sparse
          );
@@ -350,7 +350,7 @@ void for_hes(
          case StpvOp:
          case StvpOp:
          case StvvOp:
-         var_op::store_forward_hes(op,
+         var_op::store_for_hes(op,
             arg, num_vecad_ind, n,
             vecad_ind, vecad_sparsity, for_hes_sparse
          );
@@ -392,7 +392,7 @@ void for_hes(
          // -------------------------------------------------
 
          case CSumOp:
-         var_op::csum_forward_hes(arg, i_var, n, for_hes_sparse);
+         var_op::csum_for_hes(arg, i_var, n, for_hes_sparse);
          itr.correct_before_increment();
          break;
          // -------------------------------------------------
@@ -484,7 +484,7 @@ void for_hes(
          // -------------------------------------------------
 
          case AFunOp:
-         var_op::atomic_forward_hes<SetVector, Base, RecBase>(
+         var_op::atomic_for_hes<SetVector, Base, RecBase>(
             itr,
             play,
             parameter,

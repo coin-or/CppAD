@@ -284,14 +284,14 @@ void rev_hes(
 
          case CSumOp:
          itr.correct_after_decrement(arg);
-         var_op::csum_reverse_hes(
+         var_op::csum_rev_hes(
             i_var, arg, RevJac, rev_hes_sparse
          );
          break;
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cexp_reverse_hes(
+         var_op::cexp_rev_hes(
             i_var, arg, num_par, RevJac, rev_hes_sparse
          );
          break;
@@ -322,7 +322,7 @@ void rev_hes(
 
          case LdpOp:
          case LdvOp:
-         var_op::load_reverse_hes(
+         var_op::load_rev_hes(
             op,
             arg,
             num_vecad_ind,
@@ -397,7 +397,7 @@ void rev_hes(
          case StpvOp:
          case StvpOp:
          case StvvOp:
-         var_op::store_reverse_hes(
+         var_op::store_rev_hes(
             op,
             arg,
             num_vecad_ind,
@@ -411,7 +411,7 @@ void rev_hes(
          // -------------------------------------------------
 
          case AFunOp:
-         var_op::atomic_reverse_hes<Vector_set, Base, RecBase>(
+         var_op::atomic_rev_hes<Vector_set, Base, RecBase>(
             itr,
             play,
             parameter,

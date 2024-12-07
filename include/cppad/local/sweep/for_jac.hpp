@@ -224,7 +224,7 @@ void for_jac(
          // -------------------------------------------------
 
          case CSumOp:
-         var_op::csum_forward_jac(
+         var_op::csum_for_jac(
             i_var, arg, var_sparsity
          );
          itr.correct_before_increment();
@@ -232,7 +232,7 @@ void for_jac(
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cexp_forward_jac(
+         var_op::cexp_for_jac(
             dependency, i_var, arg, num_par, var_sparsity
          );
          break;
@@ -271,7 +271,7 @@ void for_jac(
 
          case LdpOp:
          case LdvOp:
-         var_op::load_forward_jac(
+         var_op::load_for_jac(
             op,
             num_vecad_ind,
             i_var,
@@ -343,7 +343,7 @@ void for_jac(
          case StpvOp:
          case StvpOp:
          case StvvOp:
-         var_op::store_forward_jac(
+         var_op::store_for_jac(
             op,
             num_vecad_ind,
             arg,
@@ -364,7 +364,7 @@ void for_jac(
          // -------------------------------------------------
 
          case AFunOp:
-         var_op:: atomic_forward_jac<Vector_set, Base, RecBase>(
+         var_op:: atomic_for_jac<Vector_set, Base, RecBase>(
             itr,
             play,
             parameter,

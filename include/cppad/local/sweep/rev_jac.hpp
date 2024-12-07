@@ -265,14 +265,14 @@ void rev_jac(
 
          case CSumOp:
          itr.correct_after_decrement(arg);
-         var_op::csum_reverse_jac(
+         var_op::csum_rev_jac(
             i_var, arg, var_sparsity
          );
          break;
          // -------------------------------------------------
 
          case CExpOp:
-         var_op::cexp_reverse_jac(
+         var_op::cexp_rev_jac(
             dependency, i_var, arg, num_par, var_sparsity
          );
          break;
@@ -302,7 +302,7 @@ void rev_jac(
 
          case LdpOp:
          case LdvOp:
-         var_op::load_reverse_jac(
+         var_op::load_rev_jac(
             op,
             num_vecad_ind,
             i_var,
@@ -373,7 +373,7 @@ void rev_jac(
          case StpvOp:
          case StvpOp:
          case StvvOp:
-         var_op::store_reverse_jac(
+         var_op::store_rev_jac(
             op,
             num_vecad_ind,
             arg,
@@ -394,7 +394,7 @@ void rev_jac(
          // -------------------------------------------------
 
          case AFunOp:
-         var_op::atomic_reverse_jac<Vector_set, Base, RecBase>(
+         var_op::atomic_rev_jac<Vector_set, Base, RecBase>(
             itr,
             play,
             parameter,
