@@ -181,12 +181,12 @@ void forward_0(
    CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
 
    // use p, q, r so other forward sweeps can use code defined here
-   size_t p = 0;
-   size_t q = 0;
+   size_t order_low = 0;
+   size_t order_up  = 0;
    size_t r = 1;
 
    // initialize the comparison operator counter
-   if( p == 0 )
+   if( order_low == 0 )
    {  change_number   = 0;
       change_op_index = 0;
    }
@@ -194,7 +194,7 @@ void forward_0(
    // If this includes a zero calculation, initialize this information
    pod_vector<bool>   vec_ad2isvar;
    pod_vector<size_t> vec_ad2index;
-   if( p == 0 )
+   if( order_low == 0 )
    {  size_t i;
 
       // this includes order zero calculation, initialize vector indices
@@ -214,8 +214,6 @@ void forward_0(
    }
 
    // information used by atomic function operators
-   const size_t order_low = p;
-   const size_t order_up  = q;
 
    // work space used by atomic funcions
    var_op::atomic_op_work<Base> atom_work;
@@ -415,7 +413,9 @@ void forward_0(
          // -------------------------------------------------
 
          case DisOp:
-         var_op::dis_forward_dir<RecBase>(p, q, r, i_var, arg, J, taylor);
+         var_op::dis_forward_dir<RecBase>(
+            order_low, order_up, r, i_var, arg, J, taylor
+         );
          break;
          // -------------------------------------------------
 
