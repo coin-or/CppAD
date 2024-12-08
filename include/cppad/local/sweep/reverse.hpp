@@ -33,7 +33,7 @@ and computations by this routine are done using type Base.
 \param n
 is the number of independent variables on the tape.
 
-\param numvar
+\param num_var
 is the total number of variables on the tape.
 This is also equal to the number of rows in the matrix Taylor; i.e.,
 play->num_var_rec().
@@ -82,7 +82,7 @@ Is the number of columns in the coefficient matrix Taylor.
 This must be greater than or equal d + 1.
 
 \param Taylor
-For i = 1 , ... , numvar, and for k = 0 , ... , d,
+For i = 1 , ... , num_var, and for k = 0 , ... , d,
  Taylor [ i * J + k ]
 is the k-th order Taylor coefficient corresponding to
 variable with index i on the tape.
@@ -103,11 +103,11 @@ The matrix \f$ w \f$, used to define \f$ W(u) \f$,
 is specified by these rows.
 For i = 0 , ... , m - 1,
 for k = 0 , ... , d,
-<code>Partial [ (numvar - m + i ) * K + k ] = w[i,k]</code>.
+<code>Partial [ (num_var - m + i ) * K + k ] = w[i,k]</code>.
 \n
 \n
 \b Temporary:
-For i = n+1 , ... , numvar - 1 and for k = 0 , ... , d,
+For i = n+1 , ... , num_var - 1 and for k = 0 , ... , d,
 the value of Partial [ i * K + k ] is used for temporary work space
 and its output value is not defined.
 \n
@@ -160,7 +160,7 @@ corresponding independent variables; see play->check_inv_op(n_ind).
 template <class Base, class Iterator, class RecBase>
 void reverse(
    size_t                      n,
-   size_t                      numvar,
+   size_t                      num_var,
    const local::player<Base>*  play,
    size_t                      J,
    const Base*                 Taylor,
@@ -172,9 +172,9 @@ void reverse(
    const RecBase&              not_used_rec_base
 )
 {
-   // check numvar argument
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
-   CPPAD_ASSERT_UNKNOWN( numvar > 0 );
+   // check num_var argument
+   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
+   CPPAD_ASSERT_UNKNOWN( num_var > 0 );
 
    // length of the parameter vector (used by CppAD assert macros)
    const size_t num_par = play->num_par_rec();
@@ -271,7 +271,7 @@ void reverse(
 
          case AcosOp:
          // sqrt(1 - x * x), acos(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::acos_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -280,7 +280,7 @@ void reverse(
 
          case AcoshOp:
          // sqrt(x * x - 1), acosh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::acosh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -304,7 +304,7 @@ void reverse(
 
          case AsinOp:
          // sqrt(1 - x * x), asin(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::asin_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -313,7 +313,7 @@ void reverse(
 
          case AsinhOp:
          // sqrt(1 + x * x), asinh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::asinh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -322,7 +322,7 @@ void reverse(
 
          case AtanOp:
          // 1 + x * x, atan(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::atan_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -331,7 +331,7 @@ void reverse(
 
          case AtanhOp:
          // 1 - x * x, atanh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::atanh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -374,7 +374,7 @@ void reverse(
          // --------------------------------------------------
 
          case CosOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::cos_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -382,7 +382,7 @@ void reverse(
          // --------------------------------------------------
 
          case CoshOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::cosh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -545,7 +545,7 @@ void reverse(
          // --------------------------------------------------
 
          case SignOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::sign_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -553,7 +553,7 @@ void reverse(
          // -------------------------------------------------
 
          case SinOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::sin_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -561,7 +561,7 @@ void reverse(
          // -------------------------------------------------
 
          case SinhOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::sinh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -615,7 +615,7 @@ void reverse(
          // -------------------------------------------------
 
          case TanOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::tan_reverse(
             i_var, arg, J, Taylor, K, Partial
          );
@@ -623,7 +623,7 @@ void reverse(
          // -------------------------------------------------
 
          case TanhOp:
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var );
          var_op::tanh_reverse(
             i_var, arg, J, Taylor, K, Partial
          );

@@ -39,7 +39,7 @@ sparse::pack_setvec or sparse::list_setvec.
 \param n
 is the number of independent variables on the tape.
 
-\param numvar
+\param num_var
 is the total number of variables on the tape; i.e.,
  play->num_var_rec().
 This is also the number of rows in the entire sparsity pattern
@@ -55,14 +55,14 @@ where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
 
 \param for_jac_sparse
-For i = 0 , ... , numvar - 1,
+For i = 0 , ... , num_var - 1,
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
 corresponds to the set with index i in for_jac_sparse.
 
 \param RevJac
 \b Input:
-For i = 0, ... , numvar - 1
+For i = 0, ... , num_var - 1
 the if the variable with index i on the tape is an dependent variable and
 included in the Hessian, RevJac[ i ] is equal to true,
 otherwise it is equal to false.
@@ -76,7 +76,7 @@ The reverse Hessian sparsity pattern for the variable with index i
 corresponds to the set with index i in rev_hes_sparse.
 \n
 \n
-\b Input: For i = 0 , ... , numvar - 1
+\b Input: For i = 0 , ... , num_var - 1
 the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
@@ -95,7 +95,7 @@ template <class Base, class Vector_set, class RecBase>
 void rev_hes(
    const local::player<Base>* play,
    size_t                     n,
-   size_t                     numvar,
+   size_t                     num_var,
    const Vector_set&          for_jac_sparse,
    bool*                      RevJac,
    Vector_set&                rev_hes_sparse,
@@ -107,11 +107,11 @@ void rev_hes(
 
    size_t             i, j, k;
 
-   // check numvar argument
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
-   CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
-   CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == numvar );
-   CPPAD_ASSERT_UNKNOWN( numvar > 0 );
+   // check num_var argument
+   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == num_var );
+   CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == num_var );
+   CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == num_var );
+   CPPAD_ASSERT_UNKNOWN( num_var > 0 );
 
    // upper limit exclusive for set elements
    size_t limit   = rev_hes_sparse.end();

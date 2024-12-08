@@ -671,7 +671,6 @@ void call_atomic_rev_jac_sparsity(
 {xrst_begin atomic_for_hes_sparsity_callback dev}
 {xrst_spell
    np
-   numvar
 }
 
 Forward Hessian Sparsity Callback to Atomic Functions
@@ -730,8 +729,8 @@ np1
 This is the number of independent variables plus one;
 i.e. size of *x* plus one.
 
-numvar
-******
+num_var
+*******
 This is the total number of variables in the tape.
 
 rev_jac_sparsity
@@ -744,7 +743,7 @@ computing the Hessian of.
 for_sparsity
 ************
 We have the conditions *np1* = *for_sparsity* . ``end`` ()
-and *for_sparsity* . ``n_set`` () = *np1* + *numvar* .
+and *for_sparsity* . ``n_set`` () = *np1* + *num_var* .
 
 Input Jacobian Sparsity
 =======================
@@ -785,13 +784,13 @@ void call_atomic_for_hes_sparsity(
    const vector<size_t>&        x_index           ,
    const vector<size_t>&        y_index           ,
    size_t                       np1               ,
-   size_t                       numvar            ,
+   size_t                       num_var           ,
    const InternalSparsity&      rev_jac_sparsity  ,
    InternalSparsity&            for_sparsity      )
 // END_FOR_HES_SPARSITY
 {  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
 
    bool         set_null = false;
    size_t       type     = 0;          // set to avoid warning
@@ -824,7 +823,7 @@ void call_atomic_for_hes_sparsity(
             x_index,
             y_index,
             np1,
-            numvar,
+            num_var,
             rev_jac_sparsity,
             for_sparsity
          );
@@ -838,7 +837,7 @@ void call_atomic_for_hes_sparsity(
             x_index,
             y_index,
             np1,
-            numvar,
+            num_var,
             rev_jac_sparsity,
             for_sparsity
          );
@@ -853,7 +852,7 @@ void call_atomic_for_hes_sparsity(
             x_index,
             y_index,
             np1,
-            numvar,
+            num_var,
             rev_jac_sparsity,
             for_sparsity
          );
@@ -882,7 +881,7 @@ void call_atomic_for_hes_sparsity(
          x_index,
          y_index,
          np1,
-         numvar,
+         num_var,
          rev_jac_sparsity,
          for_sparsity
       );
@@ -896,7 +895,7 @@ void call_atomic_for_hes_sparsity(
          x_index,
          y_index,
          np1,
-         numvar,
+         num_var,
          rev_jac_sparsity,
          for_sparsity
       );
@@ -910,7 +909,7 @@ void call_atomic_for_hes_sparsity(
          x_index,
          y_index,
          np1,
-         numvar,
+         num_var,
          rev_jac_sparsity,
          for_sparsity
       );

@@ -22,7 +22,6 @@ Compute zero order forward mode Taylor coefficients.
 {xrst_begin sweep_forward0 dev}
 {xrst_spell
    cskip
-   numvar
    pri
 }
 Compute Zero Order Forward Mode Taylor Coefficients
@@ -35,7 +34,7 @@ Syntax
 | |tab| *s_out* ,
 | |tab| *print* ,
 | |tab| *n* ,
-| |tab| *numvar* ,
+| |tab| *num_var*,
 | |tab| *J* ,
 | |tab| *taylor* ,
 | |tab| *cskip_op* ,
@@ -76,8 +75,8 @@ n
 *
 is the number of independent variables on the tape.
 
-numvar
-******
+num_var
+*******
 is the total number of variables on the tape.
 This is also equal to the number of rows in the matrix taylor; i.e.,
 *play* ``->num_var_rec`` () .
@@ -112,7 +111,7 @@ is the zero order Taylor coefficient for variable with index
 
 Output
 ======
-For *i* = *n* +1 , ... , *numvar* ``-1`` ,
+For *i* = *n* +1 , ... , *num_var* ``-1`` ,
 *taylor* [% *i* % * % *J* % + 0]%
 is the zero order Taylor coefficient for the variable with
 index i on the tape.
@@ -168,7 +167,7 @@ void forward_0(
    const RecBase&             not_used_rec_base,
    const local::player<Base>* play,
    size_t                     n,
-   size_t                     numvar,
+   size_t                     num_var,
    size_t                     J,
    Base*                      taylor,
    bool*                      cskip_op,
@@ -180,7 +179,7 @@ void forward_0(
    bool                       print
 )
 {  CPPAD_ASSERT_UNKNOWN( J >= 1 );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
+   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
 
    // use p, q, r so other forward sweeps can use code defined here
    size_t p = 0;
@@ -337,42 +336,42 @@ void forward_0(
 
          case AcosOp:
          // sqrt(1 - x * x), acos(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::acos_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case AcoshOp:
          // sqrt(x * x - 1), acosh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::acosh_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case AsinOp:
          // sqrt(1 - x * x), asin(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::asin_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case AsinhOp:
          // sqrt(1 + x * x), asinh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::asinh_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case AtanOp:
          // 1 + x * x, atan(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::atan_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case AtanhOp:
          // 1 - x * x, atanh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::atanh_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
@@ -388,14 +387,14 @@ void forward_0(
 
          case CosOp:
          // sin(x), cos(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::cos_forward_0(i_var, arg, J, taylor);
          break;
          // ---------------------------------------------------
 
          case CoshOp:
          // sinh(x), cosh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::cosh_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
@@ -472,7 +471,7 @@ void forward_0(
             i_var,
             play->num_var_vecad_ind_rec(),
             arg,
-            numvar,
+            num_var,
             num_par,
             parameter,
             J,
@@ -544,21 +543,21 @@ void forward_0(
 
          case SignOp:
          // cos(x), sin(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sign_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case SinOp:
          // cos(x), sin(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sin_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case SinhOp:
          // cosh(x), sinh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sinh_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
@@ -575,7 +574,7 @@ void forward_0(
          var_op::store_forward_0(
             op,
             arg,
-            numvar,
+            num_var,
             num_par,
             parameter,
             J,
@@ -605,14 +604,14 @@ void forward_0(
 
          case TanOp:
          // tan(x)^2, tan(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::tan_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------
 
          case TanhOp:
          // tanh(x)^2, tanh(x)
-         CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+         CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::tanh_forward_0(i_var, arg, J, taylor);
          break;
          // -------------------------------------------------

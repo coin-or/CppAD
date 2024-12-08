@@ -15,7 +15,6 @@
 /*
 {xrst_begin local_sweep_rev_jac dev}
 {xrst_spell
-   numvar
 }
 
 Reverse Mode Jacobian Sparsity Patterns
@@ -27,7 +26,7 @@ Syntax
 | |tab| *play*               ,
 | |tab| *dependency*         ,
 | |tab| *n*                  ,
-| |tab| *numvar*             ,
+| |tab| *num_var*            ,
 | |tab| *var_sparsity*       ,
 | |tab| ``not_used_rec_base``
 | )
@@ -78,8 +77,8 @@ n
 *
 is the number of independent variables in the tape.
 
-numvar
-******
+num_var
+*******
 is the total number of variables in the tape; i.e.,
 *play* ``->num_var_rec`` () .
 This is also the number of rows in all the sparsity patterns.
@@ -89,14 +88,14 @@ var_sparsity
 
 On Input
 ========
-For *i* = 0 , ... , *numvar* ``-1`` ,
+For *i* = 0 , ... , *num_var* ``-1`` ,
 if *i* corresponds to a dependent variables,
 the set with index *i* is an input.
 Otherwise the set with index *i* is empty.
 
 On Output
 =========
-For *i* = 0 , ... , *numvar* ``-1`` ,
+For *i* = 0 , ... , *num_var* ``-1`` ,
 the sparsity pattern for the variable with index *j* ``-1``
 is given by the set with index *j* in *var_sparsity* .
 Note that one dependent variable may depend on the value of another,
@@ -119,7 +118,7 @@ void rev_jac(
    const local::player<Base>* play               ,
    bool                       dependency         ,
    size_t                     n                  ,
-   size_t                     numvar             ,
+   size_t                     num_var            ,
    Vector_set&                var_sparsity       ,
    const RecBase&             not_used_rec_base  )
 // END_PROTOTYPE
@@ -129,10 +128,10 @@ void rev_jac(
    // length of the parameter vector (used by CppAD assert macros)
    const size_t num_par = play->num_par_rec();
 
-   // check numvar argument
-   CPPAD_ASSERT_UNKNOWN( numvar > 0 );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()   == numvar );
-   CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
+   // check num_var argument
+   CPPAD_ASSERT_UNKNOWN( num_var > 0 );
+   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()   == num_var );
+   CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == num_var );
 
    // upper limit (exclusive) for elements in the set
    size_t limit = var_sparsity.end();

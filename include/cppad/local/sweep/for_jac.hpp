@@ -47,7 +47,7 @@ This is used by the optimizer to obtain the correct dependency relations.
 \param n
 is the number of independent variables on the tape.
 
-\param numvar
+\param num_var
 is the total number of variables on the tape; i.e.,
  play->num_var_rec().
 
@@ -66,13 +66,13 @@ the sparsity pattern for the independent variable with index (j-1)
 corresponds to the set with index j in var_sparsity.
 \n
 \n
-\b Output: For i = n + 1 , ... , numvar - 1,
+\b Output: For i = n + 1 , ... , num_var - 1,
 the sparsity pattern for the variable with index i on the tape
 corresponds to the set with index i in var_sparsity.
 
 \par Checked Assertions:
-\li numvar == var_sparsity.n_set()
-\li numvar == play->num_var_rec()
+\li num_var == var_sparsity.n_set()
+\li num_var == play->num_var_rec()
 
 \param not_used_rec_base
 Specifies RecBase for this call.
@@ -83,16 +83,16 @@ void for_jac(
    const local::player<Base>* play,
    bool                       dependency        ,
    size_t                     n                 ,
-   size_t                     numvar            ,
+   size_t                     num_var           ,
    Vector_set&                var_sparsity,
    const RecBase&             not_used_rec_base
 )
 {
    size_t            i, j, k;
 
-   // check numvar argument
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()  == numvar );
-   CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
+   // check num_var argument
+   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()  == num_var );
+   CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == num_var );
 
    // length of the parameter vector (used by CppAD assert macros)
    const size_t num_par = play->num_par_rec();

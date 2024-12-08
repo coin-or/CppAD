@@ -14,7 +14,6 @@
 {xrst_begin local_sweep_for_hes dev}
 {xrst_spell
    inv
-   numvar
 }
 
 Forward Mode Hessian Sparsity Patterns
@@ -25,7 +24,7 @@ Syntax
 | ``local::sweep::for_hes`` (
 | |tab| *play*               ,
 | |tab| *n*                  ,
-| |tab| *numvar*             ,
+| |tab| *num_var*            ,
 | |tab| *select_domain*      ,
 | |tab| *rev_jac_sparse*     ,
 | |tab| *for_hes_sparse*     ,
@@ -83,8 +82,8 @@ n
 *
 is the number of independent variables in the tape.
 
-numvar
-******
+num_var
+*******
 is the total number of variables in the tape; i.e.,
 *play* ``->num_var_rec`` () .
 This is also the number of sets in all the sparsity patterns.
@@ -100,8 +99,8 @@ as the order of the InvOp operators.
 
 rev_jac_sparse
 **************
-Is a sparsity pattern with size *numvar* by one.
-For *i* =1, ..., *numvar* ``-1`` ,
+Is a sparsity pattern with size *num_var* by one.
+For *i* =1, ..., *num_var* ``-1`` ,
 the if the scalar valued function we are computing the Hessian sparsity for
 has a non-zero derivative w.r.t. variable with index *i* ,
 the set with index *i* has the element zero.
@@ -109,7 +108,7 @@ Otherwise it has no elements.
 
 for_hes_sparse
 **************
-This is a sparsity pattern with *n* + 1 + *numvar* sets
+This is a sparsity pattern with *n* + 1 + *num_var* sets
 and end value *n* + 1 .
 On input, all of the sets are empty.
 On output, it contains the two sparsity patterns described below:
@@ -125,14 +124,14 @@ phantom variable on the tape.
 
 Jacobian Sparsity
 =================
-For *k* equal 1 to *numvar* - 1 ,
+For *k* equal 1 to *num_var* - 1 ,
 if *i* is in the set with index *n* + 1 + *k* ,
 the variable with index *k* may have a non-zero partial with resect to the
 independent variable with index *i* - 1 .
 
 Method
 ======
-For *k* equal 1 to *numvar* - 1,
+For *k* equal 1 to *num_var* - 1,
 the Jacobian sparsity pattern for variable with index *k* is computed using
 the previous Jacobian sparsity patterns.
 The Hessian sparsity pattern is updated using linear and non-linear
@@ -154,7 +153,7 @@ template <class Base, class SetVector, class RecBase>
 void for_hes(
    const local::player<Base>* play                ,
    size_t                     n                   ,
-   size_t                     numvar              ,
+   size_t                     num_var             ,
    const pod_vector<bool>&    select_domain       ,
    const SetVector&           rev_jac_sparse      ,
    SetVector&                 for_hes_sparse      ,
@@ -169,14 +168,14 @@ void for_hes(
    // check arguments
    size_t np1 = n+1;
    CPPAD_ASSERT_UNKNOWN( select_domain.size()   == n );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
-   CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == numvar );
-   CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == np1+numvar );
+   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == num_var );
+   CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == num_var );
+   CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == np1+num_var );
    //
    CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.end()   == 1   );
    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end()   == np1 );
    //
-   CPPAD_ASSERT_UNKNOWN( numvar > 0 );
+   CPPAD_ASSERT_UNKNOWN( num_var > 0 );
    //
    // vecad_sparsity: forward Jacobian sparsity pattern for each VecAD object.
    // vecad_ind: maps the VecAD index at beginning of the VecAD object
@@ -308,7 +307,7 @@ void for_hes(
          case ZmulvpOp:
          linear[0] = true;
          var_op::one_var_for_hes(
-            np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
+            np1, num_var, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
 
@@ -319,7 +318,7 @@ void for_hes(
          case SubpvOp:
          linear[0] = true;
          var_op::one_var_for_hes(
-            np1, numvar, i_var, size_t(arg[1]), linear, for_hes_sparse
+            np1, num_var, i_var, size_t(arg[1]), linear, for_hes_sparse
          );
          break;
 
@@ -331,7 +330,7 @@ void for_hes(
          linear[1] = true;
          linear[2] = true;
          var_op::two_var_for_hes(
-            np1, numvar, i_var, arg, linear, for_hes_sparse
+            np1, num_var, i_var, arg, linear, for_hes_sparse
          );
          break;
 
@@ -381,7 +380,7 @@ void for_hes(
          CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) )
          linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
+               np1, num_var, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -403,7 +402,7 @@ void for_hes(
          linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          var_op::two_var_for_hes(
-            np1, numvar, i_var, arg, linear, for_hes_sparse
+            np1, num_var, i_var, arg, linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -412,7 +411,7 @@ void for_hes(
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[1]), linear, for_hes_sparse
+               np1, num_var, i_var, size_t(arg[1]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -449,7 +448,7 @@ void for_hes(
          linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          var_op::two_var_for_hes(
-            np1, numvar, i_var, arg, linear, for_hes_sparse
+            np1, num_var, i_var, arg, linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -458,7 +457,7 @@ void for_hes(
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
          linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[1]), linear, for_hes_sparse
+               np1, num_var, i_var, size_t(arg[1]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -467,7 +466,7 @@ void for_hes(
          CPPAD_ASSERT_NARG_NRES(op, 2, 1)
          linear[0] = false;
          var_op::one_var_for_hes(
-               np1, numvar, i_var, size_t(arg[0]), linear, for_hes_sparse
+               np1, num_var, i_var, size_t(arg[0]), linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
@@ -478,7 +477,7 @@ void for_hes(
          linear[2] = false;
          CPPAD_ASSERT_NARG_NRES(op, 2, 3)
          var_op::two_var_for_hes(
-            np1, numvar, i_var, arg, linear, for_hes_sparse
+            np1, num_var, i_var, arg, linear, for_hes_sparse
          );
          break;
          // -------------------------------------------------
