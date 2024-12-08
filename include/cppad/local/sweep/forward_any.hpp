@@ -161,11 +161,8 @@ Specifies RecBase for this call.
 
 template <class Base, class RecBase>
 void forward_any(
+   const RecBase&             not_used_rec_base,
    const local::player<Base>* play,
-   std::ostream&              s_out,
-   const bool                 print,
-   const size_t               p,
-   const size_t               q,
    const size_t               n,
    const size_t               numvar,
    const size_t               J,
@@ -175,7 +172,10 @@ void forward_any(
    size_t                     change_count,
    size_t&                    change_number,
    size_t&                    change_op_index,
-   const RecBase&             not_used_rec_base
+   std::ostream&              s_out,
+   const bool                 print,
+   const size_t               p,
+   const size_t               q
 )
 {
    // number of directions

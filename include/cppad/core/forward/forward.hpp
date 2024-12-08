@@ -192,24 +192,41 @@ BaseVector ADFun<Base,RecBase>::Forward(
    CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
    if( q == 0 )
-   {
-      local::sweep::forward_0(&play_, s, true,
-         n, num_var_tape_, C,
-         taylor_.data(), cskip_op_.data(), load_op2var_,
+   {  bool print = true;
+      local::sweep::forward_0(
+         not_used_rec_base,
+         &play_,
+         n,
+         num_var_tape_,
+         C,
+         taylor_.data(),
+         cskip_op_.data(),
+         load_op2var_,
          compare_change_count_,
          compare_change_number_,
          compare_change_op_index_,
-         not_used_rec_base
+         s,
+         print
       );
    }
    else
-   {  local::sweep::forward_any(&play_, s, true, p, q,
-         n, num_var_tape_, C,
-         taylor_.data(), cskip_op_.data(), load_op2var_,
+   {  bool print = true;
+      local::sweep::forward_any(
+         not_used_rec_base,
+         &play_,
+         n,
+         num_var_tape_,
+         C,
+         taylor_.data(),
+         cskip_op_.data(),
+         load_op2var_,
          compare_change_count_,
          compare_change_number_,
          compare_change_op_index_,
-         not_used_rec_base
+         s,
+         print,
+         p,
+         q
       );
    }
 
@@ -457,16 +474,16 @@ BaseVector ADFun<Base,RecBase>::Forward(
    CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
    local::sweep::forward_dir(
+      not_used_rec_base,
       &play_,
-      q,
-      r,
       n,
       num_var_tape_,
       c,
       taylor_.data(),
       cskip_op_.data(),
       load_op2var_,
-      not_used_rec_base
+      q,
+      r
    );
 
    // return Taylor coefficients for dependent variables

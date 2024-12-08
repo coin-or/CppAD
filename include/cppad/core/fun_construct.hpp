@@ -481,13 +481,21 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
    // use independent variable values to fill in values for others
    CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
-   local::sweep::forward_0(&play_, std::cout, false,
-      n, num_var_tape_, cap_order_taylor_, taylor_.data(),
-      cskip_op_.data(), load_op2var_,
+   bool print = false;
+   local::sweep::forward_0(
+      not_used_rec_base,
+      &play_,
+      n,
+      num_var_tape_,
+      cap_order_taylor_,
+      taylor_.data(),
+      cskip_op_.data(),
+      load_op2var_,
       compare_change_count_,
       compare_change_number_,
       compare_change_op_index_,
-      not_used_rec_base
+      std::cout,
+      print
    );
    CPPAD_ASSERT_UNKNOWN( compare_change_count_    == 1 );
    CPPAD_ASSERT_UNKNOWN( compare_change_number_   == 0 );

@@ -112,16 +112,16 @@ Specifies RecBase for this call.
 
 template <class Base, class RecBase>
 void forward_dir(
+   const RecBase&              not_used_rec_base,
    const local::player<Base>*  play,
-   const size_t                q,
-   const size_t                r,
    const size_t                n,
    const size_t                numvar,
    const size_t                J,
    Base*                       taylor,
    const bool*                 cskip_op,
    const pod_vector<addr_t>&   load_op2var,
-   const RecBase&              not_used_rec_base
+   const size_t                q,
+   const size_t                r
 )
 {
    CPPAD_ASSERT_UNKNOWN( q > 0 );

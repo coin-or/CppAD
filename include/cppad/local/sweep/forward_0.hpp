@@ -165,9 +165,8 @@ Specifies *RecBase* for this call.
 
 template <class Base, class RecBase>
 void forward_0(
+   const RecBase&             not_used_rec_base,
    const local::player<Base>* play,
-   std::ostream&              s_out,
-   bool                       print,
    size_t                     n,
    size_t                     numvar,
    size_t                     J,
@@ -177,7 +176,8 @@ void forward_0(
    size_t                     change_count,
    size_t&                    change_number,
    size_t&                    change_op_index,
-   const RecBase&             not_used_rec_base
+   std::ostream&              s_out,
+   bool                       print
 )
 {  CPPAD_ASSERT_UNKNOWN( J >= 1 );
    CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
