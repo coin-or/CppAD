@@ -40,9 +40,9 @@ Syntax
 | |tab| *taylor* ,
 | |tab| *cskip_op* ,
 | |tab| *load_op2var* ,
-| |tab| *compare_change_count* ,
-| |tab| *compare_change_number* ,
-| |tab| *compare_change_op_index* ,
+| |tab| *change_count* ,
+| |tab| *change_number* ,
+| |tab| *change_op_index* ,
 | |tab| *not_used_rec_base*
 | )
 
@@ -135,26 +135,26 @@ Note that even though the VecAD vector is a variable, the load
 can correspond to an element that is a parameter in which case
 *load_op2var* [ *i* ] is zero.
 
-compare_change_count
-********************
-Is the compare change count value at which *compare_change_op_index*
+change_count
+************
+Is the compare change count value at which *change_op_index*
 is returned. If it is zero, the comparison changes are not counted.
 
-compare_change_number
-*********************
-If *compare_change_count* is zero, this value is set to zero.
+change_number
+*************
+If *change_count* is zero, this value is set to zero.
 Otherwise, the return value is the number of comparison operations
 that have a different result from when the information in
 *play* was recorded.
 
-compare_change_op_index
-***********************
-If *compare_change_count* is zero, this value is set to zero.
+change_op_index
+***************
+If *change_count* is zero, this value is set to zero.
 Otherwise it is the operator index (see forward_next) for the
 comparison operation that has a different result from when the information in
 play was recorded.
 This is not the first comparison that is different,
-but rather the *compare_change_count* comparison.
+but rather the *change_count* comparison.
 
 not_used_rec_base
 *****************
@@ -174,9 +174,9 @@ void forward_0(
    Base*                      taylor,
    bool*                      cskip_op,
    pod_vector<addr_t>&        load_op2var,
-   size_t                     compare_change_count,
-   size_t&                    compare_change_number,
-   size_t&                    compare_change_op_index,
+   size_t                     change_count,
+   size_t&                    change_number,
+   size_t&                    change_op_index,
    const RecBase&             not_used_rec_base
 )
 {  CPPAD_ASSERT_UNKNOWN( J >= 1 );
@@ -189,8 +189,8 @@ void forward_0(
 
    // initialize the comparison operator counter
    if( p == 0 )
-   {  compare_change_number   = 0;
-      compare_change_op_index = 0;
+   {  change_number   = 0;
+      change_op_index = 0;
    }
 
    // If this includes a zero calculation, initialize this information
@@ -313,8 +313,8 @@ void forward_0(
          case NepvOp:
          case NevvOp:
          var_op::compare_forward_any(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
+            arg, parameter, J, taylor, itr.op_index(),
+            change_count, change_number, change_op_index
          );
          break;
          // -------------------------------------------------

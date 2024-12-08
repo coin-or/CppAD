@@ -130,24 +130,24 @@ this_op_index
 *************
 Is the operator index for this compare operation.
 
-compare_change_count
-********************
-is the compare_change_number at which *this_op_index* is returned
-as *compare_change_op_index*.
+change_count
+************
+is the change_number at which *this_op_index* is returned
+as *change_op_index*.
 If it is zero, the comparison changes are not counted.
 
-compare_change_number
-*********************
-If *compare_change_count* is zero, this value is not modified.
+change_number
+*************
+If *change_count* is zero, this value is not modified.
 Otherwise, if this operator comparison has changed (is no longer true),
-*compare_change_number* is incremented by one.
+*change_number* is incremented by one.
 
-compare_change_op_index
-***********************
-If *compare_change_count* is zero, this value is not modified.
+change_op_index
+***************
+If *change_count* is zero, this value is not modified.
 Otherwise, if this operator comparison has changed (is no longer true), and
-the new value of *compare_change_number* is equal to *compare_change_count* ,
-*compare_change_op_index* is set equal to *this_op_index* .
+the new value of *change_number* is equal to *change_count* ,
+*change_op_index* is set equal to *this_op_index* .
 
 {xrst_end var_compare_forward_any}
 */
@@ -165,16 +165,16 @@ template <class Base> void compare_forward_any(
    size_t        cap_order               ,
    const Base*   taylor                  ,
    size_t        this_op_index           ,
-   size_t        compare_change_count    ,
-   size_t&       compare_change_number   ,
-   size_t&       compare_change_op_index )
+   size_t        change_count            ,
+   size_t&       change_number           ,
+   size_t&       change_op_index         )
 // END_COMPARE_FORWARD_ANY
 {  //
    // n_arg, n_res
    CPPAD_ASSERT_NARG_NRES(op_code, 2, 0);
    //
    // special case
-   if( compare_change_count == 0 )
+   if( change_count == 0 )
       return;
    //
    // x, y
@@ -257,9 +257,9 @@ template <class Base> void compare_forward_any(
       break;
    }
    if( change )
-   {  ++compare_change_number;
-      if( compare_change_number == compare_change_count )
-         compare_change_op_index = this_op_index;
+   {  ++change_number;
+      if( change_number == change_count         )
+         change_op_index = this_op_index;
    }
 }
 }}} // END namespace

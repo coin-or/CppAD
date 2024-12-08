@@ -137,20 +137,20 @@ is the k-th order Taylor coefficient corresponding to
 the i-th variable.
 
 
-\param compare_change_count
+\param change_count
 Is the count value for changing number and op_index during
 zero order forward mode.
 
-\param compare_change_number
+\param change_number
 If p is non-zero, this value is not changed, otherwise:
-If compare_change_count is zero, this value is set to zero, otherwise:
+If change_count is zero, this value is set to zero, otherwise:
 this value is set to the number of comparison operations
 that have a different result from when the information in
 play was recorded.
 
-\param compare_change_op_index
+\param change_op_index
 if p is non-zero, this value is not changed, otherwise:
-If compare_change_count is zero, this value is set to zero.
+If change_count is zero, this value is set to zero.
 Otherwise it is the operator index (see forward_next) for the count-th
 comparison operation that has a different result from when the information in
 play was recorded.
@@ -172,9 +172,9 @@ void forward_any(
    Base*                      taylor,
    bool*                      cskip_op,
    pod_vector<addr_t>&        load_op2var,
-   size_t                     compare_change_count,
-   size_t&                    compare_change_number,
-   size_t&                    compare_change_op_index,
+   size_t                     change_count,
+   size_t&                    change_number,
+   size_t&                    change_op_index,
    const RecBase&             not_used_rec_base
 )
 {
@@ -191,8 +191,8 @@ void forward_any(
 
    // initialize the comparison operator counter
    if( p == 0 )
-   {  compare_change_number   = 0;
-      compare_change_op_index = 0;
+   {  change_number   = 0;
+      change_op_index = 0;
    }
 
    // If this includes a zero calculation, initialize this information
@@ -319,8 +319,8 @@ void forward_any(
          case NepvOp:
          case NevvOp:
          var_op::compare_forward_any(op,
-            arg, parameter, J, taylor, itr.op_index(), compare_change_count,
-            compare_change_number, compare_change_op_index
+            arg, parameter, J, taylor, itr.op_index(),
+            change_count, change_number, change_op_index
          );
          break;
          // -------------------------------------------------
@@ -718,8 +718,8 @@ void forward_any(
 # else
    }
 # endif
-   if( (p == 0) && (compare_change_count == 0) )
-      compare_change_number = 0;
+   if( (p == 0) && (change_count == 0) )
+      change_number = 0;
    return;
 }
 
