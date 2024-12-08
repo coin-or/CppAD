@@ -168,7 +168,6 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
    // used to identify the RecBase type in calls to sweeps
    RecBase not_used_rec_base(0.0);
    //
-   size_t n  = Domain();
    size_t m  = Range();
    //
    CPPAD_ASSERT_KNOWN(
@@ -204,7 +203,6 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
       // compute the Hessian sparsity pattern
       local::sweep::rev_hes(
          &play_,
-         n,
          num_var_tape_,
          for_jac_sparse_pack_,
          rev_jac_pattern.data(),
@@ -233,7 +231,6 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
       // compute the Hessian sparsity pattern
       local::sweep::rev_hes(
          &play_,
-         n,
          num_var_tape_,
          for_jac_sparse_set_,
          rev_jac_pattern.data(),

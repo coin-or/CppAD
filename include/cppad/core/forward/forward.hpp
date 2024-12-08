@@ -196,7 +196,6 @@ BaseVector ADFun<Base,RecBase>::Forward(
       local::sweep::forward_0(
          not_used_rec_base,
          &play_,
-         n,
          num_var_tape_,
          C,
          taylor_.data(),
@@ -214,7 +213,6 @@ BaseVector ADFun<Base,RecBase>::Forward(
       local::sweep::forward_any(
          not_used_rec_base,
          &play_,
-         n,
          num_var_tape_,
          C,
          taylor_.data(),
@@ -476,7 +474,6 @@ BaseVector ADFun<Base,RecBase>::Forward(
    local::sweep::forward_dir(
       not_used_rec_base,
       &play_,
-      n,
       num_var_tape_,
       c,
       taylor_.data(),

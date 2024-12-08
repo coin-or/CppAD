@@ -166,7 +166,6 @@ template <class Base, class RecBase>
 void forward_0(
    const RecBase&             not_used_rec_base,
    const local::player<Base>* play,
-   size_t                     n,
    size_t                     num_var,
    size_t                     J,
    Base*                      taylor,

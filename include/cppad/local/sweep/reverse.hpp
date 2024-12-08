@@ -159,7 +159,6 @@ corresponding independent variables; see play->check_inv_op(n_ind).
 */
 template <class Base, class Iterator, class RecBase>
 void reverse(
-   size_t                      n,
    size_t                      num_var,
    const local::player<Base>*  play,
    size_t                      J,

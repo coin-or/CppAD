@@ -485,7 +485,6 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
    local::sweep::forward_0(
       not_used_rec_base,
       &play_,
-      n,
       num_var_tape_,
       cap_order_taylor_,
       taylor_.data(),

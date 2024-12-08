@@ -276,7 +276,6 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
    // compute the Hessian sparsity patterns
    local::sweep::rev_hes(
       &play_,
-      n,
       num_var_tape_,
       for_jac_sparse_pack_,
       RevJac.data(),
@@ -414,7 +413,6 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
    // compute the Hessian sparsity patterns
    local::sweep::rev_hes(
       &play_,
-      n,
       num_var_tape_,
       for_jac_sparse_set_,
       RevJac.data(),
@@ -596,7 +594,6 @@ void ADFun<Base,RecBase>::RevSparseHesCheckpoint(
    // compute Hessian sparsity pattern for all variables
    local::sweep::rev_hes(
       &play_,
-      n,
       num_var_tape_,
       for_jac_sparse_set_,
       RevJac.data(),

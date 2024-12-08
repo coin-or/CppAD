@@ -156,7 +156,6 @@ BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
    local::play::const_sequential_iterator play_itr = play_.end();
    local::sweep::reverse(
-      n,
       num_var_tape_,
       &play_,
       cap_order_taylor_,

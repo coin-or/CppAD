@@ -94,7 +94,6 @@ Specifies RecBase for this call.
 template <class Base, class Vector_set, class RecBase>
 void rev_hes(
    const local::player<Base>* play,
-   size_t                     n,
    size_t                     num_var,
    const Vector_set&          for_jac_sparse,
    bool*                      RevJac,
