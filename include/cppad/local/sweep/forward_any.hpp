@@ -164,7 +164,7 @@ void forward_any(
    const RecBase&             not_used_rec_base,
    const local::player<Base>* play,
    const size_t               num_var,
-   const size_t               J,
+   const size_t               cap_order,
    Base*                      taylor,
    bool*                      cskip_op,
    pod_vector<addr_t>&        load_op2var,
@@ -181,7 +181,7 @@ void forward_any(
    const size_t r = 1;
 
    CPPAD_ASSERT_UNKNOWN(order_low <= order_up );
-   CPPAD_ASSERT_UNKNOWN( J >= order_up + 1 );
+   CPPAD_ASSERT_UNKNOWN( cap_order >= order_up + 1 );
    CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
 
    /*
@@ -316,7 +316,7 @@ void forward_any(
          case NepvOp:
          case NevvOp:
          var_op::compare_forward_any(op,
-            arg, parameter, J, taylor, itr.op_index(),
+            arg, parameter, cap_order, taylor, itr.op_index(),
             change_count, change_number, change_op_index
          );
          break;
@@ -324,14 +324,14 @@ void forward_any(
 
          case AbsOp:
          var_op::abs_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case AddvvOp:
          var_op::addvv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -339,7 +339,7 @@ void forward_any(
          case AddpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::addpv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -348,7 +348,7 @@ void forward_any(
          // sqrt(1 - x * x), acos(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::acos_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -357,7 +357,7 @@ void forward_any(
          // sqrt(x * x - 1), acosh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::acosh_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -366,7 +366,7 @@ void forward_any(
          // sqrt(1 - x * x), asin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::asin_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -375,7 +375,7 @@ void forward_any(
          // sqrt(1 + x * x), asinh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::asinh_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -384,7 +384,7 @@ void forward_any(
          // 1 + x * x, atan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::atan_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -393,14 +393,14 @@ void forward_any(
          // 1 - x * x, atanh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::atanh_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case CExpOp:
          var_op::cexp_forward_any(
-            order_low, order_up, i_var, arg, num_par, parameter, J, taylor
+            order_low, order_up, i_var, arg, num_par, parameter, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
@@ -409,7 +409,7 @@ void forward_any(
          // sin(x), cos(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::cos_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
@@ -418,7 +418,7 @@ void forward_any(
          // sinh(x), cosh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::cosh_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -426,7 +426,7 @@ void forward_any(
          case CSkipOp:
          if( order_low == 0 )
          {  var_op::cskip_forward_0(
-               i_var, arg, num_par, parameter, J, taylor, cskip_op
+               i_var, arg, num_par, parameter, cap_order, taylor, cskip_op
             );
          }
          itr.correct_before_increment();
@@ -435,7 +435,7 @@ void forward_any(
 
          case CSumOp:
          var_op::csum_forward_any(
-            order_low, order_up, i_var, arg, num_par, parameter, J, taylor
+            order_low, order_up, i_var, arg, num_par, parameter, cap_order, taylor
          );
          itr.correct_before_increment();
          break;
@@ -443,14 +443,14 @@ void forward_any(
 
          case DisOp:
          var_op::dis_forward_dir<RecBase>(
-            order_low, order_up, r, i_var, arg, J, taylor
+            order_low, order_up, r, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case DivvvOp:
          var_op::divvv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -458,7 +458,7 @@ void forward_any(
          case DivpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::divpv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -466,7 +466,7 @@ void forward_any(
          case DivvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::divvp_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -480,21 +480,21 @@ void forward_any(
          case ErfOp:
          case ErfcOp:
          var_op::erf_forward_any(
-            op, order_low, order_up, i_var, arg, parameter, J, taylor
+            op, order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case ExpOp:
          var_op::exp_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
 
          case Expm1Op:
          var_op::expm1_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
@@ -515,7 +515,7 @@ void forward_any(
                num_var,
                num_par,
                parameter,
-               J,
+               cap_order,
                taylor,
                vec_ad2isvar,
                vec_ad2index,
@@ -528,7 +528,7 @@ void forward_any(
                order_low + 1,
                order_up,
                r,
-               J,
+               cap_order,
                load_op2var,
                taylor
             );
@@ -541,7 +541,7 @@ void forward_any(
             order_low,
             order_up,
             r,
-            J,
+            cap_order,
             load_op2var,
             taylor
          );
@@ -550,14 +550,14 @@ void forward_any(
 
          case LogOp:
          var_op::log_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case Log1pOp:
          var_op::log1p_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -565,28 +565,28 @@ void forward_any(
          case MulpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::mulpv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case MulvvOp:
          var_op::mulvv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // --------------------------------------------------
 
          case NegOp:
          var_op::neg_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case ParOp:
          var_op::par_forward_any(
-            order_low, order_up, i_var, arg, num_par, parameter, J, taylor
+            order_low, order_up, i_var, arg, num_par, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -594,7 +594,7 @@ void forward_any(
          case PowvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::powvp_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -602,21 +602,21 @@ void forward_any(
          case PowpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::powpv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case PowvvOp:
          var_op::powvv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case PriOp:
          if( ( order_low == 0 ) & print ) var_op::pri_forward_0(s_out,
-            arg, num_text, text, num_par, parameter, J, taylor
+            arg, num_text, text, num_par, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -625,7 +625,7 @@ void forward_any(
          // sign(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sign_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -634,7 +634,7 @@ void forward_any(
          // cos(x), sin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sin_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -643,14 +643,14 @@ void forward_any(
          // cosh(x), sinh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sinh_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case SqrtOp:
          var_op::sqrt_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -666,7 +666,7 @@ void forward_any(
                num_var,
                num_par,
                parameter,
-               J,
+               cap_order,
                taylor,
                vec_ad2isvar,
                vec_ad2index
@@ -677,7 +677,7 @@ void forward_any(
 
          case SubvvOp:
          var_op::subvv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -685,7 +685,7 @@ void forward_any(
          case SubpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::subpv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -693,7 +693,7 @@ void forward_any(
          case SubvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::subvp_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -702,7 +702,7 @@ void forward_any(
          // tan(x)^2, tan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::tan_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -711,7 +711,7 @@ void forward_any(
          // tanh(x)^2, tanh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::tanh_forward_any(
-            order_low, order_up, i_var, arg, J, taylor
+            order_low, order_up, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -724,7 +724,7 @@ void forward_any(
             parameter,
             atom_trace,
             atom_work,
-            J,
+            cap_order,
             order_low,
             order_up,
             taylor
@@ -742,7 +742,7 @@ void forward_any(
          case ZmulpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::zmulpv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -750,14 +750,14 @@ void forward_any(
          case ZmulvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::zmulvp_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case ZmulvvOp:
          var_op::zmulvv_forward_any(
-            order_low, order_up, i_var, arg, parameter, J, taylor
+            order_low, order_up, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -766,7 +766,7 @@ void forward_any(
          CPPAD_ASSERT_UNKNOWN(false);
       }
 # if CPPAD_FORWARD1_TRACE
-      Base*           Z_tmp   = taylor + J * i_var;
+      Base*           Z_tmp   = taylor + cap_order * i_var;
       if( op != AFunOp )
       {
          printOp<Base, RecBase>(
