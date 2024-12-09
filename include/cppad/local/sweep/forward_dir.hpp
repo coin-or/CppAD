@@ -120,7 +120,7 @@ void forward_dir(
    const bool*                 cskip_op,
    const pod_vector<addr_t>&   load_op2var,
    const size_t                order_up,
-   const size_t                r
+   const size_t                n_dir
 )
 {
    CPPAD_ASSERT_UNKNOWN( order_up > 0 );
@@ -131,7 +131,6 @@ void forward_dir(
    size_t order_low = order_up;
 
    // information used by atomic function operators
-   const size_t n_dir     = r;
 
    // work space used by atomic funcions
    var_op::atomic_op_work<Base> atom_work;
@@ -160,7 +159,7 @@ void forward_dir(
 # if CPPAD_FORWARD2_TRACE
    bool atom_trace  = true;
    std::cout << std::endl;
-   CppAD::vector<Base> Z_vec(q+1);
+   CppAD::vector<Base> Z_vec(order_up + 1);
 # else
    bool atom_trace = false;
 # endif
@@ -207,14 +206,14 @@ void forward_dir(
       {
          case AbsOp:
          var_op::abs_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case AddvvOp:
          var_op::addvv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -222,7 +221,7 @@ void forward_dir(
          case AddpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::addpv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -231,7 +230,7 @@ void forward_dir(
          // sqrt(1 - x * x), acos(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::acos_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -240,7 +239,7 @@ void forward_dir(
          // sqrt(x * x - 1), acosh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::acosh_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -249,7 +248,7 @@ void forward_dir(
          // sqrt(1 - x * x), asin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::asin_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -258,7 +257,7 @@ void forward_dir(
          // sqrt(1 + x * x), asinh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::asinh_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -267,7 +266,7 @@ void forward_dir(
          // 1 + x * x, atan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::atan_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -276,14 +275,14 @@ void forward_dir(
          // 1 - x * x, atanh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::atanh_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case CExpOp:
          var_op::cexp_forward_dir(
-            order_up, r, i_var, arg, num_par, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, num_par, parameter, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
@@ -292,7 +291,7 @@ void forward_dir(
          // sin(x), cos(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::cos_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
@@ -301,7 +300,7 @@ void forward_dir(
          // sinh(x), cosh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::cosh_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -315,7 +314,7 @@ void forward_dir(
 
          case CSumOp:
          var_op::csum_forward_dir(
-            order_up, i_var, arg, num_par, parameter, r, cap_order, taylor
+            order_up, i_var, arg, num_par, parameter, n_dir, cap_order, taylor
          );
          itr.correct_before_increment();
          break;
@@ -323,14 +322,14 @@ void forward_dir(
 
          case DisOp:
          var_op::dis_forward_dir<RecBase>(
-            order_low, order_up, r, i_var, arg, cap_order, taylor
+            order_low, order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case DivvvOp:
          var_op::divvv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -338,7 +337,7 @@ void forward_dir(
          case DivpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::divpv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -346,7 +345,7 @@ void forward_dir(
          case DivvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::divvp_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -361,21 +360,21 @@ void forward_dir(
          case ErfOp:
          case ErfcOp:
          var_op::erf_forward_dir(
-            op, order_up, r, i_var, arg, parameter, cap_order, taylor
+            op, order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case ExpOp:
          var_op::exp_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case Expm1Op:
          var_op::expm1_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -393,7 +392,7 @@ void forward_dir(
             arg,
             order_low,
             order_up,
-            r,
+            n_dir,
             cap_order,
             load_op2var,
             taylor
@@ -421,14 +420,14 @@ void forward_dir(
 
          case LogOp:
          var_op::log_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
 
          case Log1pOp:
          var_op::log1p_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // ---------------------------------------------------
@@ -436,28 +435,28 @@ void forward_dir(
          case MulpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::mulpv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case MulvvOp:
          var_op::mulvv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case NegOp:
          var_op::neg_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case ParOp:
          var_op::par_forward_dir(
-            order_up, r, i_var, arg, num_par, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, num_par, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -465,7 +464,7 @@ void forward_dir(
          case PowpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::powpv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -473,14 +472,14 @@ void forward_dir(
          case PowvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::powvp_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case PowvvOp:
          var_op::powvv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -494,7 +493,7 @@ void forward_dir(
          // sign(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sign_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -503,7 +502,7 @@ void forward_dir(
          // cos(x), sin(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sin_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -512,14 +511,14 @@ void forward_dir(
          // cosh(x), sinh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::sinh_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case SqrtOp:
          var_op::sqrt_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -534,7 +533,7 @@ void forward_dir(
 
          case SubvvOp:
          var_op::subvv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -542,7 +541,7 @@ void forward_dir(
          case SubpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::subpv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -550,7 +549,7 @@ void forward_dir(
          case SubvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::subvp_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -559,7 +558,7 @@ void forward_dir(
          // tan(x)^2, tan(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::tan_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -568,7 +567,7 @@ void forward_dir(
          // tanh(x)^2, tanh(x)
          CPPAD_ASSERT_UNKNOWN( i_var < num_var  );
          var_op::tanh_forward_dir(
-            order_up, r, i_var, arg, cap_order, taylor
+            order_up, n_dir, i_var, arg, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -597,7 +596,7 @@ void forward_dir(
          case ZmulpvOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
          var_op::zmulpv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -605,14 +604,14 @@ void forward_dir(
          case ZmulvpOp:
          CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
          var_op::zmulvp_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
 
          case ZmulvvOp:
          var_op::zmulvv_forward_dir(
-            order_up, r, i_var, arg, parameter, cap_order, taylor
+            order_up, n_dir, i_var, arg, parameter, cap_order, taylor
          );
          break;
          // -------------------------------------------------
@@ -632,15 +631,15 @@ void forward_dir(
          );
          Base* Z_tmp = nullptr;
          if( op == FunavOp )
-            Z_tmp = taylor + size_t(arg[0])*((J-1) * r + 1);
+            Z_tmp = taylor + size_t(arg[0])*((cap_order - 1) * n_dir + 1);
          else if( NumRes(op) > 0 )
-            Z_tmp = taylor + i_var*((J-1)*r + 1);
+            Z_tmp = taylor + i_var*((cap_order - 1)*n_dir + 1);
          if( Z_tmp != nullptr )
          {  Z_vec[0]    = Z_tmp[0];
-            for(ell = 0; ell < r; ell++)
+            for(size_t ell = 0; ell < n_dir; ell++)
             {  std::cout << std::endl << "     ";
-               for(size_t p_tmp = 1; p_tmp <= q; p_tmp++)
-                  Z_vec[p_tmp] = Z_tmp[ (p_tmp-1)*r + ell + 1];
+               for(size_t p_tmp = 1; p_tmp <= order_up; p_tmp++)
+                  Z_vec[p_tmp] = Z_tmp[ (p_tmp-1)*n_dir + ell + 1];
                printOpResult(
                   std::cout,
                   order_up + 1,
