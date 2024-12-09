@@ -487,14 +487,14 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
       &play_,
       num_var_tape_,
       cap_order_taylor_,
-      taylor_.data(),
       cskip_op_.data(),
       load_op2var_,
       compare_change_count_,
       compare_change_number_,
       compare_change_op_index_,
       std::cout,
-      print
+      print,
+      taylor_.data()
    );
    CPPAD_ASSERT_UNKNOWN( compare_change_count_    == 1 );
    CPPAD_ASSERT_UNKNOWN( compare_change_number_   == 0 );

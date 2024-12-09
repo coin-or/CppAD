@@ -198,14 +198,14 @@ BaseVector ADFun<Base,RecBase>::Forward(
          &play_,
          num_var_tape_,
          C,
-         taylor_.data(),
          cskip_op_.data(),
          load_op2var_,
          compare_change_count_,
          compare_change_number_,
          compare_change_op_index_,
          s,
-         print
+         print,
+         taylor_.data()
       );
    }
    else
@@ -215,7 +215,6 @@ BaseVector ADFun<Base,RecBase>::Forward(
          &play_,
          num_var_tape_,
          C,
-         taylor_.data(),
          cskip_op_.data(),
          load_op2var_,
          compare_change_count_,
@@ -224,7 +223,8 @@ BaseVector ADFun<Base,RecBase>::Forward(
          s,
          print,
          p,
-         q
+         q,
+         taylor_.data()
       );
    }
 
@@ -476,11 +476,11 @@ BaseVector ADFun<Base,RecBase>::Forward(
       &play_,
       num_var_tape_,
       c,
-      taylor_.data(),
       cskip_op_.data(),
       load_op2var_,
       q,
-      r
+      r,
+      taylor_.data()
    );
 
    // return Taylor coefficients for dependent variables

@@ -49,14 +49,14 @@ void forward_0(
    const local::player<Base>* play,
    size_t                     num_var,
    size_t                     cap_order,
-   Base*                      taylor,
    bool*                      cskip_op,
    pod_vector<addr_t>&        load_op2var,
    size_t                     change_count,
    size_t&                    change_number,
    size_t&                    change_op_index,
    std::ostream&              s_out,
-   bool                       print
+   bool                       print,
+   Base*                      taylor
 )
 // END_FORWARD_0
 {  CPPAD_ASSERT_UNKNOWN( cap_order >= 1 );

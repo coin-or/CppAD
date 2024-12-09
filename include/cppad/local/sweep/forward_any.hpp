@@ -49,7 +49,6 @@ void forward_any(
    const local::player<Base>* play,
    const size_t               num_var,
    const size_t               cap_order,
-   Base*                      taylor,
    bool*                      cskip_op,
    pod_vector<addr_t>&        load_op2var,
    size_t                     change_count,
@@ -58,7 +57,9 @@ void forward_any(
    std::ostream&              s_out,
    const bool                 print,
    const size_t               order_low,
-   const size_t               order_up)
+   const size_t               order_up,
+   Base*                      taylor
+)
 // END_FORWARD_ANY
 {
    // number of directions

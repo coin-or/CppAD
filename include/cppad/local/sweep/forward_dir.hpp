@@ -47,11 +47,12 @@ void forward_dir(
    const local::player<Base>*  play,
    const size_t                num_var,
    const size_t                cap_order,
-   Base*                       taylor,
    const bool*                 cskip_op,
    const pod_vector<addr_t>&   load_op2var,
    const size_t                order_up,
-   const size_t                n_dir)
+   const size_t                n_dir,
+   Base*                       taylor
+)
 // END_FORWARD_DIR
 {
    CPPAD_ASSERT_UNKNOWN( order_up > 0 );
