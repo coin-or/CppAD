@@ -373,6 +373,56 @@ ELSE( )
    # cppad_has_cppadcg
    SET(cppad_has_cppadcg 0)
 ENDIF( include_cppadcg )
+#
+# package = xrst
+SET( include_doc FALSE CACHE BOOL "include documentation")
+IF( include_doc )
+   #
+   # xrst_path
+   FIND_PROGRAM( xrst_path xrst )
+   IF( "${xrst_path}" STREQUAL "xrst_path-NOTFOUND" )
+      MESSAGE(FATAL_ERROR
+         "include_doc is true and cannot find xrst in system path"
+      )
+   ENDIF( )
+   #
+   # processor_count
+   INCLUDE(ProcessorCount)
+   ProcessorCount(processor_count)
+   IF( processor_count EQUAL 0 )
+      SET(processor_count 1)
+   ENDIF( )
+   #
+   # see
+   # https://discourse.cmake.org/t/how-to-install-a-generated-directory/1267
+   #
+   # doc_dir
+   SET(doc_dir "${CMAKE_SOURCE_DIR}/build/html")
+   #
+   # doc_user
+   ADD_CUSTOM_TARGET(doc_user ALL
+      COMMAND xrst
+         --group_list default app
+         --local_toc
+         --html_theme sphinx_rtd_theme
+         --number_jobs ${processor_count}
+         --index_page_name user_guide
+         --suppress_spell_warnings
+         --config_file "${CMAKE_SOURCE_DIR}/xrst.toml"
+   )
+   #
+   # doc_dev
+   ADD_CUSTOM_TARGET(doc_dev
+      COMMAND xrst
+         --group_list default app dev
+         --local_toc
+         --html_theme sphinx_rtd_theme
+         --number_jobs ${processor_count}
+         --index_page_name user_guide
+         --suppress_spell_warnings
+         --config_file "${CMAKE_SOURCE_DIR}/xrst.toml"
+   )
+ENDIF( include_doc )
 # =============================================================================
 # cppad_lib
 # Perhaps in the future cppad_lib will depend on cmake header only flag ?
@@ -590,17 +640,12 @@ INSTALL(
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
-IF ( cmake_install_docdir )
-   # ADD_CUSTOM_TARGET(docdir COMMAND
-   #    xrst
-   #    --group_list default app
-   #    --config_file "${CMAKE_CURRENT_SOURCE_DIR}/xrst.toml"
-   # )
+IF ( cmake_install_docdir AND include_doc )
    INSTALL(
-      DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/html/"
+      DIRECTORY "${CMAKE_SOURCE_DIR}/build/html/"
       DESTINATION ${cppad_abs_docdir}/cppad
    )
-ENDIF ( cmake_install_docdir )
+ENDIF ( cmake_install_docdir AND include_doc )
 
 # =============================================================================
 # uninstall procedure

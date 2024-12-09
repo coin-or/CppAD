@@ -259,6 +259,7 @@ fi
 if [ -d '/usr/share' ] && [ "$yes_documentation" == 'yes' ]
 then
    cmake_args="$cmake_args -D cmake_install_docdir=share/doc"
+   cmake_args="$cmake_args -D include_doc=true"
 fi
 #
 # cmake_install_libdirs

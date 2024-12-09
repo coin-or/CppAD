@@ -38,9 +38,9 @@
    vcvarsall
    wno
    wshadow
-   xml
    yyyy
    yyyymmdd
+   dev
 }
 
 Using CMake to Configure CppAD
@@ -122,6 +122,7 @@ The full version of the command, with all its optional arguments is:
 | |tab| \\
 | |tab| ``-D cmake_defined_ok`` = *cmake_defined_ok*                        \\
 | |tab| \\
+| |tab| ``-D include_doc`` = *true_or_false*                              \\
 | |tab| ``-D include_adolc`` = *true_or_false*                              \\
 | |tab| ``-D include_ipopt`` = *true_or_false*                              \\
 | |tab| ``-D include_cppadcg`` = *true_or_false*                            \\
@@ -365,17 +366,18 @@ The default value for *cmake_install_datadir* is ``share`` .
 cmake_install_docdir
 ********************
 This is the middle level relative path below which
-the CppAD documentation files are installed.
+the CppAD user documentation files are installed.
 For example,
 if *cppad_prefix* is ``/usr`` ,
 *cmake_install_docdir* is ``share/doc`` , and
 *cppad_postfix* is not specified,
-the file ``cppad.xml`` is installed in the location
+the file ``user_guide.html`` is installed in the location
 
-   / ``usr/share/doc/cppad/cppad.xml``
+   / ``usr/share/doc/cppad/user_guide.html``
 
-There is no default value for *cmake_install_docdir* .
-If it is not specified, the documentation files are not installed.
+If *cmake_install_docdir* is not specified,
+or :ref:`cmake@include_doc` is false,
+the documentation files are not installed.
 
 cmake_defined_ok
 ****************
@@ -384,6 +386,19 @@ This must be true when running cmake with a non-empty
 If it is false, some checks will be made to make sure
 certain variables are not defined twice.
 The default value for *cmake_defined_ok* is true.
+
+include_doc
+***********
+If ``include_doc=true`` is in the command line, the
+`xrst <https://xrst.readthedocs.io/latest/>`_
+program must be installed.
+In this case, the user and developer documentation targets
+``doc_user`` and ``doc_dev`` will be available.
+For example, if the :ref:`cmake@generator` is ``Ninja``
+the commands ``ninja doc_user`` and ``ninja doc_dev``
+will build the  corresponding documentation in the
+``build/html`` sub-directory of the
+:ref:`download@Distribution Directory` .
 
 include_adolc
 *************
