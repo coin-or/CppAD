@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ ! -e "bin/check_tempfile.sh" ]
 then
@@ -20,7 +20,7 @@ then
    cmd='rm '
    for file in $list
    do
-      cmd="$cmd $file"
+      cmd+=" $file"
    done
    echo "    $cmd"
    echo 'check_tempfile.sh: Error'

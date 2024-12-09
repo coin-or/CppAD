@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_adolc.sh}
 # {xrst_spell
@@ -141,7 +141,7 @@ fi
 echo_eval cd build
 # -----------------------------------------------------------------------------
 flags="--prefix=$prefix --with-colpack=$prefix --libdir=$prefix/$libdir"
-flags="$flags --enable-static --enable-shared --enable-atrig-erf"
+flags+=" --enable-static --enable-shared --enable-atrig-erf"
 #
 echo_eval ../configure $flags
 echo_eval make -j $n_job install

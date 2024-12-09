@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ $0 != "bin/appveyor.sh" ]
 then
@@ -37,7 +37,7 @@ echo_eval cmake \
    ..
 # -----------------------------------------------------------------------------
 # Microsoft DLLs must be in current directory or execution path
-PATH="$PATH:$(pwd)/cppad_lib"
+PATH+=":$(pwd)/cppad_lib"
 # -----------------------------------------------------------------------------
 # build target1, target2, ...
 if [ "$cmd" == 'make' ]

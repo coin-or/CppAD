@@ -61,10 +61,10 @@ do
    dir="example/multi_thread/$threading"
    if [ ! -e "$dir" ]
    then
-      skip="$skip $threading"
+      skip+=" $threading"
    else
       program="$dir/example_multi_thread_${threading}"
-      program_list="$program_list $program"
+      program_list+=" $program"
       #
       # all programs check the fast cases
       echo_eval $program a11c

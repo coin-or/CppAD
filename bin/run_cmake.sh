@@ -235,40 +235,40 @@ cmake_args='-U .+ -D cmake_defined_ok=FALSE'
 # Generator
 if [ "$verbose_make" == 'yes' ]
 then
-   cmake_args="$cmake_args  -G 'Unix Makefiles' -D CMAKE_VERBOSE_MAKEFILE=YES"
+   cmake_args+="  -G 'Unix Makefiles' -D CMAKE_VERBOSE_MAKEFILE=YES"
 else
-   cmake_args="$cmake_args  -G Ninja"
+   cmake_args+="  -G Ninja"
 fi
 # -----------------------------------------------------------------------------
 # cppad_prefix
-cmake_args="$cmake_args  -D cppad_prefix=$prefix"
+cmake_args+="  -D cppad_prefix=$prefix"
 #
 # cmake_install_includedirs
 if [ -d '/usr/include' ]
 then
-   cmake_args="$cmake_args -D cmake_install_includedirs=include"
+   cmake_args+=" -D cmake_install_includedirs=include"
 fi
 #
 # cmake_install_datadir
 if [ -d '/usr/share' ]
 then
-   cmake_args="$cmake_args -D cmake_install_datadir=share"
+   cmake_args+=" -D cmake_install_datadir=share"
 fi
 #
 # cmake_install_docdir
 if [ -d '/usr/share' ] && [ "$yes_documentation" == 'yes' ]
 then
-   cmake_args="$cmake_args -D cmake_install_docdir=share/doc"
-   cmake_args="$cmake_args -D include_doc=true"
+   cmake_args+=" -D cmake_install_docdir=share/doc"
+   cmake_args+=" -D include_doc=true"
 fi
 #
 # cmake_install_libdirs
 if [ -d '/usr/lib64' ]
 then
-   cmake_args="$cmake_args -D cmake_install_libdirs='lib64;lib'"
+   cmake_args+=" -D cmake_install_libdirs='lib64;lib'"
 elif [ -d '/usr/lib' ]
 then
-   cmake_args="$cmake_args -D cmake_install_libdirs='lib;lib64'"
+   cmake_args+=" -D cmake_install_libdirs='lib;lib64'"
 fi
 #
 # {package}_prefix
@@ -281,7 +281,7 @@ then
       echo "Cannot find $prefix/include/cppad/cg/cg.hpp"
       exit 1
    fi
-   include_list="$include_list cppadcg"
+   include_list+=" cppadcg"
 fi
 if [ "$yes_fadbad" == 'yes' ]
 then
@@ -290,7 +290,7 @@ then
       echo "Cannot find $prefix/include/FADBAD++/badiff.h"
       exit 1
    fi
-   prefix_list="$prefix_list fadbad"
+   prefix_list+=" fadbad"
 fi
 if [ "$yes_adolc" == 'yes' ]
 then
@@ -299,7 +299,7 @@ then
       echo "Cannot file $prefix/include/adolc"
       exit 1
    fi
-   include_list="$include_list adolc"
+   include_list+=" adolc"
 fi
 if [ "$yes_colpack" == 'yes' ]
 then
@@ -308,7 +308,7 @@ then
       echo "Cannot find $prefix/include/ColPack"
       exit 1
    fi
-   prefix_list="$prefix_list colpack"
+   prefix_list+=" colpack"
 fi
 if [ "$yes_ipopt" == 'yes' ]
 then
@@ -317,7 +317,7 @@ then
       echo "Cannot find $prefix/include/coin-or/IpoptConfig.hpp"
       exit 1
    fi
-   include_list="$include_list ipopt"
+   include_list+=" ipopt"
 fi
 if [ "$yes_sacado" == 'yes' ]
 then
@@ -326,24 +326,24 @@ then
       echo "Cannot find $prefix/include/Sacado_config.h"
       exit
    fi
-   prefix_list="$prefix_list sacado"
+   prefix_list+=" sacado"
 fi
 for package in $include_list
 do
-   cmake_args="$cmake_args -D include_${package}=true"
+   cmake_args+=" -D include_${package}=true"
 done
 for package in $prefix_list
 do
-   cmake_args="$cmake_args  -D ${package}_prefix=$prefix"
+   cmake_args+="  -D ${package}_prefix=$prefix"
 done
 #
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
-cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
+cppad_cxx_flags+=" -Wfloat-conversion -Wconversion"
 if [ "$debug_which" == 'debug_all' ]
 then
    # CMAKE_CXX_FLAGS_DEBUG include -g so do not need it here
-   cppad_cxx_flags="$cppad_cxx_flags -O0"
+   cppad_cxx_flags+=" -O0"
 elif [ "$callgrind" == 'yes' ]
 then
    # This is a quote from the Callgrind manual:
@@ -360,39 +360,39 @@ then
 fi
 #
 # cmake_args
-cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
+cmake_args+=" -D cppad_cxx_flags='$cppad_cxx_flags'"
 #
 # clang
 if [ "$clang" == 'yes' ]
 then
-   cmake_args="$cmake_args -D CMAKE_C_COMPILER=clang"
-   cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=clang++"
+   cmake_args+=" -D CMAKE_C_COMPILER=clang"
+   cmake_args+=" -D CMAKE_CXX_COMPILER=clang++"
 fi
 #
 # static
 if [ "$static" == 'yes' ]
 then
-   cmake_args="$cmake_args -D cppad_static_lib=true"
+   cmake_args+=" -D cppad_static_lib=true"
 fi
 #
 # profile
 if [ "$profile_speed" == 'yes' ]
 then
-   cmake_args="$cmake_args -D cppad_profile_flag=-pg"
+   cmake_args+=" -D cppad_profile_flag=-pg"
 fi
 #
 # debug_and_release
 if [ "$debug_which" == 'debug_none' ] || [ "$debug_which" == 'debug_all' ]
 then
-   cmake_args="$cmake_args -D cppad_debug_and_release=false"
+   cmake_args+=" -D cppad_debug_and_release=false"
 fi
 #
 # simple options
-cmake_args="$cmake_args -D cppad_testvector=$testvector"
-cmake_args="$cmake_args -D cppad_debug_which=$debug_which"
-cmake_args="$cmake_args -D cppad_max_num_threads=48"
-cmake_args="$cmake_args -D cppad_tape_id_type='$addr_t_type'"
-cmake_args="$cmake_args -D cppad_tape_addr_type='$addr_t_type'"
+cmake_args+=" -D cppad_testvector=$testvector"
+cmake_args+=" -D cppad_debug_which=$debug_which"
+cmake_args+=" -D cppad_max_num_threads=48"
+cmake_args+=" -D cppad_tape_id_type='$addr_t_type'"
+cmake_args+=" -D cppad_tape_addr_type='$addr_t_type'"
 #
 echo_eval cmake $cmake_args ..
 #

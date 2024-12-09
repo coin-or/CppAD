@@ -59,8 +59,8 @@ PKG_CONFIG_PATH="$prefix/share/pkgconfig"
 LD_LIBRARY_PATH=""
 for dir in lib lib64
 do
-   PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$prefix/$dir/pkgconfig"
-   LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$prefix/$dir"
+   PKG_CONFIG_PATH+=":$prefix/$dir/pkgconfig"
+   LD_LIBRARY_PATH+=":$prefix/$dir"
 done
 export PKG_CONFIG_PATH
 export LD_LIBRARY_PATH
