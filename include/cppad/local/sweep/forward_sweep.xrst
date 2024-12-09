@@ -1,0 +1,310 @@
+{xrst_comment
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+SPDX-FileContributor: 2024 Bradley M. Bell
+
+Under Construction:
+
+This file is intended to help document the forward_* sweep functions.
+   headers all:     CPPAD_@NAME@_TRACE, Portotype, Base, RecBase, play, num_var
+   headers all:     cap_order, cskip, load_op2var, taylor
+   headers 0 & any: change_count, change_number, change_op_index, sout, print
+   headers any:     order_low, order_up
+   headers dir:     order_up, n_dir
+
+It has the following xrst template replacements:
+   @title@  The title for this forward sweep
+   @#####@  Underlining for the tilte
+   @NAME@   is one of FORWARD_0, FORWARD_ANY, FORWARD_DIR
+            Prototype is surrounded by // BEIGN_@NAME@ and // END_@NAME@
+   @****@   Underlining for @NAME@
+}
+
+@title@
+@#####@
+
+CPPAD_@NAME@_TRACE
+******@****@******
+This value is defined in the source code for this function
+and is either zero or one.
+Zero is the normal operational value.
+If it is one, a trace of every zero order forward mode computation is printed.
+
+{xrst_comment ----------------------------------------------------------------}
+{xrst_suspend @NAME@ != FORWARD_0}
+
+order_low
+*********
+We use *order_low* for the lowest order Taylor coefficient that is computed
+which is zero for this case.
+
+{xrst_resume}
+{xrst_comment ----------------------------------------------------------------}
+{xrst_suspend @NAME@ != FORWARD_DIR}
+
+order_low
+*********
+We use *order_low* for the lowest order Taylor coefficient that is computed
+which is equal to *order_up* and non-zero for this case.
+
+{xrst_resume}
+{xrst_comment ----------------------------------------------------------------}
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_@NAME@
+   // END_@NAME@
+}
+
+Base
+****
+The type used during the forward mode computations.
+
+RecBase
+*******
+The type use to record these operations.
+This is the same as Base except for the :ref:`base2ad-name` case
+where Base = AD< RecBase > .
+
+not_used_rec_base
+*****************
+This only present so that *RecBase* can be determined without it having
+to be specified as a template parameter in a call.
+
+play
+****
+The information stored in play
+is a recording of the operations corresponding to a function
+
+.. math::
+
+   f : \B{R}^n \rightarrow \B{R}^m
+
+where *n* is the number of independent variables and
+*m* is the number of dependent variables.
+
+num_var
+*******
+is the total number of variables on the tape; i.e.,
+*play* ``->num_var_rec()`` .
+
+cap_order
+*********
+Is the maximum number of Taylor coefficients, for each variable,
+that can fit in *taylor*.
+This must be greater than or equal one.
+
+cskip_op
+********
+Is a vector with size *play* ``->num_op_rec()`` .
+
+order_low is zero
+=================
+If *order_low* is zero,
+the input value of the elements of *cskip_op* does not matter.
+Upon return, if *cskip_op* [ *i* ] is true,
+the operator with index *i* does not affect any of the dependent variable
+(given the value of the independent variables).
+
+order_low is non-zero
+=====================
+If *order_low* is non-zero, *cskip_op* is not modified.
+If the value *cskip_op* [ *i* ] is true,
+the operator with index *i* does not affect any of the dependent variable
+(given the value of the independent variables).
+
+load_op2var
+***********
+Is a vector with size *play* ``->num_var_load_rec()`` .
+
+order_low is zero
+=================
+If *order_low* is zero,
+the input value of the elements of *load_op2var* does not matter.
+Upon return, *load_op2var* [ *i* ]
+is the variable index corresponding to the *i*-th variable VecAD load operator.
+Note that even though the VecAD vector is a variable, the load
+can correspond to an element that is a parameter in which case
+*load_op2var* [ *i* ] is zero.
+
+order_low is non-zero
+=====================
+If *order_low* is non-zero, *load_op2var* is not modified.
+The value *load_op2var* [ *i* ]
+is the variable index corresponding to the *i*-th variable VecAD load operator.
+
+{xrst_comment ----------------------------------------------------------------}
+{xrst_suspend @NAME@ == FORWARD_DIR}
+
+change_count
+************
+If *change_count* is non-zero (zero),
+the comparison changes are counted (not counted).
+Furthermore, if *change_count* is non-zero,
+it is the compare change count value for which *change_op_index* is returned.
+
+change_number
+*************
+If *change_count* is zero, this value is set to zero.
+Otherwise, the return value is the number of comparison operations
+that have a different result from when the information in
+*play* was recorded.
+
+change_op_index
+***************
+If *change_count* is zero, this value is set to zero.
+Otherwise it is the operator index (see forward_next) for the
+comparison operation that has a different result from when the information in
+play was recorded.
+This is not the first comparison that is different,
+but rather the *change_count* comparison.
+
+s_out
+*****
+Is the stream where output corresponding to
+{xrst_spell_off}
+PriOp
+{xrst_spell_on}
+operations is written.
+
+print
+*****
+If print is false,
+suppress the output that is otherwise generated by the
+{xrst_spell_off}
+PriOp
+{xrst_spell_on}
+instructions.
+
+{xrst_resume}
+{xrst_comment ----------------------------------------------------------------}
+{xrst_suspend @NAME@ != FORWARD_0}
+
+taylor
+******
+The vector *taylor* has size *num_var* * *cap_order* .
+We use *n* to denote the number of independent variables.
+
+Input
+=====
+::
+
+   for j = 1 , ... , n
+      taylor [ j * cap_order + 0 ] is an input
+
+Output
+======
+::
+
+   for j = n  + 1 , ... , num_var - 1
+      taylor [ j * cap_order + 0 ] is an output
+
+{xrst_resume}
+{xrst_comment ----------------------------------------------------------------}
+{xrst_suspend @NAME@ != FORWARD_ANY}
+
+order_low
+*********
+is the lowest order of the Taylor coefficients that are computed by this call.
+
+order_up
+********
+is the highest order of the Taylor coefficients that are computed by this call.
+
+taylor
+******
+The vector *taylor* has size *num_var* * *cap_order* .
+We use *n* to denote the number of independent variables.
+
+Input
+=====
+::
+
+   for j = 1 , ... , num_var - 1
+      for k = 0 , ... , order_low - 1
+         taylor [ j * cap_order + k ] is an input
+
+   for j = 1 , ... , n
+      for k = order_low , ... , order_up
+         taylor [ j * cap_order + k ] is an input
+
+
+Output
+======
+::
+
+   for j = n + 1 , ... , num_var - 1
+      for k = order_low , ... , order_up
+         taylor [ j * cap_order + k ] is an output
+
+
+{xrst_resume}
+{xrst_comment ----------------------------------------------------------------}
+{xrst_suspend @NAME@ != FORWARD_DIR}
+
+order_up
+********
+is the order of the Taylor coefficients that are computed by this call.
+
+n_dir
+*****
+number of directions that we are computing the Taylor coefficient for.
+
+taylor
+******
+We use *n* to denote the number of independent variables.
+
+per_variable
+============
+For each variable there is one Taylor coefficient of order zero
+and *n_dir* coefficients for orders greater than zero.
+The taylor coefficients capacity per variable is::
+
+   per_variable = (cap_order - 1) * n_dir + 1
+
+The vector *taylor* has size *num_var* * *per_variable* .
+
+(j, k, ell)
+===========
+For variable index j, order k, and direction index ell::
+
+   if k == 0
+      (j, k, ell) = j * per_variable
+   else
+      (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
+
+The value taylor[ (j, k, ell) ] is the
+Taylor coefficient corresponding to
+the variable with index j, the order k, and the direction with index ell.
+
+n_dir = 1
+=========
+If *n_dir* is equal to one then *ell* is zero and::
+
+   (j, k, ell) = j * cap_order + k
+
+Input
+=====
+::
+
+   for j = 1, ..., n
+      for k = 0 , ... , order_up
+         for ell = 0 , ... , n_dir - 1
+            taylor [ (j, k, ell) ] is an input
+
+   for j = n + 1, ..., num_var - 1
+      for k = 0 , ... , order_up - 1
+         for ell = 0 , ... , n_dir - 1
+            taylor [ (j, k, ell) ] is an input
+
+Output
+======
+::
+
+   for j = n + 1, ..., num_var - 1
+      for ell = 0 , ... , n_dir - 1
+         taylor [ (j, order_up, ell) ] is an output
+
+{xrst_resume}
+{xrst_comment ----------------------------------------------------------------}

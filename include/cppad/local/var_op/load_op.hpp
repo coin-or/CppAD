@@ -147,6 +147,23 @@ taylor
 ******
 Is the matrix of Taylor coefficients for all the variables.
 
+
+per_variable
+============
+For each variable there is one Taylor coefficient of order zero
+and *n_dir* coefficients for orders greater than zero.
+The taylor coefficients capacity per variable is::
+
+   per_variable = (cap_order - 1) * n_dir + 1
+
+Input
+=====
+For j = 0, ..., i_z - 1,  taylor[ j * per_variable + 0 ] is an input.
+
+Output
+======
+taylor[ i_z * per_variable + 0 ] is an output.
+
 i_vec
 *****
 We use *i_vec* to denote the ``size_t`` value corresponding to
@@ -254,6 +271,11 @@ see
 :ref:`var_load_op@y` ,
 :ref:`var_load_op@z`
 
+n_res
+*****
+The number of results that are variables, *n_res* , is one for
+this operation.
+
 Prototype
 *********
 {xrst_literal
@@ -270,22 +292,15 @@ see
 :ref:`var_load_op@i_z` ,
 :ref:`var_load_op@arg` .
 
-p
-*
-is the lowest order of the Taylor coefficient that we are computing.
-
-q
-*
-is the highest order of the Taylor coefficient that we are computing.
-
-r
-*
-is the number of directions for the Taylor coefficients that we
-are computing.
-
-cap_order
+order_low
 *********
-is the maximum number of orders that can fit in *taylor* .
+is the lowest order Taylor coefficient that we are computing.
+
+{xrst_template ;
+   include/cppad/local/var_op/template/forward_dir.xrst
+   headers: n_dir, cap_order, order_up, taylor
+}
+
 
 load_op2var
 ***********
@@ -293,28 +308,6 @@ maps the load operator index *arg* [2] to the
 index corresponding to *y* for this load operation.
 If the case where the index is zero,
 *y* is a parameter; i.e., *y* is not a variable.
-
-taylor
-******
-
-num_taylor_per_var
-==================
-We use the notation num_taylor_per_var = (cap_order-1) * r + 1 .
-
-Input
-=====
-#. For k = 0, ..., q,
-   taylor[ i_z * num_taylor_per_var + (k-1)*r+1+ell
-   is the k-th order coefficient for *z* in the ell-th direction,
-#. For k = 0, ..., q,
-   taylor[ i_y * num_taylor_per_var + (k-1)*r+1+ell
-   is the k-th order coefficient for *y* in the ell-th direction,
-
-Output
-======
-for k = p, ..., q,
-taylor[ i_z * num_taylor_per_var + (k-1)*r+1+ell ]
-is set to the k-th order coefficient for *z* in the ell-th direction.
 
 {xrst_end var_load_forward_nonzero}
 */

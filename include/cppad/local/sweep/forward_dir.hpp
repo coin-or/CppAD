@@ -9,107 +9,38 @@
 # include <cppad/local/sweep/call_atomic.hpp>
 # include <cppad/local/var_op/atomic_op.hpp>
 
+# define CPPAD_FORWARD_DIR_TRACE 0
+
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
-/*!
-\file sweep/forward_dir.hpp
-Compute one Taylor coefficient for each direction requested.
+/*
+ ------------------------------------------------------------------------------
+{xrst_begin sweep_forward_dir dev}
+{xrst_spell
+   cskip
+}
+
+{xrst_template ;
+   include/cppad/local/sweep/forward_sweep.xrst
+
+   headers all:     CPPAD_@NAME@_TRACE, Portotype, Base, RecBase, play, num_var
+   headers all:     cap_order, cskip, load_op2var, taylor
+   headers dir:     order_up, n_dir
+
+   @title@  The title for this forward sweep
+   @#####@  Underlining for the tilte
+   @NAME@   is one of FORWARD_0, FORWARD_ANY, FORWARD_DIR
+   @****@   Underlining for @NAME@
+
+   @title@ ; Compute One Order Multiple Directions Forward Taylor Coefficients
+   @#####@ ; #################################################################
+   @NAME@  ; FORWARD_DIR
+   @****@  ; ***********
+}
+
+{xrst_end sweep_forward_dir}
 */
-
-/*!
-\def CPPAD_FORWARD2_TRACE
-This value is either zero or one.
-Zero is the normal operational value.
-If it is one, a trace of every forward2sweep computation is printed.
-*/
-# define CPPAD_FORWARD2_TRACE 0
-
-/*!
-Compute multiple directions forward mode Taylor coefficients.
-
-\tparam Base
-The type used during the forward mode computations; i.e., the corresponding
-recording of operations used the type AD<Base>.
-
-\param q
-is the order of the Taylor coefficients
-that are computed during this call;
-<code>q > 0</code>.
-
-\param r
-is the number of Taylor coefficients
-that are computed during this call.
-
-\param n
-is the number of independent variables on the tape.
-
-\param num_var
-is the total number of variables on the tape.
-This is also equal to the number of rows in the matrix taylor; i.e.,
-play->num_var_rec().
-
-\param play
-The information stored in play
-is a recording of the operations corresponding to the function
-\f[
-   F : {\bf R}^n \rightarrow {\bf R}^m
-\f]
-where \f$ n \f$ is the number of independent variables and
-\f$ m \f$ is the number of dependent variables.
-
-\param J
-Is the number of columns in the coefficient matrix taylor.
-This must be greater than or equal one.
-
-\param taylor
-\n
-\b Input:
-For <code>i = 1 , ... , num_var-1</code>,
-<code>taylor[ (J-1)*r*i + i + 0 ]</code>
-is the zero order Taylor coefficient corresponding to
-the i-th variable and all directions.
-For <code>i = 1 , ... , num_var-1</code>,
-For <code>k = 1 , ... , q-1</code>,
-<code>ell = 0 , ... , r-1</code>,
-<code>taylor[ (J-1)*r*i + i + (k-1)*r + ell + 1 ]</code>
-is the k-th order Taylor coefficient corresponding to
-the i-th variabel and ell-th direction.
-\n
-\n
-\b Input:
-For <code>i = 1 , ... , n</code>,
-<code>ell = 0 , ... , r-1</code>,
-<code>taylor[ (J-1)*r*i + i + (q-1)*r + ell + 1 ]</code>
-is the q-th order Taylor coefficient corresponding to
-the i-th variable and ell-th direction
-(these are the independent varaibles).
-\n
-\n
-\b Output:
-For <code>i = n+1 , ... , num_var-1</code>,
-<code>ell = 0 , ... , r-1</code>,
-<code>taylor[ (J-1)*r*i + i + (q-1)*r + ell + 1 ]</code>
-is the q-th order Taylor coefficient corresponding to
-the i-th variable and ell-th direction.
-
-\param cskip_op
-Is a vector with size play->num_op_rec().
-If cskip_op[i] is true, the operator with index i
-does not affect any of the dependent variable (given the value
-of the independent variables).
-
-\param load_op2var
-is a vector with size play->num_var_load_rec().
-It is the variable index corresponding to each the
-load instruction.
-In the case where the index is zero,
-the instruction corresponds to a parameter (not variable).
-
-\param not_used_rec_base
-Specifies RecBase for this call.
-
-*/
-
+// BEGIN_FORWARD_DIR
 template <class Base, class RecBase>
 void forward_dir(
    const RecBase&              not_used_rec_base,
@@ -120,8 +51,8 @@ void forward_dir(
    const bool*                 cskip_op,
    const pod_vector<addr_t>&   load_op2var,
    const size_t                order_up,
-   const size_t                n_dir
-)
+   const size_t                n_dir)
+// END_FORWARD_DIR
 {
    CPPAD_ASSERT_UNKNOWN( order_up > 0 );
    CPPAD_ASSERT_UNKNOWN( cap_order >= order_up + 1 );
@@ -156,7 +87,7 @@ void forward_dir(
    const addr_t*   arg;
    itr.op_info(op, arg, i_var);
    CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-# if CPPAD_FORWARD2_TRACE
+# if CPPAD_FORWARD_DIR_TRACE
    bool atom_trace  = true;
    std::cout << std::endl;
    CppAD::vector<Base> Z_vec(order_up + 1);
@@ -619,7 +550,7 @@ void forward_dir(
          default:
          CPPAD_ASSERT_UNKNOWN(0);
       }
-# if CPPAD_FORWARD2_TRACE
+# if CPPAD_FORWARD_DIR_TRACE
       if( op != AFunOp )
       {  printOp<Base, RecBase>(
             std::cout,
@@ -661,7 +592,7 @@ void forward_dir(
 }
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_FORWARD2_TRACE
+# undef CPPAD_FORWARD_DIR_TRACE
 
 } } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 # endif
