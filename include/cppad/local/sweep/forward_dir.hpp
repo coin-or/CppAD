@@ -21,7 +21,7 @@ namespace CppAD { namespace local { namespace sweep {
 }
 
 {xrst_template ;
-   include/cppad/local/sweep/forward_sweep.xrst
+   include/cppad/local/sweep/template/forward_sweep.xrst
 
    headers all:     CPPAD_@NAME@_TRACE, Portotype, Base, RecBase, play, num_var
    headers all:     cap_order, cskip, load_op2var, taylor

@@ -6,7 +6,8 @@
 {xrst_begin sthread_get_started.cpp}
 
 {xrst_template ,
-   example/multi_thread/get_started.xrst
+   example/multi_thread/template/get_started.xrst
+
    title: Getting Started Using @Name@ Threads With CppAD
    start source code after: // <space> BEGIN_C++
    end source code before:  // <space> END_C++
