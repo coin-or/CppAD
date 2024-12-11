@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_POD_VECTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # if CPPAD_CSTDINT_HAS_8_TO_64
@@ -28,23 +28,23 @@ A vector class with that does not use element constructors or destructors
 template <class Type>
 class pod_vector {
 private:
-   /// maximum number of bytes current allocation can hold
-   size_t byte_capacity_;
-
-   /// number of bytes currently in this vector
-   size_t byte_length_;
+   // number of elements in vector
+   size_t length_;
+   //
+   // maximum number of elements current allocation can hold
+   size_t capacity_;
 
    /// pointer to the first type elements
-   /// (not defined and should not be used when byte_capacity_ = 0)
+   /// (not defined and should not be used when capacity_ = 0)
    Type   *data_;
 
    /// do not use the copy constructor
    explicit pod_vector(const pod_vector& )
    {  CPPAD_ASSERT_UNKNOWN(false); }
 public:
-   /// default constructor sets byte_capacity_ = byte_length_ = data_ = 0
+   /// default constructor
    pod_vector(void)
-   : byte_capacity_(0), byte_length_(0), data_(nullptr)
+   : length_(0), capacity_(0), data_(nullptr)
    {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
    }
 
@@ -52,7 +52,7 @@ public:
    pod_vector(
       /// number of elements in this vector
       size_t n )
-   : byte_capacity_(0), byte_length_(0), data_(nullptr)
+   : length_(0), capacity_(0), data_(nullptr)
    {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
       extend(n);
    }
@@ -61,7 +61,7 @@ public:
    /// see extend and resize.  If this is not plain old data,
    /// the destructor for each element is called.
    ~pod_vector(void)
-   {  if( byte_capacity_ > 0 )
+   {  if( capacity_ > 0 )
       {
          void* v_ptr = reinterpret_cast<void*>( data_ );
          thread_alloc::return_memory(v_ptr);
@@ -70,11 +70,11 @@ public:
 
    /// current number of elements in this vector.
    size_t size(void) const
-   {  return byte_length_ / sizeof(Type); }
+   {  return length_; }
 
    /// current capacity (amount of allocated storage) for this vector.
    size_t capacity(void) const
-   {  return byte_capacity_ / sizeof(Type); }
+   {  return capacity_; }
 
    /// current data pointer is no longer valid after any of the following:
    /// extend, resize, erase, clear, assignment and destructor.
@@ -91,7 +91,7 @@ public:
       /// element index, must be less than length
       size_t i
    )
-   {  CPPAD_ASSERT_UNKNOWN( i < byte_length_ / sizeof(Type) );
+   {  CPPAD_ASSERT_UNKNOWN( i < length_ );
       return data_[i];
    }
    /// non-constant element access; i.e., we can change this element value
@@ -100,7 +100,7 @@ public:
       /// element index, must be less than length and convertable to size_t
       Index i
    )
-   {  CPPAD_ASSERT_UNKNOWN( size_t(i)  < byte_length_ / sizeof(Type) );
+   {  CPPAD_ASSERT_UNKNOWN( size_t(i)  < length_ );
       return (*this)[size_t(i)];
    }
    //  ----------------------------------------------------------------------
@@ -109,7 +109,7 @@ public:
       /// element index, must be less than length
       size_t i
    ) const
-   {  CPPAD_ASSERT_UNKNOWN( i  < byte_length_ / sizeof(Type) );
+   {  CPPAD_ASSERT_UNKNOWN( i  < length_ );
       return data_[i];
    }
    /// constant element access; i.e., we cannot change this element value
@@ -118,7 +118,7 @@ public:
       /// element index, must be less than length and convertable to size_t
       Index i
    ) const
-   {  CPPAD_ASSERT_UNKNOWN( size_t(i)  < byte_length_ / sizeof(Type) );
+   {  CPPAD_ASSERT_UNKNOWN( size_t(i)  < length_ );
       return (*this)[size_t(i)];
    }
    //  ----------------------------------------------------------------------
@@ -143,8 +143,9 @@ public:
    is the other vector that we are swapping this vector with.
    */
    void swap(pod_vector& other)
-   {  std::swap(byte_capacity_, other.byte_capacity_);
-      std::swap(byte_length_,   other.byte_length_);
+   {
+      std::swap(capacity_,      other.capacity_);
+      std::swap(length_,        other.length_);
       std::swap(data_,          other.data_);
    }
    // ----------------------------------------------------------------------
@@ -167,32 +168,35 @@ public:
    pod_vector. They uses thread_alloc for this allocation.
    */
    size_t extend(size_t n)
-   {  size_t old_length   = byte_length_;
-      byte_length_       += n * sizeof(Type);
+   {  size_t old_length   = length_;
+      length_            += n;
 
       // check if we can use current memory
-      if( byte_length_ <= byte_capacity_ )
-         return old_length / sizeof(Type);
+      if( length_ <= capacity_ )
+         return old_length;
 
       // save more old information
-      size_t old_capacity = byte_capacity_;
+      size_t old_capacity = capacity_;
       void* old_v_ptr     = reinterpret_cast<void*>(data_);
 
       // get new memory and set capacity
-      void* v_ptr = thread_alloc::get_memory(byte_length_, byte_capacity_);
-      data_       = reinterpret_cast<Type*>(v_ptr);
+      size_t byte_capacity;
+      size_t bytes = length_ * sizeof(Type);
+      void* v_ptr  = thread_alloc::get_memory(bytes, byte_capacity);
+      capacity_    = byte_capacity / sizeof(Type);
+      data_        = reinterpret_cast<Type*>(v_ptr);
 
       // copy old data to new
       if( old_length >  0 )
-         std::memcpy(v_ptr, old_v_ptr, old_length);
+         std::memcpy(v_ptr, old_v_ptr, old_length * sizeof(Type));
 
       // return old memory to available pool
       if( old_capacity > 0 )
          thread_alloc::return_memory(old_v_ptr);
 
       // return value for extend(n) is the old length
-      CPPAD_ASSERT_UNKNOWN( byte_length_ <= byte_capacity_ );
-      return old_length / sizeof(Type);
+      CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
+      return old_length;
    }
    // ----------------------------------------------------------------------
    /*!
@@ -215,38 +219,41 @@ public:
    pod_vector. They uses thread_alloc for this allocation.
    */
    void resize(size_t n)
-   {  byte_length_ = n * sizeof(Type);
+   {  length_      = n;
 
       // check if we must allocate new memory
-      if( byte_capacity_ < byte_length_ )
+      if( capacity_ < length_ )
       {  void* v_ptr;
          //
-         if( byte_capacity_ > 0 )
+         if( capacity_ > 0 )
          {  // return old memory to available pool
             v_ptr = reinterpret_cast<void*>( data_ );
             thread_alloc::return_memory(v_ptr);
          }
          //
          // get new memory and set capacity
-         v_ptr     = thread_alloc::get_memory(byte_length_, byte_capacity_);
-         data_     = reinterpret_cast<Type*>(v_ptr);
+         size_t byte_capacity;
+         size_t bytes = length_ * sizeof(Type);
+         v_ptr        = thread_alloc::get_memory(bytes, byte_capacity);
+         capacity_    = byte_capacity / sizeof(Type);
+         data_        = reinterpret_cast<Type*>(v_ptr);
          //
       }
-      CPPAD_ASSERT_UNKNOWN( byte_length_ <= byte_capacity_ );
+      CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
    }
    // ----------------------------------------------------------------------
    /*!
    Remove all the elements from this vector and free its memory.
    */
    void clear(void)
-   {  if( byte_capacity_ > 0 )
+   {  if( capacity_ > 0 )
       {
          void* v_ptr = reinterpret_cast<void*>( data_ );
          thread_alloc::return_memory(v_ptr);
       }
       data_          = nullptr;
-      byte_capacity_ = 0;
-      byte_length_   = 0;
+      capacity_      = 0;
+      length_        = 0;
    }
    // -----------------------------------------------------------------------
    /// vector assignment operator
@@ -254,15 +261,14 @@ public:
       /// right hand size of the assingment operation
       const pod_vector& x
    )
-   {  CPPAD_ASSERT_UNKNOWN( x.byte_length_ % sizeof(Type) == 0 );
-      resize( x.byte_length_ / sizeof(Type) );
-      if( byte_length_ > 0 )
-      {
+   {
+      resize( x.length_ );
+      if( length_ > 0 )
+      {  size_t bytes  = length_ * sizeof(Type);
          void* v_ptr   = reinterpret_cast<void*>( data_ );
          void* v_ptr_x = reinterpret_cast<void*>( x.data_ );
-         std::memcpy(v_ptr, v_ptr_x, byte_length_);
+         std::memcpy(v_ptr, v_ptr_x, bytes);
       }
-
    }
 };
 // ---------------------------------------------------------------------------
