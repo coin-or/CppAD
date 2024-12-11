@@ -48,9 +48,14 @@ do
    then
       check='no'
    fi
-   if ! $grep BEGIN_SORT_THIS_LINE $file_name > /dev/null
+   if [ -d "$file_name" ]
    then
       check='no'
+   else
+      if ! $grep BEGIN_SORT_THIS_LINE $file_name > /dev/null
+      then
+         check='no'
+      fi
    fi
    if [ "$check" == 'yes' ]
    then

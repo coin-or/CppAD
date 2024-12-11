@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell  <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin dev_2024 dev}
+
+Development Release Notes for 2024
+##################################
+
+12-11
+*****
+The :ref:`pod_vector-name` template class was documented and simplified.
+For example, the ``pod_vector_ptr`` function was removed
+and the ``byte_length_`` and ``byte_capacity_`` member variables
+where changed to ``size_`` and ``capacity_`` 
+which use elements (instead of bytes) for their units.  
+
+12-09
+*****
+The developer documentation for the variable 
+ref:`op codes <op_code_var-name>` and 
+:ref:`sweeps <dev_sweep-name>` were improved.
+In addition, the corresponding source code was simplified.
+
+
+{xrst_end dev_2024}
+

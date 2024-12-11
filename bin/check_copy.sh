@@ -88,7 +88,7 @@ then
 fi
 for file_name in $list
 do
-   if [ -e $file_name ]
+   if [ -e $file_name ] && [ -f $file_name ]
    then
       $sed \
       -e 's|\(SPDX-FileContributor\): *\([0-9]\{4\}\)[-0-9]* |\1: \2-24 |' \

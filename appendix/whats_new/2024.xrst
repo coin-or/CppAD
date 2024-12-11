@@ -26,7 +26,6 @@
    xcode
    yy
    yyyy
-   dev
 }
 
 Release Notes for 2024
@@ -37,14 +36,9 @@ mm-dd
 
 12-09
 =====
-#. An option to build a local copy of the user or developer documentation
-   was added to the install procedure; see :ref:`cmake@include_doc` .
-   This also affects the :ref:`cmake@cmake_install_docdir` option.
-
-#. The developer documentation for the variable operators and sweep functions
-   was improved (and the corresponding source code was simplified); see
-   op_code_var.html and dev_sweep.html in the developer documentation.
-
+An option to build a local copy of the user or developer documentation
+was added to the install procedure; see :ref:`cmake@include_doc` .
+This also affects the :ref:`cmake@cmake_install_docdir` option.
 
 11-23
 =====

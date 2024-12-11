@@ -167,7 +167,7 @@ see :ref:`var_pri_op@PriOp`
 
 {xrst_comment ------------------------------------------------------------- }
 
-// BEGIN_SORT_THIS_LINE_PLUS_2
+{xrst_comment // BEGIN_SORT_THIS_LINE_PLUS_2 }
 {xrst_toc_table
    include/cppad/local/var_op/atomic_op.hpp
    include/cppad/local/var_op/binary_op.xrst
@@ -184,7 +184,7 @@ see :ref:`var_pri_op@PriOp`
    include/cppad/local/var_op/two_var.hpp
    include/cppad/local/var_op/unary_op.xrst
 }
-// END_SORT_THIS_LINE_MINUS_2
+{xrst_comment // END_SORT_THIS_LINE_MINUS_2 }
 
 Source
 ******
