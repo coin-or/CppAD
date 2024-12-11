@@ -29,16 +29,30 @@ are done using the type Base .
 // random_itr_info
 struct random_itr_info_t {
    //
+   // *_op2arg
+   // index in arg_vec_ corresonding to the first argument for each operator
    pod_vector<unsigned  short> short_op2arg;
-   pod_vector<unsigned  short> short_op2var;
-   pod_vector<unsigned  short> short_var2op;
-   //
    pod_vector<unsigned  int>   int_op2arg;
-   pod_vector<unsigned  int>   int_op2var;
-   pod_vector<unsigned  int>   int_var2op;
-   //
    pod_vector<size_t>          size_t_op2arg;
+   /*
+   *_op2var
+   Index of the result variable for each operator. If the operator has
+   no results, this is not defined. The invalid index num_var_rec_ is used
+   when NDEBUG is not defined. If the operator has more than one result, this
+   is the primary result; i.e., the last result. Auxillary results are only 
+   used by the current operator and not used by other operators.
+   */
+   pod_vector<unsigned  short> short_op2var;
+   pod_vector<unsigned  int>   int_op2var;
    pod_vector<size_t>          size_t_op2var;
+   /*
+   *_var2op
+   Mapping from primary variable index to corresponding operator index.
+   This is used to traverse sub-graphs of the operation sequence.
+   This value is valid (invalid) for primary (auxiliary) variables.
+   */
+   pod_vector<unsigned  short> short_var2op;
+   pod_vector<unsigned  int>   int_var2op;
    pod_vector<size_t>          size_t_var2op;
    //
    // swap
@@ -183,24 +197,7 @@ private:
    //
    // random_itr_info_
    random_itr_info_t random_itr_info_;
-
-   /// index in arg_vec_ corresonding to the first argument for each operator
-   pod_vector<unsigned char> op2arg_vec_;
-
-   /*!
-   Index of the result variable for each operator. If the operator has
-   no results, this is not defined. The invalid index num_var_rec_ is used
-   when NDEBUG is not defined. If the operator has more than one result, this
-   is the primary result; i.e., the last result. Auxillary are only used by
-   the operator and not used by other operators.
-   */
-   pod_vector<unsigned char> op2var_vec_;
-
-   /// Mapping from primary variable index to corresponding operator index.
-   /// This is used to traverse sub-graphs of the operation sequence.
-   /// This value is valid (invalid) for primary (auxiliary) variables.
-   pod_vector<unsigned char> var2op_vec_;
-
+   //
 public:
    // =================================================================
    /// default constructor
@@ -608,9 +605,6 @@ public:
       dyn_ind2par_ind_    = play.dyn_ind2par_ind_;
       dyn_par_op_         = play.dyn_par_op_;
       dyn_par_arg_        = play.dyn_par_arg_;
-      op2arg_vec_         = play.op2arg_vec_;
-      op2var_vec_         = play.op2var_vec_;
-      var2op_vec_         = play.var2op_vec_;
       //
       // random_itr_info_
       random_itr_info_    = play.random_itr_info_;
@@ -638,9 +632,6 @@ public:
       play.dyn_ind2par_ind_    = dyn_ind2par_ind_;
       play.dyn_par_op_         = dyn_par_op_;
       play.dyn_par_arg_        = dyn_par_arg_;
-      play.op2arg_vec_         = op2arg_vec_;
-      play.op2var_vec_         = op2var_vec_;
-      play.var2op_vec_         = var2op_vec_;
       //
       // random_itr_info_
       play.random_itr_info_    = random_itr_info_;
@@ -671,9 +662,6 @@ public:
       dyn_ind2par_ind_.swap(    other.dyn_ind2par_ind_);
       dyn_par_op_.swap(         other.dyn_par_op_);
       dyn_par_arg_.swap(        other.dyn_par_arg_);
-      op2arg_vec_.swap(         other.op2arg_vec_);
-      op2var_vec_.swap(         other.op2var_vec_);
-      var2op_vec_.swap(         other.var2op_vec_);
       //
       // random_itr_info_
       random_itr_info_.swap(    other.random_itr_info_);

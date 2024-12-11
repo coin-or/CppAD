@@ -68,25 +68,6 @@ public:
       }
    }
 
-   /*
-   Return a pointer to a pod_vector with a different type of element.
-
-   - This vector and the other share the same memory.
-
-   - The the other vector should not be deleted.
-
-   - The following operations work the same for this and the other vector:
-   swap, clear, assignment.
-   */
-   template <class Other>
-   pod_vector<Other>* pod_vector_ptr(void)
-   {  return reinterpret_cast< pod_vector<Other>* >(this);
-   }
-   template <class Other>
-   const pod_vector<Other>* pod_vector_ptr(void) const
-   {  return reinterpret_cast< const pod_vector<Other>* >(this);
-   }
-
    /// current number of elements in this vector.
    size_t size(void) const
    {  return byte_length_ / sizeof(Type); }
