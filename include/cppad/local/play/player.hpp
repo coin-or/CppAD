@@ -26,6 +26,105 @@ These were AD< Base > operations when recorded. Operations during playback
 are done using the type Base .
 */
 
+// random_itr_info
+struct random_itr_info_t {
+   //
+   pod_vector<unsigned  short> short_op2arg;
+   pod_vector<unsigned  short> short_op2var;
+   pod_vector<unsigned  short> short_var2op;
+   //
+   pod_vector<unsigned  int>   int_op2arg;
+   pod_vector<unsigned  int>   int_op2var;
+   pod_vector<unsigned  int>   int_var2op;
+   //
+   pod_vector<size_t>          size_t_op2arg;
+   pod_vector<size_t>          size_t_op2var;
+   pod_vector<size_t>          size_t_var2op;
+   //
+   // swap
+   void swap( random_itr_info_t& other )
+   {  //
+      short_op2arg.swap( other.short_op2arg );
+      short_op2var.swap( other.short_op2var );
+      short_var2op.swap( other.short_var2op );
+      //
+      int_op2arg.swap( other.int_op2arg );
+      int_op2var.swap( other.int_op2var );
+      int_var2op.swap( other.int_var2op );
+      //
+      size_t_op2arg.swap( other.size_t_op2arg );
+      size_t_op2var.swap( other.size_t_op2var );
+      size_t_var2op.swap( other.size_t_var2op );
+   }
+   //
+   // clear
+   void clear(void)
+   {  //
+      short_op2arg.clear();
+      short_op2var.clear();
+      short_var2op.clear();
+      //
+      int_op2arg.clear();
+      int_op2var.clear();
+      int_var2op.clear();
+      //
+      size_t_op2arg.clear();
+      size_t_op2var.clear();
+      size_t_var2op.clear();
+   }
+   //
+   // size
+   size_t size(void) const
+   {  //
+      CPPAD_ASSERT_UNKNOWN( short_op2arg.size()  == short_op2var.size() );
+      CPPAD_ASSERT_UNKNOWN( int_op2arg.size()    == int_op2var.size() );
+      CPPAD_ASSERT_UNKNOWN( size_t_op2arg.size() == size_t_op2var.size() );
+      //
+      size_t short_num_arg  = short_op2arg.size();
+      size_t int_num_arg    = int_op2arg.size();
+      size_t size_t_num_arg = size_t_op2arg.size();
+      //
+      size_t short_num_var  = short_var2op.size();
+      size_t int_num_var    = int_var2op.size();
+      size_t size_t_num_var = size_t_var2op.size();
+      //
+      // result
+      size_t result = 0;
+      //
+      // result
+      if( short_num_arg != 0 )
+      {  CPPAD_ASSERT_UNKNOWN( int_num_arg    == 0 );
+         CPPAD_ASSERT_UNKNOWN( size_t_num_arg == 0 );
+         //
+         result = 2 * short_num_arg + short_num_var;
+      }
+      else
+         CPPAD_ASSERT_UNKNOWN( short_num_var == 0 );
+      //
+      // result
+      if( int_num_arg != 0 )
+      {  CPPAD_ASSERT_UNKNOWN( short_num_arg  == 0 );
+         CPPAD_ASSERT_UNKNOWN( size_t_num_arg == 0 );
+         //
+         result = 2 * int_num_arg + int_num_var;
+      }
+      else
+         CPPAD_ASSERT_UNKNOWN( int_num_var == 0 );
+      //
+      // result
+      if( size_t_num_arg != 0 )
+      {  CPPAD_ASSERT_UNKNOWN( short_num_arg  == 0 );
+         CPPAD_ASSERT_UNKNOWN( int_num_arg    == 0 );
+         //
+         result = 2 * size_t_num_arg + size_t_num_var;
+      }
+      else
+         CPPAD_ASSERT_UNKNOWN( size_t_num_var == 0 );
+      //
+      return result;
+   }
+};
+
 template <class Base>
 class player {
    // player<Base> must be a friend of player< AD<Base> > for base2ad to work
@@ -81,6 +180,9 @@ private:
    // ----------------------------------------------------------------------
    // Information needed to use member functions that begin with random_
    // and for using const_subgraph_iterator.
+   //
+   // random_itr_info_
+   random_itr_info_t random_itr_info_;
 
    /// index in arg_vec_ corresonding to the first argument for each operator
    pod_vector<unsigned char> op2arg_vec_;
@@ -510,6 +612,9 @@ public:
       op2var_vec_         = play.op2var_vec_;
       var2op_vec_         = play.var2op_vec_;
       //
+      // random_itr_info_
+      random_itr_info_    = play.random_itr_info_;
+      //
       // pod_maybe_vectors
       all_par_vec_        = play.all_par_vec_;
    }
@@ -536,6 +641,9 @@ public:
       play.op2arg_vec_         = op2arg_vec_;
       play.op2var_vec_         = op2var_vec_;
       play.var2op_vec_         = var2op_vec_;
+      //
+      // random_itr_info_
+      play.random_itr_info_    = random_itr_info_;
       //
       // pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
       play.all_par_vec_.resize( all_par_vec_.size() );
@@ -567,6 +675,9 @@ public:
       op2var_vec_.swap(         other.op2var_vec_);
       var2op_vec_.swap(         other.var2op_vec_);
       //
+      // random_itr_info_
+      random_itr_info_.swap(    other.random_itr_info_);
+      //
       // pod_maybe_vectors
       all_par_vec_.swap(    other.all_par_vec_);
    }
@@ -576,27 +687,44 @@ public:
    // =================================================================
    /// Enable use of const_subgraph_iterator and member functions that begin
    // with random_(no work if already setup).
-   template <class Addr>
-   void setup_random(void)
+   //
+   // setup_random
+   void setup_random(unsigned short& not_used)
    {  play::random_setup(
-         num_var_rec_                               ,
-         op_vec_                                    ,
-         arg_vec_                                   ,
-         op2arg_vec_.pod_vector_ptr<Addr>()         ,
-         op2var_vec_.pod_vector_ptr<Addr>()         ,
-         var2op_vec_.pod_vector_ptr<Addr>()
+         num_var_rec_                        ,
+         op_vec_                             ,
+         arg_vec_                            ,
+         &random_itr_info_.short_op2arg      ,
+         &random_itr_info_.short_op2var      ,
+         &random_itr_info_.short_var2op
       );
    }
+   void setup_random(unsigned int& not_used)
+   {  play::random_setup(
+         num_var_rec_                        ,
+         op_vec_                             ,
+         arg_vec_                            ,
+         &random_itr_info_.int_op2arg        ,
+         &random_itr_info_.int_op2var        ,
+         &random_itr_info_.int_var2op
+      );
+   }
+   void setup_random(size_t& not_used)
+   {  play::random_setup(
+         num_var_rec_                        ,
+         op_vec_                             ,
+         arg_vec_                            ,
+         &random_itr_info_.size_t_op2arg     ,
+         &random_itr_info_.size_t_op2var     ,
+         &random_itr_info_.size_t_var2op
+      );
+   }
+   //
    /// Free memory used for functions that begin with random_
    /// and random iterators and subgraph iterators
    void clear_random(void)
-   {
-      op2arg_vec_.clear();
-      op2var_vec_.clear();
-      var2op_vec_.clear();
-      CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == 0  );
-      CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0  );
-      CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
+   {  random_itr_info_.clear();
+      CPPAD_ASSERT_UNKNOWN( random_itr_info_.size() == 0  );
    }
    /// get non-const version of all_par_vec
    pod_vector_maybe<Base>& all_par_vec(void)
@@ -752,42 +880,7 @@ public:
    /// A measure of amount of memory used for random access routine
    /// In user api as f.size_random(); see the file fun_property.omh.
    size_t size_random(void) const
-   {
-# ifndef NDEBUG
-      if( op2arg_vec_.size() == 0 )
-      {  CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0 );
-         CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0 );
-      }
-      else
-      {  size_t size = 0;
-         switch( address_type() )
-         {  case play::unsigned_short_enum:
-            size = sizeof(unsigned short);
-            break;
-            //
-            case play::unsigned_int_enum:
-            size = sizeof(unsigned int);
-            break;
-            //
-            case play::size_t_enum:
-            size = sizeof(size_t);
-            break;
-
-            default:
-            CPPAD_ASSERT_UNKNOWN(false);
-            break;
-         }
-         CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size()/size  == num_op_rec() );
-         CPPAD_ASSERT_UNKNOWN( op2var_vec_.size()/size  == num_op_rec() );
-         CPPAD_ASSERT_UNKNOWN( var2op_vec_.size()/size  == num_var_rec() );
-      }
-# endif
-      CPPAD_ASSERT_UNKNOWN( sizeof(unsigned char) == 1 );
-      return op2arg_vec_.size()
-             + op2var_vec_.size()
-             + var2op_vec_.size()
-      ;
-   }
+   {  return random_itr_info_.size(); }
    // -----------------------------------------------------------------------
    /// const sequential iterator begin
    play::const_sequential_iterator begin(void) const
@@ -831,14 +924,34 @@ public:
    }
    // -----------------------------------------------------------------------
    /// const random iterator
-   template <class Addr>
-   play::const_random_iterator<Addr> get_random(void) const
-   {  return play::const_random_iterator<Addr>(
-         op_vec_,
-         arg_vec_,
-         op2arg_vec_.pod_vector_ptr<Addr>(),
-         op2var_vec_.pod_vector_ptr<Addr>(),
-         var2op_vec_.pod_vector_ptr<Addr>()
+   play::const_random_iterator<unsigned short>
+   get_random(unsigned short& not_used) const
+   {  return play::const_random_iterator<unsigned short>(
+         op_vec_                             ,
+         arg_vec_                            ,
+         &random_itr_info_.short_op2arg      ,
+         &random_itr_info_.short_op2var      ,
+         &random_itr_info_.short_var2op
+      );
+   }
+   play::const_random_iterator<unsigned int>
+   get_random(unsigned int& not_used) const
+   {  return play::const_random_iterator<unsigned int>(
+         op_vec_                             ,
+         arg_vec_                            ,
+         &random_itr_info_.int_op2arg        ,
+         &random_itr_info_.int_op2var        ,
+         &random_itr_info_.int_var2op
+      );
+   }
+   play::const_random_iterator<size_t>
+   get_random(size_t& not_used)
+   {  return play::const_random_iterator<size_t>(
+         op_vec_                             ,
+         arg_vec_                            ,
+         &random_itr_info_.size_t_op2arg     ,
+         &random_itr_info_.size_t_op2var     ,
+         &random_itr_info_.size_t_var2op
       );
    }
 };

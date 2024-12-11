@@ -90,9 +90,10 @@ void subgraph_sparsity(
    pod_vector<size_t>&                        col_out       )
 {
    // get random access iterator for this player
-   play->template setup_random<Addr>();
+   Addr not_used;
+   play->setup_random( not_used );
    local::play::const_random_iterator<Addr> random_itr =
-      play->template get_random<Addr>();
+      play->get_random( not_used );
 
    // check dimension assumptions
    CPPAD_ASSERT_UNKNOWN(

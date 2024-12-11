@@ -163,9 +163,10 @@ bool optimize_run(
    CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
    //
    // get a random iterator for this player
-   play->template setup_random<Addr>();
+   Addr not_used;
+   play->setup_random( not_used );
    local::play::const_random_iterator<Addr> random_itr =
-      play->template get_random<Addr>();
+      play->get_random( not_used );
    //
    // compare_op, conditional_skip, cumulative_sum_op, print_for_op,
    // collision_limit

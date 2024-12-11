@@ -303,9 +303,10 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
    RecBase not_used_rec_base(0.0);
    //
    // get a random iterator for this player
-   play_.template setup_random<Addr>();
+   Addr not_used;
+   play_.setup_random(not_used);
    typename local::play::const_random_iterator<Addr> random_itr =
-      play_.template get_random<Addr>();
+      play_.get_random( not_used );
 
    // check BaseVector is Simple Vector class with Base type elements
    CheckSimpleVector<Base, BaseVector>();
