@@ -34,6 +34,11 @@ Release Notes for 2024
 mm-dd
 *****
 
+12-14
+=====
+Add a separate :ref:`cmake@CMake Command@true_or_false` paragraph
+to describe *true_or_false* in the cmake command.
+
 12-09
 =====
 An option to build a local copy of the user or developer documentation

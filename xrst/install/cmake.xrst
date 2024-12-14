@@ -62,12 +62,12 @@ change into the ``build`` .
 
 Eigen
 *****
-If cppad finds Eigen,
+The cmake command will automatically search for the eigen package.
+If it is found,
 the  corresponding examples will be tested and the
 :ref:`sparse2eigen-name` utility will be installed; see :ref:`eigen-name` .
 The results of cppad's search for Eigen are reported in the output of
 the cmake command.
-
 
 CMake Command
 *************
@@ -102,6 +102,12 @@ examples and tests that use boost.
 Newer version of cmake; e.g., 3.13.4, do not generate this warning
 (when boost is not present on your system).
 
+true_or_false
+=============
+The syntax ``-D`` *name* = *true_or_false* , mean that 
+the variable *name* can be assigned the value ``true`` or ``false`` . 
+
+
 Options
 =======
 The full version of the command, with all its optional arguments is:
@@ -120,9 +126,11 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cmake_install_datadir`` = *cmake_install_datadir*              \\
 | |tab| ``-D cmake_install_docdir`` = *cmake_install_docdir*                \\
 | |tab| \\
-| |tab| ``-D cmake_defined_ok`` = *cmake_defined_ok*                        \\
+| |tab| ``-D cmake_defined_ok`` = *true_or_false*                           \\
+| |tab| ``-D include_doc`` = *true_or_false*                                \\
+| |tab| ``-D cppad_static_lib`` = *true_or_false*                           \\
+| |tab| ``-D cppad_debug_and_release`` = *true_or_false*                    \\
 | |tab| \\
-| |tab| ``-D include_doc`` = *true_or_false*                              \\
 | |tab| ``-D include_adolc`` = *true_or_false*                              \\
 | |tab| ``-D include_ipopt`` = *true_or_false*                              \\
 | |tab| ``-D include_cppadcg`` = *true_or_false*                            \\
@@ -138,8 +146,6 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cppad_tape_id_type`` = *cppad_tape_id_type*                    \\
 | |tab| ``-D cppad_tape_addr_type`` = *cppad_tape_addr_type*                \\
 | |tab| ``-D cppad_debug_which`` = *cppad_debug_which*                      \\
-| |tab| ``-D cppad_static_lib`` = *cppad_static_lib*                        \\
-| |tab| ``-D cppad_debug_and_release`` = *cppad_debug_and_release*          \\
 | |tab| \\
 | |tab| ..
 
@@ -381,15 +387,16 @@ the documentation files are not installed.
 
 cmake_defined_ok
 ****************
-This must be true when running cmake with a non-empty
+The default value for this option is true.
+It must be true when running cmake with a non-empty
 ``CMakeCache.txt`` file.
 If it is false, some checks will be made to make sure
 certain variables are not defined twice.
-The default value for *cmake_defined_ok* is true.
 
 include_doc
 ***********
-If ``include_doc=true`` is in the command line, the
+The default value for this option is false.
+If it is true, is in the command line, the
 `xrst <https://xrst.readthedocs.io/latest/>`_
 program must be installed.
 In this case, the user and developer documentation targets
@@ -400,27 +407,48 @@ will build the  corresponding documentation in the
 ``build/html`` sub-directory of the
 :ref:`download@Distribution Directory` .
 
+cppad_static_lib
+****************
+The default value for this option is false.
+If it is true (false)
+the cppad library will be a static (shared) library.
+If the target system uses windows dlls, this setting should be true and
+if it is false, a warning will be issued and it will be ignored.
+
+cppad_debug_and_release
+***********************
+The default value for this option is true.
+If it is true,
+the debug and release versions of CppAD can be mixed in the same program.
+This must be true if
+:ref:`cmake@cppad_debug_which` is ``debug_even`` or ``debug_odd`` .
+If ``NDEBUG`` is defined and *cppad_debug_and_release* is false,
+:ref:`thread_alloc-name` does more error checking.
+For programs that do a lot of memory allocation,
+this can take a significant amount of time.
+This is meant for testing CppAD and as a last resort when debugging.
+
 include_adolc
 *************
-The :ref:`adolc-name` examples
-will be compiled and tested if ``include_adolc=true``
-is in the command line.
+The default value for this option is false.
+If it is true,
+the :ref:`adolc-name` examples will be compiled and tested.
 In this case, ``adolc.pc`` must be in the ``PKG_CONFIG_PATH`` .
 
 include_ipopt
 *************
-The :ref:`ipopt-name` examples
-will be compiled and tested if ``include_ipopt=true``
-is on the command line.
+The default value for this option is false.
+If it is true,
+the :ref:`ipopt-name` examples will be compiled and tested.
 In this case, ``ipopt.pc`` must be in the ``PKG_CONFIG_PATH`` .
 In addition, :ref:`ipopt_solve-name` and :ref:`cppad_ipopt_nlp-name`
 will be installed.
 
 include_cppadcg
 ***************
-The :ref:`cppadcg-name` examples
-will be compiled and tested if ``include_cppadcg=true``
-is on the command line.
+The default value for this option is false.
+If it is true,
+the :ref:`cppadcg-name` examples will be compiled and tested.
 **Warning** :
 Do not use this option when installing cppad because
 the cppadcg package depends on cppad and using this option
@@ -577,28 +605,6 @@ The value *cppad_debug_which* be one of the following:
 
 If ``CMAKE_BUILD_TYPE`` is specified on the command line,
 then *cppad_debug_which* must be the empty string (its default value).
-
-cppad_static_lib
-****************
-This value should be either ``true`` or ``false`` and
-its default value is ``false`` .
-If it is true (false), the cppad library will be a static (shared) library.
-If the target system uses windows dlls, this setting should be true.
-If it is false, a warning will be issued and it will be ignored.
-
-cppad_debug_and_release
-***********************
-This value should be either ``true`` or ``false`` and its
-default value is ``true`` .
-If it is true,
-and the debug and release versions of CppAD can be mixed in the same program.
-This must be true if
-:ref:`cmake@cppad_debug_which` is ``debug_even`` or ``debug_odd`` .
-If ``NDEBUG`` is defined and *cppad_debug_and_release* is false,
-:ref:`thread_alloc-name` does more error checking.
-For programs that do a lot of memory allocation,
-this can take a significant amount of time.
-This is meant for testing CppAD and as a last resort when debugging.
 
 {xrst_toc_hidden
    bin/get_optional.sh
