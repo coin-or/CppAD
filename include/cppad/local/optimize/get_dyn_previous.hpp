@@ -115,9 +115,6 @@ using AD< Base > and computations by this routine are done using type
 \param play
 This is the old operation sequence.
 
-\param random_itr
-This is a random iterator for the old operation sequence.
-
 \param par_usage
 The size of this vector is the number of parameters in the
 operation sequence.i.e., play->nun_var_rec().
@@ -133,10 +130,9 @@ used in place of the j-th dynamic parameter, k < j, dyn_previous[k] != num_dyn,
 par_usage[dyn_ind2par_ind[k]] == true.
 */
 
-template <class Addr, class Base>
+template <class Base>
 void get_dyn_previous(
    const player<Base>*                         play                ,
-   const play::const_random_iterator<Addr>&    random_itr          ,
    pod_vector<bool>&                           par_usage           ,
    pod_vector<addr_t>&                         dyn_previous        )
 {

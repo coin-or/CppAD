@@ -272,7 +272,6 @@ bool optimize_run(
    pod_vector<addr_t> dyn_previous;
    get_dyn_previous(
       play                ,
-      random_itr          ,
       par_usage           ,
       dyn_previous
    );
