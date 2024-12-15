@@ -112,10 +112,15 @@ arg
 see
 :ref:`var_cexp_op@arg`
 
+RecBase
+*******
+is the base type use when recording this operator;
+i.e., this operation was recording using AD< *RecBase* > operations.
+
 Base
 ****
-base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type Base.
+is the type used for computations by this operator.
+This is either *RecBase* or AD< *RecBase* >.
 
 i_z
 ***

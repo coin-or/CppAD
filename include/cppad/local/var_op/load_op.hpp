@@ -47,10 +47,15 @@ z
 is the new variable created by this load.
 (This new variable is like a copy of *y* .)
 
+RecBase
+*******
+is the base type use when recording this operator;
+i.e., this operation was recording using AD< *RecBase* > operations.
+
 Base
 ****
-base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by these operators done using type Base.
+is the type used for computations by this operator.
+This is either *RecBase* or AD< *RecBase* >.
 
 op_code
 *******

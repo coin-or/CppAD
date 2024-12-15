@@ -101,10 +101,15 @@ Prototype
    // END_COMPARE_FORWARD_ANY
 }
 
+RecBase
+*******
+is the base type use when recording this operator;
+i.e., this operation was recording using AD< *RecBase* > operations.
+
 Base
 ****
-is the base type for the operator; i.e., this operation was recorded
-using ``AD`` < *Base* > and computations by these operators are done using
+is the type used for computations by this operator.
+This is either *RecBase* or AD< *RecBase* >.
 type *Base* .
 
 op_code, arg
