@@ -158,30 +158,37 @@ public:
    }
    /*!
    Correction applied before ++ operation when current operator
-   is CSumOp or CSkipOp.
+   is CSumOp, CSkipOp, or AFunOP.
    */
    void correct_before_increment(void)
-   {  // number of arguments for this operator depends on argument data
+   {  //
+      // arg_
+      // actual number of arguments for this operator depends on argument data
       CPPAD_ASSERT_UNKNOWN( NumArg(op_) == 0 );
       const addr_t* arg = arg_;
       //
-      // CSumOp
-      if( op_ == CSumOp )
-      {  // add actual number of arguments to arg_
+      switch( op_ )
+      {  //
+         default:
+         CPPAD_ASSERT_UNKNOWN( false );
+         break;
+         //
+         // CSumOp
+         case CSumOp:
+         CPPAD_ASSERT_UNKNOWN( arg + 4 < arg_end_ );
          arg_ += arg[4] + 1;
-      }
-      //
-      // CSkip
-      else
-      {  CPPAD_ASSERT_UNKNOWN( op_ == CSkipOp );
+         break;
          //
-         CPPAD_ASSERT_UNKNOWN( arg + 5 < arg_end_ );
-         addr_t n_skip     = arg[4] + arg[5];
-         CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
-         //
-         // add actual number of arguments to arg_
-         arg_ += 7 + n_skip;
+         // CSkipOp
+         case CSkipOp:
+         {  CPPAD_ASSERT_UNKNOWN( arg + 5 < arg_end_ );
+            addr_t n_skip     = arg[4] + arg[5];
+            CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
+            arg_ += 7 + n_skip;
+         }
+         break;
       }
+      CPPAD_ASSERT_UNKNOWN( arg_ <= arg_end_ );
       return;
    }
    /*!
@@ -209,37 +216,40 @@ public:
    corrected point to arguments for this operation.
    */
    void correct_after_decrement(const addr_t*& arg)
-   {  // number of arguments for this operator depends on argument data
+   {  //
+      // arg
+      // actual number of arguments for this operator depends on argument data
       CPPAD_ASSERT_UNKNOWN( NumArg(op_) == 0 );
-      //
-      // infromation for number of arguments is stored in arg_ - 1
       CPPAD_ASSERT_UNKNOWN( arg_begin_ < arg_ );
       //
-      // CSumOp
-      if( op_ == CSumOp )
-      {  // index of arg[4]
-         addr_t arg_4 = *(arg_ - 1);
+      switch( op_ )
+      {  //
+         default:
+         CPPAD_ASSERT_UNKNOWN( false );
+         break;
          //
-         // corrected index of first argument to this operator
-         arg = arg_ -= arg_4 + 1;
+         // CSumOp
+         case CSumOp:
+         {  // index of arg[4]
+            addr_t arg_4 = *(arg_ - 1);
+            arg          = arg_ - (arg_4 + 1);
+            CPPAD_ASSERT_UNKNOWN( arg[arg[4] ] == arg[4] );
+         }
+         break;
          //
-         CPPAD_ASSERT_UNKNOWN( arg[arg[4] ] == arg[4] );
+         // CSkipOp
+         case CSkipOp:
+         {  addr_t n_skip = *(arg_ - 1);
+            arg = arg_ - (7 + n_skip);
+            CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
+         }
+         break;
       }
       //
-      // CSkip
-      else
-      {  CPPAD_ASSERT_UNKNOWN( op_ == CSkipOp );
-         //
-         // number to possibly skip is stored in last argument
-         addr_t n_skip = *(arg_ - 1);
-         //
-         // corrected index of frist argument to this operator
-         arg = arg_ -= 7 + n_skip;
-         //
-         CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
-      }
+      // arg_
       CPPAD_ASSERT_UNKNOWN( arg_begin_ <= arg );
       CPPAD_ASSERT_UNKNOWN( arg + NumArg(op_) <= arg_end_ );
+      arg_ = arg;
    }
    /*!
    \brief
