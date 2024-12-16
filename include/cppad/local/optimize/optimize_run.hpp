@@ -1334,7 +1334,7 @@ bool optimize_run(
             //
             ++itr_false;
          }
-         rec->ReplaceArg(i_arg++, n_true + n_false);
+         rec->ReplaceArg(i_arg++, 7 + n_true + n_false);
 # ifndef NDEBUG
          size_t n_arg   = 7 + size_t(n_true) + size_t(n_false);
          CPPAD_ASSERT_UNKNOWN( cskip_new[i].i_arg + n_arg == i_arg );

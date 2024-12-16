@@ -81,8 +81,10 @@ is identically false.
 
 arg[6+arg[4]+arg[5]]
 ====================
-is the total number operators that might be skipped;
-i.e., arg[4] + arg[5] .
+This is equal to 6 + arg[4] + arg[5] + 1,
+which is the total number or arguments to this operator.
+Having this value at the end enables reverse mode to know how far
+to back up to get to the start of this operation.
 
 {xrst_end var_cskip_op}
 ------------------------------------------------------------------------------

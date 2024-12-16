@@ -181,11 +181,9 @@ public:
          //
          // CSkipOp
          case CSkipOp:
-         {  CPPAD_ASSERT_UNKNOWN( arg + 5 < arg_end_ );
-            addr_t n_skip     = arg[4] + arg[5];
-            CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
-            arg_ += 7 + n_skip;
-         }
+         CPPAD_ASSERT_UNKNOWN( arg + 5 < arg_end_ );
+         arg_ += 7 + arg[4] + arg[5];
+         CPPAD_ASSERT_UNKNOWN( *(arg_ - 1) == 7 + arg[4] + arg[5] );
          break;
       }
       CPPAD_ASSERT_UNKNOWN( arg_ <= arg_end_ );
@@ -239,9 +237,9 @@ public:
          //
          // CSkipOp
          case CSkipOp:
-         {  addr_t n_skip = *(arg_ - 1);
-            arg = arg_ - (7 + n_skip);
-            CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
+         {  addr_t n_arg = *(arg_ - 1);
+            arg = arg_ - n_arg;
+            CPPAD_ASSERT_UNKNOWN( 7 + arg[4] + arg[5] == n_arg );
          }
          break;
       }
