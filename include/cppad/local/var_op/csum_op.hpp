@@ -116,9 +116,9 @@ is the index corresponding to the dynamic parameter v[j] .
 
 arg[ arg[4] ]
 =============
-This is equal to arg[4] .
-Note that there are arg[4] + 1 arguments to this operator
-and having this value at the end enable reverse model to know how far
+This is equal to arg[4] + 1
+which is the total number or arguments to this operator.
+Having this value at the end enables reverse mode to know how far
 to back up to get to the start of this operation.
 
 {xrst_end var_csum_op}
@@ -184,9 +184,7 @@ inline void csum_forward_any(
    CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
    CPPAD_ASSERT_UNKNOWN( order_low <= order_up );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-   CPPAD_ASSERT_UNKNOWN(
-      arg[arg[4]] == arg[4]
-   );
+   CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
    //
    // zero
    Base zero(0);
@@ -284,9 +282,7 @@ inline void csum_forward_dir(
    CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
    CPPAD_ASSERT_UNKNOWN( 0 < order_up );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-   CPPAD_ASSERT_UNKNOWN(
-      arg[arg[4]] == arg[4]
-   );
+   CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
    //
    // zero
    Base zero(0);

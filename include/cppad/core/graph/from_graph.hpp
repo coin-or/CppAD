@@ -548,7 +548,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                if( type_x[j] == dynamic_enum )
                   temporary[ j_dynamic++ ]  = arg[j];
             }
-            temporary[j_dynamic] = j_dynamic;
+            // number of arguments to this operator
+            temporary[j_dynamic] = j_dynamic + 1;
             //
             temporary[0] = rec.put_con_par(sum_constant);
             CPPAD_ASSERT_UNKNOWN(parameter[temporary[0]] == sum_constant);

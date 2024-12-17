@@ -801,7 +801,7 @@ void ADFun<Base, RecBase>::val2fun(
                      csum_arg[i_variable++] = fun_arg[n_add + i];
                }
                CPPAD_ASSERT_UNKNOWN( i_dynamic == n_tot - 1 );
-               csum_arg[i_dynamic] = i_dynamic;
+               csum_arg[n_tot - 1] = n_tot;
                //
                // rec, tmp_addr
                tmp_addr = rec.PutOp(local::CSumOp);

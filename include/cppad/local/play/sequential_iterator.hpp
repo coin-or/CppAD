@@ -177,6 +177,7 @@ public:
          case CSumOp:
          CPPAD_ASSERT_UNKNOWN( arg + 4 < arg_end_ );
          arg_ += arg[4] + 1;
+         CPPAD_ASSERT_UNKNOWN( *(arg_ - 1) == arg[4] + 1 );
          break;
          //
          // CSkipOp
@@ -229,16 +230,16 @@ public:
          // CSumOp
          case CSumOp:
          {  // index of arg[4]
-            addr_t arg_4 = *(arg_ - 1);
-            arg          = arg_ - (arg_4 + 1);
-            CPPAD_ASSERT_UNKNOWN( arg[arg[4] ] == arg[4] );
+            addr_t n_arg = *(arg_ - 1);
+            arg          = arg_ - n_arg;
+            CPPAD_ASSERT_UNKNOWN( arg[4] + 1 == n_arg );
          }
          break;
          //
          // CSkipOp
          case CSkipOp:
          {  addr_t n_arg = *(arg_ - 1);
-            arg = arg_ - n_arg;
+            arg          = arg_ - n_arg;
             CPPAD_ASSERT_UNKNOWN( 7 + arg[4] + arg[5] == n_arg );
          }
          break;

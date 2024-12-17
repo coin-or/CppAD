@@ -365,8 +365,8 @@ struct_size_pair record_csum(
       stack.sub_dyn.pop();
    }
 
-   // number of additions plus number of subtractions
-   rec->PutArg( addr_t(end) );    // arg[arg[4]] = arg[4]
+   // number of arguments to this operator
+   rec->PutArg( addr_t(end + 1) );    // arg[4] + 1
    //
    // return value
    struct_size_pair ret;
