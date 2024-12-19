@@ -215,6 +215,12 @@ void reverse(
       while( cskip_op[i_op] )
       {  switch(op)
          {
+            case CSumOp:
+            case CSkipOp:
+            // cases that never happen but the code reads better with them
+            play_itr.correct_after_decrement(arg);
+            break;
+
             case AFunOp:
             {  // get information for this atomic function call
                play::atom_op_info<Base>(
