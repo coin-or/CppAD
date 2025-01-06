@@ -9,7 +9,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin ad_binary}
 {xrst_spell
-   div
+  div
 }
 
 AD Binary Arithmetic Operators

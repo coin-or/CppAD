@@ -7,7 +7,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin valvector_ad_split}
 {xrst_spell
-   asplit
+  asplit
 }
 
 Split A AD valvector
@@ -50,8 +50,8 @@ of this operation.
 -------------------------------------------------------------------------------
 {xrst_begin valvector_ad_join}
 {xrst_spell
-   ajoin
-   valvectors
+  ajoin
+  valvectors
 }
 
 Join a Vector of AD valvectors

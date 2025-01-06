@@ -12,7 +12,7 @@ namespace CppAD { namespace local { namespace optimize {
 /*
 {xrst_begin optimize_get_op_previous dev}
 {xrst_spell
-   cexp
+  cexp
 }
 
 Get Mapping From Op to Previous Op That is Equivalent

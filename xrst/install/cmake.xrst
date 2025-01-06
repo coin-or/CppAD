@@ -5,42 +5,44 @@
 
 {xrst_begin cmake}
 {xrst_spell
-   ansi
-   autotools
-   bitwise
-   cl
-   cstdint
-   cxx
-   datadir
-   dlls
-   docdir
-   dylib
-   exe
-   ext
-   gprof
-   grep
-   hsc
-   includedirs
-   libcppad
-   libdirs
-   makefile
-   makefiles
-   mingw
-   mkdir
-   msys
-   pacman
-   profiler
-   sed
-   testvector
-   txt
-   uint
-   usr
-   vcvarsall
-   wno
-   wshadow
-   yyyy
-   yyyymmdd
-   dev
+  ansi
+  autotools
+  bitwise
+  colpack
+  cstdint
+  cxx
+  datadir
+  dev
+  dlls
+  docdir
+  dylib
+  exe
+  ext
+  fadbad
+  gprof
+  grep
+  hsc
+  includedirs
+  libcppad
+  libdirs
+  makefile
+  makefiles
+  mingw
+  mkdir
+  msys
+  pacman
+  profiler
+  sacado
+  sed
+  testvector
+  txt
+  uint
+  usr
+  vcvarsall
+  wno
+  wshadow
+  yyyy
+  yyyymmdd
 }
 
 Using CMake to Configure CppAD
@@ -104,8 +106,8 @@ Newer version of cmake; e.g., 3.13.4, do not generate this warning
 
 true_or_false
 =============
-The syntax ``-D`` *name* = *true_or_false* , mean that 
-the variable *name* can be assigned the value ``true`` or ``false`` . 
+The syntax ``-D`` *name* = *true_or_false* , mean that
+the variable *name* can be assigned the value ``true`` or ``false`` .
 
 
 Options

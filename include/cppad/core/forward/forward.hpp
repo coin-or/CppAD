@@ -16,9 +16,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 --------------------------------------- ---------------------------------------
 {xrst_begin devel_forward_order dev}
 {xrst_spell
-   pri
-   xq
-   yq
+  pri
+  xq
+  yq
 }
 
 Multiple orders, one direction, forward mode Taylor coefficients
@@ -316,8 +316,8 @@ BaseVector ADFun<Base,RecBase>::Forward(
 --------------------------------------- ---------------------------------------
 {xrst_begin devel_forward_dir dev}
 {xrst_spell
-   xq
-   yq
+  xq
+  yq
 }
 
 One order, multiple directions, forward mode Taylor coefficients

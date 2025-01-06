@@ -4,19 +4,16 @@
 # ----------------------------------------------------------------------------
 {xrst_begin addon app}
 {xrst_spell
-   adcomp
-   addons
-   cg
-   ext
-   gen
-   includedir
-   laplace
-   libcppad
-   libdir
-   perl
-   py
-   pycppad
-   tmb
+  adcomp
+  addons
+  cg
+  ext
+  includedir
+  libcppad
+  libdir
+  py
+  pycppad
+  tmb
 }
 
 CppAD Addons

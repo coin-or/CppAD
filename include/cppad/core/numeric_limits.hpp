@@ -9,8 +9,8 @@
 ------------------------------------------------------------------------------
 {xrst_begin numeric_limits}
 {xrst_spell
-   isnan
-   na
+  eps
+  isnan
 }
 
 Numeric Limits For an AD and Base Types

@@ -5,26 +5,26 @@
 
 {xrst_begin 2015 app}
 {xrst_spell
-   addon
-   adouble
-   aeps
-   asctime
-   autotools
-   chrono
-   cskip
-   datadir
-   docdir
-   erfc
-   gettimeofday
-   gmtime
-   hasnan
-   ieee
-   includedirs
-   lcppad
-   libdirs
-   sq
-   src
-   unreferenced
+  addon
+  adouble
+  aeps
+  asctime
+  autotools
+  chrono
+  cskip
+  datadir
+  docdir
+  erfc
+  gettimeofday
+  gmtime
+  hasnan
+  ieee
+  includedirs
+  lcppad
+  libdirs
+  runge
+  src
+  unreferenced
 }
 
 Release Notes for 2015

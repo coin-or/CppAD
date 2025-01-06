@@ -5,14 +5,14 @@
 
 {xrst_begin CppAD_vector}
 {xrst_spell
-   citr
-   cout
-   dereference
-   endl
-   initializer
-   ostream
-   rvalues
-   typename
+  citr
+  cout
+  dereference
+  endl
+  initializer
+  ostream
+  rvalues
+  typename
 }
 
 The CppAD::vector Template Class

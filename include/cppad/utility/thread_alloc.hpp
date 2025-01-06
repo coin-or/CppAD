@@ -1000,7 +1000,7 @@ Example
 /* -----------------------------------------------------------------------
 {xrst_begin ta_free_available}
 {xrst_spell
-   inuse
+  inuse
 }
 
 Free Memory Currently Available for Quick Use by a Thread
@@ -1373,7 +1373,7 @@ Example
 /* -----------------------------------------------------------------------
 {xrst_begin ta_delete_array}
 {xrst_spell
-   deallocate
+  deallocate
 }
 
 Deallocate An Array and Call Destructor for its Elements

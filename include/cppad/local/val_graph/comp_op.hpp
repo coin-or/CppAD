@@ -13,9 +13,6 @@
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_comp_op dev}
-{xrst_spell
-   com
-}
 
 The Compare Value Operator
 ##########################

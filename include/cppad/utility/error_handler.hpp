@@ -8,8 +8,8 @@
 /*
 {xrst_begin ErrorHandler}
 {xrst_spell
-   msg
-   test test
+  msg
+  test test
 }
 
 Replacing the CppAD Error Handler

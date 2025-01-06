@@ -8,7 +8,7 @@
 /*
 {xrst_begin RevOne}
 {xrst_spell
-   dw
+  dw
 }
 
 First Order Derivative: Driver Routine

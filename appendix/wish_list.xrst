@@ -4,8 +4,9 @@
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list app}
 {xrst_spell
-   grep
-   tapeless
+  adolc
+  grep
+  tapeless
 }
 
 The CppAD Wish List

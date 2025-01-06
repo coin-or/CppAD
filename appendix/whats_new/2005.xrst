@@ -5,28 +5,23 @@
 
 {xrst_begin 2005 app}
 {xrst_spell
-   dlib
-   dsp
-   dsw
-   dussault
-   etc
-   ge
-   gz
-   jon
-   kutta
-   linux
-   maxabs
-   neg
-   pearce
-   pierre
-   pkzip
-   scur
-   sln
-   typedef
-   valarray
-   vcproj
-   washington
-   yy
+  dlib
+  dsp
+  dsw
+  dussault
+  etc
+  gz
+  kutta
+  maxabs
+  neg
+  pearce
+  pkzip
+  scur
+  sln
+  typedef
+  valarray
+  vcproj
+  yy
 }
 
 Release Notes for 2005

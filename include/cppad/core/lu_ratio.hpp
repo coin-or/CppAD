@@ -8,9 +8,9 @@
 /*
 {xrst_begin LuRatio app}
 {xrst_spell
-   ip
-   jp
-   xk
+  ip
+  jp
+  xk
 }
 
 LU Factorization of A Square Matrix and Stability Calculation

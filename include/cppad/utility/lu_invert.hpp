@@ -8,8 +8,8 @@
 /*
 {xrst_begin LuInvert}
 {xrst_spell
-   ip
-   jp
+  ip
+  jp
 }
 
 Invert an LU Factored Equation

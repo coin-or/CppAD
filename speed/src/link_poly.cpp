@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/poly.hpp>
@@ -19,7 +19,7 @@ extern bool link_poly(
 -------------------------------------------------------------------------------
 {xrst_begin link_poly}
 {xrst_spell
-   ddp
+  ddp
 }
 
 Speed Testing Second Derivative of a Polynomial

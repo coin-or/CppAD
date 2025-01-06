@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin atomic_four_mat_mul}
 {xrst_spell
-   tr
+  tr
 }
 
 Atomic Matrix Multiply Class: Example Implementation

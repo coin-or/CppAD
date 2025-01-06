@@ -2,12 +2,12 @@
 # define CPPAD_LOCAL_IS_POD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin is_pod dev}
 {xrst_spell
-   nullptr
+  nullptr
 }
 
 The is_pod Template Function

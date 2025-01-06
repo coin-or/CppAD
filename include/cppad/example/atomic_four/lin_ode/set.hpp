@@ -6,8 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_lin_ode_set.hpp}
-{xrst_spell
-}
 
 atomic_lin_ode Set Routine: Example Implementation
 ##################################################

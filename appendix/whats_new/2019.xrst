@@ -5,21 +5,22 @@
 
 {xrst_begin 2019 app}
 {xrst_spell
-   autotools
-   bthread
-   cholesky
-   entires
-   goto
-   inv
-   lepp
-   mmdd
-   omhelp
-   pos
-   subgraphs
-   to to
-   usr
-   versa
-   yy
+  autotools
+  bthread
+  cholesky
+  colpack
+  entires
+  goto
+  inv
+  lepp
+  mmdd
+  omhelp
+  pos
+  subgraphs
+  to to
+  usr
+  versa
+  yy
 }
 
 Release Notes for 2019

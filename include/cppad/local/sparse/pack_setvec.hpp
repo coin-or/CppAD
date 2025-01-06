@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_PACK_SETVEC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/pod_vector.hpp>
@@ -120,7 +120,7 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_iterators dev}
 {xrst_spell
-   typedef
+  typedef
 }
 
 class pack_setvec: Iterators
@@ -898,7 +898,7 @@ inline void pack_setvec::print(void) const
 /*
 {xrst_begin sparsity_user2internal_pack_setvec dev}
 {xrst_spell
-   msg
+  msg
 }
 
 Copy A Boolean Sparsity Pattern To A pack_setvec Object

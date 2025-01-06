@@ -7,12 +7,12 @@
 /*
 {xrst_begin atomic_two app}
 {xrst_spell
-   px
-   py
-   tx
-   ty
-   vx
-   vy
+  ctor
+  px
+  py
+  tx
+  vx
+  vy
 }
 
 Defining Atomic Functions: Second Generation

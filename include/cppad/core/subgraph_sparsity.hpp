@@ -7,7 +7,8 @@
 /*
 {xrst_begin subgraph_sparsity}
 {xrst_spell
-   subgraphs
+  rc
+  subgraphs
 }
 
 Subgraph Dependency Sparsity Patterns

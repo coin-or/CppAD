@@ -8,11 +8,10 @@
 /*
 {xrst_begin OdeGear}
 {xrst_spell
-   dep
-   jan
-   pp
-   test test
-   vol
+  dep
+  pp
+  test test
+  vol
 }
 
 An Arbitrary Order Gear Method

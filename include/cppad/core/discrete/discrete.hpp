@@ -315,8 +315,8 @@ Prototype
  ------------------------------------------------------------------------------
 {xrst_begin discrete_index dev}
 {xrst_spell
-   msg
-   str
+  msg
+  str
 }
 
 Index That Identifies a Discrete Function

@@ -33,129 +33,75 @@ latex_macro = [
    '\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }',
 ]
 
-# BEGIN_SORT_THIS_LINE_PLUS_3
+# BEGIN_SORT_THIS_LINE_PLUS_4
+# Words that occurred in 10 or more pages on 2025-01-06
 [project_dictionary]
 data = [ '''
    acos
-   acosh
    addr
-   adolc
    af
    afun
    alloc
-   allocator
-   arg
    asin
-   asinh
    atan
    atanh
-   azmul
    bool
-   boolean
    cc
    ccc
-   cd
    checkpointing
-   chkpoint
    cmake
-   col
-   colpack
-   compilers
    cond
    config
    const
-   cos
    cpp
    cppad
-   cppadcg
-   ctor
    cygwin
    dd
    det
-   determinant
    dir
    dvector
-   dyn
    eigen
    endif
    enum
-   eps
    eq
    eqnarray
    erf
    eval
    exp
    fabs
-   factorization
-   fadbad
    gcc
    gt
    hes
    hpp
    ident
    ifndef
-   implementations
    ind
    int
-   ipopt
-   iterator
    itr
    jac
-   jit
-   json
-   le
-   lexer
    ll
-   lt
-   lu
-   max
-   microsoft
-   min
    mm
    mul
    multi
    namespace
-   nan
    nc
-   nlp
    nowrap
    num
    obj
-   ok
-   omp
    op
-   openmp
-   operand
-   optimizer
-   os
    pc
    pkg
    preprocessor
-   pthread
    ptr
-   rc
-   rcv
    rec
-   recursion
    rel
    res
    resize
-   retape
-   runge
-   sacado
    seq
-   setvec
-   sh
-   sinh
    sizeof
-   sparsity
    sqrt
    std
-   subgraph
-   taylor
-   th
    unix
-   val
    var
    vec
    vecad

@@ -7,7 +7,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin valvector_ad_sum}
 {xrst_spell
-   asum
+  asum
 }
 
 Sum The Elements of and AD valvector

@@ -7,8 +7,7 @@
 /*
 {xrst_begin atomic_two_rev_sparse_hes app}
 {xrst_spell
-   na
-   vx
+  vx
 }
 
 Atomic Reverse Hessian Sparsity Patterns

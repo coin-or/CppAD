@@ -61,7 +61,7 @@ addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 ------------------------------------------------------------------------------
 {xrst_begin recorder_put_var_vecad dev}
 {xrst_spell
-   taddr
+  taddr
 }
 Tape Initialization for a Variable VecAD Object
 ###############################################

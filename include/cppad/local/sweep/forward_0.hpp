@@ -18,7 +18,7 @@ namespace CppAD { namespace local { namespace sweep {
  ------------------------------------------------------------------------------
 {xrst_begin sweep_forward_0 dev}
 {xrst_spell
-   cskip
+  cskip
 }
 
 {xrst_template ;

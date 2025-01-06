@@ -176,8 +176,6 @@ void two_var_rev_jac(
 // ---------------------------------------------------------------------------
 /*
 {xrst_begin var_two_var_for_hes dev}
-{xrst_spell
-}
 
 Forward Hessian Sparsity for Two Variable Argument Operators
 ############################################################

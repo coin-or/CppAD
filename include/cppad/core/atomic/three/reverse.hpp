@@ -2,14 +2,14 @@
 # define CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_three_reverse}
 {xrst_spell
-   aparameter
-   apartial
-   ataylor
+  aparameter
+  apartial
+  ataylor
 }
 
 Atomic Function Reverse Mode

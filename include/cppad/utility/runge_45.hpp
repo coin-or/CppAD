@@ -8,10 +8,10 @@
 /*
 {xrst_begin Runge45}
 {xrst_spell
-   karp
-   kutta
-   tf
-   xf
+  karp
+  kutta
+  tf
+  xf
 }
 
 An Embedded 4th and 5th Order Runge-Kutta ODE Solver

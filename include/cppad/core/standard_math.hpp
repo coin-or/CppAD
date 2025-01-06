@@ -8,7 +8,9 @@
 /*
 {xrst_begin unary_standard_math}
 {xrst_spell
-   expm
+  acosh
+  asinh
+  expm
 }
 
 The Unary Standard Math Functions

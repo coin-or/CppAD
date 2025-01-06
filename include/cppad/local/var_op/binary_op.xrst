@@ -4,23 +4,24 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_binary_op dev}
 {xrst_spell
-   addpv
-   addvv
-   mulpv
-   mulvv
-   divpv
-   divvp
-   divvv
-   subpv
-   subvp
-   subvv
-   zmulpv
-   zmulvp
-   zmulvv
-   powpv
-   powvp
-   powvv
-   delim
+  addpv
+  addvv
+  azmul
+  delim
+  divpv
+  divvp
+  divvv
+  mulpv
+  mulvv
+  powpv
+  powvp
+  powvv
+  subpv
+  subvp
+  subvv
+  zmulpv
+  zmulvp
+  zmulvv
 }
 
 Binary Operators
@@ -210,8 +211,6 @@ see
 {xrst_end var_binary_forward_any}
 ------------------------------------------------------------------------------
 {xrst_begin var_binary_forward_dir dev}
-{xrst_spell
-}
 
 Multiple Direction Forward Binary Operators
 ###########################################

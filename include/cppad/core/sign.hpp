@@ -8,8 +8,7 @@
 /*
 {xrst_begin sign}
 {xrst_spell
-   dirac
-   rl
+  rl
 }
 The Sign: sign
 ##############

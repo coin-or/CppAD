@@ -7,8 +7,8 @@
 /*
 {xrst_begin min_nso_quad}
 {xrst_spell
-   dbl
-   maxitr
+  dbl
+  maxitr
 }
 Non-Smooth Optimization Using Abs-normal Quadratic Approximations
 #################################################################

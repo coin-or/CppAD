@@ -8,9 +8,9 @@
 /*
 {xrst_begin capacity_order}
 {xrst_spell
-   pre
-   xq
-   yq
+  pre
+  xq
+  yq
 }
 
 Controlling Taylor Coefficients Memory Allocation

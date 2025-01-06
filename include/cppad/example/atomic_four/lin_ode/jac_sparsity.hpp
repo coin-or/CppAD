@@ -2,12 +2,12 @@
 # define CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_JAC_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_lin_ode_jac_sparsity.hpp}
 {xrst_spell
-   nnz
+  nnz
 }
 
 Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation

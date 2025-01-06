@@ -15,11 +15,11 @@ namespace CppAD { namespace local { namespace optimize {
 /*!
 {xrst_begin optimize_get_cexp_info.hpp dev}
 {xrst_spell
-   deallocate
-   funap
-   funav
-   funrp
-   funrv
+  deallocate
+  funap
+  funav
+  funrp
+  funrv
 }
 
 Information for Each Conditional Expression

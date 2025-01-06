@@ -11,9 +11,9 @@
 /*
 {xrst_begin base_complex.hpp}
 {xrst_spell
-   complier
-   ge
-   isnan
+  azmul
+  complier
+  isnan
 }
 
 Enable use of AD<Base> where Base is std::complex<double>

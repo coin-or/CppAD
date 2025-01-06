@@ -7,20 +7,19 @@
 /*
 {xrst_begin ipopt_solve}
 {xrst_spell
-   bvector
-   doesn
-   fg
-   gl
-   gu
-   lagrange
-   maxiter
-   naninf
-   ng
-   nx
-   rll
-   xl
-   zl
-   zu
+  bvector
+  doesn
+  fg
+  gl
+  gu
+  maxiter
+  naninf
+  ng
+  nx
+  rll
+  xl
+  zl
+  zu
 }
 
 Use Ipopt to Solve a Nonlinear Programming Problem

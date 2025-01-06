@@ -7,20 +7,20 @@
 /*
 {xrst_begin_parent var_compare_op dev}
 {xrst_spell
-   eqpp
-   lepp
-   ltpp
-   nepp
-   eqpv
-   lepv
-   ltpv
-   nepv
-   levp
-   ltvp
-   eqvv
-   levv
-   ltvv
-   nevv
+  eqpp
+  eqpv
+  eqvv
+  lepp
+  lepv
+  levp
+  levv
+  ltpp
+  ltpv
+  ltvp
+  ltvv
+  nepp
+  nepv
+  nevv
 }
 
 Comparison Operators

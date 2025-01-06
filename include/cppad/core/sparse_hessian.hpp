@@ -8,7 +8,7 @@
 /*
 {xrst_begin sparse_hessian}
 {xrst_spell
-   valarray
+  valarray
 }
 
 Sparse Hessian

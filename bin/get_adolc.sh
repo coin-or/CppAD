@@ -4,9 +4,6 @@
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_adolc.sh}
-# {xrst_spell
-#     nov
-# }
 # {xrst_comment_ch #}
 #
 # Download and Install Adolc in Build Directory

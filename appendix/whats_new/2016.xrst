@@ -5,14 +5,16 @@
 
 {xrst_begin 2016 app}
 {xrst_spell
-   adouble
-   autotools
-   chrono
-   makefile
-   mingw
-   valgrind
-   wmisleading
-   xam
+  adouble
+  autotools
+  chkpoint
+  chrono
+  colpack
+  makefile
+  mingw
+  valgrind
+  wmisleading
+  xam
 }
 
 Release Notes for 2016

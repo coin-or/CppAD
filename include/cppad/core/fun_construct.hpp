@@ -7,7 +7,7 @@
 /*
 {xrst_begin fun_construct}
 {xrst_spell
-   versa
+  versa
 }
 
 Construct an ADFun Object and Stop Recording

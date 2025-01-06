@@ -10,7 +10,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin val_tape_renumber dev}
 {xrst_spell
-   dep
+  dep
 }
 
 Value Re-Numbering

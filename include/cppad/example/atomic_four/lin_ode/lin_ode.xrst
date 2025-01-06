@@ -4,10 +4,9 @@
 # ----------------------------------------------------------------------------
 {xrst_begin atomic_four_lin_ode}
 {xrst_spell
-   nnz
-   rosen
-   simpson
-   vk
+  nnz
+  rosen
+  vk
 }
 
 Atomic First Order Linear ODE Method: Example Implementation

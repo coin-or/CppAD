@@ -8,12 +8,11 @@
 /*
 {xrst_begin Rosen34}
 {xrst_spell
-   dep
-   rd
-   rosenbrock
-   test test
-   tf
-   xf
+  dep
+  rosenbrock
+  test test
+  tf
+  xf
 }
 
 A 3rd and 4th Order Rosenbrock ODE Solver

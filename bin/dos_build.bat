@@ -6,7 +6,7 @@ rem --------------------------------------------------------------------------
 goto end_of_comment_block
 {xrst_begin dos_build.bat}
 {xrst_spell
-   cmd
+  cmd
 }
 
 Compile and Test CppAD using Dos

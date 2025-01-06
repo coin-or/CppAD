@@ -7,9 +7,9 @@
 /*
 {xrst_begin simplex_method}
 {xrst_spell
-   maxitr
-   rl
-   xout
+  maxitr
+  rl
+  xout
 }
 
 abs_normal: Solve a Linear Program Using Simplex Method

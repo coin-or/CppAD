@@ -8,8 +8,6 @@
 namespace CppAD { namespace local { namespace var_op {
 /*
 {xrst_begin_parent var_csum_op dev}
-{xrst_spell
-}
 
 Variable Cumulative Summation Operator
 ######################################
@@ -221,8 +219,6 @@ inline void csum_forward_any(
 }
 /*
 {xrst_begin var_csum_forward_dir dev}
-{xrst_spell
-}
 
 Multiple Direction Forward Mode Cumulative Summation Operation
 ##############################################################

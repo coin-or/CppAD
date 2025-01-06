@@ -8,8 +8,7 @@
 /*
 {xrst_begin ForSparseHes}
 {xrst_spell
-   andrea
-   walther
+  walther
 }
 
 Hessian Sparsity Pattern: Forward Mode

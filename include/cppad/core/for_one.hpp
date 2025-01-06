@@ -7,9 +7,6 @@
 
 /*
 {xrst_begin ForOne}
-{xrst_spell
-   dy
-}
 
 First Order Partial Derivative: Driver Routine
 ##############################################

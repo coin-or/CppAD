@@ -5,30 +5,28 @@
 
 {xrst_begin 2012 app}
 {xrst_spell
-   datadir
-   debian
-   doxygen
-   dw
-   eigenvector
-   fcur
-   helgrind
-   includedir
-   inorder
-   libdir
-   lpthread
-   lteuchos
-   makefile
-   posix
-   src
-   stdbool
-   sys
-   taddr
-   trilinos
-   txt
-   ubuntu
-   uninitialised
-   valgrind
-   yyyymmdd
+  datadir
+  doxygen
+  dw
+  eigenvector
+  fcur
+  helgrind
+  includedir
+  inorder
+  libdir
+  lpthread
+  lteuchos
+  makefile
+  posix
+  src
+  stdbool
+  sys
+  taddr
+  trilinos
+  txt
+  uninitialised
+  valgrind
+  yyyymmdd
 }
 
 Release Notes for 2012

@@ -5,7 +5,6 @@
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin get_optional.sh}
-# {xrst_comment_ch #}
 # {xrst_spell
 #     ggrep
 #     grep
@@ -13,6 +12,7 @@
 #     homebrew
 #     sed
 # }
+# {xrst_comment_ch #}
 #
 # Download and Install The CppAD Optional Packages
 # ################################################

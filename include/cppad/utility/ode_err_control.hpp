@@ -8,19 +8,18 @@
 /*
 {xrst_begin OdeErrControl}
 {xrst_spell
-   eabs
-   eb
-   ef
-   erel
-   nstep
-   scur
-   smax
-   smin
-   tb
-   tf
-   xa
-   xb
-   xf
+  eabs
+  eb
+  ef
+  erel
+  nstep
+  scur
+  smax
+  smin
+  tf
+  xa
+  xb
+  xf
 }
 
 An Error Controller for ODE Solvers

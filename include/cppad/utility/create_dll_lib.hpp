@@ -7,12 +7,11 @@
 /*
 {xrst_begin create_dll_lib}
 {xrst_spell
-   cl
-   cmd
-   csrc
-   hc
-   hs
-   msg
+  cmd
+  csrc
+  hc
+  hs
+  msg
 }
 
 Create a Dynamic Link Library

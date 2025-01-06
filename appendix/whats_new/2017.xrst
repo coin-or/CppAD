@@ -1,23 +1,21 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2017 app}
 {xrst_spell
-   autotools
-   deallocations
-   doxydoc
-   doxygen
-   md
-   perl
-   readme
-   subgraphs
-   typedef
-   uninitialised
-   valgrind
-   wconversion
-   xq
+  autotools
+  deallocations
+  doxydoc
+  doxygen
+  readme
+  subgraphs
+  typedef
+  uninitialised
+  valgrind
+  wconversion
+  xq
 }
 
 Release Notes for 2017

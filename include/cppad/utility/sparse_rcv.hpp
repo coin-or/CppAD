@@ -9,8 +9,9 @@
 ------------------------------------------------------------------------------
 {xrst_begin sparse_rcv}
 {xrst_spell
-   nnz
-   nr
+  nnz
+  nr
+  rc
 }
 Sparse Matrix Row, Column, Value Representation
 ###############################################

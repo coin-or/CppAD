@@ -7,7 +7,7 @@
 /*
 {xrst_begin RombergMul}
 {xrst_spell
-   test test
+  test test
 }
 
 Multi-dimensional Romberg Integration

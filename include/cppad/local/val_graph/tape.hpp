@@ -19,8 +19,8 @@ struct csum_info_t;
 /*
 {xrst_begin val_tape dev}
 {xrst_spell
-   dep
-   str
+  dep
+  str
 }
 
 The Value Operator Tape

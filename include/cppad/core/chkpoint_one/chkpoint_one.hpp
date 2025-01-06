@@ -16,8 +16,8 @@ First generation checkpoint functions.
 /*
 {xrst_begin chkpoint_one app}
 {xrst_spell
-   algo
-   sv
+  algo
+  sv
 }
 
 Checkpoint Functions: First Generation

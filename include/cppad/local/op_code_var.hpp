@@ -20,14 +20,14 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 {xrst_begin op_code_var dev}
 {xrst_spell
-   funap
-   funav
-   funrp
-   funrv
-   ldp
-   ldv
-   opcode
-   pri
+  funap
+  funav
+  funrp
+  funrv
+  ldp
+  ldv
+  opcode
+  pri
 }
 
 Variable Op Codes

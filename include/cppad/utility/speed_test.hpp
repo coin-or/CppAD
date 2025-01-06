@@ -8,8 +8,8 @@
 /*
 {xrst_begin speed_test}
 {xrst_spell
-   ctime
-   gettimeofday
+  ctime
+  gettimeofday
 }
 
 Run One Speed Test and Return Results
@@ -192,9 +192,8 @@ Vector speed_test(
 /*
 {xrst_begin SpeedTest}
 {xrst_spell
-   cout
-   ctime
-   inc
+  cout
+  ctime
 }
 
 Run One Speed Test and Print Results

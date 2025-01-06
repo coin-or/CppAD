@@ -8,9 +8,6 @@
 namespace CppAD { namespace local { namespace var_op {
 /*
 {xrst_begin_parent var_cexp_op dev}
-{xrst_spell
-   Ge
-}
 
 The Variable Conditional Expression Operator
 ############################################

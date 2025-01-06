@@ -2,12 +2,12 @@
 # define CPPAD_CORE_BASE_TO_STRING_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base_to_string}
 {xrst_spell
-   struct
+  struct
 }
 
 Extending to_string To Another Floating Point Type

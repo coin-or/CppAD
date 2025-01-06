@@ -392,7 +392,7 @@ If there is no such index,
 /*
 {xrst_begin cpp_graph_print}
 {xrst_spell
-   ostream
+  ostream
 }
 
 Print A C++ AD Graph

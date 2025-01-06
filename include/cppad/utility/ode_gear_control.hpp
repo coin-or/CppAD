@@ -8,19 +8,18 @@
 /*
 {xrst_begin OdeGearControl}
 {xrst_spell
-   dep
-   eabs
-   ef
-   erel
-   maxabs
-   nstep
-   sini
-   smax
-   smin
-   tb
-   test test
-   tf
-   xf
+  dep
+  eabs
+  ef
+  erel
+  maxabs
+  nstep
+  sini
+  smax
+  smin
+  test test
+  tf
+  xf
 }
 
 An Error Controller for Gear's Ode Solvers

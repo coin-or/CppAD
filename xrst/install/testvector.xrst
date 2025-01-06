@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin cppad_testvector}
 {xrst_spell
-   ublas
+  ublas
 }
 
 Choosing the CppAD Test Vector Template Class

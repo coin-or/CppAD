@@ -10,8 +10,9 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 {xrst_begin recorder_put_comp_op dev}
 {xrst_spell
-   aleft
-   taddr
+  aleft
+  dyn
+  taddr
 }
 
 Put Compare Operators in Recording

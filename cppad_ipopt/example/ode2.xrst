@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_problem dev}
 {xrst_spell
-   na
-   ny
-   nz
+  ny
+  nz
 }
 
 An ODE Inverse Problem Example
@@ -287,10 +286,9 @@ source code that defines the example values and functions defined above.
 -----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_simple dev}
 {xrst_spell
-   fg
-   na
-   ny
-   nz
+  fg
+  ny
+  nz
 }
 
 ODE Fitting Using Simple Representation
@@ -370,10 +368,9 @@ objective and constraints.
 -----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_fast dev}
 {xrst_spell
-   fg
-   na
-   ny
-   nz
+  fg
+  ny
+  nz
 }
 
 ODE Fitting Using Fast Representation

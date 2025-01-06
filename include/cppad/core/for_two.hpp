@@ -8,7 +8,7 @@
 /*
 {xrst_begin ForTwo}
 {xrst_spell
-   ddy
+  ddy
 }
 
 Forward Mode Second Partial Derivative Driver

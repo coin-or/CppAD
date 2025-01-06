@@ -4,10 +4,13 @@
 # ----------------------------------------------------------------------------
 {xrst_begin json_graph_op}
 {xrst_spell
-   erfc
-   expm
-   neg
-   notpos
+  acosh
+  asinh
+  chkpoint
+  erfc
+  expm
+  neg
+  notpos
 }
 
 Json AD Graph Operator Definitions

@@ -7,8 +7,8 @@
 /*
 {xrst_begin exp_eps}
 {xrst_spell
-   apx
-   yyyymmdd
+  apx
+  yyyymmdd
 }
 
 An Epsilon Accurate Exponential Approximation

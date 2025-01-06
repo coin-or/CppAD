@@ -8,7 +8,7 @@
 /*
 {xrst_begin ad_input}
 {xrst_spell
-   istream
+  istream
 }
 
 AD Input Stream Operator
@@ -76,7 +76,7 @@ contains an example and test of this operation.
 ------------------------------------------------------------------------------
 {xrst_begin ad_output}
 {xrst_spell
-   ostream
+  ostream
 }
 
 AD Output Stream Operator

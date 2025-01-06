@@ -15,12 +15,12 @@
 ------------------------------------------------------------------------------
 {xrst_begin to_csrc}
 {xrst_spell
-   cdecl
-   declspec
-   dllimport
-   ny
-   typedef
-   underbar
+  cdecl
+  declspec
+  dllimport
+  ny
+  typedef
+  underbar
 }
 
 C Source Code Corresponding to an ADFun Object

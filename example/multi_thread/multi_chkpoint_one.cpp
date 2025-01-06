@@ -5,9 +5,6 @@
 
 /*
 {xrst_begin multi_chkpoint_one_algo app}
-{xrst_spell
-   au
-}
 
 chkpoint_one Algorithm that Computes Square Root
 ################################################

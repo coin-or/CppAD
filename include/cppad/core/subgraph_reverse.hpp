@@ -7,8 +7,8 @@
 /*
 {xrst_begin subgraph_reverse}
 {xrst_spell
-   dw
-   subgraphs
+  dw
+  subgraphs
 }
 
 Reverse Mode Using Subgraphs

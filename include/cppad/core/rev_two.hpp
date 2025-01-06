@@ -8,7 +8,7 @@
 /*
 {xrst_begin RevTwo}
 {xrst_spell
-   ddw
+  ddw
 }
 
 Reverse Mode Second Partial Derivative Driver

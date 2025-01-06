@@ -5,17 +5,17 @@
 
 {xrst_begin 2023 app}
 {xrst_spell
-   autotools
-   cstdint
-   kludge
-   kokkos
-   mingw
-   msys
-   pacman
-   trilinos
-   uintptr
-   usr
-   whithout
+  autotools
+  cstdint
+  kludge
+  kokkos
+  mingw
+  msys
+  pacman
+  trilinos
+  uintptr
+  usr
+  whithout
 }
 
 Release Notes for 2023

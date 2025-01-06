@@ -7,9 +7,9 @@
 /*
 {xrst_begin subgraph_jac_rev}
 {xrst_spell
-   nnz
-   nr
-   subgraphs
+  nnz
+  nr
+  subgraphs
 }
 
 Compute Sparse Jacobians Using Subgraphs

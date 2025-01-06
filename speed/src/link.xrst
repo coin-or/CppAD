@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin link_routines}
 {xrst_spell
-   teardown
+  teardown
 }
 
 Package Specific Speed Test Linking Routines

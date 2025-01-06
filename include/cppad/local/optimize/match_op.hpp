@@ -10,7 +10,7 @@ namespace CppAD { namespace local { namespace optimize  {
 /*
 {xrst_begin optimize_match_op dev}
 {xrst_spell
-   erfc
+  erfc
 }
 
 Search for a Previous Operator that Matches Current Operator

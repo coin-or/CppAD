@@ -5,13 +5,11 @@
 /*
 {xrst_begin VecAD}
 {xrst_spell
-   grep
-   ld
-   ldp
-   ldv
-   st
-   vp
-   wc
+  grep
+  ldp
+  ldv
+  vp
+  wc
 }
 
 AD Vectors that Record Index Operations

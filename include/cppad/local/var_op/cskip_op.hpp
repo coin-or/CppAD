@@ -11,9 +11,6 @@ namespace CppAD { namespace local { namespace var_op {
 
 The Conditional Skip Operator
 #############################
-{xrst_spell
-   ge
-}
 
 CSkipOp
 *******

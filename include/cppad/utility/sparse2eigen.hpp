@@ -8,7 +8,7 @@
 /*
 {xrst_begin sparse2eigen}
 {xrst_spell
-   nnz
+  nnz
 }
 
 Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix

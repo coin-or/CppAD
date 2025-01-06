@@ -4,9 +4,11 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_unary_op dev}
 {xrst_spell
-   erfc
-   expm
-   neg
+  acosh
+  asinh
+  erfc
+  expm
+  neg
 }
 
 Unary Variable Operators
@@ -178,8 +180,6 @@ see
 {xrst_end var_unary_forward_any}
 ------------------------------------------------------------------------------
 {xrst_begin var_unary_forward_dir dev}
-{xrst_spell
-}
 
 Multiple Direction Forward Unary Operators
 ##########################################

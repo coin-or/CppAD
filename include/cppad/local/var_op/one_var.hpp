@@ -284,8 +284,6 @@ void one_var_rev_hes(
 // ---------------------------------------------------------------------------
 /*
 {xrst_begin var_one_var_for_hes dev}
-{xrst_spell
-}
 
 Forward Hessian Sparsity for One Variable Argument Operators
 ############################################################

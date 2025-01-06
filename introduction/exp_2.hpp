@@ -7,8 +7,8 @@
 /*
 {xrst_begin exp_2}
 {xrst_spell
-   apx
-   yyyymmdd
+  apx
+  yyyymmdd
 }
 
 Second Order Exponential Approximation

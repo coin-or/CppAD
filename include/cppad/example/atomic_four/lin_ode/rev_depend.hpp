@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_rev_depend.hpp}
 {xrst_spell
-   wk
+  wk
 }
 
 Atomic Linear ODE Forward Type Calculation: Example Implementation

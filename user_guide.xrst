@@ -4,16 +4,20 @@
 # ----------------------------------------------------------------------------
 {xrst_begin user_guide}
 {xrst_spell
-   autodiff
-   github
-   org
-   posix
-   templated
+  adolc
+  autodiff
+  fadbad
+  github
+  openmp
+  org
+  posix
+  sacado
+  templated
 }
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20241219: CppAD User's Manual
+cppad-20250106: CppAD User's Manual
 ###################################
 {xrst_comment The scripts bin/check_version.sh and bin/new_release.sh
 edit version numbers in tables below.}

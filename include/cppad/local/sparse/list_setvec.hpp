@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_LIST_SETVEC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/define.hpp>
 # include <cppad/local/is_pod.hpp>
@@ -14,7 +14,7 @@ namespace CppAD { namespace local { namespace sparse {
 /*
 {xrst_begin_parent list_setvec dev}
 {xrst_spell
-   typedef
+  typedef
 }
 
 The list_setvec Class
@@ -35,7 +35,7 @@ typedef size_setvec_const_iterator<size_t>  list_setvec_const_iterator;
 // ----------------------------------------------------------------------------
 {xrst_begin sparsity_user2internal_list_setvec dev}
 {xrst_spell
-   msg
+  msg
 }
 
 Copy A Vector of Standard Sets To A list_setvec Object

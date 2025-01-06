@@ -8,7 +8,9 @@
 /*
 {xrst_begin sparse_jac}
 {xrst_spell
-   nr
+  nr
+  rc
+  rcv
 }
 
 Computing Sparse Jacobians

@@ -2,19 +2,18 @@
 # define CPPAD_CORE_ATOMIC_TWO_REVERSE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_two_reverse app}
 {xrst_spell
-   apx
-   apy
-   atx
-   aty
-   px
-   py
-   tx
-   ty
+  apx
+  apy
+  atx
+  aty
+  px
+  py
+  tx
 }
 
 Atomic Reverse Mode

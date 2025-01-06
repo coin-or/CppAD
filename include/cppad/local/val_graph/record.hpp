@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RECORD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
@@ -23,7 +23,7 @@ These operations store a function in the :ref:`val_tape-name`.
 ------------------------------------------------------------------------------
 {xrst_begin val_set_ind dev}
 {xrst_spell
-   str
+  str
 }
 
 Setting Independent Variables
@@ -559,7 +559,7 @@ addr_t tape_t<Value>::record_cexp_op(
 ------------------------------------------------------------------------------
 {xrst_begin val_record_pri_op dev}
 {xrst_spell
-   str
+  str
 }
 
 Recording Print Operations

@@ -10,8 +10,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 -----------------------------------------------------------------------------
 {xrst_begin atomic_four_for_hes_sparsity dev}
 {xrst_spell
-   np
-   numvar
+  numvar
 }
 
 Link from Forward Hessian Sparsity Sweep to atomic_four Callback

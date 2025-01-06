@@ -6,8 +6,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin atomic_four_lin_ode_get.hpp}
-{xrst_spell
-}
 
 atomic_lin_ode Get Routine: Example Implementation
 ##################################################

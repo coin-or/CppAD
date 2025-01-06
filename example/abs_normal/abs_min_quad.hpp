@@ -7,9 +7,9 @@
 /*
 {xrst_begin abs_min_quad}
 {xrst_spell
-   dbl
-   lll
-   maxitr
+  dbl
+  lll
+  maxitr
 }
 abs_normal: Minimize a Linear Abs-normal Approximation
 ######################################################

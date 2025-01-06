@@ -7,14 +7,14 @@
 /*
 {xrst_begin cppad_ipopt_nlp app}
 {xrst_spell
-   doesn
-   fg
-   lagrange
-   libs
-   lipopt
-   maxiter
-   naninf
-   rll
+  doesn
+  fg
+  libs
+  lipopt
+  maxiter
+  naninf
+  retape
+  rll
 }
 Nonlinear Programming Using the CppAD Interface to Ipopt
 ########################################################

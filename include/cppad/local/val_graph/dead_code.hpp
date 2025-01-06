@@ -10,8 +10,8 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_tape_dead_code dev}
 {xrst_spell
-   comp
-   dep
+  comp
+  dep
 }
 
 Dead Code Elimination

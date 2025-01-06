@@ -8,8 +8,8 @@
 /*
 {xrst_begin NearEqual}
 {xrst_spell
-   cout
-   endl
+  cout
+  endl
 }
 
 Determine if Two Values Are Nearly Equal

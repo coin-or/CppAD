@@ -7,7 +7,7 @@
 /*
 {xrst_begin chkpoint_two_ctor}
 {xrst_spell
-   chk
+  chk
 }
 
 Checkpoint Function Constructor

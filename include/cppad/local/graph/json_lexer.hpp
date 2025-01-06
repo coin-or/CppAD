@@ -238,9 +238,6 @@ public:
 {xrst_end json_lexer_constructor}
 -------------------------------------------------------------------------------
 {xrst_begin json_lexer_check_next_char dev}
-{xrst_spell
-   ch
-}
 
 Get and Check Next Single Character Token
 #########################################

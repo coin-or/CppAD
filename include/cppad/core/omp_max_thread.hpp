@@ -7,7 +7,7 @@
 /*
 {xrst_begin omp_max_thread app}
 {xrst_spell
-   mp
+  mp
 }
 
 OpenMP Parallel Setup

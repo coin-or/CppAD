@@ -9,10 +9,10 @@ namespace CppAD { namespace local { namespace var_op {
 /*
 {xrst_begin_parent var_store_op dev}
 {xrst_spell
-   stpp
-   stpv
-   stvp
-   stvv
+  stpp
+  stpv
+  stvp
+  stvv
 }
 
 Store an Element of a Variable VecAD Vector
@@ -93,7 +93,7 @@ If *y* is a parameter (variable), arg[2] is the parameter index
 ------------------------------------------------------------------------------
 {xrst_begin var_store_forward_0 dev}
 {xrst_spell
-   isvar
+  isvar
 }
 
 Zero Order Forward Store an Element of a VecAD Vector

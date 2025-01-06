@@ -7,20 +7,23 @@ echo $0 $*
 # # ----------------------------------------------------------------------------
 # {xrst_begin configure app}
 # {xrst_spell
+#     adolc
 #     adouble
 #     ansi
 #     badiff
 #     boostvector
-#     cl
+#     colpack
 #     cxx
 #     cygdrive
 #     dist
 #     eigenvector
+#     fadbad
 #     fortran
 #     ip
-#     linux
+#     ipopt
 #     msvc
 #     nmake
+#     sacado
 #     stdvector
 #     sys
 #     ublas

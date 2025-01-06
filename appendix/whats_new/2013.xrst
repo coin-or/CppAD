@@ -5,18 +5,15 @@
 
 {xrst_begin 2013 app}
 {xrst_spell
-   alg
-   algo
-   autotools
-   cout
-   handel
-   impl
-   ip
-   sb
-   sq
-   src
-   struct
-   usead
+  algo
+  autotools
+  cout
+  ctor
+  impl
+  ip
+  src
+  struct
+  usead
 }
 
 Release Notes for 2013

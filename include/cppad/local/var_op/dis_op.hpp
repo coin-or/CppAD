@@ -48,8 +48,8 @@ variable index corresponding to the argument for this function call.
 ------------------------------------------------------------------------------
 {xrst_begin dis_forward_dir dev}
 {xrst_spell
-   ataylor
-   tpv
+  ataylor
+  tpv
 }
 
 Forward Mode Result for Discrete Functions
