@@ -2,16 +2,29 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
-# ----------------------------------------------------------------------------
-if [ $# != 0 ]
+# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# -----------------------------------------------------------------------------
+#
+# echo_eval
+echo_eval() {
+   echo $*
+   eval $*
+}
+#
+# sed
+source bin/grep_and_sed.sh
+#
+# package_name, version_file_list
+source bin/dev_settings.sh
+#
+if [ "$0" != "bin/check_version.sh" ]
 then
-   echo 'bin/check_version.sh: does not expect any arguments'
+   echo "bin/check_version.sh: must be executed from its parent directory"
    exit 1
 fi
-if [ "$0" != 'bin/check_version.sh' ]
+if [ "$#" != 0 ]
 then
-   echo 'bin/check_version.sh: must be executed from its parent directory'
+   echo 'check_version does not expect any arguments'
    exit 1
 fi
 if [ ! -e './.git' ]
@@ -19,17 +32,105 @@ then
    echo 'bin/check_version.sh: cannot find ./.git'
    exit 1
 fi
-#
-# grep, sed
-source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 #
-# check_version("$1", temp.sed, version_ok)
+# branch
+branch=$(git branch --show-current)
+#
+# first_version_file
+first_version_file=$(echo $version_file_list | $sed -e 's|^ *||' -e 's| .*||')
+#
+# version
+cat << EOF > temp.sed
+/["'][0-9]{8}["']/b one
+/["'][0-9]{8}[.][0-9]{1,2}["']/b one
+/["'][0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}["']/b one
+b end
+#
+: one
+s|.*["']([0-9]{8})["'].*|\\1|
+s|.*["']([0-9]{8})[.][0-9]{1,2}["'].*|\\1|
+s|.*["']([0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2})["'].*|\\1|
+p
+#
+: end
+EOF
+version=$($sed -n -r -f temp.sed $first_version_file)
+#
+# version_type
+if [[ "$version" =~ ^[0-9]{8}$ ]]
+then
+   version_type=1
+elif [[ "$version" =~ ^[0-9]{8}[.][0-9]{1,2}$ ]]
+then
+   version_type=2
+elif [[ "$version" =~ ^[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}$ ]]
+then
+   version_type=3
+else
+   echo "check_version.sh: can't find version number in $first_version_file"
+   exit 1
+fi
+if [[ "$branch" =~ ^stable/.* ]]
+then
+   if [ "$version_type" == 1 ]
+   then
+      echo "check_version.sh: version in $first_version_file"
+      echo "is not for a release but this is the $branch branch"
+      exit 1
+   elif [ "$version_type" == 3 ]
+   then
+      if [[ "$version" =~  ^[0-9]{4}[.][^0].*$ ]]
+      then
+         echo "check_version.sh: version in $first_version_file"
+         echo "is not for a release but this is the $branch branch"
+         exit 1
+      fi
+   fi
+fi
+#
+# version
+if [ "$branch" == 'master' ] || [ "$branch" == 'main' ]
+then
+   if [ "$version_type" == 1 ]
+   then
+      version=$(date +%Y%m%d)
+   elif [ "$version_type" == 2 ]
+   then
+      echo "check_version.sh: version in $first_version_file"
+      echo "is for a release but this is the $branch branch"
+      exit 1
+   else
+      if [[ "$version" =~  ^[0-9]{4}[.]0[.][0-9]{1,2}$ ]]
+      then
+         echo "check_version.sh: version in $first_version_file"
+         echo "is for a release but this is the $branch branch"
+         exit 1
+      fi
+      version=$(date +%Y.%-m.%-d)
+   fi
+fi
+#
+# temp.sed
+cat << EOF > temp.sed
+s|(["'])[0-9]{8}(["'])|\\1$version\\2|
+s|(["'])[0-9]{8}[.][0-9]{1,2}(["'])|\\1$version\\2|
+s|(["'])[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}(["'])|\\1$version\\2|
+s|$package_name-[0-9]{8}|$package_name-$version|
+s|$package_name-[0-9]{8}[.][0-9]{1,2}|$package_name-$version|
+s|$package_name-[0-9]{8}[.][0-9]{1,2}[.][0-9]{1,2}|$package_name-$version|
+EOF
+#
+# check_version
 check_version() {
-   $sed "$1" -f temp.sed > temp.out
+   $sed -r "$1" -f temp.sed > temp.out
    if ! diff "$1" temp.out > /dev/null
    then
       version_ok='no'
+      echo "check_version.sh: changes to $1"
+      set +e
+      diff "$1" temp.out
+      set -e
       #
       if [ -x "$1" ]
       then
@@ -38,77 +139,24 @@ check_version() {
       else
          mv temp.out "$1"
       fi
-      echo_eval git diff "$1"
    fi
 }
-# -----------------------------------------------------------------------------
-#
-# this_version
-this_version=$(
-   $sed -n -e '/^SET( *cppad_version *"[0-9.]*")/p' CMakeLists.txt | \
-      $sed -e 's|.*"\([^"]*\)".*|\1|'
-)
-#
-# branch
-branch=$(git branch | $sed -n -e '/^[*]/p' | $sed -e 's|^[*] *||')
-#
-# this_version
-if [ "$branch" == 'master' ]
-then
-   this_version=$( date +%Y%m%d )
-fi
-#
-# stable_version, release_version
-if echo $branch | $grep '^stable/' > /dev/null
-then
-   if ! echo $this_version | $grep '^[0-9]\{4\}0000[.]' > /dev/null
-   then
-      echo 'check_version.sh: Stable version does not begin with yyyy0000.'
-      exit 1
-   fi
-   release_version="$this_version"
-   stable_version=$(echo $release_version | $sed -e 's|[.][0-9]*$||')
-else
-   eval $($grep '^stable_version=' bin/new_release.sh)
-   eval $($grep '^release=' bin/new_release.sh)
-   release_version="$stable_version.$release"
-fi
 #
 # version_ok
 version_ok='yes'
 #
-# version_files
-version_files='
-   CMakeLists.txt
-   user_guide.xrst
-'
-#
-# temp.sed
-cat << EOF > temp.sed
-# CMakeLists.txt
-s|^SET( *cppad_version *"[0-9.]*")|SET(cppad_version "$this_version")|
-#
-# user_guide.xrst
-s|cppad-[0-9]\\{8\\}[.]*[.0-9]*|cppad-$this_version|
-#
-s|release-[0-9]\\{8\\}\.[.0-9]*|release-$release_version|
-s|archive/[0-9]\\{8\\}\.[0-9]*|archive/$release_version|
-#
-s|documentation-[0-9]\\{8\\}|documentation-$stable_version|
-s|stable-[0-9]\\{8\\}|stable-$stable_version|
-EOF
-#
-for file in $version_files
+# check_version
+for file in $version_file_list
 do
-   # check_version(file, temp.sed, version_ok)
    check_version $file
 done
+#
 # ----------------------------------------------------------------------------
 if [ "$version_ok" == 'no' ]
 then
    echo 'bin/check_version.sh: version numbers were fixed (see above).'
-   echo "Re-execute bin/check_version.sh ?"
+   echo 'Re-execute bin/check_version.sh ?'
    exit 1
 fi
-echo 'check_version.sh: OK'
+echo 'check_version.sh OK'
 exit 0
