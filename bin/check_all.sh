@@ -2,37 +2,74 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
-# build_type, verbose_makefile
 if [ "$0" != 'bin/check_all.sh' ]
 then
    echo "bin/check_all.sh: must be executed from its parent directory"
    exit 1
 fi
-if [ "$#" != 1 ] && [ "$#" != 2 ]
+if [ $# == 1 ]
 then
-   echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
-   exit 1
-fi
-if [ "$1" != 'mixed' ] && [ "$1" != 'debug' ] && [ "$1" != 'release' ]
-then
-   echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
-   exit 1
-fi
-build_type="$1"
-verbose_make='no'
-if [ "$#" == 2 ]
-then
-   if [ "$2" != '' ] && [ "$2" != 'verbose_make' ]
+   if [ "$1" == --help ]
    then
-      echo 'bin/check_all.sh: (mixed|debug|release) [verbose_make]'
-      exit 1
-   else
-      verbose_make='yes'
+cat << EOF
+bin/check_all.sh flags
+possible flags
+--mixed                    mix debug and release compiles
+--debug                    only compile for debugging
+--release                  only compile for release
+--verbose_make             generate verbose makefiles
+--skip_external_links      do not check documentation external links
+--suppress_spell_warnings  do not check for documentaiton spelling errors
+EOF
+      exit 0
    fi
 fi
+#
+# build_type, verbose_make, skip_external_links, suppress_spell_warnings
+build_type='mixed'
+verbose_make='no'
+skip_external_links='no'
+suppress_spell_warnings='no'
+while [ $# != 0 ]
+do
+   case "$1" in
+
+      --mixed)
+      build_type=mixed
+      ;;
+
+      --debug)
+      build_type=debug
+      ;;
+
+      --release)
+      build_type=release
+      ;;
+
+      --verbose_make)
+      verbose_make='yes'
+      ;;
+
+      --skip_external_links)
+      skip_external_links='yes'
+      ;;
+
+      --suppress_spell_warnings)
+      suppress_spell_warnings='yes'
+      ;;
+
+      *)
+      echo "bin/check_all.sh: command line argument "$1" is not valid"
+      exit 1
+      ;;
+
+   esac
+   #
+   shift
+done
 #
 # grep and sed
 source bin/grep_and_sed.sh
@@ -179,7 +216,8 @@ then
 else
    if [ "$build_type" != 'mixed' ]
    then
-      echo 'bin/check_all.sh: build_type not debug release or mixed'
+      msg="build_type = $build_type not debug release or mixed"
+      echo "bin/check_all.sh $msg"
       exit 1
    fi
    random_01 debug_which
@@ -276,7 +314,6 @@ list=$(
    ls bin/check_* | sed \
    -e '/check_all.sh/d' \
    -e '/check_doxygen.sh/d' \
-   -e '/version.sh/d' \
    -e '/check_install.sh/d' \
    -e '/check_invisible/d'
 )
@@ -288,7 +325,16 @@ do
 done
 #
 # run_xrst.sh
-bin/run_xrst.sh +dev
+flags='--include_dev'
+if [ "$skip_external_links" == 'no' ]
+then
+   flags+=' --external_links'
+fi
+if [ "$suppress_spell_warnings" == 'yes' ]
+then
+   flags+=' --suppress_spell_warnings'
+fi
+bin/run_xrst.sh $flags
 #
 # build/cppad-$version.tgz
 echo_log_eval bin/package.sh

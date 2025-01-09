@@ -17,7 +17,7 @@
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20250108: CppAD User's Manual
+cppad-20250109: CppAD User's Manual
 ###################################
 {xrst_comment The scripts bin/check_version.sh and bin/new_release.sh
 edit version numbers in tables below.}
@@ -27,8 +27,8 @@ edit version numbers in tables below.}
 .. list-table::
    :widths: auto
 
-   * - `release-20240000.7 <https://github.com/coin-or/CppAD/archive/20240000.7.tar.gz>`_
-     - `documentation-20240000 <https://cppad.readthedocs.io/stable-20240000>`_
+   * - `release-20250000.7 <https://github.com/coin-or/CppAD/archive/20240000.7.tar.gz>`_
+     - `documentation-20240000 <https://cppad.readthedocs.io/stable-20250000>`_
      - `other releases <https://github.com/coin-or/CppAD/tags>`_
      - `github <https://github.com/coin-or/CppAD>`_
      - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/rawhide/f/cppad.spec>`_

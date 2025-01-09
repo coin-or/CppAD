@@ -32,13 +32,21 @@ package_name='cppad'
 # The patterns above without release are used for the master and main branches
 # and corresponds to the current year, month and day.
 # The patterns above with release are used for stable/* branches.
-# The first version file of the list below must have its version number
-# surrounded by single or double quotes. This determines the verison
-# when the branch is not master or main. All occurances of the version
-# have the form:
+#
+# The first version file of the list below must have one copy of its
+# version surrounded by single or double quotes. This determines the verison
+# when the branch is not master or main. All occurances of the version, in the
+# files listed below, with the following forms are updated by check_verison.sh:
 #     $package_name-$version  or '$version' or "$version"
+#
+# We use tag for the version corresponding to the current stable release.
+# This is (is not) the same as the current version on a stable branch
+# (on the master or main branch). All occurances of the tag, in the files
+# listed below, with the following forms are updated by new_release.sh:
+#     archive/$tag.tar.gz
+# In addition, all occurances of stable-yyyy and release-yyyy are updated.
 version_file_list='
-   CMakeLists.txt
+CMakeLists.txt
    user_guide.xrst
 '
 # All the occurances of the version in the files above are checked to see
@@ -50,22 +58,22 @@ version_file_list='
 # If an entry below is a directory it specifies all the files in the directory.
 # BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
+   .coin-or/projDesc.xml
+   .github/workflows
+   .gitignore
+   .readthedocs.yaml
+   .travis.yml
+   COPYING
+   appveyor.yml
+   authors
+   batch_edit.sed
+   bin/build.bat
+   cmake/cppad_uninstall.cmake
+   coin.png
+   epl-2.0.txt
+   uw_copy_040507.html
+   xrst.toml
 .circleci/config.yml
-.coin-or/projDesc.xml
-.github/workflows
-.gitignore
-.readthedocs.yaml
-.travis.yml
-COPYING
-appveyor.yml
-authors
-batch_edit.sed
-bin/build.bat
-cmake/cppad_uninstall.cmake
-coin.png
-epl-2.0.txt
-uw_copy_040507.html
-xrst.toml
 '
 # END_SORT_THIS_LINE_MINUS_2
 #
@@ -74,8 +82,8 @@ xrst.toml
 # If an entry below is a directory it specifies all the files in the directory.
 invisible_and_tab_ok='
 batch_edit.sed
-coin.png
-uw_copy_040507.html
+   coin.png
+   uw_copy_040507.html
 '
 #
 # check_commit
