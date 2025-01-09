@@ -96,25 +96,13 @@ then
 elif [[ "$version" =~ ^[0-9]{8}[.][0-9]{1,2}$ ]]
 then
    version_type=2
-   echo "new_release.sh: version in $first_version_file"
-   echo "is for a release but this is the $main_branch branch"
-   exit 1
 elif [[ "$version" =~ ^[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}$ ]]
 then
    version_type=3
-   if [[ "$version" =~  ^[0-9]{4}[.][0].*$ ]]
-   then
-      echo "new_release.sh: version in $first_version_file"
-      echo "is for a release but this is the $main_branch branch"
-      exit 1
-   fi
-else
-   echo "check_version.sh: can't find version number in $first_version_file"
-   exit 1
 fi
 #
 # tag
-if [ "$version_type" == 1 ]
+if [ "$version_type" == 1 ] || [ "$version_type" == 2 ]
 then
    tag="${year}0000.$release"
 else
@@ -238,6 +226,13 @@ then
    echo "bin/rew_release: branch = $stable_branch"
    echo "Version number should be $tag in $first_version_file"
    exit 1
+fi
+#
+# check_version
+# changes to version ?
+if ! bin/check_version.sh
+then
+   echo 'Continuing even thought bin/check_version made changes.'
 fi
 #
 # check_all.sh
