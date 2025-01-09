@@ -17,8 +17,8 @@
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20250109: CppAD User's Manual
-###################################
+cppad-20250000.0: CppAD User's Manual
+#####################################
 {xrst_comment The scripts bin/check_version.sh and bin/new_release.sh
 edit version numbers in tables below.}
 
