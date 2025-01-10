@@ -42,11 +42,11 @@ do
       ;;
 
       --external_links)
-      extra_falgs+=" $1"
+      extra_flags+=" $1"
       ;;
 
       --suppress_spell_warnings)
-      extra_falgs+=" $1"
+      extra_flags+=" $1"
       ;;
 
       *)

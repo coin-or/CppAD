@@ -8,9 +8,7 @@
   automake
   boostvector
   builddir
-  devel
   executables
-  fedoraproject
   for for
   geq
   gpl
@@ -22,7 +20,6 @@
   makefile
   matlab
   omh
-  org
   prefixdir
   pthreads
   retape
@@ -830,9 +827,7 @@ The directory where the :ref:`pkgconfig-name` file ``cppad.pc``
 is stored has been moved from
 *prefixdir* / ``lib/pkgconfig/cppad.pc``
 to
-*prefixdir* / ``share/pkgconfig/cppad.pc`` ;
-see
-`devel lists.fedoraproject.org <https://lists.fedoraproject.org/pipermail/devel/2011-January/147915.html>`_.
+*prefixdir* / ``share/pkgconfig/cppad.pc`` .
 
 01-16
 =====
