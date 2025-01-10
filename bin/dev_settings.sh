@@ -46,7 +46,7 @@ package_name='cppad'
 #     archive/$tag.tar.gz
 # In addition, all occurances of stable-yyyy and release-yyyy are updated.
 version_file_list='
-CMakeLists.txt
+   CMakeLists.txt
    user_guide.xrst
 '
 # All the occurances of the version in the files above are checked to see
@@ -58,6 +58,7 @@ CMakeLists.txt
 # If an entry below is a directory it specifies all the files in the directory.
 # BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
+   .circleci/config.yml
    .coin-or/projDesc.xml
    .github/workflows
    .gitignore
@@ -73,7 +74,6 @@ no_copyright_list='
    epl-2.0.txt
    uw_copy_040507.html
    xrst.toml
-.circleci/config.yml
 '
 # END_SORT_THIS_LINE_MINUS_2
 #
@@ -81,7 +81,7 @@ no_copyright_list='
 # These files are not checked for invisible white space or tabs.
 # If an entry below is a directory it specifies all the files in the directory.
 invisible_and_tab_ok='
-batch_edit.sed
+   batch_edit.sed
    coin.png
    uw_copy_040507.html
 '
@@ -90,4 +90,5 @@ batch_edit.sed
 # These files may have automatic changes that should not be commited.
 # Including them in this list gives the user the option to abort their changes.
 check_commit='
+
 '

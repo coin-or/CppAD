@@ -7,24 +7,6 @@ set -e -u
 year='2025' # Year for this stable version
 release='0' # first release for each year starts with 0
 # -----------------------------------------------------------------------------
-if [ $# != 0 ] && [ $# != 1 ]
-then
-   echo 'bin/new_release.sh does not expect any arguments'
-   exit 1
-fi
-#
-# skip_main_check_all
-skip_main_check_all='no'
-if [ $# == 1 ]
-then
-   if [ "$1" == --skip_main_check_all ]
-   then
-      skip_main_check_all='yes'
-   else
-      echo "new_release.sh $1: not a valid argument"
-      exit 1
-   fi
-fi
 if [ "$0" != 'bin/new_release.sh' ]
 then
    echo 'bin/new_release.sh: must be executed from its parent directory'
@@ -49,6 +31,25 @@ else
    echo "new_release.sh: release = $release is not valid"
    exit 1
 fi
+#
+# skip_main_check_all, skip_stable_check_all
+skip_main_check_all='no'
+skip_stable_check_all='no'
+while [ $# != 0 ]
+do
+   if [ "$1" == '--skip_main_check_all' ]
+   then
+      skip_main_check_all='yes'
+   elif [ "$1" == '--skip_stable_check_all' ]
+   then
+      skip_stable_check_all='yes'
+   else
+      echo 'bin/new_release.sh [--skip_main_check_all [--skip_stable_check_all]'
+      echo "$1 is not a valid argument"
+      exit 1
+   fi
+   shift
+done
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -236,11 +237,15 @@ then
 fi
 #
 # check_all.sh
-if [ "$tag_commited" == 'yes' ]
+if [ "$skip_stable_check_all" == 'no' ]
 then
-   echo_eval bin/check_all.sh --suppress_spell_warnings
-else
-   echo_eval bin/check_all.sh --suppress_spell_warnings --skip_external_links
+   if [ "$tag_commited" == 'yes' ]
+   then
+      echo_eval bin/check_all.sh --suppress_spell_warnings
+   else
+      echo_eval bin/check_all.sh \
+         --suppress_spell_warnings --skip_external_links
+   fi
 fi
 #
 # git_status
