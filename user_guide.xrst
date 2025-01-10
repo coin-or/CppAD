@@ -7,7 +7,6 @@
   adolc
   autodiff
   fadbad
-  github
   openmp
   org
   posix
@@ -17,23 +16,40 @@
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}
 
-cppad-20250000.0: CppAD User's Manual
-#####################################
-{xrst_comment The scripts bin/check_version.sh and bin/new_release.sh
-edit version numbers in tables below.}
+CppAD User's Manual
+###################
+CppAD is distributed by
+`COIN-OR <https://www.coin-or.org/>`_
+with the Eclipse Public License
+`EPL-2.0 <https://opensource.org/license/EPL-2.0>`_
+or the GNU General Public License
+`GPL-2.0 <https://opensource.org/license/GPL-2.0>`_ or later.
 
 .. image:: {xrst_dir coin.png}
+
+Git Repository
+**************
+`<https://github.com/coin-or/CppAD>`_
+
+Versions
+********
 
 .. list-table::
    :widths: auto
 
-   * - `release-20250000.7 <https://github.com/coin-or/CppAD/archive/20240000.7.tar.gz>`_
-     - `documentation-20240000 <https://cppad.readthedocs.io/stable-20250000>`_
-     - `other releases <https://github.com/coin-or/CppAD/tags>`_
-     - `github <https://github.com/coin-or/CppAD>`_
-     - `cppad.spec <https://src.fedoraproject.org/rpms/cppad/blob/rawhide/f/cppad.spec>`_
+   * - This version
+     - cppad-20250000.0
+   * - Documentation for latest version
+     - `latest <https://cppad.readthedocs.io/latest>`_
+   * - Documentation for most recent stable version
+     - `stable-2025 <https://cppad.readthedocs.io/stable-2025>`_
+   * - Most recent release of this stable version
+     - `release-2025 <https://github.com/coin-or/CppAD/archive/20250000.0.tar.gz>`_
 
 {xrst_comment END: Before changing see new_release.sh and check_version.sh}
+
+Other Links
+***********
 
 .. list-table::
    :widths: auto
@@ -42,15 +58,8 @@ edit version numbers in tables below.}
      - :ref:`get_started<get_started.cpp-name>`
      - :ref:`whats_new-name`
      - :ref:`addon-name`
-     - :ref:`research-name`
      - `project manager <http://www.seanet.com/~bradbell>`_
 
-CppAD is distributed by
-`COIN-OR <https://www.coin-or.org/>`_
-with the Eclipse Public License
-`EPL-2.0 <https://opensource.org/license/EPL-2.0>`_
-or the GNU General Public License
-`GPL-2.0 <https://opensource.org/license/GPL-2.0>`_ or later.
 
 Algorithmic Differentiation
 ***************************
