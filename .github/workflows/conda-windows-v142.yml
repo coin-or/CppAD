@@ -34,9 +34,10 @@ jobs:
         activate-environment: cppad
         environment-file: .github/workflows/conda/conda-env.yml
         python-version: 3.7
-    - name: Install cmake and update conda
+    - name: Install cmake , pkgconfig and update conda
       run: |
         conda install cmake -c main
+        conda install pkgconfig -c conda-forge
 
     - name: Build CppAD
       shell: cmd /C CALL {0}
@@ -48,8 +49,6 @@ jobs:
         set BOOST_ROOT_1_69_0=
         set BOOST_ROOT_1_72_0=
         set PATH=%PATH:C:\hostedtoolcache\windows\Boost\1.72.0;=%
-
-        call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
 
         :: Create build directory
         mkdir build
