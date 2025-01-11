@@ -42,7 +42,7 @@ do
       ;;
 
       --external_links)
-      extra_flags+=" $1"
+      extra_flags+=" $1 --continue_with_warnings"
       ;;
 
       --suppress_spell_warnings)
