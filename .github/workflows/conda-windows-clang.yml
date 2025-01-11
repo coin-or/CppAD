@@ -35,9 +35,10 @@ jobs:
         activate-environment: cppad
         environment-file: .github/workflows/conda/conda-env.yml
         python-version: 3.7
-    - name: Install cmake and update conda
+    - name: Install cmake , pkgconfig, and update conda
       run: |
         conda install cmake -c main
+        conda install pkgconfig -c conda-forge
     - name: Build CppAD
       shell: cmd /C CALL {0}
       env:
