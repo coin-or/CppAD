@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_VAR_OP_ATOMIC_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_VAR_OP_NAMESPACE
@@ -1089,7 +1089,7 @@ inline void atomic_for_jac(
    if( trace )
    {  size_t end = var_sparsity.end();
       CppAD::vectorBool this_row(end);
-      addr_t            arg_tmp[1];
+      addr_t*  arg_tmp = { 0 };
       for(size_t i = 0; i < m; ++i)
       {  size_t j_var = index_y[i];
          for(size_t j = 0; j < end; ++j)
@@ -1546,7 +1546,7 @@ inline void atomic_rev_hes(
    {  typedef typename Vector_set::const_iterator itr_sparse_t;
       size_t end = rev_hes_sparsity.end();
       CppAD::vectorBool jac_row(end), hes_row(end);
-      addr_t            arg_tmp[1];
+      addr_t*  arg_tmp = { 0 };
       for(size_t i = 0; i < m; ++i)
       {  size_t j_var = index_y[i];
          if( 0 < j_var)
@@ -1795,7 +1795,7 @@ inline void atomic_for_hes(
       size_t np1 = n_independent_p1;
       CPPAD_ASSERT_UNKNOWN( np1 == for_hes_sparsity.end() );
       CppAD::vectorBool jac_row(np1);
-      addr_t            arg_tmp[1];
+      addr_t*  arg_tmp = { 0 };
       for(size_t i = 0; i < m; ++i)
       {  size_t j_var = index_y[i];
          if( 0 < j_var )
