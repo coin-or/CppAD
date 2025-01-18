@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell  <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin 2025 app}
+{xrst_spell
+   tmp
+}
+
+Release Notes for 2025
+######################
+
+mm-dd
+*****
+
+01-17
+=====
+#. Fix some errors of the form *function_name*\ ``(unsigned int)``
+   cannot be overloaded with *function_name*\ ``(size_t)`` 
+   in i686 systems.
+
+#. Create 20250000.1 release.
+
+01-14
+=====
+Fix g++-15.0.1 warning about arg_tmp in atomic_op.hpp not being initialized.
+
+01-09
+=====
+Create 20250000.0 release.
+
+{xrst_end 2025}
