@@ -219,6 +219,7 @@ done
 # first_version_file
 cat << EOF > temp.sed
 s|(["'])[0-9]{8}(["'])|\\1$tag\\2|
+s|(["'])[0-9]{8}[.][0-9]{1,2}(["'])|\\1$tag\\2|
 s|(["'])[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}(["'])|\\1$tag\\2|
 EOF
 $sed -r -f temp.sed -i $first_version_file
