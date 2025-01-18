@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_PLAYER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/addr_enum.hpp>
@@ -39,7 +39,7 @@ struct random_itr_info_t {
    Index of the result variable for each operator. If the operator has
    no results, this is not defined. The invalid index num_var_rec_ is used
    when NDEBUG is not defined. If the operator has more than one result, this
-   is the primary result; i.e., the last result. Auxillary results are only 
+   is the primary result; i.e., the last result. Auxillary results are only
    used by the current operator and not used by other operators.
    */
    pod_vector<unsigned  short> short_op2var;
@@ -697,6 +697,7 @@ public:
          &random_itr_info_.int_var2op
       );
    }
+# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
    void setup_random(size_t& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
@@ -707,6 +708,7 @@ public:
          &random_itr_info_.size_t_var2op
       );
    }
+# endif
    //
    /// Free memory used for functions that begin with random_
    /// and random iterators and subgraph iterators

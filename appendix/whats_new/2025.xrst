@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell  <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2025 app}
 {xrst_spell
+   dll
+   jit
 }
 
 Release Notes for 2025
@@ -12,6 +14,23 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+01-17
+=====
+#. The :ref:`cmake@cppad_link_flags` option was added to the cmake command.
+
+#. The detection of when ``unsigned int`` and ``size_t`` were the same,
+   by the cmake command, was incorrect in cases where
+   the compiler flags affected this result.
+
+#. Fix some errors of the form *function_name*\ ``(unsigned int)``
+   cannot be overloaded with *function_name*\ ``(size_t)`` .
+
+#. The :ref:`dll_lib.cpp@Restrictions` ,
+   on when the dll_lib.cpp example is tested were documented.
+
+#. The :ref:`example_jit@Restrictions` was added to the
+   jit example documentation.
 
 01-10
 =====

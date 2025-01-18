@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 echo $0 $*
@@ -20,6 +20,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 verbose_make='no'
 standard='c++17'
+m32='no'
 profile_speed='no'
 callgrind='no'
 clang='no'
@@ -44,6 +45,7 @@ usage: bin/run_cmake.sh: \\
    [--help] \\
    [--verbose_make] \\
    [--c++11] \\
+   [--m32] \\
    [--profile_speed] \\
    [--callgrind] \\
    [--clang ] \\
@@ -76,6 +78,10 @@ EOF
 
       --c++11)
       standard='c++11'
+      ;;
+
+      --m32)
+      m32='yes'
       ;;
 
       --profile_speed)
@@ -337,9 +343,21 @@ do
    cmake_args+="  -D ${package}_prefix=$prefix"
 done
 #
+# cppad_link_flags
+if [ "$m32" == 'yes' ]
+then
+   cmake_args+=" -D cppad_link_flags=-m32"
+fi
+#
 # cppad_cxx_flags
-cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
-cppad_cxx_flags+=" -Wfloat-conversion -Wconversion"
+if [ "$m32" == 'yes' ]
+then
+   cppad_cxx_flags="-std=$standard -m32"
+else
+   cppad_cxx_flags="-std=$standard"
+fi
+cppad_cxx_flags+=' -Wall -pedantic-errors -Wshadow'
+cppad_cxx_flags+=' -Wfloat-conversion -Wconversion'
 if [ "$debug_which" == 'debug_all' ]
 then
    # CMAKE_CXX_FLAGS_DEBUG include -g so do not need it here

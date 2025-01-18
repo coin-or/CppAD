@@ -16,7 +16,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20250114")
+SET(cppad_version "20250117")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -174,6 +174,11 @@ command_line_arg(cppad_postfix NOTFOUND STRING
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags "" STRING
    "compile flags used with cppad (besides debug, release, and profile flags)"
+)
+#
+# cppad_link_flags
+command_line_arg(cppad_link_flags "" STRING
+   "additional linker flags)"
 )
 #
 # cppad_profile_flag
@@ -473,22 +478,42 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
    ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
+# cppad_link_flags_has_m32
+STRING( FIND "${cppad_link_flags}" "-m32" index)
+IF( "${index}" STREQUAL "-1" )
+   SET(cppad_link_flags_has_m32 0)
+ELSE ( )
+   SET(cppad_link_flags_has_m32 1)
+ENDIF( )
+# -----------------------------------------------------------------------------
 # OpenMP_CXX_FOUND, OpenMP_CXX_FLAGS
-IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+IF( cppad_link_flags_has_m32 )
+   SET(OpenMP_CXX_FOUND FALSE)
+   MESSAGE(STATUS
+      "Skipping OpenMP becasue -m32 is in cppad_link_flags"
+   )
+ELSEIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
    SET(OpenMP_CXX_FOUND FALSE)
    MESSAGE(STATUS
       "Skipping OpenMP on Darwin (Mac) systems. 2DO: fix this"
    )
-ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+ELSE( )
    FIND_PACKAGE(OpenMP)
-ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+ENDIF( )
 # -----------------------------------------------------------------------------
-# boost_prefix
+# Boost_Found, cppad_has_boost
 # Only need components for object libraries, not include libraries.
-SET(CMAKE_REQUIRED_FLAGS "")  # 2DO: why is this necessary with clang ?
-FIND_PACKAGE(Boost COMPONENTS thread)
-SET(CMAKE_REQUIRED_FLAGS "${cppad_cxx_flags}")
-SET(cppad_has_boost 0)
+IF( cppad_link_flags_has_m32 )
+   MESSAGE(STATUS
+      "Skipping Boost becasue -m32 is in cppad_link_flags"
+   )
+   SET( Boost_FOUND 0)
+   SET(cppad_has_boost 0)
+ELSE ( )
+   SET(CMAKE_REQUIRED_FLAGS "")  # 2DO: why is this necessary with clang ?
+   FIND_PACKAGE(Boost COMPONENTS thread)
+   SET(CMAKE_REQUIRED_FLAGS "${cppad_cxx_flags}")
+ENDIF( )
 IF ( Boost_FOUND )
    SET(cppad_has_boost 1)
    #
@@ -582,7 +607,9 @@ ELSE( )
    ENDIF( )
 ENDIF( )
 print_variable(is_cppad_lib_dynamic)
-
+#
+# CMAKE_EXE_LINKER_FLAGS
+SET(CMAKE_EXE_LINKER_FLAGS "${cppad_link_flags}" )
 #
 # Initialize list of tests as empty
 SET(check_depends "")

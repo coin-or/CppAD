@@ -2,7 +2,7 @@
 # define CPPAD_CORE_UNDEF_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -11,15 +11,18 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included.
 These are part of the user API (see omh/preprocessor.omh) with some exceptions
 that are used by the CppAD examples and tests.
 
+// BEGIN_SORT_THIS_LINE_PLUS_1
 # undef CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL used by CPPAD_USER_ATOMIC
 # undef CPPAD_ASSERT_KNOWN                   used by cppad_ipopt
 # undef CPPAD_ASSERT_UNKNOWN                 used by cppad_ipopt
-# undef CPPAD_HASH_TABLE_SIZE                used by test_more/optimize.cpp
-# undef EIGEN_MATRIXBASE_PLUGIN              example use of Eigen with CppAD
-# undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
+# undef CPPAD_C_COMPILER_CMD                 used by dll examples.
 # undef CPPAD_C_COMPILER_GNU_FLAGS           used by dll examples.
 # undef CPPAD_C_COMPILER_MSVC_FLAGS          used by dll examples.
-# undef CPPAD_C_COMPILER_CMD                 used by dll examples.
+# undef CPPAD_HASH_TABLE_SIZE                used by test_more/optimize.cpp
+# undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
+# undef CPPAD_LINK_FLAGS_HAS_M32             used to exclude certain tests
+# undef EIGEN_MATRIXBASE_PLUGIN              example use of Eigen with CppAD
+// END_SORT_THIS_LINE_MINUS_1
 
 // for conditional testing when implicit conversion is not present
 # undef CPPAD_DEPRECATED

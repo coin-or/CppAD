@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // CPPAD_HAS_* defines
@@ -247,7 +247,9 @@ int main(void)
    Run( to_string,       "to_string"      );
    // END_SORT_THIS_LINE_MINUS_1
 # if CPPAD_C_COMPILER_GNU_FLAGS || CPPAD_C_COMPILER_MSVC_FLAGS
+# if ! CPPAD_LINK_FLAGS_HAS_M32
    Run( to_csrc,         "to_csrc"        );
+# endif
 # endif
 #if CPPAD_HAS_ADOLC
    Run( base_adolc,      "base_adolc"     );

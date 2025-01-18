@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
 {xrst_begin dll_lib.cpp}
+{xrst_spell
+   msvc
+}
 
 dll_lib: Example and Test
 #########################
@@ -18,6 +21,19 @@ from the default options:
    // BEGIN_OPTIONS
    // END_OPTIONS
 }
+
+Restrictions
+************
+This example is only built and run under the following conditions:
+
+#. The :ref:`cmake-name` command determines that the C compiler is
+   gcc, clang, or msvc.
+
+#. The :ref:`cmake-name` command determines it is OK to use
+   C++17 features.
+
+#. The :ref:`cmake@cppad_link_flags` do not contain ``-m32`` .
+
 
 Source
 ******
@@ -105,6 +121,8 @@ bool dll_lib(void)
    std::map< std::string, std::string > options;
 # ifdef _MSC_VER
    options["compile"] = "cl /EHs /EHc /c /TC /O2";
+# elif CPPAD_LINK_FLAGS_HAS_M32
+   options["compile"] = "gcc -c -fPIC -O2 -m32";
 # else
    options["compile"] = "gcc -c -fPIC -O2";
 # endif

@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin cmake}
 {xrst_spell
   ansi
   autotools
-  bitwise
   colpack
   cstdint
   cxx
@@ -39,7 +38,6 @@
   uint
   usr
   vcvarsall
-  wno
   wshadow
   yyyy
   yyyymmdd
@@ -142,6 +140,7 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D sacado_prefix`` = *sacado_prefix*                              \\
 | |tab| \\
 | |tab| ``-D cppad_cxx_flags`` = *cppad_cxx_flags*                          \\
+| |tab| ``-D cppad_link_flags`` = *cppad_link_flags*                        \\
 | |tab| ``-D cppad_profile_flag`` = *cppad_profile_flag*                    \\
 | |tab| ``-D cppad_testvector`` = *cppad_testvector*                        \\
 | |tab| ``-D cppad_max_num_threads`` = *cppad_max_num_threads*              \\
@@ -492,14 +491,19 @@ C++17
 In order for the compiler to take advantage of features that are in C++17
 ,but not in C++11, the *cppad_cxx_flags* must enable these features.
 
+cppad_link_flags
+****************
+This specifies additional flags to use during linking.
+The default value for these flags is the empty string ``""`` .
 
-clang
-=====
-Clang is giving warnings for bitwise operations with logical operands.
-These operations are used by CppAD for speed because they do not require
-branching which can slow down some processors. You can suppress these
-warnings by including ``-Wno-bitwise-instead-of-logical``
-in *cppad_cxx_flags* .
+-m32
+====
+If you are on a 64 bit machine and using g++ to
+compile for 32 bit code, you need to add ``-m32`` to both
+the additional compiler and linker flags.
+If ``-m32`` is in *cppad_link_flags* ,
+the OpenMP, Boost, :ref:`jit <example_jit-name>` , and
+:ref:`speed_cppad_jit-name` examples will not be tested.
 
 cppad_profile_flag
 ******************

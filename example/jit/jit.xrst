@@ -1,11 +1,16 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin example_jit}
 
 JIT Creation, Compilation, and Linking of C Source Code
 #######################################################
+
+Restrictions
+************
+These examples are not tested when the
+:ref:`cmake@cppad_link_flags` contain ``-m32`` .
 
 Contents
 ********

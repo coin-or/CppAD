@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example directory tests
 # Inherit environment from ../CMakeList.txt
@@ -18,7 +18,6 @@ ADD_SUBDIRECTORY(compare_change)
 ADD_SUBDIRECTORY(general)
 ADD_SUBDIRECTORY(get_started)
 ADD_SUBDIRECTORY(graph)
-ADD_SUBDIRECTORY(jit)
 ADD_SUBDIRECTORY(json)
 ADD_SUBDIRECTORY(multi_thread)
 ADD_SUBDIRECTORY(optimize)
@@ -37,6 +36,12 @@ ENDIF( cppad_has_cppadcg )
 IF( cppad_has_ipopt)
    ADD_SUBDIRECTORY(ipopt_solve)
 ENDIF( cppad_has_ipopt)
+#
+# jit examples
+IF( NOT cppad_link_flags_has_m32 )
+   ADD_SUBDIRECTORY(jit)
+ENDIF( )
+
 
 
 # Add the check_example target

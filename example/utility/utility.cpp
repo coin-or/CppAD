@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin utility.cpp}
@@ -108,7 +108,7 @@ int main(void)
 // END_SORT_THIS_LINE_MINUS_1
 //
 # if CPPAD_C_COMPILER_GNU_FLAGS || CPPAD_C_COMPILER_MSVC_FLAGS
-# if CPPAD_USE_CPLUSPLUS_2017
+# if CPPAD_USE_CPLUSPLUS_2017 && ! CPPAD_LINK_FLAGS_HAS_M32
    Run( dll_lib,                "dll_lib" );
 # endif
 # endif

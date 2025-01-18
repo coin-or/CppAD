@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # Name for this text
@@ -35,7 +35,7 @@ TARGET_LINK_LIBRARIES(test_more_${name} PRIVATE
 )
 #
 # Extra flags used by linker for openmp support
-SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
+SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} ${cppad_link_flags} )
 #
 # check_test_more_${name}
 add_check_executable(check_test_more ${name})

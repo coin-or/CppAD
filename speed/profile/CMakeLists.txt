@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the speed/profile directory tests
 # Inherit build type from ../CMakeList.txt
@@ -11,7 +11,7 @@
 ADD_DEFINITIONS("-DCPPAD_PROFILE_SPEED ${cppad_profile_flag}")
 
 # Extra flags used by the linker when creating an executable.
-SET(CMAKE_EXE_LINKER_FLAGS ${cppad_profile_flag})
+SET(CMAKE_EXE_LINKER_FLAGS ${cppad_profile_flag} ${cppad_link_flags})
 
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
