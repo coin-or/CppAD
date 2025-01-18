@@ -3,7 +3,18 @@ set -e -u
 # ---------------------------------------------------------------------------
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# ---------------------------------------------------------------------------
+# bin/git_commit.sh
+# Opens your editor with comments about this git commit.
+# 1.  The git commit log message will not include comment lines.
+# 2.  The file git_commit.log contains the message for the previous commit
+#     so that you can read it in and modify it for this commit.
+# 3.  The branch of the commit is automatically placed a the beginning
+#     of the first line for the message.
+# 4.  All the modified files are automatically included in the commit.
+# 4.  The variable check_commit in bin/dev_settings.sh can be used
+#     to selectively revert certain files before the commit.
 # ---------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {

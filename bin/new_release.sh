@@ -4,6 +4,17 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2020-25 Bradley M. Bell
 # -----------------------------------------------------------------------------
+# bin/new_release.sh  [--skip_main_check_all [--skip_stable_check_all]
+# Creates and check a release for the year and release number specified below.
+#
+# bin/check_all.sh [--skip_external_links]
+# is used by new_release.sh to check the master and stable branch
+# correpsonding to this release (unless skipped by new_release.sh flags).
+#
+# bin/check_all.sh [--skip_external_links]
+# is used by new_release to skip checking external links.
+# new_release.sh skips this when testng before the remote branch exists.
+# -----------------------------------------------------------------------------
 year='2025' # Year for this stable version
 release='1' # first release for each year starts with 0
 # -----------------------------------------------------------------------------
@@ -165,13 +176,6 @@ do
       -e "s|archive/[0-9]\{4\}[.]0[.][0-9]*.tar.gz|archive/$tag.tar.gz|"
 done
 #
-# check_version
-# changes to version ?
-if ! bin/check_version.sh
-then
-   echo 'Continuing even thought bin/check_version made changes.'
-fi
-#
 # check_all.sh
 if [ "$skip_main_check_all" == 'no' ]
 then
@@ -208,12 +212,21 @@ then
 fi
 #
 # version_file_list
+cat << EOF > temp.sed
+s|stable-[0-9]\{4\}|stable-$year|g
+s|release-[0-9]\{4\}|release-$year|g
+#
+# old github location before redirect
+s|archive/[0-9]\{4\}[.][0-9]*[.][0-9]*[.]tar[.]gz|archive/$tag.tar.gz|
+s|archive/[0-9]\{8\}[.0-9]*[.]tar[.]gz|archive/$tag.tar.gz|
+#
+# new github location
+s|tags/[0-9]\{4\}[.][0-9]*[.][0-9]*[.]tar[.]gz|tags/$tag.tar.gz|
+s|tags/[0-9]\{8\}[.0-9]*[.]tar[.]gz|tags/$tag.tar.gz|
+EOF
 for file in $version_file_list
 do
-   $sed -i $file \
-      -e "s|stable-[0-9]\{4\}|stable-$year|g" \
-      -e "s|release-[0-9]\{4\}|release-$year|g" \
-      -e "s|archive/[0-9]\{4\}[.]0[.][0-9]*.tar.gz|archive/$tag.tar.gz|"
+   $sed -i $file -f temp.sed
 done
 #
 # first_version_file

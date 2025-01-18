@@ -4,6 +4,11 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2023-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
+# bin/check_copy.sh
+# Checks that the copyright message, in all the source files,
+# is correct and up to date. If here were any invisible white space in
+# the original source, and error is returned.
+# ----------------------------------------------------------------------------
 if [ "$0" != "bin/check_copy.sh" ]
 then
    echo "bin/check_copy.sh: must be executed from its parent directory"

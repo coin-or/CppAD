@@ -4,6 +4,10 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2020-25 Bradley M. Bell
 # -----------------------------------------------------------------------------
+# bin/check_verison.sh
+# Checks that the version number in the version_file_list are correct;
+# see bin/dev_settings.sh for more discussion.
+# -----------------------------------------------------------------------------
 #
 # echo_eval
 echo_eval() {
@@ -118,7 +122,7 @@ s|(["'])[0-9]{8}[.][0-9]{1,2}(["'])|\\1$version\\2|
 s|(["'])[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}(["'])|\\1$version\\2|
 s|$package_name-[0-9]{8}|$package_name-$version|
 s|$package_name-[0-9]{8}[.][0-9]{1,2}|$package_name-$version|
-s|$package_name-[0-9]{8}[.][0-9]{1,2}[.][0-9]{1,2}|$package_name-$version|
+s|$package_name-[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}|$package_name-$version|
 EOF
 #
 # check_version

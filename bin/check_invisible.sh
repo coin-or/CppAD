@@ -2,7 +2,12 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-24 Bradley M. Bell
+# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# -----------------------------------------------------------------------------
+# bin/check_invisible.sh
+# Checks that there is no invisible white space in any of the source files.
+# If there is, and you want to, it is automatically removed.
+# Files that are not checked can be sepcified in bin/dev_setting.sh
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/check_invisible.sh" ]
 then

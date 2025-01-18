@@ -3,9 +3,9 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ---------------------------------------------------------------------------
-#
 # source bin/dev_settings.sh
 # Sets the development tool variables listed below to settings for this system.
+# ---------------------------------------------------------------------------
 #
 # Directories
 # If an file name below is a directory it specifies all the
@@ -90,5 +90,4 @@ invisible_and_tab_ok='
 # These files may have automatic changes that should not be commited.
 # Including them in this list gives the user the option to abort their changes.
 check_commit='
-
 '

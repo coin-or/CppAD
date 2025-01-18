@@ -2,7 +2,13 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-24 Bradley M. Bell
+# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# -----------------------------------------------------------------------------
+# bin/check_sort.sh
+# Checks that for all files, all the sections between
+#  BEGIN_SORT_THIS_LINE_PLUS_#
+#  END_SORT_THIS_LINE_MINUS_#
+# are sorted. If not, it is corrected and an error is returned.
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/check_sort.sh" ]
 then
