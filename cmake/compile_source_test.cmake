@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # compile_source_test(defined_ok source variable)
 #
@@ -32,6 +32,15 @@ MACRO(compile_source_test defined_ok source variable)
          )
       ENDIF( DEFINED ${variable} )
    ENDIF( NOT ${defined_ok} )
+   #
+   SET(CMAKE_REQUIRED_DEFINITIONS "" )
+   SET(CMAKE_REQUIRED_INCLUDES    "" )
+   SET(CMAKE_REQUIRED_LIBRARIES   "" )
+   IF( cppad_cxx_flags )
+      SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS}" )
+   ELSE( cppad_cxx_flags )
+      SET(CMAKE_REQUIRED_FLAGS   "" )
+   ENDIF( cppad_cxx_flags )
    #
    # check that source code compiles
    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
