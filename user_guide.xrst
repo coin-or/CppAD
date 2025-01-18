@@ -47,7 +47,7 @@ Versions
    * - Documentation for most recent stable version
      - `stable-2025 <https://cppad.readthedocs.io/stable-2025>`_
    * - Most recent release of this stable version
-     - `release-2025 <https://github.com/coin-or/CppAD/archive/20250000.0.tar.gz>`_
+     - `release-2025 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20250000.0>`_
 
 {xrst_comment END: Before changing see new_release.sh and check_version.sh}
 
@@ -61,7 +61,7 @@ Other Links
      - :ref:`get_started<get_started.cpp-name>`
      - :ref:`whats_new-name`
      - :ref:`addon-name`
-     - `project manager <http://www.seanet.com/~bradbell>`_
+     - `project manager <https://www.seanet.com/~bradbell/>`_
 
 
 Algorithmic Differentiation
@@ -188,7 +188,7 @@ Software Engineering
 ********************
 CppAD is developed using the software engineering procedures described
 on the project manager's
-`software <http://www.seanet.com/~bradbell/software.html>`_
+`software <https://www.seanet.com/~bradbell/software.html>`_
 web page.
 
 Testing

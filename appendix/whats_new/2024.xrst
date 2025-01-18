@@ -410,7 +410,7 @@ were unable to reproduce in an automated regression test;
 see comment that starts with 2024-02-14 in
 `include/cppad/local/optimize/match_op.hpp` .
 
-.. _speed.py: https://dismod-at.readthedocs.io/user_speed.py.html
+.. _speed.py: https://dismod-at.readthedocs.io/latest/user_speed.py.html
 
 01-16
 =====

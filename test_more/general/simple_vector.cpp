@@ -18,7 +18,6 @@ Old simple vector example now used just for validation testing
 // # include <valarray>
 // # define MySimpleVector std::valarray
 
-// Assuming CppAD (http://www.seanet.com/~bradbell/cppad) is installed
 # include <cppad/utility/vector.hpp>
 # define MySimpleVector CppAD::vector
 

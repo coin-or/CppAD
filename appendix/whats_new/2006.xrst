@@ -258,7 +258,7 @@ Fix compiler warning while compiling ``cppad/RombergOne/``
 Cygwin packages, and other system packages,
 should not have a dash in the version number.
 See
-`cygwin package file naming <http://www.cygwin.com/packaging-package-files.html#naming>`_ .
+`cygwin package file naming <https://cygwin.com/packaging-package-files.html>`_ .
 or, to quote the
 `rpm file naming convention <http://ftp.rpm.org/max-rpm/ch-rpm-file-format.html>`_
 *The only restriction placed on the version is that*
