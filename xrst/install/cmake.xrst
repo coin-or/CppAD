@@ -126,8 +126,8 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cmake_install_datadir`` = *cmake_install_datadir*              \\
 | |tab| ``-D cmake_install_docdir`` = *cmake_install_docdir*                \\
 | |tab| \\
-| |tab| ``-D cmake_defined_ok`` = *true_or_false*                           \\
 | |tab| ``-D include_doc`` = *true_or_false*                                \\
+| |tab| ``-D cmake_defined_ok`` = *true_or_false*                           \\
 | |tab| ``-D cppad_static_lib`` = *true_or_false*                           \\
 | |tab| ``-D cppad_debug_and_release`` = *true_or_false*                    \\
 | |tab| \\
