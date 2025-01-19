@@ -325,7 +325,7 @@ do
 done
 #
 # run_xrst.sh
-flags='--include_dev'
+flags=''
 if [ "$skip_external_links" == 'no' ]
 then
    flags+=' --external_links'
