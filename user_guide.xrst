@@ -47,7 +47,7 @@ Versions
    * - Documentation for most recent stable version
      - `stable-2025 <https://cppad.readthedocs.io/stable-2025>`_
    * - Most recent release of this stable version
-     - `release-2025 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20250000.0>`_
+     - `release-2025 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20250000.1>`_
 
 {xrst_comment END: Before changing see new_release.sh and check_version.sh}
 
