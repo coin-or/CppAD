@@ -468,7 +468,7 @@ This has since been removed; see
 06-16
 =====
 Add the example :ref:`eigen_det.cpp-name` that uses the
-`Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+`Eigen <https://libeigen.gitlab.io/docs>`_
 linear algebra package.
 
 06-15
