@@ -8,15 +8,10 @@ on:
       - 'stable/*'
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -24,8 +19,6 @@ jobs:
       matrix:
         # os: ["ubuntu-latest", "macos-latest"] 2024-04-26 macos-latest failing
         # Error: No installed conda 'base' environment found ...; see
-        # https://github.com/coin-or/CppAD/actions/runs/8834404014/job/24281915299
-
         os: ["ubuntu-latest"]
 
     steps:
@@ -38,9 +31,11 @@ jobs:
     - uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: cppad
+        python-version: 3.12
+        channels:
+          - conda-forge
+          - nodefaults
         auto-update-conda: true
-        environment-file: .github/workflows/conda/conda-env.yml
-        python-version: 3.8
 
     - name: Install cmake and update conda
       shell: bash -l {0}
@@ -61,7 +56,10 @@ jobs:
         mkdir build
         cd build
 
-        cmake .. -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DPYTHON_EXECUTABLE=$(which python3) -DBUILD_WITH_CPPAD_CODEGEN_BINDINGS=ON
+        cmake .. \
+          -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX \
+          -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+          -D PYTHON_EXECUTABLE=$(which python3)
         make
         export CTEST_OUTPUT_ON_FAILURE=1
         make check
