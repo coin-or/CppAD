@@ -27,14 +27,14 @@ jobs:
     - uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: cppad
-        channels: conda-forge
         auto-update-conda: true
 
     - name: Install cmake and update conda
       shell: bash -l {0}
       run: |
         conda activate cppad
-        conda install cmake -c main
+        conda install cmake
+        conda install pkgconfig
 
     - name: Build CppAD
       shell: bash -l {0}
