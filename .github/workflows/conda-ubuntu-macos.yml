@@ -24,14 +24,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Checkout submodules
-      run: |
-        git submodule update --init
-
     - uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: cppad
-        python-version: 3.12
         channels: conda-forge
         auto-update-conda: true
 
@@ -47,20 +42,20 @@ jobs:
         if [ "$RUNNER_OS" == "macOS" ]
         then
           export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+          n_job=$(sysctl -n hw.ncpu)
+        else
+          n_job=$(nproc)
         fi
         conda activate cppad
         echo $CONDA_PREFIX
 
         mkdir build
         cd build
-
         cmake .. \
           -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX \
-          -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-          -D PYTHON_EXECUTABLE=$(which python3)
-        make
-        export CTEST_OUTPUT_ON_FAILURE=1
-        make check
+          -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        echo "make -j $n_job check"
+        make -j $n_job check
         make install
 
     - name: Uninstall CppAD

@@ -54,5 +54,4 @@ jobs:
           -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus" ^
           ..
         REM Build and run tests.
-        echo cmake --build . --target check
-             cmake --build . --target check
+        cmake --build . --target check --parallel 4

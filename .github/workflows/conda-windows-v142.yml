@@ -63,4 +63,4 @@ jobs:
           ..
 
         :: Build, check and Install
-        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check install --parallel 1
+        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check install --parallel 4
