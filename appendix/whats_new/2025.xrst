@@ -14,6 +14,16 @@ Release Notes for 2025
 mm-dd
 *****
 
+01-24
+=====
+#. Fix linking the pthread examples ( e.g. :ref:`pthread_get_started.cpp-name` )
+   when the pthread library is in a non-standard location.
+
+#. Fix linking the standard thread examples
+   ( e.g. :ref:`sthread_get_started.cpp-name` )
+   when the standard thread library required the pthread library.
+
+
 01-17
 =====
 #. Fix some errors of the form *function_name*\ ``(unsigned int)``

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/multi_thread/sthread directory tests
 # Inherit build type from ../CMakeList.txt
@@ -33,6 +33,7 @@ ADD_EXECUTABLE( example_multi_thread_sthread EXCLUDE_FROM_ALL ${source_list} )
 TARGET_LINK_LIBRARIES(example_multi_thread_sthread
    ${cppad_lib}
    ${colpack_libs}
+   ${pthread_lib_path}
 )
 
 # check_example_multi_thread_sthread

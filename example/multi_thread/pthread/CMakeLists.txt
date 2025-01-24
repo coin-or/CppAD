@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example/multi_thread/pthread directory tests
 # Inherit build type from ../CMakeList.txt
@@ -27,15 +27,11 @@ set_compile_flags( example_multi_thread_pthread "${cppad_debug_which}" "${source
 #
 ADD_EXECUTABLE( example_multi_thread_pthread EXCLUDE_FROM_ALL ${source_list} )
 
-# Paths in which the linker will search for libraries,
-# only applies to targets created after it is called
-LINK_DIRECTORIES( ${pthread_lib_path} )
-
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_multi_thread_pthread
    ${cppad_lib}
    ${colpack_libs}
-   ${pthread_lib}
+   ${pthread_lib_path}
 )
 
 # check_example_multi_thread_pthread

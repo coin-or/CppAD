@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 # initialize list as empty
@@ -15,17 +15,14 @@ SET(check_example_multi_thread_depends "")
 INCLUDE(CheckLibraryExists)
 
 #
-# sthread
-ADD_SUBDIRECTORY(sthread)
-#
 # openmp
 IF ( OpenMP_CXX_FOUND )
    # OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
    ADD_SUBDIRECTORY(openmp)
 ENDIF ( OpenMP_CXX_FOUND )
 #
-# pthread
-SET(pthread_lib "pthread")
+# pthread_lib_path
+SET( pthread_ok FALSE )
 FIND_LIBRARY(pthread_lib_path pthread)
 MESSAGE(STATUS "pthread library path = ${pthread_lib_path}")
 IF ( pthread_lib_path )
@@ -40,6 +37,14 @@ IF ( pthread_lib_path )
       ADD_SUBDIRECTORY(pthread)
    ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
+IF( NOT pthread_ok )
+   SET( pthread_lib_path "" )
+ENDIF( NOT pthread_ok )
+#
+# sthread
+# Put sthread after pthread because it can somtimes require pthread_lib_path
+# https://stackoverflow.com/questions/46994982
+ADD_SUBDIRECTORY(sthread)
 #
 # bthread
 IF ( Boost_FOUND )
