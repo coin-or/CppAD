@@ -42,25 +42,29 @@ jobs:
         conda activate cppad
         if [ "$RUNNER_OS" == "macOS" ]
         then
+          generator='Unix Makefiles'
           export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
           n_job=$(sysctl -n hw.ncpu)
+        elif  [ "$RUNNER_OS" == "Windows" ]
         else
+          generator='Visual Studio 17 2022'
+          n_job=1
+        else
+          generator='Unix Makefiles'
           n_job=$(nproc)
         fi
+        echo "RUNNER_OS=$RUNNER_OS, n_job=$n_job, generator=$generator"
         conda activate cppad
         echo $CONDA_PREFIX
 
         mkdir build
         cd build
         cmake .. \
+          -G "$generator" \
           -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX \
           -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        echo "make -j $n_job check"
-        make -j $n_job check
-        make install
-
-    - name: Uninstall CppAD
-      shell: bash -l {0}
-      run: |
-        cd build
-        make uninstall
+        cmake --build \
+          ${{github.workspace}}/build \
+          --config ${{env.BUILD_TYPE}} \
+          --target check install \
+          --parallel $n_job
