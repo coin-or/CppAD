@@ -351,7 +351,7 @@ Multiple order forward mode is the first step in this direction.
 
 #. The scripts ``get_eigen.sh`` and :ref:`get_sacado.sh-name` were added.
    If you are using Unix, and you do not have
-   `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_ or
+   `Eigen <https://libeigen.gitlab.io/docs/index.html>`_ or
    `Sacado <https://trilinos.github.io/sacado.html>`_
    installed on your system, you can use the corresponding script
    to download and install a local copy for use when testing CppAD.

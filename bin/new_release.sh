@@ -4,16 +4,16 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2020-25 Bradley M. Bell
 # -----------------------------------------------------------------------------
-# bin/new_release.sh  [--skip_main_check_all [--skip_stable_check_all]
+# bin/new_release.sh  [--skip_stable_check_all]
 # Creates and check a release for the year and release number specified below.
 #
 # bin/check_all.sh [--skip_external_links]
-# is used by new_release.sh to check the master and stable branch
+# is used by new_release.sh to check the stable branch
 # correpsonding to this release (unless skipped by new_release.sh flags).
 #
 # bin/check_all.sh [--skip_external_links]
 # is used by new_release to skip checking external links.
-# new_release.sh skips this when testng before the remote branch exists.
+# new_release.sh skips this when testng before the new release (tag)  exists.
 # -----------------------------------------------------------------------------
 year='2025' # Year for this stable version
 release='2' # first release for each year starts with 0
@@ -43,19 +43,15 @@ else
    exit 1
 fi
 #
-# skip_main_check_all, skip_stable_check_all
-skip_main_check_all='no'
+# skip_stable_check_all
 skip_stable_check_all='no'
 while [ $# != 0 ]
 do
-   if [ "$1" == '--skip_main_check_all' ]
-   then
-      skip_main_check_all='yes'
-   elif [ "$1" == '--skip_stable_check_all' ]
+   if [ "$1" == '--skip_stable_check_all' ]
    then
       skip_stable_check_all='yes'
    else
-      echo 'bin/new_release.sh [--skip_main_check_all [--skip_stable_check_all]'
+      echo 'bin/new_release.sh [--skip_stable_check_all]'
       echo "$1 is not a valid argument"
       exit 1
    fi
@@ -186,15 +182,12 @@ do
    $sed -r -i $file -f temp.sed
 done
 #
-# check_all.sh
-if [ "$skip_main_check_all" == 'no' ]
+# run_xrst.sh
+if [ "$tag_commited" == 'yes' ]
 then
-   if [ "$tag_commited" == 'yes' ]
-   then
-      echo_eval bin/check_all.sh
-   else
-      echo_eval bin/check_all.sh --skip_external_links
-   fi
+   echo_eval bin/run_xrst.sh --external_links
+else
+   echo_eval bin/run_xrst.sh 
 fi
 #
 # git_status

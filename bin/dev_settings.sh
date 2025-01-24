@@ -59,7 +59,6 @@ version_file_list='
 # BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
    .circleci/config.yml
-   .coin-or/projDesc.xml
    .github/workflows
    .gitignore
    .readthedocs.yaml

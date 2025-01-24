@@ -42,7 +42,7 @@ bin/run_xrst.sh flags
 possible flags
 --help                     print the run_xrst.sh help message
 --target_tex               create tex (instead of html) files
---exclude_dev              exclude developer documentation
+--exclude_dev              exclude developer documentation (group dev)
 --suppress_spell_warnings  do not check for documentaiton spelling errors
 --rst_line_numbers         sphinx errors and warnings use rst line numbers
 --replace_spell_commands   replace xrst_spell commands assuming no errors
@@ -144,7 +144,8 @@ else
 fi
 #
 # xrst
-echo_eval xrst \
+# python -m will search the current working directory first
+echo_eval python -m xrst \
    --local_toc \
    --html_theme sphinx_rtd_theme \
    --index_page_name $index_page_name \
