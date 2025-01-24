@@ -1,4 +1,4 @@
-name: conda-simple
+name: conda-bash
 
 on:
   pull_request:
