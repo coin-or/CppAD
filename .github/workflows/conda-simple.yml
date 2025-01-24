@@ -29,16 +29,17 @@ jobs:
         activate-environment: cppad
         auto-update-conda: true
 
-    - name: Install cmake and update conda
+    - name: Install cmake and pkgconfig
       shell: bash -l {0}
       run: |
         conda activate cppad
-        conda install cmake
-        conda install pkgconfig
+        conda install -y cmake
+        conda install -y pkgconfig
 
     - name: Build CppAD
       shell: bash -l {0}
       run: |
+        conda activate cppad
         if [ "$RUNNER_OS" == "macOS" ]
         then
           export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
