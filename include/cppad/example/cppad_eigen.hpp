@@ -7,6 +7,10 @@
 
 /*
 {xrst_begin cppad_eigen.hpp}
+{xrst_spell
+   libeigen
+   gitlab
+}
 Enable Use of Eigen Linear Algebra Package with CppAD
 #####################################################
 
@@ -23,7 +27,10 @@ Purpose
 *******
 Enables the use of the :ref:`eigen-name`
 linear algebra package with the type *AD* < ``Base`` > ; see
-`custom scalar types <https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html>`_.
+`Using custom scalar types`_ .
+
+.. _Using custom scalar types: https://
+   libeigen.gitlab.io/docs/TopicCustomizing_CustomScalar.html
 
 Example
 *******
