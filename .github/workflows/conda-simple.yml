@@ -19,7 +19,7 @@ jobs:
       matrix:
         # os: ["ubuntu-latest", "macos-latest"] 2024-04-26 macos-latest failing
         # Error: No installed conda 'base' environment found ...; see
-        os: ["ubuntu-latest"]
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
 
     steps:
     - uses: actions/checkout@v4
