@@ -46,7 +46,7 @@ jobs:
           export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
           n_job=$(sysctl -n hw.ncpu)
         elif  [ "$RUNNER_OS" == "Windows" ]
-        else
+        then
           generator='Visual Studio 17 2022'
           n_job=1
         else
