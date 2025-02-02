@@ -7,6 +7,7 @@
 {xrst_spell
    dll
    jit
+   rpath
 }
 
 Release Notes for 2025
@@ -14,6 +15,13 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+02-02
+=====
+The rpath in may not have been set properly in
+:ref:`cmake@cmake_install_libdirs@cppad_lib` because ``CMAKE_INSTALL_RPATH``
+was not set. This has been fixed its value is printed
+during the cmake command.
 
 01-24
 =====

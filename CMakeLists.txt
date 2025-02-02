@@ -16,7 +16,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20250124")
+SET(cppad_version "20250202")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -477,6 +477,38 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
       SET(cppad_abs_${dir_type} ${cppad_abs_${dir_type}}/${cppad_postfix} )
    ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
+# ----------------------------------------------------------------------------
+# https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
+#
+# CMAKE_SKIP_BUILD_RPATH
+# use, i.e. don't skip the full RPATH for the build tree
+SET(CMAKE_SKIP_BUILD_RPATH FALSE)
+#
+# CMAKE_BUILD_WITH_INSTALL_RPATH
+# when building shared libraries, don't use the install RPATH already
+# (but later on when installing)
+SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+#
+# CMAKE_INSTAL_RPATH_USE_LINK_PATH
+# add the automatically determined parts of the RPATH
+# which point to directories outside the build tree to the install RPATH
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+#
+# isSyatemDir
+# is this RPATH choice a system directory
+LIST(FIND
+   CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
+   "${cppad_abs_libdir}"
+   isSystemDir
+)
+#
+# CMAKE_INSTALL_RPATH
+# the RPATH to be used when installing, but only if it's not a system directory
+SET(CMAKE_INSTALL_RPATH "")
+if("${isSystemDir}" STREQUAL "-1")
+   SET(CMAKE_INSTALL_RPATH "${cppad_abs_libdir}")
+endif("${isSystemDir}" STREQUAL "-1")
+print_variable( CMAKE_INSTALL_RPATH )
 # -----------------------------------------------------------------------------
 # cppad_link_flags_has_m32
 STRING( FIND "${cppad_link_flags}" "-m32" index)
