@@ -4,7 +4,11 @@
 # SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ---------------------------------------------------------------------------
 # source bin/dev_settings.sh
-# Sets the development tool variables listed below to settings for this system.
+# Sets the value of the the development tool variables for this package.
+#
+# Unless this is xrst.git/bin/dev_settings.sh,
+# only edit the value for each of the variables, any other changes will
+# be lost the next time xrst.git/bin/dev_tools.sh updates this file.
 # ---------------------------------------------------------------------------
 #
 # Directories
