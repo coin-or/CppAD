@@ -13,7 +13,7 @@ set -e -u
 # 3.  The branch of the commit is automatically placed a the beginning
 #     of the first line for the message.
 # 4.  All the modified files are automatically included in the commit.
-# 4.  The variable check_commit in bin/dev_settings.sh can be used
+# 4.  The variable check_git_commit in bin/dev_settings.sh can be used
 #     to selectively revert certain files before the commit.
 # ---------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -41,7 +41,7 @@ fi
 # grep, sed
 source bin/grep_and_sed.sh
 #
-# check_commit
+# check_git_commit
 source bin/dev_settings.sh
 # -----------------------------------------------------------------------------
 # EDITOR
@@ -53,9 +53,9 @@ then
 fi
 set -u
 # -----------------------------------------------------------------------------
-# check_commit
+# check_git_commit
 echo 's|^...||' > temp.sed
-for name in $check_commit
+for name in $check_git_commit
 do
    if [ -f $name ]
    then
@@ -64,7 +64,7 @@ do
    then
       echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
    else
-      echo "$name in check_commit is not a file or directory"
+      echo "$name in check_git_commit is not a file or directory"
       exit 1
    fi
 done

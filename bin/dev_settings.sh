@@ -19,6 +19,10 @@ spdx_license_id='EPL-2.0 OR GPL-2.0-or-later'
 # package_name
 package_name='cppad'
 #
+# index_page_name
+# is the xrst index page_name for this projects documentaiton.
+index_page_name='user_guide'
+#
 # version_file_list
 # The possible patterns for a latest version number are:
 #     yyyymmdd or yyyy.month.day
@@ -85,8 +89,8 @@ invisible_and_tab_ok='
    uw_copy_040507.html
 '
 #
-# check_commit
-# These files may have automatic changes that should not be commited.
+# check_git_commit
+# These files may have automatic changes that should not be commited every time.
 # Including them in this list gives the user the option to abort their changes.
-check_commit='
+check_git_commit='
 '
