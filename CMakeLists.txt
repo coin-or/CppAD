@@ -10,6 +10,11 @@
 # see https://cmake.org//pipermail/cmake/2013-January/053213.html
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 #
+# Use the version of BoostConfig.cmake provided by boost.
+IF( POLICY CMP0167 )
+   CMAKE_POLICY(SET CMP0167 NEW)
+ENDIF( POLICY CMP0167 )
+#
 # Only interpret if() arguments as variables or keywords when unquoted.
 IF( POLICY CMP0054 )
   CMAKE_POLICY(SET CMP0054 NEW)
