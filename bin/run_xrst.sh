@@ -13,6 +13,7 @@ set -e -u
 # --rst_line_numbers         sphinx errors and warnings use rst line numbers
 # --replace_spell_commands   replace xrst_spell commands assuming no errors
 # --external_links           check documentation external links
+#
 # xrst.toml
 # The group_list argument will be automatically extracted from xrst.toml
 #
@@ -27,6 +28,9 @@ echo_eval() {
 #
 # grep, sed
 source bin/grep_and_sed.sh
+#
+# index_page_name
+source bin/dev_settings.sh
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/run_xrst.sh' ]
 then
@@ -101,39 +105,12 @@ then
 fi
 #
 # group_list
-cat << EOF > temp.sed
-/^\\[root_file\\]/ ! b end
-: loop
-N
-/\\n\\[/! b loop
-s|^\\[root_file\\]| |
-s|\\n *#[^\\n]*||g
-s|\\n\\([A-Za-z0-9_.]*\\) *=[^\\n]*|\\1 |g
-s|\\n[^\\n]*\$||
-#
-p
-#
-: end
-EOF
+group_list=$(bin/group_list.sh | $sed -e 's|^| |' -e 's|$| |' )
 if [ "$exclude_dev" == 'yes' ]
 then
-   group_list=$( $sed -n -f temp.sed xrst.toml | sed -e 's| dev | |' )
-else
-   group_list=$( $sed -n -f temp.sed xrst.toml)
+   group_list=$( echo "$group_list" | $sed -e 's| dev | |' )
 fi
-#
-# index_page_name
-if ! grep '^ *--index_page_name' .readthedocs.yaml > /dev/null
-then
-   echo 'bin/run_xrst.sh expects --index_page_name page_name'
-   echo 'to be a line in the file .readthedocs.yaml; see xrst --help'
-   exit 1
-fi
-index_page_name=$(\
-   sed -n -e '/^ *--index_page_name*/p' .readthedocs.yaml | \
-   sed -e 's|^ *--index_page_name *||' \
-)
-echo "bin/run_xrst.sh: .readthedocs.yaml: index_page_name = '$index_page_name'"
+group_list=$( echo $group_list | $sed -e 's|^ *||' -e s'| *$||' )
 #
 # n_job
 if which nproc >& /dev/null
