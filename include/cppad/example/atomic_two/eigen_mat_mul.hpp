@@ -8,8 +8,8 @@
 /*
 {xrst_begin atomic_two_eigen_mat_mul.hpp app}
 {xrst_spell
-  nr
-  tr
+   nr
+   tr
 }
 
 atomic_two Eigen Matrix Multiply Class

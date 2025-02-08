@@ -9,7 +9,7 @@ namespace CppAD { namespace local { namespace var_op {
 /*
 {xrst_begin_parent var_pri_op dev}
 {xrst_spell
-  pos
+   pos
 }
 
 Print A Variable or Parameter Operator

@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin cpp_ad_graph}
 {xrst_spell
-  notpos
-  nx
+   notpos
+   nx
 }
 
 C++ Representation of an AD Graph

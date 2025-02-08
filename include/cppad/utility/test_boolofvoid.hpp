@@ -7,7 +7,7 @@
 /*
 {xrst_begin test_boolofvoid}
 {xrst_spell
-  ipopt
+   ipopt
 }
 
 Object that Runs a Group of Tests

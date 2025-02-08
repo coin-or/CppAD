@@ -8,11 +8,11 @@
 /*
 {xrst_begin base_std_math}
 {xrst_spell
-  acosh
-  asinh
-  erfc
-  expm
-  isnan
+   acosh
+   asinh
+   erfc
+   expm
+   isnan
 }
 
 Base Type Requirements for Standard Math Functions

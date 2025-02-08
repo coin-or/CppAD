@@ -5,29 +5,29 @@
 
 {xrst_begin 2006 app}
 {xrst_spell
-  aclocal
-  autoconf
-  automake
-  avector
-  delem
-  div
-  dw
-  fy
-  gprof
-  kasper
-  kristensen
-  makefile
-  memcheck
-  of of
-  omh
-  rpm
-  sed
-  speedtest
-  tautschnig
-  usr
-  valgrind
-  yy
-  yyyymmdd
+   aclocal
+   autoconf
+   automake
+   avector
+   delem
+   div
+   dw
+   fy
+   gprof
+   kasper
+   kristensen
+   makefile
+   memcheck
+   of of
+   omh
+   rpm
+   sed
+   speedtest
+   tautschnig
+   usr
+   valgrind
+   yy
+   yyyymmdd
 }
 
 Release Notes for 2006

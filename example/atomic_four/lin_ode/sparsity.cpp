@@ -5,7 +5,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_sparsity.cpp}
 {xrst_spell
-  cccc
+   cccc
 }
 
 Atomic Linear ODE Sparsity Calculations: Example and Test

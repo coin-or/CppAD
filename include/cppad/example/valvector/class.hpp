@@ -7,9 +7,9 @@
 /*
 {xrst_begin_parent valvector}
 {xrst_spell
-  jax
-  numpy
-  pytorch
+   jax
+   numpy
+   pytorch
 }
 
 valvector: An Example Machine Learning Base Class
@@ -135,8 +135,8 @@ public:
    ---------------------------------------------------------------------------
    {xrst_begin valvector_ctor}
    {xrst_spell
-     initializer
-     sj
+      initializer
+      sj
    }
 
    The valvector Constructors
@@ -234,7 +234,7 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_resize}
    {xrst_spell
-     valvectors
+      valvectors
    }
 
    Resize a valvector
@@ -495,7 +495,7 @@ public:
    ----------------------------------------------------------------------------
    {xrst_begin valvector_binary_op}
    {xrst_spell
-     valvectors
+      valvectors
    }
 
    The valvector Numeric Binary Operators
@@ -686,11 +686,11 @@ namespace CppAD {
    --------------------------------------------------------------------------
    {xrst_begin valvector_unary_math}
    {xrst_spell
-     acosh
-     asinh
-     erfc
-     expm
-     signum
+      acosh
+      asinh
+      erfc
+      expm
+      signum
    }
 
    The valvector Unary Math Functions
@@ -853,7 +853,7 @@ namespace CppAD {
    --------------------------------------------------------------------------
    {xrst_begin valvector_azmul}
    {xrst_spell
-     valvectors
+      valvectors
    }
 
    Absolute Zero Multiply of valvectors
@@ -920,7 +920,7 @@ namespace CppAD {
    ------------------------------------------------------------------------
    {xrst_begin valvector_condexp}
    {xrst_spell
-     valvectors
+      valvectors
    }
 
    The valvector Conditional Expressions
@@ -1048,7 +1048,7 @@ namespace CppAD {
 /*
 {xrst_begin valvector_base_require}
 {xrst_spell
-  geq
+   geq
 }
 
 The valvector Implementation of CppAD Base Type Requirements

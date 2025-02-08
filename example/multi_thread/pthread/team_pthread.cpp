@@ -5,7 +5,7 @@
 /*
 {xrst_begin team_pthread.cpp}
 {xrst_spell
-  destructors
+   destructors
 }
 
 Pthread Implementation of a Team of AD Threads

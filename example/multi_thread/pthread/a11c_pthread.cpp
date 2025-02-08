@@ -6,7 +6,7 @@
 /*
 {xrst_begin a11c_pthread.cpp}
 {xrst_spell
-  pthreads
+   pthreads
 }
 
 A Simple Parallel Pthread Example and Test

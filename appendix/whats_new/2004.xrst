@@ -5,25 +5,25 @@
 
 {xrst_begin 2004 app}
 {xrst_spell
-  aclocal
-  autoconf
-  automake
-  dep
-  deps
-  dodds
-  dsp
-  executables
-  ext
-  faq
-  filename
-  hess
-  mak
-  makefile
-  nmake
-  retape
-  ublas
-  usr
-  yy
+   aclocal
+   autoconf
+   automake
+   dep
+   deps
+   dodds
+   dsp
+   executables
+   ext
+   faq
+   filename
+   hess
+   mak
+   makefile
+   nmake
+   retape
+   ublas
+   usr
+   yy
 }
 
 Release Notes for 2004

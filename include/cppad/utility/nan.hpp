@@ -7,8 +7,8 @@
 /*
 {xrst_begin nan}
 {xrst_spell
-  hasnan
-  isnan
+   hasnan
+   isnan
 }
 
 Obtain Nan or Determine if a Value is Nan

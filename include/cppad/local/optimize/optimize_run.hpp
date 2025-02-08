@@ -27,10 +27,10 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 {xrst_begin optimize_run dev}
 {xrst_spell
-  dep
-  pri
-  substring
-  taddr
+   dep
+   pri
+   substring
+   taddr
 }
 
 Convert a player object to an optimized recorder object

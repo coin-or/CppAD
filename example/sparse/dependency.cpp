@@ -6,7 +6,7 @@
 /*
 {xrst_begin dependency.cpp}
 {xrst_spell
-  rl
+   rl
 }
 
 Computing Dependency: Example and Test

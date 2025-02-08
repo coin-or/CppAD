@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_three_define}
 {xrst_spell
-  ctor
+   ctor
 }
 
 Defining Atomic Functions: Third Generation

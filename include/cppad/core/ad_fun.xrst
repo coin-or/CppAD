@@ -22,7 +22,7 @@ Contents
 -------------------------------------------------------------------------------
 {xrst_begin other_adfun}
 {xrst_spell
-  dyn
+   dyn
 }
 
 Other Ways to Create an ADFun Object
@@ -89,7 +89,7 @@ Contents
 -------------------------------------------------------------------------------
 {xrst_begin Reverse}
 {xrst_spell
-  xq
+   xq
 }
 
 Reverse Mode
@@ -117,7 +117,7 @@ Contents
 -------------------------------------------------------------------------------
 {xrst_begin sparsity_pattern}
 {xrst_spell
-  subgraph
+   subgraph
 }
 
 Calculating Sparsity Patterns
@@ -163,7 +163,7 @@ Old Sparsity Pattern Calculations
 -------------------------------------------------------------------------------
 {xrst_begin sparse_derivative}
 {xrst_spell
-  subgraph
+   subgraph
 }
 
 Calculating Sparse Derivatives

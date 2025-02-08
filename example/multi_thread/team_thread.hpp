@@ -7,11 +7,11 @@
 /*
 {xrst_begin team_thread.hpp}
 {xrst_spell
-  bthread
-  openmp
-  posix
-  pthread
-  sthread
+   bthread
+   openmp
+   posix
+   pthread
+   sthread
 }
 Specifications for A Team of AD Threads
 #######################################

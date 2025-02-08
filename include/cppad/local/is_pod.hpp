@@ -7,7 +7,7 @@
 /*
 {xrst_begin is_pod dev}
 {xrst_spell
-  nullptr
+   nullptr
 }
 
 The is_pod Template Function

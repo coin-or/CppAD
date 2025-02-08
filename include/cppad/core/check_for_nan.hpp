@@ -7,7 +7,7 @@
 /*
 {xrst_begin check_for_nan}
 {xrst_spell
-  newline
+   newline
 }
 Check an ADFun Object For Nan Results
 #####################################

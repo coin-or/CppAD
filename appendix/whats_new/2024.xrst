@@ -5,30 +5,30 @@
 
 {xrst_begin 2024 app}
 {xrst_spell
-  bitwise
-  boostvector
-  bostvector
-  cassert
-  cmd
-  dismod
-  dll
-  env
-  fadbad
-  homebrew
-  iostream
-  ipopt
-  isnan
-  nul
-  nx
-  omhelp
-  py
-  sacado
-  setvec
-  svec
-  usr
-  xcode
-  yy
-  yyyy
+   bitwise
+   boostvector
+   bostvector
+   cassert
+   cmd
+   dismod
+   dll
+   env
+   fadbad
+   homebrew
+   iostream
+   ipopt
+   isnan
+   nul
+   nx
+   omhelp
+   py
+   sacado
+   setvec
+   svec
+   usr
+   xcode
+   yy
+   yyyy
 }
 
 Release Notes for 2024

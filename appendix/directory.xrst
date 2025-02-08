@@ -4,12 +4,12 @@
 # ----------------------------------------------------------------------------
 {xrst_begin directory app}
 {xrst_spell
-  chkpoint
-  ipopt
-  jit
-  json
-  omh
-  pkgconfig
+   chkpoint
+   ipopt
+   jit
+   json
+   omh
+   pkgconfig
 }
 
 Directory Structure

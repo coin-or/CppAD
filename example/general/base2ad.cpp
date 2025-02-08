@@ -6,7 +6,7 @@
 /*
 {xrst_begin base2ad.cpp}
 {xrst_spell
-  cccc
+   cccc
 }
 
 Taylor's Ode Solver: base2ad Example and Test

@@ -41,7 +41,7 @@ private:
 ------------------------------------------------------------------------------
 {xrst_begin cpp_graph_itr_set_value dev}
 {xrst_spell
-  str
+   str
 }
 
 C++ AD Graph Iterator set_value()

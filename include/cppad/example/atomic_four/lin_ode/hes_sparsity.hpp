@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_hes_sparsity.hpp}
 {xrst_spell
-  wk
+   wk
 }
 
 Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation

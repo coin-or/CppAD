@@ -6,7 +6,7 @@
 /*
 {xrst_begin atomic_two_eigen_cholesky.cpp app}
 {xrst_spell
-  chol
+   chol
 }
 
 Atomic Eigen Cholesky Factorization: Example and Test

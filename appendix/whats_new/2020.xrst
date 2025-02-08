@@ -5,16 +5,16 @@
 
 {xrst_begin 2020 app}
 {xrst_spell
-  autotools
-  callgrind
-  cg
-  github
-  gitlab
-  libs
-  msys
-  omh
-  optionlist
-  un
+   autotools
+   callgrind
+   cg
+   github
+   gitlab
+   libs
+   msys
+   omh
+   optionlist
+   un
 }
 
 Release Notes for 2020

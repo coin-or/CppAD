@@ -14,7 +14,7 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_type dev}
 {xrst_spell
-  typedef
+   typedef
 }
 
 Value Operator Type Definitions

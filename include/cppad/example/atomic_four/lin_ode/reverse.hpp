@@ -7,8 +7,8 @@
 /*
 {xrst_begin atomic_four_lin_ode_reverse.hpp}
 {xrst_spell
-  lll
-  nnz
+   lll
+   nnz
 }
 
 Atomic Linear ODE Reverse Mode: Example Implementation

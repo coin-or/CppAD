@@ -4,24 +4,24 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_binary_op dev}
 {xrst_spell
-  addpv
-  addvv
-  azmul
-  delim
-  divpv
-  divvp
-  divvv
-  mulpv
-  mulvv
-  powpv
-  powvp
-  powvv
-  subpv
-  subvp
-  subvv
-  zmulpv
-  zmulvp
-  zmulvv
+   addpv
+   addvv
+   azmul
+   delim
+   divpv
+   divvp
+   divvv
+   mulpv
+   mulvv
+   powpv
+   powvp
+   powvv
+   subpv
+   subvp
+   subvv
+   zmulpv
+   zmulvp
+   zmulvv
 }
 
 Binary Operators

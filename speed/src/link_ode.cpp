@@ -19,7 +19,7 @@ extern bool link_ode(
 -------------------------------------------------------------------------------
 {xrst_begin link_ode}
 {xrst_spell
-  fp
+   fp
 }
 
 Speed Testing the Jacobian of Ode Solution

@@ -7,9 +7,9 @@
 /*
 {xrst_begin lp_box}
 {xrst_spell
-  maxitr
-  rl
-  xout
+   maxitr
+   rl
+   xout
 }
 abs_normal: Solve a Linear Program With Box Constraints
 #######################################################

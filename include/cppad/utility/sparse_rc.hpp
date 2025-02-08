@@ -8,9 +8,9 @@
 /*
 {xrst_begin sparse_rc}
 {xrst_spell
-  nnz
-  nr
-  ostream
+   nnz
+   nr
+   ostream
 }
 Row and Column Index Sparsity Patterns
 ######################################

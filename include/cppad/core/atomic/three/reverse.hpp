@@ -7,9 +7,9 @@
 /*
 {xrst_begin atomic_three_reverse}
 {xrst_spell
-  aparameter
-  apartial
-  ataylor
+   aparameter
+   apartial
+   ataylor
 }
 
 Atomic Function Reverse Mode

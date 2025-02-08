@@ -7,7 +7,7 @@
 /*
 {xrst_begin link_dll_lib}
 {xrst_spell
-  msg
+   msg
 }
 
 Link a Dynamic Link Library

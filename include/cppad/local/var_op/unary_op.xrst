@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_unary_op dev}
 {xrst_spell
-  acosh
-  asinh
-  erfc
-  expm
-  neg
+   acosh
+   asinh
+   erfc
+   expm
+   neg
 }
 
 Unary Variable Operators

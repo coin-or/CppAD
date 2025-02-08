@@ -7,8 +7,8 @@
 /*
 {xrst_begin abs_print_mat}
 {xrst_spell
-  cout
-  nr
+   cout
+   nr
 }
 abs_normal: Print a Vector or Matrix
 ####################################

@@ -5,11 +5,11 @@
 
 {xrst_begin speed_xpackage}
 {xrst_spell
-  cp
-  grep
-  ifdef
-  sed
-  txt
+   cp
+   grep
+   ifdef
+   sed
+   txt
 }
 
 Speed Test Example and Template for a New Package

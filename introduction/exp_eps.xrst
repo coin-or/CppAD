@@ -321,7 +321,7 @@ Exercises
 -----------------------------------------------------------------------------
 {xrst_begin exp_eps_rev1}
 {xrst_spell
-  rcll
+   rcll
 }
 
 exp_eps: First Order Reverse Sweep
@@ -901,7 +901,7 @@ Exercises
 -----------------------------------------------------------------------------
 {xrst_begin exp_eps_rev2}
 {xrst_spell
-  rcll
+   rcll
 }
 
 exp_eps: Second Order Reverse Sweep

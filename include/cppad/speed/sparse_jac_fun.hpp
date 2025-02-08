@@ -7,7 +7,7 @@
 /*
 {xrst_begin sparse_jac_fun}
 {xrst_spell
-  fp
+   fp
 }
 
 Evaluate a Function That Has a Sparse Jacobian

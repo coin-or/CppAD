@@ -7,8 +7,8 @@
 /*
 {xrst_begin atomic_three_forward}
 {xrst_spell
-  aparameter
-  ataylor
+   aparameter
+   ataylor
 }
 
 Atomic Function Forward Mode

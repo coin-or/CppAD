@@ -5,12 +5,12 @@
 
 {xrst_begin download}
 {xrst_spell
-  dev
-  github
-  grep
-  gz
-  txt
-  yyyy
+   dev
+   github
+   grep
+   gz
+   txt
+   yyyy
 }
 
 Download The CppAD Source Code

@@ -7,7 +7,7 @@
 
 {xrst_begin ipopt_solve_retape.cpp}
 {xrst_spell
-  retaping
+   retaping
 }
 
 Nonlinear Programming Retaping: Example and Test

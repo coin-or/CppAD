@@ -19,7 +19,7 @@ extern bool link_poly(
 -------------------------------------------------------------------------------
 {xrst_begin link_poly}
 {xrst_spell
-  ddp
+   ddp
 }
 
 Speed Testing Second Derivative of a Polynomial

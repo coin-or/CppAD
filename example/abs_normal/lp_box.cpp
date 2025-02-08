@@ -5,7 +5,7 @@
 /*
 {xrst_begin lp_box.cpp}
 {xrst_spell
-  rl
+   rl
 }
 
 abs_normal lp_box: Example and Test

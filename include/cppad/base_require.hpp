@@ -8,7 +8,7 @@
 /*
 {xrst_begin base_require}
 {xrst_spell
-  ostream
+   ostream
 }
 
 AD<Base> Requirements for a CppAD Base Type

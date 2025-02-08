@@ -13,7 +13,7 @@
 /*
 {xrst_begin sparse_jacobian}
 {xrst_spell
-  valarray
+   valarray
 }
 
 Sparse Jacobian

@@ -6,7 +6,7 @@
 /*
 {xrst_begin interp_retape.cpp}
 {xrst_spell
-  retaping
+   retaping
 }
 
 Interpolation With Retaping: Example and Test

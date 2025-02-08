@@ -8,8 +8,8 @@
 /*
 {xrst_begin bool_valued}
 {xrst_spell
-  dyn
-  ext
+   dyn
+   ext
 }
 
 Bool Valued Operations and Functions with AD Arguments

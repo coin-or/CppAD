@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin sacado_prefix}
 {xrst_spell
-  kokkos
-  trilinos
+   kokkos
+   trilinos
 }
 
 Including Sacado Speed Tests

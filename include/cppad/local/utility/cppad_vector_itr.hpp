@@ -11,7 +11,7 @@
 ------------------------------------------------------------------------------
 {xrst_begin cppad_vector_itr_define dev}
 {xrst_spell
-  undef
+   undef
 }
 
 Vector Class Iterator Preprocessor Definitions

@@ -5,7 +5,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_reverse.cpp}
 {xrst_spell
-  cccc
+   cccc
 }
 
 Atomic Linear ODE Reverse Mode: Example and Test

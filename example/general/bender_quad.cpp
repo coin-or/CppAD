@@ -6,7 +6,7 @@
 /*
 {xrst_begin bender_quad.cpp app}
 {xrst_spell
-  argmin
+   argmin
 }
 
 BenderQuad: Example and Test

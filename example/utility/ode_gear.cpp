@@ -6,7 +6,7 @@
 /*
 {xrst_begin ode_gear.cpp}
 {xrst_spell
-  rclr
+   rclr
 }
 
 OdeGear: Example and Test

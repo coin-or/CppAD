@@ -8,7 +8,7 @@
 /*!
 {xrst_begin optimize_extract_option dev}
 {xrst_spell
-  struct
+   struct
 }
 
 Convert Optimizer Options From String to Struct

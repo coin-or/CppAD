@@ -9,8 +9,8 @@
 -------------------------------------------------------------------------------
 {xrst_begin abs}
 {xrst_spell
-  faq
-  rl
+   faq
+   rl
 }
 
 AD Absolute Value Functions: abs, fabs

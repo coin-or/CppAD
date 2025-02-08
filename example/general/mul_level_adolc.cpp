@@ -5,8 +5,8 @@
 /*
 {xrst_begin mul_level_adolc.cpp}
 {xrst_spell
-  adouble
-  dx
+   adouble
+   dx
 }
 
 Using Adolc with Multiple Levels of Taping: Example and Test

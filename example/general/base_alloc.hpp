@@ -7,8 +7,8 @@
 /*
 {xrst_begin base_alloc.hpp}
 {xrst_spell
-  azmul
-  isnan
+   azmul
+   isnan
 }
 Example AD<Base> Where Base Constructor Allocates Memory
 ########################################################

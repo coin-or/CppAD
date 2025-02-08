@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin ipopt}
 {xrst_spell
-  cflags
+   cflags
 }
 
 Including Ipopt Library Examples, Tests, and pkg-config

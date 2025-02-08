@@ -319,7 +319,7 @@ Exercises
 ------------------------------------------------------------------------------
 {xrst_begin exp_2_rev1}
 {xrst_spell
-  rcll
+   rcll
 }
 
 exp_2: First Order Reverse Mode
@@ -708,7 +708,7 @@ Exercises
 ------------------------------------------------------------------------------
 {xrst_begin exp_2_rev2}
 {xrst_spell
-  rcll
+   rcll
 }
 
 exp_2: Second Order Reverse Mode

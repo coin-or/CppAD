@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_jac_sparsity.hpp}
 {xrst_spell
-  nnz
+   nnz
 }
 
 Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation

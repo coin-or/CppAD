@@ -10,8 +10,8 @@
 /*
 {xrst_begin base_float.hpp}
 {xrst_spell
-  azmul
-  namespaces
+   azmul
+   namespaces
 }
 
 Enable use of AD<Base> where Base is float

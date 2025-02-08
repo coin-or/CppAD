@@ -6,8 +6,8 @@
 /*
 {xrst_begin mul_level_adolc_ode.cpp}
 {xrst_spell
-  adouble
-  cccc
+   adouble
+   cccc
 }
 
 Taylor's Ode Solver: A Multi-Level Adolc Example and Test

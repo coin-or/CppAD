@@ -7,16 +7,16 @@
 /*
 {xrst_begin base_adolc.hpp}
 {xrst_spell
-  acosh
-  adouble
-  asinh
-  atrig
-  azmul
-  codassign
-  condassign
-  erfc
-  expm
-  valgrind
+   acosh
+   adouble
+   asinh
+   atrig
+   azmul
+   codassign
+   condassign
+   erfc
+   expm
+   valgrind
 }
 
 Enable use of AD<Base> where Base is Adolc's adouble Type

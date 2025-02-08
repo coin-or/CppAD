@@ -8,7 +8,7 @@
 /*
 {xrst_begin base_cond_exp}
 {xrst_spell
-  adolc
+   adolc
 }
 
 Base Type Requirements for Conditional Expressions

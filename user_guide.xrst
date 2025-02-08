@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 {xrst_begin user_guide}
 {xrst_spell
-  adolc
-  autodiff
-  fadbad
-  openmp
-  org
-  posix
-  sacado
-  templated
+   adolc
+   autodiff
+   fadbad
+   openmp
+   org
+   posix
+   sacado
+   templated
 }
 
 {xrst_comment BEGIN: Before changing see new_release.sh and check_version.sh}

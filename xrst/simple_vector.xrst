@@ -6,7 +6,7 @@
 /*
 {xrst_begin SimpleVector}
 {xrst_spell
-  valarray
+   valarray
 }
 
 C++ Concept: A Simple Vector

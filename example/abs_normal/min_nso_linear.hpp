@@ -7,8 +7,8 @@
 /*
 {xrst_begin min_nso_linear}
 {xrst_spell
-  dbl
-  maxitr
+   dbl
+   maxitr
 }
 Non-Smooth Optimization Using Abs-normal Linear Approximations
 ##############################################################

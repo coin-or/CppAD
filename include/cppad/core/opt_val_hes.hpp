@@ -7,9 +7,9 @@
 /*
 {xrst_begin opt_val_hes app}
 {xrst_spell
-  signdet
-  sy
-  yy
+   signdet
+   sy
+   yy
 }
 
 Jacobian and Hessian of Optimal Values

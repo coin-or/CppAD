@@ -7,12 +7,12 @@
 /*
 {xrst_begin qp_interior}
 {xrst_spell
-  maxitr
-  rl
-  sout
-  xin
-  xout
-  yout
+   maxitr
+   rl
+   sout
+   xin
+   xout
+   yout
 }
 
 Solve a Quadratic Program Using Interior Point Method

@@ -287,7 +287,7 @@ inline void print_comp_op(
 ------------------------------------------------------------------------------
 {xrst_begin val_print_pri_op dev}
 {xrst_spell
-  str
+   str
 }
 
 Printing Print Operators

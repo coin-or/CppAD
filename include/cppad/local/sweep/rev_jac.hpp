@@ -15,7 +15,7 @@
 /*
 {xrst_begin local_sweep_rev_jac dev}
 {xrst_spell
-  setvec
+   setvec
 }
 
 Reverse Mode Jacobian Sparsity Patterns

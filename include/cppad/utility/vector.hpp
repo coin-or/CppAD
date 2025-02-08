@@ -107,7 +107,7 @@ public:
 -----------------------------------------------------------------------------
 {xrst_begin cppad_vector_ctor dev}
 {xrst_spell
-  initializer
+   initializer
 }
 
 Vector Class: Constructors and Destructor
@@ -395,7 +395,7 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_compare dev}
 {xrst_spell
-  ture
+   ture
 }
 
 Vector Class: Comparison Operators

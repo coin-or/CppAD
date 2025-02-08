@@ -5,16 +5,16 @@
 
 {xrst_begin 2010 app}
 {xrst_spell
-  blas
-  ifdef
-  lagragian
-  libcppad
-  libipopt
-  linpack
-  makefile
-  retape
-  src
-  wshadow
+   blas
+   ifdef
+   lagragian
+   libcppad
+   libipopt
+   linpack
+   makefile
+   retape
+   src
+   wshadow
 }
 
 Release Notes for 2010

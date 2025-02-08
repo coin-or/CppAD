@@ -6,9 +6,9 @@
 /*
 {xrst_begin lu_vec_ad.cpp}
 {xrst_spell
-  logdet
-  rhs
-  signdet
+   logdet
+   rhs
+   signdet
 }
 
 Lu Factor and Solve with Recorded Pivoting

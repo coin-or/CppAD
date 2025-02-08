@@ -78,8 +78,8 @@ namespace {
 -------------------------------------------------------------------------------
 {xrst_begin multi_newton_setup}
 {xrst_spell
-  xlow
-  xup
+   xlow
+   xup
 }
 
 Set Up Multi-Threaded Newton Method
@@ -217,8 +217,8 @@ bool multi_newton_setup(
 ------------------------------------------------------------------------------
 {xrst_begin multi_newton_worker}
 {xrst_spell
-  xlow
-  xup
+   xlow
+   xup
 }
 
 Do One Thread's Work for Multi-Threaded Newton Method
@@ -348,7 +348,7 @@ void multi_newton_worker(void)
 -------------------------------------------------------------------------------
 {xrst_begin multi_newton_takedown}
 {xrst_spell
-  xout
+   xout
 }
 
 Take Down Multi-threaded Newton Method
@@ -454,10 +454,10 @@ bool multi_newton_takedown(vector<double>& xout)
 ------------------------------------------------------------------------------
 {xrst_begin multi_newton_run}
 {xrst_spell
-  df
-  xlow
-  xout
-  xup
+   df
+   xlow
+   xout
+   xup
 }
 
 A Multi-Threaded Newton's Method

@@ -10,8 +10,8 @@
 /*
 {xrst_begin optimize}
 {xrst_spell
-  onetape
-  substring
+   onetape
+   substring
 }
 
 Optimize an ADFun Object Tape

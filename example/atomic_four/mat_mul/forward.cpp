@@ -5,7 +5,7 @@
 /*
 {xrst_begin atomic_four_mat_mul_forward.cpp}
 {xrst_spell
-  cccccccc
+   cccccccc
 }
 
 Atomic Matrix Multiply Forward Mode: Example and Test

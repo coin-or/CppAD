@@ -7,8 +7,8 @@
 /*
 {xrst_begin base_hash}
 {xrst_spell
-  adouble
-  valgrind
+   adouble
+   valgrind
 }
 
 Base Type Requirements for Hash Coding Values

@@ -5,7 +5,7 @@
 /*
 {xrst_begin json_get_started.cpp}
 {xrst_spell
-  dx
+   dx
 }
 
 Json Get Started: Example and Test

@@ -9,7 +9,7 @@
 ------------------------------------------------------------------------------
 {xrst_begin epsilon app}
 {xrst_spell
-  eps
+   eps
 }
 
 Machine Epsilon For AD Types

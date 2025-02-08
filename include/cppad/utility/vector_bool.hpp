@@ -117,7 +117,7 @@ public:
 ----------------------------------------------------------------------------
 {xrst_begin vector_bool_ctor dev}
 {xrst_spell
-  initializer
+   initializer
 }
 vectorBool: Constructors and Destructor
 #######################################

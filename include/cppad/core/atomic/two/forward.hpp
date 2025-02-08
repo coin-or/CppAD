@@ -7,11 +7,11 @@
 /*
 {xrst_begin atomic_two_forward app}
 {xrst_spell
-  atx
-  aty
-  tx
-  vx
-  vy
+   atx
+   aty
+   tx
+   vx
+   vy
 }
 
 Atomic Forward Mode

@@ -54,7 +54,7 @@ namespace CppAD {
 /*
 {xrst_begin ad_type_enum dev}
 {xrst_spell
-  typedef
+   typedef
 }
 
 Type of AD an Object

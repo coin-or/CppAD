@@ -7,7 +7,7 @@
 
 {xrst_begin ipopt_nlp_get_started.cpp dev}
 {xrst_spell
-  lc
+   lc
 }
 
 Nonlinear Programming Using CppAD and Ipopt: Getting Started

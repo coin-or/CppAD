@@ -5,29 +5,29 @@
 
 {xrst_begin 2007 app}
 {xrst_spell
-  adouble
-  apx
-  autoconf
-  automake
-  executables
-  gettimeofday
-  ginac
-  intro
-  inv
-  isnan
-  kipp
-  makefile
-  makefiles
-  omh
-  openmp
-  rpm
-  tarballs
-  tay
-  tgz
-  threadprivate
-  valgrind
-  vcproj
-  yyyymmdd
+   adouble
+   apx
+   autoconf
+   automake
+   executables
+   gettimeofday
+   ginac
+   intro
+   inv
+   isnan
+   kipp
+   makefile
+   makefiles
+   omh
+   openmp
+   rpm
+   tarballs
+   tay
+   tgz
+   threadprivate
+   valgrind
+   vcproj
+   yyyymmdd
 }
 
 Release Notes for 2007

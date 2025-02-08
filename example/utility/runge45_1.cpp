@@ -6,7 +6,7 @@
 /*
 {xrst_begin runge45_1.cpp}
 {xrst_spell
-  rclr
+   rclr
 }
 
 Runge45: Example and Test

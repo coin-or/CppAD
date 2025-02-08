@@ -5,12 +5,12 @@
 
 {xrst_begin utility}
 {xrst_spell
-  boolofvoid
-  dll
-  rc
-  rcv
-  rosen
-  runge
+   boolofvoid
+   dll
+   rc
+   rcv
+   rosen
+   runge
 }
 
 Some General Purpose Utilities

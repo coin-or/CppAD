@@ -9,7 +9,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 {xrst_begin op_code_dyn dev}
 {xrst_spell
-  zmul
+   zmul
 }
 
 Dynamic Parameter Op Codes

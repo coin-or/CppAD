@@ -6,7 +6,7 @@
 /*
 {xrst_begin sub_sparse_hes.cpp}
 {xrst_spell
-  nv
+   nv
 }
 
 Computing Sparse Hessian for a Subset of Variables

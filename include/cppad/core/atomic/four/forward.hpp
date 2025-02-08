@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_forward}
 {xrst_spell
-  ataylor
+   ataylor
 }
 
 Atomic Function Forward Mode

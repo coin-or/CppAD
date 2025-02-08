@@ -7,7 +7,7 @@
 /*
 {xrst_begin val2fun_graph dev}
 {xrst_spell
-  dyn
+   dyn
 }
 
 Create an ADFun Object Corresponding to a Value Graph

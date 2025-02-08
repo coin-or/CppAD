@@ -7,7 +7,7 @@
 /*
 {xrst_begin rev_hes_sparsity}
 {xrst_spell
-  rc
+   rc
 }
 
 Reverse Mode Hessian Sparsity Patterns

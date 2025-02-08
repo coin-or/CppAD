@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin speed_available dev}
 {xrst_spell
-  src
+   src
 }
 
 Is A Speed Test Available
@@ -42,7 +42,7 @@ This function is implemented in the file
 ------------------------------------------------------------------------------
 {xrst_begin speed_correct dev}
 {xrst_spell
-  src
+   src
 }
 
 Does a A Speed Test Return Correct Results
@@ -86,7 +86,7 @@ This function is implemented in the file
 ------------------------------------------------------------------------------
 {xrst_begin speed_time dev}
 {xrst_spell
-  src
+   src
 }
 
 Measure Time It Takes for a A Speed Test to Run

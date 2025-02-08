@@ -7,7 +7,7 @@
 /*
 {xrst_begin base_to_string}
 {xrst_spell
-  struct
+   struct
 }
 
 Extending to_string To Another Floating Point Type

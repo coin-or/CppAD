@@ -8,20 +8,20 @@
 /*!
 {xrst_begin configure.hpp dev}
 {xrst_spell
-  adolc
-  cmd
-  colpack
-  complier
-  gettimeofday
-  ipopt
-  mkstemp
-  noexcept
-  nullptr
-  pragmas
-  tmpnam
-  unreferenced
-  yyyy
-  yyyymmdd
+   adolc
+   cmd
+   colpack
+   complier
+   gettimeofday
+   ipopt
+   mkstemp
+   noexcept
+   nullptr
+   pragmas
+   tmpnam
+   unreferenced
+   yyyy
+   yyyymmdd
 }
 
 Preprocessor Symbols Set By CMake Command

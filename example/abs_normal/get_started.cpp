@@ -6,7 +6,7 @@
 /*
 {xrst_begin abs_get_started.cpp}
 {xrst_spell
-  rclrcl
+   rclrcl
 }
 
 abs_normal Getting Started: Example and Test

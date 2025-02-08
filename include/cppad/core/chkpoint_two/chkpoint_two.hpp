@@ -14,7 +14,7 @@ Second generation checkpoint functions.
 /*
 {xrst_begin chkpoint_two}
 {xrst_spell
-  chk
+   chk
 }
 
 Checkpoint Functions: Second Generation

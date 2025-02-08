@@ -14,7 +14,7 @@ namespace CppAD { namespace local { namespace sparse {
 /*
 {xrst_begin_parent list_setvec dev}
 {xrst_spell
-  typedef
+   typedef
 }
 
 The list_setvec Class
@@ -35,7 +35,7 @@ typedef size_setvec_const_iterator<size_t>  list_setvec_const_iterator;
 // ----------------------------------------------------------------------------
 {xrst_begin sparsity_user2internal_list_setvec dev}
 {xrst_spell
-  msg
+   msg
 }
 
 Copy A Vector of Standard Sets To A list_setvec Object

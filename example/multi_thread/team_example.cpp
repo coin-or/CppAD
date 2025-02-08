@@ -6,9 +6,9 @@
 /*
 {xrst_begin team_example.cpp}
 {xrst_spell
-  bthread
-  openmp
-  pthread
+   bthread
+   openmp
+   pthread
 }
 
 Using a Team of AD Threads: Example and Test

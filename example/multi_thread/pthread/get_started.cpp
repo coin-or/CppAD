@@ -5,7 +5,7 @@
 /*
 {xrst_begin pthread_get_started.cpp}
 {xrst_spell
-  posix
+   posix
 }
 
 {xrst_template ,

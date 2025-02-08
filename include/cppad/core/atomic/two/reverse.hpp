@@ -7,13 +7,13 @@
 /*
 {xrst_begin atomic_two_reverse app}
 {xrst_spell
-  apx
-  apy
-  atx
-  aty
-  px
-  py
-  tx
+   apx
+   apy
+   atx
+   aty
+   px
+   py
+   tx
 }
 
 Atomic Reverse Mode

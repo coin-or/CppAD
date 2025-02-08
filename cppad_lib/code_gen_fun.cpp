@@ -5,8 +5,8 @@
 /*
 {xrst_begin code_gen_fun}
 {xrst_spell
-  cg
-  jrcv
+   cg
+   jrcv
 }
 
 Generate Source Code and Compile an AD Function

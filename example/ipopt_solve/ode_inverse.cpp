@@ -5,7 +5,7 @@
 /*
 {xrst_begin ipopt_solve_ode_inverse.cpp}
 {xrst_spell
-  nz
+   nz
 }
 
 ODE Inverse Problem Definitions: Source Code

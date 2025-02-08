@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin cmake_check}
 {xrst_spell
-  grep
+   grep
 }
 
 Checking the CppAD Examples and Tests

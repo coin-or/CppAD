@@ -7,9 +7,9 @@
 /*
 {xrst_begin parallel_ad}
 {xrst_spell
-  rosen
-  runge
-  teardown
+   rosen
+   runge
+   teardown
 }
 
 Enable AD Calculations During Parallel Mode

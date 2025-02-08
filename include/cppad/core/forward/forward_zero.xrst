@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin forward_zero}
 {xrst_spell
-  cout
-  ostream
+   cout
+   ostream
 }
 
 Zero Order Forward Mode: Function Values

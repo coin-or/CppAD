@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_two_for_sparse_hes app}
 {xrst_spell
-  vx
+   vx
 }
 
 Atomic Forward Hessian Sparsity Patterns

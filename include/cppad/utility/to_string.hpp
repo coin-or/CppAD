@@ -8,8 +8,8 @@
 /*
 {xrst_begin to_string}
 {xrst_spell
-  long long
-  ostringstream
+   long long
+   ostringstream
 }
 
 Convert Certain Types to a String

@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin json_ad_graph}
 {xrst_spell
-  nx
-  str
+   nx
+   str
 }
 
 Json Representation of an AD Graph

@@ -7,7 +7,7 @@
 /*
 {xrst_begin sparse_hes_fun}
 {xrst_spell
-  fp
+   fp
 }
 
 Evaluate a Function That Has a Sparse Hessian

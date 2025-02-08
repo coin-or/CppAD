@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin eigen}
 {xrst_spell
-  cholesky
-  inv
+   cholesky
+   inv
 }
 
 Including Eigen Examples, Tests, and sparse2eigen

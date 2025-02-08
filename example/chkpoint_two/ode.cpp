@@ -6,8 +6,8 @@
 /*
 {xrst_begin chkpoint_two_ode.cpp}
 {xrst_spell
-  kutta
-  runge
+   kutta
+   runge
 }
 
 Checkpointing an ODE Solver: Example and Test

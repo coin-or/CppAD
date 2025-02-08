@@ -5,7 +5,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_rev_depend.cpp}
 {xrst_spell
-  cccc
+   cccc
 }
 
 Atomic Linear ODE Reverse Dependency Analysis: Example and Test

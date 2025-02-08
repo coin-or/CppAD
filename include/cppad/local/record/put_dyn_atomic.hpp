@@ -10,7 +10,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 {xrst_begin recorder_put_dyn_atomic dev}
 {xrst_spell
-  taddr
+   taddr
 }
 
 Put a Dynamic Parameter Atomic Call Operator in Recording

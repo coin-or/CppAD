@@ -8,9 +8,9 @@
 /*
 {xrst_begin sparse_hes}
 {xrst_spell
-  nr
-  rc
-  rcv
+   nr
+   rc
+   rcv
 }
 
 Computing Sparse Hessians

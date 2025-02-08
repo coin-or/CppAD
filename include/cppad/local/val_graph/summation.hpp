@@ -11,9 +11,9 @@ namespace CppAD { namespace local { namespace val_graph {
 ------------------------------------------------------------------------------
 {xrst_begin_parent val_summation dev}
 {xrst_spell
-  csum
-  dep
-  neg
+   csum
+   dep
+   neg
 }
 
 Combine Multiple sum Operators into a csum Operator
@@ -62,8 +62,8 @@ Contents
 -----------------------------------------------------------------------------
 {xrst_begin val_csum_info dev}
 {xrst_spell
-  ctor
-  struct
+   ctor
+   struct
 }
 
 Information for a Cumulative Summation
@@ -83,7 +83,7 @@ struct csum_info_t {
 ------------------------------------------------------------------------------
 {xrst_begin val_replace_csum_op dev}
 {xrst_spell
-  neg
+   neg
 }
 
 Replace An Operator with a Cumulative Summation

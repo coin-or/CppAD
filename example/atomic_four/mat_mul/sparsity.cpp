@@ -5,9 +5,9 @@
 /*
 {xrst_begin atomic_four_mat_mul_sparsity.cpp}
 {xrst_spell
-  cccccccc
-  cccccccccc
-  rvec
+   cccccccc
+   cccccccccc
+   rvec
 }
 
 Atomic Matrix Multiply Sparsity Patterns: Example and Test

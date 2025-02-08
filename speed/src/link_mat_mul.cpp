@@ -18,7 +18,7 @@ extern bool link_mat_mul(
 -------------------------------------------------------------------------------
 {xrst_begin link_mat_mul}
 {xrst_spell
-  dz
+   dz
 }
 
 Speed Testing Derivative of Matrix Multiply

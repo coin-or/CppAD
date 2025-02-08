@@ -5,31 +5,31 @@
 
 {xrst_begin 2011 app}
 {xrst_spell
-  automake
-  boostvector
-  builddir
-  executables
-  for for
-  geq
-  gpl
-  hasnan
-  initializer
-  inv
-  isnan
-  libspeed
-  makefile
-  matlab
-  omh
-  prefixdir
-  pthreads
-  retape
-  rosen
-  runge
-  svn
-  tgz
-  undefine
-  vcproj
-  wshadow
+   automake
+   boostvector
+   builddir
+   executables
+   for for
+   geq
+   gpl
+   hasnan
+   initializer
+   inv
+   isnan
+   libspeed
+   makefile
+   matlab
+   omh
+   prefixdir
+   pthreads
+   retape
+   rosen
+   runge
+   svn
+   tgz
+   undefine
+   vcproj
+   wshadow
 }
 
 Release Notes for 2011

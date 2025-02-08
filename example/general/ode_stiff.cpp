@@ -6,7 +6,7 @@
 /*
 {xrst_begin ode_stiff.cpp}
 {xrst_spell
-  rosen
+   rosen
 }
 
 A Stiff Ode: Example and Test

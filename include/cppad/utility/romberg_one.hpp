@@ -7,7 +7,7 @@
 /*
 {xrst_begin RombergOne}
 {xrst_spell
-  test test
+   test test
 }
 
 One DimensionalRomberg Integration

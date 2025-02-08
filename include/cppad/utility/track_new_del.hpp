@@ -7,10 +7,10 @@
 /*
 {xrst_begin track_new_del app}
 {xrst_spell
-  ncopy
-  newlen
-  newptr
-  oldptr
+   ncopy
+   newlen
+   newptr
+   oldptr
 }
 
 Routines That Track Use of New and Delete

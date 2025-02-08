@@ -7,9 +7,9 @@
 /*
 {xrst_begin BenderQuad app}
 {xrst_spell
-  avector
-  gx
-  gxx
+   avector
+   gx
+   gxx
 }
 
 Computing Jacobian and Hessian of Bender's Reduced Objective

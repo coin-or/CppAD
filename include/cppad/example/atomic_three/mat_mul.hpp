@@ -8,9 +8,9 @@
 /*
 {xrst_begin atomic_three_mat_mul.hpp}
 {xrst_spell
-  nr
-  px
-  tx
+   nr
+   px
+   tx
 }
 
 Matrix Multiply as an Atomic Operation

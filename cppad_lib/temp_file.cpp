@@ -5,7 +5,7 @@
 /*
 {xrst_begin temp_file dev}
 {xrst_spell
-  mkstemp
+   mkstemp
 }
 
 Create a New Empty Temporary File

@@ -5,7 +5,7 @@
 /*
 {xrst_begin simplex_method.cpp}
 {xrst_spell
-  rlr
+   rlr
 }
 
 abs_normal simplex_method: Example and Test

@@ -7,12 +7,12 @@
 /*
 {xrst_begin atomic_one app}
 {xrst_spell
-  px
-  py
-  tvector
-  tx
-  vx
-  vy
+   px
+   py
+   tvector
+   tx
+   vx
+   vy
 }
 
 Defining Atomic Functions: First Generation

@@ -5,8 +5,8 @@
 
 {xrst_begin SetVector dev}
 {xrst_spell
-  dereference
-  setvec
+   dereference
+   setvec
 }
 
 C++ Concept: Vector of Sets With size_t Elements

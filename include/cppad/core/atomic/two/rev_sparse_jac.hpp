@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_two_rev_sparse_jac app}
 {xrst_spell
-  rt
+   rt
 }
 
 Atomic Reverse Jacobian Sparsity Patterns

@@ -343,7 +343,7 @@ void call_atomic_reverse(
 /*
 {xrst_begin atomic_for_jac_sparsity_callback dev}
 {xrst_spell
-  setvec
+   setvec
 }
 
 Forward Jacobian Sparsity Callback to Atomic Functions
@@ -511,7 +511,7 @@ void call_atomic_for_jac_sparsity(
 /*
 {xrst_begin atomic_rev_jac_sparsity_callback dev}
 {xrst_spell
-  setvec
+   setvec
 }
 
 Reverse Jacobian sparsity Callback to Atomic Functions
@@ -676,7 +676,7 @@ void call_atomic_rev_jac_sparsity(
 /*
 {xrst_begin atomic_for_hes_sparsity_callback dev}
 {xrst_spell
-  setvec
+   setvec
 }
 
 Forward Hessian Sparsity Callback to Atomic Functions
@@ -926,7 +926,7 @@ void call_atomic_for_hes_sparsity(
 /*
 {xrst_begin atomic_rev_hes_sparsity_callback dev}
 {xrst_spell
-  setvec
+   setvec
 }
 
 Reverse Hessian Sparsity Callback to Atomic Functions

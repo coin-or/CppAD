@@ -6,7 +6,7 @@
 /*
 {xrst_begin rosen_34.cpp}
 {xrst_spell
-  rclr
+   rclr
 }
 
 rosen_34: Example and Test

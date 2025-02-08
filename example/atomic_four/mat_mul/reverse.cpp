@@ -5,8 +5,8 @@
 /*
 {xrst_begin atomic_four_mat_mul_reverse.cpp}
 {xrst_spell
-  ccccccccc
-  cccccccccc
+   ccccccccc
+   cccccccccc
 }
 
 Atomic Matrix Multiply Reverse Mode: Example and Test

@@ -5,8 +5,8 @@
 
 {xrst_begin Install}
 {xrst_spell
-  autotools
-  nmake
+   autotools
+   nmake
 }
 
 CppAD Download, Test, and Install Instructions

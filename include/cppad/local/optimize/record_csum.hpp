@@ -11,11 +11,11 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 {xrst_begin optimize_record_csum dev}
 {xrst_spell
-  addpv
-  addvv
-  subpv
-  subvp
-  subvv
+   addpv
+   addvv
+   subpv
+   subvp
+   subvv
 }
 
 Recording a Cumulative Summation Operator

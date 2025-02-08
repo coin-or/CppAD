@@ -49,14 +49,14 @@
 /*
 {xrst_begin speed_main}
 {xrst_spell
-  boolsparsity
-  onetape
-  optionlist
-  retaped
-  revsparsity
-  subgraphs
-  subsparsity
-  underbar
+   boolsparsity
+   onetape
+   optionlist
+   retaped
+   revsparsity
+   subgraphs
+   subsparsity
+   underbar
 }
 
 Running the Speed Test Program

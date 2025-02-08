@@ -7,7 +7,7 @@
 /*
 {xrst_begin azmul}
 {xrst_spell
-  ieee
+   ieee
 }
 
 Absolute Zero Multiplication

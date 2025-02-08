@@ -8,9 +8,9 @@
 /*
 {xrst_begin ode_evaluate}
 {xrst_spell
-  fp
-  retaped
-  runge
+   fp
+   retaped
+   runge
 }
 
 Evaluate a Function Defined in Terms of an ODE

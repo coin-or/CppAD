@@ -38,7 +38,7 @@ class size_setvec { // BEGIN_CLASS_LIST_SETVEC
 -------------------------------------------------------------------------------
 {xrst_begin size_setvec_member_data dev}
 {xrst_spell
-  struct
+   struct
 }
 
 class size_setvec: Private Member Data
@@ -543,7 +543,7 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin size_setvec_iterators dev}
 {xrst_spell
-  typedef
+   typedef
 }
 
 class size_setvec: Iterators

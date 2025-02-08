@@ -6,7 +6,7 @@
 /*
 {xrst_begin subgraph_reverse.cpp}
 {xrst_spell
-  subgraphs
+   subgraphs
 }
 
 Computing Reverse Mode on Subgraphs: Example and Test

@@ -10,7 +10,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 {xrst_begin set_get_in_parallel dev}
 {xrst_spell
-  nullptr
+   nullptr
 }
 
 Set in_parallel Routine or Get In Parallel Mode

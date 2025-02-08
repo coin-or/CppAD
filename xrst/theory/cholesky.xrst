@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 {xrst_begin cholesky_theory app}
 {xrst_spell
-  diag
-  tr
-  universitat
-  zu
+   diag
+   tr
+   universitat
+   zu
 }
 
 AD Theory for Cholesky Factorization

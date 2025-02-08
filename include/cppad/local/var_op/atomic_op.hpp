@@ -121,10 +121,10 @@ struct atomic_op_work {
 ------------------------------------------------------------------------------
 {xrst_begin_parent var_atomic_op dev}
 {xrst_spell
-  funap
-  funav
-  funrp
-  funrv
+   funap
+   funav
+   funrp
+   funrv
 }
 
 Atomic Function Call Operators
@@ -653,7 +653,7 @@ void atomic_forward_dir(
 -------------------------------------------------------------------------------
 {xrst_begin var_atomic_reverse dev}
 {xrst_spell
-  subgraph
+   subgraph
 }
 
 Reverse Atomic Function Call

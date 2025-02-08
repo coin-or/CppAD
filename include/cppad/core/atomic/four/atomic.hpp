@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_define}
 {xrst_spell
-  ctor
+   ctor
 }
 
 Defining Atomic Functions: Fourth Generation

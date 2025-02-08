@@ -8,7 +8,7 @@
 /*
 {xrst_begin atomic_two_eigen_mat_inv.hpp app}
 {xrst_spell
-  tr
+   tr
 }
 
 atomic_two Eigen Matrix Inversion Class

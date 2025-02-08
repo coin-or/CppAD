@@ -13,7 +13,7 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_pri_op dev}
 {xrst_spell
-  str
+   str
 }
 
 The Print Value Operator

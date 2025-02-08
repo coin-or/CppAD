@@ -36,8 +36,8 @@ inline bool op_add_or_sub(
 /*!
 {xrst_begin optimize_op_inc_arg_usage dev}
 {xrst_spell
-  cexp
-  csum
+   cexp
+   csum
 }
 
 Increase Argument Usage and Propagate cexp_set From Result to Argument
@@ -142,10 +142,10 @@ void op_inc_arg_usage(
 /*!
 {xrst_begin optimize_get_op_usage dev}
 {xrst_spell
-  cexp
-  dep
-  pri
-  taddr
+   cexp
+   dep
+   pri
+   taddr
 }
 
 Use Reverse Activity Analysis to Get Usage Information for Each Operator

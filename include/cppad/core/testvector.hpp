@@ -8,7 +8,7 @@
 /*
 {xrst_begin testvector}
 {xrst_spell
-  ublas
+   ublas
 }
 
 Using The CppAD Test Vector Template Class

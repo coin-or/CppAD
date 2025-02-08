@@ -4,12 +4,12 @@
 # ----------------------------------------------------------------------------
 {xrst_begin forward_order}
 {xrst_spell
-  cout
-  dx
-  ostream
-  xk
-  xq
-  yq
+   cout
+   dx
+   ostream
+   xk
+   xq
+   yq
 }
 
 Multiple Order Forward Mode

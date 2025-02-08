@@ -6,7 +6,7 @@
 /*
 {xrst_begin mul_level_ode.cpp}
 {xrst_spell
-  cccc
+   cccc
 }
 
 Taylor's Ode Solver: A Multi-Level AD Example and Test

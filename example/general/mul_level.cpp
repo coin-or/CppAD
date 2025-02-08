@@ -6,8 +6,8 @@
 /*
 {xrst_begin mul_level.cpp}
 {xrst_spell
-  adouble
-  dx
+   adouble
+   dx
 }
 
 Multiple Level of AD: Example and Test

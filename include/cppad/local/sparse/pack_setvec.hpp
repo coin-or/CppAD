@@ -120,7 +120,7 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_iterators dev}
 {xrst_spell
-  typedef
+   typedef
 }
 
 class pack_setvec: Iterators
@@ -898,7 +898,7 @@ inline void pack_setvec::print(void) const
 /*
 {xrst_begin sparsity_user2internal_pack_setvec dev}
 {xrst_spell
-  msg
+   msg
 }
 
 Copy A Boolean Sparsity Pattern To A pack_setvec Object

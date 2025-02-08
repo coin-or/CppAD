@@ -276,7 +276,7 @@ public:
 /*!
 {xrst_begin vec_ad_class dev}
 {xrst_spell
-  taddr
+   taddr
 }
 VecAD Class Objects
 ###################

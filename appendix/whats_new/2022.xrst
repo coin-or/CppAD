@@ -5,25 +5,25 @@
 
 {xrst_begin 2022 app}
 {xrst_spell
-  an an
-  csrc
-  div
-  dll
-  github
-  handeling
-  isinf
-  isnan
-  libs
-  neg
-  nullptr
-  nx
-  ny
-  omhelp
-  posix
-  rc
-  tmpnam
-  txt
-  zdouble
+   an an
+   csrc
+   div
+   dll
+   github
+   handeling
+   isinf
+   isnan
+   libs
+   neg
+   nullptr
+   nx
+   ny
+   omhelp
+   posix
+   rc
+   tmpnam
+   txt
+   zdouble
 }
 
 Release Notes for 2022

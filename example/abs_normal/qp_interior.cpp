@@ -5,7 +5,7 @@
 /*
 {xrst_begin qp_interior.cpp}
 {xrst_spell
-  rlr
+   rlr
 }
 
 abs_normal qp_interior: Example and Test

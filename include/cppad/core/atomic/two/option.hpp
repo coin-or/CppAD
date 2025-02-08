@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_two_option app}
 {xrst_spell
-  typedef
+   typedef
 }
 
 Set Atomic Function Options

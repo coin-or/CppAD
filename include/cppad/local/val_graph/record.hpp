@@ -23,7 +23,7 @@ These operations store a function in the :ref:`val_tape-name`.
 ------------------------------------------------------------------------------
 {xrst_begin val_set_ind dev}
 {xrst_spell
-  str
+   str
 }
 
 Setting Independent Variables
@@ -559,7 +559,7 @@ addr_t tape_t<Value>::record_cexp_op(
 ------------------------------------------------------------------------------
 {xrst_begin val_record_pri_op dev}
 {xrst_spell
-  str
+   str
 }
 
 Recording Print Operations

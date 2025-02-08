@@ -6,7 +6,7 @@
 /*
 {xrst_begin subgraph_hes2jac.cpp}
 {xrst_spell
-  subgraphs
+   subgraphs
 }
 
 Sparse Hessian Using Subgraphs and Jacobian: Example and Test

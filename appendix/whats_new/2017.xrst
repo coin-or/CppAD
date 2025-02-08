@@ -5,17 +5,17 @@
 
 {xrst_begin 2017 app}
 {xrst_spell
-  autotools
-  deallocations
-  doxydoc
-  doxygen
-  readme
-  subgraphs
-  typedef
-  uninitialised
-  valgrind
-  wconversion
-  xq
+   autotools
+   deallocations
+   doxydoc
+   doxygen
+   readme
+   subgraphs
+   typedef
+   uninitialised
+   valgrind
+   wconversion
+   xq
 }
 
 Release Notes for 2017

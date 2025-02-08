@@ -10,8 +10,8 @@
 /*
 {xrst_begin base_double.hpp}
 {xrst_spell
-  azmul
-  namespaces
+   azmul
+   namespaces
 }
 
 Enable use of AD<Base> where Base is double

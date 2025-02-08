@@ -8,8 +8,8 @@
 /*
 {xrst_begin cppad_eigen.hpp}
 {xrst_spell
-   libeigen
    gitlab
+   libeigen
 }
 Enable Use of Eigen Linear Algebra Package with CppAD
 #####################################################

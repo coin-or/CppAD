@@ -6,7 +6,7 @@
 /*
 {xrst_begin thread_test.cpp}
 {xrst_spell
-  posix
+   posix
 }
 
 Run Multi-Threading Examples and Speed Tests

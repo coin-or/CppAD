@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_problem dev}
 {xrst_spell
-  ny
-  nz
+   ny
+   nz
 }
 
 An ODE Inverse Problem Example
@@ -286,9 +286,9 @@ source code that defines the example values and functions defined above.
 -----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_simple dev}
 {xrst_spell
-  fg
-  ny
-  nz
+   fg
+   ny
+   nz
 }
 
 ODE Fitting Using Simple Representation
@@ -368,9 +368,9 @@ objective and constraints.
 -----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_fast dev}
 {xrst_spell
-  fg
-  ny
-  nz
+   fg
+   ny
+   nz
 }
 
 ODE Fitting Using Fast Representation
