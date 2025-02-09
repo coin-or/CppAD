@@ -410,8 +410,8 @@ will build the  corresponding documentation in the
 
 cppad_static_lib
 ****************
-The default value for this option is false.
-If it is true (false)
+The default value for this option is true on
+``msys``, ``cygwin`` and ``Windows`` and false otherwise.
 the cppad library will be a static (shared) library.
 If the target system uses windows dlls, this setting should be true and
 if it is false, a warning will be issued and it will be ignored.

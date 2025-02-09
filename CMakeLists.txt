@@ -217,14 +217,24 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
 #
-# cppad_static_lib
-command_line_arg(cppad_static_lib FALSE BOOL
-   "If true (false) the cppad library will be static (shared)"
-)
-#
 # cppad_debug_and_release
 command_line_arg(cppad_debug_and_release TRUE BOOL
    "If true the cppad library and tests will be able to mix debug and release"
+)
+#
+# cppad_static_lib
+STRING( REGEX MATCH "^MSYS"    is_msys     "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^CYGWIN"  is_cygwin   "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^Windows" is_windows  "${CMAKE_SYSTEM_NAME}" )
+IF( is_msys OR is_cygwin OR is_windows )
+   SET(default_cppad_static_lib TRUE)
+ELSE( )
+   SET(default_cppad_static_lib FALSE)
+ENDIF( )
+#
+# cppad_static_lib
+command_line_arg(cppad_static_lib ${default_cppad_static_lib} BOOL
+   "If true (false) the cppad library will be static (shared)"
 )
 # ----------------------------------------------------------------------------
 #
