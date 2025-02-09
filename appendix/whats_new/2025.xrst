@@ -16,6 +16,16 @@ Release Notes for 2025
 mm-dd
 *****
 
+02-09
+=====
+Systems that use windows dll files would always build a static
+version of the cppad library; i.e., the
+`cmake@cppad_static_lib` flag was ignored in this case.
+This has been changed so that the cppad_static_lib flag is always respected.
+If you have trouble linking on a windows system, perhaps setting
+this flag to true will help.
+
+
 02-02
 =====
 The rpath in may not have been set properly in

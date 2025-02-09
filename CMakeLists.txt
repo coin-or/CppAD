@@ -21,7 +21,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20250204")
+SET(cppad_version "20250209")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -623,25 +623,10 @@ ENDIF( cppad_has_ipopt )
 #
 #
 # is_cppad_lib_dynamic
-STRING( REGEX MATCH "^MSYS"    is_msys     "${CMAKE_SYSTEM_NAME}" )
-STRING( REGEX MATCH "^CYGWIN"  is_cygwin   "${CMAKE_SYSTEM_NAME}" )
-STRING( REGEX MATCH "^Windows" is_windows  "${CMAKE_SYSTEM_NAME}" )
-IF( is_msys OR is_cygwin OR is_windows )
-   IF( NOT cppad_static_lib )
-      MESSAGE(WARNING
-"This systems uses windows dynamic libraries.
-The cppad library must be static for this case.
-Ignoring fact that cppad_static_lib is FALSE.
-"
-      )
-   ENDIF( )
+IF( cppad_static_lib )
    SET(is_cppad_lib_dynamic 0)
 ELSE( )
-   IF( cppad_static_lib )
-      SET(is_cppad_lib_dynamic 0)
-   ELSE( )
-      SET(is_cppad_lib_dynamic 1)
-   ENDIF( )
+   SET(is_cppad_lib_dynamic 1)
 ENDIF( )
 print_variable(is_cppad_lib_dynamic)
 #
