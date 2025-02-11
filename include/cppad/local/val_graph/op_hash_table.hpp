@@ -2,11 +2,12 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_OP_HASH_TABLE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/sparse/size_setvec.hpp>
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/is_pod.hpp>
+# include <cppad/local/new_optimize/op_hash_table.hpp>
 /*
 {xrst_begin val_op_hash_table dev}
 
@@ -96,26 +97,104 @@ namespace CppAD { namespace local {
 
 namespace CppAD { namespace local { namespace val_graph {
 
-// hash_value
-template <class Value>
-size_t hash_value(const Value& value)
-{
-   CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
-   CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
-   //
-   // v
-   const unsigned short* v
-             = reinterpret_cast<const unsigned short*>(& value);
-   //
-   // sum
-   size_t i   = sizeof(value) / 2 - 1;
-   size_t sum = v[i];
-   while(i--)
-      sum += v[i];
-   //
-   return sum;
-}
 
+template <class Value>
+struct op_info {
+   const tape_t<Value>&  tape_;
+   const Vector<addr_t>& op2arg_index_;
+   const Vector<addr_t>& new_arg_index_;
+   //
+   op_info(
+      const tape_t<Value>&  tape          ,
+      const Vector<addr_t>& op2arg_index  ,
+      const Vector<addr_t>& new_arg_index )
+   : tape_( tape )
+   , op2arg_index_( op2arg_index )
+   , new_arg_index_( new_arg_index )
+   { }
+};
+
+template <class Value>
+bool match_fun(
+   addr_t                 index_search ,
+   addr_t                 index_check  ,
+   const op_info<Value>&  info         )
+{  //
+   // tape, op2arg_index
+   const tape_t<Value>&  tape          = info.tape_;
+   const Vector<addr_t>& op2arg_index  = info.op2arg_index_;
+   const Vector<addr_t>& new_arg_index = info.new_arg_index_;
+   //
+   // op_ptr, check_ptr
+   const base_op_t<Value>* ptr_search = tape.base_op_ptr(index_search);
+   const base_op_t<Value>* ptr_check  = tape.base_op_ptr(index_check);
+   //
+   // enum_op
+   op_enum_t enum_op = ptr_search->op_enum();
+   if( enum_op != ptr_check->op_enum() )
+      return false;
+   //
+   // arg_vec, con_vec
+   const Vector<addr_t>&  arg_vec = tape.arg_vec();
+   const Vector<Value>&   con_vec = tape.con_vec();
+   //
+   // arg_search, arg_check
+   addr_t arg_search   = op2arg_index[index_search];
+   addr_t arg_check    = op2arg_index[index_check];
+   //
+   // n_arg
+   addr_t n_arg  = ptr_search->n_arg(arg_search, arg_vec);
+   if( n_arg != ptr_check->n_arg(arg_check, arg_vec) )
+      return false;
+   //
+   // con_op_enum
+   if( enum_op == con_op_enum )
+   {  //
+      const Value& c_search = con_vec[ arg_vec[arg_search] ];
+      const Value& c_check  = con_vec[ arg_vec[arg_check] ];
+      return IdenticalEqualCon(c_search, c_check);
+   }
+   //
+   // n_before
+   addr_t n_before = ptr_search->n_before();
+   if( n_before != ptr_check->n_before() )
+      return false;
+   //
+   // n_after
+   addr_t n_after = ptr_search->n_after();
+   if( n_after != ptr_check->n_after() )
+      return false;
+   //
+   // match
+   bool match = true;
+   for(addr_t k = 0; k < n_before; ++k)
+      match &= arg_vec[arg_search + k] == arg_vec[arg_check + k];
+   //
+   // match
+   for(addr_t k = n_before; k < n_arg - n_after; ++k)
+   {  addr_t val_search  = new_arg_index[ arg_vec[arg_search + k] ];
+      addr_t val_check   = new_arg_index[ arg_vec[arg_check + k] ];
+      match &= val_search == val_check;
+   }
+   //
+   // match
+   if( ! match )
+   {  bool communative = enum_op == add_op_enum;
+      communative     |= enum_op == mul_op_enum;
+      if( communative )
+      {  addr_t val_search, val_check;
+         //
+         val_search = new_arg_index[ arg_vec[arg_search + 0] ];
+         val_check  = new_arg_index[ arg_vec[arg_check + 1] ];
+         match = val_search == val_check;
+         //
+         val_search = new_arg_index[ arg_vec[arg_search + 1] ];
+         val_check  = new_arg_index[ arg_vec[arg_check + 0] ];
+         match = val_search == val_check;
+      }
+   }
+   return match;
+};
 //
 // op_hash_table_t
 template <class Value>
@@ -128,47 +207,13 @@ private:
    // op2arg_index_
    const Vector<addr_t>& op2arg_index_;
    //
-   // table
-   CppAD::local::sparse::size_setvec<addr_t> table_;
+   // hash_table_
+   CppAD::local::optimize::op_hash_table_class < addr_t,Value,op_info<Value> >
+      hash_table_;
    //
-   // hash_code
-   addr_t hash_code(
-      const base_op_t<Value>* op_ptr        ,
-      addr_t                  arg_index     ,
-      const Vector<addr_t>&   new_val_index )
-   {  //
-      // arg_vec, con_vec, op_enum
-      const Vector<addr_t>& arg_vec = tape_.arg_vec();
-      const Vector<Value>&  con_vec = tape_.con_vec();
-      op_enum_t             op_enum = op_ptr->op_enum();
-      //
-      size_t code;
-      if( op_enum == con_op_enum )
-         code = hash_value( con_vec[  arg_vec[arg_index] ] );
-      else
-      {  addr_t n_arg    = op_ptr->n_arg(arg_index, arg_vec);
-         addr_t n_before = op_ptr->n_before();
-         addr_t n_after  = op_ptr->n_after();
-         //
-         // code
-         code = 0;
-         //
-         // These are auxiliary indices
-         for(addr_t i = 0; i < n_before; ++i)
-            code += size_t( arg_vec[arg_index + i] );
-         //
-         // These arguments are indices in the value vector, so check for a
-         // match with the lowest equivalent value vector index.
-         for(addr_t i = n_before; i < n_arg - n_after; ++i)
-            code += size_t( new_val_index[ arg_vec[arg_index + i] ] );
-         //
-         // These are auxiliary indices
-         for(addr_t i = n_arg - n_after; i < n_arg ; ++i)
-            code += size_t( arg_vec[arg_index + i] );
-      }
-      code = code % size_t( table_.n_set() );
-      return addr_t( code );
-   }
+   // op_arg_
+   CppAD::vector<addr_t> op_arg_;
+   //
 public:
    // -------------------------------------------------------------------------
    // BEGIN_OP_HASH_TABLE_T
@@ -178,46 +223,31 @@ public:
          const Vector<addr_t>&    op2arg_index ,
          addr_t                   n_hash_code  )
    // END_OP_HASH_TABLE_T
-   : tape_( tape ), op2arg_index_(op2arg_index)
-   {  // table_
-      addr_t n_op = tape.n_op();
-      //
-      table_.resize( n_hash_code, n_op );
-   }
+   : tape_( tape )
+   , op2arg_index_(op2arg_index)
+   , hash_table_( n_hash_code, tape.n_op() )
+   { }
    // -------------------------------------------------------------------------
    // BEGIN_SIZE_COUNT
    // size_count = op_hash_table.size_count()
    Vector<addr_t> size_count(void)
    // END_SIZE_COUNT
-   {  Vector<addr_t> count;
-      addr_t n_set  = table_.n_set();
-      for(addr_t i = 0; i < n_set; ++i)
-      {  addr_t number_elements = table_.number_elements(i);
-         if( size_t( number_elements ) >= count.size() )
-         {  size_t old_size = count.size();
-            addr_t new_size = number_elements + 1;
-            count.resize(new_size);
-            for(size_t j = old_size; j < new_size; ++j)
-               count[j] = 0;
-         }
-         count[number_elements] += 1;
-      }
-      return count;
+   {  return hash_table_.differnt_count();
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
    // j_op = op_hash_table.match_op(i_op, new_val_index)
    addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    // END_MATCH_OP
-   {  assert( i_op < table_.end() );
+   {  assert( i_op < hash_table_.n_op() );
       //
       // arg_vec, con_vec
       const Vector<addr_t>&    arg_vec     = tape_.arg_vec();
       const Vector<Value>&     con_vec     = tape_.con_vec();
       //
-      // op_enum, op_ptr
-      const base_op_t<Value>* op_ptr = tape_.base_op_ptr(i_op);
-      op_enum_t op_enum              = op_ptr->op_enum();
+      // op_ptr, op_enum
+      const base_op_t<Value>* op_ptr  = tape_.base_op_ptr(i_op);
+      op_enum_t               op_enum = op_ptr->op_enum();
       //
       // arg_index, n_arg
       addr_t arg_index = op2arg_index_[i_op];
@@ -233,63 +263,38 @@ public:
          }
       }
       //
-      // code
-      addr_t code = hash_code(op_ptr, arg_index, new_val_index);
+      // info
+      op_info<Value> info(tape_, op2arg_index_, new_val_index);
       //
-      // itr
-      local::sparse::size_setvec_const_iterator<addr_t> itr(table_, code);
-      while( *itr != table_.end() )
-      {  // op_enum_j, arg_index_j
-         addr_t                  j_op = *itr;
-         const base_op_t<Value>* op_ptr_j = tape_.base_op_ptr(j_op);
-         op_enum_t op_enum_j   = op_ptr_j->op_enum();
-         addr_t    arg_index_j = op2arg_index_[j_op];
-         addr_t     n_arg_j    = op_ptr_j->n_arg(arg_index_j, arg_vec);
-         //
-         // match
-         bool match = (op_enum == op_enum_j) && (n_arg == n_arg_j);
-         if( match && op_enum == con_op_enum )
-         {  //
-            const Value& c = con_vec[ arg_vec[arg_index] ];
-            const Value& c_j = con_vec[ arg_vec[arg_index_j] ];
-            match            = IdenticalEqualCon(c, c_j);
-         }
-         else if( match )
-         {  addr_t n_before = op_ptr->n_before();
-            addr_t n_after  = op_ptr->n_after();
-            //
-            for(addr_t k = 0; k < n_before; ++k)
-               match &= arg_vec[arg_index + k] == arg_vec[arg_index_j + k];
-            //
-            for(addr_t k = n_before; k < n_arg - n_after; ++k)
-            {  addr_t val_index   = new_val_index[ arg_vec[arg_index + k] ];
-               addr_t val_index_j = new_val_index[ arg_vec[arg_index_j + k] ];
-               match &= val_index == val_index_j;
-            }
-            //
-            for(addr_t k = n_arg - n_after; k < n_arg; ++k)
-               match &= arg_vec[arg_index + k] == arg_vec[arg_index_j + k];
-            //
-            bool communative = op_enum == add_op_enum;
-            communative     |= op_enum == mul_op_enum;
-            if( communative && ! match )
-            {  addr_t val_index   = new_val_index[ arg_vec[arg_index + 0] ];
-               addr_t val_index_j = new_val_index[ arg_vec[arg_index_j + 1] ];
-               match = val_index == val_index_j;
-               //
-               val_index   = new_val_index[ arg_vec[arg_index + 1] ];
-               val_index_j = new_val_index[ arg_vec[arg_index_j + 0] ];
-               match &= val_index == val_index_j;
-            }
-         }
-         if( match )
-            return j_op;
-         //
-         // itr
-         ++itr;
+      // k_op
+      addr_t j_op;
+      if( op_enum == con_op_enum )
+      {  Value value = con_vec[ arg_vec[arg_index] ];
+         j_op = hash_table_.find_match(i_op, value, info, match_fun);
       }
-      table_.add_element(code, i_op);
-      return i_op;
+      else
+      {  // n_before, n_after
+         addr_t n_before = op_ptr->n_before();
+         addr_t n_after  = op_ptr->n_after();
+         //
+         // op_arg_
+         op_arg_.resize(0);
+         op_arg_.resize(n_arg);
+         //
+         // op_arg_
+         for(addr_t k = 0; k < n_before; ++k)
+            op_arg_[k] = arg_vec[arg_index + k];
+         for(addr_t k = n_before; k < n_arg - n_after; ++k)
+            op_arg_[k] =new_val_index[ arg_vec[arg_index + k] ];
+         for(addr_t k = n_arg - n_after; k < n_arg; ++k)
+            op_arg_[k] = arg_vec[arg_index + k];
+         //
+         // k_op
+         j_op = hash_table_.find_match(
+            i_op, op_enum, op_arg_, info, match_fun
+         );
+      }
+      return j_op;
    }
 };
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
