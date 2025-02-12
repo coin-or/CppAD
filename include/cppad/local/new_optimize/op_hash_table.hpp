@@ -33,14 +33,16 @@ Pod
 is type is used for constants referenced by the operators.
 It is treated as plain old data when computing is hash code.
 
-Constructor
-***********
+Info
+====
+is type used for information that is passed through match_fun and
+otherwise ignored.
 
-op_hash_table_t(n_hash, n_op)
-=============================
+hash_table
+**********
 {xrst_literal
-   // BEGIN_CONSTRUCTOR
-   // END_CONSTRUCTOR
+   // BEGIN_OP_HASH_TABLE_T
+   // END_OP_HASH_TABLE_T
 }
 
 n_hash
@@ -67,13 +69,14 @@ n_op
 
 match_fun_t
 ***********
-
-match_fun(index_search, index_check, info)
-==========================================
 {xrst_literal
    // BEGIN_MATCH_FUN_T
    // END_MATCH_FUN_T
 }
+
+match_fun
+=========
+is a function with type match_fun_t.
 
 index_search
 ============
@@ -87,115 +90,125 @@ info
 ====
 is information that is passed through match_fun and otherwise ignored.
 
-return
-======
-This function returns true (false) if *index_check* is a match (is not a match)
+match
+=====
+is true (false) if *index_check* is a match (is not a match)
 for *index_search* .
 
-hash_fun
-********
-
-hash_fun(pod)
-=============
+hash_fun: pod
+*************
 {xrst_literal ,
    // BEGIN_HASH_FUN_POD , // END_HASH_FUN_POD
    // BEGIN_RETURN_HASH_FUN_POD , // END_RETURN_HASH_FUN_POD
 }
 
 pod
----
+===
 is the value we are hash coding.
 It is treated as plain old data during the coding.
 
-hash_fun(op, op_arg)
-====================
+code
+====
+is the hash code value.
+
+hash_fun: arg
+*************
 {xrst_literal ,
    // BEGIN_HASH_FUN_ARG , // END_HASH_FUN_ARG
    // BEGIN_RETURN_HASH_ARG_POD , // END_RETURN_HASH_ARG_POD
 }
 
 op
---
+==
 is an integer representation of the operator are hash coding.
 
 op_arg
-------
+======
 is a vector containing to the arguments for this operator.
 (During renumbering this should be the new argument indices.)
 
 
-find_match
-**********
-
-
-find_match(index_op, pod, info, match_fun)
-==========================================
-{xrst_literal
-   // BEGIN_FIND_MATCH_POD
-   // END_FIND_MATCH_POD
+find_match: pod
+***************
+{xrst_literal ,
+   // BEGIN_FIND_MATCH_POD , // END_FIND_MATCH_POD
+   // BEGIN_RETURN_FIND_MATCH_POD , // END_RETURN_FIND_MATCH_POD
 }
 
 index_op
---------
+========
 is the index corresponding to this operator.
 
 pod
----
+===
 is the values corresponding to this operator.
 This is used to hash code the operator to get a list
 of operators to check.
 
 info
-----
+====
 see :ref:`op_hash_table_t@match_fun_t@info` .
 
 match_fun
----------
+=========
 see :ref:`op_hash_table_t@match_fun_t`.
 
-return
-------
-The return value is the index of an operator that matches.
+index_match
+===========
+is the index of a previous operator in a call
+to find_match that matches that matches this operator.
 If no such operator is found, the return value is equal to *index_op*
-and *index_op* is put in the hash table for future matches..
+and *index_op* is put in the hash table for future matches.
 
-find_match(index_op, op, op_arg, info, match_fun)
-=================================================
+find_match: arg
+***************
 {xrst_literal ,
    // BEGIN_FIND_MATCH_ARG , // END_FIND_MATCH_ARG
+   // BEGIN_RETURN_FIND_MATCH_ARG , // END_RETURN_FIND_MATCH_ARG
 }
 
 index_op
---------
+========
 is the index corresponding to this operator.
 
 op
---
+==
 is an integer representation of the operator are hash coding
 (used for hash coding).
 
 op_arg
-------
+======
 is a vector containing the argument indices for this operator
 (During renumbering this should be the new argument indices.)
 
 info
-----
+====
 see :ref:`op_hash_table_t@match_fun_t@info` .
 
 match_fun
----------
+=========
 see :ref:`op_hash_table_t@match_fun_t` .
 
-different_size
-**************
+index_match
+===========
+is the index of a previous operator in a call
+to find_match that matches that matches this operator.
+If no such operator is found, the return value is equal to *index_op*
+and *index_op* is put in the hash table for future matches.
+
+different_count
+***************
 {xrst_literal
    // BEGIN_DIFFERENT_COUNT
    // END_DIFFERENT_COUNT
 }
-For each valid index *i*, *different_size* ()[ *i* ]
-is the number of hash code values, in the table,
-that correspond to *i* operators that do not match; i.e., are different.
+
+count
+=====
+For each valid index *i*, *count* [ *i* ]
+is the number of hash code values,
+that correspond to *i* operators with the same hash code that did not match;
+i.e., are different.
 For example:
 
 #. For *i* equal to zero,
@@ -232,33 +245,37 @@ private:
    //
 public:
    //
-   // BEGIN_MATCH_FUN_T
-   typedef bool match_fun_t(
-      Index index_search, Index index_check, const Info& info
-   );
-   // END_MATCH_FUN_T
-   //
-   // BEGIN_CONSTRUCTOR
+   // BEGIN_OP_HASH_TABLE_T
+   // op_hash_table_t hash_table(n_hash, n_op)
    op_hash_table_t(Index n_hash, Index n_op)
    : n_hash_(n_hash) , n_op_(n_op)
-   // END_CONSTRUCTOR
+   // END_OP_HASH_TABLE_T
    {  //
       CPPAD_ASSERT_UNKNOWN( 1  < n_hash  );
       // table_
       table_.resize(n_hash, n_op);
    }
    // BEGIN_N_HASH
+   // n_hash = hash_table.n_hash()
    Index n_hash(void) const
    // END_N_HASH
    {  return n_hash_; }
    //
    // BEGIN_N_OP
+   // n_op = hash_table.n_op()
    Index n_op(void) const
    // END_N_OP
    {  return n_op_; }
    //
+   // BEGIN_MATCH_FUN_T
+   // match = match_fun(index_search, index_check, info)
+   typedef bool match_fun_t(
+      Index index_search, Index index_check, const Info& info
+   );
+   // END_MATCH_FUN_T
    //
    // BEGIN_HASH_FUN_POD
+   // code = hash_table.hash_fun(pod)
    Index hash_fun(const Pod& pod) const
    // END_HASH_FUN_POD
    {  //
@@ -290,6 +307,7 @@ public:
    }
    //
    // BEGIN_HASH_FUN_ARG
+   // code = hash_table.hash_fun(op, op_arg)
    Index hash_fun(Index op, const CppAD::vector<Index>& op_arg) const
    // END_HASH_FUN_ARG
    {  //
@@ -316,6 +334,7 @@ public:
       // END_RETURN_HASH_ARG_POD
    }
    // BEGIN_FIND_MATCH_POD
+   // index_match = hash_table.find_match(index_op, pod, info, match_fun)
    Index find_match(
       Index         index_op  ,
       const Pod&    pod       ,
@@ -327,28 +346,33 @@ public:
       // hash_code
       Index hash_code = hash_fun(pod);
       //
-      // itr
+      // index_match
+      Index index_match = index_op;
+      //
+      // index_match
       itr_t itr  = itr_t(table_, hash_code);
       while( *itr != n_op_ )
       {  //
          // index_check
          Index index_check = *itr;
          if( match_fun(index_op, index_check, info) )
-         {  CPPAD_ASSERT_UNKNOWN( index_check < n_op_ );
-            return index_check;
-         }
+            index_match = index_check;
          //
          ++itr;
       }
       //
       // table_
-      table_.add_element(hash_code, index_op);
+      if( index_match == index_op )
+         table_.add_element(hash_code, index_op);
       //
-      // return
-      return index_op;
+      // BEGIN_RETURN_FIND_MATCH_POD
+      CPPAD_ASSERT_UNKNOWN( index_match < n_op_ )
+      return index_match;
+      // END_RETURN_FIND_MATCH_POD
    }
    //
    // BEGIN_FIND_MATCH_ARG
+   // index_match = hash_table.find_match(index_op, op, op_arg, info, match_fun)
    Index find_match(
       Index                index_op  ,
       Index                op        ,
@@ -363,26 +387,33 @@ public:
       Index hash_code = hash_fun(op, op_arg);
       CPPAD_ASSERT_UNKNOWN( hash_code < n_hash_ );
       //
-      // itr
+      // index_match
+      Index index_match = index_op;
+      //
+      // index_match
       itr_t itr  = itr_t(table_, hash_code);
       while( *itr != n_op_ )
       {  //
          // index_check
          Index index_check = *itr;
          if( match_fun(index_op, index_check, info) )
-            return index_check;
+            index_match = index_check;
          //
          ++itr;
       }
       //
       // table_
-      table_.add_element(hash_code, index_op);
+      if( index_match == index_op )
+         table_.add_element(hash_code, index_op);
       //
-      // return
-      return index_op;
+      // BEGIN_RETURN_FIND_MATCH_ARG
+      CPPAD_ASSERT_UNKNOWN( index_match < n_op_ )
+      return index_match;
+      // END_RETURN_FIND_MATCH_ARG
    }
    //
    // BEGIN_DIFFERENT_COUNT
+   // count = hash_table.different_count()
    CppAD::vector<Index> different_count(void) const
    // END_DIFFERENT_COUNT
    {  //

@@ -23,7 +23,7 @@ Constructor
 
 prev_op_search
 ==============
-This is the operator hash table that is constructed
+This is the object that searches for previous value operators.
 
 tape
 ====
@@ -49,7 +49,7 @@ match_op
 
 prev_op_search
 ==============
-This is a hash table for the tape.
+This is the object that searches for previous value operators.
 
 i_op
 ====
