@@ -1,5 +1,5 @@
-# ifndef  CPPAD_LOCAL_VAL_GRAPH_OP_HASH_TABLE_HPP
-# define  CPPAD_LOCAL_VAL_GRAPH_OP_HASH_TABLE_HPP
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_PREV_OP_SEARCH_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_PREV_OP_SEARCH_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-25 Bradley M. Bell
@@ -9,26 +9,26 @@
 # include <cppad/local/is_pod.hpp>
 # include <cppad/local/new_optimize/op_hash_table.hpp>
 /*
-{xrst_begin val_op_hash_table dev}
+{xrst_begin prev_op_serarch dev}
 
-The Value Operator Hash Table
-#############################
+Search For a Matching Previous Value Operator
+#############################################
 
 Constructor
 ***********
 {xrst_literal
-   // BEGIN_OP_HASH_TABLE_T
-   // END_OP_HASH_TABLE_T
+   // BEGIN_OP_PREV_OP_SEARCH_T
+   // END_OP_PREV_OP_SEARCH_T
 }
 
-op_hash_table
-=============
+prev_op_search
+==============
 This is the operator hash table that is constructed
 
 tape
 ====
 A reference to *tape* is stored in *op_hash_tale* ; i.e.,
-*tape* must not be destroyed before *op_hash_table* .
+*tape* must not be destroyed before *prev_op_search* .
 
 op2arg_index
 ============
@@ -38,7 +38,7 @@ tape argument vector *tape*.arg_vec_ .
 n_hash_code
 ===========
 This is the number of possible hash codes in the operator hash table
-*op_hash_table* .
+*prev_op_search* .
 
 match_op
 ********
@@ -47,8 +47,8 @@ match_op
    // END_MATCH_OP
 }
 
-op_hash_table
-=============
+prev_op_search
+==============
 This is a hash table for the tape.
 
 i_op
@@ -80,7 +80,7 @@ For each valid index *i*, *size_count* ()[ *i* ]
 is the number of hash code values, in the table, that have *i* collisions.
 A collision occurs when two operators that do not match have the same hash code.
 
-{xrst_end val_op_hash_table}
+{xrst_end prev_op_serarch}
 */
 
 // Tell pod_vector class that each size_setvec<addr_t>::pair_s_type is
@@ -96,8 +96,8 @@ namespace CppAD { namespace local {
 } }
 
 namespace CppAD { namespace local { namespace val_graph {
-
-
+//
+// op_info
 template <class Value>
 struct op_info {
    const tape_t<Value>&  tape_;
@@ -113,7 +113,8 @@ struct op_info {
    , new_arg_index_( new_arg_index )
    { }
 };
-
+//
+// match_fun
 template <class Value>
 bool match_fun(
    addr_t                 index_search ,
@@ -196,9 +197,9 @@ bool match_fun(
    return match;
 };
 //
-// op_hash_table_t
+// prev_op_search_t
 template <class Value>
-class op_hash_table_t {
+class prev_op_search_t {
 private:
    //
    // tape_
@@ -208,7 +209,7 @@ private:
    const Vector<addr_t>& op2arg_index_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_class < addr_t,Value,op_info<Value> >
+   CppAD::local::optimize::op_hash_table_class< addr_t, Value, op_info<Value> >
       hash_table_;
    //
    // op_arg_
@@ -216,27 +217,27 @@ private:
    //
 public:
    // -------------------------------------------------------------------------
-   // BEGIN_OP_HASH_TABLE_T
-   // op_hash_table_t op_hash_table(tape, op2arg_index, n_hash_code)
-   op_hash_table_t(
+   // BEGIN_OP_PREV_OP_SEARCH_T
+   // prev_op_search_t prev_op_search(tape, op2arg_index, n_hash_code)
+   prev_op_search_t(
          const tape_t<Value>&     tape         ,
          const Vector<addr_t>&    op2arg_index ,
          addr_t                   n_hash_code  )
-   // END_OP_HASH_TABLE_T
+   // END_OP_PREV_OP_SEARCH_T
    : tape_( tape )
    , op2arg_index_(op2arg_index)
    , hash_table_( n_hash_code, tape.n_op() )
    { }
    // -------------------------------------------------------------------------
    // BEGIN_SIZE_COUNT
-   // size_count = op_hash_table.size_count()
+   // size_count = prev_op_search.size_count()
    Vector<addr_t> size_count(void)
    // END_SIZE_COUNT
    {  return hash_table_.differnt_count();
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
-   // j_op = op_hash_table.match_op(i_op, new_val_index)
+   // j_op = prev_op_search.match_op(i_op, new_val_index)
    addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    // END_MATCH_OP
    {  assert( i_op < hash_table_.n_op() );

@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_TAPE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/op_iterator.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
@@ -174,9 +174,9 @@ Operations on Tape
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/fold_con.hpp
    include/cppad/local/val_graph/op2arg_index.hpp
-   include/cppad/local/val_graph/op_hash_table.hpp
    include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/option.hpp
+   include/cppad/local/val_graph/prev_op_search.hpp
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/record_new.hpp
    include/cppad/local/val_graph/renumber.hpp
@@ -515,8 +515,8 @@ public :
 # include <cppad/local/val_graph/dead_code.hpp>
 # include <cppad/local/val_graph/fold_con.hpp>
 # include <cppad/local/val_graph/op2arg_index.hpp>
-# include <cppad/local/val_graph/op_hash_table.hpp>
 # include <cppad/local/val_graph/option.hpp>
+# include <cppad/local/val_graph/prev_op_search.hpp>
 # include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/record_new.hpp>
 # include <cppad/local/val_graph/renumber.hpp>

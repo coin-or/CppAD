@@ -2,10 +2,10 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_COMPRESS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/op_hash_table.hpp>
+# include <cppad/local/val_graph/prev_op_search.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
@@ -96,9 +96,9 @@ vectorBool tape_t<Value>::compress(void)
       }
    }
    //
-   // op_hash_table
+   // prev_op_search
    addr_t n_hash_code = 1 + (n_val_ / 2);
-   op_hash_table_t<Value>  op_hash_table(*this, op2arg_index, n_hash_code);
+   prev_op_search_t<Value>  prev_op_search(*this, op2arg_index, n_hash_code);
    //
    // keep_compare
    bool keep_compare = option_map_["keep_compare"] == "true";
@@ -175,7 +175,7 @@ vectorBool tape_t<Value>::compress(void)
       if(use_op)
       {  //
          // j_op
-         addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
+         addr_t j_op = prev_op_search.match_op(i_op, new_val_index);
          //
          if( j_op != i_op )
          {  // use j_op every where that i_op was used

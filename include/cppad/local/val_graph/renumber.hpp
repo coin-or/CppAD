@@ -2,9 +2,9 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RENUMBER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/local/val_graph/op_hash_table.hpp>
+# include <cppad/local/val_graph/prev_op_search.hpp>
 
 /*
 -------------------------------------------------------------------------------
@@ -90,9 +90,9 @@ void tape_t<Value>::renumber(void)
       }
    }
    //
-   // op_hash_table
+   // prev_op_search
    addr_t n_hash_code = 1 + (n_val_ / 2);
-   op_hash_table_t<Value>  op_hash_table(*this, op2arg_index, n_hash_code);
+   prev_op_search_t<Value>  prev_op_search(*this, op2arg_index, n_hash_code);
    //
    // new_val_index
    // value used for operators that are not replaced.
@@ -111,7 +111,7 @@ void tape_t<Value>::renumber(void)
       addr_t res_index_i = op2res_index[i_op];
       //
       // j_op
-      addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
+      addr_t j_op = prev_op_search.match_op(i_op, new_val_index);
       if( j_op != i_op )
       {  assert( j_op < i_op );
          //
@@ -162,7 +162,7 @@ void tape_t<Value>::renumber(void)
 
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // A set size more than one represents a collision
-   Vector<addr_t> size_count = op_hash_table.size_count();
+   Vector<addr_t> size_count = prev_op_search.size_count();
    for(size_t i = 0; i < size_count.size(); ++i)
       std::cout << "size = " << i << ", count = " << size_count[i] << "\n";
    //
