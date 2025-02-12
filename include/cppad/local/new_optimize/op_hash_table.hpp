@@ -10,7 +10,7 @@
 namespace CppAD { namespace local { namespace optimize {
 
 /*
-{xrst_begin op_hash_table_class dev}
+{xrst_begin op_hash_table_t dev}
 
 Operator Hash Table Class
 #########################
@@ -36,8 +36,8 @@ It is treated as plain old data when computing is hash code.
 Constructor
 ***********
 
-op_hash_table_class(n_hash, n_op)
-=================================
+op_hash_table_t(n_hash, n_op)
+=============================
 {xrst_literal
    // BEGIN_CONSTRUCTOR
    // END_CONSTRUCTOR
@@ -147,11 +147,11 @@ of operators to check.
 
 info
 ----
-see :ref:`op_hash_table_class@match_fun_t@info` .
+see :ref:`op_hash_table_t@match_fun_t@info` .
 
 match_fun
 ---------
-see :ref:`op_hash_table_class@match_fun_t`.
+see :ref:`op_hash_table_t@match_fun_t`.
 
 return
 ------
@@ -181,11 +181,11 @@ is a vector containing the argument indices for this operator
 
 info
 ----
-see :ref:`op_hash_table_class@match_fun_t@info` .
+see :ref:`op_hash_table_t@match_fun_t@info` .
 
 match_fun
 ---------
-see :ref:`op_hash_table_class@match_fun_t` .
+see :ref:`op_hash_table_t@match_fun_t` .
 
 different_size
 **************
@@ -207,12 +207,12 @@ For example:
    it is the number of hash codes that required two occurrences
    to match all the occurrences.
 
-{xrst_end op_hash_table_class}
+{xrst_end op_hash_table_t}
 -----------------------------------------------------------------------------
 */
 // BEGIN_CLASS
 template <class Index, class Pod, class Info>
-class op_hash_table_class {
+class op_hash_table_t {
    static_assert( sizeof(unsigned short) == 2, "sizeof unsigned short not 2");
    static_assert( sizeof(Pod) % 2  == 0, "size of Pod is not even");
 // END_CLASS
@@ -239,7 +239,7 @@ public:
    // END_MATCH_FUN_T
    //
    // BEGIN_CONSTRUCTOR
-   op_hash_table_class(Index n_hash, Index n_op)
+   op_hash_table_t(Index n_hash, Index n_op)
    : n_hash_(n_hash) , n_op_(n_op)
    // END_CONSTRUCTOR
    {  //

@@ -209,7 +209,7 @@ private:
    const Vector<addr_t>& op2arg_index_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_class< addr_t, Value, op_info<Value> >
+   CppAD::local::optimize::op_hash_table_t< addr_t, Value, op_info<Value> >
       hash_table_;
    //
    // op_arg_
