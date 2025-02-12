@@ -14,16 +14,12 @@
 Search For a Matching Previous Value Operator
 #############################################
 
-Constructor
-***********
+previous_op_search
+*******************
 {xrst_literal
    // BEGIN_OP_PREV_OP_SEARCH_T
    // END_OP_PREV_OP_SEARCH_T
 }
-
-prev_op_search
-==============
-This is the object that searches for previous value operators.
 
 tape
 ====
@@ -32,7 +28,7 @@ A reference to *tape* is stored in *op_hash_tale* ; i.e.,
 
 op2arg_index
 ============
-This is a mapping from operator index to corresponding offset in the
+is a mapping from operator index to corresponding offset in the
 tape argument vector *tape*.arg_vec_ .
 
 n_hash_code
@@ -47,28 +43,33 @@ match_op
    // END_MATCH_OP
 }
 
-prev_op_search
-==============
-This is the object that searches for previous value operators.
-
 i_op
 ====
 This is the index of the operator that we are searching for a match.
+The set of previous operators correspond to the values of *i_op*
+in previous calls to match_op.
 
 new_val_index
 =============
 This maps old value indices to new value indices
-for indices less than the first result for the *i_op* operator.
-New value indices are the result of using previous operator matches.
+for the previous operators.
 For arguments that are value indices,
 the new indices are used when checking to see if operators match.
+This must be defined for all the arguments to previous operators.
 
 j_op
 ====
-The return value *j_op* is the lowest operator index that corresponds to a
-match for *i_op* . If it is equal to *i_op* , then this operator has been placed
-in the hash table (for future matches).
-Otherwise *j_op* is less than *i_op* and its results are equivalent to *i_op*.
+is the index of the first previous operator that is a match for *i_op*.
+
+#. If *j_op* is equal to *i_op* , then this operator has been placed
+   in the hash table (for future matches).
+   In this case this operator is required in the new tape.
+
+#. If *j_op* is not equal to *i_op* , then the operators are equivalent
+   and the new operator is not placed in the has table.
+   Before the next call to match_op, the *new_val_index* for the 
+   results of *i_op* should map to the indices for the results of *j_op* 
+   (so that more operators will map during future calls).
 
 size_count
 **********

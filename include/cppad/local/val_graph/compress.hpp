@@ -17,7 +17,7 @@ namespace CppAD { namespace local { namespace val_graph {
 Tape Compression
 ################
 This is :ref:`val_tape_renumber-name` and :ref:`val_tape_dead_code-name`
-in one step. I should be faster, and require more memory,
+in one step. It should be faster, and require more memory,
 than separate execution. (Testing with :ref:`cppad_det_minor.cpp-name`
 indicates that it is only slightly faster.)
 
