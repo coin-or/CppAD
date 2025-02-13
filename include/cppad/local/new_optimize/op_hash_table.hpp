@@ -153,10 +153,10 @@ match_fun
 =========
 see :ref:`op_hash_table_t@match_fun_t`.
 
-index_match
-===========
+i_op_match
+==========
 is the index of a previous operator in a call
-to find_match that matches that matches this operator.
+to find_match that matches this operator.
 If no such operator is found, the return value is equal to *i_op*
 and *i_op* is put in the hash table for future matches.
 
@@ -189,8 +189,8 @@ match_fun
 =========
 see :ref:`op_hash_table_t@match_fun_t` .
 
-index_match
-===========
+i_op_match
+==========
 is the index of a previous operator in a call
 to find_match that matches that matches this operator.
 If no such operator is found, the return value is equal to *i_op*
@@ -334,7 +334,7 @@ public:
       // END_RETURN_HASH_ARG_POD
    }
    // BEGIN_FIND_MATCH_POD
-   // index_match = hash_table.find_match(i_op, pod, info, match_fun)
+   // i_op_match = hash_table.find_match(i_op, pod, info, match_fun)
    Index find_match(
       Index         i_op  ,
       const Pod&    pod       ,
@@ -346,33 +346,33 @@ public:
       // hash_code
       Index hash_code = hash_fun(pod);
       //
-      // index_match
-      Index index_match = i_op;
+      // i_op_match
+      Index i_op_match = i_op;
       //
-      // index_match
+      // i_op_match
       itr_t itr  = itr_t(table_, hash_code);
       while( *itr != n_op_ )
       {  //
          // i_op_check
          Index i_op_check = *itr;
          if( match_fun(i_op, i_op_check, info) )
-            index_match = i_op_check;
+            i_op_match = i_op_check;
          //
          ++itr;
       }
       //
       // table_
-      if( index_match == i_op )
+      if( i_op_match == i_op )
          table_.add_element(hash_code, i_op);
       //
       // BEGIN_RETURN_FIND_MATCH_POD
-      CPPAD_ASSERT_UNKNOWN( index_match < n_op_ )
-      return index_match;
+      CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
+      return i_op_match;
       // END_RETURN_FIND_MATCH_POD
    }
    //
    // BEGIN_FIND_MATCH_ARG
-   // index_match = hash_table.find_match(i_op, op, op_arg, info, match_fun)
+   // i_op_match = hash_table.find_match(i_op, op, op_arg, info, match_fun)
    Index find_match(
       Index                i_op  ,
       Index                op        ,
@@ -387,28 +387,28 @@ public:
       Index hash_code = hash_fun(op, op_arg);
       CPPAD_ASSERT_UNKNOWN( hash_code < n_hash_ );
       //
-      // index_match
-      Index index_match = i_op;
+      // i_op_match
+      Index i_op_match = i_op;
       //
-      // index_match
+      // i_op_match
       itr_t itr  = itr_t(table_, hash_code);
       while( *itr != n_op_ )
       {  //
          // i_op_check
          Index i_op_check = *itr;
          if( match_fun(i_op, i_op_check, info) )
-            index_match = i_op_check;
+            i_op_match = i_op_check;
          //
          ++itr;
       }
       //
       // table_
-      if( index_match == i_op )
+      if( i_op_match == i_op )
          table_.add_element(hash_code, i_op);
       //
       // BEGIN_RETURN_FIND_MATCH_ARG
-      CPPAD_ASSERT_UNKNOWN( index_match < n_op_ )
-      return index_match;
+      CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
+      return i_op_match;
       // END_RETURN_FIND_MATCH_ARG
    }
    //

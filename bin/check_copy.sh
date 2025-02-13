@@ -131,7 +131,7 @@ done
 #
 if [ "$missing" = 'yes' ] || [ "$changed" == 'yes' ]
 then
-   echo 'bin/check_copy.sh: See copyright errors above'
+   echo 'bin/check_copy.sh: The copyright errors above have been fixed'
    echo 'Re-execute bin/check_copy.sh ?'
    exit 1
 fi

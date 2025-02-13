@@ -68,7 +68,8 @@ s| *\t|\t|g
 \${/^[ \\t]*\$/d}
 EOF
 #
-# file
+# changed, file
+changed='no'
 for file in $file_list
 do
    if [ -f "$file" ]
@@ -76,23 +77,14 @@ do
       $sed -f sed.$$ $file > copy.$$
       if ! diff $file copy.$$ > diff.$$
       then
-         echo "original (<) invisible white space removed (>)"
+         changed='yes'
+         echo "$file: original (<) invisible space removed (>)"
          cat diff.$$
-         res=''
-         while [ "$res" != 'yes' ] && [ "$res" != 'no' ]
-         do
-            read -p "Remove invisible white space in $file [yes/no] ?" res
-         done
-         if [ "$res" == 'yes' ]
+         if [ -x $file ]
          then
-            if [ -x $file ]
-            then
-               chmod +x copy.$$
-            fi
-            mv copy.$$ $file
-         else
-            rm copy.$$
+            chmod +x copy.$$
          fi
+         mv copy.$$ $file
       else
          rm copy.$$
       fi
@@ -100,5 +92,11 @@ do
    fi
 done
 rm sed.$$
+if [ "$changed" == 'yes' ]
+then
+   echo 'check_invisible.sh: The invisible white space above have been fixed'
+   echo 'Re-execute bin/check_invisible.sh ?'
+   exit 1
+fi
 echo 'check_invisible.sh: OK'
 exit 0

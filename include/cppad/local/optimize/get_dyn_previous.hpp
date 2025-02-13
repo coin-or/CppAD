@@ -2,12 +2,14 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_DYN_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file get_cexp_info.hpp
 Create operator information tables
 */
+
+# include <cppad/local/new_optimize/prev_dyn_search.hpp>
 
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -117,7 +119,7 @@ This is the old operation sequence.
 
 \param par_usage
 The size of this vector is the number of parameters in the
-operation sequence.i.e., play->nun_var_rec().
+operation sequence.i.e., play->nun_par_rec().
 It is the usage counting previous operator optimization of operators.
 
 \param dyn_previous

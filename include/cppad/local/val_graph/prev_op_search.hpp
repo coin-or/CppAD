@@ -38,37 +38,38 @@ This is the number of possible hash codes in the operator hash table
 
 match_op
 ********
-{xrst_literal
-   // BEGIN_MATCH_OP
-   // END_MATCH_OP
+{xrst_literal ,
+   // BEGIN_MATCH_OP , // END_MATCH_OP
+   // BEGIN_RETURN_MATCH_OP , // END_RETURN_MATCH_OP
 }
 
 i_op
-
-This is the index of the operator that we are searching for a match.
+====
+We are searching for a match for the operator with this index.
 The set of previous operators correspond to the values of *i_op*
 in previous calls to match_op.
 
-new_val_index
+new_var_index
 =============
-This maps old value indices to new value indices
+This maps old variable indices to new variable indices
 for the previous operators.
-For arguments that are value indices,
+A variable in this context is a dynamic parameter.
+For arguments that are variables,
 the new indices are used when checking to see if operators match.
 This must be defined for all the arguments to previous operators.
 
-j_op
-====
+i_op_match
+==========
 is the index of the first previous operator that is a match for *i_op*.
 
-#. If *j_op* is equal to *i_op* , then this operator has been placed
+#. If *i_op_match* is equal to *i_op* , then this operator has been placed
    in the hash table (for future matches).
    In this case this operator is required in the new tape.
 
-#. If *j_op* is not equal to *i_op* , then the operators are equivalent
+#. If *i_op_match* is not equal to *i_op* , then the operators are equivalent
    and the new operator is not placed in the has table.
-   Before the next call to match_op, the *new_val_index* for the
-   results of *i_op* should map to the indices for the results of *j_op*
+   Before the next call to match_op, the *new_var_index* for the
+   results of *i_op* should map to the indices for the results of *i_op_match*
    (so that more operators will map during future calls).
 
 size_count
@@ -125,11 +126,15 @@ private:
    // op2arg_index_
    const Vector<addr_t>& op2arg_index_;
    //
+   // n_op_
+   const addr_t n_op_;
+   //
    // hash_table_
    CppAD::local::optimize::op_hash_table_t<addr_t, Value, op_info_t>
       hash_table_;
    //
    // op_arg_
+   //  a temporary put here to avoid reallocating memory each time it is used
    CppAD::vector<addr_t> op_arg_;
    //
    static bool match_fun(
@@ -149,7 +154,8 @@ public:
    // END_OP_PREV_OP_SEARCH_T
    : tape_( tape )
    , op2arg_index_(op2arg_index)
-   , hash_table_( n_hash_code, tape.n_op() )
+   , n_op_( addr_t( tape.n_op() ) )
+   , hash_table_( n_hash_code, n_op_ )
    { }
    // -------------------------------------------------------------------------
    // BEGIN_SIZE_COUNT
@@ -160,10 +166,10 @@ public:
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
-   // j_op = prev_op_search.match_op(i_op, new_val_index)
-   addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
-   // END_MATCH_OP
-   {  assert( i_op < hash_table_.n_op() );
+   // i_match_op = prev_op_search.match_op(i_op, new_var_index)
+   addr_t match_op(addr_t i_op, const Vector<addr_t>& new_var_index)
+   {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
+      // END_MATCH_OP
       //
       // arg_vec, con_vec
       const Vector<addr_t>&    arg_vec     = tape_.arg_vec();
@@ -188,13 +194,13 @@ public:
       }
       //
       // info
-      op_info_t info(tape_, op2arg_index_, new_val_index);
+      op_info_t info(tape_, op2arg_index_, new_var_index);
       //
-      // k_op
-      addr_t j_op;
+      // i_op_match
+      addr_t i_op_match;
       if( op_enum == con_op_enum )
       {  Value value = con_vec[ arg_vec[arg_index] ];
-         j_op = hash_table_.find_match(i_op, value, info, match_fun);
+         i_op_match = hash_table_.find_match(i_op, value, info, match_fun);
       }
       else
       {  // n_before, n_after
@@ -208,17 +214,20 @@ public:
          // op_arg_
          for(addr_t k = 0; k < n_before; ++k)
             op_arg_[k] = arg_vec[arg_index + k];
-         for(addr_t k = n_before; k < n_arg - n_after; ++k)
-            op_arg_[k] =new_val_index[ arg_vec[arg_index + k] ];
-         for(addr_t k = n_arg - n_after; k < n_arg; ++k)
+         for(addr_t k  = n_before; k < n_arg - n_after; ++k)
+            op_arg_[k] = new_var_index[ arg_vec[arg_index + k] ];
+         for(addr_t k  = n_arg - n_after; k < n_arg; ++k)
             op_arg_[k] = arg_vec[arg_index + k];
          //
-         // k_op
-         j_op = hash_table_.find_match(
-            i_op, op_enum, op_arg_, info, match_fun
+         // i_op_match
+         i_op_match = hash_table_.find_match(
+            i_op, addr_t(op_enum), op_arg_, info, match_fun
          );
       }
-      return j_op;
+      // BEGIN_RETURN_MATCH_OP
+      CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
+      return i_op_match;
+      // END_RETURN_MATCH_OP
    }
 };
 //
@@ -295,11 +304,11 @@ bool prev_op_search_t<Value>::match_fun(
          //
          val_search = new_arg_index[ arg_vec[arg_search + 0] ];
          val_check  = new_arg_index[ arg_vec[arg_check + 1] ];
-         match = val_search == val_check;
+         match      = val_search == val_check;
          //
          val_search = new_arg_index[ arg_vec[arg_search + 1] ];
          val_check  = new_arg_index[ arg_vec[arg_check + 0] ];
-         match = val_search == val_check;
+         match     &= val_search == val_check;
       }
    }
    return match;

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -443,6 +443,7 @@ inline size_t num_non_par_arg_dyn(op_code_dyn op)
    switch(op)
    {  case atom_dyn:
       num = 5;
+      // 2DO: This operator has an extra non-parameter arbument at the end
       break;
 
       case cond_exp_dyn:
