@@ -78,12 +78,12 @@ match_fun
 =========
 is a function with type match_fun_t.
 
-index_search
-============
+i_op_search
+===========
 is the index for the operator that we a looking to match.
 
-index_check
-===========
+i_op_check
+==========
 is the candidate match.
 
 info
@@ -92,8 +92,8 @@ is information that is passed through match_fun and otherwise ignored.
 
 match
 =====
-is true (false) if *index_check* is a match (is not a match)
-for *index_search* .
+is true (false) if *i_op_check* is a match (is not a match)
+for *i_op_search* .
 
 hash_fun: pod
 *************
@@ -135,8 +135,8 @@ find_match: pod
    // BEGIN_RETURN_FIND_MATCH_POD , // END_RETURN_FIND_MATCH_POD
 }
 
-index_op
-========
+i_op
+====
 is the index corresponding to this operator.
 
 pod
@@ -157,8 +157,8 @@ index_match
 ===========
 is the index of a previous operator in a call
 to find_match that matches that matches this operator.
-If no such operator is found, the return value is equal to *index_op*
-and *index_op* is put in the hash table for future matches.
+If no such operator is found, the return value is equal to *i_op*
+and *i_op* is put in the hash table for future matches.
 
 find_match: arg
 ***************
@@ -167,8 +167,8 @@ find_match: arg
    // BEGIN_RETURN_FIND_MATCH_ARG , // END_RETURN_FIND_MATCH_ARG
 }
 
-index_op
-========
+i_op
+====
 is the index corresponding to this operator.
 
 op
@@ -193,8 +193,8 @@ index_match
 ===========
 is the index of a previous operator in a call
 to find_match that matches that matches this operator.
-If no such operator is found, the return value is equal to *index_op*
-and *index_op* is put in the hash table for future matches.
+If no such operator is found, the return value is equal to *i_op*
+and *i_op* is put in the hash table for future matches.
 
 different_count
 ***************
@@ -268,9 +268,9 @@ public:
    {  return n_op_; }
    //
    // BEGIN_MATCH_FUN_T
-   // match = match_fun(index_search, index_check, info)
+   // match = match_fun(i_op_search, i_op_check, info)
    typedef bool match_fun_t(
-      Index index_search, Index index_check, const Info& info
+      Index i_op_search, Index i_op_check, const Info& info
    );
    // END_MATCH_FUN_T
    //
@@ -334,36 +334,36 @@ public:
       // END_RETURN_HASH_ARG_POD
    }
    // BEGIN_FIND_MATCH_POD
-   // index_match = hash_table.find_match(index_op, pod, info, match_fun)
+   // index_match = hash_table.find_match(i_op, pod, info, match_fun)
    Index find_match(
-      Index         index_op  ,
+      Index         i_op  ,
       const Pod&    pod       ,
       const Info&   info      ,
       match_fun_t   match_fun )
-   {  CPPAD_ASSERT_UNKNOWN( index_op < n_op_ )
+   {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ )
       // END_FIND_MATCH_POD
       //
       // hash_code
       Index hash_code = hash_fun(pod);
       //
       // index_match
-      Index index_match = index_op;
+      Index index_match = i_op;
       //
       // index_match
       itr_t itr  = itr_t(table_, hash_code);
       while( *itr != n_op_ )
       {  //
-         // index_check
-         Index index_check = *itr;
-         if( match_fun(index_op, index_check, info) )
-            index_match = index_check;
+         // i_op_check
+         Index i_op_check = *itr;
+         if( match_fun(i_op, i_op_check, info) )
+            index_match = i_op_check;
          //
          ++itr;
       }
       //
       // table_
-      if( index_match == index_op )
-         table_.add_element(hash_code, index_op);
+      if( index_match == i_op )
+         table_.add_element(hash_code, i_op);
       //
       // BEGIN_RETURN_FIND_MATCH_POD
       CPPAD_ASSERT_UNKNOWN( index_match < n_op_ )
@@ -372,15 +372,15 @@ public:
    }
    //
    // BEGIN_FIND_MATCH_ARG
-   // index_match = hash_table.find_match(index_op, op, op_arg, info, match_fun)
+   // index_match = hash_table.find_match(i_op, op, op_arg, info, match_fun)
    Index find_match(
-      Index                index_op  ,
+      Index                i_op  ,
       Index                op        ,
       CppAD::vector<Index> op_arg    ,
       const Info&          info      ,
       match_fun_t          match_fun )
 
-   {  CPPAD_ASSERT_UNKNOWN( index_op < n_op_ );
+   {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_FIND_MATCH_ARG
       //
       // hash_code
@@ -388,23 +388,23 @@ public:
       CPPAD_ASSERT_UNKNOWN( hash_code < n_hash_ );
       //
       // index_match
-      Index index_match = index_op;
+      Index index_match = i_op;
       //
       // index_match
       itr_t itr  = itr_t(table_, hash_code);
       while( *itr != n_op_ )
       {  //
-         // index_check
-         Index index_check = *itr;
-         if( match_fun(index_op, index_check, info) )
-            index_match = index_check;
+         // i_op_check
+         Index i_op_check = *itr;
+         if( match_fun(i_op, i_op_check, info) )
+            index_match = i_op_check;
          //
          ++itr;
       }
       //
       // table_
-      if( index_match == index_op )
-         table_.add_element(hash_code, index_op);
+      if( index_match == i_op )
+         table_.add_element(hash_code, i_op);
       //
       // BEGIN_RETURN_FIND_MATCH_ARG
       CPPAD_ASSERT_UNKNOWN( index_match < n_op_ )

@@ -15,7 +15,7 @@ Search For a Matching Previous Value Operator
 #############################################
 
 previous_op_search
-*******************
+******************
 {xrst_literal
    // BEGIN_OP_PREV_OP_SEARCH_T
    // END_OP_PREV_OP_SEARCH_T
@@ -44,7 +44,7 @@ match_op
 }
 
 i_op
-====
+
 This is the index of the operator that we are searching for a match.
 The set of previous operators correspond to the values of *i_op*
 in previous calls to match_op.
@@ -67,8 +67,8 @@ is the index of the first previous operator that is a match for *i_op*.
 
 #. If *j_op* is not equal to *i_op* , then the operators are equivalent
    and the new operator is not placed in the has table.
-   Before the next call to match_op, the *new_val_index* for the 
-   results of *i_op* should map to the indices for the results of *j_op* 
+   Before the next call to match_op, the *new_val_index* for the
+   results of *i_op* should map to the indices for the results of *j_op*
    (so that more operators will map during future calls).
 
 size_count
@@ -133,8 +133,8 @@ private:
    CppAD::vector<addr_t> op_arg_;
    //
    static bool match_fun(
-      addr_t                 index_search ,
-      addr_t                 index_check  ,
+      addr_t                 i_op_search ,
+      addr_t                 i_op_check  ,
       const op_info_t&       info
    );
    //
@@ -225,9 +225,9 @@ public:
 // match_fun
 template <class Value>
 bool prev_op_search_t<Value>::match_fun(
-   addr_t                 index_search ,
-   addr_t                 index_check  ,
-   const op_info_t&       info         )
+   addr_t                 i_op_search ,
+   addr_t                 i_op_check  ,
+   const op_info_t&       info        )
 {  //
    // tape, op2arg_index
    const tape_t<Value>&  tape          = info.tape_;
@@ -235,8 +235,8 @@ bool prev_op_search_t<Value>::match_fun(
    const Vector<addr_t>& new_arg_index = info.new_arg_index_;
    //
    // op_ptr, check_ptr
-   const base_op_t<Value>* ptr_search = tape.base_op_ptr(index_search);
-   const base_op_t<Value>* ptr_check  = tape.base_op_ptr(index_check);
+   const base_op_t<Value>* ptr_search = tape.base_op_ptr(i_op_search);
+   const base_op_t<Value>* ptr_check  = tape.base_op_ptr(i_op_check);
    //
    // enum_op
    op_enum_t enum_op = ptr_search->op_enum();
@@ -248,8 +248,8 @@ bool prev_op_search_t<Value>::match_fun(
    const Vector<Value>&   con_vec = tape.con_vec();
    //
    // arg_search, arg_check
-   addr_t arg_search   = op2arg_index[index_search];
-   addr_t arg_check    = op2arg_index[index_check];
+   addr_t arg_search   = op2arg_index[i_op_search];
+   addr_t arg_check    = op2arg_index[i_op_check];
    //
    // n_arg
    addr_t n_arg  = ptr_search->n_arg(arg_search, arg_vec);
