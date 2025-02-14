@@ -104,21 +104,8 @@ template <class Value>
 class prev_op_search_t {
 private:
    //
-   // op_info_t
-   struct op_info_t {
-      const tape_t<Value>&  tape_;
-      const Vector<addr_t>& op2arg_index_;
-      const Vector<addr_t>& new_arg_index_;
-      //
-      op_info_t(
-         const tape_t<Value>&  tape          ,
-         const Vector<addr_t>& op2arg_index  ,
-         const Vector<addr_t>& new_arg_index )
-      : tape_( tape )
-      , op2arg_index_( op2arg_index )
-      , new_arg_index_( new_arg_index )
-      { }
-   };
+   // info_t
+   typedef prev_op_search_t& info_t;
    //
    // tape_
    const tape_t<Value>& tape_;
@@ -130,7 +117,7 @@ private:
    const addr_t n_op_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_t<addr_t, Value, op_info_t>
+   CppAD::local::optimize::op_hash_table_t<addr_t, Value, info_t>
       hash_table_;
    //
    // op_arg_
@@ -140,8 +127,11 @@ private:
    static bool match_fun(
       addr_t                 i_op_search ,
       addr_t                 i_op_check  ,
-      const op_info_t&       info
+      const info_t&          info
    );
+   //
+   // new_var_index
+   const Vector<addr_t>* new_var_index_;
    //
 public:
    // -------------------------------------------------------------------------
@@ -156,7 +146,8 @@ public:
    , op2arg_index_(op2arg_index)
    , n_op_( addr_t( tape.n_op() ) )
    , hash_table_( n_hash_code, n_op_ )
-   { }
+   {  new_var_index_ = nullptr;
+   }
    // -------------------------------------------------------------------------
    // BEGIN_SIZE_COUNT
    // size_count = prev_op_search.size_count()
@@ -193,14 +184,14 @@ public:
          }
       }
       //
-      // info
-      op_info_t info(tape_, op2arg_index_, new_var_index);
+      // new_var_index_
+      new_var_index_ = &new_var_index;
       //
       // i_op_match
       addr_t i_op_match;
       if( op_enum == con_op_enum )
       {  Value value = con_vec[ arg_vec[arg_index] ];
-         i_op_match = hash_table_.find_match(i_op, value, info, match_fun);
+         i_op_match = hash_table_.find_match(i_op, value, *this, match_fun);
       }
       else
       {  // n_before, n_after
@@ -221,9 +212,13 @@ public:
          //
          // i_op_match
          i_op_match = hash_table_.find_match(
-            i_op, addr_t(op_enum), op_arg_, info, match_fun
+            i_op, addr_t(op_enum), op_arg_, *this, match_fun
          );
       }
+      //
+      // new_var_index_
+      new_var_index_ = nullptr;
+      //
       // BEGIN_RETURN_MATCH_OP
       CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
       return i_op_match;
@@ -234,14 +229,14 @@ public:
 // match_fun
 template <class Value>
 bool prev_op_search_t<Value>::match_fun(
-   addr_t                 i_op_search ,
-   addr_t                 i_op_check  ,
-   const op_info_t&       info        )
+   addr_t                 i_op_search    ,
+   addr_t                 i_op_check     ,
+   const info_t&          prev_op_search )
 {  //
    // tape, op2arg_index
-   const tape_t<Value>&  tape          = info.tape_;
-   const Vector<addr_t>& op2arg_index  = info.op2arg_index_;
-   const Vector<addr_t>& new_arg_index = info.new_arg_index_;
+   const tape_t<Value>&    tape           = prev_op_search.tape_;
+   const Vector<addr_t>& op2arg_index     = prev_op_search.op2arg_index_;
+   const Vector<addr_t>& new_arg_index    = *( prev_op_search.new_var_index_ );
    //
    // op_ptr, check_ptr
    const base_op_t<Value>* ptr_search = tape.base_op_ptr(i_op_search);
