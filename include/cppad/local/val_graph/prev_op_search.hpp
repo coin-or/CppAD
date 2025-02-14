@@ -49,12 +49,11 @@ We are searching for a match for the operator with this index.
 The set of previous operators correspond to the values of *i_op*
 in previous calls to match_op.
 
-new_var_index
+new_val_index
 =============
-This maps old variable indices to new variable indices
+This maps old value indices to new value indices
 for the previous operators.
-A variable in this context is a dynamic parameter.
-For arguments that are variables,
+For operator arguments that are value indices,
 the new indices are used when checking to see if operators match.
 This must be defined for all the arguments to previous operators.
 
@@ -68,7 +67,7 @@ is the index of the first previous operator that is a match for *i_op*.
 
 #. If *i_op_match* is not equal to *i_op* , then the operators are equivalent
    and the new operator is not placed in the has table.
-   Before the next call to match_op, the *new_var_index* for the
+   Before the next call to match_op, the *new_val_index* for the
    results of *i_op* should map to the indices for the results of *i_op_match*
    (so that more operators will map during future calls).
 
@@ -130,8 +129,8 @@ private:
       const info_t&          info
    );
    //
-   // new_var_index
-   const Vector<addr_t>* new_var_index_;
+   // new_val_index_
+   const Vector<addr_t>* new_val_index_;
    //
 public:
    // -------------------------------------------------------------------------
@@ -146,7 +145,7 @@ public:
    , op2arg_index_(op2arg_index)
    , n_op_( addr_t( tape.n_op() ) )
    , hash_table_( n_hash_code, n_op_ )
-   {  new_var_index_ = nullptr;
+   {  new_val_index_ = nullptr;
    }
    // -------------------------------------------------------------------------
    // BEGIN_SIZE_COUNT
@@ -157,8 +156,8 @@ public:
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
-   // i_match_op = prev_op_search.match_op(i_op, new_var_index)
-   addr_t match_op(addr_t i_op, const Vector<addr_t>& new_var_index)
+   // i_match_op = prev_op_search.match_op(i_op, new_val_index)
+   addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_MATCH_OP
       //
@@ -184,8 +183,8 @@ public:
          }
       }
       //
-      // new_var_index_
-      new_var_index_ = &new_var_index;
+      // new_val_index_
+      new_val_index_ = &new_val_index;
       //
       // i_op_match
       addr_t i_op_match;
@@ -206,7 +205,7 @@ public:
          for(addr_t k = 0; k < n_before; ++k)
             op_arg_[k] = arg_vec[arg_index + k];
          for(addr_t k  = n_before; k < n_arg - n_after; ++k)
-            op_arg_[k] = new_var_index[ arg_vec[arg_index + k] ];
+            op_arg_[k] = new_val_index[ arg_vec[arg_index + k] ];
          for(addr_t k  = n_arg - n_after; k < n_arg; ++k)
             op_arg_[k] = arg_vec[arg_index + k];
          //
@@ -216,8 +215,8 @@ public:
          );
       }
       //
-      // new_var_index_
-      new_var_index_ = nullptr;
+      // new_val_index_
+      new_val_index_ = nullptr;
       //
       // BEGIN_RETURN_MATCH_OP
       CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
@@ -234,9 +233,9 @@ bool prev_op_search_t<Value>::match_fun(
    const info_t&          prev_op_search )
 {  //
    // tape, op2arg_index
-   const tape_t<Value>&    tape           = prev_op_search.tape_;
-   const Vector<addr_t>& op2arg_index     = prev_op_search.op2arg_index_;
-   const Vector<addr_t>& new_arg_index    = *( prev_op_search.new_var_index_ );
+   const tape_t<Value>&    tape        = prev_op_search.tape_;
+   const Vector<addr_t>& op2arg_index  = prev_op_search.op2arg_index_;
+   const Vector<addr_t>& new_val_index = *( prev_op_search.new_val_index_ );
    //
    // op_ptr, check_ptr
    const base_op_t<Value>* ptr_search = tape.base_op_ptr(i_op_search);
@@ -285,8 +284,8 @@ bool prev_op_search_t<Value>::match_fun(
    //
    // match
    for(addr_t k = n_before; k < n_arg - n_after; ++k)
-   {  addr_t val_search  = new_arg_index[ arg_vec[arg_search + k] ];
-      addr_t val_check   = new_arg_index[ arg_vec[arg_check + k] ];
+   {  addr_t val_search  = new_val_index[ arg_vec[arg_search + k] ];
+      addr_t val_check   = new_val_index[ arg_vec[arg_check + k] ];
       match &= val_search == val_check;
    }
    //
@@ -297,12 +296,12 @@ bool prev_op_search_t<Value>::match_fun(
       if( communative )
       {  addr_t val_search, val_check;
          //
-         val_search = new_arg_index[ arg_vec[arg_search + 0] ];
-         val_check  = new_arg_index[ arg_vec[arg_check + 1] ];
+         val_search = new_val_index[ arg_vec[arg_search + 0] ];
+         val_check  = new_val_index[ arg_vec[arg_check + 1] ];
          match      = val_search == val_check;
          //
-         val_search = new_arg_index[ arg_vec[arg_search + 1] ];
-         val_check  = new_arg_index[ arg_vec[arg_check + 0] ];
+         val_search = new_val_index[ arg_vec[arg_search + 1] ];
+         val_check  = new_val_index[ arg_vec[arg_check + 0] ];
          match     &= val_search == val_check;
       }
    }
