@@ -106,11 +106,11 @@ private:
    // vector
    template <class Value_t> using vector = CppAD::vector<Value_t>;
    //
-   // Value
-   typedef typename Tape::value_type Value;
+   // value_t
+   typedef typename Tape::value_t value_t;
    //
    // base_op_t
-   typedef CppAD::local::val_graph::base_op_t<Value> base_op_t;
+   typedef CppAD::local::val_graph::base_op_t<value_t> base_op_t;
    //
    // op_enum_t
    typedef CppAD::local::val_graph::op_enum_t op_enum_t;
@@ -128,7 +128,7 @@ private:
    const addr_t n_op_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_t<addr_t, Value, info_t>
+   CppAD::local::optimize::op_hash_table_t<addr_t, value_t, info_t>
       hash_table_;
    //
    // op_arg_
@@ -175,7 +175,7 @@ public:
       //
       // arg_vec, con_vec
       const vector<addr_t>&    arg_vec     = tape_.arg_vec();
-      const vector<Value>&     con_vec     = tape_.con_vec();
+      const vector<value_t>&   con_vec     = tape_.con_vec();
       //
       // op_ptr, op_enum
       const base_op_t* op_ptr  = tape_.base_op_ptr(i_op);
@@ -201,8 +201,8 @@ public:
       // i_op_match
       addr_t i_op_match;
       if( op_enum == CppAD::local::val_graph::con_op_enum )
-      {  Value value = con_vec[ arg_vec[arg_index] ];
-         i_op_match = hash_table_.find_match(i_op, value, *this, match_fun);
+      {  value_t value = con_vec[ arg_vec[arg_index] ];
+         i_op_match    = hash_table_.find_match(i_op, value, *this, match_fun);
       }
       else
       {  // n_before, n_after
@@ -259,8 +259,8 @@ bool prev_op_search_t<Tape>::match_fun(
       return false;
    //
    // arg_vec, con_vec
-   const vector<addr_t>&  arg_vec = tape.arg_vec();
-   const vector<Value>&   con_vec = tape.con_vec();
+   const vector<addr_t>&    arg_vec = tape.arg_vec();
+   const vector<value_t>&   con_vec = tape.con_vec();
    //
    // arg_search, arg_check
    addr_t arg_search   = op2arg_index[i_op_search];
@@ -274,8 +274,8 @@ bool prev_op_search_t<Tape>::match_fun(
    // con_op_enum
    if( enum_op == CppAD::local::val_graph::con_op_enum )
    {  //
-      const Value& c_search = con_vec[ arg_vec[arg_search] ];
-      const Value& c_check  = con_vec[ arg_vec[arg_check] ];
+      const value_t& c_search = con_vec[ arg_vec[arg_search] ];
+      const value_t& c_check  = con_vec[ arg_vec[arg_check] ];
       return IdenticalEqualCon(c_search, c_check);
    }
    //

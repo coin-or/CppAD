@@ -217,8 +217,9 @@ private :
 # endif
    //
 public :
-   // value_type
-   typedef Value value_type;
+   // value_t
+   typedef Value value_t;
+   //
    //
    // default constructor
    tape_t(void)
