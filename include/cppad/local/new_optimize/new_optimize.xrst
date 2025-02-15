@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin new_optimize dev}
+
+The new Optimizer
+#################
+These routines are a generalization of the val_graph optimizer
+to optimize value tapes, parameter tapes, and variable tapes.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/new_optimize/op_hash_table.hpp
+   include/cppad/local/new_optimize/prev_op_search.hpp
+}
+
+{xrst_end new_optimize}

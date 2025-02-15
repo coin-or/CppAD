@@ -99,7 +99,7 @@ namespace CppAD { namespace local {
 namespace CppAD { namespace local { namespace optimize {
 //
 // prev_op_search_t
-template <class Tape>
+template <class Op_info>
 class prev_op_search_t {
 private:
    //
@@ -107,7 +107,7 @@ private:
    template <class Value_t> using vector = CppAD::vector<Value_t>;
    //
    // value_t
-   typedef typename Tape::value_t value_t;
+   typedef typename Op_info::value_t value_t;
    //
    // base_op_t
    typedef CppAD::local::val_graph::base_op_t<value_t> base_op_t;
@@ -116,10 +116,7 @@ private:
    typedef CppAD::local::val_graph::op_enum_t op_enum_t;
    //
    // info_t
-   typedef prev_op_search_t info_t;
-   //
-   // tape_
-   const Tape& tape_;
+   typedef prev_op_search_t search_info_t;
    //
    // op2arg_index_
    const vector<addr_t>& op2arg_index_;
@@ -127,8 +124,11 @@ private:
    // n_op_
    const addr_t n_op_;
    //
+   // op_info_
+   Op_info& op_info_;
+   //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_t<addr_t, value_t, info_t>
+   CppAD::local::optimize::op_hash_table_t<addr_t, value_t, search_info_t>
       hash_table_;
    //
    // op_arg_
@@ -138,7 +138,7 @@ private:
    static bool match_fun(
       addr_t                 i_op_search ,
       addr_t                 i_op_check  ,
-      const info_t&          info
+      const search_info_t&   search_info
    );
    //
    // new_val_index_
@@ -149,13 +149,13 @@ public:
    // BEGIN_OP_PREV_OP_SEARCH_T
    // prev_op_search_t prev_op_search(tape, op2arg_index, n_hash_code)
    prev_op_search_t(
-         const Tape&              tape         ,
+         Op_info&                 op_info      ,
          const vector<addr_t>&    op2arg_index ,
          addr_t                   n_hash_code  )
    // END_OP_PREV_OP_SEARCH_T
-   : tape_( tape )
-   , op2arg_index_(op2arg_index)
-   , n_op_( addr_t( tape.n_op() ) )
+   : op2arg_index_(op2arg_index)
+   , n_op_( addr_t( op_info.n_op() ) )
+   , op_info_( op_info )
    , hash_table_( n_hash_code, n_op_ )
    {  new_val_index_ = nullptr;
    }
@@ -174,20 +174,22 @@ public:
       // END_MATCH_OP
       //
       // arg_vec, con_vec
-      const vector<addr_t>&    arg_vec     = tape_.arg_vec();
-      const vector<value_t>&   con_vec     = tape_.con_vec();
+      const vector<addr_t>&    arg_vec     = op_info_.arg_vec();
+      const vector<value_t>&   con_vec     = op_info_.con_vec();
       //
-      // op_ptr, op_enum
-      const base_op_t* op_ptr  = tape_.base_op_ptr(i_op);
-      op_enum_t                op_enum = op_ptr->op_enum();
+      // op_info_
+      op_info_.set(i_op);
+      //
+      // op_enum
+      op_enum_t  op_enum = op_info_.get_op_enum();
       //
       // arg_index, n_arg
-      addr_t arg_index = op2arg_index_[i_op];
-      addr_t n_arg     = op_ptr->n_arg(arg_index, arg_vec);
+      addr_t arg_index = op_info_.get_arg_index();
+      addr_t n_arg     = op_info_.get_n_arg();
       //
       // nan
       if( op_enum == CppAD::local::val_graph::con_op_enum )
-      {  if( CppAD::isnan( con_vec[ arg_vec[arg_index] ] ) )
+      {  if( CppAD::isnan( op_info_.get_value() ) )
          {  CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( arg_vec[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( CppAD::isnan( con_vec[0] ) );
@@ -206,8 +208,8 @@ public:
       }
       else
       {  // n_before, n_after
-         addr_t n_before = op_ptr->n_before();
-         addr_t n_after  = op_ptr->n_after();
+         addr_t n_before = op_info_.get_n_before();
+         addr_t n_after  = op_info_.get_n_after();
          //
          // op_arg_
          op_arg_.resize(0);
@@ -238,56 +240,61 @@ public:
 };
 //
 // match_fun
-template <class Tape>
-bool prev_op_search_t<Tape>::match_fun(
+template <class Op_info>
+bool prev_op_search_t<Op_info>::match_fun(
    addr_t                 i_op_search    ,
    addr_t                 i_op_check     ,
-   const info_t&          prev_op_search )
+   const search_info_t&   prev_op_search )
 {  //
-   // tape, op2arg_index
-   const Tape&             tape        = prev_op_search.tape_;
-   const vector<addr_t>& op2arg_index  = prev_op_search.op2arg_index_;
+   //
+   // new_val_index
    const vector<addr_t>& new_val_index = *( prev_op_search.new_val_index_ );
    //
-   // op_ptr, check_ptr
-   const base_op_t* ptr_search = tape.base_op_ptr(i_op_search);
-   const base_op_t* ptr_check  = tape.base_op_ptr(i_op_check);
-   //
-   // enum_op
-   op_enum_t enum_op = ptr_search->op_enum();
-   if( enum_op != ptr_check->op_enum() )
-      return false;
+   // op_info
+   Op_info& op_info = prev_op_search.op_info_;
    //
    // arg_vec, con_vec
-   const vector<addr_t>&    arg_vec = tape.arg_vec();
-   const vector<value_t>&   con_vec = tape.con_vec();
+   const vector<addr_t>&    arg_vec = op_info.arg_vec();
+   const vector<value_t>&   con_vec = op_info.con_vec();
    //
-   // arg_search, arg_check
-   addr_t arg_search   = op2arg_index[i_op_search];
-   addr_t arg_check    = op2arg_index[i_op_check];
+   // op_info
+   op_info.set(i_op_search);
    //
-   // n_arg
-   addr_t n_arg  = ptr_search->n_arg(arg_search, arg_vec);
-   if( n_arg != ptr_check->n_arg(arg_check, arg_vec) )
+   // arg_search
+   addr_t arg_search = op_info.get_arg_index();
+   //
+   // op_enum, n_arg, n_before, n_after
+   op_enum_t op_enum        = op_info.get_op_enum();
+   addr_t    n_arg          = op_info.get_n_arg();
+   addr_t    n_before       = op_info.get_n_before();
+   addr_t    n_after        = op_info.get_n_after();
+   //
+   // op_info
+   op_info.set(i_op_check);
+   //
+   // arg_check
+   addr_t arg_check = op_info.get_arg_index();
+   //
+   // check
+   // op_enum, n_arg, n_before, n_after
+   if( op_enum != op_info.get_op_enum() )
+      return false;
+   if( n_arg != op_info.get_n_arg() )
+      return false;
+   if( n_arg != op_info.get_n_arg() )
+      return false;
+   if( n_before != op_info.get_n_before() )
+      return false;
+   if( n_after != op_info.get_n_after() )
       return false;
    //
    // con_op_enum
-   if( enum_op == CppAD::local::val_graph::con_op_enum )
+   if( op_enum == CppAD::local::val_graph::con_op_enum )
    {  //
       const value_t& c_search = con_vec[ arg_vec[arg_search] ];
       const value_t& c_check  = con_vec[ arg_vec[arg_check] ];
       return IdenticalEqualCon(c_search, c_check);
    }
-   //
-   // n_before
-   addr_t n_before = ptr_search->n_before();
-   if( n_before != ptr_check->n_before() )
-      return false;
-   //
-   // n_after
-   addr_t n_after = ptr_search->n_after();
-   if( n_after != ptr_check->n_after() )
-      return false;
    //
    // match
    bool match = true;
@@ -302,9 +309,13 @@ bool prev_op_search_t<Tape>::match_fun(
    }
    //
    // match
+   for(addr_t k = 0; k < n_before; ++k)
+      match &= arg_vec[arg_search + k] == arg_vec[arg_check + k];
+   //
+   // match
    if( ! match )
-   {  bool communative = enum_op == CppAD::local::val_graph::add_op_enum;
-      communative     |= enum_op == CppAD::local::val_graph::mul_op_enum;
+   {  bool communative = op_enum == CppAD::local::val_graph::add_op_enum;
+      communative     |= op_enum == CppAD::local::val_graph::mul_op_enum;
       if( communative )
       {  addr_t val_search, val_check;
          //

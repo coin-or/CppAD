@@ -135,8 +135,6 @@ the return value is true (false).
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/new_optimize/op_hash_table.hpp
-   include/cppad/local/new_optimize/prev_op_search.hpp
    include/cppad/local/optimize/extract_option.hpp
    include/cppad/local/optimize/cexp_info.hpp
    include/cppad/local/optimize/get_cexp_info.hpp

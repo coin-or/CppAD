@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/new_optimize/prev_op_search.hpp>
+# include <cppad/local/val_graph/op_info.hpp>
 
 /*
 -------------------------------------------------------------------------------
@@ -91,9 +92,10 @@ void tape_t<Value>::renumber(void)
    }
    //
    // prev_op_search
+   op_info_t<tape_t> op_info(*this);
    addr_t n_hash_code = 1 + (n_val_ / 2);
-   CppAD::local::optimize::prev_op_search_t<tape_t>
-      prev_op_search(*this, op2arg_index, n_hash_code);
+   CppAD::local::optimize::prev_op_search_t<op_info_t<tape_t> >
+      prev_op_search(op_info, op2arg_index, n_hash_code);
    //
    // new_val_index
    // value used for operators that are not replaced.
