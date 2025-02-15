@@ -176,7 +176,6 @@ Operations on Tape
    include/cppad/local/val_graph/op2arg_index.hpp
    include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/option.hpp
-   include/cppad/local/val_graph/prev_op_search.hpp
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/record_new.hpp
    include/cppad/local/val_graph/renumber.hpp
@@ -218,6 +217,9 @@ private :
 # endif
    //
 public :
+   // value_type
+   typedef Value value_type;
+   //
    // default constructor
    tape_t(void)
    {  initialize_option(); }
@@ -516,7 +518,6 @@ public :
 # include <cppad/local/val_graph/fold_con.hpp>
 # include <cppad/local/val_graph/op2arg_index.hpp>
 # include <cppad/local/val_graph/option.hpp>
-# include <cppad/local/val_graph/prev_op_search.hpp>
 # include <cppad/local/val_graph/record.hpp>
 # include <cppad/local/val_graph/record_new.hpp>
 # include <cppad/local/val_graph/renumber.hpp>

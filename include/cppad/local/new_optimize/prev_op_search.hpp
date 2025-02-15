@@ -1,5 +1,5 @@
-# ifndef  CPPAD_LOCAL_VAL_GRAPH_PREV_OP_SEARCH_HPP
-# define  CPPAD_LOCAL_VAL_GRAPH_PREV_OP_SEARCH_HPP
+# ifndef  CPPAD_LOCAL_NEW_OPTIMIZE_PREV_OP_SEARCH_HPP
+# define  CPPAD_LOCAL_NEW_OPTIMIZE_PREV_OP_SEARCH_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-25 Bradley M. Bell
@@ -96,18 +96,30 @@ namespace CppAD { namespace local {
 # endif
 } }
 
-namespace CppAD { namespace local { namespace val_graph {
+namespace CppAD { namespace local { namespace optimize {
 //
 // prev_op_search_t
-template <class Value>
+template <class Tape>
 class prev_op_search_t {
 private:
+   //
+   // Vector
+   template <class Value_t> using Vector = CppAD::vector<Value_t>;
+   //
+   // Value
+   typedef typename Tape::value_type Value;
+   //
+   // base_op_t
+   typedef CppAD::local::val_graph::base_op_t<Value> base_op_t;
+   //
+   // op_enum_t
+   typedef CppAD::local::val_graph::op_enum_t op_enum_t;
    //
    // info_t
    typedef prev_op_search_t& info_t;
    //
    // tape_
-   const tape_t<Value>& tape_;
+   const Tape& tape_;
    //
    // op2arg_index_
    const Vector<addr_t>& op2arg_index_;
@@ -137,7 +149,7 @@ public:
    // BEGIN_OP_PREV_OP_SEARCH_T
    // prev_op_search_t prev_op_search(tape, op2arg_index, n_hash_code)
    prev_op_search_t(
-         const tape_t<Value>&     tape         ,
+         const Tape&              tape         ,
          const Vector<addr_t>&    op2arg_index ,
          addr_t                   n_hash_code  )
    // END_OP_PREV_OP_SEARCH_T
@@ -166,15 +178,15 @@ public:
       const Vector<Value>&     con_vec     = tape_.con_vec();
       //
       // op_ptr, op_enum
-      const base_op_t<Value>* op_ptr  = tape_.base_op_ptr(i_op);
-      op_enum_t               op_enum = op_ptr->op_enum();
+      const base_op_t* op_ptr  = tape_.base_op_ptr(i_op);
+      op_enum_t                op_enum = op_ptr->op_enum();
       //
       // arg_index, n_arg
       addr_t arg_index = op2arg_index_[i_op];
       addr_t n_arg     = op_ptr->n_arg(arg_index, arg_vec);
       //
       // nan
-      if( op_enum == con_op_enum )
+      if( op_enum == CppAD::local::val_graph::con_op_enum )
       {  if( CppAD::isnan( con_vec[ arg_vec[arg_index] ] ) )
          {  CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
             CPPAD_ASSERT_UNKNOWN( arg_vec[0] == 0 );
@@ -188,7 +200,7 @@ public:
       //
       // i_op_match
       addr_t i_op_match;
-      if( op_enum == con_op_enum )
+      if( op_enum == CppAD::local::val_graph::con_op_enum )
       {  Value value = con_vec[ arg_vec[arg_index] ];
          i_op_match = hash_table_.find_match(i_op, value, *this, match_fun);
       }
@@ -226,20 +238,20 @@ public:
 };
 //
 // match_fun
-template <class Value>
-bool prev_op_search_t<Value>::match_fun(
+template <class Tape>
+bool prev_op_search_t<Tape>::match_fun(
    addr_t                 i_op_search    ,
    addr_t                 i_op_check     ,
    const info_t&          prev_op_search )
 {  //
    // tape, op2arg_index
-   const tape_t<Value>&    tape        = prev_op_search.tape_;
+   const Tape&             tape        = prev_op_search.tape_;
    const Vector<addr_t>& op2arg_index  = prev_op_search.op2arg_index_;
    const Vector<addr_t>& new_val_index = *( prev_op_search.new_val_index_ );
    //
    // op_ptr, check_ptr
-   const base_op_t<Value>* ptr_search = tape.base_op_ptr(i_op_search);
-   const base_op_t<Value>* ptr_check  = tape.base_op_ptr(i_op_check);
+   const base_op_t* ptr_search = tape.base_op_ptr(i_op_search);
+   const base_op_t* ptr_check  = tape.base_op_ptr(i_op_check);
    //
    // enum_op
    op_enum_t enum_op = ptr_search->op_enum();
@@ -260,7 +272,7 @@ bool prev_op_search_t<Value>::match_fun(
       return false;
    //
    // con_op_enum
-   if( enum_op == con_op_enum )
+   if( enum_op == CppAD::local::val_graph::con_op_enum )
    {  //
       const Value& c_search = con_vec[ arg_vec[arg_search] ];
       const Value& c_check  = con_vec[ arg_vec[arg_check] ];
@@ -291,8 +303,8 @@ bool prev_op_search_t<Value>::match_fun(
    //
    // match
    if( ! match )
-   {  bool communative = enum_op == add_op_enum;
-      communative     |= enum_op == mul_op_enum;
+   {  bool communative = enum_op == CppAD::local::val_graph::add_op_enum;
+      communative     |= enum_op == CppAD::local::val_graph::mul_op_enum;
       if( communative )
       {  addr_t val_search, val_check;
          //
@@ -308,5 +320,5 @@ bool prev_op_search_t<Value>::match_fun(
    return match;
 };
 
-} } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
+} } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 # endif
