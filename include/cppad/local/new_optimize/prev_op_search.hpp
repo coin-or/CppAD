@@ -103,8 +103,8 @@ template <class Tape>
 class prev_op_search_t {
 private:
    //
-   // Vector
-   template <class Value_t> using Vector = CppAD::vector<Value_t>;
+   // vector
+   template <class Value_t> using vector = CppAD::vector<Value_t>;
    //
    // Value
    typedef typename Tape::value_type Value;
@@ -116,13 +116,13 @@ private:
    typedef CppAD::local::val_graph::op_enum_t op_enum_t;
    //
    // info_t
-   typedef prev_op_search_t& info_t;
+   typedef prev_op_search_t info_t;
    //
    // tape_
    const Tape& tape_;
    //
    // op2arg_index_
-   const Vector<addr_t>& op2arg_index_;
+   const vector<addr_t>& op2arg_index_;
    //
    // n_op_
    const addr_t n_op_;
@@ -142,7 +142,7 @@ private:
    );
    //
    // new_val_index_
-   const Vector<addr_t>* new_val_index_;
+   const vector<addr_t>* new_val_index_;
    //
 public:
    // -------------------------------------------------------------------------
@@ -150,7 +150,7 @@ public:
    // prev_op_search_t prev_op_search(tape, op2arg_index, n_hash_code)
    prev_op_search_t(
          const Tape&              tape         ,
-         const Vector<addr_t>&    op2arg_index ,
+         const vector<addr_t>&    op2arg_index ,
          addr_t                   n_hash_code  )
    // END_OP_PREV_OP_SEARCH_T
    : tape_( tape )
@@ -162,20 +162,20 @@ public:
    // -------------------------------------------------------------------------
    // BEGIN_SIZE_COUNT
    // size_count = prev_op_search.size_count()
-   Vector<addr_t> size_count(void)
+   vector<addr_t> size_count(void)
    // END_SIZE_COUNT
    {  return hash_table_.differnt_count();
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
    // i_match_op = prev_op_search.match_op(i_op, new_val_index)
-   addr_t match_op(addr_t i_op, const Vector<addr_t>& new_val_index)
+   addr_t match_op(addr_t i_op, const vector<addr_t>& new_val_index)
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_MATCH_OP
       //
       // arg_vec, con_vec
-      const Vector<addr_t>&    arg_vec     = tape_.arg_vec();
-      const Vector<Value>&     con_vec     = tape_.con_vec();
+      const vector<addr_t>&    arg_vec     = tape_.arg_vec();
+      const vector<Value>&     con_vec     = tape_.con_vec();
       //
       // op_ptr, op_enum
       const base_op_t* op_ptr  = tape_.base_op_ptr(i_op);
@@ -246,8 +246,8 @@ bool prev_op_search_t<Tape>::match_fun(
 {  //
    // tape, op2arg_index
    const Tape&             tape        = prev_op_search.tape_;
-   const Vector<addr_t>& op2arg_index  = prev_op_search.op2arg_index_;
-   const Vector<addr_t>& new_val_index = *( prev_op_search.new_val_index_ );
+   const vector<addr_t>& op2arg_index  = prev_op_search.op2arg_index_;
+   const vector<addr_t>& new_val_index = *( prev_op_search.new_val_index_ );
    //
    // op_ptr, check_ptr
    const base_op_t* ptr_search = tape.base_op_ptr(i_op_search);
@@ -259,8 +259,8 @@ bool prev_op_search_t<Tape>::match_fun(
       return false;
    //
    // arg_vec, con_vec
-   const Vector<addr_t>&  arg_vec = tape.arg_vec();
-   const Vector<Value>&   con_vec = tape.con_vec();
+   const vector<addr_t>&  arg_vec = tape.arg_vec();
+   const vector<Value>&   con_vec = tape.con_vec();
    //
    // arg_search, arg_check
    addr_t arg_search   = op2arg_index[i_op_search];

@@ -4,10 +4,10 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
-# include <cppad/local/val_graph/op_iterator.hpp>
+# include <cppad/local/val_graph/bidir_iterator.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
 # include <cppad/local/val_graph/val_type.hpp>
-# include <cppad/local/val_graph/op_iterator.hpp>
+# include <cppad/local/val_graph/bidir_iterator.hpp>
 
 # define CPPAD_VAL_GRAPH_TAPE_TRACE 0
 
@@ -169,12 +169,12 @@ Operations on Tape
 ******************
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   include/cppad/local/val_graph/bidir_iterator.hpp
    include/cppad/local/val_graph/compress.hpp
    include/cppad/local/val_graph/cumulative.hpp
    include/cppad/local/val_graph/dead_code.hpp
    include/cppad/local/val_graph/fold_con.hpp
    include/cppad/local/val_graph/op2arg_index.hpp
-   include/cppad/local/val_graph/op_iterator.hpp
    include/cppad/local/val_graph/option.hpp
    include/cppad/local/val_graph/record.hpp
    include/cppad/local/val_graph/record_new.hpp
@@ -204,7 +204,7 @@ private :
    Vector< Vector<addr_t> > vec_initial_;
    //
    // op2arg_index_
-   // Optional vector that changes how op_iterator works; e.g.,
+   // Optional vector that changes how bidir_iterator works; e.g.,
    // this is necessary is we are using replace_csum_op with this tape.
    Vector<addr_t> op2arg_index_;
    //
@@ -330,7 +330,7 @@ public :
       }
       //
       // op_itr, i_op
-      op_iterator<Value> op_itr(*this, 0);
+      bidir_iterator<Value> op_itr(*this, 0);
       for(addr_t i_op = 0; i_op < n_op(); ++i_op)
       {  //
          // op_ptr, arg_index, res_index

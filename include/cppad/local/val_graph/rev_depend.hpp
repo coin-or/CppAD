@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_REV_DEPEND_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/atomic_index.hpp>
@@ -137,7 +137,7 @@ void tape_t<Value>::rev_depend(
    };
    //
    // op_itr
-   op_iterator<Value> op_itr(*this, n_op() );
+   bidir_iterator<Value> op_itr(*this, n_op() );
    //
    // use_case
    addr_t i_op = n_op();

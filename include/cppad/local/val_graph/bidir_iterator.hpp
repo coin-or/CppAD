@@ -1,19 +1,19 @@
-# ifndef  CPPAD_LOCAL_VAL_GRAPH_OP_ITERATOR_HPP
-# define  CPPAD_LOCAL_VAL_GRAPH_OP_ITERATOR_HPP
+# ifndef  CPPAD_LOCAL_VAL_GRAPH_BIDIR_ITERATOR_HPP
+# define  CPPAD_LOCAL_VAL_GRAPH_BIDIR_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
-{xrst_begin val_op_iterator dev}
+{xrst_begin val_bidir_iterator dev}
 
-Class For Iterating Over Operators in a Value Tape
-##################################################
+Bidirectional Iterators For Operators in a Value Tape
+#####################################################
 
 Syntax
 ******
-| |tab| ``op_iterator`` < *Value* > *op_itr* ( *tape* , *op_index* )
+| |tab| ``bidir_iterator`` < *Value* > *op_itr* ( *tape* , *op_index* )
 | |tab| *op_itr* . ``op_ptr`` ()
 | |tab| *op_itr* . ``arg_index`` ()
 | |tab| *op_itr* . ``res_index`` ()
@@ -49,7 +49,7 @@ op_itr
 ******
 is the operator iterator.
 
-{xrst_end val_op_iterator}
+{xrst_end val_bidir_iterator}
 */
 # include <cppad/local/val_graph/op_enum2class.hpp>
 # include <cppad/core/cppad_assert.hpp>
@@ -62,7 +62,7 @@ namespace CppAD { namespace local { namespace val_graph  {
 template <class Value> class tape_t;
 
 template <class Value>
-class op_iterator {
+class bidir_iterator {
 //
 private:
    //
@@ -93,7 +93,7 @@ public:
    // END_MEMBER_FUNCTIONS
    //
    // BEGIN_CTOR
-   op_iterator(const tape_t<Value>& tape, addr_t op_index)
+   bidir_iterator(const tape_t<Value>& tape, addr_t op_index)
    // END_CTOR
    :
    tape_ ( tape )         ,
@@ -114,7 +114,7 @@ public:
       }
       else
       {  CPPAD_ASSERT_KNOWN( false,
-            "op_iterator: op_index is not zero or number of operators in tape"
+            "bidir_iterator: op_index is not zero or number of operators in tape"
          );
       }
    }
@@ -123,7 +123,7 @@ public:
    void operator++(void)
    // END_INCREMENT
    {  CPPAD_ASSERT_KNOWN( op_index_ < addr_t( tape_.n_op() ),
-         "op_iterator: attempt to increment past the end of the tape"
+         "bidir_iterator: attempt to increment past the end of the tape"
       );
       //
       // n_arg, n_res
@@ -154,7 +154,7 @@ public:
    void operator--(void)
    // END_DECREMENT
    {  CPPAD_ASSERT_KNOWN( 0 < op_index_,
-         "op_iterator: attempt to decrement below the beginning of the tape"
+         "bidir_iterator: attempt to decrement below the beginning of the tape"
       );
       //
       // op_index_

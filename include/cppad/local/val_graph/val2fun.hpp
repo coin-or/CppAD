@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_VAL2FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 {xrst_begin val2fun_graph dev}
@@ -86,7 +86,7 @@ is an example an test of this conversion.
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/val_graph/tape.hpp>
-# include <cppad/local/val_graph/op_iterator.hpp>
+# include <cppad/local/val_graph/bidir_iterator.hpp>
 # include <cppad/local/val_graph/call_atomic.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
@@ -328,7 +328,7 @@ void ADFun<Base, RecBase>::val2fun(
    CppAD::vector<ad_type_enum> ad_type_x, ad_type_y;
    //
    // op_itr
-   local::val_graph::op_iterator<Base> op_itr(val_tape, 0);
+   local::val_graph::bidir_iterator<Base> op_itr(val_tape, 0);
    //
    // i_op
    for(addr_t i_op = 0; i_op < val_n_op; ++i_op)

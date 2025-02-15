@@ -88,7 +88,7 @@ vectorBool tape_t<Value>::compress(void)
    //
    // op2arg_index, op2res_index
    Vector<addr_t> op2arg_index( n_op() ), op2res_index( n_op() );
-   {  op_iterator<Value> op_itr(*this, 0);
+   {  bidir_iterator<Value> op_itr(*this, 0);
       for(addr_t i_op = 0; i_op < n_op(); ++i_op)
       {  op2arg_index[i_op] = op_itr.arg_index();
          op2res_index[i_op] = op_itr.res_index();
