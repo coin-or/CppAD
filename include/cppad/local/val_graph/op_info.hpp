@@ -66,12 +66,12 @@ The following list of *var_name* are the possible choices for the get function
    n_arg       , addr_t,     number of arguments for this operator
    n_before    , addr_t,     number of arguments before first value index
    n_after     , addr_t,     number of arguments after last value index
-   is_con_op   , bool,       is this a constant operator; see is_con_op below
+   is_con_op   , bool,       is this a constant operator
 
 
 is_con_op
 =========
-A constant operator must have n_arg = 1, n_before = 0, and n_after = 0 .
+A constant operator must have n_arg = 1, n_before = 1, and n_after = 0 .
 Furthermore, the value of the constant is::
 
    con_vec[ arg_vec[ arg_index ] ]
@@ -125,12 +125,10 @@ private:
    const vector<uint8_t>& op_enum_vec_;
    //
    // op2arg_index_
-   // effectively const (only set by constructor)
-   Vector<addr_t> op2arg_index_;
+   const Vector<addr_t>& op2arg_index_;
    //
    // op2res_index_
-   // effectively const (only set by constructor)
-   Vector<addr_t> op2res_index_;
+   const Vector<addr_t>& op2res_index_;
    //
    // ------------------------------------------------------------------------
    // set and get values
@@ -149,23 +147,18 @@ public:
    //
    // BEGIN_OPT_INFO
    // op_info_t op_info(tape)
-   op_info_t(const tape_t<value_t>& tape)
+   op_info_t(
+      const tape_t<value_t>& tape         ,
+      const Vector<addr_t>&  op2arg_index ,
+      const Vector<addr_t>&  op2res_index )
    // END_OPT_INFO
    : n_op_ ( tape.n_op() )
    , arg_vec_ ( tape.arg_vec() )
    , con_vec_ ( tape.con_vec() )
    , op_enum_vec_ ( tape.op_enum_vec() )
-   {  //
-      // op2arg_index_, op2res_index_
-      op2arg_index_.resize( n_op_ );
-      op2res_index_.resize( n_op_ );
-      bidir_iterator<value_t> bi_itr(tape, 0);
-      for(addr_t i_op = 0; i_op < n_op_; ++i_op)
-      {  op2arg_index_[i_op] = bi_itr.arg_index();
-         op2res_index_[i_op] = bi_itr.res_index();
-         ++bi_itr;
-      }
-   }
+   , op2arg_index_ ( op2arg_index )
+   , op2res_index_ ( op2res_index )
+   {  }
    // -----------------------------------------------------------------------
    // Results that do not depend on i_op
    // -----------------------------------------------------------------------

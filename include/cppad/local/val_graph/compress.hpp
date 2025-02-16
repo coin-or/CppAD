@@ -98,10 +98,10 @@ vectorBool tape_t<Value>::compress(void)
    }
    //
    // prev_op_search
-   op_info_t<tape_t> op_info(*this);
+   op_info_t<tape_t> op_info(*this, op2arg_index, op2res_index);
    addr_t n_hash_code = 1 + (n_val_ / 2);
    CppAD::local::optimize::prev_op_search_t< op_info_t<tape_t> >
-      prev_op_search(op_info, op2arg_index, n_hash_code);
+      prev_op_search(op_info, n_hash_code);
    //
    // keep_compare
    bool keep_compare = option_map_["keep_compare"] == "true";
