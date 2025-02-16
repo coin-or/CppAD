@@ -187,16 +187,6 @@ public:
       addr_t arg_index = op_info_.get_arg_index();
       addr_t n_arg     = op_info_.get_n_arg();
       //
-      // nan
-      if( op_enum == CppAD::local::val_graph::con_op_enum )
-      {  if( CppAD::isnan( op_info_.get_value() ) )
-         {  CPPAD_ASSERT_UNKNOWN( op2arg_index_[0] == 0 );
-            CPPAD_ASSERT_UNKNOWN( arg_vec[0] == 0 );
-            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( con_vec[0] ) );
-            return 0;
-         }
-      }
-      //
       // new_val_index_
       new_val_index_ = &new_val_index;
       //
