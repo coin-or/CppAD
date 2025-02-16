@@ -14,6 +14,11 @@ Syntax
 | |tab| *op_info* . ``set`` ( *i_op* )
 | |tab| *var_name* = *op_info* . ``get_`` *var_name* ()
 
+Op_info
+*******
+This template parameter must be a class that satisfies
+the requirements below.
+
 Types
 *****
 Each of the types listed below are defined in an *Op_info* class.

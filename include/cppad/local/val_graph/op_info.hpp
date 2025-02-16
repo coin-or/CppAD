@@ -7,6 +7,9 @@
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_op_info_t dev}
+{xrst_spell
+   typedef
+}
 
 Optimization Information for Value Graphs
 #########################################
@@ -14,38 +17,58 @@ Optimization Information for Value Graphs
 
 Syntax
 ******
-| |tab| *Op_info* *op_info*
+| |tab| ``val_op_info_t`` *op_info* ( *tape* )
 | |tab| *con_name* = *op_info* . *con_name* ( )
 | |tab| *op_info* . ``set`` ( *i_op* )
 | |tab| *var_name* = *op_info* . ``get_`` *var_name* ()
 
 
-Documentation
-*************
-see :ref"opt_op_info-name` .
+op_info
+*******
+{xrst_literal ,
+   // BEGIN_CLASS , // END_CLASS
+   // BEGIN_OP_INFO , // END_OP_INFO
+}
+
+typedef
+=======
+{xrst_literal
+   // BEGIN_TYPEDEF
+   // END_TYPEDEF
+}
+
+tape
+====
+is the tape that we are optimizing.
+
+op2arg_index
+============
+is a vector that maps operator index to
+the index of the first argument, for this operator,
+in the vector that contains all the operator arguments. 
+
+Requirements
+************
+The ``val_op_info_t`` class satisfied the 
+:ref:`opt_op_info@Op_info` requirements.
 
 {xrst_end val_op_info_t}
 */
 # include <cppad/local/val_graph/tape.hpp>
 
 // BEGIN_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
+// BEGIN_CLASS
 namespace CppAD { namespace local { namespace val_graph  {
-
-template <class Tape>
-class op_info_t {
+template <class Tape> class op_info_t {
+// END_CLASS
 public:
    //
-   // value_t
-   typedef typename Tape::value_t value_t;
-   //
-   // op_enum_t
-   typedef CppAD::local::val_graph::op_enum_t op_enum_t;
-   //
-   // vec_addr_t
-   typedef CppAD::vector<addr_t> vec_addr_t;
-   //
-   // vec_value_t
-   typedef CppAD::vector<value_t> vec_value_t;
+   // BEGIN_TYPEDEF
+   typedef typename Tape::value_t                value_t;
+   typedef CppAD::local::val_graph::op_enum_t    op_enum_t;
+   typedef CppAD::vector<addr_t>                 vec_addr_t;
+   typedef CppAD::vector<value_t>                vec_value_t;
+   // END_TYPEDEF
    //
 private:
    //
@@ -81,12 +104,12 @@ private:
    //
 public:
    //
-   // BEGIN_OPT_INFO
+   // BEGIN_OP_INFO
    // op_info_t op_info(tape)
    op_info_t(
       const tape_t<value_t>& tape         ,
       const vec_addr_t&      op2arg_index )
-   // END_OPT_INFO
+   // END_OP_INFO
    : n_op_ ( tape.n_op() )
    , arg_vec_ ( tape.arg_vec() )
    , con_vec_ ( tape.con_vec() )
