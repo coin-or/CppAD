@@ -142,6 +142,8 @@ private:
    );
    //
    // new_val_index_
+   // This is nullptr except that it is used to pass the new_val_index
+   // argument to match_op through to match_fun.
    const vector<addr_t>* new_val_index_;
    //
 public:
@@ -173,6 +175,9 @@ public:
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_MATCH_OP
       //
+      // new_val_index_
+      new_val_index_ = &new_val_index;
+      //
       // arg_vec, con_vec
       const vector<addr_t>&    arg_vec     = op_info_.arg_vec();
       const vector<value_t>&   con_vec     = op_info_.con_vec();
@@ -183,24 +188,24 @@ public:
       // op_enum
       op_enum_t  op_enum = op_info_.get_op_enum();
       //
-      // arg_index, n_arg
-      addr_t arg_index = op_info_.get_arg_index();
-      addr_t n_arg     = op_info_.get_n_arg();
-      //
-      // new_val_index_
-      new_val_index_ = &new_val_index;
+      // arg_index, n_arg, n_before, n_after
+      addr_t arg_index  = op_info_.get_arg_index();
+      addr_t n_arg      = op_info_.get_n_arg();
+      addr_t n_before   = op_info_.get_n_before();
+      addr_t n_after    = op_info_.get_n_after();
+      bool   is_con_op  = op_info_.get_is_con_op();
+      CPPAD_ASSERT_UNKNOWN( n_before + n_after <= n_arg );
       //
       // i_op_match
       addr_t i_op_match;
-      if( op_enum == CppAD::local::val_graph::con_op_enum )
-      {  value_t value = con_vec[ arg_vec[arg_index] ];
-         i_op_match    = hash_table_.find_match(i_op, value, *this, match_fun);
+      if( is_con_op )
+      {  // 2DO: fix n_before for val_graph con_op_enum on master branch
+         CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_before == 1 && n_after == 0 )
+         value_t con = con_vec[ arg_vec[arg_index] ];
+         i_op_match  = hash_table_.find_match(i_op, con, *this, match_fun);
       }
       else
-      {  // n_before, n_after
-         addr_t n_before = op_info_.get_n_before();
-         addr_t n_after  = op_info_.get_n_after();
-         //
+      {  //
          // op_arg_
          op_arg_.resize(0);
          op_arg_.resize(n_arg);

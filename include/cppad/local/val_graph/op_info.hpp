@@ -15,7 +15,7 @@ Syntax
 ******
 | |tab| ``op_info_t`` < *Tape* > *op_info* ( *tape* )
 | |tab|  *op_info* . ``set`` ( *i_op* )
-| |tab|  *var_name* = *op_info* . ``get_``\ *fun_name* ( *i_op* )
+| |tab|  *var_name* = *op_info* . ``get_``\ *var_name* ( *i_op* )
 
 op_info
 *******
@@ -46,29 +46,43 @@ is the index of this operator in the tape
 
 get
 ***
-The  *fun_name* in the get operations must be one of the following:
+The  *var_name* in the get operations must be one of the following:
+
+var_name
+========
+is variable holding the value returned by the get function.
+The get function name is ``get_``\ *var_name* .
+The following list of *var_name* are the possible choices for the get function
+(you can use a different name for the variable returned.)
+
 
 .. csv-table::
 
-   *fun_name*  , type,      *var_name*
-   op_enum     , op_enum_t, operator enum type converted to an addr_t value
-   i_op        , addr_t,    value of *i_op* in the previous call to ``set``
-   arg_index   , addr_t,    index of first argument for this operator
-   res_index   , addr_t,    index of first result for this operator
-   n_arg       , addr_t,    number of arguments for this operator
-   n_before    , addr_t,    number of arguments before first value index
-   n_after     , addr_t,    number of arguments after last value index
-   value       , value_t,   value of constant when op_enum is con_op_enum
+   *var_name*  , type,       Meaning
+   op_enum     , op_enum_t,  An enum value that determines the operator
+   i_op        , addr_t,     value of *i_op* in the previous call to ``set``
+   arg_index   , addr_t,     index of first argument for this operator
+   res_index   , addr_t,     index of first result for this operator
+   n_arg       , addr_t,     number of arguments for this operator
+   n_before    , addr_t,     number of arguments before first value index
+   n_after     , addr_t,     number of arguments after last value index
+   is_con_op   , bool,       is this a constant operator; see is_con_op below
+
+
+is_con_op
+=========
+A constant operator must have n_arg = 1, n_before = 0, and n_after = 0 .
+Furthermore, the value of the constant is::
+
+   con_vec[ arg_vec[ arg_index ] ]
+
+The value of *is_con_op* must only depend on the value of *op_enum* ;
+i.e., it two operators have the same *op_enum*, they have the same
+*is_con_op* .
 
 i_op
 ====
 is an ``addr_t`` representation of the operator index.
-
-var_name
-========
-is variable holding the corresponding value in the table.
-Often the variable and function have the same name.
-
 
 {xrst_end val_op_info_t}
 */
@@ -94,6 +108,9 @@ private:
    //
    // op_enum_t
    typedef CppAD::local::val_graph::op_enum_t op_enum_t;
+   //
+   // bool_vec_t
+   typedef CppAD::vectorBool bool_vec_t;
    //
    // n_op_
    const addr_t n_op_;
@@ -125,7 +142,7 @@ private:
    addr_t    n_arg_;
    addr_t    n_before_;
    addr_t    n_after_;
-   value_t   value_;
+   bool      is_con_op_;
    // ------------------------------------------------------------------------
    //
 public:
@@ -178,7 +195,7 @@ public:
       op_enum_t op_enum = op_enum_t( op_enum_vec_[i_op] );
       base_op_t* op_ptr = op_enum2class<value_t>(op_enum);
       //
-      // state corresponding to i_op
+      // op_enum_, i_op_, arg_index_, res_index_, n_arg_, n_after_, n_before_
       op_enum_   = op_ptr->op_enum();
       i_op_      = i_op;
       arg_index_ = op2arg_index_[i_op];
@@ -186,11 +203,7 @@ public:
       n_arg_     = op_ptr->n_arg(arg_index_, arg_vec_);
       n_before_  = op_ptr->n_before();
       n_after_   = op_ptr->n_after();
-      //
-      if( op_enum_ == con_op_enum )
-         value_ = con_vec_[ arg_vec_[arg_index_] ];
-      else
-         value_ = CppAD::numeric_limits<value_t>::quiet_NaN();
+      is_con_op_ = op_enum_ == con_op_enum;
    }
    //
    // get
@@ -215,8 +228,8 @@ public:
    addr_t get_n_after(void) const
    {  return n_after_; }
    //
-   value_t get_value(void) const
-   {  return value_; }
+   bool get_is_con_op(void) const
+   {  return is_con_op_; }
 };
 
 
