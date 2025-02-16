@@ -205,11 +205,9 @@ different_count
 
 count
 =====
-For each valid index *i*, *count* [ *i* ]
-is the number of hash code values,
-that correspond to *i* operators with the same hash code that did not match;
-i.e., are different.
-For example:
+For each valid index *i*, *count* [ *i* ] is the number of hash code values,
+that correspond to *i* operators with that hash code that did not match;
+i.e., are different.  For example:
 
 #. For *i* equal to zero,
    it is the number of hash codes that did not occur.

@@ -1,0 +1,101 @@
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// --------------------------------------------------------------------------
+{xrst_begin opt_op_info dev}
+
+Optimization Operator Information Class Requirements
+####################################################
+
+Syntax
+******
+| |tab| *Op_info* *op_info*
+| |tab| *con_name* = *op_info* . *con_name* ( )
+| |tab| *op_info* . ``set`` ( *i_op* )
+| |tab| *var_name* = *op_info* . ``get_`` *var_name* ()
+
+Types
+*****
+Each of the types listed below are defined in an *Op_info* class.
+
+value_t
+=======
+is the type of the values that these operators compute with.
+
+op_enum_t
+=========
+is the enum type that identifies the different operators.
+
+vec_addr_t
+==========
+is a vector type with ``addr_t`` elements.
+It only needs to support the indexing operation.
+
+vec_value_t
+===========
+is a vector type with ``value_t`` elements.
+It only needs to support the indexing operation.
+
+
+Constant Functions
+******************
+Given a *op_info* object,
+the results of these functions are always the same.
+
+.. csv-table::
+
+   *con_name* , type,          Meaning
+   n_op       , addr_t  ,      number of operators in the corresponding tape
+   arg_vec    , vec_addr_t ,   vector of arguments for all operators
+   con_vec    , vec_value_t ,  vector containing all the constants
+
+The returns for the functions above are actually
+``const`` references to the type in the table above.
+
+
+set
+***
+This function sets the operator corresponding to the
+return value for all the get functions.
+The return value for other member functions (see above) are not affected.
+
+i_op
+====
+is an ``addr_t`` index that identifies this particular use of the operator,
+*i_op* < *op_info* . ``n_op`` () .
+
+get
+***
+
+var_name
+========
+is variable holding the value returned by the function ``get_``\ *var_name* .
+The following list of *var_name* are the possible choices for the get function.
+You can use a different name for the variable returned.
+
+
+.. csv-table::
+
+   *var_name*  , type,       Meaning
+   op_enum     , op_enum_t,  An enum value that determines the operator
+   i_op        , addr_t,     value of *i_op* in the previous call to ``set``
+   arg_index   , addr_t,     index of first argument for this operator
+   n_arg       , addr_t,     number of arguments for this operator
+   n_before    , addr_t,     number of arguments before first value index
+   n_after     , addr_t,     number of arguments after last value index
+   is_con_op   , bool,       is this a constant operator; see below
+
+
+is_con_op
+=========
+A constant operator must have n_arg = 1, n_before = 1, and n_after = 0 .
+Furthermore, the value of the constant is::
+
+   con_vec[ arg_vec[ arg_index ] ]
+
+The value of *is_con_op* must only depend on the value of *op_enum* ;
+i.e., it two operators have the same *op_enum*, they have the same
+*is_con_op* .
+
+
+{xrst_end opt_op_info}

@@ -21,10 +21,12 @@ previous_op_search
    // END_OP_PREV_OP_SEARCH_T
 }
 
+
 op_info
 =======
 A reference to *op_info* is stored in *prev_op_search* ; i.e.,
 *op_info* must not be destroyed before *prev_op_search* .
+See :ref:`opt_op_info-name` for the *Op_info* class requirements.
 
 n_hash_code
 ===========
@@ -71,15 +73,13 @@ is the index of the first previous operator that is a match for *i_op*.
    results of *i_op* should map to the indices for the results of *i_op_match*
    (so that more operators will map during future calls).
 
-size_count
-**********
+different_count
+***************
 {xrst_literal
-   // BEGIN_SIZE_COUNT
-   // END_SIZE_COUNT
+   // BEGIN_DIFFERENT_COUNT
+   // END_DIFFERENT_COUNT
 }
-For each valid index *i*, *size_count* ()[ *i* ]
-is the number of hash code values, in the table, that have *i* collisions.
-A collision occurs when two operators that do not match have the same hash code.
+see the operator hash table :ref:`op_hash_table_t@different_count` .
 
 {xrst_end prev_op_serarch}
 */
@@ -109,14 +109,14 @@ private:
    // value_t
    typedef typename Op_info::value_t value_t;
    //
-   // base_op_t
-   typedef CppAD::local::val_graph::base_op_t<value_t> base_op_t;
-   //
    // op_enum_t
-   typedef CppAD::local::val_graph::op_enum_t op_enum_t;
+   typedef typename Op_info::op_enum_t op_enum_t;
    //
-   // info_t
-   typedef prev_op_search_t search_info_t;
+   // vec_addr_t
+   typedef typename Op_info::vec_addr_t vec_addr_t;
+   //
+   // vec_value_t
+   typedef typename Op_info::vec_value_t vec_value_t;
    //
    // n_op_
    const addr_t n_op_;
@@ -125,7 +125,7 @@ private:
    Op_info& op_info_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_t<addr_t, value_t, search_info_t>
+   CppAD::local::optimize::op_hash_table_t<addr_t, value_t, prev_op_search_t>
       hash_table_;
    //
    // op_arg_
@@ -133,15 +133,15 @@ private:
    CppAD::vector<addr_t> op_arg_;
    //
    static bool match_fun(
-      addr_t                 i_op_search ,
-      addr_t                 i_op_check  ,
-      const search_info_t&   search_info
+      addr_t                    i_op_search ,
+      addr_t                    i_op_check  ,
+      const prev_op_search_t&   search_info
    );
    //
    // new_var_index_
    // This is nullptr except that it is used to pass the new_var_index
    // argument to match_op through to match_fun.
-   const vector<addr_t>* new_var_index_;
+   const vec_addr_t* new_var_index_;
    //
 public:
    // -------------------------------------------------------------------------
@@ -157,16 +157,16 @@ public:
    {  new_var_index_ = nullptr;
    }
    // -------------------------------------------------------------------------
-   // BEGIN_SIZE_COUNT
-   // size_count = prev_op_search.size_count()
-   vector<addr_t> size_count(void)
-   // END_SIZE_COUNT
+   // BEGIN_DIFFERENT_COUNT
+   // different_count = prev_op_search.different_count()
+   vec_addr_t different_count(void)
+   // END_DIFFERENT_COUNT
    {  return hash_table_.differnt_count();
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
    // i_match_op = prev_op_search.match_op(i_op, new_var_index)
-   addr_t match_op(addr_t i_op, const vector<addr_t>& new_var_index)
+   addr_t match_op(addr_t i_op, const vec_addr_t& new_var_index)
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_MATCH_OP
       //
@@ -174,8 +174,8 @@ public:
       new_var_index_ = &new_var_index;
       //
       // arg_vec, con_vec
-      const vector<addr_t>&    arg_vec     = op_info_.arg_vec();
-      const vector<value_t>&   con_vec     = op_info_.con_vec();
+      const vec_addr_t&  arg_vec = op_info_.arg_vec();
+      const vec_value_t& con_vec = op_info_.con_vec();
       //
       // op_info_
       op_info_.set(i_op);
@@ -231,20 +231,20 @@ public:
 // match_fun
 template <class Op_info>
 bool prev_op_search_t<Op_info>::match_fun(
-   addr_t                 i_op_search    ,
-   addr_t                 i_op_check     ,
-   const search_info_t&   prev_op_search )
+   addr_t                    i_op_search    ,
+   addr_t                    i_op_check     ,
+   const prev_op_search_t&   prev_op_search )
 {  //
    //
    // new_var_index
-   const vector<addr_t>& new_var_index = *( prev_op_search.new_var_index_ );
+   const vec_addr_t& new_var_index = *( prev_op_search.new_var_index_ );
    //
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
    //
    // arg_vec, con_vec
-   const vector<addr_t>&    arg_vec = op_info.arg_vec();
-   const vector<value_t>&   con_vec = op_info.con_vec();
+   const vec_addr_t&  arg_vec = op_info.arg_vec();
+   const vec_value_t& con_vec = op_info.con_vec();
    //
    // op_info
    op_info.set(i_op_search);

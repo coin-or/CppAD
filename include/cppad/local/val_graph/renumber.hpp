@@ -92,7 +92,7 @@ void tape_t<Value>::renumber(void)
    }
    //
    // prev_op_search
-   op_info_t<tape_t> op_info(*this, op2arg_index, op2res_index);
+   op_info_t<tape_t> op_info(*this, op2arg_index);
    addr_t n_hash_code = 1 + (n_val_ / 2);
    CppAD::local::optimize::prev_op_search_t< op_info_t<tape_t> >
       prev_op_search(op_info, n_hash_code);
@@ -165,9 +165,9 @@ void tape_t<Value>::renumber(void)
 
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // A set size more than one represents a collision
-   Vector<addr_t> size_count = prev_op_search.size_count();
-   for(size_t i = 0; i < size_count.size(); ++i)
-      std::cout << "size = " << i << ", count = " << size_count[i] << "\n";
+   Vector<addr_t> different_count = prev_op_search.different_count();
+   for(size_t i = 0; i < different_count.size(); ++i)
+      std::cout << "size = " << i << ", count = " << different_count[i] << "\n";
    //
    // inuse
    size_t final_inuse = thread_alloc::inuse(thread);
