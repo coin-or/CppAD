@@ -268,7 +268,7 @@ public:
    // BEGIN_MATCH_FUN_T
    // match = match_fun(i_op_search, i_op_check, info)
    typedef bool match_fun_t(
-      Index i_op_search, Index i_op_check, const Info& info
+      Index i_op_search, Index i_op_check, Info& info
    );
    // END_MATCH_FUN_T
    //
@@ -334,9 +334,9 @@ public:
    // BEGIN_FIND_MATCH_POD
    // i_op_match = hash_table.find_match(i_op, pod, info, match_fun)
    Index find_match(
-      Index         i_op  ,
+      Index         i_op      ,
       const Pod&    pod       ,
-      const Info&   info      ,
+      Info&         info      ,
       match_fun_t   match_fun )
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ )
       // END_FIND_MATCH_POD
@@ -375,7 +375,7 @@ public:
       Index                i_op  ,
       Index                op        ,
       CppAD::vector<Index> op_arg    ,
-      const Info&          info      ,
+      Info&                info      ,
       match_fun_t          match_fun )
 
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );

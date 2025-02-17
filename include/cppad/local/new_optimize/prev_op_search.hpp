@@ -130,9 +130,9 @@ private:
    CppAD::vector<addr_t> op_arg_;
    //
    static bool match_fun(
-      addr_t                    i_op_search ,
-      addr_t                    i_op_check  ,
-      const prev_op_search_t&   search_info
+      addr_t              i_op_search ,
+      addr_t              i_op_check  ,
+      prev_op_search_t&   search_info
    );
    //
    // new_var_index_
@@ -140,6 +140,11 @@ private:
    // argument to match_op through to match_fun.
    const vec_addr_t* new_var_index_;
    //
+   // arg_one_search_, arg_one_check_, is_var_one_search_, is_var_one_check_
+   // Temporaries placed here to avoid reallocaiton of memory
+   // (if resize for these vectors is smart enough).
+   vec_addr_t arg_one_search_,    arg_one_check_;
+   vec_bool_t is_var_one_search_, is_var_one_check_;
 public:
    // -------------------------------------------------------------------------
    // BEGIN_OP_PREV_OP_SEARCH_T
@@ -175,9 +180,9 @@ public:
       //
       // op_enum, is_con_op, arg_one, is_var_one
       op_enum_t op_enum;
-      bool      is_con_op;
-      vec_addr_t arg_one;
-      vec_bool_t is_var_one;
+      bool         is_con_op;
+      vec_addr_t&  arg_one    = arg_one_search_;
+      vec_bool_t&  is_var_one = is_var_one_search_;
       op_info_.get(i_op, op_enum, is_con_op, arg_one, is_var_one);
       //
       // n_arg
@@ -221,11 +226,13 @@ public:
 };
 //
 // match_fun
+// match = match_fun(i_op_searh, i_op_check, prev_op_search)
+// prev_op_search not const because of temporary vecs arg_one_search_ ... above
 template <class Op_info>
 bool prev_op_search_t<Op_info>::match_fun(
-   addr_t                    i_op_search    ,
-   addr_t                    i_op_check     ,
-   const prev_op_search_t&   prev_op_search )
+   addr_t              i_op_search    ,
+   addr_t              i_op_check     ,
+   prev_op_search_t&   prev_op_search )
 {  //
    //
    // new_var_index
@@ -239,9 +246,9 @@ bool prev_op_search_t<Op_info>::match_fun(
    //
    // op_enum_s, is_con_op_s, arg_one_s, is_var_one_s
    op_enum_t op_enum_s;
-   bool      is_con_op_s;
-   vec_addr_t arg_one_s;
-   vec_bool_t is_var_one_s;
+   bool         is_con_op_s;
+   vec_addr_t&  arg_one_s     = prev_op_search.arg_one_search_;
+   vec_bool_t&  is_var_one_s  = prev_op_search.is_var_one_search_;
    op_info.get(
       i_op_search, op_enum_s, is_con_op_s, arg_one_s, is_var_one_s
    );
@@ -251,9 +258,9 @@ bool prev_op_search_t<Op_info>::match_fun(
    //
    // op_enum_c, is_con_op_c, arg_one_c, is_var_one_c
    op_enum_t op_enum_c;
-   bool      is_con_op_c;
-   vec_addr_t arg_one_c;
-   vec_bool_t is_var_one_c;
+   bool         is_con_op_c;
+   vec_addr_t&   arg_one_c    = prev_op_search.arg_one_check_;
+   vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
    op_info.get(
       i_op_check, op_enum_c, is_con_op_c, arg_one_c, is_var_one_c
    );
