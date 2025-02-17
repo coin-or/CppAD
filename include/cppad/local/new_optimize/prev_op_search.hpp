@@ -263,9 +263,9 @@ bool prev_op_search_t<Op_info>::match_fun(
    //
    // match
    bool match = true;
-   match &= op_enum_s == op_enum_c;
-   match &= n_arg_s     == n_arg_c;
-   match &= is_con_op_s == is_con_op_c;
+   match  = match && op_enum_s == op_enum_c;
+   match  = match && n_arg_s     == n_arg_c;
+   match  = match && is_con_op_s == is_con_op_c;
    if( ! match )
       return false;
    //
@@ -281,14 +281,14 @@ bool prev_op_search_t<Op_info>::match_fun(
    // match
    for(size_t k = 0; k < n_arg_s; ++k)
    {  if( ! is_var_one_s[k] )
-      {  match &= ! is_var_one_c[k];
-         match &= arg_one_s[k] == arg_one_c[k];
+      {  match  = match && ! is_var_one_c[k];
+         match  = match && arg_one_s[k] == arg_one_c[k];
       }
       else
-      {  match &= is_var_one_c[k];
+      {  match  = match && is_var_one_c[k];
          addr_t val_search  = new_var_index[ arg_one_s[k] ];
          addr_t val_check   = new_var_index[ arg_one_c[k] ];
-         match &= val_search == val_check;
+         match  = match && val_search == val_check;
       }
    }
    //
@@ -305,7 +305,7 @@ bool prev_op_search_t<Op_info>::match_fun(
          //
          val_search = new_var_index[ arg_one_s[1] ];
          val_check  = new_var_index[ arg_one_c[0] ];
-         match     &= val_search == val_check;
+         match      = match && val_search == val_check;
       }
    }
    return match;
