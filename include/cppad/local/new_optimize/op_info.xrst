@@ -10,7 +10,10 @@ Optimization Operator Information Class Requirements
 Syntax
 ******
 | |tab| *Op_info* *op_info*
-| |tab| *con_name* = *op_info* . *con_name* ( )
+| |tab| *n_op* = *op_info* . *n_op* ( )
+| |tab| *arg_all* = *op_info* . *arg_all* ( )
+| |tab| *con_all* = *op_info* . *con_all* ( )
+| |tab| *n_op* = *op_info* . *n_op* ( )
 | |tab| *op_info* . ``get_`` (
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
@@ -19,6 +22,8 @@ Syntax
 | |tab| |tab| *n_before*,
 | |tab| |tab| *n_after*,
 | |tab| |tab| *is_con_op*
+| |tab| |tab| *arg_one*
+| |tab| |tab| *is_var_one*
 | |tab| )
 
 Op_info
@@ -29,6 +34,7 @@ the requirements below.
 Types
 *****
 Each of the types listed below are defined in an *Op_info* class.
+The vector types must support the ``size`` and ``resize`` member functions.
 
 value_t
 =======
@@ -41,18 +47,29 @@ is the enum type that identifies the different operators.
 vec_addr_t
 ==========
 is a vector type with ``addr_t`` elements.
-It only needs to support the indexing operation.
+
+vec_bool_t
+==========
+is a vector type with ``bool`` elements.
 
 vec_value_t
 ===========
 is a vector type with ``value_t`` elements.
-It only needs to support the indexing operation.
 
 
-Constant Functions
-******************
-Given a *op_info* object,
-the results of these functions are always the same.
+n_op
+****
+is an ``addr_t`` equal to the number of operators in the tape.
+
+arg_all
+*******
+is a ``const vec_addr_t&`` containing the arguments for all the operators
+in the tape.
+
+con_all
+*******
+is a ``const vec_addr_t&`` containing the constants used by operators
+in the tape.
 
 .. csv-table::
 
@@ -110,6 +127,19 @@ Furthermore, the value of the constant is::
 The value of *is_con_op* must only depend on the value of *op_enum* ;
 i.e., it two operators have the same *op_enum*, they have the same
 *is_con_op* .
+
+arg_one
+=======
+is a ``vec_addr_t&`` that is set to the arguments for this operator;
+i.e., *arg_one*\ . ``size`` () is the number arguments and ,
+*arg_one*\ [ *k* ] is the k-th argument.
+
+is_var_one
+==========
+is a ``vec_bool_t&`` that is set to flag the variable arguments; i.e.
+i.e., *is_var_one*\ . ``size`` () is the number arguments and
+*is_var_one*\ [ *k* ] is true (false) if the k-th argument
+is (is not) a variable..
 
 
 {xrst_end opt_op_info}

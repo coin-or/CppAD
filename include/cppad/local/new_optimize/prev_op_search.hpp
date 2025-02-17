@@ -106,17 +106,12 @@ private:
    // vector
    template <class Value_t> using vector = CppAD::vector<Value_t>;
    //
-   // value_t
-   typedef typename Op_info::value_t value_t;
-   //
-   // op_enum_t
-   typedef typename Op_info::op_enum_t op_enum_t;
-   //
-   // vec_addr_t
-   typedef typename Op_info::vec_addr_t vec_addr_t;
-   //
-   // vec_value_t
-   typedef typename Op_info::vec_value_t vec_value_t;
+   // value_t, op_enum_t, vec_addr_t, vec_bool_t, vec_value_t
+   typedef typename Op_info::value_t       value_t;
+   typedef typename Op_info::op_enum_t     op_enum_t;
+   typedef typename Op_info::vec_addr_t    vec_addr_t;
+   typedef typename Op_info::vec_bool_t    vec_bool_t;
+   typedef typename Op_info::vec_value_t   vec_value_t;
    //
    // n_op_
    const addr_t n_op_;
@@ -181,8 +176,11 @@ public:
       op_enum_t op_enum;
       addr_t    arg_index, n_arg, n_before, n_after;
       bool      is_con_op;
+      vec_addr_t arg_one;
+      vec_bool_t is_var_one;
       op_info_.get(
-         i_op, op_enum, arg_index, n_arg, n_before, n_after, is_con_op
+         i_op, op_enum, arg_index, n_arg, n_before, n_after, is_con_op,
+         arg_one, is_var_one
       );
       CPPAD_ASSERT_UNKNOWN( n_before + n_after <= n_arg );
       //
@@ -245,8 +243,11 @@ bool prev_op_search_t<Op_info>::match_fun(
    op_enum_t op_enum_s;
    addr_t    arg_index_s, n_arg_s, n_before_s, n_after_s;
    bool      is_con_op_s;
+   vec_addr_t arg_one_s;
+   vec_bool_t is_var_one_s;
    op_info.get(i_op_search,
-      op_enum_s, arg_index_s, n_arg_s, n_before_s, n_after_s, is_con_op_s
+      op_enum_s, arg_index_s, n_arg_s, n_before_s, n_after_s, is_con_op_s,
+      arg_one_s, is_var_one_s
    );
    CPPAD_ASSERT_UNKNOWN( n_before_s + n_after_s <= n_arg_s );
    //
@@ -254,8 +255,11 @@ bool prev_op_search_t<Op_info>::match_fun(
    op_enum_t op_enum_c;
    addr_t    arg_index_c, n_arg_c, n_before_c, n_after_c;
    bool      is_con_op_c;
+   vec_addr_t arg_one_c;
+   vec_bool_t is_var_one_c;
    op_info.get(i_op_check,
-      op_enum_c, arg_index_c, n_arg_c, n_before_c, n_after_c, is_con_op_c
+      op_enum_c, arg_index_c, n_arg_c, n_before_c, n_after_c, is_con_op_c,
+      arg_one_c, is_var_one_c
    );
    CPPAD_ASSERT_UNKNOWN( n_before_c + n_after_c <= n_arg_c );
    //

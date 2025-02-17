@@ -67,6 +67,7 @@ public:
    typedef typename Tape::value_t                value_t;
    typedef CppAD::local::val_graph::op_enum_t    op_enum_t;
    typedef CppAD::vector<addr_t>                 vec_addr_t;
+   typedef CppAD::vector<bool>                   vec_bool_t;
    typedef CppAD::vector<value_t>                vec_value_t;
    // END_TYPEDEF
    //
@@ -130,7 +131,9 @@ public:
       addr_t&      n_arg      ,
       addr_t&      n_before   ,
       addr_t&      n_after    ,
-      bool&        is_con_op  )
+      bool&        is_con_op  ,
+      vec_addr_t&  arg_one    ,
+      vec_bool_t&  is_var_one )
    // END_GET
    {  //
       // op_enum, op_ptr
@@ -143,6 +146,20 @@ public:
       n_before   = op_ptr->n_before();
       n_after    = op_ptr->n_after();
       is_con_op  = op_enum == con_op_enum;
+      //
+      // arg_one
+      arg_one.resize(0); arg_one.resize(n_arg);
+      for(addr_t k = 0; k < n_arg; ++k)
+         arg_one[k] = arg_all_[arg_index + k];
+      //
+      // is_var_one
+      is_var_one.resize(0); is_var_one.resize(n_arg);
+      for(addr_t k = 0; k < n_before; ++k)
+         is_var_one[k] = false;
+      for(addr_t k = n_before; k < n_arg - n_after; ++k)
+         is_var_one[k] = true;
+      for(addr_t k = n_arg - n_after; k < n_arg; ++k)
+         is_var_one[k] = false;
    }
 };
 
