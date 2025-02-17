@@ -114,27 +114,25 @@ public:
    // END_N_OP
    {  return n_op_; }
    //
-   // arg_all = op_info.arg_all()
-   const vec_addr_t& arg_all(void) const
-   {  return arg_all_; }
-   //
    // con_all = op_info.con_all()
    const vec_value_t& con_all(void) const
    {  return con_all_; }
    //
    // BEGIN_GET
-   // op_info.get(i_op, op_enum, is_con_op, arg_one, is_var_one)
+   // op_info.get(i_op, op_enum, is_constant, arg_one, is_var_one)
    void get(
-      addr_t       i_op       ,
-      op_enum_t&   op_enum    ,
-      bool&        is_con_op  ,
-      vec_addr_t&  arg_one    ,
-      vec_bool_t&  is_var_one )
+      addr_t       i_op           ,
+      op_enum_t&   op_enum        ,
+      bool&        is_constant    ,
+      bool&        is_commutative ,
+      vec_addr_t&  arg_one        ,
+      vec_bool_t&  is_var_one     )
    // END_GET
    {  //
-      // op_enum, is_con_op
-      op_enum    = op_enum_t( op_enum_vec_[i_op] );
-      is_con_op  = op_enum == con_op_enum;
+      // op_enum, is_constant, is_commutative
+      op_enum        = op_enum_t( op_enum_vec_[i_op] );
+      is_constant    = op_enum == con_op_enum;
+      is_commutative = op_enum == add_op_enum || op_enum == mul_op_enum;
       //
       // arg_index, n_arg, n_after, n_before
       base_op_t* op_ptr = op_enum2class<value_t>(op_enum);

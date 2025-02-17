@@ -11,17 +11,13 @@ Syntax
 ******
 | |tab| *Op_info* *op_info*
 | |tab| *n_op* = *op_info* . *n_op* ( )
-| |tab| *arg_all* = *op_info* . *arg_all* ( )
 | |tab| *con_all* = *op_info* . *con_all* ( )
 | |tab| *n_op* = *op_info* . *n_op* ( )
 | |tab| *op_info* . ``get_`` (
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
-| |tab| |tab| *arg_index*,
-| |tab| |tab| *n_arg*,
-| |tab| |tab| *n_before*,
-| |tab| |tab| *n_after*,
-| |tab| |tab| *is_con_op*
+| |tab| |tab| *is_constant*
+| |tab| |tab| *is_commutative*
 | |tab| |tab| *arg_one*
 | |tab| |tab| *is_var_one*
 | |tab| )
@@ -61,25 +57,10 @@ n_op
 ****
 is an ``addr_t`` equal to the number of operators in the tape.
 
-arg_all
-*******
-is a ``const vec_addr_t&`` containing the arguments for all the operators
-in the tape.
-
 con_all
 *******
 is a ``const vec_addr_t&`` containing the constants used by operators
 in the tape.
-
-.. csv-table::
-
-   *con_name* , type,          Meaning
-   n_op       , addr_t  ,      number of operators in the corresponding tape
-   arg_all    , vec_addr_t ,   vector of arguments for all operators
-   con_all    , vec_value_t ,  vector containing all the constants
-
-The returns for the functions above are actually
-``const`` references to the type in the table above.
 
 
 get
@@ -96,18 +77,23 @@ op_enum
 =======
 is an ``op_enum_t&`` that is set to the enum value for this operator.
 
-is_con_op
-=========
+is_constant
+===========
+is a ``bool&`` that is set to true (false) if this is (is not)
+a commutative operator
+A commutative operator must have *arg_one* size two .
+
+   con_all[ arg_one[] ]
+
+is_commutative
+==============
 is a ``bool&`` that is set to true (false) if this is (is not)
 a constant operator
-A constant operator must have n_arg = 1, n_before = 1, and n_after = 0 .
-Furthermore, the value of the constant is::
+A constant operator must have *arg_one* size one and
+*is_var_one* [0] equal to false.
+The value of the constant is::
 
-   con_all[ arg_all[ arg_index ] ]
-
-The value of *is_con_op* must only depend on the value of *op_enum* ;
-i.e., it two operators have the same *op_enum*, they have the same
-*is_con_op* .
+   con_all[ arg_one[] ]
 
 arg_one
 =======

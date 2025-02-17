@@ -178,19 +178,22 @@ public:
       // con_all
       const vec_value_t& con_all = op_info_.con_all();
       //
-      // op_enum, is_con_op, arg_one, is_var_one
+      // op_enum, is_constant, arg_one, is_var_one
       op_enum_t op_enum;
-      bool         is_con_op;
+      bool         is_constant;
+      bool         is_commutative;
       vec_addr_t&  arg_one    = arg_one_search_;
       vec_bool_t&  is_var_one = is_var_one_search_;
-      op_info_.get(i_op, op_enum, is_con_op, arg_one, is_var_one);
+      op_info_.get(
+         i_op, op_enum, is_constant, is_commutative, arg_one, is_var_one
+      );
       //
       // n_arg
       size_t n_arg = arg_one.size();
       //
       // i_op_match
       addr_t i_op_match;
-      if( is_con_op )
+      if( is_constant )
       {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && ! is_var_one[0] )
          value_t con = con_all[ arg_one[0] ];
          i_op_match  = hash_table_.find_match(i_op, con, *this, match_fun);
@@ -244,25 +247,27 @@ bool prev_op_search_t<Op_info>::match_fun(
    // con_all
    const vec_value_t& con_all = op_info.con_all();
    //
-   // op_enum_s, is_con_op_s, arg_one_s, is_var_one_s
+   // op_enum_s, is_constant_s, is_commutative_s, arg_one_s, is_var_one_s
    op_enum_t op_enum_s;
-   bool         is_con_op_s;
+   bool         is_constant_s;
+   bool         is_commutative_s;
    vec_addr_t&  arg_one_s     = prev_op_search.arg_one_search_;
    vec_bool_t&  is_var_one_s  = prev_op_search.is_var_one_search_;
-   op_info.get(
-      i_op_search, op_enum_s, is_con_op_s, arg_one_s, is_var_one_s
+   op_info.get( i_op_search,
+      op_enum_s, is_constant_s, is_commutative_s, arg_one_s, is_var_one_s
    );
    //
    // n_arg_s
    size_t n_arg_s = arg_one_s.size();
    //
-   // op_enum_c, is_con_op_c, arg_one_c, is_var_one_c
+   // op_enum_c, is_constant_c, arg_one_c, is_var_one_c
    op_enum_t op_enum_c;
-   bool         is_con_op_c;
+   bool         is_constant_c;
+   bool         is_commutative_c;
    vec_addr_t&   arg_one_c    = prev_op_search.arg_one_check_;
    vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
-   op_info.get(
-      i_op_check, op_enum_c, is_con_op_c, arg_one_c, is_var_one_c
+   op_info.get( i_op_check,
+      op_enum_c, is_constant_c, is_commutative_c, arg_one_c, is_var_one_c
    );
    //
    // n_arg_c
@@ -270,9 +275,10 @@ bool prev_op_search_t<Op_info>::match_fun(
    //
    // match
    bool match = true;
-   match  = match && op_enum_s == op_enum_c;
-   match  = match && n_arg_s     == n_arg_c;
-   match  = match && is_con_op_s == is_con_op_c;
+   match  = match && op_enum_s        == op_enum_c;
+   match  = match && n_arg_s          == n_arg_c;
+   match  = match && is_constant_s    == is_constant_c;
+   match  = match && is_commutative_s == is_commutative_c;
    if( ! match )
       return false;
    //
@@ -300,19 +306,33 @@ bool prev_op_search_t<Op_info>::match_fun(
    }
    //
    // match
-   if( ! match )
-   {  bool communative = op_enum_s == CppAD::local::val_graph::add_op_enum;
-      communative     |= op_enum_s == CppAD::local::val_graph::mul_op_enum;
-      if( communative )
-      {  addr_t val_search, val_check;
+   if( ! match && is_commutative_s )
+   {  CPPAD_ASSERT_UNKNOWN( n_arg_s == 2 )
+      match =          is_var_one_s[0] == is_var_one_c[1];
+      match = match && is_var_one_s[1] == is_var_one_c[0];
+      if( match )
+      {  //
+         // index_s
+         addr_t index_s = arg_one_s[0];
+         if( is_var_one_s[0] ) index_s = new_var_index[ index_s ];
          //
-         val_search = new_var_index[ arg_one_s[0] ];
-         val_check  = new_var_index[ arg_one_c[1] ];
-         match      = val_search == val_check;
+         // index_c
+         addr_t index_c = arg_one_c[1];
+         if( is_var_one_c[1] ) index_c = new_var_index[ index_c ];
          //
-         val_search = new_var_index[ arg_one_s[1] ];
-         val_check  = new_var_index[ arg_one_c[0] ];
-         match      = match && val_search == val_check;
+         // match
+         match = index_s == index_c;
+         //
+         // index_s
+         index_s = arg_one_s[1];
+         if( is_var_one_s[1] ) index_s = new_var_index[ index_s ];
+         //
+         // index_c
+         index_c = arg_one_c[0];
+         if( is_var_one_c[0] ) index_c = new_var_index[ index_c ];
+         //
+         // match
+         match = match && index_s == index_c;
       }
    }
    return match;
