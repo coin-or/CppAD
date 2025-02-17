@@ -173,16 +173,14 @@ public:
       // con_all
       const vec_value_t& con_all = op_info_.con_all();
       //
-      // op_enum, arg_index, n_tmp, n_before, n_after, is_con_op
+      // op_enum, is_con_op, arg_one, is_var_one
       op_enum_t op_enum;
-      addr_t    arg_index, n_tmp, n_before, n_after;
       bool      is_con_op;
       vec_addr_t arg_one;
       vec_bool_t is_var_one;
-      op_info_.get(
-         i_op, op_enum, arg_index, n_tmp, n_before, n_after, is_con_op,
-         arg_one, is_var_one
-      );
+      op_info_.get(i_op, op_enum, is_con_op, arg_one, is_var_one);
+      //
+      // n_arg
       size_t n_arg = arg_one.size();
       //
       // i_op_match
@@ -239,35 +237,34 @@ bool prev_op_search_t<Op_info>::match_fun(
    // con_all
    const vec_value_t& con_all = op_info.con_all();
    //
-   // op_enum_s, arg_index_s, n_tmp_s, n_before_s, n_after_s, is_con_op_s
+   // op_enum_s, is_con_op_s, arg_one_s, is_var_one_s
    op_enum_t op_enum_s;
-   addr_t    arg_index_s, n_tmp_s, n_before_s, n_after_s;
    bool      is_con_op_s;
    vec_addr_t arg_one_s;
    vec_bool_t is_var_one_s;
-   op_info.get(i_op_search,
-      op_enum_s, arg_index_s, n_tmp_s, n_before_s, n_after_s, is_con_op_s,
-      arg_one_s, is_var_one_s
+   op_info.get(
+      i_op_search, op_enum_s, is_con_op_s, arg_one_s, is_var_one_s
    );
+   //
+   // n_arg_s
    size_t n_arg_s = arg_one_s.size();
    //
-   // op_enum_c, arg_index_c, n_tmp_c, n_before_c, n_after_c, is_con_op_c
+   // op_enum_c, is_con_op_c, arg_one_c, is_var_one_c
    op_enum_t op_enum_c;
-   addr_t    arg_index_c, n_tmp_c, n_before_c, n_after_c;
    bool      is_con_op_c;
    vec_addr_t arg_one_c;
    vec_bool_t is_var_one_c;
-   op_info.get(i_op_check,
-      op_enum_c, arg_index_c, n_tmp_c, n_before_c, n_after_c, is_con_op_c,
-      arg_one_c, is_var_one_c
+   op_info.get(
+      i_op_check, op_enum_c, is_con_op_c, arg_one_c, is_var_one_c
    );
+   //
+   // n_arg_c
    size_t n_arg_c = arg_one_c.size();
    //
    // match
    bool match = true;
    match &= op_enum_s == op_enum_c;
    match &= n_arg_s     == n_arg_c;
-   match &= n_after_s   == n_after_c;
    match &= is_con_op_s == is_con_op_c;
    if( ! match )
       return false;

@@ -96,25 +96,6 @@ op_enum
 =======
 is an ``op_enum_t&`` that is set to the enum value for this operator.
 
-arg_index
-=========
-is an ``addr_t&`` that is set to the index of the first
-argument for this operator in the arg_all vector.
-
-n_arg
-=====
-is an ``addr_t&`` that is set to the number of arguments for this operator.
-
-n_before
-========
-is an ``addr_t&`` that is set to the number of arguments
-before the first variable for this operator.
-
-n_after
-=======
-is an ``addr_t&`` that is set to the number of arguments
-after the last variable for this operator.
-
 is_con_op
 =========
 is a ``bool&`` that is set to true (false) if this is (is not)

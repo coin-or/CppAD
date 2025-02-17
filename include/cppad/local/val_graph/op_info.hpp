@@ -123,29 +123,25 @@ public:
    {  return con_all_; }
    //
    // BEGIN_GET
-   // op_info.get(i_op, op_enum, arg_index, n_arg, n_before, n_after, is_con_op)
+   // op_info.get(i_op, op_enum, is_con_op, arg_one, is_var_one)
    void get(
       addr_t       i_op       ,
       op_enum_t&   op_enum    ,
-      addr_t&      arg_index  ,
-      addr_t&      n_arg      ,
-      addr_t&      n_before   ,
-      addr_t&      n_after    ,
       bool&        is_con_op  ,
       vec_addr_t&  arg_one    ,
       vec_bool_t&  is_var_one )
    // END_GET
    {  //
-      // op_enum, op_ptr
-      op_enum           = op_enum_t( op_enum_vec_[i_op] );
-      base_op_t* op_ptr = op_enum2class<value_t>(op_enum);
+      // op_enum, is_con_op
+      op_enum    = op_enum_t( op_enum_vec_[i_op] );
+      is_con_op  = op_enum == con_op_enum;
       //
       // arg_index, n_arg, n_after, n_before
-      arg_index  = op2arg_index_[i_op];
-      n_arg      = op_ptr->n_arg(arg_index, arg_all_);
-      n_before   = op_ptr->n_before();
-      n_after    = op_ptr->n_after();
-      is_con_op  = op_enum == con_op_enum;
+      base_op_t* op_ptr = op_enum2class<value_t>(op_enum);
+      addr_t arg_index  = op2arg_index_[i_op];
+      addr_t n_arg      = op_ptr->n_arg(arg_index, arg_all_);
+      addr_t n_before   = op_ptr->n_before();
+      addr_t n_after    = op_ptr->n_after();
       //
       // arg_one
       arg_one.resize(0); arg_one.resize(n_arg);
