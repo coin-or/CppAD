@@ -54,10 +54,12 @@ For operator arguments that are variables,
 the new indices are used when checking to see if operators match.
 The new indices are::
 
-   for(k = n_before; k < n_arg - n_after; ++k)
-      new_var_index[ arg_all[ arg_index + k ] ]
+   for(k = 0; k < n_arg; ++k)
+      if( is_var_op[k] )
+         new_var_index[ arg_one[k] ]
+      else
+         arg_one[k]
 
-where n_arg, n_before, n_after, and arg_index correspond to the operator.
 
 i_op_match
 ==========
@@ -168,8 +170,7 @@ public:
       // new_var_index_
       new_var_index_ = &new_var_index;
       //
-      // arg_all, con_all
-      const vec_addr_t&  arg_all = op_info_.arg_all();
+      // con_all
       const vec_value_t& con_all = op_info_.con_all();
       //
       // op_enum, arg_index, n_arg, n_before, n_after, is_con_op
@@ -188,7 +189,7 @@ public:
       addr_t i_op_match;
       if( is_con_op )
       {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_before == 1 && n_after == 0 )
-         value_t con = con_all[ arg_all[arg_index] ];
+         value_t con = con_all[ arg_one[0] ];
          i_op_match  = hash_table_.find_match(i_op, con, *this, match_fun);
       }
       else
@@ -199,11 +200,11 @@ public:
          //
          // op_arg_
          for(addr_t k = 0; k < n_before; ++k)
-            op_arg_[k] = arg_all[arg_index + k];
+            op_arg_[k] = arg_one[k];
          for(addr_t k  = n_before; k < n_arg - n_after; ++k)
-            op_arg_[k] = new_var_index[ arg_all[arg_index + k] ];
+            op_arg_[k] = new_var_index[ arg_one[k] ];
          for(addr_t k  = n_arg - n_after; k < n_arg; ++k)
-            op_arg_[k] = arg_all[arg_index + k];
+            op_arg_[k] = arg_one[k];
          //
          // i_op_match
          i_op_match = hash_table_.find_match(
@@ -235,8 +236,7 @@ bool prev_op_search_t<Op_info>::match_fun(
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
    //
-   // arg_all, con_all
-   const vec_addr_t&  arg_all = op_info.arg_all();
+   // con_all
    const vec_value_t& con_all = op_info.con_all();
    //
    // op_enum_s, arg_index_s, n_arg_s, n_before_s, n_after_s, is_con_op_s
@@ -276,25 +276,25 @@ bool prev_op_search_t<Op_info>::match_fun(
    // con_op_enum
    if( op_enum_s == CppAD::local::val_graph::con_op_enum )
    {  //
-      const value_t& c_search = con_all[ arg_all[arg_index_s] ];
-      const value_t& c_check  = con_all[ arg_all[arg_index_c] ];
+      const value_t& c_search = con_all[ arg_one_s[0] ];
+      const value_t& c_check  = con_all[ arg_one_c[0] ];
       return IdenticalEqualCon(c_search, c_check);
    }
    //
    // match
    for(addr_t k = 0; k < n_before_s; ++k)
-      match &= arg_all[arg_index_s + k] == arg_all[arg_index_c + k];
+      match &= arg_one_s[k] == arg_one_c[k];
    //
    // match
    for(addr_t k = n_before_s; k < n_arg_s - n_after_s; ++k)
-   {  addr_t val_search  = new_var_index[ arg_all[arg_index_s + k] ];
-      addr_t val_check   = new_var_index[ arg_all[arg_index_c + k] ];
+   {  addr_t val_search  = new_var_index[ arg_one_s[k] ];
+      addr_t val_check   = new_var_index[ arg_one_c[k] ];
       match &= val_search == val_check;
    }
    //
    // match
    for(addr_t k = n_arg_s - n_after_s; k < n_arg_s; ++k)
-      match &= arg_all[arg_index_s + k] == arg_all[arg_index_c + k];
+      match &= arg_one_s[k] == arg_one_c[k];
    //
    // match
    if( ! match )
@@ -303,12 +303,12 @@ bool prev_op_search_t<Op_info>::match_fun(
       if( communative )
       {  addr_t val_search, val_check;
          //
-         val_search = new_var_index[ arg_all[arg_index_s + 0] ];
-         val_check  = new_var_index[ arg_all[arg_index_c + 1] ];
+         val_search = new_var_index[ arg_one_s[0] ];
+         val_check  = new_var_index[ arg_one_c[1] ];
          match      = val_search == val_check;
          //
-         val_search = new_var_index[ arg_all[arg_index_s + 1] ];
-         val_check  = new_var_index[ arg_all[arg_index_c + 0] ];
+         val_search = new_var_index[ arg_one_s[1] ];
+         val_check  = new_var_index[ arg_one_c[0] ];
          match     &= val_search == val_check;
       }
    }
