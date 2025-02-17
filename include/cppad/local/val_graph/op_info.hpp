@@ -45,11 +45,11 @@ op2arg_index
 ============
 is a vector that maps operator index to
 the index of the first argument, for this operator,
-in the vector that contains all the operator arguments. 
+in the vector that contains all the operator arguments.
 
 Requirements
 ************
-The ``val_op_info_t`` class satisfied the 
+The ``val_op_info_t`` class satisfied the
 :ref:`opt_op_info@Op_info` requirements.
 
 {xrst_end val_op_info_t}
@@ -78,11 +78,11 @@ private:
    // n_op_
    const addr_t n_op_;
    //
-   // arg_vec_
-   const vec_addr_t& arg_vec_;
+   // arg_all_
+   const vec_addr_t& arg_all_;
    //
-   // con_vec_
-   const vec_value_t& con_vec_;
+   // con_all_
+   const vec_value_t& con_all_;
    //
    // op_enum_vec_
    const CppAD::vector<uint8_t>& op_enum_vec_;
@@ -111,8 +111,8 @@ public:
       const vec_addr_t&      op2arg_index )
    // END_OP_INFO
    : n_op_ ( tape.n_op() )
-   , arg_vec_ ( tape.arg_vec() )
-   , con_vec_ ( tape.con_vec() )
+   , arg_all_ ( tape.arg_vec() )
+   , con_all_ ( tape.con_vec() )
    , op_enum_vec_ ( tape.op_enum_vec() )
    , op2arg_index_ ( op2arg_index )
    {  }
@@ -125,13 +125,13 @@ public:
    // END_N_OP
    {  return n_op_; }
    //
-   // arg_vec = op_info.arg_vec()
-   const vec_addr_t& arg_vec(void) const
-   {  return arg_vec_; }
+   // arg_all = op_info.arg_all()
+   const vec_addr_t& arg_all(void) const
+   {  return arg_all_; }
    //
-   // con_vec = op_info.con_vec()
-   const vec_value_t& con_vec(void) const
-   {  return con_vec_; }
+   // con_all = op_info.con_all()
+   const vec_value_t& con_all(void) const
+   {  return con_all_; }
    //
    // ------------------------------------------------------------------------
    // Results that depend on i_op
@@ -149,7 +149,7 @@ public:
       op_enum_   = op_ptr->op_enum();
       i_op_      = i_op;
       arg_index_ = op2arg_index_[i_op];
-      n_arg_     = op_ptr->n_arg(arg_index_, arg_vec_);
+      n_arg_     = op_ptr->n_arg(arg_index_, arg_all_);
       n_before_  = op_ptr->n_before();
       n_after_   = op_ptr->n_after();
       is_con_op_ = op_enum_ == con_op_enum;

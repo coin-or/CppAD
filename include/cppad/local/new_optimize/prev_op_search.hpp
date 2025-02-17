@@ -55,7 +55,7 @@ the new indices are used when checking to see if operators match.
 The new indices are::
 
    for(k = n_before; k < n_arg - n_after; ++k)
-      new_var_index[ arg_vec[ arg_index + k ] ]
+      new_var_index[ arg_all[ arg_index + k ] ]
 
 where n_arg, n_before, n_after, and arg_index correspond to the operator.
 
@@ -173,9 +173,9 @@ public:
       // new_var_index_
       new_var_index_ = &new_var_index;
       //
-      // arg_vec, con_vec
-      const vec_addr_t&  arg_vec = op_info_.arg_vec();
-      const vec_value_t& con_vec = op_info_.con_vec();
+      // arg_all, con_all
+      const vec_addr_t&  arg_all = op_info_.arg_all();
+      const vec_value_t& con_all = op_info_.con_all();
       //
       // op_info_
       op_info_.set(i_op);
@@ -195,7 +195,7 @@ public:
       addr_t i_op_match;
       if( is_con_op )
       {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_before == 1 && n_after == 0 )
-         value_t con = con_vec[ arg_vec[arg_index] ];
+         value_t con = con_all[ arg_all[arg_index] ];
          i_op_match  = hash_table_.find_match(i_op, con, *this, match_fun);
       }
       else
@@ -206,11 +206,11 @@ public:
          //
          // op_arg_
          for(addr_t k = 0; k < n_before; ++k)
-            op_arg_[k] = arg_vec[arg_index + k];
+            op_arg_[k] = arg_all[arg_index + k];
          for(addr_t k  = n_before; k < n_arg - n_after; ++k)
-            op_arg_[k] = new_var_index[ arg_vec[arg_index + k] ];
+            op_arg_[k] = new_var_index[ arg_all[arg_index + k] ];
          for(addr_t k  = n_arg - n_after; k < n_arg; ++k)
-            op_arg_[k] = arg_vec[arg_index + k];
+            op_arg_[k] = arg_all[arg_index + k];
          //
          // i_op_match
          i_op_match = hash_table_.find_match(
@@ -242,9 +242,9 @@ bool prev_op_search_t<Op_info>::match_fun(
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
    //
-   // arg_vec, con_vec
-   const vec_addr_t&  arg_vec = op_info.arg_vec();
-   const vec_value_t& con_vec = op_info.con_vec();
+   // arg_all, con_all
+   const vec_addr_t&  arg_all = op_info.arg_all();
+   const vec_value_t& con_all = op_info.con_all();
    //
    // op_info
    op_info.set(i_op_search);
@@ -280,26 +280,26 @@ bool prev_op_search_t<Op_info>::match_fun(
    // con_op_enum
    if( op_enum == CppAD::local::val_graph::con_op_enum )
    {  //
-      const value_t& c_search = con_vec[ arg_vec[arg_search] ];
-      const value_t& c_check  = con_vec[ arg_vec[arg_check] ];
+      const value_t& c_search = con_all[ arg_all[arg_search] ];
+      const value_t& c_check  = con_all[ arg_all[arg_check] ];
       return IdenticalEqualCon(c_search, c_check);
    }
    //
    // match
    bool match = true;
    for(addr_t k = 0; k < n_before; ++k)
-      match &= arg_vec[arg_search + k] == arg_vec[arg_check + k];
+      match &= arg_all[arg_search + k] == arg_all[arg_check + k];
    //
    // match
    for(addr_t k = n_before; k < n_arg - n_after; ++k)
-   {  addr_t val_search  = new_var_index[ arg_vec[arg_search + k] ];
-      addr_t val_check   = new_var_index[ arg_vec[arg_check + k] ];
+   {  addr_t val_search  = new_var_index[ arg_all[arg_search + k] ];
+      addr_t val_check   = new_var_index[ arg_all[arg_check + k] ];
       match &= val_search == val_check;
    }
    //
    // match
    for(addr_t k = 0; k < n_before; ++k)
-      match &= arg_vec[arg_search + k] == arg_vec[arg_check + k];
+      match &= arg_all[arg_search + k] == arg_all[arg_check + k];
    //
    // match
    if( ! match )
@@ -308,12 +308,12 @@ bool prev_op_search_t<Op_info>::match_fun(
       if( communative )
       {  addr_t val_search, val_check;
          //
-         val_search = new_var_index[ arg_vec[arg_search + 0] ];
-         val_check  = new_var_index[ arg_vec[arg_check + 1] ];
+         val_search = new_var_index[ arg_all[arg_search + 0] ];
+         val_check  = new_var_index[ arg_all[arg_check + 1] ];
          match      = val_search == val_check;
          //
-         val_search = new_var_index[ arg_vec[arg_search + 1] ];
-         val_check  = new_var_index[ arg_vec[arg_check + 0] ];
+         val_search = new_var_index[ arg_all[arg_search + 1] ];
+         val_check  = new_var_index[ arg_all[arg_check + 0] ];
          match     &= val_search == val_check;
       }
    }

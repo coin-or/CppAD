@@ -51,8 +51,8 @@ the results of these functions are always the same.
 
    *con_name* , type,          Meaning
    n_op       , addr_t  ,      number of operators in the corresponding tape
-   arg_vec    , vec_addr_t ,   vector of arguments for all operators
-   con_vec    , vec_value_t ,  vector containing all the constants
+   arg_all    , vec_addr_t ,   vector of arguments for all operators
+   con_all    , vec_value_t ,  vector containing all the constants
 
 The returns for the functions above are actually
 ``const`` references to the type in the table above.
@@ -96,7 +96,7 @@ is_con_op
 A constant operator must have n_arg = 1, n_before = 1, and n_after = 0 .
 Furthermore, the value of the constant is::
 
-   con_vec[ arg_vec[ arg_index ] ]
+   con_all[ arg_all[ arg_index ] ]
 
 The value of *is_con_op* must only depend on the value of *op_enum* ;
 i.e., it two operators have the same *op_enum*, they have the same
