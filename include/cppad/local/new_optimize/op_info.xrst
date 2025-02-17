@@ -11,8 +11,15 @@ Syntax
 ******
 | |tab| *Op_info* *op_info*
 | |tab| *con_name* = *op_info* . *con_name* ( )
-| |tab| *op_info* . ``set`` ( *i_op* )
-| |tab| *var_name* = *op_info* . ``get_`` *var_name* ()
+| |tab| *op_info* . ``get_`` (
+| |tab| |tab| *i_op* ,
+| |tab| |tab| *op_enum*,
+| |tab| |tab| *arg_index*,
+| |tab| |tab| *n_arg*,
+| |tab| |tab| *n_before*,
+| |tab| |tab| *n_after*,
+| |tab| |tab| *is_con_op*
+| |tab| )
 
 Op_info
 *******
@@ -58,41 +65,43 @@ The returns for the functions above are actually
 ``const`` references to the type in the table above.
 
 
-set
+get
 ***
-This function sets the operator corresponding to the
-return value for all the get functions.
-The return value for other member functions (see above) are not affected.
 
 i_op
 ====
 is an ``addr_t`` index that identifies this particular use of the operator,
 *i_op* < *op_info* . ``n_op`` () .
+This argument is the only input to ``get`` ,
+all the other arguments are outputs.
 
-get
-***
+op_enum
+=======
+is an ``op_enum_t&`` that is set to the enum value for this operator.
 
-var_name
+arg_index
+=========
+is an ``addr_t&`` that is set to the index of the first
+argument for this operator in the arg_all vector.
+
+n_arg
+=====
+is an ``addr_t&`` that is set to the number of arguments for this operator.
+
+n_before
 ========
-is variable holding the value returned by the function ``get_``\ *var_name* .
-The following list of *var_name* are the possible choices for the get function.
-You can use a different name for the variable returned.
+is an ``addr_t&`` that is set to the number of arguments
+before the first variable for this operator.
 
-
-.. csv-table::
-
-   *var_name*  , type,       Meaning
-   op_enum     , op_enum_t,  An enum value that determines the operator
-   i_op        , addr_t,     value of *i_op* in the previous call to ``set``
-   arg_index   , addr_t,     index of first argument for this operator
-   n_arg       , addr_t,     number of arguments for this operator
-   n_before    , addr_t,     number of arguments before first value index
-   n_after     , addr_t,     number of arguments after last value index
-   is_con_op   , bool,       is this a constant operator; see below
-
+n_after
+=======
+is an ``addr_t&`` that is set to the number of arguments
+after the last variable for this operator.
 
 is_con_op
 =========
+is a ``bool&`` that is set to true (false) if this is (is not)
+a constant operator
 A constant operator must have n_arg = 1, n_before = 1, and n_after = 0 .
 Furthermore, the value of the constant is::
 

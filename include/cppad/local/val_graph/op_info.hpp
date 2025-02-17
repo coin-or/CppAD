@@ -90,18 +90,6 @@ private:
    // op2arg_index_
    const vec_addr_t& op2arg_index_;
    //
-   // ------------------------------------------------------------------------
-   // set and get values
-   //
-   op_enum_t op_enum_;
-   addr_t    i_op_;
-   addr_t    arg_index_;
-   addr_t    n_arg_;
-   addr_t    n_before_;
-   addr_t    n_after_;
-   bool      is_con_op_;
-   // ------------------------------------------------------------------------
-   //
 public:
    //
    // BEGIN_OP_INFO
@@ -133,49 +121,29 @@ public:
    const vec_value_t& con_all(void) const
    {  return con_all_; }
    //
-   // ------------------------------------------------------------------------
-   // Results that depend on i_op
-   // ------------------------------------------------------------------------
-   // set(i_op)
-   // BEGIN_SET
-   void set(addr_t i_op)
-   // END_SET
+   // BEGIN_GET
+   // op_info.get(i_op, op_enum, arg_index, n_arg, n_before, n_after, is_con_op)
+   void get(
+      addr_t       i_op       ,
+      op_enum_t&   op_enum    ,
+      addr_t&      arg_index  ,
+      addr_t&      n_arg      ,
+      addr_t&      n_before   ,
+      addr_t&      n_after    ,
+      bool&        is_con_op  )
+   // END_GET
    {  //
-      // op_ptr
-      op_enum_t op_enum = op_enum_t( op_enum_vec_[i_op] );
+      // op_enum, op_ptr
+      op_enum           = op_enum_t( op_enum_vec_[i_op] );
       base_op_t* op_ptr = op_enum2class<value_t>(op_enum);
       //
-      // op_enum_, i_op_, arg_index_, n_arg_, n_after_, n_before_
-      op_enum_   = op_ptr->op_enum();
-      i_op_      = i_op;
-      arg_index_ = op2arg_index_[i_op];
-      n_arg_     = op_ptr->n_arg(arg_index_, arg_all_);
-      n_before_  = op_ptr->n_before();
-      n_after_   = op_ptr->n_after();
-      is_con_op_ = op_enum_ == con_op_enum;
+      // arg_index, n_arg, n_after, n_before
+      arg_index  = op2arg_index_[i_op];
+      n_arg      = op_ptr->n_arg(arg_index, arg_all_);
+      n_before   = op_ptr->n_before();
+      n_after    = op_ptr->n_after();
+      is_con_op  = op_enum == con_op_enum;
    }
-   //
-   // get
-   op_enum_t get_op_enum(void) const
-   {  return op_enum_; }
-   //
-   addr_t get_i_op(void) const
-   {  return i_op_; }
-   //
-   addr_t get_arg_index(void) const
-   {  return arg_index_; }
-   //
-   addr_t get_n_arg(void) const
-   {  return n_arg_; }
-   //
-   addr_t get_n_before(void) const
-   {  return n_before_; }
-   //
-   addr_t get_n_after(void) const
-   {  return n_after_; }
-   //
-   bool get_is_con_op(void) const
-   {  return is_con_op_; }
 };
 
 

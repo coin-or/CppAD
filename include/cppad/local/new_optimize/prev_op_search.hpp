@@ -177,18 +177,13 @@ public:
       const vec_addr_t&  arg_all = op_info_.arg_all();
       const vec_value_t& con_all = op_info_.con_all();
       //
-      // op_info_
-      op_info_.set(i_op);
-      //
-      // op_enum
-      op_enum_t  op_enum = op_info_.get_op_enum();
-      //
-      // arg_index, n_arg, n_before, n_after
-      addr_t arg_index  = op_info_.get_arg_index();
-      addr_t n_arg      = op_info_.get_n_arg();
-      addr_t n_before   = op_info_.get_n_before();
-      addr_t n_after    = op_info_.get_n_after();
-      bool   is_con_op  = op_info_.get_is_con_op();
+      // op_enum, arg_index, n_arg, n_before, n_after, is_con_op
+      op_enum_t op_enum;
+      addr_t    arg_index, n_arg, n_before, n_after;
+      bool      is_con_op;
+      op_info_.get(
+         i_op, op_enum, arg_index, n_arg, n_before, n_after, is_con_op
+      );
       CPPAD_ASSERT_UNKNOWN( n_before + n_after <= n_arg );
       //
       // i_op_match
@@ -246,74 +241,70 @@ bool prev_op_search_t<Op_info>::match_fun(
    const vec_addr_t&  arg_all = op_info.arg_all();
    const vec_value_t& con_all = op_info.con_all();
    //
-   // op_info
-   op_info.set(i_op_search);
+   // op_enum_s, arg_index_s, n_arg_s, n_before_s, n_after_s, is_con_op_s
+   op_enum_t op_enum_s;
+   addr_t    arg_index_s, n_arg_s, n_before_s, n_after_s;
+   bool      is_con_op_s;
+   op_info.get(i_op_search,
+      op_enum_s, arg_index_s, n_arg_s, n_before_s, n_after_s, is_con_op_s
+   );
+   CPPAD_ASSERT_UNKNOWN( n_before_s + n_after_s <= n_arg_s );
    //
-   // arg_search
-   addr_t arg_search = op_info.get_arg_index();
+   // op_enum_c, arg_index_c, n_arg_c, n_before_c, n_after_c, is_con_op_c
+   op_enum_t op_enum_c;
+   addr_t    arg_index_c, n_arg_c, n_before_c, n_after_c;
+   bool      is_con_op_c;
+   op_info.get(i_op_check,
+      op_enum_c, arg_index_c, n_arg_c, n_before_c, n_after_c, is_con_op_c
+   );
+   CPPAD_ASSERT_UNKNOWN( n_before_c + n_after_c <= n_arg_c );
    //
-   // op_enum, n_arg, n_before, n_after
-   op_enum_t op_enum        = op_info.get_op_enum();
-   addr_t    n_arg          = op_info.get_n_arg();
-   addr_t    n_before       = op_info.get_n_before();
-   addr_t    n_after        = op_info.get_n_after();
-   //
-   // op_info
-   op_info.set(i_op_check);
-   //
-   // arg_check
-   addr_t arg_check = op_info.get_arg_index();
-   //
-   // check
-   // op_enum, n_arg, n_before, n_after
-   if( op_enum != op_info.get_op_enum() )
-      return false;
-   if( n_arg != op_info.get_n_arg() )
-      return false;
-   if( n_arg != op_info.get_n_arg() )
-      return false;
-   if( n_before != op_info.get_n_before() )
-      return false;
-   if( n_after != op_info.get_n_after() )
+   // match
+   bool match = true;
+   match &= op_enum_s == op_enum_c;
+   match &= n_arg_s     == n_arg_c;
+   match &= n_before_s  == n_before_c;
+   match &= n_after_s   == n_after_c;
+   match &= is_con_op_s == is_con_op_c;
+   if( ! match )
       return false;
    //
    // con_op_enum
-   if( op_enum == CppAD::local::val_graph::con_op_enum )
+   if( op_enum_s == CppAD::local::val_graph::con_op_enum )
    {  //
-      const value_t& c_search = con_all[ arg_all[arg_search] ];
-      const value_t& c_check  = con_all[ arg_all[arg_check] ];
+      const value_t& c_search = con_all[ arg_all[arg_index_s] ];
+      const value_t& c_check  = con_all[ arg_all[arg_index_c] ];
       return IdenticalEqualCon(c_search, c_check);
    }
    //
    // match
-   bool match = true;
-   for(addr_t k = 0; k < n_before; ++k)
-      match &= arg_all[arg_search + k] == arg_all[arg_check + k];
+   for(addr_t k = 0; k < n_before_s; ++k)
+      match &= arg_all[arg_index_s + k] == arg_all[arg_index_c + k];
    //
    // match
-   for(addr_t k = n_before; k < n_arg - n_after; ++k)
-   {  addr_t val_search  = new_var_index[ arg_all[arg_search + k] ];
-      addr_t val_check   = new_var_index[ arg_all[arg_check + k] ];
+   for(addr_t k = n_before_s; k < n_arg_s - n_after_s; ++k)
+   {  addr_t val_search  = new_var_index[ arg_all[arg_index_s + k] ];
+      addr_t val_check   = new_var_index[ arg_all[arg_index_c + k] ];
       match &= val_search == val_check;
    }
    //
    // match
-   for(addr_t k = 0; k < n_before; ++k)
-      match &= arg_all[arg_search + k] == arg_all[arg_check + k];
+   for(addr_t k = n_arg_s - n_after_s; k < n_arg_s; ++k)
+      match &= arg_all[arg_index_s + k] == arg_all[arg_index_c + k];
    //
    // match
    if( ! match )
-   {  bool communative = op_enum == CppAD::local::val_graph::add_op_enum;
-      communative     |= op_enum == CppAD::local::val_graph::mul_op_enum;
+   {  bool communative = op_enum_s == CppAD::local::val_graph::add_op_enum;
+      communative     |= op_enum_s == CppAD::local::val_graph::mul_op_enum;
       if( communative )
       {  addr_t val_search, val_check;
          //
-         val_search = new_var_index[ arg_all[arg_search + 0] ];
-         val_check  = new_var_index[ arg_all[arg_check + 1] ];
+         val_search = new_var_index[ arg_all[arg_index_s + 0] ];
+         val_check  = new_var_index[ arg_all[arg_index_c + 1] ];
          match      = val_search == val_check;
          //
-         val_search = new_var_index[ arg_all[arg_search + 1] ];
-         val_check  = new_var_index[ arg_all[arg_check + 0] ];
+         val_search = new_var_index[ arg_all[arg_index_s + 1] ];
+         val_check  = new_var_index[ arg_all[arg_index_c + 0] ];
          match     &= val_search == val_check;
       }
    }
