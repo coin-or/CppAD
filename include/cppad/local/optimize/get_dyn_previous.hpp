@@ -9,8 +9,6 @@
 Create operator information tables
 */
 
-# include <cppad/local/new_optimize/prev_dyn_search.hpp>
-
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/optimize/hash_code.hpp>

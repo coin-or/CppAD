@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// --------------------------------------------------------------------------
+{xrst_begin opt_op_info dev}
+
+Optimization Information Template Class
+#######################################
+
+Syntax
+******
+| |tab| template < class *Op_info* >
+| |tab| Op_info *op_info*
+
+{xrst_template ;
+include/cppad/local/new_optimize/op_info.xrst
+
+Class Requirements for Optimization
+***********************************
+@op_info_t@ : is the type for this optimization operator information class
+@=========@ : is rst underlining with = and same length as op_info_t.
+@op_info@   : name in italic (* surrounding name) used for a op_info_t object
+
+@op_info_t@ ; Op_info
+@=========@ ; =======
+@op_info@   ; *op_info*
+}
+
+{xrst_end opt_op_info}

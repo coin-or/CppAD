@@ -1,19 +1,29 @@
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
-// --------------------------------------------------------------------------
-{xrst_begin opt_op_info dev}
+{xrst_spell_off}
+{xrst_comment
+   SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+   SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+   SPDX-FileContributor: 2003-25 Bradley M. Bell
+}
+{xrst_spell_on}
 
-Optimization Operator Information Class Requirements
-####################################################
+{xrst_comment: This is an xrst template file.
+
+The content of this file is all below its first header:
+
+It has the following xrst_template replacements:
+@op_info_t@ : is the type for this optimization operator information class
+@=========@ : is rst underlining with = and same length as op_info_t.
+@op_info@   : name in italic (* surrounding name) used for a op_info_t object
+}
+
+Class Requirements for Optimization
+***********************************
 
 Syntax
-******
-| |tab| *Op_info* *op_info*
-| |tab| *n_op* = *op_info* . *n_op* ( )
-| |tab| *con_all* = *op_info* . *con_all* ( )
-| |tab| *n_op* = *op_info* . *n_op* ( )
-| |tab| *op_info* . ``get_`` (
+======
+| |tab| *n_op* = @op_info@ . *n_op* ( )
+| |tab| *con_all* = @op_info@ . *con_all* ( )
+| |tab| @op_info@ . ``get_`` (
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
 | |tab| |tab| *is_constant*
@@ -22,91 +32,82 @@ Syntax
 | |tab| |tab| *is_var_one*
 | |tab| )
 
-Op_info
-*******
-This template parameter must be a class that satisfies
-the requirements below.
-
 Types
-*****
-Each of the types listed below are defined in an *Op_info* class.
-The vector types must support the ``size`` and ``resize`` member functions.
+=====
+Each of the types listed below are defined in the @op_info_t@ class;
+i.e. if *type* is one of the types below then ``@op_info_t@`` :: *type* is
+defined as described below.
+The vector types must support indexing
+and the ``size`` and ``resize`` member functions.
 
 value_t
-=======
+-------
 is the type of the values that these operators compute with.
 
 op_enum_t
-=========
-is the enum type that identifies the different operators.
+---------
+is the enum type that separates the different operators.
+We use operator to denote an enum type together with its arguments.
 
 vec_addr_t
-==========
+----------
 is a vector type with ``addr_t`` elements.
 
 vec_bool_t
-==========
+----------
 is a vector type with ``bool`` elements.
 
 vec_value_t
-===========
+-----------
 is a vector type with ``value_t`` elements.
 
-
 n_op
-****
+====
 is an ``addr_t`` equal to the number of operators in the tape.
 
 con_all
-*******
-is a ``const vec_addr_t&`` containing the constants used by operators
+=======
+is a ``const vec_value_t&`` containing the constants used by operators
 in the tape.
 
-
 get
-***
+===
 
 i_op
-====
-is an ``addr_t`` index that identifies this particular use of the operator,
-*i_op* < *op_info* . ``n_op`` () .
-This argument is the only input to ``get`` ,
-all the other arguments are outputs.
+----
+is an ``addr_t`` index that identifies this operator, *i_op* < *n_op* .
+Note that this is the only by value arguments to ``get`` .
+The rest of the arguments to this function are by reference.
 
 op_enum
-=======
+-------
 is an ``op_enum_t&`` that is set to the enum value for this operator.
 
 is_constant
-===========
+-----------
 is a ``bool&`` that is set to true (false) if this is (is not)
-a commutative operator
-A commutative operator must have *arg_one* size two .
-
-   con_all[ arg_one[] ]
-
-is_commutative
-==============
-is a ``bool&`` that is set to true (false) if this is (is not)
-a constant operator
-A constant operator must have *arg_one* size one and
+a constant operator.
+A constant operator must have *arg_one* . ``size`` ()  equal to one and
 *is_var_one* [0] equal to false.
 The value of the constant is::
 
-   con_all[ arg_one[] ]
+   con_all[ arg_one[0] ]
+
+is_commutative
+--------------
+is a ``bool&`` that is set to true (false) if this is (is not)
+a commutative operator.
+A commutative operator must have *arg_one* . ``size`` ()  equal to two.
 
 arg_one
-=======
+-------
 is a ``vec_addr_t&`` that is set to the arguments for this operator;
-i.e., *arg_one*\ . ``size`` () is the number arguments and ,
+i.e., *arg_one*\ . ``size`` () is the number arguments and
 *arg_one*\ [ *k* ] is the k-th argument.
 
 is_var_one
-==========
-is a ``vec_bool_t&`` that is set to flag the variable arguments; i.e.
-i.e., *is_var_one*\ . ``size`` () is the number arguments and
+----------
+is a ``vec_bool_t&`` that identifies which argument are variable indices.
+The value *is_var_one*\ . ``size`` () is the number arguments and
 *is_var_one*\ [ *k* ] is true (false) if the k-th argument
-is (is not) a variable..
-
-
-{xrst_end opt_op_info}
+is (is not) a variable index.

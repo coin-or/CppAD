@@ -265,7 +265,7 @@ public:
       table_.resize(n_hash, n_op);
       //
       // enum_multiplier_
-      size_t prime_list[] = {
+      Index prime_list[] = {
          907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
       };
       size_t n_prime = sizeof(prime_list) / sizeof( prime_list[0] );

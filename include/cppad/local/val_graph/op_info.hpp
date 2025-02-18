@@ -2,39 +2,24 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_OP_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// SPDX-FileContributor: 2025 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_op_info_t dev}
-{xrst_spell
-   typedef
-}
 
-Optimization Information for Value Graphs
-#########################################
-
+Optimization Information for Value Graphs Operators
+###################################################
 
 Syntax
 ******
-| |tab| ``val_op_info_t`` *op_info* ( *tape* )
-| |tab| *con_name* = *op_info* . *con_name* ( )
-| |tab| *op_info* . ``set`` ( *i_op* )
-| |tab| *var_name* = *op_info* . ``get_`` *var_name* ()
-
+| |tab| ``op_info_t`` *op_info* ( *tape* )
 
 op_info
 *******
 {xrst_literal ,
    // BEGIN_CLASS , // END_CLASS
    // BEGIN_OP_INFO , // END_OP_INFO
-}
-
-typedef
-=======
-{xrst_literal
-   // BEGIN_TYPEDEF
-   // END_TYPEDEF
 }
 
 tape
@@ -45,12 +30,21 @@ op2arg_index
 ============
 is a vector that maps operator index to
 the index of the first argument, for this operator,
-in the vector that contains all the operator arguments.
+in the vector that contains arguments for all the operators.
 
-Requirements
-************
-The ``val_op_info_t`` class satisfied the
-:ref:`opt_op_info@Op_info` requirements.
+{xrst_template ;
+include/cppad/local/new_optimize/op_info.xrst
+
+Class Requirements for Optimization
+***********************************
+@op_info_t@ : is the type for this optimization operator information class
+@=========@ : is rst underlining with = and same length as op_info_t.
+@op_info@   : name in italic (* surrounding name) used for a op_info_t object
+
+@op_info_t@ ; op_info_t
+@=========@ ; =========
+@op_info@   ; *op_info*
+}
 
 {xrst_end val_op_info_t}
 */
