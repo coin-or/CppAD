@@ -163,7 +163,7 @@ public:
    // different_count = prev_op_search.different_count()
    vec_addr_t different_count(void)
    // END_DIFFERENT_COUNT
-   {  return hash_table_.differnt_count();
+   {  return hash_table_.different_count();
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP

@@ -181,6 +181,12 @@ op_arg
 is a vector containing the argument indices for this operator
 (During renumbering this should be the new argument indices.)
 
+Note that for the current hash function, the order of the arguments
+does not affect the hash value. If in the future, the order affects the
+hash value, we may need to change the order for commutative operators
+so that both orders give the same hash. One solution is to sort the
+two indices before hashing.
+
 info
 ====
 see :ref:`op_hash_table_t@match_fun_t@info` .
@@ -235,6 +241,10 @@ private:
    // n_op_
    const Index n_op_;
    //
+   // enum_multiplier_
+   // effectively const; i.e., only set by constructor
+   size_t enum_multiplier_;
+   //
    // itr
    typedef local::sparse::size_setvec_const_iterator<Index> itr_t;
    //
@@ -250,8 +260,19 @@ public:
    // END_OP_HASH_TABLE_T
    {  //
       CPPAD_ASSERT_UNKNOWN( 1  < n_hash  );
+      //
       // table_
       table_.resize(n_hash, n_op);
+      //
+      // enum_multiplier_
+      size_t prime_list[] = {
+         907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
+      };
+      size_t n_prime = sizeof(prime_list) / sizeof( prime_list[0] );
+      enum_multiplier_ = prime_list[n_prime - 1];
+      for(size_t k = 1; k < n_prime; ++k)
+         if( n_hash_ % prime_list[k] != 0 )
+            enum_multiplier_ = prime_list[k];
    }
    // BEGIN_N_HASH
    // n_hash = hash_table.n_hash()
@@ -310,7 +331,7 @@ public:
    // END_HASH_FUN_ARG
    {  //
       // sum
-      size_t sum = size_t(op);
+      size_t sum = size_t(op) * enum_multiplier_;
       for(size_t i = 0; i < op_arg.size(); ++i)
          sum += size_t( op_arg[i] );
       //
@@ -419,8 +440,8 @@ public:
       CppAD::vector<Index> count;
       for(Index set = 0; set < n_hash_; ++set)
       {  Index size = table_.number_elements(set);
-         if( size_t(size) > count.size() )
-               count.resize( count.size() + 1 );
+         if( size_t(size) >= count.size() )
+               count.resize( size + 1 );
          count[size] += 1;
       }
       return count;
