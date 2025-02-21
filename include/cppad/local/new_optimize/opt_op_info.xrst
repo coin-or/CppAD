@@ -26,4 +26,11 @@ Class Requirements for Optimization
 @op_info@   ; *op_info*
 }
 
+Implementations
+***************
+{xrst_toc_table
+   include/cppad/local/new_optimize/dyn_op_info.hpp
+   include/cppad/local/val_graph/op_info.hpp
+}
+
 {xrst_end opt_op_info}

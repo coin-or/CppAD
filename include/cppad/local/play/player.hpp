@@ -141,9 +141,13 @@ struct random_itr_info_t {
 
 template <class Base>
 class player {
+public:
+   //
+   // value_t
+   typedef Base value_t;
+private:
    // player<Base> must be a friend of player< AD<Base> > for base2ad to work
    template <class AnotherBase> friend class player;
-private:
    // ----------------------------------------------------------------------
    // information that defines the recording
 
@@ -719,7 +723,7 @@ public:
    /// get non-const version of all_par_vec
    pod_vector_maybe<Base>& all_par_vec(void)
    {  return all_par_vec_; }
-   /// get non-const version of all_par_vec
+   /// get const version of all_par_vec
    const pod_vector_maybe<Base>& all_par_vec(void) const
    {  return all_par_vec_; }
    // ================================================================

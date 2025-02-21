@@ -69,6 +69,8 @@ con_all
 =======
 is a ``const vec_value_t&`` containing the constants used by operators
 in the tape.
+This vector is only used when *is_constant* is true.
+If *is_constant* is always false, it should be the empty vector.
 
 get
 ===

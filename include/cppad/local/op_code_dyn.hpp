@@ -73,12 +73,12 @@ function call.
 arg[2]
 ======
 This is the number of arguments to this atomic function.
-We use the notation *n* = *arg* [1] below.
+We use the notation *n* = *arg* [2] below.
 
 arg[3]
 ======
 This is the number of results for this atomic function.
-We use the notation *m* = *arg* [2] below.
+We use the notation *m* = *arg* [3] below.
 
 arg[4]
 ======

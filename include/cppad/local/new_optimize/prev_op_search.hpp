@@ -8,6 +8,7 @@
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/is_pod.hpp>
 # include <cppad/local/new_optimize/op_hash_table.hpp>
+# include <cppad/local/new_optimize/dyn_op_info.hpp>
 /*
 {xrst_begin prev_op_serarch dev}
 

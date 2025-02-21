@@ -57,13 +57,12 @@ template <class Tape> class op_info_t {
 // END_CLASS
 public:
    //
-   // BEGIN_TYPEDEF
+   // value_t, op_enum_t, vec_addr_t, vec_bool_t, vec_value_t
    typedef typename Tape::value_t                value_t;
    typedef CppAD::local::val_graph::op_enum_t    op_enum_t;
    typedef CppAD::vector<addr_t>                 vec_addr_t;
    typedef CppAD::vector<bool>                   vec_bool_t;
    typedef CppAD::vector<value_t>                vec_value_t;
-   // END_TYPEDEF
    //
 private:
    //
@@ -79,8 +78,8 @@ private:
    // con_all_
    const vec_value_t& con_all_;
    //
-   // op_enum_vec_
-   const CppAD::vector<uint8_t>& op_enum_vec_;
+   // op_enum_all_
+   const CppAD::vector<uint8_t>& op_enum_all_;
    //
    // op2arg_index_
    const vec_addr_t& op2arg_index_;
@@ -96,12 +95,15 @@ public:
    : n_op_ ( tape.n_op() )
    , arg_all_ ( tape.arg_vec() )
    , con_all_ ( tape.con_vec() )
-   , op_enum_vec_ ( tape.op_enum_vec() )
+   , op_enum_all_ ( tape.op_enum_vec() )
    , op2arg_index_ ( op2arg_index )
    {  }
-   // -----------------------------------------------------------------------
-   // Results that do not depend on i_op
-   // -----------------------------------------------------------------------
+   //
+   // BEGIN_OP2ARG_INDEX
+   // op2arg_index = op_info.op2arg_index()
+   const vec_addr_t& op_arg_index(void)
+   // END_OP2ARG_INDEX
+   {  return op2arg_index_; }
    //
    // n_op = op_info.n_op()
    addr_t n_op(void) const
@@ -112,7 +114,6 @@ public:
    const vec_value_t& con_all(void) const
    {  return con_all_; }
    //
-   // BEGIN_GET
    // op_info.get(i_op, op_enum, is_constant, arg_one, is_var_one)
    void get(
       addr_t       i_op           ,
@@ -124,7 +125,7 @@ public:
    // END_GET
    {  //
       // op_enum, is_constant, is_commutative
-      op_enum        = op_enum_t( op_enum_vec_[i_op] );
+      op_enum        = op_enum_t( op_enum_all_[i_op] );
       is_constant    = op_enum == con_op_enum;
       is_commutative = op_enum == add_op_enum || op_enum == mul_op_enum;
       //
