@@ -171,8 +171,11 @@ void get_dyn_previous(
    op_info_t op_info(*play);
    //
    // prev_op_search
-   addr_t n_hash_code = addr_t(num_dynamic_par) + 2;
-   prev_op_search_t<op_info_t> prev_op_search(op_info, n_hash_code);
+   addr_t n_hash_code     = addr_t(num_dynamic_par) + 2;
+   addr_t collision_limit = 10;
+   prev_op_search_t<op_info_t> prev_op_search(
+      op_info, n_hash_code, collision_limit
+   );
    //
    // dyn_arg_offset
    // mapping from dynamic parameter index to first argument index
