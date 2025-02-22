@@ -27,10 +27,15 @@ play
 is the player that we are optimizing.
 
 op2arg_index
-============
+************
 is a vector that maps operator index to
 the index of the first argument, for this operator,
 in the vector that contains arguments for all the operators.
+{xrst_literal
+      // BEGIN_OP2ARG_INDEX
+      // END_OP2ARG_INDEX
+}
+
 
 {xrst_template ;
 include/cppad/local/new_optimize/op_info.xrst
@@ -67,16 +72,13 @@ public:
 private:
    //
    // empty_vec_value_
-   const vec_value_t& empty_vec_value_;
+   const vec_value_t empty_vec_value_;
    //
    // n_op_
    const addr_t n_op_;
    //
    // arg_all_
    const vec_addr_t& arg_all_;
-   //
-   // par_all_
-   const vec_addr_t& par_all_;
    //
    // is_par_dyn_
    const vec_bool_t& is_par_dyn_;
@@ -107,23 +109,21 @@ public:
    //
    // BEGIN_OP_INFO
    // dyn_op_info_t op_info(play)
-   dyn_op_info_t(
-      const CppAD::local::player<value_t>& play           ,
-      const vec_addr_t&                    dyn_arg_offset )
+   dyn_op_info_t( const CppAD::local::player<value_t>& play )
    // END_OP_INFO
    : empty_vec_value_(0)
-   , n_op_ ( play.num_dynamic_par() )
-   , arg_all_ ( play.arg_vec() )
-   , par_all_ ( play.all_par_vec() )
+   , n_op_ ( addr_t( play.num_dynamic_par() ) )
+   , arg_all_ ( play.dyn_par_arg() )
    , is_par_dyn_ ( play.dyn_par_is() )
    , op_enum_all_ ( play.dyn_par_op() )
+   , op2arg_index_( n_op_ )
    {  //
       // op2arg_index_
       addr_t arg_index = 0;
       for(addr_t i_op = 0; i_op < n_op_; ++i_op)
       {  op2arg_index_[i_op] = arg_index;
          op_enum_t op_enum   = op_enum_t( op_enum_all_[i_op] );
-         arg_index          += num_arg_dyn(op_enum);
+         arg_index          += addr_t( num_arg_dyn(op_enum) );
          if( op_enum == atom_dyn )
          {  CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op_enum) == 0 );
             addr_t n     = arg_all_[arg_index + 2];
@@ -133,6 +133,12 @@ public:
          }
       }
    }
+   // BEGIN_OP2ARG_INDEX
+   // op2arg_index = op_info.op_arg_index()
+   const vec_addr_t& op2arg_index(void) const
+   // END_OP2ARG_INDEX
+   {  return op2arg_index_; }
+   //
    //
    // n_op = op_info.n_op()
    addr_t n_op(void) const

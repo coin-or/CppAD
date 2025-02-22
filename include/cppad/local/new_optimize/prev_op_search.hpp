@@ -29,8 +29,8 @@ See :ref:`opt_op_info-name` for the *Op_info* class requirements.
 
 n_hash_code
 ===========
-This is the number of possible hash codes in the operator hash table
-*prev_op_search* .
+This is the number of hash codes in the operator hash table
+(must be greater than one).
 
 match_op
 ********

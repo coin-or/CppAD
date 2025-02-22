@@ -13,6 +13,7 @@ Create operator information tables
 # include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/optimize/hash_code.hpp>
 # include <cppad/local/new_optimize/dyn_op_info.hpp>
+# include <cppad/local/new_optimize/prev_op_search.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -164,9 +165,19 @@ void get_dyn_previous(
    // only defined when dyn_par_is is true
    pod_vector<addr_t> par_ind2dyn_ind(num_par);
 
+   //
+   // op_info
+   typedef dyn_op_info_t< player<Base> > op_info_t;
+   op_info_t op_info(*play);
+   //
+   // prev_op_search
+   addr_t n_hash_code = addr_t(num_dynamic_par) + 2;
+   prev_op_search_t<op_info_t> prev_op_search(op_info, n_hash_code);
+   //
+   // dyn_arg_offset
    // mapping from dynamic parameter index to first argument index
-   pod_vector<addr_t> dyn_arg_offset(num_dynamic_par);
-
+   const pod_vector<addr_t>& dyn_arg_offset( op_info.op2arg_index() );
+   //
    // ----------------------------------------------------------------------
    // compute dyn_previous
    // ----------------------------------------------------------------------
@@ -195,10 +206,6 @@ void get_dyn_previous(
    {  // Initialize previous for this dynamic parameter. This is only
       // defined for dynamic parameter indices less than or equal i_dyn
       dyn_previous[i_dyn] = addr_t( num_dynamic_par );
-      //
-      // mapping from dynamic parameter index to argument offset
-      // is only defined for j_dyn <= i_dyn
-      dyn_arg_offset[i_dyn] = addr_t( i_arg );
       //
       // parameter index for this dynamic parameter
       size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );

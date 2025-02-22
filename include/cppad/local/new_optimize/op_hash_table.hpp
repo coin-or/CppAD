@@ -47,7 +47,8 @@ hash_table
 
 n_hash
 ======
-is the number of hash codes in the hash table.
+is the number of hash codes in the hash table
+(must be greater than one).
 
 n_op
 ====
