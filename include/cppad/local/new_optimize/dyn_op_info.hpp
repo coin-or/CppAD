@@ -90,8 +90,8 @@ private:
    vec_addr_t op2arg_index_;
    //
    // num_arg
-   // n_arg = op_info.narg(i_op)
-   addr_t narg(addr_t i_op)
+   // n_arg = op_info.n_arg_fun(i_op)
+   addr_t n_arg_fun(addr_t i_op)
    {  op_enum_t op_enum   = op_enum_t( op_enum_all_[i_op] );
       addr_t    arg_index = op2arg_index_[i_op];
       addr_t    n_arg     = num_arg_dyn(op_enum);
@@ -99,7 +99,7 @@ private:
       {  CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op_enum) == 0 );
          addr_t n      = arg_all_[arg_index + 2];
          addr_t m      = arg_all_[arg_index + 3];
-         addr_t reault = 6 + n + m;
+         n_arg         = 6 + n + m;
       }
       return n_arg;
    }
@@ -120,7 +120,7 @@ public:
    {  //
       // op2arg_index_
       addr_t arg_index = 0;
-      for(addr_t i_op = 0; i_op < n_op; ++i_op)
+      for(addr_t i_op = 0; i_op < n_op_; ++i_op)
       {  op2arg_index_[i_op] = arg_index;
          op_enum_t op_enum   = op_enum_t( op_enum_all_[i_op] );
          arg_index          += num_arg_dyn(op_enum);
@@ -160,15 +160,15 @@ public:
       //
       // arg_index, narg
       addr_t arg_index  = op2arg_index_[i_op];
-      addr_t n_arg      = narg(i_op);
+      addr_t n_arg      = n_arg_fun(i_op);
       //
       // arg_one
-      arg_one.resize(0); arg_one.resize(n_arg);
+      arg_one.resize(0); arg_one.resize( size_t(n_arg) );
       for(addr_t k = 0; k < n_arg; ++k)
          arg_one[k] = arg_all_[arg_index + k];
       //
       // is_var_one
-      is_var_one.resize(0); is_var_one.resize(n_arg);
+      is_var_one.resize(0); is_var_one.resize( size_t(n_arg) );
       switch(op_enum)
       {  // ------------------------------------------------------------------
          // unary and binary operators
@@ -196,15 +196,15 @@ public:
          // atom_dyn
          case atom_dyn:
          {  addr_t n = arg_all_[arg_index + 2];
-            for(size_t k = 0; k < 5; ++k)
+            for(addr_t k = 0; k < 5; ++k)
                is_var_one[k] = false;
-            for(size_t k = 5; k < 5 + n; k++)
+            for(addr_t k = 5; k < 5 + n; k++)
                is_var_one[k] = is_par_dyn_[ arg_one[k] ];
             is_var_one[n_arg - 1] = arg_one[n_arg - 1];
             //
             // 2DO: These result indices should not have to match.
             // Need to modify prev_op_match so it handels atomic functions.
-            for(size_t k = 5 + n; k < n_arg - 1; k++)
+            for(addr_t k = 5 + n; k < n_arg - 1; k++)
                is_var_one[k] = false;
          }
          break;

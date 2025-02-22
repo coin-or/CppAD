@@ -5,10 +5,8 @@
 // SPDX-FileContributor: 2025 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/sparse/size_setvec.hpp>
-# include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/is_pod.hpp>
 # include <cppad/local/new_optimize/op_hash_table.hpp>
-# include <cppad/local/new_optimize/dyn_op_info.hpp>
 /*
 {xrst_begin prev_op_serarch dev}
 
@@ -284,7 +282,7 @@ bool prev_op_search_t<Op_info>::match_fun(
       return false;
    //
    // con_op_enum
-   if( op_enum_s == CppAD::local::val_graph::con_op_enum )
+   if( is_constant_s )
    {  //
       CPPAD_ASSERT_UNKNOWN( ! is_var_one_s[0] );
       const value_t& c_search = con_all[ arg_one_s[0] ];

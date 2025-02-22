@@ -269,10 +269,11 @@ public:
          907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
       };
       size_t n_prime = sizeof(prime_list) / sizeof( prime_list[0] );
-      enum_multiplier_ = prime_list[n_prime - 1];
+      Index multiplier = prime_list[n_prime - 1];
       for(size_t k = 1; k < n_prime; ++k)
          if( n_hash_ % prime_list[k] != 0 )
-            enum_multiplier_ = prime_list[k];
+            multiplier = prime_list[k];
+      enum_multiplier_ = size_t(multiplier);
    }
    // BEGIN_N_HASH
    // n_hash = hash_table.n_hash()
