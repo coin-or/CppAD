@@ -116,7 +116,7 @@ public:
    , arg_all_ ( play.dyn_par_arg() )
    , is_par_dyn_ ( play.dyn_par_is() )
    , op_enum_all_ ( play.dyn_par_op() )
-   , op2arg_index_( n_op_ )
+   , op2arg_index_( size_t( n_op_ ) )
    {  //
       // op2arg_index_
       addr_t arg_index = 0;

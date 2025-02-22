@@ -32,6 +32,14 @@ n_hash_code
 This is the number of hash codes in the operator hash table
 (must be greater than one).
 
+collision_limit
+===============
+is the limit for the number of operators that have the same hash code
+and are in the hash table (must be greater than zero).
+When the collision limit is exceeded for a hash code,
+the previous set of operators for that code is cleared,
+and a new set is started (for that hash code).
+
 match_op
 ********
 {xrst_literal ,
@@ -149,12 +157,13 @@ public:
    // BEGIN_OP_PREV_OP_SEARCH_T
    // prev_op_search_t prev_op_search(tape, n_hash_code)
    prev_op_search_t(
-         Op_info&                 op_info      ,
-         addr_t                   n_hash_code  )
+         Op_info&  op_info                                              ,
+         addr_t    n_hash_code                                          ,
+         addr_t    collision_limit = std::numeric_limits<addr_t>::max() )
    // END_OP_PREV_OP_SEARCH_T
    : n_op_( addr_t( op_info.n_op() ) )
    , op_info_( op_info )
-   , hash_table_( n_hash_code, n_op_ )
+   , hash_table_( n_hash_code, n_op_ , collision_limit)
    {  new_var_index_ = nullptr;
    }
    // -------------------------------------------------------------------------

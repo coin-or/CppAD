@@ -54,15 +54,32 @@ n_op
 ====
 is the number of possible operator indices.
 
+collision_limit
+===============
+is the limit for the number of operators that have the same hash code
+and are in the table. When the collision limit is exceeded for a hash code,
+the previous set of operators for that code is cleared,
+and a new set is started (for that hash code).
+
 n_hash
 ******
+is the value of *n_hash* in the constructor:
 {xrst_literal
    // BEGIN_N_HASH
    // END_N_HASH
 }
 
+exceed_limit
+************
+is true if the collision limit is exceeded:
+{xrst_literal
+   // BEGIN_EXCEED_LIMIT
+   // END_EXCEED_LIMIT
+}
+
 n_op
 ****
+is the value of n_op in the constructor.
 {xrst_literal
    // BEGIN_N_OP
    // END_N_OP
@@ -242,9 +259,15 @@ private:
    // n_op_
    const Index n_op_;
    //
+   // collision_limit_
+   const Index collision_limit_;
+   //
    // enum_multiplier_
    // effectively const; i.e., only set by constructor
    size_t enum_multiplier_;
+   //
+   // exceed_limit_
+   bool exceed_limit_;
    //
    // itr
    typedef local::sparse::size_setvec_const_iterator<Index> itr_t;
@@ -256,11 +279,20 @@ public:
    //
    // BEGIN_OP_HASH_TABLE_T
    // op_hash_table_t hash_table(n_hash, n_op)
-   op_hash_table_t(Index n_hash, Index n_op)
-   : n_hash_(n_hash) , n_op_(n_op)
+   op_hash_table_t(
+      Index n_hash                                              ,
+      Index n_op                                                ,
+      Index collision_limit = std::numeric_limits<Index>::max() )
    // END_OP_HASH_TABLE_T
+   : n_hash_(n_hash)
+   , n_op_(n_op)
+   , collision_limit_(collision_limit)
    {  //
+      // n_hash
       CPPAD_ASSERT_UNKNOWN( 1  < n_hash  );
+      //
+      // collision_limit
+      CPPAD_ASSERT_UNKNOWN( 0 < collision_limit);
       //
       // table_
       table_.resize(n_hash, n_op);
@@ -281,6 +313,12 @@ public:
    Index n_hash(void) const
    // END_N_HASH
    {  return n_hash_; }
+   //
+   // BEGIN_EXCEED_LIMIT
+   // exceed_limit = hash_table.exceed_limit()
+   bool exceed_limit(void) const
+   // END_EXCEED_LIMIT
+   {  return exceed_limit_; }
    //
    // BEGIN_N_OP
    // n_op = hash_table.n_op()
@@ -371,8 +409,9 @@ public:
       Index i_op_match = i_op;
       //
       // i_op_match
-      itr_t itr  = itr_t(table_, hash_code);
-      while( *itr != n_op_ )
+      itr_t  itr   = itr_t(table_, hash_code);
+      addr_t count = 0;
+      while( *itr != n_op_ && i_op_match == i_op && count < collision_limit_ )
       {  //
          // i_op_check
          Index i_op_check = *itr;
@@ -380,11 +419,18 @@ public:
             i_op_match = i_op_check;
          //
          ++itr;
+         ++count;
       }
       //
       // table_
       if( i_op_match == i_op )
+      {  CPPAD_ASSERT_UNKNOWN( count <= collision_limit_ );
+         if( count == collision_limit_ )
+         {  exceed_limit_ = true;
+            table_.clear(hash_code);
+         }
          table_.add_element(hash_code, i_op);
+      }
       //
       // BEGIN_RETURN_FIND_MATCH_POD
       CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
@@ -412,8 +458,9 @@ public:
       Index i_op_match = i_op;
       //
       // i_op_match
-      itr_t itr  = itr_t(table_, hash_code);
-      while( *itr != n_op_ )
+      itr_t  itr   = itr_t(table_, hash_code);
+      addr_t count = 0;
+      while( *itr != n_op_ && i_op_match == i_op && count < collision_limit_ )
       {  //
          // i_op_check
          Index i_op_check = *itr;
@@ -425,7 +472,13 @@ public:
       //
       // table_
       if( i_op_match == i_op )
+      {  CPPAD_ASSERT_UNKNOWN( count <= collision_limit_ );
+         if( count == collision_limit_ )
+         {  exceed_limit_ = true;
+            table_.clear(hash_code);
+         }
          table_.add_element(hash_code, i_op);
+      }
       //
       // BEGIN_RETURN_FIND_MATCH_ARG
       CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
