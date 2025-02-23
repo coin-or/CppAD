@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_POD_VECTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # if CPPAD_CSTDINT_HAS_8_TO_64
@@ -13,6 +13,7 @@
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/is_pod.hpp>
+# include <cppad/local/declare_ad.hpp>
 
 /*
 {xrst_begin_parent pod_vector dev}
@@ -106,9 +107,9 @@ This constructor sets the size and capacity to zero.
 
 Size
 ****
-{xrst_literal
-   // BEGIN_SIZE_CTOR
-   // END_SIZE_CTOR
+{xrst_literal ,
+   // BEGIN_CTOR_SIZE_T , // END_CTOR_SIZE_T
+   // BEGIN_CTOR_ADDR_T , // END_CTOR_ADDR_T
 }
 This constructor sets the size (capacity) equal *n*
 ( greater that or equal *n* ).
@@ -135,13 +136,27 @@ The memory is returned using :ref:`ta_return_memory-name` .
    {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
    }
 
-   // BEGIN_SIZE_CTOR
+   // BEGIN_CTOR_SIZE_T
    pod_vector(size_t n)
-   // END_SIZE_CTOR
+   // END_CTOR_SIZE_T
    : size_(0), capacity_(0), data_(nullptr)
    {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
       extend(n);
    }
+
+# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
+   // BEGIN_CTOR_ADDR_T
+   pod_vector(addr_t n)
+   // END_CTOR_ADDR_T
+   : size_(0), capacity_(0), data_(nullptr)
+   {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
+      extend( size_t(n) );
+   }
+   // BEGIN_RESIZE_ADDR_T
+   void resize(addr_t n)
+   // END_RESIZE_ADDR_T
+   {  resize( size_t(n) ); }
+# endif
 
    // BEGIN_DESTRUCTOR
    ~pod_vector(void)
@@ -329,9 +344,9 @@ extent
 
 resize
 ******
-{xrst_literal
-   // BEGIN_RESIZE
-   // END_RESIZE
+{xrst_literal ,
+   // BEGIN_RESIZE_SIZE_T , // END_RESIZE_SIZE_T
+   // BEGIN_RESIZE_ADDR_T , // END_RESIZE_ADDR_T
 }
 #. This changes the size of the vector to *n* .
 #. If on input, *n* is less that or equal :ref:`pod_vector_private@capacity\_` ,
@@ -385,9 +400,9 @@ and frees all the memory that it was using.
       CPPAD_ASSERT_UNKNOWN( size_ <= capacity_ );
       return old_size;
    }
-   // BEGIN_RESIZE
+   // BEGIN_RESIZE_SIZE_T
    void resize(size_t n)
-   // END_RESIZE
+   // END_RESIZE_SIZE_T
    {  size_      = n;
 
       // check if we must allocate new memory

@@ -91,6 +91,14 @@ different_count
 }
 see the operator hash table :ref:`op_hash_table_t@different_count` .
 
+exceed_limit
+************
+is true if the collision limit is exceeded:
+{xrst_literal
+   // BEGIN_EXCEED_LIMIT
+   // END_EXCEED_LIMIT
+}
+
 {xrst_end prev_op_serarch}
 */
 
@@ -173,6 +181,13 @@ public:
    vec_addr_t different_count(void)
    // END_DIFFERENT_COUNT
    {  return hash_table_.different_count();
+   }
+   // -------------------------------------------------------------------------
+   // BEGIN_EXCEED_LIMIT
+   // exceed_limit = prev_op_search.exceed_limit()
+   bool exceed_limit(void)
+   // END_EXCEED_LIMIT
+   {  return hash_table_.exceed_limit();
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP

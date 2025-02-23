@@ -294,6 +294,9 @@ public:
       // collision_limit
       CPPAD_ASSERT_UNKNOWN( 0 < collision_limit);
       //
+      // exceed_limit_
+      exceed_limit_ = false;
+      //
       // table_
       table_.resize(n_hash, n_op);
       //

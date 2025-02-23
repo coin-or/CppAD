@@ -15,6 +15,7 @@ Contents
    include/cppad/local/new_optimize/opt_op_info.xrst
    include/cppad/local/new_optimize/op_hash_table.hpp
    include/cppad/local/new_optimize/prev_op_search.hpp
+   include/cppad/local/new_optimize/get_dyn_previous.hpp
 }
 
 {xrst_end new_optimize}

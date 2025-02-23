@@ -10,7 +10,7 @@
 # include <cppad/local/optimize/extract_option.hpp>
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
-# include <cppad/local/optimize/get_dyn_previous.hpp>
+# include <cppad/local/new_optimize/get_dyn_previous.hpp>
 # include <cppad/local/optimize/get_op_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -201,9 +201,6 @@ bool optimize_run(
    // number of independent dynamic parameters
    size_t num_dynamic_ind = play->num_dynamic_ind();
 
-   // number of dynamic parameters
-   size_t num_dynamic_par = play->num_dynamic_par();
-
    // mapping from dynamic parameter index to paramemter index
    const pod_vector<addr_t>& dyn_ind2par_ind( play->dyn_ind2par_ind() );
 
@@ -270,9 +267,10 @@ bool optimize_run(
       par_usage
    );
    pod_vector<addr_t> dyn_previous;
-   get_dyn_previous(
-      play                ,
-      par_usage           ,
+   exceed_collision_limit |= get_dyn_previous(
+      addr_t(collision_limit)     ,
+      play                        ,
+      par_usage                   ,
       dyn_previous
    );
    // -----------------------------------------------------------------------
@@ -444,7 +442,7 @@ bool optimize_run(
       }
       else if( par_usage[i_par] && (op != result_dyn) )
       {  size_t j_dyn = size_t( dyn_previous[i_dyn] );
-         if( j_dyn != num_dynamic_par )
+         if( j_dyn != i_dyn )
          {  size_t j_par = size_t( dyn_ind2par_ind[j_dyn] );
             CPPAD_ASSERT_UNKNOWN( j_par < i_par );
             new_par[i_par] = new_par[j_par];

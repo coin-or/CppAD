@@ -279,7 +279,7 @@ public:
       op_vec_.swap(rec.op_vec_);
       CPPAD_ASSERT_UNKNOWN(op_vec_.size() < addr_t_max );
 
-      // op_arg_vec_
+      // arg_vec_
       arg_vec_.swap(rec.arg_vec_);
       CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
 

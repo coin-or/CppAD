@@ -96,7 +96,7 @@ private:
    addr_t n_arg_fun(addr_t i_op)
    {  op_enum_t op_enum   = op_enum_t( op_enum_all_[i_op] );
       addr_t    arg_index = op2arg_index_[i_op];
-      addr_t    n_arg     = num_arg_dyn(op_enum);
+      addr_t    n_arg     = addr_t( num_arg_dyn(op_enum) );
       if( op_enum == atom_dyn )
       {  CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op_enum) == 0 );
          addr_t n      = arg_all_[arg_index + 2];
@@ -179,7 +179,7 @@ public:
       {  // ------------------------------------------------------------------
          // unary and binary operators
          default:
-         for(size_t k = 0; k < n_arg; ++k)
+         for(addr_t k = 0; k < n_arg; ++k)
             is_var_one[k] = is_par_dyn_[ arg_one[k] ];
          break;
 

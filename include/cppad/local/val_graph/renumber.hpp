@@ -116,7 +116,7 @@ void tape_t<Value>::renumber(void)
       // j_op
       addr_t j_op = prev_op_search.match_op(i_op, new_val_index);
       if( j_op != i_op )
-      {  assert( j_op < i_op );
+      {  CPPAD_ASSERT_UNKNOWN( j_op < i_op );
          //
          // new_val_index
          // mapping so that op_j results will be used instead of op_i results;
