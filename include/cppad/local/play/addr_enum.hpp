@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_ADDR_ENUM_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -14,7 +14,7 @@ namespace CppAD { namespace local { namespace play {
 /// enum corresponding to type used for addressing iterators for a player
 enum addr_enum {
    unsigned_short_enum  ,
-   unsigned_int_enum    ,
+   addr_t_enum    ,
    size_t_enum
 };
 

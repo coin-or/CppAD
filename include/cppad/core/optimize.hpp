@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OPTIMIZE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # define CPPAD_CORE_OPTIMIZE_PRINT_RESULT 0
@@ -342,8 +342,8 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
          );
          break;
 
-         case local::play::unsigned_int_enum:
-         exceed = local::optimize::optimize_run<unsigned int>(
+         case local::play::addr_t_enum:
+         exceed = local::optimize::optimize_run<addr_t>(
             options, n_ind_var, dep_taddr_, &play_, &rec
          );
          break;
