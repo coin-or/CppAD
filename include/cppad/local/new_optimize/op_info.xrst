@@ -40,27 +40,23 @@ defined as described below.
 The vector types must support indexing
 and the ``size`` and ``resize`` member functions.
 
-index_t
+value_t
 -------
-is the type used for indices in the tape.
+is the type of the values that these operators compute with.
+This can be any type if *is_constant* is always false.
 
 op_enum_t
 ---------
 is the enum type that separates the different operators.
 We use operator to denote an enum type together with its arguments.
 
-vec_index_t
------------
-is a vector type with ``index_t`` elements.
+vec_addr_t
+----------
+is a vector type with ``addr_t`` elements.
 
 vec_bool_t
 ----------
 is a vector type with ``bool`` elements.
-
-value_t
--------
-is the type of the values that these operators compute with.
-This type does not matter when *is_constant* is always false.
 
 vec_value_t
 -----------
@@ -68,7 +64,7 @@ is a vector type with ``value_t`` elements.
 
 n_op
 ====
-is an ``index_t`` equal to the number of operators in the tape.
+is an ``addr_t`` equal to the number of operators in the tape.
 
 con_all
 =======
@@ -82,7 +78,7 @@ get
 
 i_op
 ----
-is an ``index_t`` that identifies this operator, *i_op* < *n_op* .
+is an ``addr_t`` index that identifies this operator, *i_op* < *n_op* .
 Note that this is the only by value arguments to ``get`` .
 The rest of the arguments to this function are by reference.
 
@@ -108,7 +104,7 @@ A commutative operator must have *arg_one* . ``size`` ()  equal to two.
 
 arg_one
 -------
-is a ``vec_index_t&`` that is set to the arguments for this operator;
+is a ``vec_addr_t&`` that is set to the arguments for this operator;
 i.e., *arg_one*\ . ``size`` () is the number arguments and
 *arg_one*\ [ *k* ] is the k-th argument.
 

@@ -40,6 +40,9 @@ private:
    const pod_vector<Addr>* var2op_vec_;
 
 public:
+   /// index_t
+   typedef Addr index_t;
+   //
    /// default constructor
    const_random_iterator(void) :
    op_vec_(nullptr)     ,

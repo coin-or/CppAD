@@ -2,10 +2,12 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
+# include <cppad/local/new_optimize/var_op_info.hpp>
+# include <cppad/local/new_optimize/prev_op_search.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -117,7 +119,19 @@ bool get_op_previous(
    pod_vector<addr_t>&                         op_previous         ,
    pod_vector<usage_t>&                        op_usage            )
 // END_PROTOTYPE
-{  bool exceed_collision_limit = false;
+{  //
+   //
+   // prev_op_search
+   typedef play::const_random_iterator<Addr> random_itr_t;
+   typedef var_op_info_t<random_itr_t>       op_info_t;
+   op_info_t op_info(random_itr);
+   Addr n_hash_code  = Addr( random_itr.num_op() ) + 2;
+   prev_op_search_t<op_info_t> prev_op_search(
+      op_info, n_hash_code, Addr( collision_limit )
+   );
+   //
+   // exceed_collision_limit
+   bool exceed_collision_limit = false;
    //
    // number of operators in the tape
    const size_t num_op = random_itr.num_op();

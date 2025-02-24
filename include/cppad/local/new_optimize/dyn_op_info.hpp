@@ -26,17 +26,6 @@ play
 ====
 is the player that we are optimizing.
 
-op2arg_index
-************
-is a vector that maps operator index to
-the index of the first argument, for this operator,
-in the vector that contains arguments for all the operators.
-{xrst_literal
-      // BEGIN_OP2ARG_INDEX
-      // END_OP2ARG_INDEX
-}
-
-
 {xrst_template ;
 include/cppad/local/new_optimize/op_info.xrst
 
@@ -71,6 +60,7 @@ public:
    // value_t, vec_value_t
    typedef typename Player::value_t                value_t;
    typedef CppAD::local::pod_vector_maybe<value_t> vec_value_t;
+   //
 private:
    //
    // empty_vec_value_
@@ -90,7 +80,10 @@ private:
    const CppAD::local::pod_vector<opcode_t>& op_enum_all_;
    //
    // op2arg_index_
-   // effectively const; i.e., only set by constructor
+   // is a vector that maps operator index to
+   // the index of the first argument, for this operator,
+   // in the vector that contains arguments for all the operators.
+   // This vector is effectively const; i.e., only set by constructor.
    vec_index_t op2arg_index_;
    //
    // num_arg
@@ -135,12 +128,6 @@ public:
          }
       }
    }
-   // BEGIN_OP2ARG_INDEX
-   // op2arg_index = op_info.op_arg_index()
-   const vec_index_t& op2arg_index(void) const
-   // END_OP2ARG_INDEX
-   {  return op2arg_index_; }
-   //
    //
    // n_op = op_info.n_op()
    index_t n_op(void) const
@@ -211,7 +198,7 @@ public:
             is_var_one[n_arg - 1] = arg_one[n_arg - 1];
             //
             // 2DO: These result indices should not have to match.
-            // Need to modify prev_op_match so it handels atomic functions.
+            // Modify prev_op_match so it handels atomic functions ?
             for(index_t k = 5 + n; k < n_arg - 1; k++)
                is_var_one[k] = false;
          }
