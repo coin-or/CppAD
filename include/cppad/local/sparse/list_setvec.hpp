@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_LIST_SETVEC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/define.hpp>
 # include <cppad/local/is_pod.hpp>
@@ -146,10 +146,26 @@ void sparsity_user2internal(
 // =========================================================================
 // Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.
+// Make sure all the types used for random_itr indices are covered; see
+// include/cppad/local/play/addr_enum.hpp
 namespace CppAD { namespace local {
+   //
+   // unsigned short
+   template <> inline bool
+   is_pod<sparse::size_setvec<unsigned short>::pair_s_type>(void)
+   {  return true; }
+   //
+   // size_t
    template <> inline bool
    is_pod<sparse::size_setvec<size_t>::pair_s_type>(void)
    {  return true; }
+   //
+   // addr_t
+# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
+   template <> inline bool
+   is_pod<sparse::size_setvec<addr_t>::pair_s_type>(void)
+   {  return true; }
+# endif
 } }
 
 # endif

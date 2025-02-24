@@ -102,18 +102,6 @@ is true if the collision limit is exceeded:
 {xrst_end prev_op_serarch}
 */
 
-// Tell pod_vector class that each size_setvec<addr_t>::pair_s_type is
-// plain old data and hence the corresponding constructor need not be called.
-namespace CppAD { namespace local {
-# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
-   // This pair gets defined in list_setvec.hpp for the type size_t.
-   // Would be better to have conditional compile depending of if defined.
-   template <> inline bool
-   is_pod< sparse::size_setvec<addr_t>::pair_s_type > (void)
-   {  return true; }
-# endif
-} }
-
 namespace CppAD { namespace local { namespace optimize {
 //
 // prev_op_search_t
@@ -124,42 +112,45 @@ private:
    // vector
    template <class Value_t> using vector = CppAD::vector<Value_t>;
    //
-   // value_t, op_enum_t, vec_addr_t, vec_bool_t, vec_value_t
+   // index_t, value_t, op_enum_t, vec_bool_t
+   typedef typename Op_info::index_t        index_t;
+   typedef typename Op_info::op_enum_t      op_enum_t;
+   typedef typename Op_info::vec_index_t    vec_index_t;
+   typedef typename Op_info::vec_bool_t     vec_bool_t;
+   //
+   // value_t, vec_value_t
    typedef typename Op_info::value_t       value_t;
-   typedef typename Op_info::op_enum_t     op_enum_t;
-   typedef typename Op_info::vec_addr_t    vec_addr_t;
-   typedef typename Op_info::vec_bool_t    vec_bool_t;
    typedef typename Op_info::vec_value_t   vec_value_t;
    //
    // n_op_
-   const addr_t n_op_;
+   const index_t n_op_;
    //
    // op_info_
    Op_info& op_info_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_t<addr_t, value_t, prev_op_search_t>
+   CppAD::local::optimize::op_hash_table_t<index_t, value_t, prev_op_search_t>
       hash_table_;
    //
    // op_arg_
    //  a temporary put here to avoid reallocating memory each time it is used
-   CppAD::vector<addr_t> op_arg_;
+   CppAD::vector<index_t> op_arg_;
    //
    static bool match_fun(
-      addr_t              i_op_search ,
-      addr_t              i_op_check  ,
+      index_t              i_op_search ,
+      index_t              i_op_check  ,
       prev_op_search_t&   search_info
    );
    //
    // prev_var_index_
    // This is nullptr except that it is used to pass the prev_var_index
    // argument to match_op through to match_fun.
-   const vec_addr_t* prev_var_index_;
+   const vec_index_t* prev_var_index_;
    //
    // arg_one_search_, arg_one_check_, is_var_one_search_, is_var_one_check_
    // Temporaries placed here to avoid reallocaiton of memory
    // (if resize for these vectors is smart enough).
-   vec_addr_t arg_one_search_,    arg_one_check_;
+   vec_index_t arg_one_search_,    arg_one_check_;
    vec_bool_t is_var_one_search_, is_var_one_check_;
 public:
    // -------------------------------------------------------------------------
@@ -167,10 +158,10 @@ public:
    // prev_op_search_t prev_op_search(tape, n_hash_code)
    prev_op_search_t(
          Op_info&  op_info                                              ,
-         addr_t    n_hash_code                                          ,
-         addr_t    collision_limit = std::numeric_limits<addr_t>::max() )
+         index_t    n_hash_code                                          ,
+         index_t    collision_limit = std::numeric_limits<index_t>::max() )
    // END_OP_PREV_OP_SEARCH_T
-   : n_op_( addr_t( op_info.n_op() ) )
+   : n_op_( index_t( op_info.n_op() ) )
    , op_info_( op_info )
    , hash_table_( n_hash_code, n_op_ , collision_limit)
    {  prev_var_index_ = nullptr;
@@ -178,7 +169,7 @@ public:
    // -------------------------------------------------------------------------
    // BEGIN_DIFFERENT_COUNT
    // different_count = prev_op_search.different_count()
-   vec_addr_t different_count(void)
+   vec_index_t different_count(void)
    // END_DIFFERENT_COUNT
    {  return hash_table_.different_count();
    }
@@ -192,7 +183,7 @@ public:
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
    // i_match_op = prev_op_search.match_op(i_op, prev_var_index)
-   addr_t match_op(addr_t i_op, const vec_addr_t& prev_var_index)
+   index_t match_op(index_t i_op, const vec_index_t& prev_var_index)
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_MATCH_OP
       //
@@ -206,7 +197,7 @@ public:
       op_enum_t op_enum;
       bool         is_constant;
       bool         is_commutative;
-      vec_addr_t&  arg_one    = arg_one_search_;
+      vec_index_t&  arg_one    = arg_one_search_;
       vec_bool_t&  is_var_one = is_var_one_search_;
       op_info_.get(
          i_op, op_enum, is_constant, is_commutative, arg_one, is_var_one
@@ -216,7 +207,7 @@ public:
       size_t n_arg = arg_one.size();
       //
       // i_op_match
-      addr_t i_op_match;
+      index_t i_op_match;
       if( is_constant )
       {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && ! is_var_one[0] )
          value_t con = con_all[ arg_one[0] ];
@@ -238,7 +229,7 @@ public:
          //
          // i_op_match
          i_op_match = hash_table_.find_match(
-            i_op, addr_t(op_enum), op_arg_, *this, match_fun
+            i_op, index_t(op_enum), op_arg_, *this, match_fun
          );
       }
       //
@@ -257,13 +248,13 @@ public:
 // prev_op_search not const because of temporary vecs arg_one_search_ ... above
 template <class Op_info>
 bool prev_op_search_t<Op_info>::match_fun(
-   addr_t              i_op_search    ,
-   addr_t              i_op_check     ,
+   index_t              i_op_search    ,
+   index_t              i_op_check     ,
    prev_op_search_t&   prev_op_search )
 {  //
    //
    // prev_var_index
-   const vec_addr_t& prev_var_index = *( prev_op_search.prev_var_index_ );
+   const vec_index_t& prev_var_index = *( prev_op_search.prev_var_index_ );
    //
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
@@ -275,7 +266,7 @@ bool prev_op_search_t<Op_info>::match_fun(
    op_enum_t op_enum_s;
    bool         is_constant_s;
    bool         is_commutative_s;
-   vec_addr_t&  arg_one_s     = prev_op_search.arg_one_search_;
+   vec_index_t&  arg_one_s     = prev_op_search.arg_one_search_;
    vec_bool_t&  is_var_one_s  = prev_op_search.is_var_one_search_;
    op_info.get( i_op_search,
       op_enum_s, is_constant_s, is_commutative_s, arg_one_s, is_var_one_s
@@ -288,7 +279,7 @@ bool prev_op_search_t<Op_info>::match_fun(
    op_enum_t op_enum_c;
    bool         is_constant_c;
    bool         is_commutative_c;
-   vec_addr_t&   arg_one_c    = prev_op_search.arg_one_check_;
+   vec_index_t&   arg_one_c    = prev_op_search.arg_one_check_;
    vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
    op_info.get( i_op_check,
       op_enum_c, is_constant_c, is_commutative_c, arg_one_c, is_var_one_c
@@ -323,8 +314,8 @@ bool prev_op_search_t<Op_info>::match_fun(
       }
       else
       {  match  = match && is_var_one_c[k];
-         addr_t val_search  = prev_var_index[ arg_one_s[k] ];
-         addr_t val_check   = prev_var_index[ arg_one_c[k] ];
+         index_t val_search  = prev_var_index[ arg_one_s[k] ];
+         index_t val_check   = prev_var_index[ arg_one_c[k] ];
          match  = match && val_search == val_check;
       }
    }
@@ -337,11 +328,11 @@ bool prev_op_search_t<Op_info>::match_fun(
       if( match )
       {  //
          // index_s
-         addr_t index_s = arg_one_s[0];
+         index_t index_s = arg_one_s[0];
          if( is_var_one_s[0] ) index_s = prev_var_index[ index_s ];
          //
          // index_c
-         addr_t index_c = arg_one_c[1];
+         index_t index_c = arg_one_c[1];
          if( is_var_one_c[1] ) index_c = prev_var_index[ index_c ];
          //
          // match

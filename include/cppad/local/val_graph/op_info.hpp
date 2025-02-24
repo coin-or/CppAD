@@ -57,11 +57,14 @@ template <class Tape> class op_info_t {
 // END_CLASS
 public:
    //
-   // value_t, op_enum_t, vec_addr_t, vec_bool_t, vec_value_t
-   typedef typename Tape::value_t                value_t;
+   // index_t, op_enum_t, vec_index_t, vec_bool_t
+   typedef addr_t                                index_t;
    typedef CppAD::local::val_graph::op_enum_t    op_enum_t;
-   typedef CppAD::vector<addr_t>                 vec_addr_t;
+   typedef CppAD::vector<index_t>                vec_index_t;
    typedef CppAD::vector<bool>                   vec_bool_t;
+   //
+   // value_t, vec_value_t
+   typedef typename Tape::value_t                value_t;
    typedef CppAD::vector<value_t>                vec_value_t;
    //
 private:
@@ -70,10 +73,10 @@ private:
    typedef CppAD::local::val_graph::base_op_t<value_t> base_op_t;
    //
    // n_op_
-   const addr_t n_op_;
+   const index_t n_op_;
    //
    // arg_all_
-   const vec_addr_t& arg_all_;
+   const vec_index_t& arg_all_;
    //
    // con_all_
    const vec_value_t& con_all_;
@@ -82,15 +85,15 @@ private:
    const CppAD::vector<uint8_t>& op_enum_all_;
    //
    // op2arg_index_
-   const vec_addr_t& op2arg_index_;
+   const vec_index_t& op2arg_index_;
    //
 public:
    //
    // BEGIN_OP_INFO
    // op_info_t op_info(tape)
    op_info_t(
-      const tape_t<value_t>& tape         ,
-      const vec_addr_t&      op2arg_index )
+      const tape_t<value_t>&  tape         ,
+      const vec_index_t&      op2arg_index )
    // END_OP_INFO
    : n_op_ ( tape.n_op() )
    , arg_all_ ( tape.arg_vec() )
@@ -101,12 +104,12 @@ public:
    //
    // BEGIN_OP2ARG_INDEX
    // op2arg_index = op_info.op2arg_index()
-   const vec_addr_t& op_arg_index(void)
+   const vec_index_t& op_arg_index(void)
    // END_OP2ARG_INDEX
    {  return op2arg_index_; }
    //
    // n_op = op_info.n_op()
-   addr_t n_op(void) const
+   index_t n_op(void) const
    // END_N_OP
    {  return n_op_; }
    //
@@ -116,12 +119,12 @@ public:
    //
    // op_info.get(i_op, op_enum, is_constant, arg_one, is_var_one)
    void get(
-      addr_t       i_op           ,
-      op_enum_t&   op_enum        ,
-      bool&        is_constant    ,
-      bool&        is_commutative ,
-      vec_addr_t&  arg_one        ,
-      vec_bool_t&  is_var_one     )
+      index_t       i_op           ,
+      op_enum_t&    op_enum        ,
+      bool&         is_constant    ,
+      bool&         is_commutative ,
+      vec_index_t&  arg_one        ,
+      vec_bool_t&   is_var_one     )
    // END_GET
    {  //
       // op_enum, is_constant, is_commutative
@@ -130,24 +133,24 @@ public:
       is_commutative = op_enum == add_op_enum || op_enum == mul_op_enum;
       //
       // arg_index, n_arg, n_after, n_before
-      base_op_t* op_ptr = op_enum2class<value_t>(op_enum);
-      addr_t arg_index  = op2arg_index_[i_op];
-      addr_t n_arg      = op_ptr->n_arg(arg_index, arg_all_);
-      addr_t n_before   = op_ptr->n_before();
-      addr_t n_after    = op_ptr->n_after();
+      base_op_t* op_ptr     = op_enum2class<value_t>(op_enum);
+      index_t    arg_index  = op2arg_index_[i_op];
+      index_t    n_arg      = op_ptr->n_arg(arg_index, arg_all_);
+      index_t    n_before   = op_ptr->n_before();
+      index_t    n_after    = op_ptr->n_after();
       //
       // arg_one
       arg_one.resize(0); arg_one.resize(n_arg);
-      for(addr_t k = 0; k < n_arg; ++k)
+      for(index_t k = 0; k < n_arg; ++k)
          arg_one[k] = arg_all_[arg_index + k];
       //
       // is_var_one
       is_var_one.resize(0); is_var_one.resize(n_arg);
-      for(addr_t k = 0; k < n_before; ++k)
+      for(index_t k = 0; k < n_before; ++k)
          is_var_one[k] = false;
-      for(addr_t k = n_before; k < n_arg - n_after; ++k)
+      for(index_t k = n_before; k < n_arg - n_after; ++k)
          is_var_one[k] = true;
-      for(addr_t k = n_arg - n_after; k < n_arg; ++k)
+      for(index_t k = n_arg - n_after; k < n_arg; ++k)
          is_var_one[k] = false;
    }
 };
