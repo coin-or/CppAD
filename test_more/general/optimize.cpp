@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 // 2DO: Test that optimize.hpp use of atomic_base<Base>::rev_sparse_jac works.
 
@@ -2421,7 +2421,8 @@ bool optimize(void)
    // val_optimize cases
    use_val_optimize_      = true;
    ok     &= cond_exp_ppvv();
-   // skip:  exceed_collision_limit(void)
+   //
+   // skip: exceed_collision_limit(void)
    // skip: no_cumulative_sum(void)
    ok     &= optimize_csum();
    ok     &= optimize_ode();
@@ -2463,7 +2464,6 @@ bool optimize(void)
    conditional_skip_       = true;
    atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
    //
-
    ok     &= atomic_cond_exp_sparsity();
 
    // check exceed_collision_limit

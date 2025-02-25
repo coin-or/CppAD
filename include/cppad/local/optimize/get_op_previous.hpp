@@ -4,13 +4,12 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <algorithm>
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/new_optimize/var_op_info.hpp>
 # include <cppad/local/new_optimize/prev_op_search.hpp>
 
-// BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
-namespace CppAD { namespace local { namespace optimize {
 /*
 {xrst_begin optimize_get_op_previous dev}
 {xrst_spell
@@ -34,8 +33,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+   // BEGIN_GET_OP_PREVIOUS
+   // END_GET_OP_PREVIOUS
 }
 
 Base
@@ -109,7 +108,11 @@ the return value is true (false).
 {xrst_end optimize_get_op_previous}
 */
 
-// BEGIN_PROTOTYPE
+// BEGIN_GET_OP_PREVIOUS
+// exceed_collison_limit = get_op_previous(
+//    collision_limit, play, random_itr, cexp_set, op_previous, op_usage
+// )
+namespace CppAD { namespace local { namespace optimize {
 template <class Addr, class Base>
 bool get_op_previous(
    size_t                                      collision_limit     ,
@@ -118,47 +121,51 @@ bool get_op_previous(
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<addr_t>&                         op_previous         ,
    pod_vector<usage_t>&                        op_usage            )
-// END_PROTOTYPE
-{  //
+{  CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
+   CPPAD_ASSERT_UNKNOWN( op_usage.size() == random_itr.num_op() );
+   // END_GET_OP_PREVIOUS
    //
-   // prev_op_search
+   // op_info_t, op_info
    typedef play::const_random_iterator<Addr> random_itr_t;
    typedef var_op_info_t<random_itr_t>       op_info_t;
    op_info_t op_info(random_itr);
-   Addr n_hash_code  = Addr( random_itr.num_op() ) + 2;
+   //
+   // prev_op_search
+   Addr n_hash_code  = Addr( std::max( random_itr.num_op() ,  size_t(2) ) );
    prev_op_search_t<op_info_t> prev_op_search(
       op_info, n_hash_code, Addr( collision_limit )
    );
    //
-   // exceed_collision_limit
-   bool exceed_collision_limit = false;
+   // n_op, n_var
+   size_t n_op  = random_itr.num_op();
+   size_t n_var = random_itr.num_var();
+   CPPAD_ASSERT_UNKNOWN( size_t( std::numeric_limits<Addr>::max() ) >= n_op );
+   CPPAD_ASSERT_UNKNOWN( size_t( std::numeric_limits<Addr>::max() ) >= n_var );
    //
-   // number of operators in the tape
-   const size_t num_op = random_itr.num_op();
-   CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
-   CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
-   op_previous.resize( num_op );
+   // var_previous
+   pod_vector<Addr> var_previous(n_var);
+   for(size_t i_var = 0; i_var < n_var; ++i_var)
+      var_previous[i_var] = Addr( i_var );
    //
-   // number of conditional expressions in the tape
+   // op_previous
+   op_previous.resize( n_op );
+   for(size_t i_op = 0; i_op < n_op; ++i_op)
+      op_previous[i_op] = 0;
    //
-   // initialize mapping from variable index to operator index
-   CPPAD_ASSERT_UNKNOWN(
-      size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
-   );
-   // ----------------------------------------------------------------------
-   // compute op_previous
-   // ----------------------------------------------------------------------
-   sparse::list_setvec  hash_table_op;
-   hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
-   //
-   pod_vector<bool> work_bool;
-   pod_vector<addr_t> work_addr_t;
-   for(size_t i_op = 0; i_op < num_op; ++i_op)
-   {  op_previous[i_op] = 0;
+   for(size_t i_op = 0; i_op < n_op; ++i_op)
+   {  //
+      // op, i_var
+      op_code_var   op;
+      const addr_t* arg;
+      size_t        i_var;
+      random_itr.op_info(i_op, op, arg, i_var);
+      //
+      // skip
+      bool skip = op_usage[i_op] != usage_t(yes_usage);
+      switch( op )
+      {  default:
+         break;
 
-      if( op_usage[i_op] == usage_t(yes_usage) )
-      switch( random_itr.get_op(i_op) )
-      {
          // ----------------------------------------------------------------
          // these operators never match pevious operators
          case BeginOp:
@@ -180,103 +187,41 @@ bool get_op_previous(
          case FunavOp:
          case FunrpOp:
          case FunrvOp:
-         break;
-
-         // ----------------------------------------------------------------
-         // check for a previous match
-         // BEGIN_SORT_THIS_LINE_PLUS_1
-         case AbsOp:
-         case AcosOp:
-         case AcoshOp:
-         case AddpvOp:
-         case AddvvOp:
-         case AsinOp:
-         case AsinhOp:
-         case AtanOp:
-         case AtanhOp:
-         case CosOp:
-         case CoshOp:
-         case DisOp:
-         case DivpvOp:
-         case DivvpOp:
-         case DivvvOp:
-         case EqppOp:
-         case EqpvOp:
-         case EqvvOp:
-         case ErfOp:
-         case ErfcOp:
-         case ExpOp:
-         case Expm1Op:
-         case LeppOp:
-         case LepvOp:
-         case LevpOp:
-         case LevvOp:
-         case Log1pOp:
-         case LogOp:
-         case LtppOp:
-         case LtpvOp:
-         case LtvpOp:
-         case LtvvOp:
-         case MulpvOp:
-         case MulvvOp:
-         case NegOp:
-         case NeppOp:
-         case NepvOp:
-         case NevvOp:
-         case PowpvOp:
-         case PowvpOp:
-         case PowvvOp:
-         case SignOp:
-         case SinOp:
-         case SinhOp:
-         case SqrtOp:
-         case SubpvOp:
-         case SubvpOp:
-         case SubvvOp:
-         case TanOp:
-         case TanhOp:
-         case ZmulpvOp:
-         case ZmulvpOp:
-         case ZmulvvOp:
-         // END_SORT_THIS_LINE_MINUS_1
-         exceed_collision_limit |= match_op(
-            collision_limit,
-            random_itr,
-            op_previous,
-            i_op,
-            hash_table_op,
-            work_bool,
-            work_addr_t
-         );
-         if( op_previous[i_op] != 0 )
-         {  // like a unary operator that assigns i_op equal to previous.
-            size_t previous = size_t( op_previous[i_op] );
-            bool sum_op = false;
-            CPPAD_ASSERT_UNKNOWN( previous < i_op );
-            op_inc_arg_usage(
-               play, sum_op, i_op, previous, op_usage, cexp_set
-            );
-         }
-         break;
-
-         // ----------------------------------------------------------------
-         default:
-         CPPAD_ASSERT_UNKNOWN(false);
+         skip = true;
          break;
       }
+      if( ! skip )
+      {  size_t j_op = size_t(
+            prev_op_search.match_op( Addr(i_op), var_previous)
+         );
+         if( j_op != i_op )
+         {  //
+            // op_previous
+            op_previous[i_op] = addr_t(j_op);
+            //
+            // op_usage, cexp_set
+            CPPAD_ASSERT_UNKNOWN( j_op  < i_op );
+            bool sum_op = false;
+            op_inc_arg_usage(
+               play, sum_op, i_op, j_op, op_usage, cexp_set
+            );
+            //
+            // var_previous
+            op_code_var op_match;
+            size_t      var_match;
+            random_itr.op_info(j_op, op_match, arg, var_match);
+            CPPAD_ASSERT_UNKNOWN( op == op_match );
+            if( NumRes(op) > 0 )
+               var_previous[i_var] = Addr( var_match );
+         }
+      }
    }
-   /* ---------------------------------------------------------------------
+   /*
    // Print out hash code usage summary
-   CppAD::vector<size_t> count(collision_limit + 1);
-   for(size_t i = 0; i <= collision_limit; ++i)
-      count[i] = 0;
-   for(size_t code = 0; code < CPPAD_HASH_TABLE_SIZE; ++code)
-   {  size_t size = hash_table_op.number_elements(code);
-      ++count[size];
-   }
-   std::cout << "count = " << count << "\n";
-   --------------------------------------------------------------------- */
-   return exceed_collision_limit;
+   CppAD::vector<Addr> count = prev_op_search.different_count();
+   std::cout << "different_count = " << count << "\n";
+   */
+   return prev_op_search.exceed_limit();
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

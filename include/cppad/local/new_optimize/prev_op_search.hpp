@@ -60,7 +60,8 @@ for an equivalent variable.
 It must be defined for all the results of previous operators.
 For operator arguments that are variables,
 the previous indices are used when checking to see if operators match.
-The argument indices used to match an operator are:
+The argument indices used to match an operator are
+::
 
    for(k = 0; k < n_arg; ++k)
       if( is_var_one[k] )
@@ -169,7 +170,7 @@ public:
    // -------------------------------------------------------------------------
    // BEGIN_DIFFERENT_COUNT
    // different_count = prev_op_search.different_count()
-   vec_index_t different_count(void)
+   CppAD::vector<index_t> different_count(void)
    // END_DIFFERENT_COUNT
    {  return hash_table_.different_count();
    }

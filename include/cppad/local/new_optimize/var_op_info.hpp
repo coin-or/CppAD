@@ -60,7 +60,7 @@ public:
    //
    // value_t, vec_value_t
    // These types are not used (is_constant is always false).
-   typedef index_t                           value_t;
+   typedef double                            value_t;
    typedef CppAD::local::pod_vector<value_t> vec_value_t;
    //
 private:
@@ -101,14 +101,14 @@ public:
    {  //
       // op_enum, is_constant, is_commutative
       // Note that Addvp and Mulvp have already been folded using communativity
-      op_enum        = random_itr_.get_op(i_op);
+      op_enum        = random_itr_.get_op( size_t(i_op) );
       is_constant    = false;
       is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
       // op_enum, op_arg var_index
-      const index_t* op_arg;
+      const addr_t*  op_arg;
       size_t         var_index;
-      random_itr_.op_info(i_op, op_enum, op_arg, var_index);
+      random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
       //
       index_t n_arg;
       switch(op_enum)
@@ -117,18 +117,18 @@ public:
          break;
 
          case CSkipOp:
-         n_arg = 6 + op_arg[4] + op_arg[5] + 1;
+         n_arg = 6 + index_t( op_arg[4] + op_arg[5] ) + 1;
          break;
 
          case CSumOp:
-         n_arg = op_arg[4] + 1;
+         n_arg = index_t( op_arg[4] ) + 1;
          break;
       }
       //
       // arg_one
       arg_one.resize(0); arg_one.resize(n_arg);
       for(index_t k = 0; k < n_arg; ++k)
-         arg_one[k] = op_arg[k];
+         arg_one[k] = index_t( op_arg[k] );
       //
       // is_var_one
       arg_is_variable(op_enum, op_arg, is_var_one);
