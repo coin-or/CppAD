@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_SIZE_SETVEC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
 /*
@@ -453,7 +453,7 @@ private:
                data_[start].value = temporary_[i];
 
                // number of data entries used for this set
-               number_used_by_sets += number_elements(i) + 1;
+               number_used_by_sets += number_elements(i) + s_type(1);
                /*
                number of elements checks that value < end_
                .resizeeach pair in the list except for the start pair

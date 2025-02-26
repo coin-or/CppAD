@@ -11,7 +11,7 @@
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
 # include <cppad/local/new_optimize/get_dyn_previous.hpp>
-# include <cppad/local/optimize/get_op_previous.hpp>
+# include <cppad/local/new_optimize/get_op_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
@@ -142,7 +142,6 @@ Contents
    include/cppad/local/optimize/get_par_usage.hpp
    include/cppad/local/optimize/record_csum.hpp
    include/cppad/local/optimize/match_op.hpp
-   include/cppad/local/optimize/get_op_previous.hpp
 }
 
 {xrst_end optimize_run}

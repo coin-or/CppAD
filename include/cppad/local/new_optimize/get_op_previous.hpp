@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
-# define CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
+# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_OP_PREVIOUS_HPP
+# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_OP_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell

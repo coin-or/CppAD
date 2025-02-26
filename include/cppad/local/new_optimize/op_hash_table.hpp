@@ -462,7 +462,7 @@ public:
       //
       // i_op_match
       itr_t  itr   = itr_t(table_, hash_code);
-      addr_t count = 0;
+      Index  count = 0;
       while( *itr != n_op_ && i_op_match == i_op && count < collision_limit_ )
       {  //
          // i_op_check
