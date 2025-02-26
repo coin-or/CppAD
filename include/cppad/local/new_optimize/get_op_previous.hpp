@@ -5,7 +5,6 @@
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <algorithm>
-# include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/new_optimize/var_op_info.hpp>
 # include <cppad/local/new_optimize/prev_op_search.hpp>

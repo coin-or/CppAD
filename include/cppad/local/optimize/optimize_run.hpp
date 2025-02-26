@@ -141,7 +141,6 @@ Contents
    include/cppad/local/optimize/get_op_usage.hpp
    include/cppad/local/optimize/get_par_usage.hpp
    include/cppad/local/optimize/record_csum.hpp
-   include/cppad/local/optimize/match_op.hpp
 }
 
 {xrst_end optimize_run}
