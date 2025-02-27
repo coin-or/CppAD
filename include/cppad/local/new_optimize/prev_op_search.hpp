@@ -135,12 +135,12 @@ private:
    //
    // op_arg_
    //  a temporary put here to avoid reallocating memory each time it is used
-   CppAD::vector<index_t> op_arg_;
+   CppAD::vector<index_t>  op_arg_;
    //
    static bool match_fun(
       index_t              i_op_search ,
       index_t              i_op_check  ,
-      prev_op_search_t&   search_info
+      prev_op_search_t&    search_info
    );
    //
    // prev_var_index_
@@ -148,18 +148,24 @@ private:
    // argument to match_op through to match_fun.
    const vec_index_t* prev_var_index_;
    //
-   // arg_one_search_, arg_one_check_, is_var_one_search_, is_var_one_check_
-   // Temporaries placed here to avoid reallocaiton of memory
+   // Set by match_op and used by match_fun
+   op_enum_t   op_enum_search_;
+   bool        is_constant_search_;
+   bool        is_commutative_search_;
+   vec_index_t arg_one_search_;
+   vec_bool_t  is_var_one_search_;
+   //
+   // Used by match_fun. Placed here to avoid reallocaiton of memory
    // (if resize for these vectors is smart enough).
-   vec_index_t arg_one_search_,    arg_one_check_;
-   vec_bool_t is_var_one_search_, is_var_one_check_;
+   vec_index_t arg_one_check_;
+   vec_bool_t  is_var_one_check_;
 public:
    // -------------------------------------------------------------------------
    // BEGIN_OP_PREV_OP_SEARCH_T
    // prev_op_search_t prev_op_search(tape, n_hash_code)
    prev_op_search_t(
-         Op_info&  op_info                                              ,
-         index_t    n_hash_code                                          ,
+         Op_info&  op_info                                                ,
+         index_t    n_hash_code                                           ,
          index_t    collision_limit = std::numeric_limits<index_t>::max() )
    // END_OP_PREV_OP_SEARCH_T
    : n_op_( index_t( op_info.n_op() ) )
@@ -195,11 +201,12 @@ public:
       const vec_value_t& con_all = op_info_.con_all();
       //
       // op_enum, is_constant, arg_one, is_var_one
-      op_enum_t op_enum;
-      bool         is_constant;
-      bool         is_commutative;
-      vec_index_t&  arg_one    = arg_one_search_;
-      vec_bool_t&  is_var_one = is_var_one_search_;
+      // op_enum_search_, ... , is_var_one_search_
+      op_enum_t&     op_enum          = op_enum_search_;
+      bool&          is_constant      = is_constant_search_;
+      bool&          is_commutative   = is_commutative_search_;
+      vec_index_t&   arg_one          = arg_one_search_;
+      vec_bool_t&    is_var_one       = is_var_one_search_;
       op_info_.get(
          i_op, op_enum, is_constant, is_commutative, arg_one, is_var_one
       );
@@ -251,7 +258,7 @@ template <class Op_info>
 bool prev_op_search_t<Op_info>::match_fun(
    index_t              i_op_search    ,
    index_t              i_op_check     ,
-   prev_op_search_t&   prev_op_search )
+   prev_op_search_t&    prev_op_search )
 {  //
    //
    // prev_var_index
@@ -264,23 +271,21 @@ bool prev_op_search_t<Op_info>::match_fun(
    const vec_value_t& con_all = op_info.con_all();
    //
    // op_enum_s, is_constant_s, is_commutative_s, arg_one_s, is_var_one_s
-   op_enum_t op_enum_s;
-   bool         is_constant_s;
-   bool         is_commutative_s;
-   vec_index_t&  arg_one_s     = prev_op_search.arg_one_search_;
-   vec_bool_t&  is_var_one_s  = prev_op_search.is_var_one_search_;
-   op_info.get( i_op_search,
-      op_enum_s, is_constant_s, is_commutative_s, arg_one_s, is_var_one_s
-   );
+   // These results were stored by match_op (so i_op_search is not needed).
+   op_enum_t&     op_enum_s        = prev_op_search.op_enum_search_;
+   bool&          is_constant_s    = prev_op_search.is_constant_search_;
+   bool&          is_commutative_s = prev_op_search.is_commutative_search_;
+   vec_index_t&   arg_one_s        = prev_op_search.arg_one_search_;
+   vec_bool_t&    is_var_one_s     = prev_op_search.is_var_one_search_;
    //
    // n_arg_s
    size_t n_arg_s = arg_one_s.size();
    //
    // op_enum_c, is_constant_c, arg_one_c, is_var_one_c
-   op_enum_t op_enum_c;
-   bool         is_constant_c;
-   bool         is_commutative_c;
-   vec_index_t&   arg_one_c    = prev_op_search.arg_one_check_;
+   op_enum_t     op_enum_c;
+   bool          is_constant_c;
+   bool          is_commutative_c;
+   vec_index_t&  arg_one_c    = prev_op_search.arg_one_check_;
    vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
    op_info.get( i_op_check,
       op_enum_c, is_constant_c, is_commutative_c, arg_one_c, is_var_one_c

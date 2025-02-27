@@ -149,10 +149,8 @@ bool get_op_previous(
    // op_previous
    op_previous.resize( n_op );
    for(size_t i_op = 0; i_op < n_op; ++i_op)
-      op_previous[i_op] = 0;
-   //
-   for(size_t i_op = 0; i_op < n_op; ++i_op)
-   {  //
+   {  op_previous[i_op] = 0;
+      //
       // op, i_var
       op_code_var   op;
       const addr_t* arg;

@@ -444,11 +444,11 @@ public:
    // BEGIN_FIND_MATCH_ARG
    // i_op_match = hash_table.find_match(i_op, op, op_arg, info, match_fun)
    Index find_match(
-      Index                i_op  ,
-      Index                op        ,
-      CppAD::vector<Index> op_arg    ,
-      Info&                info      ,
-      match_fun_t          match_fun )
+      Index                       i_op      ,
+      Index                       op        ,
+      const CppAD::vector<Index>& op_arg    ,
+      Info&                       info      ,
+      match_fun_t                 match_fun )
 
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_FIND_MATCH_ARG
