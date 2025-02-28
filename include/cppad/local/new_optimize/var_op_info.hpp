@@ -100,15 +100,18 @@ public:
    // END_GET
    {  //
       // op_enum, is_constant, is_commutative
-      // Note that Addvp and Mulvp have already been folded using communativity
       op_enum        = random_itr_.get_op( size_t(i_op) );
       is_constant    = false;
-      is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
-      // op_enum, op_arg var_index
+      // op_enum,  op_arg, is_constant
       const addr_t*  op_arg;
       size_t         var_index;
       random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
+      is_constant    = false;
+      //
+      // is_commutative
+      // Note that Addvp and Mulvp have already been folded using communativity
+      is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
       index_t n_arg;
       switch(op_enum)
