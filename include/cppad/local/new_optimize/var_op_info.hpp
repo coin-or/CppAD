@@ -126,7 +126,7 @@ public:
       }
       //
       // arg_one
-      arg_one.resize(0); arg_one.resize(n_arg);
+      arg_one.resize(0); arg_one.resize( size_t(n_arg) );
       for(index_t k = 0; k < n_arg; ++k)
          arg_one[k] = index_t( op_arg[k] );
       //

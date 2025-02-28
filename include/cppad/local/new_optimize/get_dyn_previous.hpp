@@ -118,7 +118,8 @@ template <class Base> bool get_dyn_previous(
    );
    //
    // par_previous
-   pod_vector<addr_t> par_previous( n_par );
+   pod_vector<addr_t> par_previous;
+   par_previous.resize( size_t(n_par) );
    for(addr_t i_par = 0; i_par < n_par; ++i_par)
       par_previous[i_par] = i_par;
    //

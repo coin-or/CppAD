@@ -452,8 +452,12 @@ private:
                // restore reference count
                data_[start].value = temporary_[i];
 
+               // number_used_by_sets
                // number of data entries used for this set
-               number_used_by_sets += number_elements(i) + s_type(1);
+               number_used_by_sets += number_elements(i);
+               number_used_by_sets += s_type(1);
+               // number_used_by_sets += number_elements(i) + s_type(1);
+               // generates a warning using gcc 14.2.1
                /*
                number of elements checks that value < end_
                .resizeeach pair in the list except for the start pair

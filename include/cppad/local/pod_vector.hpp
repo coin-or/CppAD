@@ -109,7 +109,6 @@ Size
 ****
 {xrst_literal ,
    // BEGIN_CTOR_SIZE_T , // END_CTOR_SIZE_T
-   // BEGIN_CTOR_ADDR_T , // END_CTOR_ADDR_T
 }
 This constructor sets the size (capacity) equal *n*
 ( greater that or equal *n* ).
@@ -143,20 +142,6 @@ The memory is returned using :ref:`ta_return_memory-name` .
    {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
       extend(n);
    }
-
-# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
-   // BEGIN_CTOR_ADDR_T
-   pod_vector(addr_t n)
-   // END_CTOR_ADDR_T
-   : size_(0), capacity_(0), data_(nullptr)
-   {  CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
-      extend( size_t(n) );
-   }
-   // BEGIN_RESIZE_ADDR_T
-   void resize(addr_t n)
-   // END_RESIZE_ADDR_T
-   {  resize( size_t(n) ); }
-# endif
 
    // BEGIN_DESTRUCTOR
    ~pod_vector(void)
@@ -346,7 +331,6 @@ resize
 ******
 {xrst_literal ,
    // BEGIN_RESIZE_SIZE_T , // END_RESIZE_SIZE_T
-   // BEGIN_RESIZE_ADDR_T , // END_RESIZE_ADDR_T
 }
 #. This changes the size of the vector to *n* .
 #. If on input, *n* is less that or equal :ref:`pod_vector_private@capacity\_` ,
