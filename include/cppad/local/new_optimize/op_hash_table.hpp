@@ -262,10 +262,6 @@ private:
    // collision_limit_
    const Index collision_limit_;
    //
-   // enum_multiplier_
-   // effectively const; i.e., only set by constructor
-   size_t enum_multiplier_;
-   //
    // exceed_limit_
    bool exceed_limit_;
    //
@@ -299,17 +295,6 @@ public:
       //
       // table_
       table_.resize(n_hash, n_op);
-      //
-      // enum_multiplier_
-      Index prime_list[] = {
-         907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
-      };
-      size_t n_prime = sizeof(prime_list) / sizeof( prime_list[0] );
-      Index multiplier = prime_list[n_prime - 1];
-      for(size_t k = 1; k < n_prime; ++k)
-         if( n_hash_ % prime_list[k] != 0 )
-            multiplier = prime_list[k];
-      enum_multiplier_ = size_t(multiplier);
    }
    // BEGIN_N_HASH
    // n_hash = hash_table.n_hash()
@@ -374,9 +359,9 @@ public:
    // END_HASH_FUN_ARG
    {  //
       // sum
-      size_t sum = size_t(op) * enum_multiplier_;
+      size_t sum = size_t(op);
       for(size_t i = 0; i < op_arg.size(); ++i)
-         sum += size_t( op_arg[i] );
+         sum += size_t( op_arg[i] ) * (3 + 2 * i);
       //
       // n_hash
       size_t n_hash_size = size_t( n_hash_ );
