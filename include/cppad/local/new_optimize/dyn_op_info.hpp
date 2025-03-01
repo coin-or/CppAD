@@ -143,15 +143,13 @@ public:
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
       bool&         is_constant    ,
-      bool&         is_commutative ,
       vec_index_t&  arg_one        ,
       vec_bool_t&   is_var_one     )
    // END_GET
    {  //
-      // op_enum, is_constant, is_commutative
+      // op_enum, is_constant
       op_enum        = op_enum_t( op_enum_all_[i_op] );
       is_constant    = false;
-      is_commutative = op_enum == add_dyn || op_enum == mul_dyn;
       //
       // arg_index, narg
       index_t arg_index  = op2arg_index_[i_op];
@@ -161,6 +159,13 @@ public:
       arg_one.resize(0); arg_one.resize( size_t(n_arg) );
       for(index_t k = 0; k < n_arg; ++k)
          arg_one[k] = arg_all_[arg_index + k];
+      //
+      // arg_one
+      bool is_commutative = op_enum == add_dyn || op_enum == mul_dyn;
+      if( is_commutative )
+      {  if( arg_one[0] > arg_one[1] )
+            std::swap( arg_one[0], arg_one[1] );
+      }
       //
       // is_var_one
       is_var_one.resize(0); is_var_one.resize( size_t(n_arg) );

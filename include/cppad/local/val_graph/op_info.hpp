@@ -122,15 +122,13 @@ public:
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
       bool&         is_constant    ,
-      bool&         is_commutative ,
       vec_index_t&  arg_one        ,
       vec_bool_t&   is_var_one     )
    // END_GET
    {  //
-      // op_enum, is_constant, is_commutative
+      // op_enum, is_constant
       op_enum        = op_enum_t( op_enum_all_[i_op] );
       is_constant    = op_enum == con_op_enum;
-      is_commutative = op_enum == add_op_enum || op_enum == mul_op_enum;
       //
       // arg_index, n_arg, n_after, n_before
       base_op_t* op_ptr     = op_enum2class<value_t>(op_enum);
@@ -152,6 +150,13 @@ public:
          is_var_one[k] = true;
       for(index_t k = n_arg - n_after; k < n_arg; ++k)
          is_var_one[k] = false;
+      //
+      bool is_commutative = op_enum == add_op_enum || op_enum == mul_op_enum;
+      if( is_commutative )
+      {  CPPAD_ASSERT_UNKNOWN( is_var_one[0] && is_var_one[1] );
+         if( arg_one[0] > arg_one[1] )
+            std::swap( arg_one[0], arg_one[1] );
+      }
    }
 };
 

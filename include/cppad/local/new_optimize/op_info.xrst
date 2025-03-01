@@ -27,7 +27,6 @@ Syntax
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
 | |tab| |tab| *is_constant*
-| |tab| |tab| *is_commutative*
 | |tab| |tab| *arg_one*
 | |tab| |tab| *is_var_one*
 | |tab| )
@@ -98,17 +97,16 @@ The value of the constant is::
 
    con_all[ arg_one[0] ]
 
-is_commutative
---------------
-is a ``bool&`` that is set to true (false) if this is (is not)
-a commutative operator.
-A commutative operator must have *arg_one* . ``size`` ()  equal to two.
-
 arg_one
 -------
 is a ``vec_addr_t&`` that is set to the arguments for this operator;
 i.e., *arg_one*\ . ``size`` () is the number arguments and
 *arg_one*\ [ *k* ] is the k-th argument.
+
+If an operator is commutative, the operands passed back should be such that
+*j* < *k* implies that *arg_one*\ [ *j* ] <= *arg_one* [ *k* ] .
+If different orders are used, operators may not be recognized as equivalent.
+
 
 is_var_one
 ----------

@@ -151,7 +151,6 @@ private:
    // Set by match_op and used by match_fun
    op_enum_t   op_enum_search_;
    bool        is_constant_search_;
-   bool        is_commutative_search_;
    vec_index_t arg_one_search_;
    vec_bool_t  is_var_one_search_;
    //
@@ -204,11 +203,10 @@ public:
       // op_enum_search_, ... , is_var_one_search_
       op_enum_t&     op_enum          = op_enum_search_;
       bool&          is_constant      = is_constant_search_;
-      bool&          is_commutative   = is_commutative_search_;
       vec_index_t&   arg_one          = arg_one_search_;
       vec_bool_t&    is_var_one       = is_var_one_search_;
       op_info_.get(
-         i_op, op_enum, is_constant, is_commutative, arg_one, is_var_one
+         i_op, op_enum, is_constant, arg_one, is_var_one
       );
       //
       // n_arg
@@ -270,11 +268,10 @@ bool prev_op_search_t<Op_info>::match_fun(
    // con_all
    const vec_value_t& con_all = op_info.con_all();
    //
-   // op_enum_s, is_constant_s, is_commutative_s, arg_one_s, is_var_one_s
+   // op_enum_s, is_constant_s, arg_one_s, is_var_one_s
    // These results were stored by match_op (so i_op_search is not needed).
    op_enum_t&     op_enum_s        = prev_op_search.op_enum_search_;
    bool&          is_constant_s    = prev_op_search.is_constant_search_;
-   bool&          is_commutative_s = prev_op_search.is_commutative_search_;
    vec_index_t&   arg_one_s        = prev_op_search.arg_one_search_;
    vec_bool_t&    is_var_one_s     = prev_op_search.is_var_one_search_;
    //
@@ -284,11 +281,10 @@ bool prev_op_search_t<Op_info>::match_fun(
    // op_enum_c, is_constant_c, arg_one_c, is_var_one_c
    op_enum_t     op_enum_c;
    bool          is_constant_c;
-   bool          is_commutative_c;
    vec_index_t&  arg_one_c    = prev_op_search.arg_one_check_;
    vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
    op_info.get( i_op_check,
-      op_enum_c, is_constant_c, is_commutative_c, arg_one_c, is_var_one_c
+      op_enum_c, is_constant_c, arg_one_c, is_var_one_c
    );
    //
    // n_arg_c
@@ -299,7 +295,6 @@ bool prev_op_search_t<Op_info>::match_fun(
    match  = match && op_enum_s        == op_enum_c;
    match  = match && n_arg_s          == n_arg_c;
    match  = match && is_constant_s    == is_constant_c;
-   match  = match && is_commutative_s == is_commutative_c;
    if( ! match )
       return false;
    //
@@ -326,36 +321,6 @@ bool prev_op_search_t<Op_info>::match_fun(
       }
    }
    //
-   // match
-   if( ! match && is_commutative_s )
-   {  CPPAD_ASSERT_UNKNOWN( n_arg_s == 2 )
-      match =          is_var_one_s[0] == is_var_one_c[1];
-      match = match && is_var_one_s[1] == is_var_one_c[0];
-      if( match )
-      {  //
-         // index_s
-         index_t index_s = arg_one_s[0];
-         if( is_var_one_s[0] ) index_s = prev_var_index[ index_s ];
-         //
-         // index_c
-         index_t index_c = arg_one_c[1];
-         if( is_var_one_c[1] ) index_c = prev_var_index[ index_c ];
-         //
-         // match
-         match = index_s == index_c;
-         //
-         // index_s
-         index_s = arg_one_s[1];
-         if( is_var_one_s[1] ) index_s = prev_var_index[ index_s ];
-         //
-         // index_c
-         index_c = arg_one_c[0];
-         if( is_var_one_c[0] ) index_c = prev_var_index[ index_c ];
-         //
-         // match
-         match = match && index_s == index_c;
-      }
-   }
    return match;
 };
 

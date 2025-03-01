@@ -94,12 +94,11 @@ public:
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
       bool&         is_constant    ,
-      bool&         is_commutative ,
       vec_index_t&  arg_one        ,
       vec_bool_t&   is_var_one     )
    // END_GET
    {  //
-      // op_enum, is_constant, is_commutative
+      // op_enum, is_constant
       op_enum        = random_itr_.get_op( size_t(i_op) );
       is_constant    = false;
       //
@@ -109,9 +108,6 @@ public:
       random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
       is_constant    = false;
       //
-      // is_commutative
-      // Note that Addvp and Mulvp have already been folded using communativity
-      is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
       index_t n_arg;
       switch(op_enum)
@@ -136,6 +132,13 @@ public:
       // is_var_one
       arg_is_variable(op_enum, op_arg, is_var_one);
       CPPAD_ASSERT_UNKNOWN( is_var_one.size() == size_t( n_arg ) );
+      //
+      // arg_one
+      // Note that Addvp and Mulvp have been folded using communativity.
+      // Also not that for Addvv and Mulvv, both arguments are variables.
+      bool is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
+      if( is_commutative && arg_one[0] > arg_one[1] )
+         std::swap( arg_one[0], arg_one[1] );
    }
 };
 
