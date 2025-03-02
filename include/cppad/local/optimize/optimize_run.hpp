@@ -11,7 +11,7 @@
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
 # include <cppad/local/new_optimize/get_dyn_previous.hpp>
-# include <cppad/local/new_optimize/get_op_previous.hpp>
+# include <cppad/local/new_optimize/get_var_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
@@ -225,7 +225,7 @@ bool optimize_run(
       op_usage
    );
    pod_vector<addr_t>        op_previous;
-   exceed_collision_limit |= get_op_previous(
+   exceed_collision_limit |= get_var_previous(
       collision_limit,
       play,
       random_itr,

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_OP_PREVIOUS_HPP
-# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_OP_PREVIOUS_HPP
+# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_PREVIOUS_HPP
+# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
@@ -10,7 +10,7 @@
 # include <cppad/local/new_optimize/prev_op_search.hpp>
 
 /*
-{xrst_begin optimize_get_op_previous dev}
+{xrst_begin optimize_get_var_previous dev}
 {xrst_spell
    cexp
 }
@@ -20,7 +20,7 @@ Get Mapping From Op to Previous Op That is Equivalent
 
 Syntax
 ******
-| *exceed_collision_limit* = ``get_op_previous`` (
+| *exceed_collision_limit* = ``get_var_previous`` (
 | |tab| *collision_limit* ,
 | |tab| *play* ,
 | |tab| *random_itr* ,
@@ -104,16 +104,16 @@ exceed_collision_limit
 If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-{xrst_end optimize_get_op_previous}
+{xrst_end optimize_get_var_previous}
 */
 
 // BEGIN_GET_OP_PREVIOUS
-// exceed_collison_limit = get_op_previous(
+// exceed_collison_limit = get_var_previous(
 //    collision_limit, play, random_itr, cexp_set, op_previous, op_usage
 // )
 namespace CppAD { namespace local { namespace optimize {
 template <class Addr, class Base>
-bool get_op_previous(
+bool get_var_previous(
    size_t                                      collision_limit     ,
    const player<Base>*                         play                ,
    const play::const_random_iterator<Addr>&    random_itr          ,
