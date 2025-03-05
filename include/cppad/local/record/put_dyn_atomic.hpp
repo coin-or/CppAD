@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_PUT_DYN_ATOMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/record/recorder.hpp>
 
@@ -18,7 +18,7 @@ Put a Dynamic Parameter Atomic Call Operator in Recording
 
 Syntax
 ******
-| *rec* . ``put_dyn_atomic`` (
+| *dyn_record* . ``put_dyn_atomic`` (
 | |tab| *tape_id* , *atomic_index* , *call_id* , *type_x* , *type_y* , *ax* , *ay*
 | )
 
@@ -90,7 +90,7 @@ in the vector of all parameters.
 
 // BEGIN_PUT_DYN_ATOMIC
 template <class Base> template <class VectorAD>
-void recorder<Base>::put_dyn_atomic(
+void dyn_recorder<Base>::put_dyn_atomic(
    tape_id_t                   tape_id      ,
    size_t                      atomic_index ,
    size_t                      call_id      ,

@@ -267,7 +267,7 @@ public:
       size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
 # endif
       // just set size_t values
-      num_dynamic_ind_    = rec.num_dynamic_ind_;
+      num_dynamic_ind_    = rec.dyn_record_.num_dynamic_ind_;
       num_var_rec_        = rec.num_var_rec_;
       num_var_load_rec_   = rec.num_var_load_rec_;
 
@@ -280,13 +280,13 @@ public:
       CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
 
       // all_par_vec_
-      all_par_vec_.swap(rec.all_par_vec_);
+      all_par_vec_.swap(rec.dyn_record_.all_par_vec_);
       CPPAD_ASSERT_UNKNOWN(all_par_vec_.size() < addr_t_max );
 
       // dyn_par_is_, dyn_par_op_, dyn_par_arg_
-      dyn_par_is_.swap( rec.dyn_par_is_ );
-      dyn_par_op_.swap( rec.dyn_par_op_ );
-      dyn_par_arg_.swap( rec.dyn_par_arg_ );
+      dyn_par_is_.swap( rec.dyn_record_.dyn_par_is_ );
+      dyn_par_op_.swap( rec.dyn_record_.dyn_par_op_ );
+      dyn_par_arg_.swap( rec.dyn_record_.dyn_par_arg_ );
       CPPAD_ASSERT_UNKNOWN(dyn_par_arg_.size() < addr_t_max );
 
       // text_rec_
