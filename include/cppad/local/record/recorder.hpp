@@ -2,11 +2,12 @@
 # define CPPAD_LOCAL_RECORD_RECORDER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/core/hash_code.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/ad_type.hpp>
+# include <cppad/local/record/dyn_recorder.hpp>
 
 // ----------------------------------------------------------------------------
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -28,6 +29,9 @@ class recorder {
    friend class player<Base>;
 
 private:
+   // dyn_record_
+   dyn_recorder<Base> dyn_record_;
+
    /// are comparison operators being recorded
    bool record_compare_;
 
@@ -38,9 +42,6 @@ private:
    /// Number of variables in the recording.
    size_t num_var_rec_;
 
-   /// Number of dynamic parameters in the recording
-   size_t num_dynamic_ind_;
-
    /// Number vecad load operations (LdpOp or LdvOp) currently in recording.
    size_t num_var_load_rec_;
 
@@ -48,7 +49,6 @@ private:
    pod_vector<opcode_t> op_vec_;
 
    /// The VecAD indices in the recording.
-   pod_vector<addr_t> all_dyn_vecad_ind_;
    pod_vector<addr_t> all_var_vecad_ind_;
 
    /// The argument indices in the recording
@@ -57,39 +57,14 @@ private:
    /// Character strings ('\\0' terminated) in the recording.
    pod_vector<char> text_vec_;
 
-   /// Hash table to reduced number of duplicate parameters in all_par_vec_
-   pod_vector<addr_t> par_hash_table_;
-
-   /// Vector containing all the parameters in the recording.
-   /// Use pod_vector_maybe because Base may not be plain old data.
-   pod_vector_maybe<Base> all_par_vec_;
-
-   /// Which elements of all_par_vec_ are dynamic parameters
-   /// (same size are all_par_vec_)
-   pod_vector<bool> dyn_par_is_;
-
-   /// operators for just the dynamic parameters in all_par_vec_
-   pod_vector<opcode_t> dyn_par_op_;
-
-   /// arguments for the dynamic parameter operators
-   pod_vector<addr_t> dyn_par_arg_;
-
 // ---------------------- Public Functions -----------------------------------
 public:
    /// Default constructor
-   recorder(void) :
-   num_var_rec_(0)                          ,
-   num_dynamic_ind_(0)                      ,
-   num_var_load_rec_(0)                      ,
-   par_hash_table_( CPPAD_HASH_TABLE_SIZE )
+   recorder(void)
+   : num_var_rec_(0)
+   , num_var_load_rec_(0)
    {  record_compare_ = true;
       abort_op_index_ = 0;
-      // It does not matter if unitialized hash codes match but this
-      // initilaization is here to avoid valgrind warnings.
-      void*  ptr   = static_cast<void*>( par_hash_table_.data() );
-      int    value = 0;
-      size_t num   = CPPAD_HASH_TABLE_SIZE * sizeof(addr_t);
-      std::memset(ptr, value, num);
    }
 
    /// Set record_compare option
@@ -102,7 +77,7 @@ public:
 
    /// Set number of independent dynamic parameters
    void set_num_dynamic_ind(size_t num_dynamic_ind)
-   {  num_dynamic_ind_ = num_dynamic_ind; }
+   {  dyn_record_.set_num_dynamic_ind(num_dynamic_ind); }
 
    /// Get record_compare option
    bool get_record_compare(void) const
@@ -114,7 +89,7 @@ public:
 
    /// Get number of independent dynamic parameters
    size_t get_num_dynamic_ind(void) const
-   {  return num_dynamic_ind_; }
+   {  return dyn_record_.get_num_dynamic_ind(); }
 
    /// Destructor
    ~recorder(void)
@@ -174,7 +149,11 @@ public:
       const vector<ad_type_enum>& type_y     ,
       const VectorAD&             ax         ,
       VectorAD&                   ay
-   );
+   )
+   {  dyn_record_.put_dyn_atomic(
+         tape_id, atom_index, call_id, type_x, type_y, ax, ay
+      );
+   }
    //
    // put_var_atomic
    template <class VectorAD>
@@ -254,16 +233,17 @@ public:
 
    /// current parameter vector
    const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return all_par_vec_; }
+   {  return dyn_record_.all_par_vec(); }
 
    /// Approximate amount of memory used by the recording
    size_t Memory(void) const
-   {  return op_vec_.capacity()        * sizeof(opcode_t)
-             + all_dyn_vecad_ind_.capacity() * sizeof(addr_t)
-             + all_var_vecad_ind_.capacity() * sizeof(addr_t)
-             + arg_vec_.capacity()       * sizeof(addr_t)
-             + all_par_vec_.capacity()   * sizeof(Base)
-             + text_vec_.capacity()      * sizeof(char);
+   {  return 0
+         + dyn_record_.Memory()
+         + op_vec_.capacity()             * sizeof(opcode_t)
+         + all_var_vecad_ind_.capacity()  * sizeof(addr_t)
+         + arg_vec_.capacity()            * sizeof(addr_t)
+         + text_vec_.capacity()           * sizeof(char)
+      ;
    }
 
 };
@@ -377,204 +357,42 @@ addr_t recorder<Base>::PutLoadOp(op_code_var op)
    )
    return static_cast<addr_t>( num_var_rec_ - 1 );
 }
-
-/*!
-Put a dynamic parameter at the end of the vector for all parameters.
-
-\param par
-is value of dynamic parameter to be placed at the end of the vector.
-
-\param op
-is the operator for this dynamic parameter.
-There are no arguments to this operator, so numarg(op) == 0.
-
-\return
-is the index in all_par_vec_ corresponding to this dynamic parameter value.
-*/
+//
+// put_dyn_par
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
-{  // independent parameters come first
-   CPPAD_ASSERT_UNKNOWN(
-      op == ind_dyn || op == result_dyn || op == atom_dyn
-   );
-   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
-   all_par_vec_.push_back( par );
-   dyn_par_is_.push_back(true);
-   dyn_par_op_.push_back( opcode_t(op) );
-   return static_cast<addr_t>( all_par_vec_.size() - 1 );
-}
-/*!
-Put a dynamic parameter at the end of the vector for all parameters.
-
-\param par
-is value of dynamic parameter to be placed at the end of the vector.
-
-\param op
-is the operator for this dynamic parameter.
-There is one argument to this operator, so numarg(op) == 1.
-
-\param arg0
-this is the argument to the operator represented
-as an index in the all_par_vec_ vector.
-
-\return
-is the index in all_par_vec_ corresponding to this dynamic parameter value.
-*/
+{  return dyn_record_.put_dyn_par(par, op); }
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(
    const Base &par, op_code_dyn op, addr_t arg0
 )
-{  // independent parameters come first
-   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 1 );
-   all_par_vec_.push_back( par );
-   dyn_par_is_.push_back(true);
-   dyn_par_op_.push_back( opcode_t(op) );
-   dyn_par_arg_.push_back(arg0);
-   return static_cast<addr_t>( all_par_vec_.size() - 1 );
-}
-/*!
-Put a dynamic parameter at the end of the vector for all parameters.
-
-\param par
-is value of dynamic parameter to be placed at the end of the vector.
-
-\param op
-is the operator for this dynamic parameter.
-There are two arguments to this operator, so numarg(op) == 2.
-
-\param arg0
-this is the first argument to the operator represented
-as an index in the all_par_vec_ vector.
-
-\param arg1
-this is the second argument to the operator represented
-as an index in the all_par_vec_ vector.
-One of the two arguments must be a dynamic parameter.
-
-\return
-is the index in all_par_vec_ corresponding to this dynamic parameter value.
-*/
+{  return dyn_record_.put_dyn_par(par, op, arg0); }
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(
    const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
 )
-{  // independent parameters come first
-   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 2 );
-   all_par_vec_.push_back( par );
-   dyn_par_is_.push_back(true);
-   dyn_par_op_.push_back( opcode_t(op) );
-   dyn_par_arg_.push_back(arg0);
-   dyn_par_arg_.push_back(arg1);
-   return static_cast<addr_t>( all_par_vec_.size() - 1 );
-}
-/*!
-Put a dynamic parameter, that is result of conditional expression,
-at the end of the vector for all parameters.
-
-\param par
-is value of dynamic parameter to be placed at the end of the vector.
-
-\param cop
-is the operator comparison operator; i.e., Lt, Le, Eq, Ge, Gt, Ne.
-
-\param left
-is the left argument in conditional expression (which is a parameter).
-
-\param right
-is the right argument in conditional expression (which is a parameter).
-
-\param if_true
-is the if_true argument in conditional expression (which is a parameter).
-
-\param if_false
-is the if_false argument in conditional expression (which is a parameter).
-
-\return
-is the index in all_par_vec_ corresponding to this dynamic parameter value.
-*/
+{  return dyn_record_.put_dyn_par(par, op, arg0, arg1); }
+//
+// put_dyn_cond_exp
 template <class Base>
 addr_t recorder<Base>::put_dyn_cond_exp(const Base &par, CompareOp cop,
    addr_t left, addr_t right, addr_t if_true, addr_t if_false
 )
-{  // independent parameters come first
-   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(cond_exp_dyn) == 5 );
-   addr_t ret = addr_t( all_par_vec_.size() );
-   all_par_vec_.push_back( par );
-   dyn_par_is_.push_back(true);
-   dyn_par_op_.push_back( opcode_t(cond_exp_dyn) );
-   dyn_par_arg_.push_back( addr_t(cop) );
-   dyn_par_arg_.push_back(left);
-   dyn_par_arg_.push_back(right);
-   dyn_par_arg_.push_back(if_true);
-   dyn_par_arg_.push_back(if_false);
-   return ret;
+{  return dyn_record_.put_dyn_cond_exp(
+      par, cop, left, right, if_true, if_false
+   );
 }
-// ---------------------------------------------------------------------------
-/*!
-Puts a vector of arguments at the end of the current dynamic parameter tape
-
-\param arg_vec [in]
-is the vector of values to be added at the end of the tape.
-*/
+//
+// put_dyn_arg_vec
 template <class Base>
 void recorder<Base>::put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
-{  for(size_t i = 0; i < arg_vec.size(); ++i)
-      dyn_par_arg_.push_back( arg_vec[i] );
-}
+{  dyn_record_.put_dyn_arg_vec(arg_vec); }
 
-// ---------------------------------------------------------------------------
-/*!
-Find or add a constant parameter to the current vector of all parameters.
-
-\param par
-is the parameter to be found or placed in the vector of parameters.
-
-\return
-is the index in the parameter vector corresponding to this parameter value.
-This value is not necessarily placed at the end of the vector
-(because values that are identically equal may be reused).
-*/
+//
+// put_con_par
 template <class Base>
 addr_t recorder<Base>::put_con_par(const Base &par)
-{
-# ifndef NDEBUG
-   // index zero is used to signify that a value is not a parameter;
-   // i.e., it is a variable.
-   if( all_par_vec_.size() == 0 )
-      CPPAD_ASSERT_UNKNOWN( CppAD::isnan(par) );
-# endif
-   // ---------------------------------------------------------------------
-   // check for a match with a previous parameter
-   //
-   // get hash code for this value
-   size_t code  = static_cast<size_t>( hash_code(par) );
-
-   // current index in all_par_vec_ corresponding to this hash code
-   size_t index = static_cast<size_t>( par_hash_table_[code] );
-
-   // check if the old parameter matches the new one
-   if( (0 < index) && (index < all_par_vec_.size()) )
-   {  if( ! dyn_par_is_[index] )
-         if( IdenticalEqualCon(all_par_vec_[index], par) )
-            return static_cast<addr_t>( index );
-   }
-   // ---------------------------------------------------------------------
-   // put paramerter in all_par_vec_ and replace hash entry for this codee
-   //
-   index = all_par_vec_.size();
-   all_par_vec_.push_back( par );
-   dyn_par_is_.push_back(false);
-   //
-   // change the hash table for this code to point to new value
-   par_hash_table_[code] = static_cast<addr_t>( index );
-   //
-   // return the parameter index
-   CPPAD_ASSERT_KNOWN(
-      static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= index,
-      "cppad_tape_addr_type maximum value has been exceeded"
-   )
-   return static_cast<addr_t>( index );
-}
+{   return dyn_record_.put_con_par(par); }
 // -------------------------- PutArg --------------------------------------
 /*!
 Prototype for putting operation argument indices in the recording.
@@ -835,7 +653,6 @@ addr_t recorder<Base>::PutTxt(const char *text)
 // ----------------------------------------------------------------------------
 // member function implementations
 # include <cppad/local/record/put_var_vecad.hpp>
-# include <cppad/local/record/put_dyn_atomic.hpp>
 # include <cppad/local/record/put_var_atomic.hpp>
 # include <cppad/local/record/cond_exp.hpp>
 # include <cppad/local/record/comp_op.hpp>
