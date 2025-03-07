@@ -11,6 +11,9 @@
 /*
 -------------------------------------------------------------------------------
 {xrst_begin recorder dev}
+{xrst_spell
+   getters
+}
 
 Class That Records Both Variable and Dynamic Parameter Operations
 #################################################################
@@ -38,6 +41,70 @@ The :ref:`dyn_recorder-name` functions can be accessed using *record* ; e.g.,
 | |tab| *record* . ``set_num_dynamic_ind`` ( *num_dynamic_ind* )
 
 accesses the :ref:`dyn_recorder@set_num_dynamic_ind` function.
+
+Setters
+*******
+
+set_record_compare
+==================
+{xrst_literal
+   // BEGIN_SET_RECORD_COMPARE
+   // END_SET_RECORD_COMPARE
+}
+
+set_abort_op_index
+==================
+{xrst_literal
+   // BEGIN_SET_ABORT_OP_INDEX
+   // END_SET_ABORT_OP_INDEX
+}
+
+Getters
+*******
+
+get_record_compare
+==================
+{xrst_literal
+   // BEGIN_GET_RECORD_COMPARE
+   // END_GET_RECORD_COMPARE
+}
+
+get_abort_op_index
+==================
+{xrst_literal
+   // BEGIN_GET_ABORT_OP_INDEX
+   // END_GET_ABORT_OP_INDEX
+}
+
+num_var_rec
+===========
+{xrst_literal
+   // BEGIN_NUM_VAR_REC
+   // END_NUM_VAR_REC
+}
+
+num_var_load_rec
+================
+{xrst_literal
+   // BEGIN_NUM_VAR_LOAD_REC
+   // END_NUM_VAR_LOAD_REC
+}
+
+num_op_rec
+==========
+{xrst_literal
+   // BEGIN_NUM_OP_REC
+   // END_NUM_OP_REC
+}
+
+
+Memory
+******
+{xrst_literal
+   // BEGIN_MEMORY
+   // END_MEMORY
+}
+
 
 Contents
 ********
@@ -114,7 +181,9 @@ public:
    // Destructor
    ~recorder(void)
    { }
-   //
+   // ------------------------------------------------------------------------
+   // Parameter Operations
+   // ------------------------------------------------------------------------
    // set_num_dynamic_ind
    void set_num_dynamic_ind(size_t num_dynamic_ind)
    {  dyn_record_.set_num_dynamic_ind(num_dynamic_ind); }
@@ -162,26 +231,65 @@ public:
          par, cop, left, right, if_true, if_false
       );
    }
-   //
    // put_dyn_arg_vec
    void put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
    {  dyn_record_.put_dyn_arg_vec(arg_vec); }
-
-   /// Set record_compare option
+   // ------------------------------------------------------------------------
+   //
+   // BEGIN_SET_RECORD_COMPARE
+   // var_record.set_record_compare(record_compare)
    void set_record_compare(bool record_compare)
+   // END_SET_RECORD_COMPARE
    {  record_compare_ = record_compare; }
-
-   /// Set the abort index
+   //
+   // BEGIN_SET_ABORT_OP_INDEX
+   // var_record.set_abort_op_index(abort_op_index)
    void set_abort_op_index(size_t abort_op_index)
+   // END_SET_ABORT_OP_INDEX
    {  abort_op_index_ = abort_op_index; }
-
-   /// Get record_compare option
+   //
+   // BEGIN_GET_RECORD_COMPARE
+   // record_compare = var_record.get_record_compare()
    bool get_record_compare(void) const
+   // END_GET_RECORD_COMPARE
    {  return record_compare_; }
-
-   /// Get the abort_op_index
+   //
+   // BEGIN_GET_ABORT_OP_INDEX
+   // abort_op_index = var_record.get_abort_op_index()
    size_t get_abort_op_index(void) const
+   // END_GET_ABORT_OP_INDEX
    {  return abort_op_index_; }
+   //
+   // BEGIN_NUM_VAR_REC
+   /// num_var_rec = var_record.num_var_rec()
+   size_t num_var_rec(void) const
+   // END_NUM_VAR_REC
+   {  return num_var_rec_; }
+   //
+   // BEGIN_NUM_VAR_LOAD_REC
+   // num_var_load_rec = var_record.num_var_load_rec()
+   size_t num_var_load_rec(void) const
+   // END_NUM_VAR_LOAD_REC
+   {  return num_var_load_rec_; }
+   //
+   // BEGIN_NUM_OP_REC
+   // num_op_rec = var_record.num_op_rec()
+   size_t num_op_rec(void) const
+   // END_NUM_OP_REC
+   {  return  op_vec_.size(); }
+   //
+   // BEGIN_MEMORY
+   // memory = var_record.memory()
+   size_t Memory(void) const
+   // END_MEMORY
+   {  return 0
+         + dyn_record_.Memory()
+         + op_vec_.capacity()             * sizeof(opcode_t)
+         + all_var_vecad_ind_.capacity()  * sizeof(addr_t)
+         + arg_vec_.capacity()            * sizeof(addr_t)
+         + text_vec_.capacity()           * sizeof(char)
+      ;
+   }
 
    /// Put next operator in the operation sequence.
    addr_t PutOp(op_code_var op);
@@ -267,32 +375,6 @@ public:
       const AD<Base>&             aright       ,
       bool                        result
    );
-
-   // -----------------------------------------------------------------------
-   // functions implemented here
-
-   /// Number of variables currently stored in the recording.
-   size_t num_var_rec(void) const
-   {  return num_var_rec_; }
-
-   /// Number LdpOp, LdvOp, and load_dyn operations currently in recording
-   size_t num_var_load_rec(void) const
-   {  return num_var_load_rec_; }
-
-   /// Number of operators currently stored in the recording.
-   size_t num_op_rec(void) const
-   {  return  op_vec_.size(); }
-
-   /// Approximate amount of memory used by the recording
-   size_t Memory(void) const
-   {  return 0
-         + dyn_record_.Memory()
-         + op_vec_.capacity()             * sizeof(opcode_t)
-         + all_var_vecad_ind_.capacity()  * sizeof(addr_t)
-         + arg_vec_.capacity()            * sizeof(addr_t)
-         + text_vec_.capacity()           * sizeof(char)
-      ;
-   }
 
 };
 
