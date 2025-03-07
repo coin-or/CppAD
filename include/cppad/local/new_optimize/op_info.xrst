@@ -22,11 +22,9 @@ Class Requirements for Optimization
 Syntax
 ======
 | |tab| *n_op* = @op_info@ . *n_op* ( )
-| |tab| *con_all* = @op_info@ . *con_all* ( )
 | |tab| @op_info@ . ``get_`` (
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
-| |tab| |tab| *is_constant*
 | |tab| |tab| *arg_one*
 | |tab| |tab| *is_var_one*
 | |tab| )
@@ -67,13 +65,6 @@ n_op
 ====
 is an ``addr_t`` equal to the number of operators in the tape.
 
-con_all
-=======
-is a ``const vec_value_t&`` containing the constants used by operators
-in the tape.
-This vector is only used when *is_constant* is true.
-If *is_constant* is always false, it should be the empty vector.
-
 get
 ===
 
@@ -86,16 +77,6 @@ The rest of the arguments to this function are by reference.
 op_enum
 -------
 is an ``op_enum_t&`` that is set to the enum value for this operator.
-
-is_constant
------------
-is a ``bool&`` that is set to true (false) if this is (is not)
-a constant operator.
-A constant operator must have *arg_one* . ``size`` ()  equal to one and
-*is_var_one* [0] equal to false.
-The value of the constant is::
-
-   con_all[ arg_one[0] ]
 
 arg_one
 -------

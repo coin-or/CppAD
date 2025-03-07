@@ -59,7 +59,7 @@ public:
    typedef CppAD::local::pod_vector<bool>          vec_bool_t;
    //
    // value_t, vec_value_t
-   // These types are not used (is_constant is always false).
+   // These types are not used
    typedef double                            value_t;
    typedef CppAD::local::pod_vector<value_t> vec_value_t;
    //
@@ -85,28 +85,21 @@ public:
    // END_N_OP
    {  return index_t( random_itr_.num_op() ); }
    //
-   // con_all = op_info.con_all()
-   const vec_value_t& con_all(void) const
-   {  return empty_vec_value_; }
-   //
-   // op_info.get(i_op, op_enum, is_constant, arg_one, is_var_one)
+   // op_info.get(i_op, op_enum, arg_one, is_var_one)
    void get(
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
-      bool&         is_constant    ,
       vec_index_t&  arg_one        ,
       vec_bool_t&   is_var_one     )
    // END_GET
    {  //
-      // op_enum, is_constant
+      // op_enum
       op_enum        = random_itr_.get_op( size_t(i_op) );
-      is_constant    = false;
       //
-      // op_enum,  op_arg, is_constant
+      // op_enum,  op_arg
       const addr_t*  op_arg;
       size_t         var_index;
       random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
-      is_constant    = false;
       //
       //
       index_t n_arg;

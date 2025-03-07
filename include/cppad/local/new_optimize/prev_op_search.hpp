@@ -130,7 +130,7 @@ private:
    Op_info& op_info_;
    //
    // hash_table_
-   CppAD::local::optimize::op_hash_table_t<index_t, value_t, prev_op_search_t>
+   CppAD::local::optimize::op_hash_table_t<index_t, prev_op_search_t>
       hash_table_;
    //
    // op_arg_
@@ -150,7 +150,6 @@ private:
    //
    // Set by match_op and used by match_fun
    op_enum_t   op_enum_search_;
-   bool        is_constant_search_;
    vec_index_t arg_one_search_;
    vec_bool_t  is_var_one_search_;
    //
@@ -196,17 +195,13 @@ public:
       // prev_var_index_
       prev_var_index_ = &prev_var_index;
       //
-      // con_all
-      const vec_value_t& con_all = op_info_.con_all();
-      //
-      // op_enum, is_constant, arg_one, is_var_one
+      // op_enum, arg_one, is_var_one
       // op_enum_search_, ... , is_var_one_search_
       op_enum_t&     op_enum          = op_enum_search_;
-      bool&          is_constant      = is_constant_search_;
       vec_index_t&   arg_one          = arg_one_search_;
       vec_bool_t&    is_var_one       = is_var_one_search_;
       op_info_.get(
-         i_op, op_enum, is_constant, arg_one, is_var_one
+         i_op, op_enum, arg_one, is_var_one
       );
       //
       // n_arg
@@ -214,12 +209,6 @@ public:
       //
       // i_op_match
       index_t i_op_match;
-      if( is_constant )
-      {  CPPAD_ASSERT_UNKNOWN( n_arg == 1 && ! is_var_one[0] )
-         value_t con = con_all[ arg_one[0] ];
-         i_op_match  = hash_table_.find_match(i_op, con, *this, match_fun);
-      }
-      else
       {  //
          // op_arg_
          op_arg_.resize(0);
@@ -265,26 +254,21 @@ bool prev_op_search_t<Op_info>::match_fun(
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
    //
-   // con_all
-   const vec_value_t& con_all = op_info.con_all();
-   //
-   // op_enum_s, is_constant_s, arg_one_s, is_var_one_s
+   // op_enum_s, arg_one_s, is_var_one_s
    // These results were stored by match_op (so i_op_search is not needed).
    op_enum_t&     op_enum_s        = prev_op_search.op_enum_search_;
-   bool&          is_constant_s    = prev_op_search.is_constant_search_;
    vec_index_t&   arg_one_s        = prev_op_search.arg_one_search_;
    vec_bool_t&    is_var_one_s     = prev_op_search.is_var_one_search_;
    //
    // n_arg_s
    size_t n_arg_s = arg_one_s.size();
    //
-   // op_enum_c, is_constant_c, arg_one_c, is_var_one_c
+   // op_enum_c, arg_one_c, is_var_one_c
    op_enum_t     op_enum_c;
-   bool          is_constant_c;
    vec_index_t&  arg_one_c    = prev_op_search.arg_one_check_;
    vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
    op_info.get( i_op_check,
-      op_enum_c, is_constant_c, arg_one_c, is_var_one_c
+      op_enum_c, arg_one_c, is_var_one_c
    );
    //
    // n_arg_c
@@ -294,18 +278,8 @@ bool prev_op_search_t<Op_info>::match_fun(
    bool match = true;
    match  = match && op_enum_s        == op_enum_c;
    match  = match && n_arg_s          == n_arg_c;
-   match  = match && is_constant_s    == is_constant_c;
    if( ! match )
       return false;
-   //
-   // con_op_enum
-   if( is_constant_s )
-   {  //
-      CPPAD_ASSERT_UNKNOWN( ! is_var_one_s[0] );
-      const value_t& c_search = con_all[ arg_one_s[0] ];
-      const value_t& c_check  = con_all[ arg_one_c[0] ];
-      return IdenticalEqualCon(c_search, c_check);
-   }
    //
    // match
    for(size_t k = 0; k < n_arg_s; ++k)

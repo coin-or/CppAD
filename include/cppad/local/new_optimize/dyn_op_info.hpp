@@ -134,22 +134,16 @@ public:
    // END_N_OP
    {  return n_op_; }
    //
-   // con_all = op_info.con_all()
-   const vec_value_t& con_all(void) const
-   {  return empty_vec_value_; }
-   //
-   // op_info.get(i_op, op_enum, is_constant, arg_one, is_var_one)
+   // op_info.get(i_op, op_enum, arg_one, is_var_one)
    void get(
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
-      bool&         is_constant    ,
       vec_index_t&  arg_one        ,
       vec_bool_t&   is_var_one     )
    // END_GET
    {  //
-      // op_enum, is_constant
+      // op_enum
       op_enum        = op_enum_t( op_enum_all_[i_op] );
-      is_constant    = false;
       //
       // arg_index, narg
       index_t arg_index  = op2arg_index_[i_op];

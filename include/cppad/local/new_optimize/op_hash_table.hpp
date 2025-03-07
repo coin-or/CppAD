@@ -28,11 +28,6 @@ Index
 is the integer type used to represent operator arguments.
 Only positive values should be used but it can be a signed type for testing.
 
-Pod
-===
-is type is used for constants referenced by the operators.
-It is treated as plain old data when computing is hash code.
-
 Info
 ====
 is type used for information that is passed through match_fun and
@@ -113,27 +108,11 @@ match
 is true (false) if *i_op_check* is a match (is not a match)
 for *i_op_search* .
 
-hash_fun: pod
-*************
-{xrst_literal ,
-   // BEGIN_HASH_FUN_POD , // END_HASH_FUN_POD
-   // BEGIN_RETURN_HASH_FUN_POD , // END_RETURN_HASH_FUN_POD
-}
-
-pod
-===
-is the value we are hash coding.
-It is treated as plain old data during the coding.
-
-code
-====
-is the hash code value.
-
 hash_fun: arg
 *************
 {xrst_literal ,
    // BEGIN_HASH_FUN_ARG , // END_HASH_FUN_ARG
-   // BEGIN_RETURN_HASH_ARG_POD , // END_RETURN_HASH_ARG_POD
+   // BEGIN_RETURN_HASH_ARG , // END_RETURN_HASH_ARG
 }
 
 op
@@ -145,38 +124,6 @@ op_arg
 is a vector containing to the arguments for this operator.
 (During renumbering this should be the new argument indices.)
 
-
-find_match: pod
-***************
-{xrst_literal ,
-   // BEGIN_FIND_MATCH_POD , // END_FIND_MATCH_POD
-   // BEGIN_RETURN_FIND_MATCH_POD , // END_RETURN_FIND_MATCH_POD
-}
-
-i_op
-====
-is the index corresponding to this operator.
-
-pod
-===
-is the values corresponding to this operator.
-This is used to hash code the operator to get a list
-of operators to check.
-
-info
-====
-see :ref:`op_hash_table_t@match_fun_t@info` .
-
-match_fun
-=========
-see :ref:`op_hash_table_t@match_fun_t`.
-
-i_op_match
-==========
-is the index of a previous operator in a call
-to find_match that matches this operator.
-If no such operator is found, the return value is equal to *i_op*
-and *i_op* is put in the hash table for future matches.
 
 find_match: arg
 ***************
@@ -246,10 +193,9 @@ i.e., are different.  For example:
 -----------------------------------------------------------------------------
 */
 // BEGIN_CLASS
-template <class Index, class Pod, class Info>
+template <class Index, class Info>
 class op_hash_table_t {
    static_assert( sizeof(unsigned short) == 2, "sizeof unsigned short not 2");
-   static_assert( sizeof(Pod) % 2  == 0, "size of Pod is not even");
 // END_CLASS
 private:
    //
@@ -321,38 +267,6 @@ public:
    );
    // END_MATCH_FUN_T
    //
-   // BEGIN_HASH_FUN_POD
-   // code = hash_table.hash_fun(pod)
-   Index hash_fun(const Pod& pod) const
-   // END_HASH_FUN_POD
-   {  //
-      // v
-      const unsigned short* v
-         = reinterpret_cast<const unsigned short*>(& pod);
-      //
-      // sum
-      size_t i   = sizeof(Pod) / 2 - 1;
-      size_t sum = v[i];
-      while(i--)
-         sum += v[i];
-      //
-      // n_hash
-      size_t n_hash_size = size_t( n_hash_ );
-      //
-      // hash_code
-      size_t hash_code    = sum;
-      while( hash_code > 2 * n_hash_size )
-      {  size_t mod_size    = hash_code % n_hash_size;
-         size_t div_size    = hash_code / n_hash_size;
-         hash_code          = mod_size + div_size;
-      }
-      hash_code = hash_code % n_hash_size;
-      // BEGIN_RETURN_HASH_FUN_POD
-      CPPAD_ASSERT_UNKNOWN( hash_code < size_t( n_hash_ ) );
-      return Index( hash_code );
-      // END_RETURN_HASH_FUN_POD
-   }
-   //
    // BEGIN_HASH_FUN_ARG
    // code = hash_table.hash_fun(op, op_arg)
    Index hash_fun(Index op, const CppAD::vector<Index>& op_arg) const
@@ -375,55 +289,10 @@ public:
       }
       hash_code = hash_code % n_hash_size;
       //
-      // BEGIN_RETURN_HASH_ARG_POD
+      // BEGIN_RETURN_HASH_ARG
       CPPAD_ASSERT_UNKNOWN( hash_code < size_t( n_hash_ ) );
       return Index( hash_code );
-      // END_RETURN_HASH_ARG_POD
-   }
-   // BEGIN_FIND_MATCH_POD
-   // i_op_match = hash_table.find_match(i_op, pod, info, match_fun)
-   Index find_match(
-      Index         i_op      ,
-      const Pod&    pod       ,
-      Info&         info      ,
-      match_fun_t   match_fun )
-   {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ )
-      // END_FIND_MATCH_POD
-      //
-      // hash_code
-      Index hash_code = hash_fun(pod);
-      //
-      // i_op_match
-      Index i_op_match = i_op;
-      //
-      // i_op_match
-      itr_t  itr   = itr_t(table_, hash_code);
-      Index count = 0;
-      while( *itr != n_op_ && i_op_match == i_op && count < collision_limit_ )
-      {  //
-         // i_op_check
-         Index i_op_check = *itr;
-         if( match_fun(i_op, i_op_check, info) )
-            i_op_match = i_op_check;
-         //
-         ++itr;
-         ++count;
-      }
-      //
-      // table_
-      if( i_op_match == i_op )
-      {  CPPAD_ASSERT_UNKNOWN( count <= collision_limit_ );
-         if( count == collision_limit_ )
-         {  exceed_limit_ = true;
-            table_.clear(hash_code);
-         }
-         table_.add_element(hash_code, i_op);
-      }
-      //
-      // BEGIN_RETURN_FIND_MATCH_POD
-      CPPAD_ASSERT_UNKNOWN( i_op_match < n_op_ )
-      return i_op_match;
-      // END_RETURN_FIND_MATCH_POD
+      // END_RETURN_HASH_ARG
    }
    //
    // BEGIN_FIND_MATCH_ARG
