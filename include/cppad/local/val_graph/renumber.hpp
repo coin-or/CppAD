@@ -2,10 +2,9 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RENUMBER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-25 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/local/new_optimize/prev_op_search.hpp>
-# include <cppad/local/val_graph/op_info.hpp>
+# include <cppad/local/val_graph/op_hash_table.hpp>
 
 /*
 -------------------------------------------------------------------------------
@@ -83,7 +82,7 @@ void tape_t<Value>::renumber(void)
    //
    // op2arg_index, op2res_index
    Vector<addr_t> op2arg_index( n_op() ), op2res_index( n_op() );
-   {  bidir_iterator<Value> op_itr(*this, 0);
+   {  op_iterator<Value> op_itr(*this, 0);
       for(addr_t i_op = 0; i_op < n_op(); ++i_op)
       {  op2arg_index[i_op] = op_itr.arg_index();
          op2res_index[i_op] = op_itr.res_index();
@@ -91,11 +90,9 @@ void tape_t<Value>::renumber(void)
       }
    }
    //
-   // prev_op_search
-   op_info_t<tape_t> op_info(*this, op2arg_index);
-   addr_t n_hash_code = 2 + n_val_;
-   CppAD::local::optimize::prev_op_search_t< op_info_t<tape_t> >
-      prev_op_search(op_info, n_hash_code);
+   // op_hash_table
+   addr_t n_hash_code = 1 + (n_val_ / 2);
+   op_hash_table_t<Value>  op_hash_table(*this, op2arg_index, n_hash_code);
    //
    // new_val_index
    // value used for operators that are not replaced.
@@ -114,9 +111,9 @@ void tape_t<Value>::renumber(void)
       addr_t res_index_i = op2res_index[i_op];
       //
       // j_op
-      addr_t j_op = prev_op_search.match_op(i_op, new_val_index);
+      addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
       if( j_op != i_op )
-      {  CPPAD_ASSERT_UNKNOWN( j_op < i_op );
+      {  assert( j_op < i_op );
          //
          // new_val_index
          // mapping so that op_j results will be used instead of op_i results;
@@ -165,9 +162,9 @@ void tape_t<Value>::renumber(void)
 
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
    // A set size more than one represents a collision
-   Vector<addr_t> different_count = prev_op_search.different_count();
-   for(size_t i = 0; i < different_count.size(); ++i)
-      std::cout << "size = " << i << ", count = " << different_count[i] << "\n";
+   Vector<addr_t> size_count = op_hash_table.size_count();
+   for(size_t i = 0; i < size_count.size(); ++i)
+      std::cout << "size = " << i << ", count = " << size_count[i] << "\n";
    //
    // inuse
    size_t final_inuse = thread_alloc::inuse(thread);

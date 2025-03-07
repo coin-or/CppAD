@@ -2,12 +2,11 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_COMPRESS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-25 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/val_graph/op_hash_table.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
-# include <cppad/local/val_graph/op_info.hpp>
-# include <cppad/local/new_optimize/prev_op_search.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_tape_compress dev}
@@ -18,7 +17,7 @@ namespace CppAD { namespace local { namespace val_graph {
 Tape Compression
 ################
 This is :ref:`val_tape_renumber-name` and :ref:`val_tape_dead_code-name`
-in one step. It should be faster, and require more memory,
+in one step. I should be faster, and require more memory,
 than separate execution. (Testing with :ref:`cppad_det_minor.cpp-name`
 indicates that it is only slightly faster.)
 
@@ -89,7 +88,7 @@ vectorBool tape_t<Value>::compress(void)
    //
    // op2arg_index, op2res_index
    Vector<addr_t> op2arg_index( n_op() ), op2res_index( n_op() );
-   {  bidir_iterator<Value> op_itr(*this, 0);
+   {  op_iterator<Value> op_itr(*this, 0);
       for(addr_t i_op = 0; i_op < n_op(); ++i_op)
       {  op2arg_index[i_op] = op_itr.arg_index();
          op2res_index[i_op] = op_itr.res_index();
@@ -97,11 +96,9 @@ vectorBool tape_t<Value>::compress(void)
       }
    }
    //
-   // prev_op_search
-   op_info_t<tape_t> op_info(*this, op2arg_index);
-   addr_t n_hash_code = 2 + n_val_;
-   CppAD::local::optimize::prev_op_search_t< op_info_t<tape_t> >
-      prev_op_search(op_info, n_hash_code);
+   // op_hash_table
+   addr_t n_hash_code = 1 + (n_val_ / 2);
+   op_hash_table_t<Value>  op_hash_table(*this, op2arg_index, n_hash_code);
    //
    // keep_compare
    bool keep_compare = option_map_["keep_compare"] == "true";
@@ -178,7 +175,7 @@ vectorBool tape_t<Value>::compress(void)
       if(use_op)
       {  //
          // j_op
-         addr_t j_op = prev_op_search.match_op(i_op, new_val_index);
+         addr_t j_op = op_hash_table.match_op(i_op, new_val_index);
          //
          if( j_op != i_op )
          {  // use j_op every where that i_op was used

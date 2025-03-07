@@ -29,7 +29,6 @@ Class Requirements for Optimization
 Implementations
 ***************
 {xrst_toc_table
-   include/cppad/local/val_graph/op_info.hpp
    include/cppad/local/new_optimize/dyn_op_info.hpp
    include/cppad/local/new_optimize/var_op_info.hpp
 }

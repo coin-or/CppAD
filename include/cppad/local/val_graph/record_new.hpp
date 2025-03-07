@@ -2,9 +2,9 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RECORD_NEW_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-25 Bradley M. Bell
+// SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
-# include <cppad/local/val_graph/bidir_iterator.hpp>
+# include <cppad/local/val_graph/op_iterator.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_record_new dev}

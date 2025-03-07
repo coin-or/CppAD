@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_FOLD_CON_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-25 Bradley M. Bell
+// SPDX-FileContributor: 2023-24 Bradley M. Bell
 /*
 -------------------------------------------------------------------------------
 {xrst_begin val_tape_fold_con dev}
@@ -118,7 +118,7 @@ void tape_t<Value>::fold_con(void)
    is_constant[n_ind_] = true;
    //
    // op_itr
-   bidir_iterator<Value> op_itr(*this, 0);
+   op_iterator<Value> op_itr(*this, 0);
    //
    // i_op
    for(addr_t i_op = 1; i_op < n_op(); ++i_op)

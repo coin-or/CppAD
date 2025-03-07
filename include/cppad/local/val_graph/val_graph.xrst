@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin val_graph dev}
 
@@ -110,22 +110,20 @@ where
 
 Implementation
 **************
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   include/cppad/local/val_graph/val_type.hpp
    include/cppad/local/val_graph/base_op.hpp
-   include/cppad/local/val_graph/call_atomic.hpp
-   include/cppad/local/val_graph/dyn_type.hpp
-   include/cppad/local/val_graph/enable_parallel.hpp
-   include/cppad/local/val_graph/fun2val.hpp
-   include/cppad/local/val_graph/op_enum2class.hpp
    include/cppad/local/val_graph/print_op.hpp
    include/cppad/local/val_graph/tape.hpp
+   include/cppad/local/val_graph/op_enum2class.hpp
+   include/cppad/local/val_graph/fun2val.hpp
    include/cppad/local/val_graph/val2fun.hpp
    include/cppad/local/val_graph/val_optimize.hpp
-   include/cppad/local/val_graph/val_type.hpp
+   include/cppad/local/val_graph/dyn_type.hpp
    include/cppad/local/val_graph/var_type.hpp
+   include/cppad/local/val_graph/call_atomic.hpp
+   include/cppad/local/val_graph/enable_parallel.hpp
 }
-{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 
 {xrst_end val_graph}

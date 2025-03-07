@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_OP2ARG_INDEX_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-25 Bradley M. Bell
+// SPDX-FileContributor: 2023-23 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
@@ -47,7 +47,7 @@ void tape_t<Value>::set_op2arg_index(void)
    //
    // op2arg_indeex
    Vector<addr_t> op2arg_index( n_op() );
-   bidir_iterator<Value> op_itr(*this, 0);
+   op_iterator<Value> op_itr(*this, 0);
    for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {   op2arg_index[i_op] = op_itr.arg_index();
       ++op_itr;
