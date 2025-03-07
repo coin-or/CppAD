@@ -7,10 +7,8 @@
 # include <cppad/core/hash_code.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/ad_type.hpp>
-
-// ----------------------------------------------------------------------------
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
+-- ----------------------------------------------------------------------------
 {xrst_begin_parent dyn_recorder dev}
 
 Class That Records a Dynamic Parameter Operation Sequence
@@ -19,8 +17,22 @@ Class That Records a Dynamic Parameter Operation Sequence
 dyn_record
 **********
 {xrst_literal ,
-   // BEGIN_CLASS , END_CLASS
-   // BEGIN_DYN_RECORD , END_DYN_RECORD
+   // BEGIN_CLASS , // END_CLASS
+   // BEGIN_DYN_RECORD , // END_DYN_RECORD
+}
+
+set_num_dynamic_ind
+*******************
+{xrst_literal
+   // BEGIN_SET_NUM_DYNAMIC_IND
+   // END_SET_NUM_DYNAMIC_IND
+}
+
+get_num_dynamic_ind
+*******************
+{xrst_literal
+   // BEGIN_GET_NUM_DYNAMIC_IND
+   // END_GET_NUM_DYNAMIC_IND
 }
 
 all_par_vec
@@ -40,11 +52,16 @@ memory
 
 {xrst_end dyn_recorder}
 */
+// BEGIN_CPPAD_LOCAL_NAMESPACE
 // BEGIN_CLASS
+namespace CppAD { namespace local {
 template <class Base> class dyn_recorder {
 // END_CLASS
+   //
+   // player
+   friend class player<Base>;
 //
-public:
+private:
    //
    // num_dynamic_ind_
    // Number of dynamic parameters in the recording
@@ -93,29 +110,31 @@ public:
       std::memset(ptr, value, num);
    }
    //
-   // set_num_dynamic_ind
-   /// Set number of independent dynamic parameters
-   void set_num_dynamic_ind(size_t num_dynamic_ind)
-   {  num_dynamic_ind_ = num_dynamic_ind; }
-   //
-   // get_num_dynamic_ind
-   /// Get number of independent dynamic parameters
-   size_t get_num_dynamic_ind(void) const
-   {  return num_dynamic_ind_; }
-   //
-   /// Destructor
+   // Destructor
    ~dyn_recorder(void)
    { }
+   //
+   // BEGIN_SET_NUM_DYNAMIC_IND
+   // dyn_record.set_num_dynamic_ind(num_dynamic_ind)
+   void set_num_dynamic_ind(size_t num_dynamic_ind)
+   // END_SET_NUM_DYNAMIC_IND
+   {  num_dynamic_ind_ = num_dynamic_ind; }
+   //
+   // BEGIN_GET_NUM_DYNAMIC_IND
+   // num_dynamic_ind = dyn_record.get_num_dynamic_ind()
+   size_t get_num_dynamic_ind(void) const
+   // END_GET_NUM_DYNAMIC_IND
+   {  return num_dynamic_ind_; }
    //
    // put_dyn_par
    addr_t put_dyn_par(
       const Base &par, op_code_dyn op
    );
    addr_t put_dyn_par(
-      const Base &par, op_code_dyn op, addr_t arg0
+      const Base &par, op_code_dyn op, addr_t a0
    );
    addr_t put_dyn_par(
-      const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
+      const Base &par, op_code_dyn op, addr_t a0, addr_t a1
    );
    //
    // put_dyn_cond_exp
@@ -162,9 +181,8 @@ public:
    }
 
 };
-
-
-/*!
+/*
+------------------------------------------------------------------------------
 {xrst_begin put_dyn_par dev}
 
 Put a Dynamic Parameter at End of Parameter Vector
@@ -228,7 +246,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
 }
 // BEGIN_PUT_DYN_PAR_1
 template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
-   const Base &par, op_code_dyn op, addr_t arg0
+   const Base &par, op_code_dyn op, addr_t a0
 )
 // END_PUT_DYN_PAR_1
 {
@@ -236,12 +254,12 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
    all_par_vec_.push_back( par );
    dyn_par_is_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
-   dyn_par_arg_.push_back(arg0);
+   dyn_par_arg_.push_back(a0);
    return static_cast<addr_t>( all_par_vec_.size() - 1 );
 }
 // BEGIN_PUT_DYN_PAR_2
 template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
-   const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
+   const Base &par, op_code_dyn op, addr_t a0, addr_t a1
 )
 // END_PUT_DYN_PAR_2
 {
@@ -249,11 +267,12 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
    all_par_vec_.push_back( par );
    dyn_par_is_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
-   dyn_par_arg_.push_back(arg0);
-   dyn_par_arg_.push_back(arg1);
+   dyn_par_arg_.push_back(a0);
+   dyn_par_arg_.push_back(a1);
    return static_cast<addr_t>( all_par_vec_.size() - 1 );
 }
 /*
+------------------------------------------------------------------------------
 {xrst_begin put_dyn_cond_exp dev}
 
 Put a Conditional Expression Dynamic Parameter at End of Parameter Vector
@@ -326,8 +345,8 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_cond_exp(
    dyn_par_arg_.push_back(if_false);
    return ret;
 }
-// ---------------------------------------------------------------------------
 /*
+------------------------------------------------------------------------------
 {xrst_begin put_dyn_arg_vec dev}
 
 Put a Vector of Arguments at End of Dynamic Parameter Argument Vector
@@ -355,8 +374,8 @@ void dyn_recorder<Base>::put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
 {  for(size_t i = 0; i < arg_vec.size(); ++i)
       dyn_par_arg_.push_back( arg_vec[i] );
 }
-// ---------------------------------------------------------------------------
 /*
+------------------------------------------------------------------------------
 {xrst_begin put_con_par dev}
 
 Find or Add a Constant Parameter to Current Parameter Vector
