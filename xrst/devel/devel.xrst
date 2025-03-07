@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin_parent devel dev}
 
@@ -25,7 +25,7 @@ Contents
    include/cppad/local/op_code_var.hpp
    include/cppad/local/optimize/optimize_run.hpp
    include/cppad/local/pod_vector.hpp
-   include/cppad/local/record/recorder.xrst
+   include/cppad/local/record/recorder.hpp
    include/cppad/local/set_get_in_parallel.hpp
    include/cppad/local/sparse/dev_sparse.xrst
    include/cppad/local/sweep/dev_sweep.xrst

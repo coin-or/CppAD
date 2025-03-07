@@ -8,136 +8,120 @@
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/ad_type.hpp>
 # include <cppad/local/record/dyn_recorder.hpp>
+/*
+-------------------------------------------------------------------------------
+{xrst_begin recorder dev}
 
-// ----------------------------------------------------------------------------
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file recorder.hpp
-File used to define the recorder class.
+Class That Records Both Variable and Dynamic Parameter Operations
+#################################################################
+
+Syntax
+******
+| CppAD::local::recorder *record*
+
+record
+******
+{xrst_literal
+   // BEGIN_CLASS
+   // END_CLASS
+}
+
+Base
+****
+is the base type for this recording; i.e., we are recording
+``AD`` < *Base* > operations.
+
+Dynamic Parameter Operations
+****************************
+The :ref:`dyn_recorder-name` functions can be accessed using *record* ; e.g.,
+
+| |tab| *record* . ``set_num_dynamic_ind`` ( *num_dynamic_ind* )
+
+accesses the :ref:`dyn_recorder@set_num_dynamic_ind` function.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/record/put_var_vecad.hpp
+   include/cppad/local/record/put_dyn_atomic.hpp
+   include/cppad/local/record/put_var_atomic.hpp
+   include/cppad/local/record/cond_exp.hpp
+   include/cppad/local/record/comp_op.hpp
+   include/cppad/local/record/dyn_recorder.hpp
+}
+
+
+
+{xrst_end recorder}
+-------------------------------------------------------------------------------
 */
-
-/*!
-Class used to store an operation sequence while it is being recorded
-(the operation sequence is copied to the player class for playback).
-
-\tparam Base
-This is an AD< Base > operation sequence recording; i.e.,
-it records operations of type AD< Base >.
-*/
-template <class Base>
-class recorder {
+// BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CLASS
+namespace CppAD { namespace local {
+template <class Base> class recorder {
+   // END_CLASS
+   //
    friend class player<Base>;
-
+   //
 private:
+   //
    // dyn_record_
    dyn_recorder<Base> dyn_record_;
-
-   /// are comparison operators being recorded
+   //
+   // record_compare
+   // are comparison operators being recorded
    bool record_compare_;
-
-   /// operator index at which to abort recording with an error
-   /// (do not abort when zero)
+   //
+   // abort_op_index_
+   // operator index at which to abort recording with an error
+   // (do not abort when zero)
    size_t abort_op_index_;
-
-   /// Number of variables in the recording.
+   //
+   // num_var_rec_
+   // Number of variables in the recording.
    size_t num_var_rec_;
-
-   /// Number vecad load operations (LdpOp or LdvOp) currently in recording.
+   //
+   // num_var_load_rec_
+   // Number vecad load operations (LdpOp or LdvOp) currently in recording.
    size_t num_var_load_rec_;
-
-   /// The operators in the recording.
+   //
+   // op_vec_
+   // The operators in the recording.
    pod_vector<opcode_t> op_vec_;
-
-   /// The VecAD indices in the recording.
+   //
+   // all_var_vecad_ind_
+   // The VecAD indices in the recording.
    pod_vector<addr_t> all_var_vecad_ind_;
-
-   /// The argument indices in the recording
+   //
+   // arg_vec_
+   // The argument indices in the recording
    pod_vector<addr_t> arg_vec_;
-
-   /// Character strings ('\\0' terminated) in the recording.
+   //
+   // text_vec_
+   // Character strings ('\\0' terminated) in the recording.
    pod_vector<char> text_vec_;
-
-// ---------------------- Public Functions -----------------------------------
+   //
 public:
-   /// Default constructor
+   //
+   // Constructor
    recorder(void)
-   : num_var_rec_(0)
+   : record_compare_(true)
+   , abort_op_index_(0)
+   , num_var_rec_(0)
    , num_var_load_rec_(0)
-   {  record_compare_ = true;
-      abort_op_index_ = 0;
-   }
-
-   /// Set record_compare option
-   void set_record_compare(bool record_compare)
-   {  record_compare_ = record_compare; }
-
-   /// Set the abort index
-   void set_abort_op_index(size_t abort_op_index)
-   {  abort_op_index_ = abort_op_index; }
-
-   /// Set number of independent dynamic parameters
-   void set_num_dynamic_ind(size_t num_dynamic_ind)
-   {  dyn_record_.set_num_dynamic_ind(num_dynamic_ind); }
-
-   /// Get record_compare option
-   bool get_record_compare(void) const
-   {  return record_compare_; }
-
-   /// Get the abort_op_index
-   size_t get_abort_op_index(void) const
-   {  return abort_op_index_; }
-
-   /// Get number of independent dynamic parameters
-   size_t get_num_dynamic_ind(void) const
-   {  return dyn_record_.get_num_dynamic_ind(); }
-
-   /// Destructor
+   { }
+   //
+   // Destructor
    ~recorder(void)
    { }
-
-   /// Put a dynamic parameter in all_par_vec_.
-   addr_t put_dyn_par(
-      const Base &par, op_code_dyn op
-   );
-   addr_t put_dyn_par(
-      const Base &par, op_code_dyn op, addr_t arg0
-   );
-   addr_t put_dyn_par(
-      const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
-   );
-   addr_t put_dyn_cond_exp(
-      const Base &par, CompareOp cop,
-      addr_t left, addr_t right, addr_t if_true, addr_t if_false
-   );
-
-   /// Put a vector of dynamic parameter arguments at end of tape
-   void put_dyn_arg_vec(const pod_vector<addr_t>& arg);
-
-   /// Put next operator in the operation sequence.
-   addr_t PutOp(op_code_var op);
-   /// Put a vecad load operator in the operation sequence (special case)
-   addr_t PutLoadOp(op_code_var op);
-
-   // VecAD operations
-   addr_t put_var_vecad_ind(addr_t vec_ind);
-   addr_t put_var_vecad(size_t length, const pod_vector<addr_t>& taddr);
-
-   /// Find or add a constant parameter to the vector of all parameters.
-   addr_t put_con_par(const Base &par);
-   /// Put one operation argument index in the recording
-   void PutArg(addr_t arg0);
-   /// Put two operation argument index in the recording
-   void PutArg(addr_t arg0, addr_t arg1);
-   /// Put three operation argument index in the recording
-   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2);
-   /// Put four operation argument index in the recording
-   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3);
-   /// Put five operation argument index in the recording
-   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
-      addr_t arg4);
-   /// Put six operation argument index in the recording
-   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
-      addr_t arg4, addr_t arg5);
+   //
+   // set_num_dynamic_ind
+   void set_num_dynamic_ind(size_t num_dynamic_ind)
+   {  dyn_record_.set_num_dynamic_ind(num_dynamic_ind); }
+   //
+   // get_num_dynamic_ind
+   size_t get_num_dynamic_ind(void) const
+   {  return dyn_record_.get_num_dynamic_ind(); }
    //
    // put_dyn_atomic
    template <class VectorAD>
@@ -154,6 +138,74 @@ public:
          tape_id, atom_index, call_id, type_x, type_y, ax, ay
       );
    }
+   //
+   // all_par_vec
+   const pod_vector_maybe<Base>& all_par_vec(void) const
+   {  return dyn_record_.all_par_vec(); }
+   //
+   // put_con_par
+   addr_t put_con_par(const Base &par)
+   {   return dyn_record_.put_con_par(par); }
+   //
+   addr_t put_dyn_par(const Base &par, op_code_dyn op)
+   {  return dyn_record_.put_dyn_par(par, op); }
+   addr_t put_dyn_par( const Base &par, op_code_dyn op, addr_t a0)
+   {  return dyn_record_.put_dyn_par(par, op, a0); }
+   addr_t put_dyn_par( const Base &par, op_code_dyn op, addr_t a0, addr_t a1)
+   {  return dyn_record_.put_dyn_par(par, op, a0, a1); }
+   //
+   // put_dyn_cond_exp
+   addr_t put_dyn_cond_exp(const Base &par, CompareOp cop,
+      addr_t left, addr_t right, addr_t if_true, addr_t if_false
+   )
+   {  return dyn_record_.put_dyn_cond_exp(
+         par, cop, left, right, if_true, if_false
+      );
+   }
+   //
+   // put_dyn_arg_vec
+   void put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
+   {  dyn_record_.put_dyn_arg_vec(arg_vec); }
+
+   /// Set record_compare option
+   void set_record_compare(bool record_compare)
+   {  record_compare_ = record_compare; }
+
+   /// Set the abort index
+   void set_abort_op_index(size_t abort_op_index)
+   {  abort_op_index_ = abort_op_index; }
+
+   /// Get record_compare option
+   bool get_record_compare(void) const
+   {  return record_compare_; }
+
+   /// Get the abort_op_index
+   size_t get_abort_op_index(void) const
+   {  return abort_op_index_; }
+
+   /// Put next operator in the operation sequence.
+   addr_t PutOp(op_code_var op);
+   /// Put a vecad load operator in the operation sequence (special case)
+   addr_t PutLoadOp(op_code_var op);
+
+   // VecAD operations
+   addr_t put_var_vecad_ind(addr_t vec_ind);
+   addr_t put_var_vecad(size_t length, const pod_vector<addr_t>& taddr);
+
+   /// Put one operation argument index in the recording
+   void PutArg(addr_t arg0);
+   /// Put two operation argument index in the recording
+   void PutArg(addr_t arg0, addr_t arg1);
+   /// Put three operation argument index in the recording
+   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2);
+   /// Put four operation argument index in the recording
+   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3);
+   /// Put five operation argument index in the recording
+   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
+      addr_t arg4);
+   /// Put six operation argument index in the recording
+   void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
+      addr_t arg4, addr_t arg5);
    //
    // put_var_atomic
    template <class VectorAD>
@@ -230,10 +282,6 @@ public:
    /// Number of operators currently stored in the recording.
    size_t num_op_rec(void) const
    {  return  op_vec_.size(); }
-
-   /// current parameter vector
-   const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return dyn_record_.all_par_vec(); }
 
    /// Approximate amount of memory used by the recording
    size_t Memory(void) const
@@ -357,42 +405,6 @@ addr_t recorder<Base>::PutLoadOp(op_code_var op)
    )
    return static_cast<addr_t>( num_var_rec_ - 1 );
 }
-//
-// put_dyn_par
-template <class Base>
-addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
-{  return dyn_record_.put_dyn_par(par, op); }
-template <class Base>
-addr_t recorder<Base>::put_dyn_par(
-   const Base &par, op_code_dyn op, addr_t arg0
-)
-{  return dyn_record_.put_dyn_par(par, op, arg0); }
-template <class Base>
-addr_t recorder<Base>::put_dyn_par(
-   const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
-)
-{  return dyn_record_.put_dyn_par(par, op, arg0, arg1); }
-//
-// put_dyn_cond_exp
-template <class Base>
-addr_t recorder<Base>::put_dyn_cond_exp(const Base &par, CompareOp cop,
-   addr_t left, addr_t right, addr_t if_true, addr_t if_false
-)
-{  return dyn_record_.put_dyn_cond_exp(
-      par, cop, left, right, if_true, if_false
-   );
-}
-//
-// put_dyn_arg_vec
-template <class Base>
-void recorder<Base>::put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
-{  dyn_record_.put_dyn_arg_vec(arg_vec); }
-
-//
-// put_con_par
-template <class Base>
-addr_t recorder<Base>::put_con_par(const Base &par)
-{   return dyn_record_.put_con_par(par); }
 // -------------------------- PutArg --------------------------------------
 /*!
 Prototype for putting operation argument indices in the recording.
