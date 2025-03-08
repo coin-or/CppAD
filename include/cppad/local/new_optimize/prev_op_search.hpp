@@ -53,9 +53,9 @@ We are searching for a match for the operator with this index.
 The set of previous operators correspond to the values of *i_op*
 in previous calls to match_op.
 
-prev_var_index
+prev_res_index
 ==============
-This maps variable indices to previous variable indices
+This maps result indices to previous variable indices
 for an equivalent variable.
 It must be defined for all the results of previous operators.
 For operator arguments that are variables,
@@ -64,8 +64,8 @@ The argument indices used to match an operator are
 ::
 
    for(k = 0; k < n_arg; ++k)
-      if( is_var_one[k] )
-         prev_var_index[ arg_one[k] ]
+      if( is_res_one[k] )
+         prev_res_index[ arg_one[k] ]
       else
          arg_one[k]
 
@@ -80,7 +80,7 @@ is the index of the first previous operator that is a match for *i_op*.
 
 #. If *i_op_match* is not equal to *i_op* , then the operators are equivalent
    and the new operator is not placed in the has table.
-   Before the next call to match_op, the *prev_var_index* for the
+   Before the next call to match_op, the *prev_res_index* for the
    results of *i_op* should map to the indices for the results of *i_op_match*
    (so that more operators will map during future calls).
 
@@ -144,7 +144,7 @@ private:
    );
    //
    // prev_var_index_
-   // This is nullptr except that it is used to pass the prev_var_index
+   // This is nullptr except that it is used to pass the prev_res_index
    // argument to match_op through to match_fun.
    const vec_index_t* prev_var_index_;
    //
@@ -187,21 +187,21 @@ public:
    }
    // -------------------------------------------------------------------------
    // BEGIN_MATCH_OP
-   // i_match_op = prev_op_search.match_op(i_op, prev_var_index)
-   index_t match_op(index_t i_op, const vec_index_t& prev_var_index)
+   // i_match_op = prev_op_search.match_op(i_op, prev_res_index)
+   index_t match_op(index_t i_op, const vec_index_t& prev_res_index)
    {  CPPAD_ASSERT_UNKNOWN( i_op < n_op_ );
       // END_MATCH_OP
       //
       // prev_var_index_
-      prev_var_index_ = &prev_var_index;
+      prev_var_index_ = &prev_res_index;
       //
-      // op_enum, arg_one, is_var_one
+      // op_enum, arg_one, is_res_one
       // op_enum_search_, ... , is_var_one_search_
       op_enum_t&     op_enum          = op_enum_search_;
       vec_index_t&   arg_one          = arg_one_search_;
-      vec_bool_t&    is_var_one       = is_var_one_search_;
+      vec_bool_t&    is_res_one       = is_var_one_search_;
       op_info_.get(
-         i_op, op_enum, arg_one, is_var_one
+         i_op, op_enum, arg_one, is_res_one
       );
       //
       // n_arg
@@ -216,8 +216,8 @@ public:
          //
          // op_arg_
          for(size_t k = 0; k < n_arg; ++k)
-         {  if( is_var_one[k] )
-               op_arg_[k] = prev_var_index[ arg_one[k] ];
+         {  if( is_res_one[k] )
+               op_arg_[k] = prev_res_index[ arg_one[k] ];
             else
                op_arg_[k] = arg_one[k];
          }
@@ -248,8 +248,8 @@ bool prev_op_search_t<Op_info>::match_fun(
    prev_op_search_t&    prev_op_search )
 {  //
    //
-   // prev_var_index
-   const vec_index_t& prev_var_index = *( prev_op_search.prev_var_index_ );
+   // prev_res_index
+   const vec_index_t& prev_res_index = *( prev_op_search.prev_var_index_ );
    //
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
@@ -289,8 +289,8 @@ bool prev_op_search_t<Op_info>::match_fun(
       }
       else
       {  match  = match && is_var_one_c[k];
-         index_t val_search  = prev_var_index[ arg_one_s[k] ];
-         index_t val_check   = prev_var_index[ arg_one_c[k] ];
+         index_t val_search  = prev_res_index[ arg_one_s[k] ];
+         index_t val_check   = prev_res_index[ arg_one_c[k] ];
          match  = match && val_search == val_check;
       }
    }

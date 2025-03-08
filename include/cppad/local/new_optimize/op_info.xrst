@@ -26,7 +26,7 @@ Syntax
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
 | |tab| |tab| *arg_one*
-| |tab| |tab| *is_var_one*
+| |tab| |tab| *is_res_one*
 | |tab| )
 
 Types
@@ -89,9 +89,11 @@ If an operator is commutative, the operands passed back should be such that
 If different orders are used, operators may not be recognized as equivalent.
 
 
-is_var_one
+is_res_one
 ----------
-is a ``vec_bool_t&`` that identifies which argument are variable indices.
-The value *is_var_one*\ . ``size`` () is the number arguments and
-*is_var_one*\ [ *k* ] is true (false) if the k-th argument
-is (is not) a variable index.
+is a ``vec_bool_t&`` that identifies which argument are result indices.
+(Results are usually the result of operators and if operators are replaced,
+the corresponding result indices get replaced.)
+The value *is_res_one*\ . ``size`` () is the number arguments and
+*is_res_one*\ [ *k* ] is true (false) if the k-th argument
+is (is not) a result index.

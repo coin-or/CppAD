@@ -134,12 +134,12 @@ public:
    // END_N_OP
    {  return n_op_; }
    //
-   // op_info.get(i_op, op_enum, arg_one, is_var_one)
+   // op_info.get(i_op, op_enum, arg_one, is_res_one)
    void get(
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
       vec_index_t&  arg_one        ,
-      vec_bool_t&   is_var_one     )
+      vec_bool_t&   is_res_one     )
    // END_GET
    {  //
       // op_enum
@@ -161,14 +161,14 @@ public:
             std::swap( arg_one[0], arg_one[1] );
       }
       //
-      // is_var_one
-      is_var_one.resize(0); is_var_one.resize( size_t(n_arg) );
+      // is_res_one
+      is_res_one.resize(0); is_res_one.resize( size_t(n_arg) );
       switch(op_enum)
       {  // ------------------------------------------------------------------
          // unary and binary operators
          default:
          for(index_t k = 0; k < n_arg; ++k)
-            is_var_one[k] = is_par_dyn_[ arg_one[k] ];
+            is_res_one[k] = is_par_dyn_[ arg_one[k] ];
          break;
 
          // ------------------------------------------------------------------
@@ -180,9 +180,9 @@ public:
          // ------------------------------------------------------------------
          case dis_dyn:
          case cond_exp_dyn:
-         is_var_one[0] = false;
+         is_res_one[0] = false;
          for(index_t k = 1; k < n_arg; ++k)
-            is_var_one[k] = is_par_dyn_[ arg_one[k] ];
+            is_res_one[k] = is_par_dyn_[ arg_one[k] ];
          break;
 
 
@@ -191,15 +191,15 @@ public:
          case atom_dyn:
          {  index_t n = arg_all_[arg_index + 2];
             for(index_t k = 0; k < 5; ++k)
-               is_var_one[k] = false;
+               is_res_one[k] = false;
             for(index_t k = 5; k < 5 + n; k++)
-               is_var_one[k] = is_par_dyn_[ arg_one[k] ];
-            is_var_one[n_arg - 1] = arg_one[n_arg - 1];
+               is_res_one[k] = is_par_dyn_[ arg_one[k] ];
+            is_res_one[n_arg - 1] = arg_one[n_arg - 1];
             //
             // 2DO: These result indices should not have to match.
             // Modify prev_op_match so it handels atomic functions ?
             for(index_t k = 5 + n; k < n_arg - 1; k++)
-               is_var_one[k] = false;
+               is_res_one[k] = false;
          }
          break;
       }

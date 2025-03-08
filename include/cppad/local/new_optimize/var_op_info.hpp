@@ -85,12 +85,12 @@ public:
    // END_N_OP
    {  return index_t( random_itr_.num_op() ); }
    //
-   // op_info.get(i_op, op_enum, arg_one, is_var_one)
+   // op_info.get(i_op, op_enum, arg_one, is_res_one)
    void get(
       index_t       i_op           ,
       op_enum_t&    op_enum        ,
       vec_index_t&  arg_one        ,
-      vec_bool_t&   is_var_one     )
+      vec_bool_t&   is_res_one     )
    // END_GET
    {  //
       // op_enum
@@ -122,9 +122,9 @@ public:
       for(index_t k = 0; k < n_arg; ++k)
          arg_one[k] = index_t( op_arg[k] );
       //
-      // is_var_one
-      arg_is_variable(op_enum, op_arg, is_var_one);
-      CPPAD_ASSERT_UNKNOWN( is_var_one.size() == size_t( n_arg ) );
+      // is_res_one
+      arg_is_variable(op_enum, op_arg, is_res_one);
+      CPPAD_ASSERT_UNKNOWN( is_res_one.size() == size_t( n_arg ) );
       //
       // arg_one
       // Note that Addvp and Mulvp have been folded using communativity.
