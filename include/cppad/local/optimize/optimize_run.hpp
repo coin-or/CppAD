@@ -10,8 +10,8 @@
 # include <cppad/local/optimize/extract_option.hpp>
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
-# include <cppad/local/new_optimize/get_dyn_previous.hpp>
-# include <cppad/local/new_optimize/get_var_previous.hpp>
+# include <cppad/local/new_optimize/get_dyn_op_prev.hpp>
+# include <cppad/local/new_optimize/get_var_op_prev.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
@@ -224,13 +224,13 @@ bool optimize_run(
       vecad_used,
       op_usage
    );
-   pod_vector<addr_t>        op_previous;
-   exceed_collision_limit |= get_var_previous(
+   pod_vector<addr_t>        var_op_prev;
+   exceed_collision_limit |= get_var_op_prev(
       collision_limit,
       play,
       random_itr,
       cexp_set,
-      op_previous,
+      var_op_prev,
       op_usage
    );
    size_t num_cexp = cexp2op.size();
@@ -242,7 +242,7 @@ bool optimize_run(
    if( cexp2op.size() > 0 ) get_cexp_info(
       play,
       random_itr,
-      op_previous,
+      var_op_prev,
       op_usage,
       cexp2op,
       cexp_set,
@@ -264,12 +264,12 @@ bool optimize_run(
       vecad_used,
       par_usage
    );
-   pod_vector<addr_t> dyn_previous;
-   exceed_collision_limit |= get_dyn_previous(
+   pod_vector<addr_t> dyn_op_prev;
+   exceed_collision_limit |= get_dyn_op_prev(
       addr_t(collision_limit)     ,
       play                        ,
       par_usage                   ,
-      dyn_previous
+      dyn_op_prev
    );
    // -----------------------------------------------------------------------
    // conditional expression information
@@ -439,7 +439,7 @@ bool optimize_run(
          }
       }
       else if( par_usage[i_par] && (op != result_dyn) )
-      {  size_t j_dyn = size_t( dyn_previous[i_dyn] );
+      {  size_t j_dyn = size_t( dyn_op_prev[i_dyn] );
          if( j_dyn != i_dyn )
          {  size_t j_par = size_t( dyn_ind2par_ind[j_dyn] );
             CPPAD_ASSERT_UNKNOWN( j_par < i_par );
@@ -548,9 +548,9 @@ bool optimize_run(
    pod_vector<addr_t> new_var(num_op);
    //
    // Mapping from old operator index to new operator index will share
-   // memory with op_previous. Must get op_previous[i_op] for this operator
+   // memory with var_op_prev. Must get var_op_prev[i_op] for this operator
    // before over writting it with new_op[i_op].
-   pod_vector<addr_t>& new_op( op_previous );
+   pod_vector<addr_t>& new_op( var_op_prev );
    CPPAD_ASSERT_UNKNOWN( new_op.size() == num_op );
    // -------------------------------------------------------------
    // information for current operator
@@ -568,7 +568,7 @@ bool optimize_run(
    for(i_op = 0; i_op < num_op; ++i_op)
    {  // if non-zero, use previous result in place of this operator.
       // Must get this information before writing new_op[i_op].
-      size_t previous = size_t( op_previous[i_op] );
+      size_t previous = size_t( var_op_prev[i_op] );
       //
       // zero is invalid except for new_op[0].
       new_op[i_op] = 0;

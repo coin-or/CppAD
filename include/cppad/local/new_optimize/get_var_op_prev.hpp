@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_PREVIOUS_HPP
-# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_PREVIOUS_HPP
+# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_OP_PREV_HPP
+# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_OP_PREV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
@@ -10,7 +10,7 @@
 # include <cppad/local/new_optimize/prev_op_search.hpp>
 
 /*
-{xrst_begin optimize_get_var_previous dev}
+{xrst_begin optimize_get_var_op_prev dev}
 {xrst_spell
    cexp
 }
@@ -20,12 +20,12 @@ Get Mapping From Op to Previous Op That is Equivalent
 
 Syntax
 ******
-| *exceed_collision_limit* = ``get_var_previous`` (
+| *exceed_collision_limit* = ``get_var_op_prev`` (
 | |tab| *collision_limit* ,
 | |tab| *play* ,
 | |tab| *random_itr* ,
 | |tab| *cexp_set* ,
-| |tab| *op_previous* ,
+| |tab| *var_op_prev* ,
 | |tab| *op_usage*
 | )
 
@@ -64,16 +64,16 @@ Note the j indexes the CExpOp operators in the operation sequence.
 On input, cexp_set is does not count previous optimization.
 On output, it does count previous optimization.
 
-op_previous
+var_op_prev
 ***********
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-Let j = op_previous[i]. If j = 0, no replacement was found for i-th operator.
+Let j = var_op_prev[i]. If j = 0, no replacement was found for i-th operator.
 If j != 0:
 
 #. j < i
-#. op_previous[j] == 0
+#. var_op_prev[j] == 0
 #. op_usage[j] == usage_t(yes_usage)
 #. i-th operator has NumArg(op) <= 3
 #. i-th operator has 0 < NumRes(op)
@@ -104,23 +104,23 @@ exceed_collision_limit
 If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-{xrst_end optimize_get_var_previous}
+{xrst_end optimize_get_var_op_prev}
 */
 
 // BEGIN_GET_OP_PREVIOUS
-// exceed_collison_limit = get_var_previous(
-//    collision_limit, play, random_itr, cexp_set, op_previous, op_usage
+// exceed_collison_limit = get_var_op_prev(
+//    collision_limit, play, random_itr, cexp_set, var_op_prev, op_usage
 // )
 namespace CppAD { namespace local { namespace optimize {
 template <class Addr, class Base>
-bool get_var_previous(
+bool get_var_op_prev(
    size_t                                      collision_limit     ,
    const player<Base>*                         play                ,
    const play::const_random_iterator<Addr>&    random_itr          ,
    sparse::list_setvec&                        cexp_set            ,
-   pod_vector<addr_t>&                         op_previous         ,
+   pod_vector<addr_t>&                         var_op_prev         ,
    pod_vector<usage_t>&                        op_usage            )
-{  CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
+{  CPPAD_ASSERT_UNKNOWN( var_op_prev.size() == 0 );
    CPPAD_ASSERT_UNKNOWN( op_usage.size() == random_itr.num_op() );
    // END_GET_OP_PREVIOUS
    //
@@ -146,10 +146,10 @@ bool get_var_previous(
    for(size_t i_var = 0; i_var < n_var; ++i_var)
       var_previous[i_var] = Addr( i_var );
    //
-   // op_previous
-   op_previous.resize( n_op );
+   // var_op_prev
+   var_op_prev.resize( n_op );
    for(size_t i_op = 0; i_op < n_op; ++i_op)
-   {  op_previous[i_op] = 0;
+   {  var_op_prev[i_op] = 0;
       //
       // op, i_var
       op_code_var   op;
@@ -193,8 +193,8 @@ bool get_var_previous(
          );
          if( j_op != i_op )
          {  //
-            // op_previous
-            op_previous[i_op] = addr_t(j_op);
+            // var_op_prev
+            var_op_prev[i_op] = addr_t(j_op);
             //
             // op_usage, cexp_set
             CPPAD_ASSERT_UNKNOWN( j_op  < i_op );

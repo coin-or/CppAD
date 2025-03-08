@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_DYN_PREVIOUS_HPP
-# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_DYN_PREVIOUS_HPP
+# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_DYN_OP_PREV_HPP
+# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_DYN_OP_PREV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
@@ -17,7 +17,7 @@ Create operator information tables
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 
 /*
-{xrst_begin get_dyn_previous dev}
+{xrst_begin get_dyn_op_prev dev}
 
 Map Dynamic Parameters to Equivalent Previous Dynamic Parameters
 ################################################################
@@ -25,8 +25,8 @@ Map Dynamic Parameters to Equivalent Previous Dynamic Parameters
 Syntax
 ******
 {xrst_literal
-   // BEGIN_GET_DYN_PREVIOUS
-   // END_GET_DYN_PREVIOUS
+   // BEGIN_GET_DYN_OP_PREV
+   // END_GET_DYN_OP_PREV
 }
 
 Base
@@ -49,15 +49,15 @@ If *par_usage* [ *i_par* ] is true (false) the parameter with index *i_par*
 is used (is not used) to calculate the dependent variables for this
 operation sequence.
 
-dyn_previous
-************
+dyn_op_prev
+***********
 The input size of this vector must be zero.
 Upon return it has size equal to the number of dynamic parameters; i.e.,
 play->num_dynamic_par().
 Fix i_dyn, a dynamic parameter index and
 ::
 
-   Let j_dyn         = dyn_previous[i_dyn]
+   Let j_dyn         = dyn_op_prev[i_dyn]
    Let dyn2par_index = play->dyn_ind2par_ind
 
 The j_dyn-th dynamic parameter
@@ -66,7 +66,7 @@ can be used as a replacement for the i_dyn-th dynamic parameter and
 
    If j_dyn != i_dyn then
       j_dyn < i_dyn
-      j_dyn == dyn_previous[j_dyn].
+      j_dyn == dyn_op_prev[j_dyn].
       par_usage[ dyn2par_index[i_par] ] == true
       par_usage[ dyn2par_index[j_dyn] ] == true
 
@@ -75,20 +75,20 @@ exceed_limit
 If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-{xrst_end get_dyn_previous}
+{xrst_end get_dyn_op_prev}
 */
 
-// BEGIN_GET_DYN_PREVIOUS
-// exceet_limit = get_dyn_previous(play, par_usage, dyn_previous)
+// BEGIN_GET_DYN_OP_PREV
+// exceet_limit = get_dyn_op_prev(play, par_usage, dyn_op_prev)
 namespace CppAD { namespace local { namespace optimize {
-template <class Base> bool get_dyn_previous(
+template <class Base> bool get_dyn_op_prev(
    addr_t                       collision_limit     ,
    const player<Base>*          play                ,
    const pod_vector<bool>&      par_usage           ,
-   pod_vector<addr_t>&          dyn_previous        )
-{  CPPAD_ASSERT_UNKNOWN( dyn_previous.size() == 0 );
+   pod_vector<addr_t>&          dyn_op_prev        )
+{  CPPAD_ASSERT_UNKNOWN( dyn_op_prev.size() == 0 );
    CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_rec() );
-   // END_GET_DYN_PREVIOUS
+   // END_GET_DYN_OP_PREV
 
    // n_par
    // number of parameters in the recording
@@ -123,10 +123,10 @@ template <class Base> bool get_dyn_previous(
    for(addr_t i_par = 0; i_par < n_par; ++i_par)
       par_previous[i_par] = i_par;
    //
-   // dyn_previous
-   dyn_previous.resize( size_t(n_dyn) );
+   // dyn_op_prev
+   dyn_op_prev.resize( size_t(n_dyn) );
    for(addr_t i_dyn = 0; i_dyn < n_dyn; ++i_dyn)
-      dyn_previous[i_dyn] = i_dyn;
+      dyn_op_prev[i_dyn] = i_dyn;
    //
    // i_dyn
    for(addr_t i_dyn = 0; i_dyn < n_dyn; ++i_dyn)
@@ -147,8 +147,8 @@ template <class Base> bool get_dyn_previous(
          if( j_dyn != i_dyn )
          {  CPPAD_ASSERT_UNKNOWN( j_dyn < i_dyn );
             CPPAD_ASSERT_UNKNOWN( dyn2par_index[j_dyn] < i_par );
-            CPPAD_ASSERT_UNKNOWN( j_dyn == dyn_previous[j_dyn] )
-            dyn_previous[i_dyn] = j_dyn;
+            CPPAD_ASSERT_UNKNOWN( j_dyn == dyn_op_prev[j_dyn] )
+            dyn_op_prev[i_dyn] = j_dyn;
             par_previous[i_par] = dyn2par_index[j_dyn];
          }
       }
