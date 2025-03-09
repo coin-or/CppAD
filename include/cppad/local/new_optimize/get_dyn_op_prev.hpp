@@ -58,7 +58,7 @@ Fix i_dyn, a dynamic parameter index and
 ::
 
    Let j_dyn         = dyn_op_prev[i_dyn]
-   Let dyn2par_index = play->dyn_ind2par_ind
+   Let dyn2par_index = play->dyn2par_index
 
 The j_dyn-th dynamic parameter
 can be used as a replacement for the i_dyn-th dynamic parameter and
@@ -103,7 +103,7 @@ template <class Base> bool get_dyn_op_prev(
    CPPAD_ASSERT_UNKNOWN( n_dyn <= n_par );
 
    // dyn2par_index, dyn_par_op
-   const pod_vector<addr_t>&   dyn2par_index( play->dyn_ind2par_ind() );
+   const pod_vector<addr_t>&   dyn2par_index( play->dyn2par_index() );
    const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
 
    //

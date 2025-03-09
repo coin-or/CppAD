@@ -80,11 +80,11 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    // dynamic parameter information
    const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
    const pod_vector<addr_t>&   dyn_par_arg( play_.dyn_par_arg() );
-   const pod_vector<addr_t>&   dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
+   const pod_vector<addr_t>&   dyn2par_index ( play_.dyn2par_index() );
    const pod_vector<bool>&     dyn_par_is( play_.dyn_par_is() );
    //
    // number of dynamic parameters
-   const size_t n_dynamic     = dyn_ind2par_ind.size();
+   const size_t n_dynamic     = dyn2par_index.size();
    //
    // output: n_dynamic_ind
    size_t n_dynamic_ind = play_.n_dyn_independent();
@@ -163,7 +163,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
       local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
       //
       // parameter index for this dynamic parameter
-      size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+      size_t i_par = size_t( dyn2par_index[i_dyn] );
       CPPAD_ASSERT_UNKNOWN( par2node[i_par] == 0 );
       par2node[i_par] = ++previous_node;
       //

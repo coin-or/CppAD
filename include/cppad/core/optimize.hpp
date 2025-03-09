@@ -292,7 +292,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
    {  //
       // ind_dynamic
       for(size_t j = 0; j < n_ind_dyn; ++j)
-      {  const addr_t par_ind = play_.dyn_ind2par_ind()[j];
+      {  const addr_t par_ind = play_.dyn2par_index()[j];
          ind_dynamic[j]       = play_.all_par_vec()[par_ind];
       }
       //
