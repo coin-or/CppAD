@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_FUN2VAL_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // n_dynamic_ind
    // number of independent dynamic parameters
-   size_t n_dynamic_ind = play_.num_dynamic_ind();
+   size_t n_dynamic_ind = play_.n_dyn_independent();
    //
    // n_variables
    // number of variables

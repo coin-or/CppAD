@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ABS_NORMAL_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin abs_normal_fun}
@@ -387,8 +387,8 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    size_t num_par = play_.num_par_rec();
    //
    // number of independent dynamic parameters
-   size_t num_dynamic_ind = play_.num_dynamic_par();
-   rec.set_num_dynamic_ind(num_dynamic_ind);
+   size_t n_dyn_independent = play_.num_dynamic_par();
+   rec.set_n_dyn_independent(n_dyn_independent);
    //
    // set all parameter to be exactly the same in rec as in play
    size_t i_dyn = 0; // dynamic parameter index

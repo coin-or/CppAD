@@ -152,7 +152,7 @@ private:
    // information that defines the recording
 
    /// Number of independent dynamic parameters
-   size_t num_dynamic_ind_;
+   size_t n_dyn_independent_;
 
    /// Number of variables in the recording.
    size_t num_var_rec_;
@@ -207,11 +207,11 @@ public:
    /// default constructor
    // set all scalars to zero to avoid valgraind warning when ani assignment
    // occures before values get set.
-   player(void) :
-   num_dynamic_ind_(0)  ,
-   num_var_rec_(0)      ,
-   num_var_load_rec_(0)  ,
-   num_var_vecad_rec_(0)
+   player(void)
+   : n_dyn_independent_(0)
+   , num_var_rec_(0)
+   , num_var_load_rec_(0)
+   , num_var_vecad_rec_(0)
    { }
    // move semantics constructor
    // (none of the default constructor values matter to the destructor)
@@ -271,7 +271,7 @@ public:
       size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
 # endif
       // just set size_t values
-      num_dynamic_ind_    = rec.dyn_record_.num_dynamic_ind_;
+      n_dyn_independent_  = rec.dyn_record_.n_dyn_independent_;
       num_var_rec_        = rec.num_var_rec_;
       num_var_load_rec_   = rec.num_var_load_rec_;
 
@@ -595,7 +595,7 @@ public:
    void operator=(const player& play)
    {
       // size_t objects
-      num_dynamic_ind_    = play.num_dynamic_ind_;
+      n_dyn_independent_  = play.n_dyn_independent_;
       num_var_rec_        = play.num_var_rec_;
       num_var_load_rec_   = play.num_var_load_rec_;
       num_var_vecad_rec_  = play.num_var_vecad_rec_;
@@ -622,7 +622,7 @@ public:
    {  player< AD<Base> > play;
       //
       // size_t objects
-      play.num_dynamic_ind_    = num_dynamic_ind_;
+      play.n_dyn_independent_  = n_dyn_independent_;
       play.num_var_rec_        = num_var_rec_;
       play.num_var_load_rec_   = num_var_load_rec_;
       play.num_var_vecad_rec_  = num_var_vecad_rec_;
@@ -652,7 +652,7 @@ public:
    /// (used for move semantics version of ADFun assignment operation)
    void swap(player& other)
    {  // size_t objects
-      std::swap(num_dynamic_ind_,    other.num_dynamic_ind_);
+      std::swap(n_dyn_independent_,  other.n_dyn_independent_);
       std::swap(num_var_rec_,        other.num_var_rec_);
       std::swap(num_var_load_rec_,   other.num_var_load_rec_);
       std::swap(num_var_vecad_rec_,  other.num_var_vecad_rec_);
@@ -807,8 +807,8 @@ public:
    }
 
    /// Fetch number of independent dynamic parameters in the recording
-   size_t num_dynamic_ind(void) const
-   {  return num_dynamic_ind_; }
+   size_t n_dyn_independent(void) const
+   {  return n_dyn_independent_; }
 
    /// Fetch number of dynamic parameters in the recording
    size_t num_dynamic_par(void) const

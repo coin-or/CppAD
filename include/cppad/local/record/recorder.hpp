@@ -38,9 +38,9 @@ Dynamic Parameter Operations
 ****************************
 The :ref:`dyn_recorder-name` functions can be accessed using *record* ; e.g.,
 
-| |tab| *record* . ``set_num_dynamic_ind`` ( *num_dynamic_ind* )
+| |tab| *record* . ``set_n_dyn_independent`` ( *n_dyn_independent* )
 
-accesses the :ref:`dyn_recorder@set_num_dynamic_ind` function.
+accesses the :ref:`dyn_recorder@set_n_dyn_independent` function.
 
 Setters
 *******
@@ -184,12 +184,12 @@ public:
    // ------------------------------------------------------------------------
    // Parameter Operations
    // ------------------------------------------------------------------------
-   // set_num_dynamic_ind
-   void set_num_dynamic_ind(size_t num_dynamic_ind)
-   {  dyn_record_.set_num_dynamic_ind(num_dynamic_ind); }
+   // set_n_dyn_independent
+ void set_n_dyn_independent(size_t n_dyn_independent)
+   {  dyn_record_.set_n_dyn_independent(n_dyn_independent); }
    //
    // get_num_dynamic_ind
-   size_t get_num_dynamic_ind(void) const
+ size_t get_num_dynamic_ind(void) const
    {  return dyn_record_.get_num_dynamic_ind(); }
    //
    // put_dyn_atomic

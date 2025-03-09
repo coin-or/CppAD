@@ -21,8 +21,8 @@ dyn_record
    // BEGIN_DYN_RECORD , // END_DYN_RECORD
 }
 
-set_num_dynamic_ind
-*******************
+set_n_dyn_independent
+*********************
 {xrst_literal
    // BEGIN_SET_NUM_DYNAMIC_IND
    // END_SET_NUM_DYNAMIC_IND
@@ -63,9 +63,9 @@ template <class Base> class dyn_recorder {
 //
 private:
    //
-   // num_dynamic_ind_
-   // Number of dynamic parameters in the recording
-   size_t num_dynamic_ind_;
+   // n_dyn_independent_
+ // Number of dynamic parameters in the recording
+   size_t n_dyn_independent_;
    //
    // all_dyn_vec_ind_;
    // The VecAD indices in the recording.
@@ -98,7 +98,7 @@ public:
    // dyn_recorder dyn_record
    dyn_recorder(void)
    // END_DYN_RECORD
-   : num_dynamic_ind_(0)
+   : n_dyn_independent_(0)
    , par_hash_table_( CPPAD_HASH_TABLE_SIZE )
    {  //
       // par_hash_table_
@@ -115,16 +115,16 @@ public:
    { }
    //
    // BEGIN_SET_NUM_DYNAMIC_IND
-   // dyn_record.set_num_dynamic_ind(num_dynamic_ind)
-   void set_num_dynamic_ind(size_t num_dynamic_ind)
+   // dyn_record.set_n_dyn_independent(n_dyn_independent)
+   void set_n_dyn_independent(size_t n_dyn_independent)
    // END_SET_NUM_DYNAMIC_IND
-   {  num_dynamic_ind_ = num_dynamic_ind; }
+   {  n_dyn_independent_ = n_dyn_independent; }
    //
    // BEGIN_GET_NUM_DYNAMIC_IND
-   // num_dynamic_ind = dyn_record.get_num_dynamic_ind()
+   // n_dyn_independent = dyn_record.get_num_dynamic_ind()
    size_t get_num_dynamic_ind(void) const
    // END_GET_NUM_DYNAMIC_IND
-   {  return num_dynamic_ind_; }
+   {  return n_dyn_independent_; }
    //
    // put_dyn_par
    addr_t put_dyn_par(

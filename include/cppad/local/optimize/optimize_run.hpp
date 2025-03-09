@@ -197,13 +197,13 @@ bool optimize_run(
    size_t num_vecad_vec   = play->num_var_vecad_rec();
 
    // number of independent dynamic parameters
-   size_t num_dynamic_ind = play->num_dynamic_ind();
+   size_t n_dyn_independent = play->n_dyn_independent();
 
    // mapping from dynamic parameter index to paramemter index
    const pod_vector<addr_t>& dyn_ind2par_ind( play->dyn_ind2par_ind() );
 
    // number of dynamic parameters
-   CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= play->num_dynamic_par () );
+   CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= play->num_dynamic_par () );
 
    // -----------------------------------------------------------------------
    // operator information
@@ -319,7 +319,7 @@ bool optimize_run(
    //
    // start new recording
    CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
-   rec->set_num_dynamic_ind(num_dynamic_ind);
+   rec->set_n_dyn_independent(n_dyn_independent);
    rec->set_abort_op_index(0);
    rec->set_record_compare( compare_op );
 
@@ -329,7 +329,7 @@ bool optimize_run(
    new_par[0] = 0;
 
    // set new_par for the independent dynamic parameters
-   for(size_t i_par = 1; i_par <= num_dynamic_ind; i_par++)
+   for(size_t i_par = 1; i_par <= n_dyn_independent; i_par++)
    {  CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
       addr_t i = rec->put_dyn_par(play->GetPar(i_par), ind_dyn);
       CPPAD_ASSERT_UNKNOWN( size_t(i) == i_par );
@@ -337,9 +337,9 @@ bool optimize_run(
    }
 
    // set new_par for the constant parameters that are used
-   for(size_t i_par = num_dynamic_ind + 1; i_par < num_par; ++i_par)
+   for(size_t i_par = n_dyn_independent + 1; i_par < num_par; ++i_par)
    if( ! dyn_par_is[i_par] )
-   {  CPPAD_ASSERT_UNKNOWN( i_par == 0 || num_dynamic_ind < i_par );
+   {  CPPAD_ASSERT_UNKNOWN( i_par == 0 || n_dyn_independent < i_par );
       if( par_usage[i_par] )
       {  // value of this parameter
          Base par       = play->GetPar(i_par);
@@ -351,10 +351,10 @@ bool optimize_run(
    addr_t zero_par_index = rec->put_con_par( Base(0) );
 
    // set new_par for the dependent dynamic parameters
-   size_t i_dyn = num_dynamic_ind;  // dynamic parmaeter index
+   size_t i_dyn = n_dyn_independent;// dynamic parmaeter index
    size_t i_arg = 0;                // dynamic parameter argument index
    pod_vector<addr_t> arg_vec;
-   for(size_t i_par = num_dynamic_ind + 1; i_par < num_par; ++i_par)
+   for(size_t i_par = n_dyn_independent + 1; i_par < num_par; ++i_par)
    if( dyn_par_is[i_par] )
    {  // operator for this dynamic parameter
       op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
@@ -452,7 +452,7 @@ bool optimize_run(
             //
             if( op == cond_exp_dyn )
             {  // cond_exp_dyn
-               CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+               CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
                CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
                new_par[i_par] = rec->put_dyn_cond_exp(
                   par                                ,   // par
@@ -476,14 +476,14 @@ bool optimize_run(
             else if( n_arg == 1 )
             {  // cases with one argument
                CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
-               CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+               CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
                new_par[i_par] = rec->put_dyn_par( par, op,
                   new_par[ dyn_par_arg[i_arg + 0] ]
                );
             }
             else if( n_arg == 2 )
             {  // cases with two arguments
-               CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+               CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
                CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
                new_par[i_par] = rec->put_dyn_par( par, op,
                   new_par[ dyn_par_arg[i_arg + 0] ],
@@ -493,7 +493,7 @@ bool optimize_run(
             else
             {  // independent dynamic parmaeter case
                CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
-               CPPAD_ASSERT_UNKNOWN( i_par <= num_dynamic_ind );
+               CPPAD_ASSERT_UNKNOWN( i_par <= n_dyn_independent );
                CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
                new_par[i_par] = rec->put_dyn_par( par, op);
             }

@@ -280,7 +280,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
 
 # ifndef NDEBUG
    // n_ind_dyn, ind_dynamic
-   size_t n_ind_dyn = play_.num_dynamic_ind();
+   size_t n_ind_dyn = play_.n_dyn_independent();
    CppAD::vector<Base> ind_dynamic(n_ind_dyn);
    //
    // n_dep_var, x, y, check, max_taylor, check_zero_order
