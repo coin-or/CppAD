@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -45,9 +45,9 @@ Ths constant parameters are inputs and the dynamic parameters are outputs.
 is a vector with the same length as par_vec.
 The i-th parameter is dynamic if and only if dyn_par_is[i] is true.
 
-\param dyn_ind2par_ind
+\param dyn2par_index
 is a vector with length equal to the number of dynamic parameters.
-The element dyn_ind2par_ind[j] is the index in all_par_vec corresponding
+The element dyn2par_index[j] is the index in all_par_vec corresponding
 to the j-th dynamic parameter.
 Note that if dyn_par_is[i] is false, the i-th parameter does not
 appear in this vector.
@@ -88,13 +88,13 @@ void dynamic(
    pod_vector_maybe<Base>&       all_par_vec        ,
    const BaseVector&             ind_dynamic        ,
    const pod_vector<bool>&       dyn_par_is         ,
-   const pod_vector<addr_t>&     dyn_ind2par_ind    ,
+   const pod_vector<addr_t>&     dyn2par_index      ,
    const pod_vector<opcode_t>&   dyn_par_op         ,
    const pod_vector<addr_t>&     dyn_par_arg        ,
    const RecBase&                not_used_rec_base  )
 {
    // number of dynamic parameters
-   size_t num_dynamic_par = dyn_ind2par_ind.size();
+   size_t num_dynamic_par = dyn2par_index.size();
 
    // vectors used in call to atomic fuctions
    vector<ad_type_enum> type_x;
@@ -139,7 +139,7 @@ void dynamic(
       size_t n_dyn = 1;
       //
       // parameter index for this dynamic parameter
-      size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+      size_t i_par = size_t( dyn2par_index[i_dyn] );
       //
 # if CPPAD_DYNAMIC_TRACE
       Base old_value = all_par_vec[i_par];

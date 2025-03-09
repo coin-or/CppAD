@@ -22,7 +22,7 @@ mapping from a dynamic parameter index to its arguments
 \param i_dyn
 is the dynamic parameter index
 
-\param dyn_ind2par_ind
+\param dyn2par_index
 is the mapping from dynamic parameter index to parameter index
 (size is number of dynamic parameters).
 
@@ -59,7 +59,7 @@ have been replaced by their previous matches.
 */
 inline void dyn_arg_match(
    size_t                    i_dyn           ,
-   const pod_vector<addr_t>& dyn_ind2par_ind ,
+   const pod_vector<addr_t>& dyn2par_index ,
    const pod_vector<bool>  & dyn_par_is      ,
    const pod_vector<addr_t>& dyn_arg_offset  ,
    const pod_vector<addr_t>& dyn_par_arg     ,
@@ -68,7 +68,7 @@ inline void dyn_arg_match(
    pod_vector<addr_t>&       arg_match       )
 {
    // number of dynamic parameters
-   addr_t num_dynamic_par = addr_t( dyn_ind2par_ind.size() );
+   addr_t num_dynamic_par = addr_t( dyn2par_index.size() );
    //
    // check some assumptions
    CPPAD_ASSERT_UNKNOWN( size_t( num_dynamic_par ) == dyn_arg_offset.size() );
@@ -85,7 +85,7 @@ inline void dyn_arg_match(
    for(addr_t j = 0; j < n_arg; ++j)
    {  // parameter index for this argument
       addr_t j_par = dyn_par_arg[i_arg + j];
-      CPPAD_ASSERT_UNKNOWN( j_par < dyn_ind2par_ind[i_dyn] );
+      CPPAD_ASSERT_UNKNOWN( j_par < dyn2par_index[i_dyn] );
       //
       // map dynamic parameters arguments to previous matches
       if( dyn_par_is[j_par] )
@@ -95,7 +95,7 @@ inline void dyn_arg_match(
             // previous dynamic parameter
             j_dyn = dyn_previous[j_dyn];
             // correspoding parameter
-            j_par = dyn_ind2par_ind[j_dyn];
+            j_par = dyn2par_index[j_dyn];
          }
       }
       arg_match[j] = j_par;
@@ -127,7 +127,7 @@ operation sequence; i.e., num_dyn = play->num_dynamic_par().
 Let k = dyn_parvious[j]. If k == num_dyn, no replacement was found for the
 j-th dynamic parameter. If k != num_dyn, the k-th dynamic parameter can be
 used in place of the j-th dynamic parameter, k < j, dyn_previous[k] != num_dyn,
-par_usage[dyn_ind2par_ind[k]] == true.
+par_usage[dyn2par_index[k]] == true.
 */
 
 template <class Base>
@@ -154,7 +154,7 @@ void get_dyn_previous(
 
    // dynamic parameter information
    dyn_previous.resize( num_dynamic_par );
-   const pod_vector<addr_t>&   dyn_ind2par_ind( play->dyn_ind2par_ind() );
+   const pod_vector<addr_t>&   dyn2par_index( play->dyn2par_index() );
    const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
    const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
    const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
@@ -179,7 +179,7 @@ void get_dyn_previous(
    // independent dynamic parameters
    for(size_t i_dyn = 0; i_dyn < n_dyn_independent; ++i_dyn)
    {  // parameter index
-      size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+      size_t i_par = size_t( dyn2par_index[i_dyn] );
       // dynamic parameter index is one greater because phantom parameter
       // at index 0 is not dynamic
       CPPAD_ASSERT_UNKNOWN( i_par == i_dyn + 1 );
@@ -200,7 +200,7 @@ void get_dyn_previous(
       dyn_arg_offset[i_dyn] = addr_t( i_arg );
       //
       // parameter index for this dynamic parameter
-      size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+      size_t i_par = size_t( dyn2par_index[i_dyn] );
       //
       // mapping from parameter indices to dynamic parameter indices
       // is only defined when dyn_par_is[i_par] is true and for parameter
@@ -253,7 +253,7 @@ void get_dyn_previous(
             arg_match.resize(num_arg);
             dyn_arg_match(
                i_dyn,
-               dyn_ind2par_ind,
+               dyn2par_index,
                dyn_par_is,
                dyn_arg_offset,
                dyn_par_arg,
@@ -321,7 +321,7 @@ void get_dyn_previous(
             arg_match.resize(num_arg);
             dyn_arg_match(
                i_dyn,
-               dyn_ind2par_ind,
+               dyn2par_index,
                dyn_par_is,
                dyn_arg_offset,
                dyn_par_arg   ,

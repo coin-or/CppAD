@@ -167,9 +167,9 @@ void ADFun<Base, RecBase>::fun2val(
    // mapping from dynamic parameter index to operator
    const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
    //
-   // dyn_ind2par_ind
-   // mapping from dynamic parameter index to parameter index
-   const pod_vector<addr_t>& dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
+   // dyn2par_index
+     // mapping from dynamic parameter index to parameter index
+   const pod_vector<addr_t>& dyn2par_index ( play_.dyn2par_index() );
    //
    // dyn_par_arg
    // vector that contains arguments to all the dynamic parameter operators
@@ -181,7 +181,7 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // n_dynamic
    // number of dynamic parameters
-   size_t n_dynamic = dyn_ind2par_ind.size();
+   size_t n_dynamic = dyn2par_index.size();
    //
    // n_dynamic_ind
    // number of independent dynamic parameters
@@ -283,7 +283,7 @@ void ADFun<Base, RecBase>::fun2val(
    for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
    {  //
       // i_par
-      size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+      size_t i_par = size_t( dyn2par_index[i_dyn] );
       //
       // dyn_op
       // operator for this dynamic parameter

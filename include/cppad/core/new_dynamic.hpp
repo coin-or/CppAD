@@ -107,7 +107,7 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
    const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
    const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
    const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
-   const pod_vector<addr_t>&     dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
+   const pod_vector<addr_t>&     dyn2par_index ( play_.dyn2par_index() );
 
    // set the dependent dynamic parameters
    RecBase not_used_rec_base(0.0);
@@ -115,7 +115,7 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
       all_par_vec         ,
       dynamic             ,
       dyn_par_is          ,
-      dyn_ind2par_ind     ,
+      dyn2par_index       ,
       dyn_par_op          ,
       dyn_par_arg         ,
       not_used_rec_base

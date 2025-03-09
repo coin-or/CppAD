@@ -104,7 +104,7 @@ void get_par_usage(
    const pod_vector<bool>&        dyn_par_is( play->dyn_par_is() );
    const pod_vector<opcode_t>&    dyn_par_op( play->dyn_par_op() );
    const pod_vector<addr_t>&      dyn_par_arg( play->dyn_par_arg() );
-   const pod_vector<addr_t>&      dyn_ind2par_ind( play->dyn_ind2par_ind() );
+   const pod_vector<addr_t>&      dyn2par_index( play->dyn2par_index() );
    const pod_vector_maybe<Base>&  all_par_vec( play->all_par_vec() );
    // -----------------------------------------------------------------------
    // initialize par_usage
@@ -407,8 +407,8 @@ void get_par_usage(
    // reverse pass to determine which dynamic parameters are necessary
    // -----------------------------------------------------------------------
    size_t i_arg = dyn_par_arg.size(); // index in dyn_par_arg
-   size_t i_dyn = num_dynamic_par;    // index in dyn_ind2par_ind
-   while(i_dyn)
+   size_t i_dyn = num_dynamic_par;    // index in dyn2par_index
+     while(i_dyn)
    {  // next dynamic parameter in reverse order
       --i_dyn;
       op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
@@ -469,7 +469,7 @@ void get_par_usage(
       }
       else
       {  // corresponding parameter index
-         size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+         size_t i_par = size_t( dyn2par_index[i_dyn] );
          CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
          //
          // number of argumens to this operator

@@ -205,7 +205,7 @@ bool optimize_run(
    size_t num_dynamic_par = play->num_dynamic_par();
 
    // mapping from dynamic parameter index to paramemter index
-   const pod_vector<addr_t>& dyn_ind2par_ind( play->dyn_ind2par_ind() );
+   const pod_vector<addr_t>& dyn2par_index( play->dyn2par_index() );
 
    // number of dynamic parameters
    CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= play->num_dynamic_par () );
@@ -445,7 +445,7 @@ bool optimize_run(
       else if( par_usage[i_par] && (op != result_dyn) )
       {  size_t j_dyn = size_t( dyn_previous[i_dyn] );
          if( j_dyn != num_dynamic_par )
-         {  size_t j_par = size_t( dyn_ind2par_ind[j_dyn] );
+         {  size_t j_par = size_t( dyn2par_index[j_dyn] );
             CPPAD_ASSERT_UNKNOWN( j_par < i_par );
             new_par[i_par] = new_par[j_par];
          }

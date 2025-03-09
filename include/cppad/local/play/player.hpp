@@ -181,8 +181,8 @@ private:
 
    /// mapping from dynamic parameter index to parameter index
    /// 1: size equal to number of dynamic parameters
-   /// 2: dyn_ind2par_ind_[j] < dyn_ind2par_ind_[j+1]
-   pod_vector<addr_t> dyn_ind2par_ind_;
+   /// 2: dyn2par_index_[j] < dyn2par_index_[j+1]
+   pod_vector<addr_t> dyn2par_index_;
 
    /// operators for just the dynamic parameters
    /// (size equal number of dynamic parameters)
@@ -310,15 +310,15 @@ public:
       }
 
       // mapping from dynamic parameter index to parameter index
-      dyn_ind2par_ind_.resize( dyn_par_op_.size() );
+      dyn2par_index_.resize( dyn_par_op_.size() );
       size_t i_dyn = 0;
       for(size_t i_par = 0; i_par < all_par_vec_.size(); ++i_par)
       {  if( dyn_par_is_[i_par] )
-         {  dyn_ind2par_ind_[i_dyn] = addr_t( i_par );
+         {  dyn2par_index_[i_dyn] = addr_t( i_par );
             ++i_dyn;
          }
       }
-      CPPAD_ASSERT_UNKNOWN( i_dyn == dyn_ind2par_ind_.size() );
+      CPPAD_ASSERT_UNKNOWN( i_dyn == dyn2par_index_.size() );
 
       // random access information
       clear_random();
@@ -545,7 +545,7 @@ public:
       size_t i_arg = 0; // initialize dynamic parameter argument index
       for(size_t i_dyn = 0; i_dyn < num_dyn; ++i_dyn)
       {  // i_par is parameter index
-         addr_t i_par = dyn_ind2par_ind_[i_dyn];
+         addr_t i_par = dyn2par_index_[i_dyn];
          CPPAD_ASSERT_UNKNOWN( dyn_par_is_[i_par] );
          //
          // operator for this dynamic parameter
@@ -602,7 +602,7 @@ public:
       text_vec_           = play.text_vec_;
       all_var_vecad_ind_  = play.all_var_vecad_ind_;
       dyn_par_is_         = play.dyn_par_is_;
-      dyn_ind2par_ind_    = play.dyn_ind2par_ind_;
+      dyn2par_index_      = play.dyn2par_index_;
       dyn_par_op_         = play.dyn_par_op_;
       dyn_par_arg_        = play.dyn_par_arg_;
       //
@@ -629,7 +629,7 @@ public:
       play.text_vec_           = text_vec_;
       play.all_var_vecad_ind_  = all_var_vecad_ind_;
       play.dyn_par_is_         = dyn_par_is_;
-      play.dyn_ind2par_ind_    = dyn_ind2par_ind_;
+      play.dyn2par_index_      = dyn2par_index_;
       play.dyn_par_op_         = dyn_par_op_;
       play.dyn_par_arg_        = dyn_par_arg_;
       //
@@ -659,7 +659,7 @@ public:
       text_vec_.swap(           other.text_vec_);
       all_var_vecad_ind_.swap(  other.all_var_vecad_ind_);
       dyn_par_is_.swap(         other.dyn_par_is_);
-      dyn_ind2par_ind_.swap(    other.dyn_ind2par_ind_);
+      dyn2par_index_.swap(      other.dyn2par_index_);
       dyn_par_op_.swap(         other.dyn_par_op_);
       dyn_par_arg_.swap(        other.dyn_par_arg_);
       //
@@ -729,8 +729,8 @@ public:
    const pod_vector<bool>& dyn_par_is(void) const
    {  return dyn_par_is_; }
    /// const version of dynamic parameter index to parameter index
-   const pod_vector<addr_t>& dyn_ind2par_ind(void) const
-   {  return dyn_ind2par_ind_; }
+   const pod_vector<addr_t>& dyn2par_index(void) const
+   {  return dyn2par_index_; }
    /// const version of dynamic parameter operator
    const pod_vector<opcode_t>& dyn_par_op(void) const
    {  return dyn_par_op_; }
@@ -860,7 +860,7 @@ public:
              + arg_vec_.size()       * sizeof(addr_t)
              + all_par_vec_.size()   * sizeof(Base)
              + dyn_par_is_.size()    * sizeof(bool)
-             + dyn_ind2par_ind_.size() * sizeof(addr_t)
+             + dyn2par_index_.size() * sizeof(addr_t)
              + dyn_par_op_.size()    * sizeof(opcode_t)
              + dyn_par_arg_.size()   * sizeof(addr_t)
              + text_vec_.size()      * sizeof(char)
