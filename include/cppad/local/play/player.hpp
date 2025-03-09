@@ -663,7 +663,7 @@ public:
       text_vec_.swap(           other.text_vec_);
       all_var_vecad_ind_.swap(  other.all_var_vecad_ind_);
       dyn_par_is_.swap(         other.dyn_par_is_);
-      dyn2par_index_.swap(    other.dyn2par_index_);
+      dyn2par_index_.swap(      other.dyn2par_index_);
       dyn_par_op_.swap(         other.dyn_par_op_);
       dyn_par_arg_.swap(        other.dyn_par_arg_);
       //
