@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_INDEPENDENT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 namespace CppAD { namespace local { //  BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
@@ -54,7 +54,7 @@ void ADTape<Base>::Independent(
    // set record_compare and abort_op_index before doing anything else
    Rec_.set_record_compare(record_compare);
    Rec_.set_abort_op_index(abort_op_index);
-   Rec_.set_num_dynamic_ind( dynamic.size() );
+   Rec_.set_n_dyn_independent( dynamic.size() );
 
    // mark the beginning of the tape and skip the first variable index
    // (zero) because parameters use taddr zero

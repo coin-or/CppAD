@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OPTIMIZE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # define CPPAD_CORE_OPTIMIZE_PRINT_RESULT 0
@@ -280,7 +280,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
 
 # ifndef NDEBUG
    // n_ind_dyn, ind_dynamic
-   size_t n_ind_dyn = play_.num_dynamic_ind();
+   size_t n_ind_dyn = play_.n_dyn_independent();
    CppAD::vector<Base> ind_dynamic(n_ind_dyn);
    //
    // n_dep_var, x, y, check, max_taylor, check_zero_order

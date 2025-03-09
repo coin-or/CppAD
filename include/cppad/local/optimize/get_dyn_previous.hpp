@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_DYN_PREVIOUS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file get_cexp_info.hpp
@@ -143,13 +143,13 @@ void get_dyn_previous(
    size_t num_dynamic_par = play->num_dynamic_par();
 
    // number of independent dynamic parameters in the recording
-   size_t num_dynamic_ind  = play->num_dynamic_ind();
+   size_t n_dyn_independent= play->n_dyn_independent();
 
    // check some assumptions
    CPPAD_ASSERT_UNKNOWN( dyn_previous.size() == 0 );
    CPPAD_ASSERT_UNKNOWN( par_usage.size() == num_par );
    CPPAD_ASSERT_UNKNOWN( num_dynamic_par <= num_par );
-   CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= num_dynamic_par );
+   CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= num_dynamic_par );
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn( ind_dyn ) == 0 );
 
    // dynamic parameter information
@@ -177,7 +177,7 @@ void get_dyn_previous(
    size_t i_arg = 0;
    //
    // independent dynamic parameters
-   for(size_t i_dyn = 0; i_dyn < num_dynamic_ind; ++i_dyn)
+   for(size_t i_dyn = 0; i_dyn < n_dyn_independent; ++i_dyn)
    {  // parameter index
       size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
       // dynamic parameter index is one greater because phantom parameter
@@ -190,7 +190,7 @@ void get_dyn_previous(
    }
    //
    // other dynamic parameters
-   for(size_t i_dyn = num_dynamic_ind; i_dyn < num_dynamic_par; ++i_dyn)
+   for(size_t i_dyn = n_dyn_independent; i_dyn < num_dynamic_par; ++i_dyn)
    {  // Initialize previous for this dynamic parameter. This is only
       // defined for dynamic parameter indices less than or equal i_dyn
       dyn_previous[i_dyn] = addr_t( num_dynamic_par );

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_PAR_USAGE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file get_cexp_info.hpp
@@ -95,7 +95,7 @@ void get_par_usage(
    const size_t num_dynamic_par = play->num_dynamic_par();
    //
    // number of independent dynamic parameters
-   size_t num_dynamic_ind = play->num_dynamic_ind();
+   size_t n_dyn_independent = play->n_dyn_independent();
    //
    // number of VecAD vectors
    size_t num_vecad_vec = play->num_var_vecad_rec();
@@ -110,9 +110,9 @@ void get_par_usage(
    // initialize par_usage
    par_usage.resize(num_par);
    par_usage[0] = true; // true for nan at beginning of parameter vector
-   for(size_t i_par = 1; i_par <= num_dynamic_ind; ++i_par)
+   for(size_t i_par = 1; i_par <= n_dyn_independent; ++i_par)
       par_usage[i_par] = true;  // true for independent dynamic parameters
-   for(size_t i_par = num_dynamic_ind+1; i_par < num_par; ++i_par)
+   for(size_t i_par = n_dyn_independent+1; i_par < num_par; ++i_par)
       par_usage[i_par] = false; // initialize as false for other parameters
    //
    // -----------------------------------------------------------------------

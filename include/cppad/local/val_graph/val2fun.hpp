@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_VAL2FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // --------------------------------------------------------------------------
 /*
 {xrst_begin val2fun_graph dev}
@@ -216,7 +216,7 @@ void ADFun<Base, RecBase>::val2fun(
    // start a functon recording
    local::recorder<Base> rec;
    CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == 0 );
-   rec.set_num_dynamic_ind(dyn_n_ind);
+   rec.set_n_dyn_independent(dyn_n_ind);
    rec.set_abort_op_index(0);
    rec.set_record_compare(false);
    //

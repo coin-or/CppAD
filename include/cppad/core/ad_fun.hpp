@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin ADFun}
@@ -619,7 +619,7 @@ public:
 
    /// number of independent dynamic parameters
    size_t size_dyn_ind(void) const
-   {  return play_.num_dynamic_ind(); }
+   {  return play_.n_dyn_independent(); }
 
    /// number of dynamic parameters
    size_t size_dyn_par(void) const

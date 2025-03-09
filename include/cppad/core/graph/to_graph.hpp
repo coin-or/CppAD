@@ -3,7 +3,7 @@
 
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/core/ad_fun.hpp>
@@ -87,7 +87,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    const size_t n_dynamic     = dyn_ind2par_ind.size();
    //
    // output: n_dynamic_ind
-   size_t n_dynamic_ind = play_.num_dynamic_ind();
+   size_t n_dynamic_ind = play_.n_dyn_independent();
    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
    //
    // number of parameters
