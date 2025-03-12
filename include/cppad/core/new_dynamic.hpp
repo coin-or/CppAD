@@ -103,7 +103,7 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
    CheckSimpleVector<Base, BaseVector>();
 
    // retrieve player information about the dynamic parameters
-   local::pod_vector_maybe<Base>&     all_par_vec( play_.all_par_vec() );
+   local::pod_vector_maybe<Base>&     par_all( play_.par_all() );
    const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
    const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
    const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
@@ -112,7 +112,7 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
    // set the dependent dynamic parameters
    RecBase not_used_rec_base(0.0);
    local::sweep::dynamic(
-      all_par_vec         ,
+      par_all             ,
       dynamic             ,
       dyn_par_is          ,
       dyn2par_index       ,

@@ -180,9 +180,9 @@ private:
    // Character strings ('\\0' terminated) in the recording.
    pod_vector<char> text_vec_;
 
-   // all_var_vecad_ind_
-   // The VecAD indices in the recording.
-   pod_vector<addr_t> all_var_vecad_ind_;
+   // var_vecad_ind_
+       // The VecAD indices in the recording.
+   pod_vector<addr_t> var_vecad_ind_;
    //
    // random_itr_info_
    // Information needed to use member functions that begin with random_
@@ -251,7 +251,7 @@ public:
    Use an assert to check that the length of the following vectors is
    less than the maximum possible value for addr_t; i.e., that an index
    in these vectors can be represented using the type addr_t:
-   op_vec_, all_var_vecad_ind_, arg_vec_, test_vec_, all_par_vec_, text_vec_,
+   op_vec_, var_vecad_ind_, arg_vec_, test_vec_, par_all_, text_vec_,
    dyn_par_arg_.
    */
    void get_recording(recorder<Base>& rec, size_t n_ind)
@@ -279,20 +279,20 @@ public:
       text_vec_.swap(rec.text_vec_);
       CPPAD_ASSERT_UNKNOWN(text_vec_.size() < addr_t_max );
 
-      // all_var_vecad_ind_
-      all_var_vecad_ind_.swap(rec.all_var_vecad_ind_);
-      CPPAD_ASSERT_UNKNOWN(all_var_vecad_ind_.size() < addr_t_max );
+      // var_vecad_ind_
+          var_vecad_ind_.swap(rec.var_vecad_ind_);
+      CPPAD_ASSERT_UNKNOWN(var_vecad_ind_.size() < addr_t_max );
 
       // num_var_vecad_rec_
       num_var_vecad_rec_ = 0;
-      {  // all_var_vecad_ind_ contains size of each VecAD followed by
+      {  // var_vecad_ind_ contains size of each VecAD followed by
          // the parameter indices used to inialize it.
          size_t i = 0;
-         while( i < all_var_vecad_ind_.size() )
+         while( i < var_vecad_ind_.size() )
          {  num_var_vecad_rec_++;
-            i += size_t( all_var_vecad_ind_[i] ) + 1;
+            i += size_t( var_vecad_ind_[i] ) + 1;
          }
-         CPPAD_ASSERT_UNKNOWN( i == all_var_vecad_ind_.size() );
+         CPPAD_ASSERT_UNKNOWN( i == var_vecad_ind_.size() );
       }
 
       // random access information
@@ -517,7 +517,7 @@ public:
       op_vec_             = play.op_vec_;
       arg_vec_            = play.arg_vec_;
       text_vec_           = play.text_vec_;
-      all_var_vecad_ind_  = play.all_var_vecad_ind_;
+      var_vecad_ind_      = play.var_vecad_ind_;
       //
       // random_itr_info_
       random_itr_info_    = play.random_itr_info_;
@@ -540,7 +540,7 @@ public:
       play.op_vec_             = op_vec_;
       play.arg_vec_            = arg_vec_;
       play.text_vec_           = text_vec_;
-      play.all_var_vecad_ind_  = all_var_vecad_ind_;
+      play.var_vecad_ind_      = var_vecad_ind_;
       //
       // random_itr_info_
       play.random_itr_info_    = random_itr_info_;
@@ -564,7 +564,7 @@ public:
       op_vec_.swap(             other.op_vec_);
       arg_vec_.swap(            other.arg_vec_);
       text_vec_.swap(           other.text_vec_);
-      all_var_vecad_ind_.swap(  other.all_var_vecad_ind_);
+      var_vecad_ind_.swap(  other.var_vecad_ind_);
       //
       // random_itr_info_
       random_itr_info_.swap(    other.random_itr_info_);
@@ -614,11 +614,11 @@ public:
       CPPAD_ASSERT_UNKNOWN( random_itr_info_.size() == 0  );
    }
    //
-   // all_par_vec
-   pod_vector_maybe<Base>& all_par_vec(void)
-   {  return dyn_play_.all_par_vec(); }
-   const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return dyn_play_.all_par_vec(); }
+   // par_all
+       pod_vector_maybe<Base>& par_all(void)
+   {  return dyn_play_.par_all(); }
+   const pod_vector_maybe<Base>& par_all(void) const
+   {  return dyn_play_.par_all(); }
    //
    // dyn_par_is
    const pod_vector<bool>& dyn_par_is(void) const
@@ -662,7 +662,7 @@ public:
    the index of the VecAD index in recording
    */
    size_t GetVecInd (size_t i) const
-   {  return size_t( all_var_vecad_ind_[i] ); }
+   {  return size_t( var_vecad_ind_[i] ); }
    //
    // GetPar
    Base GetPar(size_t i) const
@@ -712,7 +712,7 @@ public:
    //
    // all_var_rec_ind_rec
    size_t num_var_vecad_ind_rec(void) const
-   {  return all_var_vecad_ind_.size(); }
+   {  return var_vecad_ind_.size(); }
    //
    // num_var_vecad_rec
    size_t num_var_vecad_rec(void) const
@@ -740,7 +740,7 @@ public:
          + op_vec_.size()            * sizeof(opcode_t)
          + arg_vec_.size()           * sizeof(addr_t)
          + text_vec_.size()          * sizeof(char)
-         + all_var_vecad_ind_.size() * sizeof(addr_t)
+         + var_vecad_ind_.size() * sizeof(addr_t)
       ;
    }
    // size_random

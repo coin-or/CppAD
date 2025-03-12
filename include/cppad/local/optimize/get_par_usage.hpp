@@ -105,7 +105,7 @@ void get_par_usage(
    const pod_vector<opcode_t>&    dyn_par_op( play->dyn_par_op() );
    const pod_vector<addr_t>&      dyn_par_arg( play->dyn_par_arg() );
    const pod_vector<addr_t>&      dyn2par_index( play->dyn2par_index() );
-   const pod_vector_maybe<Base>&  all_par_vec( play->all_par_vec() );
+   const pod_vector_maybe<Base>&  par_all( play->par_all() );
    // -----------------------------------------------------------------------
    // initialize par_usage
    par_usage.resize(num_par);
@@ -358,7 +358,7 @@ void get_par_usage(
          // this argument is a variable
          CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
          atom_ix[atom_j]     = 0;
-         parameter_x[atom_j] = all_par_vec[0]; // variables get value nan
+         parameter_x[atom_j] = par_all[0]; // variables get value nan
          type_x[atom_j]      = variable_enum;
          ++atom_j;
          if( atom_j == atom_n )
@@ -369,7 +369,7 @@ void get_par_usage(
          // this argument is a parameter
          CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
          atom_ix[atom_j]     = size_t( arg[0] );
-         parameter_x[atom_j] = all_par_vec[arg[0]]; // parameter value
+         parameter_x[atom_j] = par_all[arg[0]]; // parameter value
          if( dyn_par_is[arg[0]] )
             type_x[atom_j] = dynamic_enum;
          else
@@ -435,9 +435,9 @@ void get_par_usage(
          type_x.resize(n);
          for(size_t j = 0; j < n; ++j)
          {  // parameter index zero is used for variable
-            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( all_par_vec[0] ) );
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( par_all[0] ) );
             addr_t arg_j = dyn_par_arg[i_arg + 5 + j];
-            parameter_x[j] = all_par_vec[arg_j];
+            parameter_x[j] = par_all[arg_j];
             if( arg_j == 0 )
                type_x[j] = variable_enum;
             else if( dyn_par_is[arg_j] )

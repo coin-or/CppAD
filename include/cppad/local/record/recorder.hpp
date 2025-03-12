@@ -156,9 +156,9 @@ private:
    // The operators in the recording.
    pod_vector<opcode_t> op_vec_;
    //
-   // all_var_vecad_ind_
-   // The VecAD indices in the recording.
-   pod_vector<addr_t> all_var_vecad_ind_;
+   // var_vecad_ind_
+       // The VecAD indices in the recording.
+   pod_vector<addr_t> var_vecad_ind_;
    //
    // arg_vec_
    // The argument indices in the recording
@@ -208,9 +208,9 @@ public:
       );
    }
    //
-   // all_par_vec
-   const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return dyn_record_.all_par_vec(); }
+   // par_all
+       const pod_vector_maybe<Base>& par_all(void) const
+   {  return dyn_record_.par_all(); }
    //
    // put_con_par
    addr_t put_con_par(const Base &par)
@@ -285,7 +285,7 @@ public:
    {  return 0
          + dyn_record_.Memory()
          + op_vec_.capacity()             * sizeof(opcode_t)
-         + all_var_vecad_ind_.capacity()  * sizeof(addr_t)
+         + var_vecad_ind_.capacity()  * sizeof(addr_t)
          + arg_vec_.capacity()            * sizeof(addr_t)
          + text_vec_.capacity()           * sizeof(char)
       ;

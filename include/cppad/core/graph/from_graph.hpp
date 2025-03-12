@@ -263,7 +263,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
    Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
 
    // Place the parameter with index 0 in the tape
-   const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec());
+   const local::pod_vector_maybe<Base>& parameter( rec.par_all());
    CPPAD_ASSERT_UNKNOWN( parameter.size() == 0 );
    addr_t i_par = rec.put_con_par(nan);
    CPPAD_ASSERT_UNKNOWN( i_par == 0 );

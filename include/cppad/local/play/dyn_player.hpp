@@ -19,14 +19,14 @@ private:
    // Number of dynamic parameters in the recording
    size_t n_dyn_independent_;
    //
-   // all_par_vec_;
+   // par_all_;
    // Vector containing all the parameters in the recording.
    // Use pod_vector_maybe because Base may not be plain old data.
-   pod_vector_maybe<Base> all_par_vec_;
+   pod_vector_maybe<Base> par_all_;
    //
    // dyn_par_is_
-   // Which elements of all_par_vec_ are dynamic parameters
-   // (same size are all_par_vec_)
+   // Which elements of par_all_ are dynamic parameters
+   // (same size are par_all_)
    pod_vector<bool> dyn_par_is_;
    //
    // dyn2par_index_
@@ -36,8 +36,8 @@ private:
    pod_vector<addr_t> dyn2par_index_;
    //
    // dyn_par_op_
-   // operators for just the dynamic parameters in all_par_vec_
-   pod_vector<opcode_t> dyn_par_op_;
+   // operators for just the dynamic parameters in par_all_
+       pod_vector<opcode_t> dyn_par_op_;
    //
    // dyn_par_arg_
    // arguments for the dynamic parameter operators
@@ -128,7 +128,7 @@ public:
       dyn_par_arg_        = dyn_play.dyn_par_arg_;
       //
       // pod_maybe_vectors
-      all_par_vec_        = dyn_play.all_par_vec_;
+      par_all_            = dyn_play.par_all_;
    }
    //
    // base2ad
@@ -148,9 +148,9 @@ public:
       dyn_play.dyn_par_arg_        = dyn_par_arg_;
       //
       // pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
-      dyn_play.all_par_vec_.resize( all_par_vec_.size() );
-      for(size_t i = 0; i < all_par_vec_.size(); ++i)
-         dyn_play.all_par_vec_[i] = all_par_vec_[i];
+      dyn_play.par_all_.resize( par_all_.size() );
+      for(size_t i = 0; i < par_all_.size(); ++i)
+         dyn_play.par_all_[i] = par_all_[i];
       //
       return dyn_play;
    }
@@ -168,7 +168,7 @@ public:
       dyn_par_arg_.swap(        other.dyn_par_arg_);
       //
       // pod_maybe_vectors
-      all_par_vec_.swap(    other.all_par_vec_);
+      par_all_.swap(    other.par_all_);
    }
    //
    // get_recording
@@ -179,7 +179,7 @@ public:
       CPPAD_ASSERT_UNKNOWN( dyn_rec.dyn_par_is_.size() < addr_t_max );
       CPPAD_ASSERT_UNKNOWN( dyn_rec.dyn_par_op_.size() < addr_t_max );
       CPPAD_ASSERT_UNKNOWN( dyn_rec.dyn_par_arg_.size() < addr_t_max );
-      CPPAD_ASSERT_UNKNOWN( dyn_rec.all_par_vec_.size() < addr_t_max );
+      CPPAD_ASSERT_UNKNOWN( dyn_rec.par_all_.size() < addr_t_max );
 # endif
 
       // size_t values
@@ -191,12 +191,12 @@ public:
       dyn_par_arg_.swap( dyn_rec.dyn_par_arg_ );
       //
       // pod_maybe
-      all_par_vec_.swap( dyn_rec.all_par_vec_ );
+      par_all_.swap( dyn_rec.par_all_ );
       //
       // dyn2par_index_
       dyn2par_index_.resize( dyn_par_op_.size() );
       size_t i_dyn = 0;
-      for(size_t i_par = 0; i_par < all_par_vec_.size(); ++i_par)
+      for(size_t i_par = 0; i_par < par_all_.size(); ++i_par)
       {  if( dyn_par_is_[i_par] )
          {  dyn2par_index_[i_dyn] = addr_t( i_par );
             ++i_dyn;
@@ -208,11 +208,11 @@ public:
       check_dynamic_dag();
    }
    //
-   // all_par_vec
-   pod_vector_maybe<Base>& all_par_vec(void)
-   {  return all_par_vec_; }
-   const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return all_par_vec_; }
+   // par_all
+       pod_vector_maybe<Base>& par_all(void)
+   {  return par_all_; }
+   const pod_vector_maybe<Base>& par_all(void) const
+   {  return par_all_; }
    //
    // dyn_par_is
    const pod_vector<bool>& dyn_par_is(void) const
@@ -232,11 +232,11 @@ public:
    //
    // GetPar
    Base GetPar(size_t i) const
-   {  return all_par_vec_[i]; }
+   {  return par_all_[i]; }
    //
    // GetPar
    const Base* GetPar(void) const
-   {  return all_par_vec_.data(); }
+   {  return par_all_.data(); }
    //
    // n_dyn_independent
    size_t n_dyn_independent(void) const
@@ -252,7 +252,7 @@ public:
    //
    // num_par_rec
    size_t num_par_rec(void) const
-   {  return all_par_vec_.size(); }
+   {  return par_all_.size(); }
    //
    // size_op_seq
    // A measure of amount of memory used to store
@@ -260,7 +260,7 @@ public:
    /// In user api as f.size_op_seq(); see the file fun_property.omh.
    size_t size_op_seq(void) const
    {  return 0
-         + all_par_vec_.size()   * sizeof(Base)
+         + par_all_.size()   * sizeof(Base)
          + dyn_par_is_.size()    * sizeof(bool)
          + dyn2par_index_.size() * sizeof(addr_t)
          + dyn_par_op_.size()    * sizeof(opcode_t)
