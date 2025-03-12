@@ -8,6 +8,7 @@
 # include <cppad/local/play/addr_enum.hpp>
 # include <cppad/local/play/sequential_iterator.hpp>
 # include <cppad/local/play/subgraph_iterator.hpp>
+# include <cppad/local/play/dyn_player.hpp>
 # include <cppad/local/play/random_setup.hpp>
 # include <cppad/local/atom_state.hpp>
 # include <cppad/local/is_pod.hpp>
@@ -91,7 +92,7 @@ struct random_itr_info_t {
    size_t size(void) const
    {  //
       CPPAD_ASSERT_UNKNOWN( short_op2arg.size()  == short_op2var.size() );
-      CPPAD_ASSERT_UNKNOWN( addr_t_op2arg.size()    == addr_t_op2var.size() );
+      CPPAD_ASSERT_UNKNOWN( addr_t_op2arg.size() == addr_t_op2var.size() );
       CPPAD_ASSERT_UNKNOWN( size_t_op2arg.size() == size_t_op2var.size() );
       //
       size_t short_num_arg  = short_op2arg.size();
@@ -146,83 +147,70 @@ public:
    // value_t
    typedef Base value_t;
 private:
+   //
+   // friend
    // player<Base> must be a friend of player< AD<Base> > for base2ad to work
    template <class AnotherBase> friend class player;
    // ----------------------------------------------------------------------
-   // information that defines the recording
-
-   /// Number of independent dynamic parameters
-   size_t n_dyn_independent_;
-
-   /// Number of variables in the recording.
+   //
+   // dyn_play_
+   dyn_player<Base> dyn_play_;
+   //
+   // num_var_rec_
+   // Number of variables in the recording.
    size_t num_var_rec_;
 
-   /// number of vecad load opeations in the reconding
+   // num_var_load_rec_
+   // number of vecad load opeations in the reconding
    size_t num_var_load_rec_;
 
-   /// Number of VecAD vectors in the recording
+   // num_var_vecad_rec_
+   // Number of VecAD vectors in the recording
    size_t num_var_vecad_rec_;
 
-   /// The operators in the recording.
+   // op_vec_
+   // The operators in the recording.
    pod_vector<opcode_t> op_vec_;
 
-   /// The operation argument indices in the recording
+   // arg_vec_
+   // The operation argument indices in the recording
    pod_vector<addr_t> arg_vec_;
 
-   /// Character strings ('\\0' terminated) in the recording.
+   // text_vec_
+   // Character strings ('\\0' terminated) in the recording.
    pod_vector<char> text_vec_;
 
-   /// The VecAD indices in the recording.
+   // all_var_vecad_ind_
+   // The VecAD indices in the recording.
    pod_vector<addr_t> all_var_vecad_ind_;
-
-   /// All of the parameters in the recording.
-   /// Use pod_maybe because Base may not be plain old data.
-   pod_vector_maybe<Base> all_par_vec_;
-
-   /// Which elements of all_par_vec_ are dynamic parameters
-   /// (size equal number of parametrers)
-   pod_vector<bool> dyn_par_is_;
-
-   /// mapping from dynamic parameter index to parameter index
-   /// 1: size equal to number of dynamic parameters
-   /// 2: dyn2par_index_[j] < dyn2par_index_[j+1]
-   pod_vector<addr_t> dyn2par_index_;
-
-   /// operators for just the dynamic parameters
-   /// (size equal number of dynamic parameters)
-   pod_vector<opcode_t> dyn_par_op_;
-
-   /// arguments for the dynamic parameter operators
-   pod_vector<addr_t> dyn_par_arg_;
-
-   // ----------------------------------------------------------------------
-   // Information needed to use member functions that begin with random_
-   // and for using const_subgraph_iterator.
    //
    // random_itr_info_
+   // Information needed to use member functions that begin with random_
+   // and for using const_subgraph_iterator.
    random_itr_info_t random_itr_info_;
    //
 public:
-   // =================================================================
+   //
    /// default constructor
    // set all scalars to zero to avoid valgraind warning when ani assignment
    // occures before values get set.
    player(void)
-   : n_dyn_independent_(0)
-   , num_var_rec_(0)
+   : num_var_rec_(0)
    , num_var_load_rec_(0)
    , num_var_vecad_rec_(0)
    { }
+   //
    // move semantics constructor
    // (none of the default constructor values matter to the destructor)
    player(player& play)
    {  swap(play);  }
-   // =================================================================
-   /// destructor
+   //
+   // destructor
    ~player(void)
    { }
-   // ======================================================================
-   /// type used for addressing iterators for this player
+   //
+   // address_type
+   // type used for addressing iterators for this player
    play::addr_enum address_type(void) const
    {
       // required
@@ -245,7 +233,8 @@ public:
       );
       return play::size_t_enum;
    }
-   // ===============================================================
+   //
+   // get_recording
    /*!
    Moving an operation sequence from a recorder to this player
 
@@ -270,8 +259,11 @@ public:
 # ifndef NDEBUG
       size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
 # endif
-      // just set size_t values
-      n_dyn_independent_  = rec.dyn_record_.n_dyn_independent_;
+      //
+      // dyn_play_
+      dyn_play_.get_recording( rec.dyn_record_ );
+
+      // size_t values
       num_var_rec_        = rec.num_var_rec_;
       num_var_load_rec_   = rec.num_var_load_rec_;
 
@@ -282,16 +274,6 @@ public:
       // arg_vec_
       arg_vec_.swap(rec.arg_vec_);
       CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
-
-      // all_par_vec_
-      all_par_vec_.swap(rec.dyn_record_.all_par_vec_);
-      CPPAD_ASSERT_UNKNOWN(all_par_vec_.size() < addr_t_max );
-
-      // dyn_par_is_, dyn_par_op_, dyn_par_arg_
-      dyn_par_is_.swap( rec.dyn_record_.dyn_par_is_ );
-      dyn_par_op_.swap( rec.dyn_record_.dyn_par_op_ );
-      dyn_par_arg_.swap( rec.dyn_record_.dyn_par_arg_ );
-      CPPAD_ASSERT_UNKNOWN(dyn_par_arg_.size() < addr_t_max );
 
       // text_rec_
       text_vec_.swap(rec.text_vec_);
@@ -313,30 +295,15 @@ public:
          CPPAD_ASSERT_UNKNOWN( i == all_var_vecad_ind_.size() );
       }
 
-      // mapping from dynamic parameter index to parameter index
-      dyn2par_index_.resize( dyn_par_op_.size() );
-      size_t i_dyn = 0;
-      for(size_t i_par = 0; i_par < all_par_vec_.size(); ++i_par)
-      {  if( dyn_par_is_[i_par] )
-         {  dyn2par_index_[i_dyn] = addr_t( i_par );
-            ++i_dyn;
-         }
-      }
-      CPPAD_ASSERT_UNKNOWN( i_dyn == dyn2par_index_.size() );
-
       // random access information
       clear_random();
 
       // some checks
       check_inv_op(n_ind);
       check_variable_dag();
-      check_dynamic_dag();
    }
-   // ----------------------------------------------------------------------
-   /*!
-   Check that InvOp operators start with second operator and are contiguous,
-   and there are n_ind of them.
-   */
+   //
+   // check_inv_op
 # ifdef NDEBUG
    void check_inv_op(size_t n_ind) const
    {  return; }
@@ -358,12 +325,8 @@ public:
       return;
    }
 # endif
-   // ----------------------------------------------------------------------
-   /*!
-   Check variable graph to make sure arguments have value less
-   than or equal to the previously created variable. This is the directed
-   acyclic graph condition (DAG).
-   */
+   //
+   // check_variable_dag
 # ifdef NDEBUG
    void check_variable_dag(void) const
    {  return; }
@@ -532,70 +495,20 @@ public:
       return;
    }
 # endif
-   // ----------------------------------------------------------------------
-   /*!
-   Check dynamic parameter graph to make sure arguments have value less
-   than or equal to the previously created dynamic parameter.
-   This is the directed acyclic graph condition (DAG).
-   */
-# ifdef NDEBUG
-   void check_dynamic_dag(void) const
-   {  return; }
-# else
-   void check_dynamic_dag(void) const
-   {  // number of dynamic parameters
-      size_t num_dyn = dyn_par_op_.size();
-      //
-      size_t i_arg = 0; // initialize dynamic parameter argument index
-      for(size_t i_dyn = 0; i_dyn < num_dyn; ++i_dyn)
-      {  // i_par is parameter index
-         addr_t i_par = dyn2par_index_[i_dyn];
-         CPPAD_ASSERT_UNKNOWN( dyn_par_is_[i_par] );
-         //
-         // operator for this dynamic parameter
-         op_code_dyn op = op_code_dyn( dyn_par_op_[i_dyn] );
-         //
-         // number of arguments for this dynamic parameter
-         size_t n_arg       = num_arg_dyn(op);
-         if( op == atom_dyn )
-         {  size_t n = size_t( dyn_par_arg_[i_arg + 2] );
-            size_t m = size_t( dyn_par_arg_[i_arg + 3] );
-            n_arg    = 6 + n + m;
-            CPPAD_ASSERT_UNKNOWN(
-               n_arg == size_t( dyn_par_arg_[i_arg + 5 + n + m] )
-            );
-            for(size_t i = 5; i < n - 1; ++i)
-               CPPAD_ASSERT_UNKNOWN( dyn_par_arg_[i_arg + i] <  i_par );
-# ifndef NDEBUG
-            for(size_t i = 5+n; i < 5+n+m; ++i)
-            {  addr_t j_par = dyn_par_arg_[i_arg + i];
-               CPPAD_ASSERT_UNKNOWN( (j_par == 0) || (j_par >= i_par) );
-            }
-# endif
-         }
-         else
-         {  size_t num_non_par = num_non_par_arg_dyn(op);
-            for(size_t i = num_non_par; i < n_arg; ++i)
-               CPPAD_ASSERT_UNKNOWN( dyn_par_arg_[i_arg + i] < i_par);
-         }
-         //
-         // next dynamic parameter
-         i_arg += n_arg;
-      }
-      return;
-   }
-# endif
-   // ===============================================================
-   /*!
-   Copy a player<Base> to another player<Base>
-
-   \param play
-   object that contains the operatoion sequence to copy.
-   */
+   //
+   // operator=
+   // move semantics assignment
+   void operator=(player&& play)
+   {  swap(play); }
+   //
+   // operator=
    void operator=(const player& play)
    {
+      //
+      // dyn_play_
+      dyn_play_           = play.dyn_play_;
+      //
       // size_t objects
-      n_dyn_independent_  = play.n_dyn_independent_;
       num_var_rec_        = play.num_var_rec_;
       num_var_load_rec_   = play.num_var_load_rec_;
       num_var_vecad_rec_  = play.num_var_vecad_rec_;
@@ -605,24 +518,20 @@ public:
       arg_vec_            = play.arg_vec_;
       text_vec_           = play.text_vec_;
       all_var_vecad_ind_  = play.all_var_vecad_ind_;
-      dyn_par_is_         = play.dyn_par_is_;
-      dyn2par_index_      = play.dyn2par_index_;
-      dyn_par_op_         = play.dyn_par_op_;
-      dyn_par_arg_        = play.dyn_par_arg_;
       //
       // random_itr_info_
       random_itr_info_    = play.random_itr_info_;
-      //
-      // pod_maybe_vectors
-      all_par_vec_        = play.all_par_vec_;
    }
-   // ===============================================================
-   /// Create a player< AD<Base> > from this player<Base>
+   //
+   // base2ad
+   // Create a player< AD<Base> > from this player<Base>
    player< AD<Base> > base2ad(void) const
    {  player< AD<Base> > play;
       //
+      // dyn_play_
+      play.dyn_play_            = dyn_play_.base2ad();
+      //
       // size_t objects
-      play.n_dyn_independent_  = n_dyn_independent_;
       play.num_var_rec_        = num_var_rec_;
       play.num_var_load_rec_   = num_var_load_rec_;
       play.num_var_vecad_rec_  = num_var_vecad_rec_;
@@ -632,27 +541,21 @@ public:
       play.arg_vec_            = arg_vec_;
       play.text_vec_           = text_vec_;
       play.all_var_vecad_ind_  = all_var_vecad_ind_;
-      play.dyn_par_is_         = dyn_par_is_;
-      play.dyn2par_index_      = dyn2par_index_;
-      play.dyn_par_op_         = dyn_par_op_;
-      play.dyn_par_arg_        = dyn_par_arg_;
       //
       // random_itr_info_
       play.random_itr_info_    = random_itr_info_;
       //
-      // pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
-      play.all_par_vec_.resize( all_par_vec_.size() );
-      for(size_t i = 0; i < all_par_vec_.size(); ++i)
-         play.all_par_vec_[i] = all_par_vec_[i];
-      //
       return play;
    }
-   // ===============================================================
-   /// swap this recording with another recording
-   /// (used for move semantics version of ADFun assignment operation)
+   //
+   // swap
+   /// used for move semantics version of ADFun assignment operation
    void swap(player& other)
-   {  // size_t objects
-      std::swap(n_dyn_independent_,  other.n_dyn_independent_);
+   {  //
+      // dyn_play_
+      dyn_play_.swap( other.dyn_play_ );
+      //
+      // size_t objects
       std::swap(num_var_rec_,        other.num_var_rec_);
       std::swap(num_var_load_rec_,   other.num_var_load_rec_);
       std::swap(num_var_vecad_rec_,  other.num_var_vecad_rec_);
@@ -662,25 +565,14 @@ public:
       arg_vec_.swap(            other.arg_vec_);
       text_vec_.swap(           other.text_vec_);
       all_var_vecad_ind_.swap(  other.all_var_vecad_ind_);
-      dyn_par_is_.swap(         other.dyn_par_is_);
-      dyn2par_index_.swap(      other.dyn2par_index_);
-      dyn_par_op_.swap(         other.dyn_par_op_);
-      dyn_par_arg_.swap(        other.dyn_par_arg_);
       //
       // random_itr_info_
       random_itr_info_.swap(    other.random_itr_info_);
-      //
-      // pod_maybe_vectors
-      all_par_vec_.swap(    other.all_par_vec_);
    }
-   // move semantics assignment
-   void operator=(player&& play)
-   {  swap(play); }
-   // =================================================================
-   /// Enable use of const_subgraph_iterator and member functions that begin
-   // with random_(no work if already setup).
    //
    // setup_random
+   /// Enable use of const_subgraph_iterator and member functions that begin
+   // with random_(no work if already setup).
    void setup_random(unsigned short& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
@@ -696,8 +588,8 @@ public:
          num_var_rec_                        ,
          op_vec_                             ,
          arg_vec_                            ,
-         &random_itr_info_.addr_t_op2arg        ,
-         &random_itr_info_.addr_t_op2var        ,
+         &random_itr_info_.addr_t_op2arg     ,
+         &random_itr_info_.addr_t_op2var     ,
          &random_itr_info_.addr_t_var2op
       );
    }
@@ -714,33 +606,37 @@ public:
    }
 # endif
    //
+   // clear_
    /// Free memory used for functions that begin with random_
    /// and random iterators and subgraph iterators
    void clear_random(void)
    {  random_itr_info_.clear();
       CPPAD_ASSERT_UNKNOWN( random_itr_info_.size() == 0  );
    }
-   /// get non-const version of all_par_vec
+   //
+   // all_par_vec
    pod_vector_maybe<Base>& all_par_vec(void)
-   {  return all_par_vec_; }
-   /// get const version of all_par_vec
+   {  return dyn_play_.all_par_vec(); }
    const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return all_par_vec_; }
-   // ================================================================
-   // const functions that retrieve infromation from this player
-   // ================================================================
-   /// const version of dynamic parameter flag
+   {  return dyn_play_.all_par_vec(); }
+   //
+   // dyn_par_is
    const pod_vector<bool>& dyn_par_is(void) const
-   {  return dyn_par_is_; }
-   /// const version of dynamic parameter index to parameter index
+   {  return dyn_play_.dyn_par_is(); }
+   //
+   // dyn2par_index
    const pod_vector<addr_t>& dyn2par_index(void) const
-   {  return dyn2par_index_; }
-   /// const version of dynamic parameter operator
+   {  return dyn_play_.dyn2par_index(); }
+   //
+   // dyn_par_op
    const pod_vector<opcode_t>& dyn_par_op(void) const
-   {  return dyn_par_op_; }
-   /// const version of dynamic parameter arguments
+   {  return dyn_play_.dyn_par_op(); }
+   //
+   // dyn_par_arg
    const pod_vector<addr_t>& dyn_par_arg(void) const
-   {  return dyn_par_arg_; }
+   {  return dyn_play_.dyn_par_arg(); }
+   //
+   // GetOp
    /*!
    \brief
    fetch an operator from the recording.
@@ -753,7 +649,8 @@ public:
    */
    op_code_var GetOp (size_t i) const
    {  return op_code_var(op_vec_[i]); }
-
+   //
+   // GetVecInd
    /*!
    \brief
    Fetch a VecAD index from the recording.
@@ -766,31 +663,14 @@ public:
    */
    size_t GetVecInd (size_t i) const
    {  return size_t( all_var_vecad_ind_[i] ); }
-
-   /*!
-   \brief
-   Fetch a parameter from the recording.
-
-   \return
-   the i-th parameter in the recording.
-
-   \param i
-   the index of the parameter in recording
-   */
+   //
+   // GetPar
    Base GetPar(size_t i) const
-   {  return all_par_vec_[i]; }
-
-   /*!
-   \brief
-   Fetch entire parameter vector from the recording.
-
-   \return
-   the entire parameter vector.
-
-   */
+   {  return dyn_play_.GetPar(i);  }
    const Base* GetPar(void) const
-   {  return all_par_vec_.data(); }
-
+   {  return dyn_play_.GetPar(); }
+   //
+   // GetTxt
    /*!
    \brief
    Fetch a '\\0' terminated string from the recording.
@@ -805,77 +685,71 @@ public:
    {  CPPAD_ASSERT_UNKNOWN(i < text_vec_.size() );
       return text_vec_.data() + i;
    }
-
-   /// Fetch number of independent dynamic parameters in the recording
+   //
+   // n_dyn_independent
    size_t n_dyn_independent(void) const
-   {  return n_dyn_independent_; }
-
-   /// Fetch number of dynamic parameters in the recording
+   {  return dyn_play_.n_dyn_independent(); }
+   //
+   // num_dynamic_par
    size_t num_dynamic_par(void) const
-   {  return dyn_par_op_.size(); }
-
-   /// Fetch number of dynamic parameters operator arguments in the recording
+   {  return dyn_play_.num_dynamic_par(); }
+   //
+   // num_dynamic_arg
    size_t num_dynamic_arg(void) const
-   {  return dyn_par_arg_.size(); }
-
-   /// Fetch number of variables in the recording.
+   {  return dyn_play_.num_dynamic_arg(); }
+   //
+   // num_var_rec
    size_t num_var_rec(void) const
    {  return num_var_rec_; }
-
-   /// Fetch number of vecad load operations
+   //
+   // num_var_load_rec
    size_t num_var_load_rec(void) const
    {  return num_var_load_rec_; }
-
-   /// Fetch number of operators in the recording.
+   //
+   // num_op_rec
    size_t num_op_rec(void) const
    {  return op_vec_.size(); }
-
-   /// Fetch number of VecAD indices in the recording.
+   //
+   // all_var_rec_ind_rec
    size_t num_var_vecad_ind_rec(void) const
    {  return all_var_vecad_ind_.size(); }
-
-   /// Fetch number of VecAD vectors in the recording
+   //
+   // num_var_vecad_rec
    size_t num_var_vecad_rec(void) const
    {  return num_var_vecad_rec_; }
-
-   /// Fetch number of argument indices in the recording.
+   //
+   // num_op_arg_rec
    size_t num_op_arg_rec(void) const
    {  return arg_vec_.size(); }
-
-   /// Fetch number of parameters in the recording.
+   //
+   // num_par_rec
    size_t num_par_rec(void) const
-   {  return all_par_vec_.size(); }
-
-   /// Fetch number of characters (representing strings) in the recording.
+   {  return dyn_play_.num_par_rec(); }
+   //
+   // num_text_rec
    size_t num_text_rec(void) const
    {  return text_vec_.size(); }
-
-   /// A measure of amount of memory used to store
-   /// the operation sequence, just lengths, not capacities.
-   /// In user api as f.size_op_seq(); see the file fun_property.omh.
+   //
+   // size_op_seq
+   // A measure of amount of memory used to store
+   // the operation sequence, just lengths, not capacities.
+   // In user api as f.size_op_seq(); see the file fun_property.omh.
    size_t size_op_seq(void) const
-   {  // check assumptions made by ad_fun<Base>::size_op_seq()
-      CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
-      CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
-      CPPAD_ASSERT_UNKNOWN( all_par_vec_.size() == num_par_rec() );
-      CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
-      CPPAD_ASSERT_UNKNOWN( all_var_vecad_ind_.size() == num_var_vecad_ind_rec() );
-      return op_vec_.size()        * sizeof(opcode_t)
-             + arg_vec_.size()       * sizeof(addr_t)
-             + all_par_vec_.size()   * sizeof(Base)
-             + dyn_par_is_.size()    * sizeof(bool)
-             + dyn2par_index_.size() * sizeof(addr_t)
-             + dyn_par_op_.size()    * sizeof(opcode_t)
-             + dyn_par_arg_.size()   * sizeof(addr_t)
-             + text_vec_.size()      * sizeof(char)
-             + all_var_vecad_ind_.size() * sizeof(addr_t)
+   {  return 0
+         + dyn_play_.size_op_seq()
+         + op_vec_.size()            * sizeof(opcode_t)
+         + arg_vec_.size()           * sizeof(addr_t)
+         + text_vec_.size()          * sizeof(char)
+         + all_var_vecad_ind_.size() * sizeof(addr_t)
       ;
    }
-   /// A measure of amount of memory used for random access routine
-   /// In user api as f.size_random(); see the file fun_property.omh.
+   // size_random
+   // A measure of amount of memory used for random access routine
+   // In user api as f.size_random(); see the file fun_property.omh.
    size_t size_random(void) const
    {  return random_itr_info_.size(); }
-   // -----------------------------------------------------------------------
+   //
+   // begin
    /// const sequential iterator begin
    play::const_sequential_iterator begin(void) const
    {  size_t op_index = 0;
@@ -884,7 +758,8 @@ public:
          num_var, &op_vec_, &arg_vec_, op_index
       );
    }
-   /// const sequential iterator end
+   //
+   // end
    play::const_sequential_iterator end(void) const
    {  size_t op_index = op_vec_.size() - 1;
       size_t num_var  = num_var_rec_;
@@ -892,8 +767,8 @@ public:
          num_var, &op_vec_, &arg_vec_, op_index
       );
    }
-   // -----------------------------------------------------------------------
-   /// const subgraph iterator begin
+   //
+   // begin_subgraph
    play::const_subgraph_iterator<addr_t>  begin_subgraph(
       const play::const_random_iterator<addr_t>& random_itr ,
       const pod_vector<addr_t>*                  subgraph   ) const
@@ -904,7 +779,8 @@ public:
          subgraph_index
       );
    }
-   /// const subgraph iterator end
+   //
+   // end_subgraph
    template <class Addr>
    play::const_subgraph_iterator<Addr>  end_subgraph(
       const play::const_random_iterator<Addr>&   random_itr ,
@@ -916,7 +792,7 @@ public:
          subgraph_index
       );
    }
-   // -----------------------------------------------------------------------
+   //
    /// const random iterator
    play::const_random_iterator<unsigned short>
    get_random(unsigned short& not_used) const
@@ -933,11 +809,12 @@ public:
    {  return play::const_random_iterator<addr_t>(
          op_vec_                             ,
          arg_vec_                            ,
-         &random_itr_info_.addr_t_op2arg        ,
-         &random_itr_info_.addr_t_op2var        ,
+         &random_itr_info_.addr_t_op2arg     ,
+         &random_itr_info_.addr_t_op2var     ,
          &random_itr_info_.addr_t_var2op
       );
    }
+# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
    play::const_random_iterator<size_t>
    get_random(size_t& not_used)
    {  return play::const_random_iterator<size_t>(
@@ -948,6 +825,7 @@ public:
          &random_itr_info_.size_t_var2op
       );
    }
+# endif
 };
 
 } } // END_CPPAD_lOCAL_NAMESPACE

@@ -58,13 +58,13 @@ namespace CppAD { namespace local {
 template <class Base> class dyn_recorder {
 // END_CLASS
    //
-   // player
-   friend class player<Base>;
+   // friend
+   friend class dyn_player<Base>;
 //
 private:
    //
    // n_dyn_independent_
- // Number of dynamic parameters in the recording
+   // Number of dynamic parameters in the recording
    size_t n_dyn_independent_;
    //
    // all_dyn_vec_ind_;
@@ -95,7 +95,7 @@ private:
 //
 public:
    // BEGIN_DYN_RECORD
-   // dyn_recorder dyn_record
+   // dyn_recorder<Base> dyn_record
    dyn_recorder(void)
    // END_DYN_RECORD
    : n_dyn_independent_(0)
