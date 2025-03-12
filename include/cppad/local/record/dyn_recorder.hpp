@@ -121,8 +121,8 @@ public:
    {  n_dyn_independent_ = n_dyn_independent; }
    //
    // BEGIN_N_DYN_INDEPENDENT
-   // n_dyn_independent = dyn_record.get_num_dynamic_ind()
-   size_t get_num_dynamic_ind(void) const
+   // n_dyn_independent = dyn_record.n_dyn_independent()
+   size_t n_dyn_independent(void) const
    // END_N_DYN_INDEPENDENT
    {  return n_dyn_independent_; }
    //
