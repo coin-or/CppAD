@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SUBGRAPH_SPARSITY_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin subgraph_sparsity}
@@ -195,8 +195,8 @@ void ADFun<Base,RecBase>::subgraph_sparsity(
       );
       break;
 
-      case local::play::unsigned_int_enum:
-      local::subgraph::subgraph_sparsity<unsigned int>(
+      case local::play::addr_t_enum:
+      local::subgraph::subgraph_sparsity<addr_t>(
          &play_,
          subgraph_info_,
          dep_taddr_,

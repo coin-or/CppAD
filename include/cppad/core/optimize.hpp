@@ -342,8 +342,8 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
          );
          break;
 
-         case local::play::unsigned_int_enum:
-         exceed = local::optimize::optimize_run<unsigned int>(
+         case local::play::addr_t_enum:
+         exceed = local::optimize::optimize_run<addr_t>(
             options, n_ind_var, dep_taddr_, &play_, &rec
          );
          break;

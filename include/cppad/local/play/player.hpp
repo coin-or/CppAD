@@ -33,7 +33,7 @@ struct random_itr_info_t {
    // *_op2arg
    // index in arg_vec_ corresonding to the first argument for each operator
    pod_vector<unsigned  short> short_op2arg;
-   pod_vector<unsigned  int>   int_op2arg;
+   pod_vector<addr_t>          addr_t_op2arg;
    pod_vector<size_t>          size_t_op2arg;
    /*
    *_op2var
@@ -44,7 +44,7 @@ struct random_itr_info_t {
    used by the current operator and not used by other operators.
    */
    pod_vector<unsigned  short> short_op2var;
-   pod_vector<unsigned  int>   int_op2var;
+   pod_vector<addr_t>          addr_t_op2var;
    pod_vector<size_t>          size_t_op2var;
    /*
    *_var2op
@@ -53,7 +53,7 @@ struct random_itr_info_t {
    This value is valid (invalid) for primary (auxiliary) variables.
    */
    pod_vector<unsigned  short> short_var2op;
-   pod_vector<unsigned  int>   int_var2op;
+   pod_vector<addr_t>          addr_t_var2op;
    pod_vector<size_t>          size_t_var2op;
    //
    // swap
@@ -63,9 +63,9 @@ struct random_itr_info_t {
       short_op2var.swap( other.short_op2var );
       short_var2op.swap( other.short_var2op );
       //
-      int_op2arg.swap( other.int_op2arg );
-      int_op2var.swap( other.int_op2var );
-      int_var2op.swap( other.int_var2op );
+      addr_t_op2arg.swap( other.addr_t_op2arg );
+      addr_t_op2var.swap( other.addr_t_op2var );
+      addr_t_var2op.swap( other.addr_t_var2op );
       //
       size_t_op2arg.swap( other.size_t_op2arg );
       size_t_op2var.swap( other.size_t_op2var );
@@ -79,9 +79,9 @@ struct random_itr_info_t {
       short_op2var.clear();
       short_var2op.clear();
       //
-      int_op2arg.clear();
-      int_op2var.clear();
-      int_var2op.clear();
+      addr_t_op2arg.clear();
+      addr_t_op2var.clear();
+      addr_t_var2op.clear();
       //
       size_t_op2arg.clear();
       size_t_op2var.clear();
@@ -92,15 +92,15 @@ struct random_itr_info_t {
    size_t size(void) const
    {  //
       CPPAD_ASSERT_UNKNOWN( short_op2arg.size()  == short_op2var.size() );
-      CPPAD_ASSERT_UNKNOWN( int_op2arg.size()    == int_op2var.size() );
+      CPPAD_ASSERT_UNKNOWN( addr_t_op2arg.size() == addr_t_op2var.size() );
       CPPAD_ASSERT_UNKNOWN( size_t_op2arg.size() == size_t_op2var.size() );
       //
       size_t short_num_arg  = short_op2arg.size();
-      size_t int_num_arg    = int_op2arg.size();
+      size_t int_num_arg    = addr_t_op2arg.size();
       size_t size_t_num_arg = size_t_op2arg.size();
       //
       size_t short_num_var  = short_var2op.size();
-      size_t int_num_var    = int_var2op.size();
+      size_t int_num_var    = addr_t_var2op.size();
       size_t size_t_num_var = size_t_var2op.size();
       //
       // result
@@ -219,9 +219,9 @@ public:
       if( required <= std::numeric_limits<unsigned short>::max() )
          return play::unsigned_short_enum;
       //
-      // unsigned int
-      if( required <= std::numeric_limits<unsigned int>::max() )
-         return play::unsigned_int_enum;
+      // addr_t
+      if( required <= std::numeric_limits<addr_t>::max() )
+         return play::addr_t_enum;
       //
       // unsigned size_t
       CPPAD_ASSERT_UNKNOWN(
@@ -579,17 +579,17 @@ public:
          &random_itr_info_.short_var2op
       );
    }
-   void setup_random(unsigned int& not_used)
+   void setup_random(addr_t& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
          op_vec_                             ,
          arg_vec_                            ,
-         &random_itr_info_.int_op2arg        ,
-         &random_itr_info_.int_op2var        ,
-         &random_itr_info_.int_var2op
+         &random_itr_info_.addr_t_op2arg     ,
+         &random_itr_info_.addr_t_op2var     ,
+         &random_itr_info_.addr_t_var2op
       );
    }
-# if ! CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
+# if ! CPPAD_IS_SAME_TAPE_ADDR_T_SIZE_T
    void setup_random(size_t& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
@@ -800,16 +800,17 @@ public:
          &random_itr_info_.short_var2op
       );
    }
-   play::const_random_iterator<unsigned int>
-   get_random(unsigned int& not_used) const
-   {  return play::const_random_iterator<unsigned int>(
+   play::const_random_iterator<addr_t>
+   get_random(addr_t& not_used) const
+   {  return play::const_random_iterator<addr_t>(
          op_vec_                             ,
          arg_vec_                            ,
-         &random_itr_info_.int_op2arg        ,
-         &random_itr_info_.int_op2var        ,
-         &random_itr_info_.int_var2op
+         &random_itr_info_.addr_t_op2arg     ,
+         &random_itr_info_.addr_t_op2var     ,
+         &random_itr_info_.addr_t_var2op
       );
    }
+# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
    play::const_random_iterator<size_t>
    get_random(size_t& not_used)
    {  return play::const_random_iterator<size_t>(
@@ -820,6 +821,7 @@ public:
          &random_itr_info_.size_t_var2op
       );
    }
+# endif
 };
 
 } } // END_CPPAD_lOCAL_NAMESPACE

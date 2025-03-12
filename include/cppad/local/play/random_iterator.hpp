@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_RANDOM_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -40,6 +40,9 @@ private:
    const pod_vector<Addr>* var2op_vec_;
 
 public:
+   /// index_t
+   typedef Addr index_t;
+   //
    /// default constructor
    const_random_iterator(void) :
    op_vec_(nullptr)     ,
@@ -102,7 +105,7 @@ public:
       size_t&        var_index  ) const
    {  op        = op_code_var( (*op_vec_)[op_index] );
       op_arg    = (*op2arg_vec_)[op_index] + arg_vec_->data();
-      var_index = (*op2var_vec_)[op_index];
+      var_index = size_t( (*op2var_vec_)[op_index] );
       return;
    }
    /*!

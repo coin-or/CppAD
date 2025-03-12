@@ -159,7 +159,7 @@ done
 # ----------------------------------------------------------------------------
 if [ "$version_ok" == 'no' ]
 then
-   echo 'bin/check_version.sh: version numbers were fixed (see above).'
+   echo 'check_version.sh: The version numbers were fixed (see above).'
    echo 'Re-execute bin/check_version.sh ?'
    exit 1
 fi

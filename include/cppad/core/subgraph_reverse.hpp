@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SUBGRAPH_REVERSE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin subgraph_reverse}
@@ -220,8 +220,8 @@ void ADFun<Base,RecBase>::subgraph_reverse( const BoolVector& select_domain )
       subgraph_info_.init_rev<unsigned short>(&play_, select_domain);
       break;
 
-      case local::play::unsigned_int_enum:
-      subgraph_info_.init_rev<unsigned int>(&play_, select_domain);
+      case local::play::addr_t_enum:
+      subgraph_info_.init_rev<addr_t>(&play_, select_domain);
       break;
 
       case local::play::size_t_enum:
@@ -476,8 +476,8 @@ void ADFun<Base,RecBase>::subgraph_reverse(
       subgraph_reverse_helper<unsigned short>(q, ell, col, dw);
       break;
 
-      case local::play::unsigned_int_enum:
-      subgraph_reverse_helper<unsigned int>(q, ell, col, dw);
+      case local::play::addr_t_enum:
+      subgraph_reverse_helper<addr_t>(q, ell, col, dw);
       break;
 
       case local::play::size_t_enum:
