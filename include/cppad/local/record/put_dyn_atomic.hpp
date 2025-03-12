@@ -132,7 +132,7 @@ void dyn_recorder<Base>::put_dyn_atomic(
 
          case variable_enum:
          arg = 0; // phantom parameter index
-         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( all_par_vec_[arg] ) )
+         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( par_all_[arg] ) )
          break;
 
          default:

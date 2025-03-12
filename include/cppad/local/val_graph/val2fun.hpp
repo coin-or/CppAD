@@ -222,7 +222,7 @@ void ADFun<Base, RecBase>::val2fun(
    //
    // parameter
 # ifndef NDEBUG
-   const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec());
+   const local::pod_vector_maybe<Base>& parameter( rec.par_all());
    CPPAD_ASSERT_UNKNOWN( parameter.size() == 0 );
 # endif
    //

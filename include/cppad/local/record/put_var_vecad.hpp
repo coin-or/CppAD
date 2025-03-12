@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_RECORD_PUT_VAR_VECAD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/record/recorder.hpp>
 
@@ -49,8 +49,8 @@ increments by one for each call to put_var_vecad_ind.
 template <class Base>
 addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 // END_PUT_VAR_VECAD_IND
-{  size_t offset = all_var_vecad_ind_.size();
-   all_var_vecad_ind_.push_back( vec_ind );
+{  size_t offset = var_vecad_ind_.size();
+   var_vecad_ind_.push_back( vec_ind );
    CPPAD_ASSERT_KNOWN(
       size_t( addr_t( offset ) ) == offset,
       "cppad_tape_addr_type cannot support needed index range"

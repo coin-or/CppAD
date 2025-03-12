@@ -28,18 +28,18 @@ set_n_dyn_independent
    // END_SET_NUM_DYNAMIC_IND
 }
 
-get_num_dynamic_ind
-*******************
+n_dyn_independent
+*****************
 {xrst_literal
-   // BEGIN_GET_NUM_DYNAMIC_IND
-   // END_GET_NUM_DYNAMIC_IND
+   // BEGIN_N_DYN_INDEPENDENT
+   // END_N_DYN_INDEPENDENT
 }
 
-all_par_vec
-***********
+par_all
+*******
 {xrst_literal
-   // BEGIN_ALL_PAR_VEC
-   // END_ALL_PAR_VEC
+   // BEGIN_PAR_ALL
+   // END_PAR_ALL
 }
 
 memory
@@ -69,25 +69,25 @@ private:
    //
    // all_dyn_vec_ind_;
    // The VecAD indices in the recording.
-   pod_vector<addr_t> all_dyn_vecad_ind_;
+   pod_vector<addr_t> dyn_vecad_ind_;
    //
    // par_hash_table_
-   // Hash table to reduced number of duplicate parameters in all_par_vec_
-   pod_vector<addr_t> par_hash_table_;
+   // Hash table to reduced number of duplicate parameters in par_all_
+       pod_vector<addr_t> par_hash_table_;
    //
-   // all_par_vec_;
+   // par_all_;
    // Vector containing all the parameters in the recording.
    // Use pod_vector_maybe because Base may not be plain old data.
-   pod_vector_maybe<Base> all_par_vec_;
+   pod_vector_maybe<Base> par_all_;
    //
    // dyn_par_is_
-   // Which elements of all_par_vec_ are dynamic parameters
-   // (same size are all_par_vec_)
+   // Which elements of par_all_ are dynamic parameters
+   // (same size are par_all_)
    pod_vector<bool> dyn_par_is_;
    //
    // dyn_par_op_
-   // operators for just the dynamic parameters in all_par_vec_
-   pod_vector<opcode_t> dyn_par_op_;
+   // operators for just the dynamic parameters in par_all_
+       pod_vector<opcode_t> dyn_par_op_;
    //
    // dyn_par_arg_
    // arguments for the dynamic parameter operators
@@ -120,10 +120,10 @@ public:
    // END_SET_NUM_DYNAMIC_IND
    {  n_dyn_independent_ = n_dyn_independent; }
    //
-   // BEGIN_GET_NUM_DYNAMIC_IND
+   // BEGIN_N_DYN_INDEPENDENT
    // n_dyn_independent = dyn_record.get_num_dynamic_ind()
    size_t get_num_dynamic_ind(void) const
-   // END_GET_NUM_DYNAMIC_IND
+   // END_N_DYN_INDEPENDENT
    {  return n_dyn_independent_; }
    //
    // put_dyn_par
@@ -160,20 +160,20 @@ public:
       VectorAD&                   ay
    );
    //
-   // BEGIN_ALL_PAR_VEC
-   // all_par_vec = dyn_record.all_par_vec()
-   const pod_vector_maybe<Base>& all_par_vec(void) const
-   {  return all_par_vec_; }
-   // END_ALL_PAR_VEC
+   // BEGIN_PAR_ALL
+   // par_all = dyn_record.par_all()
+   const pod_vector_maybe<Base>& par_all(void) const
+   {  return par_all_; }
+   // END_PAR_ALL
    //
    // BEGIN_MEMORY
    /// memory = dyn_record.Memory()
    size_t Memory(void) const
    // END_MEMORY
    {  return 0
-         + all_dyn_vecad_ind_.capacity() * sizeof(addr_t)
+         + dyn_vecad_ind_.capacity() * sizeof(addr_t)
          + par_hash_table_.capacity()    * sizeof(addr_t)
-         + all_par_vec_.capacity()       * sizeof(Base)
+         + par_all_.capacity()       * sizeof(Base)
          + dyn_par_is_.capacity()        * sizeof(bool)
          + dyn_par_op_.capacity()        * sizeof(opcode_t)
          + dyn_par_arg_.capacity()       * sizeof(addr_t)
@@ -239,10 +239,10 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
       op == ind_dyn || op == result_dyn || op == atom_dyn
    );
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
-   all_par_vec_.push_back( par );
+   par_all_.push_back( par );
    dyn_par_is_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
-   return static_cast<addr_t>( all_par_vec_.size() - 1 );
+   return static_cast<addr_t>( par_all_.size() - 1 );
 }
 // BEGIN_PUT_DYN_PAR_1
 template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
@@ -251,11 +251,11 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
 // END_PUT_DYN_PAR_1
 {
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 1 );
-   all_par_vec_.push_back( par );
+   par_all_.push_back( par );
    dyn_par_is_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
    dyn_par_arg_.push_back(a0);
-   return static_cast<addr_t>( all_par_vec_.size() - 1 );
+   return static_cast<addr_t>( par_all_.size() - 1 );
 }
 // BEGIN_PUT_DYN_PAR_2
 template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
@@ -264,12 +264,12 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
 // END_PUT_DYN_PAR_2
 {
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 2 );
-   all_par_vec_.push_back( par );
+   par_all_.push_back( par );
    dyn_par_is_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
    dyn_par_arg_.push_back(a0);
    dyn_par_arg_.push_back(a1);
-   return static_cast<addr_t>( all_par_vec_.size() - 1 );
+   return static_cast<addr_t>( par_all_.size() - 1 );
 }
 /*
 ------------------------------------------------------------------------------
@@ -334,8 +334,8 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_cond_exp(
 // END_PUT_DYN_COND_EXP
 {
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(cond_exp_dyn) == 5 );
-   addr_t ret = addr_t( all_par_vec_.size() );
-   all_par_vec_.push_back( par );
+   addr_t ret = addr_t( par_all_.size() );
+   par_all_.push_back( par );
    dyn_par_is_.push_back(true);
    dyn_par_op_.push_back( opcode_t(cond_exp_dyn) );
    dyn_par_arg_.push_back( addr_t(cop) );
@@ -409,7 +409,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_con_par(const Base &par)
 # ifndef NDEBUG
    // index zero is used to signify that a value is not a parameter;
    // i.e., it is a variable.
-   if( all_par_vec_.size() == 0 )
+   if( par_all_.size() == 0 )
       CPPAD_ASSERT_UNKNOWN( CppAD::isnan(par) );
 # endif
    // ---------------------------------------------------------------------
@@ -418,20 +418,20 @@ template <class Base> addr_t dyn_recorder<Base>::put_con_par(const Base &par)
    // get hash code for this value
    size_t code  = static_cast<size_t>( hash_code(par) );
 
-   // current index in all_par_vec_ corresponding to this hash code
+   // current index in par_all_ corresponding to this hash code
    size_t index = static_cast<size_t>( par_hash_table_[code] );
 
    // check if the old parameter matches the new one
-   if( (0 < index) && (index < all_par_vec_.size()) )
+   if( (0 < index) && (index < par_all_.size()) )
    {  if( ! dyn_par_is_[index] )
-         if( IdenticalEqualCon(all_par_vec_[index], par) )
+         if( IdenticalEqualCon(par_all_[index], par) )
             return static_cast<addr_t>( index );
    }
    // ---------------------------------------------------------------------
-   // put paramerter in all_par_vec_ and replace hash entry for this codee
+   // put paramerter in par_all_ and replace hash entry for this codee
    //
-   index = all_par_vec_.size();
-   all_par_vec_.push_back( par );
+   index = par_all_.size();
+   par_all_.push_back( par );
    dyn_par_is_.push_back(false);
    //
    // change the hash table for this code to point to new value
