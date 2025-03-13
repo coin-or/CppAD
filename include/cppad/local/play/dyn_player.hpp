@@ -6,10 +6,148 @@
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
 
+/*
+------------------------------------------------------------------------------
+{xrst_begin dyn_player dev}
+
+Class That Records a Dynamic Parameter Operation Sequence
+#########################################################
+
+dyn_play
+********
+We use dyn_play to denote a dynamic player create with one of these
+constructors.
+{xrst_literal ,
+   // BEGIN_CLASS , // END_CLASS
+   // BEGIN_DYN_PLAY , // END_DYN_PLAY
+}
+
+
+check_dynamic_dag
+*****************
+This checks that the dynamic parameter operation sequence is an acyclic graph.
+{xrst_literal
+   // BEGIN_CHECK_DYNAMIC_DAG
+   // END_CHECK_DYNAMIC_DAG
+}
+
+Assignment
+**********
+{xrst_literal ,
+   // BEGIN_MOVE_ASSIGNMENT , // END_MOVE_ASSIGNMENT
+   // BEGIN_COPY_ASSIGNMENT , // END_COPY_ASSIGNMENT
+}
+
+swap
+****
+This switches the contents of the two players.
+{xrst_literal
+   // BEGIN_SWAP
+   // END_SWAP
+}
+
+base2ad
+*******
+This returns a AD<Base> player corresponding with the same operation sequence.
+{xrst_literal
+   // BEGIN_BASE2AD
+   // END_BASE2AD
+}
+
+get_recording
+*************
+This transfers a dynamic parameter recording to a dynamic parameter player.
+{xrst_literal
+   // BEGIN_GET_RECORDING
+   // END_GET_RECORDING
+}
+
+dyn_rec
+=======
+The contents of *dyn_rec* are modified in an unspecified way by this operation.
+
+par_all
+*******
+This vector holds all the parameter values (constant and dynamic parameters).
+{xrst_literal
+   // BEGIN_PAR_ALL
+   // END_PAR_ALL
+}
+
+dyn_par_is
+**********
+This vector identifies which parameters are dynamic.
+{xrst_literal
+   // BEGIN_DYN_PAR_IS
+   // END_DYN_PAR_IS
+}
+
+dyn2par_index
+*************
+This vector maps the dynamic parameter index to the
+corresponding index in the vector of all the parameters.
+{xrst_literal
+   // BEGIN_DYN2PAR_INDEX
+   // END_DYN2PAR_INDEX
+}
+
+GetPar
+******
+{xrst_literal
+   // BEGIN_GETPAR
+   // END_GETPAR
+}
+
+par_value
+=========
+is the value of one of the parameters.
+
+par_ptr
+=======
+is a raw pointer to all of the parameters
+
+n_dyn_independent
+*****************
+is the number of independent dynamic parameters
+{xrst_literal
+   // BEGIN_N_DYN_INDEPENDENT
+   // END_N_DYN_INDEPENDENT
+}
+
+num_dynamic_par
+***************
+is the number of dynamic parameters
+{xrst_literal
+   // BEGIN_NUM_DYNAMIC_PAR
+   // END_NUM_DYNAMIC_PAR
+}
+
+num_dynamic_arg
+***************
+is the length of the dynamic parameter argument vector
+{xrst_literal
+   // BEGIN_NUM_DYNAMIC_ARG
+   // END_NUM_DYNAMIC_ARG
+}
+
+size_op_seq
+***********
+This is a measure of how may bytes are needed to store the operation sequence.
+Just lengths (not capacities) are used for this computation.
+This used to compute :ref:`fun_property@size_op_seq` for an ADFun object.
+{xrst_literal
+   // BEGIN_SIZE_OP_SEQ
+   // END_SIZE_OP_SEQ
+}
+
+{xrst_end dyn_player}
+*/
 
 // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CLASS
 namespace CppAD { namespace local {
 template <class Base> class dyn_player {
+   // END_CLASS
    //
    // friend
    template <class AnotherBase> friend class dyn_player;
@@ -44,17 +182,17 @@ private:
    pod_vector<addr_t> dyn_par_arg_;
    //
 public:
-   // =================================================================
    // set all scalars to zero to avoid valgraind warning when ani assignment
    // occures before values get set.
-   // dyn_player<Base> dyn_record
+   // BEGIN_DYN_PLAY
+   // dyn_player<Base> dyn_play
+   // dyn_player<Base> dyn_play(play)
    dyn_player(void)
    : n_dyn_independent_(0)
    { }
-   // move semantics constructor
-   // (none of the default constructor values matter to the destructor)
    dyn_player(dyn_player& dyn_play)
    {  swap(dyn_play);  }
+   // END_DYN_PLAY
    //
    // destructor
    ~dyn_player(void)
@@ -68,7 +206,9 @@ public:
    void check_dynamic_dag(void) const
    {  return; }
 # else
+   // BEGIN_CHECK_DYNAMIC_DAG
    void check_dynamic_dag(void) const
+   // END_CHECK_DYNAMIC_DAG
    {  // number of dynamic parameters
       size_t num_dyn = dyn_par_op_.size();
       //
@@ -111,12 +251,16 @@ public:
       return;
    }
 # endif
-   // operator=
+   // BEGIN_MOVE_ASSIGNMENT
+   // dyn_play_1 = dyn_play_2
    void operator=(dyn_player&& dyn_play)
+   // END_MOVE_ASSIGNMENT
    {  swap(dyn_play); }
    //
-   // operator=
+   // BEGIN_COPY_ASSIGNMENT
+   // dyn_play_1 = dyn_play_2
    void operator=(const dyn_player& dyn_play)
+   // END_COPY_ASSIGNMENT
    {
       // size_t objects
       n_dyn_independent_  = dyn_play.n_dyn_independent_;
@@ -131,9 +275,10 @@ public:
       par_all_            = dyn_play.par_all_;
    }
    //
-   // base2ad
-   // Create a dyn_player< AD<Base> > from this dyn_player<Base>
+   // BEGIN_BASE2AD
+   // ad_dyn_play = dyn_play
    dyn_player< AD<Base> > base2ad(void) const
+   // END_BASE2AD
    {  //
       // dyn_play
       dyn_player< AD<Base> > dyn_play;
@@ -154,10 +299,10 @@ public:
       //
       return dyn_play;
    }
-   //
-   // swap
-   // (used for move semantics version of ADFun assignment operation)
+   // BEGIN_SWAP
+   // dyn_play_1.swap( dyn_play_2 )
    void swap(dyn_player& other)
+   // END_SWAP
    {  // size_t objects
       std::swap(n_dyn_independent_,  other.n_dyn_independent_);
       //
@@ -171,8 +316,9 @@ public:
       par_all_.swap(    other.par_all_);
    }
    //
-   // get_recording
+   // BEGIN_GET_RECORDING
    void get_recording(dyn_recorder<Base>& dyn_rec)
+   // END_GET_RECORDING
    {  //
 # ifndef NDEBUG
       size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
@@ -208,59 +354,77 @@ public:
       check_dynamic_dag();
    }
    //
-   // par_all
-       pod_vector_maybe<Base>& par_all(void)
+   // BEGIN_PAR_ALL
+   // par_all = dyn_play.par_all()
+   pod_vector_maybe<Base>& par_all(void)
+   // END_PAR_ALL
    {  return par_all_; }
    const pod_vector_maybe<Base>& par_all(void) const
    {  return par_all_; }
    //
-   // dyn_par_is
+   // BEGIN_DYN_PAR_IS
+   // dyn_par_is = dyn_play.dyn_par_is()
    const pod_vector<bool>& dyn_par_is(void) const
+   // END_DYN_PAR_IS
    {  return dyn_par_is_; }
    //
-   // dyn2par_index_
+   // BEGIN_DYN2PAR_INDEX
+   // dyn2par_index = dyn_play.dyn2par_index()
    const pod_vector<addr_t>& dyn2par_index(void) const
+   // END_DYN2PAR_INDEX
    {  return dyn2par_index_; }
    //
-   // dyn_par_op_
+   // BEGIN_DYN_PAR_OP
+   // dyn_par_op = dyn_play.dyn_par_op()
    const pod_vector<opcode_t>& dyn_par_op(void) const
+   // END_DYN_PAR_OP
    {  return dyn_par_op_; }
    //
-   // dyn_par_arg
+   // BEGIN_DYN_PAR_ARG
+   // dyn_par_arg = dyn_play.dyn_par_arg()
    const pod_vector<addr_t>& dyn_par_arg(void) const
    {  return dyn_par_arg_; }
+   // END_DYN_PAR_ARG
    //
-   // GetPar
+   // BEGIN_GETPAR
+   // par_value = dyn_play.GetPar(i)
+   // par_ptr   = dyn_play.GetPar()
    Base GetPar(size_t i) const
    {  return par_all_[i]; }
-   //
-   // GetPar
    const Base* GetPar(void) const
    {  return par_all_.data(); }
+   // END_GETPAR
    //
+   // BEGIN_N_DYN_INDEPENDENT
    // n_dyn_independent
    size_t n_dyn_independent(void) const
+   // END_N_DYN_INDEPENDENT
    {  return n_dyn_independent_; }
    //
-   // num_dynamic_par
+   // BEGIN_NUM_DYNAMIC_PAR
+   // num_dynamic_par = dy_play.num_dynamic_par()
    size_t num_dynamic_par(void) const
+   // END_NUM_DYNAMIC_PAR
    {  return dyn_par_op_.size(); }
    //
-   // num_dynamic_arg
+   // BEGIN_NUM_DYNAMIC_ARG
+   // num_dynamic_arg = dyn_play.num_dyamic_arg()
    size_t num_dynamic_arg(void) const
+   // END_NUM_DYNAMIC_ARG
    {  return dyn_par_arg_.size(); }
    //
-   // num_par_rec
+   // BEGIN_NUM_PAR_REC
+   // num_par_rec = dyn_play.rec()
    size_t num_par_rec(void) const
+   // END_NUM_PAR_REC
    {  return par_all_.size(); }
    //
-   // size_op_seq
-   // A measure of amount of memory used to store
-   /// the operation sequence, just lengths, not capacities.
-   /// In user api as f.size_op_seq(); see the file fun_property.omh.
+   // BEGIN_SIZE_OP_SEQ
+   // size_op_seq = dyn_play.size_op_seq()
    size_t size_op_seq(void) const
+   // END_SIZE_OP_SEQ
    {  return 0
-         + par_all_.size()   * sizeof(Base)
+         + par_all_.size()       * sizeof(Base)
          + dyn_par_is_.size()    * sizeof(bool)
          + dyn2par_index_.size() * sizeof(addr_t)
          + dyn_par_op_.size()    * sizeof(opcode_t)

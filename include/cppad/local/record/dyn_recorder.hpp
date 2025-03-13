@@ -56,7 +56,7 @@ memory
 // BEGIN_CLASS
 namespace CppAD { namespace local {
 template <class Base> class dyn_recorder {
-// END_CLASS
+   // END_CLASS
    //
    // friend
    friend class dyn_player<Base>;
