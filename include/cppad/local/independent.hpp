@@ -49,7 +49,7 @@ void ADTape<Base>::Independent(
    CPPAD_ASSERT_UNKNOWN( Rec_.num_var_rec() == 0 );
    CPPAD_ASSERT_UNKNOWN( Rec_.get_abort_op_index() == 0 );
    CPPAD_ASSERT_UNKNOWN( Rec_.get_record_compare() == true );
-   CPPAD_ASSERT_UNKNOWN( Rec_.get_num_dynamic_ind()    == 0 );
+   CPPAD_ASSERT_UNKNOWN( Rec_.n_dyn_independent()    == 0 );
 
    // set record_compare and abort_op_index before doing anything else
    Rec_.set_record_compare(record_compare);
@@ -88,8 +88,8 @@ void ADTape<Base>::Independent(
 
    // Place independent dynamic parameters at beginning of parameter vector,
    // just after the nan at index zero.
-   CPPAD_ASSERT_UNKNOWN( Rec_.get_num_dynamic_ind() <= dynamic.size() );
-   for(size_t j = 0; j < Rec_.get_num_dynamic_ind(); ++j)
+   CPPAD_ASSERT_UNKNOWN( Rec_.n_dyn_independent() <= dynamic.size() );
+   for(size_t j = 0; j < Rec_.n_dyn_independent(); ++j)
    {  CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
       CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
       //

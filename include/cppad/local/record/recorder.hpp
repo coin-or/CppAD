@@ -188,9 +188,9 @@ public:
  void set_n_dyn_independent(size_t n_dyn_independent)
    {  dyn_record_.set_n_dyn_independent(n_dyn_independent); }
    //
-   // get_num_dynamic_ind
- size_t get_num_dynamic_ind(void) const
-   {  return dyn_record_.get_num_dynamic_ind(); }
+   // n_dyn_independent
+ size_t n_dyn_independent(void) const
+   {  return dyn_record_.n_dyn_independent(); }
    //
    // put_dyn_atomic
    template <class VectorAD>

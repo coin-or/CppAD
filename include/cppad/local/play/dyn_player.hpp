@@ -209,7 +209,7 @@ public:
    }
    //
    // par_all
-       pod_vector_maybe<Base>& par_all(void)
+   pod_vector_maybe<Base>& par_all(void)
    {  return par_all_; }
    const pod_vector_maybe<Base>& par_all(void) const
    {  return par_all_; }
