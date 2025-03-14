@@ -24,6 +24,7 @@ Contents
    include/cppad/local/is_pod.hpp
    include/cppad/local/op_code_var.hpp
    include/cppad/local/optimize/optimize_run.hpp
+   include/cppad/local/play/dyn_player.hpp
    include/cppad/local/pod_vector.hpp
    include/cppad/local/record/recorder.hpp
    include/cppad/local/set_get_in_parallel.hpp
