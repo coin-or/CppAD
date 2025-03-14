@@ -620,9 +620,9 @@ public:
    const pod_vector_maybe<Base>& par_all(void) const
    {  return dyn_play_.par_all(); }
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is(void) const
-   {  return dyn_play_.dyn_par_is(); }
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn(void) const
+   {  return dyn_play_.par_is_dyn(); }
    //
    // dyn2par_index
    const pod_vector<addr_t>& dyn2par_index(void) const

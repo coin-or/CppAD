@@ -41,21 +41,21 @@ new value for the independent dynamic parameter vector.
 is the vector of all the parameters.
 Ths constant parameters are inputs and the dynamic parameters are outputs.
 
-\param dyn_par_is
+\param par_is_dyn
 is a vector with the same length as par_vec.
-The i-th parameter is dynamic if and only if dyn_par_is[i] is true.
+The i-th parameter is dynamic if and only if par_is_dyn[i] is true.
 
 \param dyn2par_index
 is a vector with length equal to the number of dynamic parameters.
 The element dyn2par_index[j] is the index in par_all corresponding
 to the j-th dynamic parameter.
-Note that if dyn_par_is[i] is false, the i-th parameter does not
+Note that if par_is_dyn[i] is false, the i-th parameter does not
 appear in this vector.
 
 \param dyn_par_op
 is a vector with length equal to the number of dynamic parameters.
 The element dyn_par_op_[j] is the operator for the j-th dynamic parameter.
-Note that if dyn_par_is[i] is false, the i-th parameter does not
+Note that if par_is_dyn[i] is false, the i-th parameter does not
 have a parameter in this list.
 
 \param dyn_par_arg
@@ -87,7 +87,7 @@ template <class Base, class BaseVector, class RecBase>
 void dynamic(
    pod_vector_maybe<Base>&       par_all            ,
    const BaseVector&             ind_dynamic        ,
-   const pod_vector<bool>&       dyn_par_is         ,
+   const pod_vector<bool>&       par_is_dyn         ,
    const pod_vector<addr_t>&     dyn2par_index      ,
    const pod_vector<opcode_t>&   dyn_par_op         ,
    const pod_vector<addr_t>&     dyn_par_arg        ,
@@ -103,7 +103,7 @@ void dynamic(
 # ifndef NDEBUG
    for(size_t j = 0; j < ind_dynamic.size(); ++j)
       CPPAD_ASSERT_UNKNOWN(
-         dyn_par_is[j+1] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
+         par_is_dyn[j+1] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
    );
 # endif
 # if CPPAD_DYNAMIC_TRACE
@@ -368,7 +368,7 @@ void dynamic(
          << "("
          << std::setw(12) << std::right <<
             discrete<Base>::name( size_t( dyn_par_arg[i_arg + 0] ) );
-         if( dyn_par_is[ dyn_par_arg[i_arg + 1] ] )
+         if( par_is_dyn[ dyn_par_arg[i_arg + 1] ] )
          {  std::cout << ", i=" << std::setw(10) << std::right
             << dyn_par_arg[i_arg + 1];
          }
@@ -402,7 +402,7 @@ void dynamic(
          << cond_exp_name[ dyn_par_arg[i_arg + 0] ]
          << "(";
          for(size_t i = 1; i < 5; ++i)
-         {  if( dyn_par_is[ dyn_par_arg[i_arg + i] ] )
+         {  if( par_is_dyn[ dyn_par_arg[i_arg + i] ] )
             {  std::cout << "i=" << std::setw(10) << std::right
                << dyn_par_arg[i_arg + i];
             }
@@ -447,7 +447,7 @@ void dynamic(
                taylor_x[j]   = par_all[ arg_j ];
                if( arg_j == 0 )
                   type_x[j] = variable_enum;
-               else if ( dyn_par_is[arg_j] )
+               else if ( par_is_dyn[arg_j] )
                   type_x[j] = dynamic_enum;
                else
                   type_x[j] = constant_enum;
@@ -455,7 +455,7 @@ void dynamic(
             // select_y
             for(size_t i = 0; i < m; ++i)
             {  i_par = size_t( dyn_par_arg[i_arg + 5 + n + i] );
-               select_y[i] = dyn_par_is[i_par];
+               select_y[i] = par_is_dyn[i_par];
             }
             call_atomic_forward<Base, RecBase>(
                taylor_x,
@@ -490,7 +490,7 @@ void dynamic(
 # endif
             for(size_t i = 0; i < m; ++i)
             {  i_par = size_t( dyn_par_arg[i_arg + 5 + n + i] );
-               if( dyn_par_is[i_par] )
+               if( par_is_dyn[i_par] )
                {  CPPAD_ASSERT_UNKNOWN( i_par != 0 );
                   par_all[i_par] = taylor_y[i];
 # ifndef NDEBUG
@@ -533,7 +533,7 @@ void dynamic(
          << std::setw(10) << std::right << op_name_dyn(op)
          << "(";
          if( 0 < n_arg )
-         {  if( dyn_par_is[ dyn_par_arg[i_arg + 0] ] )
+         {  if( par_is_dyn[ dyn_par_arg[i_arg + 0] ] )
             {  std::cout << "i=" << std::setw(10) << std::right
                << dyn_par_arg[i_arg + 0];
             }
@@ -543,7 +543,7 @@ void dynamic(
             }
          }
          if( 1 < n_arg )
-         {  if( dyn_par_is[ dyn_par_arg[i_arg + 1] ] )
+         {  if( par_is_dyn[ dyn_par_arg[i_arg + 1] ] )
             {  std::cout << ", i=" << std::setw(10) << std::right
                << dyn_par_arg[i_arg + 1];
             }

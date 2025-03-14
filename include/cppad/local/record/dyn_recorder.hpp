@@ -80,10 +80,10 @@ private:
    // Use pod_vector_maybe because Base may not be plain old data.
    pod_vector_maybe<Base> par_all_;
    //
-   // dyn_par_is_
+   // par_is_dyn_
    // Which elements of par_all_ are dynamic parameters
    // (same size are par_all_)
-   pod_vector<bool> dyn_par_is_;
+   pod_vector<bool> par_is_dyn_;
    //
    // dyn_par_op_
    // operators for just the dynamic parameters in par_all_
@@ -174,7 +174,7 @@ public:
          + dyn_vecad_ind_.capacity() * sizeof(addr_t)
          + par_hash_table_.capacity()    * sizeof(addr_t)
          + par_all_.capacity()       * sizeof(Base)
-         + dyn_par_is_.capacity()        * sizeof(bool)
+         + par_is_dyn_.capacity()        * sizeof(bool)
          + dyn_par_op_.capacity()        * sizeof(opcode_t)
          + dyn_par_arg_.capacity()       * sizeof(addr_t)
       ;
@@ -240,7 +240,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
    );
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
    par_all_.push_back( par );
-   dyn_par_is_.push_back(true);
+   par_is_dyn_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
    return static_cast<addr_t>( par_all_.size() - 1 );
 }
@@ -252,7 +252,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
 {
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 1 );
    par_all_.push_back( par );
-   dyn_par_is_.push_back(true);
+   par_is_dyn_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
    dyn_par_arg_.push_back(a0);
    return static_cast<addr_t>( par_all_.size() - 1 );
@@ -265,7 +265,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_par(
 {
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 2 );
    par_all_.push_back( par );
-   dyn_par_is_.push_back(true);
+   par_is_dyn_.push_back(true);
    dyn_par_op_.push_back( opcode_t(op) );
    dyn_par_arg_.push_back(a0);
    dyn_par_arg_.push_back(a1);
@@ -336,7 +336,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_dyn_cond_exp(
    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(cond_exp_dyn) == 5 );
    addr_t ret = addr_t( par_all_.size() );
    par_all_.push_back( par );
-   dyn_par_is_.push_back(true);
+   par_is_dyn_.push_back(true);
    dyn_par_op_.push_back( opcode_t(cond_exp_dyn) );
    dyn_par_arg_.push_back( addr_t(cop) );
    dyn_par_arg_.push_back(left);
@@ -423,7 +423,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_con_par(const Base &par)
 
    // check if the old parameter matches the new one
    if( (0 < index) && (index < par_all_.size()) )
-   {  if( ! dyn_par_is_[index] )
+   {  if( ! par_is_dyn_[index] )
          if( IdenticalEqualCon(par_all_[index], par) )
             return static_cast<addr_t>( index );
    }
@@ -432,7 +432,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_con_par(const Base &par)
    //
    index = par_all_.size();
    par_all_.push_back( par );
-   dyn_par_is_.push_back(false);
+   par_is_dyn_.push_back(false);
    //
    // change the hash table for this code to point to new value
    par_hash_table_[code] = static_cast<addr_t>( index );

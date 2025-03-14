@@ -133,7 +133,7 @@ template <class Base> bool get_dyn_op_prev(
    {  // i_par
       // parameter index for this dynamic parameter
       addr_t i_par = dyn2par_index[i_dyn];
-      CPPAD_ASSERT_UNKNOWN( play->dyn_par_is()[i_par] );
+      CPPAD_ASSERT_UNKNOWN( play->par_is_dyn()[i_par] );
       //
       // skip
       op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );

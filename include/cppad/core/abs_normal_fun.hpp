@@ -376,7 +376,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    // Forward sweep to create new recording
    // ------------------------------------------------------------------------
    // dynamic parameter information in player
-   const pod_vector<bool>&     dyn_par_is( play_.dyn_par_is() );
+   const pod_vector<bool>&     par_is_dyn( play_.par_is_dyn() );
    const pod_vector<opcode_t>& dyn_par_op( play_.dyn_par_op() );
    const pod_vector<addr_t>&   dyn_par_arg( play_.dyn_par_arg() );
    //
@@ -400,7 +400,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
 # endif
       // value of this parameter
       Base par = play_.GetPar(i_par);
-      if( ! dyn_par_is[i_par] )
+      if( ! par_is_dyn[i_par] )
          CPPAD_J_PAR_EQUAL_REC.put_con_par(par);
       else
       {  // operator for this dynamic parameter

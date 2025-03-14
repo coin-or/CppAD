@@ -101,7 +101,7 @@ void get_par_usage(
    size_t num_vecad_vec = play->num_var_vecad_rec();
    //
    // dynamic parameter information
-   const pod_vector<bool>&        dyn_par_is( play->dyn_par_is() );
+   const pod_vector<bool>&        par_is_dyn( play->par_is_dyn() );
    const pod_vector<opcode_t>&    dyn_par_op( play->dyn_par_op() );
    const pod_vector<addr_t>&      dyn_par_arg( play->dyn_par_arg() );
    const pod_vector<addr_t>&      dyn2par_index( play->dyn2par_index() );
@@ -128,7 +128,7 @@ void get_par_usage(
          {  // index of parameter used by this VecAD vector
             size_t i_par = play->GetVecInd(start_this_vector + k);
             // must not be a dynamic parameter
-            CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[i_par] );
+            CPPAD_ASSERT_UNKNOWN( ! par_is_dyn[i_par] );
             // set usage for this parameter
             par_usage[i_par] = true;
          }
@@ -167,7 +167,7 @@ void get_par_usage(
          // add or subtract with left a parameter and right a variable
          case AddpvOp:
          case SubpvOp:
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             par_usage[ arg[0] ] = true;
          else
          {  // determine if this parameter will be absorbed by csum
@@ -183,7 +183,7 @@ void get_par_usage(
 
          // subtract with left a variable and right a parameter
          case SubvpOp:
-         if( dyn_par_is[ arg[1] ] )
+         if( par_is_dyn[ arg[1] ] )
             par_usage[ arg[1] ] = true;
          else
          {  // determine if this parameter will be absorbed by csum
@@ -370,7 +370,7 @@ void get_par_usage(
          CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
          atom_ix[atom_j]     = size_t( arg[0] );
          parameter_x[atom_j] = par_all[arg[0]]; // parameter value
-         if( dyn_par_is[arg[0]] )
+         if( par_is_dyn[arg[0]] )
             type_x[atom_j] = dynamic_enum;
          else
             type_x[atom_j] = constant_enum;
@@ -440,7 +440,7 @@ void get_par_usage(
             parameter_x[j] = par_all[arg_j];
             if( arg_j == 0 )
                type_x[j] = variable_enum;
-            else if( dyn_par_is[arg_j] )
+            else if( par_is_dyn[arg_j] )
                type_x[j] = dynamic_enum;
             else
                type_x[j] = constant_enum;
@@ -470,7 +470,7 @@ void get_par_usage(
       else
       {  // corresponding parameter index
          size_t i_par = size_t( dyn2par_index[i_dyn] );
-         CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+         CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
          //
          // number of argumens to this operator
          size_t n_arg = num_arg_dyn(op);

@@ -109,7 +109,7 @@ public:
    : empty_vec_value_(0)
    , n_op_ ( index_t( play.num_dynamic_par() ) )
    , arg_all_ ( play.dyn_par_arg() )
-   , is_par_dyn_ ( play.dyn_par_is() )
+   , is_par_dyn_ ( play.par_is_dyn() )
    , op_enum_all_ ( play.dyn_par_op() )
    , op2arg_index_( size_t( n_op_ ) )
    {  //
