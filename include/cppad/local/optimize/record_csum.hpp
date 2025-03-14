@@ -108,7 +108,7 @@ struct_size_pair record_csum(
    // vector of length npar containing the parameters the old operation
    // sequence; i.e., given a parameter index i < npar, the corresponding
    // parameter value is par[i].
-   const Base* par = play->GetPar();
+   const Base* par = play->par_ptr();
 
    // which parameters are dynamic
    const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );

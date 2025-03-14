@@ -103,7 +103,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    graph_obj.n_variable_ind_set(n_variable_ind);
    //
    // value of parameters
-   const Base* parameter = play_.GetPar();
+   const Base* parameter = play_.par_ptr();
    //
    // number of variables
    const size_t n_variable = play_.num_var_rec();

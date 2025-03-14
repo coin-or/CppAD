@@ -91,11 +91,18 @@ corresponding index in the vector of all the parameters.
    // END_DYN2PAR_INDEX
 }
 
-GetPar
-******
+par_ptr
+*******
 {xrst_literal
-   // BEGIN_GETPAR
-   // END_GETPAR
+   // BEGIN_PAR_PTR
+   // END_PAR_PTR
+}
+
+par_one
+*******
+{xrst_literal
+   // BEGIN_PAR_ONE
+   // END_PAR_ONE
 }
 
 par_value
@@ -386,14 +393,17 @@ public:
    {  return dyn_par_arg_; }
    // END_DYN_ARG_ALL
    //
-   // BEGIN_GETPAR
-   // par_value = dyn_play.GetPar(i)
-   // par_ptr   = dyn_play.GetPar()
-   Base GetPar(size_t i) const
+   // BEGIN_PAR_ONE
+   // par_one = dyn_play.par_one(i)
+   Base par_one(size_t i) const
+   // END_PAR_ONE
    {  return par_all_[i]; }
-   const Base* GetPar(void) const
+   //
+   // BEGIN_PAR_PTR
+   // par_ptr = dyn_play.par_ptr()
+   const Base* par_ptr(void) const
+   // END_PAR_PTR
    {  return par_all_.data(); }
-   // END_GETPAR
    //
    // BEGIN_N_DYN_INDEPENDENT
    // n_dyn_independent

@@ -98,7 +98,7 @@ void ADFun<Base, RecBase>::fun2val(
    addr_t invalid_addr_t = std::numeric_limits<addr_t>::max();
    //
    // parameter
-   const Base* parameter = play_.GetPar();
+   const Base* parameter = play_.par_ptr();
    //
    // dyn_op2val_op
    Vector<op_enum_t> dyn_op2val_op(number_dyn);

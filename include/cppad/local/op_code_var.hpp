@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <string>
 # include <sstream>
@@ -754,11 +754,11 @@ void printOp(
       if( arg[1] & 1 )
          printOpField(os, " vl=", arg[2], ncol);
       else
-         printOpField(os, " pl=", play->GetPar( size_t(arg[2]) ), ncol);
+         printOpField(os, " pl=", play->par_one( size_t(arg[2]) ), ncol);
       if( arg[1] & 2 )
          printOpField(os, " vr=", arg[3], ncol);
       else
-         printOpField(os, " pr=", play->GetPar( size_t(arg[3]) ), ncol);
+         printOpField(os, " pr=", play->par_one( size_t(arg[3]) ), ncol);
       if( size_t(arg[4]) < 3 )
       {  for(addr_t i = 0; i < arg[4]; i++)
             printOpField(os, " ot=", arg[6+i], ncol);
@@ -794,21 +794,21 @@ void printOp(
       arg[arg[4]] = arg[4]
       */
       CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] );
-      printOpField(os, " pr=", play->GetPar( size_t(arg[0]) ), ncol);
+      printOpField(os, " pr=", play->par_one( size_t(arg[0]) ), ncol);
       for(addr_t i = 5; i < arg[1]; i++)
              printOpField(os, " +v=", arg[i], ncol);
       for(addr_t i = arg[1]; i < arg[2]; i++)
              printOpField(os, " -v=", arg[i], ncol);
       for(addr_t i = arg[2]; i < arg[3]; i++)
-             printOpField(os, " +d=", play->GetPar( size_t(arg[i]) ), ncol);
+             printOpField(os, " +d=", play->par_one( size_t(arg[i]) ), ncol);
       for(addr_t i = arg[3]; i < arg[4]; i++)
-             printOpField(os, " -d=", play->GetPar( size_t(arg[i]) ), ncol);
+             printOpField(os, " -d=", play->par_one( size_t(arg[i]) ), ncol);
       break;
 
       case LdpOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
       printOpField(os, "off=", arg[0], ncol);
-      printOpField(os, "  p=", play->GetPar( size_t(arg[1]) ), ncol);
+      printOpField(os, "  p=", play->par_one( size_t(arg[1]) ), ncol);
       break;
 
       case LdvOp:
@@ -820,14 +820,14 @@ void printOp(
       case StppOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
       printOpField(os, "off=", arg[0], ncol);
-      printOpField(os, " pl=", play->GetPar( size_t(arg[1]) ), ncol);
-      printOpField(os, " pr=", play->GetPar( size_t(arg[2]) ), ncol);
+      printOpField(os, " pl=", play->par_one( size_t(arg[1]) ), ncol);
+      printOpField(os, " pr=", play->par_one( size_t(arg[2]) ), ncol);
       break;
 
       case StpvOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
       printOpField(os, "off=", arg[0], ncol);
-      printOpField(os, "  p=", play->GetPar( size_t(arg[1]) ), ncol);
+      printOpField(os, "  p=", play->par_one( size_t(arg[1]) ), ncol);
       printOpField(os, "  v=", arg[2], ncol);
       break;
 
@@ -835,7 +835,7 @@ void printOp(
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
       printOpField(os, "off=", arg[0], ncol);
       printOpField(os, "  v=", arg[1], ncol);
-      printOpField(os, "  p=", play->GetPar( size_t(arg[2]) ), ncol);
+      printOpField(os, "  p=", play->par_one( size_t(arg[2]) ), ncol);
       break;
 
       case StvvOp:
@@ -871,7 +871,7 @@ void printOp(
       case PowpvOp:
       case ZmulpvOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-      printOpField(os, " pl=", play->GetPar( size_t(arg[0]) ), ncol);
+      printOpField(os, " pl=", play->par_one( size_t(arg[0]) ), ncol);
       printOpField(os, " vr=", arg[1], ncol);
       break;
 
@@ -883,7 +883,7 @@ void printOp(
       case ZmulvpOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
       printOpField(os, " vl=", arg[0], ncol);
-      printOpField(os, " pr=", play->GetPar( size_t(arg[1]) ), ncol);
+      printOpField(os, " pr=", play->par_one( size_t(arg[1]) ), ncol);
       break;
 
       case AbsOp:
@@ -923,7 +923,7 @@ void printOp(
       case FunapOp:
       case FunrpOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-      printOpField(os, "  p=", play->GetPar( size_t(arg[0]) ), ncol);
+      printOpField(os, "  p=", play->par_one( size_t(arg[0]) ), ncol);
       break;
 
       case AFunOp:
@@ -948,12 +948,12 @@ void printOp(
       if( arg[0] & 1 )
          printOpField(os, " v=", arg[1], ncol);
       else
-         printOpField(os, " p=", play->GetPar( size_t(arg[1]) ), ncol);
+         printOpField(os, " p=", play->par_one( size_t(arg[1]) ), ncol);
       os << "before=\"" << play->GetTxt( size_t(arg[2]) ) << "\"";
       if( arg[0] & 2 )
          printOpField(os, " v=", arg[3], ncol);
       else
-         printOpField(os, " p=", play->GetPar( size_t(arg[3]) ), ncol);
+         printOpField(os, " p=", play->par_one( size_t(arg[3]) ), ncol);
       os << "after=\"" << play->GetTxt( size_t(arg[4]) ) << "\"";
       break;
 
@@ -983,19 +983,19 @@ void printOp(
       if( arg[1] & 1 )
          printOpField(os, " vl=", arg[2], ncol);
       else
-         printOpField(os, " pl=", play->GetPar( size_t(arg[2]) ), ncol);
+         printOpField(os, " pl=", play->par_one( size_t(arg[2]) ), ncol);
       if( arg[1] & 2 )
          printOpField(os, " vr=", arg[3], ncol);
       else
-         printOpField(os, " pr=", play->GetPar( size_t(arg[3]) ), ncol);
+         printOpField(os, " pr=", play->par_one( size_t(arg[3]) ), ncol);
       if( arg[1] & 4 )
          printOpField(os, " vt=", arg[4], ncol);
       else
-         printOpField(os, " pt=", play->GetPar( size_t(arg[4]) ), ncol);
+         printOpField(os, " pt=", play->par_one( size_t(arg[4]) ), ncol);
       if( arg[1] & 8 )
          printOpField(os, " vf=", arg[5], ncol);
       else
-         printOpField(os, " pf=", play->GetPar( size_t(arg[5]) ), ncol);
+         printOpField(os, " pf=", play->par_one( size_t(arg[5]) ), ncol);
       break;
 
       case EqppOp:
@@ -1003,8 +1003,8 @@ void printOp(
       case LtppOp:
       case NeppOp:
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-      printOpField(os, " pl=", play->GetPar( size_t(arg[0]) ), ncol);
-      printOpField(os, " pr=", play->GetPar( size_t(arg[1]) ), ncol);
+      printOpField(os, " pl=", play->par_one( size_t(arg[0]) ), ncol);
+      printOpField(os, " pr=", play->par_one( size_t(arg[1]) ), ncol);
       break;
 
       default:
