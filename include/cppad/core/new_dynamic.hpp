@@ -104,7 +104,7 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
 
    // retrieve player information about the dynamic parameters
    local::pod_vector_maybe<Base>&     par_all( play_.par_all() );
-   const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
+   const pod_vector<bool>&            par_is_dyn ( play_.par_is_dyn()  );
    const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
    const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
    const pod_vector<addr_t>&     dyn2par_index ( play_.dyn2par_index() );
@@ -114,7 +114,7 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
    local::sweep::dynamic(
       par_all             ,
       dynamic             ,
-      dyn_par_is          ,
+      par_is_dyn          ,
       dyn2par_index       ,
       dyn_par_op          ,
       dyn_par_arg         ,

@@ -81,7 +81,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
    const pod_vector<addr_t>&   dyn_par_arg( play_.dyn_par_arg() );
    const pod_vector<addr_t>&   dyn2par_index ( play_.dyn2par_index() );
-   const pod_vector<bool>&     dyn_par_is( play_.dyn_par_is() );
+   const pod_vector<bool>&     par_is_dyn( play_.par_is_dyn() );
    //
    // number of dynamic parameters
    const size_t n_dynamic     = dyn2par_index.size();
@@ -110,10 +110,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    //
    // some checks
    CPPAD_ASSERT_UNKNOWN( n_dynamic_ind <= n_dynamic );
-   CPPAD_ASSERT_UNKNOWN( dyn_par_is.size() == n_parameter );
+   CPPAD_ASSERT_UNKNOWN( par_is_dyn.size() == n_parameter );
    CPPAD_ASSERT_UNKNOWN( n_parameter > 0 );
    CPPAD_ASSERT_UNKNOWN( CppAD::isnan( parameter[0] ) );
-   CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
+   CPPAD_ASSERT_UNKNOWN( ! par_is_dyn[0] );
    // --------------------------------------------------------------------
    // par2node
    pod_vector<size_t> par2node(n_parameter);
@@ -137,7 +137,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    // output: constant_vec
    // constant_vec and par2node for constants
    for(size_t i = 1; i < n_parameter; ++i)
-   {  if( ! dyn_par_is[i] )
+   {  if( ! par_is_dyn[i] )
       {  // this is a constant node
          graph_obj.constant_vec_push_back( parameter[i] );
          par2node[i] = ++previous_node;

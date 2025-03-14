@@ -310,7 +310,7 @@ bool optimize_run(
    // =======================================================================
    //
    // dynamic parameter information in player
-   const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
+   const pod_vector<bool>&     par_is_dyn( play->par_is_dyn() );
    const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
    const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
    //
@@ -328,13 +328,13 @@ bool optimize_run(
    rec->set_record_compare( compare_op );
 
    // copy parameters with index 0
-   CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] && CppAD::isnan( play->GetPar(0) ) );
+   CPPAD_ASSERT_UNKNOWN( ! par_is_dyn[0] && CppAD::isnan( play->GetPar(0) ) );
    rec->put_con_par( play->GetPar(0) );
    new_par[0] = 0;
 
    // set new_par for the independent dynamic parameters
    for(size_t i_par = 1; i_par <= n_dyn_independent; i_par++)
-   {  CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+   {  CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
       addr_t i = rec->put_dyn_par(play->GetPar(i_par), ind_dyn);
       CPPAD_ASSERT_UNKNOWN( size_t(i) == i_par );
       new_par[i_par] = i;
@@ -342,7 +342,7 @@ bool optimize_run(
 
    // set new_par for the constant parameters that are used
    for(size_t i_par = n_dyn_independent + 1; i_par < num_par; ++i_par)
-   if( ! dyn_par_is[i_par] )
+   if( ! par_is_dyn[i_par] )
    {  CPPAD_ASSERT_UNKNOWN( i_par == 0 || n_dyn_independent < i_par );
       if( par_usage[i_par] )
       {  // value of this parameter
@@ -359,7 +359,7 @@ bool optimize_run(
    size_t i_arg = 0;                // dynamic parameter argument index
    pod_vector<addr_t> arg_vec;
    for(size_t i_par = n_dyn_independent + 1; i_par < num_par; ++i_par)
-   if( dyn_par_is[i_par] )
+   if( par_is_dyn[i_par] )
    {  // operator for this dynamic parameter
       op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
       //
@@ -383,7 +383,7 @@ bool optimize_run(
          bool found_i_par = false;
          for(size_t i = 0; i < atom_m; ++i)
          {  size_t j_par = size_t( dyn_par_arg[i_arg + 5 + atom_n + i] );
-            if( dyn_par_is[j_par] )
+            if( par_is_dyn[j_par] )
             {  call_used |= par_usage[j_par];
                CPPAD_ASSERT_UNKNOWN( j_par == i_par || found_i_par );
                // j_par > i_par corresponds to result_dyn operator
@@ -395,7 +395,7 @@ bool optimize_run(
 # else
          for(size_t i = 0; i < atom_m; ++i)
          {  size_t j_par = size_t( dyn_par_arg[i_arg + 5 + atom_n + i] );
-            if( dyn_par_is[j_par] )
+            if( par_is_dyn[j_par] )
                call_used |= par_usage[j_par];
          }
 # endif
@@ -416,9 +416,9 @@ bool optimize_run(
             bool first_dynamic_result = true;
             for(size_t i = 0; i < atom_m; ++i)
             {  addr_t res_i = dyn_par_arg[i_arg + 5 + atom_n + i];
-               CPPAD_ASSERT_UNKNOWN( dyn_par_is[res_i] || res_i == 0 );
+               CPPAD_ASSERT_UNKNOWN( par_is_dyn[res_i] || res_i == 0 );
                //
-               if( dyn_par_is[res_i] )
+               if( par_is_dyn[res_i] )
                {  Base par = play->GetPar( size_t(res_i) );
                   if( first_dynamic_result )
                   {  first_dynamic_result = false;

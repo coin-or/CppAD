@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -790,7 +790,7 @@ void get_op_usage(
          //
          // parameter arguments
          atom_x[atom_j] = parameter[arg[0]];
-         if( play->dyn_par_is()[arg[0]] )
+         if( play->par_is_dyn()[arg[0]] )
             type_x[atom_j] = dynamic_enum;
          else
             type_x[atom_j] = constant_enum;

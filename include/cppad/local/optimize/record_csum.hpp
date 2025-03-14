@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
@@ -111,7 +111,7 @@ struct_size_pair record_csum(
    const Base* par = play->GetPar();
 
    // which parameters are dynamic
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
 
    // check assumption about work space
    CPPAD_ASSERT_UNKNOWN( stack.op_info.empty() );
@@ -166,7 +166,7 @@ struct_size_pair record_csum(
          //
          // arg[0] is constant parameter that initializes the sum
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
-         CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[ arg[0] ] );
+         CPPAD_ASSERT_UNKNOWN( ! par_is_dyn[ arg[0] ] );
          if( add )
             sum_par += par[arg[0]];
          else
@@ -212,7 +212,7 @@ struct_size_pair record_csum(
          {  for(size_t i = dyn_start; i < dyn_end; ++i)
             {  // i-th argument is a dynamic parameter
                // (can't yet be a result, so no nodes below)
-               CPPAD_ASSERT_UNKNOWN( dyn_par_is[ arg[i] ] );
+               CPPAD_ASSERT_UNKNOWN( par_is_dyn[ arg[i] ] );
                if( dny_add )
                   stack.add_dyn.push(arg[i]);
                else
@@ -261,7 +261,7 @@ struct_size_pair record_csum(
             {  // case where i-th argument is a parameter
                CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < npar );
                //
-               if( dyn_par_is[ arg[i] ] )
+               if( par_is_dyn[ arg[i] ] )
                {  // i-th argument is a dynamic parameter
                   // (can't yet be a result, so no nodes below)
                   if( add )

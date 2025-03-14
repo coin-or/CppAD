@@ -24,10 +24,10 @@ private:
    // Use pod_vector_maybe because Base may not be plain old data.
    pod_vector_maybe<Base> par_all_;
    //
-   // dyn_par_is_
+   // par_is_dyn_
    // Which elements of par_all_ are dynamic parameters
    // (same size are par_all_)
-   pod_vector<bool> dyn_par_is_;
+   pod_vector<bool> par_is_dyn_;
    //
    // dyn2par_index_
    // mapping from dynamic parameter index to parameter index
@@ -76,7 +76,7 @@ public:
       for(size_t i_dyn = 0; i_dyn < num_dyn; ++i_dyn)
       {  // i_par is parameter index
          addr_t i_par = dyn2par_index_[i_dyn];
-         CPPAD_ASSERT_UNKNOWN( dyn_par_is_[i_par] );
+         CPPAD_ASSERT_UNKNOWN( par_is_dyn_[i_par] );
          //
          // operator for this dynamic parameter
          op_code_dyn op = op_code_dyn( dyn_par_op_[i_dyn] );
@@ -122,7 +122,7 @@ public:
       n_dyn_independent_  = dyn_play.n_dyn_independent_;
       //
       // pod_vectors
-      dyn_par_is_         = dyn_play.dyn_par_is_;
+      par_is_dyn_         = dyn_play.par_is_dyn_;
       dyn2par_index_      = dyn_play.dyn2par_index_;
       dyn_par_op_         = dyn_play.dyn_par_op_;
       dyn_par_arg_        = dyn_play.dyn_par_arg_;
@@ -142,7 +142,7 @@ public:
       dyn_play.n_dyn_independent_  = n_dyn_independent_;
       //
       // pod_vectors
-      dyn_play.dyn_par_is_         = dyn_par_is_;
+      dyn_play.par_is_dyn_         = par_is_dyn_;
       dyn_play.dyn2par_index_      = dyn2par_index_;
       dyn_play.dyn_par_op_         = dyn_par_op_;
       dyn_play.dyn_par_arg_        = dyn_par_arg_;
@@ -162,7 +162,7 @@ public:
       std::swap(n_dyn_independent_,  other.n_dyn_independent_);
       //
       // pod_vectors
-      dyn_par_is_.swap(         other.dyn_par_is_);
+      par_is_dyn_.swap(         other.par_is_dyn_);
       dyn2par_index_.swap(      other.dyn2par_index_);
       dyn_par_op_.swap(         other.dyn_par_op_);
       dyn_par_arg_.swap(        other.dyn_par_arg_);
@@ -176,7 +176,7 @@ public:
    {  //
 # ifndef NDEBUG
       size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
-      CPPAD_ASSERT_UNKNOWN( dyn_rec.dyn_par_is_.size() < addr_t_max );
+      CPPAD_ASSERT_UNKNOWN( dyn_rec.par_is_dyn_.size() < addr_t_max );
       CPPAD_ASSERT_UNKNOWN( dyn_rec.dyn_par_op_.size() < addr_t_max );
       CPPAD_ASSERT_UNKNOWN( dyn_rec.dyn_par_arg_.size() < addr_t_max );
       CPPAD_ASSERT_UNKNOWN( dyn_rec.par_all_.size() < addr_t_max );
@@ -186,7 +186,7 @@ public:
       n_dyn_independent_ = dyn_rec.n_dyn_independent_;
       //
       // pod_vectors
-      dyn_par_is_.swap( dyn_rec.dyn_par_is_ );
+      par_is_dyn_.swap( dyn_rec.par_is_dyn_ );
       dyn_par_op_.swap( dyn_rec.dyn_par_op_ );
       dyn_par_arg_.swap( dyn_rec.dyn_par_arg_ );
       //
@@ -197,7 +197,7 @@ public:
       dyn2par_index_.resize( dyn_par_op_.size() );
       size_t i_dyn = 0;
       for(size_t i_par = 0; i_par < par_all_.size(); ++i_par)
-      {  if( dyn_par_is_[i_par] )
+      {  if( par_is_dyn_[i_par] )
          {  dyn2par_index_[i_dyn] = addr_t( i_par );
             ++i_dyn;
          }
@@ -214,9 +214,9 @@ public:
    const pod_vector_maybe<Base>& par_all(void) const
    {  return par_all_; }
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is(void) const
-   {  return dyn_par_is_; }
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn(void) const
+   {  return par_is_dyn_; }
    //
    // dyn2par_index_
    const pod_vector<addr_t>& dyn2par_index(void) const
@@ -261,7 +261,7 @@ public:
    size_t size_op_seq(void) const
    {  return 0
          + par_all_.size()   * sizeof(Base)
-         + dyn_par_is_.size()    * sizeof(bool)
+         + par_is_dyn_.size()    * sizeof(bool)
          + dyn2par_index_.size() * sizeof(addr_t)
          + dyn_par_op_.size()    * sizeof(opcode_t)
          + dyn_par_arg_.size()   * sizeof(addr_t)

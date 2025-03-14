@@ -26,7 +26,7 @@ is the dynamic parameter index
 is the mapping from dynamic parameter index to parameter index
 (size is number of dynamic parameters).
 
-\param dyn_par_is
+\param par_is_dyn
 i-th element is true (false) if i-th parameter is (is not) dynamic
 (size is number of parameters).
 
@@ -60,7 +60,7 @@ have been replaced by their previous matches.
 inline void dyn_arg_match(
    size_t                    i_dyn           ,
    const pod_vector<addr_t>& dyn2par_index ,
-   const pod_vector<bool>  & dyn_par_is      ,
+   const pod_vector<bool>  & par_is_dyn      ,
    const pod_vector<addr_t>& dyn_arg_offset  ,
    const pod_vector<addr_t>& dyn_par_arg     ,
    const pod_vector<addr_t>& par_ind2dyn_ind ,
@@ -73,7 +73,7 @@ inline void dyn_arg_match(
    // check some assumptions
    CPPAD_ASSERT_UNKNOWN( size_t( num_dynamic_par ) == dyn_arg_offset.size() );
    CPPAD_ASSERT_UNKNOWN( size_t( num_dynamic_par ) == dyn_previous.size() );
-   CPPAD_ASSERT_UNKNOWN( dyn_par_is.size() == par_ind2dyn_ind.size() );
+   CPPAD_ASSERT_UNKNOWN( par_is_dyn.size() == par_ind2dyn_ind.size() );
    //
    // number of arguments for this operator
    addr_t n_arg = addr_t( arg_match.size() );
@@ -88,7 +88,7 @@ inline void dyn_arg_match(
       CPPAD_ASSERT_UNKNOWN( j_par < dyn2par_index[i_dyn] );
       //
       // map dynamic parameters arguments to previous matches
-      if( dyn_par_is[j_par] )
+      if( par_is_dyn[j_par] )
       {  addr_t j_dyn = par_ind2dyn_ind[j_par];
          if( dyn_previous[j_dyn] != num_dynamic_par )
          {  CPPAD_ASSERT_UNKNOWN( dyn_previous[j_dyn] < j_dyn );
@@ -155,12 +155,12 @@ void get_dyn_previous(
    // dynamic parameter information
    dyn_previous.resize( num_dynamic_par );
    const pod_vector<addr_t>&   dyn2par_index( play->dyn2par_index() );
-   const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
+   const pod_vector<bool>&     par_is_dyn( play->par_is_dyn() );
    const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
    const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
 
    // mapping from parameter index to dynamic parameter index
-   // only defined when dyn_par_is is true
+   // only defined when par_is_dyn is true
    pod_vector<addr_t> par_ind2dyn_ind(num_par);
 
    // mapping from dynamic parameter index to first argument index
@@ -203,9 +203,9 @@ void get_dyn_previous(
       size_t i_par = size_t( dyn2par_index[i_dyn] );
       //
       // mapping from parameter indices to dynamic parameter indices
-      // is only defined when dyn_par_is[i_par] is true and for parameter
+      // is only defined when par_is_dyn[i_par] is true and for parameter
       // indices less than or equal i_par
-      CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+      CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
       par_ind2dyn_ind[i_par] = addr_t( i_dyn );
       //
       // operator for this dynamic parameter
@@ -248,13 +248,13 @@ void get_dyn_previous(
          case tan_dyn:
          case tanh_dyn:
          CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 1);
-         CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+         CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
          {  size_t num_arg = 1;
             arg_match.resize(num_arg);
             dyn_arg_match(
                i_dyn,
                dyn2par_index,
-               dyn_par_is,
+               par_is_dyn,
                dyn_arg_offset,
                dyn_par_arg,
                par_ind2dyn_ind,
@@ -315,14 +315,14 @@ void get_dyn_previous(
          case sub_dyn:
          case zmul_dyn:
          CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 2);
-         CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+         CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
          match = false;
          {  size_t num_arg = 2;
             arg_match.resize(num_arg);
             dyn_arg_match(
                i_dyn,
                dyn2par_index,
-               dyn_par_is,
+               par_is_dyn,
                dyn_arg_offset,
                dyn_par_arg   ,
                par_ind2dyn_ind,

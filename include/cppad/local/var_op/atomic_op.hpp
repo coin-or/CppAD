@@ -229,8 +229,8 @@ void atomic_forward_any(
    // vector
    using CppAD::vector;
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // n_order
    size_t n_order = order_up + 1;
@@ -288,7 +288,7 @@ void atomic_forward_any(
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
@@ -453,8 +453,8 @@ void atomic_forward_dir(
       return index;
    };
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // n_order
    size_t n_order = order_up + 1;
@@ -515,7 +515,7 @@ void atomic_forward_dir(
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
          index_x[j] = std::numeric_limits<size_t>::max();
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
@@ -731,8 +731,8 @@ void atomic_reverse(
    // vector
    using CppAD::vector;
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // n_order
    size_t order_up = n_order - 1;
@@ -853,7 +853,7 @@ void atomic_reverse(
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
          variable_x[j] = false;
          index_x[j]    = size_t( arg[0] );
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
@@ -969,8 +969,8 @@ inline void atomic_for_jac(
    // vector
    using CppAD::vector;
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // op_code, i_var, arg
    op_code_var   op_code;
@@ -1022,7 +1022,7 @@ inline void atomic_for_jac(
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
@@ -1174,8 +1174,8 @@ inline void atomic_rev_jac(
    // vector
    using CppAD::vector;
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // op_code, i_var, arg
    op_code_var   op_code;
@@ -1294,7 +1294,7 @@ inline void atomic_rev_jac(
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
@@ -1422,8 +1422,8 @@ inline void atomic_rev_hes(
    // vector
    using CppAD::vector;
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // op_code, i_var, arg
    op_code_var   op_code;
@@ -1506,7 +1506,7 @@ inline void atomic_rev_hes(
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
@@ -1670,8 +1670,8 @@ inline void atomic_for_hes(
    // vector
    using CppAD::vector;
    //
-   // dyn_par_is
-   const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+   // par_is_dyn
+   const pod_vector<bool>& par_is_dyn( play->par_is_dyn() );
    //
    // op_code, i_var, arg
    op_code_var   op_code;
@@ -1723,7 +1723,7 @@ inline void atomic_for_hes(
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
          CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
-         if( dyn_par_is[ arg[0] ] )
+         if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
             type_x[j]    = constant_enum;
