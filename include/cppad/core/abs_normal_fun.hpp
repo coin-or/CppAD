@@ -399,7 +399,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
       size_t j_par = 0;
 # endif
       // value of this parameter
-      Base par = play_.GetPar(i_par);
+      Base par = play_.par_one(i_par);
       if( ! par_is_dyn[i_par] )
          CPPAD_J_PAR_EQUAL_REC.put_con_par(par);
       else

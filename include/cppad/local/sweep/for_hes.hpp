@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/atom_op_info.hpp>
@@ -210,7 +210,7 @@ void for_hes(
    // pointer to the beginning of the parameter vector
    // (used by atomic functions)
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
-   const Base* parameter = play->GetPar();
+   const Base* parameter = play->par_ptr();
    //
    // skip the BeginOp at the beginning of the recording
    play::const_sequential_iterator itr = play->begin();

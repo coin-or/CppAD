@@ -660,11 +660,13 @@ public:
    size_t GetVecInd (size_t i) const
    {  return size_t( var_vecad_ind_[i] ); }
    //
-   // GetPar
-   Base GetPar(size_t i) const
-   {  return dyn_play_.GetPar(i);  }
-   const Base* GetPar(void) const
-   {  return dyn_play_.GetPar(); }
+   // par_one
+   Base par_one(size_t i) const
+   {  return dyn_play_.par_one(i);  }
+   //
+   // par_ptr
+   const Base* par_ptr(void) const
+   {  return dyn_play_.par_ptr(); }
    //
    // GetTxt
    /*!

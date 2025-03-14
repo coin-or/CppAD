@@ -328,14 +328,14 @@ bool optimize_run(
    rec->set_record_compare( compare_op );
 
    // copy parameters with index 0
-   CPPAD_ASSERT_UNKNOWN( ! par_is_dyn[0] && CppAD::isnan( play->GetPar(0) ) );
-   rec->put_con_par( play->GetPar(0) );
+   CPPAD_ASSERT_UNKNOWN( ! par_is_dyn[0] && CppAD::isnan( play->par_one(0) ) );
+   rec->put_con_par( play->par_one(0) );
    new_par[0] = 0;
 
    // set new_par for the independent dynamic parameters
    for(size_t i_par = 1; i_par <= n_dyn_independent; i_par++)
    {  CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
-      addr_t i = rec->put_dyn_par(play->GetPar(i_par), ind_dyn);
+      addr_t i = rec->put_dyn_par(play->par_one(i_par), ind_dyn);
       CPPAD_ASSERT_UNKNOWN( size_t(i) == i_par );
       new_par[i_par] = i;
    }
@@ -346,7 +346,7 @@ bool optimize_run(
    {  CPPAD_ASSERT_UNKNOWN( i_par == 0 || n_dyn_independent < i_par );
       if( par_usage[i_par] )
       {  // value of this parameter
-         Base par       = play->GetPar(i_par);
+         Base par       = play->par_one(i_par);
          new_par[i_par] = rec->put_con_par(par);
       }
    }
@@ -419,7 +419,7 @@ bool optimize_run(
                CPPAD_ASSERT_UNKNOWN( par_is_dyn[res_i] || res_i == 0 );
                //
                if( par_is_dyn[res_i] )
-               {  Base par = play->GetPar( size_t(res_i) );
+               {  Base par = play->par_one( size_t(res_i) );
                   if( first_dynamic_result )
                   {  first_dynamic_result = false;
                      new_par[res_i] = rec->put_dyn_par(par, atom_dyn);
@@ -452,7 +452,7 @@ bool optimize_run(
          else
          {
             // value of this parameter
-            Base par       = play->GetPar(i_par);
+            Base par       = play->par_one(i_par);
             //
             if( op == cond_exp_dyn )
             {  // cond_exp_dyn
