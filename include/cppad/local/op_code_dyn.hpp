@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -73,12 +73,12 @@ function call.
 arg[2]
 ======
 This is the number of arguments to this atomic function.
-We use the notation *n* = *arg* [1] below.
+We use the notation *n* = *arg* [2] below.
 
 arg[3]
 ======
 This is the number of results for this atomic function.
-We use the notation *m* = *arg* [2] below.
+We use the notation *m* = *arg* [3] below.
 
 arg[4]
 ======
@@ -427,11 +427,14 @@ All of the non-parameter arguments come first
 so *num* is also the offset for the
 first argument that is a parameter index.
 
-atom_dyn
-********
-The :ref:`op_code_dyn@atom_dyn` case is special,
-*num* is zero for this case but it is not as documented above; see
-:ref:`op_code_dyn@atom_dyn` .
+Special Case
+************
+If :ref:`num_arg_dyn-name` ( *op* ) is zero and *num* is non-zero,
+this operator has a variable number of arguments.
+(The only such operator so far is ``atom_dyn`` .)
+In this case the last argument is not a parameter index and
+there are *num* - 1 arguments that are not parameter indices
+before the first parameter index.
 
 {xrst_end num_non_par_arg_dyn}
 */
@@ -442,7 +445,7 @@ inline size_t num_non_par_arg_dyn(op_code_dyn op)
    size_t num;
    switch(op)
    {  case atom_dyn:
-      num = 5;
+      num = 6;
       break;
 
       case cond_exp_dyn:
