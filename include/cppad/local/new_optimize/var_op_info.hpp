@@ -131,7 +131,9 @@ public:
       // Also not that for Addvv and Mulvv, both arguments are variables.
       bool is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       if( is_commutative && arg_one[0] > arg_one[1] )
-         std::swap( arg_one[0], arg_one[1] );
+      {  std::swap(    arg_one[0],    arg_one[1] );
+         std::swap( is_res_one[0], is_res_one[1] );
+      }
    }
 };
 

@@ -154,13 +154,6 @@ public:
       for(index_t k = 0; k < n_arg; ++k)
          arg_one[k] = arg_all_[arg_index + k];
       //
-      // arg_one
-      bool is_commutative = op_enum == add_dyn || op_enum == mul_dyn;
-      if( is_commutative )
-      {  if( arg_one[0] > arg_one[1] )
-            std::swap( arg_one[0], arg_one[1] );
-      }
-      //
       // is_res_one
       is_res_one.resize(0); is_res_one.resize( size_t(n_arg) );
       switch(op_enum)
@@ -202,6 +195,16 @@ public:
                is_res_one[k] = false;
          }
          break;
+      }
+      //
+      // arg_one
+      bool is_commutative = op_enum == add_dyn || op_enum == mul_dyn;
+      if( is_commutative )
+      {  CPPAD_ASSERT_UNKNOWN( arg_one.size() == 2 );
+         if( arg_one[0] > arg_one[1] )
+         {  std::swap(    arg_one[0],    arg_one[1] );
+            std::swap( is_res_one[0], is_res_one[1] );
+         }
       }
    }
 };
