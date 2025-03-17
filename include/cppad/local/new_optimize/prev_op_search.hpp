@@ -151,12 +151,12 @@ private:
    // Set by match_op and used by match_fun
    op_enum_t   op_enum_search_;
    vec_index_t arg_one_search_;
-   vec_bool_t  is_var_one_search_;
+   vec_bool_t  is_res_one_search_;
    //
    // Used by match_fun. Placed here to avoid reallocaiton of memory
    // (if resize for these vectors is smart enough).
    vec_index_t arg_one_check_;
-   vec_bool_t  is_var_one_check_;
+   vec_bool_t  is_res_one_check_;
 public:
    // -------------------------------------------------------------------------
    // BEGIN_OP_PREV_OP_SEARCH_T
@@ -196,10 +196,10 @@ public:
       prev_var_index_ = &prev_res_index;
       //
       // op_enum, arg_one, is_res_one
-      // op_enum_search_, ... , is_var_one_search_
+      // op_enum_search_, ... , is_res_one_search_
       op_enum_t&     op_enum          = op_enum_search_;
       vec_index_t&   arg_one          = arg_one_search_;
-      vec_bool_t&    is_res_one       = is_var_one_search_;
+      vec_bool_t&    is_res_one       = is_res_one_search_;
       op_info_.get(
          i_op, op_enum, arg_one, is_res_one
       );
@@ -254,21 +254,21 @@ bool prev_op_search_t<Op_info>::match_fun(
    // op_info
    Op_info& op_info = prev_op_search.op_info_;
    //
-   // op_enum_s, arg_one_s, is_var_one_s
+   // op_enum_s, arg_one_s, is_res_one_s
    // These results were stored by match_op (so i_op_search is not needed).
    op_enum_t&     op_enum_s        = prev_op_search.op_enum_search_;
    vec_index_t&   arg_one_s        = prev_op_search.arg_one_search_;
-   vec_bool_t&    is_var_one_s     = prev_op_search.is_var_one_search_;
+   vec_bool_t&    is_res_one_s     = prev_op_search.is_res_one_search_;
    //
    // n_arg_s
    size_t n_arg_s = arg_one_s.size();
    //
-   // op_enum_c, arg_one_c, is_var_one_c
+   // op_enum_c, arg_one_c, is_res_one_c
    op_enum_t     op_enum_c;
    vec_index_t&  arg_one_c    = prev_op_search.arg_one_check_;
-   vec_bool_t&   is_var_one_c = prev_op_search.is_var_one_check_;
+   vec_bool_t&   is_res_one_c = prev_op_search.is_res_one_check_;
    op_info.get( i_op_check,
-      op_enum_c, arg_one_c, is_var_one_c
+      op_enum_c, arg_one_c, is_res_one_c
    );
    //
    // n_arg_c
@@ -283,12 +283,12 @@ bool prev_op_search_t<Op_info>::match_fun(
    //
    // match
    for(size_t k = 0; k < n_arg_s; ++k)
-   {  if( ! is_var_one_s[k] )
-      {  match  = match && ! is_var_one_c[k];
+   {  if( ! is_res_one_s[k] )
+      {  match  = match && ! is_res_one_c[k];
          match  = match && arg_one_s[k] == arg_one_c[k];
       }
       else
-      {  match  = match && is_var_one_c[k];
+      {  match  = match && is_res_one_c[k];
          index_t val_search  = prev_res_index[ arg_one_s[k] ];
          index_t val_check   = prev_res_index[ arg_one_c[k] ];
          match  = match && val_search == val_check;
