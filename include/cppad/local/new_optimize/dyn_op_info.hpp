@@ -57,14 +57,7 @@ public:
    typedef CppAD::local::pod_vector<index_t>       vec_index_t;
    typedef CppAD::local::pod_vector<bool>          vec_bool_t;
    //
-   // value_t, vec_value_t
-   typedef typename Player::value_t                value_t;
-   typedef CppAD::local::pod_vector_maybe<value_t> vec_value_t;
-   //
 private:
-   //
-   // empty_vec_value_
-   const vec_value_t empty_vec_value_;
    //
    // n_op_
    const index_t n_op_;
@@ -104,10 +97,9 @@ public:
    //
    // BEGIN_OP_INFO
    // dyn_op_info_t op_info(play)
-   dyn_op_info_t( const CppAD::local::player<value_t>& play )
+   dyn_op_info_t( const Player& play )
    // END_OP_INFO
-   : empty_vec_value_(0)
-   , n_op_ ( index_t( play.num_dynamic_par() ) )
+   : n_op_ ( index_t( play.num_dynamic_par() ) )
    , arg_all_ ( play.dyn_par_arg() )
    , is_par_dyn_ ( play.par_is_dyn() )
    , op_enum_all_ ( play.dyn_par_op() )

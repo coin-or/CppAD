@@ -113,15 +113,11 @@ private:
    // vector
    template <class Value_t> using vector = CppAD::vector<Value_t>;
    //
-   // index_t, value_t, op_enum_t, vec_bool_t
+   // index_t, op_enum_t, vec_bool_t
    typedef typename Op_info::index_t        index_t;
    typedef typename Op_info::op_enum_t      op_enum_t;
    typedef typename Op_info::vec_index_t    vec_index_t;
    typedef typename Op_info::vec_bool_t     vec_bool_t;
-   //
-   // value_t, vec_value_t
-   typedef typename Op_info::value_t       value_t;
-   typedef typename Op_info::vec_value_t   vec_value_t;
    //
    // n_op_
    const index_t n_op_;

@@ -37,13 +37,6 @@ defined as described below.
 The vector types must support indexing
 and the ``size`` and ``resize`` member functions.
 
-value_t
--------
-If *is_constant* is always false this can be any
-:ref:`base type <base_require-name>`; e.g., ``double`` .
-Otherwise, it must be the base type used to record this
-operator sequence; i.e., the type to sequence computes with.
-
 op_enum_t
 ---------
 is the enum type that separates the different operators.

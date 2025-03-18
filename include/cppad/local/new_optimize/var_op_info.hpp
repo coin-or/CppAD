@@ -58,15 +58,7 @@ public:
    typedef CppAD::local::pod_vector<index_t>       vec_index_t;
    typedef CppAD::local::pod_vector<bool>          vec_bool_t;
    //
-   // value_t, vec_value_t
-   // These types are not used
-   typedef double                            value_t;
-   typedef CppAD::local::pod_vector<value_t> vec_value_t;
-   //
 private:
-   //
-   // empty_vec_value_
-   const vec_value_t empty_vec_value_;
    //
    // random_itr_
    const Random_itr& random_itr_;
