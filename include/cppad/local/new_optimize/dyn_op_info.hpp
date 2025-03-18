@@ -179,7 +179,7 @@ public:
                is_res_one[k] = false;
             for(index_t k = 5; k < 5 + n; k++)
                is_res_one[k] = is_par_dyn_[ arg_one[k] ];
-            is_res_one[n_arg - 1] = arg_one[n_arg - 1];
+            is_res_one[n_arg - 1] = false;
             //
             // 2DO: These result indices should not have to match.
             // Modify prev_op_match so it handels atomic functions ?
