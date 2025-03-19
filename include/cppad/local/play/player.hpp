@@ -151,6 +151,7 @@ private:
    // friend
    // player<Base> must be a friend of player< AD<Base> > for base2ad to work
    template <class AnotherBase> friend class player;
+   template <class Player> friend class CppAD::local::optimize::dyn_op_info_t;
    // ----------------------------------------------------------------------
    //
    // dyn_play_

@@ -43,7 +43,8 @@ Class Requirements for Optimization
 
 {xrst_end var_op_info_t}
 */
-# include <cppad/local/val_graph/tape.hpp>
+# include <cppad/local/play/player.hpp>
+# include <cppad/local/new_optimize/subvector.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 // BEGIN_CLASS
@@ -63,6 +64,24 @@ private:
    // random_itr_
    const Random_itr& random_itr_;
    //
+   // num_arg
+   index_t num_arg(op_enum_t op_enum, const addr_t* op_arg)
+   {  index_t n_arg;
+      switch(op_enum)
+      {  default:
+         n_arg = index_t( NumArg(op_enum) );
+         break;
+
+         case CSkipOp:
+         n_arg = 6 + index_t( op_arg[4] + op_arg[5] ) + 1;
+         break;
+
+         case CSumOp:
+         n_arg = index_t( op_arg[4] ) + 1;
+         break;
+      }
+      return n_arg;
+   }
 public:
    //
    // BEGIN_OP_INFO
@@ -77,55 +96,68 @@ public:
    // END_N_OP
    {  return index_t( random_itr_.num_op() ); }
    //
-   // op_info.get(i_op, op_enum, arg_one, is_res_one)
+   // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
-      index_t       i_op           ,
-      op_enum_t&    op_enum        ,
-      vec_index_t&  arg_one        ,
-      vec_bool_t&   is_res_one     )
+      index_t              i_op           ,
+      op_enum_t&           op_enum        ,
+      bool&                commutative    ,
+      const_subvector_t&   arg_one        ,
+      vec_bool_t&          is_res_one     )
    // END_GET
    {  //
       // op_enum
       op_enum        = random_itr_.get_op( size_t(i_op) );
+      //
+      // commutative
+      // Note that Addvp and Mulvp have been folded using communativity.
+      commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
       // op_enum,  op_arg
       const addr_t*  op_arg;
       size_t         var_index;
       random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
       //
-      //
-      index_t n_arg;
-      switch(op_enum)
-      {  default:
-         n_arg = index_t( NumArg(op_enum) );
-         break;
-
-         case CSkipOp:
-         n_arg = 6 + index_t( op_arg[4] + op_arg[5] ) + 1;
-         break;
-
-         case CSumOp:
-         n_arg = index_t( op_arg[4] ) + 1;
-         break;
-      }
+      // n_arg
+      index_t n_arg = num_arg(op_enum, op_arg);
       //
       // arg_one
-      arg_one.resize(0); arg_one.resize( size_t(n_arg) );
-      for(index_t k = 0; k < n_arg; ++k)
-         arg_one[k] = index_t( op_arg[k] );
+      arg_one.set(op_arg, n_arg);
       //
       // is_res_one
       arg_is_variable(op_enum, op_arg, is_res_one);
       CPPAD_ASSERT_UNKNOWN( is_res_one.size() == size_t( n_arg ) );
+   }
+   //
+   // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
+   void get(
+      index_t              i_op           ,
+      op_enum_t&           op_enum        ,
+      bool&                commutative    ,
+      mutable_subvector_t& arg_one        ,
+      vec_bool_t&          is_res_one     )
+   // END_GET
+   {  //
+      // op_enum
+      op_enum        = random_itr_.get_op( size_t(i_op) );
+      //
+      // commutative
+      // Note that Addvp and Mulvp have been folded using communativity.
+      commutative = op_enum == AddvvOp || op_enum == MulvvOp;
+      //
+      // op_enum,  op_arg
+      addr_t*        op_arg;
+      size_t         var_index;
+      random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
+      //
+      // n_arg
+      index_t n_arg = num_arg(op_enum, op_arg);
       //
       // arg_one
-      // Note that Addvp and Mulvp have been folded using communativity.
-      // Also not that for Addvv and Mulvv, both arguments are variables.
-      bool is_commutative = op_enum == AddvvOp || op_enum == MulvvOp;
-      if( is_commutative && arg_one[0] > arg_one[1] )
-      {  std::swap(    arg_one[0],    arg_one[1] );
-         std::swap( is_res_one[0], is_res_one[1] );
-      }
+      arg_one.set(op_arg, n_arg);
+      //
+      // is_res_one
+      arg_is_variable(op_enum, op_arg, is_res_one);
+      CPPAD_ASSERT_UNKNOWN( is_res_one.size() == size_t( n_arg ) );
    }
 };
 

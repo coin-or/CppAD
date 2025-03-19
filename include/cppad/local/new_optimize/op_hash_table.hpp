@@ -122,6 +122,9 @@ is an integer representation of the operator are hash coding.
 op_arg
 ======
 is a vector containing to the arguments for this operator.
+This is only used for determining the hash code,
+:ref:`op_hash_table_t@find_match: arg@match_fun` is used to determine
+if operators with the same hash code match.
 (During renumbering this should be the new argument indices.)
 
 

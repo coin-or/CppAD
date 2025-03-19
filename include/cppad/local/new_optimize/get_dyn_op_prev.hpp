@@ -83,9 +83,9 @@ the return value is true (false).
 namespace CppAD { namespace local { namespace optimize {
 template <class Base> bool get_dyn_op_prev(
    addr_t                       collision_limit     ,
-   const player<Base>*          play                ,
+   player<Base>*                play                ,
    const pod_vector<bool>&      par_usage           ,
-   pod_vector<addr_t>&          dyn_op_prev        )
+   pod_vector<addr_t>&          dyn_op_prev         )
 {  CPPAD_ASSERT_UNKNOWN( dyn_op_prev.size() == 0 );
    CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_rec() );
    // END_GET_DYN_OP_PREV

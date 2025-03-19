@@ -43,6 +43,7 @@ Class Requirements for Optimization
 {xrst_end dyn_op_info_t}
 */
 # include <cppad/local/play/player.hpp>
+# include <cppad/local/new_optimize/subvector.hpp>
 
 // BEGIN_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE
 // BEGIN_CLASS
@@ -63,7 +64,7 @@ private:
    const index_t n_op_;
    //
    // arg_all_
-   const vec_index_t& arg_all_;
+   vec_index_t& arg_all_;
    //
    // is_par_dyn_
    const vec_bool_t& is_par_dyn_;
@@ -80,8 +81,8 @@ private:
    vec_index_t op2arg_index_;
    //
    // num_arg
-   // n_arg = op_info.n_arg_fun(i_op)
-   index_t n_arg_fun(index_t i_op)
+   // n_arg = op_info.num_arg(i_op)
+   index_t num_arg(index_t i_op)
    {  op_enum_t  op_enum   = op_enum_t( op_enum_all_[i_op] );
       index_t    arg_index = op2arg_index_[i_op];
       index_t    n_arg     = index_t( num_arg_dyn(op_enum) );
@@ -97,10 +98,10 @@ public:
    //
    // BEGIN_OP_INFO
    // dyn_op_info_t op_info(play)
-   dyn_op_info_t( const Player& play )
+   dyn_op_info_t( Player& play )
    // END_OP_INFO
    : n_op_ ( index_t( play.num_dynamic_par() ) )
-   , arg_all_ ( play.dyn_par_arg() )
+   , arg_all_ ( play.dyn_play_.dyn_par_arg_  )
    , is_par_dyn_ ( play.par_is_dyn() )
    , op_enum_all_ ( play.dyn_par_op() )
    , op2arg_index_( size_t( n_op_ ) )
@@ -126,25 +127,28 @@ public:
    // END_N_OP
    {  return n_op_; }
    //
-   // op_info.get(i_op, op_enum, arg_one, is_res_one)
+   // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
-      index_t       i_op           ,
-      op_enum_t&    op_enum        ,
-      vec_index_t&  arg_one        ,
-      vec_bool_t&   is_res_one     )
+      index_t              i_op           ,
+      op_enum_t&           op_enum        ,
+      bool&                commutative    ,
+      mutable_subvector_t& arg_one        ,
+      vec_bool_t&          is_res_one     )
    // END_GET
    {  //
       // op_enum
       op_enum        = op_enum_t( op_enum_all_[i_op] );
       //
+      // commutative
+      commutative = op_enum == add_dyn || op_enum == mul_dyn;
+      //
       // arg_index, narg
       index_t arg_index  = op2arg_index_[i_op];
-      index_t n_arg      = n_arg_fun(i_op);
+      index_t n_arg      = num_arg(i_op);
       //
       // arg_one
-      arg_one.resize(0); arg_one.resize( size_t(n_arg) );
-      for(index_t k = 0; k < n_arg; ++k)
-         arg_one[k] = arg_all_[arg_index + k];
+      CPPAD_ASSERT_UNKNOWN( size_t(arg_index + n_arg) <= arg_all_.size() );
+      arg_one.set(arg_all_.data() + arg_index, n_arg);
       //
       // is_res_one
       is_res_one.resize(0); is_res_one.resize( size_t(n_arg) );
@@ -188,16 +192,20 @@ public:
          }
          break;
       }
-      //
-      // arg_one
-      bool is_commutative = op_enum == add_dyn || op_enum == mul_dyn;
-      if( is_commutative )
-      {  CPPAD_ASSERT_UNKNOWN( arg_one.size() == 2 );
-         if( arg_one[0] > arg_one[1] )
-         {  std::swap(    arg_one[0],    arg_one[1] );
-            std::swap( is_res_one[0], is_res_one[1] );
-         }
-      }
+   }
+   //
+   // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
+   void get(
+      index_t              i_op           ,
+      op_enum_t&           op_enum        ,
+      bool&                commutative    ,
+      const_subvector_t&   arg_one        ,
+      vec_bool_t&          is_res_one     )
+   // END_GET
+   {  //
+      mutable_subvector_t mutable_subvector;
+      get(i_op, op_enum, commutative, mutable_subvector, is_res_one);
+      arg_one = mutable_subvector;
    }
 };
 

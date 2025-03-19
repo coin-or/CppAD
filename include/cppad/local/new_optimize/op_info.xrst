@@ -25,34 +25,28 @@ Syntax
 | |tab| @op_info@ . ``get_`` (
 | |tab| |tab| *i_op* ,
 | |tab| |tab| *op_enum*,
+| |tab| |tab| *commutative*,
 | |tab| |tab| *arg_one*
 | |tab| |tab| *is_res_one*
 | |tab| )
 
 Types
 =====
-Each of the types listed below are defined in the @op_info_t@ class;
 i.e. if *type* is one of the types below then ``@op_info_t@`` :: *type* is
 defined as described below.
-The vector types must support indexing
-and the ``size`` and ``resize`` member functions.
 
 op_enum_t
 ---------
-is the enum type that separates the different operators.
+This type must be defined in the @op_info_t@ class.
+It is the enum type that separates the different operators.
 We use operator to denote an enum type together with its arguments.
-
-vec_addr_t
-----------
-is a vector type with ``addr_t`` elements.
 
 vec_bool_t
 ----------
-is a vector type with ``bool`` elements.
-
-vec_value_t
------------
-is a vector type with ``value_t`` elements.
+This type must be defined in the @op_info_t@ class.
+It is a vector type with ``bool`` elements.
+This vector must support indexing
+and the ``size`` and ``resize`` member functions.
 
 n_op
 ====
@@ -71,15 +65,18 @@ op_enum
 -------
 is an ``op_enum_t&`` that is set to the enum value for this operator.
 
+commutative
+-----------
+is a ``bool&`` that is set to true (false) if the operator is commutative
+(not commutative); i.e., it has two operands and switching the order
+of the operands does not affect the result.
+
 arg_one
 -------
-is a ``vec_addr_t&`` that is set to the arguments for this operator;
+is a :ref:`const_subvector-name` or :ref:`mutable_subvector-name`
+that contains the arguments for this operator;
 i.e., *arg_one*\ . ``size`` () is the number arguments and
 *arg_one*\ [ *k* ] is the k-th argument.
-
-If an operator is commutative, the operands passed back should be such that
-*j* < *k* implies that *arg_one*\ [ *j* ] <= *arg_one* [ *k* ] .
-If different orders are used, operators may not be recognized as equivalent.
 
 
 is_res_one

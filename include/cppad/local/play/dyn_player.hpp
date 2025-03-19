@@ -5,6 +5,7 @@
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/local/declare_ad.hpp>
 
 /*
 ------------------------------------------------------------------------------
@@ -158,6 +159,7 @@ template <class Base> class dyn_player {
    //
    // friend
    template <class AnotherBase> friend class dyn_player;
+   template <class Player> friend class CppAD::local::optimize::dyn_op_info_t;
 private:
    //
    // n_dyn_independent_

@@ -21,6 +21,9 @@ namespace CppAD { namespace local {
 namespace CppAD { namespace local { namespace val_graph {
    template <class Value> class tape_t;
 } } }
+namespace CppAD { namespace local { namespace optimize {
+   template <class Player> class dyn_op_info_t;
+} } }
 
 namespace CppAD {
    // BEGIN_COMPARE_OP

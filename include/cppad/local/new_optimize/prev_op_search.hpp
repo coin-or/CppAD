@@ -7,6 +7,7 @@
 # include <cppad/local/sparse/size_setvec.hpp>
 # include <cppad/local/is_pod.hpp>
 # include <cppad/local/new_optimize/op_hash_table.hpp>
+# include <cppad/local/new_optimize/subvector.hpp>
 /*
 {xrst_begin prev_op_serarch dev}
 
@@ -145,14 +146,15 @@ private:
    const vec_index_t* prev_var_index_;
    //
    // Set by match_op and used by match_fun
-   op_enum_t   op_enum_search_;
-   vec_index_t arg_one_search_;
-   vec_bool_t  is_res_one_search_;
+   op_enum_t      op_enum_search_;
+   bool           commutative_search_;
+   vec_index_t    arg_one_search_;
+   vec_bool_t     is_res_one_search_;
    //
    // Used by match_fun. Placed here to avoid reallocaiton of memory
    // (if resize for these vectors is smart enough).
-   vec_index_t arg_one_check_;
-   vec_bool_t  is_res_one_check_;
+   vec_index_t    arg_one_check_;
+   vec_bool_t     is_res_one_check_;
 public:
    // -------------------------------------------------------------------------
    // BEGIN_OP_PREV_OP_SEARCH_T
@@ -193,12 +195,24 @@ public:
       //
       // op_enum, arg_one, is_res_one
       // op_enum_search_, ... , is_res_one_search_
-      op_enum_t&     op_enum          = op_enum_search_;
-      vec_index_t&   arg_one          = arg_one_search_;
-      vec_bool_t&    is_res_one       = is_res_one_search_;
+      op_enum_t&        op_enum          = op_enum_search_;
+      bool&             commutative      = commutative_search_;
+      vec_index_t&      arg_one          = arg_one_search_;
+      vec_bool_t&       is_res_one       = is_res_one_search_;
+      const_subvector_t arg_tmp;
       op_info_.get(
-         i_op, op_enum, arg_one, is_res_one
+         i_op, op_enum, commutative, arg_tmp, is_res_one
       );
+      arg_one.resize( arg_tmp.size() );
+      for(size_t i = 0; i < arg_tmp.size(); ++i)
+         arg_one[i] = index_t( arg_tmp[i] );
+      if( commutative )
+      {  CPPAD_ASSERT_UNKNOWN( arg_one.size() == 2 );
+         if( arg_one[0] > arg_one[1] )
+         {  std::swap(    arg_one[0],    arg_one[1] );
+            std::swap( is_res_one[0], is_res_one[1] );
+         }
+      }
       //
       // n_arg
       size_t n_arg = arg_one.size();
@@ -215,8 +229,10 @@ public:
          {  if( is_res_one[k] )
                op_arg_[k] = prev_res_index[ arg_one[k] ];
             else
-               op_arg_[k] = arg_one[k];
+               op_arg_[k] = index_t( arg_one[k] );
          }
+         if( commutative && op_arg_[0] > op_arg_[1] )
+            std::swap( op_arg_[0], op_arg_[1] );
          //
          // i_op_match
          i_op_match = hash_table_.find_match(
@@ -260,12 +276,24 @@ bool prev_op_search_t<Op_info>::match_fun(
    size_t n_arg_s = arg_one_s.size();
    //
    // op_enum_c, arg_one_c, is_res_one_c
-   op_enum_t     op_enum_c;
-   vec_index_t&  arg_one_c    = prev_op_search.arg_one_check_;
-   vec_bool_t&   is_res_one_c = prev_op_search.is_res_one_check_;
-   op_info.get( i_op_check,
-      op_enum_c, arg_one_c, is_res_one_c
+   op_enum_t         op_enum_c;
+   bool              commutative_c;
+   vec_index_t&      arg_one_c        = prev_op_search.arg_one_check_;
+   vec_bool_t&       is_res_one_c     = prev_op_search.is_res_one_check_;
+   const_subvector_t arg_tmp;
+   op_info.get(i_op_check,
+      op_enum_c, commutative_c, arg_tmp, is_res_one_c
    );
+   arg_one_c.resize( arg_tmp.size() );
+   for(size_t i = 0; i < arg_tmp.size(); ++i)
+      arg_one_c[i] = index_t( arg_tmp[i] );
+   if( commutative_c )
+   {  CPPAD_ASSERT_UNKNOWN( arg_one_c.size() == 2 );
+      if( arg_one_c[0] > arg_one_c[1] )
+      {  std::swap(    arg_one_c[0],    arg_one_c[1] );
+         std::swap( is_res_one_c[0], is_res_one_c[1] );
+      }
+   }
    //
    // n_arg_c
    size_t n_arg_c = arg_one_c.size();
