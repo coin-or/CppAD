@@ -148,7 +148,7 @@ public:
       //
       // arg_one
       CPPAD_ASSERT_UNKNOWN( size_t(arg_index + n_arg) <= arg_all_.size() );
-      arg_one.set(arg_all_.data() + arg_index, n_arg);
+      arg_one.set(arg_all_.data() + arg_index, index_t(n_arg) );
       //
       // is_res_one
       is_res_one.resize(0); is_res_one.resize( size_t(n_arg) );

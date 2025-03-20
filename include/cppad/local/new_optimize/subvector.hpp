@@ -114,9 +114,10 @@ public:
    //
    // BEGIN_MUTTABLE_INDEX
    // element = mutable_subvector[index]
-   addr_t& operator[](size_t index) const
+   template <class Index>
+   addr_t& operator[](Index index) const
    // END_MUTTABLE_INDEX
-   {  CPPAD_ASSERT_UNKNOWN( index < size_ );
+   {  CPPAD_ASSERT_UNKNOWN( size_t(index) < size_ );
       return data_[index];
    }
 };
