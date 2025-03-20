@@ -453,7 +453,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    //
    // number of variables in both operation sequences
    // (the AbsOp operators are replace by InvOp operators)
-   const size_t num_var = play_.num_var_rec();
+   const size_t num_var = play_.num_var();
    //
    // mapping from old variable index to new variable index
    CPPAD_ASSERT_UNKNOWN(
@@ -892,7 +892,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    }
    // Check a few expected results
    CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == play_.num_op_rec() );
-   CPPAD_ASSERT_UNKNOWN( rec.num_var_rec() == play_.num_var_rec() );
+   CPPAD_ASSERT_UNKNOWN( rec.num_var() == play_.num_var() );
    CPPAD_ASSERT_UNKNOWN( rec.num_var_load_rec() == play_.num_var_load_rec() );
 
    // -----------------------------------------------------------------------
@@ -900,7 +900,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    // -----------------------------------------------------------------------
 
    // number of variables in the recording
-   g.num_var_tape_ = rec.num_var_rec();
+   g.num_var_tape_ = rec.num_var();
 
    // dimension cskip_op vector to number of operators
    g.cskip_op_.resize( rec.num_op_rec() );
@@ -958,7 +958,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
       g.ind_taddr_.size(),   // n_ind
       g.dep_taddr_.size(),   // n_dep
       g.play_.num_op_rec(),  // n_op
-      g.play_.num_var_rec()  // n_var
+      g.play_.num_var()      // n_var
    );
 
    // ------------------------------------------------------------------------

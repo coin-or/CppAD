@@ -961,7 +961,7 @@ void ADFun<Base, RecBase>::val2fun(
    num_order_taylor_          = 0;
    cap_order_taylor_          = 0;
    num_direction_taylor_      = 0;
-   num_var_tape_              = rec.num_var_rec();
+   num_var_tape_              = rec.num_var();
    //
    // taylor_
    taylor_.resize(0);
@@ -995,7 +995,7 @@ void ADFun<Base, RecBase>::val2fun(
       ind_taddr_.size(),   // n_dep
       dep_taddr_.size(),   // n_ind
       play_.num_op_rec(),  // n_op
-      play_.num_var_rec()  // n_var
+      play_.num_var()      // n_var
    );
    //
    // set the function name

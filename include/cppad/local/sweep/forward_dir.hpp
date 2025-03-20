@@ -57,7 +57,7 @@ void forward_dir(
 {
    CPPAD_ASSERT_UNKNOWN( order_up > 0 );
    CPPAD_ASSERT_UNKNOWN( cap_order >= order_up + 1 );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var() == num_var );
 
    // only compute one order at a time when using multi-direction forward
    size_t order_low = order_up;

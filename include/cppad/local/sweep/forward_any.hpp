@@ -67,7 +67,7 @@ void forward_any(
 
    CPPAD_ASSERT_UNKNOWN(order_low <= order_up );
    CPPAD_ASSERT_UNKNOWN( cap_order >= order_up + 1 );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var() == num_var );
 
    /*
    <!-- replace forward0sweep_code_define -->

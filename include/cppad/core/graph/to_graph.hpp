@@ -106,7 +106,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    const Base* parameter = play_.par_ptr();
    //
    // number of variables
-   const size_t n_variable = play_.num_var_rec();
+   const size_t n_variable = play_.num_var();
    //
    // some checks
    CPPAD_ASSERT_UNKNOWN( n_dynamic_ind <= n_dynamic );

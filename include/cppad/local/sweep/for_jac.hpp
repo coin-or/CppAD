@@ -49,7 +49,7 @@ is the number of independent variables on the tape.
 
 \param num_var
 is the total number of variables on the tape; i.e.,
- play->num_var_rec().
+ play->num_var().
 
 \param play
 The information stored in play
@@ -72,7 +72,7 @@ corresponds to the set with index i in var_sparsity.
 
 \par Checked Assertions:
 \li num_var == var_sparsity.n_set()
-\li num_var == play->num_var_rec()
+\li num_var == play->num_var()
 
 \param not_used_rec_base
 Specifies RecBase for this call.
@@ -91,7 +91,7 @@ void for_jac(
    size_t            i, j, k;
 
    // check num_var argument
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()  == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var()      == num_var );
    CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == num_var );
 
    // length of the parameter vector (used by CppAD assert macros)

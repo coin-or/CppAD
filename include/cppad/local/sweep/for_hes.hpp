@@ -24,7 +24,7 @@ Syntax
 | ``local::sweep::for_hes`` (
 | |tab| *play*               ,
 | |tab| *n*                  ,
-| |tab| *num_var*            ,
+| |tab| *num_var*        ,
 | |tab| *select_domain*      ,
 | |tab| *rev_jac_sparse*     ,
 | |tab| *for_hes_sparse*     ,
@@ -85,7 +85,7 @@ is the number of independent variables in the tape.
 num_var
 *******
 is the total number of variables in the tape; i.e.,
-*play* ``->num_var_rec`` () .
+*play* ``->num_var`` () .
 This is also the number of sets in all the sparsity patterns.
 
 select_domain
@@ -168,7 +168,7 @@ void for_hes(
    // check arguments
    size_t np1 = n+1;
    CPPAD_ASSERT_UNKNOWN( select_domain.size()   == n );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var()        == num_var );
    CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == num_var );
    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == np1+num_var );
    //

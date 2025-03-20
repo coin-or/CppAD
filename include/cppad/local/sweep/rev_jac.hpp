@@ -27,7 +27,7 @@ Syntax
 | |tab| *play*               ,
 | |tab| *dependency*         ,
 | |tab| *n*                  ,
-| |tab| *num_var*            ,
+| |tab| *num_var*        ,
 | |tab| *var_sparsity*       ,
 | |tab| ``not_used_rec_base``
 | )
@@ -81,7 +81,7 @@ is the number of independent variables in the tape.
 num_var
 *******
 is the total number of variables in the tape; i.e.,
-*play* ``->num_var_rec`` () .
+*play* ``->num_var`` () .
 This is also the number of rows in all the sparsity patterns.
 
 var_sparsity
@@ -131,7 +131,7 @@ void rev_jac(
 
    // check num_var argument
    CPPAD_ASSERT_UNKNOWN( num_var > 0 );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()   == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var()       == num_var );
    CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == num_var );
 
    // upper limit (exclusive) for elements in the set

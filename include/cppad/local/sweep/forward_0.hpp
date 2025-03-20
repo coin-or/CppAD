@@ -60,7 +60,7 @@ void forward_0(
 )
 // END_FORWARD_0
 {  CPPAD_ASSERT_UNKNOWN( cap_order >= 1 );
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var() == num_var );
 
    // use p, q, r so other forward sweeps can use code defined here
    size_t order_low = 0;

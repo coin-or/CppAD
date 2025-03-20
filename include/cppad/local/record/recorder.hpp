@@ -76,8 +76,8 @@ get_abort_op_index
    // END_GET_ABORT_OP_INDEX
 }
 
-num_var_rec
-===========
+num_var
+=======
 {xrst_literal
    // BEGIN_NUM_VAR_REC
    // END_NUM_VAR_REC
@@ -144,10 +144,10 @@ private:
    // (do not abort when zero)
    size_t abort_op_index_;
    //
-   // num_var_rec_
-   // Number of variables in the recording.
-   size_t num_var_rec_;
-   //
+   // num_var_
+       // Number of variables in the recording.
+   size_t num_var_;
+       //
    // num_var_load_rec_
    // Number vecad load operations (LdpOp or LdvOp) currently in recording.
    size_t num_var_load_rec_;
@@ -174,7 +174,7 @@ public:
    recorder(void)
    : record_compare_(true)
    , abort_op_index_(0)
-   , num_var_rec_(0)
+   , num_var_(0)
    , num_var_load_rec_(0)
    { }
    //
@@ -261,10 +261,10 @@ public:
    {  return abort_op_index_; }
    //
    // BEGIN_NUM_VAR_REC
-   /// num_var_rec = recorder.num_var_rec()
-   size_t num_var_rec(void) const
+   /// num_var = recorder.num_var()
+   size_t num_var(void) const
    // END_NUM_VAR_REC
-   {  return num_var_rec_; }
+   {  return num_var_; }
    //
    // BEGIN_NUM_VAR_LOAD_REC
    // num_var_load_rec = recorder.num_var_load_rec()
@@ -431,17 +431,17 @@ template <class Base> addr_t recorder<Base>::PutOp(op_code_var op)
    CPPAD_ASSERT_UNKNOWN( (op != LdpOp) && (op != LdvOp) );
 
    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
-   num_var_rec_ += NumRes(op);
-   CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
+   num_var_ += NumRes(op);
+   CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
 
    // index of last variable corresponding to this operation
    // (if NumRes(op) > 0)
    CPPAD_ASSERT_KNOWN(
-      (size_t) std::numeric_limits<addr_t>::max() >= num_var_rec_ - 1,
+      (size_t) std::numeric_limits<addr_t>::max() >= num_var_ - 1,
       "cppad_tape_addr_type maximum value has been exceeded"
    )
 
-   return static_cast<addr_t>( num_var_rec_ - 1 );
+   return static_cast<addr_t>( num_var_ - 1 );
 }
 /*
 -------------------------------------------------------------------------------
@@ -640,8 +640,8 @@ template <class Base> addr_t recorder<Base>::PutLoadOp(op_code_var op)
    CPPAD_ASSERT_UNKNOWN( (op == LdpOp) || (op == LdvOp) );
 
    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
-   num_var_rec_ += NumRes(op);
-   CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
+   num_var_ += NumRes(op);
+   CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
 
    // count this vecad load operation
    num_var_load_rec_++;
@@ -649,10 +649,10 @@ template <class Base> addr_t recorder<Base>::PutLoadOp(op_code_var op)
    // index of last variable corresponding to this operation
    // (if NumRes(op) > 0)
    CPPAD_ASSERT_KNOWN(
-      (size_t) std::numeric_limits<addr_t>::max() >= num_var_rec_ - 1,
+      (size_t) std::numeric_limits<addr_t>::max() >= num_var_ - 1,
       "cppad_tape_addr_type maximum value has been exceeded"
    )
-   return static_cast<addr_t>( num_var_rec_ - 1 );
+   return static_cast<addr_t>( num_var_ - 1 );
 }
 /*
 -------------------------------------------------------------------------------

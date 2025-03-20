@@ -38,7 +38,7 @@ struct random_itr_info_t {
    /*
    *_op2var
    Index of the result variable for each operator. If the operator has
-   no results, this is not defined. The invalid index num_var_rec_ is used
+   no results, this is not defined. The invalid index num_var_ is used
    when NDEBUG is not defined. If the operator has more than one result, this
    is the primary result; i.e., the last result. Auxillary results are only
    used by the current operator and not used by other operators.
@@ -100,7 +100,7 @@ struct random_itr_info_t {
       size_t size_t_num_arg = size_t_op2arg.size();
       //
       size_t short_num_var  = short_var2op.size();
-      size_t int_num_var    = addr_t_var2op.size();
+      size_t int_num_var= addr_t_var2op.size();
       size_t size_t_num_var = size_t_var2op.size();
       //
       // result
@@ -157,9 +157,9 @@ private:
    // dyn_play_
    dyn_player<Base> dyn_play_;
    //
-   // num_var_rec_
-   // Number of variables in the recording.
-   size_t num_var_rec_;
+   // num_var_
+       // Number of variables in the recording.
+   size_t num_var_;
 
    // num_var_load_rec_
    // number of vecad load opeations in the reconding
@@ -196,7 +196,7 @@ public:
    // set all scalars to zero to avoid valgraind warning when ani assignment
    // occures before values get set.
    player(void)
-   : num_var_rec_(0)
+   : num_var_(0)
    , num_var_load_rec_(0)
    , num_var_vecad_rec_(0)
    { }
@@ -216,7 +216,7 @@ public:
    {
       // required
       size_t required = 0;
-      required = std::max(required, num_var_rec_   );  // number variables
+      required = std::max(required, num_var_       );  // number variables
       required = std::max(required, var_op_.size()  ); // number operators
       required = std::max(required, var_arg_.size() ); // number arguments
       //
@@ -265,8 +265,8 @@ public:
       dyn_play_.get_recording( rec.dyn_record_ );
 
       // size_t values
-      num_var_rec_        = rec.num_var_rec_;
-      num_var_load_rec_   = rec.num_var_load_rec_;
+      num_var_            = rec.num_var_;
+          num_var_load_rec_   = rec.num_var_load_rec_;
 
       // var_op_
       var_op_.swap(rec.var_op_);
@@ -510,8 +510,8 @@ public:
       dyn_play_           = play.dyn_play_;
       //
       // size_t objects
-      num_var_rec_        = play.num_var_rec_;
-      num_var_load_rec_   = play.num_var_load_rec_;
+      num_var_            = play.num_var_;
+          num_var_load_rec_   = play.num_var_load_rec_;
       num_var_vecad_rec_  = play.num_var_vecad_rec_;
       //
       // pod_vectors
@@ -533,8 +533,8 @@ public:
       play.dyn_play_            = dyn_play_.base2ad();
       //
       // size_t objects
-      play.num_var_rec_        = num_var_rec_;
-      play.num_var_load_rec_   = num_var_load_rec_;
+      play.num_var_            = num_var_;
+          play.num_var_load_rec_   = num_var_load_rec_;
       play.num_var_vecad_rec_  = num_var_vecad_rec_;
       //
       // pod_vectors
@@ -557,7 +557,7 @@ public:
       dyn_play_.swap( other.dyn_play_ );
       //
       // size_t objects
-      std::swap(num_var_rec_,        other.num_var_rec_);
+      std::swap(num_var_,            other.num_var_);
       std::swap(num_var_load_rec_,   other.num_var_load_rec_);
       std::swap(num_var_vecad_rec_,  other.num_var_vecad_rec_);
       //
@@ -576,7 +576,7 @@ public:
    // with random_(no work if already setup).
    void setup_random(unsigned short& not_used)
    {  play::random_setup(
-         num_var_rec_                        ,
+         num_var_                            ,
          var_op_                             ,
          var_arg_                            ,
          &random_itr_info_.short_op2arg      ,
@@ -586,7 +586,7 @@ public:
    }
    void setup_random(addr_t& not_used)
    {  play::random_setup(
-         num_var_rec_                        ,
+         num_var_                            ,
          var_op_                             ,
          var_arg_                            ,
          &random_itr_info_.addr_t_op2arg     ,
@@ -597,7 +597,7 @@ public:
 # if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
    void setup_random(size_t& not_used)
    {  play::random_setup(
-         num_var_rec_                        ,
+         num_var_                            ,
          var_op_                             ,
          var_arg_                            ,
          &random_itr_info_.size_t_op2arg     ,
@@ -701,9 +701,9 @@ public:
    size_t num_dynamic_arg(void) const
    {  return dyn_play_.num_dynamic_arg(); }
    //
-   // num_var_rec
-   size_t num_var_rec(void) const
-   {  return num_var_rec_; }
+   // num_var
+       size_t num_var(void) const
+   {  return num_var_; }
    //
    // num_var_load_rec
    size_t num_var_load_rec(void) const
@@ -756,8 +756,8 @@ public:
    /// const sequential iterator begin
    play::const_sequential_iterator begin(void) const
    {  size_t op_index = 0;
-      size_t num_var  = num_var_rec_;
-      return play::const_sequential_iterator(
+      size_t num_var      = num_var_;
+          return play::const_sequential_iterator(
          num_var, &var_op_, &var_arg_, op_index
       );
    }
@@ -765,8 +765,8 @@ public:
    // end
    play::const_sequential_iterator end(void) const
    {  size_t op_index = var_op_.size() - 1;
-      size_t num_var  = num_var_rec_;
-      return play::const_sequential_iterator(
+      size_t num_var      = num_var_;
+          return play::const_sequential_iterator(
          num_var, &var_op_, &var_arg_, op_index
       );
    }

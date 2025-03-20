@@ -364,7 +364,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
    }
 
    // number of variables in the recording
-   num_var_tape_  = play_.num_var_rec();
+   num_var_tape_  = play_.num_var();
 
    // set flag so this function knows it has been optimized
    has_been_optimized_ = true;
@@ -388,7 +388,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
       ind_taddr_.size(),    // n_ind
       dep_taddr_.size(),    // n_dep
       play_.num_op_rec(),   // n_op
-      play_.num_var_rec()   // n_var
+      play_.num_var()       // n_var
    );
 
 # ifndef NDEBUG
