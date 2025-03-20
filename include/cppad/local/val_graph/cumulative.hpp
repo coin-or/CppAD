@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_CUMULATIVE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 namespace CppAD { namespace local { namespace val_graph {
@@ -96,19 +96,19 @@ void tape_t<Value>::op2csum(addr_t op_index)
    op_enum_vec_[op_index] = uint8_t( csum_op_enum );
    //
    // op2arg_index_
-   op2arg_index_[op_index] = addr_t( arg_vec_.size() );
+   op2arg_index_[op_index] = addr_t( var_arg_.size() );
    //
-   // arg_vec_
-   arg_vec_.push_back( n_add );
-   arg_vec_.push_back( n_sub );
+   // var_arg_
+   var_arg_.push_back( n_add );
+   var_arg_.push_back( n_sub );
    for(addr_t i = 0; i < n_add + n_sub; ++i)
-   {  addr_t arg_i = arg_vec_[arg_index + i];
-      arg_vec_.push_back( arg_i );
+   {  addr_t arg_i = var_arg_[arg_index + i];
+      var_arg_.push_back( arg_i );
    }
    //
-   // arg_vec_
+   // var_arg_
    addr_t n_arg = 3 + n_add + n_sub;
-   arg_vec_.push_back( n_arg );
+   var_arg_.push_back( n_arg );
    //
    return;
 }

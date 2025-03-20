@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_TAPE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/val_graph/op_iterator.hpp>
 # include <cppad/local/val_graph/op_enum2class.hpp>
@@ -194,7 +194,7 @@ template <class Value> class tape_t {
 private :
    addr_t              n_ind_;       // number of independent values
    addr_t              n_val_;       // total number of values
-   Vector<addr_t>      arg_vec_;     // arguments for all operator uses
+   Vector<addr_t>      var_arg_;     // arguments for all operator uses
    Vector<Value>       con_vec_;     // value constants
    Vector<std::string> str_vec_;     // string constants
    Vector<addr_t>      dep_vec_;     // dependent variable indices in val_vec
@@ -246,7 +246,7 @@ public :
    //
    // BEGIN_ARG_VEC
    const Vector<addr_t>& arg_vec(void) const
-   {  return arg_vec_; }
+   {  return var_arg_; }
    // END_ARG_VEC
    //
    // BEGIN_CON_VEC
@@ -280,7 +280,7 @@ public :
    {  // same order as declaration of member variables just below private:
       std::swap( n_ind_, other.n_ind_ );
       std::swap( n_val_, other.n_val_);
-      arg_vec_.swap( other.arg_vec_ );
+      var_arg_.swap( other.var_arg_ );
       con_vec_.swap( other.con_vec_ );
       str_vec_.swap( other.str_vec_ );
       dep_vec_.swap( other.dep_vec_ );

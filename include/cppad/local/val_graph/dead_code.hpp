@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_DEAD_CODE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
@@ -135,7 +135,7 @@ vectorBool tape_t<Value>::dead_code(void)
 # ifndef NDEBUG
    // nan at index n_ind_
    assert( op_enum_t( new_tape.op_enum_vec_[0] ) == con_op_enum );
-   assert( new_tape.arg_vec_[0] == 0 );
+   assert( new_tape.var_arg_[0] == 0 );
    assert( CppAD::isnan( new_tape.con_vec_[0] ) );
 # endif
    //
@@ -166,23 +166,23 @@ vectorBool tape_t<Value>::dead_code(void)
       //
       // op_enum, n_res
       op_enum_t  op_enum   = op_ptr->op_enum();
-      addr_t     n_res     = op_ptr->n_res(arg_index, arg_vec_);
+      addr_t     n_res     = op_ptr->n_res(arg_index, var_arg_);
       //
       // need_op
       bool need_op = false;
       if( n_res == 0 )
       {  if( op_enum == vec_op_enum || op_enum == store_op_enum )
-         {  addr_t which_vector = arg_vec_[arg_index + 0];
+         {  addr_t which_vector = var_arg_[arg_index + 0];
             need_op             = i_op < vec_last_load[which_vector];
          }
          else if( op_enum == pri_op_enum )
          {  need_op  = keep_print;
-            need_op &= arg_vec_[arg_index + 2] != this->n_ind();
+            need_op &= var_arg_[arg_index + 2] != this->n_ind();
          }
          else
          {  CPPAD_ASSERT_UNKNOWN( op_enum == comp_op_enum );
             need_op  = keep_compare;
-            need_op &= arg_vec_[arg_index + 0] != addr_t(compare_no_enum);
+            need_op &= var_arg_[arg_index + 0] != addr_t(compare_no_enum);
          }
       }
       else for(addr_t k = 0; k < n_res; ++k)

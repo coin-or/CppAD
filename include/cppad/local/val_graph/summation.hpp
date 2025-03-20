@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_SUMMATION_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/val_graph/rev_depend.hpp>
@@ -136,34 +136,34 @@ void tape_t<Value>::replace_csum_op(
    op_enum_vec_[i_op] = uint8_t( csum_op_enum );
    //
    // arg_index_vec_
-   op2arg_index_[i_op] = addr_t( arg_vec_.size() );
+   op2arg_index_[i_op] = addr_t( var_arg_.size() );
    //
-   // n_add, arg_vec_
+   // n_add, var_arg_
    addr_t n_add  = addr_t( csum_info.add_list.size() );
-   arg_vec_.push_back( n_add );
+   var_arg_.push_back( n_add );
    //
-   // n_sub, arg_vec_
+   // n_sub, var_arg_
    addr_t n_sub  = addr_t( csum_info.sub_list.size() );
-   arg_vec_.push_back( n_sub );
+   var_arg_.push_back( n_sub );
    //
    // itr
    std::list<addr_t>::const_iterator itr;
    //
-   // arg_vec_: addition variables
+   // var_arg_: addition variables
    for(itr = csum_info.add_list.begin(); itr != csum_info.add_list.end(); ++itr)
    {  CPPAD_ASSERT_UNKNOWN( *itr < res_index );
-      arg_vec_.push_back( *itr );
+      var_arg_.push_back( *itr );
    }
    //
-   // arg_vec_: subtraction variables
+   // var_arg_: subtraction variables
    for(itr = csum_info.sub_list.begin(); itr != csum_info.sub_list.end(); ++itr)
    {  CPPAD_ASSERT_UNKNOWN( *itr < res_index );
-      arg_vec_.push_back( *itr );
+      var_arg_.push_back( *itr );
    }
    //
-   // n_arg, arg_vec_
+   // n_arg, var_arg_
    addr_t n_arg = 3 + n_add + n_sub;
-   arg_vec_.push_back( n_arg );
+   var_arg_.push_back( n_arg );
    //
    return;
 }
@@ -235,7 +235,7 @@ void tape_t<Value>::summation(void)
       //
       // op_enum_i, n_arg
       op_enum_t op_enum_i  = op_ptr_i->op_enum();
-      addr_t    n_arg      = op_ptr_i->n_arg(arg_index_i, arg_vec_);
+      addr_t    n_arg      = op_ptr_i->n_arg(arg_index_i, var_arg_);
       //
       // use_i, sum_i
       bool sum_i   = sum_op( op_enum_i );
@@ -243,7 +243,7 @@ void tape_t<Value>::summation(void)
       if( sum_i )
       {
 # ifndef NDEBUG
-         addr_t n_res = op_ptr_i->n_res(arg_index_i, arg_vec_);
+         addr_t n_res = op_ptr_i->n_res(arg_index_i, var_arg_);
          CPPAD_ASSERT_UNKNOWN( n_res == 1 );
 # endif
          use_i = 0 != val_use_case[res_index_i];
@@ -254,7 +254,7 @@ void tape_t<Value>::summation(void)
          // op_arg
          op_arg.resize(n_arg);
          for(addr_t i = 0; i < n_arg; ++i)
-            op_arg[i] = arg_vec_[arg_index_i + i];
+            op_arg[i] = var_arg_[arg_index_i + i];
          //
          // op_arg_equal_i
          bool op_arg_equal_i = false;
@@ -371,8 +371,8 @@ void tape_t<Value>::summation(void)
                bool op_arg_equal_j = false;
                if( (op_enum_j == add_op_enum) || (op_enum_j == sub_op_enum) )
                {  addr_t          arg_index_j = op2arg_index_[j_op];
-                  addr_t          right_index = arg_vec_[arg_index_j + 1];
-                  addr_t          left_index  = arg_vec_[arg_index_j + 0];
+                  addr_t          right_index = var_arg_[arg_index_j + 1];
+                  addr_t          left_index  = var_arg_[arg_index_j + 0];
                   second_operand  = right_index == res_index_i;
                   op_arg_equal_j  = right_index == left_index;
                   CPPAD_ASSERT_UNKNOWN(

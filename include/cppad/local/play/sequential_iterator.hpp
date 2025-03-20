@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_SEQUENTIAL_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
@@ -92,11 +92,11 @@ public:
 
    \param op_index
    is the operator index that iterator will start at.
-   It must be zero or op_vec_->size() - 1.
+   It must be zero or var_op_->size() - 1.
 
    \par Assumptions
-   - op_code_var(op_vec_[0]) == BeginOp
-   - op_code_var(op_vec_[op_vec_->size() - 1]) == EndOp
+   - op_code_var(var_op_[0]) == BeginOp
+   - op_code_var(var_op_[op_vec_->size() - 1]) == EndOp
    */
    const_sequential_iterator(
       size_t                                num_var    ,

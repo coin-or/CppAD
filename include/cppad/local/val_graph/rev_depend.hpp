@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_REV_DEPEND_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/tape.hpp>
 # include <cppad/local/atomic_index.hpp>
@@ -155,8 +155,8 @@ void tape_t<Value>::rev_depend(
       op_enum_t op_enum   = op_ptr->op_enum();
       addr_t    n_before  = op_ptr->n_before();
       addr_t    n_after   = op_ptr->n_after();
-      addr_t    n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
-      addr_t    n_res     = op_ptr->n_res(arg_index, arg_vec_);
+      addr_t    n_arg     = op_ptr->n_arg(arg_index, var_arg_);
+      addr_t    n_res     = op_ptr->n_res(arg_index, var_arg_);
       bool      is_binary = op_ptr->is_binary();
       //
       if( 0 < n_res && op_enum != call_op_enum )
@@ -168,23 +168,23 @@ void tape_t<Value>::rev_depend(
          // val_use_case
          if( need_op )
          {  if( is_binary )
-            {  addr_t left_index  = arg_vec_[arg_index + 0];
-               addr_t right_index = arg_vec_[arg_index + 1];
+            {  addr_t left_index  = var_arg_[arg_index + 0];
+               addr_t right_index = var_arg_[arg_index + 1];
                inc_val_use_case(left_index, i_op);
                if( left_index != right_index )
                   inc_val_use_case(right_index, i_op);
             }
             else if( op_enum == load_op_enum )
             {  CPPAD_ASSERT_UNKNOWN( i_op != 0 );
-               addr_t which_vector = arg_vec_[arg_index + 0];
-               addr_t val_index    = arg_vec_[arg_index + 1];
+               addr_t which_vector = var_arg_[arg_index + 0];
+               addr_t val_index    = var_arg_[arg_index + 1];
                if( vec_last_load[which_vector] == 0 )
                   vec_last_load[which_vector] = i_op;
                inc_val_use_case(val_index, i_op);
             }
             else
             {  for(addr_t i = n_before; i < n_arg - n_after; ++i)
-               {  addr_t val_index = arg_vec_[arg_index + i];
+               {  addr_t val_index = var_arg_[arg_index + i];
                   inc_val_use_case(val_index, i_op);
                }
             }
@@ -195,8 +195,8 @@ void tape_t<Value>::rev_depend(
          // call_op_enum
          CPPAD_ASSERT_UNKNOWN( op_enum == call_op_enum );
          //
-         size_t atomic_index  = size_t( arg_vec_[arg_index + 2] );
-         size_t call_id       = size_t( arg_vec_[arg_index + 3] );
+         size_t atomic_index  = size_t( var_arg_[arg_index + 2] );
+         size_t call_id       = size_t( var_arg_[arg_index + 3] );
          //
          // n_x
          addr_t n_x = n_arg - n_before - n_after;
@@ -206,7 +206,7 @@ void tape_t<Value>::rev_depend(
          con_x.resize(nx);
          type_x.resize(nx);
          for(addr_t i = 0; i < n_x; ++i)
-         {  con_x[i] = val_index2con[ arg_vec_[arg_index + n_before + i] ];
+         {  con_x[i] = val_index2con[ var_arg_[arg_index + n_before + i] ];
             if( CppAD::isnan( con_x[i] ) )
                type_x[i] = variable_enum;
             else
@@ -227,7 +227,7 @@ void tape_t<Value>::rev_depend(
          //
          // val_use_case
          for(addr_t k = 0; k < n_x; ++k)
-         {  addr_t val_index = arg_vec_[arg_index + n_before + k];
+         {  addr_t val_index = var_arg_[arg_index + n_before + k];
             if( depend_x[k] )
                inc_val_use_case(val_index, i_op);
          }

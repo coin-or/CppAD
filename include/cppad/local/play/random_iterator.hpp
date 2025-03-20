@@ -23,13 +23,13 @@ template <class Addr>
 class const_random_iterator {
 private:
    /// vector of operators on the tape
-   const pod_vector<opcode_t>* op_vec_;
+   const pod_vector<opcode_t>* var_op_;
 
    /// vector of arguments for all the operators
    /// (note that this is same type as used in recorder; i.e., addr_t)
-   const pod_vector<addr_t>* arg_vec_;
+   const pod_vector<addr_t>* var_arg_;
 
-   /// mapping from operator index to index of first argument in arg_vec_
+   /// mapping from operator index to index of first argument in var_arg_
    const pod_vector<Addr>* op2arg_vec_;
 
    /// mapping from operator index to index of primary (last) result
@@ -45,8 +45,8 @@ public:
    //
    /// default constructor
    const_random_iterator(void) :
-   op_vec_(nullptr)     ,
-   arg_vec_(nullptr)    ,
+   var_op_(nullptr)     ,
+   var_arg_(nullptr)    ,
    op2arg_vec_(nullptr) ,
    op2var_vec_(nullptr) ,
    var2op_vec_(nullptr)
@@ -54,7 +54,7 @@ public:
    /// default assignment operator
    void operator=(const const_random_iterator& rhs)
    {
-      op_vec_          = rhs.op_vec_;
+      var_op_          = rhs.var_op_;
       op2arg_vec_      = rhs.op2arg_vec_;
       op2var_vec_      = rhs.op2var_vec_;
       var2op_vec_      = rhs.var2op_vec_;
@@ -68,14 +68,14 @@ public:
    function is not used.
    */
    const_random_iterator(
-      const pod_vector<opcode_t>&           op_vec     , ///< op_vec_
-      const pod_vector<addr_t>&             arg_vec    , ///< arg_vec_
+      const pod_vector<opcode_t>&           op_vec     , ///< var_op_
+      const pod_vector<addr_t>&             arg_vec    , ///< var_arg_
       const pod_vector<Addr>*               op2arg_vec , ///< op2ar_vec_
       const pod_vector<Addr>*               op2var_vec , ///< op2var_vec_
       const pod_vector<Addr>*               var2op_vec ) ///< var2op_vec_
    :
-   op_vec_          ( &op_vec    )   ,
-   arg_vec_         ( &arg_vec   )   ,
+   var_op_          ( &op_vec    )   ,
+   var_arg_         ( &arg_vec   )   ,
    op2arg_vec_      ( op2arg_vec )   ,
    op2var_vec_      ( op2var_vec )   ,
    var2op_vec_      ( var2op_vec )
@@ -103,8 +103,8 @@ public:
       op_code_var&   op         ,
       const addr_t*& op_arg     ,
       size_t&        var_index  ) const
-   {  op        = op_code_var( (*op_vec_)[op_index] );
-      op_arg    = (*op2arg_vec_)[op_index] + arg_vec_->data();
+   {  op        = op_code_var( (*var_op_)[op_index] );
+      op_arg    = (*op2arg_vec_)[op_index] + var_arg_->data();
       var_index = size_t( (*op2var_vec_)[op_index] );
       return;
    }
@@ -126,17 +126,17 @@ public:
       size_t op_index = size_t( (*var2op_vec_)[var_index] );
       //
       // check that var_index is a primary variable index (see random_setup)
-      CPPAD_ASSERT_UNKNOWN( op_index < op_vec_->size() );
+      CPPAD_ASSERT_UNKNOWN( op_index < var_op_->size() );
       //
       return op_index;
    }
    /// get operator corresponding to operator index
    op_code_var get_op(size_t op_index) const
-   {  return op_code_var( (*op_vec_)[op_index] );
+   {  return op_code_var( (*var_op_)[op_index] );
    }
    /// number of operators
    size_t num_op(void) const
-   {  return op_vec_->size(); }
+   {  return var_op_->size(); }
    //
    /// number of variables
    size_t num_var(void) const
