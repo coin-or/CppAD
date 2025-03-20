@@ -106,10 +106,11 @@ public:
    //
    // BEGIN_MUTTABLE_SET
    // mutable_subvector.set(data, size)
-   void set(addr_t *data, size_t size)
+   template <class Index>
+   void set(addr_t *data, Index size)
    // END_MUTTABLE_SET
    {  data_   = data;
-      size_   = size;
+      size_   = size_t( size );
    }
    //
    // BEGIN_MUTTABLE_INDEX
@@ -225,10 +226,11 @@ public:
    //
    // BEGIN_CONST_SET
    // const_subvector.set(data, size)
-   void set(const addr_t *data, size_t size)
+   template <class Index>
+   void set(const addr_t *data, Index size)
    // END_CONST_SET
    {  data_   = data;
-      size_   = size;
+      size_   = size_t(size);
    }
    //
    // BEGIN_CONST_ASSIGN
@@ -241,7 +243,8 @@ public:
    //
    // BEGIN_CONST_INDEX
    // element = const_subvector[index]
-   const addr_t& operator[](size_t index) const
+   template <class Index>
+   const addr_t& operator[](Index index) const
    // END_CONST_INDEX
    {  CPPAD_ASSERT_UNKNOWN( index < size_ );
       return data_[index];
