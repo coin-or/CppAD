@@ -36,7 +36,7 @@ is the number of independent variables on the tape.
 \param num_var
 is the total number of variables on the tape.
 This is also equal to the number of rows in the matrix Taylor; i.e.,
-play->num_var_rec().
+play->num_var().
 
 \param play
 The information stored in play
@@ -172,7 +172,7 @@ void reverse(
 )
 {
    // check num_var argument
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var() == num_var );
    CPPAD_ASSERT_UNKNOWN( num_var > 0 );
 
    // length of the parameter vector (used by CppAD assert macros)

@@ -41,7 +41,7 @@ is the number of independent variables on the tape.
 
 \param num_var
 is the total number of variables on the tape; i.e.,
- play->num_var_rec().
+ play->num_var().
 This is also the number of rows in the entire sparsity pattern
  rev_hes_sparse.
 
@@ -107,7 +107,7 @@ void rev_hes(
    size_t             i, j, k;
 
    // check num_var argument
-   CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == num_var );
+   CPPAD_ASSERT_UNKNOWN( play->num_var()        == num_var );
    CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == num_var );
    CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == num_var );
    CPPAD_ASSERT_UNKNOWN( num_var > 0 );

@@ -186,7 +186,7 @@ bool optimize_run(
 
    // number of variables in the player
 # ifndef NDEBUG
-   const size_t num_var = play->num_var_rec();
+   const size_t num_var = play->num_var();
 # endif
 
    // number of parameter in the player
@@ -877,7 +877,7 @@ bool optimize_run(
             {  new_arg[i] = new_var[ random_itr.var2op(size_t(arg[i])) ];
                CPPAD_ASSERT_UNKNOWN(
                   size_t(new_arg[i]) < num_var
-               );
+           );
             }
             else
                new_arg[i] = new_par[ arg[i] ];

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SUBGRAPH_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/random_iterator.hpp>
@@ -261,7 +261,7 @@ public:
    {  CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == 0 );
       //
       CPPAD_ASSERT_UNKNOWN( n_op_  == play->num_op_rec() );
-      CPPAD_ASSERT_UNKNOWN( n_var_ == play->num_var_rec() );
+      CPPAD_ASSERT_UNKNOWN( n_var_ == play->num_var() );
       //
       // resize map_user_op_
       map_user_op_.resize(n_op_);

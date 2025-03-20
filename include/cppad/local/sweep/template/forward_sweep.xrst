@@ -1,7 +1,7 @@
 {xrst_comment
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-SPDX-FileContributor: 2024 Bradley M. Bell
+SPDX-FileContributor: 2024-25 Bradley M. Bell
 
 Under Construction:
 
@@ -87,7 +87,7 @@ where *n* is the number of independent variables and
 num_var
 *******
 is the total number of variables on the tape; i.e.,
-*play* ``->num_var_rec()`` .
+*play* ``->num_var()`` .
 
 cap_order
 *********

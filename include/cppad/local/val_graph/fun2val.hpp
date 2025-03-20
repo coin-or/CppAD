@@ -189,7 +189,7 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // n_variables
    // number of variables
-   const size_t n_variable = play_.num_var_rec();
+   const size_t n_variable = play_.num_var();
    //
    // n_variable_ind
    // number of indepedent variables

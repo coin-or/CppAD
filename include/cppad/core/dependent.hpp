@@ -2,7 +2,7 @@
 # define CPPAD_CORE_DEPENDENT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin Dependent}
@@ -275,7 +275,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
    num_order_taylor_          = 0;
    cap_order_taylor_          = 0;
    num_direction_taylor_      = 0;
-   num_var_tape_              = tape->Rec_.num_var_rec();
+   num_var_tape_              = tape->Rec_.num_var();
 
    // taylor_
    taylor_.resize(0);
@@ -310,7 +310,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
       ind_taddr_.size(),   // n_dep
       dep_taddr_.size(),   // n_ind
       play_.num_op_rec(),  // n_op
-      play_.num_var_rec()  // n_var
+      play_.num_var()      // n_var
    );
    // ---------------------------------------------------------------------
    // End set ad_fun.hpp private member data
@@ -320,7 +320,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
    AD<Base>::tape_manage(delete_tape_manage);
 
    // total number of varables in this recording
-   CPPAD_ASSERT_UNKNOWN( num_var_tape_  == play_.num_var_rec() );
+   CPPAD_ASSERT_UNKNOWN( num_var_tape_  == play_.num_var() );
 
    // used to determine if there is an operation sequence in *this
    CPPAD_ASSERT_UNKNOWN( num_var_tape_  > 0 );
