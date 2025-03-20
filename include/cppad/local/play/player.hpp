@@ -31,7 +31,7 @@ are done using the type Base .
 struct random_itr_info_t {
    //
    // *_op2arg
-   // index in arg_vec_ corresonding to the first argument for each operator
+   // index in var_arg_ corresonding to the first argument for each operator
    pod_vector<unsigned  short> short_op2arg;
    pod_vector<addr_t>          addr_t_op2arg;
    pod_vector<size_t>          size_t_op2arg;
@@ -164,17 +164,17 @@ private:
    // Number of VecAD vectors in the recording
    size_t num_var_vecad_rec_;
 
-   // op_vec_
+   // var_op_
    // The operators in the recording.
-   pod_vector<opcode_t> op_vec_;
+   pod_vector<opcode_t> var_op_;
 
-   // arg_vec_
+   // var_arg_
    // The operation argument indices in the recording
-   pod_vector<addr_t> arg_vec_;
+   pod_vector<addr_t> var_arg_;
 
-   // text_vec_
+   // var_text_
    // Character strings ('\\0' terminated) in the recording.
-   pod_vector<char> text_vec_;
+   pod_vector<char> var_text_;
 
    // var_vecad_ind_
        // The VecAD indices in the recording.
@@ -212,8 +212,8 @@ public:
       // required
       size_t required = 0;
       required = std::max(required, num_var_rec_   );  // number variables
-      required = std::max(required, op_vec_.size()  ); // number operators
-      required = std::max(required, arg_vec_.size() ); // number arguments
+      required = std::max(required, var_op_.size()  ); // number operators
+      required = std::max(required, var_arg_.size() ); // number arguments
       //
       // unsigned short
       if( required <= std::numeric_limits<unsigned short>::max() )
@@ -247,7 +247,7 @@ public:
    Use an assert to check that the length of the following vectors is
    less than the maximum possible value for addr_t; i.e., that an index
    in these vectors can be represented using the type addr_t:
-   op_vec_, var_vecad_ind_, arg_vec_, test_vec_, par_all_, text_vec_,
+   var_op_, var_vecad_ind_, var_arg_, test_vec_, par_all_, var_text_,
    dyn_par_arg_.
    */
    void get_recording(recorder<Base>& rec, size_t n_ind)
@@ -263,17 +263,17 @@ public:
       num_var_rec_        = rec.num_var_rec_;
       num_var_load_rec_   = rec.num_var_load_rec_;
 
-      // op_vec_
-      op_vec_.swap(rec.op_vec_);
-      CPPAD_ASSERT_UNKNOWN(op_vec_.size() < addr_t_max );
+      // var_op_
+      var_op_.swap(rec.var_op_);
+      CPPAD_ASSERT_UNKNOWN(var_op_.size() < addr_t_max );
 
       // op_arg_vec_
-      arg_vec_.swap(rec.arg_vec_);
-      CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
+      var_arg_.swap(rec.var_arg_);
+      CPPAD_ASSERT_UNKNOWN(var_arg_.size()    < addr_t_max );
 
       // text_rec_
-      text_vec_.swap(rec.text_vec_);
-      CPPAD_ASSERT_UNKNOWN(text_vec_.size() < addr_t_max );
+      var_text_.swap(rec.var_text_);
+      CPPAD_ASSERT_UNKNOWN(var_text_.size() < addr_t_max );
 
       // var_vecad_ind_
           var_vecad_ind_.swap(rec.var_vecad_ind_);
@@ -510,9 +510,9 @@ public:
       num_var_vecad_rec_  = play.num_var_vecad_rec_;
       //
       // pod_vectors
-      op_vec_             = play.op_vec_;
-      arg_vec_            = play.arg_vec_;
-      text_vec_           = play.text_vec_;
+      var_op_             = play.var_op_;
+      var_arg_            = play.var_arg_;
+      var_text_           = play.var_text_;
       var_vecad_ind_      = play.var_vecad_ind_;
       //
       // random_itr_info_
@@ -533,9 +533,9 @@ public:
       play.num_var_vecad_rec_  = num_var_vecad_rec_;
       //
       // pod_vectors
-      play.op_vec_             = op_vec_;
-      play.arg_vec_            = arg_vec_;
-      play.text_vec_           = text_vec_;
+      play.var_op_             = var_op_;
+      play.var_arg_            = var_arg_;
+      play.var_text_           = var_text_;
       play.var_vecad_ind_      = var_vecad_ind_;
       //
       // random_itr_info_
@@ -557,9 +557,9 @@ public:
       std::swap(num_var_vecad_rec_,  other.num_var_vecad_rec_);
       //
       // pod_vectors
-      op_vec_.swap(             other.op_vec_);
-      arg_vec_.swap(            other.arg_vec_);
-      text_vec_.swap(           other.text_vec_);
+      var_op_.swap(             other.var_op_);
+      var_arg_.swap(            other.var_arg_);
+      var_text_.swap(           other.var_text_);
       var_vecad_ind_.swap(  other.var_vecad_ind_);
       //
       // random_itr_info_
@@ -572,8 +572,8 @@ public:
    void setup_random(unsigned short& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
-         op_vec_                             ,
-         arg_vec_                            ,
+         var_op_                             ,
+         var_arg_                            ,
          &random_itr_info_.short_op2arg      ,
          &random_itr_info_.short_op2var      ,
          &random_itr_info_.short_var2op
@@ -582,8 +582,8 @@ public:
    void setup_random(addr_t& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
-         op_vec_                             ,
-         arg_vec_                            ,
+         var_op_                             ,
+         var_arg_                            ,
          &random_itr_info_.addr_t_op2arg     ,
          &random_itr_info_.addr_t_op2var     ,
          &random_itr_info_.addr_t_var2op
@@ -593,8 +593,8 @@ public:
    void setup_random(size_t& not_used)
    {  play::random_setup(
          num_var_rec_                        ,
-         op_vec_                             ,
-         arg_vec_                            ,
+         var_op_                             ,
+         var_arg_                            ,
          &random_itr_info_.size_t_op2arg     ,
          &random_itr_info_.size_t_op2var     ,
          &random_itr_info_.size_t_var2op
@@ -644,7 +644,7 @@ public:
    the index of the operator in recording
    */
    op_code_var GetOp (size_t i) const
-   {  return op_code_var(op_vec_[i]); }
+   {  return op_code_var(var_op_[i]); }
    //
    // GetVecInd
    /*!
@@ -680,8 +680,8 @@ public:
    the index where the string begins.
    */
    const char *GetTxt(size_t i) const
-   {  CPPAD_ASSERT_UNKNOWN(i < text_vec_.size() );
-      return text_vec_.data() + i;
+   {  CPPAD_ASSERT_UNKNOWN(i < var_text_.size() );
+      return var_text_.data() + i;
    }
    //
    // n_dyn_independent
@@ -706,7 +706,7 @@ public:
    //
    // num_op_rec
    size_t num_op_rec(void) const
-   {  return op_vec_.size(); }
+   {  return var_op_.size(); }
    //
    // all_var_rec_ind_rec
    size_t num_var_vecad_ind_rec(void) const
@@ -718,7 +718,7 @@ public:
    //
    // num_op_arg_rec
    size_t num_op_arg_rec(void) const
-   {  return arg_vec_.size(); }
+   {  return var_arg_.size(); }
    //
    // num_par_rec
    size_t num_par_rec(void) const
@@ -726,7 +726,7 @@ public:
    //
    // num_text_rec
    size_t num_text_rec(void) const
-   {  return text_vec_.size(); }
+   {  return var_text_.size(); }
    //
    // size_op_seq
    // A measure of amount of memory used to store
@@ -735,9 +735,9 @@ public:
    size_t size_op_seq(void) const
    {  return 0
          + dyn_play_.size_op_seq()
-         + op_vec_.size()            * sizeof(opcode_t)
-         + arg_vec_.size()           * sizeof(addr_t)
-         + text_vec_.size()          * sizeof(char)
+         + var_op_.size()            * sizeof(opcode_t)
+         + var_arg_.size()           * sizeof(addr_t)
+         + var_text_.size()          * sizeof(char)
          + var_vecad_ind_.size() * sizeof(addr_t)
       ;
    }
@@ -753,16 +753,16 @@ public:
    {  size_t op_index = 0;
       size_t num_var  = num_var_rec_;
       return play::const_sequential_iterator(
-         num_var, &op_vec_, &arg_vec_, op_index
+         num_var, &var_op_, &var_arg_, op_index
       );
    }
    //
    // end
    play::const_sequential_iterator end(void) const
-   {  size_t op_index = op_vec_.size() - 1;
+   {  size_t op_index = var_op_.size() - 1;
       size_t num_var  = num_var_rec_;
       return play::const_sequential_iterator(
-         num_var, &op_vec_, &arg_vec_, op_index
+         num_var, &var_op_, &var_arg_, op_index
       );
    }
    //
@@ -795,8 +795,8 @@ public:
    play::const_random_iterator<unsigned short>
    get_random(unsigned short& not_used) const
    {  return play::const_random_iterator<unsigned short>(
-         op_vec_                             ,
-         arg_vec_                            ,
+         var_op_                             ,
+         var_arg_                            ,
          &random_itr_info_.short_op2arg      ,
          &random_itr_info_.short_op2var      ,
          &random_itr_info_.short_var2op
@@ -805,8 +805,8 @@ public:
    play::const_random_iterator<addr_t>
    get_random(addr_t& not_used) const
    {  return play::const_random_iterator<addr_t>(
-         op_vec_                             ,
-         arg_vec_                            ,
+         var_op_                             ,
+         var_arg_                            ,
          &random_itr_info_.addr_t_op2arg     ,
          &random_itr_info_.addr_t_op2var     ,
          &random_itr_info_.addr_t_var2op
@@ -816,8 +816,8 @@ public:
    play::const_random_iterator<size_t>
    get_random(size_t& not_used)
    {  return play::const_random_iterator<size_t>(
-         op_vec_                             ,
-         arg_vec_                            ,
+         var_op_                             ,
+         var_arg_                            ,
          &random_itr_info_.size_t_op2arg     ,
          &random_itr_info_.size_t_op2var     ,
          &random_itr_info_.size_t_var2op

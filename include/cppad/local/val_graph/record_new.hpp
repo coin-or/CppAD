@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RECORD_NEW_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-23 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/op_iterator.hpp>
 namespace CppAD { namespace local { namespace val_graph {
@@ -108,8 +108,8 @@ addr_t tape_t<Value>::record_new(
    op_enum_t  op_enum   = op_ptr->op_enum();
    addr_t     n_before  = op_ptr->n_before();
    addr_t     n_after   = op_ptr->n_after();
-   addr_t     n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
-   addr_t     n_res     = op_ptr->n_res(arg_index, arg_vec_);
+   addr_t     n_arg     = op_ptr->n_arg(arg_index, var_arg_);
+   addr_t     n_res     = op_ptr->n_res(arg_index, var_arg_);
    //
    // new_tape, new_res_index
    bool simple = n_res == 1;
@@ -119,15 +119,15 @@ addr_t tape_t<Value>::record_new(
    if( simple )
    {  op_arg.resize(n_arg);
       for(addr_t k = 0; k < n_before; ++k)
-         op_arg[k] = arg_vec_[arg_index + k];
+         op_arg[k] = var_arg_[arg_index + k];
       for(addr_t k = n_before; k < n_arg - n_after; ++k)
-      {  addr_t old_index = arg_vec_[arg_index + k];
+      {  addr_t old_index = var_arg_[arg_index + k];
          assert( old_index < res_index );
          CPPAD_ASSERT_UNKNOWN( val_use_case[old_index] != 0 );
          op_arg[k] = new_val_index[old_index];
       }
       for(addr_t k = 1; k <= n_after; ++k)
-         op_arg[n_arg - k] = arg_vec_[arg_index + n_arg - k];
+         op_arg[n_arg - k] = var_arg_[arg_index + n_arg - k];
       //
       new_res_index = new_tape.record_op(op_enum, op_arg);
    }
@@ -144,8 +144,8 @@ addr_t tape_t<Value>::record_new(
       // new_val_index
       case load_op_enum:
       CPPAD_ASSERT_UNKNOWN( n_res == 1);
-      {  addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
-         addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
+      {  addr_t which_vector = new_which_vec[ var_arg_[arg_index + 0] ];
+         addr_t vector_index = new_val_index[ var_arg_[arg_index + 1] ];
          //
          // record_con_op, new_val_index
          new_res_index = new_tape.record_load_op( which_vector, vector_index);
@@ -156,7 +156,7 @@ addr_t tape_t<Value>::record_new(
       // new_val_index
       case con_op_enum:
       CPPAD_ASSERT_UNKNOWN( n_res == 1 );
-      {  Value value = con_vec_[ arg_vec_[ arg_index ] ];
+      {  Value value = con_vec_[ var_arg_[ arg_index ] ];
          //
          // record_con_op, new_val_index
          new_res_index = new_tape.record_con_op(value);
@@ -166,11 +166,11 @@ addr_t tape_t<Value>::record_new(
       // store_op_enum
       case store_op_enum:
       CPPAD_ASSERT_UNKNOWN( n_res == 0 );
-      {  addr_t which_vector = new_which_vec[ arg_vec_[arg_index + 0] ];
-         addr_t vector_index = new_val_index[ arg_vec_[arg_index + 1] ];
-         addr_t value_index  = new_val_index[ arg_vec_[arg_index + 2] ];
-         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 1] ] != 0 );
-         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 2] ] != 0 );
+      {  addr_t which_vector = new_which_vec[ var_arg_[arg_index + 0] ];
+         addr_t vector_index = new_val_index[ var_arg_[arg_index + 1] ];
+         addr_t value_index  = new_val_index[ var_arg_[arg_index + 2] ];
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ var_arg_[arg_index + 1] ] != 0 );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ var_arg_[arg_index + 2] ] != 0 );
          new_tape.record_store_op(
             which_vector, vector_index, value_index
          );
@@ -180,7 +180,7 @@ addr_t tape_t<Value>::record_new(
       // vec_op_enum
       case vec_op_enum:
       CPPAD_ASSERT_UNKNOWN( n_res == 0 );
-      {  addr_t old_which_vector       = arg_vec_[arg_index + 0];
+      {  addr_t old_which_vector       = var_arg_[arg_index + 0];
          const Vector<addr_t>& initial = vec_initial_[old_which_vector];
          addr_t which_vector           = new_tape.record_vec_op(initial);
          //
@@ -193,11 +193,11 @@ addr_t tape_t<Value>::record_new(
       case comp_op_enum:
       CPPAD_ASSERT_UNKNOWN( n_res == 0 );
       {  compare_enum_t compare_enum;
-         compare_enum       = compare_enum_t( arg_vec_[arg_index + 0] );
-         addr_t left_index  = new_val_index[ arg_vec_[arg_index + 1] ];
-         addr_t right_index = new_val_index[ arg_vec_[arg_index + 2] ];
-         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 1] ] != 0 );
-         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 2] ] != 0 );
+         compare_enum       = compare_enum_t( var_arg_[arg_index + 0] );
+         addr_t left_index  = new_val_index[ var_arg_[arg_index + 1] ];
+         addr_t right_index = new_val_index[ var_arg_[arg_index + 2] ];
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ var_arg_[arg_index + 1] ] != 0 );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ var_arg_[arg_index + 2] ] != 0 );
          new_tape.record_comp_op(
             compare_enum, left_index, right_index
          );
@@ -207,12 +207,12 @@ addr_t tape_t<Value>::record_new(
       // pri_op_enum
       CPPAD_ASSERT_UNKNOWN( n_res == 0 );
       case pri_op_enum:
-      {  std::string before = str_vec_[ arg_vec_[arg_index + 0] ];
-         std::string after  = str_vec_[ arg_vec_[arg_index + 1] ];
-         addr_t left_index  = new_val_index[ arg_vec_[arg_index + 2] ];
-         addr_t right_index = new_val_index[ arg_vec_[arg_index + 3] ];
-         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 2] ] != 0 );
-         CPPAD_ASSERT_UNKNOWN( val_use_case[ arg_vec_[arg_index + 3] ] != 0 );
+      {  std::string before = str_vec_[ var_arg_[arg_index + 0] ];
+         std::string after  = str_vec_[ var_arg_[arg_index + 1] ];
+         addr_t left_index  = new_val_index[ var_arg_[arg_index + 2] ];
+         addr_t right_index = new_val_index[ var_arg_[arg_index + 3] ];
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ var_arg_[arg_index + 2] ] != 0 );
+         CPPAD_ASSERT_UNKNOWN( val_use_case[ var_arg_[arg_index + 3] ] != 0 );
          new_tape.record_pri_op(
             before, after, left_index, right_index
          );
@@ -231,7 +231,7 @@ addr_t tape_t<Value>::record_new(
          //
          op_arg.resize(n_x);
          for(addr_t k = 0; k < n_x; ++k)
-         {  addr_t val_index = arg_vec_[arg_index + n_before + k];
+         {  addr_t val_index = var_arg_[arg_index + n_before + k];
             if( val_use_case[val_index] != 0 )
             {  op_arg[k] = new_val_index[val_index];
 # ifndef NDEBUG
@@ -244,8 +244,8 @@ addr_t tape_t<Value>::record_new(
             }
          }
          CPPAD_ASSERT_UNKNOWN( one_arg_needed );
-         addr_t atomic_index = arg_vec_[arg_index + 2];
-         addr_t call_id      = arg_vec_[arg_index + 3];
+         addr_t atomic_index = var_arg_[arg_index + 2];
+         addr_t call_id      = var_arg_[arg_index + 3];
          new_res_index       = new_tape.record_call_op(
             atomic_index, call_id, n_res, op_arg
          );

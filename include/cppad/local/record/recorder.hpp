@@ -152,21 +152,21 @@ private:
    // Number vecad load operations (LdpOp or LdvOp) currently in recording.
    size_t num_var_load_rec_;
    //
-   // op_vec_
+   // var_op_
    // The operators in the recording.
-   pod_vector<opcode_t> op_vec_;
+   pod_vector<opcode_t> var_op_;
    //
    // var_vecad_ind_
        // The VecAD indices in the recording.
    pod_vector<addr_t> var_vecad_ind_;
    //
-   // arg_vec_
+   // var_arg_
    // The argument indices in the recording
-   pod_vector<addr_t> arg_vec_;
+   pod_vector<addr_t> var_arg_;
    //
-   // text_vec_
+   // var_text_
    // Character strings ('\\0' terminated) in the recording.
-   pod_vector<char> text_vec_;
+   pod_vector<char> var_text_;
    //
 public:
    //
@@ -276,7 +276,7 @@ public:
    // num_op_rec = recorder.num_op_rec()
    size_t num_op_rec(void) const
    // END_NUM_OP_REC
-   {  return  op_vec_.size(); }
+   {  return  var_op_.size(); }
    //
    // BEGIN_MEMORY
    // memory = recorder.memory()
@@ -284,10 +284,10 @@ public:
    // END_MEMORY
    {  return 0
          + dyn_record_.Memory()
-         + op_vec_.capacity()             * sizeof(opcode_t)
+         + var_op_.capacity()             * sizeof(opcode_t)
          + var_vecad_ind_.capacity()  * sizeof(addr_t)
-         + arg_vec_.capacity()            * sizeof(addr_t)
-         + text_vec_.capacity()           * sizeof(char)
+         + var_arg_.capacity()            * sizeof(addr_t)
+         + var_text_.capacity()           * sizeof(char)
       ;
    }
    //
@@ -421,13 +421,13 @@ This index starts at zero after the default constructor.
 // var_index = record.PutOp(op)
 template <class Base> addr_t recorder<Base>::PutOp(op_code_var op)
 // END_PUT_OP
-{  size_t i    = op_vec_.extend(1);
+{  size_t i    = var_op_.extend(1);
    CPPAD_ASSERT_KNOWN(
       (abort_op_index_ == 0) || (abort_op_index_ != i),
       "Operator index equals abort_op_index in Independent"
    );
-   op_vec_[i]  = static_cast<opcode_t>(op);
-   CPPAD_ASSERT_UNKNOWN( op_vec_.size() == i + 1 );
+   var_op_[i]  = static_cast<opcode_t>(op);
+   CPPAD_ASSERT_UNKNOWN( var_op_.size() == i + 1 );
    CPPAD_ASSERT_UNKNOWN( (op != LdpOp) && (op != LdvOp) );
 
    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
@@ -511,18 +511,18 @@ Prototype
 template <class Base> void recorder<Base>::PutArg(addr_t a0)
 // END_PUT_ARG_0
 {
-   size_t i      =  arg_vec_.extend(1);
-   arg_vec_[i]   =  a0;
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
+   size_t i      =  var_arg_.extend(1);
+   var_arg_[i]   =  a0;
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 // BEGIN_PUT_ARG_1
 template <class Base> void recorder<Base>::PutArg(addr_t a0, addr_t a1)
 // END_PUT_ARG_1
 {
-   size_t i      =  arg_vec_.extend(2);
-   arg_vec_[i++] =  a0;
-   arg_vec_[i]   =  a1;
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
+   size_t i      =  var_arg_.extend(2);
+   var_arg_[i++] =  a0;
+   var_arg_[i]   =  a1;
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 // BEGIN_PUT_ARG_2
 template <class Base> void recorder<Base>::PutArg(
@@ -530,11 +530,11 @@ template <class Base> void recorder<Base>::PutArg(
 )
 // END_PUT_ARG_2
 {
-   size_t i      =  arg_vec_.extend(3);
-   arg_vec_[i++] =  a0;
-   arg_vec_[i++] =  a1;
-   arg_vec_[i]   =  a2;
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
+   size_t i      =  var_arg_.extend(3);
+   var_arg_[i++] =  a0;
+   var_arg_[i++] =  a1;
+   var_arg_[i]   =  a2;
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 // BEGIN_PUT_ARG_3
 template <class Base> void recorder<Base>::PutArg(
@@ -542,12 +542,12 @@ template <class Base> void recorder<Base>::PutArg(
 )
 // END_PUT_ARG_3
 {
-   size_t i      =  arg_vec_.extend(4);
-   arg_vec_[i++] =  a0;
-   arg_vec_[i++] =  a1;
-   arg_vec_[i++] =  a2;
-   arg_vec_[i]   =  a3;
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
+   size_t i      =  var_arg_.extend(4);
+   var_arg_[i++] =  a0;
+   var_arg_[i++] =  a1;
+   var_arg_[i++] =  a2;
+   var_arg_[i]   =  a3;
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 
 }
 // BEGIN_PUT_ARG_4
@@ -556,13 +556,13 @@ template <class Base> void recorder<Base>::PutArg(
 )
 // END_PUT_ARG_4
 {
-   size_t i      =  arg_vec_.extend(5);
-   arg_vec_[i++] =  a0;
-   arg_vec_[i++] =  a1;
-   arg_vec_[i++] =  a2;
-   arg_vec_[i++] =  a3;
-   arg_vec_[i]   =  a4;
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
+   size_t i      =  var_arg_.extend(5);
+   var_arg_[i++] =  a0;
+   var_arg_[i++] =  a1;
+   var_arg_[i++] =  a2;
+   var_arg_[i++] =  a3;
+   var_arg_[i]   =  a4;
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 
 }
 // BEGIN_PUT_ARG_5
@@ -571,14 +571,14 @@ template <class Base> void recorder<Base>::PutArg(
 )
 // END_PUT_ARG_5
 {
-   size_t i      =  arg_vec_.extend(6);
-   arg_vec_[i++] =  a0;
-   arg_vec_[i++] =  a1;
-   arg_vec_[i++] =  a2;
-   arg_vec_[i++] =  a3;
-   arg_vec_[i++] =  a4;
-   arg_vec_[i]   =  a5;
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
+   size_t i      =  var_arg_.extend(6);
+   var_arg_[i++] =  a0;
+   var_arg_[i++] =  a1;
+   var_arg_[i++] =  a2;
+   var_arg_[i++] =  a3;
+   var_arg_[i++] =  a4;
+   var_arg_[i]   =  a5;
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 /*
 -------------------------------------------------------------------------------
@@ -629,14 +629,14 @@ increases by one after each call to this function.
 // var_index = recorder.PutLoadOp(op)
 template <class Base> addr_t recorder<Base>::PutLoadOp(op_code_var op)
 // END_PUT_LOAD_OP
-{  size_t i    = op_vec_.extend(1);
+{  size_t i    = var_op_.extend(1);
    CPPAD_ASSERT_KNOWN(
       (abort_op_index_ == 0) || (abort_op_index_ != i),
       "This is the abort operator index specified by "
       "Independent(x, abort_op_index)."
    );
-   op_vec_[i]  = op;
-   CPPAD_ASSERT_UNKNOWN( op_vec_.size() == i + 1 );
+   var_op_[i]  = op;
+   CPPAD_ASSERT_UNKNOWN( var_op_.size() == i + 1 );
    CPPAD_ASSERT_UNKNOWN( (op == LdpOp) || (op == LdvOp) );
 
    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
@@ -684,8 +684,8 @@ first of the arguments being reserved.
 template <class Base> size_t recorder<Base>::ReserveArg(size_t n_arg)
 // END_RESERVE_ARG
 {
-   size_t i      =  arg_vec_.extend(n_arg);
-   CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + n_arg );
+   size_t i      =  var_arg_.extend(n_arg);
+   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + n_arg );
    return i;
 }
 /*
@@ -722,7 +722,7 @@ template <class Base> void recorder<Base>::ReplaceArg(
    size_t arg_index, addr_t value
 )
 // END_REPLACE_ARG
-{  arg_vec_[arg_index] =  value; }
+{  var_arg_[arg_index] =  value; }
 // --------------------------------------------------------------------------
 /*
 {xrst_begin var_put_txt dev}
@@ -764,11 +764,11 @@ template <class Base> addr_t recorder<Base>::PutTxt(const char *text)
    CPPAD_ASSERT_UNKNOWN( text[n-1] == '\0' );
 
    // copy text including terminating '\0'
-   size_t i = text_vec_.extend(n);
+   size_t i = var_text_.extend(n);
    size_t j;
    for(j = 0; j < n; j++)
-      text_vec_[i + j] = text[j];
-   CPPAD_ASSERT_UNKNOWN( text_vec_.size() == i + n );
+      var_text_[i + j] = text[j];
+   CPPAD_ASSERT_UNKNOWN( var_text_.size() == i + n );
 
    CPPAD_ASSERT_KNOWN(
       size_t( std::numeric_limits<addr_t>::max() ) >= i,

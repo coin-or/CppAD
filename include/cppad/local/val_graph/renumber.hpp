@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_RENUMBER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-25 Bradley M. Bell
 // ---------------------------------------------------------------------------
 # include <cppad/local/val_graph/op_hash_table.hpp>
 
@@ -119,16 +119,16 @@ void tape_t<Value>::renumber(void)
          // mapping so that op_j results will be used instead of op_i results;
          // i.e., op_i becomes dead code.
          addr_t res_index_j = op2res_index[j_op];
-         addr_t n_res       = op_ptr->n_res(arg_index_i, arg_vec_);
+         addr_t n_res       = op_ptr->n_res(arg_index_i, var_arg_);
          if( n_res == 0 )
          {  //
             // change the i_op operator to a no op
             if( op_ptr->op_enum() == pri_op_enum )
-               arg_vec_[arg_index_i + 2] = this->n_ind();
+               var_arg_[arg_index_i + 2] = this->n_ind();
             else
             {
                CPPAD_ASSERT_UNKNOWN( op_ptr->op_enum() == comp_op_enum );
-               arg_vec_[arg_index_i + 0] = compare_no_enum;
+               var_arg_[arg_index_i + 0] = compare_no_enum;
             }
          }
          else for(addr_t k = 0; k < n_res; ++k)
@@ -136,7 +136,7 @@ void tape_t<Value>::renumber(void)
       }
    }
    //
-   // arg_vec_
+   // var_arg_
    for(addr_t i_op = 0; i_op < n_op(); ++i_op)
    {  //
       // op_ptr
@@ -144,7 +144,7 @@ void tape_t<Value>::renumber(void)
       //
       // arg_index, n_arg
       addr_t    arg_index = op2arg_index[i_op];
-      addr_t    n_arg     = op_ptr->n_arg(arg_index, arg_vec_);
+      addr_t    n_arg     = op_ptr->n_arg(arg_index, var_arg_);
       //
       // n_before, n_x
       addr_t n_before = op_ptr->n_before();
@@ -152,7 +152,7 @@ void tape_t<Value>::renumber(void)
       //
       for(addr_t i = 0; i < n_x; ++i)
       {  addr_t val_index = arg_index + n_before + i;
-         arg_vec_[val_index] = new_val_index[ arg_vec_[val_index] ];
+         var_arg_[val_index] = new_val_index[ var_arg_[val_index] ];
       }
    }
    //
