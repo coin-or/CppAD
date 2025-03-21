@@ -589,7 +589,7 @@ public:
          &random_itr_info_.addr_t_var2op
       );
    }
-# if ! CPPAD_IS_SAME_TAPE_ADDR_T_SIZE_T
+# if ! CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
    void setup_random(size_t& not_used)
    {  play::random_setup(
          num_var_                            ,
