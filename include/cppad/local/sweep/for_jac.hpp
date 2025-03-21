@@ -105,7 +105,7 @@ void for_jac(
    // vecad_ind maps a VecAD index (the beginning of the
    // VecAD object) to its from index in vecad_sparsity
    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
-   size_t num_vecad_vec   = play->num_var_vecad_rec();
+   size_t num_vecad_vec   = play->num_var_vecad();
    Vector_set  vecad_sparsity;
    pod_vector<size_t> vecad_ind;
    if( num_vecad_vec > 0 )

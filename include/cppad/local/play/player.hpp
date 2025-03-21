@@ -161,13 +161,13 @@ private:
        // Number of variables in the recording.
    size_t num_var_;
 
-   // num_var_load_rec_
-   // number of vecad load opeations in the reconding
-   size_t num_var_load_rec_;
+   // num_var_load_
+       // number of vecad load opeations in the reconding
+   size_t num_var_load_;
 
-   // num_var_vecad_rec_
-   // Number of VecAD vectors in the recording
-   size_t num_var_vecad_rec_;
+   // num_var_vecad_
+       // Number of VecAD vectors in the recording
+   size_t num_var_vecad_;
 
    // var_op_
    // The operators in the recording.
@@ -197,8 +197,8 @@ public:
    // occures before values get set.
    player(void)
    : num_var_(0)
-   , num_var_load_rec_(0)
-   , num_var_vecad_rec_(0)
+   , num_var_load_(0)
+   , num_var_vecad_(0)
    { }
    //
    // move semantics constructor
@@ -266,7 +266,7 @@ public:
 
       // size_t values
       num_var_            = rec.num_var_;
-          num_var_load_rec_   = rec.num_var_load_rec_;
+          num_var_load_       = rec.num_var_load_;
 
       // var_op_
       var_op_.swap(rec.var_op_);
@@ -284,13 +284,13 @@ public:
           var_vecad_ind_.swap(rec.var_vecad_ind_);
       CPPAD_ASSERT_UNKNOWN(var_vecad_ind_.size() < addr_t_max );
 
-      // num_var_vecad_rec_
-      num_var_vecad_rec_ = 0;
+      // num_var_vecad_
+          num_var_vecad_ = 0;
       {  // var_vecad_ind_ contains size of each VecAD followed by
          // the parameter indices used to inialize it.
          size_t i = 0;
          while( i < var_vecad_ind_.size() )
-         {  num_var_vecad_rec_++;
+         {  num_var_vecad_++;
             i += size_t( var_vecad_ind_[i] ) + 1;
          }
          CPPAD_ASSERT_UNKNOWN( i == var_vecad_ind_.size() );
@@ -511,9 +511,9 @@ public:
       //
       // size_t objects
       num_var_            = play.num_var_;
-          num_var_load_rec_   = play.num_var_load_rec_;
-      num_var_vecad_rec_  = play.num_var_vecad_rec_;
-      //
+          num_var_load_       = play.num_var_load_;
+          num_var_vecad_      = play.num_var_vecad_;
+          //
       // pod_vectors
       var_op_             = play.var_op_;
       var_arg_            = play.var_arg_;
@@ -534,9 +534,9 @@ public:
       //
       // size_t objects
       play.num_var_            = num_var_;
-          play.num_var_load_rec_   = num_var_load_rec_;
-      play.num_var_vecad_rec_  = num_var_vecad_rec_;
-      //
+          play.num_var_load_       = num_var_load_;
+          play.num_var_vecad_      = num_var_vecad_;
+          //
       // pod_vectors
       play.var_op_             = var_op_;
       play.var_arg_            = var_arg_;
@@ -558,8 +558,8 @@ public:
       //
       // size_t objects
       std::swap(num_var_,            other.num_var_);
-      std::swap(num_var_load_rec_,   other.num_var_load_rec_);
-      std::swap(num_var_vecad_rec_,  other.num_var_vecad_rec_);
+      std::swap(num_var_load_,       other.num_var_load_);
+      std::swap(num_var_vecad_,      other.num_var_vecad_);
       //
       // pod_vectors
       var_op_.swap(             other.var_op_);
@@ -705,9 +705,9 @@ public:
        size_t num_var(void) const
    {  return num_var_; }
    //
-   // num_var_load_rec
-   size_t num_var_load_rec(void) const
-   {  return num_var_load_rec_; }
+   // num_var_load
+       size_t num_var_load(void) const
+   {  return num_var_load_; }
    //
    // num_op_rec
    size_t num_op_rec(void) const
@@ -717,9 +717,9 @@ public:
    size_t num_var_vecad_ind_rec(void) const
    {  return var_vecad_ind_.size(); }
    //
-   // num_var_vecad_rec
-   size_t num_var_vecad_rec(void) const
-   {  return num_var_vecad_rec_; }
+   // num_var_vecad
+       size_t num_var_vecad(void) const
+   {  return num_var_vecad_; }
    //
    // num_op_arg_rec
    size_t num_op_arg_rec(void) const

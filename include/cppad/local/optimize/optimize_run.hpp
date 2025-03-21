@@ -194,7 +194,7 @@ bool optimize_run(
    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
 
    // number of VecAD vectors
-   size_t num_vecad_vec   = play->num_var_vecad_rec();
+   size_t num_vecad_vec   = play->num_var_vecad();
 
    // number of independent dynamic parameters
    size_t n_dyn_independent = play->n_dyn_independent();
@@ -1044,9 +1044,9 @@ bool optimize_run(
          new_arg[0] = new_vecad_ind[ arg[0] ];
          new_arg[1] = new_par[ arg[1] ];
          CPPAD_ASSERT_UNKNOWN(
-            size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load_rec()
+            size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load()
          );
-         new_arg[2] = addr_t( rec->num_var_load_rec() );
+         new_arg[2] = addr_t( rec->num_var_load() );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
          rec->PutArg(
             new_arg[0],
@@ -1064,9 +1064,9 @@ bool optimize_run(
          new_arg[0] = new_vecad_ind[ arg[0] ];
          new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
          CPPAD_ASSERT_UNKNOWN(
-            size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load_rec()
+            size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load()
          );
-         new_arg[2] = addr_t( rec->num_var_load_rec() );
+         new_arg[2] = addr_t( rec->num_var_load() );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
          rec->PutArg(

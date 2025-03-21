@@ -1515,7 +1515,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
    cskip_op_.resize( rec.num_op_rec() );
    //
    // load_op2var_
-   load_op2var_.resize( rec.num_var_load_rec() );
+   load_op2var_.resize( rec.num_var_load() );
    //
    // play_
    // Now that each dependent variable has a place in the recording,

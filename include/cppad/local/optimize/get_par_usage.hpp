@@ -54,7 +54,7 @@ the i-th operator in the operation sequence.
 vecad_used
 **********
 This argument has size equal to the number of VecAD vectors
-in the operations sequences; i.e., play->num_var_vecad_rec().
+in the operations sequences; i.e., play->num_var_vecad().
 The VecAD vectors are indexed in the order that their indices appear
 in the one large play->GetVecInd that holds all the VecAD vectors.
 
@@ -98,7 +98,7 @@ void get_par_usage(
    size_t n_dyn_independent = play->n_dyn_independent();
    //
    // number of VecAD vectors
-   size_t num_vecad_vec = play->num_var_vecad_rec();
+   size_t num_vecad_vec = play->num_var_vecad();
    //
    // dynamic parameter information
    const pod_vector<bool>&        par_is_dyn( play->par_is_dyn() );

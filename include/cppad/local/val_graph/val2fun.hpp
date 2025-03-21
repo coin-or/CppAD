@@ -826,7 +826,7 @@ void ADFun<Base, RecBase>::val2fun(
          case local::val_graph::load_op_enum:
          {  addr_t which_vector  = val_arg_vec[arg_index + 0];
             offset               = vecad_offset[which_vector];
-            addr_t load_op_index = addr_t( rec.num_var_load_rec() );
+            addr_t load_op_index = addr_t( rec.num_var_load() );
             rec.PutArg(offset, fun_arg[0], load_op_index);
             if( ad_type_x[0] < variable_enum )
                var_addr = rec.PutLoadOp(local::LdpOp);
@@ -970,7 +970,7 @@ void ADFun<Base, RecBase>::val2fun(
    cskip_op_.resize( rec.num_op_rec() );
    //
    // load_op2var_
-   load_op2var_.resize( rec.num_var_load_rec() );
+   load_op2var_.resize( rec.num_var_load() );
    //
    // play_
    // Now that each dependent variable has a place in the recording,

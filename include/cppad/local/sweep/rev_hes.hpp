@@ -125,7 +125,7 @@ void rev_hes(
    // vecad_ind maps a VecAD index (beginning of the VecAD object)
    // to the index for the corresponding set in vecad_sparsity.
    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
-   size_t num_vecad_vec   = play->num_var_vecad_rec();
+   size_t num_vecad_vec   = play->num_var_vecad();
    Vector_set vecad_sparse;
    pod_vector<size_t> vecad_ind;
    pod_vector<bool>   vecad_jac;

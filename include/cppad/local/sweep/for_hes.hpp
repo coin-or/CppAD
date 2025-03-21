@@ -181,7 +181,7 @@ void for_hes(
    // vecad_ind: maps the VecAD index at beginning of the VecAD object
    //            to the index for the corresponding set in vecad_sparsity.
    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
-   size_t num_vecad_vec   = play->num_var_vecad_rec();
+   size_t num_vecad_vec   = play->num_var_vecad();
    SetVector vecad_sparsity;
    pod_vector<size_t> vecad_ind;
    if( num_vecad_vec > 0 )
