@@ -83,8 +83,8 @@ num_var
    // END_NUM_VAR_REC
 }
 
-num_var_load_rec
-================
+num_var_load
+============
 {xrst_literal
    // BEGIN_NUM_VAR_LOAD_REC
    // END_NUM_VAR_LOAD_REC
@@ -148,10 +148,10 @@ private:
        // Number of variables in the recording.
    size_t num_var_;
        //
-   // num_var_load_rec_
-   // Number vecad load operations (LdpOp or LdvOp) currently in recording.
-   size_t num_var_load_rec_;
-   //
+   // num_var_load_
+       // Number vecad load operations (LdpOp or LdvOp) currently in recording.
+   size_t num_var_load_;
+       //
    // var_op_
    // The operators in the recording.
    pod_vector<opcode_t> var_op_;
@@ -175,7 +175,7 @@ public:
    : record_compare_(true)
    , abort_op_index_(0)
    , num_var_(0)
-   , num_var_load_rec_(0)
+   , num_var_load_(0)
    { }
    //
    // Destructor
@@ -267,10 +267,10 @@ public:
    {  return num_var_; }
    //
    // BEGIN_NUM_VAR_LOAD_REC
-   // num_var_load_rec = recorder.num_var_load_rec()
-   size_t num_var_load_rec(void) const
+   // num_var_load = recorder.num_var_load()
+   size_t num_var_load(void) const
    // END_NUM_VAR_LOAD_REC
-   {  return num_var_load_rec_; }
+   {  return num_var_load_; }
    //
    // BEGIN_NUM_OP_REC
    // num_op_rec = recorder.num_op_rec()
@@ -618,9 +618,9 @@ the return index increases by the number of variables corresponding
 to this call to the call.
 This index starts at zero after the default constructor.
 
-num_var_load_rec
-****************
-The return value for ``num_var_load_rec()``
+num_var_load
+************
+The return value for ``num_var_load()``
 increases by one after each call to this function.
 
 {xrst_end var_put_load_op}
@@ -644,7 +644,7 @@ template <class Base> addr_t recorder<Base>::PutLoadOp(op_code_var op)
    CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
 
    // count this vecad load operation
-   num_var_load_rec_++;
+   num_var_load_++;
 
    // index of last variable corresponding to this operation
    // (if NumRes(op) > 0)

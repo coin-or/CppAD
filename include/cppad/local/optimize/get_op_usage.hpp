@@ -227,7 +227,7 @@ vecad_used
 **********
 The input size of this vector must be zero.
 Upon return it has size equal to the number of VecAD vectors
-in the operations sequences; i.e., play->num_var_vecad_rec().
+in the operations sequences; i.e., play->num_var_vecad().
 The VecAD vectors are indexed in the order that their indices appear
 in the one large play->GetVecInd that holds all the VecAD vectors.
 
@@ -299,7 +299,7 @@ void get_op_usage(
    const Base* parameter = play->par_ptr();
    // -----------------------------------------------------------------------
    // vecad information
-   size_t num_vecad      = play->num_var_vecad_rec();
+   size_t num_vecad      = play->num_var_vecad();
    size_t num_vecad_ind  = play->num_var_vecad_ind_rec();
    //
    vecad_used.resize(num_vecad);

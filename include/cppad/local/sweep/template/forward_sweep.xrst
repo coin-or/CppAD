@@ -116,7 +116,7 @@ the operator with index *i* does not affect any of the dependent variable
 
 load_op2var
 ***********
-Is a vector with size *play* ``->num_var_load_rec()`` .
+Is a vector with size *play* ``->num_var_load()`` .
 
 order_low is zero
 =================

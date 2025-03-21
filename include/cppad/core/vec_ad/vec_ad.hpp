@@ -2,7 +2,7 @@
 # define CPPAD_CORE_VEC_AD_VEC_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/pod_vector.hpp>
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
@@ -235,7 +235,7 @@ public:
       // index corresponding to this element
       CPPAD_ASSERT_UNKNOWN( var_vec );
       {  CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0  );
-         size_t load_op_index = tape->Rec_.num_var_load_rec();
+         size_t load_op_index = tape->Rec_.num_var_load();
          //
          if( var_ind )
          {  CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdvOp) == 1 );

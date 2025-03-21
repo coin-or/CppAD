@@ -127,7 +127,7 @@ Note that all the operators in an atomic function call are skipped as a block,
 so only the last AFunOp fore each call needs to have cskip_op[i] true.
 
 \param load_op2var
-is a vector with size play->num_var_load_rec().
+is a vector with size play->num_var_load().
 It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).

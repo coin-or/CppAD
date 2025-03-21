@@ -398,7 +398,7 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 
    // evaluate the derivatives
    CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
-   CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
+   CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load() );
    size_t n = Domain();
    //
    local::play::const_subgraph_iterator<Addr> subgraph_itr =

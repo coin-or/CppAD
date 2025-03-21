@@ -284,7 +284,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
    cskip_op_.resize( tape->Rec_.num_op_rec() );
 
    // load_op2var_
-   load_op2var_.resize( tape->Rec_.num_var_load_rec() );
+   load_op2var_.resize( tape->Rec_.num_var_load() );
 
    // play_
    // Now that each dependent variable has a place in the tape,
