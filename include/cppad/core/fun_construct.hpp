@@ -479,7 +479,7 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
    }
 
    // use independent variable values to fill in values for others
-   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_var_op() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load() );
    bool print = false;
    local::sweep::forward_0(

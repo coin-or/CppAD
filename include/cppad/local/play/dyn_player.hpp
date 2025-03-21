@@ -424,8 +424,8 @@ public:
    {  return dyn_par_arg_.size(); }
    //
    // BEGIN_NUM_PAR_REC
-   // num_par_rec = dyn_play.rec()
-   size_t num_par_rec(void) const
+   // num_par_all = dyn_play.rec()
+   size_t num_par_all(void) const
    // END_NUM_PAR_REC
    {  return par_all_.size(); }
    //

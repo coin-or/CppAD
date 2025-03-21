@@ -260,7 +260,7 @@ public:
    void set_map_user_op(const player<Base>* play)
    {  CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == 0 );
       //
-      CPPAD_ASSERT_UNKNOWN( n_op_  == play->num_op_rec() );
+      CPPAD_ASSERT_UNKNOWN( n_op_  == play->num_var_op() );
       CPPAD_ASSERT_UNKNOWN( n_var_ == play->num_var() );
       //
       // resize map_user_op_

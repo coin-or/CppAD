@@ -71,7 +71,7 @@ void forward_dir(
    size_t atom_index=0, atom_id=0, atom_m=0, atom_n=0;
    //
    // length of the parameter vector (used by CppAD assert macros)
-   const size_t num_par = play->num_par_rec();
+   const size_t num_par = play->num_par_all();
 
    // pointer to the beginning of the parameter vector
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
@@ -100,7 +100,7 @@ void forward_dir(
    {
       // next op
       (++itr).op_info(op, arg, i_var);
-      CPPAD_ASSERT_UNKNOWN( itr.op_index() < play->num_op_rec() );
+      CPPAD_ASSERT_UNKNOWN( itr.op_index() < play->num_var_op() );
 
       // check if we are skipping this operation
       while( cskip_op[itr.op_index()] )

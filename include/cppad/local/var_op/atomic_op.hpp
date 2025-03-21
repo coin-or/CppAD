@@ -287,7 +287,7 @@ void atomic_forward_any(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
@@ -327,7 +327,7 @@ void atomic_forward_any(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_y[i]    = std::numeric_limits<size_t>::max();
          variable_y[i] = false;
          if( 0 < order_low )
@@ -513,7 +513,7 @@ void atomic_forward_dir(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_x[j] = std::numeric_limits<size_t>::max();
          if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
@@ -549,7 +549,7 @@ void atomic_forward_dir(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_y[i]    = size_t( arg[0] );
          variable_y[i] = false;
          if( trace )
@@ -793,7 +793,7 @@ void atomic_reverse(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          taylor_y[i * n_order + 0]  = parameter[ arg[0] ];
          partial_y[i * n_order + 0] = Base(0.0);
          for(size_t k = 1; k < n_order; ++k)
@@ -850,7 +850,7 @@ void atomic_reverse(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          variable_x[j] = false;
          index_x[j]    = size_t( arg[0] );
          if( par_is_dyn[ arg[0] ] )
@@ -1021,7 +1021,7 @@ inline void atomic_for_jac(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
@@ -1057,7 +1057,7 @@ inline void atomic_for_jac(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_y[i]       = 0;  // special variable index used for parameters
          break;
          //
@@ -1221,7 +1221,7 @@ inline void atomic_rev_jac(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_y[i]       = 0;  // special variable index used for parameters
          break;
          //
@@ -1293,7 +1293,7 @@ inline void atomic_rev_jac(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
@@ -1469,7 +1469,7 @@ inline void atomic_rev_hes(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_y[i]       = 0;  // special variable index used for parameters
          break;
          //
@@ -1505,7 +1505,7 @@ inline void atomic_rev_hes(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
@@ -1722,7 +1722,7 @@ inline void atomic_for_hes(
          // FunapOp
          case FunapOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          if( par_is_dyn[ arg[0] ] )
             type_x[j]    = dynamic_enum;
          else
@@ -1758,7 +1758,7 @@ inline void atomic_for_hes(
          // FunrpOp
          case FunrpOp:
          CPPAD_ASSERT_NARG_NRES(op_code, 1, 0);
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_rec() );
+         CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < play->num_par_all() );
          index_y[i]       = 0;  // special variable index used for parameters
          break;
          //

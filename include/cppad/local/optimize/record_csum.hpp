@@ -102,7 +102,7 @@ struct_size_pair record_csum(
 {
 # ifndef NDEBUG
    // number of parameters corresponding to the old operation sequence.
-   size_t npar = play->num_par_rec();
+   size_t npar = play->num_par_all();
 # endif
 
    // vector of length npar containing the parameters the old operation
@@ -370,7 +370,7 @@ struct_size_pair record_csum(
    //
    // return value
    struct_size_pair ret;
-   ret.i_op  = rec->num_op_rec();
+   ret.i_op  = rec->num_var_op();
    ret.i_var = size_t(rec->PutOp(CSumOp));
    //
    return ret;

@@ -281,7 +281,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
    taylor_.resize(0);
 
    // cskip_op_
-   cskip_op_.resize( tape->Rec_.num_op_rec() );
+   cskip_op_.resize( tape->Rec_.num_var_op() );
 
    // load_op2var_
    load_op2var_.resize( tape->Rec_.num_var_load() );
@@ -309,7 +309,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
    subgraph_info_.resize(
       ind_taddr_.size(),   // n_dep
       dep_taddr_.size(),   // n_ind
-      play_.num_op_rec(),  // n_op
+      play_.num_var_op(),  // n_op
       play_.num_var()      // n_var
    );
    // ---------------------------------------------------------------------

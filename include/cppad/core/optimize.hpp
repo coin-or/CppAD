@@ -381,13 +381,13 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
 
    // resize and initilaize conditional skip vector
    // (must use player size because it now has the recoreder information)
-   cskip_op_.resize( play_.num_op_rec() );
+   cskip_op_.resize( play_.num_var_op() );
 
    // resize subgraph_info_
    subgraph_info_.resize(
       ind_taddr_.size(),    // n_ind
       dep_taddr_.size(),    // n_dep
-      play_.num_op_rec(),   // n_op
+      play_.num_var_op(),   // n_op
       play_.num_var()       // n_var
    );
 

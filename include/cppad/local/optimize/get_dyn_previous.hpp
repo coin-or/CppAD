@@ -137,7 +137,7 @@ void get_dyn_previous(
    pod_vector<addr_t>&                         dyn_previous        )
 {
    // number of parameters in the recording
-   size_t num_par = play->num_par_rec();
+   size_t num_par = play->num_par_all();
 
    // number of dynamic parameters in the recording
    size_t num_dynamic_par = play->num_dynamic_par();

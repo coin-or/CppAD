@@ -189,7 +189,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
    }
    //
    // evaluate the derivatives
-   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_var_op() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load() );
    if( q == 0 )
    {  bool print = true;
@@ -469,7 +469,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
    }
 
    // evaluate the derivatives
-   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_var_op() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load() );
    local::sweep::forward_dir(
       not_used_rec_base,

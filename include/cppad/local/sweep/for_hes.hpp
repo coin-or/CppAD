@@ -162,7 +162,7 @@ void for_hes(
 {
    // length of the parameter vector (used by CppAD assert macros)
 # ifndef NDEBUG
-   const size_t num_par = play->num_par_rec();
+   const size_t num_par = play->num_par_all();
 # endif
 
    // check arguments
@@ -180,7 +180,7 @@ void for_hes(
    // vecad_sparsity: forward Jacobian sparsity pattern for each VecAD object.
    // vecad_ind: maps the VecAD index at beginning of the VecAD object
    //            to the index for the corresponding set in vecad_sparsity.
-   size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
+   size_t num_vecad_ind   = play->num_var_vec_ind();
    size_t num_vecad_vec   = play->num_var_vecad();
    SetVector vecad_sparsity;
    pod_vector<size_t> vecad_ind;
@@ -200,7 +200,7 @@ void for_hes(
          // start of next VecAD
          j       += length + 1;
       }
-      CPPAD_ASSERT_UNKNOWN( j == play->num_var_vecad_ind_rec() );
+      CPPAD_ASSERT_UNKNOWN( j == play->num_var_vec_ind() );
    }
    // ------------------------------------------------------------------------
    // work space used by atomic funcions

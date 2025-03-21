@@ -160,7 +160,7 @@ bool optimize_run(
 {  bool exceed_collision_limit = false;
    //
    // check that recorder is empty
-   CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
+   CPPAD_ASSERT_UNKNOWN( rec->num_var_op() == 0 );
    //
    // get a random iterator for this player
    Addr not_used;
@@ -179,7 +179,7 @@ bool optimize_run(
    CPPAD_ASSERT_UNKNOWN( result.val_graph == false );
    //
    // number of operators in the player
-   const size_t num_op = play->num_op_rec();
+   const size_t num_op = play->num_var_op();
    CPPAD_ASSERT_UNKNOWN(
       num_op < size_t( (std::numeric_limits<addr_t>::max)() )
    );
@@ -190,10 +190,10 @@ bool optimize_run(
 # endif
 
    // number of parameter in the player
-   const size_t num_par = play->num_par_rec();
+   const size_t num_par = play->num_par_all();
 
    // number of  VecAD indices
-   size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
+   size_t num_vecad_ind   = play->num_var_vec_ind();
 
    // number of VecAD vectors
    size_t num_vecad_vec   = play->num_var_vecad();
@@ -322,7 +322,7 @@ bool optimize_run(
       new_par[i_par] = addr_t_max; // initialize as not used
    //
    // start new recording
-   CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
+   CPPAD_ASSERT_UNKNOWN( rec->num_var_op() == 0 );
    rec->set_n_dyn_independent(n_dyn_independent);
    rec->set_abort_op_index(0);
    rec->set_record_compare( compare_op );
@@ -631,7 +631,7 @@ bool optimize_run(
       }
       //
       CPPAD_ASSERT_UNKNOWN(
-         size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_op_rec()
+         size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_op()
       );
       //
       // For each call, first and second AFunOp will have same op_usage
@@ -657,7 +657,7 @@ bool optimize_run(
          CPPAD_ASSERT_UNKNOWN( previous == 0 );
          CPPAD_ASSERT_NARG_NRES(op, 1, 1);
          // Put BeginOp at beginning of recording
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          new_var[i_op] = rec->PutOp(BeginOp);
          rec->PutArg(arg[0]);
          break;
@@ -691,7 +691,7 @@ bool optimize_run(
             new_arg[0]   = new_var[ random_itr.var2op(size_t(arg[0])) ];
             rec->PutArg( new_arg[0] );
             //
-            new_op[i_op]  = addr_t( rec->num_op_rec() );
+            new_op[i_op]  = addr_t( rec->num_var_op() );
             new_var[i_op] = rec->PutOp(op);
             CPPAD_ASSERT_UNKNOWN(
                new_arg[0] < new_var[random_itr.var2op(i_var)]
@@ -767,7 +767,7 @@ bool optimize_run(
             new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
             rec->PutArg( new_arg[0], new_arg[1] );
             //
-            new_op[i_op]  = addr_t( rec->num_op_rec() );
+            new_op[i_op]  = addr_t( rec->num_var_op() );
             new_var[i_op] = rec->PutOp(op);
             CPPAD_ASSERT_UNKNOWN(
                new_arg[1] < new_var[random_itr.var2op(i_var)]
@@ -891,7 +891,7 @@ bool optimize_run(
             new_arg[4] ,
             new_arg[5]
          );
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          new_var[i_op] = rec->PutOp(op);
          //
          // The new addresses for left and right are used during
@@ -912,7 +912,7 @@ bool optimize_run(
          case EndOp:
          CPPAD_ASSERT_UNKNOWN( previous == 0 );
          CPPAD_ASSERT_NARG_NRES(op, 0, 0);
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(op);
          break;
          // ---------------------------------------------------
@@ -928,7 +928,7 @@ bool optimize_run(
          {  new_arg[0] = new_par[ arg[0] ];
             new_arg[1] = new_par[ arg[1] ];
             rec->PutArg(new_arg[0], new_arg[1]);
-            new_op[i_op] = addr_t( rec->num_op_rec() );
+            new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(op);
          }
          break;
@@ -943,7 +943,7 @@ bool optimize_run(
          {  new_arg[0] = new_par[ arg[0] ];
             new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
             rec->PutArg(new_arg[0], new_arg[1]);
-            new_op[i_op] = addr_t( rec->num_op_rec() );
+            new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(op);
          }
          break;
@@ -956,7 +956,7 @@ bool optimize_run(
          {  new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
             new_arg[1] = new_par[ arg[1] ];
             rec->PutArg(new_arg[0], new_arg[1]);
-            new_op[i_op] = addr_t( rec->num_op_rec() );
+            new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(op);
          }
          break;
@@ -971,7 +971,7 @@ bool optimize_run(
          {  new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
             new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
             rec->PutArg(new_arg[0], new_arg[1]);
-            new_op[i_op] = addr_t( rec->num_op_rec() );
+            new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(op);
          }
          break;
@@ -981,7 +981,7 @@ bool optimize_run(
          case InvOp:
          CPPAD_ASSERT_UNKNOWN( previous == 0 );
          CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          new_var[i_op] = rec->PutOp(op);
          break;
 
@@ -993,7 +993,7 @@ bool optimize_run(
          new_arg[0] = new_par[ arg[0] ];
          rec->PutArg( new_arg[0] );
          //
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          new_var[i_op] = rec->PutOp(op);
          break;
 
@@ -1033,7 +1033,7 @@ bool optimize_run(
             new_arg[4]
          );
          // new operator
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          // no new variable
          rec->PutOp(op);
          break;
@@ -1057,7 +1057,7 @@ bool optimize_run(
             new_arg[1],
             new_arg[2]
          );
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          new_var[i_op] = rec->PutLoadOp(op);
          break;
 
@@ -1078,7 +1078,7 @@ bool optimize_run(
             new_arg[1],
             new_arg[2]
          );
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          new_var[i_op] = rec->PutLoadOp(op);
          break;
 
@@ -1095,7 +1095,7 @@ bool optimize_run(
             new_arg[1],
             new_arg[2]
          );
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(op);
          break;
 
@@ -1113,7 +1113,7 @@ bool optimize_run(
             new_arg[1],
             new_arg[2]
          );
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(op);
          break;
 
@@ -1131,7 +1131,7 @@ bool optimize_run(
             new_arg[1],
             new_arg[2]
          );
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(op);
          break;
 
@@ -1150,7 +1150,7 @@ bool optimize_run(
             new_arg[1],
             new_arg[2]
          );
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(op);
          break;
 
@@ -1162,7 +1162,7 @@ bool optimize_run(
          CPPAD_ASSERT_NARG_NRES(op, 4, 0);
          // atom_index, atom_old, atom_n, atom_m
          rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(AFunOp);
          if( atom_state == start_atom )
          {  atom_state = arg_atom;
@@ -1187,7 +1187,7 @@ bool optimize_run(
             new_arg[0] = zero_par_index;
          }
          rec->PutArg(new_arg[0]);
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(FunapOp);
          CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
          --atom_j;
@@ -1202,14 +1202,14 @@ bool optimize_run(
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_var );
          if( new_arg[0] != 0 )
          {  rec->PutArg(new_arg[0]);
-            new_op[i_op] = addr_t( rec->num_op_rec() );
+            new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(FunavOp);
          }
          else
          {  // This argument does not affect the result.
             new_arg[0] = zero_par_index;
             rec->PutArg(new_arg[0]);
-            new_op[i_op] = addr_t( rec->num_op_rec() );
+            new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(FunapOp);
          }
          CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
@@ -1229,7 +1229,7 @@ bool optimize_run(
          }
          rec->PutArg(new_arg[0]);
          //
-         new_op[i_op] = addr_t( rec->num_op_rec() );
+         new_op[i_op] = addr_t( rec->num_var_op() );
          rec->PutOp(FunrpOp);
          CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
          --atom_i;
@@ -1240,7 +1240,7 @@ bool optimize_run(
          case FunrvOp:
          CPPAD_ASSERT_UNKNOWN( previous == 0 );
          CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-         new_op[i_op]  = addr_t( rec->num_op_rec() );
+         new_op[i_op]  = addr_t( rec->num_var_op() );
          if( op_usage[i_op] == usage_t(yes_usage) )
             new_var[i_op] = rec->PutOp(FunrvOp);
          else
@@ -1292,7 +1292,7 @@ bool optimize_run(
    {  random_itr.op_info(i_op, op, arg, i_var);
       if( NumRes(op) > 0 )
          CPPAD_ASSERT_UNKNOWN(
-            size_t(new_op[i_op]) < rec->num_op_rec()
+            size_t(new_op[i_op]) < rec->num_var_op()
          );
    }
 # endif

@@ -598,11 +598,11 @@ public:
 
    /// number of operators in the operation sequence
    size_t size_op(void) const
-   {  return play_.num_op_rec(); }
+   {  return play_.num_var_op(); }
 
    /// number of operator arguments in the operation sequence
    size_t size_op_arg(void) const
-   {  return play_.num_op_arg_rec(); }
+   {  return play_.num_var_arg(); }
 
    /// amount of memory required for the operation sequence
    size_t size_op_seq(void) const
@@ -615,7 +615,7 @@ public:
 
    /// number of parameters in the operation sequence
    size_t size_par(void) const
-   {  return play_.num_par_rec(); }
+   {  return play_.num_par_all(); }
 
    /// number of independent dynamic parameters
    size_t size_dyn_ind(void) const
@@ -639,7 +639,7 @@ public:
 
    /// number of characters in the operation sequence
    size_t size_text(void) const
-   {  return play_.num_text_rec(); }
+   {  return play_.num_var_text(); }
 
    /// number of variables in opertion sequence
    size_t size_var(void) const
@@ -647,7 +647,7 @@ public:
 
    /// number of VecAD indices in the operation sequence
    size_t size_VecAD(void) const
-   {  return play_.num_var_vecad_ind_rec(); }
+   {  return play_.num_var_vec_ind(); }
 
    /// set number of orders currently allocated (user API)
    void capacity_order(size_t c);
@@ -837,7 +837,7 @@ public:
    /// Deprecated: Does this AD operation sequence use
    /// VecAD<Base>::reference operands
    bool use_VecAD(void) const
-   {  return play_.num_var_vecad_ind_rec() > 0; }
+   {  return play_.num_var_vec_ind() > 0; }
 
    /// Deprecated: # taylor_ coefficient orders calculated
    /// (per variable,direction)

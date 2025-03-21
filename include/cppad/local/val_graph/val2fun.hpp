@@ -215,7 +215,7 @@ void ADFun<Base, RecBase>::val2fun(
    // rec
    // start a functon recording
    local::recorder<Base> rec;
-   CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == 0 );
+   CPPAD_ASSERT_UNKNOWN( rec.num_var_op() == 0 );
    rec.set_n_dyn_independent(dyn_n_ind);
    rec.set_abort_op_index(0);
    rec.set_record_compare(false);
@@ -967,7 +967,7 @@ void ADFun<Base, RecBase>::val2fun(
    taylor_.resize(0);
    //
    // cskip_op_
-   cskip_op_.resize( rec.num_op_rec() );
+   cskip_op_.resize( rec.num_var_op() );
    //
    // load_op2var_
    load_op2var_.resize( rec.num_var_load() );
@@ -994,7 +994,7 @@ void ADFun<Base, RecBase>::val2fun(
    subgraph_info_.resize(
       ind_taddr_.size(),   // n_dep
       dep_taddr_.size(),   // n_ind
-      play_.num_op_rec(),  // n_op
+      play_.num_var_op(),  // n_op
       play_.num_var()      // n_var
    );
    //

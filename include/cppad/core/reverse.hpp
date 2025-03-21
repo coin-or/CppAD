@@ -152,7 +152,7 @@ BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
       }
    }
    // evaluate the derivatives
-   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_var_op() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load() );
    local::play::const_sequential_iterator play_itr = play_.end();
    local::sweep::reverse(
