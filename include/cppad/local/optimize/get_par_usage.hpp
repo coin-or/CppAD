@@ -62,7 +62,7 @@ par_usage
 *********
 The input size of this vector must be zero.
 Upon return it has size equal to the number of parameters
-in the operation sequence; i.e., play->num_par_rec();
+in the operation sequence; i.e., play->num_par_all();
 The value *par_usage* [ *i* ] is true if an only if
 the i-th parameter is used to compute a dependent variable
 or parameter.
@@ -82,14 +82,14 @@ void get_par_usage(
    pod_vector<bool>&                           par_usage           )
 // END_PROTOTYPE
 {
-   CPPAD_ASSERT_UNKNOWN( op_usage.size()   == play->num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( op_usage.size()   == play->num_var_op() );
    CPPAD_ASSERT_UNKNOWN( par_usage.size()  == 0 );
    //
    // number of operators in the tape
-   const size_t num_op = play->num_op_rec();
+   const size_t num_op = play->num_var_op();
    //
    // number of parameters in the tape
-   const size_t num_par = play->num_par_rec();
+   const size_t num_par = play->num_par_all();
    //
    // number of dynamic parameters
    const size_t num_dynamic_par = play->num_dynamic_par();
@@ -135,7 +135,7 @@ void get_par_usage(
       }
       start_this_vector += length + 1;
    }
-   CPPAD_ASSERT_UNKNOWN( start_this_vector == play->num_var_vecad_ind_rec() );
+   CPPAD_ASSERT_UNKNOWN( start_this_vector == play->num_var_vec_ind() );
    //
    // -----------------------------------------------------------------------
    // forward pass to mark which parameters are used by necessary operators

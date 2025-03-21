@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_PV_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
 \file record_pv.hpp
@@ -66,7 +66,7 @@ struct_size_pair record_pv(
       CPPAD_ASSERT_UNKNOWN(false);
    }
    // number of parameters corresponding to the old operation sequence.
-   size_t npar = play->num_par_rec();
+   size_t npar = play->num_par_all();
 # endif
    //
    // vector of length npar containing the parameters the old operation
@@ -83,7 +83,7 @@ struct_size_pair record_pv(
    rec->PutArg( new_arg[0], new_arg[1] );
    //
    struct_size_pair ret;
-   ret.i_op  = rec->num_op_rec();
+   ret.i_op  = rec->num_var_op();
    ret.i_var = size_t(rec->PutOp(op));
    CPPAD_ASSERT_UNKNOWN( 0 < new_arg[1] && size_t(new_arg[1]) < ret.i_var );
    return ret;

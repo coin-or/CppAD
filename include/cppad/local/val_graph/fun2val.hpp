@@ -177,7 +177,7 @@ void ADFun<Base, RecBase>::fun2val(
    //
    // n_parameter
    // number of parameters
-   size_t n_parameter = play_.num_par_rec();
+   size_t n_parameter = play_.num_par_all();
    //
    // n_dynamic
    // number of dynamic parameters
@@ -212,7 +212,7 @@ void ADFun<Base, RecBase>::fun2val(
    // Put dynamic vectors in val_tape and create vec_info_vec
    struct vec_info_t { size_t size; size_t offset; };
    Vector<vec_info_t> vec_info_vec;
-   {  size_t n_vecad_ind = play_.num_var_vecad_ind_rec();
+   {  size_t n_vecad_ind = play_.num_var_vec_ind();
       size_t index         = 0;
       while(index < n_vecad_ind)
       {  size_t size         = play_.GetVecInd(index++);

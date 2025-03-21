@@ -384,7 +384,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    recorder<Base> rec;
    //
    // number of parameters in both operation sequences
-   size_t num_par = play_.num_par_rec();
+   size_t num_par = play_.num_par_all();
    //
    // number of independent dynamic parameters
    size_t n_dyn_independent = play_.num_dynamic_par();
@@ -891,7 +891,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
          (++itr).op_info(op, arg, i_var);
    }
    // Check a few expected results
-   CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == play_.num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( rec.num_var_op() == play_.num_var_op() );
    CPPAD_ASSERT_UNKNOWN( rec.num_var() == play_.num_var() );
    CPPAD_ASSERT_UNKNOWN( rec.num_var_load() == play_.num_var_load() );
 
@@ -903,7 +903,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    g.num_var_tape_ = rec.num_var();
 
    // dimension cskip_op vector to number of operators
-   g.cskip_op_.resize( rec.num_op_rec() );
+   g.cskip_op_.resize( rec.num_var_op() );
 
    // independent variables in g: (x, u)
    size_t s = f_abs_res.size();
@@ -957,7 +957,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    g.subgraph_info_.resize(
       g.ind_taddr_.size(),   // n_ind
       g.dep_taddr_.size(),   // n_dep
-      g.play_.num_op_rec(),  // n_op
+      g.play_.num_var_op(),  // n_op
       g.play_.num_var()      // n_var
    );
 

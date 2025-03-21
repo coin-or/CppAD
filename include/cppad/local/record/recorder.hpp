@@ -90,7 +90,7 @@ num_var_load
    // END_NUM_VAR_LOAD_REC
 }
 
-num_op_rec
+num_var_op
 ==========
 {xrst_literal
    // BEGIN_NUM_OP_REC
@@ -273,8 +273,8 @@ public:
    {  return num_var_load_; }
    //
    // BEGIN_NUM_OP_REC
-   // num_op_rec = recorder.num_op_rec()
-   size_t num_op_rec(void) const
+   // num_var_op = recorder.num_var_op()
+   size_t num_var_op(void) const
    // END_NUM_OP_REC
    {  return  var_op_.size(); }
    //

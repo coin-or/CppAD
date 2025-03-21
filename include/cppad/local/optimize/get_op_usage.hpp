@@ -267,7 +267,7 @@ void get_op_usage(
    CPPAD_ASSERT_UNKNOWN( op_usage.size()   == 0 );
 
    // number of operators in the tape
-   const size_t num_op = play->num_op_rec();
+   const size_t num_op = play->num_var_op();
    //
    // initialize mapping from variable index to operator index
    CPPAD_ASSERT_UNKNOWN(
@@ -293,14 +293,14 @@ void get_op_usage(
    //
    // parameter information (used by atomic function calls)
 # ifndef NDEBUG
-   size_t num_par = play->num_par_rec();
+   size_t num_par = play->num_par_all();
 # endif
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
    const Base* parameter = play->par_ptr();
    // -----------------------------------------------------------------------
    // vecad information
    size_t num_vecad      = play->num_var_vecad();
-   size_t num_vecad_ind  = play->num_var_vecad_ind_rec();
+   size_t num_vecad_ind  = play->num_var_vec_ind();
    //
    vecad_used.resize(num_vecad);
    for(size_t i = 0; i < num_vecad; i++)

@@ -91,7 +91,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
    //
    // number of parameters
-   const size_t n_parameter = play_.num_par_rec();
+   const size_t n_parameter = play_.num_par_all();
    //
    // number of constant parameters
 # ifndef NDEBUG

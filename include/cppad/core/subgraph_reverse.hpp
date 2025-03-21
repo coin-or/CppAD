@@ -210,7 +210,7 @@ void ADFun<Base,RecBase>::subgraph_reverse( const BoolVector& select_domain )
    {  CPPAD_ASSERT_UNKNOWN( subgraph_info_.check_map_user_op(&play_) );
    }
    CPPAD_ASSERT_UNKNOWN(
-      subgraph_info_.map_user_op().size() == play_.num_op_rec()
+      subgraph_info_.map_user_op().size() == play_.num_var_op()
    );
 
    // initialize for reverse mode subgraph computations
@@ -232,7 +232,7 @@ void ADFun<Base,RecBase>::subgraph_reverse( const BoolVector& select_domain )
       CPPAD_ASSERT_UNKNOWN(false);
    }
    CPPAD_ASSERT_UNKNOWN(
-      subgraph_info_.in_subgraph().size() == play_.num_op_rec()
+      subgraph_info_.in_subgraph().size() == play_.num_var_op()
    );
 
    return;
@@ -347,7 +347,7 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
    // First add the BeginOp and EndOp to the subgraph and then sort it
    // sort the subgraph
    addr_t i_op_begin_op = 0;
-   addr_t i_op_end_op   = addr_t( play_.num_op_rec() - 1);
+   addr_t i_op_end_op   = addr_t( play_.num_var_op() - 1);
    subgraph.push_back(i_op_begin_op);
    subgraph.push_back(i_op_end_op);
    std::sort( subgraph.data(), subgraph.data() + subgraph.size() );
@@ -397,7 +397,7 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
    subgraph_partial_[ dep_taddr_[ell] * q + q - 1] = Base(1);
 
    // evaluate the derivatives
-   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+   CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_var_op() );
    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load() );
    size_t n = Domain();
    //

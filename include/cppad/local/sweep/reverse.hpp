@@ -119,7 +119,7 @@ is the partial derivative of \f$ W( u ) \f$ with
 respect to \f$ u_j^{(k)} \f$.
 
 \param cskip_op
-Is a vector with size play->num_op_rec().
+Is a vector with size play->num_var_op().
 If cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
@@ -176,7 +176,7 @@ void reverse(
    CPPAD_ASSERT_UNKNOWN( num_var > 0 );
 
    // length of the parameter vector (used by CppAD assert macros)
-   const size_t num_par = play->num_par_rec();
+   const size_t num_par = play->num_par_all();
 
    // pointer to the beginning of the parameter vector
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
@@ -424,7 +424,7 @@ void reverse(
          // --------------------------------------------------
          case EndOp:
          CPPAD_ASSERT_UNKNOWN(
-            i_op == play->num_op_rec() - 1
+            i_op == play->num_var_op() - 1
          );
          break;
 

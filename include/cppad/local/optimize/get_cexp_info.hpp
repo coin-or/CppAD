@@ -143,7 +143,7 @@ void get_cexp_info(
    CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 
    // number of operators in the tape
-   const size_t num_op = play->num_op_rec();
+   const size_t num_op = play->num_var_op();
    CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
    CPPAD_ASSERT_UNKNOWN( var_op_prev.size() == num_op );
    //

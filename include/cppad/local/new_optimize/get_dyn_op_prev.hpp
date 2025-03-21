@@ -87,12 +87,12 @@ template <class Base> bool get_dyn_op_prev(
    const pod_vector<bool>&      par_usage           ,
    pod_vector<addr_t>&          dyn_op_prev         )
 {  CPPAD_ASSERT_UNKNOWN( dyn_op_prev.size() == 0 );
-   CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_rec() );
+   CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_all() );
    // END_GET_DYN_OP_PREV
 
    // n_par
    // number of parameters in the recording
-   addr_t n_par = addr_t( play->num_par_rec() );
+   addr_t n_par = addr_t( play->num_par_all() );
 
    // n_dyn
    // number of dynamic parameters in the recording

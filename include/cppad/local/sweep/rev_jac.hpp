@@ -127,7 +127,7 @@ void rev_jac(
    size_t            i, j, k;
 
    // length of the parameter vector (used by CppAD assert macros)
-   const size_t num_par = play->num_par_rec();
+   const size_t num_par = play->num_par_all();
 
    // check num_var argument
    CPPAD_ASSERT_UNKNOWN( num_var > 0 );
@@ -140,7 +140,7 @@ void rev_jac(
    // vecad_sparsity contains a sparsity pattern for each VecAD object.
    // vecad_ind maps a VecAD index (beginning of the VecAD object)
    // to the index of the corresponding set in vecad_sparsity.
-   size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
+   size_t num_vecad_ind   = play->num_var_vec_ind();
    size_t num_vecad_vec   = play->num_var_vecad();
    Vector_set  vecad_sparsity;
    pod_vector<size_t> vecad_ind;
@@ -159,7 +159,7 @@ void rev_jac(
          // start of next VecAD
          j       += length + 1;
       }
-      CPPAD_ASSERT_UNKNOWN( j == play->num_var_vecad_ind_rec() );
+      CPPAD_ASSERT_UNKNOWN( j == play->num_var_vec_ind() );
    }
    // ----------------------------------------------------------------------
    //
