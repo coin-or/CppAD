@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAY_SUBGRAPH_ITERATOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/play/random_iterator.hpp>
@@ -19,7 +19,7 @@ Constant subgraph iterator for a player object.
 
 \tparam Addr
 An integer type capable of representing the largest value in the vectors
-arg_vec, op2arg_vec, op2var_vec, var2op_vec.
+var_arg, op2arg_index, op2var_index, var2op_index.
 
 Except for constructor, the public API for this class is the same as
 for the sequential iterator class.
