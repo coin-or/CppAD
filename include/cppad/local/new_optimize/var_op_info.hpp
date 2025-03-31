@@ -92,7 +92,7 @@ public:
    {  }
    //
    // n_op = op_info.n_op()
-   index_t n_op(void) const
+   size_t n_op(void) const
    // END_N_OP
    {  return index_t( random_itr_.num_op() ); }
    //

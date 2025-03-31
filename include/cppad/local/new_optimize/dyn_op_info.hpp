@@ -61,7 +61,7 @@ public:
 private:
    //
    // n_op_
-   const index_t n_op_;
+   const size_t n_op_;
    //
    // arg_all_
    vec_index_t& arg_all_;
@@ -100,11 +100,11 @@ public:
    // dyn_op_info_t op_info(play)
    dyn_op_info_t( Player& play )
    // END_OP_INFO
-   : n_op_ ( index_t( play.num_dynamic_par() ) )
+   : n_op_ ( play.num_dynamic_par() )
    , arg_all_ ( play.dyn_play_.dyn_par_arg_  )
    , is_par_dyn_ ( play.par_is_dyn() )
    , op_enum_all_ ( play.dyn_par_op() )
-   , op2arg_index_( size_t( n_op_ ) )
+   , op2arg_index_( n_op_ )
    {  //
       // op2arg_index_
       index_t arg_index = 0;
@@ -123,7 +123,7 @@ public:
    }
    //
    // n_op = op_info.n_op()
-   index_t n_op(void) const
+   size_t n_op(void) const
    // END_N_OP
    {  return n_op_; }
    //

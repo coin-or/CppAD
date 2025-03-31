@@ -50,7 +50,7 @@ and the ``size`` and ``resize`` member functions.
 
 n_op
 ====
-is an ``addr_t`` equal to the number of operators in the tape.
+is a ``size_t`` equal to the number of operators in the tape.
 
 get
 ===
