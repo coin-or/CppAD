@@ -82,7 +82,7 @@ private:
    //
    // num_arg
    // n_arg = op_info.num_arg(i_op)
-   index_t num_arg(index_t i_op)
+   index_t num_arg(size_t i_op)
    {  op_enum_t  op_enum   = op_enum_t( op_enum_all_[i_op] );
       index_t    arg_index = op2arg_index_[i_op];
       index_t    n_arg     = index_t( num_arg_dyn(op_enum) );
@@ -108,7 +108,7 @@ public:
    {  //
       // op2arg_index_
       index_t arg_index = 0;
-      for(index_t i_op = 0; i_op < n_op_; ++i_op)
+      for(size_t i_op = 0; i_op < n_op_; ++i_op)
       {  op2arg_index_[i_op] = arg_index;
          op_enum_t op_enum   = op_enum_t( op_enum_all_[i_op] );
          arg_index          += index_t( num_arg_dyn(op_enum) );
@@ -129,7 +129,7 @@ public:
    //
    // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
-      index_t              i_op           ,
+      size_t               i_op           ,
       op_enum_t&           op_enum        ,
       bool&                commutative    ,
       mutable_subvector_t& arg_one        ,
@@ -196,7 +196,7 @@ public:
    //
    // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
-      index_t              i_op           ,
+      size_t               i_op           ,
       op_enum_t&           op_enum        ,
       bool&                commutative    ,
       const_subvector_t&   arg_one        ,

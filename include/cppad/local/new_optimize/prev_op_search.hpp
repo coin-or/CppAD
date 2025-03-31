@@ -201,7 +201,7 @@ public:
       vec_bool_t&       is_res_one       = is_res_one_search_;
       const_subvector_t arg_tmp;
       op_info_.get(
-         i_op, op_enum, commutative, arg_tmp, is_res_one
+         size_t(i_op), op_enum, commutative, arg_tmp, is_res_one
       );
       arg_one.resize( arg_tmp.size() );
       for(size_t i = 0; i < arg_tmp.size(); ++i)
@@ -281,7 +281,7 @@ bool prev_op_search_t<Op_info>::match_fun(
    vec_index_t&      arg_one_c        = prev_op_search.arg_one_check_;
    vec_bool_t&       is_res_one_c     = prev_op_search.is_res_one_check_;
    const_subvector_t arg_tmp;
-   op_info.get(i_op_check,
+   op_info.get(size_t(i_op_check),
       op_enum_c, commutative_c, arg_tmp, is_res_one_c
    );
    arg_one_c.resize( arg_tmp.size() );

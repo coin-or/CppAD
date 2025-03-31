@@ -94,11 +94,11 @@ public:
    // n_op = op_info.n_op()
    size_t n_op(void) const
    // END_N_OP
-   {  return index_t( random_itr_.num_op() ); }
+   {  return random_itr_.num_op(); }
    //
    // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
-      index_t              i_op           ,
+      size_t               i_op           ,
       op_enum_t&           op_enum        ,
       bool&                commutative    ,
       const_subvector_t&   arg_one        ,
@@ -130,7 +130,7 @@ public:
    //
    // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
-      index_t              i_op           ,
+      size_t               i_op           ,
       op_enum_t&           op_enum        ,
       bool&                commutative    ,
       mutable_subvector_t& arg_one        ,

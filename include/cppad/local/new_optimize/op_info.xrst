@@ -57,7 +57,7 @@ get
 
 i_op
 ----
-is an ``addr_t`` index that identifies this operator, *i_op* < *n_op* .
+is an ``size_t`` index that identifies this operator, *i_op* < *n_op* .
 Note that this is the only by value arguments to ``get`` .
 The rest of the arguments to this function are by reference.
 
