@@ -23,6 +23,7 @@ namespace CppAD { namespace local { namespace val_graph {
 } } }
 namespace CppAD { namespace local { namespace optimize {
    template <class Player> class dyn_op_info_t;
+   template <class Player> class var_op_info_t;
 } } }
 
 namespace CppAD {

@@ -115,7 +115,7 @@ namespace CppAD { namespace local { namespace optimize {
 template <class Addr, class Base>
 bool get_var_op_prev(
    size_t                                      collision_limit     ,
-   const player<Base>*                         play                ,
+   player<Base>*                               play                ,
    const play::const_random_iterator<Addr>&    random_itr          ,
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<addr_t>&                         var_op_prev         ,
@@ -124,15 +124,15 @@ bool get_var_op_prev(
    CPPAD_ASSERT_UNKNOWN( op_usage.size() == random_itr.num_op() );
    // END_GET_OP_PREVIOUS
    //
-   // op_info_t, op_info
-   typedef play::const_random_iterator<Addr> random_itr_t;
-   typedef var_op_info_t<random_itr_t>       op_info_t;
-   op_info_t op_info(random_itr);
+   // op_info_t, index_t, op_info
+   typedef var_op_info_t< player<Base> > op_info_t;
+   typedef typename op_info_t::index_t index_t;
+   op_info_t op_info(*play);
    //
    // prev_op_search
-   Addr n_hash_code  = Addr( std::max( random_itr.num_op() ,  size_t(2) ) );
+   index_t n_hash_code  = index_t( random_itr.num_op() ) + 2;
    prev_op_search_t<op_info_t> prev_op_search(
-      op_info, n_hash_code, Addr( collision_limit )
+      op_info, n_hash_code, index_t( collision_limit )
    );
    //
    // n_op, n_var
@@ -142,9 +142,9 @@ bool get_var_op_prev(
    CPPAD_ASSERT_UNKNOWN( size_t( std::numeric_limits<Addr>::max() ) >= n_var );
    //
    // var_previous
-   pod_vector<Addr> var_previous(n_var);
+   pod_vector<addr_t> var_previous(n_var);
    for(size_t i_var = 0; i_var < n_var; ++i_var)
-      var_previous[i_var] = Addr( i_var );
+      var_previous[i_var] = addr_t( i_var );
    //
    // var_op_prev
    var_op_prev.resize( n_op );
@@ -189,7 +189,7 @@ bool get_var_op_prev(
       }
       if( ! skip )
       {  size_t j_op = size_t(
-            prev_op_search.match_op( Addr(i_op), var_previous)
+            prev_op_search.match_op( index_t(i_op), var_previous)
          );
          if( j_op != i_op )
          {  //
@@ -209,7 +209,7 @@ bool get_var_op_prev(
             random_itr.op_info(j_op, op_match, arg, var_match);
             CPPAD_ASSERT_UNKNOWN( op == op_match );
             if( NumRes(op) > 0 )
-               var_previous[i_var] = Addr( var_match );
+               var_previous[i_var] = addr_t( var_match );
          }
       }
    }

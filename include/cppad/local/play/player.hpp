@@ -152,6 +152,7 @@ private:
    // player<Base> must be a friend of player< AD<Base> > for base2ad to work
    template <class AnotherBase> friend class player;
    template <class Player> friend class CppAD::local::optimize::dyn_op_info_t;
+   template <class Player> friend class CppAD::local::optimize::var_op_info_t;
    // ----------------------------------------------------------------------
    //
    // dyn_play_
@@ -702,7 +703,7 @@ public:
    {  return dyn_play_.num_dynamic_arg(); }
    //
    // num_var
-       size_t num_var(void) const
+   size_t num_var(void) const
    {  return num_var_; }
    //
    // num_var_load
@@ -718,11 +719,11 @@ public:
    {  return var_vecad_ind_.size(); }
    //
    // num_var_vecad
-       size_t num_var_vecad(void) const
+   size_t num_var_vecad(void) const
    {  return num_var_vecad_; }
    //
    // num_var_arg
-      size_t num_var_arg(void) const
+   size_t num_var_arg(void) const
    {  return var_arg_.size(); }
    //
    // num_par_all

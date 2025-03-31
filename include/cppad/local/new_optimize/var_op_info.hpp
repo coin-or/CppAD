@@ -49,20 +49,33 @@ Class Requirements for Optimization
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 // BEGIN_CLASS
 namespace CppAD { namespace local { namespace optimize  {
-template <class Random_itr> class var_op_info_t {
+template <class Player> class var_op_info_t {
 // END_CLASS
 public:
    //
    // index_t, op_enum_t, vec_index_t, vec_bool_t
-   typedef typename Random_itr::index_t            index_t;
+   typedef addr_t                                  index_t;
    typedef CppAD::local::op_code_var               op_enum_t;
    typedef CppAD::local::pod_vector<index_t>       vec_index_t;
    typedef CppAD::local::pod_vector<bool>          vec_bool_t;
    //
 private:
    //
-   // random_itr_
-   const Random_itr& random_itr_;
+   // n_op_
+   const size_t n_op_;
+   //
+   // op_enum_all_
+   typedef CPPAD_VEC_ENUM_TYPE               opcode_t;
+   const CppAD::local::pod_vector<opcode_t>& op_enum_all_;
+   //
+   // arg_all_
+   vec_index_t& arg_all_;
+   //
+   // op2arg_index_
+   // is a vector that maps operator index to the index in arg_all_
+   // of the first argument, for this operator.
+   // This vector is effectively const; i.e., only set by constructor.
+   vec_index_t op2arg_index_;
    //
    // num_arg
    index_t num_arg(op_enum_t op_enum, const addr_t* op_arg)
@@ -86,15 +99,51 @@ public:
    //
    // BEGIN_OP_INFO
    // var_op_info_t op_info(tape)
-   var_op_info_t(const Random_itr& random_itr)
+   var_op_info_t(Player& play)
    // END_OP_INFO
-   : random_itr_( random_itr )
-   {  }
+   : n_op_( play.num_var_op() )
+   , op_enum_all_( play.var_op_ )
+   , arg_all_( play.var_arg_ )
+   , op2arg_index_( n_op_ )
+   {  //
+      // op2arg_index
+      size_t arg_index = 0;
+      for(size_t i_op =  0; i_op < n_op_; ++i_op)
+      {  op_code_var op       = op_code_var( op_enum_all_[i_op] );
+         op2arg_index_[i_op]  = index_t( arg_index );
+         arg_index           += NumArg(op);
+         // CSumOp
+         if( op == CSumOp )
+         {  CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+            //
+            // pointer to first argument for this operator
+            const addr_t* op_arg = arg_all_.data() + arg_index;
+            //
+            // The actual number of arugments for this operator is
+            // op_arg[4] + 1
+            // Correct index of first argument for next operator
+            arg_index += size_t(op_arg[4] + 1);
+         }
+         //
+         // CSkip
+         if( op == CSkipOp )
+         {  CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+            //
+            // pointer to first argument for this operator
+            const addr_t* op_arg = arg_all_.data() + arg_index;
+            //
+            // The actual number of arugments for this operator is
+            // 7 + op_arg[4] + op_arg[5].
+            // Correct index of first argument for next operator.
+            arg_index += size_t(7 + op_arg[4] + op_arg[5]);
+         }
+      }
+   }
    //
    // n_op = op_info.n_op()
    size_t n_op(void) const
    // END_N_OP
-   {  return random_itr_.num_op(); }
+   {  return n_op_; }
    //
    // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(
@@ -106,16 +155,15 @@ public:
    // END_GET
    {  //
       // op_enum
-      op_enum        = random_itr_.get_op( size_t(i_op) );
+      op_enum = op_enum_t( op_enum_all_[i_op] );
       //
       // commutative
       // Note that Addvp and Mulvp have been folded using communativity.
       commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
-      // op_enum,  op_arg
-      const addr_t*  op_arg;
-      size_t         var_index;
-      random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
+      // op_arg
+      index_t        arg_index   = op2arg_index_[i_op];
+      const addr_t*  op_arg      = arg_all_.data() + arg_index;
       //
       // n_arg
       index_t n_arg = num_arg(op_enum, op_arg);
@@ -138,16 +186,15 @@ public:
    // END_GET
    {  //
       // op_enum
-      op_enum        = random_itr_.get_op( size_t(i_op) );
+      op_enum = op_enum_t( op_enum_all_[i_op] );
       //
       // commutative
       // Note that Addvp and Mulvp have been folded using communativity.
       commutative = op_enum == AddvvOp || op_enum == MulvvOp;
       //
-      // op_enum,  op_arg
-      addr_t*        op_arg;
-      size_t         var_index;
-      random_itr_.op_info( size_t(i_op) , op_enum, op_arg, var_index);
+      // op_arg
+      index_t  arg_index   = op2arg_index_[i_op];
+      addr_t*  op_arg      = arg_all_.data() + arg_index;
       //
       // n_arg
       index_t n_arg = num_arg(op_enum, op_arg);
