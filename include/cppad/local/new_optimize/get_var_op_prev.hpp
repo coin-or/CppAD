@@ -23,7 +23,6 @@ Syntax
 | *exceed_collision_limit* = ``get_var_op_prev`` (
 | |tab| *collision_limit* ,
 | |tab| *play* ,
-| |tab| *random_itr* ,
 | |tab| *cexp_set* ,
 | |tab| *var_op_prev* ,
 | |tab| *op_usage*
@@ -49,10 +48,6 @@ allowed in the hash expression has table.
 play
 ****
 is the old operation sequence.
-
-random_itr
-**********
-is a random iterator for the old operation sequence.
 
 cexp_set
 ********
@@ -109,19 +104,17 @@ the return value is true (false).
 
 // BEGIN_GET_OP_PREVIOUS
 // exceed_collison_limit = get_var_op_prev(
-//    collision_limit, play, random_itr, cexp_set, var_op_prev, op_usage
+//    collision_limit, play, cexp_set, var_op_prev, op_usage
 // )
 namespace CppAD { namespace local { namespace optimize {
-template <class Addr, class Base>
+template <class Base>
 bool get_var_op_prev(
    size_t                                      collision_limit     ,
    player<Base>*                               play                ,
-   const play::const_random_iterator<Addr>&    random_itr          ,
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<addr_t>&                         var_op_prev         ,
    pod_vector<usage_t>&                        op_usage            )
 {  CPPAD_ASSERT_UNKNOWN( var_op_prev.size() == 0 );
-   CPPAD_ASSERT_UNKNOWN( op_usage.size() == random_itr.num_op() );
    // END_GET_OP_PREVIOUS
    //
    // op_info_t, index_t, op_info
@@ -130,16 +123,16 @@ bool get_var_op_prev(
    op_info_t op_info(*play);
    //
    // prev_op_search
-   index_t n_hash_code  = index_t( random_itr.num_op() ) + 2;
+   index_t n_hash_code  = index_t( play->num_var_op() ) + 2;
    prev_op_search_t<op_info_t> prev_op_search(
       op_info, n_hash_code, index_t( collision_limit )
    );
    //
    // n_op, n_var
-   size_t n_op  = random_itr.num_op();
-   size_t n_var = random_itr.num_var();
-   CPPAD_ASSERT_UNKNOWN( size_t( std::numeric_limits<Addr>::max() ) >= n_op );
-   CPPAD_ASSERT_UNKNOWN( size_t( std::numeric_limits<Addr>::max() ) >= n_var );
+   size_t n_op  = play->num_var_op();
+   size_t n_var = play->num_var();
+   CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_op );
+   CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_var );
    //
    // var_previous
    pod_vector<addr_t> var_previous(n_var);
@@ -152,10 +145,8 @@ bool get_var_op_prev(
    {  var_op_prev[i_op] = 0;
       //
       // op, i_var
-      op_code_var   op;
-      const addr_t* arg;
-      size_t        i_var;
-      random_itr.op_info(i_op, op, arg, i_var);
+      op_code_var   op    = op_info.op_enum(i_op);
+      size_t        i_var = op_info.var_index(i_op);
       //
       // skip
       bool skip = op_usage[i_op] != usage_t(yes_usage);
@@ -204,12 +195,11 @@ bool get_var_op_prev(
             );
             //
             // var_previous
-            op_code_var op_match;
-            size_t      var_match;
-            random_itr.op_info(j_op, op_match, arg, var_match);
+            op_code_var op_match  = op_info.op_enum(j_op);
+            size_t      j_var     = op_info.var_index(j_op);
             CPPAD_ASSERT_UNKNOWN( op == op_match );
-            if( NumRes(op) > 0 )
-               var_previous[i_var] = addr_t( var_match );
+            if( NumRes(op_match) > 0 )
+               var_previous[i_var] = addr_t( j_var );
          }
       }
    }

@@ -23,9 +23,9 @@ op_info
 }
 
 
-random_itr
-**********
-is a random iterator for the operation sequence.
+play
+====
+is the player for this operation sequence.
 
 {xrst_template ;
 include/cppad/local/new_optimize/op_info.xrst
@@ -40,6 +40,24 @@ Class Requirements for Optimization
 @=========@ ; =============
 @op_info@   ; *op_info*
 }
+
+
+op_enum
+*******
+{xrst_literal ,
+   // BEGIN_OP_ENUM , // END_OP_ENUM
+}
+The return operator corresponding to this operator index.
+
+var_index
+*********
+{xrst_literal ,
+   // BEGIN_VAR_INDEX , // END_VAR_INDEX
+}
+The return value *i_var* is the index of the primary result for this operator.
+If the operator does not have any results, the *i_var* is the
+number of variables in the player; i.e., *play* . ``num_var`` () .
+(This is an invalid variable index.)
 
 {xrst_end var_op_info_t}
 */
@@ -77,6 +95,11 @@ private:
    // This vector is effectively const; i.e., only set by constructor.
    vec_index_t op2arg_index_;
    //
+   // op2var_index_
+   // is a vector that maps operator index to variable index.
+   // This vector is effectively const; i.e., only set by constructor.
+   vec_index_t op2var_index_;
+   //
    // num_arg
    index_t num_arg(op_enum_t op_enum, const addr_t* op_arg)
    {  index_t n_arg;
@@ -105,13 +128,32 @@ public:
    , op_enum_all_( play.var_op_ )
    , arg_all_( play.var_arg_ )
    , op2arg_index_( n_op_ )
+   , op2var_index_( n_op_ )
    {  //
-      // op2arg_index
+      // n_var
+      size_t n_var = play.num_var();
+      //
+      // op2var_index_
+      // initalize are an invalid variable index
+      for(size_t i_op = 0; i_op < n_op_; ++i_op)
+         op2var_index_[i_op] = index_t( n_var );
+      //
+      // op2arg_index_, op2var_index_
+      op2arg_index_.resize( n_op_ );
       size_t arg_index = 0;
+      size_t var_index = 0;
       for(size_t i_op =  0; i_op < n_op_; ++i_op)
-      {  op_code_var op       = op_code_var( op_enum_all_[i_op] );
+      {  //
+         op_code_var op       = op_code_var( op_enum_all_[i_op] );
+         //
          op2arg_index_[i_op]  = index_t( arg_index );
-         arg_index           += NumArg(op);
+         if( NumRes(op) > 0 )
+         {  // index of the primary (last) result for this operator
+            op2var_index_[i_op] = index_t( var_index + NumRes(op) - 1 );
+         }
+         //
+         var_index += NumRes(op);
+         arg_index += NumArg(op);
          // CSumOp
          if( op == CSumOp )
          {  CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
@@ -138,6 +180,8 @@ public:
             arg_index += size_t(7 + op_arg[4] + op_arg[5]);
          }
       }
+      CPPAD_ASSERT_UNKNOWN( arg_index == arg_all_.size() );
+      CPPAD_ASSERT_UNKNOWN( var_index == n_var );
    }
    //
    // n_op = op_info.n_op()
@@ -206,6 +250,18 @@ public:
       arg_is_variable(op_enum, op_arg, is_res_one);
       CPPAD_ASSERT_UNKNOWN( is_res_one.size() == size_t( n_arg ) );
    }
+   //
+   // BEGIN_OP_ENUM
+   // op_enum = op_info.op_enum(i_op)
+   op_enum_t op_enum(size_t i_op)
+   // END_OP_ENUM
+   {  return op_enum_t( op_enum_all_[i_op] ); }
+   //
+   // BEGIN_VAR_INDEX
+   // i_var = op_info.var_index(i_op)
+   size_t var_index(size_t i_op)
+   // END_VAR_INDEX
+   {  return size_t( op2var_index_[i_op] ); }
 };
 
 

@@ -24,7 +24,7 @@ op_info
 
 play
 ====
-is the player that we are optimizing.
+is the player for this operation sequence.
 
 {xrst_template ;
 include/cppad/local/new_optimize/op_info.xrst

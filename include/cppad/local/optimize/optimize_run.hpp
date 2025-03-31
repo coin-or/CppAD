@@ -228,7 +228,6 @@ bool optimize_run(
    exceed_collision_limit |= get_var_op_prev(
       collision_limit,
       play,
-      random_itr,
       cexp_set,
       var_op_prev,
       op_usage
