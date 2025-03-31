@@ -366,6 +366,8 @@ pkgconfig_info(ipopt ${system_include})
 prefix_info(colpack ${system_include} )
 #
 # package = sacado
+set(Trilinos_DIR "./build/prefix/lib64/cmake/Trilinos")
+find_package(Trilinos REQUIRED)
 prefix_info(sacado ${system_include} )
 #
 # package = fadbad
