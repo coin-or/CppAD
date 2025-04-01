@@ -747,9 +747,9 @@ void printOp(
       arg[5] = number of operations to skip if CExpOp comparison is false
       arg[6] -> arg[5+arg[4]]               = skip operations if true
       arg[6+arg[4]] -> arg[5+arg[4]+arg[5]] = skip operations if false
-      arg[6+arg[4]+arg[5]] = arg[4] + arg[5]
+      arg[6+arg[4]+arg[5]] = 6+arg[4]+arg[5]+1
       */
-      CPPAD_ASSERT_UNKNOWN( arg[6+arg[4]+arg[5]] == arg[4]+arg[5] );
+      CPPAD_ASSERT_UNKNOWN( arg[6+arg[4]+arg[5]] == 6+arg[4]+arg[5]+1 );
       CPPAD_ASSERT_UNKNOWN(arg[1] != 0);
       if( arg[1] & 1 )
          printOpField(os, " vl=", arg[2], ncol);
@@ -791,9 +791,9 @@ void printOp(
       arg[arg[1]], ... , arg[arg[2]-1]: indices for subtraction variables
       arg[arg[2]], ... , arg[arg[3]-1]: indices for additon dynamics
       arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
-      arg[arg[4]] = arg[4]
+      arg[arg[4]] = arg[4] + 1
       */
-      CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] );
+      CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
       printOpField(os, " pr=", play->par_one( size_t(arg[0]) ), ncol);
       for(addr_t i = 5; i < arg[1]; i++)
              printOpField(os, " +v=", arg[i], ncol);
