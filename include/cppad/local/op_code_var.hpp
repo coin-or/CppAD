@@ -1266,10 +1266,10 @@ void arg_is_variable(
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
       is_variable[0] = false;
       is_variable[1] = false;
-      is_variable[2] = (arg[0] & 1) != 0;
-      is_variable[3] = (arg[0] & 2) != 0;
-      is_variable[4] = (arg[0] & 4) != 0;
-      is_variable[5] = (arg[0] & 8) != 0;
+      is_variable[2] = (arg[1] & 1) != 0;
+      is_variable[3] = (arg[1] & 2) != 0;
+      is_variable[4] = (arg[1] & 4) != 0;
+      is_variable[5] = (arg[1] & 8) != 0;
       break;
 
       // -------------------------------------------------------------------
@@ -1294,7 +1294,7 @@ void arg_is_variable(
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
       //
       // true number of arguments
-      num_arg = size_t(arg[4]);
+      num_arg = size_t(arg[4] + 1);
       //
       is_variable.resize( num_arg );
       for(size_t i = 0; i < num_arg; ++i)
