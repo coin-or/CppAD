@@ -261,13 +261,13 @@ public:
 
       // size_t values
       num_var_            = rec.num_var_;
-          num_var_load_       = rec.num_var_load_;
+      num_var_load_       = rec.num_var_load_;
 
       // var_op_
       var_op_.swap(rec.var_op_);
       CPPAD_ASSERT_UNKNOWN(var_op_.size() < addr_t_max );
 
-      // op_arg_vec_
+      // var_arg_
       var_arg_.swap(rec.var_arg_);
       CPPAD_ASSERT_UNKNOWN(var_arg_.size()    < addr_t_max );
 
@@ -697,11 +697,11 @@ public:
    {  return dyn_play_.num_dynamic_arg(); }
    //
    // num_var
-       size_t num_var(void) const
+   size_t num_var(void) const
    {  return num_var_; }
    //
    // num_var_load
-       size_t num_var_load(void) const
+   size_t num_var_load(void) const
    {  return num_var_load_; }
    //
    // num_var_op
@@ -713,11 +713,11 @@ public:
    {  return var_vecad_ind_.size(); }
    //
    // num_var_vecad
-       size_t num_var_vecad(void) const
+   size_t num_var_vecad(void) const
    {  return num_var_vecad_; }
    //
    // num_var_arg
-      size_t num_var_arg(void) const
+   size_t num_var_arg(void) const
    {  return var_arg_.size(); }
    //
    // num_par_all
