@@ -267,7 +267,7 @@ public:
 
       // size_t values
       num_var_            = rec.num_var_;
-          num_var_load_       = rec.num_var_load_;
+      num_var_load_       = rec.num_var_load_;
 
       // var_op_
       var_op_.swap(rec.var_op_);
@@ -707,7 +707,7 @@ public:
    {  return num_var_; }
    //
    // num_var_load
-       size_t num_var_load(void) const
+   size_t num_var_load(void) const
    {  return num_var_load_; }
    //
    // num_var_op

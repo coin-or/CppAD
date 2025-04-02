@@ -17,7 +17,7 @@ Constant random iterator for a player object.
 
 \tparam Addr
 An integer type capable of representing the largest value in the vectors
-arg_vec, op2arg_index, op2var_index, var2op_index.
+var_arg, op2arg_index, op2var_index, var2op_index.
 */
 template <class Addr>
 class const_random_iterator {
@@ -69,13 +69,13 @@ public:
    */
    const_random_iterator(
       const pod_vector<opcode_t>&           var_op     , ///< var_op_
-      const pod_vector<addr_t>&             arg_vec    , ///< var_arg_
+      const pod_vector<addr_t>&             var_arg    , ///< var_arg_
       const pod_vector<Addr>*               op2arg_index , ///< op2ar_vec_
       const pod_vector<Addr>*               op2var_index , ///< op2var_index_
       const pod_vector<Addr>*               var2op_index ) ///< var2op_index_
    :
    var_op_          ( &var_op    )   ,
-   var_arg_         ( &arg_vec   )   ,
+   var_arg_         ( &var_arg   )   ,
    op2arg_index_    ( op2arg_index )   ,
    op2var_index_    ( op2var_index )   ,
    var2op_index_    ( var2op_index )

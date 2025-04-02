@@ -17,6 +17,19 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-01
+=====
+Fix a :ref:`conditional expressions<CondExp-name>`  bug that affect
+:ref:`optimize-name` and :ref:`subgraph_sparsity-name` .
+optimizing functions with
+
+03-21
+=====
+If :ref:`cmake@cppad_tape_addr_type` was chosen to be `size_t` ,
+a multiple definition of ``setup_random`` compiler error would occur.
+This has been fixed.
+
+
 02-09
 =====
 Systems that use windows dll files,

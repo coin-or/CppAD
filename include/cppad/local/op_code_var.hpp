@@ -793,7 +793,7 @@ void printOp(
       arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
       arg[arg[4]] = arg[4] + 1
       */
-      CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4]+1 );
+      CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
       printOpField(os, " pr=", play->par_one( size_t(arg[0]) ), ncol);
       for(addr_t i = 5; i < arg[1]; i++)
              printOpField(os, " +v=", arg[i], ncol);
