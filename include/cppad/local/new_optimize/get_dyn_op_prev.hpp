@@ -19,8 +19,8 @@ Create operator information tables
 /*
 {xrst_begin get_dyn_op_prev dev}
 
-Map Dynamic Parameters to Equivalent Previous Dynamic Parameters
-################################################################
+Replace Dynamic Parameters Using Equivalent Previous Parameters
+###############################################################
 
 Syntax
 ******
@@ -48,6 +48,12 @@ The size of this vector is the number of parameters in the operation sequence.
 If *par_usage* [ *i_par* ] is true (false) the parameter with index *i_par*
 is used (is not used) to calculate the dependent variables for this
 operation sequence.
+If a the parameter with index *i_par* gets replaced:
+
+#. It is a dynamic parameter
+#. *par_usage* [ *i_par* ] was true on input
+#. *par_usage* [ *i_par* ] is false upon return
+
 
 dyn_op_prev
 ***********
@@ -61,7 +67,7 @@ Fix i_dyn, a dynamic parameter index and
    Let dyn2par_index = play->dyn2par_index
 
 The j_dyn-th dynamic parameter
-can be used as a replacement for the i_dyn-th dynamic parameter and
+can be used as a replacement for the i_dyn-th dynamic parameter and on input
 ::
 
    If j_dyn != i_dyn then
@@ -84,7 +90,7 @@ namespace CppAD { namespace local { namespace optimize {
 template <class Base> bool get_dyn_op_prev(
    addr_t                       collision_limit     ,
    player<Base>*                play                ,
-   const pod_vector<bool>&      par_usage           ,
+   pod_vector<bool>&            par_usage           ,
    pod_vector<addr_t>&          dyn_op_prev         )
 {  CPPAD_ASSERT_UNKNOWN( dyn_op_prev.size() == 0 );
    CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_all() );
@@ -105,16 +111,19 @@ template <class Base> bool get_dyn_op_prev(
    // dyn2par_index, dyn_par_op
    const pod_vector<addr_t>&   dyn2par_index( play->dyn2par_index() );
    const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
-
    //
-   // op_info
-   typedef dyn_op_info_t< player<Base> > op_info_t;
-   op_info_t op_info(*play);
+   // dyn_info
+   typedef dyn_op_info_t< player<Base> > dyn_info_t;
+   dyn_info_t dyn_info(*play);
+   //
+   // var_info
+   typedef var_op_info_t< player<Base> > var_info_t;
+   var_info_t var_info(*play);
    //
    // prev_op_search
    addr_t n_hash_code     = addr_t(n_dyn) + 2;
-   prev_op_search_t<op_info_t> prev_op_search(
-      op_info, n_hash_code, collision_limit
+   prev_op_search_t<dyn_info_t> prev_op_search(
+      dyn_info, n_hash_code, collision_limit
    );
    //
    // par_previous
@@ -128,9 +137,10 @@ template <class Base> bool get_dyn_op_prev(
    for(addr_t i_dyn = 0; i_dyn < n_dyn; ++i_dyn)
       dyn_op_prev[i_dyn] = i_dyn;
    //
-   // i_dyn
+   // par_previous, par_usage, dyn_op_prev
    for(addr_t i_dyn = 0; i_dyn < n_dyn; ++i_dyn)
-   {  // i_par
+   {  //
+      // i_par
       // parameter index for this dynamic parameter
       addr_t i_par = dyn2par_index[i_dyn];
       CPPAD_ASSERT_UNKNOWN( play->par_is_dyn()[i_par] );
@@ -150,11 +160,47 @@ template <class Base> bool get_dyn_op_prev(
             CPPAD_ASSERT_UNKNOWN( j_dyn == dyn_op_prev[j_dyn] )
             dyn_op_prev[i_dyn] = j_dyn;
             par_previous[i_par] = dyn2par_index[j_dyn];
+            CPPAD_ASSERT_UNKNOWN( par_previous[i_par] < i_par );
+            par_usage[i_par]    = false;
          }
       }
    }
+   //
+   // dyn_op, var_op, cummulative, arg_one, is_one
+   typename dyn_info_t::op_enum_t  dyn_op;
+   typename var_info_t::op_enum_t  var_op;
+   bool                            commutative;
+   mutable_subvector_t             arg_one;
+   typename dyn_info_t::vec_bool_t is_res_one;
+   //
+   // renumber parameters in dynamic parameter operaitons sequence
+   for(size_t i_dyn = 0; i_dyn < dyn_info.n_op(); ++i_dyn)
+   {  //
+      // dyn_op, cummulative, arg_one, is_one
+      dyn_info.get(i_dyn, dyn_op, commutative, arg_one, is_res_one);
+      for(size_t j = 0; j < arg_one.size(); ++j)
+         if( is_res_one[j] )
+            arg_one[j] = par_previous[ arg_one[j] ];
+   }
+   //
+   // is_parameter
+   pod_vector<bool> is_parameter;
+   //
+   // renumber parameters in variable operaitons sequence
+   for(size_t i_op = 0; i_op < var_info.n_op(); ++i_op)
+   {  //
+      // var_op, cummulative, arg_one, is_one
+      var_info.get(i_op, var_op, commutative, arg_one, is_res_one);
+      arg_is_parameter(var_op, arg_one, is_parameter);
+      for(size_t j = 0; j < arg_one.size(); ++j)
+         if( is_parameter[j] )
+            arg_one[j] = par_previous[ arg_one[j] ];
+   }
+   //
    return prev_op_search.exceed_limit();
 }
+
+
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 

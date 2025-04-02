@@ -747,9 +747,9 @@ void printOp(
       arg[5] = number of operations to skip if CExpOp comparison is false
       arg[6] -> arg[5+arg[4]]               = skip operations if true
       arg[6+arg[4]] -> arg[5+arg[4]+arg[5]] = skip operations if false
-      arg[6+arg[4]+arg[5]] = arg[4] + arg[5]
+      arg[6+arg[4]+arg[5]] = 6+arg[4]+arg[5]+1
       */
-      CPPAD_ASSERT_UNKNOWN( arg[6+arg[4]+arg[5]] == arg[4]+arg[5] );
+      CPPAD_ASSERT_UNKNOWN( arg[6+arg[4]+arg[5]] == 6+arg[4]+arg[5]+1 );
       CPPAD_ASSERT_UNKNOWN(arg[1] != 0);
       if( arg[1] & 1 )
          printOpField(os, " vl=", arg[2], ncol);
@@ -791,9 +791,9 @@ void printOp(
       arg[arg[1]], ... , arg[arg[2]-1]: indices for subtraction variables
       arg[arg[2]], ... , arg[arg[3]-1]: indices for additon dynamics
       arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
-      arg[arg[4]] = arg[4]
+      arg[arg[4]] = arg[4] + 1
       */
-      CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] );
+      CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4]+1 );
       printOpField(os, " pr=", play->par_one( size_t(arg[0]) ), ncol);
       for(addr_t i = 5; i < arg[1]; i++)
              printOpField(os, " +v=", arg[i], ncol);
@@ -1266,10 +1266,10 @@ void arg_is_variable(
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
       is_variable[0] = false;
       is_variable[1] = false;
-      is_variable[2] = (arg[0] & 1) != 0;
-      is_variable[3] = (arg[0] & 2) != 0;
-      is_variable[4] = (arg[0] & 4) != 0;
-      is_variable[5] = (arg[0] & 8) != 0;
+      is_variable[2] = (arg[1] & 1) != 0;
+      is_variable[3] = (arg[1] & 2) != 0;
+      is_variable[4] = (arg[1] & 4) != 0;
+      is_variable[5] = (arg[1] & 8) != 0;
       break;
 
       // -------------------------------------------------------------------
@@ -1294,7 +1294,7 @@ void arg_is_variable(
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
       //
       // true number of arguments
-      num_arg = size_t(arg[4]);
+      num_arg = size_t(arg[4] + 1);
       //
       is_variable.resize( num_arg );
       for(size_t i = 0; i < num_arg; ++i)
@@ -1308,6 +1308,276 @@ void arg_is_variable(
       CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
       is_variable[0] = false;
       is_variable[1] = false;
+      break;
+
+      // --------------------------------------------------------------------
+      default:
+      CPPAD_ASSERT_UNKNOWN(false);
+      break;
+   }
+   return;
+}
+/*!
+Determines which arguments are parameters for an operator.
+
+\param op
+is the operator. Note that CSkipOp and CSumOp are special cases
+because the true number of arguments is not equal to NumArg(op)
+and the true number of arguments num_arg can be large.
+It may be more efficient to handle these cases separately
+(see below).
+
+\param arg
+is the argument vector for this operator.
+
+\param is_parameter
+If the input value of the elements in this vector do not matter.
+Upon return, resize has been used to set its size to the true number
+of arguments to this operator.
+If op != CSkipOp and op != CSumOp, is_parameter.size() = NumArg(op).
+The j-th argument for this operator is a
+parameter index if and only if is_parameter[j] is true.
+
+\par CSkipOp
+In the case of CSkipOp,
+\code
+      is_parameter.size()  = 7 + arg[4] + arg[5];
+      is_parameter[2]      = (arg[1] & 1) == 0;
+      is_parameter[3]      = (arg[1] & 2) == 0;
+\endcode
+and all the other is_parameter[j] values are false.
+
+\par CSumOp
+In the case of CSumOp,
+\code
+      is_parameter.size() = arg[4]
+      is_parameter[0] = true
+      for(size_t j = arg[2]; j < arg[4]; ++j)
+         is_parameter[j] = true;
+\endcode
+and all the other is_parameter values are false.
+*/
+template <class AddrVector>
+void arg_is_parameter(
+   op_code_var       op          ,
+   const AddrVector  arg         ,
+   pod_vector<bool>& is_parameter )
+{  size_t num_arg = NumArg(op);
+   is_parameter.resize( num_arg );
+   //
+   switch(op)
+   {
+      // -------------------------------------------------------------------
+      // cases where true number of arugments = NumArg(op) == 0
+
+      case EndOp:
+      case InvOp:
+      case FunrvOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+      break;
+
+      // -------------------------------------------------------------------
+      // cases where NumArg(op) == 1
+      case AbsOp:
+      case AcoshOp:
+      case AcosOp:
+      case AsinhOp:
+      case AsinOp:
+      case AtanhOp:
+      case AtanOp:
+      case CoshOp:
+      case CosOp:
+      case Expm1Op:
+      case ExpOp:
+      case Log1pOp:
+      case LogOp:
+      case NegOp:
+      case SignOp:
+      case SinhOp:
+      case SinOp:
+      case SqrtOp:
+      case TanhOp:
+      case TanOp:
+      case FunavOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+      is_parameter[0] = false;
+      break;
+
+      case BeginOp:
+      case ParOp:
+      case FunapOp:
+      case FunrpOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+      is_parameter[0] = true;
+      break;
+
+
+      // -------------------------------------------------------------------
+      // cases where NumArg(op) == 2
+
+      case AddpvOp:
+      case DisOp:
+      case DivpvOp:
+      case EqpvOp:
+      case LepvOp:
+      case LtpvOp:
+      case MulpvOp:
+      case NepvOp:
+      case PowpvOp:
+      case SubpvOp:
+      case ZmulpvOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+      is_parameter[0] = true;
+      is_parameter[1] = false;
+      break;
+
+      case DivvpOp:
+      case LevpOp:
+      case LtvpOp:
+      case PowvpOp:
+      case SubvpOp:
+      case ZmulvpOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+      is_parameter[0] = false;
+      is_parameter[1] = true;
+      break;
+
+      case AddvvOp:
+      case DivvvOp:
+      case EqvvOp:
+      case LevvOp:
+      case LtvvOp:
+      case MulvvOp:
+      case NevvOp:
+      case PowvvOp:
+      case SubvvOp:
+      case ZmulvvOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+      is_parameter[0] = false;
+      is_parameter[1] = false;
+      break;
+
+      case ErfOp:
+      case ErfcOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = true; // parameter index corresponding to zero
+      is_parameter[2] = true; // parameter index corresponding to one
+      break;
+
+      // --------------------------------------------------------------------
+      // cases where NumArg(op) == 3
+
+      case StppOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = true;
+      is_parameter[2] = true;
+      break;
+
+      case StvpOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = false;
+      is_parameter[2] = true;
+      break;
+
+      case StpvOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = true;
+      is_parameter[2] = false;
+      break;
+
+      case StvvOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = false;
+      is_parameter[2] = false;
+      break;
+
+      case LdpOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = true;
+      is_parameter[2] = false;
+      break;
+
+      case LdvOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+      is_parameter[0] = false;
+      is_parameter[1] = false;
+      is_parameter[2] = false;
+      break;
+
+      // --------------------------------------------------------------------
+      // case where NumArg(op) == 4
+      case AFunOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
+      for(size_t i = 0; i < 4; i++)
+         is_parameter[i] = false;
+      break;
+
+      // --------------------------------------------------------------------
+      // case where NumArg(op) == 5
+      case PriOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 5 );
+      is_parameter[0] = false;
+      is_parameter[1] = (arg[0] & 1) == 0;
+      is_parameter[2] = false;
+      is_parameter[3] = (arg[0] & 2) == 0;
+      is_parameter[4] = false;
+      break;
+
+      // --------------------------------------------------------------------
+      // case where NumArg(op) == 6
+      case CExpOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
+      is_parameter[0] = false;
+      is_parameter[1] = false;
+      is_parameter[2] = (arg[1] & 1) == 0;
+      is_parameter[3] = (arg[1] & 2) == 0;
+      is_parameter[4] = (arg[1] & 4) == 0;
+      is_parameter[5] = (arg[1] & 8) == 0;
+      break;
+
+      // -------------------------------------------------------------------
+      // CSkipOp:
+      case CSkipOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
+      //
+      // true number of arguments
+      num_arg = size_t(7 + arg[4] + arg[5]);
+      is_parameter.resize(num_arg);
+      is_parameter[0] = false;
+      is_parameter[1] = false;
+      is_parameter[2] = (arg[1] & 1) == 0;
+      is_parameter[3] = (arg[1] & 2) == 0;
+      for(size_t i = 4; i < num_arg; ++i)
+         is_parameter[i] = false;
+      break;
+
+      // -------------------------------------------------------------------
+      // CSumOp:
+      case CSumOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
+      //
+      // true number of arguments
+      num_arg = size_t(arg[4] + 1);
+      //
+      is_parameter.resize( num_arg );
+      is_parameter[0] = true;
+      for(size_t i = 1; i < num_arg; ++i)
+         is_parameter[i] = (size_t(arg[2]) <= i) && (i < size_t(arg[4]));
+      break;
+
+      case EqppOp:
+      case LeppOp:
+      case LtppOp:
+      case NeppOp:
+      CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+      is_parameter[0] = true;
+      is_parameter[1] = true;
       break;
 
       // --------------------------------------------------------------------
