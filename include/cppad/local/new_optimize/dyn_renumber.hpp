@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_DYN_OP_PREV_HPP
-# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_DYN_OP_PREV_HPP
+# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_DYN_RENUMBER_HPP
+# define CPPAD_LOCAL_NEW_OPTIMIZE_DYN_RENUMBER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
@@ -17,7 +17,7 @@ Create operator information tables
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 
 /*
-{xrst_begin get_dyn_op_prev dev}
+{xrst_begin dyn_renumber dev}
 
 Replace Dynamic Parameters Using Equivalent Previous Parameters
 ###############################################################
@@ -25,8 +25,8 @@ Replace Dynamic Parameters Using Equivalent Previous Parameters
 Syntax
 ******
 {xrst_literal
-   // BEGIN_GET_DYN_OP_PREV
-   // END_GET_DYN_OP_PREV
+   // BEGIN_DYN_RENUMBER
+   // END_DYN_RENUMBER
 }
 
 Base
@@ -60,18 +60,18 @@ exceed_limit
 If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-{xrst_end get_dyn_op_prev}
+{xrst_end dyn_renumber}
 */
 
-// BEGIN_GET_DYN_OP_PREV
-// exceet_limit = get_dyn_op_prev(play, par_usage, dyn_op_prev)
+// BEGIN_DYN_RENUMBER
+// exceet_limit = dyn_renumber(play, par_usage, dyn_op_prev)
 namespace CppAD { namespace local { namespace optimize {
-template <class Base> bool get_dyn_op_prev(
+template <class Base> bool dyn_renumber(
    addr_t                       collision_limit     ,
    player<Base>*                play                ,
    pod_vector<bool>&            par_usage           )
 {  CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_all() );
-   // END_GET_DYN_OP_PREV
+   // END_DYN_RENUMBER
 
    // n_par
    // number of parameters in the recording

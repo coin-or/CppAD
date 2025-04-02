@@ -10,7 +10,7 @@
 # include <cppad/local/optimize/extract_option.hpp>
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
-# include <cppad/local/new_optimize/get_dyn_op_prev.hpp>
+# include <cppad/local/new_optimize/dyn_renumber.hpp>
 # include <cppad/local/new_optimize/get_var_op_prev.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -261,7 +261,7 @@ bool optimize_run(
       par_usage
    );
    pod_vector<addr_t> dyn_op_prev;
-   exceed_collision_limit |= get_dyn_op_prev(
+   exceed_collision_limit |= dyn_renumber(
       addr_t(collision_limit)     ,
       play                        ,
       par_usage
