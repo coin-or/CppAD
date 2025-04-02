@@ -55,27 +55,6 @@ If a the parameter with index *i_par* gets replaced:
 #. *par_usage* [ *i_par* ] is false upon return
 
 
-dyn_op_prev
-***********
-The input size of this vector must be zero.
-Upon return it has size equal to the number of dynamic parameters; i.e.,
-play->num_dynamic_par().
-Fix i_dyn, a dynamic parameter index and
-::
-
-   Let j_dyn         = dyn_op_prev[i_dyn]
-   Let dyn2par_index = play->dyn2par_index
-
-The j_dyn-th dynamic parameter
-can be used as a replacement for the i_dyn-th dynamic parameter and on input
-::
-
-   If j_dyn != i_dyn then
-      j_dyn < i_dyn
-      j_dyn == dyn_op_prev[j_dyn].
-      par_usage[ dyn2par_index[i_par] ] == true
-      par_usage[ dyn2par_index[j_dyn] ] == true
-
 exceed_limit
 ************
 If the *collision_limit* is exceeded (is not exceeded),
@@ -90,10 +69,8 @@ namespace CppAD { namespace local { namespace optimize {
 template <class Base> bool get_dyn_op_prev(
    addr_t                       collision_limit     ,
    player<Base>*                play                ,
-   pod_vector<bool>&            par_usage           ,
-   pod_vector<addr_t>&          dyn_op_prev         )
-{  CPPAD_ASSERT_UNKNOWN( dyn_op_prev.size() == 0 );
-   CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_all() );
+   pod_vector<bool>&            par_usage           )
+{  CPPAD_ASSERT_UNKNOWN( par_usage.size() == play->num_par_all() );
    // END_GET_DYN_OP_PREV
 
    // n_par
@@ -132,12 +109,7 @@ template <class Base> bool get_dyn_op_prev(
    for(addr_t i_par = 0; i_par < n_par; ++i_par)
       par_previous[i_par] = i_par;
    //
-   // dyn_op_prev
-   dyn_op_prev.resize( size_t(n_dyn) );
-   for(addr_t i_dyn = 0; i_dyn < n_dyn; ++i_dyn)
-      dyn_op_prev[i_dyn] = i_dyn;
-   //
-   // par_previous, par_usage, dyn_op_prev
+   // par_previous, par_usage
    for(addr_t i_dyn = 0; i_dyn < n_dyn; ++i_dyn)
    {  //
       // i_par
@@ -157,8 +129,6 @@ template <class Base> bool get_dyn_op_prev(
          if( j_dyn != i_dyn )
          {  CPPAD_ASSERT_UNKNOWN( j_dyn < i_dyn );
             CPPAD_ASSERT_UNKNOWN( dyn2par_index[j_dyn] < i_par );
-            CPPAD_ASSERT_UNKNOWN( j_dyn == dyn_op_prev[j_dyn] )
-            dyn_op_prev[i_dyn] = j_dyn;
             par_previous[i_par] = dyn2par_index[j_dyn];
             CPPAD_ASSERT_UNKNOWN( par_previous[i_par] < i_par );
             par_usage[i_par]    = false;

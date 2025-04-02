@@ -199,9 +199,6 @@ bool optimize_run(
    // number of independent dynamic parameters
    size_t n_dyn_independent = play->n_dyn_independent();
 
-   // mapping from dynamic parameter index to paramemter index
-   const pod_vector<addr_t>& dyn2par_index( play->dyn2par_index() );
-
    // number of dynamic parameters
    CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= play->num_dynamic_par () );
 
@@ -267,8 +264,7 @@ bool optimize_run(
    exceed_collision_limit |= get_dyn_op_prev(
       addr_t(collision_limit)     ,
       play                        ,
-      par_usage                   ,
-      dyn_op_prev
+      par_usage
    );
    // -----------------------------------------------------------------------
    // conditional expression information
@@ -438,64 +434,56 @@ bool optimize_run(
          }
       }
       else if( par_usage[i_par] && (op != result_dyn) )
-      {  size_t j_dyn = size_t( dyn_op_prev[i_dyn] );
-         if( j_dyn != i_dyn )
-         {  size_t j_par = size_t( dyn2par_index[j_dyn] );
-            CPPAD_ASSERT_UNKNOWN( j_par < i_par );
-            new_par[i_par] = new_par[j_par];
+      {
+         // value of this parameter
+         Base par       = play->par_one(i_par);
+         //
+         if( op == cond_exp_dyn )
+         {  // cond_exp_dyn
+            CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
+            new_par[i_par] = rec->put_dyn_cond_exp(
+               par                                ,   // par
+               CompareOp( dyn_par_arg[i_arg + 0] ),   // cop
+               new_par[ dyn_par_arg[i_arg + 1] ]  ,   // left
+               new_par[ dyn_par_arg[i_arg + 2] ]  ,   // right
+               new_par[ dyn_par_arg[i_arg + 3] ]  ,   // if_true
+               new_par[ dyn_par_arg[i_arg + 4] ]      // if_false
+            );
+         }
+         else if(  op == dis_dyn )
+         {  // dis_dyn
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            new_par[i_par] = rec->put_dyn_par(
+               par                               ,  // par
+               op                                ,  // op
+               dyn_par_arg[i_arg + 0]            ,  // index
+               new_par[ dyn_par_arg[i_arg + 1] ]    // parameter
+            );
+         }
+         else if( n_arg == 1 )
+         {  // cases with one argument
+            CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
+            new_par[i_par] = rec->put_dyn_par( par, op,
+               new_par[ dyn_par_arg[i_arg + 0] ]
+            );
+         }
+         else if( n_arg == 2 )
+         {  // cases with two arguments
+            CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
+            CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
+            new_par[i_par] = rec->put_dyn_par( par, op,
+               new_par[ dyn_par_arg[i_arg + 0] ],
+               new_par[ dyn_par_arg[i_arg + 1] ]
+            );
          }
          else
-         {
-            // value of this parameter
-            Base par       = play->par_one(i_par);
-            //
-            if( op == cond_exp_dyn )
-            {  // cond_exp_dyn
-               CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
-               CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
-               new_par[i_par] = rec->put_dyn_cond_exp(
-                  par                                ,   // par
-                  CompareOp( dyn_par_arg[i_arg + 0] ),   // cop
-                  new_par[ dyn_par_arg[i_arg + 1] ]  ,   // left
-                  new_par[ dyn_par_arg[i_arg + 2] ]  ,   // right
-                  new_par[ dyn_par_arg[i_arg + 3] ]  ,   // if_true
-                  new_par[ dyn_par_arg[i_arg + 4] ]      // if_false
-               );
-            }
-            else if(  op == dis_dyn )
-            {  // dis_dyn
-               CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-               new_par[i_par] = rec->put_dyn_par(
-                  par                               ,  // par
-                  op                                ,  // op
-                  dyn_par_arg[i_arg + 0]            ,  // index
-                  new_par[ dyn_par_arg[i_arg + 1] ]    // parameter
-               );
-            }
-            else if( n_arg == 1 )
-            {  // cases with one argument
-               CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
-               CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
-               new_par[i_par] = rec->put_dyn_par( par, op,
-                  new_par[ dyn_par_arg[i_arg + 0] ]
-               );
-            }
-            else if( n_arg == 2 )
-            {  // cases with two arguments
-               CPPAD_ASSERT_UNKNOWN( n_dyn_independent <= i_par );
-               CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
-               new_par[i_par] = rec->put_dyn_par( par, op,
-                  new_par[ dyn_par_arg[i_arg + 0] ],
-                  new_par[ dyn_par_arg[i_arg + 1] ]
-               );
-            }
-            else
-            {  // independent dynamic parmaeter case
-               CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
-               CPPAD_ASSERT_UNKNOWN( i_par <= n_dyn_independent );
-               CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
-               new_par[i_par] = rec->put_dyn_par( par, op);
-            }
+         {  // independent dynamic parmaeter case
+            CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
+            CPPAD_ASSERT_UNKNOWN( i_par <= n_dyn_independent );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+            new_par[i_par] = rec->put_dyn_par( par, op);
          }
       }
       ++i_dyn;

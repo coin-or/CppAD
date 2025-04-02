@@ -1416,7 +1416,6 @@ void arg_is_parameter(
       // cases where NumArg(op) == 2
 
       case AddpvOp:
-      case DisOp:
       case DivpvOp:
       case EqpvOp:
       case LepvOp:
@@ -1442,6 +1441,7 @@ void arg_is_parameter(
       is_parameter[1] = true;
       break;
 
+      case DisOp:
       case AddvvOp:
       case DivvvOp:
       case EqvvOp:
