@@ -141,15 +141,16 @@ template <class Base> bool dyn_renumber(
    typename var_info_t::op_enum_t  var_op;
    bool                            commutative;
    mutable_subvector_t             arg_one;
-   typename dyn_info_t::vec_bool_t is_res_one;
+   typename dyn_info_t::vec_bool_t is_dyn_one;
+   typename var_info_t::vec_bool_t is_var_one;
    //
    // renumber parameters in dynamic parameter operaitons sequence
    for(size_t i_dyn = 0; i_dyn < dyn_info.n_op(); ++i_dyn)
    {  //
       // dyn_op, cummulative, arg_one, is_one
-      dyn_info.get(i_dyn, dyn_op, commutative, arg_one, is_res_one);
+      dyn_info.get(i_dyn, dyn_op, commutative, arg_one, is_dyn_one);
       for(size_t j = 0; j < arg_one.size(); ++j)
-         if( is_res_one[j] )
+         if( is_dyn_one[j] )
             arg_one[j] = par_previous[ arg_one[j] ];
    }
    //
@@ -160,7 +161,7 @@ template <class Base> bool dyn_renumber(
    for(size_t i_op = 0; i_op < var_info.n_op(); ++i_op)
    {  //
       // var_op, cummulative, arg_one, is_one
-      var_info.get(i_op, var_op, commutative, arg_one, is_res_one);
+      var_info.get(i_op, var_op, commutative, arg_one, is_var_one);
       arg_is_parameter(var_op, arg_one, is_parameter);
       for(size_t j = 0; j < arg_one.size(); ++j)
          if( is_parameter[j] )
