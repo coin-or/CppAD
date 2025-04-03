@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_OP_PREV_HPP
-# define CPPAD_LOCAL_NEW_OPTIMIZE_GET_VAR_OP_PREV_HPP
+# ifndef CPPAD_LOCAL_NEW_OPTIMIZE_VAR_RENUMBER_HPP
+# define CPPAD_LOCAL_NEW_OPTIMIZE_VAR_RENUMBER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
@@ -10,35 +10,33 @@
 # include <cppad/local/new_optimize/prev_op_search.hpp>
 
 /*
-{xrst_begin optimize_get_var_op_prev dev}
+{xrst_begin optimize_var_renumber dev}
 {xrst_spell
    cexp
 }
 
-Get Mapping From Op to Previous Op That is Equivalent
+Replace Variables Using Equivalent Previous Variables
 #####################################################
 
 Syntax
 ******
-| *exceed_collision_limit* = ``get_var_op_prev`` (
+| *exceed_collision_limit* = ``var_renumber`` (
 | |tab| *collision_limit* ,
 | |tab| *play* ,
 | |tab| *cexp_set* ,
-| |tab| *var_op_prev* ,
 | |tab| *op_usage*
 | )
 
 Prototype
 *********
 {xrst_literal
-   // BEGIN_GET_OP_PREVIOUS
-   // END_GET_OP_PREVIOUS
+   // BEGIN_DYN_RENUMBER
+   // END_DYN_RENUMBER
 }
 
 Base
 ****
-base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
+base type for the operator; i.e., this player was recorded using AD< *Base* >.
 
 collision_limit
 ***************
@@ -63,34 +61,36 @@ On output, it does count previous optimization.
 op_usage
 ********
 The size of this vector is the number of operators in the
-old operation sequence.i.e., play->nun_var_rec().
+operation sequence.i.e., play->nun_var_op().
 On input, op_usage[i] is the usage for
-the i-th operator in the operation sequence not counting previous
-optimization.
+the i-th operator in the operation sequence not counting previous optimization.
 On output, it is the usage counting previous operator optimization.
+If the variable with index *i_var* gets replaced,
+op_usage[i] is equal to yes_usage on input and no_usage upon return.
+
 
 exceed_collision_limit
 **********************
 If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-{xrst_end optimize_get_var_op_prev}
+{xrst_end optimize_var_renumber}
 */
 
-// BEGIN_GET_OP_PREVIOUS
-// exceed_collison_limit = get_var_op_prev(
-//    collision_limit, play, cexp_set, var_op_prev, op_usage
+// BEGIN_DYN_RENUMBER
+// exceed_collison_limit = var_renumber(
+//    collision_limit, play, cexp_set, op_usage
 // )
 namespace CppAD { namespace local { namespace optimize {
 template <class Base>
-bool get_var_op_prev(
+bool var_renumber(
    size_t                                      collision_limit     ,
    pod_vector<size_t>&                         dep_taddr           ,
    player<Base>*                               play                ,
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<usage_t>&                        op_usage            )
 {
-   // END_GET_OP_PREVIOUS
+   // END_DYN_RENUMBER
    //
    // op_info_t, index_t, op_info
    typedef var_op_info_t< player<Base> > op_info_t;

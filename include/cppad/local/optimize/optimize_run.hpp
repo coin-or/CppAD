@@ -11,7 +11,7 @@
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
 # include <cppad/local/new_optimize/dyn_renumber.hpp>
-# include <cppad/local/new_optimize/get_var_op_prev.hpp>
+# include <cppad/local/new_optimize/var_renumber.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
@@ -221,7 +221,7 @@ bool optimize_run(
       vecad_used,
       op_usage
    );
-   exceed_collision_limit |= get_var_op_prev(
+   exceed_collision_limit |= var_renumber(
       collision_limit,
       dep_taddr,
       play,
