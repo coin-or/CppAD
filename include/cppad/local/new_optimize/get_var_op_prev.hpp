@@ -60,32 +60,6 @@ Note the j indexes the CExpOp operators in the operation sequence.
 On input, cexp_set is does not count previous optimization.
 On output, it does count previous optimization.
 
-var_op_prev
-***********
-The input size of this vector must be zero.
-Upon return it has size equal to the number of operators
-in the operation sequence; i.e., num_op = play->nun_var_rec().
-Let j = var_op_prev[i]. If j = 0, no replacement was found for i-th operator.
-If j != 0:
-
-#. j < i
-#. var_op_prev[j] == 0
-#. op_usage[j] == usage_t(yes_usage)
-#. i-th operator has NumArg(op) <= 3
-#. i-th operator has 0 < NumRes(op)
-#. i-th operator is not one of the following:
-   {xrst_spell_off}
-   PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
-   {xrst_spell_on}
-#. i-th operator is not one of the load store operator:
-   {xrst_spell_off}
-   LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
-   {xrst_spell_on}
-#. i-th operator is not a atomic function operator:
-   {xrst_spell_off}
-   AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.
-   {xrst_spell_on}
-
 op_usage
 ********
 The size of this vector is the number of operators in the
@@ -114,9 +88,8 @@ bool get_var_op_prev(
    pod_vector<size_t>&                         dep_taddr           ,
    player<Base>*                               play                ,
    sparse::list_setvec&                        cexp_set            ,
-   pod_vector<addr_t>&                         var_op_prev         ,
    pod_vector<usage_t>&                        op_usage            )
-{  CPPAD_ASSERT_UNKNOWN( var_op_prev.size() == 0 );
+{
    // END_GET_OP_PREVIOUS
    //
    // op_info_t, index_t, op_info
@@ -141,10 +114,9 @@ bool get_var_op_prev(
    for(size_t i_var = 0; i_var < n_var; ++i_var)
       var_previous[i_var] = addr_t( i_var );
    //
-   // var_op_prev, var_previous, op_usage
-   var_op_prev.resize( n_op );
+   // var_previous, op_usage
    for(size_t i_op = 0; i_op < n_op; ++i_op)
-   {  var_op_prev[i_op] = 0;
+   {
       //
       // op, i_var
       op_code_var   op    = op_info.op_enum(i_op);
@@ -186,9 +158,6 @@ bool get_var_op_prev(
          );
          if( j_op != i_op )
          {  CPPAD_ASSERT_UNKNOWN( j_op < i_op );
-            //
-            // var_op_prev
-            var_op_prev[i_op] = addr_t(j_op);
             //
             // op_usage
             op_usage[i_op] = no_usage;

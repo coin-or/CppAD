@@ -14,7 +14,6 @@ namespace CppAD { namespace local { namespace optimize {
 /*!
 {xrst_begin optimize_get_cexp_info.hpp dev}
 {xrst_spell
-   prev
    deallocate
    funap
    funav
@@ -30,7 +29,6 @@ Syntax
 | ``get_cexp_info`` (
 | |tab| *play* ,
 | |tab| *random_itr* ,
-| |tab| *var_op_prev* ,
 | |tab| *op_usage* ,
 | |tab| *cexp2op* ,
 | |tab| *cexp_set* ,
@@ -108,13 +106,6 @@ comparison result for cexp_info[j] is false.
 Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
 set and should be skipped when the corresponding AFunOp are skipped.
 
-var_op_prev
-***********
-This argument has size equal to the number of operators
-in the operation sequence; i.e., num_op = play->nun_var_rec().
-If var_op_prev[i] == 0, no replacement was found for the i-th operator.
-If var_op_prev[i] != 0, op_usage[ var_op_prev[i] ] == usage_t(yes_usage).
-
 op_usage
 ********
 This argument has size equal to the number of operators
@@ -130,7 +121,6 @@ template <class Addr, class Base>
 void get_cexp_info(
    const player<Base>*                         play                ,
    const play::const_random_iterator<Addr>&    random_itr          ,
-   const pod_vector<addr_t>&                   var_op_prev         ,
    const pod_vector<usage_t>&                  op_usage            ,
    const pod_vector<addr_t>&                   cexp2op             ,
    const sparse::list_setvec&                  cexp_set            ,
@@ -145,7 +135,6 @@ void get_cexp_info(
    // number of operators in the tape
    const size_t num_op = play->num_var_op();
    CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
-   CPPAD_ASSERT_UNKNOWN( var_op_prev.size() == num_op );
    //
    // number of conditional expressions in the tape
    size_t num_cexp_op = cexp2op.size();
@@ -165,9 +154,7 @@ void get_cexp_info(
    //
    for(size_t i = 0; i < num_cexp_op; i++)
    {  size_t i_op = size_t( cexp2op[i] );
-      CPPAD_ASSERT_UNKNOWN(
-         var_op_prev[i_op] == 0 || op_usage[i_op] == usage_t(yes_usage)
-      );
+      //
       op_code_var   op;     // operator
       const addr_t* arg;    // arguments
       size_t        i_var;  // variable index of first result
@@ -197,7 +184,6 @@ void get_cexp_info(
    {  size_t j_op = i_op;
       bool keep = op_usage[i_op] != usage_t(no_usage);
       keep     &= op_usage[i_op] != usage_t(csum_usage);
-      keep     &= var_op_prev[i_op] == 0;
       if( keep )
       {  sparse::list_setvec_const_iterator itr(cexp_set, i_op);
          if( *itr != cexp_set.end() )

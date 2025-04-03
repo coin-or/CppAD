@@ -221,13 +221,11 @@ bool optimize_run(
       vecad_used,
       op_usage
    );
-   pod_vector<addr_t>        var_op_prev;
    exceed_collision_limit |= get_var_op_prev(
       collision_limit,
       dep_taddr,
       play,
       cexp_set,
-      var_op_prev,
       op_usage
    );
    size_t num_cexp = cexp2op.size();
@@ -239,7 +237,6 @@ bool optimize_run(
    if( cexp2op.size() > 0 ) get_cexp_info(
       play,
       random_itr,
-      var_op_prev,
       op_usage,
       cexp2op,
       cexp_set,
