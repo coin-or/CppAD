@@ -224,6 +224,7 @@ bool optimize_run(
    pod_vector<addr_t>        var_op_prev;
    exceed_collision_limit |= get_var_op_prev(
       collision_limit,
+      dep_taddr,
       play,
       cexp_set,
       var_op_prev,

@@ -47,7 +47,8 @@ allowed in the hash expression has table.
 
 play
 ****
-is the old operation sequence.
+is the player for this operation sequence.
+It is both an input and output for this routine.
 
 cexp_set
 ********
@@ -110,6 +111,7 @@ namespace CppAD { namespace local { namespace optimize {
 template <class Base>
 bool get_var_op_prev(
    size_t                                      collision_limit     ,
+   pod_vector<size_t>&                         dep_taddr           ,
    player<Base>*                               play                ,
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<addr_t>&                         var_op_prev         ,
@@ -139,7 +141,7 @@ bool get_var_op_prev(
    for(size_t i_var = 0; i_var < n_var; ++i_var)
       var_previous[i_var] = addr_t( i_var );
    //
-   // var_op_prev
+   // var_op_prev, var_previous, op_usage
    var_op_prev.resize( n_op );
    for(size_t i_op = 0; i_op < n_op; ++i_op)
    {  var_op_prev[i_op] = 0;
@@ -183,9 +185,13 @@ bool get_var_op_prev(
             prev_op_search.match_op( index_t(i_op), var_previous)
          );
          if( j_op != i_op )
-         {  //
+         {  CPPAD_ASSERT_UNKNOWN( j_op < i_op );
+            //
             // var_op_prev
             var_op_prev[i_op] = addr_t(j_op);
+            //
+            // op_usage
+            op_usage[i_op] = no_usage;
             //
             // op_usage, cexp_set
             CPPAD_ASSERT_UNKNOWN( j_op  < i_op );
@@ -199,10 +205,39 @@ bool get_var_op_prev(
             size_t      j_var     = op_info.var_index(j_op);
             CPPAD_ASSERT_UNKNOWN( op == op_match );
             if( NumRes(op_match) > 0 )
+            {  CPPAD_ASSERT_UNKNOWN( j_var < i_var );
                var_previous[i_var] = addr_t( j_var );
+            }
          }
       }
    }
+   //
+   // var_info
+   typedef var_op_info_t< player<Base> > var_info_t;
+   var_info_t var_info( *play );
+   //
+   // var_op, cummulative, arg_one, is_one
+   typename var_info_t::op_enum_t  var_op;
+   bool                            commutative;
+   mutable_subvector_t             arg_one;
+   typename var_info_t::vec_bool_t is_var_one;
+   //
+   // play->var_arg_
+   // renumber variables in variable operaitons sequence
+   for(size_t i_op = 0; i_op < var_info.n_op(); ++i_op)
+   {  //
+      // var_op, cummulative, arg_one, is_one
+      var_info.get(i_op, var_op, commutative, arg_one, is_var_one);
+      for(size_t j = 0; j < arg_one.size(); ++j)
+         if( is_var_one[j] )
+            arg_one[j] = var_previous[ arg_one[j] ];
+   }
+   //
+   // dep_taddr
+   // renumber the dependent variable vector
+   for(size_t i = 0; i < dep_taddr.size(); ++i)
+      dep_taddr[i] = size_t( var_previous[ dep_taddr[i] ] );
+   //
    /*
    // Print out hash code usage summary
    CppAD::vector<Addr> count = prev_op_search.different_count();

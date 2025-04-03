@@ -41,6 +41,7 @@ allowed in the hash expression has table.
 play
 ****
 This is the player for this operation sequence.
+It is both an input and output for this routine.
 
 par_usage
 *********
@@ -144,6 +145,7 @@ template <class Base> bool dyn_renumber(
    typename dyn_info_t::vec_bool_t is_dyn_one;
    typename var_info_t::vec_bool_t is_var_one;
    //
+   // play->dyn_play_.dyn_par_arg_
    // renumber parameters in dynamic parameter operaitons sequence
    for(size_t i_dyn = 0; i_dyn < dyn_info.n_op(); ++i_dyn)
    {  //
@@ -157,6 +159,7 @@ template <class Base> bool dyn_renumber(
    // is_parameter
    pod_vector<bool> is_parameter;
    //
+   // play->var_arg
    // renumber parameters in variable operaitons sequence
    for(size_t i_op = 0; i_op < var_info.n_op(); ++i_op)
    {  //
