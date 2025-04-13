@@ -160,14 +160,15 @@ bool var_renumber(
          {  CPPAD_ASSERT_UNKNOWN( j_op < i_op );
             //
             // op_usage
+            CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
             op_usage[i_op] = no_usage;
+            op_usage[j_op] = yes_usage;
             //
-            // op_usage, cexp_set
-            CPPAD_ASSERT_UNKNOWN( j_op  < i_op );
-            bool sum_op = false;
-            op_inc_arg_usage(
-               play, sum_op, i_op, j_op, op_usage, cexp_set
-            );
+            // cexp_set[j_op]
+            if( cexp_set.n_set() != 0 )
+            {  cexp_set.process_post(j_op);
+               cexp_set.binary_intersection(j_op, j_op, i_op, cexp_set);
+            }
             //
             // var_previous
             op_code_var op_match  = op_info.op_enum(j_op);
