@@ -41,13 +41,27 @@ Class Requirements for Optimization
 @op_info@   ; *op_info*
 }
 
+n_op
+****
+{xrst_literal ,
+   // BEGIN_N_OP , // END_N_OP
+}
+The number of operators in this operation sequence.
+
+n_var
+*****
+{xrst_literal ,
+   // BEGIN_N_VAR , // END_N_VAR
+}
+The number of variables in this operation sequence.
+
 
 op_enum
 *******
 {xrst_literal ,
    // BEGIN_OP_ENUM , // END_OP_ENUM
 }
-The return operator corresponding to this operator index.
+The operator corresponding to this operator index.
 
 var_index
 *********
@@ -81,6 +95,9 @@ private:
    //
    // n_op_
    const size_t n_op_;
+   //
+   // n_var_
+   const size_t n_var_;
    //
    // op_enum_all_
    typedef CPPAD_VEC_ENUM_TYPE               opcode_t;
@@ -125,6 +142,7 @@ public:
    var_op_info_t(Player& play)
    // END_OP_INFO
    : n_op_( play.num_var_op() )
+   , n_var_( play.num_var() )
    , op_enum_all_( play.var_op_ )
    , arg_all_( play.var_arg_ )
    , op2arg_index_( n_op_ )
@@ -183,11 +201,17 @@ public:
       CPPAD_ASSERT_UNKNOWN( arg_index == arg_all_.size() );
       CPPAD_ASSERT_UNKNOWN( var_index == n_var );
    }
-   //
+   // BEGIN_N_OP
    // n_op = op_info.n_op()
    size_t n_op(void) const
    // END_N_OP
    {  return n_op_; }
+   //
+   // BEGIN_N_VAR
+   // n_var = op_info.n_var()
+   size_t n_var(void) const
+   // END_N_VAR
+   {  return n_var_; }
    //
    // op_info.get(i_op, op_enum, commutative, arg_one, is_res_one)
    void get(

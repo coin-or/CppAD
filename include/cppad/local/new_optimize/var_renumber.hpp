@@ -97,17 +97,17 @@ bool var_renumber(
    typedef typename op_info_t::index_t index_t;
    op_info_t op_info(*play);
    //
+   // n_op, n_var
+   size_t n_op  = op_info.n_op();
+   size_t n_var = op_info.n_var();
+   CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_op );
+   CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_var );
+   //
    // prev_op_search
-   index_t n_hash_code  = index_t( play->num_var_op() ) + 2;
+   index_t n_hash_code  = index_t( n_op ) + 2;
    prev_op_search_t<op_info_t> prev_op_search(
       op_info, n_hash_code, index_t( collision_limit )
    );
-   //
-   // n_op, n_var
-   size_t n_op  = play->num_var_op();
-   size_t n_var = play->num_var();
-   CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_op );
-   CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_var );
    //
    // var_previous
    pod_vector<addr_t> var_previous(n_var);
@@ -181,22 +181,18 @@ bool var_renumber(
       }
    }
    //
-   // var_info
-   typedef var_op_info_t< player<Base> > var_info_t;
-   var_info_t var_info( *play );
-   //
    // var_op, cummulative, arg_one, is_one
-   typename var_info_t::op_enum_t  var_op;
+   typename op_info_t::op_enum_t  var_op;
    bool                            commutative;
    mutable_subvector_t             arg_one;
-   typename var_info_t::vec_bool_t is_var_one;
+   typename op_info_t::vec_bool_t  is_var_one;
    //
    // play->var_arg_
    // renumber variables in variable operaitons sequence
-   for(size_t i_op = 0; i_op < var_info.n_op(); ++i_op)
+   for(size_t i_op = 0; i_op < op_info.n_op(); ++i_op)
    {  //
       // var_op, cummulative, arg_one, is_one
-      var_info.get(i_op, var_op, commutative, arg_one, is_var_one);
+      op_info.get(i_op, var_op, commutative, arg_one, is_var_one);
       for(size_t j = 0; j < arg_one.size(); ++j)
          if( is_var_one[j] )
             arg_one[j] = var_previous[ arg_one[j] ];
