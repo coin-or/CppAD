@@ -86,7 +86,7 @@ template <class Base>
 bool var_renumber(
    size_t                                      collision_limit     ,
    pod_vector<size_t>&                         dep_taddr           ,
-   player<Base>*                               play                ,
+   var_op_info_t< player<Base> >&              var_op_info         ,
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<usage_t>&                        op_usage            )
 {
@@ -97,9 +97,6 @@ bool var_renumber(
    typedef typename var_op_info_t::index_t     index_t;
    typedef typename var_op_info_t::op_enum_t   op_enum_t;
    typedef typename var_op_info_t::vec_bool_t  vec_bool_t;
-   //
-   // var_op_info
-   var_op_info_t var_op_info(*play);
    //
    // n_op, n_var
    size_t n_op  = var_op_info.n_op();

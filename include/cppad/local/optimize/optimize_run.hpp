@@ -160,11 +160,14 @@ bool optimize_run(
    // check that recorder is empty
    CPPAD_ASSERT_UNKNOWN( rec->num_var_op() == 0 );
    //
-   // get a random iterator for this player
+   // random_itr
    Addr not_used;
    play->setup_random( not_used );
    local::play::const_random_iterator<Addr> random_itr =
       play->get_random( not_used );
+   //
+   // var_op_info
+   var_op_info_t< player<Base> > var_op_info(*play);
    //
    // compare_op, conditional_skip, cumulative_sum_op, print_for_op,
    // collision_limit
@@ -224,7 +227,7 @@ bool optimize_run(
    exceed_collision_limit |= var_renumber(
       collision_limit,
       dep_taddr,
-      play,
+      var_op_info,
       cexp_set,
       op_usage
    );
