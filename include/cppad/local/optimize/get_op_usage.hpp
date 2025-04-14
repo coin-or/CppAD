@@ -253,7 +253,7 @@ void get_op_usage(
    bool                                        print_for_op        ,
    bool                                        cumulative_sum_op   ,
    const player<Base>*                         play                ,
-   var_op_info_t< player<Base> >&              var_op_info         ,
+   const var_op_info_t< player<Base> >&        var_op_info         ,
    const pod_vector<size_t>&                   dep_taddr           ,
    pod_vector<addr_t>&                         cexp2op             ,
    sparse::list_setvec&                        cexp_set            ,

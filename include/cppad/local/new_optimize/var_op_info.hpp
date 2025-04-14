@@ -133,7 +133,7 @@ private:
    vec_index_t var2op_index_;
    //
    // num_arg
-   index_t num_arg(op_enum_t op_enum, const addr_t* op_arg)
+   index_t num_arg(op_enum_t op_enum, const addr_t* op_arg) const
    {  index_t n_arg;
       switch(op_enum)
       {  default:
@@ -239,7 +239,7 @@ public:
       op_enum_t&           op_enum        ,
       bool&                commutative    ,
       const_subvector_t&   arg_one        ,
-      vec_bool_t&          is_res_one     )
+      vec_bool_t&          is_res_one     ) const
    // END_GET
    {  //
       // op_enum
@@ -297,19 +297,19 @@ public:
    //
    // BEGIN_OP_ENUM
    // op_enum = op_info.op_enum(i_op)
-   op_enum_t op_enum(size_t i_op)
+   op_enum_t op_enum(size_t i_op) const
    // END_OP_ENUM
    {  return op_enum_t( op_enum_all_[i_op] ); }
    //
    // BEGIN_VAR_INDEX
    // i_var = op_info.var_index(i_op)
-   size_t var_index(size_t i_op)
+   size_t var_index(size_t i_op) const
    // END_VAR_INDEX
    {  return size_t( op2var_index_[i_op] ); }
    //
    // BEGIN_OP_INDEX
    // i_op = op_info.op_index(i_var)
-   size_t op_index(size_t i_var)
+   size_t op_index(size_t i_var) const
    // END_OP_INDEX
    {  return size_t( var2op_index_[i_var] ); }
 };
