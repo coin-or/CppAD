@@ -246,7 +246,7 @@ public:
    template <class Index>
    const addr_t& operator[](Index index) const
    // END_CONST_INDEX
-   {  CPPAD_ASSERT_UNKNOWN( index < size_ );
+   {  CPPAD_ASSERT_UNKNOWN( size_t(index) < size_ );
       return data_[index];
    }
 };

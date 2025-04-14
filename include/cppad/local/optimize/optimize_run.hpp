@@ -217,7 +217,7 @@ bool optimize_run(
       print_for_op,
       cumulative_sum_op,
       play,
-      random_itr,
+      var_op_info,
       dep_taddr,
       cexp2op,
       cexp_set,
