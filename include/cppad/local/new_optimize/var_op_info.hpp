@@ -46,14 +46,14 @@ n_op
 {xrst_literal ,
    // BEGIN_N_OP , // END_N_OP
 }
-The number of operators in this operation sequence.
+is number of operators in this operation sequence.
 
 n_var
 *****
 {xrst_literal ,
    // BEGIN_N_VAR , // END_N_VAR
 }
-The number of variables in this operation sequence.
+is number of variables in this operation sequence.
 
 
 op_enum
@@ -61,7 +61,7 @@ op_enum
 {xrst_literal ,
    // BEGIN_OP_ENUM , // END_OP_ENUM
 }
-The operator corresponding to this operator index.
+is the operator corresponding to this operator index.
 
 var_index
 *********
@@ -70,8 +70,18 @@ var_index
 }
 The return value *i_var* is the index of the primary result for this operator.
 If the operator does not have any results, the *i_var* is the
-number of variables in the player; i.e., *play* . ``num_var`` () .
-(This is an invalid variable index.)
+number of variables in the player; i.e., *play* . ``num_var`` ()
+(an invalid variable index).
+
+op_index
+********
+{xrst_literal ,
+   // BEGIN_OP_INDEX , // END_OP_INDEX
+}
+The return value *i_op* is the index of the variable for this operator.
+If this is not a primary (last) variable index for an operator
+the number of operators in the player; i.e., *play* . ``num_var_op`` ()
+(an invalid operator index).
 
 {xrst_end var_op_info_t}
 */
@@ -117,6 +127,11 @@ private:
    // This vector is effectively const; i.e., only set by constructor.
    vec_index_t op2var_index_;
    //
+   // var2op_index_
+   // This maps variable indices to the operator that created the variable.
+   // It is only defined for primary (last) variable indices for operators.
+   vec_index_t var2op_index_;
+   //
    // num_arg
    index_t num_arg(op_enum_t op_enum, const addr_t* op_arg)
    {  index_t n_arg;
@@ -147,14 +162,17 @@ public:
    , arg_all_( play.var_arg_ )
    , op2arg_index_( n_op_ )
    , op2var_index_( n_op_ )
+   , var2op_index_( n_var_ )
    {  //
-      // n_var
-      size_t n_var = play.num_var();
-      //
       // op2var_index_
-      // initalize are an invalid variable index
+      // initalize as an invalid variable index
       for(size_t i_op = 0; i_op < n_op_; ++i_op)
-         op2var_index_[i_op] = index_t( n_var );
+         op2var_index_[i_op] = index_t( n_var_ );
+      //
+      // var2op_index_
+      // initialize as an invalide operator index
+      for(size_t i_var = 0; i_var < n_var_; ++i_var)
+         var2op_index_[i_var] = index_t( n_op_ );
       //
       // op2arg_index_, op2var_index_
       op2arg_index_.resize( n_op_ );
@@ -167,7 +185,9 @@ public:
          op2arg_index_[i_op]  = index_t( arg_index );
          if( NumRes(op) > 0 )
          {  // index of the primary (last) result for this operator
-            op2var_index_[i_op] = index_t( var_index + NumRes(op) - 1 );
+            size_t primary_index         = var_index + NumRes(op) - 1;
+            op2var_index_[i_op]          = index_t( primary_index );
+            var2op_index_[primary_index] = index_t( i_op );
          }
          //
          var_index += NumRes(op);
@@ -199,7 +219,7 @@ public:
          }
       }
       CPPAD_ASSERT_UNKNOWN( arg_index == arg_all_.size() );
-      CPPAD_ASSERT_UNKNOWN( var_index == n_var );
+      CPPAD_ASSERT_UNKNOWN( var_index == n_var_ );
    }
    // BEGIN_N_OP
    // n_op = op_info.n_op()
@@ -286,6 +306,12 @@ public:
    size_t var_index(size_t i_op)
    // END_VAR_INDEX
    {  return size_t( op2var_index_[i_op] ); }
+   //
+   // BEGIN_OP_INDEX
+   // i_op = op_info.op_index(i_var)
+   size_t op_index(size_t i_var)
+   // END_OP_INDEX
+   {  return size_t( var2op_index_[i_var] ); }
 };
 
 
