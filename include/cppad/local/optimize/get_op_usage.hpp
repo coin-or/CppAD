@@ -274,13 +274,12 @@ void get_op_usage(
    );
    // -----------------------------------------------------------------------
    // information about current operator
-   op_code_var   op;     // operator
+   op_code_var       op;     // operator
    const_subvector_t arg;    // arguments
-   size_t        i_op;   // operator index
+   size_t            i_op;   // operator index
    // -----------------------------------------------------------------------
    // information about atomic function calls
    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-   enum_atom_state atom_state;
    //
    // work space used by user atomic functions
    vector<Base>         atom_x;    // value of parameters in x
@@ -360,11 +359,13 @@ void get_op_usage(
    // ----------------------------------------------------------------------
    //
    // Initialize reverse pass
-   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
-   bool commutative;
-   size_t last_atom_i_op = 0;
-   size_t cexp_index     = num_cexp_op;
-   atom_state            = end_atom;
+   typedef typename var_op_info_t< player<Base> >::vec_bool_t vec_bool_t;
+   vec_bool_t is_res;
+   bool            commutative;
+   size_t          last_atom_i_op = 0;
+   size_t          cexp_index     = num_cexp_op;
+   enum_atom_state atom_state     = end_atom;
+   //
    i_op = num_op;
    while(i_op != 0 )
    {  --i_op;
