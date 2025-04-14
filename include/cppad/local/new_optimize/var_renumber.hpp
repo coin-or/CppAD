@@ -92,21 +92,25 @@ bool var_renumber(
 {
    // END_DYN_RENUMBER
    //
-   // op_info_t, index_t, op_info
-   typedef var_op_info_t< player<Base> > op_info_t;
-   typedef typename op_info_t::index_t index_t;
-   op_info_t op_info(*play);
+   // var_op_info_t, index_t, op_enum_t, vec_bool_t
+   typedef var_op_info_t< player<Base> >       var_op_info_t;
+   typedef typename var_op_info_t::index_t     index_t;
+   typedef typename var_op_info_t::op_enum_t   op_enum_t;
+   typedef typename var_op_info_t::vec_bool_t  vec_bool_t;
+   //
+   // var_op_info
+   var_op_info_t var_op_info(*play);
    //
    // n_op, n_var
-   size_t n_op  = op_info.n_op();
-   size_t n_var = op_info.n_var();
+   size_t n_op  = var_op_info.n_op();
+   size_t n_var = var_op_info.n_var();
    CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_op );
    CPPAD_ASSERT_UNKNOWN(size_t( std::numeric_limits<addr_t>::max() ) >= n_var );
    //
    // prev_op_search
    index_t n_hash_code  = index_t( n_op ) + 2;
-   prev_op_search_t<op_info_t> prev_op_search(
-      op_info, n_hash_code, index_t( collision_limit )
+   prev_op_search_t<var_op_info_t> prev_op_search(
+      var_op_info, n_hash_code, index_t( collision_limit )
    );
    //
    // var_previous
@@ -119,8 +123,8 @@ bool var_renumber(
    {
       //
       // op, i_var
-      op_code_var   op    = op_info.op_enum(i_op);
-      size_t        i_var = op_info.var_index(i_op);
+      op_code_var   op    = var_op_info.op_enum(i_op);
+      size_t        i_var = var_op_info.var_index(i_op);
       //
       // skip
       bool skip = op_usage[i_op] != usage_t(yes_usage);
@@ -171,8 +175,8 @@ bool var_renumber(
             }
             //
             // var_previous
-            op_code_var op_match  = op_info.op_enum(j_op);
-            size_t      j_var     = op_info.var_index(j_op);
+            op_code_var op_match  = var_op_info.op_enum(j_op);
+            size_t      j_var     = var_op_info.var_index(j_op);
             CPPAD_ASSERT_UNKNOWN( op == op_match );
             if( NumRes(op_match) > 0 )
             {  CPPAD_ASSERT_UNKNOWN( j_var < i_var );
@@ -183,17 +187,17 @@ bool var_renumber(
    }
    //
    // var_op, cummulative, arg_one, is_one
-   typename op_info_t::op_enum_t  var_op;
-   bool                            commutative;
-   mutable_subvector_t             arg_one;
-   typename op_info_t::vec_bool_t  is_var_one;
+   op_enum_t             var_op;
+   bool                  commutative;
+   mutable_subvector_t   arg_one;
+   vec_bool_t            is_var_one;
    //
    // play->var_arg_
    // renumber variables in variable operaitons sequence
-   for(size_t i_op = 0; i_op < op_info.n_op(); ++i_op)
+   for(size_t i_op = 0; i_op < var_op_info.n_op(); ++i_op)
    {  //
       // var_op, cummulative, arg_one, is_one
-      op_info.get(i_op, var_op, commutative, arg_one, is_var_one);
+      var_op_info.get(i_op, var_op, commutative, arg_one, is_var_one);
       for(size_t j = 0; j < arg_one.size(); ++j)
          if( is_var_one[j] )
             arg_one[j] = var_previous[ arg_one[j] ];
