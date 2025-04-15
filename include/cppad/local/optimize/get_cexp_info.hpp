@@ -28,7 +28,7 @@ Syntax
 ******
 | ``get_cexp_info`` (
 | |tab| *play* ,
-| |tab| *random_itr* ,
+| |tab| *var_op_info* ,
 | |tab| *op_usage* ,
 | |tab| *cexp2op* ,
 | |tab| *cexp_set* ,
@@ -58,9 +58,9 @@ play
 ****
 This is the old operation sequence.
 
-random_itr
-**********
-This is a random iterator for the old operation sequence.
+var_op_info
+***********
+This is the information for the variable operation sequence.
 
 cexp2op
 *******
@@ -117,10 +117,10 @@ the i-th operator in the operation sequence.
 */
 
 // BEGIN_PROTOTYPE
-template <class Addr, class Base>
+template <class Base>
 void get_cexp_info(
    const player<Base>*                         play                ,
-   const play::const_random_iterator<Addr>&    random_itr          ,
+   const var_op_info_t< player<Base> >&        var_op_info         ,
    const pod_vector<usage_t>&                  op_usage            ,
    const pod_vector<addr_t>&                   cexp2op             ,
    const sparse::list_setvec&                  cexp_set            ,
@@ -152,13 +152,16 @@ void get_cexp_info(
    skip_op_true.resize(num_cexp_op, num_op);
    skip_op_false.resize(num_cexp_op, num_op);
    //
+   // op, commutative, arg, is_res
+   op_code_var                                        op;
+   bool                                               commutative;
+   const_subvector_t                                  arg;
+   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
+   //
    for(size_t i = 0; i < num_cexp_op; i++)
    {  size_t i_op = size_t( cexp2op[i] );
       //
-      op_code_var   op;     // operator
-      const addr_t* arg;    // arguments
-      size_t        i_var;  // variable index of first result
-      random_itr.op_info(i_op, op, arg, i_var);
+      var_op_info.get(i_op, op, commutative, arg, is_res);
       CPPAD_ASSERT_UNKNOWN( op == CExpOp );
       //
       struct_cexp_info info;

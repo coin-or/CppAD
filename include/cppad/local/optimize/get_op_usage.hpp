@@ -198,7 +198,7 @@ This is the operation sequence.
 
 var_op_info
 ***********
-This is the variable information for the operation sequence.
+This is the information for the variable operation sequence.
 
 dep_taddr
 *********

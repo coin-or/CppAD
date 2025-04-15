@@ -239,7 +239,7 @@ bool optimize_run(
    //
    if( cexp2op.size() > 0 ) get_cexp_info(
       play,
-      random_itr,
+      var_op_info,
       op_usage,
       cexp2op,
       cexp_set,
