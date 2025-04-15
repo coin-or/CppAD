@@ -152,6 +152,9 @@ void get_cexp_info(
    skip_op_true.resize(num_cexp_op, num_op);
    skip_op_false.resize(num_cexp_op, num_op);
    //
+   // is_res
+   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
+   //
    for(size_t i = 0; i < num_cexp_op; i++)
    {  size_t i_op = size_t( cexp2op[i] );
       //
@@ -159,7 +162,6 @@ void get_cexp_info(
       op_code_var                                        op;
       bool                                               commutative;
       const_subvector_t                                  arg;
-      typename var_op_info_t< player<Base> >::vec_bool_t is_res;
       var_op_info.get(i_op, op, commutative, arg, is_res);
       CPPAD_ASSERT_UNKNOWN( op == CExpOp );
       //

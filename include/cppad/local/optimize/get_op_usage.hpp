@@ -358,8 +358,8 @@ void get_op_usage(
    // Reverse pass to compute usage and cexp_set for each operator
    // ----------------------------------------------------------------------
    //
-   // vec_bool_t
-   typedef typename var_op_info_t< player<Base> >::vec_bool_t vec_bool_t;
+   // is_res
+   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
    //
    // Initialize reverse pass
    size_t          last_atom_i_op = 0;
@@ -375,7 +375,6 @@ void get_op_usage(
       }
       //
       // op, arg
-      vec_bool_t is_res;
       bool       commutative;
       var_op_info.get(i_op, op, commutative, arg, is_res);
       //
