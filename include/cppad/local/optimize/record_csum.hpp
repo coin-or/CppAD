@@ -16,6 +16,7 @@ namespace CppAD { namespace local { namespace optimize  {
    subpv
    subvp
    subvv
+   struct
 }
 
 Recording a Cumulative Summation Operator
@@ -32,9 +33,9 @@ play
 ****
 player object corresponding to the old recording.
 
-random_itr
-**********
-is a random iterator corresponding to the old operation sequence.
+var_op_info
+***********
+is the information for the old variable operation sequence.
 
 op_usage
 ********
@@ -52,7 +53,11 @@ current
 *******
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-We use the notation *i_op* = *random_itr* . ``var2op`` ( *current* ) .
+We use the following notation below ::
+
+   i_op = var_op_info.op_index(current)
+   op   = var_op_info.op_enum(i_op)
+
 It follows that  NumRes( random_itr.get_op[i_op] ) > 0.
 If 0 < j_op < i_op, either op_usage[j_op] == usage_t(csum_usage),
 op_usage[j_op] = usage_t(no_usage), or new_var[j_op] != 0.
@@ -61,9 +66,10 @@ rec
 ***
 is the object that will record the new operations.
 
-return
-******
-is the operator and variable indices in the new operation sequence.
+size_pair
+*********
+The ``i_op`` ( ``i_var`` ) field of *size_pair*
+is the operator index (variable index) for the new csum operator.
 
 stack
 *****
@@ -72,25 +78,39 @@ stack.op_info, stack.add_var, and stack.sub_var, are all empty.
 These stacks are passed in so that they are created once
 and then be reused with calls to ``record_csum`` .
 
+struct_csum_op_info
+*******************
+{xrst_toc_table
+   include/cppad/local/optimize/csum_op_info.hpp
+}
+
 Assumptions
 ***********
 
-#. random_itr.get_op[i_op] must be one of the following:
+#. NumRes(op) == 1 and op is one of the following:
    CSumOp, AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
+
+#. If j_op < i_op and op_usage[j_op] == yes_usage, new_var[j_op] != 0.
+
 #. op_usage[i_op] == usage_t(yes_usage).
-#. Either this is a CSumOp, or
-   op_usage[j_op] == usage_t(csum_usage) is true from some
-   j_op that corresponds to a variable that is an argument to
-   random_itr.get_op[i_op].
+
+#. Either op is a CSumOp, or
+   op_usage[j_op] == csum_usage from some
+   j_op that corresponds to a variable that is an argument to this operator.
+
+
 
 {xrst_end optimize_record_csum}
 */
 
 // BEGIN_RECORD_CSUM
-template <class Addr, class Base>
+// size_pair = record_csum(
+//    play, var_op_info, op_usage, new_pair, new_var, current, rec, stack
+// )
+template <class Base>
 struct_size_pair record_csum(
    const player<Base>*                                play           ,
-   const play::const_random_iterator<Addr>&           random_itr     ,
+   const var_op_info_t< player<Base> >&               var_op_info    ,
    const pod_vector<usage_t>&                         op_usage       ,
    const pod_vector<addr_t>&                          new_par        ,
    const pod_vector<addr_t>&                          new_var        ,
@@ -119,14 +139,16 @@ struct_size_pair record_csum(
    CPPAD_ASSERT_UNKNOWN( stack.sub_var.empty() );
    //
    // this operator is not csum connected to some other result
-   size_t i_op = random_itr.var2op(current);
-   CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == usage_t(csum_usage) ) );
+   size_t i_op = var_op_info.op_index(current);
+   CPPAD_ASSERT_UNKNOWN( op_usage[i_op] == usage_t(yes_usage) );
    //
-   // information corresponding to the root node in the cummulative summation
-   struct struct_csum_op_info info;
-   size_t not_used;
-   random_itr.op_info(i_op, info.op, info.arg, not_used);
+   // info
+   struct struct_csum_op_info                         info;
+   bool                                               commutative;
+   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
+   var_op_info.get(i_op, info.op, commutative, info.arg, is_res);
    info.add = true;  // was parrent operator positive or negative
+   CPPAD_ASSERT_UNKNOWN( NumRes( info.op ) == 1 );
    //
    // initialize stack as containing this one operator
    stack.op_info.push( info );
@@ -139,12 +161,12 @@ struct_size_pair record_csum(
    bool ok = info.op == CSumOp;
    if( (! ok) && (info.op != SubpvOp) && (info.op != AddpvOp) )
    {  // first argument is a varialbe being added
-      i_op = random_itr.var2op(size_t(info.arg[0]));
+      i_op = var_op_info.op_index( size_t(info.arg[0]) );
       ok  |= op_usage[i_op] == usage_t(csum_usage);
    }
    if( (! ok) && (info.op != SubvpOp) )
    {  // second argument is a varialbe being added or subtracted
-      i_op = random_itr.var2op(size_t(info.arg[1]));
+      i_op = var_op_info.op_index( size_t(info.arg[1]) );
       ok  |= op_usage[i_op] == usage_t(csum_usage);
    }
    CPPAD_ASSERT_UNKNOWN( ok );
@@ -155,9 +177,9 @@ struct_size_pair record_csum(
    {  // get this summation operator
       info = stack.op_info.top();
       stack.op_info.pop();
-      op_code_var   op      = info.op;
-      const addr_t* arg     = info.arg;
-      bool          add     = info.add;
+      op_code_var       op    = info.op;
+      const_subvector_t arg   = info.arg;
+      bool              add   = info.add;
       CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
       //
       if( op == CSumOp )
@@ -180,13 +202,13 @@ struct_size_pair record_csum(
          {  for(size_t i = var_start; i < var_end; ++i)
             {  //
                // check if the i-th argument has csum usage
-               i_op = random_itr.var2op(size_t(arg[i]));
+               i_op = var_op_info.op_index( size_t(arg[i]) );
                if( op_usage[i_op] == usage_t(csum_usage) )
                {  // there is no result corresponding to i-th argument
                   CPPAD_ASSERT_UNKNOWN( size_t( new_var[i_op]) == 0 );
 
                   // push operator corresponding to the i-th argument
-                  random_itr.op_info(i_op, info.op, info.arg, not_used);
+                  var_op_info.get(i_op, info.op, commutative, info.arg, is_res);
                   info.add = add;
                   stack.op_info.push( info );
                }
@@ -281,13 +303,13 @@ struct_size_pair record_csum(
             {    // case where i-th argument is a variable
                //
                // check if the i-th argument has csum usage
-               i_op = random_itr.var2op(size_t(arg[i]));
+               i_op = var_op_info.op_index( size_t(arg[i]) );
                if( op_usage[i_op] == usage_t(csum_usage) )
                {  // there is no result corresponding to i-th argument
                   CPPAD_ASSERT_UNKNOWN( size_t( new_var[i_op]) == 0 );
 
                   // push operator corresponding to the i-th argument
-                  random_itr.op_info(i_op, info.op, info.arg, not_used);
+                  var_op_info.get(i_op, info.op, commutative, info.arg, is_res);
                   info.add = add;
                   stack.op_info.push( info );
                }
@@ -333,7 +355,7 @@ struct_size_pair record_csum(
    for(size_t i = 0; i < n_add_var; i++)
    {  CPPAD_ASSERT_UNKNOWN( ! stack.add_var.empty() );
       addr_t old_arg = stack.add_var.top();
-      new_arg        = new_var[ random_itr.var2op(size_t(old_arg)) ];
+      new_arg        = new_var[ var_op_info.op_index( size_t(old_arg) ) ];
       CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
       rec->PutArg(new_arg);         // arg[5+i]
       stack.add_var.pop();
@@ -343,7 +365,7 @@ struct_size_pair record_csum(
    for(size_t i = 0; i < n_sub_var; i++)
    {  CPPAD_ASSERT_UNKNOWN( ! stack.sub_var.empty() );
       addr_t old_arg = stack.sub_var.top();
-      new_arg        = new_var[ random_itr.var2op(size_t(old_arg)) ];
+      new_arg        = new_var[ var_op_info.op_index( size_t(old_arg) ) ];
       CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
       rec->PutArg(new_arg);      // arg[arg[1] + i]
       stack.sub_var.pop();

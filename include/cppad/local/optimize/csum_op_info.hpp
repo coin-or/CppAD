@@ -2,33 +2,54 @@
 # define CPPAD_LOCAL_OPTIMIZE_CSUM_OP_INFO_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/op_code_var.hpp>
-# include <cppad/local/declare_ad.hpp> // defines addr_t
-
-/*!
-\file csum_op_info.hpp
-Information about one old variable that is part of a new CSumOp operation.
-*/
+# include <cppad/local/new_optimize/subvector.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
-/*!
-Information about one old variable that is part of a new CSumOp operation.
+
+/*
+{xrst_begin optimize_csum_op_info dev}
+{xrst_spell
+   struct
+}
+
+Information About One Old Variable in a new CSumOp operation
+############################################################
+
+struct_csum_op_info
+*******************
+{xrst_literal
+   // BEGIN_STRUCT
+   // END_STRUCT
+}
+
+arg
+***
+is the sub-vector of arguments for the old operator
+corresponding to this variable.
+
+add
+***
+is true (false) if this old variable is added (subtracted) in the summation.
+
+op
+**
+is the operator that this old variable is the result for.
+It must hold that NumRes(op) == 1.
+
+
+{xrst_end optimize_csum_op_info}
 */
+// BEGIN_STRUCT
 struct struct_csum_op_info {
-   /// Pointer to first argument (child) for this old operator.
-   /// Set by the reverse sweep at beginning of optimization.
-   const addr_t*       arg;
-
-   /// Was this old variable added to the summation
-   /// (if not it was subtracted)
+   const_subvector_t   arg;
    bool                add;
-
-   /// Operator for which this old variable is the result, NumRes(op) > 0.
    op_code_var         op;
 };
+// END_STRUCT
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 

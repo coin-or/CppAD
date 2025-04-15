@@ -707,7 +707,7 @@ bool optimize_run(
             // convert to a sequence of summation operators
             size_pair = record_csum(
                play                ,
-               random_itr          ,
+               var_op_info         ,
                op_usage            ,
                new_par             ,
                new_var             ,
@@ -766,7 +766,7 @@ bool optimize_run(
             // convert to a sequence of summation operators
             size_pair = record_csum(
                play                ,
-               random_itr          ,
+               var_op_info         ,
                op_usage            ,
                new_par             ,
                new_var             ,
@@ -811,7 +811,7 @@ bool optimize_run(
             // convert to a sequence of summation operators
             size_pair = record_csum(
                play                ,
-               random_itr          ,
+               var_op_info         ,
                op_usage            ,
                new_par             ,
                new_var             ,
@@ -1218,7 +1218,7 @@ bool optimize_run(
          // check if more entries can be included in this summation
          size_pair = record_csum(
             play                ,
-            random_itr          ,
+            var_op_info         ,
             op_usage            ,
             new_par             ,
             new_var             ,
