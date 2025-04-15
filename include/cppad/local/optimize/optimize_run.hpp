@@ -528,6 +528,9 @@ bool optimize_run(
    // (decalared here to avoid realloaction of memory)
    struct_csum_stacks csum_work;
 
+   // vec_bool_work
+   typename var_op_info_t< player<Base> >::vec_bool_t vec_bool_work;
+
    // tempory used to hold a size_pair
    struct_size_pair size_pair;
    //
@@ -713,7 +716,8 @@ bool optimize_run(
                new_var             ,
                i_var               ,
                rec                 ,
-               csum_work
+               csum_work           ,
+               vec_bool_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -772,7 +776,8 @@ bool optimize_run(
                new_var             ,
                i_var               ,
                rec                 ,
-               csum_work
+               csum_work           ,
+               vec_bool_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -817,7 +822,8 @@ bool optimize_run(
                new_var             ,
                i_var               ,
                rec                 ,
-               csum_work
+               csum_work           ,
+               vec_bool_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -1224,7 +1230,8 @@ bool optimize_run(
             new_var             ,
             i_var               ,
             rec                 ,
-            csum_work
+            csum_work           ,
+            vec_bool_work
          );
          new_op[i_op]  = addr_t( size_pair.i_op );
          new_var[i_op] = addr_t( size_pair.i_var );
