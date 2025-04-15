@@ -358,10 +358,10 @@ void get_op_usage(
    // Reverse pass to compute usage and cexp_set for each operator
    // ----------------------------------------------------------------------
    //
-   // Initialize reverse pass
+   // vec_bool_t
    typedef typename var_op_info_t< player<Base> >::vec_bool_t vec_bool_t;
-   vec_bool_t is_res;
-   bool            commutative;
+   //
+   // Initialize reverse pass
    size_t          last_atom_i_op = 0;
    size_t          cexp_index     = num_cexp_op;
    enum_atom_state atom_state     = end_atom;
@@ -374,7 +374,9 @@ void get_op_usage(
          cexp_set.process_post(i_op);
       }
       //
-      // this operator information
+      // op, arg
+      vec_bool_t is_res;
+      bool       commutative;
       var_op_info.get(i_op, op, commutative, arg, is_res);
       //
       // Is the result of this operation used.

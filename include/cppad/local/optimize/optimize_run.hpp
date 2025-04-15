@@ -256,7 +256,7 @@ bool optimize_run(
    pod_vector<bool> par_usage;
    get_par_usage(
       play,
-      random_itr,
+      var_op_info,
       op_usage,
       vecad_used,
       par_usage

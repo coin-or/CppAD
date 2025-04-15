@@ -32,17 +32,13 @@ Base type for the operator; i.e., this operation was recorded
 using ``AD`` < *Base* >
 and computations by this routine are done using type *Base* .
 
-Addr
-****
-Type used by random iterator for the player.
-
 play
 ****
 This is the operation sequence.
 
-random_itr
-**********
-This is a random iterator for the operation sequence.
+var_op_info
+***********
+This is the information for the variable operation sequence.
 
 op_usage
 ********
@@ -73,10 +69,10 @@ and the independent dynamic parameters are always used.
 */
 
 // BEGIN_GET_PAR_USAGE
-template <class Addr, class Base>
+template <class Base>
 void get_par_usage(
    const player<Base>*                         play                ,
-   const play::const_random_iterator<Addr>&    random_itr          ,
+   const var_op_info_t< player<Base> >&        var_op_info         ,
    const pod_vector<usage_t>&                  op_usage            ,
    pod_vector<bool>&                           vecad_used          ,
    pod_vector<bool>&                           par_usage           )
@@ -154,11 +150,13 @@ void get_par_usage(
    //
    for(size_t i_op = 0; i_op < num_op; ++i_op)
    {
-      // information about current operator
-      op_code_var   op;     // operator
-      const addr_t* arg;    // arguments
-      size_t        i_var;  // variable index of first result
-      random_itr.op_info(i_op, op, arg, i_var);
+      //
+      // op, arg
+      op_code_var                                        op;
+      bool                                               commutative;
+      const_subvector_t                                  arg;
+      typename var_op_info_t< player<Base> >::vec_bool_t is_res;
+      var_op_info.get(i_op, op, commutative, arg, is_res);
       //
       bool skip = op_usage[i_op] == usage_t(no_usage);
       skip     &= atom_state == start_atom;
@@ -173,7 +171,7 @@ void get_par_usage(
          {  // determine if this parameter will be absorbed by csum
             if( ! (op_usage[i_op] == csum_usage) )
             {  // determine operator corresponding to variable
-               size_t j_op = random_itr.var2op(size_t(arg[1]));
+               size_t j_op = var_op_info.op_index(size_t(arg[1]));
                CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
                if( op_usage[j_op] != csum_usage )
                   par_usage[ arg[0] ] = true;
@@ -189,7 +187,7 @@ void get_par_usage(
          {  // determine if this parameter will be absorbed by csum
             if( ! (op_usage[i_op] == csum_usage) )
             {  // determine operator corresponding to variable
-               size_t j_op = random_itr.var2op(size_t(arg[0]));
+               size_t j_op = var_op_info.op_index(size_t(arg[0]));
                CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
                if( op_usage[j_op] != csum_usage )
                   par_usage[ arg[1] ] = true;
