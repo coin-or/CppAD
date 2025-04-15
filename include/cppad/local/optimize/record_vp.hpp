@@ -4,6 +4,8 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <cppad/local/new_optimize/subvector.hpp>
+
 /*!
 \file record_vp.hpp
 Record an operation of the form (variable op parameter).
@@ -38,22 +40,26 @@ is the object that will record the new operations.
 \return
 is the operator and variable indices in the new operation sequence.
 */
-template <class Addr, class Base>
+template <class Base>
 struct_size_pair record_vp(
-   const player<Base>*                                play           ,
-   const play::const_random_iterator<Addr>&           random_itr     ,
-   const pod_vector<addr_t>&                          new_par        ,
-   const pod_vector<addr_t>&                          new_var        ,
-   size_t                                             i_op           ,
-   recorder<Base>*                                    rec            )
+   const player<Base>*                                 play           ,
+   const var_op_info_t< player<Base> >&                var_op_info    ,
+   const pod_vector<addr_t>&                           new_par        ,
+   const pod_vector<addr_t>&                           new_var        ,
+   size_t                                              i_op           ,
+   recorder<Base>*                                     rec            ,
+   typename var_op_info_t< player<Base> >::vec_bool_t& is_res         )
 {
-   // get_op_info
-   op_code_var   op;
-   const addr_t* arg;
-   size_t        i_var;
-   random_itr.op_info(i_op, op, arg, i_var);
+   // op, arg
+   op_code_var       op;
+   bool              commutative;
+   const_subvector_t arg;
+   var_op_info.get(i_op, op, commutative, arg, is_res);
    //
 # ifndef NDEBUG
+   // i_var
+   size_t  i_var = var_op_info.var_index(i_op);
+   //
    switch(op)
    {  case DivvpOp:
       case PowvpOp:
@@ -77,7 +83,7 @@ struct_size_pair record_vp(
    CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar  );
    //
    addr_t new_arg[2];
-   new_arg[0]   = new_var[ random_itr.var2op(size_t(arg[0])) ];
+   new_arg[0]   = new_var[ var_op_info.op_index( size_t(arg[0]) ) ];
    new_arg[1]   = new_par[ arg[1] ];
    rec->PutArg( new_arg[0], new_arg[1] );
    //
