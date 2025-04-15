@@ -538,26 +538,30 @@ bool optimize_run(
    // Mapping from old operator index to new operator index.
    pod_vector<addr_t> new_op( num_op );
    // -------------------------------------------------------------
-   // information for current operator
-   size_t          i_op;   // index
-   op_code_var     op;     // operator
-   const addr_t*   arg;    // arguments
-   size_t          i_var;  // variable index of primary (last) result
+   //
+   // is_res
+   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
    //
    // information about atomic function
    enum_atom_state atom_state = start_atom;
    size_t atom_i              = 0;
    size_t atom_j              = 0;
    //
-   i_var      = 0;
+   // i_op, i_var
+   size_t i_op;
+   size_t i_var = 0;
    for(i_op = 0; i_op < num_op; ++i_op)
-   {
-      //
-      // this operator information
+   {  //
+      // i_tmp
       size_t i_tmp;
-      random_itr.op_info(i_op, op, arg, i_tmp);
+      //
+      // op, arg, i_var
+      op_code_var       op;
+      bool              commutative;
+      const_subvector_t arg;
+      var_op_info.get(i_op, op, commutative, arg, is_res);
       if( NumRes(op) > 0 )
-         i_var = i_tmp;
+         i_var = var_op_info.var_index(i_op);
       //
       // zero is invalid except for new_op[0].
       new_op[i_op] = 0;
@@ -1240,7 +1244,7 @@ bool optimize_run(
 
 # ifndef NDEBUG
    for(i_op = 0; i_op < num_op; i_op++)
-   {  random_itr.op_info(i_op, op, arg, i_var);
+   {  op_code_var op = var_op_info.op_enum(i_op);
       if( NumRes(op) > 0 )
          CPPAD_ASSERT_UNKNOWN(
             size_t(new_op[i_op]) < rec->num_var_op()
