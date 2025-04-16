@@ -160,12 +160,6 @@ bool optimize_run(
    // check that recorder is empty
    CPPAD_ASSERT_UNKNOWN( rec->num_var_op() == 0 );
    //
-   // random_itr
-   Addr not_used;
-   play->setup_random( not_used );
-   local::play::const_random_iterator<Addr> random_itr =
-      play->get_random( not_used );
-   //
    // var_op_info
    var_op_info_t< player<Base> > var_op_info(*play);
    //
@@ -671,13 +665,13 @@ bool optimize_run(
          case TanOp:
          case TanhOp:
          {  //
-            new_arg[0]   = new_var[ random_itr.var2op(size_t(arg[0])) ];
+            new_arg[0]   = new_var[ var_op_info.op_index( size_t(arg[0]) ) ];
             rec->PutArg( new_arg[0] );
             //
             new_op[i_op]  = addr_t( rec->num_var_op() );
             new_var[i_op] = rec->PutOp(op);
             CPPAD_ASSERT_UNKNOWN(
-               new_arg[0] < new_var[random_itr.var2op(i_var)]
+               new_arg[0] < new_var[var_op_info.op_index(i_var)]
             );
             if( op == ErfOp || op == ErfcOp )
             {  CPPAD_ASSERT_NARG_NRES(op, 3, 5);
@@ -702,7 +696,7 @@ bool optimize_run(
          // Binary operators, left variable, right parameter, one result
          case SubvpOp:
          // check if this is the top of a csum connection
-         i_tmp    = random_itr.var2op(size_t(arg[0]));
+         i_tmp    = var_op_info.op_index( size_t(arg[0]) );
          top_csum = op_usage[i_tmp] == usage_t(csum_usage);
          if( top_csum )
          {
@@ -747,13 +741,13 @@ bool optimize_run(
          CPPAD_ASSERT_NARG_NRES(op, 2, 1);
          {  //
             new_arg[0] = arg[0];
-            new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
+            new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
             rec->PutArg( new_arg[0], new_arg[1] );
             //
             new_op[i_op]  = addr_t( rec->num_var_op() );
             new_var[i_op] = rec->PutOp(op);
             CPPAD_ASSERT_UNKNOWN(
-               new_arg[1] < new_var[random_itr.var2op(i_var)]
+               new_arg[1] < new_var[var_op_info.op_index(i_var)]
             );
          }
          break;
@@ -763,7 +757,7 @@ bool optimize_run(
          case SubpvOp:
          case AddpvOp:
          // check if this is the top of a csum connection
-         i_tmp    = random_itr.var2op(size_t(arg[1]));
+         i_tmp    = var_op_info.op_index( size_t(arg[1]) );
          top_csum = op_usage[i_tmp] == usage_t(csum_usage);
          if( top_csum )
          {
@@ -808,9 +802,9 @@ bool optimize_run(
          case AddvvOp:
          case SubvvOp:
          // check if this is the top of a csum connection
-         i_tmp     = random_itr.var2op(size_t(arg[0]));
+         i_tmp     = var_op_info.op_index( size_t(arg[0]) );
          top_csum  = op_usage[i_tmp] == usage_t(csum_usage);
-         i_tmp     = random_itr.var2op(size_t(arg[1]));
+         i_tmp     = var_op_info.op_index( size_t(arg[1]) );
          top_csum |= op_usage[i_tmp] == usage_t(csum_usage);
          if( top_csum )
          {
@@ -858,7 +852,7 @@ bool optimize_run(
          mask = 1;
          for(size_t i = 2; i < 6; i++)
          {  if( arg[1] & mask )
-            {  new_arg[i] = new_var[ random_itr.var2op(size_t(arg[i])) ];
+            {  new_arg[i] = new_var[ var_op_info.op_index( size_t(arg[i]) ) ];
                CPPAD_ASSERT_UNKNOWN(
                   size_t(new_arg[i]) < num_var
            );
@@ -922,7 +916,7 @@ bool optimize_run(
          CPPAD_ASSERT_UNKNOWN( compare_op );
          CPPAD_ASSERT_NARG_NRES(op, 2, 0);
          {  new_arg[0] = new_par[ arg[0] ];
-            new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
+            new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
             rec->PutArg(new_arg[0], new_arg[1]);
             new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(op);
@@ -933,7 +927,7 @@ bool optimize_run(
          case LtvpOp:
          CPPAD_ASSERT_UNKNOWN( compare_op );
          CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-         {  new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
+         {  new_arg[0] = new_var[ var_op_info.op_index( size_t(arg[0]) ) ];
             new_arg[1] = new_par[ arg[1] ];
             rec->PutArg(new_arg[0], new_arg[1]);
             new_op[i_op] = addr_t( rec->num_var_op() );
@@ -947,8 +941,8 @@ bool optimize_run(
          case NevvOp:
          CPPAD_ASSERT_UNKNOWN( compare_op );
          CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-         {  new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
-            new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
+         {  new_arg[0] = new_var[ var_op_info.op_index( size_t(arg[0]) ) ];
+            new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
             rec->PutArg(new_arg[0], new_arg[1]);
             new_op[i_op] = addr_t( rec->num_var_op() );
             rec->PutOp(op);
@@ -983,7 +977,7 @@ bool optimize_run(
          //
          // arg[1]
          if( arg[0] & 1 )
-         {  new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
+         {  new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
             CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
          }
          else
@@ -992,7 +986,7 @@ bool optimize_run(
          //
          // arg[3]
          if( arg[0] & 2 )
-         {  new_arg[3] = new_var[ random_itr.var2op(size_t(arg[3])) ];
+         {  new_arg[3] = new_var[ var_op_info.op_index( size_t(arg[3]) ) ];
             CPPAD_ASSERT_UNKNOWN( size_t(new_arg[3]) < num_var );
          }
          else
@@ -1040,7 +1034,7 @@ bool optimize_run(
          case LdvOp:
          CPPAD_ASSERT_NARG_NRES(op, 3, 1);
          new_arg[0] = new_vecad_ind[ arg[0] ];
-         new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
+         new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
          CPPAD_ASSERT_UNKNOWN(
             size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load()
          );
@@ -1076,7 +1070,7 @@ bool optimize_run(
          case StvpOp:
          CPPAD_ASSERT_NARG_NRES(op, 3, 0);
          new_arg[0] = new_vecad_ind[ arg[0] ];
-         new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
+         new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
          new_arg[2] = new_par[ arg[2] ];
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
@@ -1094,7 +1088,7 @@ bool optimize_run(
          CPPAD_ASSERT_NARG_NRES(op, 3, 0);
          new_arg[0] = new_vecad_ind[ arg[0] ];
          new_arg[1] = new_par[ arg[1] ];
-         new_arg[2] = new_var[ random_itr.var2op(size_t(arg[2])) ];
+         new_arg[2] = new_var[ var_op_info.op_index( size_t(arg[2]) ) ];
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
          rec->PutArg(
@@ -1110,8 +1104,8 @@ bool optimize_run(
          case StvvOp:
          CPPAD_ASSERT_NARG_NRES(op, 3, 0);
          new_arg[0] = new_vecad_ind[ arg[0] ];
-         new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
-         new_arg[2] = new_var[ random_itr.var2op(size_t(arg[2])) ];
+         new_arg[1] = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
+         new_arg[2] = new_var[ var_op_info.op_index( size_t(arg[2]) ) ];
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
@@ -1165,7 +1159,7 @@ bool optimize_run(
 
          case FunavOp:
          CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-         new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
+         new_arg[0] = new_var[ var_op_info.op_index( size_t(arg[0]) ) ];
          CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_var );
          if( new_arg[0] != 0 )
          {  rec->PutArg(new_arg[0]);
@@ -1248,7 +1242,7 @@ bool optimize_run(
    }
    // modify the dependent variable vector to new indices
    for(size_t i = 0; i < dep_taddr.size(); i++ )
-   {  dep_taddr[i] = size_t(new_var[ random_itr.var2op(dep_taddr[i]) ]);
+   {  dep_taddr[i] = size_t(new_var[ var_op_info.op_index(dep_taddr[i]) ]);
       CPPAD_ASSERT_UNKNOWN( size_t(dep_taddr[i]) < num_var );
    }
 
