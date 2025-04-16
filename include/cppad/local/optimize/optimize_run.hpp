@@ -839,10 +839,11 @@ bool optimize_run(
          {  //
             size_pair = record_vv(
                play                ,
-               random_itr          ,
+               var_op_info         ,
                new_var             ,
                i_op                ,
-               rec
+               rec                 ,
+               vec_bool_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
