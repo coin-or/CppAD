@@ -20,8 +20,8 @@ Record an operation of the form (variable op parameter).
 \param play
 player object corresponding to the old recroding.
 
-\param random_itr
-is a random iterator corresponding to the old recording.
+\param var_op_info
+is the information for the old variable operation sequence.
 
 \param new_par
 mapping from old parameter index to parameter index in new recording.

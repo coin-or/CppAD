@@ -37,22 +37,27 @@ is the object that will record the new operations.
 \return
 is the operator and variable indices in the new operation sequence.
 */
-template <class Addr, class Base>
+template <class Base>
 struct_size_pair record_pv(
-   const player<Base>*                                play           ,
-   const play::const_random_iterator<Addr>&           random_itr     ,
-   const pod_vector<addr_t>&                          new_par        ,
-   const pod_vector<addr_t>&                          new_var        ,
-   size_t                                             i_op           ,
-   recorder<Base>*                                    rec            )
+   const player<Base>*                                 play           ,
+   const var_op_info_t< player<Base> >&                var_op_info    ,
+   const pod_vector<addr_t>&                           new_par        ,
+   const pod_vector<addr_t>&                           new_var        ,
+   size_t                                              i_op           ,
+   recorder<Base>*                                     rec            ,
+   typename var_op_info_t< player<Base> >::vec_bool_t& is_res         )
 {
-   // get_op_info
-   op_code_var   op;
-   const addr_t* arg;
-   size_t        i_var;
-   random_itr.op_info(i_op, op, arg, i_var);
+   // op, arg
+   op_code_var       op;
+   bool              commutative;
+   const_subvector_t arg;
+   var_op_info.get(i_op, op, commutative, arg, is_res);
    //
 # ifndef NDEBUG
+   //
+   // i_var
+   size_t i_var = var_op_info.var_index(i_op);
+   //
    switch(op)
    {  case AddpvOp:
       case DivpvOp:
@@ -79,7 +84,7 @@ struct_size_pair record_pv(
    //
    addr_t new_arg[2];
    new_arg[0]   = new_par[ arg[0] ];
-   new_arg[1]   = new_var[ random_itr.var2op(size_t(arg[1])) ];
+   new_arg[1]   = new_var[ var_op_info.op_index( size_t(arg[1]) ) ];
    rec->PutArg( new_arg[0], new_arg[1] );
    //
    struct_size_pair ret;
