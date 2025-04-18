@@ -17,6 +17,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-18
+=====
+Increase size of matrices in the
+:ref:`det_minor<link_det_minor-name>` speed tests.
+
 04-01
 =====
 Fix a :ref:`conditional expressions<CondExp-name>`  bug that affect
