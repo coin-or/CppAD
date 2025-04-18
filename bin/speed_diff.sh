@@ -35,8 +35,9 @@ sed -n -e'/_size *=/p' $speed_one | sort -u > speed_diff.1.$$
 sed -n -e'/_size *=/p' $speed_two | sort -u > speed_diff.2.$$
 if ! diff speed_diff.1.$$ speed_diff.2.$$
 then
-   echo "Size in $speed_one"
-   echo "Note equal size in $speed_two"
+   echo 'The sizes above do not agree'
+   echo "< for $speed_one"
+   echo "> for $speed_two"
    rm speed_diff.1.$$ speed_diff.2.$$
    exit 1
 fi
