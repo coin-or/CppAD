@@ -78,11 +78,6 @@ stack.op_info, stack.add_var, and stack.sub_var, are all empty.
 These stacks are passed in so that they are created once
 and then be reused with calls to ``record_csum`` .
 
-is_rec
-******
-is temporary work space with no specifications other than its type.
-It should not be cleared between calls because it will be re-sized often.
-
 struct_csum_op_info
 *******************
 {xrst_toc_table
@@ -122,8 +117,7 @@ struct_size_pair record_csum(
    size_t                                             current        ,
    recorder<Base>*                                    rec            ,
    // local information passed so stacks need not be allocated for every call
-   struct_csum_stacks&                                 stack         ,
-   typename var_op_info_t< player<Base> >::vec_bool_t& is_res        )
+   struct_csum_stacks&                                 stack         )
 // END_PROROTYPE
 {
 # ifndef NDEBUG
@@ -149,9 +143,9 @@ struct_size_pair record_csum(
    CPPAD_ASSERT_UNKNOWN( op_usage[i_op] == usage_t(yes_usage) );
    //
    // info
-   struct struct_csum_op_info                         info;
-   bool                                               commutative;
-   var_op_info.get(i_op, info.op, commutative, info.arg, is_res);
+   struct struct_csum_op_info   info;
+   info.op  = var_op_info.op_enum(i_op);
+   info.arg = var_op_info.arg_ptr(i_op);
    info.add = true;  // was parrent operator positive or negative
    CPPAD_ASSERT_UNKNOWN( NumRes( info.op ) == 1 );
    //
@@ -183,7 +177,7 @@ struct_size_pair record_csum(
       info = stack.op_info.top();
       stack.op_info.pop();
       op_code_var       op    = info.op;
-      const_subvector_t arg   = info.arg;
+      const addr_t*     arg   = info.arg;
       bool              add   = info.add;
       CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
       //
@@ -212,8 +206,10 @@ struct_size_pair record_csum(
                {  // there is no result corresponding to i-th argument
                   CPPAD_ASSERT_UNKNOWN( size_t( new_var[i_op]) == 0 );
 
+                  // stack
                   // push operator corresponding to the i-th argument
-                  var_op_info.get(i_op, info.op, commutative, info.arg, is_res);
+                  info.op  = var_op_info.op_enum(i_op);
+                  info.arg = var_op_info.arg_ptr(i_op);
                   info.add = add;
                   stack.op_info.push( info );
                }
@@ -313,8 +309,10 @@ struct_size_pair record_csum(
                {  // there is no result corresponding to i-th argument
                   CPPAD_ASSERT_UNKNOWN( size_t( new_var[i_op]) == 0 );
 
+                  // stack
                   // push operator corresponding to the i-th argument
-                  var_op_info.get(i_op, info.op, commutative, info.arg, is_res);
+                  info.op  = var_op_info.op_enum(i_op);
+                  info.arg = var_op_info.arg_ptr(i_op);
                   info.add = add;
                   stack.op_info.push( info );
                }

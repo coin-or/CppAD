@@ -8,7 +8,6 @@
 # include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
 # include <cppad/local/new_optimize/var_op_info.hpp>
-# include <cppad/local/new_optimize/subvector.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -275,7 +274,7 @@ void get_op_usage(
    // -----------------------------------------------------------------------
    // information about current operator
    op_code_var       op;     // operator
-   const_subvector_t arg;    // arguments
+   const addr_t*     arg;    // arguments
    size_t            i_op;   // operator index
    // -----------------------------------------------------------------------
    // information about atomic function calls
@@ -358,9 +357,6 @@ void get_op_usage(
    // Reverse pass to compute usage and cexp_set for each operator
    // ----------------------------------------------------------------------
    //
-   // is_res
-   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
-   //
    // Initialize reverse pass
    size_t          last_atom_i_op = 0;
    size_t          cexp_index     = num_cexp_op;
@@ -375,8 +371,8 @@ void get_op_usage(
       }
       //
       // op, arg
-      bool       commutative;
-      var_op_info.get(i_op, op, commutative, arg, is_res);
+      op   = var_op_info.op_enum(i_op);
+      arg  = var_op_info.arg_ptr(i_op);
       //
       // Is the result of this operation used.
       // (This only makes sense when NumRes(op) > 0.)

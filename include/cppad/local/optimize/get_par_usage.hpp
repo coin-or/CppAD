@@ -148,17 +148,12 @@ void get_par_usage(
    vector<bool>         depend_y;    // results that are used
    vector<bool>         depend_x;    // arguments that are used
    //
-   // is_res
-   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
-   //
    for(size_t i_op = 0; i_op < num_op; ++i_op)
    {
       //
       // op, arg
-      op_code_var        op;
-      bool               commutative;
-      const_subvector_t  arg;
-      var_op_info.get(i_op, op, commutative, arg, is_res);
+      op_code_var   op  = var_op_info.op_enum(i_op);
+      const addr_t* arg = var_op_info.arg_ptr(i_op);
       //
       bool skip = op_usage[i_op] == usage_t(no_usage);
       skip     &= atom_state == start_atom;

@@ -29,8 +29,8 @@ is the player for this operation sequence.
 {xrst_template ;
 include/cppad/local/new_optimize/op_info.xrst
 
-Class Requirements for Optimization
-***********************************
+op_info Requirements
+********************
 @op_info_t@ : is the type for this optimization operator information class
 @=========@ : is rst underlining with = and same length as op_info_t.
 @op_info@   : name in italic (* surrounding name) used for a op_info_t object

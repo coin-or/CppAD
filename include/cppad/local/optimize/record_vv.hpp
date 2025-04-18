@@ -39,14 +39,11 @@ struct_size_pair record_vv(
    const var_op_info_t< player<Base> >&                var_op_info    ,
    const pod_vector<addr_t>&                           new_var        ,
    size_t                                              i_op           ,
-   recorder<Base>*                                     rec            ,
-   typename var_op_info_t< player<Base> >::vec_bool_t& is_res         )
+   recorder<Base>*                                     rec            )
 {
    // op, arg
-   op_code_var       op;
-   bool              commutative;
-   const_subvector_t arg;
-   var_op_info.get(i_op, op, commutative, arg, is_res);
+   op_code_var   op  = var_op_info.op_enum(i_op);
+   const addr_t* arg = var_op_info.arg_ptr(i_op);
    //
 # ifndef NDEBUG
    //

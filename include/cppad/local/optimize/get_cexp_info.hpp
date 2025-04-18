@@ -152,19 +152,17 @@ void get_cexp_info(
    skip_op_true.resize(num_cexp_op, num_op);
    skip_op_false.resize(num_cexp_op, num_op);
    //
-   // is_res
-   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
-   //
    for(size_t i = 0; i < num_cexp_op; i++)
    {  size_t i_op = size_t( cexp2op[i] );
-      //
-      // op, arg
-      op_code_var                                        op;
-      bool                                               commutative;
-      const_subvector_t                                  arg;
-      var_op_info.get(i_op, op, commutative, arg, is_res);
+# ifndef NDEBUG
+      op_code_var   op  = var_op_info.op_enum(i_op);
       CPPAD_ASSERT_UNKNOWN( op == CExpOp );
+# endif
       //
+      // arg
+      const addr_t* arg = var_op_info.arg_ptr(i_op);
+      //
+      // info
       struct_cexp_info info;
       info.i_op       = addr_t(i_op);
       info.cop        = CompareOp( arg[0] );
@@ -172,7 +170,7 @@ void get_cexp_info(
       info.left       = arg[2];
       info.right      = arg[3];
       //
-      // max_left_right
+      // info.max_left_right
       addr_t index    = 0;
       if( arg[1] & 1 )
          index = std::max<addr_t>(index, info.left);
@@ -180,6 +178,7 @@ void get_cexp_info(
          index = std::max<addr_t>(index, info.right);
       info.max_left_right = index;
       //
+      // cexp_info
       cexp_info[i] = info;
    };
    // Determine which operators can be conditionally skipped

@@ -536,9 +536,6 @@ bool optimize_run(
    pod_vector<addr_t> new_op( num_op );
    // -------------------------------------------------------------
    //
-   // is_res
-   typename var_op_info_t< player<Base> >::vec_bool_t is_res;
-   //
    // information about atomic function
    enum_atom_state atom_state = start_atom;
    size_t atom_i              = 0;
@@ -553,10 +550,8 @@ bool optimize_run(
       size_t i_tmp;
       //
       // op, arg, i_var
-      op_code_var       op;
-      bool              commutative;
-      const_subvector_t arg;
-      var_op_info.get(i_op, op, commutative, arg, is_res);
+      op_code_var   op  = var_op_info.op_enum(i_op);
+      const addr_t* arg = var_op_info.arg_ptr(i_op);
       if( NumRes(op) > 0 )
          i_var = var_op_info.var_index(i_op);
       //
@@ -710,8 +705,7 @@ bool optimize_run(
                new_var             ,
                i_var               ,
                rec                 ,
-               csum_work           ,
-               vec_bool_work
+               csum_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -728,8 +722,7 @@ bool optimize_run(
                new_par             ,
                new_var             ,
                i_op                ,
-               rec                 ,
-               vec_bool_work
+               rec
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -771,8 +764,7 @@ bool optimize_run(
                new_var             ,
                i_var               ,
                rec                 ,
-               csum_work           ,
-               vec_bool_work
+               csum_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -790,8 +782,7 @@ bool optimize_run(
                new_par             ,
                new_var             ,
                i_op                ,
-               rec                 ,
-               vec_bool_work
+               rec
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -818,8 +809,7 @@ bool optimize_run(
                new_var             ,
                i_var               ,
                rec                 ,
-               csum_work           ,
-               vec_bool_work
+               csum_work
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -836,8 +826,7 @@ bool optimize_run(
                var_op_info         ,
                new_var             ,
                i_op                ,
-               rec                 ,
-               vec_bool_work
+               rec
             );
             new_op[i_op]  = addr_t( size_pair.i_op );
             new_var[i_op] = addr_t( size_pair.i_var );
@@ -1227,8 +1216,7 @@ bool optimize_run(
             new_var             ,
             i_var               ,
             rec                 ,
-            csum_work           ,
-            vec_bool_work
+            csum_work
          );
          new_op[i_op]  = addr_t( size_pair.i_op );
          new_var[i_op] = addr_t( size_pair.i_var );

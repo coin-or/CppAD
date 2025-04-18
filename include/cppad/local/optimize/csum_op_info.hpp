@@ -5,7 +5,6 @@
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/local/op_code_var.hpp>
-# include <cppad/local/new_optimize/subvector.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
@@ -28,7 +27,7 @@ struct_csum_op_info
 
 arg
 ***
-is the sub-vector of arguments for the old operator
+is a pointer to the first argument for the operator
 corresponding to this variable.
 
 add
@@ -45,7 +44,7 @@ It must hold that NumRes(op) == 1.
 */
 // BEGIN_STRUCT
 struct struct_csum_op_info {
-   const_subvector_t   arg;
+   const addr_t*       arg;
    bool                add;
    op_code_var         op;
 };

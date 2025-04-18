@@ -16,8 +16,8 @@ It has the following xrst_template replacements:
 @op_info@   : name in italic (* surrounding name) used for a op_info_t object
 }
 
-Class Requirements for Optimization
-***********************************
+op_info Requirements
+********************
 
 Syntax
 ======

@@ -30,8 +30,8 @@ is the player for this operation sequence.
 {xrst_template ;
 include/cppad/local/new_optimize/op_info.xrst
 
-Class Requirements for Optimization
-***********************************
+op_info Requirements
+********************
 @op_info_t@ : is the type for this optimization operator information class
 @=========@ : is rst underlining with = and same length as op_info_t.
 @op_info@   : name in italic (* surrounding name) used for a op_info_t object
@@ -82,6 +82,15 @@ The return value *i_op* is the index of the variable for this operator.
 If this is not a primary (last) variable index for an operator
 the number of operators in the player; i.e., *play* . ``num_var_op`` ()
 (an invalid operator index).
+
+arg_ptr
+*******
+{xrst_literal ,
+   // BEGIN_ARG_PTR , // END_ARG_PTR
+}
+The return value *arg_ptr* points to the first argument for this operator.
+This is similar to :ref:`var_op_info_t@op_info Requirements@get@arg_one`
+except that you cannot obtain the number of arguments from *arg_ptr* .
 
 {xrst_end var_op_info_t}
 */
@@ -312,6 +321,12 @@ public:
    size_t op_index(size_t i_var) const
    // END_OP_INDEX
    {  return size_t( var2op_index_[i_var] ); }
+   //
+   // BEGIN_ARG_PTR
+   // arg_ptr = op_info.arg_ptr(i_op)
+   const addr_t* arg_ptr(size_t i_op) const
+   // END_ARG_PTR
+   {  return arg_all_.data() + op2arg_index_[i_op]; }
 };
 
 
