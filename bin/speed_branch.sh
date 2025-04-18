@@ -109,7 +109,7 @@ do
       # use --quiet to supress detached HEAD message
       echo_eval git checkout --quiet $branch
       #
-      # main.cpp
+      # speed/main.cpp
       echo "git show $branch_start:speed/main.cpp > speed/main.cpp"
       git show $branch_start:speed/main.cpp > speed/main.cpp
       #
@@ -142,6 +142,8 @@ do
       echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
       $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
       #
+      # speed/main.cpp
+      echo_eval git checkout speed/main.cpp
    fi
 done
 # return to master (branch where we started)
