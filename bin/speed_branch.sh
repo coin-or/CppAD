@@ -29,9 +29,10 @@ then
    echo "$program: must be executed from its parent directory"
    exit 1
 fi
-if ! git branch | grep '^\* master' > /dev/null
+branch_start=$(git branch --show-current)
+if [ "$branch_start" != 'master' ] && [ "$branch_start" != 'main' ]
 then
-   echo 'bin/speed_branch.sh: must start execution from master branch'
+   echo 'bin/speed_branch.sh: must start from master or main branch'
    exit 1
 fi
 if [ "$3" == '' ]
@@ -108,6 +109,10 @@ do
       # use --quiet to supress detached HEAD message
       echo_eval git checkout --quiet $branch
       #
+      # speed/main.cpp
+      echo "git show $branch_start:speed/main.cpp > speed/main.cpp"
+      git show $branch_start:speed/main.cpp > speed/main.cpp
+      #
       day=`git log -1 --date=iso | grep '^Date:' | \
          sed -e 's|Date: *||' -e 's|-||g' -e 's| .*||'`
       if [ "$test_name" == 'speed' ] || [ "$test_name" == 'sparse_hessian' ]
@@ -137,6 +142,8 @@ do
       echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
       $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
       #
+      # speed/main.cpp
+      echo_eval git checkout speed/main.cpp
    fi
 done
 # return to master (branch where we started)
