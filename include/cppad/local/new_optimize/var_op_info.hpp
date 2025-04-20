@@ -13,7 +13,7 @@ Optimization Information for Variable Operators
 
 Syntax
 ******
-| |tab| ``var_op_info_t`` *op_info* ( *random_itr* )
+| |tab| ``var_op_info_t`` *op_info* ( *play* )
 
 op_info
 *******
