@@ -126,16 +126,12 @@ do
          fi
       fi
       #
-      # versions of CppAD before 20170625 did not have --debug_none option
-      echo "bin/run_cmake.sh --debug_none >& $target_dir/$log_file"
-      if ! bin/run_cmake.sh --debug_none >& $target_dir/$log_file
-      then
-         echo "bin/run_cmake.sh >& $target_dir/$log_file"
-         bin/run_cmake.sh >& $target_dir/$log_file
-      fi
+      echo "bin/run_cmake.sh --debug_none --no_optional >& $target_dir/$log_file"
+      bin/run_cmake.sh --debug_none --no_optional >& $target_dir/$log_file
       #
       echo "ninja check_speed_cppad >>& $target_dir/$log_file"
       ninja -C build check_speed_cppad >& speed_branch.log.$$
+      #
       cat speed_branch.log.$$ >> $target_dir/$log_file
       rm speed_branch.log.$$
       #
