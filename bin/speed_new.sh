@@ -63,8 +63,8 @@ do
    else
       echo_eval git_new.sh from
    fi
-   echo "bin/run_cmake.sh --debug_none > /dev/null"
-   bin/run_cmake.sh --debug_none > /dev/null
+   echo "bin/run_cmake.sh --debug_none --no_optional > /dev/null"
+   bin/run_cmake.sh --debug_none --no_optional > /dev/null
    #
    out_file="$name.$option_list.out"
    if [ -e "$target_dir/$out_file" ]
