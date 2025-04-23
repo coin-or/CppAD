@@ -156,7 +156,7 @@ command_line_arg(cmake_install_includedirs include STRING
 )
 #
 # cmake_install_libdirs
-command_line_arg(cmake_install_libdirs lib STRING
+command_line_arg(cmake_install_libdirs "lib;lib64" STRING
    "directories, below prefix, where cmake installs library files"
 )
 #
