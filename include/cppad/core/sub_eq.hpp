@@ -93,19 +93,25 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
       ad_type_ = variable_enum;
    }
    else if( dyn_left | dyn_right )
-   {  addr_t arg0 = taddr_;
-      addr_t arg1 = right.taddr_;
-      if( ! dyn_left )
+   {  if( (! dyn_right) && IdenticalZero(right.value_) )
+      {   // this is left -= 0, so do nothing
+      }
+      else
+      {
+         addr_t arg0 = taddr_;
+         addr_t arg1 = right.taddr_;
+         if( ! dyn_left )
          arg0 = tape->Rec_.put_con_par(left);
-      if( ! dyn_right )
+         if( ! dyn_right )
          arg1 = tape->Rec_.put_con_par(right.value_);
-      //
-      // parameters with a dynamic parameter results
-      taddr_ = tape->Rec_.put_dyn_par(
+         //
+         // parameters with a dynamic parameter results
+         taddr_ = tape->Rec_.put_dyn_par(
             value_, local::sub_dyn, arg0, arg1
-      );
-      tape_id_ = tape_id;
-      ad_type_ = dynamic_enum;
+         );
+         tape_id_ = tape_id;
+         ad_type_ = dynamic_enum;
+      }
    }
    return *this;
 }
