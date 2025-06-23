@@ -17,6 +17,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+06-23
+=====
+The default value for :ref:`cmake@cmake_install_libdirs` was changed from
+``lib`` to ``lib;lib64`` so that ``lib64`` is also searched for library files.
+
 04-18
 =====
 Increase size of matrices in the
@@ -32,7 +37,7 @@ optimizing functions with
 =====
 If :ref:`cmake@cppad_tape_addr_type` was chosen to be `size_t` ,
 a multiple definition of ``setup_random`` compiler error would occur.
-This has been fixed. 
+This has been fixed.
 
 
 02-09
