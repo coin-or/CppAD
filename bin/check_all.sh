@@ -111,7 +111,7 @@ echo_log_eval() {
    then
       if $sed $top_srcdir/check_all.tmp \
          -e '/temp_file.cpp:.*warning.*tmpnam/d' \
-         | grep ': *warning *:'
+         | $grep ': *warning *:'
       then
          warning='yes'
       fi
@@ -123,7 +123,7 @@ echo_log_eval() {
          -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
          -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
          -e '/abs_min_quad.hpp:424:.*bound.*exceeds maximum/d' \
-         | grep ': *warning *:'
+         | $grep ': *warning *:'
       then
          warning='yes'
       fi
@@ -311,7 +311,7 @@ fi
 # bin/check_*.sh
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=$(
-   ls bin/check_* | sed \
+   ls bin/check_* | $sed \
    -e '/check_all.sh/d' \
    -e '/check_doxygen.sh/d' \
    -e '/check_install.sh/d' \
@@ -345,7 +345,7 @@ echo_log_eval tar -xzf cppad-$version.tgz
 echo_log_eval cd cppad-$version
 #
 # build/cppad-$version/bin/get_optional.sh
-sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
+$sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
 #
 # builder
 if [ "$use_configure" == 'yes' ]
@@ -417,8 +417,8 @@ cd build
 program='example/print_for/example_print_for'
 echo_log_eval $builder -j $n_job example_print_for
 echo_log_eval $program
-$program | sed -e '/^Test passes/,$d' > temp.1.$$
-$program | sed -e '1,/^Test passes/d' > temp.2.$$
+$program | $sed -e '/^Test passes/,$d' > temp.1.$$
+$program | $sed -e '1,/^Test passes/d' > temp.2.$$
 if diff temp.1.$$ temp.2.$$
 then
    rm temp.1.$$ temp.2.$$
@@ -439,7 +439,7 @@ fi
 #
 #
 echo "date >> check_all.log"
-date  | sed -e 's|^|date: |' >> $top_srcdir/check_all.log
+date  | $sed -e 's|^|date: |' >> $top_srcdir/check_all.log
 # ----------------------------------------------------------------------------
 echo "$0: OK" >> $top_srcdir/check_all.log
 echo "$0: OK"
