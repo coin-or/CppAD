@@ -280,6 +280,16 @@ private:
       taddr_   = taddr;
       ad_type_ = variable_enum;
    }
+   // -----------------------------------------------------------------
+   // Make this parameter a new dynamic
+   void make_dynamic(tape_id_t id,  addr_t taddr)
+   {   CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); // currently a par
+       CPPAD_ASSERT_UNKNOWN( taddr > 0 );        // sure valid taddr
+      
+       tape_id_ = id;
+       taddr_   = taddr;
+       ad_type_ = dynamic_enum;
+   }
    // ---------------------------------------------------------------
    // tape linking functions
    //
