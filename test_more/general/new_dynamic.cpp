@@ -214,6 +214,238 @@ bool operator_with_variable(void)
    return ok;
 }
 // ----------------------------------------------------------------------------
+// Test that no-op steps in the dynamic tape are not recorded. See PR \#232.
+// This function was written with assistance from ChatGPT-5 via Copilot.
+bool operator_no_op(bool any = false)
+{  bool ok = (any ? false : true);
+   using CppAD::AD;
+   using CppAD::NearEqual;
+   using CppAD::azmul;
+   double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+   bool verbose = false; // set to true to see output from each test within this function.
+   if(verbose) std::cout << "operator_no_op tests:\n";
+   // If any is true, then this test will return true if ANY no_op test passes and 
+   //   false ONLY if ALL no_op tests fail.
+   //   (and the "sanity checking" tests are skipped)
+   // In the new_dynamic function below that calls all tests in this file,
+   // this test is called first with any=false and then with any=true.
+   // The purpose of any=true is to demonstrate that ALL of the operators included
+   //   here were NOT handled as no-ops in dynamic parameter tapes prior to PR \#232.
+   // This is relevant at the time of making the PR for the treating each of these as
+   //  no-ops.
+   const size_t nd = 1, nx = 1, ny = 1;
+
+   // Helper to record one expression and check tape sizes + two Forward(0)
+   auto check_no_op = [&](const char* label,
+                          auto expr_builder,
+                          double a_init, double a_new,
+                          double x_init, double x_new,
+                          double expect_init, double expect_new,
+                          size_t expect_dyn_par)
+   {
+      CPPAD_TESTVECTOR(AD<double>) ad(nd), ax(nx), ay(ny);
+      ad[0] = a_init;
+      ax[0] = x_init;
+      CppAD::Independent(ax, /*abort*/0, /*record_compare*/false, ad);
+      expr_builder(ad, ax, ay);
+      CppAD::ADFun<double> f(ax, ay);
+      bool this_ok = true;
+      this_ok &= f.size_dyn_ind() == nd;
+      // This is the key test: a no-op should not add any dynamic parameters
+      this_ok &= f.size_dyn_par() == expect_dyn_par;
+
+      // We also check that the dynamic tape still works correctly.
+      CPPAD_TESTVECTOR(double) xd(nx), yd(ny), pd(nd);
+      xd[0] = x_init;
+      yd = f.Forward(0, xd);
+      this_ok &= NearEqual(yd[0], expect_init, eps99, eps99);
+
+      xd[0] = x_new;
+      pd[0] = a_new;
+      f.new_dynamic(pd);
+      yd = f.Forward(0, xd);
+      this_ok &= NearEqual(yd[0], expect_new, eps99, eps99);
+      if(!any) ok &= this_ok;
+      else ok |= this_ok;
+      if(verbose) std::cout<<label<<" "<< (this_ok ? "PASS" : "FAIL") <<std::endl;
+   };
+
+   if(verbose) std::cout<<"no_op tests:\n";
+   // ----------------------------
+   // Isolated no-op operators (eight tests)
+   // ----------------------------
+   check_no_op("+0",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> zero(0.0);
+         ay[0] = ax[0] * (ad[0] + zero);
+      },
+      2.0, 3.0, 1.0, 1.25, 2.0 * 1.0, 3.0 * 1.25, nd);
+
+   check_no_op("-0",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> zero(0.0);
+         ay[0] = ax[0] * (ad[0] - zero);
+      },
+      2.0, 4.0, 1.0, 1.5, 2.0 * 1.0, 4.0 * 1.5, nd);
+
+   check_no_op("*1",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> one(1.0);
+         ay[0] = ax[0] * (ad[0] * one);
+      },
+      1.5, 3.0, 1.0, 2.0, 1.5 * 1.0, 3.0 * 2.0, nd);
+
+   check_no_op("/1",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> one(1.0);
+         ay[0] = ax[0] * (ad[0] / one);
+      },
+      2.0, 3.0, 1.0, 1.75, 2.0 * 1.0, 3.0 * 1.75, nd);
+
+   // Compound no-ops
+   check_no_op("+=0",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> zero(0.0), a = ad[0];
+         a += zero;
+         ay[0] = ax[0] * a;
+      },
+      2.0, 5.0, 1.0, 1.1, 2.0, 5.0 * 1.1, nd);
+
+   check_no_op("-=0",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> zero(0.0), a = ad[0];
+         a -= zero;
+         ay[0] = ax[0] * a;
+      },
+      3.0, 1.0, 2.0, 0.5, 3.0 * 2.0, 1.0 * 0.5, nd);
+
+   check_no_op("*=1",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> one(1.0), a = ad[0];
+         a *= one;
+         ay[0] = ax[0] * a;
+      },
+      2.5, 4.0, 1.0, 2.0, 2.5 * 1.0, 4.0 * 2.0, nd);
+
+   check_no_op("/=1",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> one(1.0), a = ad[0];
+         a /= one;
+         ay[0] = ax[0] * a;
+      },
+      2.0, 3.0, 1.0, 3.0, 2.0 * 1.0, 3.0 * 3.0, nd);
+
+   // ----------------------------
+   // Isolated azmul no-ops (four tests)
+   // ----------------------------
+   check_no_op("azmul(a,0)",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> zero(0.0);
+         ay[0] = ax[0] + azmul(ad[0], zero); // always 0
+      },
+      2.0, 7.0, 1.0, 3.0, 1.0, 3.0, nd);
+
+   check_no_op("azmul(0,a)",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> zero(0.0);
+         ay[0] = ax[0] + azmul(zero, ad[0]); // always 0
+      },
+      3.0, 9.0, 1.0, 3.0, 1.0, 3.0, nd);
+
+   check_no_op("azmul(a,1)",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> one(1.0);
+         ay[0] = ax[0] + azmul(ad[0], one); // equals a
+      },
+      2.0, 3.0, 1.0, 1.5, 2.0 + 1.0, 3.0 + 1.5, nd);
+
+   check_no_op("azmul(1,a)",
+      [](auto& ad, auto& ax, auto& ay) {
+         AD<double> one(1.0);
+         ay[0] = ax[0] + azmul(one, ad[0]); // equals a
+      },
+      4.0, 5.0, 1.0, 1.5, 4.0 + 1.0, 5.0 + 1.5, nd);
+
+   if(any) return ok;
+   // ----------------------------
+   // Sanity positive tests (each should add one dynamic parameter)
+   // These tests show the operators above do work in non-no-op situations
+   //   with a similar testing setup as above.
+   // ----------------------------
+   auto check_dyn_op = [&](const char* label, auto builder,
+                           double a_init, double a_new,
+                           double x_init, double x_new,
+                           double expect_init, double expect_new)
+   {
+      CPPAD_TESTVECTOR(AD<double>) ad(nd), ax(nx), ay(ny);
+      ad[0]  = a_init;
+      ax[0]  = x_init;
+      CppAD::Independent(ax, /*abort*/0, /*record_compare*/false, ad);
+      builder(ad, ax, ay);
+      CppAD::ADFun<double> f(ax, ay);
+      bool this_ok = true;
+      this_ok &= f.size_dyn_par() == nd + 1;
+
+      CPPAD_TESTVECTOR(double) xd(nx), yd(ny), pd(nd);
+      xd[0] = x_init;
+      yd = f.Forward(0, xd);
+      this_ok &= NearEqual(yd[0], expect_init, eps99, eps99);
+
+      xd[0] = x_new; pd[0] = a_new;
+      f.new_dynamic(pd);
+      yd = f.Forward(0, xd);
+      this_ok &= NearEqual(yd[0], expect_new, eps99, eps99);
+      ok &= this_ok;
+      if(verbose) std::cout<<label<<" "<< (this_ok ? "PASS" : "FAIL") <<std::endl;
+   };
+   if(verbose) std::cout<<"sanity-checking cases of the no_op tests:\n";
+   // +2, -2, *2, /2
+   check_dyn_op("+2",
+      [](auto& ad, auto& ax, auto& ay){ ay[0] = ax[0] + (ad[0] + 2.0); },
+      2.0, 3.0, 1.0, 1.25, 1.0 + (2.0 + 2.0), 1.25 + (3.0 + 2.0));
+
+   check_dyn_op("-2",
+      [](auto& ad, auto& ax, auto& ay){ ay[0] = ax[0] + (ad[0] - 2.0); },
+      2.0, 4.0, 1.0, 1.5, 1.0 + (2.0 - 2.0), 1.5 + (4.0 - 2.0));
+
+   check_dyn_op("*2",
+      [](auto& ad, auto& ax, auto& ay){ ay[0] = ax[0] + (ad[0] * 2.0); },
+      1.5, 3.0, 1.0, 2.0, 1.0 + (1.5 * 2.0), 2.0 + (3.0 * 2.0));
+
+   check_dyn_op("/2",
+      [](auto& ad, auto& ax, auto& ay){ ay[0] = ax[0] + (ad[0] / 2.0); },
+      2.0, 3.0, 1.0, 1.75, 1.0 + (2.0 / 2.0), 1.75 + (3.0 / 2.0));
+
+   // +=2, -=2, *=2, /=2
+   check_dyn_op("+=2",
+      [](auto& ad, auto& ax, auto& ay){ AD<double> a = ad[0]; a += 2.0; ay[0] = ax[0] + a; },
+      2.0, 5.0, 1.0, 1.1, 1.0 + (2.0 + 2.0), 1.1 + (5.0 + 2.0));
+
+   check_dyn_op("-=2",
+      [](auto& ad, auto& ax, auto& ay){ AD<double> a = ad[0]; a -= 2.0; ay[0] = ax[0] + a; },
+      3.0, 6.0, 2.0, 0.5, 2.0 + (3.0 - 2.0), 0.5 + (6.0 - 2.0));
+
+   check_dyn_op("*=2",
+      [](auto& ad, auto& ax, auto& ay){ AD<double> a = ad[0]; a *= 2.0; ay[0] = ax[0] + a; },
+      2.5, 4.0, 1.0, 2.0, 1.0 + (2.5 * 2.0), 2.0 + (4.0 * 2.0));
+
+   check_dyn_op("/=2",
+      [](auto& ad, auto& ax, auto& ay){ AD<double> a = ad[0]; a /= 2.0; ay[0] = ax[0] + a; },
+      2.0, 3.0, 1.0, 3.0, 1.0 + (2.0 / 2.0), 3.0 + (3.0 / 2.0));
+
+   // azmul(a,2), azmul(2,a)
+   check_dyn_op("azmul(a,2)",
+      [](auto& ad, auto& ax, auto& ay){ ay[0] = ax[0] + azmul(ad[0], AD<double>(2.0)); },
+      2.0, 3.0, 1.0, 1.25, 1.0 + (2.0 * 2.0), 1.25 + (3.0 * 2.0));
+
+   check_dyn_op("azmul(2,a)",
+      [](auto& ad, auto& ax, auto& ay){ ay[0] = ax[0] + azmul(AD<double>(2.0), ad[0]); },
+      1.5, 4.0, 0.5, 2.0, 0.5 + (2.0 * 1.5), 2.0 + (2.0 * 4.0));
+
+   if(verbose) std::cout<<"end of operator_no_op tests\n";
+   return ok;
+}
+// ----------------------------------------------------------------------------
 bool dynamic_operator(void)
 {  bool ok = true;
    using CppAD::AD;
@@ -821,6 +1053,8 @@ bool new_dynamic(void)
 {  bool ok = true;
    ok     &= vecad();
    ok     &= operator_with_variable();
+   ok     &= operator_no_op();
+   ok     &= operator_no_op(true); // fail only if ALL no-op tests fail. See PR \#232
    ok     &= dynamic_operator();
    ok     &= dynamic_compare();
    ok     &= optimize_csum();
