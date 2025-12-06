@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -30,7 +30,7 @@ linear algebra package with the type *AD* < ``Base`` > ; see
 `Using custom scalar types`_ .
 
 .. _Using custom scalar types: https://
-   libeigen.gitlab.io/docs/TopicCustomizing_CustomScalar.html
+   libeigen.gitlab.io/eigen/docs-nightly/TopicCustomizing_CustomScalar.html
 
 Example
 *******
