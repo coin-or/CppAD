@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # -----------------------------------------------------------------------------
 set -e -u
 #
@@ -24,7 +24,7 @@ fi
 prefix="$(pwd)/build/prefix"
 export PKG_CONFIG_PATH="$prefix/share/pkgconfig"
 export LD_LIBRARY_PATH=""
-for subdir in  'lib' 'lib64' 
+for subdir in  'lib' 'lib64'
 do
    PKG_CONFIG_PATH+=":$prefix/$subdir/pkgconfig"
    LD_LIBRARY_PATH+=";$prefix/$subdir"
@@ -49,7 +49,7 @@ then
 fi
 mkdir -p build/bug
 cd build/bug
-# 
+#
 # $name.cpp
 cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
@@ -73,14 +73,14 @@ EOF
 #
 # $name
 cmd="
-   g++ 
-   $name.cpp 
-   -I../../include 
+   g++
+   $name.cpp
+   -I../../include
    $extra_flags
-   $eigen_flags 
-   $ipopt_flags 
+   $eigen_flags
+   $ipopt_flags
    -o $name
-   $link_flags 
+   $link_flags
 "
 #
 $cmd
@@ -90,6 +90,7 @@ if ! ./$name
 then
    echo
    echo "build/bug/$name: Error"
+   echo "export LD_LIBRARY_PATH='$LD_LIBRARY_PATH'"
    exit 1
 fi
 echo

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_POW_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -152,7 +152,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
          result.tape_id_ = tape_id;
          result.ad_type_ = variable_enum;
       }
-      else if( IdenticalZero( y.value_ ) )
+      else if( (! dyn_y) && IdenticalZero( y.value_ ) )
       {  // result = variable^0
       }
       else
@@ -175,7 +175,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
       }
    }
    else if( var_y )
-   {  if( IdenticalZero(x.value_) )
+   {  if( (! dyn_x) && IdenticalZero(x.value_) )
       {  // result = 0^variable
       }
       else
