@@ -9,7 +9,7 @@ set -e -u
 # Checks that there is no invisible white space in any of the source files.
 # If there is, a message is printed about it, it is automatically removed,
 # and this script exits with an error.
-# Files that are not checked can be sepcified in bin/dev_setting.sh
+# Files that are not checked can be specified in bin/dev_setting.sh
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/check_invisible.sh" ]
 then

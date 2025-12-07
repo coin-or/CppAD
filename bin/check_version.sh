@@ -60,7 +60,7 @@ p
 #
 : end
 EOF
-version=$($sed -n -r -f temp.sed $first_version_file)
+version=$($sed -n -r -f temp.sed $first_version_file | head -1)
 #
 # version_type
 if [[ "$version" =~ ^[0-9]{8}$ ]]

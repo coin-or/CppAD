@@ -9,6 +9,7 @@
    jit
    rpath
    msys
+   dev
 }
 
 Release Notes for 2025
@@ -19,9 +20,12 @@ mm-dd
 
 12-07
 =====
-The :ref:`pow-name` function was identically zero (one),
-when the base (exponent) during recording was the dynamic parameter zero;
-see issue 242. This has been fixed.
+#. The :ref:`pow-name` function was identically zero (one),
+   when the base (exponent) during recording was the dynamic parameter zero;
+   see issue 242. This has been fixed.
+
+#. Update the development tools (see dev_tools.sh in xrst repository).
+
 
 06-23
 =====

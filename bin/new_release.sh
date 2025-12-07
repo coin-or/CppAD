@@ -10,11 +10,11 @@ set -e -u
 #
 # bin/check_all.sh [--skip_external_links]
 # is used by new_release.sh to check the stable branch
-# correpsonding to this release (unless skipped by new_release.sh flags).
+# corresponding to this release (unless skipped by new_release.sh flags).
 #
 # bin/check_all.sh [--skip_external_links]
 # is used by new_release to skip checking external links.
-# new_release.sh skips this when testng before the new release (tag)  exists.
+# new_release.sh skips this when testing before the new release (tag)  exists.
 # -----------------------------------------------------------------------------
 year='2025' # Year for this stable version
 release='2' # first release for each year starts with 0
@@ -68,7 +68,7 @@ echo_eval() {
 #
 # main_branch
 main_branch=$(git branch --show-current)
-if [ "$main_branch" != 'master' ] || [ "$main_branch" == 'main' ]
+if [ "$main_branch" != 'master' ] && [ "$main_branch" != 'main' ]
 then
    echo 'bin/new_release.sh: execute using master or main branch'
    exit 1
@@ -118,50 +118,30 @@ else
    tag=$year.0.$release
 fi
 #
-# tag_commited
-tag_commited='no'
+# tag_committed
+tag_committed='no'
 if git tag --list | grep "$tag" > /dev/null
 then
-   tag_commited='yes'
+   tag_committed='yes'
 fi
 #
 # stable_branch
 stable_branch=stable/$year
 #
 # stable_local_hash
-pattern=$(echo " *refs/heads/$stable_branch" | $sed -e 's|/|[/]|g')
-stable_local_hash=$(
-   git show-ref $stable_branch | \
-      $sed -n -e "/$pattern/p" | \
-         $sed -e "s|$pattern||"
-)
+stable_local_hash=$(git show-ref --hash "heads/$stable_branch" )
 #
 # stable_remote_hash
-pattern=$(echo " *refs/remotes/origin/$stable_branch" | $sed -e 's|/|[/]|g')
-stable_remote_hash=$(
-   git show-ref $stable_branch | \
-      $sed -n -e "/$pattern/p" | \
-         $sed -e "s|$pattern||"
-)
+stable_remote_hash=$(git show-ref --hash "origin/$stable_branch" )
 #
 # main_local_hash
-pattern=$(echo " *refs/heads/master" | $sed -e 's|/|[/]|g')
-main_local_hash=$(
-   git show-ref $main_branch | \
-      $sed -n -e "/$pattern/p" | \
-         $sed -e "s|$pattern||"
-)
+main_local_hash=$(git show-ref --hash "heads/$main_branch" )
 #
 # main_remote_hash
-pattern=$(echo " *refs/remotes/origin/master" | $sed -e 's|/|[/]|g')
-main_remote_hash=$(
-   git show-ref $main_branch | \
-      $sed -n -e "/$pattern/p" | \
-         $sed -e "s|$pattern||"
-)
+main_remote_hash=$(git show-ref --hash "origin/$main_branch" )
 #
 # ----------------------------------------------------------------------------
-# Changes to master branch
+# Changes to main_branch
 # ----------------------------------------------------------------------------
 #
 # version_file_list
@@ -188,7 +168,7 @@ do
 done
 #
 # run_xrst.sh
-if [ "$tag_commited" == 'yes' ]
+if [ "$tag_committed" == 'yes' ]
 then
    echo_eval bin/run_xrst.sh --external_links
 else
@@ -208,7 +188,7 @@ fi
 # ----------------------------------------------------------------------------
 if ! git show-ref $stable_branch > /dev/null
 then
-   echo "bin/new_release: neither local or remvoe $stable_branch exists."
+   echo "bin/new_release: neither local or remove $stable_branch exists."
    echo 'Use the following to create it ?'
    echo "   git branch $stable_branch"
    exit 1
@@ -266,7 +246,7 @@ fi
 # check_all.sh
 if [ "$skip_stable_check_all" == 'no' ]
 then
-   if [ "$tag_commited" == 'yes' ]
+   if [ "$tag_committed" == 'yes' ]
    then
       echo_eval bin/check_all.sh --suppress_spell_warnings
    else
@@ -305,7 +285,7 @@ then
 fi
 #
 # push tag
-if [ "$tag_commited" == 'no' ]
+if [ "$tag_committed" == 'no' ]
 then
    read -p 'commit release or abort [c/a] ?' response
    if [ "$response" == 'a' ]

@@ -7,9 +7,9 @@ set -e -u
 # ----------------------------------------------------------------------------
 # bin/check_copy.sh
 # Checks that the copyright message, in all the source files,
-# is correct and up to date. If there were any erorrs, a message is printed,
+# is correct and up to date. If there were any errors, a message is printed,
 # it is automatically corrected, and this script exits with an error.
-# Files that are not checked can be sepcified in bin/dev_setting.sh
+# Files that are not checked can be specified in bin/dev_setting.sh
 # ----------------------------------------------------------------------------
 if [ "$0" != "bin/check_copy.sh" ]
 then
@@ -30,6 +30,7 @@ source bin/dev_settings.sh
 #
 # yy
 yy=$(date +%y)
+#
 # ----------------------------------------------------------------------------
 if [ $# != 0 ]
 then
@@ -47,13 +48,26 @@ then
    exit 1
 fi
 # ---------------------------------------------------------------------------
-username='bradbell'
-fullname='Bradley M. Bell'
-# ---------------------------------------------------------------------------
-if [ -e temp.sed ]
+# fullname
+fullname=''
+if [ "${USER+x}" != '' ]
 then
-   rm temp.sed
+   for contributor in $contributor_list
+   do
+      if [[ $contributor == ${USER}* ]]
+      then
+         fullname=$(echo $contributor | sed -e 's|^.*:||' -e 's|_| |g')
+      fi
+   done
+   if [ "$fullname" == '' ] && [ "${USER+x}" != '' ]
+   then
+      echo "Cannot user name = $USER in bin/dev_settings.sh contributor_list"
+      exit 1
+   fi
 fi
+# ---------------------------------------------------------------------------
+# copyright_all, copyright_changed
+echo "#" > temp.sed
 for name in $no_copyright_list
 do
    if [ -f $name ]
@@ -67,43 +81,58 @@ do
       exit 1
    fi
 done
+copyright_all=$(git ls-files | $sed -f temp.sed)
+copyright_changed=$(
+   git status --porcelain | $sed -e 's|^...||' | $sed -f temp.sed
+)
+# ---------------------------------------------------------------------------
 missing='no'
 changed='no'
-for file_name in $(git ls-files | $sed -f temp.sed)
+for file_name in $copyright_all
 do
-   if ! $grep "$spdx_license_id\$" $file_name > /dev/null
+   # if file has not been deleted
+   if [ -e $file_name ]
    then
-      if [ "$missing" == 'no' ]
+      # if file does not have expected license identifier
+      if ! $grep "$spdx_license_id\$" $file_name > /dev/null
       then
-         echo "Cannot find line that ends with:"
-         echo "   $spdx_license_id"
-         echo "In the following files:"
+         if [ "$missing" == 'no' ]
+         then
+            echo "Cannot find line that ends with:"
+            echo "   $spdx_license_id"
+            echo "In the following files:"
+         fi
+         echo "$file_name"
+         missing='yes'
       fi
-      echo "$file_name"
-      missing='yes'
    fi
 done
 # ---------------------------------------------------------------------------
 cat << EOF > temp.sed
-s|\\(SPDX-FileContributor: *[0-9]\\{4\\}\\)[-0-9]* $fullname|\\1-$yy $fullname|
-s|\\(SPDX-FileContributor\\): 20$yy-$yy |\\1: 20$yy |
+/SPDX-FileContributor:[ 0-9.-]*$fullname/! b end
+s|\\([0-9]\\{4\\}\\)[-0-9]* |\\1-$yy |
+s|20$yy-$yy |20$yy |
+#
+: end
 EOF
 list=''
-if [ "${USER+x}" != '' ]
+if [ "$fullname" != '' ]
 then
-   if [ "$USER" == 'bradbell' ]
-   then
-      list=$(git status --porcelain | $sed -e 's|^...||' )
-   fi
+   list="$copyright_changed"
 fi
 for file_name in $list
 do
    if [ -e $file_name ] && [ -f $file_name ]
    then
-      $sed \
-      -e "s|\\(SPDX-FileContributor\\): *\\([0-9]\\{4\\}\\)[-0-9]* |\\1: \\2-$yy |" \
-      -e "s|\\(SPDX-FileContributor\\): 20$yy-$yy |\\1: 20$yy |" \
-      $file_name > temp.$$
+      if ! $grep "SPDX-FileContributor:[ 0-9.-]*$fullname" $file_name \
+         > /dev/null
+      then
+         echo "username = $USER, fullname = $fullname"
+         echo "The following pattern does not appear in $file_name"
+         echo 'SPDX-FileContributor:[ 0-9.-]*'$fullname:
+         exit 1
+      fi
+      $sed -f temp.sed $file_name > temp.$$
       if diff $file_name temp.$$ > /dev/null
       then
          rm temp.$$

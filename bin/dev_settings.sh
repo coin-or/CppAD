@@ -24,13 +24,13 @@ spdx_license_id='EPL-2.0 OR GPL-2.0-or-later'
 package_name='cppad'
 #
 # index_page_name
-# is the xrst index page_name for this projects documentaiton.
+# is the xrst index page_name for this projects documentation.
 index_page_name='user_guide'
 #
 # version_file_list
 # The possible patterns for a latest version number are:
 #     yyyymmdd or yyyy.month.day
-# whee yyyymmdd is an eight decimal digit representaiton of the date.
+# where yyyymmdd is an eight decimal digit representation of the date.
 # yyyy is the year (as four decimal digits yyy), month is a number
 # between 1 and 12, and the day is a number between 1 and 31
 # The possible patterns for a release version number are:
@@ -42,27 +42,36 @@ index_page_name='user_guide'
 # The patterns above with release are used for stable/* branches.
 #
 # The first version file of the list below must have one copy of its
-# version surrounded by single or double quotes. This determines the verison
-# when the branch is not master or main. All occurances of the version, in the
-# files listed below, with the following forms are updated by check_verison.sh:
+# version surrounded by single or double quotes. This determines the version
+# when the branch is not master or main. All occurrences of the version, in the
+# files listed below, with the following forms are updated by check_version.sh:
 #     $package_name-$version  or '$version' or "$version"
 #
 # We use tag for the version corresponding to the current stable release.
 # This is (is not) the same as the current version on a stable branch
-# (on the master or main branch). All occurances of the tag, in the files
+# (on the master or main branch). All occurrences of the tag, in the files
 # listed below, with the following forms are updated by new_release.sh:
 #     archive/$tag.tar.gz
-# In addition, all occurances of stable-yyyy and release-yyyy are updated.
+# In addition, all occurrences of stable-yyyy and release-yyyy are updated.
 version_file_list='
    CMakeLists.txt
    user_guide.xrst
 '
-# All the occurances of the version in the files above are checked to see
+# All the occurrences of the version in the files above are checked to see
 # that they agree.
 #
+# contributor_list
+# This maps the system user name $USER to the contributor's full name.
+# A full name can have multiple user names, but each user name can have
+# only one full name. The colon seperates the user name from the full name.
+# The entries are separate by white space, so the under bar character is used
+# for spaces in the full name.
+contributor_list='
+   bradbell:Bradley_M._Bell
+'
 #
 # no_copyright_list
-# These files and dirctories do not have the spdx license id in them.
+# These files and directories do not have the spdx license id in them.
 # If an entry below is a directory it specifies all the files in the directory.
 # BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
@@ -94,7 +103,7 @@ invisible_and_tab_ok='
 '
 #
 # check_git_commit
-# These files may have automatic changes that should not be commited every time.
+# Files that have automatic changes that should not be committed every time.
 # Including them in this list gives the user the option to abort their changes.
 check_git_commit='
 '

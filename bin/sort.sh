@@ -126,7 +126,7 @@ do
    let count="$count + 1"
    echo "sort.sh: sorting lines $start_line to $stop_line in $file_name"
    #
-   if [ $start_line -ge $stop_line ]
+   if [ $start_line -gt $stop_line ]
    then
       echo "start_line = $start_line >= stop_line = $stop_line "
       rm sorted.$$
