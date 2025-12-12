@@ -335,6 +335,20 @@ bool operator_no_op(bool any = false)
       },
       2.0, 3.0, 1.0, 3.0, 2.0 * 1.0, 3.0 * 3.0, nd);
 
+   check_no_op("pow(x,0)",
+      [](auto& ad, auto& ax, auto& ay){
+         AD<double> zero(0.0);
+         ay[0] = ax[0] * (pow(ad[0], zero));
+      },
+      2.0, 3.0, 1.5, 2.5, 1.5, 2.5, nd);
+
+   check_no_op("pow(0,x)",
+      [](auto& ad, auto& ax, auto& ay){
+         AD<double> zero(0.0);
+         ay[0] = ax[0] * (pow(zero, ad[0]));
+      },
+      2.0, 3.0, 1.5, 2.5, 0.0, 0.0, nd);
+
    // ----------------------------
    // Isolated azmul no-ops (four tests)
    // ----------------------------
@@ -432,6 +446,14 @@ bool operator_no_op(bool any = false)
    check_dyn_op("/=2",
       [](auto& ad, auto& ax, auto& ay){ AD<double> a = ad[0]; a /= 2.0; ay[0] = ax[0] + a; },
       2.0, 3.0, 1.0, 3.0, 1.0 + (2.0 / 2.0), 3.0 + (3.0 / 2.0));
+
+   check_dyn_op("pow(x,2)",
+      [](auto& ad, auto& ax, auto& ay){AD<double> zero(0.0); ay[0] = ax[0] * (pow(ad[0], 2.0)); },
+      2.0, 3.0, 1.5, 2.5, 1.5*4.0, 2.5*9.0);
+
+   check_dyn_op("pow(2,x)",
+      [](auto& ad, auto& ax, auto& ay){AD<double> zero(0.0); ay[0] = ax[0] * (pow(2.0, ad[0])); },
+      2.0, 3.0, 1.5, 2.5, 1.5*4.0, 2.5*8.0);
 
    // azmul(a,2), azmul(2,a)
    check_dyn_op("azmul(a,2)",
