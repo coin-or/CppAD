@@ -328,7 +328,7 @@ by spaces or by semi-colons.
 This first entry in the list is the middle level relative path below which
 the CppAD library files are installed.
 The entire list is used for searching for library files.
-The default value for this directory list is ``lib`` .
+The default value for this directory list is ``lib;lib64`` .
 
 cppad_lib
 =========

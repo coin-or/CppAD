@@ -78,7 +78,7 @@ do
       ;;
 
       --external_links)
-      extra_flags+=" $1"
+      extra_flags+=" $1 --link_timeout 5"
       ;;
 
       *)
@@ -122,8 +122,8 @@ else
 fi
 #
 # xrst
-# python -m will search the current working directory first
-echo_eval python -m xrst \
+# python3 -m will search the current working directory first
+echo_eval python3 -m xrst \
    --local_toc \
    --html_theme sphinx_rtd_theme \
    --index_page_name $index_page_name \

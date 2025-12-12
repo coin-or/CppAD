@@ -111,7 +111,7 @@ echo_log_eval() {
    then
       if $sed $top_srcdir/check_all.tmp \
          -e '/temp_file.cpp:.*warning.*tmpnam/d' \
-         | grep ': *warning *:'
+         | $grep ': *warning *:'
       then
          warning='yes'
       fi
@@ -123,7 +123,7 @@ echo_log_eval() {
          -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
          -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
          -e '/abs_min_quad.hpp:424:.*bound.*exceeds maximum/d' \
-         | grep ': *warning *:'
+         | $grep ': *warning *:'
       then
          warning='yes'
       fi

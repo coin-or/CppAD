@@ -9,6 +9,7 @@
    jit
    rpath
    msys
+   dev
 }
 
 Release Notes for 2025
@@ -16,6 +17,20 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+12-07
+=====
+#. The :ref:`pow-name` function was identically zero (one),
+   when the base (exponent) during recording was the dynamic parameter zero;
+   see issue 242. This has been fixed.
+
+#. Update the development tools (see dev_tools.sh in xrst repository).
+
+
+06-23
+=====
+The default value for :ref:`cmake@cmake_install_libdirs` was changed from
+``lib`` to ``lib;lib64`` so that ``lib64`` is also searched for library files.
 
 04-18
 =====
@@ -32,7 +47,7 @@ optimizing functions with
 =====
 If :ref:`cmake@cppad_tape_addr_type` was chosen to be `size_t` ,
 a multiple definition of ``setup_random`` compiler error would occur.
-This has been fixed. 
+This has been fixed.
 
 
 02-09
