@@ -2,14 +2,14 @@
 # define CPPAD_CORE_CHKPOINT_ONE_FOR_SPARSE_JAC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 template <class Base>
 template <class sparsity_type>
-bool checkpoint<Base>::for_sparse_jac(
+bool checkpoint<Base>::for_sparse_jac_sparsity_type(
    size_t                                  q  ,
    const sparsity_type&                    r  ,
           sparsity_type&                    s  ,
@@ -61,7 +61,7 @@ bool checkpoint<Base>::for_sparse_jac(
    size_t thread = thread_alloc::thread_num();
    allocate_member(thread);
    //
-   return for_sparse_jac< vectorBool >(q, r, s, x);
+   return for_sparse_jac_sparsity_type< vectorBool >(q, r, s, x);
 }
 template <class Base>
 bool checkpoint<Base>::for_sparse_jac(
@@ -73,7 +73,7 @@ bool checkpoint<Base>::for_sparse_jac(
    size_t thread = thread_alloc::thread_num();
    allocate_member(thread);
    //
-   return for_sparse_jac< vector<bool> >(q, r, s, x);
+   return for_sparse_jac_sparsity_type< vector<bool> >(q, r, s, x);
 }
 template <class Base>
 bool checkpoint<Base>::for_sparse_jac(

@@ -10,6 +10,7 @@
    rpath
    msys
    dev
+   Woverloaded
 }
 
 Release Notes for 2025
@@ -17,6 +18,18 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+12-14
+=====
+The :ref:`chkpoint_one-name` source code,
+when compiled with g++ version 15.2.1,
+was causing the following warnings:
+{xrst_code text}
+   ... rev_sparse_hes ... was hidden [-Woverloaded-virtual=]
+   ... rev_sparse_jac ... was hidden [-Woverloaded-virtual=]
+   ... for_sparse_jac ... was hidden [-Woverloaded-virtual=]
+{xrst_code}
+This has been fixed.
 
 12-07
 =====
