@@ -2,14 +2,14 @@
 # define CPPAD_CORE_CHKPOINT_ONE_REV_SPARSE_HES_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 template <class Base>
 template <class sparsity_type>
-bool checkpoint<Base>::rev_sparse_hes(
+bool checkpoint<Base>::rev_sparse_hes_sparsity_type(
    const vector<bool>&                     vx ,
    const vector<bool>&                     s  ,
           vector<bool>&                     t  ,
@@ -100,7 +100,7 @@ bool checkpoint<Base>::rev_sparse_hes(
    size_t thread = thread_alloc::thread_num();
    allocate_member(thread);
    //
-   return rev_sparse_hes< vectorBool >(vx, s, t, q, r, u, v, x);
+   return rev_sparse_hes_sparsity_type< vectorBool >(vx, s, t, q, r, u, v, x);
 }
 template <class Base>
 bool checkpoint<Base>::rev_sparse_hes(
@@ -116,7 +116,7 @@ bool checkpoint<Base>::rev_sparse_hes(
    size_t thread = thread_alloc::thread_num();
    allocate_member(thread);
    //
-   return rev_sparse_hes< vector<bool> >(vx, s, t, q, r, u, v, x);
+   return rev_sparse_hes_sparsity_type< vector<bool> >(vx, s, t, q, r, u, v, x);
 }
 template <class Base>
 bool checkpoint<Base>::rev_sparse_hes(
