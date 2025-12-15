@@ -11,10 +11,29 @@
    msys
    dev
    Woverloaded
+   azmul
 }
 
 Release Notes for 2025
 ######################
+
+pull_232
+********
+Let p denote a dynamic parameter, z denote the constant zero,
+and e denote the constant one.
+The number of dynamic parameter operations was reduced by
+recognizing the following special cases (where p is a dynamic parameter:
+{xrst_code text}
+   p = p + z
+   p = p - z
+   p = p * e
+   p = p / e
+   e = pow(p, z)
+   z = pow(z, p)
+   z = azmul(z, p)
+   z = azmul(p, z)
+{xrst_code}
+
 
 mm-dd
 *****
