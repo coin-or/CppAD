@@ -17,22 +17,6 @@
 Release Notes for 2025
 ######################
 
-pull_232
-********
-Let p denote a dynamic parameter, z denote the constant zero,
-and e denote the constant one.
-The number of dynamic parameter operations was reduced by
-recognizing the following special cases (where p is a dynamic parameter:
-{xrst_code text}
-   p = p + z
-   p = p - z
-   p = p * e
-   p = p / e
-   e = pow(p, z)
-   z = pow(z, p)
-   z = azmul(z, p)
-   z = azmul(p, z)
-{xrst_code}
 
 
 mm-dd
@@ -40,15 +24,30 @@ mm-dd
 
 12-14
 =====
-The :ref:`chkpoint_one-name` source code,
-when compiled with g++ version 15.2.1,
-was causing the following warnings:
-{xrst_code text}
-   ... rev_sparse_hes ... was hidden [-Woverloaded-virtual=]
-   ... rev_sparse_jac ... was hidden [-Woverloaded-virtual=]
-   ... for_sparse_jac ... was hidden [-Woverloaded-virtual=]
-{xrst_code}
-This has been fixed.
+#. Let p denote a dynamic parameter, z denote the constant zero,
+   and e denote the constant one.
+   The number of dynamic parameter operations was reduced by
+   recognizing the following special cases (where p is a dynamic parameter:
+   {xrst_code text}
+      p = p + z
+      p = p - z
+      p = p * e
+      p = p / e
+      e = pow(p, z)
+      z = pow(z, p)
+      z = azmul(z, p)
+      z = azmul(p, z)
+   {xrst_code}
+
+#. The :ref:`chkpoint_one-name` source code,
+   when compiled with g++ version 15.2.1,
+   was causing the following warnings:
+   {xrst_code text}
+      ... rev_sparse_hes ... was hidden [-Woverloaded-virtual=]
+      ... rev_sparse_jac ... was hidden [-Woverloaded-virtual=]
+      ... for_sparse_jac ... was hidden [-Woverloaded-virtual=]
+   {xrst_code}
+   This has been fixed.
 
 12-07
 =====
