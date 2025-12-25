@@ -340,7 +340,7 @@ ENDIF( debug_even_or_odd )
 print_variable(CMAKE_SYSTEM_NAME)
 print_variable(cppad_debug_which)
 print_variable(CMAKE_BUILD_TYPE)
-MESSAGE(STATUS "make check: avialable")
+MESSAGE(STATUS "make check: available")
 # -----------------------------------------------------------------------------
 # CMAKE_INSTALL_PREFIX
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
