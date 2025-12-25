@@ -94,7 +94,7 @@ bool team_example(void)
 
    size_t num_threads = NUMBER_THREADS;
 
-   // Check that no memory is in use or avialable at start
+   // Check that no memory is in use or available at start
    // (using thread_alloc in sequential mode)
    size_t thread_num;
    for(thread_num = 0; thread_num < num_threads; thread_num++)

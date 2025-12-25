@@ -190,7 +190,7 @@ bool check_alignment(void)
    // check that it is aligned
    ok &= (array_size_t % n_byte) == 0;
 
-   // return memory to avialable pool
+   // return memory to available pool
    thread_alloc::delete_array(array_ptr);
 
    return ok;
