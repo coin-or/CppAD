@@ -14,7 +14,7 @@ Program
 {xrst_code cpp} */
 # include <cppad/utility/speed_test.hpp>
 
-// Some compilers have gotten smarter and do not calucate somthing that is not used
+// Some compilers have gotten smarter and do not calculate something that is not used
 // so make the result a global.
 double global_result = 0.0;
 

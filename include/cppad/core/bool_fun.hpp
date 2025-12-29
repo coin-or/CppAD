@@ -168,7 +168,7 @@ Deprecated name for CPPAD_BOOL_UNARY
 
 /*!
 Link a function name, and AD value pair to function call with base argument
-and bool retrun value.
+and bool return value.
 
 \param FunName
 is the name of the function that we are linking.
@@ -210,7 +210,7 @@ Deprecated name for CPPAD_BOOL_BINARY
 
 /*!
 Link a function name, and two AD values to function call with base arguments
-and bool retrun value.
+and bool return value.
 
 \param FunName
 is the name of the function that we are linking.

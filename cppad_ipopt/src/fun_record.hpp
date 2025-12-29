@@ -93,7 +93,7 @@ void fun_record(
    // start the recording
    CppAD::Independent(u);
 
-   // record the evaulation of r_k (u)
+   // record the evaluation of r_k (u)
    ADVector r_k = fg_info->eval_r(k, u);
    CPPAD_ASSERT_KNOWN( r_k.size() == p[k] ,
    "cppad_ipopt_nlp: eval_r return value size not equal to p[k]."

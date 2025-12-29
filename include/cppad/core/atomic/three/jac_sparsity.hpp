@@ -133,7 +133,7 @@ what is the type, in afun(ax, ay), for each component of x.
 
 \param dependency [in]
 if true, calculate dependency pattern,
-otherwise calcuate sparsity pattern.
+otherwise calculate sparsity pattern.
 
 \param select_x [in]
 which domain components to include in the dependency or sparsity pattern.
@@ -158,15 +158,15 @@ bool atomic_three<Base>::jac_sparsity(
 // END_PROTOTYPE
 {  return false; }
 /*!
-Link from forward Jacobian sparsity calcuations to atomic_three
+Link from forward Jacobian sparsity calculations to atomic_three
 
 \tparam InternalSparsity
 Is the type used for internal sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param dependency
-if true, calcuate dependency pattern,
-otherwise calcuate sparsity pattern.
+if true, calculate dependency pattern,
+otherwise calculate sparsity pattern.
 
 \param parameter_x
 is parameter arguments to the function, other components are nan.
@@ -204,7 +204,7 @@ bool atomic_three<Base>::for_jac_sparsity(
    InternalSparsity&                var_sparsity )
 {  typedef typename InternalSparsity::const_iterator iterator;
 
-   // number of arguments and resutls for this atomic function
+   // number of arguments and results for this atomic function
    size_t n = x_index.size();
    size_t m = y_index.size();
 
@@ -254,15 +254,15 @@ bool atomic_three<Base>::for_jac_sparsity(
    return true;
 }
 /*!
-Link from reverse Jacobian sparsity calcuations to atomic_three
+Link from reverse Jacobian sparsity calculations to atomic_three
 
 \tparam InternalSparsity
 Is the type used for internal sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param dependency
-if true, calcuate dependency pattern,
-otherwise calcuate sparsity pattern.
+if true, calculate dependency pattern,
+otherwise calculate sparsity pattern.
 
 \param parameter_x
 is parameter arguments to the function, other components are nan.
@@ -280,15 +280,15 @@ This size of y_index is m, the number of results for this atomic function.
 
 \param var_sparsity
 On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
-is the sparsity of the outter function with respect to the i-th
+is the sparsity of the outer function with respect to the i-th
 result for this atomic function.
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the outter function with repsect to the j-th
+is the sparsity for the outer function with repsect to the j-th
 argument to this atomic function.
 On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the outter function with repsect to the j-th
+is the sparsity for the outer function with repsect to the j-th
 argument to this atomic function with the atomic function results
-removed as arguments to the outter function.
+removed as arguments to the outer function.
 
 \return
 is true if the computation succeeds.
@@ -304,7 +304,7 @@ bool atomic_three<Base>::rev_jac_sparsity(
    InternalSparsity&                var_sparsity )
 {  typedef typename InternalSparsity::const_iterator iterator;
 
-   // number of arguments and resutls for this atomic function
+   // number of arguments and results for this atomic function
    size_t n = x_index.size();
    size_t m = y_index.size();
 

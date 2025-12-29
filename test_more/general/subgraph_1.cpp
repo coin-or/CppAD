@@ -62,8 +62,8 @@ namespace {
       (*atom_g)(au, av);
       ay[6] = av[0];
       //
-      // variable + variable operatros that optimizier will change to
-      // cumulative sumation
+      // variable + variable operatros that optimizer will change to
+      // cumulative summation
       ay[7] = 0.0;
       for(size_t j = 0; j < n; ++j)
          ay[7] += ax[j];

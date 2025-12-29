@@ -6,7 +6,7 @@
 #
 # variable: (out)
 # is the variable we are setting to its default value.
-# The varaiable can be changed on the cmake command line (or in the camke gui).
+# The variable can be changed on the cmake command line (or in the camke gui).
 # The final value of the variable is printed with the cmake output.
 #
 # default: (in)

@@ -153,7 +153,7 @@ bool multi_newton_setup(
    epsilon_ = epsilon;
    max_itr_ = max_itr;
 
-   // resize the work vector to accomidate the number of threads
+   // resize the work vector to accommodate the number of threads
    ok &= work_all_.size() == 0;
    work_all_.resize(num_threads);
 
@@ -433,7 +433,7 @@ bool multi_newton_takedown(vector<double>& xout)
 # else
       delete work_all_[thread_num];
 # endif
-      // Note that xout corresponds to memroy that is inuse by master
+      // Note that xout corresponds to memory that is inuse by master
       // (so we can only chech have freed all their memory).
       if( thread_num > 0 )
       {  // check that there is no longer any memory inuse by this thread
@@ -843,7 +843,7 @@ namespace { // empty namespace
       return;
    }
 
-   // evaulate the function and its derivative
+   // evaluate the function and its derivative
    void fun_no(double x, double& f, double& df)
    {  f  = f_eval(x);
       df = df_direct(x);
@@ -882,7 +882,7 @@ namespace { // empty namespace
       return;
    }
 
-   // Repeat computation of all the zeros a specied number of times
+   // Repeat computation of all the zeros a specified number of times
    void test_repeat(size_t repeat)
    {  size_t i;
       for(i = 0; i < repeat; i++)

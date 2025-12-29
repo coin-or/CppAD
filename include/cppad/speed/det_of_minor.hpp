@@ -231,7 +231,7 @@ Scalar det_of_minor(
       // row R(0) and column C(j) removed.
       Scalar detS = det_of_minor(a, m, n - 1, r, c);
       //
-      // restore column with index j in represenation of M as a minor of A
+      // restore column with index j in representation of M as a minor of A
       c[Cj1] = Cj;
       //
       // detM

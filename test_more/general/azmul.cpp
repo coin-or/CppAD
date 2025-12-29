@@ -14,7 +14,7 @@ namespace {
       using CppAD::AD;
 
       // Both recordiings are done with the dynamic  parameter p = 0, 1
-      // to make sure does not short circut multiply
+      // to make sure does not short circuit multiply
       for(size_t ip = 0; ip < 2; ++ip)
       {
          // f(p; x) = p[0] * x[0] * x[0]

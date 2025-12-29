@@ -236,7 +236,7 @@ inline void load_forward_0(
    //
    CPPAD_ASSERT_KNOWN(
       size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
-      "VecAD: dynamic parmaeter index out or range during zero order forward"
+      "VecAD: dynamic parameter index out or range during zero order forward"
    );
    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < num_vec_ind );
    //

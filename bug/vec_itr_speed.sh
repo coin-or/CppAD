@@ -15,7 +15,7 @@ if [ "$compiler" != 'g++' ] && [ "$compiler" != 'clang++' ]
 then
    if [ "$compiler" != '' ]
    then
-      echo 'complier is not g++ or clang++'
+      echo 'compiler is not g++ or clang++'
    fi
    ok='no'
 fi
@@ -41,7 +41,7 @@ if [ "$ok" == 'no' ]
 then
    echo
    echo "usage: bug/$name.sh compiler debug opt_level"
-   echo 'complier is:  g++ or clang++'
+   echo 'compiler is:  g++ or clang++'
    echo 'debug is:     yes or no'
    echo 'opt_level is: 0, 1, 2, or 3.'
    exit 1

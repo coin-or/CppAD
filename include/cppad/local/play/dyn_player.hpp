@@ -190,7 +190,7 @@ private:
    //
 public:
    // set all scalars to zero to avoid valgraind warning when ani assignment
-   // occures before values get set.
+   // occurs before values get set.
    // BEGIN_DYN_PLAY
    // dyn_player<Base> dyn_play
    // dyn_player<Base> dyn_play(play)
@@ -357,7 +357,7 @@ public:
       }
       CPPAD_ASSERT_UNKNOWN( i_dyn == dyn2par_index_.size() );
       //
-      // check_dyanmic_dag
+      // check_dynamic_dag
       check_dynamic_dag();
    }
    //

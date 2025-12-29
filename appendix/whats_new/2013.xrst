@@ -251,7 +251,7 @@ optimize (and hence should be faster).
 
 #. The ability to turn on and off checking for :ref:`nan-name` in
    :ref:`Forward-name` mode results has been added; see :ref:`check_for_nan-name` .
-#. Use this option to remove the need to handel ``nan`` as a special
+#. Use this option to remove the need to handle ``nan`` as a special
    case in :ref:`checkpoint<chkpoint_one-name>` functions that
    :ref:`optimize@Atomic Functions` in within
    another function is optimized.

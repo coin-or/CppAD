@@ -85,10 +85,10 @@ class index_sort_element {
 private:
    /// key used to determine position of this element
    Compare key_;
-   /// index vlaue corresponding to this key
+   /// index value corresponding to this key
    Size_t  index_;
 public:
-   /// operator requried by std::sort
+   /// operator required by std::sort
    bool operator<(const index_sort_element& other) const
    {  return key_ < other.key_; }
    /// set the key for this element

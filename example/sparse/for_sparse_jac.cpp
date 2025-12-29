@@ -131,7 +131,7 @@ bool SetCases(void)
    Vector s(m);
    s = f.ForSparseJac(n, r);
 
-   // an interator to a standard set
+   // an iterator to a standard set
    std::set<size_t>::iterator itr;
    bool found;
 

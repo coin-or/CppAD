@@ -67,7 +67,7 @@ bool atomic_mat_mul<Base>::reverse(
    size_t x_offset = n_left * n_middle;
    //
    // u, v, u_offset
-   // note that resize only re-alocates when capacity is not large enough
+   // note that resize only re-allocates when capacity is not large enough
    CppAD::vector<Base> u;
    CppAD::vector<Base> v;
    size_t u_offset;
@@ -170,7 +170,7 @@ bool atomic_mat_mul<Base>::reverse(
    size_t x_offset = n_left * n_middle;
    //
    // u, v, u_offset
-   // note that resize only re-alocates when capacity is not large enough
+   // note that resize only re-allocates when capacity is not large enough
    CppAD::vector< AD<Base> > u;
    CppAD::vector< AD<Base> > v;
    size_t u_offset;

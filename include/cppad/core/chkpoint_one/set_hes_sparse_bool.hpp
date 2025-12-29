@@ -22,7 +22,7 @@ void checkpoint<Base>::set_hes_sparse_bool(void)
    for(size_t i = 0; i < m; i++)
       all_one[i] = true;
 
-   // set version of sparsity for n by n idendity matrix
+   // set version of sparsity for n by n identity matrix
    vectorBool identity(n * n);
    for(size_t j = 0; j < n; j++)
    {  for(size_t i = 0; i < n; i++)

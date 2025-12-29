@@ -34,7 +34,7 @@ Float sumGauss(const Float &x, const CppAD::vector<Float> &a)
    // number of Gaussians
    size_t n = na / 3;
 
-   // check the restricitons on na
+   // check the restrictions on na
    assert( na == n * 3 );
 
    // declare temporaries used inside of loop
@@ -69,7 +69,7 @@ void sumGauss(float x, float a[], float *y, float dyda[], size_t na)
    // use the shorthand ADfloat for the type CppAD::AD<float>
    typedef CppAD::AD<float> ADfloat;
 
-   // vector for indpendent variables
+   // vector for independent variables
    CppAD::vector<ADfloat> A(na);      // used with template function above
    CppAD::vector<float>   acopy(na);  // used for derivative calculations
 
@@ -137,7 +137,7 @@ bool Interface2C(void)
    for(i = 0; i < na; i++)
       a[i] = (float) (i+1);
 
-   // evaulate function and derivative
+   // evaluate function and derivative
    sumGauss(x, a, &y, dyda, na);
 
    // compare dyda to central difference approximation for deriative

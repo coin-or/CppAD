@@ -12,7 +12,7 @@
 # eigen_LINK_LIBRARIES: (out)
 # if cppad_has_eigen is 1,
 # is a list of absolute paths to libraries necessary to use eigen
-# (should be empty becasuse eigen is a header only library).
+# (should be empty because eigen is a header only library).
 #
 # This macro may use variables with the name eigen_*
 MACRO(eigen_info)

@@ -29,7 +29,7 @@ is a random iterator for this operation sequence.
 
 \param dep_taddr
 is the vector mapping user dependent variable indices
-to the correpsonding variable in the recording.
+to the corresponding variable in the recording.
 
 \param i_dep
 is the user index for his dependent variable;
@@ -103,7 +103,7 @@ void subgraph_info::get_rev(
    size_t i_op = random_itr.var2op(i_var);
    i_op        = size_t( map_user_op_[i_op] );
 
-   // if this variable depends on the selected indepent variables
+   // if this variable depends on the selected independent variables
    // process its subgraph
    CPPAD_ASSERT_UNKNOWN( in_subgraph_[i_op] != i_dep )
    if( in_subgraph_[i_op] <= depend_yes )
@@ -148,7 +148,7 @@ void subgraph_info::get_rev(
             in_subgraph_[j_op] = i_dep;
          }
       }
-      // we are done scaning this subgraph operator
+      // we are done scanning this subgraph operator
       ++sub_index;
    }
 }

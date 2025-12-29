@@ -100,7 +100,7 @@ bool test_pow(void)
 
    return ok;
 }
-} // END_EMPYT_NAMESPACE
+} // END_EMPTY_NAMESPACE
 
 bool abs_normal(void)
 {  bool ok = true;

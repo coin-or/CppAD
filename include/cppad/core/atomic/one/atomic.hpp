@@ -789,7 +789,7 @@ the base type for the atomic operation.
 \par afun
 name of the CppAD defined function that corresponding to this operation.
 Note that afun, preceeded by a pound sign,
-is a version of afun with quotes arround it.
+is a version of afun with quotes around it.
 
 \par forward
 name of the user defined function that computes corresponding
@@ -859,7 +859,7 @@ public:
    static void clear(void)
    {  CPPAD_ASSERT_KNOWN(
          false,
-         "Depreacted API uses user_atomic<Base>::clear()"
+         "Deprecated API uses user_atomic<Base>::clear()"
       );
    }
    /// type for user routine that computes forward mode results
@@ -1020,8 +1020,8 @@ public:
       vector<Base> y(m * (q+1));
       vector<bool> empty;
 
-      // atomic_one interface can only handel one order at a time
-      // so must just throuh hoops to get multiple orders at one time.
+      // atomic_one interface can only handle one order at a time
+      // so must just through hoops to get multiple orders at one time.
       bool ok = true;
       for(k = p; k <= q; k++)
       {  for(j = 0; j < n; j++)

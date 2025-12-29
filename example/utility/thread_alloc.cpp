@@ -40,11 +40,11 @@ bool raw_allocate(void)
    // repeatedly allocate enough memory for at least two size_t values.
    size_t min_size_t = 2;
    size_t min_bytes  = min_size_t * sizeof(size_t);
-   size_t n_outter   = 10;
+   size_t n_outer   = 10;
    size_t n_inner    = 5;
-   for(size_t i = 0; i < n_outter; i++)
+   for(size_t i = 0; i < n_outer; i++)
    {  // Do not use CppAD::vector here because its use of thread_alloc
-      // complicates the inuse and avaialble results.
+      // complicates the inuse and available results.
       std::vector<void*> v_ptr(n_inner);
       // cap_bytes will be set by get_memory
       size_t cap_bytes = 0; // set here to avoid MSC warning

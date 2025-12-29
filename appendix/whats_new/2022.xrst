@@ -10,7 +10,6 @@
    div
    dll
    github
-   handeling
    isinf
    isnan
    libs
@@ -65,7 +64,7 @@ to ``zdouble`` ( *i* ) where *i* is ``long`` .
 
 08-30
 =====
-The :ref:`optimize-name` operations was not handeling
+The :ref:`optimize-name` operations was not handling
 comparison operators that only had parameters,
 with at least one dynamic parameter.
 This has been fixed.

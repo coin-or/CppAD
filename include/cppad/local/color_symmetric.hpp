@@ -92,7 +92,7 @@ void color_symmetric_cppad(
       pair_needed[ col[k1] ].insert( row[k1] );
    }
 
-   // order the rows decending by number of pairs needed
+   // order the rows descending by number of pairs needed
    CppAD::vector<size_t> key(m), order2row(m);
    for(size_t i1 = 0; i1 < m; i1++)
    {  CPPAD_ASSERT_UNKNOWN( pair_needed[i1].size() <= m );

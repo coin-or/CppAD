@@ -266,7 +266,7 @@ public:
    void          *ptr;   // value returned by TrackNew
    TrackElement *next;   // next element in linked list
 
-   // default contructor (used to initialize root)
+   // default constructor (used to initialize root)
    TrackElement(void)
    : file(""), line(0), ptr(nullptr), next(nullptr)
    { }
@@ -387,7 +387,7 @@ Type *TrackNewVec(
    // get the root
    TrackElement *root = TrackElement::Root();
 
-   // put this elemenent at the front of linked list
+   // put this element at the front of linked list
    E->next    = root->next;
    root->next = E;
 

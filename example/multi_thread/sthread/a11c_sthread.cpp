@@ -97,7 +97,7 @@ bool a11c(void)
       sthread[j] = new std::thread(worker[j]);
    }
 
-   // do this threads protion of the work
+   // do this threads portion of the work
    worker[0]();
 
    // wait for other threads to finish

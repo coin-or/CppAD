@@ -59,7 +59,7 @@ struct options_t {
 inline options_t extract_option(const std::string& options)
 // END_OPTIMIZE_OPTIONS
 {  //
-   // result: defualt value
+   // result: default value
    struct options_t result = {
       true,  // compare_op
       true,  // conditional_skip

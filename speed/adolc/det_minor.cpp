@@ -94,7 +94,7 @@ bool link_det_minor(
       {  // get a matrix
          CppAD::uniform_01(size_t(n), matrix);
          //
-         // recrod the tape
+         // record the tape
          setup(tag, size, matrix);
          static_size = size;
       }

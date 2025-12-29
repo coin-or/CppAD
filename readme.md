@@ -17,5 +17,5 @@ SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
   procedure can be used for this purpose, but it will eventually be removed.
 
 ## Getting Started
-  [get_sarted](https://cppad.readthedocs.io/latest/get_started.cpp.html)
+  [get_started](https://cppad.readthedocs.io/latest/get_started.cpp.html)
   demonstrates using CppAD by computing the derivative of a simple example function.

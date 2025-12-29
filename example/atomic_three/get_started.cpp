@@ -125,7 +125,7 @@ Recording
 =========
 {xrst_spell_off}
 {xrst_code cpp} */
-   // Create the function f(x) which is eqaul to g(x) for this example.
+   // Create the function f(x) which is equal to g(x) for this example.
    //
    // domain space vector
    size_t  n  = 1;

@@ -126,7 +126,7 @@ $srccode%cpp% */
          return ok;
       // ------------------------------------------------------------------
       // Second order forward mode.
-      // This case is neede if second order forwrd mode is used.
+      // This case is neede if second order forward mode is used.
       // f'(x) = [   0,   0, 2 x_2 ]
       //         [ x_1, x_0,     0 ]
       //

@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# Trying to figure out why ADFun::Forward appers twice where there is only
+# Trying to figure out why ADFun::Forward appears twice where there is only
 # one implementation.
 #
 # ------------------------------------------------------------------------------

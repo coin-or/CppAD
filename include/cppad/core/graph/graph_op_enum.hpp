@@ -20,7 +20,7 @@ C++ AD Graph Operator Enum Type
 
 {xrst_comment
    The following headings are referenced by comments in cpp_graph_op.cpp:
-   Atomic Fucntion, Comparison, Discrete Function, Print, Summation
+   Atomic Function, Comparison, Discrete Function, Print, Summation
 }
 
 Unary

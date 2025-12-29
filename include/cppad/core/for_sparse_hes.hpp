@@ -159,7 +159,7 @@ applies.
 
 \param set_type
 is a bool value. This argument is used to dispatch to the proper source
-code depending on the vlaue of SetVector::value_type.
+code depending on the value of SetVector::value_type.
 
 \param r
 See ForSparseHes(r, s).
@@ -168,7 +168,7 @@ See ForSparseHes(r, s).
 See ForSparseHes(r, s).
 
 \param h
-is the return value for the corresponging call to ForSparseJac(q, s).
+is the return value for the corresponding call to ForSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class SetVector>
@@ -205,7 +205,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
       CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]  == j + 1);
       CPPAD_ASSERT_UNKNOWN( play_.GetOp(j + 1) == local::InvOp );
    }
-   // sparsity pattern correspnding to s
+   // sparsity pattern corresponding to s
    local::sparse::pack_setvec rev_jac_pattern;
    rev_jac_pattern.resize(num_var_tape_, 1);
    for(size_t i = 0; i < m; i++)
@@ -273,7 +273,7 @@ applies.
 \param set_type
 is a std::set<size_t> value.
 This argument is used to dispatch to the proper source
-code depending on the vlaue of SetVector::value_type.
+code depending on the value of SetVector::value_type.
 
 \param r
 See ForSparseHes(r, s).
@@ -282,7 +282,7 @@ See ForSparseHes(r, s).
 See ForSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to ForSparseJac(q, s).
+is the return value for the corresponding call to ForSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class SetVector>
@@ -326,7 +326,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
    {  size_t j = *itr_1++;
       select_domain[j] = true;
    }
-   // sparsity pattern correspnding to s
+   // sparsity pattern corresponding to s
    local::sparse::list_setvec rev_jac_pattern;
    rev_jac_pattern.resize(num_var_tape_, 1);
    itr_1 = s[0].begin();
@@ -497,7 +497,7 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
    CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0   );
    CPPAD_ASSERT_UNKNOWN( s.size()                    == m );
 
-   // Array that holds the reverse Jacobiain dependcy flags.
+   // Array that holds the reverse Jacobiain dependency flags.
    // Initialize as true for dependent variables, flase for others.
    local::pod_vector<bool> RevJac(num_var_tape_);
    for(size_t i = 0; i < num_var_tape_; i++)

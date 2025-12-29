@@ -10,7 +10,7 @@ usage: adolc_usrparms.sh <dir>
        adolc_usrparms.sh <dir> <bufsize> <tbufsize> show
        adolc_usrparms.sh <dir> <bufsize> <tbufsize> modify
 
-The frist usage prints the value of BUFSIZE and TBUFSIZE.
+The first usage prints the value of BUFSIZE and TBUFSIZE.
 The second usage show how the usrparms.h file would be modified.
 The third usage actually modifies the file.
 

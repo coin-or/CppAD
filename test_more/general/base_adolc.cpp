@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
-// adolc examples should supppress conversion warnings
+// adolc examples should suppress conversion warnings
 # include <cppad/wno_conversion.hpp>
 
 # include <adolc/adouble.h>

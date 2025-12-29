@@ -146,7 +146,7 @@ bool get_op_previous(
       switch( random_itr.get_op(i_op) )
       {
          // ----------------------------------------------------------------
-         // these operators never match pevious operators
+         // these operators never match previous operators
          case BeginOp:
          case CExpOp:
          case CSkipOp:

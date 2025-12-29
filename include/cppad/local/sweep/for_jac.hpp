@@ -126,7 +126,7 @@ void for_jac(
       CPPAD_ASSERT_UNKNOWN( j == play->num_var_vec_ind() );
    }
 
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
    //
    //

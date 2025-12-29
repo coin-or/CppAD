@@ -369,7 +369,7 @@ bool norm_sq(void)
    }
    //
    // optimize
-   // this uses the rev_depend overide above
+   // this uses the rev_depend override above
    f.optimize("val_graph no_conditional_skip");
    //
    // ok

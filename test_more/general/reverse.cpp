@@ -68,7 +68,7 @@ bool reverse_one(void)
    u1[0] = 2.; u1[1] = -1.; u1[2] = 3.;
    f.Forward(p, u1);
 
-   // Evaluate the derivaties with respect to u0 of the functions
+   // Evaluate the derivatives with respect to u0 of the functions
    // order 0: v[0] *      z_0 (0, u0, u1) + v[1] *      z_1 (0, u0, u1)
    // order 1: v[0] * d/dt z_0 (0, u0, u1) + v[1] * d/dt z_1 (0, u0, u1)
    p    = 2;

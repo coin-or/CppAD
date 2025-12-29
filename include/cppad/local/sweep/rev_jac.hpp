@@ -163,7 +163,7 @@ void rev_jac(
    }
    // ----------------------------------------------------------------------
    //
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
    //
    // pointer to the beginning of the parameter vector

@@ -128,7 +128,7 @@ bool runge_45(void)
       term /= double(j+1);
    }
 
-   // evalute f'(b)
+   // evaluate f'(b)
    CPPAD_TESTVECTOR(double) d_xf(n);
    d_xf = f.Jacobian(b);
 

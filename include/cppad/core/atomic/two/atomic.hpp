@@ -605,7 +605,7 @@ public:
 };
 } // END_CPPAD_NAMESPACE
 
-// functitons implemented in cppad/core/atomic_base files
+// functions implemented in cppad/core/atomic_base files
 # include <cppad/core/atomic/two/ctor.hpp>
 # include <cppad/core/atomic/two/option.hpp>
 # include <cppad/core/atomic/two/afun.hpp>

@@ -62,10 +62,10 @@ private:
    /// name of this function (so far only json operations use this value)
    std::string function_name_;
 
-   /// Did the previous optimzation exceed the collision limit
+   /// Did the previous optimization exceed the collision limit
    bool exceed_collision_limit_;
 
-   /// Has this ADFun object been optmized
+   /// Has this ADFun object been optimized
    bool has_been_optimized_;
 
    /// Check for nan's and report message to user (default value is true).
@@ -641,7 +641,7 @@ public:
    size_t size_text(void) const
    {  return play_.num_var_text(); }
 
-   /// number of variables in opertion sequence
+   /// number of variables in operation sequence
    size_t size_var(void) const
    {  return num_var_tape_; }
 
@@ -807,7 +807,7 @@ public:
    template <class ADvector>
    void Dependent(const ADvector &y);
 
-   /// Deprecated: number of variables in opertion sequence
+   /// Deprecated: number of variables in operation sequence
    size_t Size(void) const
    {  return num_var_tape_; }
 

@@ -175,7 +175,7 @@ else
 fi
 if ! $builder cppad_lib
 then
-   echo "test_one.sh: $builder cppad_lib failed: see erros above"
+   echo "test_one.sh: $builder cppad_lib failed: see errors above"
    exit 1
 fi
 cd ..

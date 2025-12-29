@@ -10,7 +10,7 @@
 # include <cppad/core/atomic/four/atomic.hpp>
 namespace CppAD { namespace local { namespace val_graph {
 /*
-This is similar to the routins in cppad/local/sweep/call_atomic.hpp,
+This is similar to the routines in cppad/local/sweep/call_atomic.hpp,
 but it is used by val_graph instead of the sweeps.
 */
 /*

@@ -158,7 +158,7 @@ namespace {
       }
       else
       {  // need full sparsity pattern
-         // (could use subset_sparsity, but pretend we do not konw that)
+         // (could use subset_sparsity, but pretend we do not know that)
          sparsity pattern;
          calc_sparsity(pattern, f);
          //

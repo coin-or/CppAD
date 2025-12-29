@@ -4,7 +4,7 @@
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 set -e -u
 # ----------------------------------------------------------------------------
-# This sript is 'test_*' instead of 'check_*' because it requires
+# This script is 'test_*' instead of 'check_*' because it requires
 # that cmake has already cerated build/bukld.ninja or Makefile.
 program='bin/test_multi_thread.sh'
 if [ "$0" != "$program" ]
@@ -27,12 +27,12 @@ then
 fi
 if [ "$builder" == 'ninja' ] && [ ! -e build/build.ninja ]
 then
-   echo "$program: builder is ninja and connot find build/build.ninja"
+   echo "$program: builder is ninja and cannot find build/build.ninja"
    exit 1
 fi
 if [ "$builder" == 'make' ] && [ ! -e build/Makefile ]
 then
-   echo "$program: builder is make and connot file build/Makefile"
+   echo "$program: builder is make and cannot file build/Makefile"
    exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ fi
 #
 if [ "$skip" != '' ]
 then
-   echo "Skipped following muti_treading tests: $skip"
+   echo "Skipped following multi_treading tests: $skip"
 fi
 echo 'test_multi_thread.sh: OK'
 exit 0

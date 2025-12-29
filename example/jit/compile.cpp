@@ -61,7 +61,7 @@ bool compile(void)
 # endif
    //
    if( compile == "" )
-   {  std::cout << ": cannot determine C compiler to use so skiping test: ";
+   {  std::cout << ": cannot determine C compiler to use so skipping test: ";
       return ok;
    }
    // std::cout << "compile = " << compile << "\n";

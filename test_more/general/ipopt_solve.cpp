@@ -82,7 +82,7 @@ bool ipopt_solve(void)
    base_options += "Numeric tol          1e-6\n";
    // derivative testing
    base_options += "String  derivative_test            second-order\n";
-   // maximum amount of random pertubation; e.g.,
+   // maximum amount of random perturbation; e.g.,
    // when evaluation finite diff
    base_options += "Numeric point_perturbation_radius  0.\n";
 

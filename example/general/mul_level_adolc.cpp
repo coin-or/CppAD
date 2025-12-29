@@ -168,7 +168,7 @@ bool mul_level_adolc(void)
       ok &= CppAD::NearEqual(dw[j], vj, eps, eps);
    }
 
-   // make memory avaialble for other use by this thread
+   // make memory available for other use by this thread
    thread_alloc::delete_array(w);
    thread_alloc::delete_array(dw);
    return ok;

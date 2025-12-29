@@ -4,7 +4,7 @@ set -e -u
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# This sript name is 'test_*' instead of 'check_*' because it requires
+# This script name is 'test_*' instead of 'check_*' because it requires
 # that cmake has already cerated build/bukld.ninja or Makefile.
 program='bin/test_install.sh'
 if [ "$0" != "$program" ]
@@ -28,12 +28,12 @@ then
 fi
 if [ "$builder" == 'ninja' ] && [ ! -e build/build.ninja ]
 then
-   echo "$program: builder is ninja and connot find build/build.ninja"
+   echo "$program: builder is ninja and cannot find build/build.ninja"
    exit 1
 fi
 if [ "$builder" == 'make' ] && [ ! -e build/Makefile ]
 then
-   echo "$program: builder is make and connot file build/Makefile"
+   echo "$program: builder is make and cannot file build/Makefile"
    exit 1
 fi
 if ! echo "$standard" | grep '^--c++[0-9][0-9]' > /dev/null

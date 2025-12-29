@@ -237,7 +237,7 @@ This allocation should be faster if the following conditions hold:
    Use omp_alloc to get a specified amount of memory.
 
    If the memory allocated by a previous call to get_memory is now
-   avaialable, and min_bytes is between its previous value
+   available, and min_bytes is between its previous value
    and the previous cap_bytes, this memory allocation will have
    optimal speed. Otherwise, the memory allocation is more complicated and
    may have to wait for other threads to complete an allocation.
@@ -249,7 +249,7 @@ This allocation should be faster if the following conditions hold:
    The actual number of bytes of memory obtained for use.
 
    \return
-   pointer to the beginning of the memory allocted for use.
+   pointer to the beginning of the memory allocated for use.
    */
    static void* get_memory(size_t min_bytes, size_t& cap_bytes)
    {  return thread_alloc::get_memory(min_bytes, cap_bytes); }
@@ -416,7 +416,7 @@ It is the number of bytes currently in use by the specified thread.
    \param thread [in]
    Thread for which we are determining the amount of memory
    (must be < CPPAD_MAX_NUM_THREADS).
-   Durring parallel execution, this must be the thread
+   During parallel execution, this must be the thread
    that is currently executing.
 
    \return
@@ -636,7 +636,7 @@ is the same as for the corresponding call to ``create_array`` .
    of the array.
 
    \par
-   Durring parallel execution, the current thread must be the same
+   During parallel execution, the current thread must be the same
    as during the corresponding call to create_array.
    */
    template <class Type>

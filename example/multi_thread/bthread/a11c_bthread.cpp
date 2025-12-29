@@ -96,7 +96,7 @@ bool a11c(void)
       bthread[j] = new boost::thread(worker[j]);
    }
 
-   // do this threads protion of the work
+   // do this threads portion of the work
    worker[0]();
 
    // wait for other threads to finish

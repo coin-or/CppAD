@@ -127,7 +127,7 @@ bool sparse_hessian(void)
       col[k] = j;
       k++;
    }
-   // only off diagonal non-zero elemenet in upper triangle
+   // only off diagonal non-zero element in upper triangle
    row[k] = 0;
    col[k] = 1;
    k++;

@@ -22,7 +22,7 @@ void checkpoint<Base>::set_hes_sparse_set(void)
    for(size_t i = 0; i < m; i++)
       all_one[i] = true;
 
-   // set version of sparsity for n by n idendity matrix
+   // set version of sparsity for n by n identity matrix
    local::sparse::list_setvec identity;
    identity.resize(n, n);
    for(size_t j = 0; j < n; j++)

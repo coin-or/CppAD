@@ -300,7 +300,7 @@ bool ode_inverse(void)
    size_t ng = (np_ * nz_ + 1) * 2;
    // number of independent variables
    size_t nx = na_ + ng;
-   // initial vlaue for the variables we are optimizing w.r.t
+   // initial value for the variables we are optimizing w.r.t
    Dvector xi(nx), xl(nx), xu(nx);
    for(i = 0; i < nx; i++)
    {  xi[i] =   0.0; // initial value
@@ -310,7 +310,7 @@ bool ode_inverse(void)
    for(i = 0; i < na_; i++)
       xi[0] = 1.5;   // initial value for a
 
-   // all the difference equations are constrainted to be zero
+   // all the difference equations are constrained to be zero
    Dvector gl(ng), gu(ng);
    for(i = 0; i < ng; i++)
    {  gl[i] = 0.0;

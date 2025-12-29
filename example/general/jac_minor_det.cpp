@@ -17,7 +17,7 @@ Gradient of Determinant Using Expansion by Minors: Example and Test
 {xrst_end jac_minor_det.cpp}
 */
 // BEGIN C++
-// Complex examples should supppress conversion warnings
+// Complex examples should suppress conversion warnings
 # include <cppad/wno_conversion.hpp>
 
 # include <cppad/cppad.hpp>

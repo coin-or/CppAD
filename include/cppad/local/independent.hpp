@@ -44,7 +44,7 @@ void ADTape<Base>::Independent(
    size_t n = x.size();
    CPPAD_ASSERT_KNOWN(
       n > 0,
-      "Indepdendent: the argument vector x has zero size"
+      "Independent: the argument vector x has zero size"
    );
    CPPAD_ASSERT_UNKNOWN( Rec_.num_var() == 0 );
    CPPAD_ASSERT_UNKNOWN( Rec_.get_abort_op_index() == 0 );

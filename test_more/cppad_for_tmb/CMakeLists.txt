@@ -18,7 +18,7 @@ SET(source_list
    multi_atomic_two.cpp
    multi_chkpoint_one.cpp
    multi_chkpoint_two.cpp
-   perfer_reverse.cpp
+   prefer_reverse.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

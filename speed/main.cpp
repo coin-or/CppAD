@@ -413,7 +413,7 @@ namespace {
    // not available test message
    void not_available_message(const char* test_name)
    {  cout << AD_PACKAGE << ": " << test_name;
-      cout << " is not availabe with " << endl;
+      cout << " is not available with " << endl;
       int max_len = 0;
       for(size_t i = 0; i < num_option; i++)
       {  int len = int( std::strlen( option_list[i] ) );

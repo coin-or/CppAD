@@ -45,14 +45,14 @@ MACRO(compile_source_test defined_ok source variable)
    # check that source code compiles
    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
    #
-   # change result varialbe to 0 (1) for fail (succeed).
+   # change result variable to 0 (1) for fail (succeed).
    IF( ${variable} )
       SET(${variable} 1)
    ELSE( ${variable} )
       SET(${variable} 0)
    ENDIF( ${variable} )
    #
-   # check that varialbe is defined
+   # check that variable is defined
    IF( NOT DEFINED ${variable} )
       MESSAGE(FATAL_ERROR
          "compile_source_test: error in CMake script."

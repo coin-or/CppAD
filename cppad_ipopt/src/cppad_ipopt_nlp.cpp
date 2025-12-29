@@ -82,7 +82,7 @@ The following arrays have fixed size which is set during this constructor:
 \li tape_ok_ has size K_. It is initialized as true for indices
  k such that <tt>retape[k]</tt> is false.
 
-\li r_fun_ has size K_. It is initilaize with the default
+\li r_fun_ has size K_. It is initialize with the default
  ADFun constructor. Then, for indices k such that
 <tt>retape[k]</tt> is false, the operation sequence corresponding
 to \f$ r_k (u) \f$ is stored in <tt>r_fun_[k]</tt>.
@@ -249,7 +249,7 @@ is set to the value m_.
 is set to the value of nnz_jac_g_.
 
 \param[out] nnz_h_lag
-is set to the vlaue of nnz_h_lag_.
+is set to the value of nnz_h_lag_.
 
 \param[out] index_style
 is set to C_STYLE; i.e., zeoro based indexing is used in the
@@ -809,7 +809,7 @@ is the dimension of the range space for g(x); i.e., must be equal to m_.
 
 \param[in] lambda
 if values is not NULL, lambda
-is a vector of size m specifing the value of \f$ \lambda \f$
+is a vector of size m specifying the value of \f$ \lambda \f$
 in the expression for \ref Deprecated_Hessian_of_the_Lagragian.
 
 \param[in] new_lambda
@@ -956,7 +956,7 @@ Pass solution information from Ipopt to users solution structure.
 
 \param[in] status
 is value that the Ipopt solution status
-which gets mapped to a correponding value for
+which gets mapped to a corresponding value for
 \n
 <tt>solution_->status</tt>.
 
@@ -965,20 +965,20 @@ is the dimension of the domain space for f(x) and g(x); i.e.,
 it must be equal to n_.
 
 \param[in] x
-is a vector with size n specifing the final solution.
+is a vector with size n specifying the final solution.
 \n
 <tt>solution_->x</tt> is set to be a vector with size n
 and to have the same element values.
 
 \param[in] z_L
-is a vector with size n specifing the Lagragian multipliers for the
+is a vector with size n specifying the Lagragian multipliers for the
 constraint \f$ x^l \leq x \f$.
 \n
 <tt>solution_->z_l</tt> is set to be a vector with size n
 and to have the same element values.
 
 \param[in] z_U
-is a vector with size n specifing the Lagragian multipliers for the
+is a vector with size n specifying the Lagragian multipliers for the
 constraint \f$ x \leq x^u \f$.
 \n
 <tt>solution_->z_u</tt> is set to be a vector with size n
@@ -996,7 +996,7 @@ g(x) at the final solution for x.
 and to have the same element values.
 
 \param[in] lambda
-is a vector with size m specifing the Lagragian multipliers for the
+is a vector with size m specifying the Lagragian multipliers for the
 constraints \f$ g^l \leq g(x) \leq g^u \f$.
 \n
 <tt>solution_->lambda</tt> is set to be a vector with size m

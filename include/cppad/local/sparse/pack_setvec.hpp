@@ -400,7 +400,7 @@ public:
       // initialize count of non-zero bits in this set
       size_t count = 0;
       //
-      // mask corresonding to first bit in Pack
+      // mask corresponding to first bit in Pack
       Pack mask = one_;
       //
       // number of bits in last Packing unit

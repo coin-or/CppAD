@@ -45,7 +45,7 @@ will use ``xpackage`` as a template for your package:
 | |tab| |tab| ``sed -i speed/`` *your_package* / ``$file`` \\
 | |tab| |tab| |tab| ``-e`` ' ``s/xpackage/`` *your_package* /' \\
 | |tab| |tab| |tab| ``-e`` ' ``s/Xpackage/`` *Your_package* /' \\
-| |tab| |tab| |tab| ``-e`` ' ``s/CPPAD_XPACKAGE_SPEED/`` *YOUR_PACKGE* /'
+| |tab| |tab| |tab| ``-e`` ' ``s/CPPAD_XPACKAGE_SPEED/`` *YOUR_PACKAGE* /'
 | |tab| ``done``
 | |tab| ``git checkout speed/CMakeLists.txt``
 | |tab| ``sed -i speed/CMakeLists.txt`` \\

@@ -171,7 +171,7 @@ bool dynamic(void)
    check = p[0] * u[0];
    ok &= CppAD::NearEqual( Value(ay[2]) , check,  eps, eps);
    //
-   // y = f.Foward(0, u)
+   // y = f.Forward(0, u)
    CPPAD_TESTVECTOR(double) y(ny);
    y     = f.Forward(0, u);
    check = c[0] * c[0];
@@ -185,7 +185,7 @@ bool dynamic(void)
    p[0]   = 2.0 * p[0];
    f.new_dynamic(p);
    //
-   // y = f.Foward(0, u)
+   // y = f.Forward(0, u)
    y     = f.Forward(0, u);
    check = c[0] * c[0];
    ok    &= CppAD::NearEqual(y[0] , check,  eps, eps);

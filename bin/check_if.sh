@@ -22,7 +22,7 @@ for file in $list
 do
    if grep '^# *if *0 *$' $file > /dev/null
    then
-      # CppAD uses /* comment */ for all its block commnets
+      # CppAD uses /* comment */ for all its block comments
       echo "$file has an '# if 0' preprocessor command"
       ok="no"
    fi

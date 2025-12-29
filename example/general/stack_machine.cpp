@@ -158,7 +158,7 @@ bool StackMachine(void)
    vector< AD<double> > variable(26);
    variable[0] = X[0];
 
-   // calculate the resutls of the program
+   // calculate the results of the program
    StackMachine( token_stack , variable);
 
    // range space vector

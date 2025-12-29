@@ -230,7 +230,7 @@ new taylor coefficient buffer.
 \par num_direction_taylor_
 If is zero (one), num_direction_taylor_ is set to zero (one).
 Otherwise, if num_direction_taylor_ is zero, it is set to one.
-Othwerwise, num_direction_taylor_ is not modified.
+Otherwise, num_direction_taylor_ is not modified.
 */
 
 template <class Base, class RecBase>

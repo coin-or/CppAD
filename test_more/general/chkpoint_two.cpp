@@ -245,7 +245,7 @@ namespace {
       // now optimize f so that the calculation of au[1] is removed
       f.optimize();
 
-      // number of varialbes after optimization
+      // number of variables after optimization
       // ax[0], ax[1], ax[0] + ax[1], g[0]
       // and phantom variable at index 0
       size_t n_after = f.size_var();

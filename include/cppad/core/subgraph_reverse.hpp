@@ -159,7 +159,7 @@ contains an example and test of this operation.
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file subgraph_reverse.hpp
-Compute derivatvies using reverse mode and subgraphs.
+Compute derivatives using reverse mode and subgraphs.
 */
 
 /// clear all subgraph information
@@ -443,7 +443,7 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
       size_t j = i_op - 1;
       CPPAD_ASSERT_UNKNOWN( i_op == random_itr.var2op( ind_taddr_[j] ) );
       //
-      // return paritial for this independent variable
+      // return partial for this independent variable
       col[c] = j;
       for(size_t k = 0; k < q; k++)
          dw[j * q + k ] = subgraph_partial_[ind_taddr_[j] * q + k];
@@ -451,7 +451,7 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
    //
    CPPAD_ASSERT_KNOWN( ! ( hasnan(dw) && check_for_nan_ ) ,
       "f.subgraph_reverse(dw, q, ell): dw has a nan,\n"
-      "but none of f's Taylor coefficents are nan."
+      "but none of f's Taylor coefficients are nan."
    );
    //
    return;

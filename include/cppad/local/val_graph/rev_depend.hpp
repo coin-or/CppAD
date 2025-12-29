@@ -219,7 +219,7 @@ void tape_t<Value>::rev_depend(
             depend_y[i] = bool( val_use_case[ res_index + i ] );
          //
          // depend_x
-         // only constants (not dynamic parameters) are incldued in con_x
+         // only constants (not dynamic parameters) are included in con_x
          depend_x.resize(nx);
          local::sweep::call_atomic_rev_depend<Value, Value>(
             atomic_index, call_id, con_x, type_x, depend_x, depend_y

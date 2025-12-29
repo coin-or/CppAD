@@ -47,7 +47,7 @@ namespace {
       const s_vector& col     ,
       const d_vector& x       ,
       int*            options , // const but adolc want non-const arg
-      // outupts
+      // outputs
       size_t&         n_color ,
       int&            nnz     ,
       unsigned int*&  rind    ,

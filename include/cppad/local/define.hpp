@@ -194,7 +194,7 @@ AD<Base> operator Op                                            \
    (const VecAD_reference<Base> &left, const double &right)          \
 {  return left.ADBase() Op AD<Base>(right); }                        \
 /* ----------------------------------------------------------------*/  \
-/* Special case to avoid ambuigity when Base is double */              \
+/* Special case to avoid ambiguity when Base is double */              \
                                                                        \
 inline AD<double> operator Op                                          \
    (const double &left, const AD<double> &right)                     \
@@ -297,7 +297,7 @@ bool operator Op                                                \
    (const VecAD_reference<Base> &left, const double &right)          \
 {  return left.ADBase() Op AD<Base>(right); }                        \
 /* ----------------------------------------------------------------*/  \
-/* Special case to avoid ambuigity when Base is double */              \
+/* Special case to avoid ambiguity when Base is double */              \
                                                                        \
 inline bool operator Op                                                \
    (const double &left, const AD<double> &right)                     \

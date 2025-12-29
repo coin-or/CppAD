@@ -84,7 +84,7 @@ void choose_row_col(
    {  // generate max_per_row random values between 0 and 1
       CppAD::uniform_01(max_per_row, random_01);
 
-      // make sure the diagnoal is in the result because
+      // make sure the diagonal is in the result because
       // sparse_hes_fun requires it
       random_index[0] = i;
 

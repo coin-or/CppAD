@@ -22,7 +22,7 @@ The CheckNumericType Function: Example and Test
 # include <cppad/utility/near_equal.hpp>
 
 
-// Chosing a value between 1 and 10 selects a numeric class properity to be
+// Choosing a value between 1 and 10 selects a numeric class properity to be
 // omitted and result in an error message being generated
 # define CppADMyTypeOmit 0
 
@@ -39,7 +39,7 @@ namespace { // Empty namespace
       // constructor from an int
       MyType(int d_) : d(d_)
       { }
-      // copy constuctor
+      // copy constructor
       MyType(const MyType &x)
       {  d = x.d; }
       // assignment operator

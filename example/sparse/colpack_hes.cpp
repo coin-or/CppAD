@@ -91,7 +91,7 @@ bool colpack_hes(void)
    }
 
    // subset of elements to compute
-   // (only compute lower traingle)
+   // (only compute lower triangle)
    nnz = n + (n - 1);
    sparsity lower_triangle(nr, nc, nnz);
    d_vector check(nnz);

@@ -26,7 +26,7 @@ bool fun_assign(void)
    using CppAD::NearEqual;
    size_t i, j;
 
-   // ten times machine percision
+   // ten times machine precision
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
    // an empty ADFun<double> object

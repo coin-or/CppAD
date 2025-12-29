@@ -614,7 +614,7 @@ public:
    /// function that evaluates the users representation for f(x) and
    /// and g(x) is pure virtual so user must define it in derived class
    virtual ADVector eval_r(size_t k, const ADVector& u) = 0;
-   /// should the function r_k (u) be retaped when ever the arguemnt
+   /// should the function r_k (u) be retaped when ever the argument
    /// u changes (default is true which is safe but slow)
    virtual bool retape(size_t k)
    {  return true; }
@@ -624,7 +624,7 @@ public:
    /// range_size p[k] for r_k (u) (simple representation uses m+1)
    virtual size_t range_size(size_t k)
    {  return m_ + 1; }
-   /// number_terms that use r_k (u) (simple represenation uses 1)
+   /// number_terms that use r_k (u) (simple representation uses 1)
    virtual size_t number_terms(size_t k)
    {  return 1; }
    /// return the index vectors I_{k,ell} and J_{k,ell}
@@ -745,7 +745,7 @@ private:
    typedef CppAD::vector< std::map<size_t,size_t> > IndexMap;
 
    // ------------------------------------------------------------------
-   // Values directly passed in to constuctor
+   // Values directly passed in to constructor
    // ------------------------------------------------------------------
    /// dimension of the domain space for f(x) and g(x)
    /// (passed to ctor)

@@ -26,19 +26,19 @@ form the corresponding element type.
 The general form is not valid, must use a specialization.
 
 \tparam Element_type
-type of an element in the sparsity structrue.
+type of an element in the sparsity structure.
 
 \par <code>internal_pattern<Element_type>::pattern_type</code>
 is the type of the corresponding internal sparsity pattern.
 */
 template <class Element_type> struct internal_pattern;
-/// Specilization for bool elements.
+/// Specialization for bool elements.
 template <>
 struct internal_pattern<bool>
 {
    typedef sparse::pack_setvec pattern_type;
 };
-/// Specilization for <code>std::set<size_t></code> elements.
+/// Specialization for <code>std::set<size_t></code> elements.
 template <>
 struct internal_pattern< std::set<size_t> >
 {
@@ -53,12 +53,12 @@ The type used for index sparsity patterns. This is a simple vector
 with elements of type size_t.
 
 \tparam InternalSparsitiy
-The type used for intenal sparsity patterns. This can be either
+The type used for internal sparsity patterns. This can be either
 sparse::pack_setvec or list_setvec.
 
 \param zero_empty
 If this is true, the internal sparstity pattern corresponds to row zero
-must be empty on input and will be emtpy output; i.e., any corresponding
+must be empty on input and will be empty output; i.e., any corresponding
 values in pattern_in will be ignored.
 
 \param input_empty
@@ -73,7 +73,7 @@ If this is true, pattern_in is transposed.
 
 \param internal_index
 This specifies the sub-set of rows in internal_pattern that we are updating.
-If traspose is false (true),
+If transpose is false (true),
 this is the mapping from row (column) index in pattern_in to the corresponding
 row index in the internal_pattern.
 
@@ -274,7 +274,7 @@ The type used for index sparsity patterns. This is a simple vector
 with elements of type size_t.
 
 \tparam InternalSparsitiy
-The type used for intenal sparsity patterns. This can be either
+The type used for internal sparsity patterns. This can be either
 sparse::pack_setvec or list_setvec.
 
 \param transpose
@@ -302,7 +302,7 @@ void get_internal_pattern(
 {  typedef typename InternalSparsity::const_iterator iterator;
    // number variables
    size_t nr = internal_index.size();
-   // column size of interanl sparstiy pattern
+   // column size of internal sparstiy pattern
    size_t nc = internal_pattern.end();
    // determine nnz, the number of possibly non-zero index pairs
    size_t nnz = 0;
@@ -354,7 +354,7 @@ void get_internal_pattern(
    // number variables
    size_t nr = internal_index.size();
    //
-   // column size of interanl sparstiy pattern
+   // column size of internal sparstiy pattern
    size_t nc = internal_pattern.end();
    //
    pattern_out.resize(nr * nc);
@@ -385,7 +385,7 @@ void get_internal_pattern(
    // number variables
    size_t nr = internal_index.size();
    //
-   // column size of interanl sparstiy pattern
+   // column size of internal sparstiy pattern
    size_t nc = internal_pattern.end();
    //
    pattern_out.resize(nr * nc);
@@ -416,7 +416,7 @@ void get_internal_pattern(
    // number variables
    size_t nr = internal_index.size();
    //
-   // column size of interanl sparstiy pattern
+   // column size of internal sparstiy pattern
    size_t nc = internal_pattern.end();
    //
    if( transpose )

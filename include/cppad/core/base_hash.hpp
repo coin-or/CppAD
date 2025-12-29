@@ -73,7 +73,7 @@ and the ``adouble`` :ref:`base_adolc.hpp@hash_code` .
 
 /*!
 \def CPPAD_HASH_TABLE_SIZE
-the codes retruned by hash_code are between zero and CPPAD_HASH_TABLE_SIZE
+the codes returned by hash_code are between zero and CPPAD_HASH_TABLE_SIZE
 minus one.
 */
 # define CPPAD_HASH_TABLE_SIZE 10000

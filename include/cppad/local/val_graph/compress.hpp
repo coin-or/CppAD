@@ -133,7 +133,7 @@ vectorBool tape_t<Value>::compress(void)
    //
    // new_use_val
    // Because the call operator can have more than one result, not all the
-   // results for all the needed operators are used. Initilaize as all the
+   // results for all the needed operators are used. Initialize as all the
    // independent values and the nan after them are used.
    vectorBool new_use_val(n_ind_ + 1);
    for(addr_t i = 0; i <= n_ind_; ++i)

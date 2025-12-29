@@ -107,7 +107,7 @@ Operations
    bool operator op(const valvector& other) const \
    {  CPPAD_VALVECTOR_ASSERT_KNOWN( \
          size() == 1 && other.size() == 1, \
-         "binary " #op " operator is only availble when both sizes are one" \
+         "binary " #op " operator is only available when both sizes are one" \
       ) \
       return (*this)[0] op other[0]; \
    }
@@ -904,7 +904,7 @@ namespace CppAD {
       if( x == vec_zero )
          return vec_zero;
       //
-      // elememt-by-element
+      // element-by-element
       scalar_type scalar_zero(0);
       valvector  result;
       result.resize( std::max( x.size(), y.size() ) );

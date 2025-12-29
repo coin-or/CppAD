@@ -193,10 +193,10 @@ public:
    AD(const Base &b);
 # endif
 
-   // implicit contructor from VecAD<Base>::reference
+   // implicit constructor from VecAD<Base>::reference
    AD(const VecAD_reference<Base> &x);
 
-   // explicit construction from some other type (depricated)
+   // explicit construction from some other type (deprecated)
    template <class T> explicit AD(const T &t);
 
    // conversion from AD to Base type
@@ -205,7 +205,7 @@ public:
    // use default assignment operator
    // AD& operator=(const AD &x);
 
-   // assingment from base type
+   // assignment from base type
    AD& operator=(const Base &b);
 
    // assignment from VecAD<Base>::reference
@@ -285,7 +285,7 @@ private:
    void make_dynamic(tape_id_t id,  addr_t taddr)
    {   CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); // currently a par
        CPPAD_ASSERT_UNKNOWN( taddr > 0 );        // sure valid taddr
-      
+
        tape_id_ = id;
        taddr_   = taddr;
        ad_type_ = dynamic_enum;

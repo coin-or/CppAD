@@ -10,7 +10,7 @@ set -e -u
 # --help                     print the run_xrst.sh help message
 # --target_tex               create tex (instead of html) files
 # --exclude_dev              exclude developer documentation
-# --suppress_spell_warnings  do not check for documentaiton spelling errors
+# --suppress_spell_warnings  do not check for documentation spelling errors
 # --rst_line_numbers         sphinx errors and warnings use rst line numbers
 # --replace_spell_commands   replace xrst_spell commands assuming no errors
 # --external_links           check documentation external links
@@ -48,7 +48,7 @@ possible flags
 --help                     print the run_xrst.sh help message
 --target_tex               create tex (instead of html) files
 --exclude_dev              exclude developer documentation (group dev)
---suppress_spell_warnings  do not check for documentaiton spelling errors
+--suppress_spell_warnings  do not check for documentation spelling errors
 --rst_line_numbers         sphinx errors and warnings use rst line numbers
 --replace_spell_commands   replace xrst_spell commands assuming no errors
 --external_links           check documentation external links

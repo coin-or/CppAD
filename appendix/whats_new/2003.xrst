@@ -619,7 +619,7 @@ was defined in ``math.h`` .
 =====
 The
 ``Grad`` and ``Hess`` functions were modified
-to handel the case where the function does not depend on
+to handle the case where the function does not depend on
 the independent variables.
 
 The

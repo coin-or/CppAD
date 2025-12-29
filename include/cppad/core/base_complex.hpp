@@ -12,7 +12,6 @@
 {xrst_begin base_complex.hpp}
 {xrst_spell
    azmul
-   complier
    isnan
 }
 
@@ -190,7 +189,7 @@ namespace CppAD {
 
 isnan
 *****
-The gcc 4.1.1 complier defines the function
+The gcc 4.1.1 compiler defines the function
 
    ``int std::complex<double>::isnan`` ( ``std::complex<double>`` *z*  )
 
@@ -381,7 +380,7 @@ namespace CppAD {
    CPPAD_STANDARD_MATH_UNARY(std::complex<float>, sin)
    CPPAD_STANDARD_MATH_UNARY(std::complex<float>, sinh)
    CPPAD_STANDARD_MATH_UNARY(std::complex<float>, sqrt)
-   // Invalid standrd math functions -------------------------------
+   // Invalid standard math functions -------------------------------
    CPPAD_USER_MACRO_TWO(abs)
    CPPAD_USER_MACRO_TWO(acos)
    CPPAD_USER_MACRO_TWO(asin)

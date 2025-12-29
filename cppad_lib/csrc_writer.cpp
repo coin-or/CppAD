@@ -46,7 +46,7 @@ be one of the following:
 
 /* Optimizations 2DO:
 1. Reduce size of v by removing x and y from the v vector.
-2. Reduce size of v by reusing elemnents when they are no longer needed.
+2. Reduce size of v by reusing elements when they are no longer needed.
 */
 
 
@@ -111,7 +111,7 @@ namespace {
    {  std::string rhs = "\t" + element("v", result_node) + " = ";
       os << rhs;
       if( arg_node.size() == 1 )
-      {  // can have subraction terms with no addition terms
+      {  // can have subtraction terms with no addition terms
          os << "(float_point_t) 0;\n";
          return;
       }

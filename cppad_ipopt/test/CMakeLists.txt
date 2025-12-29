@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the cppad_ipopt/test directory tests
-# Inherit build tyope from ../CMakeList.txt
+# Inherit build type from ../CMakeList.txt
 
 # Local include directories to search (not in package_prefix/include)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )

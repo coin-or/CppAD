@@ -80,7 +80,7 @@ bool atomic_four<Base>::for_jac_sparsity(
 // END_FOR_JAC_SPARSITY
 {  typedef typename InternalSparsity::const_iterator iterator;
 
-   // number of arguments and resutls for this atomic function
+   // number of arguments and results for this atomic function
    size_t n = x_index.size();
    size_t m = y_index.size();
 
@@ -224,7 +224,7 @@ bool atomic_four<Base>::rev_jac_sparsity(
 // END_REV_JAC_SPARSITY
 {  typedef typename InternalSparsity::const_iterator iterator;
 
-   // number of arguments and resutls for this atomic function
+   // number of arguments and results for this atomic function
    size_t n = x_index.size();
    size_t m = y_index.size();
 

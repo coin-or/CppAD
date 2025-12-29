@@ -185,7 +185,7 @@ public:
    /// Conversion from VecAD_reference to AD<Base>.
    /// puts the correspond vecad load instruction in the tape.
    AD<Base> ADBase(void) const
-   {  // start with default construtor (hence dynamic_ is false).
+   {  // start with default constructor (hence dynamic_ is false).
       AD<Base> result;
 
       size_t i = static_cast<size_t>( Integer(ind_) );
@@ -453,7 +453,7 @@ public:
       if( tape == nullptr )
          return VecAD_reference<Base>(*this, ind);
 
-      // tape_id cannot match the defautl value zero
+      // tape_id cannot match the default value zero
       CPPAD_ASSERT_UNKNOWN( tape->id_ > 0 );
 
       // check if vector, index match tape_id
@@ -487,13 +487,13 @@ public:
          offset_ = tape->Rec_.put_var_vecad(length_, taddr_);
 
          // Advance pointer by one so starts at first component of this
-         // vector; i.e., skip length at begining (so is always > 0)
+         // vector; i.e., skip length at beginning (so is always > 0)
          offset_++;
 
          // tape_id corresponding to this vector
          tape_id_ = ind.tape_id_;
 
-         // VecAD objects go striaght from constants to variables; i.e.,
+         // VecAD objects go straight from constants to variables; i.e.,
          // they never are dynamic parameters.
          ad_type_ = variable_enum;
       }
@@ -519,7 +519,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
    if( tape == nullptr )
       return;
 
-   // tape_id cannot match the defautl value zero
+   // tape_id cannot match the default value zero
    tape_id_t tape_id = tape->id_;
    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
@@ -572,7 +572,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
       // tape_id corresponding to this vector
       vec_.tape_id_ = right.tape_id_;
 
-      // VecAD objects go striaght from constants to variables; i.e.,
+      // VecAD objects go straight from constants to variables; i.e.,
       // they never are dynamic parameters.
       vec_.ad_type_ = variable_enum;
    }

@@ -204,7 +204,7 @@ a1vector taylor_ode(
 }
 } // END empty namespace
 // ==========================================================================
-// Routine that tests alogirhtmic differentiation of solutions computed
+// Routine that tests algorithmic differentiation of solutions computed
 // by the routine taylor_ode.
 bool mul_level_ode(void)
 {  bool ok = true;

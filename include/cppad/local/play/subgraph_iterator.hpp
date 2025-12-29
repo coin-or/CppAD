@@ -100,12 +100,12 @@ public:
    op code for this operator.
 
    \param op_arg [out]
-   pointer to the first arguement to this operator.
+   pointer to the first argument to this operator.
 
    \param var_index [out]
    index of the last variable (primary variable) for this operator.
    If there is no primary variable for this operator, var_index
-   is not sepcified and could have any value.
+   is not specified and could have any value.
    */
    void op_info(
       op_code_var&   op         ,

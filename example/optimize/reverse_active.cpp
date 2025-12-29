@@ -30,7 +30,7 @@ namespace {
       before.n_var = 1 + x.size(); before.n_op  = 2 + x.size();
       after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
-      // initilized product of even and odd variables
+      // initialized product of even and odd variables
       scalar prod_even = x[0];
       scalar prod_odd  = x[1];
       before.n_var += 0; before.n_op  += 0;

@@ -167,7 +167,7 @@ BaseVector ADFun<Base,RecBase>::RevTwo(
    );
    CPPAD_ASSERT_KNOWN(
       i.size() == j.size(),
-      "RevTwo: Lenght of the i and j vectors are not equal."
+      "RevTwo: Length of the i and j vectors are not equal."
    );
    // point at which we are evaluating the second partials
    Forward(0, x);
@@ -194,7 +194,7 @@ BaseVector ADFun<Base,RecBase>::RevTwo(
       j1 = j[l];
       CPPAD_ASSERT_KNOWN(
       i1 < m,
-      "RevTwo: an eleemnt of i not less than range dimension for f."
+      "RevTwo: an element of i not less than range dimension for f."
       );
       CPPAD_ASSERT_KNOWN(
       j1 < n,

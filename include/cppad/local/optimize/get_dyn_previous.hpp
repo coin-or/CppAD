@@ -52,9 +52,9 @@ This is only defined for dynamic parameters indices less than or equal i_dyn.
 \param arg_match
 Size of this vector must be number of arguments for operator for i_dyn.
 The input value of its elements does not matter.
-Upn return it containts the parameter indices for the arguments
+Upn return it contains the parameter indices for the arguments
 to use when matching this operator
-Arguments that are dynamic prarameters, and have previous matches,
+Arguments that are dynamic parameters, and have previous matches,
 have been replaced by their previous matches.
 */
 inline void dyn_arg_match(
@@ -94,7 +94,7 @@ inline void dyn_arg_match(
          {  CPPAD_ASSERT_UNKNOWN( dyn_previous[j_dyn] < j_dyn );
             // previous dynamic parameter
             j_dyn = dyn_previous[j_dyn];
-            // correspoding parameter
+            // corresponding parameter
             j_par = dyn2par_index[j_dyn];
          }
       }

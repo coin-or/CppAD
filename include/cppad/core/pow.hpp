@@ -278,7 +278,7 @@ template <class Base> AD<Base>
 pow(const VecAD_reference<Base>& x, const double& y)
 {  return pow(x.ADBase(), AD<Base>(y)); }
 // -------------------------------------------------------------------------
-// Special case to avoid ambuigity when Base is double
+// Special case to avoid ambiguity when Base is double
 
 inline AD<double>
 pow(const double& x, const AD<double>& y)

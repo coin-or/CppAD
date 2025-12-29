@@ -96,7 +96,7 @@ bool azmul_op(void)
    p[1] = std::numeric_limits<double>::quiet_NaN();
    x[0] = 0.0;
    //
-   // supress checking for nan in y
+   // suppress checking for nan in y
    f.check_for_nan(false);
    //
    // compute y = f(x, p)

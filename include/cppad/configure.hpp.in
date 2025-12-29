@@ -11,7 +11,6 @@
    adolc
    cmd
    colpack
-   complier
    gettimeofday
    ipopt
    mkstemp
@@ -329,7 +328,7 @@ It can be used to run the C compiler; e.g. see for :ref:`create_dll_lib-name` .
 
 CPPAD_C_COMPILER_GNU_FLAGS
 **************************
-If true, the C complier uses the same flags as ``gcc``
+If true, the C compiler uses the same flags as ``gcc``
 {xrst_spell_off}
 {xrst_code hpp} */
 # define CPPAD_C_COMPILER_GNU_FLAGS @cppad_c_compiler_gnu_flags@
@@ -338,7 +337,7 @@ If true, the C complier uses the same flags as ``gcc``
 
 CPPAD_C_COMPILER_MSVC_FLAGS
 ***************************
-If true, the C complier uses the same flags as ``cl``
+If true, the C compiler uses the same flags as ``cl``
 {xrst_spell_off}
 {xrst_code hpp} */
 # define CPPAD_C_COMPILER_MSVC_FLAGS @cppad_c_compiler_msvc_flags@

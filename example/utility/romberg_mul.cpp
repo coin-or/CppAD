@@ -64,7 +64,7 @@ bool RombergMul(void)
       CppAD::vector<double>,
       2                    > RombergMulTest;
 
-   // arugments to RombergMul
+   // arguments to RombergMul
    CppAD::vector<double> a(2);
    CppAD::vector<double> b(2);
    CppAD::vector<size_t> n(2);

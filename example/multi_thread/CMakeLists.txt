@@ -42,7 +42,7 @@ IF( NOT pthread_ok )
 ENDIF( NOT pthread_ok )
 #
 # sthread
-# Put sthread after pthread because it can somtimes require pthread_lib_path
+# Put sthread after pthread because it can sometimes require pthread_lib_path
 # https://stackoverflow.com/questions/46994982
 ADD_SUBDIRECTORY(sthread)
 #

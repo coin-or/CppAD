@@ -174,11 +174,11 @@ void ADFun<Base, RecBase>::val2fun(
 # endif
    //
    // dyn_n_ind
-   // number of independent dynamc parameters
+   // number of independent dynamic parameters
    size_t dyn_n_ind = dyn_ind.size();
    //
    // var_n_ind
-   // number of independent varibles
+   // number of independent variables
    size_t var_n_ind = var_ind.size();
    //
    // val_n_op
@@ -213,7 +213,7 @@ void ADFun<Base, RecBase>::val2fun(
       val2fun_index[i] = std::numeric_limits<addr_t>::max(); // invalid
    //
    // rec
-   // start a functon recording
+   // start a function recording
    local::recorder<Base> rec;
    CPPAD_ASSERT_UNKNOWN( rec.num_var_op() == 0 );
    rec.set_n_dyn_independent(dyn_n_ind);
@@ -237,7 +237,7 @@ void ADFun<Base, RecBase>::val2fun(
    CPPAD_ASSERT_UNKNOWN( NumArg(local::BeginOp) == 1);
    CPPAD_ASSERT_UNKNOWN( NumRes(local::BeginOp) == 1);
    rec.PutOp(local::BeginOp);
-   rec.PutArg(0); // parameter argumnet is the nan above
+   rec.PutArg(0); // parameter argument is the nan above
    //
    // rec, vecad_offset
    // place the VecAD objects in the recording
@@ -261,7 +261,7 @@ void ADFun<Base, RecBase>::val2fun(
    }
    //
    // rec, fun_ad_type, val2fun_index
-   // put the independent dynamic paraeters in the function recording
+   // put the independent dynamic parameters in the function recording
    for(size_t i = 0; i < dyn_n_ind; ++i)
    {  CPPAD_ASSERT_KNOWN( dyn_ind[i] < val_n_ind,
          "val2fun: number of independent values is <= dyn_ind[i]"
@@ -819,7 +819,7 @@ void ADFun<Base, RecBase>::val2fun(
          // -------------------------------------------------------------------
          // vec_op
          case local::val_graph::vec_op_enum:
-         // All the VecAD objects have alread been initialized
+         // All the VecAD objects have already been initialized
          break;
          //
          // load_op

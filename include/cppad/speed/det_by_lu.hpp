@@ -137,7 +137,7 @@ public:
       for(i = 0; i < n_ * n_; i++)
          A_[i] = x[i];
 
-      // comput log determinant
+      // compute log determinant
       signdet = CppAD::LuSolve(
          n_, m_, A_, B_, X_, logdet);
 
@@ -154,7 +154,7 @@ public:
       det     = Scalar( signdet ) * exp( logdet );
 
 # ifdef FADBAD
-      // Fadbad requires tempories to be set to constants
+      // Fadbad requires temporaries to be set to constants
       for(i = 0; i < n_ * n_; i++)
          A_[i] = 0;
 # endif

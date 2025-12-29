@@ -21,7 +21,7 @@ namespace {
    }
 }
 bool check_simple_vector(void)
-{  // Unusal test in that CheckSimpleVector will abort if an error occurs
+{  // Unusual test in that CheckSimpleVector will abort if an error occurs
    Case(float(0), float(1));
    Case(double(0), double(1));
    //

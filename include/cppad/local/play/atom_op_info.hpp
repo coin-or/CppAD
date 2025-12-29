@@ -29,10 +29,10 @@ is the index in local::atomic_index corresponding to this atomic functions.
 is the call_id for this atomic function call.
 
 \param atom_m   [out]
-is the number of results for this user atmoic function.
+is the number of results for this user atomic function.
 
 \param atom_n   [out]
-is the number of arguments for this user atmoic function.
+is the number of arguments for this user atomic function.
 
 \return
 Is a pointer to this atomic function.

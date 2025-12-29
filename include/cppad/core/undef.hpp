@@ -7,7 +7,7 @@
 
 /*
 ----------------------------------------------------------------------------
-Preprecessor definitions that presist after cppad/cppad.hpp is included.
+Preprecessor definitions that persist after cppad/cppad.hpp is included.
 These are part of the user API (see omh/preprocessor.omh) with some exceptions
 that are used by the CppAD examples and tests.
 
@@ -28,7 +28,7 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_DEPRECATED
 -----------------------------------------------------------------------------
 */
-// Preprecessor definitions that do not presist. None of these are in the
+// Preprecessor definitions that do not persist. None of these are in the
 // user API.
 // BEGIN_SORT_THIS_LINE_PLUS_1
 # undef CPPAD_ASSERT_AD_TYPE

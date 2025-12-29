@@ -202,7 +202,7 @@ Atomic reverse mode Hessian sparsity patterns.
 Link from reverse Hessian sparsity sweep to atomic_base
 
 \param vx [in]
-which componens of x are variables.
+which components of x are variables.
 
 \param s [in]
 is the reverse Jacobian sparsity pattern w.r.t the result vector y.
@@ -293,7 +293,7 @@ bool atomic_base<Base>::rev_sparse_hes(
 Link, before case split, from rev_hes_sweep to atomic_base.
 
 \tparam InternalSparsity
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param x
@@ -317,7 +317,7 @@ computing the Hessian of.
 On input, for i = 0, ... , m-1, the rev_jac_flag[ y_index[i] ] is true
 if the Jacobian of function (we are computing sparsity for) is no-zero.
 Upon return, for j = 0, ... , n-1, rev_jac_flag [ x_index[j] ]
-as been adjusted to accound removing this atomic function.
+as been adjusted to account removing this atomic function.
 
 \param rev_hes_sparsity
 This is the sparsity pattern for the Hessian.

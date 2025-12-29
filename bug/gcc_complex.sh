@@ -29,7 +29,7 @@ EOF
 echo_eval g++ gcc_complex.cpp -o gcc_complex
 echo_eval ./gcc_complex
 cat << EOF
-Explination:
+Explanation:
 
 (x + i*y)     (x + i*y) * (a - i*b)     (x*a - y*b) + i*(y*a - x*b)
 ---------  =  ---------------------  =  ---------------------------

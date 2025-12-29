@@ -203,7 +203,7 @@ void for_hes(
       CPPAD_ASSERT_UNKNOWN( j == play->num_var_vec_ind() );
    }
    // ------------------------------------------------------------------------
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
    //
    //
@@ -275,7 +275,7 @@ void for_hes(
       }
       //
       if( include ) switch( op )
-      {  // operators that should not occurr
+      {  // operators that should not occur
          // case BeginOp
 
          // operators that do not affect Jacobian or Hessian

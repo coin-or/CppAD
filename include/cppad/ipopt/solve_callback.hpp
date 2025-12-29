@@ -45,7 +45,7 @@ private:
    /// Indexing style used in Ipopt sparsity structure
    typedef Ipopt::TNLP::IndexStyleEnum           IndexStyleEnum;
    // ------------------------------------------------------------------
-   // Values directly passed in to constuctor
+   // Values directly passed in to constructor
    // ------------------------------------------------------------------
    /// dimension of the range space for f(x).
    /// The objective is sum_i f_i (x).
@@ -81,7 +81,7 @@ private:
    // Values that are initilaized by the constructor
    // ------------------------------------------------------------------
    /// AD function object that evaluates x -> [ f(x) , g(x) ]
-   /// If retape is false, this object is initialzed by constructor
+   /// If retape is false, this object is initialized by constructor
    /// otherwise it is set by cache_new_x each time it is called.
    CppAD::ADFun<double>            adfun_;
    /// value of x corresponding to previous new_x
@@ -323,7 +323,7 @@ public:
                }
                s = adfun_.RevSparseJac(n_row, r);
 
-               // fill in correspoding rows of total sparsity
+               // fill in corresponding rows of total sparsity
                for(i = 0; i < n_row; i++)
                {  for(j = 0; j < nx_; j++)
                      if( i_row + i < m )
@@ -905,7 +905,7 @@ public:
 
    \param[in] lambda
    if values is not NULL, lambda
-   is a vector of size ng_ specifing the value of \f$ \lambda \f$
+   is a vector of size ng_ specifying the value of \f$ \lambda \f$
    in the expression for \ref The_Hessian_of_the_Lagragian.
 
    \param[in] new_lambda
@@ -1017,7 +1017,7 @@ public:
 
    \param[in] status
    is value that the Ipopt solution status
-   which gets mapped to a correponding value for
+   which gets mapped to a corresponding value for
    \n
    <tt>solution_.status</tt>
 
@@ -1026,20 +1026,20 @@ public:
    it must be equal to nx_.
 
    \param[in] x
-   is a vector with size nx_ specifing the final solution.
+   is a vector with size nx_ specifying the final solution.
    This is the output value for
    \n
    <tt>solution_.x</tt>
 
    \param[in] z_L
-   is a vector with size nx_ specifing the Lagragian multipliers for the
+   is a vector with size nx_ specifying the Lagragian multipliers for the
    constraint \f$ x^l \leq x \f$.
    This is the output value for
    \n
    <tt>solution_.zl</tt>
 
    \param[in] z_U
-   is a vector with size nx_ specifing the Lagragian multipliers for the
+   is a vector with size nx_ specifying the Lagragian multipliers for the
    constraint \f$ x \leq x^u \f$.
    This is the output value for
    \n
@@ -1057,7 +1057,7 @@ public:
    <tt>solution_.g</tt>
 
    \param[in] lambda
-   is a vector with size ng_ specifing the Lagragian multipliers for the
+   is a vector with size ng_ specifying the Lagragian multipliers for the
    constraints \f$ g^l \leq g(x) \leq g^u \f$.
    This is the output value for
    \n

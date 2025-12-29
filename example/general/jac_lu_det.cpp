@@ -17,7 +17,7 @@ Gradient of Determinant Using Lu Factorization: Example and Test
 {xrst_end jac_lu_det.cpp}
 */
 // BEGIN C++
-// Complex examples should supppress conversion warnings
+// Complex examples should suppress conversion warnings
 # include <cppad/wno_conversion.hpp>
 
 # include <cppad/cppad.hpp>

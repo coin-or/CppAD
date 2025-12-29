@@ -24,7 +24,7 @@ is the AD type for ax in the corresponding afun(ax, ay) call.
 specifies which components of x affect the values of interest
 
 \param depend_y [in]
-specifies which components of y affect the vlaues of interest
+specifies which components of y affect the values of interest
 */
 template <class Base>
 bool chkpoint_two<Base>::rev_depend(

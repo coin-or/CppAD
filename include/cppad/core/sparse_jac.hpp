@@ -322,7 +322,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_for(
       "sparse_jac_for: work is non-empty and conditions have changed"
    );
    //
-   // point at which we are evaluationg the Jacobian
+   // point at which we are evaluating the Jacobian
    Forward(0, x);
    //
    // number of elements in the subset
@@ -515,7 +515,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_rev(
       "sparse_jac_rev: work is non-empty and conditions have changed"
    );
    //
-   // point at which we are evaluationg the Jacobian
+   // point at which we are evaluating the Jacobian
    Forward(0, x);
    //
    // number of elements in the subset

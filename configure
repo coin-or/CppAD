@@ -564,7 +564,7 @@ else
 fi
 if [ "$with_clang" == 'yes' ]
 then
-   cmake_c_compiler='-D CMAKE_C_COMPLIER=clang'
+   cmake_c_compiler='-D CMAKE_C_COMPILER=clang'
 elif [ "$first_executable_result" != '' ]
 then
    cmake_c_compiler="-D CMAKE_C_COMPILER=$first_executable_result"
@@ -580,7 +580,7 @@ else
 fi
 if [ "$first_executable_result" != '' ]
 then
-   cmake_fortran_compiler="-D CMAKE_Fortan_COMPILER=$first_executable_result"
+   cmake_fortran_compiler="-D CMAKE_Fortran_COMPILER=$first_executable_result"
 fi
 #
 # source_dir

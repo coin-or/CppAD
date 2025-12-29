@@ -357,7 +357,7 @@ inline void powpv_forward_dir(
    addr_t addr[2];
    // offset of z_0 in taylor (as if it were a parameter); i.e., log(x)
    addr[0] = addr_t( i_z * num_taylor_per_var );
-   // ofset of y in taylor (as a variable)
+   // offset of y in taylor (as a variable)
    addr[1] = arg[1];
 
    // Trick: use taylor both for the parameter vector and variable values
@@ -688,7 +688,7 @@ inline void powvp_reverse(
    // Special solution when x[0] is zero
    Base b0 = Base( 0.0 );
 
-   // Place to hold px for this operator until conditional assigment at end
+   // Place to hold px for this operator until conditional assignment at end
    work.resize(n_order);
    for(size_t j = 0; j < n_order; ++j)
       work[j] = px[j];

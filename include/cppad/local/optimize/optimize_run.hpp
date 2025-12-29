@@ -204,7 +204,7 @@ bool optimize_run(
    // number of dynamic parameters
    size_t num_dynamic_par = play->num_dynamic_par();
 
-   // mapping from dynamic parameter index to paramemter index
+   // mapping from dynamic parameter index to parameter index
    const pod_vector<addr_t>& dyn2par_index( play->dyn2par_index() );
 
    // number of dynamic parameters
@@ -355,7 +355,7 @@ bool optimize_run(
    addr_t zero_par_index = rec->put_con_par( Base(0) );
 
    // set new_par for the dependent dynamic parameters
-   size_t i_dyn = n_dyn_independent;// dynamic parmaeter index
+   size_t i_dyn = n_dyn_independent;// dynamic parameter index
    size_t i_arg = 0;                // dynamic parameter argument index
    pod_vector<addr_t> arg_vec;
    for(size_t i_par = n_dyn_independent + 1; i_par < num_par; ++i_par)
@@ -495,7 +495,7 @@ bool optimize_run(
                );
             }
             else
-            {  // independent dynamic parmaeter case
+            {  // independent dynamic parameter case
                CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
                CPPAD_ASSERT_UNKNOWN( i_par <= n_dyn_independent );
                CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
@@ -541,10 +541,10 @@ bool optimize_run(
    addr_t new_arg[6];
 
    // temporary work space used by record_csum
-   // (decalared here to avoid realloaction of memory)
+   // (declared here to avoid realloaction of memory)
    struct_csum_stacks csum_work;
 
-   // tempory used to hold a size_pair
+   // temporary used to hold a size_pair
    struct_size_pair size_pair;
    //
    // Mapping from old operator index to new variable index,
@@ -553,7 +553,7 @@ bool optimize_run(
    //
    // Mapping from old operator index to new operator index will share
    // memory with op_previous. Must get op_previous[i_op] for this operator
-   // before over writting it with new_op[i_op].
+   // before over writing it with new_op[i_op].
    pod_vector<addr_t>& new_op( op_previous );
    CPPAD_ASSERT_UNKNOWN( new_op.size() == num_op );
    // -------------------------------------------------------------
@@ -592,7 +592,7 @@ bool optimize_run(
       if( NumRes(op) > 0 )
          i_var = i_tmp;
       //
-      // is this new result the top of a cummulative summation
+      // is this new result the top of a cumulative summation
       bool top_csum;
       //
       // determine if we should insert a conditional skip here

@@ -19,7 +19,7 @@ Numeric Limits: Example and Test
 // BEGIN C++
 
 # ifdef _MSC_VER
-// Supress Microsoft compiler warning about possible loss of precision,
+// Suppress Microsoft compiler warning about possible loss of precision,
 // in the constructors (when converting to std::complex<float>)
 //    Float one = 1
 //    Float two = 2

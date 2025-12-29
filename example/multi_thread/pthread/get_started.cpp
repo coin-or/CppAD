@@ -107,7 +107,7 @@ namespace {
       // rc
       int rc;
       //
-      // phtread_setspecific, ok
+      // pthread_setspecific, ok
       // This sets up the thread_number function for this thread.
       if( thread_num != 0 )
       {  rc  = pthread_setspecific(thread_specific_key_, &thread_num);

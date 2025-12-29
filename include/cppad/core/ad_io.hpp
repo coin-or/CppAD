@@ -153,7 +153,7 @@ contains an example and test of this operation.
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file ad_io.hpp
-AD<Base> input and ouput stream operators.
+AD<Base> input and output stream operators.
 */
 // ---------------------------------------------------------------------------
 /*!
@@ -208,7 +208,7 @@ Is the output stream to which that value is written.
 
 \param x
 is the element of the VecAD object that is being written to the output stream.
-This is equivalent to writing the corresponing Base value to the stream.
+This is equivalent to writing the corresponding Base value to the stream.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

@@ -192,7 +192,7 @@ BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
    }
    CPPAD_ASSERT_KNOWN( ! ( hasnan(value) && check_for_nan_ ) ,
       "dw = f.Reverse(q, w): has a nan,\n"
-      "but none of its Taylor coefficents are nan."
+      "but none of its Taylor coefficients are nan."
    );
 
    return value;

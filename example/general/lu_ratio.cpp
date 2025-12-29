@@ -145,7 +145,7 @@ bool LuRatio(void)
    x[0] = 1.; x[1] = 0;
    x[2] = 0.; x[3] = 1.;
 
-   // create a fnction object corresponding to this value of x
+   // create a function object corresponding to this value of x
    CppAD::ADFun<double> *FunPtr = NewFactor(n, x, ok, ip, jp);
 
    // use function object to factor matrix

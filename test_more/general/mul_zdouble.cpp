@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
-// Check that multilevel reverse with conditial expressions works properly
+// Check that multilevel reverse with conditional expressions works properly
 // when using AD< AD<zdouble> >.
 
 # include <cppad/cppad.hpp>
@@ -58,7 +58,7 @@ namespace {
       ADFun<zdouble> g;
       record(div, g);
       vector<zdouble>  x(n_), z(n_);
-      // check result where x[1] <= 0.0 (would be nan without absoute zero)
+      // check result where x[1] <= 0.0 (would be nan without absolute zero)
       x[0] = 0.0;
       x[1] = 0.0;
       z   = g.Forward(0, x);
@@ -90,7 +90,7 @@ namespace {
       ADFun<zdouble> g;
       record(mul, g);
       vector<zdouble>  x(n_), z(n_);
-      // check result where x[0] > 4 (would be nan without absoute zero)
+      // check result where x[0] > 4 (would be nan without absolute zero)
       ok &= std::numeric_limits<double>::has_infinity;
       x[0] = std::numeric_limits<double>::infinity();
       x[1] = 0.0;

@@ -22,7 +22,7 @@ fi
 # -----------------------------------------------------------------------------
 file_list=`git ls-files example speed | sed -e '/example\/deprecated\//d'`
 # -----------------------------------------------------------------------------
-# deprecated functions with not arugments
+# deprecated functions with not arguments
 list_just_name='
    CPPAD_TRACK_
    CPPAD_TEST_VECTOR

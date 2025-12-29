@@ -185,7 +185,7 @@ bool use_jac_sparsity(bool x_1_variable, bool forward)
    using CppAD::NearEqual;
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
    //
-   // Create the atomic_jac_sparsity object correspnding to g(x)
+   // Create the atomic_jac_sparsity object corresponding to g(x)
    atomic_jac_sparsity afun("atomic_jac_sparsity");
    //
    // Create the function f(u) = g(u) for this example.

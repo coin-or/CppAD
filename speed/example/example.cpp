@@ -107,7 +107,7 @@ int main(void)
    // check for memory leak in previous calculations
    if( ! CppAD::thread_alloc::free_all() )
    {  ok = false;
-      cout << "Error: memroy leak detected" << endl;
+      cout << "Error: memory leak detected" << endl;
    }
 
    if( ok )

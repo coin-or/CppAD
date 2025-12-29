@@ -117,7 +117,7 @@ bool atom4_op(void)
    p[0] = 2.0;
    g.new_dynamic(p);
    //
-   // evalute g(p; x)
+   // evaluate g(p; x)
    vector<double> x(2), y(1);
    x[0] = 3.0;
    x[1] = 4.0;
@@ -137,7 +137,7 @@ bool atom4_op(void)
    p[0] = 5.0;
    g.new_dynamic(p);
    //
-   // evalute g(p; x)
+   // evaluate g(p; x)
    x[0] = 6.0;
    x[1] = 7.0;
    y    = g.Forward(0, x);

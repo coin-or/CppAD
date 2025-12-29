@@ -11,7 +11,7 @@ It has the following xrst template comments:
 
 It has the following xrst template replacements:
 @x, y@   : The arguments, without parenthesis, in function for this operator;
-           e.g., if @x, y@ is replaced by 'x , y', the funciton is 'z(x, y)' .
+           e.g., if @x, y@ is replaced by 'x , y', the function is 'z(x, y)' .
 }
 
 n_order

@@ -293,7 +293,7 @@ Routine called by CppAD during :ref:`afun(ax, ay)<atomic_three_afun-name>` .
       if( ! ok )
          return false;
       //
-      // commpute type_y
+      // compute type_y
       size_t nk = 1; // number of orders
       size_t k  = 0; // order
       for(size_t i = 0; i < nr_left; ++i)
@@ -420,7 +420,7 @@ Routine called by CppAD during :ref:`Reverse-name` mode.
             );
       }
 
-      // all orders are implented, so always return true
+      // all orders are implemented, so always return true
       return true;
    }
 /* {xrst_code}
@@ -644,7 +644,7 @@ Routine called when a function using ``mat_mul`` is optimized.
       for(size_t ell = 3; ell < depend_x.size(); ++ell)
          depend_x[ell] = false; // initialize as false
       //
-      // commpute depend_x
+      // compute depend_x
       size_t nk = 1; // number of orders
       size_t k  = 0; // order
       for(size_t i = 0; i < nr_left; ++i)

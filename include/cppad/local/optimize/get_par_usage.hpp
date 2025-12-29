@@ -277,7 +277,7 @@ void get_par_usage(
          par_usage[arg[1]] = true;
          break;
 
-         // cases where second and thrid arguments are parameters
+         // cases where second and third arguments are parameters
          case ErfOp:
          case ErfcOp:
          case StppOp:
@@ -449,7 +449,7 @@ void get_par_usage(
          // depend_y
          depend_y.resize(m);
          for(size_t i = 0; i < m; ++i)
-         {  // a constant prameter cannot depend on a dynamic parameter
+         {  // a constant parameter cannot depend on a dynamic parameter
             // so do not worry about constant parameters in depend_y
             size_t i_par = size_t( dyn_par_arg[i_arg + 5 + n + i] );
             depend_y[i]  = par_usage[i_par];
@@ -472,7 +472,7 @@ void get_par_usage(
          size_t i_par = size_t( dyn2par_index[i_dyn] );
          CPPAD_ASSERT_UNKNOWN( par_is_dyn[i_par] );
          //
-         // number of argumens to this operator
+         // number of arguments to this operator
          size_t n_arg = num_arg_dyn(op);
          //
          // index of first argument for this operator

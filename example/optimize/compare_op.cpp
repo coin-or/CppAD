@@ -122,7 +122,7 @@ bool compare_op(void)
       fun(options, x, check, before, after);
       ok &= NearEqual(y[0], check[0], eps10, eps10);
 
-      // Check case where result of the comparison is differnent
+      // Check case where result of the comparison is different
       // (hence one needs to re-tape to get correct result)
       x[0] = 2.0;
       y    = f.Forward(0, x);

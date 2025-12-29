@@ -50,7 +50,7 @@ the i-th row does not appear in the vector row.
 Otherwise, <code>color[i] < m</code>.
 \n
 \n
-Suppose two differen rows, <code>i != r</code> have the same color and
+Suppose two different rows, <code>i != r</code> have the same color and
 column index j is such that both of the pairs
 <code>(i, j)</code> and <code>(r, j)</code> appear in the sparsity pattern.
 It follows that neither of these pairs appear in the set of

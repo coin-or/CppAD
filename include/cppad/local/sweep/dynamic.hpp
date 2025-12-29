@@ -11,15 +11,15 @@
 namespace CppAD { namespace local { namespace sweep {
 /*!
 \file sweep/dynamic.hpp
-Under Consruction
+Under Construction
 */
 
 /*!
 \def CPPAD_DYNAMIC_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
-If it is one, a trace for each dynamic parameter is compuation is printed.
-Sometimes it is usefull to trace f.new_dynamic with the same
+If it is one, a trace for each dynamic parameter is computation is printed.
+Sometimes it is useful to trace f.new_dynamic with the same
 dynamic parameter values as during the recording
 (to debug the recording process).
 */
@@ -96,7 +96,7 @@ void dynamic(
    // number of dynamic parameters
    size_t num_dynamic_par = dyn2par_index.size();
 
-   // vectors used in call to atomic fuctions
+   // vectors used in call to atomic functions
    vector<ad_type_enum> type_x;
    vector<Base>         taylor_x, taylor_y;
    vector<bool>         select_y;

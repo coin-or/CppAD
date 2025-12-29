@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-// documened after Forward but included here so easy to see
+// documented after Forward but included here so easy to see
 # include <cppad/core/capacity_order.hpp>
 # include <cppad/core/num_skip.hpp>
 # include <cppad/core/check_for_nan.hpp>

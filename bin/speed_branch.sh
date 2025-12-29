@@ -106,7 +106,7 @@ do
    then
       echo "Using existing $target_dir/$out_file"
    else
-      # use --quiet to supress detached HEAD message
+      # use --quiet to suppress detached HEAD message
       echo_eval git checkout --quiet $branch
       #
       # speed/main.cpp

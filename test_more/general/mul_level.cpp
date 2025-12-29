@@ -8,7 +8,7 @@
 # include <cppad/configure.hpp>
 
 # if CPPAD_HAS_ADOLC
-// adolc examples should supppress conversion warnings
+// adolc examples should suppress conversion warnings
 # include <cppad/wno_conversion.hpp>
 //
 # include <adolc/adouble.h>
@@ -134,7 +134,7 @@ bool Two(void)
    a_w[0] = 1;                          // weighted function same as a_F
    a_df   = a_F.Reverse(p, a_w);        // gradient of f
 
-   // declare outter function (corresponding to ADdouble calculation)
+   // declare outer function (corresponding to ADdouble calculation)
    CppAD::ADFun<double> df(a_x, a_df);
 
    // compute the d/dx of f'(x) * v = f''(x) * v
@@ -194,7 +194,7 @@ bool adolc(void)
    a_w[0] = 1;                          // weighted function same as a_F
    a_df   = a_F.Reverse(p, a_w);        // gradient of f
 
-   // declare outter function
+   // declare outer function
    // (corresponding to the tape of adouble operations)
    double df_j;
    for(j = 0; j < n; j++)

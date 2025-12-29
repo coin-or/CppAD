@@ -283,7 +283,7 @@ it must solve the implicit equation
 
 \param fun
 The argument fun is an object of type Fun
-wich must support the member functions listed below.
+which must support the member functions listed below.
 CppAD will may be recording operations of the type  AD<Base>
 when these member functions are called.
 These member functions must not stop such a recording; e.g.,
@@ -415,7 +415,7 @@ int opt_val_hes(
 
    if( jac.size() > 0  )
    {  // this is the easy part, computing the V^{(1)} (x) which is equal
-      // to \partial_x F (x, y) (see Thoerem 2 of the reference).
+      // to \partial_x F (x, y) (see Theorem 2 of the reference).
 
       // copy x and y to AD version
       for(j = 0; j < n; j++)

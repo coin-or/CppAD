@@ -54,7 +54,7 @@ bool multi_chkpoint_one(void)
       "long_sum", long_sum_algo, ax, ay, sparsity, optimize
    );
 
-   // setup for using CppAD in paralle mode
+   // setup for using CppAD in parallel mode
    CppAD::thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
    CppAD::thread_alloc::hold_memory(true);
    CppAD::parallel_ad<double>();
@@ -76,7 +76,7 @@ bool multi_chkpoint_one(void)
       x[0]      = double( thread + 1 );
       v         = f.Forward(0, x);
       //
-      // this assigment has false sharing; i.e., will case cache resets
+      // this assignment has false sharing; i.e., will case cache resets
       // (conversion avoids boost vector conversion warning)
       y[size_t(thread)] = v[0];
    }

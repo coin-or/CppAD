@@ -316,7 +316,7 @@ This has been fixed.
 
 08-09
 =====
-Let user detect and handel the case where an ODE initial vector *xi*
+Let user detect and handle the case where an ODE initial vector *xi*
 contains  not a number ``nan``
 (see :ref:`Runge45-name` , :ref:`Rosen34-name` , and :ref:`OdeErrControl-name` ).
 
@@ -372,7 +372,7 @@ has been changes (to an item that was previous missing).
 
 07-28
 =====
-The preprocessor macro ``CPPAD_DISCRETE_FUNCTIOIN`` was defined
+The preprocessor macro ``CPPAD_DISCRETE_FUNCTION`` was defined
 as a replacement for ``CppADCreateDiscrete``
 which has been deprecated.
 

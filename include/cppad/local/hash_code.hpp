@@ -145,7 +145,7 @@ unsigned short local_hash_code(
 
    // first argument
    switch(op)
-   {  // Binary operators where first arugment is a parameter.
+   {  // Binary operators where first argument is a parameter.
       // Code parameters by value instead of
       // by index for two reasons. One, it gives better separation.
       // Two, different indices can be same parameter value.
@@ -182,7 +182,7 @@ unsigned short local_hash_code(
          code += v[i];
       break;
 
-      // Binary operators where second arugment is a parameter.
+      // Binary operators where second argument is a parameter.
       case DivvpOp:
       case PowvpOp:
       case SubvpOp:

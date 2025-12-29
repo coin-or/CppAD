@@ -14,7 +14,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
    {  return std::floor(x); }
    CPPAD_DISCRETE_FUNCTION(double, my_integer);
    //
-   // descrete
+   // discrete
    bool discrete(void)
    {  bool ok = true;
       using CppAD::AD;

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
-// Complex examples should supppress conversion warnings
+// Complex examples should suppress conversion warnings
 # include <cppad/wno_conversion.hpp>
 //
 # include <cppad/cppad.hpp>

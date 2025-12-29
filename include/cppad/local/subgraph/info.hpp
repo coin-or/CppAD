@@ -40,7 +40,7 @@ private:
 
    /// Mapping atomic call operators to AFunOp that begins call sequence,
    /// other operators are not changed by the map.
-   /// (size zero after construtor or resize)
+   /// (size zero after constructor or resize)
    pod_vector<addr_t> map_user_op_;
 
    // -----------------------------------------------------------------------
@@ -90,7 +90,7 @@ public:
    const pod_vector<bool>& process_range(void) const
    {  return process_range_; }
 
-   /// amount of memory corresonding to this object
+   /// amount of memory corresponding to this object
    size_t memory(void) const
    {  size_t sum = map_user_op_.size()   * sizeof(addr_t);
       sum       += in_subgraph_.size()   * sizeof(addr_t);
@@ -193,7 +193,7 @@ public:
    set sizes for this object (the default sizes are zero)
 
    \param n_ind
-   number of indepent variables.
+   number of independent variables.
 
    \param n_dep
    number of dependent variables.

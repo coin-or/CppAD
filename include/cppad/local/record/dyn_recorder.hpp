@@ -102,7 +102,7 @@ public:
    , par_hash_table_( CPPAD_HASH_TABLE_SIZE )
    {  //
       // par_hash_table_
-      // It does not matter if unitialized hash codes match but this
+      // It does not matter if uninitialized hash codes match but this
       // initilaization is here to avoid valgrind warnings.
       void*  ptr   = static_cast<void*>( par_hash_table_.data() );
       int    value = 0;
@@ -428,7 +428,7 @@ template <class Base> addr_t dyn_recorder<Base>::put_con_par(const Base &par)
             return static_cast<addr_t>( index );
    }
    // ---------------------------------------------------------------------
-   // put paramerter in par_all_ and replace hash entry for this codee
+   // put parameter in par_all_ and replace hash entry for this codee
    //
    index = par_all_.size();
    par_all_.push_back( par );

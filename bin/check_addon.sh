@@ -34,7 +34,7 @@ for file in $file_list
 do
    if grep -E $grep_cmd $file > /dev/null
    then
-      echo "$file containts $grep_cmd"
+      echo "$file contains $grep_cmd"
       ok="no"
    fi
 done

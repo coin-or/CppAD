@@ -12,7 +12,7 @@
 
 
 # ifdef _MSC_VER
-// Supress warning that Microsoft compiler changed its behavior and is now
+// Suppress warning that Microsoft compiler changed its behavior and is now
 // doing the correct thing at the statement:
 //            new(array + i) Type();
 # pragma warning(disable:4345)
@@ -173,14 +173,14 @@ private:
    \param clear
    If clear is true, then the information pointer for this thread
    is deleted and the nullptr pointer is returned.
-   There must be no memory currently in either the inuse or avaialble
+   There must be no memory currently in either the inuse or available
    lists when this routine is called.
 
    \return
    is the current information pointer for this thread.
    If clear is false, and the current pointer is nullptr,
-   a new infromation record is allocated and its pointer returned.
-   In this case, if info is the retured pointer,
+   a new information record is allocated and its pointer returned.
+   In this case, if info is the returned pointer,
    <code>info->count_inuse == 0</code> and
    <code>info->count_available == 0</code>.
    In addition,
@@ -251,7 +251,7 @@ private:
    \param thread [in]
    Thread for which we are increasing the number of bytes in use
    (must be less than num_threads).
-   Durring parallel execution, this must be the thread
+   During parallel execution, this must be the thread
    that is currently executing.
    */
    static void inc_inuse(size_t inc, size_t thread)
@@ -270,7 +270,7 @@ private:
    }
    // -----------------------------------------------------------------------
    /*!
-   Increase the number of bytes of memory that are currently avaialble; i.e.,
+   Increase the number of bytes of memory that are currently available; i.e.,
    have been obtained obtained from the system and are being held future use.
 
    \copydetails inc_inuse
@@ -299,7 +299,7 @@ private:
    \param thread [in]
    Thread for which we are decreasing the number of bytes in use
    (must be less than num_threads).
-   Durring parallel execution, this must be the thread
+   During parallel execution, this must be the thread
    that is currently executing.
    */
    static void dec_inuse(size_t dec, size_t thread)
@@ -318,7 +318,7 @@ private:
    }
    // -----------------------------------------------------------------------
    /*!
-   Decrease the number of bytes of memory that are currently avaialble; i.e.,
+   Decrease the number of bytes of memory that are currently available; i.e.,
    have been obtained obtained from the system and are being held future use.
 
    \copydetails dec_inuse
@@ -340,8 +340,8 @@ private:
    Set and get the number of threads that are sharing memory.
 
    \param number_new
-   If number is zero, we are only retreiving the current maximum
-   number of threads. Otherwise, we are setting and retreiving
+   If number is zero, we are only retrieving the current maximum
+   number of threads. Otherwise, we are setting and retrieving
    maximum number of threads.
 
    \return
@@ -548,7 +548,7 @@ contain examples and tests that use this function.
       free_available( set_get_thread_num(nullptr) );
 
       // delay this so thread_num() call above is in previous mode
-      // (current setings may not yet be valid)
+      // (current settings may not yet be valid)
       if( num_threads > 1 )
       {  bool set = true;
          set_get_num_threads(num_threads);
@@ -736,7 +736,7 @@ Example
    Use thread_alloc to get a specified amount of memory.
 
    If the memory allocated by a previous call to get_memory is now
-   avaialable, and min_bytes is between its previous value
+   available, and min_bytes is between its previous value
    and the previous cap_bytes, this memory allocation will have
    optimal speed. Otherwise, the memory allocation is more complicated and
    may have to wait for other threads to complete an allocation.
@@ -832,7 +832,7 @@ Example
          CPPAD_ASSERT_UNKNOWN( i_ptr % sizeof(v_ptr) == 0 );
          CPPAD_ASSERT_UNKNOWN( i_ptr % sizeof(double) == 0 );
 # endif
-         // return pointer to memory, do not inclue block_t at begining
+         // return pointer to memory, do not include block_t at beginning
          return v_ptr;
       }
 
@@ -1179,7 +1179,7 @@ Example
    \param thread [in]
    Thread for which we are determining the amount of memory
    (must be < CPPAD_MAX_NUM_THREADS).
-   Durring parallel execution, this must be the thread
+   During parallel execution, this must be the thread
    that is currently executing.
 
    \return
@@ -1327,7 +1327,7 @@ Example
 {xrst_end ta_create_array}
 */
    /*!
-   Use thread_alloc to allocate an array, then call default construtor
+   Use thread_alloc to allocate an array, then call default constructor
    for each element.
 
    \tparam Type
@@ -1436,7 +1436,7 @@ Example
    of the array.
 
    \par
-   Durring parallel execution, the current thread must be the same
+   During parallel execution, the current thread must be the same
    as during the corresponding call to create_array.
    */
    template <class Type>

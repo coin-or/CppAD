@@ -247,7 +247,7 @@ bool old_usead_1(void)
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
    // --------------------------------------------------------------------
-   // Create the ADFun<doulbe> r_
+   // Create the ADFun<double> r_
    create_r();
 
    // --------------------------------------------------------------------

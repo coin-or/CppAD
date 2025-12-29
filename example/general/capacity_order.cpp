@@ -99,7 +99,7 @@ bool capacity_order(void)
    // do test in separate routine so all objects are destroyed
    ok &= test();
 
-   // check that the amount of memroy inuse has not changed
+   // check that the amount of memory inuse has not changed
    ok &= thread_alloc::inuse(thread) == inuse;
 
    // Test above uses hold_memory, so return available memory

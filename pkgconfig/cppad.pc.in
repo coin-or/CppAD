@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
-# The following variable settings seem to by requried by the vcpkg packager,
+# The following variable settings seem to by required by the vcpkg packager,
 # see https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
 # for the meaning of these variables.
 #

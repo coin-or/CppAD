@@ -75,7 +75,7 @@ MACRO(pkgconfig_info package system_include)
          pkgconfig_info_dirs "${${pkgconfig_info_package}_INCLUDE_DIRS}"
       )
       #
-      # INLCUDE_DIRECTORIES
+      # INCLUDE_DIRECTORIES
       IF( ${system_include} )
          INCLUDE_DIRECTORIES( SYSTEM ${pkgconfig_info_dirs} )
       ELSE( )

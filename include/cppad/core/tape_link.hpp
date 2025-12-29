@@ -185,7 +185,7 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_enum job)
       // tape for this thread must be null at the start
       CPPAD_ASSERT_UNKNOWN( *tape_h  == nullptr );
 
-      // allocate separate memroy to avoid false sharing
+      // allocate separate memory to avoid false sharing
       *tape_h = new local::ADTape<Base>();
 
       // if tape id is zero, initialize it so that

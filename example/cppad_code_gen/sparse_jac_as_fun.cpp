@@ -49,10 +49,10 @@ bool sparse_jac_as_fun(void)
    // create f: x -> y and stop tape recording
    CppAD::ADFun<c_double> c_f(ac_x, ac_y);
 
-   // create a version of f that evalutes using ac_double
+   // create a version of f that evaluates using ac_double
    CppAD::ADFun<ac_double, c_double> ac_f = c_f.base2ad();
 
-   // Independent varialbes while evaluating Jacobian
+   // Independent variables while evaluating Jacobian
    CppAD::Independent(ac_x);
 
    // ----------------------------------------------------------------

@@ -224,7 +224,7 @@ enum op_code_var {
    FunavOp,  // ...
    FunrpOp,  // ...
    FunrvOp,  // ...
-   InvOp,    // independent variable, no argumements, one result variable
+   InvOp,    // independent variable, no arguments, one result variable
    LdpOp,    // see its heading above
    LdvOp,    // ...
    LeppOp,   // compare <=
@@ -282,11 +282,11 @@ Number of arguments for a specified operator.
 Number of arguments corresponding to the specified operator.
 
 \param op
-Operator for which we are fetching the number of arugments.
+Operator for which we are fetching the number of arguments.
 
 \par NumArgTable
-this table specifes the number of arguments stored for each
-occurance of the operator that is the i-th value in the op_code_var enum type.
+this table specifies the number of arguments stored for each
+occurrence of the operator that is the i-th value in the op_code_var enum type.
 For example, for the first three op_code_var enum values we have
 \verbatim
 op_code_var j   NumArgTable[j]  Meaning
@@ -407,8 +407,8 @@ Number of variables resulting from the specified operation.
 Operator for which we are fecching the number of results.
 
 \par NumResTable
-table specifes the number of varibles that result for each
-occurance of the operator that is the i-th value in the op_code_var enum type.
+table specifies the number of variables that result for each
+occurrence of the operator that is the i-th value in the op_code_var enum type.
 For example, for the first three op_code_var enum values we have
 \verbatim
 op_code_var j   NumResTable[j]  Meaning
@@ -662,7 +662,7 @@ void printOpField(
       return;
    }
 
-   // count number of spaces at begining
+   // count number of spaces at beginning
    size_t nspace = 0;
    while(str[nspace] == ' ' && nspace < len)
       nspace++;
@@ -741,8 +741,8 @@ void printOp(
       arg[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
       arg[1] & 1 = is left a variable
       arg[1] & 2 = is right a variable
-      arg[2]     = index correspoding to left
-      arg[3]     = index correspoding to right
+      arg[2]     = index corresponding to left
+      arg[3]     = index corresponding to right
       arg[4] = number of operations to skip if CExpOp comparison is true
       arg[5] = number of operations to skip if CExpOp comparison is false
       arg[6] -> arg[5+arg[4]]               = skip operations if true
@@ -789,7 +789,7 @@ void printOp(
       arg[4] = end in arg of subtraction dynamic parameters in summation
       arg[5],      ... , arg[arg[1]-1]: indices for addition variables
       arg[arg[1]], ... , arg[arg[2]-1]: indices for subtraction variables
-      arg[arg[2]], ... , arg[arg[3]-1]: indices for additon dynamics
+      arg[arg[2]], ... , arg[arg[3]-1]: indices for addition dynamics
       arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
       arg[arg[4]] = arg[4] + 1
       */
@@ -1013,7 +1013,7 @@ void printOp(
 }
 
 /*!
-Prints the result values correspnding to an operator.
+Prints the result values corresponding to an operator.
 
 \tparam Base
 Is the base type for these AD< Base > operations.
@@ -1111,7 +1111,7 @@ void arg_is_variable(
    switch(op)
    {
       // -------------------------------------------------------------------
-      // cases where true number of arugments = NumArg(op) == 0
+      // cases where true number of arguments = NumArg(op) == 0
 
       case EndOp:
       case InvOp:

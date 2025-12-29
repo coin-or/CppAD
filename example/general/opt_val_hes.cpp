@@ -165,7 +165,7 @@ bool opt_val_hes(void)
 # endif
    CppAD::opt_val_hes(x, y, fun, jac, hes);
 
-   // we know that F_yy is positive definate for this case
+   // we know that F_yy is positive definite for this case
    assert( signdet == 1 );
 
    // create ADFun object g corresponding to V(x)

@@ -15,7 +15,7 @@ scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
 using CppAD::NearEqual;
 // --------------------------------------------------------------------------
 /*
-Test atomic_eigen_mat_inv using a non-symetric matrix
+Test atomic_eigen_mat_inv using a non-symmetric matrix
 
 f(x) = [ x[0]   -1  ]^{-1}
        [ 2     x[1] ]

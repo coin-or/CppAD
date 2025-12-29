@@ -246,7 +246,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Optimize a player object operation sequence
 
 The operation sequence for this object is replaced by one with fewer operations
-but the same funcition and derivative values.
+but the same function and derivative values.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
@@ -311,7 +311,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
       }
       // max_taylor
       // maximum zero order coefficient not counting BeginOp at beginning
-      // (which is correpsonds to uninitialized memory).
+      // (which is corresponds to uninitialized memory).
       for(size_t i = 1; i < num_var_tape_; i++)
       {  if(  abs_geq(taylor_[i*cap_order_taylor_+0] , max_taylor) )
             max_taylor = taylor_[i*cap_order_taylor_+0];
@@ -379,7 +379,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
    num_order_taylor_     = 0;
    cap_order_taylor_     = 0;
 
-   // resize and initilaize conditional skip vector
+   // resize and initialize conditional skip vector
    // (must use player size because it now has the recoreder information)
    cskip_op_.resize( play_.num_var_op() );
 

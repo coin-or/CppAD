@@ -260,7 +260,7 @@ bool use_hes_sparsity(bool u_1_variable, bool forward)
    using CppAD::NearEqual;
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
    //
-   // Create the atomic_hes_sparsity object correspnding to g(x)
+   // Create the atomic_hes_sparsity object corresponding to g(x)
    atomic_hes_sparsity afun("atomic_hes_sparsity");
    //
    // Create the function f(u) = g(u) for this example.

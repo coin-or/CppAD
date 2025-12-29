@@ -194,7 +194,7 @@ void cppad_colpack_symmetric(
    }
 
 # ifndef NDEBUG
-   // check that every entry in the symetric matrix can be direclty recovered
+   // check that every entry in the symmetric matrix can be directly recovered
    size_t i1, i2, j1, j2, k1, k2, nz1, nz2;
    for(i1 = 0; i1 < m; i1++)
    {  nz1 = size_t(adolc_pattern[i1][0]);

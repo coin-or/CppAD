@@ -146,14 +146,14 @@ public:
 /*!
 Place a parameter in the tape as a variable.
 
-On rare occations it is necessary to place a parameter in the tape; e.g.,
-when it is one of the dependent variabes.
+On rare occasions it is necessary to place a parameter in the tape; e.g.,
+when it is one of the dependent variables.
 
 \param y
 value of the parameter that we are placing in the tape as a variable.
 
 \return
-variable index (for this recording) correpsonding to the parameter.
+variable index (for this recording) corresponding to the parameter.
 
 \par 2DO
 All these operates are preformed in Rec_, so we should

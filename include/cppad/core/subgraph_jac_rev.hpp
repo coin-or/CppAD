@@ -225,7 +225,7 @@ void ADFun<Base,RecBase>::subgraph_jac_rev(
    const SizeVector& col( subset.col() );
    SizeVector row_major = subset.row_major();
    //
-   // determine set of independent variabels
+   // determine set of independent variables
    local::pod_vector<bool> select_domain(n);
    for(size_t j = 0; j < n; j++)
       select_domain[j] = false;

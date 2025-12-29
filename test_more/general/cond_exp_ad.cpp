@@ -49,7 +49,7 @@ bool CondExpADOne(void)
    // CondExp(parameter, parameter, variable)
    Yaa[1] = CondExp(p, q, Xaa[2]);
 
-   // CondExp(parameter, varaible, parameter)
+   // CondExp(parameter, variable, parameter)
    Yaa[2] = CondExp(p, Xaa[1], r);
 
    // CondExp(parameter, variable, variable)
@@ -202,7 +202,7 @@ bool CondExpADTwo(void)
    // CondExp(parameter, parameter, variable)
    Yaa[1] = CondExp(p, q, Xaa[2]);
 
-   // CondExp(parameter, varaible, parameter)
+   // CondExp(parameter, variable, parameter)
    Yaa[2] = CondExp(p, Xaa[1], r);
 
    // CondExp(parameter, variable, variable)

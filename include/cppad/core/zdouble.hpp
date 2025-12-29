@@ -345,26 +345,26 @@ public:
       return zdouble( zero ? 0.0 : (dbl_ / x) );
    }
    //
-   /// Compute assignmnet *= with absolute zero
+   /// Compute assignment *= with absolute zero
    zdouble& operator *= (const zdouble& z)
    {  bool zero = (dbl_ == 0.0) || (z.dbl_ == 0.0);
       zero ? (dbl_ = 0.0) : (dbl_ *= z.dbl_);
       return *this;
    }
-   /// Compute assignmnet *= with absolute zero
+   /// Compute assignment *= with absolute zero
    zdouble& operator *= (const double& x)
    {  bool zero = (dbl_ == 0.0) || (x == 0.0);
       zero ? (dbl_ = 0.0) : (dbl_ *= x);
       return *this;
    }
    //
-   /// Compute assignmnet /= with absolute zero
+   /// Compute assignment /= with absolute zero
    zdouble& operator /= (const zdouble& z)
    {  bool zero = (dbl_ == 0.0);
       zero ? (dbl_ = 0.0) : (dbl_ /= z.dbl_);
       return *this;
    }
-   /// Compute assignmnet /= with absolute zero
+   /// Compute assignment /= with absolute zero
    zdouble& operator /= (const double& x)
    {  bool zero = (dbl_ == 0.0);
       zero ? (dbl_ = 0.0) : (dbl_ /= x);

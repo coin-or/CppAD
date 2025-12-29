@@ -55,7 +55,7 @@ void tape_t<Value>::set_op2arg_index(void)
    //
    // op2arg_index_
    // We needed a complete op2arg_index, before we could set op2arg_index_,
-   // otherwise op_iteator would not work properly.
+   // otherwise op_iterator would not work properly.
    op2arg_index_.swap(op2arg_index);
 }
 //

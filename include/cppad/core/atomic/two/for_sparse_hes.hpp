@@ -122,7 +122,7 @@ Atomic forward mode Hessian sparsity patterns.
 Link, after case split, from for_hes_sweep to atomic_base.
 
 \param vx [in]
-which componens of x are variables.
+which components of x are variables.
 
 \param r [in]
 is the forward Jacobian sparsity pattern w.r.t the argument vector x.
@@ -184,11 +184,11 @@ bool atomic_base<Base>::for_sparse_hes(
 {  return false; }
 /*!
 Link, before case split, from for_hes_sweep to atomic_base.
-2DO: move this functiton outside this file so can change
-developer documentation to omhelp formating.
+2DO: move this function outside this file so can change
+developer documentation to omhelp formatting.
 
 \tparam InternalSparsity
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param x
@@ -214,7 +214,7 @@ computing the Hessian of.
 
 \param for_hes_sparsity
 This is the sparsity pattern for the Hessian. On input, the non-linear
-terms in the atomic fuction have not been included. Upon return, they
+terms in the atomic function have not been included. Upon return, they
 have been included.
 */
 template <class Base>

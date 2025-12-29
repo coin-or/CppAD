@@ -56,7 +56,7 @@ bool ode_check(const SizeVector& N, const NumberVector& x)
       );
    }
 
-   // check accuarcy of constraint equations
+   // check accuracy of constraint equations
    rel_tol = 1e-9;
    abs_tol = 1e-9;
 

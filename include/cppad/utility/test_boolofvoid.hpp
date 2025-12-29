@@ -90,7 +90,7 @@ class test_boolofvoid {
 private:
    /// name for the group of test this object will run
    const std::string group_;
-   /// number of characters used to display the name for each indiviual test
+   /// number of characters used to display the name for each individual test
    /// (must be larger than the number of characters in name for each test)
    const size_t      width_;
    /// number of tests that have passed
@@ -130,10 +130,10 @@ public:
       }
       return ok;
    }
-   /// nuber of tests that passed
+   /// number of tests that passed
    size_t n_ok(void) const
    {  return n_ok_; }
-   /// nuber of tests that failed
+   /// number of tests that failed
    size_t n_error(void) const
    {  return n_error_; }
    /// summary

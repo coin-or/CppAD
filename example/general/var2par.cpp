@@ -33,7 +33,7 @@ bool Var2Par(void)
    ax[0] = 3.;
    ax[1] = 4.;
 
-   // independent dynamic paramers
+   // independent dynamic parameters
    size_t np = 1;
    CPPAD_TESTVECTOR(AD<double>) ap(np);
    ap[0] = 5.;

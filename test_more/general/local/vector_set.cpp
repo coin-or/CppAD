@@ -66,7 +66,7 @@ bool test_no_other(void)
    ok &= vec_set.is_element(source, source+1);
    //
    // now take the union of set 2 and set 3 and place in set 0
-   // (wich is sharing a list with set 2)
+   // (which is sharing a list with set 2)
    target = 0;
    vec_set.binary_union(target, source, source+1, vec_set);
    ok &= vec_set.is_element(target, source+1);

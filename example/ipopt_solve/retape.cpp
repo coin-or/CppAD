@@ -85,7 +85,7 @@ bool retape(void)
    options += "Numeric tol           1e-9\n";
    // derivative testing
    options += "String  derivative_test            second-order\n";
-   // maximum amount of random pertubation; e.g.,
+   // maximum amount of random perturbation; e.g.,
    // when evaluation finite diff
    options += "Numeric point_perturbation_radius  0.\n";
 

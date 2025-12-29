@@ -345,7 +345,7 @@ public:
       const AD<Base> &if_false
    );
 
-   /// record a comparison operators for varialbes or just dynamic parameters
+   /// record a comparison operators for variables or just dynamic parameters
    void comp_eq(
       bool                        var_left     ,
       bool                        var_right    ,

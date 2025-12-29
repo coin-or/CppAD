@@ -69,7 +69,7 @@ bool ForHess(void)
 
    size_t j;
    for(i = 0; i < 3; i++)
-   {  // diagonal of Hessians in i-th coordiante direction
+   {  // diagonal of Hessians in i-th coordinate direction
       u1[i] = 1.;
       F.Forward(1, u1);
       CPPAD_TESTVECTOR(double) Di = F.Forward(2, u2);

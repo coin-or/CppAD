@@ -31,7 +31,7 @@ are done using the type Base .
 struct random_itr_info_t {
    //
    // *_op2arg
-   // index in var_arg_ corresonding to the first argument for each operator
+   // index in var_arg_ corresponding to the first argument for each operator
    pod_vector<unsigned  short> short_op2arg;
    pod_vector<addr_t>          addr_t_op2arg;
    pod_vector<size_t>          size_t_op2arg;
@@ -40,7 +40,7 @@ struct random_itr_info_t {
    Index of the result variable for each operator. If the operator has
    no results, this is not defined. The invalid index num_var_ is used
    when NDEBUG is not defined. If the operator has more than one result, this
-   is the primary result; i.e., the last result. Auxillary results are only
+   is the primary result; i.e., the last result. Auxiliary results are only
    used by the current operator and not used by other operators.
    */
    pod_vector<unsigned  short> short_op2var;
@@ -157,7 +157,7 @@ private:
    size_t num_var_;
 
    // num_var_load_
-       // number of vecad load opeations in the reconding
+       // number of vecad load operations in the reconding
    size_t num_var_load_;
 
    // num_var_vecad_
@@ -189,7 +189,7 @@ public:
    //
    /// default constructor
    // set all scalars to zero to avoid valgraind warning when ani assignment
-   // occures before values get set.
+   // occurs before values get set.
    player(void)
    : num_var_(0)
    , num_var_load_(0)
@@ -282,7 +282,7 @@ public:
       // num_var_vecad_
           num_var_vecad_ = 0;
       {  // var_vecad_ind_ contains size of each VecAD followed by
-         // the parameter indices used to inialize it.
+         // the parameter indices used to initialize it.
          size_t i = 0;
          while( i < var_vecad_ind_.size() )
          {  num_var_vecad_++;

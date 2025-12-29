@@ -22,7 +22,7 @@ void CppAD::local::graph::json_parser(
    // match_any_string
    const string match_any_string = "";
    //
-   // initilize atomic_name_vec
+   // initialize atomic_name_vec
    graph_obj.initialize();
    //
    // The values in this vector will be set while parsing op_define_vec.

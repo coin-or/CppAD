@@ -273,7 +273,7 @@ Prototype
       //
       if( ax.ad_type_ == dynamic_enum )
       {
-         // tape dynamic paramter operation
+         // tape dynamic parameter operation
          ay.taddr_   = tape->Rec_.put_dyn_par(
             ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
          );

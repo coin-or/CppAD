@@ -15,7 +15,6 @@
    libs
    ltmain
    msys
-   ocurred
    rcv
    txt
 }
@@ -237,7 +236,7 @@ are identically equal (actually the same variable).
 03-07
 =====
 
-#. Fix bug in :ref:`f.to_graph<to_graph-name>` that ocurred
+#. Fix bug in :ref:`f.to_graph<to_graph-name>` that occurred
    when *f* had ``fabs`` dynamic parameter operators.
    To be more specific, if ``NDEBUG`` was not defined,
    an error from an unknown source would be detected in the file ``to_graph.hpp`` .

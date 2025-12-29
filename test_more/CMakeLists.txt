@@ -11,7 +11,7 @@ SET(check_test_more_depends "")
 ADD_SUBDIRECTORY(deprecated)
 
 # compare_c tests
-# clange-cl.exe seems to be confused about C files and gives an erro message
+# clange-cl.exe seems to be confused about C files and gives an error message
 # saying that C++ forbids macroizing the keywords bool, true, and false.
 STRING(REGEX MATCH ".*[/\]clang-cl.exe" match "${CMAKE_C_COMPILER}" )
 IF( NOT "${match}" STREQUAL "${CMAKE_C_COMPILER}" )

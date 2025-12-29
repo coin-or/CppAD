@@ -201,7 +201,7 @@ void atomic_four<Base>::operator()(
       ay[i].taddr_   = 0;
 
       // we need to record this operation if
-      // any of the elemnts of ay are dynamics or variables,
+      // any of the elements of ay are dynamics or variables,
       record_dynamic  |= type_y[i] == dynamic_enum;
       record_variable |= type_y[i] == variable_enum;
    }

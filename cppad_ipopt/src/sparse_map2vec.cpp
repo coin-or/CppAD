@@ -67,7 +67,7 @@ void sparse_map2vec(
       for(itr = sparse[i].begin(); itr != sparse[i].end(); itr++)
          ++n_nz;
 
-   // resize the return vectors to accomidate n_nz entries
+   // resize the return vectors to accommodate n_nz entries
    i_row.resize(n_nz);
    j_col.resize(n_nz);
 

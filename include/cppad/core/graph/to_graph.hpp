@@ -330,7 +330,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
          {
             // arg[0]: discrete function index
             size_t discrete_index = size_t( dyn_par_arg[i_arg + 0] );
-            // get the name for this dicrete function
+            // get the name for this discrete function
             std::string name = discrete<Base>::name( discrete_index );
             //
             // set graph index for this discrete function call
@@ -465,7 +465,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
    // ----------------------------------------------------------------------
    // variable operators
    pod_vector<size_t> var2node(n_variable);
-   var2node[0] = 0; // invalide node value
+   var2node[0] = 0; // invalid node value
    for(size_t i = 1; i <= n_variable_ind; ++i)
       var2node[i] = n_dynamic_ind + i;
    for(size_t i = n_variable_ind + 1; i < n_variable; ++i)

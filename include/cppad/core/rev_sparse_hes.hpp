@@ -203,7 +203,7 @@ applies.
 
 \param set_type
 is a bool value. This argument is used to dispatch to the proper source
-code depending on the vlaue of SetVector::value_type.
+code depending on the value of SetVector::value_type.
 
 \param transpose
 See RevSparseHes(q, s).
@@ -215,7 +215,7 @@ See RevSparseHes(q, s).
 See RevSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to RevSparseJac(q, s).
+is the return value for the corresponding call to RevSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class SetVector>
@@ -325,7 +325,7 @@ applies.
 \param set_type
 is a std::set<size_t> value.
 This argument is used to dispatch to the proper source
-code depending on the vlaue of SetVector::value_type.
+code depending on the value of SetVector::value_type.
 
 \param transpose
 See RevSparseHes(q, s).
@@ -337,7 +337,7 @@ See RevSparseHes(q, s).
 See RevSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to RevSparseJac(q, s).
+is the return value for the corresponding call to RevSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class SetVector>
@@ -577,7 +577,7 @@ void ADFun<Base,RecBase>::RevSparseHesCheckpoint(
    CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end()   == q );
    CPPAD_ASSERT_UNKNOWN( s.size()                    == m );
 
-   // Array that holds the reverse Jacobiain dependcy flags.
+   // Array that holds the reverse Jacobiain dependency flags.
    // Initialize as true for dependent variables, flase for others.
    local::pod_vector<bool> RevJac(num_var_tape_);
    for(size_t i = 0; i < num_var_tape_; i++)

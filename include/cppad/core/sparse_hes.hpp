@@ -253,7 +253,7 @@ so it does not need to be recomputed every time.
 */
 class sparse_hes_work {
    public:
-      /// row and column indicies for return values
+      /// row and column indices for return values
       /// (some may be reflected by symmetric coloring algorithms)
       CppAD::vector<size_t> row;
       CppAD::vector<size_t> col;
@@ -308,7 +308,7 @@ where m is number of dependent variables in f.
 
 \param coloring
 determines which coloring algorithm is used.
-This must be cppad.symmetric, cppad.general, colpack.symmetic,
+This must be cppad.symmetric, cppad.general, colpack.symmetric,
 or colpack.star.
 
 \param work
@@ -319,7 +319,7 @@ and the same subset.
 
 \return
 This is the number of first order forward
-(and second order reverse) sweeps used to compute thhe Hessian.
+(and second order reverse) sweeps used to compute the Hessian.
 */
 template <class Base, class RecBase>
 template <class SizeVector, class BaseVector>
@@ -359,7 +359,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
    const SizeVector& subset_row( subset.row() );
    const SizeVector& subset_col( subset.col() );
    //
-   // point at which we are evaluationg the Hessian
+   // point at which we are evaluating the Hessian
    Forward(0, x);
    //
    // number of elements in the subset
@@ -460,7 +460,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
 # else
          CPPAD_ASSERT_KNOWN(
             false,
-            "sparse_hes: coloring = colpack.symmetic or colpack.star "
+            "sparse_hes: coloring = colpack.symmetric or colpack.star "
             "and colpack_prefix not in cmake command line."
          );
 # endif
@@ -512,7 +512,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
       // (it does not know about the subset corresponding to row, col)
       CPPAD_ASSERT_UNKNOWN(
          coloring == "colpack.general" ||
-         coloring == "colpack.symmetic" ||
+         coloring == "colpack.symmetric" ||
          coloring == "colpack.star"
       );
    }

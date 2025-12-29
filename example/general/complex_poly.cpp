@@ -21,7 +21,7 @@ Select this link to view specifications for :ref:`Poly-name` :
 {xrst_end complex_poly.cpp}
 */
 // BEGIN C++
-// Complex examples should supppress conversion warnings
+// Complex examples should suppress conversion warnings
 # include <cppad/wno_conversion.hpp>
 
 # include <cppad/cppad.hpp>

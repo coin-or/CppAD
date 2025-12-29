@@ -86,7 +86,7 @@ void recorder<Base>::cond_exp(
    // arg[0] = cop
    addr_t arg0 = addr_t( cop );
 
-   // arg[1] = base 2 represenation of the value
+   // arg[1] = base 2 representation of the value
    // [Var(left), Var(right), Var(if_true), Var(if_false)]
    addr_t arg1 = 0;
 

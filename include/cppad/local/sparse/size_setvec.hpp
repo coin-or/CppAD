@@ -254,7 +254,7 @@ private:
 
 {xrst_end size_setvec_drop}
 */
-   {  // inialize count of addition elements not being used.
+   {  // initialize count of addition elements not being used.
       s_type number_drop = 0;
 
       // the elements in the post list will no longer be used
@@ -1340,11 +1340,11 @@ public:
       {  assignment(this_target, other_right, other);
          return;
       }
-      // if niether case holds, then both left and right are non-empty
+      // if neither case holds, then both left and right are non-empty
       CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
       CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
-      // we will use temparary_ for temporary storage of the union
+      // we will use temporary_ for temporary storage of the union
       temporary_.resize(0);
 
       // for left next and value
@@ -1482,11 +1482,11 @@ public:
       {  clear(this_target);
          return;
       }
-      // if niether case holds, then both left and right are non-empty
+      // if neither case holds, then both left and right are non-empty
       CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
       CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
-      // we will use temparary_ for temporary storage of the intersection
+      // we will use temporary_ for temporary storage of the intersection
       temporary_.resize(0);
 
       // left next and value
@@ -1653,7 +1653,7 @@ public:
       {  // value for this entry is reference count for list
          CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
 
-         // data index where list truely starts
+         // data index where list truly starts
          s_type next = data_[start].next;
          CPPAD_ASSERT_UNKNOWN( next != 0 );
 

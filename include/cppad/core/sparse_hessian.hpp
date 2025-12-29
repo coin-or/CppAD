@@ -338,7 +338,7 @@ class sparse_hessian_work {
       /// Coloring method: "cppad", or "colpack"
       /// (this field is set by user)
       std::string color_method;
-      /// row and column indicies for return values
+      /// row and column indices for return values
       /// (some may be reflected by star coloring algorithm)
       CppAD::vector<size_t> row;
       CppAD::vector<size_t> col;
@@ -377,7 +377,7 @@ is a simple vector class with elements of type
 is sparse_pack or sparse_list.
 
 \param x [in]
-is a vector specifing the point at which to compute the Hessian.
+is a vector specifying the point at which to compute the Hessian.
 
 \param w [in]
 is the weighting vector that defines a scalar valued function by
@@ -550,7 +550,7 @@ size_t ADFun<Base,RecBase>::SparseHessianCompute(
       // (it does not know about the subset corresponding to row, col)
       CPPAD_ASSERT_UNKNOWN(
          coloring == "colpack.general" ||
-         coloring == "colpack.symmetic" ||
+         coloring == "colpack.symmetric" ||
          coloring == "colpack.star"
       );
    }
@@ -559,7 +559,7 @@ size_t ADFun<Base,RecBase>::SparseHessianCompute(
       // (it does not know about the subset corresponding to row, col)
       CPPAD_ASSERT_UNKNOWN(
          coloring == "colpack.general" ||
-         coloring == "colpack.symmetic" ||
+         coloring == "colpack.symmetric" ||
          coloring == "colpack.star"
       );
    }
@@ -611,7 +611,7 @@ is a simple vector class with elements of type
 is a simple vector class with elements of type size_t.
 
 \param x [in]
-is a vector specifing the point at which to compute the Hessian.
+is a vector specifying the point at which to compute the Hessian.
 
 \param w [in]
 is the weighting vector that defines a scalar valued function by
@@ -712,7 +712,7 @@ size_t ADFun<Base,RecBase>::SparseHessian(
 /*!
 Compute a sparse Hessian.
 
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    hes = SparseHessian(x, w, p)
 \endverbatim
@@ -730,7 +730,7 @@ is a simple vector class with elements of type
  bool or std::set<size_t>.
 
 \param x [in]
-is a vector specifing the point at which to compute the Hessian.
+is a vector specifying the point at which to compute the Hessian.
 
 \param w [in]
 The Hessian is computed for a weighted sum of the components
@@ -805,7 +805,7 @@ BaseVector ADFun<Base,RecBase>::SparseHessian(
 /*!
 Compute a sparse Hessian
 
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    hes = SparseHessian(x, w)
 \endverbatim
@@ -819,7 +819,7 @@ ADFun<Base object.
 is a simple vector class with elements of the Base.
 
 \param x [in]
-is a vector specifing the point at which to compute the Hessian.
+is a vector specifying the point at which to compute the Hessian.
 
 \param w [in]
 The Hessian is computed for a weighted sum of the components

@@ -134,7 +134,7 @@ namespace {
             // x indices corresponding to this value of y
             for(j = 0; j < Ny; j++)
                J[j] = S_[k + 1] * Ny + j;
-            // components of x correspondig to a
+            // components of x corresponding to a
             for(j = 0; j < Na; j++)
                J[Ny + j] = ny_inx + j;
             return;

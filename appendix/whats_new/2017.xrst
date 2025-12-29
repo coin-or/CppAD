@@ -163,7 +163,7 @@ and the :ref:`wish_list@check_finite` entry was modified.
 =====
 
 #. If :ref:`colpack_prefix-name` was not specified, one would get the following
-   waring during the :ref:`cmake-name` command:
+   warning during the :ref:`cmake-name` command:
 
       ``Policy CMP0046 is not set: Error on non-existent dependency in``
 
@@ -324,7 +324,7 @@ are in the ``example/ipopt_solve`` directory.
    and `auto tools' has been changed to :ref:`configure-name` .
 #. The README file was replace by readme.md
    and AUTHORS was moved to authors.
-#. The NEWS, INSALL, and ChangeLog files
+#. The NEWS, INSTALL, and ChangeLog files
    are no longer necessary for autotools build and have been removed.
 #. The file test_more/sparse_jacobian.cpp generated a warning
    under some gcc compiler options.

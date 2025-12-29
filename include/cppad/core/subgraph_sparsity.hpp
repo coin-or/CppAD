@@ -155,7 +155,7 @@ row, column index sparsity patterns.
 sparsity pattern for the diagonal of the square matrix D.
 
 \param select_range
-sparsity pattern for the diagnoal of the square matrix R
+sparsity pattern for the diagonal of the square matrix R
 
 \param transpose
 If true, the return is a dependency sparsity pattern for

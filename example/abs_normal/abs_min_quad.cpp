@@ -135,7 +135,7 @@ bool abs_min_quad(void)
       hessian[i * n + i] = 1.0;
    }
 
-   // minimize the approxiamtion for f (which is equal to f for this case)
+   // minimize the approximation for f (which is equal to f for this case)
    d_vector delta_x(n);
    ok &= CppAD::abs_min_quad(
       level, n, m, s,

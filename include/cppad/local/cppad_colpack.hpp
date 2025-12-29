@@ -23,7 +23,7 @@ This CppAD library routine is necessary because
 is the number of rows in the sparse matrix
 
 \param n [in]
-is the nubmer of columns in the sparse matrix.
+is the number of columns in the sparse matrix.
 
 \param adolc_pattern [in]
 This vector has size m,
@@ -43,7 +43,7 @@ If for some i, <code>color[i] == m</code>, then
 Otherwise, <code>color[i] < m</code>.
 \n
 \n
-Suppose two differen rows, <code>i != r</code> have the same color.
+Suppose two different rows, <code>i != r</code> have the same color.
 It follows that for all column indices j;
 it is not the case that both
 <code>(i, j)</code> and <code>(r, j)</code> appear in the sparsity pattern.
@@ -68,7 +68,7 @@ This CppAD library routine is necessary because
 <code>using namespace std</code> at the global level.
 
 \param n [in]
-is the nubmer of rows and columns in the symmetric sparse matrix.
+is the number of rows and columns in the symmetric sparse matrix.
 
 \param adolc_pattern [in]
 This vector has size n,

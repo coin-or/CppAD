@@ -27,7 +27,7 @@ gcc-4.9.2. Here is the gist of the message:
    ... snip ...
       return norm_inf (e1 - e2) < epsilon *
                                    ^
-The folowing change to
+The following change to
    /usr/include/boost/numeric/ublas/detail/matrix_assign.hpp
 seems to fix the problem:
 
@@ -139,7 +139,7 @@ s|matrix_matrix_binary<AD_prod_ulower_upper>|AD_prod_ulower_upper|g
 EOF
    echo "sed -f $name.sed $name.log > ../$name.log"
    sed -f $name.sed $name.log > ../$name.log
-   echo "$name.sh: Compliation Error: see build/bug/$name.log"
+   echo "$name.sh: Compilation Error: see build/bug/$name.log"
    exit 1
 fi
 #

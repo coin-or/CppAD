@@ -349,7 +349,7 @@ void get_op_usage(
    if( num_set > 0 )
       cexp_set.resize(num_set, end_set);
    // -----------------------------------------------------------------------
-   // initilaize operator usage for reverse dependency analysis.
+   // initialize operator usage for reverse dependency analysis.
    op_usage.resize( num_op );
    for(i_op = 0; i_op < num_op; ++i_op)
       op_usage[i_op] = usage_t(no_usage);
@@ -751,7 +751,7 @@ void get_op_usage(
                );
                for(size_t j = 0; j < atom_n; j++)
                if( depend_x[j] )
-               {  // The parameter or variable correspnding to the j-th
+               {  // The parameter or variable corresponding to the j-th
                   // argument gets used
                   op_usage[i_op + 1 + j] = true;
                   if( type_x[j] == variable_enum )
@@ -765,7 +765,7 @@ void get_op_usage(
                   }
                }
             }
-            // copy set infomation from last to first
+            // copy set information from last to first
             if( cexp_set.n_set() > 0 )
             {  cexp_set.process_post(last_atom_i_op);
                cexp_set.assignment(i_op, last_atom_i_op, cexp_set);

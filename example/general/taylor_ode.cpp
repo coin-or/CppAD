@@ -88,7 +88,7 @@ bool taylor_ode(void)
 {  // initialize the return value as true
    bool ok = true;
 
-   // The ODE does not depend on the arugment values
+   // The ODE does not depend on the argument values
    // so only tape once, also note that ode does not depend on t
    size_t n = 5;    // number of independent and dependent variables
    a_vector ay(n), ag(n);

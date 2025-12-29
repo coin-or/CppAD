@@ -502,7 +502,7 @@ public:
    /// non-constant element access; i.e., we can change this element value
    template <class Index>
    Type& operator[](
-      /// element index, must be less than length and convertable to size_t
+      /// element index, must be less than length and convertible to size_t
       Index i
    )
    {  return (*this)[size_t(i)]; }
@@ -519,7 +519,7 @@ public:
    /// constant element access; i.e., we cannot change this element value
    template <class Index>
    const Type& operator[](
-      /// element index, must be less than length and convertable to size_t
+      /// element index, must be less than length and convertible to size_t
       Index i
    ) const
    {  return (*this)[size_t(i)]; }
@@ -686,7 +686,7 @@ public:
    // -----------------------------------------------------------------------
    /// vector assignment operator
    void operator=(
-      /// right hand size of the assingment operation
+      /// right hand size of the assignment operation
       const pod_vector_maybe& x
    )
    {  resize( x.length_ );

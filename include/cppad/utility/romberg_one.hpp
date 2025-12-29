@@ -191,7 +191,7 @@ Float RombergOne(
    Float pow4, pow4minus;
    for(i = 0; i < p; i++)
    {  // compute estimate accurate to O[ step^(2*(i+1)) ]
-      // put resutls in r[n-1], r[n-2], ... , r[n-i+1]
+      // put results in r[n-1], r[n-2], ... , r[n-i+1]
       ipow4    *= 4;
       pow4      = Float(int(ipow4));
       pow4minus = Float(ipow4-1);

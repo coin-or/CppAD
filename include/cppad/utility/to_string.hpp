@@ -82,7 +82,7 @@ Float
 =====
 If *value* is a ``Float`` ,
 enough digits are used in the representation so that
-the result is accurate to withing round off error.
+the result is accurate to within round off error.
 {xrst_toc_hidden
    example/utility/to_string.cpp
 }
@@ -122,7 +122,7 @@ template <> struct to_string_struct<Float>\
 namespace CppAD {
 
    // Default implementation,
-   // each type must define its own specilization.
+   // each type must define its own specialization.
    template <class Type>
    struct to_string_struct
    {  std::string operator()(const Type& value)

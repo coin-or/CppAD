@@ -32,7 +32,7 @@ checkpoint<Base>::checkpoint(
    //
    // make a copy of ax because Independent modifies AD information
    ADVector x_tmp(ax);
-   // delcare x_tmp as the independent variables
+   // declare x_tmp as the independent variables
    Independent(x_tmp);
    // record mapping from x_tmp to ay
    algo(x_tmp, ay);

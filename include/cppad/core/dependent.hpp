@@ -136,7 +136,7 @@ Different versions of Dependent function.
 */
 
 /*!
-Determine the tape corresponding to this exeuction thread and then use
+Determine the tape corresponding to this execution thread and then use
 <code>Dependent(tape, y)</code> to store this tapes recording in a function.
 
 \param y [in]
@@ -158,7 +158,7 @@ void ADFun<Base,RecBase>::Dependent(const ADvector &y)
 
 
 /*!
-Determine the tape corresponding to this exeuction thread and then use
+Determine the tape corresponding to this execution thread and then use
 <code>Dependent(tape, y)</code> to store this tapes recording in a function.
 
 \param x [in]
@@ -319,7 +319,7 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
    // now we can delete the tape
    AD<Base>::tape_manage(delete_tape_manage);
 
-   // total number of varables in this recording
+   // total number of variables in this recording
    CPPAD_ASSERT_UNKNOWN( num_var_tape_  == play_.num_var() );
 
    // used to determine if there is an operation sequence in *this

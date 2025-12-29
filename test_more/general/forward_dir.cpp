@@ -13,7 +13,7 @@ namespace {
    using CppAD::AD;
    using CppAD::NearEqual;
    // ---------------------------------------------------------------------
-   // Used the check that fun is an idenity function
+   // Used the check that fun is an identity function
    typedef AD<double> (*adfun)(const AD<double>&);
    bool check_identity(adfun identity, double argument)
    {
@@ -480,7 +480,7 @@ namespace {
       // create f: x -> y and stop tape recording
       CppAD::ADFun<double> f(ax, ay);
 
-      // optmize the tape so converts summation to on CSumOp operator
+      // optimize the tape so converts summation to on CSumOp operator
       f.optimize();
 
       // zero order

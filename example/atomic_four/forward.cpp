@@ -150,7 +150,7 @@ namespace {
             return ok;
          // --------------------------------------------------------------
          // Second order forward mode.
-         // This case is needed if second order forwrd mode is used.
+         // This case is needed if second order forward mode is used.
          // g'(x) = [   0,   0, 2 x_2 ]
          //         [ x_1, x_0,     0 ]
          //

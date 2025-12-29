@@ -33,7 +33,7 @@ build:
       - xrst --version
       #
       # build/html
-      # This comamnd builds the xrst user documentaiton.
+      # This comamnd builds the xrst user documentation.
       # Suppress spell warnings because readthdocs uses a different dictionry.
       - xrst
          --page_source

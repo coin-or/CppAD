@@ -98,7 +98,7 @@ Constructor
    ad_matrix ad_result = mat_mul.op(ad_left, ad_right);
    // -------------------------------------------------------------------
    // check that first component of result is a parameter
-   // and the other components are varaibles.
+   // and the other components are variables.
    ok &= Parameter( ad_result(0, 0) );
    ok &= Variable(  ad_result(1, 0) );
    ok &= Variable(  ad_result(2, 0) );

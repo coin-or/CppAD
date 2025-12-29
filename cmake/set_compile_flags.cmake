@@ -27,7 +27,7 @@
 FUNCTION(set_compile_flags program_name debug_which source_list)
    # debug compile flags
    SET(debug_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}")
-   # relese compile flags
+   # release compile flags
    SET(release_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}")
    #
    # set alternate, report random number result,

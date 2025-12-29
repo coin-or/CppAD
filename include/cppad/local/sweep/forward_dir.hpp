@@ -64,7 +64,7 @@ void forward_dir(
 
    // information used by atomic function operators
 
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
 
    // information defined by atomic function operators
@@ -238,7 +238,7 @@ void forward_dir(
          // -------------------------------------------------
 
          case CSkipOp:
-         // CSkipOp only does somthing on order zero.
+         // CSkipOp only does something on order zero.
          CPPAD_ASSERT_UNKNOWN( order_low > 0 );
          itr.correct_before_increment();
          break;

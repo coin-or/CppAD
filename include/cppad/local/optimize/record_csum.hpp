@@ -25,7 +25,7 @@ Prototype
 *********
 {xrst_literal
    // BEGIN_RECORD_CSUM
-   // END_PROROTYPE
+   // END_PROTOTYPE
 }
 
 play
@@ -98,7 +98,7 @@ struct_size_pair record_csum(
    recorder<Base>*                                    rec            ,
    // local information passed so stacks need not be allocated for every call
    struct_csum_stacks&                                stack          )
-// END_PROROTYPE
+// END_PROTOTYPE
 {
 # ifndef NDEBUG
    // number of parameters corresponding to the old operation sequence.
@@ -122,11 +122,11 @@ struct_size_pair record_csum(
    size_t i_op = random_itr.var2op(current);
    CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == usage_t(csum_usage) ) );
    //
-   // information corresponding to the root node in the cummulative summation
+   // information corresponding to the root node in the cumulative summation
    struct struct_csum_op_info info;
    size_t not_used;
    random_itr.op_info(i_op, info.op, info.arg, not_used);
-   info.add = true;  // was parrent operator positive or negative
+   info.add = true;  // was parent operator positive or negative
    //
    // initialize stack as containing this one operator
    stack.op_info.push( info );
@@ -138,12 +138,12 @@ struct_size_pair record_csum(
    // one argument of this operator must have been csum connected to it
    bool ok = info.op == CSumOp;
    if( (! ok) && (info.op != SubpvOp) && (info.op != AddpvOp) )
-   {  // first argument is a varialbe being added
+   {  // first argument is a variable being added
       i_op = random_itr.var2op(size_t(info.arg[0]));
       ok  |= op_usage[i_op] == usage_t(csum_usage);
    }
    if( (! ok) && (info.op != SubvpOp) )
-   {  // second argument is a varialbe being added or subtracted
+   {  // second argument is a variable being added or subtracted
       i_op = random_itr.var2op(size_t(info.arg[1]));
       ok  |= op_usage[i_op] == usage_t(csum_usage);
    }
@@ -232,7 +232,7 @@ struct_size_pair record_csum(
          // is this a subtraction operator
          bool subtract = (op==SubpvOp) || (op==SubvpOp) || (op==SubvvOp);
          //
-         // is the i-th arguemnt a parameter
+         // is the i-th argument a parameter
          CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
          bool par_arg[2];
          switch(op)
@@ -305,16 +305,16 @@ struct_size_pair record_csum(
          // ---------------------------------------------------------------
       }
    }
-   // number of variables to add in this cummulative sum operator
+   // number of variables to add in this cumulative sum operator
    size_t n_add_var = stack.add_var.size();
 
-   // number of variables to subtract in this cummulative sum operator
+   // number of variables to subtract in this cumulative sum operator
    size_t n_sub_var = stack.sub_var.size();
 
-   // number of dynamics to add in this cummulative sum operator
+   // number of dynamics to add in this cumulative sum operator
    size_t n_add_dyn = stack.add_dyn.size();
 
-   // number of dynamics to subtract in this cummulative sum operator
+   // number of dynamics to subtract in this cumulative sum operator
    size_t n_sub_dyn = stack.sub_dyn.size();
 
    // first five arguments to cumulative sum operator

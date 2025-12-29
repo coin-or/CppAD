@@ -57,7 +57,7 @@ bool ForwardCases(void)
    double F_00 = 2. * y2[0];
    ok         &= NearEqual(F_00, 2.*x0[1], eps99, eps99);
 
-   // evalute derivative of F in X[1] direction
+   // evaluate derivative of F in X[1] direction
    x1[0]    = 0.;
    x1[1]    = 1.;
    y1       = F.Forward(1, x1);
@@ -68,7 +68,7 @@ bool ForwardCases(void)
    double F_11 = 2. * y2[0];
    ok         &= NearEqual(F_11, 0., eps99, eps99);
 
-   // evalute derivative of F in X[0] + X[1] direction
+   // evaluate derivative of F in X[0] + X[1] direction
    x1[0]    = 1.;
    x1[1]    = 1.;
    y1       = F.Forward(1, x1);
@@ -187,7 +187,7 @@ void my_error_handler(
    const char *file     ,
    const char *exp      ,
    const char *msg      )
-{  // error hander must not return, so throw an exception
+{  // error handler must not return, so throw an exception
    std::string message = msg;
    throw message;
 }

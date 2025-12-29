@@ -51,7 +51,7 @@ bool cppad_eigen(void)
    x = traits::infinity();
    ok  &= std::isinf(x);
 
-   // Outputing a matrix used to fail before partial specialization of
+   // Outputting a matrix used to fail before partial specialization of
    // struct significant_decimals_default_impl in cppad_eigen.hpp.
    Matrix< AD<double>, 1, 1> X;
    X(0, 0) = AD<double>(1);

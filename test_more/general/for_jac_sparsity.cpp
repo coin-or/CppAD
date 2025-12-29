@@ -128,7 +128,7 @@ bool case_one()
    Check[index * n + 2] = false;
    index++;
 
-   // non-trival composition
+   // non-trivial composition
    Y[index] = X[0] * X[1] + X[1] * X[2];
    Check[index * n + 0] = true;
    Check[index * n + 1] = true;
@@ -195,7 +195,7 @@ bool case_two()
    // dimension of the range space
    size_t m = 3;
 
-   // inialize the vector as zero
+   // initialize the vector as zero
    CppAD::VecAD<double> Z(n - 1);
    size_t k;
    for(k = 0; k < n-1; k++)

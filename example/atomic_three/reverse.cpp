@@ -183,7 +183,7 @@ reverse
       if( ! ok )
          return ok;
       //
-      // initalize summation as zero
+      // initialize summation as zero
       for(size_t j = 0; j < n; j++)
          for(size_t k = 0; k < q1; k++)
             partial_x[j * q1 + k] = 0.0;

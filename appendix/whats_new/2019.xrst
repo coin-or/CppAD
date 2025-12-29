@@ -9,7 +9,6 @@
    bthread
    cholesky
    colpack
-   entires
    goto
    inv
    lepp
@@ -586,7 +585,7 @@ This simplification was a change from using
 There was a bug in the checking for correctness of the
 :ref:`adolc_sparse_hessian.cpp-name` results.
 This was due to the fact that the sparsity patterns for ADOL-C
-may have more entires that CppAD knows are zero.
+may have more entries that CppAD knows are zero.
 
 04-01
 =====

@@ -940,7 +940,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
       g.dep_parameter_[m + i] = false;
 
    // free memory allocated for sparse Jacobian calculation
-   // (the resutls are no longer valid)
+   // (the results are no longer valid)
    g.for_jac_sparse_pack_.resize(0, 0);
    g.for_jac_sparse_set_.resize(0, 0);
 
@@ -977,7 +977,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
    }
 
    // free memory allocated for sparse Jacobian calculation
-   // (the resutls are no longer valid)
+   // (the results are no longer valid)
    a.for_jac_sparse_pack_.resize(0, 0);
    a.for_jac_sparse_set_.resize(0, 0);
 

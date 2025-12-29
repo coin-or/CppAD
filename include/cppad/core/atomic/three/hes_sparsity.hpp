@@ -138,11 +138,11 @@ bool atomic_three<Base>::hes_sparsity(
 {  return false; }
 /*!
 Link from forward Hessian sweep to atomic_three.
-2DO: move this functiton outside this file so can change
-developer documentation to omhelp formating.
+2DO: move this function outside this file so can change
+developer documentation to omhelp formatting.
 
 \tparam InternalSparsity
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param parameter_x
@@ -173,7 +173,7 @@ computing the Hessian of.
 
 \param hes_sparsity_for
 This is the sparsity pattern for the Hessian. On input, the non-linear
-terms in the atomic fuction have not been included. Upon return, they
+terms in the atomic function have not been included. Upon return, they
 have been included.
 */
 template <class Base>
@@ -282,7 +282,7 @@ bool atomic_three<Base>::for_hes_sparsity(
 Link from for_reverse Hessian sweep to atomic_three.
 
 \tparam InternalSparsity
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param parameter_x
@@ -308,15 +308,15 @@ is the forward Jacobian pattern for the j-th argument to this atomic function.
 \param rev_jac_flag
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
 if the function we are computing the Hessian of has possibly non-zero Jacobian
-w.r.t varialbe y_index[i].
+w.r.t variable y_index[i].
 On output, for j = 0, ... , n, rev_jac_flag[ x_index[j] ] is set to true
-if the varialbe with index x_index[j] has possible non-zero Jacobian
-with repect to one of the true y_index[i] cases.
+if the variable with index x_index[j] has possible non-zero Jacobian
+with respect to one of the true y_index[i] cases.
 Otherwise, rev_jac_flag [ x_inde[j] ] is not changed.
 
 \param hes_sparsity_rev
 Is the reverse mode sparsity pattern for the Hessian. On input, the non-linear
-terms in the atomic fuction have not been included. Upon return, they
+terms in the atomic function have not been included. Upon return, they
 have been included.
 */
 template <class Base>

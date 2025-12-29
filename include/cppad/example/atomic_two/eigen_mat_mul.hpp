@@ -485,8 +485,8 @@ for_sparse_jac
                size_t i_left  = 3 + i * n_middle + ell;
                // pack index for entry (ell, j) in right
                size_t i_right = 3 + n_left + ell * nc_right + j;
-               // check if result of for this product is alwasy zero
-               // note that x is nan for commponents that are variables
+               // check if result of for this product is always zero
+               // note that x is nan for components that are variables
                bool zero = x[i_left] == Base(0.0) || x[i_right] == Base(0);
                if( ! zero )
                {  s[i_result] =
@@ -580,7 +580,7 @@ for_sparse_hes
       assert( s.size()  == ny );
       assert( h.size()  == nx );
       //
-      // initilize h as empty
+      // initialize h as empty
       for(size_t i = 0; i < nx; i++)
          h[i].clear();
       //
@@ -645,7 +645,7 @@ rev_sparse_hes
       assert( r.size()  == nx );
       assert( v.size()  == nx );
       //
-      // initilaize return sparsity patterns as false
+      // initialize return sparsity patterns as false
       for(size_t j = 0; j < nx; j++)
       {  t[j] = false;
          v[j].clear();

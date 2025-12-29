@@ -376,7 +376,7 @@ inline void csum_reverse(
          px[k] += pz[k];
    }
    //
-   // subtraction varables
+   // subtraction variables
    for(addr_t i = arg[1]; i < arg[2]; ++i)
    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
       Base* px = partial + size_t(arg[i]) * n_order;

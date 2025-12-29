@@ -2020,7 +2020,7 @@ bool abs_op(void)
    return ok;
 }
 // ---------------------------------------------------------------------------
-// Test conditonal expression
+// Test conditional expression
 bool cexp_lt_variable(void)
 {  bool ok = true;
    using CppAD::vector;
@@ -2087,7 +2087,7 @@ bool cexp_lt_variable(void)
    // std::cout << graph;
    return ok;
 }
-// Test conditonal expression
+// Test conditional expression
 bool cexp_lt_constant(void)
 {  bool ok = true;
    using CppAD::vector;
@@ -2243,7 +2243,7 @@ bool atomic_both(void)
    ok &= g.Range() == 1;
    ok &= g.size_dyn_ind() == 0;
    //
-   // evalute g(u; p)
+   // evaluate g(u; p)
    vector<double> p(1), u(2), y(1);
    p[0] = 3.0;
    u[0] = 4.0;
@@ -2263,7 +2263,7 @@ bool atomic_both(void)
    ok &= g.Range() == 1;
    ok &= g.size_dyn_ind() == 0;
    //
-   // evalute g(u; p)
+   // evaluate g(u; p)
    p[0] = 4.0;
    u[0] = 5.0;
    u[1] = 6.0;
@@ -2325,7 +2325,7 @@ bool atomic_dynamic(void)
    q[1] = 3.0;
    g.new_dynamic(q);
    //
-   // evalute g(u; q)
+   // evaluate g(u; q)
    vector<double> u(1), y(1);
    u[0] = 4.0;
    y    = g.Forward(0, u);
@@ -2347,7 +2347,7 @@ bool atomic_dynamic(void)
    q[1] = 4.0;
    g.new_dynamic(q);
    //
-   // evalute g(u; q)
+   // evaluate g(u; q)
    u[0] = 5.0;
    y    = g.Forward(0, u);
    //

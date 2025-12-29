@@ -47,7 +47,7 @@ bool DivEqTestOne(void)
    // (must do this before creating f because it erases the tape)
    ok &= Parameter(zero);
 
-   // create f : U -> Z and vectors for derivative calcualtions
+   // create f : U -> Z and vectors for derivative calculations
    ADFun<double> f(U, Z);
    CPPAD_TESTVECTOR(double) v( f.Domain() );
    CPPAD_TESTVECTOR(double) w( f.Range() );
@@ -57,7 +57,7 @@ bool DivEqTestOne(void)
    for(i = 0; i < f.Range(); i++)
       ok &= ! f.Parameter(i);
 
-   // check functin values
+   // check function values
    ok &= NearEqual(Z[x] , 3. / 2. , eps99, eps99);
    ok &= NearEqual(Z[y] , 2. / 5. , eps99, eps99);
 

@@ -260,7 +260,7 @@ bool optimize_dynamic_two(void)
    // sequence properties
    ok &= f.size_dyn_ind() == 1; // p
    ok &= f.size_dyn_par() == 1; // p
-   // Two constant paramete: nan, zero
+   // Two constant parameter: nan, zero
    ok &= f.size_par() == 3;
 
    // check
@@ -382,7 +382,7 @@ bool optimize_dynamic_three(void)
    return ok;
 }
 // ============================================================================
-// Testing Varialbes that get removed
+// Testing Variables that get removed
 // ============================================================================
 class variable_optimize : public CppAD::atomic_three<double> {
 public:

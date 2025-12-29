@@ -87,14 +87,14 @@ bool dynamic(void)
       ay[i] = aq[0] * ay[i];
    CppAD::ADFun<double> f_fun(ax, ay);
    //
-   // vecotrs of doubles
+   // vectors of doubles
    CPPAD_TESTVECTOR(double) x(nx), y(ny), p(np), q(nq);
    //
    // set dynamic parameters in g_chk
    p[0] = 4.0;
    g_chk.new_dynamic(p);
    //
-   // set dynamic parmeters in f_fun
+   // set dynamic parameters in f_fun
    q[0] = 5.0;
    f_fun.new_dynamic(q);
    //

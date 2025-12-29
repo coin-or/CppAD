@@ -122,7 +122,7 @@ namespace {
       while( true )
       {
          // Use wait_for_job_ to give master time in sequential mode
-         // (so it can change global infromation like thread_job_)
+         // (so it can change global information like thread_job_)
          rc = pthread_barrier_wait(&wait_for_job_);
          ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 
@@ -290,7 +290,7 @@ bool team_destroy(void)
    // set the new job that other threads are waiting for
    thread_job_ = join_enum;
 
-   // Enter parallel exectuion soon as master thread completes wait_for_job_
+   // Enter parallel execution soon as master thread completes wait_for_job_
    if( num_threads_ > 1 )
          sequential_execution_ = false;
    rc  = pthread_barrier_wait(&wait_for_job_);

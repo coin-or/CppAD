@@ -137,7 +137,7 @@ inline void erf_forward_any(
    Base* z_3  = taylor + (i_z+3) * cap_order;
    Base* z_4  = taylor + (i_z+4) * cap_order;
 
-   // calculte z_4 coefficients
+   // calculate z_4 coefficients
    if( p == 0 )
    {  // z4 (t) = erf[x(t)]
       if( op == ErfOp )

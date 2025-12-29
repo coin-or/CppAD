@@ -233,7 +233,7 @@ bool case_four()
    // dimension of the range space
    size_t m = 1;
 
-   // inialize the vector as zero
+   // initialize the vector as zero
    CppAD::VecAD<double> Z(n - 1);
    size_t k;
    for(k = 0; k < n-1; k++)

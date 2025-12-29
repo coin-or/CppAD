@@ -192,11 +192,11 @@ void ADFun<Base, RecBase>::fun2val(
    const size_t n_variable = play_.num_var();
    //
    // n_variable_ind
-   // number of indepedent variables
+   // number of independent variables
    size_t n_variable_ind = ind_taddr_.size();
    //
    // n_val_ind
-   // number of indepedent valuse
+   // number of independent valuse
    addr_t n_val_ind = addr_t( n_dynamic_ind + n_variable_ind );
    //
 # ifndef NDEBUG
@@ -581,7 +581,7 @@ void ADFun<Base, RecBase>::fun2val(
             // default
             default:
             CPPAD_ASSERT_UNKNOWN(false);
-            // set to avoid comiler warning
+            // set to avoid compiler warning
             compare_enum = local::val_graph::number_compare_enum;
             break;
 

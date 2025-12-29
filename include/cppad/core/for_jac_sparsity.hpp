@@ -197,7 +197,7 @@ This is used by the optimizer to obtain the correct dependency relations.
 
 \param internal_bool
 If this is true, calculations are done with sets represented by a vector
-of boolean values. Othewise, a vector of standard sets is used.
+of boolean values. Otherwise, a vector of standard sets is used.
 
 \param pattern_out
 The value of transpose is false (true),
@@ -238,11 +238,11 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
    bool input_empty = true;
    if( internal_bool )
    {  // allocate memory for bool sparsity calculation
-      // (sparsity pattern is emtpy after a resize)
+      // (sparsity pattern is empty after a resize)
       for_jac_sparse_pack_.resize(num_var_tape_, ell);
       for_jac_sparse_set_.resize(0, 0);
       //
-      // set sparsity patttern for independent variables
+      // set sparsity pattern for independent variables
       local::sparse::set_internal_pattern(
          zero_empty            ,
          input_empty           ,
@@ -270,11 +270,11 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
    else
    {
       // allocate memory for set sparsity calculation
-      // (sparsity pattern is emtpy after a resize)
+      // (sparsity pattern is empty after a resize)
       for_jac_sparse_set_.resize(num_var_tape_, ell);
       for_jac_sparse_pack_.resize(0, 0);
       //
-      // set sparsity patttern for independent variables
+      // set sparsity pattern for independent variables
       local::sparse::set_internal_pattern(
          zero_empty            ,
          input_empty           ,
@@ -294,7 +294,7 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
          not_used_rec_base
 
       );
-      // get the ouput pattern
+      // get the output pattern
       local::sparse::get_internal_pattern(
          transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
       );

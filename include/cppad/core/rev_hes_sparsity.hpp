@@ -193,13 +193,13 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
    {  CPPAD_ASSERT_KNOWN(
          for_jac_sparse_pack_.n_set() > 0,
          "rev_hes_sparsity: previous call to for_jac_sparsity did not "
-         "use bool for interanl sparsity patterns."
+         "use bool for internal sparsity patterns."
       );
       // column dimension of internal sparstiy pattern
       size_t ell = for_jac_sparse_pack_.end();
       //
       // allocate memory for bool sparsity calculation
-      // (sparsity pattern is emtpy after a resize)
+      // (sparsity pattern is empty after a resize)
       local::sparse::pack_setvec internal_hes;
       internal_hes.resize(num_var_tape_, ell);
       //
@@ -221,13 +221,13 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
    {  CPPAD_ASSERT_KNOWN(
          for_jac_sparse_set_.n_set() > 0,
          "rev_hes_sparsity: previous call to for_jac_sparsity did not "
-         "use bool for interanl sparsity patterns."
+         "use bool for internal sparsity patterns."
       );
       // column dimension of internal sparstiy pattern
       size_t ell = for_jac_sparse_set_.end();
       //
       // allocate memory for bool sparsity calculation
-      // (sparsity pattern is emtpy after a resize)
+      // (sparsity pattern is empty after a resize)
       local::sparse::list_setvec internal_hes;
       internal_hes.resize(num_var_tape_, ell);
       //

@@ -106,21 +106,21 @@ bool atomic_lin_ode<Base>::rev_depend(
       // we use k = 1, 2, ... to denote the pass through this loop
       //
       // depend_w, depend_x
-      // include depenency for w^k (x)
+      // include dependency for w^k (x)
       for(size_t p = 0; p < nnz; ++p) if( ! ident_zero_x[p] )
       {  size_t i = pattern.row()[p];
          size_t j = pattern.col()[p];
          if( transpose )
             std::swap(i, j);
          //
-         // back propagate depenency on y
+         // back propagate dependency on y
          if( depend_w[i] && ! depend_w[j] )
          {  change      = true;
             depend_w[j] = true;
          }
          //
          // depend_x
-         // for propage dependency on A_{i,j}
+         // for propagate dependency on A_{i,j}
          if( depend_w[i] && ! depend_x[p] )
          {  change      = true;
             depend_x[p] = true;

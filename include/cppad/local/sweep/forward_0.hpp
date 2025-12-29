@@ -97,7 +97,7 @@ void forward_0(
 
    // information used by atomic function operators
 
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
 
    // length of the parameter vector (used by CppAD assert macros)
@@ -257,7 +257,7 @@ void forward_0(
 
          case CExpOp:
          // Use the general case with d == 0
-         // (could create an optimzied version for this case)
+         // (could create an optimized version for this case)
          var_op::cexp_forward_0(
             i_var, arg, num_par, parameter, cap_order, taylor
          );

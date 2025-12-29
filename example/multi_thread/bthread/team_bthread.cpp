@@ -100,7 +100,7 @@ namespace {
          worker_();
 
          // Use wait_for_work_ to inform master that our work is done and
-         // that this thread will not use global infromation until
+         // that this thread will not use global information until
          // passing its barrier wait_for_job_ above.
          wait_for_work_->wait();
 
@@ -185,7 +185,7 @@ bool team_work(void worker(void))
    // set the new job that other threads are waiting for
    thread_job_ = work_enum;
 
-   // Enter parallel exectuion when master thread calls wait_for_job_
+   // Enter parallel execution when master thread calls wait_for_job_
    if( num_threads_ > 1 )
       sequential_execution_ = false;
    wait_for_job_->wait();
@@ -216,7 +216,7 @@ bool team_destroy(void)
    // set the new job that other threads are waiting for
    thread_job_ = join_enum;
 
-   // enter parallel exectuion soon as master thread completes wait_for_job_
+   // enter parallel execution soon as master thread completes wait_for_job_
    if( num_threads_ > 1 )
          sequential_execution_ = false;
    wait_for_job_->wait();

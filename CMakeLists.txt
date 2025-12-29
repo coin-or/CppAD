@@ -21,7 +21,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20251214")
+SET(cppad_version "20251229")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -309,7 +309,7 @@ IF( CMAKE_BUILD_TYPE )
       SET(cppad_debug_which "debug_none")
    ELSE( )
       MESSAGE(FATAL_ERROR
-         "Unknonw CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}"
+         "Unknown CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}"
       )
    ENDIF( )
 ELSE( ) # CMAKE_BUILD_TYPE
@@ -328,7 +328,7 @@ ENDIF( ) # CMAKE_BUILD_TYPE
 IF( debug_even_or_odd )
    IF ( NOT cppad_debug_and_release )
       MESSAGE(FATAL_ERROR
-"cppad_debug_and_release is false and cppad_debug_wich = ${cppad_debug_which}"
+"cppad_debug_and_release is false and cppad_debug_which = ${cppad_debug_which}"
       )
    ENDIF ( NOT cppad_debug_and_release )
    IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
@@ -537,7 +537,7 @@ ENDIF( )
 IF( cppad_link_flags_has_m32 )
    SET(OpenMP_CXX_FOUND FALSE)
    MESSAGE(STATUS
-      "Skipping OpenMP becasue -m32 is in cppad_link_flags"
+      "Skipping OpenMP because -m32 is in cppad_link_flags"
    )
 ELSEIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
    SET(OpenMP_CXX_FOUND FALSE)
@@ -552,7 +552,7 @@ ENDIF( )
 # Only need components for object libraries, not include libraries.
 IF( cppad_link_flags_has_m32 )
    MESSAGE(STATUS
-      "Skipping Boost becasue -m32 is in cppad_link_flags"
+      "Skipping Boost because -m32 is in cppad_link_flags"
    )
    SET( Boost_FOUND 0)
    SET(cppad_has_boost 0)

@@ -202,7 +202,7 @@ bool VecADTestTwo(void)
    y    = f.Forward(0, x);
    ok  &= NearEqual(y[0], (Data[0] + Data[1])/2., eps99, eps99);
 
-   // evalute the derivative with respect to x
+   // evaluate the derivative with respect to x
    CPPAD_TESTVECTOR(double) dx(1);
    CPPAD_TESTVECTOR(double) dy(1);
    dx[0] = 1.;

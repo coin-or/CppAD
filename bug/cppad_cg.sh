@@ -77,7 +77,7 @@ int main(void)
    // string corresponding to source code
    std::string source_str = source_code.str();
 
-   // C souce code corresponding to y = g(x)
+   // C source code corresponding to y = g(x)
    std::cout << source_str;
 
    return 0;

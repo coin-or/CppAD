@@ -145,7 +145,7 @@ If i_var is a variable index, and the corresponding operator
 is not in the subgraph,
 then the partials with respect to i_var are not modified and need to be
 initialized as zero. Note that this means the partial for the independent
-varaibles, that are not in the subgraph are not calculated.
+variables, that are not in the subgraph are not calculated.
 If part of an atomic function call is in the subgraph,
 the entire atomic function call must be in the subgraph.
 
@@ -182,7 +182,7 @@ void reverse(
    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
    const Base* parameter = play->par_ptr();
 
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
 
    //

@@ -152,7 +152,7 @@ bool simplex_method(
    // number of rows in Tableau, the equations plust two objectives
    size_t nr = ne + 2;
 
-   // Initilize Tableau as zero
+   // Initialize Tableau as zero
    Vector T(nr * nc);
    for(size_t i = 0; i < nr * nc; i++)
       T[i] = 0.0;
@@ -321,7 +321,7 @@ bool simplex_method(
       double pivot = T[imin * nc + jmax];
       //
       // Which variable is changing from basic to non-basic.
-      // Initilaize as not yet determined.
+      // Initialize as not yet determined.
       size_t basic2not = nc;
       //
       // Divide row imin by pivot element

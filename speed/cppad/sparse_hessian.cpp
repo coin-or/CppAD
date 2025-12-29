@@ -83,7 +83,7 @@ namespace {
          // skip comparison operators
          fun.compare_change_count(0);
          //
-         // fun corresonds to f(x)
+         // fun corresponds to f(x)
          return;
       }
       // declare independent variables for f(x)
@@ -118,7 +118,7 @@ namespace {
       // skip comparison operators
       fun.compare_change_count(0);
       //
-      // fun corresonds to g(x)
+      // fun corresponds to g(x)
       return;
    }
    // ------------------------------------------------------------------------
@@ -180,7 +180,7 @@ namespace {
          }
          return;
       }
-      // fun correspnds to g(x)
+      // fun corresponds to g(x)
       CPPAD_ASSERT_UNKNOWN( m == n );
       //
       // sparsity pattern for identity matrix
@@ -346,7 +346,7 @@ bool link_sparse_hessian(
       calc_sparsity(sparsity, fun);
       //
       // calculate the Hessian at this x
-      jac_work.clear(); // wihtout work from previous calculation
+      jac_work.clear(); // without work from previous calculation
       hes_work.clear();
       n_color = calc_hessian(
          hessian, x, subset, sparsity, jac_work, hes_work, fun

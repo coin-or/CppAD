@@ -13,7 +13,7 @@ namespace { // BEGIN empty namespace
 
 // ---------------------------------------------------------------------------
 // dynamic_zero
-// Cases during recording where the base or exponent is a dynamic parmaeter
+// Cases during recording where the base or exponent is a dynamic parameter
 // with value zero.
 bool dynamic_zero(void)
 {  bool ok = true;

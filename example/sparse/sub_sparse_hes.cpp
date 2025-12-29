@@ -142,7 +142,7 @@ bool sub_sparse_hes(void)
    // record H(u, v) = Hessian of f w.r.t u
    CppAD::ADFun<double> H(ax, ahes);
 
-   // remove unecessary operations
+   // remove unnecessary operations
    H.optimize();
 
    // Now evaluate the Hessian at a particular value for u, v

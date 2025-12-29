@@ -63,7 +63,7 @@ bool vectorBool(void)
    ok &= (x[0] == true);
 
    // resize x to zero and check that vector assignment works for both
-   // size zero and mathching sizes
+   // size zero and matching sizes
    x.resize(0);
    ok &= (x.size() == 0);
    ok &= (y.size() == z.size());

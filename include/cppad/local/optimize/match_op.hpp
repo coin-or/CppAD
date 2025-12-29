@@ -204,7 +204,7 @@ bool match_op(
    // hash coding and matching.
    addr_t arg_match[] = {
       // Invalid value that will not be used. This initialization avoid
-      // a wraning on some compilers
+      // a warning on some compilers
       std::numeric_limits<addr_t>::max(),
       std::numeric_limits<addr_t>::max(),
       std::numeric_limits<addr_t>::max()

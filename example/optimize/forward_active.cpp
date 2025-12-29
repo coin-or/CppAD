@@ -49,14 +49,14 @@ namespace {
       before.n_var += 0; before.n_op  += 0;
       after.n_var  += 0; after.n_op   += 0;
 
-      // The optimizer will reconize that zero + one = one + zero
+      // The optimizer will recognize that zero + one = one + zero
       // for all values of x.
       scalar four   = zero + one;
       scalar five   = one  + zero;
       before.n_var += 2; before.n_op  += 2;
       after.n_var  += 1; after.n_op   += 1;
 
-      // The optimizer will reconize that sin(x[3]) = sin(x[3])
+      // The optimizer will recognize that sin(x[3]) = sin(x[3])
       // for all values of x. Note that, for computation of derivatives,
       // sin(x[3]) and cos(x[3]) are stored on the tape as a pair.
       scalar six    = sin(x[2]);
@@ -114,7 +114,7 @@ bool forward_active(void)
 
    // Optimize the operation sequence
    // Note that, for this case, all the optimization was done during
-   // the recording and there is no benifit to the optimization.
+   // the recording and there is no benefit to the optimization.
    f.optimize();
    ok &= f.size_order() == 0; // 0 order forward not present
    ok &= f.size_var() == after.n_var;

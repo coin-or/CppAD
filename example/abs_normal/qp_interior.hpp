@@ -618,7 +618,7 @@ bool qp_interior(
       }
    }
    if( level > 0 )
-      std::cout << "end qp_interior: progam error\n";
+      std::cout << "end qp_interior: program error\n";
    return false;
 }
 } // END_CPPAD_NAMESPACE

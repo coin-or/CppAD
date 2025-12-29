@@ -136,7 +136,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
 \file base_std_math.hpp
-Defintions that aid meeting Base type requirements for standard math functions.
+Definitions that aid meeting Base type requirements for standard math functions.
 */
 
 /*!

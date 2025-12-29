@@ -28,7 +28,7 @@ Contents
 */
 
 // include MathOther.h after CondExp.h because some MathOther.h routines use
-// CondExp.h and CondExp.h is not sufficently declared in Declare.h
+// CondExp.h and CondExp.h is not sufficiently declared in Declare.h
 
 # include <cppad/core/arithmetic.hpp>
 # include <cppad/core/standard_math.hpp>

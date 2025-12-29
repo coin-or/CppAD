@@ -60,7 +60,7 @@ bool rc_tridiagonal(void)
          p_s[0].insert(i);
    SetVector p_h = f.RevSparseHes(n, p_s);
 
-   // requres the upper triangle of the Hessian
+   // requires the upper triangle of the Hessian
    size_t K = 2 * n - 1;
    CPPAD_TESTVECTOR(size_t) r(K), c(K);
    CPPAD_TESTVECTOR(double) hes(K);

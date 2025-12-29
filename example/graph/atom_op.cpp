@@ -147,7 +147,7 @@ bool atom_op(void)
    q[1] = 4.0;
    g.new_dynamic(q);
    //
-   // evalute g(u; p, q)
+   // evaluate g(u; p, q)
    CPPAD_TESTVECTOR(float) u(2), y(1);
    u[0] = 5.0;
    u[1] = 6.0;
@@ -172,7 +172,7 @@ bool atom_op(void)
    q[1] = 5.0;
    g.new_dynamic(q);
    //
-   // evalute g(u; p, q)
+   // evaluate g(u; p, q)
    u[0] = 6.0;
    u[1] = 7.0;
    y    = g.Forward(0, u);

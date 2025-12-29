@@ -126,7 +126,7 @@ bool CppAD_vector(void)
       ok &= vec[i + n]  == Scalar(n - i);
    }
 
-   // resize perserves elements when new size less than capacity
+   // resize preserves elements when new size less than capacity
    ok &= n < vec.capacity();
    vec.resize(n);
    for(size_t i = 0; i < n; i++)

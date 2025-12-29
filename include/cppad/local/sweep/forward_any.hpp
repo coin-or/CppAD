@@ -103,7 +103,7 @@ void forward_any(
 
    // information used by atomic function operators
 
-   // work space used by atomic funcions
+   // work space used by atomic functions
    var_op::atomic_op_work<Base> atom_work;
 
    // information defined by atomic function operators

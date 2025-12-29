@@ -260,7 +260,7 @@ bool min_nso_quad(
    // current bound
    double b_cur = b_in;
    //
-   // initilaize the current x
+   // initialize the current x
    x_out = x_in;
    //
    // value of a(x) at current x

@@ -143,7 +143,7 @@ bool abs_min_linear(void)
    maxitr[0] = 10; // maximum number of abs_min_linear iterations
    maxitr[1] = 35; // maximum number of qp_interior iterations
 
-   // minimize the approxiamtion for f, which is equal to f because
+   // minimize the approximation for f, which is equal to f because
    // f is affine, except for absolute value terms
    d_vector delta_x(n);
    ok &= CppAD::abs_min_linear(

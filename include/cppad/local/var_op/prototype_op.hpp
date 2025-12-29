@@ -245,7 +245,7 @@ for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 
 \param n_order
-number of colums in the matrix containing all the partial derivatives.
+number of columns in the matrix containing all the partial derivatives.
 
 \param partial
 \b Input: partial [ i_x * n_order + k ]
@@ -556,7 +556,7 @@ is the k-th order Taylor coefficient corresponding to
 the auxiliary variable y.
 
 \param n_order
-number of colums in the matrix containing all the partial derivatives.
+number of columns in the matrix containing all the partial derivatives.
 
 \param partial
 \b Input: partial [ i_x * n_order + k ]
@@ -903,7 +903,7 @@ for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to y.
 
 \param n_order
-number of colums in the matrix containing all the partial derivatives.
+number of columns in the matrix containing all the partial derivatives.
 
 \param partial
 \b Input: partial [ i_z * n_order + k ]
@@ -1289,7 +1289,7 @@ for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to y.
 
 \param n_order
-number of colums in the matrix containing all the partial derivatives.
+number of columns in the matrix containing all the partial derivatives.
 
 \param partial
 \b Input: partial [ (i_z - 2 + j) * n_order + k ]
@@ -1353,8 +1353,8 @@ Prototype for reverse mode Hessian sparsity unary operators.
 
 This routine is given the forward mode Jacobian sparsity patterns for x.
 It is also given the reverse mode dependence of G on z.
-In addition, it is given the revese mode Hessian sparsity
-for the quanity of interest G(z , y , ... )
+In addition, it is given the reverse mode Hessian sparsity
+for the quantity of interest G(z , y , ... )
 and it uses them to compute the sparsity patterns for
 \verbatim
    H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
@@ -1439,7 +1439,7 @@ i.e. the row index in sparsity corresponding to z.
  arg[0]
 variable index corresponding to the left operand for this operator;
 i.e. the set with index arg[0] in var_sparsity
-is the spasity pattern correspoding to x.
+is the spasity pattern corresponding to x.
 \n
 \n arg[1]
 variable index corresponding to the right operand for this operator;
@@ -1473,7 +1473,7 @@ The set with index arg[1] in for_jac_sparsity
 is the forward sparsity pattern for y.
 
 \param rev_hes_sparsity
-The set wiht index i_x in rev_hes_sparsity
+The set with index i_x in rev_hes_sparsity
 is the Hessian sparsity pattern for the function G
 where one of the partial derivatives is with respect to z.
 \n

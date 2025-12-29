@@ -48,7 +48,7 @@ Recording
 =========
 {xrst_spell_off}
 {xrst_code cpp} */
-   // start recording with four independent varables
+   // start recording with four independent variables
    size_t n = 4;
    vector<double> x(n);
    vector< AD<double> > ax(n);
@@ -73,7 +73,7 @@ Recording
    atom_x[5] = 5.;     // left[1, 0] = 5
    atom_x[6] = 6.;     // left[1, 1] = 6
 
-   // right matix
+   // right matrix
    atom_x[7] = ax[2];  // right[0, 0] = x2
    atom_x[8] = 7.;     // right[0, 1] = 7
    atom_x[9] = ax[3];  // right[1, 0] = x3

@@ -178,7 +178,7 @@ bool atomic_base<Base>::rev_sparse_jac(
 Link, before case split, from rev_jac_sweep to atomic_base.
 
 \tparam InternalSparsity
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 \param x

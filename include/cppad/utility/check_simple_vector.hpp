@@ -155,7 +155,7 @@ namespace CppAD {
       // size member function
       CPPAD_ASSERT_KNOWN(
          d.size() == 0,
-         "default construtor result does not have size zero"
+         "default constructor result does not have size zero"
       );
 
       // resize to same size as other vectors in test

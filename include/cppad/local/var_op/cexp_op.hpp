@@ -232,7 +232,7 @@ inline void cexp_forward_any(
 Multiple directions forward mode Taylor coefficients for op = CExpOp.
 
 <!-- replace conditional_exp_op -->
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
@@ -407,7 +407,7 @@ inline void cexp_forward_dir(
 Compute zero order forward mode Taylor coefficients for op = CExpOp.
 
 <!-- replace conditional_exp_op -->
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
@@ -563,7 +563,7 @@ and it uses them to compute the partial derivatives of
 where y above represents y_0, y_1, y_2, y_3.
 
 <!-- replace conditional_exp_op -->
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
@@ -752,7 +752,7 @@ inline void cexp_reverse(
 Compute forward Jacobian sparsity patterns for op = CExpOp.
 
 <!-- replace sparse_conditional_exp_op -->
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
@@ -892,7 +892,7 @@ and it uses them to compute the sparsity patterns for
 where y represents the combination of y_0, y_1, y_2, and y_3.
 
 <!-- replace sparse_conditional_exp_op -->
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
@@ -972,14 +972,14 @@ if y_2 is a variable, the set with index t is
 the sparsity pattern corresponding to y_2.
 This identifies which of the dependent variables depend on the variable y_2.
 On input, this pattern corresponds to the function G.
-On ouput, it corresponds to the function H.
+On output, it corresponds to the function H.
 \n
 \n
 if y_3 is a variable, the set with index t is
 the sparsity pattern corresponding to y_3.
 This identifies which of the dependent variables depeond on the variable y_3.
 On input, this pattern corresponds to the function G.
-On ouput, it corresponds to the function H.
+On output, it corresponds to the function H.
 \n
 \b Output:
 The set with index T is
@@ -1034,7 +1034,7 @@ and it uses them to compute the sparsity patterns for
 where y represents the combination of y_0, y_1, y_2, and y_3.
 
 <!-- replace sparse_conditional_exp_op -->
-The C++ source code coresponding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim

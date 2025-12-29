@@ -20,7 +20,7 @@ enum enum_usage {
 
    /*!
    This operator is only used once, it is a summation operator,
-   and its parrent is a summation operator. Furthermore, its result is not
+   and its parent is a summation operator. Furthermore, its result is not
    a dependent variable. Hence case it can be removed as part of a
    cumulative summation starting at its parent or above.
    */

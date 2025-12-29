@@ -267,7 +267,7 @@ $srccode%cpp% */
             );
       }
 
-      // all orders are implented, so always return true
+      // all orders are implemented, so always return true
       return true;
    }
 /* %$$
@@ -308,7 +308,7 @@ $srccode%cpp% */
             );
       }
 
-      // all orders are implented, so always return true
+      // all orders are implemented, so always return true
       return true;
    }
 /* %$$
@@ -534,7 +534,7 @@ $srccode%cpp% */
       //
       size_t i, j;
       //
-      // initilaize sparsity patterns as false
+      // initialize sparsity patterns as false
       for(j = 0; j < nx; j++)
       {  t[j] = false;
          v[j].clear();
@@ -564,7 +564,7 @@ $srccode%cpp% */
                // S(x) = g'(y)
 
                // back propagate f'(x)^T * U(x)
-               // (no need to use vx with f'(x) propogation)
+               // (no need to use vx with f'(x) propagation)
                v[i_left]  = set_union(v[i_left],  u[i_result] );
                v[i_right] = set_union(v[i_right], u[i_result] );
 
@@ -606,7 +606,7 @@ $srccode%cpp% */
       assert( u.size()  == ny * q );
       size_t i, j, p;
       //
-      // initilaize sparsity patterns as false
+      // initialize sparsity patterns as false
       for(j = 0; j < nx; j++)
       {  t[j] = false;
          for(p = 0; p < q; p++)
@@ -637,7 +637,7 @@ $srccode%cpp% */
                // S(x) = g'(y)
 
                // back propagate f'(x)^T * U(x)
-               // (no need to use vx with f'(x) propogation)
+               // (no need to use vx with f'(x) propagation)
                for(p = 0; p < q; p++)
                {  v[ i_left  * q + p] |= bool( u[ i_result * q + p] );
                   v[ i_right * q + p] |= bool( u[ i_result * q + p] );

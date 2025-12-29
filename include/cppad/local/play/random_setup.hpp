@@ -49,7 +49,7 @@ the return value map value is not specified.
 On input, var2op_index is either the empty vector
 (or contains the proper result from a previous call to random_setup).
 Upon return it maps each primary variable index to the corresponding
-operator index. The value of the map is only specifed for primary variable
+operator index. The value of the map is only specified for primary variable
 indices.
 */
 template <class Addr>
@@ -111,7 +111,7 @@ void random_setup(
          // pointer to first argument for this operator
          const addr_t* op_arg = var_arg.data() + arg_index;
          //
-         // The actual number of arugments for this operator is
+         // The actual number of arguments for this operator is
          // op_arg[4] + 1
          // Correct index of first argument for next operator
          arg_index += size_t(op_arg[4] + 1);
@@ -124,7 +124,7 @@ void random_setup(
          // pointer to first argument for this operator
          const addr_t* op_arg = var_arg.data() + arg_index;
          //
-         // The actual number of arugments for this operator is
+         // The actual number of arguments for this operator is
          // 7 + op_arg[4] + op_arg[5].
          // Correct index of first argument for next operator.
          arg_index += size_t(7 + op_arg[4] + op_arg[5]);

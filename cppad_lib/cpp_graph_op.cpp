@@ -21,7 +21,7 @@ const char* op_enum2name[n_graph_op];
 size_t op_enum2fixed_n_arg[n_graph_op];
 
 // This routine is called by the first use of the cpp_graph constructor
-// see cpp_grpah.hpp.
+// see cpp_graph.hpp.
 void set_operator_info(void)
 {  // This routine cannot be called in parallel mode
    CPPAD_ASSERT_UNKNOWN( ! ( CppAD::thread_alloc::in_parallel() ));

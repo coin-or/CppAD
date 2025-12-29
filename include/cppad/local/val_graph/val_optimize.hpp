@@ -62,7 +62,7 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
       var_ind[j] = n_dyn_ind + j;
    //
    // val_tape
-   // value operator representaiton corresonding to this function
+   // value operator representaiton corresponding to this function
    local::val_graph::tape_t<Base> val_tape;
    fun2val(val_tape);
    //

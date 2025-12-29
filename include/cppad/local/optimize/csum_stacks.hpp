@@ -19,7 +19,7 @@ Information about one cumulative summation operation.
 */
 struct struct_csum_stacks {
 
-   /// old operator indices for this cummulative summation
+   /// old operator indices for this cumulative summation
    std::stack<struct struct_csum_op_info>      op_info;
 
    /// old variable indices to be added

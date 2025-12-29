@@ -248,7 +248,7 @@ private:
    is the other svec_setvec object which may be the same as this object.
 
    \return
-   If zero, niether set is a subset of the other.
+   If zero, neither set is a subset of the other.
    If one, then one is a subset of two and they are not equal.
    If two, then two is a subset of one and they are not equal.
    If three, then the sets are equal.
@@ -390,7 +390,7 @@ private:
    Assign a set equal to the union of a set and a vector;
 
    \param target
-   is the index in this svec_setvec object of the set being assinged.
+   is the index in this svec_setvec object of the set being assigned.
 
    \param left
    is the index in this svec_setvec object of the
@@ -398,7 +398,7 @@ private:
    It is OK for target and left to be the same value.
 
    \param right
-   is a vector of size_t, sorted in accending order.
+   is a vector of size_t, sorted in ascending order.
    right operand for the union operation.
    Elements can be repeated in right, but are not be repeated in the
    resulting set.
@@ -577,7 +577,7 @@ public:
    }
    // -----------------------------------------------------------------
    /*!
-   Assignement operator.
+   Assignment operator.
 
    \param other
    this svec_setvec with be set to a deep copy of other.
@@ -1007,7 +1007,7 @@ public:
    Assign one set equal to another set.
 
    \param this_target
-   is the index in this svec_setvec object of the set being assinged.
+   is the index in this svec_setvec object of the set being assigned.
 
    \param other_source
    is the index in the other svec_setvec object of the
@@ -1081,7 +1081,7 @@ public:
    Assign a set equal to the union of two other sets.
 
    \param this_target
-   is the index in this svec_setvec object of the set being assinged.
+   is the index in this svec_setvec object of the set being assigned.
 
    \param this_left
    is the index in this svec_setvec object of the
@@ -1123,7 +1123,7 @@ public:
       {  assignment(this_target, other_right, other);
          return;
       }
-      // if niether case holds, then both left and right are non-empty
+      // if neither case holds, then both left and right are non-empty
       CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
       CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
@@ -1150,13 +1150,13 @@ public:
       data_[start]        = 1; // reference count
       // data_[start + 1] = length is not yet known
 
-      // initilaize left
+      // initialize left
       CPPAD_ASSERT_UNKNOWN( start_left != 0 );
       size_t current_left = start_left + 2;
       size_t value_left   = data_[current_left];
       CPPAD_ASSERT_UNKNOWN( value_left < end_ );
 
-      // initilaize right
+      // initialize right
       CPPAD_ASSERT_UNKNOWN( start_right != 0 );
       size_t current_right = start_right + 2;
       size_t value_right   = other.data_[current_right];
@@ -1201,7 +1201,7 @@ public:
    Assign a set equal to the intersection of two other sets.
 
    \param this_target
-   is the index in this svec_setvec object of the set being assinged.
+   is the index in this svec_setvec object of the set being assigned.
 
    \param this_left
    is the index in this svec_setvec object of the
@@ -1243,7 +1243,7 @@ public:
       {  assignment(this_target, other_right, other);
          return;
       }
-      // if niether case holds, then both left and right are non-empty
+      // if neither case holds, then both left and right are non-empty
       CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
       CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
@@ -1269,13 +1269,13 @@ public:
       size_t start        = 0;
       start_[this_target] = start;
 
-      // initilaize left
+      // initialize left
       CPPAD_ASSERT_UNKNOWN( start_left != 0 );
       size_t current_left = start_left + 2;
       size_t value_left   = data_[current_left];
       CPPAD_ASSERT_UNKNOWN( value_left < end_ );
 
-      // initilaize right
+      // initialize right
       CPPAD_ASSERT_UNKNOWN( start_right != 0 );
       size_t current_right = start_right + 2;
       size_t value_right   = other.data_[current_right];
@@ -1440,7 +1440,7 @@ sparsity pattern that we are placing internal.
 number of sets (rows) in the internal sparsity pattern.
 
 \param end
-end of set value (number of columns) in the interanl sparsity pattern.
+end of set value (number of columns) in the internal sparsity pattern.
 
 \param transpose
 if true, the user sparsity patter is the transposed.

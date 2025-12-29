@@ -168,7 +168,7 @@ void atomic_base<Base>::operator()(
       ay[i].taddr_   = 0;
 
       // we need to record this operation if
-      // any of the elemnts of ay are variables,
+      // any of the elements of ay are variables,
       record_operation |= vy[i];
    }
 # ifndef NDEBUG

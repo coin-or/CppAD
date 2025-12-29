@@ -10,7 +10,6 @@
    autotools
    bthread
    cmath
-   complier
    cstdint
    ctor
    datadir
@@ -49,7 +48,7 @@ The example ``not_complex_ad.cpp`` was using the type
 
    ``std::complex< CppAD::AD<double> >``
 
-and was failing to compile with the ``clang`` complier.
+and was failing to compile with the ``clang`` compiler.
 This example has been removed because it is not consistent with the
 C++ standard; see
 :ref:`complex FAQ<faq@Complex Types>` .
@@ -91,7 +90,7 @@ conditional expressions.
 The c++11 standard includes the error function :ref:`erf-name` in
 ``cmath`` .
 If the c++ compiler has the error function defined in ``cmath`` ,
-the complier version of the error function is used and it corresponds to an
+the compiler version of the error function is used and it corresponds to an
 atomic operation.
 
 Fix typo in tangent reverse mode theory for

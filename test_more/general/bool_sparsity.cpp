@@ -168,7 +168,7 @@ namespace {
 bool bool_sparsity(void)
 {  bool ok = true;
    //
-   // record the funcion
+   // record the function
    size_t n = 100;
    size_t m = n + 1;
    vector< AD<double> > x(n), y(m);

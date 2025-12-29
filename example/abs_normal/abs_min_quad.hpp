@@ -306,7 +306,7 @@ bool abs_min_quad(
       {  pz_pu[ i * s + j ] = g_jac[ (n + s) * (i + m) + n + j ];
       }
    }
-   // initailize delta_x
+   // initialize delta_x
    for(size_t j = 0; j < n; j++)
       delta_x[j] = 0.0;
    //
@@ -333,7 +333,7 @@ bool abs_min_quad(
    }
    for(size_t itr = 0; itr < maxitr[0]; itr++)
    {
-      // Equation (5), Propostion 3.1 of reference
+      // Equation (5), Proposition 3.1 of reference
       // dy_dx = py_px + py_pu * Sigma * (I - pz_pu * Sigma)^-1 * pz_px
       //
       // tmp_ss = I - pz_pu * Sigma
