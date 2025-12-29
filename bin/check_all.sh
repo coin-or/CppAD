@@ -22,7 +22,8 @@ possible flags
 --release                  only compile for release
 --verbose_make             generate verbose makefiles
 --skip_external_links      do not check documentation external links
---suppress_spell_warnings  do not check for documentaiton spelling errors
+--skip_check_copy          do not check copyright messages
+--suppress_spell_warnings  do not check for documentation spelling errors
 EOF
       exit 0
    fi
@@ -32,6 +33,7 @@ fi
 build_type='mixed'
 verbose_make='no'
 skip_external_links='no'
+skip_check_copy='no'
 suppress_spell_warnings='no'
 while [ $# != 0 ]
 do
@@ -55,6 +57,10 @@ do
 
       --skip_external_links)
       skip_external_links='yes'
+      ;;
+
+      --skip_check_copy)
+      skip_check_copy='yes'
       ;;
 
       --suppress_spell_warnings)
@@ -286,7 +292,7 @@ then
 fi
 #
 # prefix
-# absoute prefix where optional packages are installed
+# absolute prefix where optional packages are installed
 eval `$grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
@@ -315,10 +321,15 @@ list=$(
    -e '/check_all.sh/d' \
    -e '/check_doxygen.sh/d' \
    -e '/check_install.sh/d' \
+   -e '/check_copy.sh/d' \
    -e '/check_invisible/d'
 )
 #
 echo_eval bin/check_invisible.sh
+if [ "$skip_check_copy" == 'no' ]
+then
+   echo_eval bin/check_copy.sh
+fi
 for check in $list
 do
    echo_log_eval $check
