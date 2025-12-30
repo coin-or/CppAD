@@ -13,7 +13,7 @@ then
 cat << EOF
 usage: bin/speed_diff.sh speed_one.out speed_two.out
 where speed_one.out and speed_two.out are outputs from the speed_cppad program
-runing its 'speed' test.
+running its 'speed' test.
 EOF
    exit 1
 fi

@@ -296,7 +296,7 @@ a vector of length m, the number of dependent variables in f
 (this ADFun object).
 
 \param subset
-specifices the subset of the sparsity pattern where the Hessian is evaluated.
+spedifies the subset of the sparsity pattern where the Hessian is evaluated.
 subset.nr() == n,
 subset.nc() == n.
 

@@ -182,7 +182,7 @@ vectorBool tape_t<Value>::compress(void)
             assert( j_op < i_op );
             //
             // new_val_index
-            // mapping so use op_j results in palce of op_i results.
+            // mapping so use op_j results in place of op_i results.
             addr_t res_index_j = op2res_index[j_op];
             for(addr_t k = 0; k < n_res; ++k)
                new_val_index[res_index_i + k] = res_index_j + k;

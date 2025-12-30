@@ -62,7 +62,7 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
       var_ind[j] = n_dyn_ind + j;
    //
    // val_tape
-   // value operator representaiton corresponding to this function
+   // value operator representation corresponding to this function
    local::val_graph::tape_t<Base> val_tape;
    fun2val(val_tape);
    //
@@ -106,7 +106,7 @@ void ADFun<Base, RecBase>::val_optimize(const std::string& options)
    // convert optimized value graph to fun
    val2fun(val_tape, dyn_ind, var_ind, use_val);
    //
-   // no collision limit in value graph representaiton.
+   // no collision limit in value graph representation.
    return;
 }
 

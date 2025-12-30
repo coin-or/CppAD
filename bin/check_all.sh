@@ -305,6 +305,16 @@ then
    exit 1
 fi
 #
+# typos
+if which typos >& /dev/null
+then
+   if ! typos
+   then
+      echo 'check_all: see typos errors above'
+      exit 1
+   fi
+fi
+#
 # check_version
 if echo $version | $grep '[0-9]\{4\}0000[.]' > /dev/null
 then

@@ -395,7 +395,6 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin cppad_vector_compare dev}
 {xrst_spell
-   ture
 }
 
 Vector Class: Comparison Operators
@@ -434,7 +433,7 @@ The *result* is true if the comparison
 
 |  *vec* [ *i* ] *op* *other [ *i* ]
 
-ture for all valid indices *i* .  Otherwise, the *result* is false
+true for all valid indices *i* .  Otherwise, the *result* is false
 
 {xrst_end cppad_vector_compare}
 -------------------------------------------------------------------------------

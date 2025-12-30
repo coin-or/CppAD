@@ -6,7 +6,7 @@
 # include <cppad/local/val_graph/val2fun.hpp>
 # include "../atomic_xam.hpp"
 
-namespace { // BEIGN_EMPTY_NAMESPACE
+namespace { // BEGIN_EMPTY_NAMESPACE
 // ----------------------------------------------------------------------------
 bool dynamic_atom(void)
 {  bool ok = true;

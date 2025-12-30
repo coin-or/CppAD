@@ -5,7 +5,7 @@ set -e -u
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # This script name is 'test_*' instead of 'check_*' because it requires
-# that cmake has already cerated build/bukld.ninja or Makefile.
+# that cmake has already created build/bukld.ninja or Makefile.
 program='bin/test_install.sh'
 if [ "$0" != "$program" ]
 then

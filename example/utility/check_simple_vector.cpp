@@ -23,7 +23,7 @@ The CheckSimpleVector Function: Example and Test
 # include <iostream>
 
 
-// Choosing a value between 1 and 9 selects a simple vector properity to be
+// Choosing a value between 1 and 9 selects a simple vector property to be
 // omitted and result in an error message being generated
 # define CppADMyVectorOmit 0
 

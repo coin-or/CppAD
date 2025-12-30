@@ -19,7 +19,7 @@ C++ AD Graph Iterator Private Member Data
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   // valuse set by constructor
+   // values set by constructor
    const vector<graph_op_enum>*   operator_vec_;
    const vector<size_t>*          operator_arg_;
    //

@@ -296,7 +296,7 @@ void two_var_for_hes(
       {  // x depends on the independent variable u
          //
          // for_sparsity
-         // update Hessian term with one parital w.r.t u
+         // update Hessian term with one partial w.r.t u
          if( ! linear_xy )
          {  // other independent variables that z depends on
             for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
@@ -319,7 +319,7 @@ void two_var_for_hes(
       {  // y depends on the independent variable u
          //
          // for_sparsity
-         // update Hessian term with one parital w.r.t u
+         // update Hessian term with one partial w.r.t u
          if( ! linear_xy )
          {  // other independent variables that z depends on
             for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
@@ -342,7 +342,7 @@ void two_var_for_hes(
       {  // x depends on the independent variable u
          //
          // for_sparsity
-         // update Hessian term with one parital w.r.t u other w.r.t
+         // update Hessian term with one partial w.r.t u other w.r.t
          // independent variables that y depends on
          for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
          //
@@ -359,7 +359,7 @@ void two_var_for_hes(
       {  // y depends on the independent variable u
          //
          // for_sparsity
-         // update Hessian term with one parital w.r.t u other w.r.t
+         // update Hessian term with one partial w.r.t u other w.r.t
          // independent variables that x depends on
          for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
          //

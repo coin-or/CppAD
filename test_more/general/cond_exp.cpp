@@ -531,7 +531,7 @@ bool OldExample(void)
    CppAD::Independent(X);
 
    // sum with respect to j of log of absolute value of X[j]
-   // sould be - infinity if any of the X[j] are zero
+   // should be - infinity if any of the X[j] are zero
    AD<double> MinusInfinity = - Infinity(0.);
    AD<double> Sum           = 0.;
    AD<double> Zero(0);

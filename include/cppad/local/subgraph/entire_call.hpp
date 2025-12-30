@@ -15,7 +15,7 @@ include entire function call in a subgraph
 */
 // ===========================================================================
 /*!
-Convert from just firt AFunOp to entire atomic function call in a subgraph.
+Convert from just first AFunOp to entire atomic function call in a subgraph.
 
 \tparam Addr
 Type used for indices in the random iterator.

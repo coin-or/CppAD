@@ -243,7 +243,7 @@ public:
       size_t i, j;
       size_t nfg = nf_ + ng_;
 
-      // initialize x0_ and fg0_ wih proper dimensions and value nan
+      // initialize x0_ and fg0_ with proper dimensions and value nan
       x0_.resize(nx);
       fg0_.resize(nfg);
       for(i = 0; i < nx_; i++)
@@ -538,7 +538,7 @@ public:
    }
    // -----------------------------------------------------------------------
    /*!
-   Return initial x value where optimiation is started.
+   Return initial x value where optimization is started.
 
    \param[in] n
    must be equal to the domain dimension for f(x) and g(x); i.e.,
@@ -926,7 +926,7 @@ public:
    On output,
    For <tt>k = 0 , ... , nele_hess-1, iRow[k]</tt> is the
    base zero row index for the
-   k-th possibly non-zero entry in the Hessian fo the Lagragian.
+   k-th possibly non-zero entry in the Hessian of the Lagragian.
 
    \param jCol
    if values is not NULL, jCol is not defined.

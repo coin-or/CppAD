@@ -4,7 +4,7 @@
 # include <cppad/cppad.hpp>
 # include <cppad/local/val_graph/tape.hpp>
 # include "../atomic_xam.hpp"
-namespace { // BEIGN_EMPTY_NAMESPACE
+namespace { // BEGIN_EMPTY_NAMESPACE
 // ----------------------------------------------------------------------------
 // dynamic_atom
 bool dynamic_atom(void)

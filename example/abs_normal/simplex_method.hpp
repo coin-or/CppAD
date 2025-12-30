@@ -230,7 +230,7 @@ bool simplex_method(
    if( na > 0 )
       iobj = ne + 1; // auxiliary objective w
    //
-   // simplex interations
+   // simplex iterations
    for(size_t itr = 0; itr < maxitr; itr++)
    {  // current value for xout
       for(size_t j = 0; j < nx; j++)

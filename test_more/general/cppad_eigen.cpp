@@ -79,7 +79,7 @@ bool cppad_eigen(void)
    ok       &= a_matrix(0, 0) == AScalar(0);
 
    // Test multiply matrix elements of mixed types
-   // (This worked before corresponding ScalarBianryOpTraits was added.)
+   // (This worked before corresponding ScalarBinaryOpTraits was added.)
    AScalar a_scalar = a_matrix(0,0) * d_matrix(0,0);
    ok              &= a_scalar == AScalar(0);
    a_scalar         = d_matrix(0, 0) * a_matrix(0, 0);

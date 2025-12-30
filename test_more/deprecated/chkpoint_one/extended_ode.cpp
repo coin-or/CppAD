@@ -369,7 +369,7 @@ bool extended_ode(void)
    a0vector acc(n_);
    for(size_t i = 0; i < n_; i++)
    {  if( i < 4 )
-      {  // Runge-Kutta methos is exact for this case
+      {  // Runge-Kutta methods is exact for this case
          acc[i] = 10. * eps;
       }
       else
@@ -391,7 +391,7 @@ bool extended_ode(void)
    //
    // Now use f to compute a derivative. For this 'simple' example it is
    // the derivative with respect to x of the
-   // parital with respect to x[n-1] of z_{n-1} (t , x)
+   // partial with respect to x[n-1] of z_{n-1} (t , x)
    a0vector w(n_ * n_), dw(n_);
    for(size_t i = 0; i < n_; i++)
    {  for(size_t j = 0; j < n_; j++)

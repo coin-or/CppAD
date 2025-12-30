@@ -19,5 +19,5 @@ SET_TARGET_PROPERTIES(test_more_compare_c_c PROPERTIES
    LINK_OPTIONS "${cppad_link_flags}"
 )
 #
-# check_test_more_compre_c_c
+# check_test_more_compare_c_c
 add_check_executable(check_test_more_compare_c c)

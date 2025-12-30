@@ -196,7 +196,7 @@ void ADFun<Base, RecBase>::fun2val(
    size_t n_variable_ind = ind_taddr_.size();
    //
    // n_val_ind
-   // number of independent valuse
+   // number of independent values
    addr_t n_val_ind = addr_t( n_dynamic_ind + n_variable_ind );
    //
 # ifndef NDEBUG

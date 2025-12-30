@@ -22,7 +22,7 @@ The CheckNumericType Function: Example and Test
 # include <cppad/utility/near_equal.hpp>
 
 
-// Choosing a value between 1 and 10 selects a numeric class properity to be
+// Choosing a value between 1 and 10 selects a numeric class property to be
 // omitted and result in an error message being generated
 # define CppADMyTypeOmit 0
 

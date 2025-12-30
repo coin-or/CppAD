@@ -280,7 +280,7 @@ Constructor
 {xrst_spell_off}
 {xrst_code cpp} */
    // --------------------------------------------------------------------
-   // Creater a tan and tanh object
+   // Create a tan and tanh object
    atomic_tangent my_tan("my_tan", false), my_tanh("my_tanh", true);
 /* {xrst_code}
 {xrst_spell_on}

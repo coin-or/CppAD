@@ -323,7 +323,7 @@ bool cppad_ipopt_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
 }
 
 /*!
-Return initial x value where optimiation is started.
+Return initial x value where optimization is started.
 
 \param[in] n
 must be equal to the domain dimension for f(x) and g(x); i.e.,

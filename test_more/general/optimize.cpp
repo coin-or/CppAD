@@ -854,7 +854,7 @@ namespace {
       V[ X[0] ] = X[1];
 
       // Make dependency for vecad vectors different that for
-      // variables because original code used worng dependency info.
+      // variables because original code used wrong dependency info.
       // Y does not depend on the first variable in the tape; i.e.
       // the one corresponding to the BeginOp. So make it depend
       // on the first vecad vector in the tape.
@@ -928,7 +928,7 @@ namespace {
       y = F.Forward(0, x);
 
       // Use identically equal because the result of the operations
-      // have been stored as double and gaurd bits have been dropped.
+      // have been stored as double and guard bits have been dropped.
       // (This may not be true for some compiler in the future).
       for(j = 0; j < n; j++)
          ok &= NearEqual(y[j], Value(Y[j]), eps10, eps10);

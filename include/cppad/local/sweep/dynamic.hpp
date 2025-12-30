@@ -39,7 +39,7 @@ new value for the independent dynamic parameter vector.
 
 \param par_all
 is the vector of all the parameters.
-Ths constant parameters are inputs and the dynamic parameters are outputs.
+The constant parameters are inputs and the dynamic parameters are outputs.
 
 \param par_is_dyn
 is a vector with the same length as par_vec.

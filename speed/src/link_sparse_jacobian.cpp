@@ -69,7 +69,7 @@ void choose_row_col(
    vector<double>  random(2 * K);
    CppAD::uniform_01(2 * K, random);
    //
-   // sort the temporary row and colunn choices
+   // sort the temporary row and column choices
    vector<size_t> key(K);
    vector<size_t> ind(K);
    for(size_t k = 0; k < K; k++)

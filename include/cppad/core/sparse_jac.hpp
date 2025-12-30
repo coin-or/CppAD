@@ -266,7 +266,7 @@ a vector of length n, the number of independent variables in f
 (this ADFun object).
 
 \param subset
-specifices the subset of the sparsity pattern where the Jacobian is evaluated.
+spedifies the subset of the sparsity pattern where the Jacobian is evaluated.
 subset.nr() == m,
 subset.nc() == n.
 
@@ -460,7 +460,7 @@ a vector of length n, the number of independent variables in f
 (this ADFun object).
 
 \param subset
-specifices the subset of the sparsity pattern where the Jacobian is evaluated.
+spedifies the subset of the sparsity pattern where the Jacobian is evaluated.
 subset.nr() == m,
 subset.nc() == n.
 

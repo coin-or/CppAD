@@ -116,7 +116,7 @@
 #  cppad_lib
 # The other variables used by cppad.pc.in are set below
 # Note that cppad_SOURCE_DIR is used by cppad-uninstalled.pc
-# and is set by cmake to the top soruce directory.
+# and is set by cmake to the top source directory.
 #
 # cppad_includedir
 LIST(GET cmake_install_includedirs 0 cppad_includedir)

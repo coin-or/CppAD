@@ -322,7 +322,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Create an abs-normal representation of an ADFun object.
 
 \tparam Base
-base type for this abs-normal form and for the function beging represented;
+base type for this abs-normal form and for the function being represented;
 i.e., f.
 
 \param f

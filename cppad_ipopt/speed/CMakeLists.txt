@@ -9,7 +9,7 @@
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
 # Local link directories to search (not in external packages)
-# (cannot use ../src/cppad_ipopt library because it is linke with debugging)
+# (cannot use ../src/cppad_ipopt library because it is linked with debugging)
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]

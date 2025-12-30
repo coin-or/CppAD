@@ -475,7 +475,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
       size_t r = std::min<size_t>(max_r , n_color - count_color);
       BaseVector dx(n * r), dy(m * r);
 
-      // loop over colors we will do this tme
+      // loop over colors we will do this time
       for(ell = 0; ell < r; ell++)
       {  // combine all columns with this color
          for(j = 0; j < n; j++)

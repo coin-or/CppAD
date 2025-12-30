@@ -5,7 +5,7 @@
 set -e -u
 # ----------------------------------------------------------------------------
 # This script is 'test_*' instead of 'check_*' because it requires
-# that cmake has already cerated build/bukld.ninja or Makefile.
+# that cmake has already created build/bukld.ninja or Makefile.
 program='bin/test_multi_thread.sh'
 if [ "$0" != "$program" ]
 then

@@ -91,7 +91,7 @@ void tape_t<Value>::fold_con(void)
    bool trace           = false;
    eval(trace, val_index2con);
    //
-   // is_consant
+   // is_constant
    vectorBool is_constant( static_cast<size_t>(n_val_) );
    for(addr_t i = 0; i < n_val_; ++i)
       is_constant[i] = false;

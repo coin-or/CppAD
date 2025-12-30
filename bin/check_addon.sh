@@ -26,7 +26,7 @@ do
    fi
 done
 #
-echo "Checking soruce code for names reserved for addon packages"
+echo "Checking source code for names reserved for addon packages"
 echo "-------------------------------------------------------"
 ok="yes"
 file_list=`git ls-files`

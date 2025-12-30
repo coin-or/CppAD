@@ -33,7 +33,7 @@ if [[ "$opt_level" =~ "[^0-3]" ]]
 then
    if [ "$opt_level" != '' ]
    then
-      echo 'opt_leve is not 0, 1, 2, or 3'
+      echo 'opt_level is not 0, 1, 2, or 3'
    fi
    ok='no'
 fi

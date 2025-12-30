@@ -602,7 +602,7 @@ void ADFun<Base, RecBase>::val2fun(
             addr_t value  = fun_arg[1];
             //
             // is_var
-            // base 2 representaiton of [ is_var(flag), is_var(value) ]
+            // base 2 representation of [ is_var(flag), is_var(value) ]
             addr_t is_var = 0;
             if( fun_ad_type[flag] == variable_enum )
                is_var += 1;

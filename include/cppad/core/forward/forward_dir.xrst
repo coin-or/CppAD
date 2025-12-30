@@ -162,7 +162,7 @@ For :math:`\ell = 0 , \ldots , r-1`, the function
 :math:`Y_\ell (t) = F[ X_\ell (t) ]`.
 We use :math:`y^{(0)}` for the zero order coefficient
 and :math:`y^{(k),\ell} \in \B{R}^m` to denote the
-hight order coefficients; i.e.,
+higher order coefficients; i.e.,
 
 .. math::
 

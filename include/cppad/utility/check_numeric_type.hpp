@@ -75,7 +75,7 @@ namespace CppAD {
          return NumericType(0);
       count[thread]++;
       /*
-      contructors
+      constructors
       */
       NumericType check_NumericType_default_constructor;
       NumericType check_NumericType_constructor_from_int(1);

@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2023-23 Bradley M. Bell
 # include <cppad/cppad.hpp>
-namespace { // BEIGN_EMPTY_NAMESPACE
+namespace { // BEGIN_EMPTY_NAMESPACE
 // ----------------------------------------------------------------------------
 bool con_op(void)
 {  bool ok = true;

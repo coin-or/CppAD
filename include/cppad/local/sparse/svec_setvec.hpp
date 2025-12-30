@@ -330,7 +330,7 @@ private:
    Does garbage collection when indicated.
 
    This routine should be called when more entries are not being used.
-   If a significant propotion are not being used, the data structure
+   If a significant proportion are not being used, the data structure
    will be compacted.
 
    The size of data_ should equal the number of entries used by the sets

@@ -181,7 +181,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
       {  if( discrete_index[graph_index] != n_list_discrete )
          {  std::string msg = "from_graph: error in call to ";
             msg += name;
-            msg += ".\nThere is mor than one discrete ";
+            msg += ".\nThere is more than one discrete ";
             msg += "function with this name";
             //
             // use this source code as point of detection

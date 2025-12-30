@@ -434,7 +434,7 @@ bool multi_newton_takedown(vector<double>& xout)
       delete work_all_[thread_num];
 # endif
       // Note that xout corresponds to memory that is inuse by master
-      // (so we can only chech have freed all their memory).
+      // (so we can only check have freed all their memory).
       if( thread_num > 0 )
       {  // check that there is no longer any memory inuse by this thread
          ok &= thread_alloc::inuse(thread_num) == 0;

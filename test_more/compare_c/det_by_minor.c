@@ -12,7 +12,7 @@
 # include <stddef.h>
 # include <float.h>
 
-// In the case of plain C, we defined the type bool together with ture, false
+// In the case of plain C, we defined the type bool together with true, false
 # ifndef __cplusplus
 # define bool int
 # define true 1

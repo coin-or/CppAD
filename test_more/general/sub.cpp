@@ -129,7 +129,7 @@ bool Three(void)
    using namespace CppAD;
 
    // special cases where tests above check OK and SubpvOp
-   // implementation is known to be worng.
+   // implementation is known to be wrong.
    // Probably two minuses make a plus.
    size_t n = 1;
    CPPAD_TESTVECTOR(AD<double>) X(n);

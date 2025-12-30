@@ -363,7 +363,7 @@ bool tangent(void)
 $subhead Constructor$$
 $srccode%cpp% */
    // --------------------------------------------------------------------
-   // Creater a tan and tanh object
+   // Create a tan and tanh object
    atomic_tangent my_tan("my_tan", false), my_tanh("my_tanh", true);
 /* %$$
 $subhead Recording$$

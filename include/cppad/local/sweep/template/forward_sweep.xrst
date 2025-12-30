@@ -16,7 +16,7 @@ It has the following xrst template replacements:
    @title@  The title for this forward sweep
    @#####@  Underlining for the tilte
    @NAME@   is one of FORWARD_0, FORWARD_ANY, FORWARD_DIR
-            Prototype is surrounded by // BEIGN_@NAME@ and // END_@NAME@
+            Prototype is surrounded by // BEGIN_@NAME@ and // END_@NAME@
    @****@   Underlining for @NAME@
 }
 

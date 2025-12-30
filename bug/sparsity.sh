@@ -56,11 +56,11 @@ int main(int argc, char *argv[])
          std::cout << argv[i] << " ";
       std::cout << "elapsed_seconds = " << elapsed_seconds() << std::endl;
    }
-   catch( std::bad_alloc& ba )
+   catch( std::bad_alloc& bad )
    {
       for(int i = 0; i < argc; i++)
          std::cout << argv[i] << " ";
-      std::cout << ba.what() << std::endl;
+      std::cout << bad.what() << std::endl;
    }
    return 0;
 }

@@ -12,6 +12,7 @@
    dev
    Woverloaded
    azmul
+   toml
 }
 
 Release Notes for 2025
@@ -21,6 +22,29 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+12-30
+=====
+Previously, CppAD only checked for spelling errors in the documentation.
+The `typos`_ package was used
+to fix many spelling errors in the code (including example code).
+This was done in two commits.
+
+#. The `first commit`_
+   only included the errors where typos provided a single correction
+   and the error had four or more letters.
+
+#. The second commit included changes that were individually reviewed.
+   In addition the file ``typos.toml`` as added
+   (this defines some CppAD typos spelling exceptions).
+
+.. _typos: https://github.com/crate-ci/typos
+
+{xrst_spell_off}
+.. _first commit: https://github.com/coin-or/CppAD/commit/
+   95146e99838fd908833846a85c72dde882b46f6a
+{xrst_spell_on}
+
 
 12-14
 =====

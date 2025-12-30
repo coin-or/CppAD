@@ -299,7 +299,7 @@ bool ode(void)
    a0vector acc(n_);
    for(size_t i = 0; i < n_; i++)
    {  if( i < 4 )
-      {  // Runge-Kutta methos is exact for this case
+      {  // Runge-Kutta methods is exact for this case
          acc[i] = 10. * eps;
       }
       else
