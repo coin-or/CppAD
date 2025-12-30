@@ -35,7 +35,7 @@ This was done in two commits.
    and the error had four or more letters.
 
 #. The second commit included changes that were individually reviewed.
-   In addition the file ``typos.toml`` as added
+   In addition the file ``typos.toml`` was added
    (this defines some CppAD typos spelling exceptions).
 
 .. _typos: https://github.com/crate-ci/typos
