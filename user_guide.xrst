@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin user_guide}
 {xrst_spell
@@ -41,13 +41,13 @@ Versions
    :widths: auto
 
    * - This version
-     - cppad-20260103
+     - cppad-20260000.0
    * - Documentation for latest version
      - `latest <https://cppad.readthedocs.io/latest>`_
    * - Documentation for most recent stable version
-     - `stable-2025 <https://cppad.readthedocs.io/stable-2025>`_
+     - `stable-2026 <https://cppad.readthedocs.io/stable-2026>`_
    * - Most recent release of this stable version
-     - `release-2025 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20250000.3>`_
+     - `release-2026 <https://codeload.github.com/coin-or/CppAD/tar.gz/refs/tags/20260000.0>`_
 
 {xrst_comment END: Before changing see new_release.sh and check_version.sh}
 

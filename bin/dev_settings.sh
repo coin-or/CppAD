@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # SPDX-FileContributor: 2025 Perry de Valpine
 # ---------------------------------------------------------------------------
 # source bin/dev_settings.sh
@@ -91,6 +91,7 @@ no_copyright_list='
    epl-2.0.txt
    uw_copy_040507.html
    xrst.toml
+   typos.toml
 '
 # END_SORT_THIS_LINE_MINUS_2
 #
