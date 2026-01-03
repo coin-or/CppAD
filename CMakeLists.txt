@@ -8,7 +8,7 @@
 #
 # Set the minimum required version of cmake for this project.
 # see https://cmake.org//pipermail/cmake/2013-January/053213.html
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 #
 # Use the version of BoostConfig.cmake provided by boost.
 IF( POLICY CMP0167 )
