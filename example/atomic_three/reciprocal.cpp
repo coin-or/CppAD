@@ -22,7 +22,7 @@ Start Class Definition
 {xrst_code cpp} */
 # include <cppad/cppad.hpp>
 namespace {           // isolate items below to this file
-using CppAD::vector;  // abbreivate CppAD::vector as vector
+using CppAD::vector;  // abbreviate CppAD::vector as vector
 //
 class atomic_reciprocal : public CppAD::atomic_three<double> {
 /* {xrst_code}

@@ -104,7 +104,7 @@ bool optimize_dynamic_one(void)
    // constant parameter
    double c_0 = 2.0;
    //
-   // indepndent dynamic parameter vector
+   // independent dynamic parameter vector
    size_t np = 1;
    CPPAD_TESTVECTOR(double) p(np);
    CPPAD_TESTVECTOR( AD<double> ) ap(np);
@@ -205,7 +205,7 @@ bool optimize_dynamic_two(void)
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
    dynamic_optimize afun("dynamic_optimize");
    //
-   // indepndent dynamic parameter vector
+   // independent dynamic parameter vector
    size_t np = 1;
    CPPAD_TESTVECTOR(double) p(np);
    CPPAD_TESTVECTOR( AD<double> ) ap(np);
@@ -296,7 +296,7 @@ bool optimize_dynamic_three(void)
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
    dynamic_optimize afun("dynamic_optimize");
    //
-   // indepndent dynamic parameter vector
+   // independent dynamic parameter vector
    size_t np = 1;
    CPPAD_TESTVECTOR(double) p(np);
    CPPAD_TESTVECTOR( AD<double> ) ap(np);

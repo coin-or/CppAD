@@ -47,7 +47,7 @@ private:
    // other private member data
    // -----------------------------------------------------------------------
 
-   /// flags which operatiors are in subgraph
+   /// flags which operators are in subgraph
    /// (size zero or n_op_).
    pod_vector<addr_t> in_subgraph_;
 

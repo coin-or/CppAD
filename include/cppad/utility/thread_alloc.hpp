@@ -105,7 +105,7 @@ private:
    public:
       /// extra information (currently used by create and delete array)
       size_t             extra_;
-      /// an index that uniquely idenfifies both thread and capacity
+      /// an index that uniquely identifies both thread and capacity
       size_t             tc_index_;
       /// pointer to the next memory allocation with the same tc_index_
       void*              next_;

@@ -182,7 +182,7 @@ bool operator_with_variable(void)
    for(size_t j = 0; j < n; ++j)
       ax[j] = AD<double>(j + 1);
 
-   // declare independent variables, dynamic parammeters, starting recording
+   // declare independent variables, dynamic parameters, starting recording
    CppAD::Independent(ax, adynamic);
 
    // range space vector
@@ -331,7 +331,7 @@ bool dynamic_operator(void)
    CPPAD_TESTVECTOR(AD<double>) ax(nx);
    ax[0] = 0.25;
 
-   // declare independent variables, dynamic parammeters, starting recording
+   // declare independent variables, dynamic parameters, starting recording
    CppAD::Independent(ax, adynamic);
 
    // range space vector

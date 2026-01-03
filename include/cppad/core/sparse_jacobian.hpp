@@ -670,7 +670,7 @@ Compute user specified subset of a sparse Jacobian using forward mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
-   SparceJacobianForward(x, p, row, col, jac, work)
+   SparseJacobinanForward(x, p, row, col, jac, work)
 \endverbatim
 
 \tparam Base
@@ -785,7 +785,7 @@ Compute user specified subset of a sparse Jacobian using forward mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
-   SparceJacobianReverse(x, p, row, col, jac, work)
+   SparseJacobinanReverse(x, p, row, col, jac, work)
 \endverbatim
 
 \tparam Base

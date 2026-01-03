@@ -128,7 +128,7 @@ bool dynamic(void)
    size_t ny = 3;
    //
    // ap
-   // indepndent dynamic parameter vector
+   // independent dynamic parameter vector
    CPPAD_TESTVECTOR( CppAD::AD<double> ) ap(np);
    ap[0] = p[0];
    //

@@ -211,7 +211,7 @@ is the reverse Jacobian sparsity pattern w.r.t the result vector y.
 is the reverse Jacobian sparsity pattern w.r.t the argument vector x.
 
 \param q [in]
-is the column dimension for the sparsity partterns.
+is the column dimension for the sparsity patterns.
 
 \param r [in]
 is the forward Jacobian sparsity pattern w.r.t the argument vector x

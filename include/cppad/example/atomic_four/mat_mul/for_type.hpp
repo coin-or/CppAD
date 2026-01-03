@@ -57,7 +57,7 @@ bool atomic_mat_mul<Base>::for_type(
    // type_y
    // y[ i * n_right + j] = sum_k
    //      x[i * n_middle + k] * x[ offset + k * n_right + j]
-   // treat multpilication by zero like absolute zero
+   // treat multiplication by zero like absolute zero
    for(size_t i = 0; i < n_left; ++i)
    {  for(size_t j = 0; j < n_right; ++j)
       {  CppAD::ad_type_enum type_ij = CppAD::identical_zero_enum;

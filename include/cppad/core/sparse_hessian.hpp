@@ -594,7 +594,7 @@ Compute user specified subset of a sparse Hessian.
 
 The C++ source code corresponding to this operation is
 \verbatim
-   SparceHessian(x, w, p, row, col, hes, work)
+   SparseHessian(x, w, p, row, col, hes, work)
 \endverbatim
 
 \tparam Base

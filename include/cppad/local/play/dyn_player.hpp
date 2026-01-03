@@ -418,7 +418,7 @@ public:
    {  return dyn_par_op_.size(); }
    //
    // BEGIN_NUM_DYNAMIC_ARG
-   // num_dynamic_arg = dyn_play.num_dyamic_arg()
+   // num_dynamic_arg = dyn_play.num_dynamic_arg()
    size_t num_dynamic_arg(void) const
    // END_NUM_DYNAMIC_ARG
    {  return dyn_par_arg_.size(); }

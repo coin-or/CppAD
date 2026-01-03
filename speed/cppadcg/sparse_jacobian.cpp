@@ -303,7 +303,7 @@ bool link_sparse_jacobian(
    // -----------------------------------------------------
    CPPAD_ASSERT_UNKNOWN( job == "run" )
    if( onetape ) while(repeat--)
-   {  // use if before assert to vaoid warning that static_size is not used
+   {  // use if before assert to avoid warning that static_size is not used
       if( size != static_size )
       {  CPPAD_ASSERT_UNKNOWN( size == static_size );
       }

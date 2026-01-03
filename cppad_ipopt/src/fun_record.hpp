@@ -19,7 +19,7 @@ namespace cppad_ipopt {
 Records operation sequence for \f$ r_k (u) \f$ at \f$u = [ J \circ n ] (x)\f$.
 
 \tparam NumVector
-is the type of the argumen x. It can either be
+is the type of the argument x. It can either be
 <tt>Ipopt::Number*</tt> or
 <tt>CppAD::vector<Ipopt::Number></tt>; i.e., <tt>NumberVector</tt>.
 

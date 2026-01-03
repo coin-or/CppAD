@@ -72,7 +72,7 @@ namespace {
 
       // Use two, three, four and six in order to avoid a compiler warning
       // Note that addition of two and three does not take any operations.
-      // Also note that optimizer reconizes four * six == five * seven.
+      // Also note that optimizer recognizes four * six == five * seven.
       scalar nine  = eight + four * six * (two + three);
       before.n_var += 3; before.n_op  += 3;
       after.n_var  += 2; after.n_op   += 2;

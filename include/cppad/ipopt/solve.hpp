@@ -416,7 +416,7 @@ It must also support
 \code
    FG_eval::ADvector
 \endcode
-to dentify the type used for the arguments to fg_eval.
+to identify the type used for the arguments to fg_eval.
 
 \param options
 list of options, one for each line.

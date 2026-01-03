@@ -474,14 +474,14 @@ void get_op_usage(
          }
          if( use_result != usage_t(no_usage) )
          {  CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-            // propgate from result to left argument
+            // propagate from result to left argument
             if( arg[1] & 1 )
             {  size_t j_op = random_itr.var2op(size_t(arg[2]));
                op_inc_arg_usage(
                   play, check_csum, i_op, j_op, op_usage, cexp_set
                );
             }
-            // propgate from result to right argument
+            // propagate from result to right argument
             if( arg[1] & 2 )
             {  size_t j_op = random_itr.var2op(size_t(arg[3]));
                op_inc_arg_usage(

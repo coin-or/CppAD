@@ -86,7 +86,7 @@ bool result_not_used(void)
    tape.eval(trace, val_vec);
    //
    // ok
-   // before optmizing
+   // before optimizing
    ok &= tape.arg_vec().size() == 1 + 2 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
    ok &= tape.n_op() == 6;
@@ -199,7 +199,7 @@ bool ident_zero(void)
    tape.eval(trace, val_vec);
    //
    // ok
-   // before optmizing
+   // before optimizing
    ok &= tape.arg_vec().size() == 1 + 2 + 2 + 2 + 4 + 5;
    ok &= tape.con_vec().size() == 3;
    ok &= tape.n_op() == 6;

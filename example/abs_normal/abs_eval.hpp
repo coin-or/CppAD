@@ -159,7 +159,7 @@ Vector abs_eval(
          double delta_a_j = fabs(g_tilde[m + j]) - fabs(g_hat[m + j]);
          // index in g_jac of partial of z_i w.r.t u_j
          size_t index = (m + i) * (n + s) + n + j;
-         // add constribution for delta_a_j to s_tilde_i
+         // add contribution for delta_a_j to s_tilde_i
          g_tilde[m + i] += g_jac[index] * delta_a_j;
       }
    }
@@ -181,7 +181,7 @@ Vector abs_eval(
          double delta_a_j = fabs(g_tilde[m + j]) - fabs(g_hat[m + j]);
          // index in g_jac of partial of y_i w.r.t u_j
          size_t index = i * (n + s) + n + j;
-         // add constribution for delta_a_j to s_tilde_i
+         // add contribution for delta_a_j to s_tilde_i
          g_tilde[i] += g_jac[index] * delta_a_j;
       }
    }

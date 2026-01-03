@@ -78,7 +78,7 @@ private:
    /// final results are returned to this structure
    solve_result<Dvector>&          solution_;
    // ------------------------------------------------------------------
-   // Values that are initilaized by the constructor
+   // Values that are initialized by the constructor
    // ------------------------------------------------------------------
    /// AD function object that evaluates x -> [ f(x) , g(x) ]
    /// If retape is false, this object is initialized by constructor

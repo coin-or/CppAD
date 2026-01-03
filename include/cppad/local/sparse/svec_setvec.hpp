@@ -621,7 +621,7 @@ public:
    is freed.
    \li
    If n_set is non-zero, a vector of n_set sets is created and all
-   the sets are initilaized as empty.
+   the sets are initialized as empty.
 
    \param end
    is the maximum element plus one (the minimum element is 0).

@@ -1729,7 +1729,7 @@ namespace {
       return ok;
    }
    // check that CondExp properly handles expressions that get
-   // removed during opitmization
+   // removed during optimization
    bool cond_exp_removed(void)
    {  bool ok = true;
       using CppAD::AD;

@@ -115,7 +115,7 @@ Atomic forward Jacobian sparsity pattern.
 Link, after case split, from for_jac_sweep to atomic_base.
 
 \param q
-is the column dimension for the Jacobian sparsity partterns.
+is the column dimension for the Jacobian sparsity patterns.
 
 \param r
 is the Jacobian sparsity pattern for the argument vector x

@@ -122,7 +122,7 @@ Atomic reverse mode Jacobian sparsity patterns.
 Link, after case split, from rev_jac_sweep to atomic_base
 
 \param q [in]
-is the row dimension for the Jacobian sparsity partterns
+is the row dimension for the Jacobian sparsity patterns
 
 \param rt [out]
 is the tansposed Jacobian sparsity pattern w.r.t to range variables y

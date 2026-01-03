@@ -159,7 +159,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
    size_t C = cap_order_taylor_;
 
    // The optimizer may skip a step that does not affect dependent variables.
-   // Initilaizing zero order coefficients avoids following valgrind warning:
+   // Initializing zero order coefficients avoids following valgrind warning:
    // "Conditional jump or move depends on uninitialised value(s)".
    for(j = 0; j < num_var_tape_; j++)
    {  for(k = p; k <= q; k++)

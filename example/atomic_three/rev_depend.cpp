@@ -184,7 +184,7 @@ Recording
    // constant parameter
    double c_0 = 2.0;
    //
-   // indepndent dynamic parameter vector
+   // independent dynamic parameter vector
    size_t np = 1;
    CPPAD_TESTVECTOR(double) p(np);
    CPPAD_TESTVECTOR( AD<double> ) ap(np);

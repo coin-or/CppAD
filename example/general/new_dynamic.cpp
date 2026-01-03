@@ -39,7 +39,7 @@ bool new_dynamic(void)
    ax[0] = 0.;
    ax[1] = 1.;
 
-   // declare independent variables, dynamic parammeters, starting recording
+   // declare independent variables, dynamic parameters, starting recording
    CppAD::Independent(ax, adynamic);
 
    // create a dependent dynamic parameter

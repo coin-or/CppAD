@@ -151,7 +151,7 @@ bool link_sparse_hessian(
       }
    }
    // Adolc returns upper triangle in row major order while row, col are
-   // lower trangle in row major order.
+   // lower triangle in row major order.
    CppAD::vector<size_t> keys(nnz), ind(nnz);
    for(int ell = 0; ell < nnz; ++ell)
    {  // transpose to get lower triangle
@@ -164,7 +164,7 @@ bool link_sparse_hessian(
    size_t r = row[k];
    size_t c = col[k];
    for(int ell = 0; ell < nnz; ++ell)
-   {  // Adolc version of lower trangle of Hessian in row major order
+   {  // Adolc version of lower triangle of Hessian in row major order
       size_t ind_ell  = ind[ell];
       size_t i        = size_t( cind[ind_ell] );
       size_t j        = size_t( rind[ind_ell] );

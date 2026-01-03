@@ -283,7 +283,7 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
    size_t  i, j;          // some temporary indices
    const Float zero( 0 ); // the value zero as a Float object
    size_t  imax;          // row index of maximum element
-   size_t  jmax;          // column indx of maximum element
+   size_t  jmax;          // column index of maximum element
    Float    emax;         // maximum absolute value
    size_t  p;             // count pivots
    int     sign;          // sign of the permutation

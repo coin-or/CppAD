@@ -15,6 +15,7 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 {xrst_toc_hidden
+   appendix/whats_new/2026.xrst
    appendix/whats_new/2025.xrst
    appendix/whats_new/2024.xrst
    appendix/whats_new/2023.xrst
@@ -42,10 +43,11 @@ assist you in learning about changes between various versions of CppAD.
 
 This Year
 *********
-:ref:`2025-name`
+:ref:`2026-name`
 
 Previous Years
 **************
+:ref:`2025-name` ,
 :ref:`2024-name` ,
 :ref:`2023-name` ,
 :ref:`2022-name` ,

@@ -276,7 +276,7 @@ bool simplex_method(
             nv = nx + ne + na; // (x, s, a)
       }
       //
-      // determine variable with maximuim coefficient in objective row
+      // determine variable with maximum coefficient in objective row
       double cmax = 0.0;
       size_t jmax = nv;
       for(size_t j = 0; j < nv; j++)

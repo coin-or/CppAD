@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell  <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin 2026 app}
+{xrst_spell
+}
+
+Release Notes for 2026
+######################
+
+
+
+mm-dd
+*****
+
+01-03
+=====
+More spelling corrections in the source code comments found
+by a newer version of the typos package; see
+:ref:`2025@mm-dd@12-30` whats new for 2025.
+
+
+{xrst_end 2026}

@@ -283,10 +283,10 @@ On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the sparsity of the outer function with respect to the i-th
 result for this atomic function.
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the outer function with repsect to the j-th
+is the sparsity for the outer function with respect to the j-th
 argument to this atomic function.
 On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the outer function with repsect to the j-th
+is the sparsity for the outer function with respect to the j-th
 argument to this atomic function with the atomic function results
 removed as arguments to the outer function.
 

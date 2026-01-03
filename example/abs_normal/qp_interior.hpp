@@ -478,7 +478,7 @@ bool qp_interior(
       yout[i] = std::sqrt(mu);
    }
    // ----------------------------------------------------------------------
-   // initialie F_0(xout, yout, sout)
+   // initial F_0(xout, yout, sout)
    Vector F_0       = qp_interior_F_0(c, C, g, G, xout, yout, sout);
    double F_max_abs = qp_interior_max_abs( F_0 );
    for(size_t itr = 0; itr <= maxitr; itr++)

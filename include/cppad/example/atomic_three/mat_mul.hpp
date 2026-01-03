@@ -305,7 +305,7 @@ Routine called by CppAD during :ref:`afun(ax, ay)<atomic_three_afun-name>` .
                size_t i_left = left(
                   i, ell, k, nk, nr_left, n_middle, nc_right
                );
-               // indx for right(ell, j)
+               // index for right(ell, j)
                size_t i_right = right(
                   ell, j, k, nk, nr_left, n_middle, nc_right
                );
@@ -659,7 +659,7 @@ Routine called when a function using ``mat_mul`` is optimized.
                   size_t i_left = left(
                      i, ell, k, nk, nr_left, n_middle, nc_right
                   );
-                  // indx for right(ell, j)
+                  // index for right(ell, j)
                   size_t i_right = right(
                      ell, j, k, nk, nr_left, n_middle, nc_right
                   );
