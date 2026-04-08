@@ -6,9 +6,9 @@
 /*
 {xrst_begin lu_vec_ad.cpp}
 {xrst_spell
-   logdet
-   rhs
-   signdet
+    logdet
+    rhs
+    signdet
 }
 
 Lu Factor and Solve with Recorded Pivoting
@@ -30,7 +30,7 @@ Solves the linear equation
 
 .. math::
 
-   Matrix * Result = Rhs
+    Matrix * Result = Rhs
 
 where *Matrix* is an :math:`n \times n` matrix,
 *Rhs* is an :math:`n x m` matrix, and
@@ -60,7 +60,7 @@ and :math:`j` is between zero and :math:`m-1`,
 
 .. math::
 
-   A_{i,j} = A[ i * m + j ]
+    A_{i,j} = A[ i * m + j ]
 
 (The length of :math:`A` must be equal to :math:`n * m`.)
 
@@ -116,14 +116,14 @@ the determinant of *Matrix* is given by the formula
 
 .. math::
 
-   det = signdet \exp( logdet )
+    det = signdet \exp( logdet )
 
 This enables ``lu_vec_ad`` to use logs of absolute values.
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/lu_vec_ad_ok.cpp
+    example/general/lu_vec_ad_ok.cpp
 }
 The file
 :ref:`lu_vec_ad_ok.cpp-name`
@@ -140,203 +140,203 @@ contains an example and test of ``lu_vec_ad`` .
 namespace CppAD {
 
 AD<double> lu_vec_ad(
-   size_t                           n,
-   size_t                           m,
-   CppAD::VecAD<double>             &Matrix,
-   CppAD::VecAD<double>             &Rhs,
-   CppAD::VecAD<double>             &Result,
-   CppAD::AD<double>                &logdet)
+    size_t                           n,
+    size_t                           m,
+    CppAD::VecAD<double>             &Matrix,
+    CppAD::VecAD<double>             &Rhs,
+    CppAD::VecAD<double>             &Result,
+    CppAD::AD<double>                &logdet)
 {
-   using namespace CppAD;
-   typedef AD<double> Type;
+    using namespace CppAD;
+    typedef AD<double> Type;
 
-   // temporary index
-   Type index;
-   Type jndex;
+    // temporary index
+    Type index;
+    Type jndex;
 
-   // index and maximum element value
-   Type   imax;
-   Type   jmax;
-   Type   itmp;
-   Type   jtmp;
-   Type   emax;
+    // index and maximum element value
+    Type   imax;
+    Type   jmax;
+    Type   itmp;
+    Type   jtmp;
+    Type   emax;
 
-   // some temporary indices
-   Type i;
-   Type j;
-   Type k;
+    // some temporary indices
+    Type i;
+    Type j;
+    Type k;
 
-   // count pivots
-   Type p;
+    // count pivots
+    Type p;
 
-   // sign of the determinant
-   Type  signdet;
+    // sign of the determinant
+    Type  signdet;
 
-   // temporary values
-   Type  etmp;
-   Type  diff;
+    // temporary values
+    Type  etmp;
+    Type  diff;
 
-   // pivot element
-   Type  pivot;
+    // pivot element
+    Type  pivot;
 
-   // singular matrix
-   Type  singular = 0.;
+    // singular matrix
+    Type  singular = 0.;
 
-   // some constants
-   Type M(m);
-   Type N(n);
-   Type One(1);
-   Type Zero(0);
+    // some constants
+    Type M(m);
+    Type N(n);
+    Type One(1);
+    Type Zero(0);
 
-   // pivot row and column order in the matrix
-   VecAD<double> ip(n);
-   VecAD<double> jp(n);
+    // pivot row and column order in the matrix
+    VecAD<double> ip(n);
+    VecAD<double> jp(n);
 
-   // -------------------------------------------------------
+    // -------------------------------------------------------
 
-   // initialize row and column order in matrix not yet pivoted
-   for(i = 0; i < N; i += 1.)
-   {  ip[i] = i;
-      jp[i] = i;
-   }
+    // initialize row and column order in matrix not yet pivoted
+    for(i = 0; i < N; i += 1.)
+    {   ip[i] = i;
+        jp[i] = i;
+    }
 
-   // initialize the log determinant
-   logdet  = 0.;
-   signdet = 1;
+    // initialize the log determinant
+    logdet  = 0.;
+    signdet = 1;
 
-   for(p = 0; p < N; p += 1.)
-   {
-      // determine row and column corresponding to element of
-      // maximum absolute value in remaining part of Matrix
-      imax = N;
-      jmax = N;
-      emax = 0.;
-      for(i = p; i < N; i += 1.)
-      {  itmp = ip[i] * N;
-         for(j = p; j < N; j += 1.)
-         {  assert(
-               (ip[i] < N) && (jp[j] < N)
-            );
-            index = itmp + jp[j];
+    for(p = 0; p < N; p += 1.)
+    {
+        // determine row and column corresponding to element of
+        // maximum absolute value in remaining part of Matrix
+        imax = N;
+        jmax = N;
+        emax = 0.;
+        for(i = p; i < N; i += 1.)
+        {   itmp = ip[i] * N;
+            for(j = p; j < N; j += 1.)
+            {   assert(
+                    (ip[i] < N) && (jp[j] < N)
+                );
+                index = itmp + jp[j];
+                etmp  = Matrix[ index ];
+
+                // compute absolute value of element
+                etmp = fabs(etmp);
+
+                // update maximum absolute value so far
+                emax = CondExpGe(etmp, emax, etmp, emax);
+                imax = CondExpGe(etmp, emax,    i, imax);
+                jmax = CondExpGe(etmp, emax,    j, jmax);
+            }
+        }
+        assert( (imax < N) && (jmax < N) );
+
+
+        // switch rows so max absolute element is in row p
+        index    = ip[p];
+        ip[p]    = ip[imax];
+        ip[imax] = index;
+
+        // if imax != p, switch sign of determinant
+        signdet  = CondExpEq(imax, p, signdet,  -signdet);
+
+        // switch columns so max absolute element is in column p
+        jndex    = jp[p];
+        jp[p]    = jp[jmax];
+        jp[jmax] = jndex;
+
+        // if imax != p, switch sign of determinant
+        signdet  = CondExpEq(jmax, p, signdet,  -signdet);
+
+        // pivot using the max absolute element
+        itmp    = ip[p] * N;
+        index   = itmp + jp[p];
+        pivot   = Matrix[ index ];
+
+        // update the singular matrix flag
+        singular = CondExpEq(pivot, Zero, One, singular);
+
+        // update the log of absolute determinant and its sign
+        etmp     = fabs(pivot);
+        logdet   = logdet + log( etmp );
+        signdet  = CondExpGe(pivot, Zero, signdet, - signdet);
+
+        /*
+        Reduce by the elementary transformations that maps
+        Matrix( ip[p], jp[p] ) to one and Matrix( ip[i], jp[p] )
+        to zero for i = p + 1., ... , n-1
+        */
+
+        // divide row number ip[p] by pivot element
+        for(j = p + 1.; j < N; j += 1.)
+        {
+            index           = itmp + jp[j];
+            Matrix[ index ] = Matrix[ index ] / pivot;
+        }
+
+        // not used anymore so no need to set to 1
+        // Matrix[ ip[p] * N + jp[p] ] = Type(1);
+
+        // divide corresponding row of right hand side by pivot element
+        itmp = ip[p] * M;
+        for(k = 0; k < M; k += 1.)
+        {
+            index = itmp + k;
+            Rhs[ index ] = Rhs[ index ] / pivot;
+        }
+
+        for(i = p + 1.; i < N; i += 1. )
+        {   itmp  = ip[i] * N;
+            jtmp  = ip[p] * N;
+
+            index = itmp + jp[p];
             etmp  = Matrix[ index ];
 
-            // compute absolute value of element
-            etmp = fabs(etmp);
+            for(j = p + 1.; j < N; j += 1.)
+            {   index = itmp + jp[j];
+                jndex = jtmp + jp[j];
+                Matrix[ index ] = Matrix[ index ]
+                            - etmp * Matrix[ jndex ];
+            }
 
-            // update maximum absolute value so far
-            emax = CondExpGe(etmp, emax, etmp, emax);
-            imax = CondExpGe(etmp, emax,    i, imax);
-            jmax = CondExpGe(etmp, emax,    j, jmax);
-         }
-      }
-      assert( (imax < N) && (jmax < N) );
+            itmp = ip[i] * M;
+            jtmp = ip[p] * M;
+            for(k = 0; k < M; k += 1.)
+            {
+                index = itmp + k;
+                jndex = jtmp + k;
+                Rhs[ index ] = Rhs[ index ]
+                                      - etmp * Rhs[ jndex ];
+            }
 
+            // not used any more so no need to set to zero
+            // Matrix[ ip[i] * N + jp[p] ] = 0.;
+        }
 
-      // switch rows so max absolute element is in row p
-      index    = ip[p];
-      ip[p]    = ip[imax];
-      ip[imax] = index;
+    }
 
-      // if imax != p, switch sign of determinant
-      signdet  = CondExpEq(imax, p, signdet,  -signdet);
+    // loop over equations
+    for(k = 0; k < M; k += 1.)
+    {   // loop over variables
+        p = N;
+        while( p > 0. )
+        {   p -= 1.;
+            index = ip[p] * M + k;
+            jndex = jp[p] * M + k;
+            etmp            = Rhs[ index ];
+            Result[ jndex ] = etmp;
+            for(i = 0; i < p; i += 1. )
+            {
+                index = ip[i] * M + k;
+                jndex = ip[i] * N + jp[p];
+                Rhs[ index ] = Rhs[ index ]
+                                      - etmp * Matrix[ jndex ];
+            }
+        }
+    }
 
-      // switch columns so max absolute element is in column p
-      jndex    = jp[p];
-      jp[p]    = jp[jmax];
-      jp[jmax] = jndex;
-
-      // if imax != p, switch sign of determinant
-      signdet  = CondExpEq(jmax, p, signdet,  -signdet);
-
-      // pivot using the max absolute element
-      itmp    = ip[p] * N;
-      index   = itmp + jp[p];
-      pivot   = Matrix[ index ];
-
-      // update the singular matrix flag
-      singular = CondExpEq(pivot, Zero, One, singular);
-
-      // update the log of absolute determinant and its sign
-      etmp     = fabs(pivot);
-      logdet   = logdet + log( etmp );
-      signdet  = CondExpGe(pivot, Zero, signdet, - signdet);
-
-      /*
-      Reduce by the elementary transformations that maps
-      Matrix( ip[p], jp[p] ) to one and Matrix( ip[i], jp[p] )
-      to zero for i = p + 1., ... , n-1
-      */
-
-      // divide row number ip[p] by pivot element
-      for(j = p + 1.; j < N; j += 1.)
-      {
-         index           = itmp + jp[j];
-         Matrix[ index ] = Matrix[ index ] / pivot;
-      }
-
-      // not used anymore so no need to set to 1
-      // Matrix[ ip[p] * N + jp[p] ] = Type(1);
-
-      // divide corresponding row of right hand side by pivot element
-      itmp = ip[p] * M;
-      for(k = 0; k < M; k += 1.)
-      {
-         index = itmp + k;
-         Rhs[ index ] = Rhs[ index ] / pivot;
-      }
-
-      for(i = p + 1.; i < N; i += 1. )
-      {  itmp  = ip[i] * N;
-         jtmp  = ip[p] * N;
-
-         index = itmp + jp[p];
-         etmp  = Matrix[ index ];
-
-         for(j = p + 1.; j < N; j += 1.)
-         {  index = itmp + jp[j];
-            jndex = jtmp + jp[j];
-            Matrix[ index ] = Matrix[ index ]
-                     - etmp * Matrix[ jndex ];
-         }
-
-         itmp = ip[i] * M;
-         jtmp = ip[p] * M;
-         for(k = 0; k < M; k += 1.)
-         {
-            index = itmp + k;
-            jndex = jtmp + k;
-            Rhs[ index ] = Rhs[ index ]
-                             - etmp * Rhs[ jndex ];
-         }
-
-         // not used any more so no need to set to zero
-         // Matrix[ ip[i] * N + jp[p] ] = 0.;
-      }
-
-   }
-
-   // loop over equations
-   for(k = 0; k < M; k += 1.)
-   {  // loop over variables
-      p = N;
-      while( p > 0. )
-      {  p -= 1.;
-         index = ip[p] * M + k;
-         jndex = jp[p] * M + k;
-         etmp            = Rhs[ index ];
-         Result[ jndex ] = etmp;
-         for(i = 0; i < p; i += 1. )
-         {
-            index = ip[i] * M + k;
-            jndex = ip[i] * N + jp[p];
-            Rhs[ index ] = Rhs[ index ]
-                             - etmp * Matrix[ jndex ];
-         }
-      }
-   }
-
-   // make sure return zero in the singular case
-   return (1. - singular) * signdet;
+    // make sure return zero in the singular case
+    return (1. - singular) * signdet;
 }
 
 } // END CppAD namespace

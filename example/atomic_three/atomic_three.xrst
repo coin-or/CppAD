@@ -10,12 +10,12 @@ Example Defining Atomic Functions: Third Generation
 Contents
 ********
 {xrst_toc_table
-   example/atomic_three/get_started.cpp
-   example/atomic_three/norm_sq.cpp
-   example/atomic_three/tangent.cpp
-   example/atomic_three/base2ad.cpp
-   example/atomic_three/reciprocal.cpp
-   example/atomic_three/mat_mul.cpp
+    example/atomic_three/get_started.cpp
+    example/atomic_three/norm_sq.cpp
+    example/atomic_three/tangent.cpp
+    example/atomic_three/base2ad.cpp
+    example/atomic_three/reciprocal.cpp
+    example/atomic_three/mat_mul.cpp
 }
 
 {xrst_end atomic_three_example}

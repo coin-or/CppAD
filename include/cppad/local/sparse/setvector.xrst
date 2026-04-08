@@ -5,8 +5,8 @@
 
 {xrst_begin SetVector dev}
 {xrst_spell
-   dereference
-   setvec
+    dereference
+    setvec
 }
 
 C++ Concept: Vector of Sets With size_t Elements
@@ -27,7 +27,7 @@ Constructor
 In the specifications below, *vec* and *other*
 are *SetVector* objects created using the default constructor; e.g.,
 
-   *SetVector* *vec* , *other* ;
+    *SetVector* *vec* , *other* ;
 
 After this constructor the vectors are empty; i.e.,
 there are no sets in either vector.
@@ -39,7 +39,7 @@ resize
 ======
 This operation has the following syntax:
 
-   *vec* . ``resize`` ( *n_set* , *end* )
+    *vec* . ``resize`` ( *n_set* , *end* )
 
 The argument *n_set* has type ``size_t`` and is the
 number of sets in *vec* .
@@ -54,7 +54,7 @@ n_set
 =====
 The syntax
 
-   *n_set* = *vec* . ``n_set`` ()
+    *n_set* = *vec* . ``n_set`` ()
 
 sets the ``size_t`` value *n_set* equal to the
 number of sets in *vec* .
@@ -64,7 +64,7 @@ end
 ===
 The syntax
 
-   *end* = *vec* . ``end`` ()
+    *end* = *vec* . ``end`` ()
 
 sets the ``size_t`` value *end* equal to the
 end value for the sets in *vec* .
@@ -77,7 +77,7 @@ Assignment
 The following
 makes *vec* into a separate copy of *other* :
 
-   *vec* = *other*
+    *vec* = *other*
 
 The *other* object is ``const`` for this operation.
 
@@ -86,13 +86,13 @@ swap
 The following
 exchanges to vector of sets in *vec* and *other* :
 
-   *vec* . ``swap`` ( *other* )
+    *vec* . ``swap`` ( *other* )
 
 number_elements
 ***************
 If *i* is a ``size_t`` value less than *n_set* ,
 
-   *count* = *vec* . ``number_elements`` ( *i* )
+    *count* = *vec* . ``number_elements`` ( *i* )
 
 returns the ``size_t`` value *count*
 equal to the number of elements in the *i*-th set.
@@ -104,7 +104,7 @@ add_element
 If *i* is a ``size_t`` value less than *n_set*
 and *element* is a ``size_t`` value less than *end* ,
 
-   *vec* . ``add_element`` ( *i* , *element* )
+    *vec* . ``add_element`` ( *i* , *element* )
 
 adds the specified element to the *i*-th set.
 
@@ -113,7 +113,7 @@ post_element
 If *i* is a ``size_t`` value less than *n_set*
 and *element* is a ``size_t`` value less than *end* ,
 
-   *vec* . ``post_element`` ( *i* , *element* )
+    *vec* . ``post_element`` ( *i* , *element* )
 
 post the specified element for addition to the *i*-th set.
 Posting multiple elements to one set and then processing them may be faster
@@ -126,7 +126,7 @@ process_post
 ************
 If *i* is a ``size_t`` value less than *n_set* ,
 
-   *vec* . ``process_post`` ( *i* )
+    *vec* . ``process_post`` ( *i* )
 
 Processes all of the posts that have been made for the *i*-th set; i.e.,
 adds the posted elements to the set.
@@ -136,7 +136,7 @@ is_element
 If *i* is a ``size_t`` value less than *n_set*
 and *element* is a ``size_t`` value less than *end* ,
 
-   *find* = *vec* . ``is_element`` ( *i* , *element* )
+    *find* = *vec* . ``is_element`` ( *i* , *element* )
 
 returns the ``bool`` value *find*
 which is  true (false) if the specified element is in
@@ -147,7 +147,7 @@ clear
 *****
 If *i* is a ``size_t`` value less than *n_set* ,
 
-   *vec* . ``clear`` ( *i* )
+    *vec* . ``clear`` ( *i* )
 
 assigns the empty set to the *i*-th set.
 It is OK to have postings to *i*-th that have not been processed
@@ -158,7 +158,7 @@ assignment
 If *this_target* and *other_source*
 are ``size_t`` with value less than the end value,
 
-   *vec* . ``assignment`` ( *this_target* , *other_source* , *other* )
+    *vec* . ``assignment`` ( *this_target* , *other_source* , *other* )
 
 sets the *this_target* set in *vec*
 equal to the *other_source* set in *other* .
@@ -215,7 +215,7 @@ Given a *SetVector* object *vec* ,
 and a ``size_t`` index *i* ,
 a constant iterator *itr* is constructed as follows:
 
-   *SetVector* :: ``const_iterator`` *itr* ( *vec* , *i* )
+    *SetVector* :: ``const_iterator`` *itr* ( *vec* , *i* )
 
 After this constructor, *itr* points to the first
 (smallest) element in the *i*-th set.
@@ -226,7 +226,7 @@ Dereference
 ===========
 The operation
 
-   ``element`` = * ``itr``
+    ``element`` = * ``itr``
 
 sets the ``size_t`` value *element* to the current element value.
 If *element* is equal to value *vec* . ``end`` () ,
@@ -242,7 +242,7 @@ The increment operation is not defined when the value of
 * *itr* is equal to *vec* . ``end`` () .
 The operation
 
-   *element* = * (++ *itr* )
+    *element* = * (++ *itr* )
 
 increments the iterator *itr* and sets *element*
 to the deference after the increment (see dereference above).
@@ -251,14 +251,14 @@ It is an error to have postings to *i*-th that have not been processed.
 Implementation
 **************
 {xrst_toc_hidden
-   include/cppad/local/sparse/list_setvec.hpp
-   include/cppad/local/sparse/pack_setvec.xrst
+    include/cppad/local/sparse/list_setvec.hpp
+    include/cppad/local/sparse/pack_setvec.xrst
 }
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   list_setvec,:ref:`list_setvec-title`
-   pack_setvec,:ref:`pack_setvec-title`
+    list_setvec,:ref:`list_setvec-title`
+    pack_setvec,:ref:`pack_setvec-title`
 
 {xrst_end SetVector}

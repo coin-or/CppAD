@@ -7,8 +7,8 @@
 /*
 {xrst_begin atomic_three_forward}
 {xrst_spell
-   aparameter
-   ataylor
+    aparameter
+    ataylor
 }
 
 Atomic Function Forward Mode
@@ -23,7 +23,7 @@ They are also used by
 *f* . ``Forward`` and *f* . ``new_dynamic``
 where *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 and *afun* is used during the recording of *f* .
 
@@ -38,8 +38,8 @@ Syntax
 Prototype
 =========
 {xrst_literal
-   // BEGIN_PROTOTYPE_BASE
-   // END_PROTOTYPE_BASE
+    // BEGIN_PROTOTYPE_BASE
+    // END_PROTOTYPE_BASE
 }
 
 AD<Base>
@@ -48,7 +48,7 @@ This syntax and prototype are used by
 *af* . ``Forward`` and *af* . ``new_dynamic``
 where *af* has prototype
 
-   ``ADFun< AD<`` *Base* > , *Base* > *af*
+    ``ADFun< AD<`` *Base* > , *Base* > *af*
 
 and *afun* is used in *af* (see :ref:`base2ad-name` ).
 
@@ -63,8 +63,8 @@ Syntax
 Prototype
 =========
 {xrst_literal
-   // BEGIN_PROTOTYPE_AD_BASE
-   // END_PROTOTYPE_AD_BASE
+    // BEGIN_PROTOTYPE_AD_BASE
+    // END_PROTOTYPE_AD_BASE
 }
 
 Implementation
@@ -158,13 +158,13 @@ For :math:`j = 0 , \ldots , n-1` and :math:`k = 0 , \ldots , q`,
 we use the Taylor coefficient notation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
-      \\
-      X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
-   \end{eqnarray}
+    \begin{eqnarray}
+        x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
+        \\
+        X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+    \end{eqnarray}
 
 Note that superscripts represent an index for :math:`x_j^k`
 and an exponent for :math:`t^k`.
@@ -173,23 +173,23 @@ to the derivatives of :math:`X(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 
 parameters
 ==========
 If the *j*-th component of *x* corresponds to a parameter,
 
-   *type_x* [ *j* ] < ``CppAD::variable_enum``
+    *type_x* [ *j* ] < ``CppAD::variable_enum``
 
 In this case,
 the *j*-th component of *parameter_x* is equal to :math:`x_j^0`;
 i.e.,
 
-   *parameter_x* [ *j* ] == *taylor_x* [ *j* * ( *q*  + 1 ) + 0 ]
+    *parameter_x* [ *j* ] == *taylor_x* [ *j* * ( *q*  + 1 ) + 0 ]
 
 Furthermore, for *k*  > 0 ,
 
-   *taylor_x* [ *j* * ( *q* + 1 ) + *k*  ] == 0
+    *taylor_x* [ *j* * ( *q* + 1 ) + *k*  ] == 0
 
 ataylor_x
 *********
@@ -203,15 +203,15 @@ Upon return,
 For :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , q`,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      Y_i (t)  & = & g_i [ X(t) ]
-      \\
-      Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
-      \\
-      \R{taylor\_y}  [ i * ( q + 1 ) + k ] & = & y_i^k
-   \end{eqnarray}
+    \begin{eqnarray}
+        Y_i (t)  & = & g_i [ X(t) ]
+        \\
+        Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+        \\
+        \R{taylor\_y}  [ i * ( q + 1 ) + k ] & = & y_i^k
+    \end{eqnarray}
 
 where :math:`o( t^q ) / t^q \rightarrow 0` as :math:`t \rightarrow 0`.
 Note that superscripts represent an index for :math:`y_j^k`
@@ -221,7 +221,7 @@ to the derivatives of :math:`Y(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 
 If :math:`p > 0`,
 for :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , p-1`,
@@ -229,7 +229,7 @@ the input of *taylor_y* satisfies
 
 .. math::
 
-   \R{taylor\_y}  [ i * ( q + 1 ) + k ] = y_i^k
+    \R{taylor\_y}  [ i * ( q + 1 ) + k ] = y_i^k
 
 These values do not need to be recalculated
 and can be used during the computation of the higher order coefficients.
@@ -253,35 +253,35 @@ and it component wise Hessian :math:`g_i^{(2)} (x)`.
 Then you can compute *taylor_x* using the following formulas:
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   y_i^0 & = & Y(0)
-         = g_i ( x^0 )
-   \\
-   y_i^1 & = & Y^{(1)} ( 0 )
-         = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
-         = g_i^{(1)} ( x^0 ) x^1
-   \\
-   y_i^2
-   & = & \frac{1}{2 !} Y^{(2)} (0)
-   \\
-   & = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
-     +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
-   \\
-   & = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
-     +    g_i^{(1)} ( x^0 ) x^2
-   \end{eqnarray}
+    \begin{eqnarray}
+    y_i^0 & = & Y(0)
+            = g_i ( x^0 )
+    \\
+    y_i^1 & = & Y^{(1)} ( 0 )
+            = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+            = g_i^{(1)} ( x^0 ) x^1
+    \\
+    y_i^2
+    & = & \frac{1}{2 !} Y^{(2)} (0)
+    \\
+    & = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+      +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+    \\
+    & = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
+      +    g_i^{(1)} ( x^0 ) x^2
+    \end{eqnarray}
 
 For :math:`i = 0 , \ldots , m-1`, and :math:`k = 0 , 1 , 2`,
 
 .. math::
 
-   \R{taylor\_y} [ i * (q + 1) + k ] = y_i^k
+    \R{taylor\_y} [ i * (q + 1) + k ] = y_i^k
 
 {xrst_toc_hidden
-   example/atomic_three/forward.cpp
-   example/atomic_three/dynamic.cpp
+    example/atomic_three/forward.cpp
+    example/atomic_three/dynamic.cpp
 }
 Examples
 ********
@@ -327,15 +327,15 @@ See the forward mode in user's documentation for atomic_three
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-   const vector<Base>&          parameter_x ,
-   const vector<ad_type_enum>&  type_x      ,
-   size_t                       need_y      ,
-   size_t                       order_low   ,
-   size_t                       order_up    ,
-   const vector<Base>&          taylor_x    ,
-   vector<Base>&                taylor_y    )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    size_t                       need_y      ,
+    size_t                       order_low   ,
+    size_t                       order_up    ,
+    const vector<Base>&          taylor_x    ,
+    vector<Base>&                taylor_y    )
 // END_PROTOTYPE_BASE
-{  return false; }
+{   return false; }
 
 /*!
 Link from atomic_three to forward mode
@@ -366,15 +366,15 @@ See the forward mode in user's documentation for base_three
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-   const vector< AD<Base> >&    aparameter_x ,
-   const vector<ad_type_enum>&  type_x       ,
-   size_t                       need_y       ,
-   size_t                       order_low    ,
-   size_t                       order_up     ,
-   const vector< AD<Base> >&    ataylor_x    ,
-   vector< AD<Base> >&          ataylor_y    )
+    const vector< AD<Base> >&    aparameter_x ,
+    const vector<ad_type_enum>&  type_x       ,
+    size_t                       need_y       ,
+    size_t                       order_low    ,
+    size_t                       order_up     ,
+    const vector< AD<Base> >&    ataylor_x    ,
+    vector< AD<Base> >&          ataylor_y    )
 // END_PROTOTYPE_AD_BASE
-{  return false; }
+{   return false; }
 
 
 } // END_CPPAD_NAMESPACE

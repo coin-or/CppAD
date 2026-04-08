@@ -32,8 +32,8 @@ Deprecated 2022-05-10
 Prototype
 =========
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Dependency Analysis
@@ -109,9 +109,9 @@ Example
 The following is an example ``rev_depend`` definition taken from
 :ref:`atomic_four_norm_sq.cpp-name` :
 {xrst_literal
-   example/atomic_four/norm_sq.cpp
-   // BEGIN REV_DEPEND
-   // END REV_DEPEND
+    example/atomic_four/norm_sq.cpp
+    // BEGIN REV_DEPEND
+    // END REV_DEPEND
 }
 
 {xrst_end atomic_four_rev_depend}
@@ -122,21 +122,21 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-   size_t                      call_id      ,
-   const vector<bool>&         ident_zero_x ,
-   vector<bool>&               depend_x     ,
-   const vector<bool>&         depend_y     )
+    size_t                      call_id      ,
+    const vector<bool>&         ident_zero_x ,
+    vector<bool>&               depend_x     ,
+    const vector<bool>&         depend_y     )
 // END_PROTOTYPE
-{  return false; }
+{   return false; }
 
 // deprecated version
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-   size_t                      call_id     ,
-   vector<bool>&               depend_x    ,
-   const vector<bool>&         depend_y    )
+    size_t                      call_id     ,
+    vector<bool>&               depend_x    ,
+    const vector<bool>&         depend_y    )
 // end deprecated version
-{  return false; }
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 

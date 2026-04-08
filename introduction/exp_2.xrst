@@ -8,9 +8,9 @@ exp_2: Implementation
 #####################
 
 {xrst_literal
-   introduction/exp_2.hpp
-   // BEGIN C++
-   // END C++
+    introduction/exp_2.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end exp_2.hpp}
@@ -21,9 +21,9 @@ exp_2: Test
 ###########
 
 {xrst_literal
-   introduction/exp_2.cpp
-   // BEGIN C++
-   // END C++
+    introduction/exp_2.cpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end exp_2.cpp}
@@ -41,7 +41,7 @@ The mathematical form for the corresponding function is
 
 .. math::
 
-   f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 An algorithmic differentiation package
 does not operate on the mathematical function :math:`f(x)`
@@ -56,7 +56,7 @@ In general, a zero order forward sweep is given a vector
 
 .. math::
 
-   y^{(0)} = f( x^{(0)} )
+    y^{(0)} = f( x^{(0)} )
 
 The superscript :math:`(0)` denotes zero order derivative;
 i.e., it is equal to the value
@@ -110,14 +110,14 @@ Sweep
 =====
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   **Index**,,**Code**,,**Operation**,,**Zero Order**
-   1,,``Type v1  = x;``,,:math:`v_1 = x`,,:math:`v_1^{(0)} = 0.5`
-   2,,``Type v2  = Type(1) + v1;``,,:math:`v_2 = 1 + v_1`,,:math:`v_2^{(0)} = 1.5`
-   3,,``Type v3  = v1 * v1;``,,:math:`v_3 = v_1 * v_1`,,:math:`v_3^{(0)} = 0.25`
-   4,,``Type v4  = v3 / Type(2);``,,:math:`v_4 = v_3 / 2`,,:math:`v_4^{(0)} = 0.125`
-   5,,``Type v5  = v2 + v4;``,,:math:`v_5 = v_2 + v_4`,,:math:`v_5^{(0)} = 1.625`
+    **Index**,,**Code**,,**Operation**,,**Zero Order**
+    1,,``Type v1  = x;``,,:math:`v_1 = x`,,:math:`v_1^{(0)} = 0.5`
+    2,,``Type v2  = Type(1) + v1;``,,:math:`v_2 = 1 + v_1`,,:math:`v_2^{(0)} = 1.5`
+    3,,``Type v3  = v1 * v1;``,,:math:`v_3 = v_1 * v_1`,,:math:`v_3^{(0)} = 0.25`
+    4,,``Type v4  = v3 / Type(2);``,,:math:`v_4 = v_3 / 2`,,:math:`v_4^{(0)} = 0.125`
+    5,,``Type v5  = v2 + v4;``,,:math:`v_5 = v_2 + v_4`,,:math:`v_5^{(0)} = 1.625`
 
 Return Value
 ************
@@ -125,12 +125,12 @@ The return value for this case is
 
 .. math::
 
-   1.625 =
-   v_5^{(0)} =
-   f( x^{(0)} )
+    1.625 =
+    v_5^{(0)} =
+    f( x^{(0)} )
 
 {xrst_toc_hidden
-   introduction/exp_2_for0.cpp
+    introduction/exp_2_for0.cpp
 }
 
 Verification
@@ -146,9 +146,9 @@ Exercises
    the operation sequence above;
    i.e., what are the corresponding values for
 
-   .. math::
+    .. math::
 
-      v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}
+        v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}
 
 #. Create a modified version of
    :ref:`exp_2_for0.cpp-name` that verifies the values you obtained
@@ -170,7 +170,7 @@ We define :math:`x(t)` near :math:`t = 0` by the first order expansion
 
 .. math::
 
-   x(t) = x^{(0)} + x^{(1)} * t
+    x(t) = x^{(0)} + x^{(1)} * t
 
 it follows that :math:`x^{(0)}` is the zero,
 and :math:`x^{(1)}` the first,
@@ -193,13 +193,13 @@ Suppose that we use the algorithm :ref:`exp_2.hpp-name` to compute
 
 .. math::
 
-   f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 The corresponding derivative function is
 
 .. math::
 
-   \partial_x f (x) =   1 + x
+    \partial_x f (x) =   1 + x
 
 An algorithmic differentiation package
 does not operate on the mathematical form of the function,
@@ -249,7 +249,7 @@ for the corresponding variable in the operation sequence; i.e.,
 
 .. math::
 
-   v_j (t) = v_j^{(0)} + v_j^{(1)} t
+    v_j (t) = v_j^{(0)} + v_j^{(1)} t
 
 We use :math:`x^{(1)} = 1` so that differentiation
 with respect to :math:`t`,
@@ -260,37 +260,37 @@ Sweep
 =====
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   **Index**,,**Operation**,,**Zero Order**,,**Derivative**,,**First Order**
-   1,,:math:`v_1 = x`,,0.5,,:math:`v_1^{(1)} = x^{(1)}`,,:math:`v_1^{(1)} = 1`
-   2,,:math:`v_2 = 1 + v_1`,,1.5,,:math:`v_2^{(1)} = v_1^{(1)}`,,:math:`v_2^{(1)} = 1`
-   3,,:math:`v_3 = v_1 * v_1`,,0.25,,:math:`v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}`,,:math:`v_3^{(1)} = 1`
-   4,,:math:`v_4 = v_3 / 2`,,0.125,,:math:`v_4^{(1)} = v_3^{(1)} / 2`,,:math:`v_4^{(1)} = 0.5`
-   5,,:math:`v_5 = v_2 + v_4`,,1.625,,:math:`v_5^{(1)} = v_2^{(1)} + v_4^{(1)}`,,:math:`v_5^{(1)} = 1.5`
+    **Index**,,**Operation**,,**Zero Order**,,**Derivative**,,**First Order**
+    1,,:math:`v_1 = x`,,0.5,,:math:`v_1^{(1)} = x^{(1)}`,,:math:`v_1^{(1)} = 1`
+    2,,:math:`v_2 = 1 + v_1`,,1.5,,:math:`v_2^{(1)} = v_1^{(1)}`,,:math:`v_2^{(1)} = 1`
+    3,,:math:`v_3 = v_1 * v_1`,,0.25,,:math:`v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}`,,:math:`v_3^{(1)} = 1`
+    4,,:math:`v_4 = v_3 / 2`,,0.125,,:math:`v_4^{(1)} = v_3^{(1)} / 2`,,:math:`v_4^{(1)} = 0.5`
+    5,,:math:`v_5 = v_2 + v_4`,,1.625,,:math:`v_5^{(1)} = v_2^{(1)} + v_4^{(1)}`,,:math:`v_5^{(1)} = 1.5`
 
 Return Value
 ************
 The derivative of the return value for this case is
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      1.5
-      & = &
-      v_5^{(1)} =
-      \left[ \D{v_5}{t} \right]_{t=0} =
-      \left[ \D{}{t} f ( x^{(0)} + x^{(1)} t ) \right]_{t=0}
-      \\
-      & = &
-      f^{(1)} ( x^{(0)} ) * x^{(1)} =
-      f^{(1)} ( x^{(0)} )
-   \end{eqnarray}
+    \begin{eqnarray}
+        1.5
+        & = &
+        v_5^{(1)} =
+        \left[ \D{v_5}{t} \right]_{t=0} =
+        \left[ \D{}{t} f ( x^{(0)} + x^{(1)} t ) \right]_{t=0}
+        \\
+        & = &
+        f^{(1)} ( x^{(0)} ) * x^{(1)} =
+        f^{(1)} ( x^{(0)} )
+    \end{eqnarray}
 
 (We have used the fact that :math:`x^{(1)} = 1`.)
 {xrst_toc_hidden
-   introduction/exp_2_for1.cpp
+    introduction/exp_2_for1.cpp
 }
 Verification
 ************
@@ -319,7 +319,7 @@ Exercises
 ------------------------------------------------------------------------------
 {xrst_begin exp_2_rev1}
 {xrst_spell
-   rcll
+    rcll
 }
 
 exp_2: First Order Reverse Mode
@@ -341,13 +341,13 @@ Suppose that we use the algorithm :ref:`exp_2.hpp-name` to compute
 
 .. math::
 
-   f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 The corresponding derivative function is
 
 .. math::
 
-   \partial_x f (x) =   1 + x
+    \partial_x f (x) =   1 + x
 
 f_5
 ***
@@ -359,13 +359,13 @@ We begin with the function :math:`f_5` where :math:`v_5`
 is both an argument and the value of the function; i.e.,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   f_5 ( v_1 , v_2 , v_3 , v_4 , v_5 ) & = & v_5
-   \\
-   \D{f_5}{v_5} & = & 1
-   \end{eqnarray}
+    \begin{eqnarray}
+    f_5 ( v_1 , v_2 , v_3 , v_4 , v_5 ) & = & v_5
+    \\
+    \D{f_5}{v_5} & = & 1
+    \end{eqnarray}
 
 All the other partial derivatives of :math:`f_5` are zero.
 
@@ -376,7 +376,7 @@ For the case in question, this is the operation with index 5,
 
 .. math::
 
-   v_5 = v_2 + v_4
+    v_5 = v_2 + v_4
 
 We define the function
 :math:`f_4 ( v_1 , v_2 , v_3 , v_4 )`
@@ -386,24 +386,24 @@ this operation; i.e.
 
 .. math::
 
-   f_4  =
-   f_5 [  v_1 , v_2 , v_3 , v_4 , v_5 ( v_2 , v_4 ) ]
+    f_4  =
+    f_5 [  v_1 , v_2 , v_3 , v_4 , v_5 ( v_2 , v_4 ) ]
 
 It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_4}{v_2}
-   & = & \D{f_5}{v_2} +
-      \D{f_5}{v_5} * \D{v_5}{v_2}
-   & = 1
-   \\
-   \D{f_4}{v_4}
-   & = & \D{f_5}{v_4} +
-      \D{f_5}{v_5} * \D{v_5}{v_4}
-   & = 1
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_4}{v_2}
+    & = & \D{f_5}{v_2} +
+        \D{f_5}{v_5} * \D{v_5}{v_2}
+    & = 1
+    \\
+    \D{f_4}{v_4}
+    & = & \D{f_5}{v_4} +
+        \D{f_5}{v_5} * \D{v_5}{v_4}
+    & = 1
+    \end{array}
 
 All the other partial derivatives of :math:`f_4` are zero.
 
@@ -413,7 +413,7 @@ The next operation has index 4,
 
 .. math::
 
-   v_4 = v_3 / 2
+    v_4 = v_3 / 2
 
 We define the function
 :math:`f_3 (  v_1 , v_2 , v_3 )`
@@ -422,27 +422,27 @@ except that :math:`v_4` is eliminated using this operation; i.e.,
 
 .. math::
 
-   f_3 =
-   f_4 [ v_1 , v_2 , v_3 , v_4 ( v_3 ) ]
+    f_3 =
+    f_4 [ v_1 , v_2 , v_3 , v_4 ( v_3 ) ]
 
 It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_3}{v_1}
-   & = & \D{f_4}{v_1}
-   & = 0
-   \\
-   \D{f_3}{v_2}
-   & = & \D{f_4}{v_2}
-   & = 1
-   \\
-   \D{f_3}{v_3}
-   & = & \D{f_4}{v_3} +
-      \D{f_4}{v_4} * \D{v_4}{v_3}
-   & = 0.5
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_3}{v_1}
+    & = & \D{f_4}{v_1}
+    & = 0
+    \\
+    \D{f_3}{v_2}
+    & = & \D{f_4}{v_2}
+    & = 1
+    \\
+    \D{f_3}{v_3}
+    & = & \D{f_4}{v_3} +
+        \D{f_4}{v_4} * \D{v_4}{v_3}
+    & = 0.5
+    \end{array}
 
 Index 3: f_2
 ************
@@ -450,7 +450,7 @@ The next operation has index 3,
 
 .. math::
 
-   v_3 = v_1 * v_1
+    v_3 = v_1 * v_1
 
 We define the function
 :math:`f_2 ( v_1 , v_2 )`
@@ -459,8 +459,8 @@ except that :math:`v_3` is eliminated using this operation; i.e.,
 
 .. math::
 
-   f_2 =
-   f_3 [ v_1 , v_2 , v_3 ( v_1 ) ]
+    f_2 =
+    f_3 [ v_1 , v_2 , v_3 ( v_1 ) ]
 
 Note that the value of :math:`v_1` is equal to :math:`x`
 which is .5 for this evaluation.
@@ -468,16 +468,16 @@ It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_2}{v_1}
-   & = & \D{f_3}{v_1} +
-      \D{f_3}{v_3} * \D{v_3}{v_1}
-   & = 0.5
-   \\
-   \D{f_2}{v_2}
-   & = & \D{f_3}{v_2}
-   & = 1
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_2}{v_1}
+    & = & \D{f_3}{v_1} +
+        \D{f_3}{v_3} * \D{v_3}{v_1}
+    & = 0.5
+    \\
+    \D{f_2}{v_2}
+    & = & \D{f_3}{v_2}
+    & = 1
+    \end{array}
 
 Index 2: f_1
 ************
@@ -485,7 +485,7 @@ The next operation has index 2,
 
 .. math::
 
-   v_2 = 1 + v_1
+    v_2 = 1 + v_1
 
 We define the function
 :math:`f_1 ( v_1 )`
@@ -494,25 +494,25 @@ except that :math:`v_2` is eliminated using this operation; i.e.,
 
 .. math::
 
-   f_1 =
-   f_2 [ v_1 , v_2 ( v_1 ) ]
+    f_1 =
+    f_2 [ v_1 , v_2 ( v_1 ) ]
 
 It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_1}{v_1}
-   & = & \D{f_2}{v_1} +
-      \D{f_2}{v_2} * \D{v_2}{v_1}
-   & = 1.5
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_1}{v_1}
+    & = & \D{f_2}{v_1} +
+        \D{f_2}{v_2} * \D{v_2}{v_1}
+    & = 1.5
+    \end{array}
 
 Note that :math:`v_1` is equal to :math:`x`,
 so the derivative of this is the derivative of
 the function defined by :ref:`exp_2.hpp-name` at :math:`x = .5`.
 {xrst_toc_hidden
-   introduction/exp_2_rev1.cpp
+    introduction/exp_2_rev1.cpp
 }
 Verification
 ************
@@ -557,13 +557,13 @@ We define :math:`x(t)` near :math:`t = 0` by the second order expansion
 
 .. math::
 
-   x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
+    x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
 
 It follows that for :math:`k = 0 , 1 , 2`,
 
 .. math::
 
-   x^{(k)} = \dpow{k}{t} x (0)
+    x^{(k)} = \dpow{k}{t} x (0)
 
 Purpose
 *******
@@ -581,13 +581,13 @@ Suppose that we use the algorithm :ref:`exp_2.hpp-name` to compute
 
 .. math::
 
-   f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 The corresponding second derivative function is
 
 .. math::
 
-   \Dpow{2}{x} f (x) =   1
+    \Dpow{2}{x} f (x) =   1
 
 Operation Sequence
 ******************
@@ -637,7 +637,7 @@ the second order expansion for the *i*-th variable is given by
 
 .. math::
 
-   v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+    v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
 
 We use :math:`x^{(0)} = 1`, and :math:`x^{(2)} = 0`
 so that second order differentiation
@@ -649,38 +649,38 @@ Sweep
 =====
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   **Index**,,**Zero**,,**Operation**,,**First**,,**Derivative**,,**Second**
-   1,,0.5,,:math:`v_1^{(1)} = x^{(1)}`,,1,,:math:`v_1^{(2)} = x^{(2)}`,,:math:`v_1^{(2)} = 0`
-   2,,1.5,,:math:`v_2^{(1)} = v_1^{(1)}`,,1,,:math:`v_2^{(2)} = v_1^{(2)}`,,:math:`v_2^{(2)} = 0`
-   3,,0.25,,:math:`v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}`,,1,,:math:`v_3^{(2)} = 2 * (v_1^{(1)} * v_1^{(1)} + v_1^{(0)} * v_1^{(2)} )`,,:math:`v_3^{(2)} = 2`
-   4,,0.125,,:math:`v_4^{(1)} = v_3^{(1)} / 2`,,.5,,:math:`v_4^{(2)} = v_3^{(2)} / 2`,,:math:`v_4^{(2)} = 1`
-   5,,1.625,,:math:`v_5^{(1)} = v_2^{(1)} + v_4^{(1)}`,,1.5,,:math:`v_5^{(2)} = v_2^{(2)} + v_4^{(2)}`,,:math:`v_5^{(2)} = 1`
+    **Index**,,**Zero**,,**Operation**,,**First**,,**Derivative**,,**Second**
+    1,,0.5,,:math:`v_1^{(1)} = x^{(1)}`,,1,,:math:`v_1^{(2)} = x^{(2)}`,,:math:`v_1^{(2)} = 0`
+    2,,1.5,,:math:`v_2^{(1)} = v_1^{(1)}`,,1,,:math:`v_2^{(2)} = v_1^{(2)}`,,:math:`v_2^{(2)} = 0`
+    3,,0.25,,:math:`v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}`,,1,,:math:`v_3^{(2)} = 2 * (v_1^{(1)} * v_1^{(1)} + v_1^{(0)} * v_1^{(2)} )`,,:math:`v_3^{(2)} = 2`
+    4,,0.125,,:math:`v_4^{(1)} = v_3^{(1)} / 2`,,.5,,:math:`v_4^{(2)} = v_3^{(2)} / 2`,,:math:`v_4^{(2)} = 1`
+    5,,1.625,,:math:`v_5^{(1)} = v_2^{(1)} + v_4^{(1)}`,,1.5,,:math:`v_5^{(2)} = v_2^{(2)} + v_4^{(2)}`,,:math:`v_5^{(2)} = 1`
 
 Return Value
 ************
 The second derivative of the return value for this case is
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      1
-      & = &
-      v_5^{(2)} =
-      \left[ \Dpow{2}{t} v_5 \right]_{t=0} =
-      \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
-      \\
-      & = &
-      x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
-      \Dpow{2}{x} f ( x^{(0)} )
-   \end{eqnarray}
+    \begin{eqnarray}
+        1
+        & = &
+        v_5^{(2)} =
+        \left[ \Dpow{2}{t} v_5 \right]_{t=0} =
+        \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
+        \\
+        & = &
+        x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
+        \Dpow{2}{x} f ( x^{(0)} )
+    \end{eqnarray}
 
 (We have used the fact that
 :math:`x^{(1)} = 1` and :math:`x^{(2)} = 0`.)
 {xrst_toc_hidden
-   introduction/exp_2_for2.cpp
+    introduction/exp_2_for2.cpp
 }
 Verification
 ************
@@ -708,7 +708,7 @@ Exercises
 ------------------------------------------------------------------------------
 {xrst_begin exp_2_rev2}
 {xrst_spell
-   rcll
+    rcll
 }
 
 exp_2: Second Order Reverse Mode
@@ -730,13 +730,13 @@ Suppose that we use the algorithm :ref:`exp_2.hpp-name` to compute
 
 .. math::
 
-   f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 The corresponding second derivative is
 
 .. math::
 
-   \Dpow{2}{x} f (x) =   1
+    \Dpow{2}{x} f (x) =   1
 
 f_5
 ***
@@ -752,16 +752,16 @@ We begin with the function :math:`f_5` where :math:`v_5^{(1)}`
 is both an argument and the value of the function; i.e.,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   f_5 \left(
-      v_1^{(0)}, v_1^{(1)} , \ldots  , v_5^{(0)} , v_5^{(1)}
-   \right)
-   & = & v_5^{(1)}
-   \\
-   \D{f_5}{v_5^{(1)}} & = & 1
-   \end{eqnarray}
+    \begin{eqnarray}
+    f_5 \left(
+        v_1^{(0)}, v_1^{(1)} , \ldots  , v_5^{(0)} , v_5^{(1)}
+    \right)
+    & = & v_5^{(1)}
+    \\
+    \D{f_5}{v_5^{(1)}} & = & 1
+    \end{eqnarray}
 
 All the other partial derivatives of :math:`f_5` are zero.
 
@@ -772,13 +772,13 @@ For the case in question, this is the operation with index 5.
 The zero and first order sweep representations of this operation are
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      v_5^{(0)} & = & v_2^{(0)} + v_4^{(0)}
-      \\
-      v_5^{(1)} & = & v_2^{(1)} + v_4^{(1)}
-   \end{eqnarray}
+    \begin{eqnarray}
+        v_5^{(0)} & = & v_2^{(0)} + v_4^{(0)}
+        \\
+        v_5^{(1)} & = & v_2^{(1)} + v_4^{(1)}
+    \end{eqnarray}
 
 We define the function
 :math:`f_4 \left( v_1^{(0)} , \ldots , v_4^{(1)} \right)`
@@ -788,27 +788,27 @@ this operation; i.e.
 
 .. math::
 
-   f_4  =
-   f_5 \left[   v_1^{(0)} , \ldots , v_4^{(1)} ,
-      v_5^{(0)} \left( v_2^{(0)} , v_4^{(0)} \right) ,
-      v_5^{(1)} \left( v_2^{(1)} , v_4^{(1)} \right)
-   \right]
+    f_4  =
+    f_5 \left[   v_1^{(0)} , \ldots , v_4^{(1)} ,
+        v_5^{(0)} \left( v_2^{(0)} , v_4^{(0)} \right) ,
+        v_5^{(1)} \left( v_2^{(1)} , v_4^{(1)} \right)
+    \right]
 
 It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_4}{v_2^{(1)}}
-   & = & \D{f_5}{v_2^{(1)}} +
-      \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_2^{(1)}}
-   & = 1
-   \\
-   \D{f_4}{v_4^{(1)}}
-   & = & \D{f_5}{v_4^{(1)}} +
-      \D{f_5}{v_5^{(1)}} * \D{v_5}{v_4^{(1)}}
-   & = 1
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_4}{v_2^{(1)}}
+    & = & \D{f_5}{v_2^{(1)}} +
+        \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_2^{(1)}}
+    & = 1
+    \\
+    \D{f_4}{v_4^{(1)}}
+    & = & \D{f_5}{v_4^{(1)}} +
+        \D{f_5}{v_5^{(1)}} * \D{v_5}{v_4^{(1)}}
+    & = 1
+    \end{array}
 
 All the other partial derivatives of :math:`f_4` are zero.
 
@@ -817,13 +817,13 @@ Index 4: f_3
 The next operation has index 4,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      v_4^{(0)} & = & v_3^{(0)} / 2
-      \\
-      v_4^{(1)} & = & v_3^{(1)} / 2
-   \end{eqnarray}
+    \begin{eqnarray}
+        v_4^{(0)} & = & v_3^{(0)} / 2
+        \\
+        v_4^{(1)} & = & v_3^{(1)} / 2
+    \end{eqnarray}
 
 We define the function
 :math:`f_3 \left(  v_1^{(0)} , \ldots , v_3^{(1)} \right)`
@@ -833,26 +833,26 @@ are eliminated using this operation; i.e.,
 
 .. math::
 
-   f_3 =
-   f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
-      v_4^{(0)} \left( v_3^{(0)} \right) ,
-      v_4^{(1)} \left( v_3^{(1)} \right)
-   \right]
+    f_3 =
+    f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
+        v_4^{(0)} \left( v_3^{(0)} \right) ,
+        v_4^{(1)} \left( v_3^{(1)} \right)
+    \right]
 
 It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_3}{v_2^{(1)}}
-   & = & \D{f_4}{v_2^{(1)}}
-   & = 1
-   \\
-   \D{f_3}{v_3^{(1)}}
-   & = & \D{f_4}{v_3^{(1)}} +
-      \D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}}
-   & = 0.5
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_3}{v_2^{(1)}}
+    & = & \D{f_4}{v_2^{(1)}}
+    & = 1
+    \\
+    \D{f_3}{v_3^{(1)}}
+    & = & \D{f_4}{v_3^{(1)}} +
+        \D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}}
+    & = 0.5
+    \end{array}
 
 All the other partial derivatives of :math:`f_3` are zero.
 
@@ -861,13 +861,13 @@ Index 3: f_2
 The next operation has index 3,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      v_3^{(0)} & = & v_1^{(0)} * v_1^{(0)}
-      \\
-      v_3^{(1)} & = & 2 * v_1^{(0)} * v_1^{(1)}
-   \end{eqnarray}
+    \begin{eqnarray}
+        v_3^{(0)} & = & v_1^{(0)} * v_1^{(0)}
+        \\
+        v_3^{(1)} & = & 2 * v_1^{(0)} * v_1^{(1)}
+    \end{eqnarray}
 
 We define the function
 :math:`f_2 \left(  v_1^{(0)} , \ldots , v_2^{(1)} \right)`
@@ -877,11 +877,11 @@ eliminated using this operation; i.e.,
 
 .. math::
 
-   f_2 =
-   f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
-      v_3^{(0)} ( v_1^{(0)} ) ,
-      v_3^{(1)} ( v_1^{(0)} , v_1^{(1)} )
-   \right]
+    f_2 =
+    f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
+        v_3^{(0)} ( v_1^{(0)} ) ,
+        v_3^{(1)} ( v_1^{(0)} , v_1^{(1)} )
+    \right]
 
 Note that, from the
 :ref:`first order forward sweep<exp_2_for1@Operation Sequence@Sweep>` ,
@@ -891,41 +891,41 @@ It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_2}{v_1^{(0)}}
-   & = &
-   \D{f_3}{v_1^{(0)}} +
-      \D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_1^{(0)}}  +
-      \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(0)}}
-   & = 1
-   \\
-   \D{f_2}{v_1^{(1)}}
-   & = &
-   \D{f_3}{v_1^{(1)}} +
-      \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(1)}}
-   & = 0.5
-   \\
-   \D{f_2}{v_2^{(0)}}
-   & = & \D{f_3}{v_2^{(0)}}
-   & = 0
-   \\
-   \D{f_2}{v_2^{(1)}}
-   & = & \D{f_3}{v_2^{(1)}}
-   & = 1
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_2}{v_1^{(0)}}
+    & = &
+    \D{f_3}{v_1^{(0)}} +
+        \D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_1^{(0)}}  +
+        \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(0)}}
+    & = 1
+    \\
+    \D{f_2}{v_1^{(1)}}
+    & = &
+    \D{f_3}{v_1^{(1)}} +
+        \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(1)}}
+    & = 0.5
+    \\
+    \D{f_2}{v_2^{(0)}}
+    & = & \D{f_3}{v_2^{(0)}}
+    & = 0
+    \\
+    \D{f_2}{v_2^{(1)}}
+    & = & \D{f_3}{v_2^{(1)}}
+    & = 1
+    \end{array}
 
 Index 2: f_1
 ************
 The next operation has index 2,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      v_2^{(0)} & = & 1 + v_1^{(0)}
-      \\
-      v_2^{(1)} & = & v_1^{(1)}
-   \end{eqnarray}
+    \begin{eqnarray}
+        v_2^{(0)} & = & 1 + v_1^{(0)}
+        \\
+        v_2^{(1)} & = & v_1^{(1)}
+    \end{eqnarray}
 
 We define the function
 :math:`f_1 ( v_1^{(0)} , v_1^{(1)} )`
@@ -935,27 +935,27 @@ are eliminated using this operation; i.e.,
 
 .. math::
 
-   f_1 =
-   f_2 \left[ v_1^{(0)} , v_1^{(1)} ,
-      v_2^{(0)} ( v_1^{(0)} )  ,
-      v_2^{(1)} ( v_1^{(1)} )
-   \right]
+    f_1 =
+    f_2 \left[ v_1^{(0)} , v_1^{(1)} ,
+        v_2^{(0)} ( v_1^{(0)} )  ,
+        v_2^{(1)} ( v_1^{(1)} )
+    \right]
 
 It follows that
 
 .. math::
 
-   \begin{array}{rcll}
-   \D{f_1}{v_1^{(0)}}
-   & = & \D{f_2}{v_1^{(0)}} +
-      \D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}}
-   & = 1
-   \\
-   \D{f_1}{v_1^{(1)}}
-   & = & \D{f_2}{v_1^{(1)}} +
-      \D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}}
-   & = 1.5
-   \end{array}
+    \begin{array}{rcll}
+    \D{f_1}{v_1^{(0)}}
+    & = & \D{f_2}{v_1^{(0)}} +
+        \D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}}
+    & = 1
+    \\
+    \D{f_1}{v_1^{(1)}}
+    & = & \D{f_2}{v_1^{(1)}} +
+        \D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}}
+    & = 1.5
+    \end{array}
 
 Note that :math:`v_1` is equal to :math:`x`,
 so the second derivative of
@@ -964,20 +964,20 @@ is given by
 
 .. math::
 
-   \Dpow{2}{x} v_5^{(0)}
-   =
-   \D{ v_5^{(1)} }{x}
-   =
-   \D{ v_5^{(1)} }{v_1^{(0)}}
-   =
-   \D{f_1}{v_1^{(0)}} = 1
+    \Dpow{2}{x} v_5^{(0)}
+    =
+    \D{ v_5^{(1)} }{x}
+    =
+    \D{ v_5^{(1)} }{v_1^{(0)}}
+    =
+    \D{f_1}{v_1^{(0)}} = 1
 
 There is a theorem about Algorithmic Differentiation that explains why
 the other partial of :math:`f_1` is equal to the
 first derivative of
 the function defined by :ref:`exp_2.hpp-name` at :math:`x = .5`.
 {xrst_toc_hidden
-   introduction/exp_2_rev2.cpp
+    introduction/exp_2_rev2.cpp
 }
 Verification
 ************

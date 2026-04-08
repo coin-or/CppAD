@@ -8,10 +8,10 @@
 /*
 {xrst_begin LuSolve}
 {xrst_spell
-   geq
-   leq
-   logdet
-   signdet
+    geq
+    leq
+    logdet
+    signdet
 }
 
 Compute Determinant and Solve Linear Equations
@@ -30,7 +30,7 @@ and solve for *X* in the linear of equation
 
 .. math::
 
-   A * X = B
+    A * X = B
 
 where *A* is an
 *n* by *n* matrix,
@@ -68,7 +68,7 @@ the size of :math:`Y` must be equal to :math:`p * q` and for
 
 .. math::
 
-   Y_{i,j} = Y[ i * q + j ]
+    Y_{i,j} = Y[ i * q + j ]
 
 signdet
 *******
@@ -100,7 +100,7 @@ A
 *
 The argument *A* has the prototype
 
-   ``const`` *FloatVector* & *A*
+    ``const`` *FloatVector* & *A*
 
 and the size of *A* must equal :math:`n * n`
 (see description of :ref:`LuSolve@FloatVector` below).
@@ -112,7 +112,7 @@ B
 *
 The argument *B* has the prototype
 
-   ``const`` *FloatVector* & *B*
+    ``const`` *FloatVector* & *B*
 
 and the size of *B* must equal :math:`n * m`
 (see description of :ref:`LuSolve@FloatVector` below).
@@ -124,7 +124,7 @@ X
 *
 The argument *X* has the prototype
 
-   *FloatVector* & *X*
+    *FloatVector* & *X*
 
 and the size of *X* must equal :math:`n * m`
 (see description of :ref:`LuSolve@FloatVector` below).
@@ -138,7 +138,7 @@ logdet
 ******
 The argument *logdet* has prototype
 
-   *Float* & *logdet*
+    *Float* & *logdet*
 
 On input, the value of *logdet* does not matter.
 On output, it has been set to the
@@ -147,7 +147,7 @@ log of the determinant of *A*
 To be more specific,
 the determinant of *A* is given by the formula
 
-   *det* = *signdet* * ``exp`` ( *logdet*  )
+    *det* = *signdet* * ``exp`` ( *logdet*  )
 
 This enables ``LuSolve`` to use logs of absolute values
 in the case where *Float* corresponds to a real number.
@@ -162,12 +162,12 @@ In addition, the following operations must be defined for any pair
 of *Float* objects *x* and *y* :
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Operation**
-     - **Description**
-   * - ``log`` ( *x* )
-     - returns the logarithm of *x* as a *Float* object
+    * - **Operation**
+      - **Description**
+    * - ``log`` ( *x* )
+      - returns the logarithm of *x* as a *Float* object
 
 FloatVector
 ***********
@@ -216,8 +216,8 @@ If the type *Float* does not support the ``<=`` operation
 and it is not ``std::complex<float>`` or ``std::complex<double>`` ,
 see the documentation for ``AbsGeq`` in :ref:`LuFactor<LuFactor@AbsGeq>` .
 {xrst_toc_hidden
-   example/utility/lu_solve.cpp
-   xrst/lu_solve_hpp.xrst
+    example/utility/lu_solve.cpp
+    xrst/lu_solve_hpp.xrst
 }
 Example
 *******
@@ -251,91 +251,91 @@ namespace CppAD { // BEGIN CppAD namespace
 // LeqZero
 template <class Float>
 bool LeqZero(const Float &x)
-{  return x <= Float(0); }
+{   return x <= Float(0); }
 inline bool LeqZero( const std::complex<double> &x )
-{  return x == std::complex<double>(0); }
+{   return x == std::complex<double>(0); }
 inline bool LeqZero( const std::complex<float> &x )
-{  return x == std::complex<float>(0); }
+{   return x == std::complex<float>(0); }
 
 // LuSolve
 template <class Float, class FloatVector>
 int LuSolve(
-   size_t             n      ,
-   size_t             m      ,
-   const FloatVector &A      ,
-   const FloatVector &B      ,
-   FloatVector       &X      ,
-   Float        &logdet      )
+    size_t             n      ,
+    size_t             m      ,
+    const FloatVector &A      ,
+    const FloatVector &B      ,
+    FloatVector       &X      ,
+    Float        &logdet      )
 {
-   // check numeric type specifications
-   CheckNumericType<Float>();
+    // check numeric type specifications
+    CheckNumericType<Float>();
 
-   // check simple vector class specifications
-   CheckSimpleVector<Float, FloatVector>();
+    // check simple vector class specifications
+    CheckSimpleVector<Float, FloatVector>();
 
-   size_t        p;       // index of pivot element (diagonal of L)
-   int     signdet;       // sign of the determinant
-   Float     pivot;       // pivot element
+    size_t        p;       // index of pivot element (diagonal of L)
+    int     signdet;       // sign of the determinant
+    Float     pivot;       // pivot element
 
-   // the value zero
-   const Float zero(0);
+    // the value zero
+    const Float zero(0);
 
-   // pivot row and column order in the matrix
-   std::vector<size_t> ip(n);
-   std::vector<size_t> jp(n);
+    // pivot row and column order in the matrix
+    std::vector<size_t> ip(n);
+    std::vector<size_t> jp(n);
 
-   // -------------------------------------------------------
-   CPPAD_ASSERT_KNOWN(
-      size_t(A.size()) == n * n,
-      "Error in LuSolve: A must have size equal to n * n"
-   );
-   CPPAD_ASSERT_KNOWN(
-      size_t(B.size()) == n * m,
-      "Error in LuSolve: B must have size equal to n * m"
-   );
-   CPPAD_ASSERT_KNOWN(
-      size_t(X.size()) == n * m,
-      "Error in LuSolve: X must have size equal to n * m"
-   );
-   // -------------------------------------------------------
+    // -------------------------------------------------------
+    CPPAD_ASSERT_KNOWN(
+        size_t(A.size()) == n * n,
+        "Error in LuSolve: A must have size equal to n * n"
+    );
+    CPPAD_ASSERT_KNOWN(
+        size_t(B.size()) == n * m,
+        "Error in LuSolve: B must have size equal to n * m"
+    );
+    CPPAD_ASSERT_KNOWN(
+        size_t(X.size()) == n * m,
+        "Error in LuSolve: X must have size equal to n * m"
+    );
+    // -------------------------------------------------------
 
-   // copy A so that it does not change
-   FloatVector Lu(A);
+    // copy A so that it does not change
+    FloatVector Lu(A);
 
-   // copy B so that it does not change
-   X = B;
+    // copy B so that it does not change
+    X = B;
 
-   // Lu factor the matrix A
-   signdet = LuFactor(ip, jp, Lu);
+    // Lu factor the matrix A
+    signdet = LuFactor(ip, jp, Lu);
 
-   // compute the log of the determinant
-   logdet  = Float(0);
-   for(p = 0; p < n; p++)
-   {  // pivot using the max absolute element
-      pivot   = Lu[ ip[p] * n + jp[p] ];
+    // compute the log of the determinant
+    logdet  = Float(0);
+    for(p = 0; p < n; p++)
+    {   // pivot using the max absolute element
+        pivot   = Lu[ ip[p] * n + jp[p] ];
 
-      // check for determinant equal to zero
-      if( pivot == zero )
-      {  // abort the mission
-         logdet = Float(0);
-         return   0;
-      }
+        // check for determinant equal to zero
+        if( pivot == zero )
+        {   // abort the mission
+            logdet = Float(0);
+            return   0;
+        }
 
-      // update the determinant
-      if( LeqZero ( pivot ) )
-      {  logdet += log( - pivot );
-         signdet = - signdet;
-      }
-      else
-         logdet += log( pivot );
+        // update the determinant
+        if( LeqZero ( pivot ) )
+        {   logdet += log( - pivot );
+            signdet = - signdet;
+        }
+        else
+            logdet += log( pivot );
 
-   }
+    }
 
-   // solve the linear equations
-   LuInvert(ip, jp, Lu, X);
+    // solve the linear equations
+    LuInvert(ip, jp, Lu, X);
 
-   // return the sign factor for the determinant
-   return signdet;
+    // return the sign factor for the determinant
+    return signdet;
 }
 } // END CppAD namespace
 // END C++

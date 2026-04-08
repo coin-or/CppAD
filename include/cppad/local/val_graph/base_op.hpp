@@ -16,8 +16,8 @@ The Value Operator Base Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_BASE_OP_T
-   // END_BASE_OP_T
+    // BEGIN_BASE_OP_T
+    // END_BASE_OP_T
 }
 
 Purpose
@@ -47,8 +47,8 @@ op_enum
 This member function returns the enum value corresponding to this operator;
 see :ref:`val_graph_type@op_enum_t` .
 {xrst_literal
-   // BEGIN_OP_ENUM
-   // END_OP_ENUM
+    // BEGIN_OP_ENUM
+    // END_OP_ENUM
 }
 
 n_before
@@ -56,8 +56,8 @@ n_before
 This member function returns the number of auxiliary arguments
 that come before the arguments that are value vector indices.
 {xrst_literal
-   // BEGIN_N_BEFORE
-   // END_N_BEFORE
+    // BEGIN_N_BEFORE
+    // END_N_BEFORE
 }
 
 n_after
@@ -66,8 +66,8 @@ This member function returns the number of auxiliary arguments
 that come after the arguments that are value vector indices.
 This can only be zero or one.
 {xrst_literal
-   // BEGIN_N_AFTER
-   // END_N_AFTER
+    // BEGIN_N_AFTER
+    // END_N_AFTER
 }
 
 
@@ -75,8 +75,8 @@ n_arg
 *****
 This member function returns the number of arguments for this operator.
 {xrst_literal
-   // BEGIN_N_ARG
-   // END_N_ARG
+    // BEGIN_N_ARG
+    // END_N_ARG
 }
 
 Fixed
@@ -96,8 +96,8 @@ n_res
 *****
 This member function returns the number of results for this operator.
 {xrst_literal
-   // BEGIN_N_RES
-   // END_N_RES
+    // BEGIN_N_RES
+    // END_N_RES
 }
 
 eval
@@ -107,8 +107,8 @@ are inputs to this member function.
 The *n_res* values starting at *res_index* in *val_vec* are
 computed by this function.
 {xrst_literal
-   // BEGIN_EVAL
-   // END_EVAL
+    // BEGIN_EVAL
+    // END_EVAL
 }
 
 tape
@@ -180,8 +180,8 @@ is_unary
 is true (false) if this is (is not) a unary operator;
 see :ref:`val_unary_op-name`.
 {xrst_literal
-   // BEGIN_IS_UNARY
-   // END_IS_UNARY
+    // BEGIN_IS_UNARY
+    // END_IS_UNARY
 }
 
 is_binary
@@ -189,8 +189,8 @@ is_binary
 is true (false) if this is (is not) a binary operator;
 see :ref:`val_binary_op-name`.
 {xrst_literal
-   // BEGIN_IS_BINARY
-   // END_IS_BINARY
+    // BEGIN_IS_BINARY
+    // END_IS_BINARY
 }
 
 
@@ -198,16 +198,16 @@ Operator Classes
 ****************
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
-   include/cppad/local/val_graph/binary_op.hpp
-   include/cppad/local/val_graph/call_op.hpp
-   include/cppad/local/val_graph/cexp_op.hpp
-   include/cppad/local/val_graph/comp_op.hpp
-   include/cppad/local/val_graph/con_op.hpp
-   include/cppad/local/val_graph/csum_op.hpp
-   include/cppad/local/val_graph/dis_op.hpp
-   include/cppad/local/val_graph/pri_op.hpp
-   include/cppad/local/val_graph/unary_op.hpp
-   include/cppad/local/val_graph/vector_op.hpp
+    include/cppad/local/val_graph/binary_op.hpp
+    include/cppad/local/val_graph/call_op.hpp
+    include/cppad/local/val_graph/cexp_op.hpp
+    include/cppad/local/val_graph/comp_op.hpp
+    include/cppad/local/val_graph/con_op.hpp
+    include/cppad/local/val_graph/csum_op.hpp
+    include/cppad/local/val_graph/dis_op.hpp
+    include/cppad/local/val_graph/pri_op.hpp
+    include/cppad/local/val_graph/unary_op.hpp
+    include/cppad/local/val_graph/vector_op.hpp
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
@@ -221,50 +221,50 @@ template<class Value> class tape_t;
 template <class Value> class base_op_t {
 public:
 // END_BASE_OP_T
-   // BEGIN_OP_ENUM
-   virtual op_enum_t op_enum(void)  const = 0;
-   // END_OP_ENUM
-   //
-   // BEGIN_N_BEFORE
-   virtual addr_t    n_before(void) const = 0;
-   // END_N_BEFORE
-   //
-   // BEGIN_N_AFTER
-   virtual addr_t    n_after(void)  const = 0;
-   // END_N_AFTER
-   //
-   // BEGIN_N_ARG
-   virtual addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const = 0;
-   // END_N_ARG
-   //
-   // BEGIN_N_RES
-   virtual addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const = 0;
-   // END_N_RES
-   //
-   // BEGIN_EVAL
-   virtual void eval(
-      const tape_t<Value>*       tape          ,
-      bool                       trace         ,
-      addr_t                     arg_index     ,
-      addr_t                     res_index     ,
-      Vector<Value>&             val_vec       ,
-      Vector< Vector<addr_t> >&  ind_vec_vec   ,
-      size_t&                    compare_false ) const = 0;
-   // END_EVAL
-   //
-   // BEGIN_IS_UNARY
-   virtual bool is_unary(void) const
-   // END_IS_UNARY
-   {  return false; }
-   //
-   // BEGIN_IS_BINARY
-   virtual bool is_binary(void) const
-   // END_IS_BINARY
-   {  return false; }
+    // BEGIN_OP_ENUM
+    virtual op_enum_t op_enum(void)  const = 0;
+    // END_OP_ENUM
+    //
+    // BEGIN_N_BEFORE
+    virtual addr_t    n_before(void) const = 0;
+    // END_N_BEFORE
+    //
+    // BEGIN_N_AFTER
+    virtual addr_t    n_after(void)  const = 0;
+    // END_N_AFTER
+    //
+    // BEGIN_N_ARG
+    virtual addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const = 0;
+    // END_N_ARG
+    //
+    // BEGIN_N_RES
+    virtual addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const = 0;
+    // END_N_RES
+    //
+    // BEGIN_EVAL
+    virtual void eval(
+        const tape_t<Value>*       tape          ,
+        bool                       trace         ,
+        addr_t                     arg_index     ,
+        addr_t                     res_index     ,
+        Vector<Value>&             val_vec       ,
+        Vector< Vector<addr_t> >&  ind_vec_vec   ,
+        size_t&                    compare_false ) const = 0;
+    // END_EVAL
+    //
+    // BEGIN_IS_UNARY
+    virtual bool is_unary(void) const
+    // END_IS_UNARY
+    {   return false; }
+    //
+    // BEGIN_IS_BINARY
+    virtual bool is_binary(void) const
+    // END_IS_BINARY
+    {   return false; }
 };
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

@@ -16,8 +16,8 @@ This only covers that valvector
 Source Code
 ***********
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end valvector_base_require.cpp}
@@ -28,44 +28,44 @@ Source Code
 //
 // base_require
 bool base_require(void)
-{  // ok
-   bool ok = true;
-   //
-   // x, y
-   valvector x, y;
-   //
-   // ok
-   x = valvector(2.5);
-   int integer_x = CppAD::Integer(x);
-   ok &= integer_x == 2;
-   //
-   // ok
-   valvector nan = CppAD::numeric_limits<valvector>::quiet_NaN();
-   ok &= CppAD::isnan( nan );
-   //
-   // ok
-   x = valvector( {1, 2} );
-   std::string string_x = CppAD::to_string( x );
-   std::string s;
-   for(auto itr = string_x.begin(); itr != string_x.end(); ++itr)
-      if( *itr != ' ')
-         s.push_back( *itr );
-   ok &= s == "{1,2}";
-   //
-   // ok
-   x   = valvector( {1, 2} );
-   y   = valvector( {1.0, 2.0} );
-   ok &= CppAD::EqualOpSeq(x, y);
-   //
-   // ok
-   ok &= CppAD::IdenticalCon(x);
-   ok &= ! CppAD::IdenticalZero(x);
-   ok &= ! CppAD::IdenticalOne(x);
-   ok &= CppAD::IdenticalEqualCon(x, y);
-   //
-   x   = valvector( {0.0, 0.0} );
-   ok &= CppAD::IdenticalZero(x);
-   //
-   return ok;
+{   // ok
+    bool ok = true;
+    //
+    // x, y
+    valvector x, y;
+    //
+    // ok
+    x = valvector(2.5);
+    int integer_x = CppAD::Integer(x);
+    ok &= integer_x == 2;
+    //
+    // ok
+    valvector nan = CppAD::numeric_limits<valvector>::quiet_NaN();
+    ok &= CppAD::isnan( nan );
+    //
+    // ok
+    x = valvector( {1, 2} );
+    std::string string_x = CppAD::to_string( x );
+    std::string s;
+    for(auto itr = string_x.begin(); itr != string_x.end(); ++itr)
+        if( *itr != ' ')
+            s.push_back( *itr );
+    ok &= s == "{1,2}";
+    //
+    // ok
+    x   = valvector( {1, 2} );
+    y   = valvector( {1.0, 2.0} );
+    ok &= CppAD::EqualOpSeq(x, y);
+    //
+    // ok
+    ok &= CppAD::IdenticalCon(x);
+    ok &= ! CppAD::IdenticalZero(x);
+    ok &= ! CppAD::IdenticalOne(x);
+    ok &= CppAD::IdenticalEqualCon(x, y);
+    //
+    x   = valvector( {0.0, 0.0} );
+    ok &= CppAD::IdenticalZero(x);
+    //
+    return ok;
 }
 // END C++

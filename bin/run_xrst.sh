@@ -23,8 +23,8 @@ set -e -u
 # ----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 #
 # grep, sed
@@ -35,13 +35,13 @@ source bin/dev_settings.sh
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/run_xrst.sh' ]
 then
-   echo 'bin/run_xrst.sh must be run from its parent directory.'
-   exit 1
+    echo 'bin/run_xrst.sh must be run from its parent directory.'
+    exit 1
 fi
 if [ $# == 1 ]
 then
-   if [ "$1" == --help ]
-   then
+    if [ "$1" == --help ]
+    then
 cat << EOF
 bin/run_xrst.sh flags
 possible flags
@@ -53,8 +53,8 @@ possible flags
 --replace_spell_commands   replace xrst_spell commands assuming no errors
 --external_links           check documentation external links
 EOF
-      exit 0
-   fi
+        exit 0
+    fi
 fi
 #
 # exclude_dev, extra_flags
@@ -63,73 +63,73 @@ exclude_dev='no'
 extra_flags=''
 while [ $# != 0 ]
 do
-   case "$1" in
+    case "$1" in
 
-      --target_tex)
-      target_tex='yes'
-      ;;
+        --target_tex)
+        target_tex='yes'
+        ;;
 
-      --exclude_dev)
-      exclude_dev='yes'
-      ;;
+        --exclude_dev)
+        exclude_dev='yes'
+        ;;
 
-      --suppress_spell_warnings)
-      extra_flags+=" $1"
-      ;;
+        --suppress_spell_warnings)
+        extra_flags+=" $1"
+        ;;
 
-      --external_links)
-      extra_flags+=" $1 --link_timeout 5"
-      ;;
+        --external_links)
+        extra_flags+=" $1 --link_timeout 5"
+        ;;
 
-      *)
-      echo "bin/run_xrst.sh: command line argument "$1" is not valid"
-      exit 1
-      ;;
+        *)
+        echo "bin/run_xrst.sh: command line argument "$1" is not valid"
+        exit 1
+        ;;
 
-   esac
-   #
-   shift
+    esac
+    #
+    shift
 done
 #
 # extra_flags
 if [ "$target_tex" == 'yes' ]
 then
-   extra_flags+=' --target tex'
+    extra_flags+=' --target tex'
 else
-   extra_flags+=' --target html'
+    extra_flags+=' --target html'
 fi
 #
 # build/html
 if [ -e build/html ]
 then
-   rm -r build/html
+    rm -r build/html
 fi
 #
 # group_list
 group_list=$(bin/group_list.sh | $sed -e 's|^| |' -e 's|$| |' )
 if [ "$exclude_dev" == 'yes' ]
 then
-   group_list=$( echo "$group_list" | $sed -e 's| dev | |' )
+    group_list=$( echo "$group_list" | $sed -e 's| dev | |' )
 fi
 group_list=$( echo $group_list | $sed -e 's|^ *||' -e s'| *$||' )
 #
 # n_job
 if which nproc >& /dev/null
 then
-   n_job=$(nproc)
+    n_job=$(nproc)
 else
-   n_job=$(sysctl -n hw.ncpu)
+    n_job=$(sysctl -n hw.ncpu)
 fi
 #
 # xrst
 # python3 -m will search the current working directory first
 echo_eval python3 -m xrst \
-   --local_toc \
-   --html_theme sphinx_rtd_theme \
-   --index_page_name $index_page_name \
-   --group_list $group_list \
-   --number_jobs $n_job \
-   $extra_flags
+    --local_toc \
+    --html_theme sphinx_rtd_theme \
+    --index_page_name $index_page_name \
+    --group_list $group_list \
+    --number_jobs $n_job \
+    $extra_flags
 # -----------------------------------------------------------------------------
 echo 'run_xrst.sh: OK'
 exit 0

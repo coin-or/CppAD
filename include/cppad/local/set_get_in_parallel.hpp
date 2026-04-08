@@ -10,7 +10,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 {xrst_begin set_get_in_parallel dev}
 {xrst_spell
-   nullptr
+    nullptr
 }
 
 Set in_parallel Routine or Get In Parallel Mode
@@ -20,8 +20,8 @@ Set and call the routine that determine if we are in parallel execution mode.
 Prototype
 *********
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 
 set
@@ -50,25 +50,25 @@ flag
 // BEGIN PROTOTYPE
 // flag = CppAD::local::set_get_inparallel( .. )
 inline bool set_get_in_parallel(
-   bool set                      = false   ,
-   bool (*in_parallel_new)(void) = nullptr )
+    bool set                      = false   ,
+    bool (*in_parallel_new)(void) = nullptr )
 // END PROTOTYPE
-{  typedef bool (*function_ptr)(void);
-   static function_ptr in_parallel_user = nullptr;
+{   typedef bool (*function_ptr)(void);
+    static function_ptr in_parallel_user = nullptr;
 
-   if( set )
-   {  in_parallel_user = in_parallel_new;
-      // Doing a raw assert in this case because set_get_in_parallel is used
-      // by ErrorHandler and hence cannot use ErrorHandler.
-      // CPPAD_ASSERT_UNKNOWN( in_parallel_user() == false )
-      assert(in_parallel_user == nullptr || in_parallel_user() == false);
-      return false;
-   }
-   //
-   if( in_parallel_user == nullptr )
-      return false;
-   //
-   return in_parallel_user();
+    if( set )
+    {   in_parallel_user = in_parallel_new;
+        // Doing a raw assert in this case because set_get_in_parallel is used
+        // by ErrorHandler and hence cannot use ErrorHandler.
+        // CPPAD_ASSERT_UNKNOWN( in_parallel_user() == false )
+        assert(in_parallel_user == nullptr || in_parallel_user() == false);
+        return false;
+    }
+    //
+    if( in_parallel_user == nullptr )
+        return false;
+    //
+    return in_parallel_user();
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

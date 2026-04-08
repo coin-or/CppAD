@@ -22,12 +22,12 @@ Determines an angle :math:`\theta \in [ - \pi , + \pi ]`
 such that
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      \sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
-      \cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
-   \end{eqnarray}
+    \begin{eqnarray}
+        \sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
+        \cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
+    \end{eqnarray}
 
 y
 *
@@ -47,7 +47,7 @@ theta
 *****
 The result *theta* has prototype
 
-   ``AD`` < *Base* > *theta*
+    ``AD`` < *Base* > *theta*
 
 Operation Sequence
 ******************
@@ -59,7 +59,7 @@ of *x* and *y* .
 Example
 *******
 {xrst_toc_hidden
-   example/general/atan2.cpp
+    example/general/atan2.cpp
 }
 The file
 :ref:`atan2.cpp-name`
@@ -72,70 +72,70 @@ contains an example and test of this function.
 namespace CppAD { // BEGIN CppAD namespace
 
 inline float atan2(float x, float y)
-{  return std::atan2(x, y); }
+{   return std::atan2(x, y); }
 
 inline double atan2(double x, double y)
-{  return std::atan2(x, y); }
+{   return std::atan2(x, y); }
 
 // The code below is used as an example by the CondExp documentation.
 // BEGIN CondExp
 template <class Base>
 AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
-{  //
-   // zero, pi2, pi
-   AD<Base> zero(0.);
-   AD<Base> pi2(2. * atan(1.));
-   AD<Base> pi(2. * pi2);
-   //
-   // abs_x, abs_y
-   // Not using fabs because its derivative is zero at zero
-   AD<Base> abs_x = CondExpGe(x, zero, x, -x);
-   AD<Base> abs_y = CondExpGe(y, zero, y, -y);
-   //
-   // first
-   // This is the result for first quadrant: x >= 0 , y >= 0
-   AD<Base> alpha = atan(abs_y / abs_x);
-   AD<Base> beta  = pi2 - atan(abs_x / abs_y);
-   AD<Base> first = CondExpGt(abs_x, abs_y, alpha, beta);
-   //
-   // second
-   // This is the result for second quadrant: x <= 0 , y >= 0
-   AD<Base> second = pi - first;
-   //
-   // third
-   // This is the result for third quadrant: x <= 0 , y <= 0
-   AD<Base> third = - pi + first;
-   //
-   // fourth
-   // This is the result for fourth quadrant: x >= 0 , y <= 0
-   AD<Base> fourth = - first;
-   //
-   // alpha
-   // This is the result for x >= 0
-   alpha = CondExpGe(y, zero, first, fourth);
-   //
-   // beta
-   // This is the result for x <= 0
-   beta = CondExpGe(y, zero, second, third);
-   //
-   //
-   AD<Base> result = CondExpGe(x, zero, alpha, beta);
-   return result;
+{   //
+    // zero, pi2, pi
+    AD<Base> zero(0.);
+    AD<Base> pi2(2. * atan(1.));
+    AD<Base> pi(2. * pi2);
+    //
+    // abs_x, abs_y
+    // Not using fabs because its derivative is zero at zero
+    AD<Base> abs_x = CondExpGe(x, zero, x, -x);
+    AD<Base> abs_y = CondExpGe(y, zero, y, -y);
+    //
+    // first
+    // This is the result for first quadrant: x >= 0 , y >= 0
+    AD<Base> alpha = atan(abs_y / abs_x);
+    AD<Base> beta  = pi2 - atan(abs_x / abs_y);
+    AD<Base> first = CondExpGt(abs_x, abs_y, alpha, beta);
+    //
+    // second
+    // This is the result for second quadrant: x <= 0 , y >= 0
+    AD<Base> second = pi - first;
+    //
+    // third
+    // This is the result for third quadrant: x <= 0 , y <= 0
+    AD<Base> third = - pi + first;
+    //
+    // fourth
+    // This is the result for fourth quadrant: x >= 0 , y <= 0
+    AD<Base> fourth = - first;
+    //
+    // alpha
+    // This is the result for x >= 0
+    alpha = CondExpGe(y, zero, first, fourth);
+    //
+    // beta
+    // This is the result for x <= 0
+    beta = CondExpGe(y, zero, second, third);
+    //
+    //
+    AD<Base> result = CondExpGe(x, zero, alpha, beta);
+    return result;
 }
 // END CondExp
 
 template <class Base>
 AD<Base> atan2 (const VecAD_reference<Base> &y, const AD<Base> &x)
-{  return atan2( y.ADBase() , x ); }
+{   return atan2( y.ADBase() , x ); }
 
 template <class Base>
 AD<Base> atan2 (const AD<Base> &y, const VecAD_reference<Base> &x)
-{  return atan2( y , x.ADBase() ); }
+{   return atan2( y , x.ADBase() ); }
 
 template <class Base>
 AD<Base> atan2
 (const VecAD_reference<Base> &y, const VecAD_reference<Base> &x)
-{  return atan2( y.ADBase() , x.ADBase() ); }
+{   return atan2( y.ADBase() , x.ADBase() ); }
 
 } // END CppAD namespace
 

@@ -24,13 +24,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp
-   det_lu.cpp
-   det_minor.cpp
-   mat_mul.cpp
-   ode.cpp
-   poly.cpp
-   sparse_hessian.cpp
-   sparse_jacobian.cpp
+    det_lu.cpp
+    det_minor.cpp
+    mat_mul.cpp
+    ode.cpp
+    poly.cpp
+    sparse_hessian.cpp
+    sparse_jacobian.cpp
 )
 set_compile_flags( speed_sacado "${cppad_debug_which}" "${source_list}" )
 #
@@ -38,14 +38,14 @@ ADD_EXECUTABLE( speed_sacado EXCLUDE_FROM_ALL ${source_list} )
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_sacado
-   ${cppad_lib}
-   ${colpack_libs}
+    ${cppad_lib}
+    ${colpack_libs}
 )
 # determine libraries necessary to link Sacado
 FOREACH(dir ${cmake_install_libdirs})
-   IF( IS_DIRECTORY ${sacado_prefix}/${dir}/cmake/Trilinos )
-      SET(Trilinos_DIR "${sacado_prefix}/${dir}/cmake/Trilinos" )
-   ENDIF( IS_DIRECTORY ${sacado_prefix}/${dir}/cmake/Trilinos )
+    IF( IS_DIRECTORY ${sacado_prefix}/${dir}/cmake/Trilinos )
+        SET(Trilinos_DIR "${sacado_prefix}/${dir}/cmake/Trilinos" )
+    ENDIF( IS_DIRECTORY ${sacado_prefix}/${dir}/cmake/Trilinos )
 ENDFOREACH( dir )
 FIND_PACKAGE(Trilinos CONFIG)
 print_variable(Sacado_LIBRARIES)
@@ -53,9 +53,9 @@ print_variable(Sacado_LIBRARIES)
 # include the dl library if it is in the system path
 CHECK_LIBRARY_EXISTS( dl dlopen "${CMAKE_SYSTEM_LIBRARY_PATH}" dl_found )
 IF( dl_found )
-   TARGET_LINK_LIBRARIES( speed_sacado speed_src ${Sacado_LIBRARIES} dl )
+    TARGET_LINK_LIBRARIES( speed_sacado speed_src ${Sacado_LIBRARIES} dl )
 ELSE( dl_found )
-   TARGET_LINK_LIBRARIES( speed_sacado speed_src ${Sacado_LIBRARIES} )
+    TARGET_LINK_LIBRARIES( speed_sacado speed_src ${Sacado_LIBRARIES} )
 ENDIF( dl_found )
 #
 # the check_speed_sacado

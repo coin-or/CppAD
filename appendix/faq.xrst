@@ -5,7 +5,7 @@
 
 {xrst_begin Faq app}
 {xrst_spell
-   github
+    github
 }
 
 Frequently Asked Questions and Answers
@@ -71,7 +71,7 @@ with respect to its real and imaginary parts,
 but it is not complex differentiable.
 Thus one would prefer to use
 
-   ``std::complex< AD<`` *Base* > >
+    ``std::complex< AD<`` *Base* > >
 
 On the other hand, the C++ standard only specifies
 ``std::complex<`` *Type* > where *Type* is

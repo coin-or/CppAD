@@ -14,7 +14,7 @@ namespace CppAD { namespace local { namespace val_graph {
 /*
 {xrst_begin val_graph_type dev}
 {xrst_spell
-   typedef
+    typedef
 }
 
 Value Operator Type Definitions
@@ -50,44 +50,44 @@ This enum type is used to identify the concrete operator class types.
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_3}
 {xrst_code hpp}*/
 enum op_enum_t {
-   abs_op_enum,      // absolute value
-   acos_op_enum,     // inverse cosine
-   acosh_op_enum,    // inverse hyperbolic cosine
-   add_op_enum,      // addition
-   asin_op_enum,     // inverse sine
-   asinh_op_enum,    // inverse hyperbolic sine
-   atan_op_enum,     // inverse tangent
-   atanh_op_enum,    // inverse hyperbolic tangent
-   call_op_enum,     // atomic functions
-   cexp_op_enum,     // conditional expression
-   comp_op_enum,     // comparison
-   con_op_enum,      // constants
-   cos_op_enum,      // cosine
-   cosh_op_enum,     // hyperbolic cosine
-   csum_op_enum,     // cumulative summation
-   dis_op_enum,      // discrete functions
-   div_op_enum,      // division
-   erf_op_enum,      // error function
-   erfc_op_enum,     // complementary error function
-   exp_op_enum,      // exponential function
-   expm1_op_enum,    // exponential function minus one
-   load_op_enum,     // load an element from a dynamic vector
-   log1p_op_enum,    // one plust natural log
-   log_op_enum,      // natural log function
-   mul_op_enum,      // multiplication
-   neg_op_enum,      // negative
-   pow_op_enum,      // power function
-   pri_op_enum,      // print
-   sign_op_enum,     // sign function (1, 0, -1)
-   sin_op_enum,      // sine function
-   sinh_op_enum,     // hyperbolic sine
-   sqrt_op_enum,     // square root
-   store_op_enum,    // store an element in a dynamic vector
-   sub_op_enum,      // subtraction
-   tan_op_enum,      // tangent
-   tanh_op_enum,     // hyperbolic tangent
-   vec_op_enum,      // create a new dynamic vector
-   number_op_enum
+    abs_op_enum,      // absolute value
+    acos_op_enum,     // inverse cosine
+    acosh_op_enum,    // inverse hyperbolic cosine
+    add_op_enum,      // addition
+    asin_op_enum,     // inverse sine
+    asinh_op_enum,    // inverse hyperbolic sine
+    atan_op_enum,     // inverse tangent
+    atanh_op_enum,    // inverse hyperbolic tangent
+    call_op_enum,     // atomic functions
+    cexp_op_enum,     // conditional expression
+    comp_op_enum,     // comparison
+    con_op_enum,      // constants
+    cos_op_enum,      // cosine
+    cosh_op_enum,     // hyperbolic cosine
+    csum_op_enum,     // cumulative summation
+    dis_op_enum,      // discrete functions
+    div_op_enum,      // division
+    erf_op_enum,      // error function
+    erfc_op_enum,     // complementary error function
+    exp_op_enum,      // exponential function
+    expm1_op_enum,    // exponential function minus one
+    load_op_enum,     // load an element from a dynamic vector
+    log1p_op_enum,    // one plust natural log
+    log_op_enum,      // natural log function
+    mul_op_enum,      // multiplication
+    neg_op_enum,      // negative
+    pow_op_enum,      // power function
+    pri_op_enum,      // print
+    sign_op_enum,     // sign function (1, 0, -1)
+    sin_op_enum,      // sine function
+    sinh_op_enum,     // hyperbolic sine
+    sqrt_op_enum,     // square root
+    store_op_enum,    // store an element in a dynamic vector
+    sub_op_enum,      // subtraction
+    tan_op_enum,      // tangent
+    tanh_op_enum,     // hyperbolic tangent
+    vec_op_enum,      // create a new dynamic vector
+    number_op_enum
 };
 /* {xrst_code}
 {xrst_comment END_SORT_THIS_LINE_MINUS_4}
@@ -101,12 +101,12 @@ This enum type is used to identify which comparison a :ref:`val_comp_op-name`
 does.
 {xrst_code hpp}*/
 enum compare_enum_t {
-   compare_eq_enum,    // equal
-   compare_ne_enum,    // not equal
-   compare_lt_enum,    // less than
-   compare_le_enum,    // less than or equal
-   compare_no_enum,    // no comparison (used during optimization)
-   number_compare_enum
+    compare_eq_enum,    // equal
+    compare_ne_enum,    // not equal
+    compare_lt_enum,    // less than
+    compare_le_enum,    // less than or equal
+    compare_no_enum,    // no comparison (used during optimization)
+    number_compare_enum
 };
 /*{xrst_code}
 {xrst_end val_graph_type}

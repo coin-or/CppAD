@@ -10,11 +10,11 @@ Example Simultaneous Solution of Forward and Inverse Problem
 Contents
 ********
 {xrst_toc_list
-   cppad_ipopt/example/get_started.cpp
-   cppad_ipopt/example/ode2.xrst
-   cppad_ipopt/example/ode_run.hpp
-   cppad_ipopt/example/ode_check.cpp
-   cppad_ipopt/speed/ode_speed.cpp
+    cppad_ipopt/example/get_started.cpp
+    cppad_ipopt/example/ode2.xrst
+    cppad_ipopt/example/ode_run.hpp
+    cppad_ipopt/example/ode_check.cpp
+    cppad_ipopt/speed/ode_speed.cpp
 }
 
 {xrst_end ipopt_nlp_ode}

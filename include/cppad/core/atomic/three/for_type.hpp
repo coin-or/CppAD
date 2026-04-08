@@ -17,8 +17,8 @@ Syntax
 Prototype
 =========
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Dependency Analysis
@@ -29,7 +29,7 @@ Usage
 *****
 This syntax and prototype are used by
 
-   *afun* ( *ax* , *ay* )
+    *afun* ( *ax* , *ay* )
 
 where :ref:`atomic_three_ctor@atomic_user@afun`
 is a user defined atomic function.
@@ -104,11 +104,11 @@ constants, dynamics, and variables
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::for_type(
-   const vector<Base>&          parameter_x ,
-   const vector<ad_type_enum>&  type_x      ,
-   vector<ad_type_enum>&        type_y      )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    vector<ad_type_enum>&        type_y      )
 // END_PROTOTYPE
-{  return false; }
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 

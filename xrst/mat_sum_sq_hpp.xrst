@@ -12,9 +12,9 @@ Source: mat_sum_sq
 | # ``define CPPAD_MAT_SUM_SQ_HPP``
 
 {xrst_literal
-   include/cppad/speed/mat_sum_sq.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/speed/mat_sum_sq.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

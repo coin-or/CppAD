@@ -12,8 +12,8 @@ set -e -u
 #
 # echo_eval
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 #
 # sed
@@ -24,18 +24,18 @@ source bin/dev_settings.sh
 #
 if [ "$0" != "bin/check_version.sh" ]
 then
-   echo "bin/check_version.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/check_version.sh: must be executed from its parent directory"
+    exit 1
 fi
 if [ "$#" != 0 ]
 then
-   echo 'check_version does not expect any arguments'
-   exit 1
+    echo 'check_version does not expect any arguments'
+    exit 1
 fi
 if [ ! -e './.git' ]
 then
-   echo 'bin/check_version.sh: cannot find ./.git'
-   exit 1
+    echo 'bin/check_version.sh: cannot find ./.git'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 #
@@ -65,55 +65,55 @@ version=$($sed -n -r -f temp.sed $first_version_file | head -1)
 # version_type
 if [[ "$version" =~ ^[0-9]{8}$ ]]
 then
-   version_type=1
+    version_type=1
 elif [[ "$version" =~ ^[0-9]{8}[.][0-9]{1,2}$ ]]
 then
-   version_type=2
+    version_type=2
 elif [[ "$version" =~ ^[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}$ ]]
 then
-   version_type=3
+    version_type=3
 else
-   echo "check_version.sh: can't find version number in $first_version_file"
-   exit 1
+    echo "check_version.sh: can't find version number in $first_version_file"
+    exit 1
 fi
 if [[ "$branch" =~ ^stable/.* ]]
 then
-   if [ "$version_type" == 1 ]
-   then
-      echo "check_version.sh: version in $first_version_file"
-      echo "is not for a release but this is the $branch branch"
-      exit 1
-   elif [ "$version_type" == 3 ]
-   then
-      if [[ "$version" =~  ^[0-9]{4}[.][^0].*$ ]]
-      then
-         echo "check_version.sh: version in $first_version_file"
-         echo "is not for a release but this is the $branch branch"
-         exit 1
-      fi
-   fi
+    if [ "$version_type" == 1 ]
+    then
+        echo "check_version.sh: version in $first_version_file"
+        echo "is not for a release but this is the $branch branch"
+        exit 1
+    elif [ "$version_type" == 3 ]
+    then
+        if [[ "$version" =~  ^[0-9]{4}[.][^0].*$ ]]
+        then
+            echo "check_version.sh: version in $first_version_file"
+            echo "is not for a release but this is the $branch branch"
+            exit 1
+        fi
+    fi
 fi
 #
 # version
 if [ "$branch" == 'master' ] || [ "$branch" == 'main' ]
 then
-   if [ "$version_type" == 1 ]
-   then
-      version=$(date +%Y%m%d)
-   elif [ "$version_type" == 2 ]
-   then
-      echo "check_version.sh: version in $first_version_file"
-      echo "is for a release but this is the $branch branch"
-      exit 1
-   else
-      if [[ "$version" =~  ^[0-9]{4}[.]0[.][0-9]{1,2}$ ]]
-      then
-         echo "check_version.sh: version in $first_version_file"
-         echo "is for a release but this is the $branch branch"
-         exit 1
-      fi
-      version=$(date +%Y.%-m.%-d)
-   fi
+    if [ "$version_type" == 1 ]
+    then
+        version=$(date +%Y%m%d)
+    elif [ "$version_type" == 2 ]
+    then
+        echo "check_version.sh: version in $first_version_file"
+        echo "is for a release but this is the $branch branch"
+        exit 1
+    else
+        if [[ "$version" =~  ^[0-9]{4}[.]0[.][0-9]{1,2}$ ]]
+        then
+            echo "check_version.sh: version in $first_version_file"
+            echo "is for a release but this is the $branch branch"
+            exit 1
+        fi
+        version=$(date +%Y.%-m.%-d)
+    fi
 fi
 #
 # temp.sed
@@ -130,23 +130,23 @@ EOF
 #
 # check_version
 check_version() {
-   $sed -r "$1" -f temp.sed > temp.out
-   if ! diff "$1" temp.out > /dev/null
-   then
-      version_ok='no'
-      echo "check_version.sh: changes to $1"
-      set +e
-      diff "$1" temp.out
-      set -e
-      #
-      if [ -x "$1" ]
-      then
-         mv temp.out "$1"
-         chmod +x "$1"
-      else
-         mv temp.out "$1"
-      fi
-   fi
+    $sed -r "$1" -f temp.sed > temp.out
+    if ! diff "$1" temp.out > /dev/null
+    then
+        version_ok='no'
+        echo "check_version.sh: changes to $1"
+        set +e
+        diff "$1" temp.out
+        set -e
+        #
+        if [ -x "$1" ]
+        then
+            mv temp.out "$1"
+            chmod +x "$1"
+        else
+            mv temp.out "$1"
+        fi
+    fi
 }
 #
 # version_ok
@@ -155,15 +155,15 @@ version_ok='yes'
 # check_version
 for file in $version_file_list
 do
-   check_version $file
+    check_version $file
 done
 #
 # ----------------------------------------------------------------------------
 if [ "$version_ok" == 'no' ]
 then
-   echo 'check_version.sh: The version numbers were fixed (see above).'
-   echo 'Re-execute bin/check_version.sh ?'
-   exit 1
+    echo 'check_version.sh: The version numbers were fixed (see above).'
+    echo 'Re-execute bin/check_version.sh ?'
+    exit 1
 fi
 echo 'check_version.sh OK'
 exit 0

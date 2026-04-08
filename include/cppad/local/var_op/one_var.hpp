@@ -73,8 +73,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ONE_VAR_FOR_JAC
-   // END_ONE_VAR_FOR_JAC
+    // BEGIN_ONE_VAR_FOR_JAC
+    // END_ONE_VAR_FOR_JAC
 }
 
 Vector_set, i_z, i_v
@@ -103,15 +103,15 @@ the Jacobian sparsity for the variable *z* .
 // BEGIN_ONE_VAR_FOR_JAC
 template <class Vector_set>
 void one_var_for_jac(
-   size_t            i_z           ,
-   size_t            i_v           ,
-   Vector_set&       sparsity      )
+    size_t            i_z           ,
+    size_t            i_v           ,
+    Vector_set&       sparsity      )
 // END_ONE_VAR_FOR_JAC
 {
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( i_v < i_z );
 
-   sparsity.assignment(i_z, i_v, sparsity);
+    sparsity.assignment(i_z, i_v, sparsity);
 }
 /*
 ------------------------------------------------------------------------------
@@ -130,8 +130,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ONE_VAR_REV_JAC
-   // END_ONE_VAR_REV_JAC
+    // BEGIN_ONE_VAR_REV_JAC
+    // END_ONE_VAR_REV_JAC
 }
 
 Vector_set, i_z, i_v
@@ -146,7 +146,7 @@ sparsity
 Use z(v) to denote the variable *z* as a function of the variable *v*
 and define H in terms of G by::
 
-   H( v , u , ... ) = G[ z(v) , u , ... ]
+    H( v , u , ... ) = G[ z(v) , u , ... ]
 
 On input, *sparsity* is a sparsity pattern for the Jacobian of *G* .
 Upon return, *sparsity* is a sparsity pattern for the Jacobian of *H* .
@@ -156,17 +156,17 @@ Upon return, *sparsity* is a sparsity pattern for the Jacobian of *H* .
 // BEGIN_ONE_VAR_REV_JAC
 template <class Vector_set>
 void one_var_rev_jac(
-   size_t            i_z         ,
-   size_t            i_v         ,
-   Vector_set&       sparsity    )
+    size_t            i_z         ,
+    size_t            i_v         ,
+    Vector_set&       sparsity    )
 // END_ONE_VAR_REV_JAC
 {
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( i_v < i_z );
 
-   sparsity.binary_union(i_v, i_v, i_z, sparsity);
+    sparsity.binary_union(i_v, i_v, i_z, sparsity);
 
-   return;
+    return;
 }
 // ---------------------------------------------------------------------------
 /*
@@ -191,7 +191,7 @@ We define :math:`H(v, \ldost)` by
 
 .. math::
 
-   H(v, \cdots ) = G [ z(v) , v , \cdots ]
+    H(v, \cdots ) = G [ z(v) , v , \cdots ]
 
 num_var
 *******
@@ -201,8 +201,8 @@ We use the notation *num_var* for the number of variables on the tape
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ONE_VAR_REV_HES
-   // END_ONE_VAR_REV_HES
+    // BEGIN_ONE_VAR_REV_HES
+    // END_ONE_VAR_REV_HES
 }
 
 Vector_set, i_z, i_v
@@ -232,8 +232,8 @@ Input
 =====
 ::
 
-   for j = num_var, ... , i_z + 1
-      rev_jac_include[j] is an input
+    for j = num_var, ... , i_z + 1
+        rev_jac_include[j] is an input
 
 Output
 ======
@@ -259,27 +259,27 @@ of the tape. )
 // BEGIN_ONE_VAR_REV_HES
 template <class Vector_set>
 void one_var_rev_hes(
-   size_t              i_z               ,
-   size_t              i_v               ,
-   bool*               linear            ,
-   bool*               rev_jacobian      ,
-   const Vector_set&   for_jac_sparsity  ,
-   Vector_set&         rev_hes_sparsity  )
+    size_t              i_z               ,
+    size_t              i_v               ,
+    bool*               linear            ,
+    bool*               rev_jacobian      ,
+    const Vector_set&   for_jac_sparsity  ,
+    Vector_set&         rev_hes_sparsity  )
 // END_ONE_VAR_REV_HES
 {
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( i_v < i_z );
 
-   // check for no effect
-   if( ! rev_jacobian[i_z] )
-      return;
+    // check for no effect
+    if( ! rev_jacobian[i_z] )
+        return;
 
-   rev_hes_sparsity.binary_union(i_v, i_v, i_z, rev_hes_sparsity);
-   if( ! linear[0] )
-      rev_hes_sparsity.binary_union(i_v, i_v, i_v, for_jac_sparsity);
+    rev_hes_sparsity.binary_union(i_v, i_v, i_z, rev_hes_sparsity);
+    if( ! linear[0] )
+        rev_hes_sparsity.binary_union(i_v, i_v, i_v, for_jac_sparsity);
 
-   rev_jacobian[i_v] = true;
-   return;
+    rev_jacobian[i_v] = true;
+    return;
 }
 // ---------------------------------------------------------------------------
 /*
@@ -298,8 +298,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ONE_VAR_FOR_HES
-   // END_ONE_VAR_FOR_HES
+    // BEGIN_ONE_VAR_FOR_HES
+    // END_ONE_VAR_FOR_HES
 }
 
 Vector_set, i_z, i_v
@@ -352,43 +352,43 @@ independent variable with index *i* - 1 .
 // BEGIN_ONE_VAR_FOR_HES
 template <class Vector_set>
 void one_var_for_hes(
-   size_t              n_independent_p1 ,
-   size_t              num_var          ,
-   size_t              i_z              ,
-   size_t              i_v              ,
-   bool*               linear           ,
-   Vector_set&         for_sparsity     )
+    size_t              n_independent_p1 ,
+    size_t              num_var          ,
+    size_t              i_z              ,
+    size_t              i_v              ,
+    bool*               linear           ,
+    Vector_set&         for_sparsity     )
 // END_ONE_VAR_FOR_HES
-{  // np1
-   size_t np1 = n_independent_p1;
-   //
-   CPPAD_ASSERT_UNKNOWN( i_v < i_z );
-   CPPAD_ASSERT_UNKNOWN( i_v < num_var );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
+{   // np1
+    size_t np1 = n_independent_p1;
+    //
+    CPPAD_ASSERT_UNKNOWN( i_v < i_z );
+    CPPAD_ASSERT_UNKNOWN( i_v < num_var );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
 
-   // for_sparsity
-   // set Jacobian sparsity for z
-   for_sparsity.assignment(np1 + i_z, np1 + i_v, for_sparsity);
+    // for_sparsity
+    // set Jacobian sparsity for z
+    for_sparsity.assignment(np1 + i_z, np1 + i_v, for_sparsity);
 
-   //
-   if( ! linear[0] )
-   {  // itr
-      // set of independent variables that v depends on
-      typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
-      //
-      // i_x
-      // loop over independent variables that v has non-zero partials w.r.t.
-      size_t i_x = *itr;
-      while( i_x < np1 )
-      {  // for_sparsity
-         // union of Hessian sparsity for x and Jacobian sparsity for v
-         for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
-         i_x = *(++itr);
-      }
-   }
-   return;
+    //
+    if( ! linear[0] )
+    {   // itr
+        // set of independent variables that v depends on
+        typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
+        //
+        // i_x
+        // loop over independent variables that v has non-zero partials w.r.t.
+        size_t i_x = *itr;
+        while( i_x < np1 )
+        {   // for_sparsity
+            // union of Hessian sparsity for x and Jacobian sparsity for v
+            for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
+            i_x = *(++itr);
+        }
+    }
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE

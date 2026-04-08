@@ -36,20 +36,20 @@ f
 *
 The object *f* has prototype
 
-   ``const ADFun`` < *Base* > *f*
+    ``const ADFun`` < *Base* > *f*
 
 c
 *
 The result *c* has prototype
 
-   ``size_t`` *c*
+    ``size_t`` *c*
 
 It is the number of
 ``AD`` < *Base* > :ref:`comparison<Compare-name>`
 operations,
 corresponding to the previous call to :ref:`Forward-name`
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 that have a different result from
 when *F* was created by taping an algorithm.

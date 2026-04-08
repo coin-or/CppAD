@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin reverse_one}
 {xrst_spell
-   dw
+    dw
 }
 
 First Order Reverse Mode
@@ -22,14 +22,14 @@ The function :math:`W : \B{R}^n \rightarrow \B{R}` is defined by
 
 .. math::
 
-   W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
+    W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
 
 The result of this operation is the derivative
 :math:`dw = W^{(1)} (x)`; i.e.,
 
 .. math::
 
-   dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
+    dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
 
 Note that if :math:`w` is the *i*-th
 :ref:`glossary@Elementary Vector` ,
@@ -39,11 +39,11 @@ f
 *
 The object *f* has prototype
 
-   ``const ADFun`` < *Base* > *f*
+    ``const ADFun`` < *Base* > *f*
 
 Before this call to ``Reverse`` , the value returned by
 
-   *f* . ``size_order`` ()
+    *f* . ``size_order`` ()
 
 must be greater than or equal one (see :ref:`size_order-name` ).
 
@@ -53,7 +53,7 @@ The vector *x* in expression for *dw* above
 corresponds to the previous call to :ref:`forward_zero-name`
 using this ADFun object *f* ; i.e.,
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 If there is no previous call with the first argument zero,
 the value of the :ref:`Independent-name` variables
@@ -64,7 +64,7 @@ w
 *
 The argument *w* has prototype
 
-   ``const`` *Vector* & *w*
+    ``const`` *Vector* & *w*
 
 (see :ref:`reverse_one@Vector` below)
 and its size
@@ -75,7 +75,7 @@ dw
 **
 The result *dw* has prototype
 
-   *Vector* *dw*
+    *Vector* *dw*
 
 (see :ref:`reverse_one@Vector` below)
 and its value is the derivative :math:`W^{(1)} (x)`.
@@ -94,7 +94,7 @@ if this is not the case.
 Example
 *******
 {xrst_toc_hidden
-   example/general/reverse_one.cpp
+    example/general/reverse_one.cpp
 }
 The file
 :ref:`reverse_one.cpp-name`

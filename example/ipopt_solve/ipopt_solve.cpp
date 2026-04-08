@@ -14,15 +14,15 @@ After executing the :ref:`cmake-name` command
 form the :ref:`download@Distribution Directory`,
 you can build and run these tests with the commands::
 
-   cd build
-   make check_example_ipopt_solve
+    cd build
+    make check_example_ipopt_solve
 
 Note that your choice of :ref:`cmake@generator` may require using
 an different version of make; e.g., ``ninja`` .
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end ipopt_solve.cpp}
@@ -43,22 +43,22 @@ extern bool retape(void);
 
 // main program that runs all the tests
 int main(void)
-{  std::string group = "example/ipopt_solve";
-   size_t      width = 20;
-   CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "example/ipopt_solve";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-   // This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-   // external compiled tests
-   Run( get_started,         "get_started"  );
-   Run( ode_inverse,         "ode_inverse"  );
-   Run( retape,              "retape"       );
-   //
-   // check for memory leak
-   bool memory_ok = CppAD::thread_alloc::free_all();
-   // print summary at end
-   bool ok = Run.summary(memory_ok);
-   //
-   return static_cast<int>( ! ok );
+    // external compiled tests
+    Run( get_started,         "get_started"  );
+    Run( ode_inverse,         "ode_inverse"  );
+    Run( retape,              "retape"       );
+    //
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }
 // END C++

@@ -14,15 +14,15 @@ After executing the :ref:`cmake-name` command
 form the :ref:`download@Distribution Directory`,
 you can build and run these tests with the commands::
 
-   cd build
-   make check_example_valvector
+    cd build
+    make check_example_valvector
 
 Note that your choice of :ref:`cmake@generator` may require using
 an different version of make; e.g., ``ninja`` .
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end valvector.cpp}
@@ -68,43 +68,43 @@ extern bool unary_op(void);
 
 // main program that runs all the tests
 int main(void)
-{  bool ok = true;
-   //
-   std::string group = "example/valvector";
-   size_t      width = 20;
-   CppAD::test_boolofvoid Run(group, width);
+{   bool ok = true;
+    //
+    std::string group = "example/valvector";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-   // This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-   // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( ad_join,             "ad_join"               );
-   Run( ad_split,            "ad_split"              );
-   Run( ad_sum,              "ad_sum"                );
-   Run( assign,              "assign"                );
-   Run( azmul,               "azmul"                 );
-   Run( base_require,        "base_require"          );
-   Run( binary_op,           "binary_op"             );
-   Run( compare_op,         "compare_op"             );
-   Run( compound_op,         "compound_op"           );
-   Run( condexp,             "condexp"               );
-   Run( ctor,                "ctor"                  );
-   Run( element,             "element"               );
-   Run( get_started,         "get_started"           );
-   Run( llsq_obj,            "llsq_obj"              );
-   Run( math_unary,          "math_unary"            );
-   Run( output,              "output"                );
-   Run( pow,                 "pow"                   );
-   Run( resize,              "resize"                );
-   Run( size,                "size"                  );
-   Run( sum,                 "sum"                   );
-   Run( unary_op,            "unary_op"              );
-   // END_SORT_THIS_LINE_MINUS_1
+    // BEGIN_SORT_THIS_LINE_PLUS_1
+    Run( ad_join,             "ad_join"               );
+    Run( ad_split,            "ad_split"              );
+    Run( ad_sum,              "ad_sum"                );
+    Run( assign,              "assign"                );
+    Run( azmul,               "azmul"                 );
+    Run( base_require,        "base_require"          );
+    Run( binary_op,           "binary_op"             );
+    Run( compare_op,         "compare_op"             );
+    Run( compound_op,         "compound_op"           );
+    Run( condexp,             "condexp"               );
+    Run( ctor,                "ctor"                  );
+    Run( element,             "element"               );
+    Run( get_started,         "get_started"           );
+    Run( llsq_obj,            "llsq_obj"              );
+    Run( math_unary,          "math_unary"            );
+    Run( output,              "output"                );
+    Run( pow,                 "pow"                   );
+    Run( resize,              "resize"                );
+    Run( size,                "size"                  );
+    Run( sum,                 "sum"                   );
+    Run( unary_op,            "unary_op"              );
+    // END_SORT_THIS_LINE_MINUS_1
 
-   // check for memory leak
-   bool memory_ok = CppAD::thread_alloc::free_all();
-   // print summary at end
-   ok = Run.summary(memory_ok);
-   //
-   return static_cast<int>( ! ok );
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }
 // END C++

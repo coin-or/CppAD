@@ -97,36 +97,36 @@ prefix="build/prefix"
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_optional.sh" ]
 then
-   echo "bin/get_optional.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/get_optional.sh: must be executed from its parent directory"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 if [ -e 'get_optional.log' ]
 then
-   echo_eval rm get_optional.log
+    echo_eval rm get_optional.log
 fi
 if [ -e 'get_optional.err' ]
 then
-   echo_eval rm get_optional.err
+    echo_eval rm get_optional.err
 fi
 # -----------------------------------------------------------------------------
 list='colpack adolc fadbad ipopt sacado cppadcg'
 for package in $list
 do
-   echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"
-   if bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err
-   then
-      echo "bin/get_${package}.sh: OK"
-   else
-      echo "bin/get_${package}.sh: Error; try following:"
-      echo '  tail ./get_optional.err'
-      exit 1
-   fi
+    echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"
+    if bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err
+    then
+        echo "bin/get_${package}.sh: OK"
+    else
+        echo "bin/get_${package}.sh: Error; try following:"
+        echo '  tail ./get_optional.err'
+        exit 1
+    fi
 done
 # -----------------------------------------------------------------------------
 echo "get_optional: OK"

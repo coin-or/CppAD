@@ -17,8 +17,8 @@ source bin/grep_and_sed.sh
 #
 if [ ! -e xrst.toml ]
 then
-   echo 'default'
-   exit 0
+    echo 'default'
+    exit 0
 fi
 #
 # temp.sed

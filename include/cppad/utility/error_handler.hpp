@@ -8,8 +8,8 @@
 /*
 {xrst_begin ErrorHandler}
 {xrst_spell
-   msg
-   test test
+    msg
+    test test
 }
 
 Replacing the CppAD Error Handler
@@ -57,7 +57,7 @@ The argument *handler* has prototype
 When an error is detected,
 it is called with the syntax
 
-   *handler* ( *known* , *line* , *file* , *exp* , *msg* )
+    *handler* ( *known* , *line* , *file* , *exp* , *msg* )
 
 This routine should not return; i.e., upon detection of the error,
 the routine calling *handler* does not know how to proceed.
@@ -66,7 +66,7 @@ known
 *****
 The *handler* argument *known* has prototype
 
-   ``bool`` *known*
+    ``bool`` *known*
 
 If it is true, the error being reported is from a know problem.
 
@@ -74,7 +74,7 @@ line
 ****
 The *handler* argument *line* has prototype
 
-   ``int`` *line*
+    ``int`` *line*
 
 It reports the source code line number where the error is detected.
 
@@ -82,7 +82,7 @@ file
 ****
 The *handler* argument *file* has prototype
 
-   ``const char`` * *file*
+    ``const char`` * *file*
 
 and is a ``'\0'`` terminated character vector.
 It reports the source code file where the error is detected.
@@ -91,7 +91,7 @@ exp
 ***
 The *handler* argument *exp* has prototype
 
-   ``const char`` * *exp*
+    ``const char`` * *exp*
 
 and is a ``'\0'`` terminated character vector.
 It is a source code boolean expression that should have been true,
@@ -102,13 +102,13 @@ msg
 ***
 The *handler* argument *msg* has prototype
 
-   ``const char`` * *msg*
+    ``const char`` * *msg*
 
 and is a ``'\0'`` terminated character vector.
 It reports the meaning of the error from the C++ programmers point of view.
 {xrst_toc_hidden
-   example/utility/error_handler.cpp
-   include/cppad/core/cppad_assert.hpp
+    example/utility/error_handler.cpp
+    include/cppad/core/cppad_assert.hpp
 }
 Example
 *******
@@ -130,102 +130,102 @@ contains an example and test a test of using this routine.
 namespace CppAD { // BEGIN CppAD namespace
 
 class ErrorHandler {
-   template <class Base>
-   friend void parallel_ad(void);
+    template <class Base>
+    friend void parallel_ad(void);
 public:
-   typedef void (*Handler)
-      (bool, int, const char *, const char *, const char *);
+    typedef void (*Handler)
+        (bool, int, const char *, const char *, const char *);
 
-   // construct a new handler
-   ErrorHandler(Handler handler) : previous( Current() )
-   {  if( local::set_get_in_parallel() )
-      {  bool known       = true;
-         int  line        = __LINE__;
-         const char* file = __FILE__;
-         const char* exp  = "! local::set_get_in_parallel()";
-         const char* msg  =
-            "Using ErrorHandler constructor in parallel mode.";
-         Call(known, line, file, exp, msg);
-      }
-      Current() = handler;
-   }
-
-   // destructor for an error handler
-   ~ErrorHandler(void)
-   {  if( local::set_get_in_parallel() )
-      {  bool known       = true;
-         int  line        = __LINE__;
-         const char* file = __FILE__;
-         const char* exp  = "! local::set_get_in_parallel()";
-         const char* msg  =
-            "Using ErrorHandler destructor in parallel mode.";
-         Call(known, line, file, exp, msg);
-      }
-      Current() = previous;
-   }
-
-   // report an error
-   static void Call(
-      bool        known,
-      int         line ,
-      const char *file ,
-      const char *exp  ,
-      const char *msg  )
-   {  Handler handler = Current();
-      handler(known, line, file, exp, msg);
-   }
-
-private:
-   const Handler previous;
-
-   // The default error handler
-   static void Default(
-      bool        known,
-      int         line ,
-      const char *file ,
-      const char *exp  ,
-      const char *msg  )
-   {  using std::cerr;
-      using std::endl;
-
-      cerr << CPPAD_PACKAGE_STRING;
-      if( known )
-         cerr << " error from a known source:" << endl;
-      else
-         cerr << " error from unknown source"  << endl;
-      if( msg[0] != '\0' )
-         cerr << msg << endl;
-      cerr << "Error detected by false result for"  << endl;
-      cerr << "    "     << exp                     << endl;
-      cerr << "at line " << line << " in the file " << endl;
-      cerr << "    "     << file                    << endl;
-
-      // terminate program execution
-      assert(false);
-
-      // termination when NDEBUG is defined
-      std::exit(1);
-   }
-
-   // current error handler
-   static Handler &Current(void)
-   {  static bool first_call = true;
-      static Handler current = Default;
-      // CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-      // code below is like macro above but works when NDEBUG defined
-      if( first_call )
-      {  if( local::set_get_in_parallel() )
-         {  bool known       = false;
+    // construct a new handler
+    ErrorHandler(Handler handler) : previous( Current() )
+    {   if( local::set_get_in_parallel() )
+        {   bool known       = true;
             int  line        = __LINE__;
             const char* file = __FILE__;
-            const char* exp  = "";
-            const char* msg  = "";
+            const char* exp  = "! local::set_get_in_parallel()";
+            const char* msg  =
+                "Using ErrorHandler constructor in parallel mode.";
             Call(known, line, file, exp, msg);
-         }
-         first_call = false;
-      }
-      return current;
-   }
+        }
+        Current() = handler;
+    }
+
+    // destructor for an error handler
+    ~ErrorHandler(void)
+    {   if( local::set_get_in_parallel() )
+        {   bool known       = true;
+            int  line        = __LINE__;
+            const char* file = __FILE__;
+            const char* exp  = "! local::set_get_in_parallel()";
+            const char* msg  =
+                "Using ErrorHandler destructor in parallel mode.";
+            Call(known, line, file, exp, msg);
+        }
+        Current() = previous;
+    }
+
+    // report an error
+    static void Call(
+        bool        known,
+        int         line ,
+        const char *file ,
+        const char *exp  ,
+        const char *msg  )
+    {   Handler handler = Current();
+        handler(known, line, file, exp, msg);
+    }
+
+private:
+    const Handler previous;
+
+    // The default error handler
+    static void Default(
+        bool        known,
+        int         line ,
+        const char *file ,
+        const char *exp  ,
+        const char *msg  )
+    {   using std::cerr;
+        using std::endl;
+
+        cerr << CPPAD_PACKAGE_STRING;
+        if( known )
+            cerr << " error from a known source:" << endl;
+        else
+            cerr << " error from unknown source"  << endl;
+        if( msg[0] != '\0' )
+            cerr << msg << endl;
+        cerr << "Error detected by false result for"  << endl;
+        cerr << "    "     << exp                     << endl;
+        cerr << "at line " << line << " in the file " << endl;
+        cerr << "    "     << file                    << endl;
+
+        // terminate program execution
+        assert(false);
+
+        // termination when NDEBUG is defined
+        std::exit(1);
+    }
+
+    // current error handler
+    static Handler &Current(void)
+    {   static bool first_call = true;
+        static Handler current = Default;
+        // CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+        // code below is like macro above but works when NDEBUG defined
+        if( first_call )
+        {   if( local::set_get_in_parallel() )
+            {   bool known       = false;
+                int  line        = __LINE__;
+                const char* file = __FILE__;
+                const char* exp  = "";
+                const char* msg  = "";
+                Call(known, line, file, exp, msg);
+            }
+            first_call = false;
+        }
+        return current;
+    }
 };
 
 } // END CppAD namespace

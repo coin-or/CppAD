@@ -10,7 +10,7 @@ Developer Sparse Documentation
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/sparse/setvector.xrst
+    include/cppad/local/sparse/setvector.xrst
 }
 
 {xrst_end dev_sparse}

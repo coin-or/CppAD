@@ -4,24 +4,24 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_binary_op dev}
 {xrst_spell
-   addpv
-   addvv
-   azmul
-   delim
-   divpv
-   divvp
-   divvv
-   mulpv
-   mulvv
-   powpv
-   powvp
-   powvv
-   subpv
-   subvp
-   subvv
-   zmulpv
-   zmulvp
-   zmulvv
+    addpv
+    addvv
+    azmul
+    delim
+    divpv
+    divvp
+    divvv
+    mulpv
+    mulvv
+    powpv
+    powvp
+    powvv
+    subpv
+    subvp
+    subvv
+    zmulpv
+    zmulvp
+    zmulvv
 }
 
 Binary Operators
@@ -59,27 +59,27 @@ Fun
 ***
 
 .. csv-table::
-   :widths: auto
-   :header-rows: 1
-   :delim: ;
+    :widths: auto
+    :header-rows: 1
+    :delim: ;
 
-   op_code;      Fun;     fun; Op;         x;         y;  z
-   AddpvOp;    addpv;        ; \+; parameter;  variable;  *x* + *y*
-   AddvvOp;    addvv;        ; \+;  variable;  variable;  *x* + *y*
-   DivpvOp;    divpv;        ; \/; parameter;  variable;  *x* / *y*
-   DivvpOp;    divvp;        ; \/;  variable; parameter;  *x* / *y*
-   DivvvOp;    divvv;        ; \/;  variable;  variable;  *x* / *y*
-   MulpvOp;    mulpv;        ; \*; parameter;  variable;  *x* * *y*
-   MulvvOp;    mulvv;        ; \*;  variable;  variable;  *x* * *y*
-   SubpvOp;    subpv;        ; \-; parameter;  variable;  *x* - *y*
-   SubvpOp;    subvp;        ; \-;  variable; parameter;  *x* - *y*
-   SubvvOp;    subvv;        ; \-;  variable;  variable;  *x* - *y*
-   PowpvOp;    zmulpv;    pow;   ; parameter;  variable;    pow( *x* , *y* )
-   PowvpOp;    zmulvp;    pow;   ;  variable; parameter;    pow( *x* , *y* )
-   PowvvOp;    zmulvv;    pow;   ;  variable;  variable;    pow( *x* , *y* )
-   ZmulpvOp;   zmulpv;  azmul;   ; parameter;  variable;  azmul( *x* , *y* )
-   ZmulvpOp;   zmulvp;  azmul;   ;  variable; parameter;  azmul( *x* , *y* )
-   ZmulvvOp;   zmulvv;  azmul;   ;  variable;  variable;  azmul( *x* , *y* )
+    op_code;      Fun;     fun; Op;         x;         y;  z
+    AddpvOp;    addpv;        ; \+; parameter;  variable;  *x* + *y*
+    AddvvOp;    addvv;        ; \+;  variable;  variable;  *x* + *y*
+    DivpvOp;    divpv;        ; \/; parameter;  variable;  *x* / *y*
+    DivvpOp;    divvp;        ; \/;  variable; parameter;  *x* / *y*
+    DivvvOp;    divvv;        ; \/;  variable;  variable;  *x* / *y*
+    MulpvOp;    mulpv;        ; \*; parameter;  variable;  *x* * *y*
+    MulvvOp;    mulvv;        ; \*;  variable;  variable;  *x* * *y*
+    SubpvOp;    subpv;        ; \-; parameter;  variable;  *x* - *y*
+    SubvpOp;    subvp;        ; \-;  variable; parameter;  *x* - *y*
+    SubvvOp;    subvv;        ; \-;  variable;  variable;  *x* - *y*
+    PowpvOp;    zmulpv;    pow;   ; parameter;  variable;    pow( *x* , *y* )
+    PowvpOp;    zmulvp;    pow;   ;  variable; parameter;    pow( *x* , *y* )
+    PowvvOp;    zmulvv;    pow;   ;  variable;  variable;    pow( *x* , *y* )
+    ZmulpvOp;   zmulpv;  azmul;   ; parameter;  variable;  azmul( *x* , *y* )
+    ZmulvpOp;   zmulvp;  azmul;   ;  variable; parameter;  azmul( *x* , *y* )
+    ZmulvvOp;   zmulvv;  azmul;   ;  variable;  variable;  azmul( *x* , *y* )
 
 i_z
 ***
@@ -129,11 +129,11 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_0(
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   const Base*   parameter   ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    const Base*   parameter   ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {xrst_code}
 
 Base, Fun, i_z, arg, parameter
@@ -153,7 +153,7 @@ taylor
 ******
 The Taylor coefficient corresponding to variable *i* and order *k* is
 
-   *taylor* [ *i* * *cap_order* + *k*  ]
+    *taylor* [ *i* * *cap_order* + *k*  ]
 
 Input
 =====
@@ -185,13 +185,13 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_any(
-   size_t        order_low   ,
-   size_t        order_up    ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   const Base*   parameter   ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        order_low   ,
+    size_t        order_up    ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    const Base*   parameter   ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {xrst_code}
 
 Base, Fun, i_z, arg, parameter
@@ -204,8 +204,8 @@ see
 :ref:`var_binary_op@parameter`
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_op.xrst
-   headers: cap_order, order_low, order_up, taylor
+    include/cppad/local/var_op/template/forward_op.xrst
+    headers: cap_order, order_low, order_up, taylor
 }
 
 {xrst_end var_binary_forward_any}
@@ -228,13 +228,13 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_dir(
-   size_t        order_up    ,
-   size_t        n_dir       ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   const Base*   parameter   ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        order_up    ,
+    size_t        n_dir       ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    const Base*   parameter   ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {xrst_code}
 
 Base, Fun, i_z, arg, parameter
@@ -247,8 +247,8 @@ see
 :ref:`var_binary_op@parameter`
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_dir.xrst
-   headers: n_dir, cap_order, order_up, taylor
+    include/cppad/local/var_op/template/forward_dir.xrst
+    headers: n_dir, cap_order, order_up, taylor
 }
 
 {xrst_end var_binary_forward_dir}
@@ -271,13 +271,13 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_reverse(
-   size_t        i_z          ,
-   const addr_t* arg          ,
-   const Base*   parameter    ,
-   size_t        cap_order    ,
-   const Base*   taylor       ,
-   size_t        n_order      ,
-   Base*         partial      )
+    size_t        i_z          ,
+    const addr_t* arg          ,
+    const Base*   parameter    ,
+    size_t        cap_order    ,
+    const Base*   taylor       ,
+    size_t        n_order      ,
+    Base*         partial      )
 {xrst_code}
 
 Base, Fun, i_z, arg, parameter
@@ -297,13 +297,13 @@ taylor
 ******
 The Taylor coefficient corresponding to variable *i* and order *k* is
 
-   *taylor* [ *i* * *cap_order* + *k*  ]
+    *taylor* [ *i* * *cap_order* + *k*  ]
 
 {xrst_template ;
-   include/cppad/local/var_op/template/reverse_op.xrst
-   headers: n_order, partial
+    include/cppad/local/var_op/template/reverse_op.xrst
+    headers: n_order, partial
 
-   @x, y@ ; x
+    @x, y@ ; x
 }
 
 {xrst_end var_binary_reverse}

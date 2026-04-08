@@ -5,29 +5,29 @@
 
 {xrst_begin 2007 app}
 {xrst_spell
-   adouble
-   apx
-   autoconf
-   automake
-   executables
-   gettimeofday
-   ginac
-   intro
-   inv
-   isnan
-   kipp
-   makefile
-   makefiles
-   omh
-   openmp
-   rpm
-   tarballs
-   tay
-   tgz
-   threadprivate
-   valgrind
-   vcproj
-   yyyymmdd
+    adouble
+    apx
+    autoconf
+    automake
+    executables
+    gettimeofday
+    ginac
+    intro
+    inv
+    isnan
+    kipp
+    makefile
+    makefiles
+    omh
+    openmp
+    rpm
+    tarballs
+    tay
+    tgz
+    threadprivate
+    valgrind
+    vcproj
+    yyyymmdd
 }
 
 Release Notes for 2007
@@ -166,7 +166,7 @@ The instructions for downloading the current version using
 The user should now directly edit the file
 ::
 
-   trunk/configure
+    trunk/configure
 
 in order to set the correct date for the installation
 and to build the corresponding documentation.
@@ -184,7 +184,7 @@ have changed.
 The user must now execute the command
 ::
 
-   ./build.sh version
+    ./build.sh version
 
 in order to set the correct version number for her (or his) installation.
 
@@ -262,7 +262,7 @@ This has been fixed.
 The routine :ref:`CheckSimpleVector-name` was changed.
 It used to require conversion of the form
 
-   *Scalar* ( *i* )
+    *Scalar* ( *i* )
 
 where *i* was ``0`` or ``1`` .
 This does not work with when *Scalar* is
@@ -271,7 +271,7 @@ This requirement has been changed
 (see :ref:`CheckSimpleVector@Restrictions` )
 to support of
 
-   *x* = *i*
+    *x* = *i*
 
 where *x* has type *Scalar*
 and *i* has type ``int`` .
@@ -394,9 +394,9 @@ Merge in changes made in ``branches/test_vector`` .
    and start changing it to
    ``CPPAD_TEST_VECTOR`` .
 
-   Change all occurrences of ``CppADvector`` ,
-   in the ``example/`` * . ``cpp`` files,
-   to ``CPPAD_TEST_VECTOR`` .
+    Change all occurrences of ``CppADvector`` ,
+    in the ``example/`` * . ``cpp`` files,
+    to ``CPPAD_TEST_VECTOR`` .
 
 07-23
 =====
@@ -529,7 +529,7 @@ the :ref:`compound assignment<compound_assign-name>` operators did not
 always allow for ``double`` operands. For example,
 if *x* had type ``AD< AD<double> >``
 
-   *x*  += .5;
+    *x*  += .5;
 
 would slice the value ``.5`` to an ``int``
 and then convert it to an ``AD< AD<double> >`` .
@@ -557,7 +557,7 @@ compound assignment wish list item has been added
 =====
 Suppose that *op* is a binary operation and we have
 
-   *left* *op* *right*
+    *left* *op* *right*
 
 where one of the operands was ``AD< AD<double> >`` and
 the other operand was ``double`` .
@@ -668,7 +668,7 @@ Merge in changes made in ``branches/intro`` .
    ``exp_apx/exp_2_for`` to ``exp_apx/exp_2_for1``
    on 04-05).
 
-   Added :ref:`exp_2_for2-name` to introduction.
+    Added :ref:`exp_2_for2-name` to introduction.
 
 #. 04-05:
    Use order expansions in introduction; e.g., the
@@ -685,10 +685,10 @@ and remove the corresponding Introduction item from the wish list:
    called :ref:`exp_2-name` which has a different program
    variable for each variable in the operation sequence.
 
-   Simplify the :ref:`exp_eps-name` approximation using the
-   :math:`v_1 , \ldots , v_7` notation so that variables directly
-   correspond to index in operation sequence (as with the :ref:`exp_2-name`
-   example).
+    Simplify the :ref:`exp_eps-name` approximation using the
+    :math:`v_1 , \ldots , v_7` notation so that variables directly
+    correspond to index in operation sequence (as with the :ref:`exp_2-name`
+    example).
 
 #. 03-30:
    The Microsoft project file ``introduction/exp_apx/exp_apx.vcproj``
@@ -729,12 +729,12 @@ so that so CppAD does not use the OpenMP ``threadprivate`` command
    Fixed some Microsoft compiler warnings by explicitly converting from
    ``size_t`` to ``int`` .
 
-   In the Microsoft compiler case, the ``cppad/config.h`` file had
-   the wrong setting of ``GETTIMEOFDAY`` .
-   The setting is now overridden (and always false) when the
-   ``_MSC_VER`` preprocessor symbol is defined.
+    In the Microsoft compiler case, the ``cppad/config.h`` file had
+    the wrong setting of ``GETTIMEOFDAY`` .
+    The setting is now overridden (and always false) when the
+    ``_MSC_VER`` preprocessor symbol is defined.
 
-   Some minor changes were made in an effort to speed up the multi-threading case.
+    Some minor changes were made in an effort to speed up the multi-threading case.
 
 #. 03-13:
    Started a new openmp branch and created a version of CppAD
@@ -754,58 +754,58 @@ were made in the openmp branch and transferred to the trunk on 03-09.
    for example
    ::
 
-      # ifndef CPPAD_BENDER_QUAD_HPP
-      # define CPPAD_BENDER_QUAD_HPP
+        # ifndef CPPAD_BENDER_QUAD_HPP
+        # define CPPAD_BENDER_QUAD_HPP
 
-   was missing at the beginning of the :ref:`BenderQuad-name` include file.
-   This has been fixed.
+    was missing at the beginning of the :ref:`BenderQuad-name` include file.
+    This has been fixed.
 
-   The ``speed_test`` routines :ref:`speed_test@Timing` was
-   changed to use ``gettimeofday`` if it is available.
-   (``gettimeofday`` measures wall clock time
-   which is better in a multi-threading environment).
+    The ``speed_test`` routines :ref:`speed_test@Timing` was
+    changed to use ``gettimeofday`` if it is available.
+    (``gettimeofday`` measures wall clock time
+    which is better in a multi-threading environment).
 
-   Added the user multi-threading interface
-   :ref:`omp_max_thread-name` along with its examples
-   which are distributed in the directory ``openmp`` .
+    Added the user multi-threading interface
+    :ref:`omp_max_thread-name` along with its examples
+    which are distributed in the directory ``openmp`` .
 
-   The ``speed/`` * . ``hpp`` files have been moved to
-   ``include/cppad/speed/`` * . ``hpp`` and the corresponding wish list
-   item has been removed.
+    The ``speed/`` * . ``hpp`` files have been moved to
+    ``include/cppad/speed/`` * . ``hpp`` and the corresponding wish list
+    item has been removed.
 
-   The multiple tapes with the same base type wish list item
-   have been removed (it's purpose was multi-threading which
-   has been implemented).
+    The multiple tapes with the same base type wish list item
+    have been removed (it's purpose was multi-threading which
+    has been implemented).
 
 #. 02-27:
    The :ref:`speed-name` include files are currently being distributed
    above the ``cppad`` include directory.
    A fix this wish list item has been added.
 
-   Multiple active tapes required a lot of multi-threading access
-   management for the tapes. This was made simpler (and faster)
-   by having at most one tape per thread.
+    Multiple active tapes required a lot of multi-threading access
+    management for the tapes. This was made simpler (and faster)
+    by having at most one tape per thread.
 
 #. 02-22:
    The include command in the :ref:`speed_test-name` documentation was
    ::
 
-      # include <speed/speed_test.hpp>
+        # include <speed/speed_test.hpp>
 
-   but it should have been
-   ::
+    but it should have been
+    ::
 
-      # include <cppad/speed_test.hpp>
+        # include <cppad/speed_test.hpp>
 
-   This has been fixed.
+    This has been fixed.
 
 #. 02-17:
    An entry about optimizing the operation
    sequence in an :ref:`ADFun<fun_construct-name>` object was added to the
    :ref:`wish_list-name` .
 
-   Change the argument syntax for :ref:`Dependent-name` and deprecate the
-   :ref:`old Dependent syntax<fun_deprecated@Dependent>` .
+    Change the argument syntax for :ref:`Dependent-name` and deprecate the
+    :ref:`old Dependent syntax<fun_deprecated@Dependent>` .
 
 #. 02-16:
    Added ``VecAD`` < *Base* > as a valid argument type for the

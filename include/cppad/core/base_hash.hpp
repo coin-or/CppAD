@@ -7,8 +7,8 @@
 /*
 {xrst_begin base_hash}
 {xrst_spell
-   adouble
-   valgrind
+    adouble
+    valgrind
 }
 
 Base Type Requirements for Hash Coding Values
@@ -40,7 +40,7 @@ x
 *
 This argument has prototype
 
-   *const* ``Base`` & ``x``
+    *const* ``Base`` & ``x``
 
 It is the value we are forming a hash code for.
 
@@ -48,13 +48,13 @@ code
 ****
 The return value *code* has prototype
 
-   ``unsigned short`` *code*
+    ``unsigned short`` *code*
 
 It is the hash code corresponding to *x* . This intention is the
 commonly used values will have different hash codes.
 The hash code must satisfy
 
-   *code* < ``CPPAD_HASH_TABLE_SIZE``
+    *code* < ``CPPAD_HASH_TABLE_SIZE``
 
 so that it is a valid index into the hash code table.
 

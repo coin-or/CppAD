@@ -24,11 +24,11 @@ Implementation
 extern std::map<std::string, bool> global_option;
 
 bool link_mat_mul(
-   size_t                           size     ,
-   size_t                           repeat   ,
-   CppAD::vector<double>&           x        ,
-   CppAD::vector<double>&           z        ,
-   CppAD::vector<double>&           dz       )
+    size_t                           size     ,
+    size_t                           repeat   ,
+    CppAD::vector<double>&           x        ,
+    CppAD::vector<double>&           z        ,
+    CppAD::vector<double>&           dz       )
 {  return false; }
 /* {xrst_code}
 {xrst_spell_on}

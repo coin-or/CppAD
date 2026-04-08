@@ -28,13 +28,13 @@ x
 *
 The argument *x* has prototype
 
-   ``const AD`` < *Base* > & *x*
+    ``const AD`` < *Base* > & *x*
 
 b
 *
 The return value *b* has prototype
 
-   *Base* *b*
+    *Base* *b*
 
 Operation Sequence
 ******************
@@ -55,7 +55,7 @@ would not be included in the ``Value`` result *b* .
 Example
 *******
 {xrst_toc_hidden
-   example/general/value.cpp
+    example/general/value.cpp
 }
 The file
 :ref:`value.cpp-name`
@@ -71,15 +71,15 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 Base Value(const AD<Base> &x)
-{  Base result;
-   //
-   CPPAD_ASSERT_KNOWN(
-      ! ( Variable(x) || Dynamic(x) ) ,
-      "Value: argument is a variable or dynamic parameter"
-   );
-   //
-   result = x.value_;
-   return result;
+{   Base result;
+    //
+    CPPAD_ASSERT_KNOWN(
+        ! ( Variable(x) || Dynamic(x) ) ,
+        "Value: argument is a variable or dynamic parameter"
+    );
+    //
+    result = x.value_;
+    return result;
 }
 
 }

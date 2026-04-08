@@ -8,7 +8,7 @@
 /*
 {xrst_begin elapsed_seconds}
 {xrst_spell
-   chrono
+    chrono
 }
 
 Returns Elapsed Number of Seconds
@@ -28,7 +28,7 @@ s
 is a ``double`` equal to the
 number of seconds since the first call to ``elapsed_seconds`` .
 {xrst_toc_hidden
-   speed/example/elapsed_seconds.cpp
+    speed/example/elapsed_seconds.cpp
 }
 Example
 *******
@@ -53,18 +53,18 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 inline double elapsed_seconds(void)
 // --------------------------------------------------------------------------
-{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-   static bool first_ = true;
-   static std::chrono::time_point<std::chrono::steady_clock> start_;
-   if( first_ )
-   {  start_ = std::chrono::steady_clock::now();
-      first_ = false;
-      return 0.0;
-   }
-   std::chrono::time_point<std::chrono::steady_clock> now;
-   now   = std::chrono::steady_clock::now();
-   std::chrono::duration<double> difference = now - start_;
-   return difference.count();
+{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    static bool first_ = true;
+    static std::chrono::time_point<std::chrono::steady_clock> start_;
+    if( first_ )
+    {   start_ = std::chrono::steady_clock::now();
+        first_ = false;
+        return 0.0;
+    }
+    std::chrono::time_point<std::chrono::steady_clock> now;
+    now   = std::chrono::steady_clock::now();
+    std::chrono::duration<double> difference = now - start_;
+    return difference.count();
 }
 // --------------------------------------------------------------------------
 } // END_CPPAD_NAMESPACE

@@ -10,11 +10,11 @@
 # )
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-   cppad_ipopt_nlp.cpp
-   hes_fg_map.cpp
-   jac_g_map.cpp
-   sparse_map2vec.cpp
-   vec_fun_pattern.cpp
+    cppad_ipopt_nlp.cpp
+    hes_fg_map.cpp
+    jac_g_map.cpp
+    sparse_map2vec.cpp
+    vec_fun_pattern.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
@@ -23,9 +23,9 @@ set_compile_flags( cppad_ipopt "${cppad_debug_which}" "${source_list}" )
 #
 # add_library
 IF( "${is_cppad_lib_dynamic}" STREQUAL "0" )
-   ADD_LIBRARY( cppad_ipopt STATIC ${source_list} )
+    ADD_LIBRARY( cppad_ipopt STATIC ${source_list} )
 ELSEIF( "${is_cppad_lib_dynamic}" STREQUAL "1" )
-   ADD_LIBRARY( cppad_ipopt SHARED ${source_list} )
+    ADD_LIBRARY( cppad_ipopt SHARED ${source_list} )
 ENDIF( )
 
 # install(FILES files... DESTINATION <dir>

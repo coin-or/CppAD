@@ -34,7 +34,7 @@ In addition, if the index for a load operation is nan,
 the corresponding result will be nan.
 
 {xrst_toc_hidden
-   val_graph/vec_xam.cpp
+    val_graph/vec_xam.cpp
 }
 Operators
 *********
@@ -60,8 +60,8 @@ Create A Dynamic Vector Operator
 Prototype
 *********
 {xrst_literal
-   // BEGIN_VEC_OP_T
-   // END_VEC_OP_T
+    // BEGIN_VEC_OP_T
+    // END_VEC_OP_T
 }
 
 Context
@@ -82,8 +82,8 @@ n_before
 ********
 This override of :ref:`val_base_op@n_before` returns 1.
 {xrst_literal
-   // BEGIN_VEC_ARG_BEFORE
-   // END_VEC_ARG_BEFORE
+    // BEGIN_VEC_ARG_BEFORE
+    // END_VEC_ARG_BEFORE
 }
 
 n_after
@@ -114,82 +114,82 @@ is called to print this operator.
 template <class Value>
 class vec_op_t : public base_op_t<Value> {
 public:
-   // n_before
-   addr_t n_before(void) const override
-   {  return 1; }
-   //
-   // n_after
-   addr_t n_after(void) const override
-   {  return 0; }
-   //
-   // get_instance
-   static vec_op_t* get_instance(void)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static vec_op_t instance;
-      return &instance;
-   }
-   // op_enum
-   op_enum_t op_enum(void) const override
-   {  return vec_op_enum; }
+    // n_before
+    addr_t n_before(void) const override
+    {  return 1; }
+    //
+    // n_after
+    addr_t n_after(void) const override
+    {  return 0; }
+    //
+    // get_instance
+    static vec_op_t* get_instance(void)
+    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        static vec_op_t instance;
+        return &instance;
+    }
+    // op_enum
+    op_enum_t op_enum(void) const override
+    {  return vec_op_enum; }
 // END_VEC_OP_T
-   //
-   // n_arg
-   addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 1; }
-   //
-   // n_res
-   addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 0; }
-   //
-   // eval
-   void eval(
-      const tape_t<Value>*      tape           ,
-      bool                      trace          ,
-      addr_t                    arg_index      ,
-      addr_t                    res_index      ,
-      Vector<Value>&            val_vec        ,
-      Vector< Vector<addr_t> >& ind_vec_vec    ,
-      size_t&                   compare_false  ) const override
-   {  //
-      // arg_vec, vec_vec
-      const Vector<addr_t>& arg_vec( tape->arg_vec() );
-      //
-      // which_vector
-      // BEGIN_VEC_ARG_BEFORE
-      addr_t  which_vector = arg_vec[arg_index + 0];
-      // END_VEC_ARG_BEFORE
-      //
-      // initial
-      const Vector<addr_t> initial = tape->vec_initial()[which_vector];
+    //
+    // n_arg
+    addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {  return 1; }
+    //
+    // n_res
+    addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {  return 0; }
+    //
+    // eval
+    void eval(
+        const tape_t<Value>*      tape           ,
+        bool                      trace          ,
+        addr_t                    arg_index      ,
+        addr_t                    res_index      ,
+        Vector<Value>&            val_vec        ,
+        Vector< Vector<addr_t> >& ind_vec_vec    ,
+        size_t&                   compare_false  ) const override
+    {  //
+        // arg_vec, vec_vec
+        const Vector<addr_t>& arg_vec( tape->arg_vec() );
+        //
+        // which_vector
+        // BEGIN_VEC_ARG_BEFORE
+        addr_t  which_vector = arg_vec[arg_index + 0];
+        // END_VEC_ARG_BEFORE
+        //
+        // initial
+        const Vector<addr_t> initial = tape->vec_initial()[which_vector];
 # ifndef NDEBUG
-      for(size_t i = 0; i < initial.size(); ++i)
-      {  CPPAD_ASSERT_KNOWN(
-            initial[i] < res_index,
-            "vec_op: initial indices must come before index of next result"
-         );
-      }
+        for(size_t i = 0; i < initial.size(); ++i)
+        {  CPPAD_ASSERT_KNOWN(
+                initial[i] < res_index,
+                "vec_op: initial indices must come before index of next result"
+            );
+        }
 # endif
-      //
-      // ind_vec_vec
-      CPPAD_ASSERT_UNKNOWN( ind_vec_vec.size() == size_t(which_vector) );
-      ind_vec_vec.push_back(initial);
-      ind_vec_vec[which_vector].resize( initial.size() + 1 );
-      //
-      // ind_vec_vec
-      // Does not point to the nan in the tape which is at index tape->n_ind()
-      CPPAD_ASSERT_UNKNOWN( 0 < tape->n_ind() );
-      ind_vec_vec[which_vector][ initial.size() ] = 0;
-      //
-      if( ! trace )
-         return;
-      //
-      // print_vec_op
-      print_vec_op(which_vector, initial);
-   }
+        //
+        // ind_vec_vec
+        CPPAD_ASSERT_UNKNOWN( ind_vec_vec.size() == size_t(which_vector) );
+        ind_vec_vec.push_back(initial);
+        ind_vec_vec[which_vector].resize( initial.size() + 1 );
+        //
+        // ind_vec_vec
+        // Does not point to the nan in the tape which is at index tape->n_ind()
+        CPPAD_ASSERT_UNKNOWN( 0 < tape->n_ind() );
+        ind_vec_vec[which_vector][ initial.size() ] = 0;
+        //
+        if( ! trace )
+            return;
+        //
+        // print_vec_op
+        print_vec_op(which_vector, initial);
+    }
 };
 // ---------------------------------------------------------------------------
 /*
@@ -201,8 +201,8 @@ Dynamic Vector Load Operator
 Prototype
 *********
 {xrst_literal
-   // BEGIN_LOAD_OP_T
-   // END_LOAD_OP_T
+    // BEGIN_LOAD_OP_T
+    // END_LOAD_OP_T
 }
 
 Context
@@ -223,8 +223,8 @@ n_before
 ********
 This override of :ref:`val_base_op@n_before` returns 1.
 {xrst_literal
-   // BEGIN_LOAD_ARG_BEFORE
-   // END_LOAD_ARG_BEFORE
+    // BEGIN_LOAD_ARG_BEFORE
+    // END_LOAD_ARG_BEFORE
 }
 
 n_after
@@ -266,88 +266,88 @@ is called to print this operator.
 template <class Value>
 class load_op_t : public base_op_t<Value> {
 public:
-   // n_before
-   addr_t n_before(void) const override
-   {  return 1; }
-   //
-   // n_after
-   addr_t n_after(void) const override
-   {  return 0; }
-   //
-   // get_instance
-   static load_op_t* get_instance(void)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static load_op_t instance;
-      return &instance;
-   }
-   // op_enum
-   op_enum_t op_enum(void) const override
-   {  return load_op_enum; }
+    // n_before
+    addr_t n_before(void) const override
+    {  return 1; }
+    //
+    // n_after
+    addr_t n_after(void) const override
+    {  return 0; }
+    //
+    // get_instance
+    static load_op_t* get_instance(void)
+    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        static load_op_t instance;
+        return &instance;
+    }
+    // op_enum
+    op_enum_t op_enum(void) const override
+    {  return load_op_enum; }
 // END_LOAD_OP_T
-   //
-   // n_arg
-   addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 2; }
-   //
-   // n_res
-   addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 1; }
-   //
-   // eval
-   void eval(
-      const tape_t<Value>*      tape           ,
-      bool                      trace          ,
-      addr_t                    arg_index      ,
-      addr_t                    res_index      ,
-      Vector<Value>&            val_vec        ,
-      Vector< Vector<addr_t> >& ind_vec_vec    ,
-      size_t&                   compare_false  ) const override
-   {  //
-      // arg_vec, vec_vec
-      const Vector<addr_t>& arg_vec( tape->arg_vec() );
-      //
-      // this_vector
-      // BEGIN_LOAD_ARG_BEFORE
-      addr_t          which_vector = arg_vec[arg_index + 0];
-      Vector<addr_t>& this_vector  = ind_vec_vec[which_vector];
-      // END_LOAD_ARG_BEFORE
-      //
-      // vector_index
-      addr_t vector_index = arg_vec[arg_index + 1];
-      //
-      // index
-      Value index          = val_vec[vector_index];
-      //
-      // val_vec
-      addr_t flag = this_vector[ this_vector.size() - 1 ];
-      if( flag == tape->n_ind() || CppAD::isnan(index) )
-      {  val_vec[res_index] = val_vec[ tape->n_ind() ];
-         CPPAD_ASSERT_UNKNOWN( CppAD::isnan( val_vec[res_index] ) );
-      }
-      else
-      {  //
-         // dynamic_index
-         addr_t dynamic_index = addr_t( Integer(index) );
-         CPPAD_ASSERT_KNOWN( size_t(dynamic_index) + 1 < this_vector.size(),
-            "dynamic vector index is greater than or equal vector size"
-         );
-         //
-         // val_vec
-         val_vec[res_index] = val_vec[ this_vector[dynamic_index] ];
-      }
-      //
-      // trace
-      if( ! trace )
-         return;
-      //
-      // print_load_op
-      Value res_value = val_vec[res_index];
-      print_load_op(which_vector, vector_index, res_index, res_value);
-   }
+    //
+    // n_arg
+    addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {  return 2; }
+    //
+    // n_res
+    addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {  return 1; }
+    //
+    // eval
+    void eval(
+        const tape_t<Value>*      tape           ,
+        bool                      trace          ,
+        addr_t                    arg_index      ,
+        addr_t                    res_index      ,
+        Vector<Value>&            val_vec        ,
+        Vector< Vector<addr_t> >& ind_vec_vec    ,
+        size_t&                   compare_false  ) const override
+    {  //
+        // arg_vec, vec_vec
+        const Vector<addr_t>& arg_vec( tape->arg_vec() );
+        //
+        // this_vector
+        // BEGIN_LOAD_ARG_BEFORE
+        addr_t          which_vector = arg_vec[arg_index + 0];
+        Vector<addr_t>& this_vector  = ind_vec_vec[which_vector];
+        // END_LOAD_ARG_BEFORE
+        //
+        // vector_index
+        addr_t vector_index = arg_vec[arg_index + 1];
+        //
+        // index
+        Value index          = val_vec[vector_index];
+        //
+        // val_vec
+        addr_t flag = this_vector[ this_vector.size() - 1 ];
+        if( flag == tape->n_ind() || CppAD::isnan(index) )
+        {  val_vec[res_index] = val_vec[ tape->n_ind() ];
+            CPPAD_ASSERT_UNKNOWN( CppAD::isnan( val_vec[res_index] ) );
+        }
+        else
+        {  //
+            // dynamic_index
+            addr_t dynamic_index = addr_t( Integer(index) );
+            CPPAD_ASSERT_KNOWN( size_t(dynamic_index) + 1 < this_vector.size(),
+                "dynamic vector index is greater than or equal vector size"
+            );
+            //
+            // val_vec
+            val_vec[res_index] = val_vec[ this_vector[dynamic_index] ];
+        }
+        //
+        // trace
+        if( ! trace )
+            return;
+        //
+        // print_load_op
+        Value res_value = val_vec[res_index];
+        print_load_op(which_vector, vector_index, res_index, res_value);
+    }
 };
 // ---------------------------------------------------------------------------
 /*
@@ -359,8 +359,8 @@ Dynamic Vector Store Operator
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_OP_T
-   // END_STORE_OP_T
+    // BEGIN_STORE_OP_T
+    // END_STORE_OP_T
 }
 
 Context
@@ -381,8 +381,8 @@ n_before
 ********
 This override of :ref:`val_base_op@n_before` returns 1.
 {xrst_literal
-   // BEGIN_STORE_ARG_BEFORE
-   // END_STORE_ARG_BEFORE
+    // BEGIN_STORE_ARG_BEFORE
+    // END_STORE_ARG_BEFORE
 }
 
 n_after
@@ -430,84 +430,84 @@ is called to print this operator.
 template <class Value>
 class store_op_t : public base_op_t<Value> {
 public:
-   // n_before
-   addr_t n_before(void) const override
-   {  return 1; }
-   //
-   // n_after
-   addr_t n_after(void) const override
-   {  return 0; }
-   //
-   // get_instance
-   static store_op_t* get_instance(void)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static store_op_t instance;
-      return &instance;
-   }
-   // op_enum
-   op_enum_t op_enum(void) const override
-   {  return store_op_enum; }
+    // n_before
+    addr_t n_before(void) const override
+    {   return 1; }
+    //
+    // n_after
+    addr_t n_after(void) const override
+    {   return 0; }
+    //
+    // get_instance
+    static store_op_t* get_instance(void)
+    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        static store_op_t instance;
+        return &instance;
+    }
+    // op_enum
+    op_enum_t op_enum(void) const override
+    {   return store_op_enum; }
 // END_STORE_OP_T
-   //
-   // n_arg
-   addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 3; }
-   //
-   // n_res
-   addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 0; }
-   //
-   // eval
-   void eval(
-      const tape_t<Value>*      tape           ,
-      bool                      trace          ,
-      addr_t                    arg_index      ,
-      addr_t                    res_index      ,
-      Vector<Value>&            val_vec        ,
-      Vector< Vector<addr_t> >& ind_vec_vec    ,
-      size_t&                   compare_false  ) const override
-   {  //
-      // arg_vec, vec_vec
-      const Vector<addr_t>& arg_vec( tape->arg_vec() );
-      //
-      // this_vector
-      // BEGIN_STORE_ARG_BEFORE
-      addr_t          which_vector = arg_vec[arg_index + 0];
-      Vector<addr_t>& this_vector  = ind_vec_vec[which_vector];
-      // END_STORE_ARG_BEFORE
-      //
-      // vector_index, value_index
-      addr_t vector_index = arg_vec[arg_index + 1];
-      addr_t value_index  = arg_vec[arg_index + 2];
-      //
-      // index
-      Value index          = val_vec[vector_index];
-      if( CppAD::isnan(index) )
-      {  // set flag for this vector
-         this_vector[ this_vector.size() - 1 ] = tape->n_ind();
-      }
-      else
-      {  // dynamic_index
-         addr_t dynamic_index = addr_t( Integer(index) );
-         CPPAD_ASSERT_KNOWN( size_t(dynamic_index) + 1 < this_vector.size(),
-            "dynamic vector index is greater than or equal vector size"
-         );
-         //
-         // val_vec_vec
-         this_vector[dynamic_index] = value_index;
-      }
-      //
-      // trace
-      if( ! trace )
-         return;
-      //
-      // print_store_op
-      print_store_op(which_vector, vector_index, value_index);
-   }
+    //
+    // n_arg
+    addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 3; }
+    //
+    // n_res
+    addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 0; }
+    //
+    // eval
+    void eval(
+        const tape_t<Value>*      tape           ,
+        bool                      trace          ,
+        addr_t                    arg_index      ,
+        addr_t                    res_index      ,
+        Vector<Value>&            val_vec        ,
+        Vector< Vector<addr_t> >& ind_vec_vec    ,
+        size_t&                   compare_false  ) const override
+    {   //
+        // arg_vec, vec_vec
+        const Vector<addr_t>& arg_vec( tape->arg_vec() );
+        //
+        // this_vector
+        // BEGIN_STORE_ARG_BEFORE
+        addr_t          which_vector = arg_vec[arg_index + 0];
+        Vector<addr_t>& this_vector  = ind_vec_vec[which_vector];
+        // END_STORE_ARG_BEFORE
+        //
+        // vector_index, value_index
+        addr_t vector_index = arg_vec[arg_index + 1];
+        addr_t value_index  = arg_vec[arg_index + 2];
+        //
+        // index
+        Value index          = val_vec[vector_index];
+        if( CppAD::isnan(index) )
+        {   // set flag for this vector
+            this_vector[ this_vector.size() - 1 ] = tape->n_ind();
+        }
+        else
+        {   // dynamic_index
+            addr_t dynamic_index = addr_t( Integer(index) );
+            CPPAD_ASSERT_KNOWN( size_t(dynamic_index) + 1 < this_vector.size(),
+                "dynamic vector index is greater than or equal vector size"
+            );
+            //
+            // val_vec_vec
+            this_vector[dynamic_index] = value_index;
+        }
+        //
+        // trace
+        if( ! trace )
+            return;
+        //
+        // print_store_op
+        print_store_op(which_vector, vector_index, value_index);
+    }
 };
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

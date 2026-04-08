@@ -7,13 +7,13 @@
 /*
 {xrst_begin atomic_two_reverse app}
 {xrst_spell
-   apx
-   apy
-   atx
-   aty
-   px
-   py
-   tx
+    apx
+    apy
+    atx
+    aty
+    px
+    py
+    tx
 }
 
 Atomic Reverse Mode
@@ -25,22 +25,22 @@ Syntax
 Base
 ====
 
-   *ok* = *afun* . ``reverse`` ( *q* , *tx* , *ty* , *px* , *py* )
+    *ok* = *afun* . ``reverse`` ( *q* , *tx* , *ty* , *px* , *py* )
 
 This syntax is used by *f* . ``Forward`` where *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 and *afun* is used in *f* .
 
 AD<Base>
 ========
 
-   *ok* = *afun* . ``reverse`` ( *q* , *atx* , *aty* , *apx* , *apy* )
+    *ok* = *afun* . ``reverse`` ( *q* , *atx* , *aty* , *apx* , *apy* )
 
 This syntax is used by *af* . ``Forward`` where *af* has prototype
 
-   ``ADFun< AD<`` *Base* > , *Base* > *af*
+    ``ADFun< AD<`` *Base* > , *Base* > *af*
 
 and *afun* is used in *af* (see :ref:`base2ad-name` ).
 
@@ -64,7 +64,7 @@ q
 *
 The argument *q* has prototype
 
-   ``size_t`` *q*
+    ``size_t`` *q*
 
 It specifies the highest order Taylor coefficient that
 computing the derivative of.
@@ -73,20 +73,20 @@ tx
 **
 The argument *tx* has prototype
 
-   ``const CppAD::vector<`` *Base* >& *tx*
+    ``const CppAD::vector<`` *Base* >& *tx*
 
 and *tx* . ``size`` () == ( *q* +1)* *n* .
 For :math:`j = 0 , \ldots , n-1` and :math:`k = 0 , \ldots , q`,
 we use the Taylor coefficient notation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      x_j^k    & = & tx [ j * ( q + 1 ) + k ]
-      \\
-      X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
-   \end{eqnarray}
+    \begin{eqnarray}
+        x_j^k    & = & tx [ j * ( q + 1 ) + k ]
+        \\
+        X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+    \end{eqnarray}
 
 Note that superscripts represent an index for :math:`x_j^k`
 and an exponent for :math:`t^k`.
@@ -95,13 +95,13 @@ to the derivatives of :math:`X(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 
 atx
 ***
 The argument *atx* has prototype
 
-   ``const CppAD::vector< AD<`` *Base* > >& *atx*
+    ``const CppAD::vector< AD<`` *Base* > >& *atx*
 
 Otherwise, *atx* specifications are the same as for *tx* .
 
@@ -109,22 +109,22 @@ ty
 **
 The argument *ty* has prototype
 
-   ``const CppAD::vector<`` *Base* >& *ty*
+    ``const CppAD::vector<`` *Base* >& *ty*
 
 and *tx* . ``size`` () == ( *q* +1)* *m* .
 For :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , q`,
 we use the Taylor coefficient notation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      Y_i (t)  & = & f_i [ X(t) ]
-      \\
-      Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
-      \\
-      y_i^k    & = & ty [ i * ( q + 1 ) + k ]
-   \end{eqnarray}
+    \begin{eqnarray}
+        Y_i (t)  & = & f_i [ X(t) ]
+        \\
+        Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+        \\
+        y_i^k    & = & ty [ i * ( q + 1 ) + k ]
+    \end{eqnarray}
 
 where :math:`o( t^q ) / t^q \rightarrow 0` as :math:`t \rightarrow 0`.
 Note that superscripts represent an index for :math:`y_j^k`
@@ -134,13 +134,13 @@ to the derivatives of :math:`Y(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 
 aty
 ***
 The argument *aty* has prototype
 
-   ``const CppAD::vector< AD<`` *Base* > >& *aty*
+    ``const CppAD::vector< AD<`` *Base* > >& *aty*
 
 Otherwise, *aty* specifications are the same as for *ty* .
 
@@ -150,26 +150,26 @@ We use the notation :math:`\{ x_j^k \} \in \B{R}^{n \times (q+1)}` for
 
 .. math::
 
-   \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
+    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
 
 We use the notation :math:`\{ y_i^k \} \in \B{R}^{m \times (q+1)}` for
 
 .. math::
 
-   \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
+    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
 
 We define the function
 :math:`F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}` by
 
 .. math::
 
-   y_i^k = F_i^k [ \{ x_j^k \} ]
+    y_i^k = F_i^k [ \{ x_j^k \} ]
 
 Note that
 
 .. math::
 
-   F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
+    F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
 
 We also note that
 :math:`F_i^\ell ( \{ x_j^k \} )` is a function of
@@ -186,26 +186,26 @@ defined by
 
 .. math::
 
-   H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
+    H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
 
 py
 **
 The argument *py* has prototype
 
-   ``const CppAD::vector<`` *Base* >& *py*
+    ``const CppAD::vector<`` *Base* >& *py*
 
 and *py* . ``size`` () == ``m`` * ( *q* +1) .
 For :math:`i = 0 , \ldots , m-1`, :math:`k = 0 , \ldots , q`,
 
 .. math::
 
-   py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
+    py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
 
 apy
 ***
 The argument *apy* has prototype
 
-   ``const CppAD::vector< AD<`` *Base* > >& *apy*
+    ``const CppAD::vector< AD<`` *Base* > >& *apy*
 
 Otherwise, *apy* specifications are the same as for *py* .
 
@@ -213,7 +213,7 @@ px
 ==
 The *px* has prototype
 
-   ``CppAD::vector<`` *Base* >& *px*
+    ``CppAD::vector<`` *Base* >& *px*
 
 and *px* . ``size`` () == ``n`` * ( *q* +1) .
 The input values of the elements of *px*
@@ -222,25 +222,25 @@ Upon return,
 for :math:`j = 0 , \ldots , n-1` and :math:`\ell = 0 , \ldots , q`,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   px [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
-   \\
-   & = &
-   ( \partial G / \partial \{ y_i^k \} ) \cdot
-      ( \partial \{ y_i^k \} / \partial x_j^\ell )
-   \\
-   & = &
-   \sum_{k=0}^q
-   \sum_{i=0}^{m-1}
-   ( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
-   \\
-   & = &
-   \sum_{k=\ell}^q
-   \sum_{i=0}^{m-1}
-   py[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
-   \end{eqnarray}
+    \begin{eqnarray}
+    px [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
+    \\
+    & = &
+    ( \partial G / \partial \{ y_i^k \} ) \cdot
+        ( \partial \{ y_i^k \} / \partial x_j^\ell )
+    \\
+    & = &
+    \sum_{k=0}^q
+    \sum_{i=0}^{m-1}
+    ( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
+    \\
+    & = &
+    \sum_{k=\ell}^q
+    \sum_{i=0}^{m-1}
+    py[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
+    \end{eqnarray}
 
 Note that we have used the fact that for :math:`k < \ell`,
 :math:`\partial F_i^k / \partial x_j^\ell = 0`.
@@ -249,7 +249,7 @@ apx
 ***
 The argument *apx* has prototype
 
-   ``CppAD::vector< AD<`` *Base* > >& *apx*
+    ``CppAD::vector< AD<`` *Base* > >& *apx*
 
 Otherwise, *apx* specifications are the same as for *px* .
 
@@ -257,7 +257,7 @@ ok
 **
 The return value *ok* has prototype
 
-   ``bool`` *ok*
+    ``bool`` *ok*
 
 If it is ``true`` , the corresponding evaluation succeeded,
 otherwise it failed.
@@ -293,21 +293,21 @@ See atomic_reverse mode use documentation
 */
 template <class Base>
 bool atomic_base<Base>::reverse(
-   size_t                    q  ,
-   const vector<Base>&       tx ,
-   const vector<Base>&       ty ,
-          vector<Base>&       px ,
-   const vector<Base>&       py )
-{  return false; }
+    size_t                    q  ,
+    const vector<Base>&       tx ,
+    const vector<Base>&       ty ,
+             vector<Base>&       px ,
+    const vector<Base>&       py )
+{   return false; }
 
 template <class Base>
 bool atomic_base<Base>::reverse(
-   size_t                    q  ,
-   const vector< AD<Base> >& atx ,
-   const vector< AD<Base> >& aty ,
-          vector< AD<Base> >& apx ,
-   const vector< AD<Base> >& apy )
-{  return false; }
+    size_t                    q  ,
+    const vector< AD<Base> >& atx ,
+    const vector< AD<Base> >& aty ,
+             vector< AD<Base> >& apx ,
+    const vector< AD<Base> >& apy )
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 # endif

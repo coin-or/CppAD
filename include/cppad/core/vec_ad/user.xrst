@@ -5,11 +5,11 @@
 /*
 {xrst_begin VecAD}
 {xrst_spell
-   grep
-   ldp
-   ldv
-   vp
-   wc
+    grep
+    ldp
+    ldv
+    vp
+    wc
 }
 
 AD Vectors that Record Index Operations
@@ -31,7 +31,7 @@ If either *vec* or *ind* is a
 :ref:`dynamic parameter<glossary@Parameter@Dynamic>` ,
 the indexing operation
 
-   *vec* [ *ind* ]
+    *vec* [ *ind* ]
 
 is recorded in the corresponding ``AD`` < *Base* >
 :ref:`operation sequence<glossary@Operation@Sequence>` and
@@ -71,7 +71,7 @@ VecAD<Base>::reference
 **********************
 The expression *vec* [ *ind* ] has prototype
 
-   ``VecAD`` < *Base* >:: ``reference`` *vec* [ *ind* ]
+    ``VecAD`` < *Base* >:: ``reference`` *vec* [ *ind* ]
 
 which is like the ``AD`` < *Base* > type
 with some notable exceptions:
@@ -83,9 +83,9 @@ Exceptions
    :ref:`Value-name` function to compute the corresponding *Base* value.
    In some cases, the syntax
 
-      *vec* [ *i* ]
+        *vec* [ *i* ]
 
-   can be used to obtain the corresponding *Base* value; see below.
+    can be used to obtain the corresponding *Base* value; see below.
 
 #. This object cannot be used as the left hand side in a
    with a :ref:`compound assignment<compound_assign-name>` ; i.e.,
@@ -95,23 +95,23 @@ Exceptions
    ``/=`` .
    For example, the following syntax is not valid:
 
-      *vec* [ *ind* ] += *z* ;
+        *vec* [ *ind* ] += *z* ;
 
-   no matter what the types of *z* .
+    no matter what the types of *z* .
 
 #. Assignment to ``vec`` [ ``ind`` ] returns a ``void`` .
    For example, the following syntax is not valid:
 
-      *z* = *vec* [ *ind* ] = *u* ;
+        *z* = *vec* [ *ind* ] = *u* ;
 
-   no matter what the types of *z* , and *u* .
+    no matter what the types of *z* , and *u* .
 
 #. A *vec* [ *ind* ] object cannot appear in a :ref:`CondExp-name` ;
    For example, the following syntax is not valid:
 
-      ``CondExpGt`` ( *vec* [ *ind* ], *u* , *v* , *w* )
+        ``CondExpGt`` ( *vec* [ *ind* ], *u* , *v* , *w* )
 
-   no matter what the types of *u* , *v* , and *w* .
+    no matter what the types of *u* , *v* , and *w* .
 
 #. A *vec* [ *ind* ] object should not be used with the
    ``Constant`` , ``Dynamic`` , ``Parameter`` , and ``Variable``
@@ -128,7 +128,7 @@ vec
 ===
 The syntax
 
-   ``VecAD`` < *Base* > *vec* ( *n* )
+    ``VecAD`` < *Base* > *vec* ( *n* )
 
 creates an ``VecAD`` object *vec* with
 *n* elements.
@@ -138,13 +138,13 @@ n
 =
 The argument *n* has prototype
 
-   ``size_t`` *n*
+    ``size_t`` *n*
 
 size
 ****
 The syntax
 
-   *vec* . ``size`` ()
+    *vec* . ``size`` ()
 
 returns the number of elements in the vector *vec* ;
 i.e., the value of *n* when it was constructed.
@@ -153,7 +153,7 @@ Base Indexing
 *************
 We refer to the syntax
 
-   *base* = *vec* [ *i* ]
+    *base* = *vec* [ *i* ]
 
 as base indexing of a ``VecAD`` object.
 This indexing is only valid if the vector *vec* is a
@@ -164,7 +164,7 @@ i
 =
 The operand *i* has prototype
 
-   ``size_t`` *i*
+    ``size_t`` *i*
 
 and must be less than *n* ; i.e., less than
 the number of elements in *vec* .
@@ -173,13 +173,13 @@ base
 ====
 The result *base* has prototype
 
-   *Base* & *base*
+    *Base* & *base*
 
 i.e., it is a reference to the *i*-th element in the vector *vec* .
 It can be used to change the element value;
 for example,
 
-   *vec* [ *i* ] = *b*
+    *vec* [ *i* ] = *b*
 
 is valid where *b* is a *Base* object.
 The reference *base* is no longer valid once the
@@ -189,7 +189,7 @@ AD Indexing
 ***********
 We refer to the syntax
 
-   *vec* [ *ind* ]
+    *vec* [ *ind* ]
 
 as AD indexing of a ``VecAD`` object.
 
@@ -197,7 +197,7 @@ ind
 ===
 The argument *ind* has prototype
 
-   ``const AD`` < *Base* >& *ind*
+    ``const AD`` < *Base* >& *ind*
 
 The value of *ind* must be greater than or equal zero
 and less than *n* ; i.e., less than
@@ -207,7 +207,7 @@ result
 ======
 The resulting expression has prototype
 
-   ``VecAD`` < *Base* >:: ``reference`` *vec* [ *ind* ]
+    ``VecAD`` < *Base* >:: ``reference`` *vec* [ *ind* ]
 
 This objects operations are recorded as part of the ``AD`` < *Base* >
 :ref:`operation sequence<glossary@Operation@Sequence>` .
@@ -233,12 +233,12 @@ Is the left hand side of the assignment statement
 is the current value for the corresponding element of *vec* .
 It has the following prototype:
 
-   ``const AD`` < *Base* >& *left*
+    ``const AD`` < *Base* >& *left*
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/vec_ad.cpp
+    example/general/vec_ad.cpp
 }
 The file
 :ref:`vec_ad.cpp-name`
@@ -264,28 +264,28 @@ The effect of this can be seen by executing the following steps:
    change the definition of ``CPPAD_FORWARD1SWEEP_TRACE`` to
    ::
 
-      # define CPPAD_FORWARD1SWEEP_TRACE 1
+        # define CPPAD_FORWARD1SWEEP_TRACE 1
 
 #. In the ``Example`` directory, execute the command
    ::
 
-      ./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG > lu_vec_ad_ok.log
+        ./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG > lu_vec_ad_ok.log
 
-   This will write a trace of all the forward tape operations,
-   for the test case :ref:`lu_vec_ad_ok.cpp-name` ,
-   to the file ``lu_vec_ad_ok.log`` .
+    This will write a trace of all the forward tape operations,
+    for the test case :ref:`lu_vec_ad_ok.cpp-name` ,
+    to the file ``lu_vec_ad_ok.log`` .
 #. In the ``Example`` directory execute the commands
    ::
 
-      grep "op="           lu_vec_ad_ok.log | wc -l
-      grep "op=Ld[vp]"     lu_vec_ad_ok.log | wc -l
-      grep "op=St[vp][vp]" lu_vec_ad_ok.log | wc -l
+        grep "op="           lu_vec_ad_ok.log | wc -l
+        grep "op=Ld[vp]"     lu_vec_ad_ok.log | wc -l
+        grep "op=St[vp][vp]" lu_vec_ad_ok.log | wc -l
 
-   The first command counts the number of operators in the tracing,
-   the second counts the number of VecAD load operations,
-   and the third counts the number of VecAD store operations.
-   (For CppAD version 05-11-20 these counts were 956, 348, and 118
-   respectively.)
+    The first command counts the number of operators in the tracing,
+    the second counts the number of VecAD load operations,
+    and the third counts the number of VecAD store operations.
+    (For CppAD version 05-11-20 these counts were 956, 348, and 118
+    respectively.)
 
 {xrst_end VecAD}
 ------------------------------------------------------------------------

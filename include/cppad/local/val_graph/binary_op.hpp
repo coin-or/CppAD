@@ -11,37 +11,37 @@
 namespace CppAD { namespace local { namespace val_graph {
 
 # define CPPAD_VAL_GRAPH_BINARY(Name, Op) \
-   template <class Value> \
-   class Name##_op_t : public binary_op_t<Value> { \
-   public: \
-      /* get_instance */ \
-      static Name##_op_t* get_instance(void) \
-      {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \
-         static Name##_op_t instance; \
-         return &instance; \
-      } \
-      /* op_enum */ \
-      op_enum_t op_enum(void) const override \
-      {  return Name##_op_enum;  \
-      } \
-      /* eval */ \
-      void eval( \
-         const tape_t<Value>*      tape          , \
-         bool                      trace         , \
-         addr_t                    arg_index     , \
-         addr_t                    res_index     , \
-         Vector<Value>&            val_vec       , \
-         Vector< Vector<addr_t> >& ind_vec_vec   , \
-         size_t&                   compare_false ) const override \
-      {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
-         const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
-         const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
-         val_vec[res_index]  = left Op right; \
-         if( trace ) this->print_op( \
-            #Name , arg_index, tape->arg_vec(), res_index, val_vec \
-         ); \
-      } \
-   }
+    template <class Value> \
+    class Name##_op_t : public binary_op_t<Value> { \
+    public: \
+        /* get_instance */ \
+        static Name##_op_t* get_instance(void) \
+        {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \
+            static Name##_op_t instance; \
+            return &instance; \
+        } \
+        /* op_enum */ \
+        op_enum_t op_enum(void) const override \
+        {   return Name##_op_enum;  \
+        } \
+        /* eval */ \
+        void eval( \
+            const tape_t<Value>*      tape          , \
+            bool                      trace         , \
+            addr_t                    arg_index     , \
+            addr_t                    res_index     , \
+            Vector<Value>&            val_vec       , \
+            Vector< Vector<addr_t> >& ind_vec_vec   , \
+            size_t&                   compare_false ) const override \
+        {   const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
+            const Value& left   = val_vec[ arg_vec[arg_index + 0] ]; \
+            const Value& right  = val_vec[ arg_vec[arg_index + 1] ]; \
+            val_vec[res_index]  = left Op right; \
+            if( trace ) this->print_op( \
+                #Name , arg_index, tape->arg_vec(), res_index, val_vec \
+            ); \
+        } \
+    }
 
 /*
 ------------------------------------------------------------------------------
@@ -60,8 +60,8 @@ The Value Operator Binary Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_BINARY_OP_T
-   // END_BINARY_OP_T
+    // BEGIN_BINARY_OP_T
+    // END_BINARY_OP_T
 }
 
 Purpose
@@ -95,8 +95,8 @@ This override of :ref:`val_base_op@n_res` returns 1.
 print_op
 ********
 {xrst_literal
-   // BEGIN_PRINT_OP
-   // END_PRINT_OP
+    // BEGIN_PRINT_OP
+    // END_PRINT_OP
 }
 This member function uses :ref:`val_print_op-name`
 to print binary operators.
@@ -109,60 +109,60 @@ template <class Value>
 class binary_op_t : public base_op_t<Value> {
 // END_BINARY_OP_T
 public:
-   // n_before
-   addr_t n_before(void) const override
-   {  return 0; }
-   //
-   // n_after
-   addr_t n_after(void) const override
-   {  return 0; }
-   //
-   // is_binary
-   bool is_binary(void) const override
-   {  return true; }
-   //
-   // n_arg
-   addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 2; }
-   //
-   // n_res
-   addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 1; }
-   //
-   // op_enum
-   virtual op_enum_t op_enum(void) const override = 0;
-   //
-   // eval
-   virtual void eval(
-      const tape_t<Value>*      tape          ,
-      bool                      trace         ,
-      addr_t                    arg_index     ,
-      addr_t                    res_index     ,
-      Vector<Value>&            val_vec       ,
-      Vector< Vector<addr_t> >& ind_vec_vec   ,
-      size_t&                   compare_false ) const override = 0;
-   //
-   // BEGIN_PRINT_OP
-   void print_op(
-      const char*           name         ,
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      addr_t                res_index    ,
-      Vector<Value>&        val_vec      ) const
-   // END_PRINT_OP
-   {  //
-      addr_t left_index            = arg_vec[ arg_index + 0 ];
-      addr_t right_index           = arg_vec[ arg_index + 1 ];
-      Vector<addr_t> arg_val_index = { left_index, right_index };
-      Vector<Value>  res_value     = { val_vec[res_index] };
-      CppAD::local::val_graph::print_op(
-         name, arg_val_index, res_index, res_value
-      );
-   }
+    // n_before
+    addr_t n_before(void) const override
+    {   return 0; }
+    //
+    // n_after
+    addr_t n_after(void) const override
+    {   return 0; }
+    //
+    // is_binary
+    bool is_binary(void) const override
+    {   return true; }
+    //
+    // n_arg
+    addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 2; }
+    //
+    // n_res
+    addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 1; }
+    //
+    // op_enum
+    virtual op_enum_t op_enum(void) const override = 0;
+    //
+    // eval
+    virtual void eval(
+        const tape_t<Value>*      tape          ,
+        bool                      trace         ,
+        addr_t                    arg_index     ,
+        addr_t                    res_index     ,
+        Vector<Value>&            val_vec       ,
+        Vector< Vector<addr_t> >& ind_vec_vec   ,
+        size_t&                   compare_false ) const override = 0;
+    //
+    // BEGIN_PRINT_OP
+    void print_op(
+        const char*           name         ,
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ,
+        addr_t                res_index    ,
+        Vector<Value>&        val_vec      ) const
+    // END_PRINT_OP
+    {   //
+        addr_t left_index            = arg_vec[ arg_index + 0 ];
+        addr_t right_index           = arg_vec[ arg_index + 1 ];
+        Vector<addr_t> arg_val_index = { left_index, right_index };
+        Vector<Value>  res_value     = { val_vec[res_index] };
+        CppAD::local::val_graph::print_op(
+            name, arg_val_index, res_index, res_value
+        );
+    }
 };
 /*
 ------------------------------------------------------------------------------
@@ -181,12 +181,12 @@ Prototype
 Unary operators are defined for the following names:
 
 .. csv-table:: Unary Operators
-   :widths: auto
-   :header-rows: 1
+    :widths: auto
+    :header-rows: 1
 
-   Name,description
-   add,result is the sum of the two operands
-   sub,result is the first operand minus the second
+    Name,description
+    add,result is the sum of the two operands
+    sub,result is the first operand minus the second
 
 Context
 *******
@@ -212,7 +212,7 @@ the result equal to the binary operator applied to the operands; see
 
 
 {xrst_toc_hidden
-   val_graph/binary_xam.cpp
+    val_graph/binary_xam.cpp
 }
 Example
 *******
@@ -229,35 +229,35 @@ CPPAD_VAL_GRAPH_BINARY(div, /);
 template <class Value>
 class pow_op_t : public binary_op_t<Value> {
 public:
-   /* get_instance */
-   static pow_op_t* get_instance(void)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static pow_op_t instance;
-      return &instance;
-   }
-   /* op_enum */
-   op_enum_t op_enum(void) const override
-   {  return pow_op_enum;
-   }
-   /* eval */
-   void eval(
-      const tape_t<Value>*      tape          ,
-      bool                      trace         ,
-      addr_t                    arg_index     ,
-      addr_t                    res_index     ,
-      Vector<Value>&            val_vec       ,
-      Vector< Vector<addr_t> >& ind_vec_vec   ,
-      size_t&                   compare_false ) const override
-   {  const Vector<addr_t>& arg_vec( tape->arg_vec() );
-      const Value& left   = val_vec[ arg_vec[arg_index + 0] ];
-      const Value& right  = val_vec[ arg_vec[arg_index + 1] ];
-      // Only the line directly below is different from
-      // CPPAD_VAL_GRAPH_BINARY(pow, pow)
-      val_vec[res_index]  = pow(left, right);
-      if( trace ) this->print_op(
-         "pow", arg_index, tape->arg_vec(), res_index, val_vec
-      );
-   }
+    /* get_instance */
+    static pow_op_t* get_instance(void)
+    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        static pow_op_t instance;
+        return &instance;
+    }
+    /* op_enum */
+    op_enum_t op_enum(void) const override
+    {   return pow_op_enum;
+    }
+    /* eval */
+    void eval(
+        const tape_t<Value>*      tape          ,
+        bool                      trace         ,
+        addr_t                    arg_index     ,
+        addr_t                    res_index     ,
+        Vector<Value>&            val_vec       ,
+        Vector< Vector<addr_t> >& ind_vec_vec   ,
+        size_t&                   compare_false ) const override
+    {   const Vector<addr_t>& arg_vec( tape->arg_vec() );
+        const Value& left   = val_vec[ arg_vec[arg_index + 0] ];
+        const Value& right  = val_vec[ arg_vec[arg_index + 1] ];
+        // Only the line directly below is different from
+        // CPPAD_VAL_GRAPH_BINARY(pow, pow)
+        val_vec[res_index]  = pow(left, right);
+        if( trace ) this->print_op(
+            "pow", arg_index, tape->arg_vec(), res_index, val_vec
+        );
+    }
 };
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

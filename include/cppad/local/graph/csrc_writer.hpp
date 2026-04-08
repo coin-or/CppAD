@@ -24,11 +24,11 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 namespace CppAD { namespace local { namespace graph {
-   CPPAD_LIB_EXPORT void csrc_writer(
-      std::ostream&       os          ,
-      const cpp_graph&    graph_obj   ,
-      const std::string&  type
-   );
+    CPPAD_LIB_EXPORT void csrc_writer(
+        std::ostream&       os          ,
+        const cpp_graph&    graph_obj   ,
+        const std::string&  type
+    );
 } } }
 /* {xrst_code}
 {xrst_spell_on}

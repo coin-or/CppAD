@@ -33,10 +33,10 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 namespace CppAD { namespace local { namespace graph {
-   CPPAD_LIB_EXPORT void json_writer(
-      std::string&       json        ,
-      const cpp_graph&   graph_obj
-   );
+    CPPAD_LIB_EXPORT void json_writer(
+        std::string&       json        ,
+        const cpp_graph&   graph_obj
+    );
 } } }
 /* {xrst_code}
 {xrst_spell_on}

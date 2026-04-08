@@ -33,7 +33,7 @@ s
 *
 The return value has prototype
 
-   ``std::string`` *s*
+    ``std::string`` *s*
 
 and contains a representation of the specified *value* .
 If *value* is an AD type,
@@ -51,14 +51,14 @@ includes an example and test of ``to_string`` with AD types.
 
 namespace CppAD {
 
-   // Template definition is in cppad/utility/to_string.hpp.
-   // Partial specialzation for AD<Base> types
-   template<class Base>
-   struct to_string_struct< CppAD::AD<Base> >
-   {  std::string operator()(const CppAD::AD<Base>& value)
-      {  to_string_struct<Base> ts;
-         return ts( Value( Var2Par( value ) ) ); }
-   };
+    // Template definition is in cppad/utility/to_string.hpp.
+    // Partial specialzation for AD<Base> types
+    template<class Base>
+    struct to_string_struct< CppAD::AD<Base> >
+    {   std::string operator()(const CppAD::AD<Base>& value)
+        {   to_string_struct<Base> ts;
+            return ts( Value( Var2Par( value ) ) ); }
+    };
 
 }
 

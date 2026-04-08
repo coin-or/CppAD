@@ -26,8 +26,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 fun
@@ -54,7 +54,7 @@ The ``to_json`` routine is not yet implement for some
 possible :ref:`ADFun-name` operators; see
 :ref:`graph_op_enum@Missing Operators` .
 {xrst_toc_hidden
-   example/json/to_json.cpp
+    example/json/to_json.cpp
 }
 Example
 *******
@@ -66,18 +66,18 @@ The file :ref:`to_json.cpp-name` is an example and test of this operation.
 template <class Base, class RecBase>
 std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
-{  //
-   // to_graph return values
-   cpp_graph graph_obj;
-   //
-   // graph corresponding to this function
-   to_graph(graph_obj);
-   //
-   // convert to json
-   std::string json;
-   local::graph::json_writer(json, graph_obj);
-   //
-   return json;
+{   //
+    // to_graph return values
+    cpp_graph graph_obj;
+    //
+    // graph corresponding to this function
+    to_graph(graph_obj);
+    //
+    // convert to json
+    std::string json;
+    local::graph::json_writer(json, graph_obj);
+    //
+    return json;
 }
 
 # endif

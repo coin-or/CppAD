@@ -28,8 +28,8 @@ Enable val_graph Operators During Parallel Mode
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ENABLE_PARALLEL
-   // END_ENABLE_PARALLEL
+    // BEGIN_ENABLE_PARALLEL
+    // END_ENABLE_PARALLEL
 }
 
 Purpose
@@ -45,47 +45,47 @@ to a pointer to an operator base class object :ref:`val_base_op-name` .
 // CppAD::local::val_graph enable_parallel()
 template <class Value> void enable_parallel(void)
 // END_ENABLE_PARALLEL
-{  //
-   // BEGIN_SORT_THIS_LINE_PLUS_1
-   abs_op_t<Value>::get_instance();
-   acos_op_t<Value>::get_instance();
-   acosh_op_t<Value>::get_instance();
-   add_op_t<Value>::get_instance();
-   asin_op_t<Value>::get_instance();
-   asinh_op_t<Value>::get_instance();
-   atan_op_t<Value>::get_instance();
-   atanh_op_t<Value>::get_instance();
-   call_op_t<Value>::get_instance();
-   cexp_op_t<Value>::get_instance();
-   comp_op_t<Value>::get_instance();
-   con_op_t<Value>::get_instance();
-   cos_op_t<Value>::get_instance();
-   cosh_op_t<Value>::get_instance();
-   csum_op_t<Value>::get_instance();
-   dis_op_t<Value>::get_instance();
-   div_op_t<Value>::get_instance();
-   erf_op_t<Value>::get_instance();
-   erfc_op_t<Value>::get_instance();
-   exp_op_t<Value>::get_instance();
-   expm1_op_t<Value>::get_instance();
-   load_op_t<Value>::get_instance();
-   log1p_op_t<Value>::get_instance();
-   log_op_t<Value>::get_instance();
-   mul_op_t<Value>::get_instance();
-   neg_op_t<Value>::get_instance();
-   pow_op_t<Value>::get_instance();
-   pri_op_t<Value>::get_instance();
-   sign_op_t<Value>::get_instance();
-   sin_op_t<Value>::get_instance();
-   sinh_op_t<Value>::get_instance();
-   sqrt_op_t<Value>::get_instance();
-   store_op_t<Value>::get_instance();
-   sub_op_t<Value>::get_instance();
-   tan_op_t<Value>::get_instance();
-   tanh_op_t<Value>::get_instance();
-   vec_op_t<Value>::get_instance();
-   // END_SORT_THIS_LINE_MINUS_1
-   return;
+{   //
+    // BEGIN_SORT_THIS_LINE_PLUS_1
+    abs_op_t<Value>::get_instance();
+    acos_op_t<Value>::get_instance();
+    acosh_op_t<Value>::get_instance();
+    add_op_t<Value>::get_instance();
+    asin_op_t<Value>::get_instance();
+    asinh_op_t<Value>::get_instance();
+    atan_op_t<Value>::get_instance();
+    atanh_op_t<Value>::get_instance();
+    call_op_t<Value>::get_instance();
+    cexp_op_t<Value>::get_instance();
+    comp_op_t<Value>::get_instance();
+    con_op_t<Value>::get_instance();
+    cos_op_t<Value>::get_instance();
+    cosh_op_t<Value>::get_instance();
+    csum_op_t<Value>::get_instance();
+    dis_op_t<Value>::get_instance();
+    div_op_t<Value>::get_instance();
+    erf_op_t<Value>::get_instance();
+    erfc_op_t<Value>::get_instance();
+    exp_op_t<Value>::get_instance();
+    expm1_op_t<Value>::get_instance();
+    load_op_t<Value>::get_instance();
+    log1p_op_t<Value>::get_instance();
+    log_op_t<Value>::get_instance();
+    mul_op_t<Value>::get_instance();
+    neg_op_t<Value>::get_instance();
+    pow_op_t<Value>::get_instance();
+    pri_op_t<Value>::get_instance();
+    sign_op_t<Value>::get_instance();
+    sin_op_t<Value>::get_instance();
+    sinh_op_t<Value>::get_instance();
+    sqrt_op_t<Value>::get_instance();
+    store_op_t<Value>::get_instance();
+    sub_op_t<Value>::get_instance();
+    tan_op_t<Value>::get_instance();
+    tanh_op_t<Value>::get_instance();
+    vec_op_t<Value>::get_instance();
+    // END_SORT_THIS_LINE_MINUS_1
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

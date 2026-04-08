@@ -48,44 +48,44 @@ extern bool vec_xam(void);
 
 // main program that runs all the tests
 int main(void)
-{  std::string group = "val_graph";
-   size_t      width = 20;
-   CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "val_graph";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-   // This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-   // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( binary_xam,          "binary_xam"          );
-   Run( call_xam,            "call_xam"            );
-   Run( cexp_xam,            "cexp_xam"            );
-   Run( comp_xam,            "comp_xam"            );
-   Run( compress_xam,        "compress_xam"        );
-   Run( con_xam,             "con_xam"             );
-   Run( csum_xam,            "csum_xam"            );
-   Run( cumulative_xam,      "cumulative_xam"      );
-   Run( dead_xam,            "dead_xam"            );
-   Run( dis_xam,             "dis_xam"             );
-   Run( fold_con_xam,        "fold_con_xam"        );
-   Run( fun2val_xam,         "fun2val_xam"         );
-   Run( pri_xam,             "pri_xam"             );
-   Run( renumber_xam,        "renumber_xam"        );
-   Run( summation_xam,       "summation_xam"       );
-   Run( test_ad_double,      "test_ad_double"      );
-   Run( test_fold,           "test_fold"           );
-   Run( test_fun2val,        "test_fun2val"        );
-   Run( test_nan,            "test_nan"            );
-   Run( test_opt_call,       "test_opt_call"       );
-   Run( test_optimize,       "test_optimize"       );
-   Run( test_val2fun,        "test_val2fun"        );
-   Run( unary_xam,           "unary_xam"           );
-   Run( val2fun_xam,         "val2fun_xam"         );
-   Run( vec_xam,             "vec_xam"             );
-   // END_SORT_THIS_LINE_MINUS_1
+    // BEGIN_SORT_THIS_LINE_PLUS_1
+    Run( binary_xam,          "binary_xam"          );
+    Run( call_xam,            "call_xam"            );
+    Run( cexp_xam,            "cexp_xam"            );
+    Run( comp_xam,            "comp_xam"            );
+    Run( compress_xam,        "compress_xam"        );
+    Run( con_xam,             "con_xam"             );
+    Run( csum_xam,            "csum_xam"            );
+    Run( cumulative_xam,      "cumulative_xam"      );
+    Run( dead_xam,            "dead_xam"            );
+    Run( dis_xam,             "dis_xam"             );
+    Run( fold_con_xam,        "fold_con_xam"        );
+    Run( fun2val_xam,         "fun2val_xam"         );
+    Run( pri_xam,             "pri_xam"             );
+    Run( renumber_xam,        "renumber_xam"        );
+    Run( summation_xam,       "summation_xam"       );
+    Run( test_ad_double,      "test_ad_double"      );
+    Run( test_fold,           "test_fold"           );
+    Run( test_fun2val,        "test_fun2val"        );
+    Run( test_nan,            "test_nan"            );
+    Run( test_opt_call,       "test_opt_call"       );
+    Run( test_optimize,       "test_optimize"       );
+    Run( test_val2fun,        "test_val2fun"        );
+    Run( unary_xam,           "unary_xam"           );
+    Run( val2fun_xam,         "val2fun_xam"         );
+    Run( vec_xam,             "vec_xam"             );
+    // END_SORT_THIS_LINE_MINUS_1
 
-   // check for memory leak
-   bool memory_ok = CppAD::thread_alloc::free_all();
-   // print summary at end
-   bool ok = Run.summary(memory_ok);
-   //
-   return static_cast<int>( ! ok );
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }

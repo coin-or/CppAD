@@ -30,60 +30,60 @@
 # prefix_info_.
 #
 MACRO(prefix_info package system_include)
-   #
-   # ${package}_prefix
-   SET(${package}_prefix NOTFOUND CACHE PATH "${package} install prefix")
-   #
-   # prefix_info_value
-   SET( prefix_info_value "${${package}_prefix}" )
-   #
-   SET(cppad_has_${package} 1)
-   #
-   IF( "${prefix_info_value}" STREQUAL "NOTFOUND" )
-      SET(cppad_has_${package} 0)
-   ENDIF( )
-   #
-   IF( "${prefix_info_value}" STREQUAL "" )
-      SET(cppad_has_${package} 0)
-   ENDIF( )
-   #
-   IF( cppad_has_${package} )
-      SET(cppad_has_${package} 0)
-      #
-      # prefix_info_subdir
-      FOREACH(prefix_info_subdir ${cmake_install_includedirs})
-         #
-         # prefix_info_dir
-         SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
-         IF(IS_DIRECTORY "${prefix_info_dir}" )
-            SET(cppad_has_${package} 1)
-            MESSAGE(STATUS "    Found ${prefix_info_dir}")
-            IF( ${system_include} )
-               INCLUDE_DIRECTORIES( SYSTEM "${prefix_info_dir}" )
-            ELSE( )
-               INCLUDE_DIRECTORIES( "${prefix_info_dir}" )
+    #
+    # ${package}_prefix
+    SET(${package}_prefix NOTFOUND CACHE PATH "${package} install prefix")
+    #
+    # prefix_info_value
+    SET( prefix_info_value "${${package}_prefix}" )
+    #
+    SET(cppad_has_${package} 1)
+    #
+    IF( "${prefix_info_value}" STREQUAL "NOTFOUND" )
+        SET(cppad_has_${package} 0)
+    ENDIF( )
+    #
+    IF( "${prefix_info_value}" STREQUAL "" )
+        SET(cppad_has_${package} 0)
+    ENDIF( )
+    #
+    IF( cppad_has_${package} )
+        SET(cppad_has_${package} 0)
+        #
+        # prefix_info_subdir
+        FOREACH(prefix_info_subdir ${cmake_install_includedirs})
+            #
+            # prefix_info_dir
+            SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
+            IF(IS_DIRECTORY "${prefix_info_dir}" )
+                SET(cppad_has_${package} 1)
+                MESSAGE(STATUS "    Found ${prefix_info_dir}")
+                IF( ${system_include} )
+                    INCLUDE_DIRECTORIES( SYSTEM "${prefix_info_dir}" )
+                ELSE( )
+                    INCLUDE_DIRECTORIES( "${prefix_info_dir}" )
+                ENDIF( )
             ENDIF( )
-         ENDIF( )
-      ENDFOREACH( )
-      #
-      # prefix_info_subdir
-      FOREACH(prefix_info_subdir ${cmake_install_libdirs})
-         #
-         # prefix_info_dir
-         SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
-         IF(IS_DIRECTORY "${prefix_info_dir}" )
-            SET(cppad_has_${package} 1)
-            MESSAGE(STATUS "    Found ${prefix_info_dir}")
-            LINK_DIRECTORIES( "${prefix_info_dir}" )
-         ENDIF( )
-      ENDFOREACH()
-      IF( NOT cppad_has_${package} )
-         MESSAGE(FATAL_ERROR
-            "cppad_has_${package} = ${prefix_info_value} "
-            "but did not find any include files or libraries there"
-         )
-      ENDIF( )
-   ENDIF( )
-   #
-   print_variable( cppad_has_${package} )
+        ENDFOREACH( )
+        #
+        # prefix_info_subdir
+        FOREACH(prefix_info_subdir ${cmake_install_libdirs})
+            #
+            # prefix_info_dir
+            SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
+            IF(IS_DIRECTORY "${prefix_info_dir}" )
+                SET(cppad_has_${package} 1)
+                MESSAGE(STATUS "    Found ${prefix_info_dir}")
+                LINK_DIRECTORIES( "${prefix_info_dir}" )
+            ENDIF( )
+        ENDFOREACH()
+        IF( NOT cppad_has_${package} )
+            MESSAGE(FATAL_ERROR
+                "cppad_has_${package} = ${prefix_info_value} "
+                "but did not find any include files or libraries there"
+            )
+        ENDIF( )
+    ENDIF( )
+    #
+    print_variable( cppad_has_${package} )
 ENDMACRO( )

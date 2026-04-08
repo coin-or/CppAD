@@ -73,8 +73,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_TWO_VAR_FOR_JAC
-   // END_TWO_VAR_FOR_JAC
+    // BEGIN_TWO_VAR_FOR_JAC
+    // END_TWO_VAR_FOR_JAC
 }
 
 Vector_set, i_z, arg
@@ -103,18 +103,18 @@ the Jacobian sparsity for the variable *z* .
 // BEGIN_TWO_VAR_FOR_JAC
 template <class Vector_set>
 void two_var_for_jac(
-   size_t            i_z           ,
-   const addr_t*     arg           ,
-   Vector_set&       sparsity      )
+    size_t            i_z           ,
+    const addr_t*     arg           ,
+    Vector_set&       sparsity      )
 // END_TWO_VAR_FOR_JAC
 {
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
-   sparsity.binary_union(i_z, size_t(arg[0]), size_t(arg[1]), sparsity);
+    sparsity.binary_union(i_z, size_t(arg[0]), size_t(arg[1]), sparsity);
 
-   return;
+    return;
 }
 /*
 ------------------------------------------------------------------------------
@@ -133,8 +133,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_TWO_VAR_REV_JAC
-   // END_TWO_VAR_REV_JAC
+    // BEGIN_TWO_VAR_REV_JAC
+    // END_TWO_VAR_REV_JAC
 }
 
 Vector_set, i_z, arg
@@ -149,7 +149,7 @@ sparsity
 Use z(x, y) to denote the variable *z* as a function of the variables
 *x* , *y* , and define H in terms of G by::
 
-   H( x, y, ... ) = G[ z(x, y) , x, y, ... ]
+    H( x, y, ... ) = G[ z(x, y) , x, y, ... ]
 
 On input, *sparsity* is a sparsity pattern for the Jacobian of *G* .
 Upon return, *sparsity* is a sparsity pattern for the Jacobian of *H* .
@@ -159,19 +159,19 @@ Upon return, *sparsity* is a sparsity pattern for the Jacobian of *H* .
 // BEGIN_TWO_VAR_REV_JAC
 template <class Vector_set>
 void two_var_rev_jac(
-   size_t              i_z           ,
-   const addr_t*       arg           ,
-   Vector_set&         sparsity      )
+    size_t              i_z           ,
+    const addr_t*       arg           ,
+    Vector_set&         sparsity      )
 // END_TWO_VAR_REV_JAC
 {
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
-   sparsity.binary_union( size_t(arg[0]), size_t(arg[0]), i_z, sparsity);
-   sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, sparsity);
+    sparsity.binary_union( size_t(arg[0]), size_t(arg[0]), i_z, sparsity);
+    sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, sparsity);
 
-   return;
+    return;
 }
 // ---------------------------------------------------------------------------
 /*
@@ -190,8 +190,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_TWO_VAR_FOR_HES
-   // END_TWO_VAR_FOR_HES
+    // BEGIN_TWO_VAR_FOR_HES
+    // END_TWO_VAR_FOR_HES
 }
 
 Vector_set, i_z, arg
@@ -259,114 +259,114 @@ independent variable with index *i* - 1 .
 // BEGIN_TWO_VAR_FOR_HES
 template <class Vector_set>
 void two_var_for_hes(
-   size_t        n_independent_p1    ,
-   size_t        num_var             ,
-   size_t        i_z                 ,
-   const addr_t* arg                 ,
-   bool*         linear              ,
-   Vector_set&   for_sparsity        )
+    size_t        n_independent_p1    ,
+    size_t        num_var             ,
+    size_t        i_z                 ,
+    const addr_t* arg                 ,
+    bool*         linear              ,
+    Vector_set&   for_sparsity        )
 // END_TWO_VAR_FOR_HES
 {  //
-   // np1, i_x, i_y, linear_x, linear_y, linear_xy
-   size_t np1 = n_independent_p1;
-   size_t i_x = size_t( arg[0] );
-   size_t i_y = size_t( arg[1] );
-   bool linear_x  = linear[0];
-   bool linear_y  = linear[1];
-   bool linear_xy = linear[2];
-   //
-   CPPAD_ASSERT_UNKNOWN( i_x < i_z  && i_y < i_z );
-   CPPAD_ASSERT_UNKNOWN( i_z < num_var );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
-   CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
-   //
-   //
-   // for_sparsity
-   // Jacobian sparsity for z
-   for_sparsity.binary_union(np1 + i_z, np1 + i_x, np1 + i_y, for_sparsity);
-   //
-   //
-   if( ! linear_x )
-   {  //
-      // itr_x, i_u
-      typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
-      size_t i_u = *itr_x;
-      while( i_u < np1 )
-      {  // x depends on the independent variable u
-         //
-         // for_sparsity
-         // update Hessian term with one partial w.r.t u
-         if( ! linear_xy )
-         {  // other independent variables that z depends on
-            for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
-         }
-         else
-         {  // other independent variables that x depends on
-            for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
-         }
-         //
-         // i_u
-         i_u = *(++itr_x);
-      }
-   }
-   if( ! linear_y )
-   {  //
-      // itr_y, i_u
-      typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
-      size_t i_u = *itr_y;
-      while( i_u < np1 )
-      {  // y depends on the independent variable u
-         //
-         // for_sparsity
-         // update Hessian term with one partial w.r.t u
-         if( ! linear_xy )
-         {  // other independent variables that z depends on
-            for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
-         }
-         else
-         {  // other independent variables that y depends on
+    // np1, i_x, i_y, linear_x, linear_y, linear_xy
+    size_t np1 = n_independent_p1;
+    size_t i_x = size_t( arg[0] );
+    size_t i_y = size_t( arg[1] );
+    bool linear_x  = linear[0];
+    bool linear_y  = linear[1];
+    bool linear_xy = linear[2];
+    //
+    CPPAD_ASSERT_UNKNOWN( i_x < i_z  && i_y < i_z );
+    CPPAD_ASSERT_UNKNOWN( i_z < num_var );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + num_var );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
+    //
+    //
+    // for_sparsity
+    // Jacobian sparsity for z
+    for_sparsity.binary_union(np1 + i_z, np1 + i_x, np1 + i_y, for_sparsity);
+    //
+    //
+    if( ! linear_x )
+    {  //
+        // itr_x, i_u
+        typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
+        size_t i_u = *itr_x;
+        while( i_u < np1 )
+        {  // x depends on the independent variable u
+            //
+            // for_sparsity
+            // update Hessian term with one partial w.r.t u
+            if( ! linear_xy )
+            {  // other independent variables that z depends on
+                for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
+            }
+            else
+            {  // other independent variables that x depends on
+                for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+            }
+            //
+            // i_u
+            i_u = *(++itr_x);
+        }
+    }
+    if( ! linear_y )
+    {  //
+        // itr_y, i_u
+        typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
+        size_t i_u = *itr_y;
+        while( i_u < np1 )
+        {  // y depends on the independent variable u
+            //
+            // for_sparsity
+            // update Hessian term with one partial w.r.t u
+            if( ! linear_xy )
+            {  // other independent variables that z depends on
+                for_sparsity.binary_union(i_u, i_u, i_z + np1, for_sparsity);
+            }
+            else
+            {  // other independent variables that y depends on
+                for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
+            }
+            //
+            // i_u
+            i_u = *(++itr_y);
+        }
+    }
+    if( (! linear_xy) && linear_x )
+    {  //
+        // itr_x, i_u
+        typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
+        size_t i_u = *itr_x;
+        while( i_u < np1 )
+        {  // x depends on the independent variable u
+            //
+            // for_sparsity
+            // update Hessian term with one partial w.r.t u other w.r.t
+            // independent variables that y depends on
             for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
-         }
-         //
-         // i_u
-         i_u = *(++itr_y);
-      }
-   }
-   if( (! linear_xy) && linear_x )
-   {  //
-      // itr_x, i_u
-      typename Vector_set::const_iterator itr_x(for_sparsity, i_x + np1);
-      size_t i_u = *itr_x;
-      while( i_u < np1 )
-      {  // x depends on the independent variable u
-         //
-         // for_sparsity
-         // update Hessian term with one partial w.r.t u other w.r.t
-         // independent variables that y depends on
-         for_sparsity.binary_union(i_u, i_u, i_y + np1, for_sparsity);
-         //
-         // i_u
-         i_u = *(++itr_x);
-      }
-   }
-   if( (! linear_xy) && linear_y )
-   {  //
-      // itr_y, i_u
-      typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
-      size_t i_u = *itr_y;
-      while( i_u < np1 )
-      {  // y depends on the independent variable u
-         //
-         // for_sparsity
-         // update Hessian term with one partial w.r.t u other w.r.t
-         // independent variables that x depends on
-         for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
-         //
-         // i_u
-         i_u = *(++itr_y);
-      }
-   }
+            //
+            // i_u
+            i_u = *(++itr_x);
+        }
+    }
+    if( (! linear_xy) && linear_y )
+    {  //
+        // itr_y, i_u
+        typename Vector_set::const_iterator itr_y(for_sparsity, i_y + np1);
+        size_t i_u = *itr_y;
+        while( i_u < np1 )
+        {  // y depends on the independent variable u
+            //
+            // for_sparsity
+            // update Hessian term with one partial w.r.t u other w.r.t
+            // independent variables that x depends on
+            for_sparsity.binary_union(i_u, i_u, i_x + np1, for_sparsity);
+            //
+            // i_u
+            i_u = *(++itr_y);
+        }
+    }
 }
 // ---------------------------------------------------------------------------
 /*
@@ -387,13 +387,13 @@ G and H
 Use z(x, y) to denote the variable *z* as a function of the variables
 *x* , *y* , and define H in terms of G by::
 
-   H( x, y, ... ) = G[ z(x, y) , x, y, ... ]
+    H( x, y, ... ) = G[ z(x, y) , x, y, ... ]
 
 Prototype
 *********
 {xrst_literal
-   // BEGIN_TWO_VAR_REV_HES
-   // END_TWO_VAR_REV_HES
+    // BEGIN_TWO_VAR_REV_HES
+    // END_TWO_VAR_REV_HES
 }
 
 Vector_set, i_z, arg
@@ -448,8 +448,8 @@ Input
 =====
 ::
 
-   for j = num_var, ... , i_z + 1
-      rev_jac_include[j] is an input
+    for j = num_var, ... , i_z + 1
+        rev_jac_include[j] is an input
 
 Output
 ======
@@ -475,49 +475,49 @@ of the tape. )
 // BEGIN_TWO_VAR_REV_HES
 template <class Vector_set>
 void two_var_rev_hes(
-   size_t              i_z               ,
-   const addr_t*       arg               ,
-   bool*               linear            ,
-   bool*               rev_jacobian      ,
-   const Vector_set&   for_jac_sparsity  ,
-   Vector_set&         rev_hes_sparsity  )
+    size_t              i_z               ,
+    const addr_t*       arg               ,
+    bool*               linear            ,
+    bool*               rev_jacobian      ,
+    const Vector_set&   for_jac_sparsity  ,
+    Vector_set&         rev_hes_sparsity  )
 // END_TWO_VAR_REV_HES
-{  //
-   // check for nothing to do
-   if( ! rev_jacobian[i_z] )
-      return;
-   //
-   // i_x, i_y, linear_x, linear_y, linear_xy
-   size_t i_x = size_t( arg[0] );
-   size_t i_y = size_t( arg[1] );
-   bool linear_x  = linear[0];
-   bool linear_y  = linear[1];
-   bool linear_xy = linear[2];
-   //
-   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
-   CPPAD_ASSERT_UNKNOWN( i_y < i_z );
-   //
-   // rev_hes_sparsity
-   // propagate form z to x and y
-   rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
-   rev_hes_sparsity.binary_union(i_y, i_y, i_z, rev_hes_sparsity);
-   //
-   if( ! linear_x )
-   {  rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
-      rev_hes_sparsity.binary_union(i_y, i_y, i_x, for_jac_sparsity);
-   }
-   if( ! linear_y )
-   {  rev_hes_sparsity.binary_union(i_x, i_x, i_y, for_jac_sparsity);
-      rev_hes_sparsity.binary_union(i_y, i_y, i_y, for_jac_sparsity);
-   }
-   if( ! linear_xy )
-   {  rev_hes_sparsity.binary_union(i_x, i_x, i_y, for_jac_sparsity);
-      rev_hes_sparsity.binary_union(i_y, i_y, i_x, for_jac_sparsity);
-   }
-   //
-   // rev_jacobian
-   rev_jacobian[i_x] = true;
-   rev_jacobian[i_y] = true;
+{   //
+    // check for nothing to do
+    if( ! rev_jacobian[i_z] )
+        return;
+    //
+    // i_x, i_y, linear_x, linear_y, linear_xy
+    size_t i_x = size_t( arg[0] );
+    size_t i_y = size_t( arg[1] );
+    bool linear_x  = linear[0];
+    bool linear_y  = linear[1];
+    bool linear_xy = linear[2];
+    //
+    CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+    CPPAD_ASSERT_UNKNOWN( i_y < i_z );
+    //
+    // rev_hes_sparsity
+    // propagate form z to x and y
+    rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
+    rev_hes_sparsity.binary_union(i_y, i_y, i_z, rev_hes_sparsity);
+    //
+    if( ! linear_x )
+    {   rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
+        rev_hes_sparsity.binary_union(i_y, i_y, i_x, for_jac_sparsity);
+    }
+    if( ! linear_y )
+    {   rev_hes_sparsity.binary_union(i_x, i_x, i_y, for_jac_sparsity);
+        rev_hes_sparsity.binary_union(i_y, i_y, i_y, for_jac_sparsity);
+    }
+    if( ! linear_xy )
+    {   rev_hes_sparsity.binary_union(i_x, i_x, i_y, for_jac_sparsity);
+        rev_hes_sparsity.binary_union(i_y, i_y, i_x, for_jac_sparsity);
+    }
+    //
+    // rev_jacobian
+    rev_jacobian[i_x] = true;
+    rev_jacobian[i_y] = true;
 }
 // ---------------------------------------------------------------------------
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE

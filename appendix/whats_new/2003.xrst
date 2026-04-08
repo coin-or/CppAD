@@ -5,17 +5,17 @@
 
 {xrst_begin 2003 app}
 {xrst_spell
-   ddouble
-   def
-   dodds
-   faq
-   geq
-   hess
-   indvar
-   ini
-   leq
-   mak
-   valarray
+    ddouble
+    def
+    dodds
+    faq
+    geq
+    hess
+    indvar
+    ini
+    leq
+    mak
+    valarray
 }
 
 Release Notes for 2003
@@ -110,7 +110,7 @@ the resulting speed tests gave much faster results.
 =====
 The following function has been added:
 
-   ``void Independent`` ( ``const CppADvector`` < *Base* > & *x* )
+    ``void Independent`` ( ``const CppADvector`` < *Base* > & *x* )
 
 which will declare the independent variables and begin recording
 ``AD`` < *Base* > operations
@@ -425,26 +425,26 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Version**
-     - **double Rate**
-     - **AD<double> Rate**
-     - **Gradient Rate**
-     - **Hessian Rate**
-     - **Tape Length**
-   * - 03-08-20
-     - 8,524
-     - 5,278
-     - 4,260
-     - 2,450
-     - 532
-   * - 03-08-23
-     - 7,869
-     - 4,989
-     - 4,870
-     - 2,637
-     - 464
+    * - **Version**
+      - **double Rate**
+      - **AD<double> Rate**
+      - **Gradient Rate**
+      - **Hessian Rate**
+      - **Tape Length**
+    * - 03-08-20
+      - 8,524
+      - 5,278
+      - 4,260
+      - 2,450
+      - 532
+    * - 03-08-23
+      - 7,869
+      - 4,989
+      - 4,870
+      - 2,637
+      - 464
 
 08-22
 =====
@@ -475,26 +475,26 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Version**
-     - **double Rate**
-     - **AD<double> Rate**
-     - **Gradient Rate**
-     - **Hessian Rate**
-     - **Tape Length**
-   * - 03-08-16
-     - 9,509
-     - 5,565
-     - 3,587
-     - 54
-     - 537
-   * - 03-08-19
-     - 8,655
-     - 5,313
-     - 4,307
-     - 2,495
-     - 532
+    * - **Version**
+      - **double Rate**
+      - **AD<double> Rate**
+      - **Gradient Rate**
+      - **Hessian Rate**
+      - **Tape Length**
+    * - 03-08-16
+      - 9,509
+      - 5,565
+      - 3,587
+      - 54
+      - 537
+    * - 03-08-19
+      - 8,655
+      - 5,313
+      - 4,307
+      - 2,495
+      - 532
 
 08-17
 =====
@@ -526,26 +526,26 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Version**
-     - **double Rate**
-     - **AD<double> Rate**
-     - **Gradient Rate**
-     - **Hessian Rate**
-     - **Tape Length**
-   * - 03-08-10
-     - 49,201
-     - 7,787
-     - 2,655
-     - 1,809
-     - 824
-   * - 03-08-11
-     - 35,178
-     - 12,681
-     - 4,521
-     - 2,541
-     - 540
+    * - **Version**
+      - **double Rate**
+      - **AD<double> Rate**
+      - **Gradient Rate**
+      - **Hessian Rate**
+      - **Tape Length**
+    * - 03-08-10
+      - 49,201
+      - 7,787
+      - 2,655
+      - 1,809
+      - 824
+    * - 03-08-11
+      - 35,178
+      - 12,681
+      - 4,521
+      - 2,541
+      - 540
 
 In addition the corresponding test case
 :ref:`lu_solve.cpp-name` was changed to a Hilbert matrix case.
@@ -581,20 +581,20 @@ for the calculation of the gradient and Hessian for
 the Lu determinant test of a 5 by 5 matrix as follows:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Version**
-     - **Tape Length**
-     - **Gradient Rate**
-     - **Hessian Rate**
-   * - 03-08-05
-     - 176
-     - 11,362
-     - 1,149
-   * - 03-08-06
-     - 167
-     - 12,780
-     - 10,625
+    * - **Version**
+      - **Tape Length**
+      - **Gradient Rate**
+      - **Hessian Rate**
+    * - 03-08-05
+      - 176
+      - 11,362
+      - 1,149
+    * - 03-08-06
+      - 167
+      - 12,780
+      - 10,625
 
 08-05
 =====
@@ -606,12 +606,12 @@ the :ref:`LuSolve-name` example.
 Added a the compiler flag
 ::
 
-   AbsOfDoubleNotDefined
+    AbsOfDoubleNotDefined
 
 to the make files so that it could be removed on systems where the
 function
 
-   ``double abs`` ( ``double`` *x* )
+    ``double abs`` ( ``double`` *x* )
 
 was defined in ``math.h`` .
 
@@ -654,7 +654,7 @@ operator was changed so the it returns a reference to
 the target.
 This allows for statements of the form
 
-   *x* = *y* = *z* ;
+    *x* = *y* = *z* ;
 
 i.e., multiple assignments.
 
@@ -684,20 +684,20 @@ for the calculation of the gradient and Hessian for
 the determinant of a 5 by 5 matrix as follows:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Version**
-     - **Tape Length**
-     - **Gradient Rate**
-     - **Hessian Rate**
-   * - 03-07-22
-     - 1668
-     - 1,363
-     - 53
-   * - 03-07-26
-     - 436
-     - 3,436
-     - 213
+    * - **Version**
+      - **Tape Length**
+      - **Gradient Rate**
+      - **Hessian Rate**
+    * - 03-07-22
+      - 1668
+      - 1,363
+      - 53
+    * - 03-07-26
+      - 436
+      - 3,436
+      - 213
 
 07-22
 =====

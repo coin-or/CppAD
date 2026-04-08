@@ -8,9 +8,9 @@ qp_box Source Code
 ##################
 
 {xrst_literal
-   example/abs_normal/qp_box.hpp
-   // BEGIN C++
-   // END C++
+    example/abs_normal/qp_box.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end qp_box.hpp}

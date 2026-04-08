@@ -5,24 +5,24 @@
 
 {xrst_begin 2022 app}
 {xrst_spell
-   an an
-   csrc
-   div
-   dll
-   github
-   isinf
-   isnan
-   libs
-   neg
-   nullptr
-   nx
-   ny
-   omhelp
-   posix
-   rc
-   tmpnam
-   txt
-   zdouble
+    an an
+    csrc
+    div
+    dll
+    github
+    isinf
+    isnan
+    libs
+    neg
+    nullptr
+    nx
+    ny
+    omhelp
+    posix
+    rc
+    tmpnam
+    txt
+    zdouble
 }
 
 Release Notes for 2022
@@ -173,13 +173,13 @@ JIT C source code generation, compilation, and linking were added using
 the following new features, examples, and speed tests:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   to_csrc,:ref:`to_csrc-title`
-   create_dll_lib,:ref:`create_dll_lib-title`
-   link_dll_lib,:ref:`link_dll_lib-title`
-   example_jit,:ref:`example_jit-title`
-   cppad_jit_det_minor.cpp,:ref:`cppad_jit_det_minor.cpp-title`
+    to_csrc,:ref:`to_csrc-title`
+    create_dll_lib,:ref:`create_dll_lib-title`
+    link_dll_lib,:ref:`link_dll_lib-title`
+    example_jit,:ref:`example_jit-title`
+    cppad_jit_det_minor.cpp,:ref:`cppad_jit_det_minor.cpp-title`
 
 The following improvements were made to existing features:
 
@@ -438,7 +438,7 @@ base class.
 #. The :ref:`atomic_four_mat_mul-name` example class was added.
 #. The :ref:`atomic_four_vector-name` include path has changed to
 
-      # ``include <cppad/example/atomic_four/vector.hpp>``
+        # ``include <cppad/example/atomic_four/vector.hpp>``
 
 02-12
 =====

@@ -8,9 +8,9 @@ simplex_method Source Code
 ##########################
 
 {xrst_literal
-   example/abs_normal/simplex_method.hpp
-   // BEGIN C++
-   // END C++
+    example/abs_normal/simplex_method.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end simplex_method.hpp}

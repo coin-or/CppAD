@@ -29,12 +29,12 @@ Derivative
 
 .. math::
 
-   \R{acos}^{(1)} (x) = - (1 - x * x)^{-1/2}
+    \R{acos}^{(1)} (x) = - (1 - x * x)^{-1/2}
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/acos.cpp
+    example/general/acos.cpp
 }
 The file
 :ref:`acos.cpp-name`
@@ -67,7 +67,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/acosh.cpp
+    example/general/acosh.cpp
 }
 The file
 :ref:`acosh.cpp-name`
@@ -98,12 +98,12 @@ Derivative
 
 .. math::
 
-   \R{asin}^{(1)} (x) = (1 - x * x)^{-1/2}
+    \R{asin}^{(1)} (x) = (1 - x * x)^{-1/2}
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/asin.cpp
+    example/general/asin.cpp
 }
 The file
 :ref:`asin.cpp-name`
@@ -136,7 +136,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/asinh.cpp
+    example/general/asinh.cpp
 }
 The file
 :ref:`asinh.cpp-name`
@@ -167,12 +167,12 @@ Derivative
 
 .. math::
 
-   \R{atan}^{(1)} (x) = \frac{1}{1 + x^2}
+    \R{atan}^{(1)} (x) = \frac{1}{1 + x^2}
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/atan.cpp
+    example/general/atan.cpp
 }
 The file
 :ref:`atan.cpp-name`
@@ -205,7 +205,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/atanh.cpp
+    example/general/atanh.cpp
 }
 The file
 :ref:`atanh.cpp-name`
@@ -236,12 +236,12 @@ Derivative
 
 .. math::
 
-   \R{cos}^{(1)} (x) = - \sin(x)
+    \R{cos}^{(1)} (x) = - \sin(x)
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/cos.cpp
+    example/general/cos.cpp
 }
 The file
 :ref:`cos.cpp-name`
@@ -272,12 +272,12 @@ Derivative
 
 .. math::
 
-   \R{cosh}^{(1)} (x) = \sinh(x)
+    \R{cosh}^{(1)} (x) = \sinh(x)
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/cosh.cpp
+    example/general/cosh.cpp
 }
 The file
 :ref:`cosh.cpp-name`
@@ -299,7 +299,7 @@ Returns the value of the error function which is defined by
 
 .. math::
 
-   {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
+    {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
 
 x, y
 ****
@@ -313,7 +313,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/erf.cpp
+    example/general/erf.cpp
 }
 The file
 :ref:`erf.cpp-name`
@@ -346,7 +346,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/erfc.cpp
+    example/general/erfc.cpp
 }
 The file
 :ref:`erfc.cpp-name`
@@ -377,12 +377,12 @@ Derivative
 
 .. math::
 
-   \R{exp}^{(1)} (x) = \exp(x)
+    \R{exp}^{(1)} (x) = \exp(x)
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/exp.cpp
+    example/general/exp.cpp
 }
 The file
 :ref:`exp.cpp-name`
@@ -415,7 +415,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/expm1.cpp
+    example/general/expm1.cpp
 }
 The file
 :ref:`expm1.cpp-name`
@@ -446,12 +446,12 @@ Derivative
 
 .. math::
 
-   \R{log}^{(1)} (x) = \frac{1}{x}
+    \R{log}^{(1)} (x) = \frac{1}{x}
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/log.cpp
+    example/general/log.cpp
 }
 The file
 :ref:`log.cpp-name`
@@ -485,7 +485,7 @@ This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 Example
 *******
 {xrst_toc_hidden
-   example/general/log1p.cpp
+    example/general/log1p.cpp
 }
 The file
 :ref:`log1p.cpp-name`
@@ -513,12 +513,12 @@ CppAD uses the representation
 
 .. math::
 
-   {\rm log10} (x) = \log(x) / \log(10)
+    {\rm log10} (x) = \log(x) / \log(10)
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/log10.cpp
+    example/general/log10.cpp
 }
 The file
 :ref:`log10.cpp-name`
@@ -549,12 +549,12 @@ Derivative
 
 .. math::
 
-   \R{sin}^{(1)} (x) = \cos(x)
+    \R{sin}^{(1)} (x) = \cos(x)
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/sin.cpp
+    example/general/sin.cpp
 }
 The file
 :ref:`sin.cpp-name`
@@ -585,12 +585,12 @@ Derivative
 
 .. math::
 
-   \R{sinh}^{(1)} (x) = \cosh(x)
+    \R{sinh}^{(1)} (x) = \cosh(x)
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/sinh.cpp
+    example/general/sinh.cpp
 }
 The file
 :ref:`sinh.cpp-name`
@@ -621,12 +621,12 @@ Derivative
 
 .. math::
 
-   \R{sqrt}^{(1)} (x) = \frac{1}{2 \R{sqrt} (x) }
+    \R{sqrt}^{(1)} (x) = \frac{1}{2 \R{sqrt} (x) }
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/sqrt.cpp
+    example/general/sqrt.cpp
 }
 The file
 :ref:`sqrt.cpp-name`
@@ -657,12 +657,12 @@ Derivative
 
 .. math::
 
-   \R{tan}^{(1)} (x) = 1 + \tan (x)^2
+    \R{tan}^{(1)} (x) = 1 + \tan (x)^2
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/tan.cpp
+    example/general/tan.cpp
 }
 The file
 :ref:`tan.cpp-name`
@@ -693,12 +693,12 @@ Derivative
 
 .. math::
 
-   \R{tanh}^{(1)} (x) = 1 - \tanh (x)^2
+    \R{tanh}^{(1)} (x) = 1 - \tanh (x)^2
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/tanh.cpp
+    example/general/tanh.cpp
 }
 The file
 :ref:`tanh.cpp-name`
@@ -731,166 +731,166 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 */
 
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
-   template <class Base>                                         \
-   inline AD<Base> Name(const AD<Base> &x)                       \
-   {  return x.Name##_me();                                     \
-   }                                                             \
-   template <class Base>                                         \
-   inline AD<Base> AD<Base>::Name##_me (void) const              \
-   {                                                             \
-      AD<Base> result;                                          \
-      result.value_ = CppAD::Name(value_);                      \
-      CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
-                                                                  \
-      local::ADTape<Base>* tape = AD<Base>::tape_ptr();         \
-      if( tape == nullptr )                                  \
-         return result;                                        \
-                                                                  \
-      if( tape_id_ != tape->id_ )                               \
-         return result;                                        \
-                                                                  \
-      if(ad_type_ == dynamic_enum)                        \
-      {  result.taddr_ = tape->Rec_.put_dyn_par(               \
-            result.value_, local::Name##_dyn, taddr_          \
-         );                                                    \
-         result.tape_id_ = tape_id_;                           \
-         result.ad_type_ = dynamic_enum;                 \
-      }                                                         \
-      else                                                      \
-      {  CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
-         tape->Rec_.PutArg(taddr_);                            \
-         result.taddr_    = tape->Rec_.PutOp(Op);              \
-         result.tape_id_  = tape->id_;                         \
-         result.ad_type_  = variable_enum;                \
-      }                                                         \
-      return result;                                            \
-   }                                                             \
-   template <class Base>                                         \
-   inline AD<Base> Name(const VecAD_reference<Base> &x)          \
-   {  return x.ADBase().Name##_me(); }
+    template <class Base>                                         \
+    inline AD<Base> Name(const AD<Base> &x)                       \
+    {   return x.Name##_me();                                     \
+    }                                                             \
+    template <class Base>                                         \
+    inline AD<Base> AD<Base>::Name##_me (void) const              \
+    {                                                              \
+        AD<Base> result;                                          \
+        result.value_ = CppAD::Name(value_);                      \
+        CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
+                                                                                        \
+        local::ADTape<Base>* tape = AD<Base>::tape_ptr();         \
+        if( tape == nullptr )                                  \
+            return result;                                        \
+                                                                                        \
+        if( tape_id_ != tape->id_ )                               \
+            return result;                                        \
+                                                                                        \
+        if(ad_type_ == dynamic_enum)                        \
+        {   result.taddr_ = tape->Rec_.put_dyn_par(               \
+                result.value_, local::Name##_dyn, taddr_          \
+            );                                                    \
+            result.tape_id_ = tape_id_;                           \
+            result.ad_type_ = dynamic_enum;                 \
+        }                                                         \
+        else                                                      \
+        {   CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
+            tape->Rec_.PutArg(taddr_);                            \
+            result.taddr_    = tape->Rec_.PutOp(Op);              \
+            result.tape_id_  = tape->id_;                         \
+            result.ad_type_  = variable_enum;                \
+        }                                                         \
+        return result;                                            \
+    }                                                             \
+    template <class Base>                                         \
+    inline AD<Base> Name(const VecAD_reference<Base> &x)          \
+    {   return x.ADBase().Name##_me(); }
 
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-     CPPAD_STANDARD_MATH_UNARY_AD(acos, local::AcosOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(acosh, local::AcoshOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(asin, local::AsinOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(asinh, local::AsinhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(atan, local::AtanOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(atanh, local::AtanhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(cos, local::CosOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(cosh, local::CoshOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(exp, local::ExpOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(expm1, local::Expm1Op)
-     CPPAD_STANDARD_MATH_UNARY_AD(fabs, local::AbsOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(log, local::LogOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(log1p, local::Log1pOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(sin, local::SinOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(sinh, local::SinhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(sqrt, local::SqrtOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(tan, local::TanOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(tanh, local::TanhOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(acos, local::AcosOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(acosh, local::AcoshOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(asin, local::AsinOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(asinh, local::AsinhOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(atan, local::AtanOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(atanh, local::AtanhOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(cos, local::CosOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(cosh, local::CoshOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(exp, local::ExpOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(expm1, local::Expm1Op)
+      CPPAD_STANDARD_MATH_UNARY_AD(fabs, local::AbsOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(log, local::LogOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(log1p, local::Log1pOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(sin, local::SinOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(sinh, local::SinhOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(sqrt, local::SqrtOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(tan, local::TanOp)
+      CPPAD_STANDARD_MATH_UNARY_AD(tanh, local::TanhOp)
 
 
-   // Error function is a special case
-   template <class Base>
-   inline AD<Base> erf(const AD<Base> &x)
-   {  bool complement = false;
-      return x.erf_me(complement);
-   }
-   template <class Base>
-   inline AD<Base> erfc(const AD<Base> &x)
-   {  bool complement = true;
-      return x.erf_me(complement);
-   }
-   template <class Base>
-   inline AD<Base> AD<Base>::erf_me (bool complement) const
-   {
-      AD<Base> result;
-      if( complement )
-         result.value_ = CppAD::erfc(value_);
-      else
-         result.value_ = CppAD::erf(value_);
-      CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+    // Error function is a special case
+    template <class Base>
+    inline AD<Base> erf(const AD<Base> &x)
+    {   bool complement = false;
+        return x.erf_me(complement);
+    }
+    template <class Base>
+    inline AD<Base> erfc(const AD<Base> &x)
+    {   bool complement = true;
+        return x.erf_me(complement);
+    }
+    template <class Base>
+    inline AD<Base> AD<Base>::erf_me (bool complement) const
+    {
+        AD<Base> result;
+        if( complement )
+            result.value_ = CppAD::erfc(value_);
+        else
+            result.value_ = CppAD::erf(value_);
+        CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-      // check if there is a recording in progress
-      local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-      if( tape == nullptr )
-         return result;
+        // check if there is a recording in progress
+        local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+        if( tape == nullptr )
+            return result;
 
-      // check if operand is a constant parameter
-      if( tape_id_ != tape->id_ )
-         return result;
+        // check if operand is a constant parameter
+        if( tape_id_ != tape->id_ )
+            return result;
 
-      if(ad_type_ == dynamic_enum)
-      {  local::op_code_dyn op = local::erf_dyn;
-         if( complement )
-            op = local::erfc_dyn;
+        if(ad_type_ == dynamic_enum)
+        {   local::op_code_dyn op = local::erf_dyn;
+            if( complement )
+                op = local::erfc_dyn;
 
-           // dynamic parameter argument
-         result.taddr_   = tape->Rec_.put_dyn_par(
-            result.value_, op, taddr_
-         );
-         result.tape_id_  = tape_id_;
-         result.ad_type_  = dynamic_enum;
-      }
-      else
-      {  local::op_code_var op = local::ErfOp;
-         if( complement )
-            op = local::ErfcOp;
+              // dynamic parameter argument
+            result.taddr_   = tape->Rec_.put_dyn_par(
+                result.value_, op, taddr_
+            );
+            result.tape_id_  = tape_id_;
+            result.ad_type_  = dynamic_enum;
+        }
+        else
+        {   local::op_code_var op = local::ErfOp;
+            if( complement )
+                op = local::ErfcOp;
 
-           // variable argument
-         CPPAD_ASSERT_UNKNOWN( local::NumArg(op) == 3 );
+              // variable argument
+            CPPAD_ASSERT_UNKNOWN( local::NumArg(op) == 3 );
 
-         // arg[0] = argument to erf function
-         tape->Rec_.PutArg(taddr_);
+            // arg[0] = argument to erf function
+            tape->Rec_.PutArg(taddr_);
 
-         // arg[1] = zero
-         addr_t p  = tape->Rec_.put_con_par( Base(0.0) );
-         tape->Rec_.PutArg(p);
+            // arg[1] = zero
+            addr_t p  = tape->Rec_.put_con_par( Base(0.0) );
+            tape->Rec_.PutArg(p);
 
-         // arg[2] = 2 / sqrt(pi)
-         p = tape->Rec_.put_con_par(Base(
-            1.0 / std::sqrt( std::atan(1.0) )
-         ));
-         tape->Rec_.PutArg(p);
-         //
-         result.taddr_   = tape->Rec_.PutOp(op);
-         result.tape_id_ = tape->id_;
-         result.ad_type_ = variable_enum;
-      }
-      return result;
-   }
-   template <class Base>
-   inline AD<Base> erf(const VecAD_reference<Base> &x)
-   {  bool complement = false;
-      return x.ADBase().erf_me(complement);
-   }
-   template <class Base>
-   inline AD<Base> erfc(const VecAD_reference<Base> &x)
-   {  bool complement = true;
-      return x.ADBase().erf_me(complement);
-   }
+            // arg[2] = 2 / sqrt(pi)
+            p = tape->Rec_.put_con_par(Base(
+                1.0 / std::sqrt( std::atan(1.0) )
+            ));
+            tape->Rec_.PutArg(p);
+            //
+            result.taddr_   = tape->Rec_.PutOp(op);
+            result.tape_id_ = tape->id_;
+            result.ad_type_ = variable_enum;
+        }
+        return result;
+    }
+    template <class Base>
+    inline AD<Base> erf(const VecAD_reference<Base> &x)
+    {   bool complement = false;
+        return x.ADBase().erf_me(complement);
+    }
+    template <class Base>
+    inline AD<Base> erfc(const VecAD_reference<Base> &x)
+    {   bool complement = true;
+        return x.ADBase().erf_me(complement);
+    }
 
-     /*!
-   Compute the log of base 10 of x where  has type AD<Base>
+      /*!
+    Compute the log of base 10 of x where  has type AD<Base>
 
-   \tparam Base
-   is the base type (different from base for log)
-   for this AD type, see base_require.
+    \tparam Base
+    is the base type (different from base for log)
+    for this AD type, see base_require.
 
-   \param x
-   is the argument for the log10 function.
+    \param x
+    is the argument for the log10 function.
 
-   \result
-   if the result is y, then \f$ x = 10^y \f$.
-   */
-     template <class Base>
-     inline AD<Base> log10(const AD<Base> &x)
-   {  return CppAD::log(x) / CppAD::log( Base(10) ); }
-     template <class Base>
-     inline AD<Base> log10(const VecAD_reference<Base> &x)
-   {  return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
+    \result
+    if the result is y, then \f$ x = 10^y \f$.
+    */
+      template <class Base>
+      inline AD<Base> log10(const AD<Base> &x)
+    {   return CppAD::log(x) / CppAD::log( Base(10) ); }
+      template <class Base>
+      inline AD<Base> log10(const VecAD_reference<Base> &x)
+    {   return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
 }
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD

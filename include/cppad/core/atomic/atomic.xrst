@@ -10,9 +10,9 @@ Atomic AD Functions
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/atomic/four/atomic.xrst
-   include/cppad/core/atomic/three/atomic.xrst
-   include/cppad/core/chkpoint_two/chkpoint_two.hpp
+    include/cppad/core/atomic/four/atomic.xrst
+    include/cppad/core/atomic/three/atomic.xrst
+    include/cppad/core/chkpoint_two/chkpoint_two.hpp
 }
 
 Deprecated Atomic Function

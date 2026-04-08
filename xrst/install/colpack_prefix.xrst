@@ -27,7 +27,7 @@ The value of *colpack_prefix* must be such that,
 for one of the directories *dir* in
 :ref:`cmake@cmake_install_includedirs` ,
 
-   *colpack_prefix* / *dir* / ``ColPack/ColPackHeaders.h``
+    *colpack_prefix* / *dir* / ``ColPack/ColPackHeaders.h``
 
 is a valid way to reference to the include file ``ColPackHeaders.h`` .
 
@@ -35,17 +35,17 @@ cppad_lib
 *********
 The Colpack header files has a
 
-   ``using namespace std``
+    ``using namespace std``
 
 at the global level.
 For this reason, CppAD does not include these files.
 It is therefore necessary to link the object library ``cppad_lib``
 when using Colpack.
 {xrst_toc_hidden
-   example/sparse/colpack_jac.cpp
-   example/sparse/colpack_jacobian.cpp
-   example/sparse/colpack_hes.cpp
-   example/sparse/colpack_hessian.cpp
+    example/sparse/colpack_jac.cpp
+    example/sparse/colpack_jacobian.cpp
+    example/sparse/colpack_hes.cpp
+    example/sparse/colpack_hessian.cpp
 }
 Example
 *******

@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin link_routines}
 {xrst_spell
-   teardown
+    teardown
 }
 
 Package Specific Speed Test Linking Routines
@@ -33,13 +33,13 @@ The routine *link_name* in the syntax is one of the following:
 Contents
 ********
 {xrst_toc_table
-   speed/src/link_det_lu.cpp
-   speed/src/link_det_minor.cpp
-   speed/src/link_mat_mul.cpp
-   speed/src/link_ode.cpp
-   speed/src/link_poly.cpp
-   speed/src/link_sparse_hessian.hpp
-   speed/src/link_sparse_jacobian.hpp
+    speed/src/link_det_lu.cpp
+    speed/src/link_det_minor.cpp
+    speed/src/link_mat_mul.cpp
+    speed/src/link_ode.cpp
+    speed/src/link_poly.cpp
+    speed/src/link_sparse_hessian.hpp
+    speed/src/link_sparse_jacobian.hpp
 }
 
 Namespace

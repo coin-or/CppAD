@@ -11,17 +11,17 @@ Notation
 ********
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   **Symbol**,**Meaning**
-   *Base*,The base type corresponding to ``AD`` < *Base* >
-   *b*,An object of type ``bool``
-   *i*,An object of type ``int``
-   *s*,An object of type ``size_t``
-   *d*,An object of type ``double``
-   *x*,An object of type ``const`` *Base* &
-   *y*,An object of type ``const`` *Base* &
-   *z*,An object of type *Base*
+    **Symbol**,**Meaning**
+    *Base*,The base type corresponding to ``AD`` < *Base* >
+    *b*,An object of type ``bool``
+    *i*,An object of type ``int``
+    *s*,An object of type ``size_t``
+    *d*,An object of type ``double``
+    *x*,An object of type ``const`` *Base* &
+    *y*,An object of type ``const`` *Base* &
+    *z*,An object of type *Base*
 
 Constructors
 ************
@@ -53,7 +53,7 @@ For ``op`` equal to
 ``-``
 the following operation must be supported:
 
-   *z* = *op* *x*
+    *z* = *op* *x*
 
 Assignment Operators
 ********************
@@ -64,7 +64,7 @@ For *op* equal to
 ``*=`` , and
 ``/=`` the following operation must be supported:
 
-   *z* *op* *x*
+    *z* *op* *x*
 
 Binary Operators
 ****************
@@ -74,7 +74,7 @@ For *op* equal to
 ``*`` , and
 ``/`` the following operation must be supported:
 
-   *z* = *x* *op* *y*
+    *z* = *x* *op* *y*
 
 Bool Operators
 **************
@@ -83,7 +83,7 @@ For *op* equal to
 ``!=`` ,
 the following operation must be supported:
 
-   *b* = *x* *op* *y*
+    *b* = *x* *op* *y*
 
 Example
 *******

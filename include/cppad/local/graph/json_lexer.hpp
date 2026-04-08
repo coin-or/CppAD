@@ -77,17 +77,17 @@ Source Code
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   const std::string& json_;
-   size_t             index_;
-   size_t             line_number_;
-   size_t             char_number_;
-   std::string        token_;
-   std::string        function_name_;
+    const std::string& json_;
+    size_t             index_;
+    size_t             line_number_;
+    size_t             char_number_;
+    std::string        token_;
+    std::string        function_name_;
 public:
-   const std::string& token(void)       const;
-   size_t             line_number(void) const;
-   size_t             char_number(void) const;
-   void               set_function_name(const std::string& function_name);
+    const std::string& token(void)       const;
+    size_t             line_number(void) const;
+    size_t             char_number(void) const;
+    void               set_function_name(const std::string& function_name);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -124,7 +124,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void report_error(const std::string& expected, const std::string& found);
+    void report_error(const std::string& expected, const std::string& found);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -138,7 +138,7 @@ json lexer: Advance Index by One
 Syntax
 ******
 
-   *json_lexer* . ``next_index`` ()
+    *json_lexer* . ``next_index`` ()
 
 json_lexer
 **********
@@ -166,7 +166,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   void next_index(void);
+    void next_index(void);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -180,7 +180,7 @@ json lexer: Skip White Space That Separates Tokens
 Syntax
 ******
 
-   *json_lexer* . ``skip_white_space`` ()
+    *json_lexer* . ``skip_white_space`` ()
 
 json_lexer
 **********
@@ -197,7 +197,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   void skip_white_space(void);
+    void skip_white_space(void);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -211,7 +211,7 @@ json lexer: Constructor
 Syntax
 ******
 
-   ``local::graph::lexer`` *json_lexer* ( *json* )
+    ``local::graph::lexer`` *json_lexer* ( *json* )
 
 json
 ****
@@ -231,7 +231,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   json_lexer(const std::string& json);
+    json_lexer(const std::string& json);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -245,7 +245,7 @@ Get and Check Next Single Character Token
 Syntax
 ******
 
-   *json_lexer* . ``check_next_char`` ( *ch* )
+    *json_lexer* . ``check_next_char`` ( *ch* )
 
 index\_
 *******
@@ -272,7 +272,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void check_next_char(char ch);
+    void check_next_char(char ch);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -286,7 +286,7 @@ Get and Check Next Single Character Token
 Syntax
 ******
 
-   *json_lexer* . ``check_next_string`` ( *expected* )
+    *json_lexer* . ``check_next_string`` ( *expected* )
 
 index\_
 *******
@@ -311,7 +311,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void check_next_string(const std::string& expected);
+    void check_next_string(const std::string& expected);
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -349,8 +349,8 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void next_non_neg_int(void);
-   size_t token2size_t(void) const;
+    void next_non_neg_int(void);
+    size_t token2size_t(void) const;
 
 /* {xrst_code}
 {xrst_spell_on}
@@ -389,8 +389,8 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void next_float(void);
-   double token2double(void) const;
+    void next_float(void);
+    double token2double(void) const;
 
 /* {xrst_code}
 {xrst_spell_on}

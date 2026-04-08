@@ -20,13 +20,13 @@ and the corresponding *p*-th order Taylor coefficients row vectors are
 :math:`x`, :math:`y` and :math:`z`; i.e.,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + O( t^{p+1} ) \\
-   Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + O( t^{p+1} ) \\
-   Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + O( t^{p+1} )
-   \end{eqnarray}
+    \begin{eqnarray}
+    X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + O( t^{p+1} ) \\
+    Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + O( t^{p+1} ) \\
+    Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + O( t^{p+1} )
+    \end{eqnarray}
 
 For the purposes of this discussion,
 we are given the *p*-th order Taylor coefficient row vectors
@@ -35,14 +35,14 @@ In addition, we are given the partial derivatives of a scalar valued function
 
 .. math::
 
-   G ( z^{(j)} , \ldots , z^{(0)}, x, y)
+    G ( z^{(j)} , \ldots , z^{(0)}, x, y)
 
 We need to compute the partial derivatives of the scalar valued function
 
 .. math::
 
-   H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
-   G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
+    H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
+    G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
 
 where :math:`z^{(j)}` is expressed as a function of the
 *j-1*-th order Taylor coefficient row
@@ -51,7 +51,7 @@ vector for :math:`Z` and the vectors :math:`x`, :math:`y`; i.e.,
 
 .. math::
 
-   z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
+    z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
 
 If we do not provide a formula for
 a partial derivative of :math:`H`, then that partial derivative
@@ -67,23 +67,23 @@ The forward mode formula for
 
 .. math::
 
-   z^{(j)} =  x^{(j)} + y^{(j)}
+    z^{(j)} =  x^{(j)} + y^{(j)}
 
 If follows that for :math:`k = 0 , \ldots , j`
 and :math:`l = 0 , \ldots , j-1`
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \D{H}{ x^{(k)} } & = &
-   \D{G}{ x^{(k)} }  + \D{G}{ z^{(k)} } \\
-   \\
-   \D{H}{ y^{(k)} } & = &
-   \D{G}{ y^{(k)} }  + \D{G}{ z^{(k)} }
-   \\
-   \D{H}{ z^{(l)} } & = & \D{G}{ z^{(l)} }
-   \end{eqnarray}
+    \begin{eqnarray}
+    \D{H}{ x^{(k)} } & = &
+    \D{G}{ x^{(k)} }  + \D{G}{ z^{(k)} } \\
+    \\
+    \D{H}{ y^{(k)} } & = &
+    \D{G}{ y^{(k)} }  + \D{G}{ z^{(k)} }
+    \\
+    \D{H}{ z^{(l)} } & = & \D{G}{ z^{(l)} }
+    \end{eqnarray}
 
 Subtraction
 ===========
@@ -92,20 +92,20 @@ The forward mode formula for
 
 .. math::
 
-   z^{(j)} =  x^{(j)} - y^{(j)}
+    z^{(j)} =  x^{(j)} - y^{(j)}
 
 If follows that for :math:`k = 0 , \ldots , j`
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \D{H}{ x^{(k)} } & = &
-   \D{G}{ x^{(k)} }  - \D{G}{ z^{(k)} } \\
-   \\
-   \D{H}{ y^{(k)} } & = &
-   \D{G}{ y^{(k)} }  - \D{G}{ z^{(k)} }
-   \end{eqnarray}
+    \begin{eqnarray}
+    \D{H}{ x^{(k)} } & = &
+    \D{G}{ x^{(k)} }  - \D{G}{ z^{(k)} } \\
+    \\
+    \D{H}{ y^{(k)} } & = &
+    \D{G}{ y^{(k)} }  - \D{G}{ z^{(k)} }
+    \end{eqnarray}
 
 Multiplication
 ==============
@@ -114,23 +114,23 @@ The forward mode formula for
 
 .. math::
 
-   z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+    z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
 
 If follows that for :math:`k = 0 , \ldots , j`
 and :math:`l = 0 , \ldots , j-1`
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \D{H}{ x^{(j-k)} } & = &
-   \D{G}{ x^{(j-k)} }  +
-   \sum_{k=0}^j \D{G}{ z^{(j)} } y^{(k)}
-   \\
-   \D{H}{ y^{(k)} } & = &
-   \D{G}{ y^{(k)} }  +
-   \sum_{k=0}^j \D{G}{ z^{(j)} } x^{(j-k)}
-   \end{eqnarray}
+    \begin{eqnarray}
+    \D{H}{ x^{(j-k)} } & = &
+    \D{G}{ x^{(j-k)} }  +
+    \sum_{k=0}^j \D{G}{ z^{(j)} } y^{(k)}
+    \\
+    \D{H}{ y^{(k)} } & = &
+    \D{G}{ y^{(k)} }  +
+    \sum_{k=0}^j \D{G}{ z^{(j)} } x^{(j-k)}
+    \end{eqnarray}
 
 Division
 ========
@@ -139,36 +139,36 @@ The forward mode formula for
 
 .. math::
 
-   z^{(j)} =
-   \frac{1}{y^{(0)}}
-   \left(
-      x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
-   \right)
+    z^{(j)} =
+    \frac{1}{y^{(0)}}
+    \left(
+        x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+    \right)
 
 If follows that for :math:`k = 1 , \ldots , j`
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \D{H}{ x^{(j)} } & = &
-   \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{y^{(0)}}
-   \\
-   \D{H}{ z^{(j-k)} } & = &
-   \D{G}{ z^{(j-k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} y^{(k)}
-   \\
-   \D{H}{ y^{(k)} } & = &
-   \D{G}{ y^{(k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j-k)}
-   \\
-   \D{H}{ y^{(0)} } & = &
-   \D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}}
-   \left(
-      x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
-   \right)
-   \\
-   & = &
-   \D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j)}
-   \end{eqnarray}
+    \begin{eqnarray}
+    \D{H}{ x^{(j)} } & = &
+    \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{y^{(0)}}
+    \\
+    \D{H}{ z^{(j-k)} } & = &
+    \D{G}{ z^{(j-k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} y^{(k)}
+    \\
+    \D{H}{ y^{(k)} } & = &
+    \D{G}{ y^{(k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j-k)}
+    \\
+    \D{H}{ y^{(0)} } & = &
+    \D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}}
+    \left(
+        x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+    \right)
+    \\
+    & = &
+    \D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j)}
+    \end{eqnarray}
 
 Standard Math Functions
 ***********************
@@ -177,14 +177,14 @@ Hence we are given the partial derivatives of a scalar valued function
 
 .. math::
 
-   G ( z^{(j)} , \ldots , z^{(0)}, x)
+    G ( z^{(j)} , \ldots , z^{(0)}, x)
 
 We need to compute the partial derivatives of the scalar valued function
 
 .. math::
 
-   H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
-   G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
+    H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
+    G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
 
 where :math:`z^{(j)}` is expressed as a function of the
 *j-1*-th order Taylor coefficient row
@@ -193,21 +193,21 @@ vector for :math:`Z` and the vector :math:`x`; i.e.,
 
 .. math::
 
-   z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
+    z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
 
 Contents
 ********
 {xrst_toc_table
-   xrst/theory/exp_reverse.xrst
-   xrst/theory/log_reverse.xrst
-   xrst/theory/sqrt_reverse.xrst
-   xrst/theory/sin_cos_reverse.xrst
-   xrst/theory/atan_reverse.xrst
-   xrst/theory/asin_reverse.xrst
-   xrst/theory/acos_reverse.xrst
-   xrst/theory/tan_reverse.xrst
-   xrst/theory/erf_reverse.xrst
-   xrst/theory/pow_reverse.xrst
+    xrst/theory/exp_reverse.xrst
+    xrst/theory/log_reverse.xrst
+    xrst/theory/sqrt_reverse.xrst
+    xrst/theory/sin_cos_reverse.xrst
+    xrst/theory/atan_reverse.xrst
+    xrst/theory/asin_reverse.xrst
+    xrst/theory/acos_reverse.xrst
+    xrst/theory/tan_reverse.xrst
+    xrst/theory/erf_reverse.xrst
+    xrst/theory/pow_reverse.xrst
 }
 
 {xrst_end reverse_theory}

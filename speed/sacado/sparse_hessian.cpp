@@ -15,16 +15,16 @@ Sacado Speed: Sparse Hessian
 {xrst_code cpp} */
 // A sacado version of this test is not yet implemented
 extern bool link_sparse_hessian(
-   size_t                            size      ,
-   size_t                            repeat    ,
-   const CppAD::vector<size_t>&      row       ,
-   const CppAD::vector<size_t>&      col       ,
-   CppAD::vector<double>&            x         ,
-   CppAD::vector<double>&            hessian   ,
-   size_t&                           n_color
+    size_t                            size      ,
+    size_t                            repeat    ,
+    const CppAD::vector<size_t>&      row       ,
+    const CppAD::vector<size_t>&      col       ,
+    CppAD::vector<double>&            x         ,
+    CppAD::vector<double>&            hessian   ,
+    size_t&                           n_color
 )
 {
-   return false;
+    return false;
 }
 /* {xrst_code}
 {xrst_spell_on}

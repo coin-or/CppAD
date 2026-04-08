@@ -5,12 +5,12 @@
 
 {xrst_begin download}
 {xrst_spell
-   dev
-   github
-   grep
-   gz
-   txt
-   yyyy
+    dev
+    github
+    grep
+    gz
+    txt
+    yyyy
 }
 
 Download The CppAD Source Code
@@ -64,7 +64,7 @@ Git
 CppAD source code development is current done using ``git``
 You can a git clone of the current version using the command
 
-   ``git clone https://github.com/coin-or/CppAD.git cppad.git``
+    ``git clone https://github.com/coin-or/CppAD.git cppad.git``
 
 This procedure requires that
 the `git <https://en.wikipedia.org/wiki/Git_%28software%29>`_
@@ -78,22 +78,22 @@ use the following command to determine the corresponding
 :ref:`download@Version` :
 ::
 
-   grep '^SET(cppad_version' CMakeLists.txt
+    grep '^SET(cppad_version' CMakeLists.txt
 
 Use the following command to determine the git *hash* code
 corresponding to this version:
 ::
 
-   git show-ref | grep 'refs/heads/master'
+    git show-ref | grep 'refs/heads/master'
 
 You can get an old version using the command
 
-   ``git checkout -q`` *hash*
+    ``git checkout -q`` *hash*
 
 You can check the corresponding version number using the command
 ::
 
-   grep '^SET(cppad_version' CMakeLists.txt
+    grep '^SET(cppad_version' CMakeLists.txt
 
 Compressed Archives
 ===================
@@ -118,6 +118,6 @@ If you use ``+dev`` the developer documentation will be included.
 You can then view documentation that you built by opening the
 following file in a web browser::
 
-   build/html/index.html
+    build/html/index.html
 
 {xrst_end download}

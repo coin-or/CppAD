@@ -24,7 +24,7 @@ then the pkg-config will find the
 necessary information to include cppadcg.
 The value of *PKG_CONFIG_PATH* must be such that the command
 
-   ``pkg-config cppadcg --path --print-errors``
+    ``pkg-config cppadcg --path --print-errors``
 
 finds the location of the file ``cppadcg.pc`` .
 

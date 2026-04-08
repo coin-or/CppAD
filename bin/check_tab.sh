@@ -11,18 +11,18 @@ set -e -u
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/check_tab.sh" ]
 then
-   echo "bin/check_tab.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/check_tab.sh: must be executed from its parent directory"
+    exit 1
 fi
 if [ "$#" == 0 ]
 then
-   all='false'
+    all='false'
 elif [ "$#" == 1 ] && [ "$1" == 'all' ]
 then
-   all='true'
+    all='true'
 else
-   echo 'usage: bin/check_tab [all]'
-   exit 1
+    echo 'usage: bin/check_tab [all]'
+    exit 1
 fi
 #
 # sed
@@ -38,42 +38,42 @@ s|.*-> *||
 EOF
 for name in $invisible_and_tab_ok
 do
-   if [ -f $name ]
-   then
-      echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
-   elif [ -d $name ]
-   then
-      echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
-   else
-      echo "$name in no_copyright_list is not a file or directory"
-      exit 1
-   fi
+    if [ -f $name ]
+    then
+        echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
+    elif [ -d $name ]
+    then
+        echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
+    else
+        echo "$name in no_copyright_list is not a file or directory"
+        exit 1
+    fi
 done
 #
 # file_list
 if [ "$all" == 'true' ]
 then
-   file_list=$(git ls-files | $sed -f sed.$$)
+    file_list=$(git ls-files | $sed -f sed.$$)
 else
-   file_list=$(git status --porcelain | \
-      $sed -e '/^D/d' -e 's|^...||' | $sed -f sed.$$)
+    file_list=$(git status --porcelain | \
+        $sed -e '/^D/d' -e 's|^...||' | $sed -f sed.$$)
 fi
 #
 # ok
 ok='yes'
 for file in $file_list
 do
-   if $grep -P '\t' $file > /dev/null
-   then
-      echo "$file has a tab"
-      ok='no'
-   fi
+    if $grep -P '\t' $file > /dev/null
+    then
+        echo "$file has a tab"
+        ok='no'
+    fi
 done
 if [ "$ok" != 'yes' ]
 then
-   echo 'check_tab: Error'
-   rm sed.$$
-   exit 1
+    echo 'check_tab: Error'
+    rm sed.$$
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 rm sed.$$

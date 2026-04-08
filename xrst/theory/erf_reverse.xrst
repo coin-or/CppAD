@@ -21,20 +21,20 @@ suppose that :math:`H` is the same as :math:`G`.
 
 .. math::
 
-   z^{(j)}
-   =
-   \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+    z^{(j)}
+    =
+    \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
 
 For :math:`k = 1 , \ldots , j`,
 the partial of :math:`H` with respect to :math:`x^{(k)}` is given by
 
 .. math::
 
-   \D{H}{ x^{(k)} }
-   =
-   \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
-   =
-   \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \frac{k}{j} y^{(j-k)}
+    \D{H}{ x^{(k)} }
+    =
+    \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+    =
+    \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \frac{k}{j} y^{(j-k)}
 
 For :math:`k = 1 , \ldots ,  j`
 The partial of :math:`H` with respect to :math:`y^{j-k}`,
@@ -42,11 +42,11 @@ is given by
 
 .. math::
 
-   \D{H}{ y^{(j-k)} }
-   =
-   \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
-   =
-   \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \frac{k}{j} x^{k}
+    \D{H}{ y^{(j-k)} }
+    =
+    \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
+    =
+    \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \frac{k}{j} x^{k}
 
 Order Zero Z(t)
 ***************
@@ -57,10 +57,10 @@ In this case,
 
 .. math::
 
-   \D{H}{ x^{(0)} }
-   =
-   \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
-   =
-   \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } y^{(0)}
+    \D{H}{ x^{(0)} }
+    =
+    \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+    =
+    \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } y^{(0)}
 
 {xrst_end erf_reverse}

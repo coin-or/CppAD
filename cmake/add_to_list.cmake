@@ -13,9 +13,9 @@
 # Is the value we are adding to the list. This value cannot be empty.
 #
 MACRO(add_to_list variable_list constant_value )
-     IF( "${${variable_list}}" STREQUAL "" )
-          SET( ${variable_list} ${constant_value} )
-     ELSE( "${${variable_list}}" STREQUAL "" )
-          SET( ${variable_list} ${${variable_list}} ${constant_value} )
-     ENDIF( "${${variable_list}}" STREQUAL "" )
+      IF( "${${variable_list}}" STREQUAL "" )
+             SET( ${variable_list} ${constant_value} )
+      ELSE( "${${variable_list}}" STREQUAL "" )
+             SET( ${variable_list} ${${variable_list}} ${constant_value} )
+      ENDIF( "${${variable_list}}" STREQUAL "" )
 ENDMACRO(add_to_list)

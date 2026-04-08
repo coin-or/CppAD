@@ -48,8 +48,8 @@ variable index corresponding to the argument for this function call.
 ------------------------------------------------------------------------------
 {xrst_begin dis_forward_dir dev}
 {xrst_spell
-   ataylor
-   tpv
+    ataylor
+    tpv
 }
 
 Forward Mode Result for Discrete Functions
@@ -69,15 +69,15 @@ Prototype
 RecBase
 =======
 {xrst_literal
-   // BEGIN_DIS_FORWARD_ANY
-   // END_DIS_FORWARD_ANY
+    // BEGIN_DIS_FORWARD_ANY
+    // END_DIS_FORWARD_ANY
 }
 
 AD<RecBase>
 ===========
 {xrst_literal
-   // BEGIN_AD_DIS_FORWARD_ANY
-   // END_AD_DIS_FORWARD_ANY
+    // BEGIN_AD_DIS_FORWARD_ANY
+    // END_AD_DIS_FORWARD_ANY
 }
 
 RecBase
@@ -111,7 +111,7 @@ tpv
 ***
 We use the notation
 
-   *tpv* = ( *cap_order* - 1 ) * *n_dir*  + 1
+    *tpv* = ( *cap_order* - 1 ) * *n_dir*  + 1
 
 which is the number of Taylor coefficients per variable
 
@@ -122,18 +122,18 @@ Input
 =====
 The zero order Taylor coefficient corresponding to x::
 
-   taylor[ arg[1] * tpv + 0 ]
+    taylor[ arg[1] * tpv + 0 ]
 
 Output
 ======
 If *order_low* is zero::
 
-   taylor[ i_z * tpv + 0 ]
+    taylor[ i_z * tpv + 0 ]
 
 is the zero order Taylor coefficient corresponding to z.
 For k = max(order_low, 1), ... , order_up,
 
-   taylor[ i_z * tpv + (k-1)*n_dir + 1 + ell ]
+    taylor[ i_z * tpv + (k-1)*n_dir + 1 + ell ]
 
 is the k-th order Taylor coefficient corresponding to z (which is zero).
 
@@ -150,73 +150,73 @@ namespace CppAD { namespace local { namespace var_op {
 // BEGIN_DIS_FORWARD_ANY
 template <class RecBase>
 inline void dis_forward_dir(
-   size_t        order_low   ,
-   size_t        order_up    ,
-   size_t        n_dir       ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        cap_order   ,
-   RecBase*      taylor      )
+    size_t        order_low   ,
+    size_t        order_up    ,
+    size_t        n_dir       ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        cap_order   ,
+    RecBase*      taylor      )
 // END_DIS_FORWARD_ANY
-{   // p, q
-   size_t p = order_low;
-   size_t q = order_up;
-   size_t r = n_dir;
-   //
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( q < cap_order );
-   CPPAD_ASSERT_UNKNOWN( 0 < r );
+{    // p, q
+    size_t p = order_low;
+    size_t q = order_up;
+    size_t r = n_dir;
+    //
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( 0 < r );
 
-   // Taylor coefficients corresponding to argument and result
-   size_t num_taylor_per_var = (cap_order-1) * r + 1;
-   RecBase* x = taylor + size_t(arg[1]) * num_taylor_per_var;
-   RecBase* z = taylor +    i_z * num_taylor_per_var;
+    // Taylor coefficients corresponding to argument and result
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    RecBase* x = taylor + size_t(arg[1]) * num_taylor_per_var;
+    RecBase* z = taylor +    i_z * num_taylor_per_var;
 
-   if( p == 0 )
-   {  z[0]  = discrete<RecBase>::eval(size_t(arg[0]), x[0]);
-      p++;
-   }
-   for(size_t ell = 0; ell < r; ell++)
-      for(size_t k = p; k <= q; k++)
-         z[ (k-1) * r + 1 + ell ] = RecBase(0.0);
+    if( p == 0 )
+    {   z[0]  = discrete<RecBase>::eval(size_t(arg[0]), x[0]);
+        p++;
+    }
+    for(size_t ell = 0; ell < r; ell++)
+        for(size_t k = p; k <= q; k++)
+            z[ (k-1) * r + 1 + ell ] = RecBase(0.0);
 }
 // ---------------------------------------------------------------------------
 // BEGIN_AD_DIS_FORWARD_ANY
 template <class RecBase>
 inline void dis_forward_dir(
-   size_t        order_low   ,
-   size_t        order_up    ,
-   size_t        n_dir       ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        cap_order   ,
-   AD<RecBase>*  ataylor     )
+    size_t        order_low   ,
+    size_t        order_up    ,
+    size_t        n_dir       ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        cap_order   ,
+    AD<RecBase>*  ataylor     )
 // END_AD_DIS_FORWARD_ANY
-{   // p, q
-   size_t p = order_low;
-   size_t q = order_up;
-   size_t r = n_dir;
-   //
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( q < cap_order );
-   CPPAD_ASSERT_UNKNOWN( 0 < r );
+{    // p, q
+    size_t p = order_low;
+    size_t q = order_up;
+    size_t r = n_dir;
+    //
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( 0 < r );
 
-   // Taylor coefficients corresponding to argument and result
-   size_t num_taylor_per_var = (cap_order-1) * r + 1;
-   AD<RecBase>* ax = ataylor + size_t(arg[1]) * num_taylor_per_var;
-   AD<RecBase>* az = ataylor +    i_z * num_taylor_per_var;
+    // Taylor coefficients corresponding to argument and result
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    AD<RecBase>* ax = ataylor + size_t(arg[1]) * num_taylor_per_var;
+    AD<RecBase>* az = ataylor +    i_z * num_taylor_per_var;
 
-   if( p == 0 )
-   {  az[0]  = discrete<RecBase>::ad_eval(size_t(arg[0]), ax[0]);
-      p++;
-   }
-   for(size_t ell = 0; ell < r; ell++)
-      for(size_t k = p; k <= q; k++)
-         az[ (k-1) * r + 1 + ell ] = AD<RecBase>(0.0);
+    if( p == 0 )
+    {   az[0]  = discrete<RecBase>::ad_eval(size_t(arg[0]), ax[0]);
+        p++;
+    }
+    for(size_t ell = 0; ell < r; ell++)
+        for(size_t k = p; k <= q; k++)
+            az[ (k-1) * r + 1 + ell ] = AD<RecBase>(0.0);
 }
 
 } } } // END namespace

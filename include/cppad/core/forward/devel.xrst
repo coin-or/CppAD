@@ -10,7 +10,7 @@ Devel: Forward Mode
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/forward/forward.hpp
+    include/cppad/core/forward/forward.hpp
 }
 
 {xrst_end devel_forward}

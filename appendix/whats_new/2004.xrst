@@ -5,25 +5,25 @@
 
 {xrst_begin 2004 app}
 {xrst_spell
-   aclocal
-   autoconf
-   automake
-   dep
-   deps
-   dodds
-   dsp
-   executables
-   ext
-   faq
-   filename
-   hess
-   mak
-   makefile
-   nmake
-   retape
-   ublas
-   usr
-   yy
+    aclocal
+    autoconf
+    automake
+    dep
+    deps
+    dodds
+    dsp
+    executables
+    ext
+    faq
+    filename
+    hess
+    mak
+    makefile
+    nmake
+    retape
+    ublas
+    usr
+    yy
 }
 
 Release Notes for 2004
@@ -340,7 +340,7 @@ for example, the :ref:`GetStarted<get_started.cpp-name>` example now
 has its own directory and
 the distribution directory is named
 
-   ``cppad-`` *yy* ``-`` *mm* ``-`` *dd*
+    ``cppad-`` *yy* ``-`` *mm* ``-`` *dd*
 
 where *yy* ``-`` *mm* ``-`` *dd* is the year, month and date
 of the distribution.
@@ -496,11 +496,11 @@ The special case where the second argument to the :ref:`pow-name` function is an
 =====
 Change all of the include syntax
 
-   # ``include`` " *filename* "
+    # ``include`` " *filename* "
 
 to the syntax
 
-   # ``include`` < *filename* >
+    # ``include`` < *filename* >
 
 so that examples and other use better reflect how one would use CppAD after
 it was installed in a standard include directory; for example
@@ -542,11 +542,11 @@ Note that if ``/usr/local/cppad/`` is no longer searched,
 you will have to change
 ::
 
-   # include "cppad.hpp"
+    # include "cppad.hpp"
 
 to::
 
-   # include "cppad/cppad.hpp"
+    # include "cppad/cppad.hpp"
 
 The window ``nmake`` file ``Speed/Speed.mak`` was out of date.
 This has been fixed.
@@ -842,16 +842,16 @@ In addition, the :ref:`ADFun-name` member functions
 because it is easier to use the uniform syntax below:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Old Syntax**
-     - **Uniform Syntax**
-   * - *r1* = *f* . ``Rev`` ( *v* )
-     - *r1* = *f* . ``Reverse`` (1, *v* )
-   * - *q1* = *f* . ``RevTwo`` ( *v* )
-     - *r2* = *f* . ``Reverse`` (2, *v* )
-   * -
-     - *q1* [ *i* ] == *r2* [2 * *i*  + 1]
+    * - **Old Syntax**
+      - **Uniform Syntax**
+    * - *r1* = *f* . ``Rev`` ( *v* )
+      - *r1* = *f* . ``Reverse`` (1, *v* )
+    * - *q1* = *f* . ``RevTwo`` ( *v* )
+      - *r2* = *f* . ``Reverse`` (2, *v* )
+    * -
+      - *q1* [ *i* ] == *r2* [2 * *i*  + 1]
 
 The :ref:`Theory-name` section has been completely changed so that
 it corresponds to the arbitrary order calculations.
@@ -899,16 +899,16 @@ In addition, the :ref:`ADFun-name` member functions
 because it is easier to use the uniform syntax below:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Old Syntax**
-     - **Uniform Syntax**
-   * - *v0* = *f* . ``Arg`` ( *u0* )
-     - *v0* = *f* . ``Forward`` (0, *u0* )
-   * - *v1* = *f* . ``For`` ( *u1* )
-     - *v1* = *f* . ``Forward`` (1, *u1* )
-   * - *v2* = *f* . ``For`` ( *u2* )
-     - *v2* = *f* . ``Forward`` (1, *u2* )
+    * - **Old Syntax**
+      - **Uniform Syntax**
+    * - *v0* = *f* . ``Arg`` ( *u0* )
+      - *v0* = *f* . ``Forward`` (0, *u0* )
+    * - *v1* = *f* . ``For`` ( *u1* )
+      - *v1* = *f* . ``Forward`` (1, *u1* )
+    * - *v2* = *f* . ``For`` ( *u2* )
+      - *v2* = *f* . ``Forward`` (1, *u2* )
 
 02-12
 =====

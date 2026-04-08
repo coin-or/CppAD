@@ -8,13 +8,13 @@
 # include <cppad/utility/vector.hpp>
 // BEGIN PROTOTYPE
 extern bool link_sparse_hessian(
-   size_t                           size      ,
-   size_t                           repeat    ,
-   const CppAD::vector<size_t>&     row       ,
-   const CppAD::vector<size_t>&     col       ,
-   CppAD::vector<double>&           x         ,
-   CppAD::vector<double>&           hessian   ,
-   size_t&                          n_color
+    size_t                           size      ,
+    size_t                           repeat    ,
+    const CppAD::vector<size_t>&     row       ,
+    const CppAD::vector<size_t>&     col       ,
+    CppAD::vector<double>&           x         ,
+    CppAD::vector<double>&           hessian   ,
+    size_t&                          n_color
 );
 // END PROTOTYPE
 /*
@@ -33,8 +33,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 
 Namespace
@@ -54,13 +54,13 @@ one of the following forms:
 
 .. math::
 
-   \DD{f}{x[row[k]]}{x[row[k]]}
-   \; , \;
-   \DD{f}{x[row[k]]}{x[col[k]]}
-   \; , \;
-   \DD{f}{x[col[k]]}{x[row[k]]}
-   \; , \;
-   \DD{f}{x[col[k]]}{x[col[k]]}
+    \DD{f}{x[row[k]]}{x[row[k]]}
+    \; , \;
+    \DD{f}{x[row[k]]}{x[col[k]]}
+    \; , \;
+    \DD{f}{x[col[k]]}{x[row[k]]}
+    \; , \;
+    \DD{f}{x[col[k]]}{x[col[k]]}
 
 for some :math:`k` between zero and :math:`K-1`.
 All the other terms of the Hessian are zero.
@@ -113,17 +113,17 @@ Row Major
 The indices *row* and *col* are in row major order; i.e.,
 for each *k* < *row* . ``size`` () ``-2``
 
-   *row* [ *k* ] <= *row* [ *k* +1]
+    *row* [ *k* ] <= *row* [ *k* +1]
 
 and if *row* [ *k* ] == *row* [ *k* +1] then
 
-   *col* [ *k* ] < *col* [ *k* +1]
+    *col* [ *k* ] < *col* [ *k* +1]
 
 Lower Triangular
 ****************
 Only the lower triangle of the Hessian is included.
 
-   *col* [ *k* ] <= *row* [ *k* ]
+    *col* [ *k* ] <= *row* [ *k* ]
 
 .
 
@@ -137,7 +137,7 @@ To be more specific, for
 
 .. math::
 
-   \DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = \R{hessian} [k]
+    \DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = \R{hessian} [k]
 
 n_color
 *******

@@ -8,9 +8,9 @@ abs_min_linear Source Code
 ##########################
 
 {xrst_literal
-   example/abs_normal/abs_min_linear.hpp
-   // BEGIN C++
-   // END C++
+    example/abs_normal/abs_min_linear.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end abs_min_linear.hpp}

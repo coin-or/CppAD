@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list app}
 {xrst_spell
-   adolc
-   grep
-   tapeless
+    adolc
+    grep
+    tapeless
 }
 
 The CppAD Wish List
@@ -59,7 +59,7 @@ Reverse Mode
 Reverse mode calculation of the function
 :math:`f : \B{R} \rightarrow \B{R}`  defined by :math:`y = f(x)` where
 
-   *ay* [0] = ``pow`` ( *ax* [0], 0.5) * ``pow`` ( *ax* [0], 0.5)
+    *ay* [0] = ``pow`` ( *ax* [0], 0.5) * ``pow`` ( *ax* [0], 0.5)
 
 yields the result zero when :math:`x_0 = 0`;
 see the file ``bug/pow.sh`` .
@@ -106,7 +106,7 @@ function at the current point :math:`\hat{x}` the displaced point
 
 .. math::
 
-   |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
 
 {xrst_comment -------------------------------------------------------------- }
 cppad_lib
@@ -236,7 +236,7 @@ Special Operators
 =================
 Add special operators that can be implemented more efficiently, e.g.,
 
-   ``square`` ( *x* ) = *x* * *x*
+    ``square`` ( *x* ) = *x* * *x*
 
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
@@ -283,7 +283,7 @@ Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 ::
 
-   grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep\*.hpp
+    grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep\*.hpp
 
 to find all the possible tracing flags.
 

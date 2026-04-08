@@ -5,7 +5,7 @@
 
 {xrst_begin fun_property}
 {xrst_spell
-   dyn
+    dyn
 }
 
 ADFun Function Properties
@@ -48,7 +48,7 @@ f
 *
 The object *f* has prototype
 
-   ``const ADFun`` < *Base* > *f*
+    ``const ADFun`` < *Base* > *f*
 
 (see ``ADFun`` < *Base* > :ref:`constructor<fun_construct-name>` ).
 
@@ -56,12 +56,12 @@ Domain
 ******
 The result *n* has prototype
 
-   ``size_t`` *n*
+    ``size_t`` *n*
 
 and is the dimension of the domain space corresponding to *f* .
 This is equal to the size of the vector *x* in the call
 
-   ``Independent`` ( *x* )
+    ``Independent`` ( *x* )
 
 that starting recording the operation sequence
 currently stored in *f*
@@ -71,16 +71,16 @@ Range
 *****
 The result *m* has prototype
 
-   ``size_t`` *m*
+    ``size_t`` *m*
 
 and is the dimension of the range space corresponding to *f* .
 This is equal to the size of the vector *y* in syntax
 
-   *ADFun* < ``Base>`` *f* ( *x* , *y* )
+    *ADFun* < ``Base>`` *f* ( *x* , *y* )
 
 or
 
-   *f* . ``Dependent`` ( *y* )
+    *f* . ``Dependent`` ( *y* )
 
 depending on which stored the operation sequence currently in *f*
 (see :ref:`fun_construct-name` and :ref:`Dependent-name` ).
@@ -89,12 +89,12 @@ Parameter
 *********
 The argument *i* has prototype
 
-   ``size_t`` *i*
+    ``size_t`` *i*
 
 and :math:`0 \leq i < m`.
 The result *p* has prototype
 
-   ``bool`` *p*
+    ``bool`` *p*
 
 It is true if the *i*-th component of range space for :math:`F`
 corresponds to a
@@ -104,7 +104,7 @@ the *i*-th component of :math:`F` is constant and
 
 .. math::
 
-   \D{F_i}{x_j} (x) = 0
+    \D{F_i}{x_j} (x) = 0
 
 for :math:`j = 0 , \ldots , n-1` and all :math:`x \in \B{R}^n`.
 
@@ -112,7 +112,7 @@ size_var
 ********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
@@ -131,7 +131,7 @@ size_par
 ********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of parameters in the operation sequence
 (include a phantom parameter at index zero that is not used).
@@ -146,7 +146,7 @@ size_op
 *******
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of operations in the operation sequence.
 Some operators, like comparison operators,
@@ -161,7 +161,7 @@ size_op_arg
 ***********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the total number of operator arguments in the operation sequence.
 For example, Binary operators (e.g. addition) have two arguments.
@@ -174,7 +174,7 @@ size_text
 *********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the total characters used in the :ref:`PrintFor-name` commands
 in this operation sequence.
@@ -183,7 +183,7 @@ size_VecAD
 **********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of :ref:`VecAD-name` vectors,
 plus the number of elements in the vectors.
@@ -194,7 +194,7 @@ size_random
 ***********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the amount of memory currently holding information
 for randomly access the operator sequence.
@@ -214,7 +214,7 @@ size_dyn_ind
 ************
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of independent
 :ref:`glossary@Parameter@Dynamic` parameters
@@ -227,7 +227,7 @@ size_dyn_par
 ************
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of
 :ref:`glossary@Parameter@Dynamic` parameters.
@@ -239,7 +239,7 @@ size_dyn_arg
 ************
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the total number of dynamic parameter operator arguments
 in the operation sequence.
@@ -251,7 +251,7 @@ size_op_seq
 ***********
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the amount of memory required to store the operation sequence
 (not counting a small amount of memory required for every operation sequence).
@@ -279,7 +279,7 @@ of the CppAD API and may change.
 Example
 *******
 {xrst_toc_hidden
-   example/general/fun_property.cpp
+    example/general/fun_property.cpp
 }
 The file
 :ref:`fun_property.cpp-name`

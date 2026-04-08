@@ -24,7 +24,7 @@ i
 *
 The result *i* has prototype
 
-   ``int`` *i*
+    ``int`` *i*
 
 x
 *
@@ -52,7 +52,7 @@ If the argument *x* has either of the following prototypes:
 
 The result *i* is given by
 
-   *i* = ``Integer`` ( *x* . ``real`` ())
+    *i* = ``Integer`` ( *x* . ``real`` ())
 
 AD Types
 ========
@@ -75,7 +75,7 @@ AD of *Base*
 Example
 *******
 {xrst_toc_hidden
-   example/general/integer.cpp
+    example/general/integer.cpp
 }
 The file
 :ref:`integer.cpp-name`
@@ -88,14 +88,14 @@ contains an example and test of this operation.
 
 namespace CppAD {
 
-   template <class Base>
-   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-   int Integer(const AD<Base> &x)
-   {  return Integer(x.value_); }
+    template <class Base>
+    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+    int Integer(const AD<Base> &x)
+    {   return Integer(x.value_); }
 
-   template <class Base>
-   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-   int Integer(const VecAD_reference<Base> &x)
-   {  return Integer( x.ADBase() ); }
+    template <class Base>
+    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+    int Integer(const VecAD_reference<Base> &x)
+    {   return Integer( x.ADBase() ); }
 }
 # endif

@@ -20,7 +20,7 @@ keys
 ****
 The argument *keys* has prototype
 
-   ``const`` *KeyVector* & *keys*
+    ``const`` *KeyVector* & *keys*
 
 where *KeyVector* is
 a :ref:`SimpleVector-name` class with elements that support the ``<``
@@ -30,7 +30,7 @@ ind
 ***
 The argument *ind* has prototype
 
-   *SizeVector* & *ind*
+    *SizeVector* & *ind*
 
 where *SizeVector* is
 a :ref:`SimpleVector-name` class with elements of type *Size_t* ,
@@ -49,16 +49,16 @@ Upon return, *ind* is a permutation of the set of indices
 that yields increasing order for *keys* .
 In other words, for all *i* != *j* ,
 
-   *ind* [ *i* ] != *ind* [ *j* ]
+    *ind* [ *i* ] != *ind* [ *j* ]
 
 and for *i* = 0 , ... , *size* ``-2`` ,
 
-   ( *keys* [ *ind* [ *i* +1] ] < *keys* [ *ind* [ *i* ] ] ) == ``false``
+    ( *keys* [ *ind* [ *i* +1] ] < *keys* [ *ind* [ *i* ] ] ) == ``false``
 
 Example
 *******
 {xrst_toc_hidden
-   example/utility/index_sort.cpp
+    example/utility/index_sort.cpp
 }
 The file :ref:`index_sort.cpp-name` contains an example
 and test of this routine.
@@ -83,26 +83,26 @@ Helper class used by index_sort
 template <class Compare, class Size_t>
 class index_sort_element {
 private:
-   /// key used to determine position of this element
-   Compare key_;
-   /// index value corresponding to this key
-   Size_t  index_;
+    /// key used to determine position of this element
+    Compare key_;
+    /// index value corresponding to this key
+    Size_t  index_;
 public:
-   /// operator required by std::sort
-   bool operator<(const index_sort_element& other) const
-   {  return key_ < other.key_; }
-   /// set the key for this element
-   void set_key(const Compare& value)
-   {  key_ = value; }
-   /// set the index for this element
-   void set_index(const Size_t& index)
-   {  index_ = index; }
-   /// get the key for this element
-   Compare get_key(void) const
-   {  return key_; }
-   /// get the index for this element
-   Size_t get_index(void) const
-   {  return index_; }
+    /// operator required by std::sort
+    bool operator<(const index_sort_element& other) const
+    {   return key_ < other.key_; }
+    /// set the key for this element
+    void set_key(const Compare& value)
+    {   key_ = value; }
+    /// set the index for this element
+    void set_index(const Size_t& index)
+    {   index_ = index; }
+    /// get the key for this element
+    Compare get_key(void) const
+    {   return key_; }
+    /// get the index for this element
+    Size_t get_index(void) const
+    {   return index_; }
 };
 
 /*!
@@ -129,40 +129,40 @@ The output value of its elements satisfy
 */
 template <class KeyVector, class SizeVector>
 void index_sort(const KeyVector& keys, SizeVector& ind)
-{  typedef typename KeyVector::value_type      Compare;
-   typedef typename SizeVector::value_type     Size_t;
-   typedef index_sort_element<Compare, Size_t> Element;
-   //
-   CheckSimpleVector<Size_t, SizeVector>();
-   //
-   CPPAD_ASSERT_KNOWN(
-      keys.size() == ind.size(),
-      "index_sort: vector sizes do not match"
-   );
+{   typedef typename KeyVector::value_type      Compare;
+    typedef typename SizeVector::value_type     Size_t;
+    typedef index_sort_element<Compare, Size_t> Element;
+    //
+    CheckSimpleVector<Size_t, SizeVector>();
+    //
+    CPPAD_ASSERT_KNOWN(
+        keys.size() == ind.size(),
+        "index_sort: vector sizes do not match"
+    );
 
-   size_t size_work = keys.size();
-   size_t size_out;
-   Element* work =
-      thread_alloc::create_array<Element>(size_work, size_out);
+    size_t size_work = keys.size();
+    size_t size_out;
+    Element* work =
+        thread_alloc::create_array<Element>(size_work, size_out);
 
-   // copy initial order into work
-   size_t i;
-   for(i = 0; i < size_work; i++)
-   {  work[i].set_key( keys[i] );
-      work[i].set_index( Size_t(i) );
-   }
+    // copy initial order into work
+    size_t i;
+    for(i = 0; i < size_work; i++)
+    {   work[i].set_key( keys[i] );
+        work[i].set_index( Size_t(i) );
+    }
 
-   // sort the work array
-   std::sort(work, work+size_work);
+    // sort the work array
+    std::sort(work, work+size_work);
 
-   // copy the indices to the output vector
-   for(i = 0; i < size_work; i++)
-      ind[i] = work[i].get_index();
+    // copy the indices to the output vector
+    for(i = 0; i < size_work; i++)
+        ind[i] = work[i].get_index();
 
-   // we are done with this work array
-   thread_alloc::delete_array(work);
+    // we are done with this work array
+    thread_alloc::delete_array(work);
 
-   return;
+    return;
 }
 
 } // END_CPPAD_NAMESPACE

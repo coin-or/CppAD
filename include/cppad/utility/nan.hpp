@@ -7,8 +7,8 @@
 /*
 {xrst_begin nan}
 {xrst_spell
-   hasnan
-   isnan
+    hasnan
+    isnan
 }
 
 Obtain Nan or Determine if a Value is Nan
@@ -26,7 +26,7 @@ Check for the value not a number ``nan`` .
 The IEEE standard specifies that a floating point value *a*
 is ``nan`` if and only if the following returns true
 
-   *a* != *a*
+    *a* != *a*
 
 std::isnan
 **********
@@ -56,13 +56,13 @@ s
 =
 The argument *s* has prototype
 
-   ``const`` *Scalar* *s*
+    ``const`` *Scalar* *s*
 
 b
 =
 The return value *b* has prototype
 
-   ``bool`` *b*
+    ``bool`` *b*
 
 It is true if the value *s* is ``nan`` .
 
@@ -75,7 +75,7 @@ v
 =
 The argument *v* has prototype
 
-   ``const`` *Vector* & *v*
+    ``const`` *Vector* & *v*
 
 (see :ref:`nan@Vector` for the definition of *Vector* ).
 
@@ -83,7 +83,7 @@ b
 =
 The return value *b* has prototype
 
-   ``bool`` *b*
+    ``bool`` *b*
 
 It is true if the vector *v* has a ``nan`` .
 
@@ -98,13 +98,13 @@ This routine has been deprecated, use CppAD numeric limits
 Syntax
 ======
 
-   *s* = ``nan`` ( *z* )
+    *s* = ``nan`` ( *z* )
 
 z
 =
 The argument *z* has prototype
 
-   ``const`` *Scalar* & *z*
+    ``const`` *Scalar* & *z*
 
 and its value is zero
 (see :ref:`nan@Scalar` for the definition of *Scalar* ).
@@ -113,7 +113,7 @@ s
 =
 The return value *s* has prototype
 
-   *Scalar* *s*
+    *Scalar* *s*
 
 It is the value ``nan`` for this floating point type.
 
@@ -122,16 +122,16 @@ Scalar
 The type *Scalar* must support the following operations;
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Operation**
-     - **Description**
-   * - *a* / *b*
-     - division operator (returns a *Scalar* object)
-   * - *a* == *b*
-     - equality operator (returns a ``bool`` object)
-   * - *a* != *b*
-     - not equality operator (returns a ``bool`` object)
+    * - **Operation**
+      - **Description**
+    * - *a* / *b*
+      - division operator (returns a *Scalar* object)
+    * - *a* == *b*
+      - equality operator (returns a ``bool`` object)
+    * - *a* != *b*
+      - not equality operator (returns a ``bool`` object)
 
 Note that the division operator will be used with *a* and *b*
 equal to zero. For some types (e.g. ``int`` ) this may generate
@@ -142,7 +142,7 @@ Vector
 The type *Vector* must be a :ref:`SimpleVector-name` class with
 elements of type *Scalar* .
 {xrst_toc_hidden
-   example/utility/nan.cpp
+    example/utility/nan.cpp
 }
 Example
 *******
@@ -173,25 +173,25 @@ namespace CppAD { // BEGIN CppAD namespace
 
 template <class Scalar>
 bool isnan(const Scalar &s)
-{  return (s != s);
+{   return (s != s);
 }
 
 template <class Vector>
 bool hasnan(const Vector &v)
 {
-   bool found_nan;
-   size_t i;
-   i   = v.size();
-   found_nan = false;
-   // on MS Visual Studio 2012, CppAD required in front of isnan ?
-   while(i--)
-      found_nan |= CppAD::isnan(v[i]);
-   return found_nan;
+    bool found_nan;
+    size_t i;
+    i   = v.size();
+    found_nan = false;
+    // on MS Visual Studio 2012, CppAD required in front of isnan ?
+    while(i--)
+        found_nan |= CppAD::isnan(v[i]);
+    return found_nan;
 }
 
 template <class Scalar>
 Scalar nan(const Scalar &zero)
-{  return zero / zero;
+{   return zero / zero;
 }
 
 } // End CppAD namespace

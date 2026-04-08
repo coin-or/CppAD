@@ -5,10 +5,10 @@
 
 {xrst_begin speed}
 {xrst_spell
-   adolc
-   cppadcg
-   fadbad
-   sacado
+    adolc
+    cppadcg
+    fadbad
+    sacado
 }
 
 Speed Test an Operator Overloading AD Package
@@ -40,16 +40,16 @@ The sections below explain how you can run these tests on your computer.
 Contents
 ********
 {xrst_toc_table
-   speed/main.cpp
-   speed/speed_utility.xrst
-   speed/double/speed_double.xrst
-   speed/adolc/speed_adolc.xrst
-   speed/cppad/speed_cppad.xrst
-   speed/fadbad/speed_fadbad.xrst
-   speed/cppad_jit/speed_cppad_jit.xrst
-   speed/cppadcg/speed_cppadcg.xrst
-   speed/sacado/speed_sacado.xrst
-   speed/xpackage/speed_xpackage.xrst
+    speed/main.cpp
+    speed/speed_utility.xrst
+    speed/double/speed_double.xrst
+    speed/adolc/speed_adolc.xrst
+    speed/cppad/speed_cppad.xrst
+    speed/fadbad/speed_fadbad.xrst
+    speed/cppad_jit/speed_cppad_jit.xrst
+    speed/cppadcg/speed_cppadcg.xrst
+    speed/sacado/speed_sacado.xrst
+    speed/xpackage/speed_xpackage.xrst
 }
 
 {xrst_end speed}

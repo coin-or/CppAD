@@ -12,16 +12,16 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../thread_test.cpp
-   ../team_example.cpp
-   ../harmonic.cpp
-   ../multi_atomic_two.cpp
-   ../multi_atomic_three.cpp
-   ../multi_chkpoint_one.cpp
-   ../multi_chkpoint_two.cpp
-   ../multi_newton.cpp
-   a11c_pthread.cpp
-   get_started.cpp
-   team_pthread.cpp
+    ../team_example.cpp
+    ../harmonic.cpp
+    ../multi_atomic_two.cpp
+    ../multi_atomic_three.cpp
+    ../multi_chkpoint_one.cpp
+    ../multi_chkpoint_two.cpp
+    ../multi_newton.cpp
+    a11c_pthread.cpp
+    get_started.cpp
+    team_pthread.cpp
 )
 set_compile_flags( example_multi_thread_pthread "${cppad_debug_which}" "${source_list}" )
 #
@@ -29,9 +29,9 @@ ADD_EXECUTABLE( example_multi_thread_pthread EXCLUDE_FROM_ALL ${source_list} )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_multi_thread_pthread
-   ${cppad_lib}
-   ${colpack_libs}
-   ${pthread_lib_path}
+    ${cppad_lib}
+    ${colpack_libs}
+    ${pthread_lib_path}
 )
 
 # check_example_multi_thread_pthread

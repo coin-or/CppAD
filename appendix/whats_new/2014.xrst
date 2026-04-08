@@ -5,25 +5,25 @@
 
 {xrst_begin 2014 app}
 {xrst_spell
-   autoconf
-   automake
-   autotools
-   bthread
-   cmath
-   cstdint
-   ctor
-   datadir
-   docdir
-   doxygen
-   forwardany
-   forwardone
-   forwardzero
-   ipopt
-   omhelp
-   openmp
-   pthread
-   retape
-   uj
+    autoconf
+    automake
+    autotools
+    bthread
+    cmath
+    cstdint
+    ctor
+    datadir
+    docdir
+    doxygen
+    forwardany
+    forwardone
+    forwardzero
+    ipopt
+    omhelp
+    openmp
+    pthread
+    retape
+    uj
 }
 
 Release Notes for 2014
@@ -38,7 +38,7 @@ There was a bug in the :ref:`cmake-name` whereby it would sometimes mistakenly
 exit with the error message
 ::
 
-   cppad_max_num_threads is not an integer greater than or equal 4
+    cppad_max_num_threads is not an integer greater than or equal 4
 
 This has been fixed.
 
@@ -46,7 +46,7 @@ This has been fixed.
 =====
 The example ``not_complex_ad.cpp`` was using the type
 
-   ``std::complex< CppAD::AD<double> >``
+    ``std::complex< CppAD::AD<double> >``
 
 and was failing to compile with the ``clang`` compiler.
 This example has been removed because it is not consistent with the
@@ -208,18 +208,18 @@ These instructions should work on any system, not just unix.
    before this change:
    ::
 
-      cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
-      cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
+        cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+        cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
 
-   and after this change:
-   ::
+    and after this change:
+    ::
 
-      cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
-      cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
+        cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+        cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
 
-   Due to the success of this change,
-   ``multiple direction`` items were added to the wish list
-   (they were later removed).
+    Due to the success of this change,
+    ``multiple direction`` items were added to the wish list
+    (they were later removed).
 #. Improve the  forward mode tracing of arguments to,
    and results from, user defined :ref:`atomic-name` operations.
 
@@ -409,12 +409,12 @@ The destination directory for the
 is now set separately from the data directory
 using the ``cmake`` option
 
-   ``-D cmake_install_docdir`` = *cmake_install_docdir*
+    ``-D cmake_install_docdir`` = *cmake_install_docdir*
 
 This has increased the flexibility of the documentation installation
 and removed the need for the option
 
-   ``-D cppad_documentation`` = *yes_or_no*
+    ``-D cppad_documentation`` = *yes_or_no*
 
 which has been removed.
 

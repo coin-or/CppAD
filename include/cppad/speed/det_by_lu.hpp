@@ -27,7 +27,7 @@ Constructor
 ***********
 The syntax
 
-   ``det_by_lu`` < *Scalar* > *det* ( *n* )
+    ``det_by_lu`` < *Scalar* > *det* ( *n* )
 
 constructs the object *det* which can be used for
 evaluating the determinant of *n* by *n* matrices
@@ -42,13 +42,13 @@ n
 *
 The argument *n* has prototype
 
-   ``size_t`` *n*
+    ``size_t`` *n*
 
 det
 ***
 The syntax
 
-   *d* = *det* ( *a* )
+    *d* = *det* ( *a* )
 
 returns the determinant of the matrix :math:`A` using LU factorization.
 
@@ -56,7 +56,7 @@ a
 =
 The argument *a* has prototype
 
-   ``const`` *Vector* & *a*
+    ``const`` *Vector* & *a*
 
 It must be a *Vector* with length :math:`n * n` and with
 It must be a *Vector* with length :math:`n * n` and with
@@ -66,28 +66,28 @@ for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
 
 .. math::
 
-   A_{i,j} = a[ i * m + j]
+    A_{i,j} = a[ i * m + j]
 
 d
 =
 The return value *d* has prototype
 
-   *Scalar* *d*
+    *Scalar* *d*
 
 Vector
 ******
 If *y* is a *Vector* object,
 it must support the syntax
 
-   *y* [ *i* ]
+    *y* [ *i* ]
 
 where *i* has type ``size_t`` with value less than :math:`n * n`.
 This must return a *Scalar* value corresponding to the *i*-th
 element of the vector *y* .
 This is the only requirement of the type *Vector* .
 {xrst_toc_hidden
-   speed/example/det_by_lu.cpp
-   xrst/det_by_lu_hpp.xrst
+    speed/example/det_by_lu.cpp
+    xrst/det_by_lu_hpp.xrst
 }
 
 Example
@@ -115,52 +115,52 @@ namespace CppAD {
 template <class Scalar>
 class det_by_lu {
 private:
-   const size_t m_;
-   const size_t n_;
-   CppAD::vector<Scalar> A_;
-   CppAD::vector<Scalar> B_;
-   CppAD::vector<Scalar> X_;
+    const size_t m_;
+    const size_t n_;
+    CppAD::vector<Scalar> A_;
+    CppAD::vector<Scalar> B_;
+    CppAD::vector<Scalar> X_;
 public:
-   det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
-   {  }
+    det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
+    {   }
 
-   template <class Vector>
-   Scalar operator()(const Vector &x)
-   {
+    template <class Vector>
+    Scalar operator()(const Vector &x)
+    {
 
-      Scalar       logdet;
-      Scalar       det;
-      int          signdet;
-      size_t       i;
+        Scalar       logdet;
+        Scalar       det;
+        int          signdet;
+        size_t       i;
 
-      // copy matrix so it is not overwritten
-      for(i = 0; i < n_ * n_; i++)
-         A_[i] = x[i];
+        // copy matrix so it is not overwritten
+        for(i = 0; i < n_ * n_; i++)
+            A_[i] = x[i];
 
-      // compute log determinant
-      signdet = CppAD::LuSolve(
-         n_, m_, A_, B_, X_, logdet);
+        // compute log determinant
+        signdet = CppAD::LuSolve(
+            n_, m_, A_, B_, X_, logdet);
 
 /*
-      // Do not do this for speed test because it makes floating
-      // point operation sequence very simple.
-      if( signdet == 0 )
-         det = 0;
-      else
-         det =  Scalar( signdet ) * exp( logdet );
+        // Do not do this for speed test because it makes floating
+        // point operation sequence very simple.
+        if( signdet == 0 )
+            det = 0;
+        else
+            det =  Scalar( signdet ) * exp( logdet );
 */
 
-      // convert to determinant
-      det     = Scalar( signdet ) * exp( logdet );
+        // convert to determinant
+        det     = Scalar( signdet ) * exp( logdet );
 
 # ifdef FADBAD
-      // Fadbad requires temporaries to be set to constants
-      for(i = 0; i < n_ * n_; i++)
-         A_[i] = 0;
+        // Fadbad requires temporaries to be set to constants
+        for(i = 0; i < n_ * n_; i++)
+            A_[i] = 0;
 # endif
 
-      return det;
-   }
+        return det;
+    }
 };
 } // END CppAD namespace
 // END C++

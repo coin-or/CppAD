@@ -12,7 +12,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 #
 # Use the version of BoostConfig.cmake provided by boost.
 IF( POLICY CMP0167 )
-   CMAKE_POLICY(SET CMP0167 NEW)
+    CMAKE_POLICY(SET CMP0167 NEW)
 ENDIF( POLICY CMP0167 )
 #
 # Only interpret if() arguments as variables or keywords when unquoted.
@@ -21,11 +21,11 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20260103")
+SET(cppad_version "20260408")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE "NOTFOUND")
+     SET(CMAKE_BUILD_TYPE "NOTFOUND")
 ENDIF( NOT DEFINED CMAKE_BUILD_TYPE)
 #
 # Set name of this project and create the variables
@@ -91,125 +91,125 @@ INCLUDE(cmake/add_check_executable.cmake)
 # Arguments that are no longer used
 #
 IF( debug_which )
-   MESSAGE(FATAL_ERROR
-      "Using debug_which, use cppad_debug_which or CMAKE_BUILD_TYPE instead"
-   )
+    MESSAGE(FATAL_ERROR
+        "Using debug_which, use cppad_debug_which or CMAKE_BUILD_TYPE instead"
+    )
 ENDIF( debug_which )
 #
 IF( cppad_sparse_list )
-   MESSAGE(FATAL_ERROR
-      "cppad_sparse_list has been removed from cmake command"
-   )
+    MESSAGE(FATAL_ERROR
+        "cppad_sparse_list has been removed from cmake command"
+    )
 ENDIF( cppad_sparse_list )
 #
 IF( cppad_deprecated )
-   MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake command" )
+    MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake command" )
 ENDIF( cppad_deprecated )
 #
 IF( cmake_install_prefix )
-   MESSAGE(FATAL_ERROR
-      "cmake_install_prefix has been changed to cppad_prefix"
-   )
+    MESSAGE(FATAL_ERROR
+        "cmake_install_prefix has been changed to cppad_prefix"
+    )
 ENDIF( cmake_install_prefix )
 #
 IF( cmake_install_postfix )
-   MESSAGE(FATAL_ERROR
-      "cmake_install_postfix has been changed to cppad_postfix"
-   )
+    MESSAGE(FATAL_ERROR
+        "cmake_install_postfix has been changed to cppad_postfix"
+    )
 ENDIF( cmake_install_postfix )
 #
 FOREACH(pkg adolc eigen ipopt cppadcg)
-   IF( ${pkg}_prefix )
-      MESSAGE(FATAL_ERROR
-         "-D ${pkg}_prefix=value has been changed to -D include_${pkg}=true"
-      )
-   ENDIF( ${pkg}_prefix )
+    IF( ${pkg}_prefix )
+        MESSAGE(FATAL_ERROR
+            "-D ${pkg}_prefix=value has been changed to -D include_${pkg}=true"
+        )
+    ENDIF( ${pkg}_prefix )
 ENDFOREACH(pkg adolc eigen ipopt cppadcg)
 #
 IF( cmake_needs_dot_slash )
-   MESSAGE(FATAL_ERROR
-      "cmake_needs_dot_slash was removed; see release notes for 2023-06-01"
-   )
+    MESSAGE(FATAL_ERROR
+        "cmake_needs_dot_slash was removed; see release notes for 2023-06-01"
+    )
 ENDIF( cmake_needs_dot_slash )
 #
 IF( include_eigen )
-   MESSAGE(FATAL_ERROR
-      "include_eigen was removed; see release notes for 2024-10-02"
-   )
+    MESSAGE(FATAL_ERROR
+        "include_eigen was removed; see release notes for 2024-10-02"
+    )
 ENDIF( )
 # -----------------------------------------------------------------------------
 # Current Arguments
 #
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
-   "directory, below prefix, where cmake installs cppad data files"
+    "directory, below prefix, where cmake installs cppad data files"
 )
 #
 # cmake_install_docdir
 command_line_arg(cmake_install_docdir NOTFOUND STRING
-   "directory, below prefix, where cmake installs cppad documentation files"
+    "directory, below prefix, where cmake installs cppad documentation files"
 )
 #
 # cmake_install_includedirs
 command_line_arg(cmake_install_includedirs include STRING
-   "directories, below prefix, where cmake installs include files"
+    "directories, below prefix, where cmake installs include files"
 )
 #
 # cmake_install_libdirs
 command_line_arg(cmake_install_libdirs "lib;lib64" STRING
-   "directories, below prefix, where cmake installs library files"
+    "directories, below prefix, where cmake installs library files"
 )
 #
 # cmake_defined_ok
 command_line_arg(cmake_defined_ok TRUE BOOL
-   "If false, check that some symbols only get defined once"
-   "If true, you can use CMakeCache.txt to store previous settings"
+    "If false, check that some symbols only get defined once"
+    "If true, you can use CMakeCache.txt to store previous settings"
 )
 #
 # cppad_prefix
 command_line_arg(cppad_prefix "${CMAKE_INSTALL_PREFIX}" PATH
-   "cppad install prefix"
+    "cppad install prefix"
 )
 #
 # cppad_postfix
 command_line_arg(cppad_postfix NOTFOUND STRING
-   "cppad install postfix"
+    "cppad install postfix"
 )
 #
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags "" STRING
-   "compile flags used with cppad (besides debug, release, and profile flags)"
+    "compile flags used with cppad (besides debug, release, and profile flags)"
 )
 #
 # cppad_link_flags
 command_line_arg(cppad_link_flags "" STRING
-   "additional linker flags)"
+    "additional linker flags)"
 )
 #
 # cppad_profile_flag
 command_line_arg(cppad_profile_flag NOTFOUND STRING
-   "compile flag used to compile and link a profile version of a program"
+    "compile flag used to compile and link a profile version of a program"
 )
 #
 # cppad_testvector
 command_line_arg(cppad_testvector cppad STRING
-   "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
+    "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
 )
 assert_value_in_set(cppad_testvector boost cppad eigen std)
 #
 # cppad_max_num_threads
 command_line_arg(cppad_max_num_threads 48 STRING
-   "maximum number of threads that CppAD can use use"
+    "maximum number of threads that CppAD can use use"
 )
 IF( "${cppad_max_num_threads}" LESS "4" )
-   MESSAGE(FATAL_ERROR
-      "cppad_max_num_threads is not an integer greater than or equal 4"
-   )
+    MESSAGE(FATAL_ERROR
+        "cppad_max_num_threads is not an integer greater than or equal 4"
+    )
 ENDIF( "${cppad_max_num_threads}" LESS "4" )
 #
 # cppad_tape_id_type
 command_line_arg(cppad_tape_id_type "unsigned int" STRING
-   "type used to identify different tapes, size must be <= sizeof(size_t)"
+    "type used to identify different tapes, size must be <= sizeof(size_t)"
 )
 #
 # cppad_tape_addr_type
@@ -219,7 +219,7 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 #
 # cppad_debug_and_release
 command_line_arg(cppad_debug_and_release TRUE BOOL
-   "If true the cppad library and tests will be able to mix debug and release"
+    "If true the cppad library and tests will be able to mix debug and release"
 )
 #
 # cppad_static_lib
@@ -227,14 +227,14 @@ STRING( REGEX MATCH "^MSYS"    is_msys     "${CMAKE_SYSTEM_NAME}" )
 STRING( REGEX MATCH "^CYGWIN"  is_cygwin   "${CMAKE_SYSTEM_NAME}" )
 STRING( REGEX MATCH "^Windows" is_windows  "${CMAKE_SYSTEM_NAME}" )
 IF( is_msys OR is_cygwin OR is_windows )
-   SET(default_cppad_static_lib TRUE)
+    SET(default_cppad_static_lib TRUE)
 ELSE( )
-   SET(default_cppad_static_lib FALSE)
+    SET(default_cppad_static_lib FALSE)
 ENDIF( )
 #
 # cppad_static_lib
 command_line_arg(cppad_static_lib ${default_cppad_static_lib} BOOL
-   "If true (false) the cppad library will be static (shared)"
+    "If true (false) the cppad library will be static (shared)"
 )
 # ----------------------------------------------------------------------------
 #
@@ -245,22 +245,22 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 SET(source "
 int main(void)
-{  static_assert( __cplusplus >= 201103 , \"c++11 is supported\" );
-   return 0;
+{   static_assert( __cplusplus >= 201103 , \"c++11 is supported\" );
+    return 0;
 }"
 )
 compile_source_test(${cmake_defined_ok} "${source}" minimal_cplusplus )
 IF( NOT minimal_cplusplus  )
-   MESSAGE(STATUS "setting C++ standard to 2011")
-   SET(CMAKE_CXX_STANDARD 11)
-   SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+    MESSAGE(STATUS "setting C++ standard to 2011")
+    SET(CMAKE_CXX_STANDARD 11)
+    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 ENDIF( NOT minimal_cplusplus  )
 #
 # use_cplusplus_2014_ok
 SET(source "
 int main(void)
-{  static_assert( __cplusplus >= 201302L , \"c++17 is supported\" );
-   return 0;
+{   static_assert( __cplusplus >= 201302L , \"c++17 is supported\" );
+    return 0;
 }"
 )
 compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2014_ok )
@@ -268,8 +268,8 @@ compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2014_ok )
 # use_cplusplus_2017_ok
 SET(source "
 int main(void)
-{  static_assert( __cplusplus >= 201703L , \"c++17 is supported\" );
-   return 0;
+{   static_assert( __cplusplus >= 201703L , \"c++17 is supported\" );
+    return 0;
 }"
 )
 compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2017_ok )
@@ -277,65 +277,65 @@ compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2017_ok )
 #
 # cppad_debug_and_release_01
 IF (cppad_debug_and_release )
-   SET(cppad_debug_and_release_01 1 )
+    SET(cppad_debug_and_release_01 1 )
 ELSE (cppad_debug_and_release )
-   SET(cppad_debug_and_release_01 0 )
+    SET(cppad_debug_and_release_01 0 )
 ENDIF ( )
 #
 # cppad_debug_which
 # CMAKE_BUILD_TYPE
 SET(debug_even_or_odd FALSE)
 IF( NOT ${cppad_debug_which} STREQUAL "" )
-   assert_value_in_set(
-      cppad_debug_which debug_even debug_odd debug_all debug_none
-   )
+    assert_value_in_set(
+        cppad_debug_which debug_even debug_odd debug_all debug_none
+    )
 ENDIF( NOT ${cppad_debug_which} STREQUAL "" )
 IF( CMAKE_BUILD_TYPE )
-   IF( NOT ${cppad_debug_which} STREQUAL "" )
-      print_variable(CMAKE_BUILD_TYPE)
-      print_variable(cppad_debug_which)
-      MESSAGE(FATAL_ERROR
-         "Both CMAKE_BUILD_TYPE and cppad_debug_which specified"
-      )
-   ENDIF( )
-   STRING( TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_lower )
-   IF(cmake_build_type_lower MATCHES debug)
-      SET(cppad_debug_which "debug_all")
-   ELSEIF(cmake_build_type_lower MATCHES release)
-      SET(cppad_debug_which "debug_none")
-   ELSEIF(cmake_build_type_lower MATCHES relwithdebInfo)
-      SET(cppad_debug_which "debug_none")
-   ELSEIF(cmake_build_type_lower MATCHES minsizerel)
-      SET(cppad_debug_which "debug_none")
-   ELSE( )
-      MESSAGE(FATAL_ERROR
-         "Unknown CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}"
-      )
-   ENDIF( )
+    IF( NOT ${cppad_debug_which} STREQUAL "" )
+        print_variable(CMAKE_BUILD_TYPE)
+        print_variable(cppad_debug_which)
+        MESSAGE(FATAL_ERROR
+            "Both CMAKE_BUILD_TYPE and cppad_debug_which specified"
+        )
+    ENDIF( )
+    STRING( TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_lower )
+    IF(cmake_build_type_lower MATCHES debug)
+        SET(cppad_debug_which "debug_all")
+    ELSEIF(cmake_build_type_lower MATCHES release)
+        SET(cppad_debug_which "debug_none")
+    ELSEIF(cmake_build_type_lower MATCHES relwithdebInfo)
+        SET(cppad_debug_which "debug_none")
+    ELSEIF(cmake_build_type_lower MATCHES minsizerel)
+        SET(cppad_debug_which "debug_none")
+    ELSE( )
+        MESSAGE(FATAL_ERROR
+            "Unknown CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}"
+        )
+    ENDIF( )
 ELSE( ) # CMAKE_BUILD_TYPE
-   IF( "${cppad_debug_which}" STREQUAL debug_all)
-      SET(CMAKE_BUILD_TYPE Debug)
-   ELSEIF( "${cppad_debug_which}" STREQUAL debug_none)
-      SET(CMAKE_BUILD_TYPE Release)
-   ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd)
-      SET(CMAKE_BUILD_TYPE Debug)
-      SET(debug_even_or_odd TRUE)
-   ELSEIF( "${cppad_debug_which}" STREQUAL debug_even)
-      SET(CMAKE_BUILD_TYPE Release)
-      SET(debug_even_or_odd TRUE)
-   ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
+    IF( "${cppad_debug_which}" STREQUAL debug_all)
+        SET(CMAKE_BUILD_TYPE Debug)
+    ELSEIF( "${cppad_debug_which}" STREQUAL debug_none)
+        SET(CMAKE_BUILD_TYPE Release)
+    ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd)
+        SET(CMAKE_BUILD_TYPE Debug)
+        SET(debug_even_or_odd TRUE)
+    ELSEIF( "${cppad_debug_which}" STREQUAL debug_even)
+        SET(CMAKE_BUILD_TYPE Release)
+        SET(debug_even_or_odd TRUE)
+    ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 ENDIF( ) # CMAKE_BUILD_TYPE
 IF( debug_even_or_odd )
-   IF ( NOT cppad_debug_and_release )
-      MESSAGE(FATAL_ERROR
+    IF ( NOT cppad_debug_and_release )
+        MESSAGE(FATAL_ERROR
 "cppad_debug_and_release is false and cppad_debug_which = ${cppad_debug_which}"
-      )
-   ENDIF ( NOT cppad_debug_and_release )
-   IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
-      MESSAGE(FATAL_ERROR
-      "Cannot have cppad_debug_which equal ${cppad_debug_which} on Windows."
-      )
-   ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+        )
+    ENDIF ( NOT cppad_debug_and_release )
+    IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+        MESSAGE(FATAL_ERROR
+        "Cannot have cppad_debug_which equal ${cppad_debug_which} on Windows."
+        )
+    ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
 ENDIF( debug_even_or_odd )
 print_variable(CMAKE_SYSTEM_NAME)
 print_variable(cppad_debug_which)
@@ -344,7 +344,7 @@ MESSAGE(STATUS "make check: available")
 # -----------------------------------------------------------------------------
 # CMAKE_INSTALL_PREFIX
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
-   CACHE PATH "value copied from cppad_prefix" FORCE
+    CACHE PATH "value copied from cppad_prefix" FORCE
 )
 # -----------------------------------------------------------------------------
 # Optional package information
@@ -373,75 +373,75 @@ prefix_info(fadbad ${system_include} )
 #
 # check sacado
 IF( ${cppad_has_sacado} )
-   IF( NOT ${use_cplusplus_2017_ok} )
-      MESSAGE(FATAL_ERROR "sacado_prefix is defined but c++17 not supported")
-   ENDIF( )
+    IF( NOT ${use_cplusplus_2017_ok} )
+        MESSAGE(FATAL_ERROR "sacado_prefix is defined but c++17 not supported")
+    ENDIF( )
 ENDIF( )
 #
 # package = cppadcg
 SET( include_cppadcg FALSE CACHE BOOL "include cppadcg" )
 IF( include_cppadcg )
-   #
-   # cppad_has_cppadcg
-   SET(cppad_has_cppadcg 1)
-   #
-   # Assume bin/get_cppadcg.sh puts include files in this directory
-   SET(cppadcg_include_dir "${CMAKE_BINARY_DIR}/prefix/include" )
-   print_variable(cppadcg_include_dir)
-   INCLUDE_DIRECTORIES( SYSTEM ${cppadcg_include_dir})
+    #
+    # cppad_has_cppadcg
+    SET(cppad_has_cppadcg 1)
+    #
+    # Assume bin/get_cppadcg.sh puts include files in this directory
+    SET(cppadcg_include_dir "${CMAKE_BINARY_DIR}/prefix/include" )
+    print_variable(cppadcg_include_dir)
+    INCLUDE_DIRECTORIES( SYSTEM ${cppadcg_include_dir})
 ELSE( )
-   # cppad_has_cppadcg
-   SET(cppad_has_cppadcg 0)
+    # cppad_has_cppadcg
+    SET(cppad_has_cppadcg 0)
 ENDIF( include_cppadcg )
 #
 # package = xrst
 SET( include_doc FALSE CACHE BOOL "include documentation")
 IF( include_doc )
-   #
-   # xrst_path
-   FIND_PROGRAM( xrst_path xrst )
-   IF( "${xrst_path}" STREQUAL "xrst_path-NOTFOUND" )
-      MESSAGE(FATAL_ERROR
-         "include_doc is true and cannot find xrst in system path"
-      )
-   ENDIF( )
-   #
-   # processor_count
-   INCLUDE(ProcessorCount)
-   ProcessorCount(processor_count)
-   IF( processor_count EQUAL 0 )
-      SET(processor_count 1)
-   ENDIF( )
-   #
-   # see
-   # https://discourse.cmake.org/t/how-to-install-a-generated-directory/1267
-   #
-   # doc_dir
-   SET(doc_dir "${CMAKE_SOURCE_DIR}/build/html")
-   #
-   # doc_user
-   ADD_CUSTOM_TARGET(doc_user ALL
-      COMMAND xrst
-         --group_list default app
-         --local_toc
-         --html_theme sphinx_rtd_theme
-         --number_jobs ${processor_count}
-         --index_page_name user_guide
-         --suppress_spell_warnings
-         --config_file "${CMAKE_SOURCE_DIR}/xrst.toml"
-   )
-   #
-   # doc_dev
-   ADD_CUSTOM_TARGET(doc_dev
-      COMMAND xrst
-         --group_list default app dev
-         --local_toc
-         --html_theme sphinx_rtd_theme
-         --number_jobs ${processor_count}
-         --index_page_name user_guide
-         --suppress_spell_warnings
-         --config_file "${CMAKE_SOURCE_DIR}/xrst.toml"
-   )
+    #
+    # xrst_path
+    FIND_PROGRAM( xrst_path xrst )
+    IF( "${xrst_path}" STREQUAL "xrst_path-NOTFOUND" )
+        MESSAGE(FATAL_ERROR
+            "include_doc is true and cannot find xrst in system path"
+        )
+    ENDIF( )
+    #
+    # processor_count
+    INCLUDE(ProcessorCount)
+    ProcessorCount(processor_count)
+    IF( processor_count EQUAL 0 )
+        SET(processor_count 1)
+    ENDIF( )
+    #
+    # see
+    # https://discourse.cmake.org/t/how-to-install-a-generated-directory/1267
+    #
+    # doc_dir
+    SET(doc_dir "${CMAKE_SOURCE_DIR}/build/html")
+    #
+    # doc_user
+    ADD_CUSTOM_TARGET(doc_user ALL
+        COMMAND xrst
+            --group_list default app
+            --local_toc
+            --html_theme sphinx_rtd_theme
+            --number_jobs ${processor_count}
+            --index_page_name user_guide
+            --suppress_spell_warnings
+            --config_file "${CMAKE_SOURCE_DIR}/xrst.toml"
+    )
+    #
+    # doc_dev
+    ADD_CUSTOM_TARGET(doc_dev
+        COMMAND xrst
+            --group_list default app dev
+            --local_toc
+            --html_theme sphinx_rtd_theme
+            --number_jobs ${processor_count}
+            --index_page_name user_guide
+            --suppress_spell_warnings
+            --config_file "${CMAKE_SOURCE_DIR}/xrst.toml"
+    )
 ENDIF( include_doc )
 # =============================================================================
 # cppad_lib
@@ -452,45 +452,45 @@ LINK_DIRECTORIES( ${cppad_BINARY_DIR}/cppad_lib )
 # colpack_libs
 #
 IF( cppad_has_colpack )
-   SET( colpack_libs "ColPack" )
+    SET( colpack_libs "ColPack" )
 ELSE( cppad_has_colpack )
-   SET( colpack_libs "" )
+    SET( colpack_libs "" )
 ENDIF( cppad_has_colpack )
 # =============================================================================
 # automated system configuration
 # =============================================================================
 # CMAKE_CXX_FLAGS
 IF( "${cppad_debug_which}" STREQUAL "debug_all" )
-   print_variable(CMAKE_CXX_FLAGS_DEBUG)
+    print_variable(CMAKE_CXX_FLAGS_DEBUG)
 ELSEIF( "${cppad_debug_which}" STREQUAL "debug_none" )
-   print_variable(CMAKE_CXX_FLAGS_RELEASE)
+    print_variable(CMAKE_CXX_FLAGS_RELEASE)
 ELSE( "${cppad_debug_which}" )
-   print_variable(CMAKE_CXX_FLAGS_DEBUG)
-   print_variable(CMAKE_CXX_FLAGS_RELEASE)
+    print_variable(CMAKE_CXX_FLAGS_DEBUG)
+    print_variable(CMAKE_CXX_FLAGS_RELEASE)
 ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
 # -----------------------------------------------------------------------------
 # cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
 #
 # for dir_types = includedirs, libdirs, datadir, docdir
 FOREACH(dir_types includedirs libdirs datadir docdir)
-   # set dir_type = dir_types with  "dirs" -> "dir"
-   STRING(REGEX REPLACE "dirs" "dir" dir_type ${dir_types})
-   #
-   # set dir_name to first directory in cmake_install_${dir_types}
-   SET(dir_name NOTFOUND)
-   FOREACH(dir ${cmake_install_${dir_types}})
-      IF( NOT dir_name )
-         SET(dir_name ${dir})
-      ENDIF( NOT dir_name )
-   ENDFOREACH(dir ${cmake_install_${dir_types}})
-   #
-   # set cppad_abs_${dir_type}
-   SET(cppad_abs_${dir_type} "${cppad_prefix}/${dir_name}" )
-   #
-   # check if we need to add a postfix to it
-   IF( cppad_postfix )
-      SET(cppad_abs_${dir_type} ${cppad_abs_${dir_type}}/${cppad_postfix} )
-   ENDIF( cppad_postfix )
+    # set dir_type = dir_types with  "dirs" -> "dir"
+    STRING(REGEX REPLACE "dirs" "dir" dir_type ${dir_types})
+    #
+    # set dir_name to first directory in cmake_install_${dir_types}
+    SET(dir_name NOTFOUND)
+    FOREACH(dir ${cmake_install_${dir_types}})
+        IF( NOT dir_name )
+            SET(dir_name ${dir})
+        ENDIF( NOT dir_name )
+    ENDFOREACH(dir ${cmake_install_${dir_types}})
+    #
+    # set cppad_abs_${dir_type}
+    SET(cppad_abs_${dir_type} "${cppad_prefix}/${dir_name}" )
+    #
+    # check if we need to add a postfix to it
+    IF( cppad_postfix )
+        SET(cppad_abs_${dir_type} ${cppad_abs_${dir_type}}/${cppad_postfix} )
+    ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # ----------------------------------------------------------------------------
 # https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
@@ -512,117 +512,117 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # isSystemDir
 # is this RPATH choice a system directory
 LIST(FIND
-   CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
-   "${cppad_abs_libdir}"
-   isSystemDir
+    CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
+    "${cppad_abs_libdir}"
+    isSystemDir
 )
 #
 # CMAKE_INSTALL_RPATH
 # the RPATH to be used when installing, but only if it's not a system directory
 SET(CMAKE_INSTALL_RPATH "")
 if("${isSystemDir}" STREQUAL "-1")
-   SET(CMAKE_INSTALL_RPATH "${cppad_abs_libdir}")
+    SET(CMAKE_INSTALL_RPATH "${cppad_abs_libdir}")
 endif("${isSystemDir}" STREQUAL "-1")
 print_variable( CMAKE_INSTALL_RPATH )
 # -----------------------------------------------------------------------------
 # cppad_link_flags_has_m32
 STRING( FIND "${cppad_link_flags}" "-m32" index)
 IF( "${index}" STREQUAL "-1" )
-   SET(cppad_link_flags_has_m32 0)
+    SET(cppad_link_flags_has_m32 0)
 ELSE ( )
-   SET(cppad_link_flags_has_m32 1)
+    SET(cppad_link_flags_has_m32 1)
 ENDIF( )
 # -----------------------------------------------------------------------------
 # OpenMP_CXX_FOUND, OpenMP_CXX_FLAGS
 IF( cppad_link_flags_has_m32 )
-   SET(OpenMP_CXX_FOUND FALSE)
-   MESSAGE(STATUS
-      "Skipping OpenMP because -m32 is in cppad_link_flags"
-   )
+    SET(OpenMP_CXX_FOUND FALSE)
+    MESSAGE(STATUS
+        "Skipping OpenMP because -m32 is in cppad_link_flags"
+    )
 ELSEIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
-   SET(OpenMP_CXX_FOUND FALSE)
-   MESSAGE(STATUS
-      "Skipping OpenMP on Darwin (Mac) systems. 2DO: fix this"
-   )
+    SET(OpenMP_CXX_FOUND FALSE)
+    MESSAGE(STATUS
+        "Skipping OpenMP on Darwin (Mac) systems. 2DO: fix this"
+    )
 ELSE( )
-   FIND_PACKAGE(OpenMP)
+    FIND_PACKAGE(OpenMP)
 ENDIF( )
 # -----------------------------------------------------------------------------
 # Boost_Found, cppad_has_boost
 # Only need components for object libraries, not include libraries.
 IF( cppad_link_flags_has_m32 )
-   MESSAGE(STATUS
-      "Skipping Boost because -m32 is in cppad_link_flags"
-   )
-   SET( Boost_FOUND 0)
-   SET(cppad_has_boost 0)
+    MESSAGE(STATUS
+        "Skipping Boost because -m32 is in cppad_link_flags"
+    )
+    SET( Boost_FOUND 0)
+    SET(cppad_has_boost 0)
 ELSE ( )
-   SET(CMAKE_REQUIRED_FLAGS "")  # 2DO: why is this necessary with clang ?
-   FIND_PACKAGE(Boost COMPONENTS thread)
-   SET(CMAKE_REQUIRED_FLAGS "${cppad_cxx_flags}")
+    SET(CMAKE_REQUIRED_FLAGS "")  # 2DO: why is this necessary with clang ?
+    FIND_PACKAGE(Boost COMPONENTS thread)
+    SET(CMAKE_REQUIRED_FLAGS "${cppad_cxx_flags}")
 ENDIF( )
 IF ( Boost_FOUND )
-   SET(cppad_has_boost 1)
-   #
-   # Extract the Boost prefix from Boost_INCLUDE_DIRS
-   #
-   # convert to using unix directory separator
-   dos_path_to_unix("${Boost_INCLUDE_DIRS}" boost_include_dirs)
-   #
-   # convert to just one directory
-   STRING(REGEX REPLACE
-      "([^ ]+).*" "\\1"
-      boost_include_dir "${boost_include_dirs}"
-   )
-   #
-   # extract part before last backslash
-   STRING(REGEX REPLACE
-      "([^ ]*)/[^/ ]*" "\\1"
-      boost_prefix "${boost_include_dir}"
-   )
-   print_variable(boost_prefix)
-   #
-   # add boost include directories
-   FOREACH(dir ${cmake_install_includedirs})
-      IF( IS_DIRECTORY ${boost_prefix}/${dir} )
-         INCLUDE_DIRECTORIES( ${boost_prefix}/${dir} )
-         MESSAGE(STATUS "Found ${boost_prefix}/${dir}")
-      ENDIF( IS_DIRECTORY ${boost_prefix}/${dir} )
-   ENDFOREACH( dir )
-   #
-   # add boost link directories
-   FOREACH(dir ${cmake_install_libdirs})
-      IF( IS_DIRECTORY ${boost_prefix}/${dir} )
-         LINK_DIRECTORIES( ${boost_prefix}/${dir} )
-         MESSAGE(STATUS "Found ${boost_prefix}/${dir}")
-      ENDIF( IS_DIRECTORY ${boost_prefix}/${dir} )
-   ENDFOREACH( dir )
+    SET(cppad_has_boost 1)
+    #
+    # Extract the Boost prefix from Boost_INCLUDE_DIRS
+    #
+    # convert to using unix directory separator
+    dos_path_to_unix("${Boost_INCLUDE_DIRS}" boost_include_dirs)
+    #
+    # convert to just one directory
+    STRING(REGEX REPLACE
+        "([^ ]+).*" "\\1"
+        boost_include_dir "${boost_include_dirs}"
+    )
+    #
+    # extract part before last backslash
+    STRING(REGEX REPLACE
+        "([^ ]*)/[^/ ]*" "\\1"
+        boost_prefix "${boost_include_dir}"
+    )
+    print_variable(boost_prefix)
+    #
+    # add boost include directories
+    FOREACH(dir ${cmake_install_includedirs})
+        IF( IS_DIRECTORY ${boost_prefix}/${dir} )
+            INCLUDE_DIRECTORIES( ${boost_prefix}/${dir} )
+            MESSAGE(STATUS "Found ${boost_prefix}/${dir}")
+        ENDIF( IS_DIRECTORY ${boost_prefix}/${dir} )
+    ENDFOREACH( dir )
+    #
+    # add boost link directories
+    FOREACH(dir ${cmake_install_libdirs})
+        IF( IS_DIRECTORY ${boost_prefix}/${dir} )
+            LINK_DIRECTORIES( ${boost_prefix}/${dir} )
+            MESSAGE(STATUS "Found ${boost_prefix}/${dir}")
+        ENDIF( IS_DIRECTORY ${boost_prefix}/${dir} )
+    ENDFOREACH( dir )
 ENDIF ( Boost_FOUND )
 # -----------------------------------------------------------------------------
 # ipopt_LIBRARIES and ipopt_LIBRARY_DIRS
 IF( cppad_has_ipopt )
-   #
-   # Set the system environment variable PKG_CONFIG_PATH
-   FOREACH(dir ${cmake_install_libdirs})
-      IF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
-         SET( ENV{PKG_CONFIG_PATH} ${ipopt_prefix}/${dir}/pkgconfig )
-      ENDIF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
-   ENDFOREACH(dir)
-   #
-   # pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)
-   # ipopt_LIBRARIES      ... only the libraries (w/o the '-l')
-   # ipopt_LIBRARY_DIRS   ... the paths of the libraries (w/o the '-L')
-   pkg_check_modules(ipopt ipopt)
-   IF( NOT ipopt_FOUND )
-      MESSAGE(FATAL_ERROR
+    #
+    # Set the system environment variable PKG_CONFIG_PATH
+    FOREACH(dir ${cmake_install_libdirs})
+        IF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
+            SET( ENV{PKG_CONFIG_PATH} ${ipopt_prefix}/${dir}/pkgconfig )
+        ENDIF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
+    ENDFOREACH(dir)
+    #
+    # pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)
+    # ipopt_LIBRARIES      ... only the libraries (w/o the '-l')
+    # ipopt_LIBRARY_DIRS   ... the paths of the libraries (w/o the '-L')
+    pkg_check_modules(ipopt ipopt)
+    IF( NOT ipopt_FOUND )
+        MESSAGE(FATAL_ERROR
 "For all directories dir in cmake_install_libdirs, cannot find the file
-   ipopt_prefix/dir/pkgconfig/ipopt.pc
+    ipopt_prefix/dir/pkgconfig/ipopt.pc
 where
-   ipopt_prefix = ${ipopt_prefix}
-   cmake_install_libdirs = ${cmake_install_libdirs}
+    ipopt_prefix = ${ipopt_prefix}
+    cmake_install_libdirs = ${cmake_install_libdirs}
 "
-      )
-   ENDIF( NOT ipopt_FOUND )
+        )
+    ENDIF( NOT ipopt_FOUND )
 ENDIF( cppad_has_ipopt )
 # =============================================================================
 # Currently building tests as normal executables
@@ -634,9 +634,9 @@ ENDIF( cppad_has_ipopt )
 #
 # is_cppad_lib_dynamic
 IF( cppad_static_lib )
-   SET(is_cppad_lib_dynamic 0)
+    SET(is_cppad_lib_dynamic 0)
 ELSE( )
-   SET(is_cppad_lib_dynamic 1)
+    SET(is_cppad_lib_dynamic 1)
 ENDIF( )
 print_variable(is_cppad_lib_dynamic)
 #
@@ -652,7 +652,7 @@ ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(cppad_lib)
 #
 IF( NOT ( "${check_depends}" STREQUAL "" ) )
-   MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
+    MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
 ENDIF( NOT ( "${check_depends}" STREQUAL "" ) )
 #
 # directories with check depends entries
@@ -662,7 +662,7 @@ ADD_SUBDIRECTORY(introduction)
 ADD_SUBDIRECTORY(test_more)
 ADD_SUBDIRECTORY(speed)
 IF( cppad_has_ipopt )
-   ADD_SUBDIRECTORY(cppad_ipopt)
+    ADD_SUBDIRECTORY(cppad_ipopt)
 ENDIF( cppad_has_ipopt )
 #
 # check, test
@@ -672,8 +672,8 @@ ADD_CUSTOM_TARGET(test DEPENDS ${check_depends})
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
 CONFIGURE_FILE(
-   ${CMAKE_CURRENT_SOURCE_DIR}/bin/test_one.sh.in
-   ${CMAKE_CURRENT_SOURCE_DIR}/bin/test_one.sh
+    ${CMAKE_CURRENT_SOURCE_DIR}/bin/test_one.sh.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/bin/test_one.sh
 )
 # =============================================================================
 # install procedure
@@ -693,17 +693,17 @@ CONFIGURE_FILE(
 # During install copy all the cppad include files to
 # ${cppad_abs_includedir}/cppad
 INSTALL(
-   DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/cppad/"
-   DESTINATION ${cppad_abs_includedir}/cppad
-   FILES_MATCHING PATTERN "*.hpp" PATTERN "xrst" EXCLUDE
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/cppad/"
+    DESTINATION ${cppad_abs_includedir}/cppad
+    FILES_MATCHING PATTERN "*.hpp" PATTERN "xrst" EXCLUDE
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
 IF ( cmake_install_docdir AND include_doc )
-   INSTALL(
-      DIRECTORY "${CMAKE_SOURCE_DIR}/build/html/"
-      DESTINATION ${cppad_abs_docdir}/cppad
-   )
+    INSTALL(
+        DIRECTORY "${CMAKE_SOURCE_DIR}/build/html/"
+        DESTINATION ${cppad_abs_docdir}/cppad
+    )
 ENDIF ( cmake_install_docdir AND include_doc )
 
 # =============================================================================

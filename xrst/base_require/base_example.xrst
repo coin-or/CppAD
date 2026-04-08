@@ -10,13 +10,13 @@ Example AD Base Types That are not AD<OtherBase>
 Contents
 ********
 {xrst_toc_list
-   example/general/base_alloc.hpp
-   example/general/base_require.cpp
-   include/cppad/example/base_adolc.hpp
-   include/cppad/example/valvector/class.hpp
-   include/cppad/core/base_float.hpp
-   include/cppad/core/base_double.hpp
-   include/cppad/core/base_complex.hpp
+    example/general/base_alloc.hpp
+    example/general/base_require.cpp
+    include/cppad/example/base_adolc.hpp
+    include/cppad/example/valvector/class.hpp
+    include/cppad/core/base_float.hpp
+    include/cppad/core/base_double.hpp
+    include/cppad/core/base_complex.hpp
 }
 
 {xrst_end base_example}

@@ -45,33 +45,33 @@ r
 *
 The relative error criteria *r* has prototype
 
-   ``const`` *Type* & *r*
+    ``const`` *Type* & *r*
 
 It must be greater than or equal to zero.
 The relative error condition is defined as:
 
 .. math::
 
-   \frac{ | x - y | } { |x| + |y| } \leq r
+    \frac{ | x - y | } { |x| + |y| } \leq r
 
 a
 *
 The absolute error criteria *a* has prototype
 
-   ``const`` *Type* & *a*
+    ``const`` *Type* & *a*
 
 It must be greater than or equal to zero.
 The absolute error condition is defined as:
 
 .. math::
 
-   | x - y | \leq a
+    | x - y | \leq a
 
 b
 *
 The return value *b* has prototype
 
-   ``bool`` *b*
+    ``bool`` *b*
 
 If either *x* or *y* is infinite or not a number,
 the return value is false.
@@ -89,12 +89,12 @@ If *a* and *b* have type *Type* ,
 the following operation must be defined
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Operation**
-     - **Description**
-   * - *a* <= *b*
-     - less that or equal operator (returns a ``bool`` object)
+    * - **Operation**
+      - **Description**
+    * - *a* <= *b*
+      - less that or equal operator (returns a ``bool`` object)
 
 Operation Sequence
 ******************
@@ -107,7 +107,7 @@ AD of *Base*
 Example
 *******
 {xrst_toc_hidden
-   example/general/near_equal_ext.cpp
+    example/general/near_equal_ext.cpp
 }
 The file :ref:`near_equal_ext.cpp-name` contains an example
 and test of this extension of :ref:`NearEqual-name` .
@@ -125,54 +125,54 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(
 const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a)
-{  return NearEqual(x.value_, y.value_, r, a);
+{   return NearEqual(x.value_, y.value_, r, a);
 }
 
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(
 const Base &x, const AD<Base> &y, const Base &r, const Base &a)
-{  return NearEqual(x, y.value_, r, a);
+{   return NearEqual(x, y.value_, r, a);
 }
 
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(
 const AD<Base> &x, const Base &y, const Base &r, const Base &a)
-{  return NearEqual(x.value_, y, r, a);
+{   return NearEqual(x.value_, y, r, a);
 }
 
 // fold into AD type and then use cases above
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(
-   const VecAD_reference<Base> &x, const VecAD_reference<Base> &y,
-   const Base &r, const Base &a)
-{  return NearEqual(x.ADBase(), y.ADBase(), r, a);
+    const VecAD_reference<Base> &x, const VecAD_reference<Base> &y,
+    const Base &r, const Base &a)
+{   return NearEqual(x.ADBase(), y.ADBase(), r, a);
 }
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(const VecAD_reference<Base> &x, const AD<Base> &y,
-   const Base &r, const Base &a)
-{  return NearEqual(x.ADBase(), y, r, a);
+    const Base &r, const Base &a)
+{   return NearEqual(x.ADBase(), y, r, a);
 }
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(const VecAD_reference<Base> &x, const Base &y,
-   const Base &r, const Base &a)
-{  return NearEqual(x.ADBase(), y, r, a);
+    const Base &r, const Base &a)
+{   return NearEqual(x.ADBase(), y, r, a);
 }
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(const AD<Base> &x, const VecAD_reference<Base> &y,
-   const Base &r, const Base &a)
-{  return NearEqual(x, y.ADBase(), r, a);
+    const Base &r, const Base &a)
+{   return NearEqual(x, y.ADBase(), r, a);
 }
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool NearEqual(const Base &x, const VecAD_reference<Base> &y,
-   const Base &r, const Base &a)
-{  return NearEqual(x, y.ADBase(), r, a);
+    const Base &r, const Base &a)
+{   return NearEqual(x, y.ADBase(), r, a);
 }
 
 } // END CppAD namespace

@@ -20,11 +20,11 @@ User Syntax
 ***********
 ::
 
-   z = s
-       + x[0] + ... + x[ n1 - 1 ]
-       - y[0] - ... - y[ n2 - 1 ]
-       + u[0] + ... + u[ n3 - 1 ]
-       - v[0] - ... - v[ n4 - 1 ]
+    z = s
+         + x[0] + ... + x[ n1 - 1 ]
+         - y[0] - ... - y[ n2 - 1 ]
+         + u[0] + ... + u[ n3 - 1 ]
+         - v[0] - ... - v[ n4 - 1 ]
 
 s
 *
@@ -129,8 +129,8 @@ Any Order Forward Cumulative Summation Operation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FORWARD_ANY
-   // END_CSUM_FORWARD_ANY
+    // BEGIN_CSUM_FORWARD_ANY
+    // END_CSUM_FORWARD_ANY
 }
 
 x, y, u, v, z
@@ -149,8 +149,8 @@ see
 :ref:`var_csum_op@arg`
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_op.xrst
-   headers: cap_order, order_low, order_up, taylor
+    include/cppad/local/var_op/template/forward_op.xrst
+    headers: cap_order, order_low, order_up, taylor
 }
 
 num_par
@@ -166,56 +166,56 @@ is the parameter vector for this operation sequence.
 // BEGIN_CSUM_FORWARD_ANY
 template <class Base>
 inline void csum_forward_any(
-   size_t        order_low   ,
-   size_t        order_up    ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        num_par     ,
-   const Base*   parameter   ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        order_low   ,
+    size_t        order_up    ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        num_par     ,
+    const Base*   parameter   ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 // END_CSUM_FORWARD_ANY
 {  //
-   //
-   // check assumptions
-   CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
-   CPPAD_ASSERT_UNKNOWN( order_low <= order_up );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-   CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
-   //
-   // zero
-   Base zero(0);
-   //
-   // z
-   Base* z = taylor + i_z    * cap_order;
-   for(size_t k = order_low; k <= order_up; k++)
-      z[k] = zero;
-   //
-   if( order_low == 0 )
-   {  // constant parameter
-      z[order_low] = parameter[ arg[0] ];
-      // addition dynamic parameters
-      for(addr_t i = arg[2]; i < arg[3]; ++i)
-         z[order_low] += parameter[ arg[i] ];
-      // subtraction dynamic parameters
-      for(addr_t i = arg[3]; i < arg[4]; ++i)
-         z[order_low] -= parameter[ arg[i] ];
-   }
-   // addition variables
-   for(addr_t i = 5; i < arg[1]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* x = taylor + size_t(arg[i]) * cap_order;
-      for(size_t k = order_low; k <= order_up; k++)
-         z[k] += x[k];
-   }
-   // subtraction variables
-   for(addr_t i = arg[1]; i < arg[2]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* x = taylor + size_t(arg[i]) * cap_order;
-      for(size_t k = order_low; k <= order_up; k++)
-         z[k] -= x[k];
-   }
+    //
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
+    CPPAD_ASSERT_UNKNOWN( order_low <= order_up );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+    CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
+    //
+    // zero
+    Base zero(0);
+    //
+    // z
+    Base* z = taylor + i_z    * cap_order;
+    for(size_t k = order_low; k <= order_up; k++)
+        z[k] = zero;
+    //
+    if( order_low == 0 )
+    {  // constant parameter
+        z[order_low] = parameter[ arg[0] ];
+        // addition dynamic parameters
+        for(addr_t i = arg[2]; i < arg[3]; ++i)
+            z[order_low] += parameter[ arg[i] ];
+        // subtraction dynamic parameters
+        for(addr_t i = arg[3]; i < arg[4]; ++i)
+            z[order_low] -= parameter[ arg[i] ];
+    }
+    // addition variables
+    for(addr_t i = 5; i < arg[1]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        Base* x = taylor + size_t(arg[i]) * cap_order;
+        for(size_t k = order_low; k <= order_up; k++)
+            z[k] += x[k];
+    }
+    // subtraction variables
+    for(addr_t i = arg[1]; i < arg[2]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        Base* x = taylor + size_t(arg[i]) * cap_order;
+        for(size_t k = order_low; k <= order_up; k++)
+            z[k] -= x[k];
+    }
 }
 /*
 {xrst_begin var_csum_forward_dir dev}
@@ -226,8 +226,8 @@ Multiple Direction Forward Mode Cumulative Summation Operation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FORWARD_DIR
-   // END_CSUM_FORWARD_DIR
+    // BEGIN_CSUM_FORWARD_DIR
+    // END_CSUM_FORWARD_DIR
 }
 
 x, y, u, v, z
@@ -254,8 +254,8 @@ parameter
 is the parameter vector for this operation sequence.
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_dir.xrst
-   headers: n_dir, cap_order, order_up, taylor
+    include/cppad/local/var_op/template/forward_dir.xrst
+    headers: n_dir, cap_order, order_up, taylor
 }
 
 {xrst_end var_csum_forward_dir}
@@ -263,52 +263,52 @@ is the parameter vector for this operation sequence.
 // BEGIN_CSUM_FORWARD_DIR
 template <class Base>
 inline void csum_forward_dir(
-   size_t        order_up    ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        num_par     ,
-   const Base*   parameter   ,
-   size_t        n_dir       ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        order_up    ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        num_par     ,
+    const Base*   parameter   ,
+    size_t        n_dir       ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 // END_CSUM_FORWARD_DIR
 {  //
-   //
-   CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
-   CPPAD_ASSERT_UNKNOWN( 0 < order_up );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-   CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
-   //
-   // zero
-   Base zero(0);
-   //
-   // per_variable
-   size_t per_variable = (cap_order-1) * n_dir + 1;
-   //
-   // m
-   size_t m = (order_up - 1) * n_dir + 1;
-   //
-   // z
-   Base* z = taylor + i_z * per_variable + m;
-   for(size_t ell = 0; ell < n_dir; ell++)
-      z[ell] = zero;
-   //
-   // addition variables
-   for(addr_t i = 5; i < arg[1]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* x = taylor + size_t(arg[i]) * per_variable + m;
-      for(size_t ell = 0; ell < n_dir; ell++)
-         z[ell] += x[ell];
-   }
-   //
-   // subtraction variables
-   for(addr_t i = arg[1]; i < arg[2]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* x = taylor + size_t(arg[i]) * per_variable + m;
-      for(size_t ell = 0; ell < n_dir; ell++)
-         z[ell] -= x[ell];
-   }
+    //
+    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( order_up < cap_order );
+    CPPAD_ASSERT_UNKNOWN( 0 < order_up );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+    CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] + 1 );
+    //
+    // zero
+    Base zero(0);
+    //
+    // per_variable
+    size_t per_variable = (cap_order-1) * n_dir + 1;
+    //
+    // m
+    size_t m = (order_up - 1) * n_dir + 1;
+    //
+    // z
+    Base* z = taylor + i_z * per_variable + m;
+    for(size_t ell = 0; ell < n_dir; ell++)
+        z[ell] = zero;
+    //
+    // addition variables
+    for(addr_t i = 5; i < arg[1]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        Base* x = taylor + size_t(arg[i]) * per_variable + m;
+        for(size_t ell = 0; ell < n_dir; ell++)
+            z[ell] += x[ell];
+    }
+    //
+    // subtraction variables
+    for(addr_t i = arg[1]; i < arg[2]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        Base* x = taylor + size_t(arg[i]) * per_variable + m;
+        for(size_t ell = 0; ell < n_dir; ell++)
+            z[ell] -= x[ell];
+    }
 }
 /*
 ---------------------------------------------------------------------------
@@ -320,8 +320,8 @@ Reverse Mode Cumulative Summation Operation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_REVERSE
-   // END_CSUM_REVERSE
+    // BEGIN_CSUM_REVERSE
+    // END_CSUM_REVERSE
 }
 
 x, y, u, v, z
@@ -340,10 +340,10 @@ see
 :ref:`var_csum_op@arg`
 
 {xrst_template ;
-   include/cppad/local/var_op/template/reverse_op.xrst
-   headers: n_order, partial
+    include/cppad/local/var_op/template/reverse_op.xrst
+    headers: n_order, partial
 
-   @x, y@  ; x, y, u, v
+    @x, y@  ; x, y, u, v
 }
 
 {xrst_end var_csum_reverse}
@@ -351,39 +351,39 @@ see
 // BEGIN_CSUM_REVERSE
 template <class Base>
 inline void csum_reverse(
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        n_order     ,
-   Base*         partial     )
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        n_order     ,
+    Base*         partial     )
 // END_CSUM_REVERSE
 {  // d
-   //
-   size_t d = n_order - 1;
-   //
-   //
-   CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-   //
-   // pz, dp1
-   Base* pz = partial + i_z * n_order;
-   size_t dp1 = d + 1;
-   //
-   // addition variables
-   for(addr_t i = 5; i < arg[1]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* px = partial + size_t(arg[i]) * n_order;
-      size_t k = dp1;
-      while(k--)
-         px[k] += pz[k];
-   }
-   //
-   // subtraction variables
-   for(addr_t i = arg[1]; i < arg[2]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      Base* px = partial + size_t(arg[i]) * n_order;
-      size_t k = dp1;
-      while(k--)
-         px[k] -= pz[k];
-   }
+    //
+    size_t d = n_order - 1;
+    //
+    //
+    CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
+    //
+    // pz, dp1
+    Base* pz = partial + i_z * n_order;
+    size_t dp1 = d + 1;
+    //
+    // addition variables
+    for(addr_t i = 5; i < arg[1]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        Base* px = partial + size_t(arg[i]) * n_order;
+        size_t k = dp1;
+        while(k--)
+            px[k] += pz[k];
+    }
+    //
+    // subtraction variables
+    for(addr_t i = arg[1]; i < arg[2]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        Base* px = partial + size_t(arg[i]) * n_order;
+        size_t k = dp1;
+        while(k--)
+            px[k] -= pz[k];
+    }
 }
 /*
 ------------------------------------------------------------------------------
@@ -395,8 +395,8 @@ Forward Jacobian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FOR_JAC
-   // END_CSUM_FOR_JAC
+    // BEGIN_CSUM_FOR_JAC
+    // END_CSUM_FOR_JAC
 }
 
 x, y, u, v, z
@@ -440,25 +440,25 @@ identifies which independent variables the variable *z* depends on.
 // BEGIN_CSUM_FOR_JAC
 template <class Vector_set>
 inline void csum_for_jac(
-   size_t           i_z         ,
-   const addr_t*    arg         ,
-   Vector_set&      sparsity    )
+    size_t           i_z         ,
+    const addr_t*    arg         ,
+    Vector_set&      sparsity    )
 // END_CSUM_FOR_JAC
 {  //
-   //
-   // sparsity
-   sparsity.clear(i_z);
-   //
-   // addition and subtraction variables
-   for(addr_t i = 5; i < arg[2]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      sparsity.binary_union(
-         i_z            , // index in sparsity for result
-         i_z            , // index in sparsity for left operand
-         size_t(arg[i]) , // index for right operand
-         sparsity         // sparsity vector for right operand
-      );
-   }
+    //
+    // sparsity
+    sparsity.clear(i_z);
+    //
+    // addition and subtraction variables
+    for(addr_t i = 5; i < arg[2]; ++i)
+    {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        sparsity.binary_union(
+            i_z            , // index in sparsity for result
+            i_z            , // index in sparsity for left operand
+            size_t(arg[i]) , // index for right operand
+            sparsity         // sparsity vector for right operand
+        );
+    }
 }
 /*
 ------------------------------------------------------------------------------
@@ -470,8 +470,8 @@ Reverse Jacobian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_REV_JAC
-   // END_CSUM_REV_JAC
+    // BEGIN_CSUM_REV_JAC
+    // END_CSUM_REV_JAC
 }
 
 x, y, u, v, z
@@ -506,23 +506,23 @@ variables in the vectors *x* and *y* .
 // BEGIN_CSUM_REV_JAC
 template <class Vector_set>
 inline void csum_rev_jac(
-   size_t           i_z         ,
-   const addr_t*    arg         ,
-   Vector_set&      sparsity    )
+    size_t           i_z         ,
+    const addr_t*    arg         ,
+    Vector_set&      sparsity    )
 // END_CSUM_REV_JAC
 {  //
-   //
-   // addition and subtraction variables
-   for(addr_t i = 5; i < arg[2]; ++i)
-   {
-      CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      sparsity.binary_union(
-         size_t(arg[i]), // index in sparsity for result
-         size_t(arg[i]), // index in sparsity for left operand
-         i_z        , // index for right operand
-         sparsity     // sparsity vector for right operand
-      );
-   }
+    //
+    // addition and subtraction variables
+    for(addr_t i = 5; i < arg[2]; ++i)
+    {
+        CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        sparsity.binary_union(
+            size_t(arg[i]), // index in sparsity for result
+            size_t(arg[i]), // index in sparsity for left operand
+            i_z        , // index for right operand
+            sparsity     // sparsity vector for right operand
+        );
+    }
 }
 /*
 {xrst_begin var_csum_rev_hes dev}
@@ -533,8 +533,8 @@ Reverse Hessian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_REV_HES
-   // END_CSUM_REV_HES
+    // BEGIN_CSUM_REV_HES
+    // END_CSUM_REV_HES
 }
 
 x, y, u, v, z
@@ -558,7 +558,7 @@ We use *G* to denote the scalar function we are computing the
 sparsity pattern for as a function of the variables up to and including *z* .
 We use *H* for the function with *z* replaced by its operator; i.e.::
 
-   H(x, y, u, v, ...) = G[ z(x, y, u, v) , x, y, u, v, ... ]
+    H(x, y, u, v, ...) = G[ z(x, y, u, v) , x, y, u, v, ... ]
 
 Vector_set
 **********
@@ -585,25 +585,25 @@ On output, it contains the Hessian sparsity pattern for the function *H* .
 // BEGIN_CSUM_REV_HES
 template <class Vector_set>
 inline void csum_rev_hes(
-   size_t           i_z                 ,
-   const addr_t*    arg                 ,
-   bool*            rev_jacobian        ,
-   Vector_set&      rev_hes_sparsity    )
+    size_t           i_z                 ,
+    const addr_t*    arg                 ,
+    bool*            rev_jacobian        ,
+    Vector_set&      rev_hes_sparsity    )
 // END_CSUM_REV_HES
 {  //
-   //
-   // addition and subtraction variables
-   for(addr_t i = 5; i < arg[2]; ++i)
-   {
-      CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      rev_hes_sparsity.binary_union(
-         size_t(arg[i])     , // index in sparsity for result
-         size_t(arg[i])     , // index in sparsity for left operand
-         i_z                , // index for right operand
-         rev_hes_sparsity     // sparsity vector for right operand
-      );
-      rev_jacobian[arg[i]] |= rev_jacobian[i_z];
-   }
+    //
+    // addition and subtraction variables
+    for(addr_t i = 5; i < arg[2]; ++i)
+    {
+        CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        rev_hes_sparsity.binary_union(
+            size_t(arg[i])     , // index in sparsity for result
+            size_t(arg[i])     , // index in sparsity for left operand
+            i_z                , // index for right operand
+            rev_hes_sparsity     // sparsity vector for right operand
+        );
+        rev_jacobian[arg[i]] |= rev_jacobian[i_z];
+    }
 }
 /*
 ------------------------------------------------------------------------------
@@ -615,8 +615,8 @@ Forward Hessian Sparsity for Cumulative Summation
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_FOR_HES
-   // END_CSUM_FOR_HES
+    // BEGIN_CSUM_FOR_HES
+    // END_CSUM_FOR_HES
 }
 
 x, y, u, v, z
@@ -652,31 +652,31 @@ see :ref:`local_sweep_for_hes@for_hes_sparse` .
 // BEGIN_CSUM_FOR_HES
 template <class Vector_set>
 inline void csum_for_hes(
-   const addr_t*             arg            ,
-   size_t                    i_z            ,
-   size_t                    n              ,
-   Vector_set&               for_hes_sparse )
+    const addr_t*             arg            ,
+    size_t                    i_z            ,
+    size_t                    n              ,
+    Vector_set&               for_hes_sparse )
 // END_CSUM_FOR_HES
-{  //
-   //
-   // np1
-   size_t np1 = n + 1;
-   //
-   // for_hes_sparse
-   for_hes_sparse.clear(np1 + i_z);
-   //
-   // addition and subtraction variables
-   for(addr_t i = 5; i < arg[2]; ++i)
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-      //
-      // linear functions only modify forward Jacobian sparsity
-      for_hes_sparse.binary_union(
-         np1 + i_z            , // index in sparsity for result
-         np1 + i_z            , // index in sparsity for left operand
-         np1 + size_t(arg[i]) , // index for right operand
-         for_hes_sparse         // sparsity vector for right operand
-      );
-   }
+{   //
+    //
+    // np1
+    size_t np1 = n + 1;
+    //
+    // for_hes_sparse
+    for_hes_sparse.clear(np1 + i_z);
+    //
+    // addition and subtraction variables
+    for(addr_t i = 5; i < arg[2]; ++i)
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
+        //
+        // linear functions only modify forward Jacobian sparsity
+        for_hes_sparse.binary_union(
+            np1 + i_z            , // index in sparsity for result
+            np1 + i_z            , // index in sparsity for left operand
+            np1 + size_t(arg[i]) , // index for right operand
+            for_hes_sparse         // sparsity vector for right operand
+        );
+    }
 }
 
 } } } // END namespace

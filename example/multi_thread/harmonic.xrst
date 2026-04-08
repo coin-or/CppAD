@@ -12,12 +12,12 @@ Source File
 All of the routines below are located in the file
 ::
 
-   example/multi_thread/harmonic.cpp
+    example/multi_thread/harmonic.cpp
 
 Contents
 ********
 {xrst_toc_table
-   example/multi_thread/harmonic.cpp
+    example/multi_thread/harmonic.cpp
 }
 
 {xrst_end harmonic.cpp}

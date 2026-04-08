@@ -31,20 +31,20 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 .
 It contains the elements of the matrix :math:`X` in row major order; i.e.,
 
 .. math::
 
-   X_{i,j} = x [ i * 3 + j ]
+    X_{i,j} = x [ i * 3 + j ]
 
 d
 *
 The argument *d* has prototype
 
-   ``const`` *Vector* & *d*
+    ``const`` *Vector* & *d*
 
 .
 It is tested to see if *d* [0] it is equal to :math:`\det ( X )`.
@@ -54,7 +54,7 @@ Vector
 If *y* is a *Vector* object,
 it must support the syntax
 
-   *y* [ *i* ]
+    *y* [ *i* ]
 
 where *i* has type ``size_t`` with value less than 9.
 This must return a ``double`` value corresponding to the *i*-th
@@ -66,12 +66,12 @@ ok
 **
 The return value *ok* has prototype
 
-   ``bool`` *ok*
+    ``bool`` *ok*
 
 It is true, if the determinant *d* [0]
 passes the test and false otherwise.
 {xrst_toc_hidden
-   xrst/det_33_hpp.xrst
+    xrst/det_33_hpp.xrst
 }
 
 Source Code
@@ -87,20 +87,20 @@ contains the source code for this template function.
 # include <cppad/utility/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
-   bool det_33(const Vector &x, const Vector &d)
-   {  bool ok = true;
-      double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    bool det_33(const Vector &x, const Vector &d)
+    {   bool ok = true;
+        double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
-      // use expansion by minors to compute the determinant by hand
-      double check = 0.;
-      check += x[0] * ( x[4] * x[8] - x[5] * x[7] );
-      check -= x[1] * ( x[3] * x[8] - x[5] * x[6] );
-      check += x[2] * ( x[3] * x[7] - x[4] * x[6] );
+        // use expansion by minors to compute the determinant by hand
+        double check = 0.;
+        check += x[0] * ( x[4] * x[8] - x[5] * x[7] );
+        check -= x[1] * ( x[3] * x[8] - x[5] * x[6] );
+        check += x[2] * ( x[3] * x[7] - x[4] * x[6] );
 
-      ok &= CppAD::NearEqual(check, d[0], eps99, eps99);
+        ok &= CppAD::NearEqual(check, d[0], eps99, eps99);
 
-      return ok;
-   }
+        return ok;
+    }
 }
 // END C++
 # endif

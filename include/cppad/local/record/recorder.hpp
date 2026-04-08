@@ -12,7 +12,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin_parent recorder dev}
 {xrst_spell
-   getters
+    getters
 }
 
 Class That Records Both Variable and Dynamic Parameter Operations
@@ -25,8 +25,8 @@ Syntax
 record
 ******
 {xrst_literal
-   // BEGIN_CLASS
-   // END_CLASS
+    // BEGIN_CLASS
+    // END_CLASS
 }
 
 Base
@@ -48,15 +48,15 @@ Setters
 set_record_compare
 ==================
 {xrst_literal
-   // BEGIN_SET_RECORD_COMPARE
-   // END_SET_RECORD_COMPARE
+    // BEGIN_SET_RECORD_COMPARE
+    // END_SET_RECORD_COMPARE
 }
 
 set_abort_op_index
 ==================
 {xrst_literal
-   // BEGIN_SET_ABORT_OP_INDEX
-   // END_SET_ABORT_OP_INDEX
+    // BEGIN_SET_ABORT_OP_INDEX
+    // END_SET_ABORT_OP_INDEX
 }
 
 Getters
@@ -65,56 +65,56 @@ Getters
 get_record_compare
 ==================
 {xrst_literal
-   // BEGIN_GET_RECORD_COMPARE
-   // END_GET_RECORD_COMPARE
+    // BEGIN_GET_RECORD_COMPARE
+    // END_GET_RECORD_COMPARE
 }
 
 get_abort_op_index
 ==================
 {xrst_literal
-   // BEGIN_GET_ABORT_OP_INDEX
-   // END_GET_ABORT_OP_INDEX
+    // BEGIN_GET_ABORT_OP_INDEX
+    // END_GET_ABORT_OP_INDEX
 }
 
 num_var
 =======
 {xrst_literal
-   // BEGIN_NUM_VAR_REC
-   // END_NUM_VAR_REC
+    // BEGIN_NUM_VAR_REC
+    // END_NUM_VAR_REC
 }
 
 num_var_load
 ============
 {xrst_literal
-   // BEGIN_NUM_VAR_LOAD_REC
-   // END_NUM_VAR_LOAD_REC
+    // BEGIN_NUM_VAR_LOAD_REC
+    // END_NUM_VAR_LOAD_REC
 }
 
 num_var_op
 ==========
 {xrst_literal
-   // BEGIN_NUM_OP_REC
-   // END_NUM_OP_REC
+    // BEGIN_NUM_OP_REC
+    // END_NUM_OP_REC
 }
 
 
 Memory
 ******
 {xrst_literal
-   // BEGIN_MEMORY
-   // END_MEMORY
+    // BEGIN_MEMORY
+    // END_MEMORY
 }
 
 
 Contents
 ********
 {xrst_toc_table after
-   include/cppad/local/record/put_var_vecad.hpp
-   include/cppad/local/record/put_dyn_atomic.hpp
-   include/cppad/local/record/put_var_atomic.hpp
-   include/cppad/local/record/cond_exp.hpp
-   include/cppad/local/record/comp_op.hpp
-   include/cppad/local/record/dyn_recorder.hpp
+    include/cppad/local/record/put_var_vecad.hpp
+    include/cppad/local/record/put_dyn_atomic.hpp
+    include/cppad/local/record/put_var_atomic.hpp
+    include/cppad/local/record/cond_exp.hpp
+    include/cppad/local/record/comp_op.hpp
+    include/cppad/local/record/dyn_recorder.hpp
 }
 
 
@@ -126,261 +126,261 @@ Contents
 // BEGIN_CLASS
 namespace CppAD { namespace local {
 template <class Base> class recorder {
-   // END_CLASS
-   //
-   friend class player<Base>;
-   //
+    // END_CLASS
+    //
+    friend class player<Base>;
+    //
 private:
-   //
-   // dyn_record_
-   dyn_recorder<Base> dyn_record_;
-   //
-   // record_compare
-   // are comparison operators being recorded
-   bool record_compare_;
-   //
-   // abort_op_index_
-   // operator index at which to abort recording with an error
-   // (do not abort when zero)
-   size_t abort_op_index_;
-   //
-   // num_var_
-       // Number of variables in the recording.
-   size_t num_var_;
-       //
-   // num_var_load_
-       // Number vecad load operations (LdpOp or LdvOp) currently in recording.
-   size_t num_var_load_;
-       //
-   // var_op_
-   // The operators in the recording.
-   pod_vector<opcode_t> var_op_;
-   //
-   // var_vecad_ind_
-       // The VecAD indices in the recording.
-   pod_vector<addr_t> var_vecad_ind_;
-   //
-   // var_arg_
-   // The argument indices in the recording
-   pod_vector<addr_t> var_arg_;
-   //
-   // var_text_
-   // Character strings ('\\0' terminated) in the recording.
-   pod_vector<char> var_text_;
-   //
+    //
+    // dyn_record_
+    dyn_recorder<Base> dyn_record_;
+    //
+    // record_compare
+    // are comparison operators being recorded
+    bool record_compare_;
+    //
+    // abort_op_index_
+    // operator index at which to abort recording with an error
+    // (do not abort when zero)
+    size_t abort_op_index_;
+    //
+    // num_var_
+         // Number of variables in the recording.
+    size_t num_var_;
+         //
+    // num_var_load_
+         // Number vecad load operations (LdpOp or LdvOp) currently in recording.
+    size_t num_var_load_;
+         //
+    // var_op_
+    // The operators in the recording.
+    pod_vector<opcode_t> var_op_;
+    //
+    // var_vecad_ind_
+         // The VecAD indices in the recording.
+    pod_vector<addr_t> var_vecad_ind_;
+    //
+    // var_arg_
+    // The argument indices in the recording
+    pod_vector<addr_t> var_arg_;
+    //
+    // var_text_
+    // Character strings ('\\0' terminated) in the recording.
+    pod_vector<char> var_text_;
+    //
 public:
-   //
-   // Constructor
-   recorder(void)
-   : record_compare_(true)
-   , abort_op_index_(0)
-   , num_var_(0)
-   , num_var_load_(0)
-   { }
-   //
-   // Destructor
-   ~recorder(void)
-   { }
-   // ------------------------------------------------------------------------
-   // Parameter Operations
-   // ------------------------------------------------------------------------
-   // set_n_dyn_independent
+    //
+    // Constructor
+    recorder(void)
+    : record_compare_(true)
+    , abort_op_index_(0)
+    , num_var_(0)
+    , num_var_load_(0)
+    { }
+    //
+    // Destructor
+    ~recorder(void)
+    { }
+    // ------------------------------------------------------------------------
+    // Parameter Operations
+    // ------------------------------------------------------------------------
+    // set_n_dyn_independent
  void set_n_dyn_independent(size_t n_dyn_independent)
-   {  dyn_record_.set_n_dyn_independent(n_dyn_independent); }
-   //
-   // n_dyn_independent
+    {   dyn_record_.set_n_dyn_independent(n_dyn_independent); }
+    //
+    // n_dyn_independent
  size_t n_dyn_independent(void) const
-   {  return dyn_record_.n_dyn_independent(); }
-   //
-   // put_dyn_atomic
-   template <class VectorAD>
-   void put_dyn_atomic(
-      tape_id_t                   tape_id    ,
-      size_t                      atom_index ,
-      size_t                      call_id    ,
-      const vector<ad_type_enum>& type_x     ,
-      const vector<ad_type_enum>& type_y     ,
-      const VectorAD&             ax         ,
-      VectorAD&                   ay
-   )
-   {  dyn_record_.put_dyn_atomic(
-         tape_id, atom_index, call_id, type_x, type_y, ax, ay
-      );
-   }
-   //
-   // par_all
-       const pod_vector_maybe<Base>& par_all(void) const
-   {  return dyn_record_.par_all(); }
-   //
-   // put_con_par
-   addr_t put_con_par(const Base &par)
-   {   return dyn_record_.put_con_par(par); }
-   //
-   addr_t put_dyn_par(const Base &par, op_code_dyn op)
-   {  return dyn_record_.put_dyn_par(par, op); }
-   addr_t put_dyn_par( const Base &par, op_code_dyn op, addr_t a0)
-   {  return dyn_record_.put_dyn_par(par, op, a0); }
-   addr_t put_dyn_par( const Base &par, op_code_dyn op, addr_t a0, addr_t a1)
-   {  return dyn_record_.put_dyn_par(par, op, a0, a1); }
-   //
-   // put_dyn_cond_exp
-   addr_t put_dyn_cond_exp(const Base &par, CompareOp cop,
-      addr_t left, addr_t right, addr_t if_true, addr_t if_false
-   )
-   {  return dyn_record_.put_dyn_cond_exp(
-         par, cop, left, right, if_true, if_false
-      );
-   }
-   // put_dyn_arg_vec
-   void put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
-   {  dyn_record_.put_dyn_arg_vec(arg_vec); }
-   // ------------------------------------------------------------------------
-   //
-   // BEGIN_SET_RECORD_COMPARE
-   // recorder.set_record_compare(record_compare)
-   void set_record_compare(bool record_compare)
-   // END_SET_RECORD_COMPARE
-   {  record_compare_ = record_compare; }
-   //
-   // BEGIN_SET_ABORT_OP_INDEX
-   // recorder.set_abort_op_index(abort_op_index)
-   void set_abort_op_index(size_t abort_op_index)
-   // END_SET_ABORT_OP_INDEX
-   {  abort_op_index_ = abort_op_index; }
-   //
-   // BEGIN_GET_RECORD_COMPARE
-   // record_compare = recorder.get_record_compare()
-   bool get_record_compare(void) const
-   // END_GET_RECORD_COMPARE
-   {  return record_compare_; }
-   //
-   // BEGIN_GET_ABORT_OP_INDEX
-   // abort_op_index = recorder.get_abort_op_index()
-   size_t get_abort_op_index(void) const
-   // END_GET_ABORT_OP_INDEX
-   {  return abort_op_index_; }
-   //
-   // BEGIN_NUM_VAR_REC
-   /// num_var = recorder.num_var()
-   size_t num_var(void) const
-   // END_NUM_VAR_REC
-   {  return num_var_; }
-   //
-   // BEGIN_NUM_VAR_LOAD_REC
-   // num_var_load = recorder.num_var_load()
-   size_t num_var_load(void) const
-   // END_NUM_VAR_LOAD_REC
-   {  return num_var_load_; }
-   //
-   // BEGIN_NUM_OP_REC
-   // num_var_op = recorder.num_var_op()
-   size_t num_var_op(void) const
-   // END_NUM_OP_REC
-   {  return  var_op_.size(); }
-   //
-   // BEGIN_MEMORY
-   // memory = recorder.memory()
-   size_t Memory(void) const
-   // END_MEMORY
-   {  return 0
-         + dyn_record_.Memory()
-         + var_op_.capacity()             * sizeof(opcode_t)
-         + var_vecad_ind_.capacity()  * sizeof(addr_t)
-         + var_arg_.capacity()            * sizeof(addr_t)
-         + var_text_.capacity()           * sizeof(char)
-      ;
-   }
-   //
-   // PutOp
-   addr_t PutOp(op_code_var op);
-   //
-   // PutArg
-   void PutArg(addr_t a0);
-   void PutArg(addr_t a0, addr_t a1);
-   void PutArg(addr_t a0, addr_t a1, addr_t a2);
-   void PutArg(addr_t a0, addr_t a1, addr_t a2, addr_t a3);
-   void PutArg(addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4);
-   void PutArg(
-      addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4, addr_t a5
-   );
-   //
-   // PutLoadOp
-   addr_t PutLoadOp(op_code_var op);
-   //
-   // ReserveArg
-   size_t ReserveArg(size_t n_arg);
-   //
-   // ReplaceArg
-   void ReplaceArg(size_t i_arg, addr_t value);
-   //
-   // PutTxt
-   addr_t PutTxt(const char *text);
-   //
-   // put_var_vecad_ind
-   addr_t put_var_vecad_ind(addr_t vec_ind);
-   //
-   // put_var_vecad
-   addr_t put_var_vecad(size_t length, const pod_vector<addr_t>& taddr);
-   //
-   // put_var_atomic
-   template <class VectorAD>
-   void put_var_atomic(
-      tape_id_t                   tape_id    ,
-      size_t                      atom_index ,
-      size_t                      call_id    ,
-      const vector<ad_type_enum>& type_x     ,
-      const vector<ad_type_enum>& type_y     ,
-      const VectorAD&             ax         ,
-      VectorAD&                   ay
-   );
+    {   return dyn_record_.n_dyn_independent(); }
+    //
+    // put_dyn_atomic
+    template <class VectorAD>
+    void put_dyn_atomic(
+        tape_id_t                   tape_id    ,
+        size_t                      atom_index ,
+        size_t                      call_id    ,
+        const vector<ad_type_enum>& type_x     ,
+        const vector<ad_type_enum>& type_y     ,
+        const VectorAD&             ax         ,
+        VectorAD&                   ay
+    )
+    {   dyn_record_.put_dyn_atomic(
+            tape_id, atom_index, call_id, type_x, type_y, ax, ay
+        );
+    }
+    //
+    // par_all
+         const pod_vector_maybe<Base>& par_all(void) const
+    {   return dyn_record_.par_all(); }
+    //
+    // put_con_par
+    addr_t put_con_par(const Base &par)
+    {    return dyn_record_.put_con_par(par); }
+    //
+    addr_t put_dyn_par(const Base &par, op_code_dyn op)
+    {   return dyn_record_.put_dyn_par(par, op); }
+    addr_t put_dyn_par( const Base &par, op_code_dyn op, addr_t a0)
+    {   return dyn_record_.put_dyn_par(par, op, a0); }
+    addr_t put_dyn_par( const Base &par, op_code_dyn op, addr_t a0, addr_t a1)
+    {   return dyn_record_.put_dyn_par(par, op, a0, a1); }
+    //
+    // put_dyn_cond_exp
+    addr_t put_dyn_cond_exp(const Base &par, CompareOp cop,
+        addr_t left, addr_t right, addr_t if_true, addr_t if_false
+    )
+    {   return dyn_record_.put_dyn_cond_exp(
+            par, cop, left, right, if_true, if_false
+        );
+    }
+    // put_dyn_arg_vec
+    void put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
+    {   dyn_record_.put_dyn_arg_vec(arg_vec); }
+    // ------------------------------------------------------------------------
+    //
+    // BEGIN_SET_RECORD_COMPARE
+    // recorder.set_record_compare(record_compare)
+    void set_record_compare(bool record_compare)
+    // END_SET_RECORD_COMPARE
+    {   record_compare_ = record_compare; }
+    //
+    // BEGIN_SET_ABORT_OP_INDEX
+    // recorder.set_abort_op_index(abort_op_index)
+    void set_abort_op_index(size_t abort_op_index)
+    // END_SET_ABORT_OP_INDEX
+    {   abort_op_index_ = abort_op_index; }
+    //
+    // BEGIN_GET_RECORD_COMPARE
+    // record_compare = recorder.get_record_compare()
+    bool get_record_compare(void) const
+    // END_GET_RECORD_COMPARE
+    {   return record_compare_; }
+    //
+    // BEGIN_GET_ABORT_OP_INDEX
+    // abort_op_index = recorder.get_abort_op_index()
+    size_t get_abort_op_index(void) const
+    // END_GET_ABORT_OP_INDEX
+    {   return abort_op_index_; }
+    //
+    // BEGIN_NUM_VAR_REC
+    /// num_var = recorder.num_var()
+    size_t num_var(void) const
+    // END_NUM_VAR_REC
+    {   return num_var_; }
+    //
+    // BEGIN_NUM_VAR_LOAD_REC
+    // num_var_load = recorder.num_var_load()
+    size_t num_var_load(void) const
+    // END_NUM_VAR_LOAD_REC
+    {   return num_var_load_; }
+    //
+    // BEGIN_NUM_OP_REC
+    // num_var_op = recorder.num_var_op()
+    size_t num_var_op(void) const
+    // END_NUM_OP_REC
+    {   return  var_op_.size(); }
+    //
+    // BEGIN_MEMORY
+    // memory = recorder.memory()
+    size_t Memory(void) const
+    // END_MEMORY
+    {   return 0
+            + dyn_record_.Memory()
+            + var_op_.capacity()             * sizeof(opcode_t)
+            + var_vecad_ind_.capacity()  * sizeof(addr_t)
+            + var_arg_.capacity()            * sizeof(addr_t)
+            + var_text_.capacity()           * sizeof(char)
+        ;
+    }
+    //
+    // PutOp
+    addr_t PutOp(op_code_var op);
+    //
+    // PutArg
+    void PutArg(addr_t a0);
+    void PutArg(addr_t a0, addr_t a1);
+    void PutArg(addr_t a0, addr_t a1, addr_t a2);
+    void PutArg(addr_t a0, addr_t a1, addr_t a2, addr_t a3);
+    void PutArg(addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4);
+    void PutArg(
+        addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4, addr_t a5
+    );
+    //
+    // PutLoadOp
+    addr_t PutLoadOp(op_code_var op);
+    //
+    // ReserveArg
+    size_t ReserveArg(size_t n_arg);
+    //
+    // ReplaceArg
+    void ReplaceArg(size_t i_arg, addr_t value);
+    //
+    // PutTxt
+    addr_t PutTxt(const char *text);
+    //
+    // put_var_vecad_ind
+    addr_t put_var_vecad_ind(addr_t vec_ind);
+    //
+    // put_var_vecad
+    addr_t put_var_vecad(size_t length, const pod_vector<addr_t>& taddr);
+    //
+    // put_var_atomic
+    template <class VectorAD>
+    void put_var_atomic(
+        tape_id_t                   tape_id    ,
+        size_t                      atom_index ,
+        size_t                      call_id    ,
+        const vector<ad_type_enum>& type_x     ,
+        const vector<ad_type_enum>& type_y     ,
+        const VectorAD&             ax         ,
+        VectorAD&                   ay
+    );
 
-   /// record a variable or dynamic parameter conditional expression
-   void cond_exp(
-      tape_id_t       tape_id     ,
-      enum CompareOp  cop         ,
-      AD<Base>       &result      ,
-      const AD<Base> &left        ,
-      const AD<Base> &right       ,
-      const AD<Base> &if_true     ,
-      const AD<Base> &if_false
-   );
+    /// record a variable or dynamic parameter conditional expression
+    void cond_exp(
+        tape_id_t       tape_id     ,
+        enum CompareOp  cop         ,
+        AD<Base>       &result      ,
+        const AD<Base> &left        ,
+        const AD<Base> &right       ,
+        const AD<Base> &if_true     ,
+        const AD<Base> &if_false
+    );
 
-   /// record a comparison operators for variables or just dynamic parameters
-   void comp_eq(
-      bool                        var_left     ,
-      bool                        var_right    ,
-      bool                        dyn_left     ,
-      bool                        dyn_right    ,
-      const AD<Base>&             aleft        ,
-      const AD<Base>&             aright       ,
-      bool                        result
-   );
-   void comp_le(
-      bool                        var_left     ,
-      bool                        var_right    ,
-      bool                        dyn_left     ,
-      bool                        dyn_right    ,
-      const AD<Base>&             aleft        ,
-      const AD<Base>&             aright       ,
-      bool                        result
-   );
-   void comp_lt(
-      bool                        var_left     ,
-      bool                        var_right    ,
-      bool                        dyn_left     ,
-      bool                        dyn_right    ,
-      const AD<Base>&             aleft        ,
-      const AD<Base>&             aright       ,
-      bool                        result
-   );
+    /// record a comparison operators for variables or just dynamic parameters
+    void comp_eq(
+        bool                        var_left     ,
+        bool                        var_right    ,
+        bool                        dyn_left     ,
+        bool                        dyn_right    ,
+        const AD<Base>&             aleft        ,
+        const AD<Base>&             aright       ,
+        bool                        result
+    );
+    void comp_le(
+        bool                        var_left     ,
+        bool                        var_right    ,
+        bool                        dyn_left     ,
+        bool                        dyn_right    ,
+        const AD<Base>&             aleft        ,
+        const AD<Base>&             aright       ,
+        bool                        result
+    );
+    void comp_lt(
+        bool                        var_left     ,
+        bool                        var_right    ,
+        bool                        dyn_left     ,
+        bool                        dyn_right    ,
+        const AD<Base>&             aleft        ,
+        const AD<Base>&             aright       ,
+        bool                        result
+    );
 
 };
 /*
 ------------------------------------------------------------------------------
 {xrst_begin var_put_op dev}
 {xrst_spell
-   ldv
-   ldp
+    ldv
+    ldp
 }
 
 Put Next Operator in the Variable Operation Sequence
@@ -389,8 +389,8 @@ Put Next Operator in the Variable Operation Sequence
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PUT_OP
-   // END_PUT_OP
+    // BEGIN_PUT_OP
+    // END_PUT_OP
 }
 
 Description
@@ -422,32 +422,32 @@ This index starts at zero after the default constructor.
 template <class Base> addr_t recorder<Base>::PutOp(op_code_var op)
 // END_PUT_OP
 {  size_t i    = var_op_.extend(1);
-   CPPAD_ASSERT_KNOWN(
-      (abort_op_index_ == 0) || (abort_op_index_ != i),
-      "Operator index equals abort_op_index in Independent"
-   );
-   var_op_[i]  = static_cast<opcode_t>(op);
-   CPPAD_ASSERT_UNKNOWN( var_op_.size() == i + 1 );
-   CPPAD_ASSERT_UNKNOWN( (op != LdpOp) && (op != LdvOp) );
+    CPPAD_ASSERT_KNOWN(
+        (abort_op_index_ == 0) || (abort_op_index_ != i),
+        "Operator index equals abort_op_index in Independent"
+    );
+    var_op_[i]  = static_cast<opcode_t>(op);
+    CPPAD_ASSERT_UNKNOWN( var_op_.size() == i + 1 );
+    CPPAD_ASSERT_UNKNOWN( (op != LdpOp) && (op != LdvOp) );
 
-   // first operator should be a BeginOp and NumRes( BeginOp ) > 0
-   num_var_ += NumRes(op);
-   CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
+    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
+    num_var_ += NumRes(op);
+    CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
 
-   // index of last variable corresponding to this operation
-   // (if NumRes(op) > 0)
-   CPPAD_ASSERT_KNOWN(
-      (size_t) std::numeric_limits<addr_t>::max() >= num_var_ - 1,
-      "cppad_tape_addr_type maximum value has been exceeded"
-   )
+    // index of last variable corresponding to this operation
+    // (if NumRes(op) > 0)
+    CPPAD_ASSERT_KNOWN(
+        (size_t) std::numeric_limits<addr_t>::max() >= num_var_ - 1,
+        "cppad_tape_addr_type maximum value has been exceeded"
+    )
 
-   return static_cast<addr_t>( num_var_ - 1 );
+    return static_cast<addr_t>( num_var_ - 1 );
 }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin var_put_arg dev}
 {xrst_spell
-   etc
+    etc
 }
 
 Put Operator Arguments in the Variable Operation Sequence
@@ -498,12 +498,12 @@ if present, is places after *a4* at the end of the operator argument vector.
 Prototype
 *********
 {xrst_literal ,
-   // BEGIN_PUT_ARG_0 , END_PUT_ARG_0
-   // BEGIN_PUT_ARG_1 , END_PUT_ARG_1
-   // BEGIN_PUT_ARG_2 , END_PUT_ARG_2
-   // BEGIN_PUT_ARG_3 , END_PUT_ARG_3
-   // BEGIN_PUT_ARG_4 , END_PUT_ARG_4
-   // BEGIN_PUT_ARG_5 , END_PUT_ARG_5
+    // BEGIN_PUT_ARG_0 , END_PUT_ARG_0
+    // BEGIN_PUT_ARG_1 , END_PUT_ARG_1
+    // BEGIN_PUT_ARG_2 , END_PUT_ARG_2
+    // BEGIN_PUT_ARG_3 , END_PUT_ARG_3
+    // BEGIN_PUT_ARG_4 , END_PUT_ARG_4
+    // BEGIN_PUT_ARG_5 , END_PUT_ARG_5
 }
 {xrst_end var_put_arg}
 */
@@ -511,81 +511,81 @@ Prototype
 template <class Base> void recorder<Base>::PutArg(addr_t a0)
 // END_PUT_ARG_0
 {
-   size_t i      =  var_arg_.extend(1);
-   var_arg_[i]   =  a0;
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
+    size_t i      =  var_arg_.extend(1);
+    var_arg_[i]   =  a0;
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 // BEGIN_PUT_ARG_1
 template <class Base> void recorder<Base>::PutArg(addr_t a0, addr_t a1)
 // END_PUT_ARG_1
 {
-   size_t i      =  var_arg_.extend(2);
-   var_arg_[i++] =  a0;
-   var_arg_[i]   =  a1;
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
+    size_t i      =  var_arg_.extend(2);
+    var_arg_[i++] =  a0;
+    var_arg_[i]   =  a1;
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 // BEGIN_PUT_ARG_2
 template <class Base> void recorder<Base>::PutArg(
-   addr_t a0, addr_t a1, addr_t a2
+    addr_t a0, addr_t a1, addr_t a2
 )
 // END_PUT_ARG_2
 {
-   size_t i      =  var_arg_.extend(3);
-   var_arg_[i++] =  a0;
-   var_arg_[i++] =  a1;
-   var_arg_[i]   =  a2;
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
+    size_t i      =  var_arg_.extend(3);
+    var_arg_[i++] =  a0;
+    var_arg_[i++] =  a1;
+    var_arg_[i]   =  a2;
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 // BEGIN_PUT_ARG_3
 template <class Base> void recorder<Base>::PutArg(
-   addr_t a0, addr_t a1, addr_t a2, addr_t a3
+    addr_t a0, addr_t a1, addr_t a2, addr_t a3
 )
 // END_PUT_ARG_3
 {
-   size_t i      =  var_arg_.extend(4);
-   var_arg_[i++] =  a0;
-   var_arg_[i++] =  a1;
-   var_arg_[i++] =  a2;
-   var_arg_[i]   =  a3;
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
+    size_t i      =  var_arg_.extend(4);
+    var_arg_[i++] =  a0;
+    var_arg_[i++] =  a1;
+    var_arg_[i++] =  a2;
+    var_arg_[i]   =  a3;
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 
 }
 // BEGIN_PUT_ARG_4
 template <class Base> void recorder<Base>::PutArg(
-   addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4
+    addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4
 )
 // END_PUT_ARG_4
 {
-   size_t i      =  var_arg_.extend(5);
-   var_arg_[i++] =  a0;
-   var_arg_[i++] =  a1;
-   var_arg_[i++] =  a2;
-   var_arg_[i++] =  a3;
-   var_arg_[i]   =  a4;
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
+    size_t i      =  var_arg_.extend(5);
+    var_arg_[i++] =  a0;
+    var_arg_[i++] =  a1;
+    var_arg_[i++] =  a2;
+    var_arg_[i++] =  a3;
+    var_arg_[i]   =  a4;
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 
 }
 // BEGIN_PUT_ARG_5
 template <class Base> void recorder<Base>::PutArg(
-   addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4, addr_t a5
+    addr_t a0, addr_t a1, addr_t a2, addr_t a3, addr_t a4, addr_t a5
 )
 // END_PUT_ARG_5
 {
-   size_t i      =  var_arg_.extend(6);
-   var_arg_[i++] =  a0;
-   var_arg_[i++] =  a1;
-   var_arg_[i++] =  a2;
-   var_arg_[i++] =  a3;
-   var_arg_[i++] =  a4;
-   var_arg_[i]   =  a5;
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
+    size_t i      =  var_arg_.extend(6);
+    var_arg_[i++] =  a0;
+    var_arg_[i++] =  a1;
+    var_arg_[i++] =  a2;
+    var_arg_[i++] =  a3;
+    var_arg_[i++] =  a4;
+    var_arg_[i]   =  a5;
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + 1 );
 }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin var_put_load_op dev}
 {xrst_spell
-   ldv
-   ldp
+    ldv
+    ldp
 }
 
 Put Next LdpOp or LdvOp Operator in Operation Sequence
@@ -594,8 +594,8 @@ Put Next LdpOp or LdvOp Operator in Operation Sequence
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PUT_LOAD_OP
-   // END_PUT_LOAD_OP
+    // BEGIN_PUT_LOAD_OP
+    // END_PUT_LOAD_OP
 }
 
 Description
@@ -630,29 +630,29 @@ increases by one after each call to this function.
 template <class Base> addr_t recorder<Base>::PutLoadOp(op_code_var op)
 // END_PUT_LOAD_OP
 {  size_t i    = var_op_.extend(1);
-   CPPAD_ASSERT_KNOWN(
-      (abort_op_index_ == 0) || (abort_op_index_ != i),
-      "This is the abort operator index specified by "
-      "Independent(x, abort_op_index)."
-   );
-   var_op_[i]  = op;
-   CPPAD_ASSERT_UNKNOWN( var_op_.size() == i + 1 );
-   CPPAD_ASSERT_UNKNOWN( (op == LdpOp) || (op == LdvOp) );
+    CPPAD_ASSERT_KNOWN(
+        (abort_op_index_ == 0) || (abort_op_index_ != i),
+        "This is the abort operator index specified by "
+        "Independent(x, abort_op_index)."
+    );
+    var_op_[i]  = op;
+    CPPAD_ASSERT_UNKNOWN( var_op_.size() == i + 1 );
+    CPPAD_ASSERT_UNKNOWN( (op == LdpOp) || (op == LdvOp) );
 
-   // first operator should be a BeginOp and NumRes( BeginOp ) > 0
-   num_var_ += NumRes(op);
-   CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
+    // first operator should be a BeginOp and NumRes( BeginOp ) > 0
+    num_var_ += NumRes(op);
+    CPPAD_ASSERT_UNKNOWN( num_var_ > 0 );
 
-   // count this vecad load operation
-   num_var_load_++;
+    // count this vecad load operation
+    num_var_load_++;
 
-   // index of last variable corresponding to this operation
-   // (if NumRes(op) > 0)
-   CPPAD_ASSERT_KNOWN(
-      (size_t) std::numeric_limits<addr_t>::max() >= num_var_ - 1,
-      "cppad_tape_addr_type maximum value has been exceeded"
-   )
-   return static_cast<addr_t>( num_var_ - 1 );
+    // index of last variable corresponding to this operation
+    // (if NumRes(op) > 0)
+    CPPAD_ASSERT_KNOWN(
+        (size_t) std::numeric_limits<addr_t>::max() >= num_var_ - 1,
+        "cppad_tape_addr_type maximum value has been exceeded"
+    )
+    return static_cast<addr_t>( num_var_ - 1 );
 }
 /*
 -------------------------------------------------------------------------------
@@ -664,8 +664,8 @@ Reserve Space for Variable Recording Arguments, Delay Placing Values There
 Prototype
 *********
 {xrst_literal
-   // BEGIN_RESERVE_ARG
-   // END_RESERVE_ARG
+    // BEGIN_RESERVE_ARG
+    // END_RESERVE_ARG
 }
 
 n_arg
@@ -684,9 +684,9 @@ first of the arguments being reserved.
 template <class Base> size_t recorder<Base>::ReserveArg(size_t n_arg)
 // END_RESERVE_ARG
 {
-   size_t i      =  var_arg_.extend(n_arg);
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + n_arg );
-   return i;
+    size_t i      =  var_arg_.extend(n_arg);
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size()    == i + n_arg );
+    return i;
 }
 /*
 -------------------------------------------------------------------------------
@@ -698,8 +698,8 @@ Replace an Argument Value in the Variable Recording
 Prototype
 *********
 {xrst_literal
-   // BEGIN_REPLACE_ARG
-   // END_REPLACE_ARG
+    // BEGIN_REPLACE_ARG
+    // END_REPLACE_ARG
 }
 
 Purpose
@@ -719,10 +719,10 @@ is the new value for the argument with the specified index.
 // BEGIN_REPLACE_ARG
 // recorder.ReplaceArg(arg_index, value)
 template <class Base> void recorder<Base>::ReplaceArg(
-   size_t arg_index, addr_t value
+    size_t arg_index, addr_t value
 )
 // END_REPLACE_ARG
-{  var_arg_[arg_index] =  value; }
+{   var_arg_[arg_index] =  value; }
 // --------------------------------------------------------------------------
 /*
 {xrst_begin var_put_txt dev}
@@ -733,8 +733,8 @@ Put a Character String in the Text for This Variable Recording
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PUT_TXT
-   // END_PUT_TXT
+    // BEGIN_PUT_TXT
+    // END_PUT_TXT
 }
 
 text
@@ -755,27 +755,27 @@ the character string starts.
 template <class Base> addr_t recorder<Base>::PutTxt(const char *text)
 // END_PUT_TXT
 {
-   // determine length of the text including terminating '\0'
-   size_t n = 0;
-   while( text[n] != '\0' )
-      n++;
-   CPPAD_ASSERT_UNKNOWN( n <= 1000 );
-   n++;
-   CPPAD_ASSERT_UNKNOWN( text[n-1] == '\0' );
+    // determine length of the text including terminating '\0'
+    size_t n = 0;
+    while( text[n] != '\0' )
+        n++;
+    CPPAD_ASSERT_UNKNOWN( n <= 1000 );
+    n++;
+    CPPAD_ASSERT_UNKNOWN( text[n-1] == '\0' );
 
-   // copy text including terminating '\0'
-   size_t i = var_text_.extend(n);
-   size_t j;
-   for(j = 0; j < n; j++)
-      var_text_[i + j] = text[j];
-   CPPAD_ASSERT_UNKNOWN( var_text_.size() == i + n );
+    // copy text including terminating '\0'
+    size_t i = var_text_.extend(n);
+    size_t j;
+    for(j = 0; j < n; j++)
+        var_text_[i + j] = text[j];
+    CPPAD_ASSERT_UNKNOWN( var_text_.size() == i + n );
 
-   CPPAD_ASSERT_KNOWN(
-      size_t( std::numeric_limits<addr_t>::max() ) >= i,
-      "cppad_tape_addr_type maximum value has been exceeded"
-   );
-   //
-   return static_cast<addr_t>( i );
+    CPPAD_ASSERT_KNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= i,
+        "cppad_tape_addr_type maximum value has been exceeded"
+    );
+    //
+    return static_cast<addr_t>( i );
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

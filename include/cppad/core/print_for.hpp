@@ -8,7 +8,7 @@
 /*
 {xrst_begin PrintFor}
 {xrst_spell
-   notpos
+    notpos
 }
 
 Printing AD Values During Forward Mode
@@ -29,7 +29,7 @@ Purpose
 *******
 The :ref:`zero order forward<forward_zero-name>` mode command
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 sets the
 :ref:`glossary@Tape@Independent Variable` vector
@@ -61,7 +61,7 @@ before
 ******
 The argument *before* has prototype
 
-   ``const char`` * *before*
+    ``const char`` * *before*
 
 This text is written to ``std::cout`` before *value* .
 
@@ -75,7 +75,7 @@ The argument *value* has one of the following prototypes
 The *value* , that corresponds to *x* ,
 is written to ``std::cout`` during the execution of
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 Note that *value* may be a
 :ref:`glossary@Variable` or
@@ -88,7 +88,7 @@ after
 *****
 The argument *after* has prototype
 
-   ``const char`` * *after*
+    ``const char`` * *after*
 
 This text is written to ``std::cout`` after *value* .
 
@@ -96,7 +96,7 @@ s
 *
 You can redirect this output to any standard output stream using the syntax
 
-   *f* . ``Forward`` (0, *x* , *s* )
+    *f* . ``Forward`` (0, *x* , *s* )
 
 see :ref:`forward_zero@s` in the zero order forward mode documentation.
 
@@ -110,8 +110,8 @@ the corresponding result will :ref:`nan-name` .
 Example
 *******
 {xrst_toc_hidden
-   example/print_for/print_for.cpp
-   example/general/print_for.cpp
+    example/print_for/print_for.cpp
+    example/general/print_for.cpp
 }
 The program
 :ref:`print_for_cout.cpp-name`
@@ -130,94 +130,94 @@ This function automatically check for correct output.
 # include <cstring>
 
 namespace CppAD {
-   template <class Base>
-   void PrintFor(
-      const AD<Base>& notpos        ,
-      const char*     before        ,
-      const AD<Base>& value         ,
-      const char*     after         )
-   {  CPPAD_ASSERT_NARG_NRES(local::PriOp, 5, 0);
+    template <class Base>
+    void PrintFor(
+        const AD<Base>& notpos        ,
+        const char*     before        ,
+        const AD<Base>& value         ,
+        const char*     after         )
+    {   CPPAD_ASSERT_NARG_NRES(local::PriOp, 5, 0);
 
-      // check for case where we are not recording operations
-      local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-      if( tape == nullptr )
-         return;
+        // check for case where we are not recording operations
+        local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+        if( tape == nullptr )
+            return;
 
-      CPPAD_ASSERT_KNOWN(
-         std::strlen(before) <= 1000 ,
-         "PrintFor: length of before is greater than 1000 characters"
-      );
-      CPPAD_ASSERT_KNOWN(
-         std::strlen(after) <= 1000 ,
-         "PrintFor: length of after is greater than 1000 characters"
-      );
-      addr_t arg0, arg1, arg2, arg3, arg4;
+        CPPAD_ASSERT_KNOWN(
+            std::strlen(before) <= 1000 ,
+            "PrintFor: length of before is greater than 1000 characters"
+        );
+        CPPAD_ASSERT_KNOWN(
+            std::strlen(after) <= 1000 ,
+            "PrintFor: length of after is greater than 1000 characters"
+        );
+        addr_t arg0, arg1, arg2, arg3, arg4;
 
-      // arg[0] = base 2 representation of [Var(notpos), Var(value)]
-      arg0 = 0;
+        // arg[0] = base 2 representation of [Var(notpos), Var(value)]
+        arg0 = 0;
 
-      // arg[1] = address for notpos
-      if( Constant(notpos) )
-         arg1  = tape->Rec_.put_con_par(notpos.value_);
-      else if( Dynamic(notpos) )
-         arg1  = notpos.taddr_;
-      else
-      {  arg0 += 1;
-         arg1  = notpos.taddr_;
-      }
+        // arg[1] = address for notpos
+        if( Constant(notpos) )
+            arg1  = tape->Rec_.put_con_par(notpos.value_);
+        else if( Dynamic(notpos) )
+            arg1  = notpos.taddr_;
+        else
+        {   arg0 += 1;
+            arg1  = notpos.taddr_;
+        }
 
-      // arg[2] = address of before
-      arg2 = tape->Rec_.PutTxt(before);
+        // arg[2] = address of before
+        arg2 = tape->Rec_.PutTxt(before);
 
-      // arg[3] = address for value
-      if( Constant(value) )
-         arg3  = tape->Rec_.put_con_par(value.value_);
-      else if( Dynamic(value) )
-         arg3  = value.taddr_;
-      else
-      {  arg0 += 2;
-         arg3  = value.taddr_;
-      }
+        // arg[3] = address for value
+        if( Constant(value) )
+            arg3  = tape->Rec_.put_con_par(value.value_);
+        else if( Dynamic(value) )
+            arg3  = value.taddr_;
+        else
+        {   arg0 += 2;
+            arg3  = value.taddr_;
+        }
 
-      // arg[4] = address of after
-      arg4 = tape->Rec_.PutTxt(after);
+        // arg[4] = address of after
+        arg4 = tape->Rec_.PutTxt(after);
 
-      // put the operator in the tape
-      tape->Rec_.PutArg(arg0, arg1, arg2, arg3, arg4);
-      tape->Rec_.PutOp(local::PriOp);
-   }
-   // Fold all other cases into the case above
-   template <class Base>
-   void PrintFor(const char* before, const AD<Base>& value)
-   {  PrintFor(AD<Base>(0), before, value, "" ); }
-   //
-   template <class Base>
-   void PrintFor(const char* before, const VecAD_reference<Base>& value)
-   {  PrintFor(AD<Base>(0), before, value.ADBase(), "" ); }
-   //
-   template <class Base>
-   void PrintFor(
-      const VecAD_reference<Base>& notpos ,
-      const char                  *before ,
-      const VecAD_reference<Base>& value  ,
-      const char                  *after  )
-   {  PrintFor(notpos.ADBase(), before, value.ADBase(), after); }
-   //
-   template <class Base>
-   void PrintFor(
-      const VecAD_reference<Base>& notpos ,
-      const char                  *before ,
-      const AD<Base>&              value  ,
-      const char                  *after  )
-   {  PrintFor(notpos.ADBase(), before, value, after); }
-   //
-   template <class Base>
-   void PrintFor(
-      const AD<Base>&              notpos ,
-      const char                  *before ,
-      const VecAD_reference<Base>& value  ,
-      const char                  *after  )
-   {  PrintFor(notpos, before, value.ADBase(), after); }
+        // put the operator in the tape
+        tape->Rec_.PutArg(arg0, arg1, arg2, arg3, arg4);
+        tape->Rec_.PutOp(local::PriOp);
+    }
+    // Fold all other cases into the case above
+    template <class Base>
+    void PrintFor(const char* before, const AD<Base>& value)
+    {   PrintFor(AD<Base>(0), before, value, "" ); }
+    //
+    template <class Base>
+    void PrintFor(const char* before, const VecAD_reference<Base>& value)
+    {   PrintFor(AD<Base>(0), before, value.ADBase(), "" ); }
+    //
+    template <class Base>
+    void PrintFor(
+        const VecAD_reference<Base>& notpos ,
+        const char                  *before ,
+        const VecAD_reference<Base>& value  ,
+        const char                  *after  )
+    {   PrintFor(notpos.ADBase(), before, value.ADBase(), after); }
+    //
+    template <class Base>
+    void PrintFor(
+        const VecAD_reference<Base>& notpos ,
+        const char                  *before ,
+        const AD<Base>&              value  ,
+        const char                  *after  )
+    {   PrintFor(notpos.ADBase(), before, value, after); }
+    //
+    template <class Base>
+    void PrintFor(
+        const AD<Base>&              notpos ,
+        const char                  *before ,
+        const VecAD_reference<Base>& value  ,
+        const char                  *after  )
+    {   PrintFor(notpos, before, value.ADBase(), after); }
 }
 
 # endif

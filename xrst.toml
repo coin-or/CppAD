@@ -21,89 +21,89 @@ overline  = [ false, false, false, false, false,  ]
 rst_epilog = ''
 rst_prolog = '''
 .. |space| unicode:: 0xA0
-.. |tab| replace:: |space| |space| |space|
+.. |tab| replace:: |space| |space| |space| |space|
 '''
 latex_macro = [
-   '\newcommand{\W}[1]{ \; #1 \; }',
-   '\newcommand{\R}[1]{ {\rm #1} }',
-   '\newcommand{\B}[1]{ {\bf #1} }',
-   '\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }',
-   '\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }',
-   '\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }',
-   '\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }',
+    '\newcommand{\W}[1]{ \; #1 \; }',
+    '\newcommand{\R}[1]{ {\rm #1} }',
+    '\newcommand{\B}[1]{ {\bf #1} }',
+    '\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }',
+    '\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }',
+    '\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }',
+    '\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }',
 ]
 
 # BEGIN_SORT_THIS_LINE_PLUS_4
 # Words that occurred in 10 or more pages on 2025-01-06
 [project_dictionary]
 data = [ '''
-   acos
-   addr
-   af
-   afun
-   alloc
-   asin
-   atan
-   atanh
-   bool
-   cc
-   ccc
-   checkpointing
-   cmake
-   cond
-   config
-   const
-   cpp
-   cppad
-   cygwin
-   dd
-   det
-   dir
-   dvector
-   eigen
-   endif
-   enum
-   eq
-   eqnarray
-   erf
-   eval
-   exp
-   fabs
-   gcc
-   gt
-   hes
-   hpp
-   ident
-   ifndef
-   ind
-   int
-   itr
-   jac
-   ll
-   mm
-   mul
-   multi
-   namespace
-   nc
-   nowrap
-   num
-   obj
-   op
-   pc
-   pkg
-   preprocessor
-   ptr
-   rec
-   rel
-   res
-   resize
-   seq
-   sizeof
-   sqrt
-   std
-   unix
-   var
-   vec
-   vecad
+    acos
+    addr
+    af
+    afun
+    alloc
+    asin
+    atan
+    atanh
+    bool
+    cc
+    ccc
+    checkpointing
+    cmake
+    cond
+    config
+    const
+    cpp
+    cppad
+    cygwin
+    dd
+    det
+    dir
+    dvector
+    eigen
+    endif
+    enum
+    eq
+    eqnarray
+    erf
+    eval
+    exp
+    fabs
+    gcc
+    gt
+    hes
+    hpp
+    ident
+    ifndef
+    ind
+    int
+    itr
+    jac
+    ll
+    mm
+    mul
+    multi
+    namespace
+    nc
+    nowrap
+    num
+    obj
+    op
+    pc
+    pkg
+    preprocessor
+    ptr
+    rec
+    rel
+    res
+    resize
+    seq
+    sizeof
+    sqrt
+    std
+    unix
+    var
+    vec
+    vecad
 ''' ]
 # END_SORT_THIS_LINE_MINUS_2

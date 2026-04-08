@@ -5,30 +5,30 @@
 
 {xrst_begin 2012 app}
 {xrst_spell
-   datadir
-   doxygen
-   dw
-   eigenvector
-   fcur
-   gitlab
-   helgrind
-   includedir
-   inorder
-   libdir
-   libeigen
-   lpthread
-   lteuchos
-   makefile
-   posix
-   src
-   stdbool
-   sys
-   taddr
-   trilinos
-   txt
-   uninitialised
-   valgrind
-   yyyymmdd
+    datadir
+    doxygen
+    dw
+    eigenvector
+    fcur
+    gitlab
+    helgrind
+    includedir
+    inorder
+    libdir
+    libeigen
+    lpthread
+    lteuchos
+    makefile
+    posix
+    src
+    stdbool
+    sys
+    taddr
+    trilinos
+    txt
+    uninitialised
+    valgrind
+    yyyymmdd
 }
 
 Release Notes for 2012
@@ -138,11 +138,11 @@ It has been fixed.
 #. The :ref:`cmake-name` installation was putting the ``cppad.pc``
    :ref:`pkgconfig-name` file in
 
-      ``cppad_prefix`` / *cmake_install_datadir* / ``cppad.pc``
+        ``cppad_prefix`` / *cmake_install_datadir* / ``cppad.pc``
 
-   This has been fixed and is now
+    This has been fixed and is now
 
-      ``cppad_prefix`` / *cmake_install_datadir* / ``pkgconfig/cppad.pc``
+        ``cppad_prefix`` / *cmake_install_datadir* / ``pkgconfig/cppad.pc``
 
 #. The :ref:`pkgconfig-name` documentation has been improved.
 #. The command for running the
@@ -381,13 +381,13 @@ a simpler :ref:`atomic_one-name` example.
    ``optimize.cpp`` example:
    ::
 
-      ==6344== Conditional jump or move depends on uninitialised value(s)
+        ==6344== Conditional jump or move depends on uninitialised value(s)
 
 #. Fix mistake in old_tan.cpp where ``w[2] = 0``
    was missing before the call
    ::
 
-      dw    = F.Reverse(1, w);
+        dw    = F.Reverse(1, w);
 
 07-08
 =====
@@ -424,9 +424,9 @@ Fix bug in :ref:`atomic_one-name` functions identification of variables
 that caused old_tan.cpp to fail with error message
 ::
 
-   Error detected by false result for
-   y_taddr > 0
-   at line 262 in the file cppad/local/dependent.hpp
+    Error detected by false result for
+    y_taddr > 0
+    at line 262 in the file cppad/local/dependent.hpp
 
 07-02
 =====
@@ -440,7 +440,7 @@ This has since been removed; see
 =====
 
 .. _Using custom scalar types: https://
-   libeigen.gitlab.io/eigen/docs-nightly/TopicCustomizing_CustomScalar.html
+    libeigen.gitlab.io/eigen/docs-nightly/TopicCustomizing_CustomScalar.html
 
 #. Change :ref:`cppad_eigen.hpp-name`
    to match new specifications and example in eigen help files on
@@ -697,20 +697,20 @@ If you then edited the file ``work/multi_thread/makefile``
 and changed
 ::
 
-   # AM_CXXFLAGS     = -g $(CXX_FLAGS)
-   AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
+    # AM_CXXFLAGS     = -g $(CXX_FLAGS)
+    AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 
 to::
 
-   AM_CXXFLAGS     = -g $(CXX_FLAGS)
-   # AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
+    AM_CXXFLAGS     = -g $(CXX_FLAGS)
+    # AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 
 and then executed the commands
 ::
 
-   make clean
-   make pthread_test
-   valgrind --tool=helgrind ./pthread_test get_started
+    make clean
+    make pthread_test
+    valgrind --tool=helgrind ./pthread_test get_started
 
 The following error message would result:
 
@@ -771,7 +771,7 @@ There was a bug in :ref:`thread_alloc-name` where extra memory was held
 onto even if :ref:`hold_memory<ta_hold_memory-name>` was never called
 and only one thread was used by the program.  This caused
 
-   ``valgrind --leak-check`` = ``full --show-reachable`` = ``yes``
+    ``valgrind --leak-check`` = ``full --show-reachable`` = ``yes``
 
 to generate an error message.
 If :ref:`multiple threads<multi_thread-name>` are used,
@@ -865,11 +865,11 @@ and the ability to obtain a speed up even
 when there is only one thread.
 To convert old code to the new interface, after each call to
 
-   ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* );
+    ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* );
 
 put the following call
 
-   ``thread_alloc::hold_memory`` ( *num_threads*  > 1);
+    ``thread_alloc::hold_memory`` ( *num_threads*  > 1);
 
 01-23
 =====
@@ -926,9 +926,9 @@ This has been fixed.
 #. A duplicated code block beginning with
    ::
 
-      if( fabs( fcur ) <= epsilon_ )
+        if( fabs( fcur ) <= epsilon_ )
 
-   was removed from the routine ``multi_newton_worker`` .
+    was removed from the routine ``multi_newton_worker`` .
 
 #. The distance between solutions that are joined to one solution
    has been corrected from :math:`(b - a) / (2 n )` to
@@ -947,9 +947,9 @@ This has been fixed.
    On one tests machine, the execution time for the 32 thread case for the test
    ::
 
-      ./openmp_test multi_newton 1 32 1000 4800 10 true
+        ./openmp_test multi_newton 1 32 1000 4800 10 true
 
-   improved from  0.0302 seconds to 0.0135 seconds.
+    improved from  0.0302 seconds to 0.0135 seconds.
 
 #. There was a problem with the correctness test section of the
    :ref:`multi_newton_time-name` test.

@@ -17,13 +17,13 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
-   // BEGIN sparse_rc_type
-   // END sparse_rc_type
+    include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+    // BEGIN sparse_rc_type
+    // END sparse_rc_type
 }
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 
 Purpose
@@ -56,8 +56,8 @@ If this argument is true (false) the sparsity pattern is for
 Source
 ******
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end atomic_four_lin_ode_set.hpp}
@@ -69,53 +69,53 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
 size_t atomic_lin_ode<Base>::set(
-   const Base& r, const Base& step, sparse_rc& pattern, const bool& transpose
+    const Base& r, const Base& step, sparse_rc& pattern, const bool& transpose
 )
 // END PROTOTYPE
 {
-   // pattern
-   // set_row_major so that checking for pattern equality is faster
-   pattern.set_row_major();
-   //
-   // thread
-   size_t thread = thread_alloc::thread_num();
-   //
-   // work_[thread]
-   if( work_[thread] == nullptr )
-      work_[thread] = new thread_struct;
-   //
-   // pattern_vec
-   CppAD::vector<sparse_rc>& pattern_vec( work_[thread]->pattern_vec );
-   //
-   // pattern_index
-   size_t     n_pattern     = pattern_vec.size();
-   size_t     pattern_index = n_pattern;
-   for(size_t i = 0; i < n_pattern; ++i)
-      if( pattern == pattern_vec[i] )
-         pattern_index = i;
-   if( pattern_index == n_pattern )
-   {  pattern_vec.push_back( pattern );
-      CPPAD_ASSERT_UNKNOWN( pattern_vec[pattern_index] == pattern );
-   }
-   //
-   // call_vec
-   CppAD::vector<call_struct>& call_vec( work_[thread]->call_vec );
-   //
-   // call_id
-   size_t call_id = call_vec.size();
-   //
-   // call
-   call_struct call;
-   call.thread        = thread;
-   call.r             = r;
-   call.step          = step;
-   call.pattern_index = pattern_index;
-   call.transpose     = transpose;
-   //
-   // work_[thread]
-   call_vec.push_back( call );
-   //
-   return call_id;
+    // pattern
+    // set_row_major so that checking for pattern equality is faster
+    pattern.set_row_major();
+    //
+    // thread
+    size_t thread = thread_alloc::thread_num();
+    //
+    // work_[thread]
+    if( work_[thread] == nullptr )
+        work_[thread] = new thread_struct;
+    //
+    // pattern_vec
+    CppAD::vector<sparse_rc>& pattern_vec( work_[thread]->pattern_vec );
+    //
+    // pattern_index
+    size_t     n_pattern     = pattern_vec.size();
+    size_t     pattern_index = n_pattern;
+    for(size_t i = 0; i < n_pattern; ++i)
+        if( pattern == pattern_vec[i] )
+            pattern_index = i;
+    if( pattern_index == n_pattern )
+    {   pattern_vec.push_back( pattern );
+        CPPAD_ASSERT_UNKNOWN( pattern_vec[pattern_index] == pattern );
+    }
+    //
+    // call_vec
+    CppAD::vector<call_struct>& call_vec( work_[thread]->call_vec );
+    //
+    // call_id
+    size_t call_id = call_vec.size();
+    //
+    // call
+    call_struct call;
+    call.thread        = thread;
+    call.r             = r;
+    call.step          = step;
+    call.pattern_index = pattern_index;
+    call.transpose     = transpose;
+    //
+    // work_[thread]
+    call_vec.push_back( call );
+    //
+    return call_id;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

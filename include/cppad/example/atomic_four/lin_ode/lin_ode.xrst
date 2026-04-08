@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 {xrst_begin atomic_four_lin_ode}
 {xrst_spell
-   nnz
-   rosen
-   vk
+    nnz
+    rosen
+    vk
 }
 
 Atomic First Order Linear ODE Method: Example Implementation
@@ -27,7 +27,7 @@ approximate solution of the first order linear initial value ODE
 
 .. math::
 
-   z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
 
 where
 :math:`z : \B{R} \times \B{R}^n \rightarrow \B{R}^m`,
@@ -134,7 +134,7 @@ We sometimes use the following representation for :math:`y(x)`:
 
 .. math::
 
-   y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+    y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
 
 Define :math:`v^0 (x) = b(x)` and for :math:`k = 1, 2, \ldots`,
 :math:`v^k (x) = (r / k) A(x) v^{k-1} (x)`.
@@ -142,7 +142,7 @@ Using this notation,
 
 .. math::
 
-   y(x) = \sum_{k=0}^\infty v^k (x)
+    y(x) = \sum_{k=0}^\infty v^k (x)
 
 Approximations
 **************
@@ -160,18 +160,18 @@ is used to approximate the integral
 
 .. math::
 
-   \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
 
 Any other approximation for this integral can be used.
 
 Contents
 ********
 {xrst_toc_table
-   include/cppad/example/atomic_four/lin_ode/implement.xrst
-   example/atomic_four/lin_ode/forward.cpp
-   example/atomic_four/lin_ode/reverse.cpp
-   example/atomic_four/lin_ode/sparsity.cpp
-   example/atomic_four/lin_ode/rev_depend.cpp
+    include/cppad/example/atomic_four/lin_ode/implement.xrst
+    example/atomic_four/lin_ode/forward.cpp
+    example/atomic_four/lin_ode/reverse.cpp
+    example/atomic_four/lin_ode/sparsity.cpp
+    example/atomic_four/lin_ode/rev_depend.cpp
 }
 
 {xrst_end atomic_four_lin_ode}

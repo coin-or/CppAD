@@ -8,7 +8,7 @@
 /*
 {xrst_begin RevTwo}
 {xrst_spell
-   ddw
+    ddw
 }
 
 Reverse Mode Second Partial Derivative Driver
@@ -26,9 +26,9 @@ The syntax above sets
 
 .. math::
 
-   ddw [ k * p + \ell ]
-   =
-   \DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
+    ddw [ k * p + \ell ]
+    =
+    \DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
 
 for :math:`k = 0 , \ldots , n-1`
 and :math:`\ell = 0 , \ldots , p`,
@@ -38,7 +38,7 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 Note that the :ref:`ADFun-name` object *f* is not ``const``
 (see :ref:`RevTwo@RevTwo Uses Forward` below).
@@ -47,7 +47,7 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *BaseVector* & *x*
+    ``const`` *BaseVector* & *x*
 
 (see :ref:`RevTwo@BaseVector` below)
 and its size
@@ -60,7 +60,7 @@ i
 *
 The argument *i* has prototype
 
-   ``const`` *SizeVector_t* & *i*
+    ``const`` *SizeVector_t* & *i*
 
 (see :ref:`RevTwo@SizeVector_t` below)
 We use *p* to denote the size of the vector *i* .
@@ -73,7 +73,7 @@ j
 *
 The argument *j* has prototype
 
-   ``const`` *SizeVector_t* & *j*
+    ``const`` *SizeVector_t* & *j*
 
 (see :ref:`RevTwo@SizeVector_t` below)
 and its size must be equal to *p* ,
@@ -86,7 +86,7 @@ ddw
 ***
 The result *ddw* has prototype
 
-   *BaseVector* *ddw*
+    *BaseVector* *ddw*
 
 (see :ref:`RevTwo@BaseVector` below)
 and its size is :math:`n * p`.
@@ -96,9 +96,9 @@ and :math:`\ell = 0 , \ldots , p - 1`
 
 .. math::
 
-   ddw [ k * p + \ell ]
-   =
-   \DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
+    ddw [ k * p + \ell ]
+    =
+    \DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
 
 BaseVector
 **********
@@ -127,7 +127,7 @@ and the other coefficients are unspecified.
 Examples
 ********
 {xrst_toc_hidden
-   example/general/rev_two.cpp
+    example/general/rev_two.cpp
 }
 The routine
 :ref:`RevTwo<rev_two.cpp-name>` is both an example and test.
@@ -143,90 +143,90 @@ namespace CppAD {
 template <class Base, class RecBase>
 template <class BaseVector, class SizeVector_t>
 BaseVector ADFun<Base,RecBase>::RevTwo(
-   const BaseVector   &x,
-   const SizeVector_t &i,
-   const SizeVector_t &j)
-{  size_t i1;
-   size_t j1;
-   size_t k;
-   size_t l;
+    const BaseVector   &x,
+    const SizeVector_t &i,
+    const SizeVector_t &j)
+{   size_t i1;
+    size_t j1;
+    size_t k;
+    size_t l;
 
-   size_t n = Domain();
-   size_t m = Range();
-   size_t p = i.size();
+    size_t n = Domain();
+    size_t m = Range();
+    size_t p = i.size();
 
-   // check BaseVector is Simple Vector class with Base elements
-   CheckSimpleVector<Base, BaseVector>();
+    // check BaseVector is Simple Vector class with Base elements
+    CheckSimpleVector<Base, BaseVector>();
 
-   // check SizeVector_t is Simple Vector class with size_t elements
-   CheckSimpleVector<size_t, SizeVector_t>();
+    // check SizeVector_t is Simple Vector class with size_t elements
+    CheckSimpleVector<size_t, SizeVector_t>();
 
-   CPPAD_ASSERT_KNOWN(
-      x.size() == n,
-      "RevTwo: Length of x not equal domain dimension for f."
-   );
-   CPPAD_ASSERT_KNOWN(
-      i.size() == j.size(),
-      "RevTwo: Length of the i and j vectors are not equal."
-   );
-   // point at which we are evaluating the second partials
-   Forward(0, x);
+    CPPAD_ASSERT_KNOWN(
+        x.size() == n,
+        "RevTwo: Length of x not equal domain dimension for f."
+    );
+    CPPAD_ASSERT_KNOWN(
+        i.size() == j.size(),
+        "RevTwo: Length of the i and j vectors are not equal."
+    );
+    // point at which we are evaluating the second partials
+    Forward(0, x);
 
-   // dimension the return value
-   BaseVector ddw(n * p);
+    // dimension the return value
+    BaseVector ddw(n * p);
 
-   // direction vector in argument space
-   BaseVector dx(n);
-   for(j1 = 0; j1 < n; j1++)
-      dx[j1] = Base(0.0);
+    // direction vector in argument space
+    BaseVector dx(n);
+    for(j1 = 0; j1 < n; j1++)
+        dx[j1] = Base(0.0);
 
-   // direction vector in range space
-   BaseVector w(m);
-   for(i1 = 0; i1 < m; i1++)
-      w[i1] = Base(0.0);
+    // direction vector in range space
+    BaseVector w(m);
+    for(i1 = 0; i1 < m; i1++)
+        w[i1] = Base(0.0);
 
-   // place to hold the results of a reverse calculation
-   BaseVector r(n * 2);
+    // place to hold the results of a reverse calculation
+    BaseVector r(n * 2);
 
-   // check the indices in i and j
-   for(l = 0; l < p; l++)
-   {  i1 = i[l];
-      j1 = j[l];
-      CPPAD_ASSERT_KNOWN(
-      i1 < m,
-      "RevTwo: an element of i not less than range dimension for f."
-      );
-      CPPAD_ASSERT_KNOWN(
-      j1 < n,
-      "RevTwo: an element of j not less than domain dimension for f."
-      );
-   }
+    // check the indices in i and j
+    for(l = 0; l < p; l++)
+    {   i1 = i[l];
+        j1 = j[l];
+        CPPAD_ASSERT_KNOWN(
+        i1 < m,
+        "RevTwo: an element of i not less than range dimension for f."
+        );
+        CPPAD_ASSERT_KNOWN(
+        j1 < n,
+        "RevTwo: an element of j not less than domain dimension for f."
+        );
+    }
 
-   // loop over all forward directions
-   for(j1 = 0; j1 < n; j1++)
-   {  // first order forward mode calculation done
-      bool first_done = false;
-      for(l = 0; l < p; l++) if( j[l] == j1 )
-      {  if( ! first_done )
-         {  first_done = true;
+    // loop over all forward directions
+    for(j1 = 0; j1 < n; j1++)
+    {   // first order forward mode calculation done
+        bool first_done = false;
+        for(l = 0; l < p; l++) if( j[l] == j1 )
+        {   if( ! first_done )
+            {   first_done = true;
 
-            // first order forward mode in j1 direction
-            dx[j1] = Base(1.0);
-            Forward(1, dx);
-            dx[j1] = Base(0.0);
-         }
-         // execute a reverse in this component direction
-         i1    = i[l];
-         w[i1] = Base(1.0);
-         r     = Reverse(2, w);
-         w[i1] = Base(0.0);
+                // first order forward mode in j1 direction
+                dx[j1] = Base(1.0);
+                Forward(1, dx);
+                dx[j1] = Base(0.0);
+            }
+            // execute a reverse in this component direction
+            i1    = i[l];
+            w[i1] = Base(1.0);
+            r     = Reverse(2, w);
+            w[i1] = Base(0.0);
 
-         // place the reverse result in return value
-         for(k = 0; k < n; k++)
-            ddw[k * p + l] = r[k * 2 + 1];
-      }
-   }
-   return ddw;
+            // place the reverse result in return value
+            for(k = 0; k < n; k++)
+                ddw[k * p + l] = r[k * 2 + 1];
+        }
+    }
+    return ddw;
 }
 
 } // END CppAD namespace

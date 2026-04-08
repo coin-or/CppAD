@@ -66,8 +66,8 @@ The following routine cannot be called in parallel mode:
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/parallel_ad.hpp
-   example/multi_thread/thread_test.cpp
+    include/cppad/core/parallel_ad.hpp
+    example/multi_thread/thread_test.cpp
 }
 
 {xrst_end multi_thread}

@@ -31,20 +31,20 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 .
 It contains the elements of the matrix :math:`X` in row major order; i.e.,
 
 .. math::
 
-   X_{i,j} = x [ i * 3 + j ]
+    X_{i,j} = x [ i * 3 + j ]
 
 g
 *
 The argument *g* has prototype
 
-   ``const`` *Vector* & *g*
+    ``const`` *Vector* & *g*
 
 .
 It contains the elements of the gradient of
@@ -52,14 +52,14 @@ It contains the elements of the gradient of
 
 .. math::
 
-   \D{\det (X)}{X(i,j)} = g [ i * 3 + j ]
+    \D{\det (X)}{X(i,j)} = g [ i * 3 + j ]
 
 Vector
 ******
 If *y* is a *Vector* object,
 it must support the syntax
 
-   *y* [ *i* ]
+    *y* [ *i* ]
 
 where *i* has type ``size_t`` with value less than 9.
 This must return a ``double`` value corresponding to the *i*-th
@@ -70,12 +70,12 @@ ok
 **
 The return value *ok* has prototype
 
-   ``bool`` *ok*
+    ``bool`` *ok*
 
 It is true, if the gradient *g*
 passes the test and false otherwise.
 {xrst_toc_hidden
-   xrst/det_grad_33_hpp.xrst
+    xrst/det_grad_33_hpp.xrst
 }
 
 Source Code
@@ -92,30 +92,30 @@ contains the source code for this template function.
 # include <cppad/utility/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
-   bool det_grad_33(const Vector &x, const Vector &g)
-   {  bool ok = true;
-      typedef typename Vector::value_type Float;
-      Float eps = 10. * Float( std::numeric_limits<double>::epsilon() );
+    bool det_grad_33(const Vector &x, const Vector &g)
+    {   bool ok = true;
+        typedef typename Vector::value_type Float;
+        Float eps = 10. * Float( std::numeric_limits<double>::epsilon() );
 
-      // use expansion by minors to compute the derivative by hand
-      double check[9];
-      check[0] = + ( x[4] * x[8] - x[5] * x[7] );
-      check[1] = - ( x[3] * x[8] - x[5] * x[6] );
-      check[2] = + ( x[3] * x[7] - x[4] * x[6] );
-      //
-      check[3] = - ( x[1] * x[8] - x[2] * x[7] );
-      check[4] = + ( x[0] * x[8] - x[2] * x[6] );
-      check[5] = - ( x[0] * x[7] - x[1] * x[6] );
-      //
-      check[6] = + ( x[1] * x[5] - x[2] * x[4] );
-      check[7] = - ( x[0] * x[5] - x[2] * x[3] );
-      check[8] = + ( x[0] * x[4] - x[1] * x[3] );
-      //
-      for(size_t i = 0; i < 3 * 3; i++)
-         ok &= CppAD::NearEqual(check[i], g[i], eps, eps);
+        // use expansion by minors to compute the derivative by hand
+        double check[9];
+        check[0] = + ( x[4] * x[8] - x[5] * x[7] );
+        check[1] = - ( x[3] * x[8] - x[5] * x[6] );
+        check[2] = + ( x[3] * x[7] - x[4] * x[6] );
+        //
+        check[3] = - ( x[1] * x[8] - x[2] * x[7] );
+        check[4] = + ( x[0] * x[8] - x[2] * x[6] );
+        check[5] = - ( x[0] * x[7] - x[1] * x[6] );
+        //
+        check[6] = + ( x[1] * x[5] - x[2] * x[4] );
+        check[7] = - ( x[0] * x[5] - x[2] * x[3] );
+        check[8] = + ( x[0] * x[4] - x[1] * x[3] );
+        //
+        for(size_t i = 0; i < 3 * 3; i++)
+            ok &= CppAD::NearEqual(check[i], g[i], eps, eps);
 
-      return ok;
-   }
+        return ok;
+    }
 }
 // END C++
 # endif

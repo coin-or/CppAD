@@ -57,14 +57,14 @@ version='1.0.10'
 package='colpack'
 if [ $0 != "bin/get_$package.sh" ]
 then
-   echo "bin/get_$package.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/get_$package.sh: must be executed from its parent directory"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 web_page='https://github.com/CSCsw/ColPack.git'
@@ -73,16 +73,16 @@ cppad_dir=`pwd`
 # n_job
 if which nproc > /dev/null
 then
-   n_job=$(nproc)
+    n_job=$(nproc)
 else
-   n_job=$(sysctl -n hw.ncpu)
+    n_job=$(sysctl -n hw.ncpu)
 fi
 # ----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-   prefix="$cppad_dir/$prefix"
+    prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
@@ -90,29 +90,29 @@ configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
-   echo "Skipping configuration because $configured_flag exits"
-   echo_eval cd external/$package.git
-   echo_eval make -j $n_job install
-   echo "get_$package.sh: OK"
-   exit 0
+    echo "Skipping configuration because $configured_flag exits"
+    echo_eval cd external/$package.git
+    echo_eval make -j $n_job install
+    echo "get_$package.sh: OK"
+    exit 0
 fi
 # --------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
-   libdir='lib64'
+    libdir='lib64'
 else
-   libdir='lib'
+    libdir='lib'
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d external ]
 then
-   echo_eval mkdir external
+    echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e "$package.git" ]
 then
-   echo_eval git clone $web_page $package.git
+    echo_eval git clone $web_page $package.git
 fi
 # -----------------------------------------------------------------------------
 echo_eval cd $package.git
@@ -120,30 +120,30 @@ echo_eval git checkout --quiet v$version
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-   if which libtoolize >& /dev/null
-   then
-      echo_eval libtoolize
-   else
-      echo_eval glibtoolize
-   fi
-   echo_eval autoreconf --install --force
+    if which libtoolize >& /dev/null
+    then
+        echo_eval libtoolize
+    else
+        echo_eval glibtoolize
+    fi
+    echo_eval autoreconf --install --force
 else
-   echo "Error: autoconf and libtool required for this script"
-   exit 1
+    echo "Error: autoconf and libtool required for this script"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 if [[ "$(uname)" == CYGWIN* ]] || [ "$(uname)" == Darwin ]
 then
-   lib_type='--enable-static --disable-shared'
-   echo_eval ls -l ./configure
-   echo_eval chmod +x ./configure
+    lib_type='--enable-static --disable-shared'
+    echo_eval ls -l ./configure
+    echo_eval chmod +x ./configure
 else
-   lib_type='--disable-static --enable-shared'
+    lib_type='--disable-static --enable-shared'
 fi
 echo_eval ./configure \
-   --prefix=$prefix \
-   --libdir=$prefix/$libdir \
-   $lib_type
+    --prefix=$prefix \
+    --libdir=$prefix/$libdir \
+    $lib_type
 #
 echo_eval touch $cppad_dir/$configured_flag
 echo_eval make -j $n_job install

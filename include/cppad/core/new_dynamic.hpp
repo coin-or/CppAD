@@ -33,7 +33,7 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 Note that the :ref:`ADFun-name` object *f* is not ``const`` .
 
@@ -41,7 +41,7 @@ dynamic
 *******
 This argument has prototype
 
-   ``const`` *BaseVector* & *dynamic*
+    ``const`` *BaseVector* & *dynamic*
 
 (see *BaseVector* below).
 It specifies a new value for the independent
@@ -67,7 +67,7 @@ In order words;
 :ref:`f.size_order<size_order-name>` returns zero directly after
 *f* . ``new_dynamic`` is called.
 {xrst_toc_hidden
-   example/general/new_dynamic.cpp
+    example/general/new_dynamic.cpp
 }
 Example
 *******
@@ -93,38 +93,38 @@ is the vector of new values for the dynamic parameters.
 template <class Base, class RecBase>
 template <class BaseVector>
 void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
-{  using local::pod_vector;
-   CPPAD_ASSERT_KNOWN(
-      size_t( dynamic.size() ) == play_.n_dyn_independent() ,
-      "f.new_dynamic: dynamic.size() different from corresponding "
-      "call to Independent"
-   );
-   // check BaseVector is Simple Vector class with Base elements
-   CheckSimpleVector<Base, BaseVector>();
+{   using local::pod_vector;
+    CPPAD_ASSERT_KNOWN(
+        size_t( dynamic.size() ) == play_.n_dyn_independent() ,
+        "f.new_dynamic: dynamic.size() different from corresponding "
+        "call to Independent"
+    );
+    // check BaseVector is Simple Vector class with Base elements
+    CheckSimpleVector<Base, BaseVector>();
 
-   // retrieve player information about the dynamic parameters
-   local::pod_vector_maybe<Base>&     par_all( play_.par_all() );
-   const pod_vector<bool>&            par_is_dyn ( play_.par_is_dyn()  );
-   const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
-   const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
-   const pod_vector<addr_t>&     dyn2par_index ( play_.dyn2par_index() );
+    // retrieve player information about the dynamic parameters
+    local::pod_vector_maybe<Base>&     par_all( play_.par_all() );
+    const pod_vector<bool>&            par_is_dyn ( play_.par_is_dyn()  );
+    const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
+    const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
+    const pod_vector<addr_t>&     dyn2par_index ( play_.dyn2par_index() );
 
-   // set the dependent dynamic parameters
-   RecBase not_used_rec_base(0.0);
-   local::sweep::dynamic(
-      par_all             ,
-      dynamic             ,
-      par_is_dyn          ,
-      dyn2par_index       ,
-      dyn_par_op          ,
-      dyn_par_arg         ,
-      not_used_rec_base
-   );
+    // set the dependent dynamic parameters
+    RecBase not_used_rec_base(0.0);
+    local::sweep::dynamic(
+        par_all             ,
+        dynamic             ,
+        par_is_dyn          ,
+        dyn2par_index       ,
+        dyn_par_op          ,
+        dyn_par_arg         ,
+        not_used_rec_base
+    );
 
-   // the existing Taylor coefficients are no longer valid
-   num_order_taylor_ = 0;
+    // the existing Taylor coefficients are no longer valid
+    num_order_taylor_ = 0;
 
-   return;
+    return;
 }
 
 

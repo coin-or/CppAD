@@ -29,7 +29,7 @@ CppAD::graph
 ************
 {xrst_spell_off}
 {xrst_code hpp} */
-   using namespace CppAD::graph;
+    using namespace CppAD::graph;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -37,7 +37,7 @@ addr_t
 ******
 {xrst_spell_off}
 {xrst_code hpp} */
-   typedef CPPAD_TAPE_ADDR_TYPE addr_t;
+    typedef CPPAD_TAPE_ADDR_TYPE addr_t;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -47,7 +47,7 @@ This is a mapping from the operator name to its enum value.
 The name is the operator enum without the ``_operator`` at the end.
 {xrst_spell_off}
 {xrst_code hpp} */
-   extern CPPAD_LIB_EXPORT std::map< std::string, graph_op_enum > op_name2enum;
+    extern CPPAD_LIB_EXPORT std::map< std::string, graph_op_enum > op_name2enum;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -58,7 +58,7 @@ a fixed number of arguments and one result.
 For other operators, this value is zero.
 {xrst_spell_off}
 {xrst_code hpp} */
-   extern CPPAD_LIB_EXPORT size_t op_enum2fixed_n_arg[];
+    extern CPPAD_LIB_EXPORT size_t op_enum2fixed_n_arg[];
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -68,7 +68,7 @@ This is mapping from operator enum value to its name.
 In the ``local::graph`` namespace:
 {xrst_spell_off}
 {xrst_code hpp} */
-   extern CPPAD_LIB_EXPORT const char* op_enum2name[];
+    extern CPPAD_LIB_EXPORT const char* op_enum2name[];
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -80,7 +80,7 @@ This routine sets the values in
 ``op_name2enum`` .
 {xrst_spell_off}
 {xrst_code hpp} */
-   extern CPPAD_LIB_EXPORT void set_operator_info(void);
+    extern CPPAD_LIB_EXPORT void set_operator_info(void);
 /* {xrst_code}
 {xrst_spell_on}
 

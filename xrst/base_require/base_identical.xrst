@@ -5,7 +5,7 @@
 /*
 {xrst_begin base_identical}
 {xrst_spell
-   adolc
+    adolc
 }
 
 Base Type Requirements for Identically Equal Comparisons
@@ -17,7 +17,7 @@ If function :ref:`EqualOpSeq-name` is used with
 arguments of type ``AD`` < *Base* > ,
 the type *Base* must support the syntax
 
-   *b* = ``CppAD::EqualOpSeq`` ( *u* , *v* )
+    *b* = ``CppAD::EqualOpSeq`` ( *u* , *v* )
 
 This should return true if and only if
 *u* is identically equal to *v*
@@ -29,7 +29,7 @@ The arguments *u* and *v* have prototype
 
 The return value *b* has prototype
 
-   ``bool`` *b*
+    ``bool`` *b*
 
 The Simple Case
 ===============
@@ -75,15 +75,15 @@ Prototypes
 ==========
 The argument *u* has prototype
 
-   ``const`` *Base* *u*
+    ``const`` *Base* *u*
 
 If it is present, the argument *v* has prototype
 
-   ``const`` *Base* *v*
+    ``const`` *Base* *v*
 
 The result *b* has prototype
 
-   ``bool`` *b*
+    ``bool`` *b*
 
 Identical Functions
 ===================
@@ -91,20 +91,20 @@ The type *Base* must support the following functions
 (in the CppAD namespace):
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Syntax**
-     - **Result**
-   * - *b* = ``IdenticalCon`` ( *u* )
-     - the *Base* value will always be the same
-   * - *b* = ``IdenticalZero`` ( *u* )
-     - *u* equals zero and ``IdenticalCon`` ( *u* )
-   * - *b* = ``IdenticalOne`` ( *u* )
-     - *u* equals one and ``IdenticalCon`` ( *u* )
-   * - *b* = ``IdenticalEqualCon`` ( *u* , *v* )
-     - *u* equals *v* ,
-       ``IdenticalCon`` ( *u* ) and
-       ``IdenticalCon`` ( *v* )
+    * - **Syntax**
+      - **Result**
+    * - *b* = ``IdenticalCon`` ( *u* )
+      - the *Base* value will always be the same
+    * - *b* = ``IdenticalZero`` ( *u* )
+      - *u* equals zero and ``IdenticalCon`` ( *u* )
+    * - *b* = ``IdenticalOne`` ( *u* )
+      - *u* equals one and ``IdenticalCon`` ( *u* )
+    * - *b* = ``IdenticalEqualCon`` ( *u* , *v* )
+      - *u* equals *v* ,
+         ``IdenticalCon`` ( *u* ) and
+         ``IdenticalCon`` ( *v* )
 
 Examples
 ========

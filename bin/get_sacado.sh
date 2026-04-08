@@ -61,8 +61,8 @@ version='14-0-0'
 package='sacado'
 if [ $0 != "bin/get_$package.sh" ]
 then
-   echo "bin/get_$package.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/get_$package.sh: must be executed from its parent directory"
+    exit 1
 fi
 #
 # grep, sed
@@ -70,8 +70,8 @@ source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 web_page='https://github.com/trilinos/Trilinos/archive/refs/tags'
@@ -81,16 +81,16 @@ cppad_dir=`pwd`
 # n_job
 if which nproc > /dev/null
 then
-   n_job=$(nproc)
+    n_job=$(nproc)
 else
-   n_job=$(sysctl -n hw.ncpu)
+    n_job=$(sysctl -n hw.ncpu)
 fi
 # ----------------------------------------------------------------------------
 # prefix
 eval `$grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-   prefix="$cppad_dir/$prefix"
+    prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
@@ -98,58 +98,58 @@ configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
-   echo "Skipping configuration because $configured_flag exits"
-   echo_eval cd external/$release_name/build
-   echo_eval make -j $n_job install
-   echo "get_$package.sh: OK"
-   exit 0
+    echo "Skipping configuration because $configured_flag exits"
+    echo_eval cd external/$release_name/build
+    echo_eval make -j $n_job install
+    echo "get_$package.sh: OK"
+    exit 0
 fi
 # -----------------------------------------------------------------------------
 # libdir
 if [ -e /usr/lib64 ]
 then
-   libdir='lib64'
+    libdir='lib64'
 else
-   libdir='lib'
+    libdir='lib'
 fi
 # -----------------------------------------------------------------------------
 # change into external directory
 if [ ! -d external ]
 then
-   echo_eval mkdir external
+    echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 # create the trilions source directory and change into it
 if [ ! -e $release_name ]
 then
-   wget "$web_page/$release_name.tar.gz"
-   tar -xzf "$release_name.tar.gz"
-   mv Trilinos-$release_name $release_name
-   #
-   # see https://github.com/trilinos/Trilinos/issues/11923
-   file="$release_name/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp"
-   if ! $grep '^#include <cstdint>' $file > /dev/null
-   then
-      $sed -i $file -e 's|#include <iosfwd>|&\n#include <cstdint>|'
-   fi
+    wget "$web_page/$release_name.tar.gz"
+    tar -xzf "$release_name.tar.gz"
+    mv Trilinos-$release_name $release_name
+    #
+    # see https://github.com/trilinos/Trilinos/issues/11923
+    file="$release_name/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp"
+    if ! $grep '^#include <cstdint>' $file > /dev/null
+    then
+        $sed -i $file -e 's|#include <iosfwd>|&\n#include <cstdint>|'
+    fi
 fi
 echo_eval cd $release_name
 # -----------------------------------------------------------------------------
 # change into build sub-directory
 if [ ! -e build ]
 then
-   echo_eval mkdir build
+    echo_eval mkdir build
 fi
 echo_eval cd build
 # -----------------------------------------------------------------------------
 cmd="cmake \
-   -D CMAKE_BUILD_TYPE=RELEASE \
-   -D Trilinos_ENABLE_Sacado=ON \
-   -D Sacado_ENABLE_TESTS=OFF \
-   -D CMAKE_INSTALL_PREFIX=$prefix \
-   -D Trilinos_INSTALL_LIB_DIR=$prefix/$libdir \
-   .."
+    -D CMAKE_BUILD_TYPE=RELEASE \
+    -D Trilinos_ENABLE_Sacado=ON \
+    -D Sacado_ENABLE_TESTS=OFF \
+    -D CMAKE_INSTALL_PREFIX=$prefix \
+    -D Trilinos_INSTALL_LIB_DIR=$prefix/$libdir \
+    .."
 echo $cmd
 $cmd
 echo_eval make -j $n_job install

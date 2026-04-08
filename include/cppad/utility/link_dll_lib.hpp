@@ -7,7 +7,7 @@
 /*
 {xrst_begin link_dll_lib}
 {xrst_spell
-   msg
+    msg
 }
 
 Link a Dynamic Link Library
@@ -23,8 +23,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 dll_linker
@@ -54,7 +54,7 @@ Warning !!
 *fun_ptr* becomes invalid when the *dll_linker* destructor is called.
 
 {xrst_toc_hidden
-   example/utility/dll_lib.cpp
+    example/utility/dll_lib.cpp
 }
 Example
 *******
@@ -70,26 +70,26 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 class link_dll_lib {
 private:
-   // pointer to the dll object
-   void* handle_;
-   //
-   // error message during constructor
-   std::string ctor_err_msg_;
-   //
+    // pointer to the dll object
+    void* handle_;
+    //
+    // error message during constructor
+    std::string ctor_err_msg_;
+    //
 # ifdef _WIN32
-   static void*       dlopen(const char *filename, int flag);
-   static void*       dlsym(void* handle, const char* symbol);
-   static int         dlclose(void* handle);
-   static const char* dlerror(void);
+    static void*       dlopen(const char *filename, int flag);
+    static void*       dlsym(void* handle, const char* symbol);
+    static int         dlclose(void* handle);
+    static const char* dlerror(void);
 # endif
-   //
+    //
 public:
-   // BEGIN_PROTOTYPE
-   link_dll_lib(const std::string& dll_file, std::string& err_msg);
-   ~link_dll_lib(void);
-   void* operator()
-   (const std::string& function_name, std::string& err_msg) const;
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    link_dll_lib(const std::string& dll_file, std::string& err_msg);
+    ~link_dll_lib(void);
+    void* operator()
+    (const std::string& function_name, std::string& err_msg) const;
+    // END_PROTOTYPE
 };
 
 } // END_CPPAD_NAMESPACE

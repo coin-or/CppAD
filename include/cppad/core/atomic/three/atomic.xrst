@@ -10,8 +10,8 @@ Atomic AD Functions: Third Generation
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/atomic/three/atomic.hpp
-   example/atomic_three/atomic_three.xrst
+    include/cppad/core/atomic/three/atomic.hpp
+    example/atomic_three/atomic_three.xrst
 }
 
 {xrst_end atomic_three}

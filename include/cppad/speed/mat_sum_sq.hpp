@@ -21,13 +21,13 @@ This routine is intended for use with the matrix multiply speed tests;
 to be specific, it computes
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-      \\
-      z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
-   \end{eqnarray}
+    \begin{eqnarray}
+        y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+        \\
+        z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
+    \end{eqnarray}
 
 see :ref:`link_mat_mul-name` .
 
@@ -42,7 +42,7 @@ n
 *
 This argument has prototype
 
-   ``size_t`` *n*
+    ``size_t`` *n*
 
 It specifies the size of the matrices.
 
@@ -50,52 +50,52 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 and *x* . ``size`` () == *n* * *n* .
 It contains the elements of :math:`x` in row major order; i.e.,
 
 .. math::
 
-   x_{i,j} = x [ i * n + j ]
+    x_{i,j} = x [ i * n + j ]
 
 y
 *
 The argument *y* has prototype
 
-   *Vector* & *y*
+    *Vector* & *y*
 
 and *y* . ``size`` () == *n* * *n* .
 The input value of its elements does not matter.
 Upon return,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-      \\
-      y[ i * n + j ] & = & y_{i,j}
-   \end{eqnarray}
+    \begin{eqnarray}
+        y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+        \\
+        y[ i * n + j ] & = & y_{i,j}
+    \end{eqnarray}
 
 z
 *
 The argument *d* has prototype
 
-   *Vector* & *z*
+    *Vector* & *z*
 
 .
 The input value of its element does not matter.
 Upon return
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
-      \\
-      z[0] & = & z_0
-   \end{eqnarray}
+    \begin{eqnarray}
+        z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
+        \\
+        z[0] & = & z_0
+    \end{eqnarray}
 
 Vector
 ******
@@ -105,8 +105,8 @@ The element type must support
 addition, multiplication, and assignment to both its own type
 and to a double value.
 {xrst_toc_hidden
-   speed/example/mat_sum_sq.cpp
-   xrst/mat_sum_sq_hpp.xrst
+    speed/example/mat_sum_sq.cpp
+    xrst/mat_sum_sq_hpp.xrst
 }
 
 Example
@@ -128,24 +128,24 @@ contains the source for this template function.
 # include <cstddef>
 //
 namespace CppAD {
-   template <class Vector>
-   void mat_sum_sq(size_t n, Vector& x , Vector& y , Vector& z)
-   {  size_t i, j, k;
-      // Very simple computation of y = x * x for speed comparison
-      for(i = 0; i < n; i++)
-      {  for(j = 0; j < n; j++)
-         {  y[i * n + j] = 0.;
-            for(k = 0; k < n; k++)
-               y[i * n + j] += x[i * n + k] * x[k * n + j];
-         }
-      }
-      z[0] = 0.;
-      for(i = 0; i < n; i++)
-      {  for(j = 0; j < n; j++)
-            z[0] += y[i * n + j];
-      }
-      return;
-   }
+    template <class Vector>
+    void mat_sum_sq(size_t n, Vector& x , Vector& y , Vector& z)
+    {   size_t i, j, k;
+        // Very simple computation of y = x * x for speed comparison
+        for(i = 0; i < n; i++)
+        {   for(j = 0; j < n; j++)
+            {   y[i * n + j] = 0.;
+                for(k = 0; k < n; k++)
+                    y[i * n + j] += x[i * n + k] * x[k * n + j];
+            }
+        }
+        z[0] = 0.;
+        for(i = 0; i < n; i++)
+        {   for(j = 0; j < n; j++)
+                z[0] += y[i * n + j];
+        }
+        return;
+    }
 
 }
 // END C++

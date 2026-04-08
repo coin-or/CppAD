@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 {xrst_begin cholesky_theory app}
 {xrst_spell
-   diag
-   tr
-   universitat
-   zu
+    diag
+    tr
+    universitat
+    zu
 }
 
 AD Theory for Cholesky Factorization
@@ -34,7 +34,7 @@ and a Cholesky factorization
 
 .. math::
 
-   A = L L^\R{T}
+    A = L L^\R{T}
 
 where :math:`L \in \B{R}^{n \times n}` is lower triangular.
 
@@ -47,7 +47,7 @@ corresponding Taylor coefficients; i.e.,
 
 .. math::
 
-   A(t) = o( t^K ) + \sum_{k = 0}^K A_k t^k
+    A(t) = o( t^K ) + \sum_{k = 0}^K A_k t^k
 
 where :math:`o( t^K ) / t^K \rightarrow 0` as :math:`t \rightarrow 0`.
 We use a similar notation for :math:`L(t)`.
@@ -61,7 +61,7 @@ For a square matrix :math:`C`,
 
 .. math::
 
-   \R{low} ( C ) = \R{lower} (C) - \frac{1}{2} \R{diag} (C)
+    \R{low} ( C ) = \R{lower} (C) - \frac{1}{2} \R{diag} (C)
 
 Forward Mode
 ************
@@ -72,26 +72,26 @@ satisfy the equation
 
 .. math::
 
-   A_k = \sum_{\ell=0}^k L_\ell L_{k-\ell}^\R{T}
+    A_k = \sum_{\ell=0}^k L_\ell L_{k-\ell}^\R{T}
 
 In the case where :math:`k=0`, the
 
 .. math::
 
-   A_0 = L_0 L_0^\R{T}
+    A_0 = L_0 L_0^\R{T}
 
 The value of :math:`L_0` can be computed using the Cholesky factorization.
 In the case where :math:`k > 0`,
 
 .. math::
 
-   A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
+    A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
 
 where
 
 .. math::
 
-   B_k = \sum_{\ell=1}^{k-1} L_\ell L_{k-\ell}^\R{T}
+    B_k = \sum_{\ell=1}^{k-1} L_\ell L_{k-\ell}^\R{T}
 
 Note that :math:`B_k` is defined in terms of Taylor coefficients
 of :math:`L(t)` that have order less than :math:`k`.
@@ -99,9 +99,9 @@ We also note that
 
 .. math::
 
-   L_0^{-1} ( A_k - B_k ) L_0^\R{-T}
-   =
-   L_0^{-1} L_k + L_k^\R{T} L_0^\R{-T}
+    L_0^{-1} ( A_k - B_k ) L_0^\R{-T}
+    =
+    L_0^{-1} L_k + L_k^\R{T} L_0^\R{-T}
 
 The first matrix on the right hand side is lower triangular,
 the second is upper triangular,
@@ -110,15 +110,15 @@ It follows that
 
 .. math::
 
-   L_0^{-1} L_k
-   =
-   \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
+    L_0^{-1} L_k
+    =
+    \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
 
 .. math::
 
-   L_k
-   =
-   L_0 \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
+    L_k
+    =
+    L_0 \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
 
 This expresses :math:`L_k` in term of the
 Taylor coefficients of :math:`A(t)` and the lower order coefficients
@@ -136,7 +136,7 @@ Define the scalar valued function
 
 .. math::
 
-   \hat{F}( C ) = \bar{F} [ S , \hat{L} (S) ]
+    \hat{F}( C ) = \bar{F} [ S , \hat{L} (S) ]
 
 We use :math:`\hat{S}` for the total derivative of :math:`\hat{F}` with
 respect to :math:`S`.
@@ -144,72 +144,72 @@ Suppose that :math:`\hat{L} ( S )` is such that
 
 .. math::
 
-   \dot{L} = L_0 \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
+    \dot{L} = L_0 \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
 
 for any :math:`S(s)`. It follows that
 
 .. math::
 
-   \hat{S} = \bar{S} + \frac{1}{2} ( M + M^\R{T} )
+    \hat{S} = \bar{S} + \frac{1}{2} ( M + M^\R{T} )
 
 where
 
 .. math::
 
-   M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
+    M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
 
 Proof
 =====
 
 .. math::
 
-   \partial_s \hat{F} [ S(s) , L(s) ]
-   =
-   \R{tr} ( \bar{S}^\R{T} \dot{S} )
-   +
-   \R{tr} ( \bar{L}^\R{T} \dot{L} )
+    \partial_s \hat{F} [ S(s) , L(s) ]
+    =
+    \R{tr} ( \bar{S}^\R{T} \dot{S} )
+    +
+    \R{tr} ( \bar{L}^\R{T} \dot{L} )
 
 .. math::
 
-   \R{tr} ( \bar{L}^\R{T} \dot{L} )
-   =
-   \R{tr} [
-      \bar{L}^\R{T} L_0
-      \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
-   ]
+    \R{tr} ( \bar{L}^\R{T} \dot{L} )
+    =
+    \R{tr} [
+        \bar{L}^\R{T} L_0
+        \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
+    ]
 
 .. math::
 
-   =
-   \R{tr} [
-      \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )^\R{T}
-      L_0^\R{T} \bar{L}
-   ]
+    =
+    \R{tr} [
+        \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )^\R{T}
+        L_0^\R{T} \bar{L}
+    ]
 
 .. math::
 
-   =
-   \R{tr} [
-      L_0^{-1} \dot{S} L_0^\R{-T}
-      \R{low}( L_0^\R{T} \bar{L} )
-   ]
+    =
+    \R{tr} [
+        L_0^{-1} \dot{S} L_0^\R{-T}
+        \R{low}( L_0^\R{T} \bar{L} )
+    ]
 
 .. math::
 
-   =
-   \R{tr} [
-      L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
-   ]
+    =
+    \R{tr} [
+        L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
+    ]
 
 .. math::
 
-   \partial_s \hat{F} [ S(s) , L(s) ]
-   =
-   \R{tr} ( \bar{S}^\R{T} \dot{S} )
-   +
-   \R{tr} [
-      L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
-   ]
+    \partial_s \hat{F} [ S(s) , L(s) ]
+    =
+    \R{tr} ( \bar{S}^\R{T} \dot{S} )
+    +
+    \R{tr} [
+        L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
+    ]
 
 We now consider the :math:`(i, j)` component function,
 for a symmetric matrix :math:`S(s)`,
@@ -217,11 +217,11 @@ defined by
 
 .. math::
 
-   S_{k, \ell} (s) = \left\{ \begin{array}{ll}
-      1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
-      1 & \R{if} \; k = j \; \R{and} \; \ell = i \\
-      0 & \R{otherwise}
-   \end{array} \right\}
+    S_{k, \ell} (s) = \left\{ \begin{array}{ll}
+        1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
+        1 & \R{if} \; k = j \; \R{and} \; \ell = i \\
+        0 & \R{otherwise}
+    \end{array} \right\}
 
 This shows that the formula in the lemma is correct for
 :math:`\hat{S}_{i,j}` and :math:`\hat{S}_{j,i}`.
@@ -235,23 +235,23 @@ It follows that
 
 .. math::
 
-   \hat{S} = \bar{S} + \R{lower}(M)
+    \hat{S} = \bar{S} + \R{lower}(M)
 
 where
 
 .. math::
 
-   M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
+    M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
 
 The proof of this lemma is identical to Lemma 2 except that component function
 is defined by
 
 .. math::
 
-   S_{k, \ell} (s) = \left\{ \begin{array}{ll}
-      1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
-      0 & \R{otherwise}
-   \end{array} \right\}
+    S_{k, \ell} (s) = \left\{ \begin{array}{ll}
+        1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
+        0 & \R{otherwise}
+    \end{array} \right\}
 
 Reverse Mode
 ************
@@ -262,43 +262,43 @@ For the case :math:`k = 0`,
 
 .. math::
 
-   \dot{A}_0
-   =
-   \dot{L}_0 L_0^\R{T}
-   +
-   L_0  \dot{L}_0^\R{T}
+    \dot{A}_0
+    =
+    \dot{L}_0 L_0^\R{T}
+    +
+    L_0  \dot{L}_0^\R{T}
 
 .. math::
 
-   L_0^{-1} \dot{A}_0 L_0^\R{-T}
-   =
-   L_0^{-1} \dot{L}_0
-   +
-   \dot{L}_0^\R{T} L_0^\R{-T}
+    L_0^{-1} \dot{A}_0 L_0^\R{-T}
+    =
+    L_0^{-1} \dot{L}_0
+    +
+    \dot{L}_0^\R{T} L_0^\R{-T}
 
 .. math::
 
-   \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
-   =
-   L_0^{-1} \dot{L}_0
+    \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
+    =
+    L_0^{-1} \dot{L}_0
 
 .. math::
 
-   \dot{L}_0
-   =
-   L_0 \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
+    \dot{L}_0
+    =
+    L_0 \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
 
 It follows from Lemma 1 that
 
 .. math::
 
-   \bar{A}_0 \stackrel{+}{=} \frac{1}{2} ( M + M^\R{T} )
+    \bar{A}_0 \stackrel{+}{=} \frac{1}{2} ( M + M^\R{T} )
 
 where
 
 .. math::
 
-   M = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_0 )^\R{T} L_0^{-1}
+    M = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_0 )^\R{T} L_0^{-1}
 
 and :math:`\bar{A}_0` is the partial before and after
 is before and after :math:`L_0` is removed from the scalar function
@@ -310,7 +310,7 @@ In the case where :math:`k > 0`,
 
 .. math::
 
-   A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
+    A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
 
 where :math:`B_k` is defined in terms of Taylor coefficients
 of :math:`L(t)` that have order less than :math:`k`.
@@ -318,133 +318,133 @@ It follows that
 
 .. math::
 
-   \dot{L}_k L_0^\R{T}
-   +
-   L_0 \dot{L}_k^\R{T}
-   =
-   \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    \dot{L}_k L_0^\R{T}
+    +
+    L_0 \dot{L}_k^\R{T}
+    =
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
 
 .. math::
 
-   L_0^{-1} \dot{L}_k
-   +
-   \dot{L}_k^\R{T} L_0^\R{-T}
-   =
-   L_0^{-1} (
-   \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
-   ) L_0^\R{-T}
+    L_0^{-1} \dot{L}_k
+    +
+    \dot{L}_k^\R{T} L_0^\R{-T}
+    =
+    L_0^{-1} (
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    ) L_0^\R{-T}
 
 .. math::
 
-   L_0^{-1} \dot{L}_k
-   =
-   \R{low} [ L_0^{-1} (
-   \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
-   ) L_0^\R{-T} ]
+    L_0^{-1} \dot{L}_k
+    =
+    \R{low} [ L_0^{-1} (
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    ) L_0^\R{-T} ]
 
 .. math::
 
-   \dot{L}_k
-   =
-   L_0 \R{low} [ L_0^{-1} (
-   \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
-   ) L_0^\R{-T} ]
+    \dot{L}_k
+    =
+    L_0 \R{low} [ L_0^{-1} (
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    ) L_0^\R{-T} ]
 
 The matrix :math:`A_k` is symmetric, it follows that
 
 .. math::
 
-   \bar{A}_k \stackrel{+}{=} \frac{1}{2} ( M_k + M_k^\R{T} )
+    \bar{A}_k \stackrel{+}{=} \frac{1}{2} ( M_k + M_k^\R{T} )
 
 where
 
 .. math::
 
-   M_k = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_k )^\R{T} L_0^{-1}
+    M_k = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_k )^\R{T} L_0^{-1}
 
 The matrix :math:`B_k` is also symmetric, hence
 
 .. math::
 
-   \bar{B}_k = - \; \frac{1}{2} ( M_k + M_k^\R{T} )
+    \bar{B}_k = - \; \frac{1}{2} ( M_k + M_k^\R{T} )
 
 We define the symmetric matrix :math:`C_k (s)` by
 
 .. math::
 
-   \dot{C}_k = \dot{L}_0 L_k^\R{T} +  L_k \dot{L}_0^\R{T}
+    \dot{C}_k = \dot{L}_0 L_k^\R{T} +  L_k \dot{L}_0^\R{T}
 
 and remove the dependency on :math:`C_k` with
 
 .. math::
 
-   \R{tr}( \bar{C}_k^\R{T} \dot{C}_k )
-   =
-   \R{tr}( \bar{B}_k^\R{T} \dot{C}_k )
-   =
-   \R{tr}( \bar{B}_k^\R{T} \dot{L}_0 L_k^\R{T}  )
-   +
-   \R{tr}( \bar{B}_k^\R{T}  L_k \dot{L}_0^\R{T} )
+    \R{tr}( \bar{C}_k^\R{T} \dot{C}_k )
+    =
+    \R{tr}( \bar{B}_k^\R{T} \dot{C}_k )
+    =
+    \R{tr}( \bar{B}_k^\R{T} \dot{L}_0 L_k^\R{T}  )
+    +
+    \R{tr}( \bar{B}_k^\R{T}  L_k \dot{L}_0^\R{T} )
 
 .. math::
 
-   =
-   \R{tr}( L_k^\R{T} \bar{B}_k^\R{T} \dot{L}_0 )
-   +
-   \R{tr}( L_k^\R{T} \bar{B}_k \dot{L}_0 )
+    =
+    \R{tr}( L_k^\R{T} \bar{B}_k^\R{T} \dot{L}_0 )
+    +
+    \R{tr}( L_k^\R{T} \bar{B}_k \dot{L}_0 )
 
 .. math::
 
-   =
-   \R{tr}[ L_k^\R{T} ( \bar{B}_k + \bar{B}_k^\R{T} ) \dot{L}_0 ]
+    =
+    \R{tr}[ L_k^\R{T} ( \bar{B}_k + \bar{B}_k^\R{T} ) \dot{L}_0 ]
 
 Thus, removing :math:`C_k` from the dependency results in the
 following update to :math:`\bar{L}_0`:
 
 .. math::
 
-   \bar{L}_0 \stackrel{+}{=} \R{lower} [ ( \bar{B}_k + \bar{B}_k^\R{T} ) L_k ]
+    \bar{L}_0 \stackrel{+}{=} \R{lower} [ ( \bar{B}_k + \bar{B}_k^\R{T} ) L_k ]
 
 which is the same as
 
 .. math::
 
-   \bar{L}_0 \stackrel{+}{=} 2 \; \R{lower} [ \bar{B}_k L_k ]
+    \bar{L}_0 \stackrel{+}{=} 2 \; \R{lower} [ \bar{B}_k L_k ]
 
 We still need to remove :math:`B_k` from the dependency.
 It follows from its definition that
 
 .. math::
 
-   \dot{B}_k = \sum_{\ell=1}^{k-1}
-      \dot{L}_\ell L_{k-\ell}^\R{T} + L_\ell \dot{L}_{k-\ell}^\R{T}
+    \dot{B}_k = \sum_{\ell=1}^{k-1}
+        \dot{L}_\ell L_{k-\ell}^\R{T} + L_\ell \dot{L}_{k-\ell}^\R{T}
 
 .. math::
 
-   \R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
-   =
-   \sum_{\ell=1}^{k-1}
-   \R{tr}( \bar{B}_k^\R{T} \dot{L}_\ell L_{k-\ell}^\R{T} )
-   +
-   \R{tr}( \bar{B}_k^\R{T} L_\ell \dot{L}_{k-\ell}^\R{T} )
+    \R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
+    =
+    \sum_{\ell=1}^{k-1}
+    \R{tr}( \bar{B}_k^\R{T} \dot{L}_\ell L_{k-\ell}^\R{T} )
+    +
+    \R{tr}( \bar{B}_k^\R{T} L_\ell \dot{L}_{k-\ell}^\R{T} )
 
 .. math::
 
-   =
-   \sum_{\ell=1}^{k-1}
-   \R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
-   +
-   \sum_{\ell=1}^{k-1}
-   \R{tr}( L_\ell^\R{T} \bar{B}_k \dot{L}_{k-\ell} )
+    =
+    \sum_{\ell=1}^{k-1}
+    \R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
+    +
+    \sum_{\ell=1}^{k-1}
+    \R{tr}( L_\ell^\R{T} \bar{B}_k \dot{L}_{k-\ell} )
 
 We now use the fact that :math:`\bar{B}_k` is symmetric to conclude
 
 .. math::
 
-   \R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
-   =
-   2 \sum_{\ell=1}^{k-1}
-   \R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
+    \R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
+    =
+    2 \sum_{\ell=1}^{k-1}
+    \R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
 
 Each of the :math:`\dot{L}_\ell` matrices is lower triangular.
 Thus, removing :math:`B_k` from the dependency results in the following
@@ -452,7 +452,7 @@ update for :math:`\ell = 1 , \ldots , k-1`:
 
 .. math::
 
-   \bar{L}_\ell
-   \stackrel{+}{=} 2 \; \R{lower}( \bar{B}_k L_{k-\ell} )
+    \bar{L}_\ell
+    \stackrel{+}{=} 2 \; \R{lower}( \bar{B}_k L_{k-\ell} )
 
 {xrst_end cholesky_theory}

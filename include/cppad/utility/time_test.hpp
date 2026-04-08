@@ -53,12 +53,12 @@ or function object.
 In the case where *test_size* is not present,
 *test_fun* supports the syntax
 
-   *test_fun* ( *repeat* )
+    *test_fun* ( *repeat* )
 
 In the case where *test_size* is present,
 *test_fun* supports the syntax
 
-   *test_fun* ( *size* , *repeat* )
+    *test_fun* ( *size* , *repeat* )
 
 In either case, the return value for *test_fun* is ``void`` .
 
@@ -67,7 +67,7 @@ size
 If the argument *size* is present,
 it has prototype
 
-   ``size_t`` *size*
+    ``size_t`` *size*
 
 and is equal to the *test_size* argument to ``time_test`` .
 
@@ -75,7 +75,7 @@ repeat
 ======
 The *test_fun* argument *repeat* has prototype
 
-   ``size_t`` *repeat*
+    ``size_t`` *repeat*
 
 It specifies the number of times to repeat the test.
 
@@ -83,7 +83,7 @@ time_min
 ********
 The argument *time_min* has prototype
 
-   ``double`` *time_min*
+    ``double`` *time_min*
 
 It specifies the minimum amount of time in seconds
 that the repeats of *test_fun* routine should take.
@@ -94,7 +94,7 @@ test_size
 *********
 If this argument is present, it argument has prototype
 
-   ``size_t`` *test_size*
+    ``size_t`` *test_size*
 
 In this case *test_size* will be present, and have the same value,
 in each call to *test_fun* .
@@ -103,20 +103,20 @@ repeat_out
 **********
 If this argument is present, it has prototype
 
-   ``size_t&`` *repeat_out*
+    ``size_t&`` *repeat_out*
 
 This input value of this argument does not matter.
 Upon return, it is the value of :ref:`time_test@test_fun@repeat`
 that corresponds to the return value *time* ; i.e.,
 the total time for the repeats of the test is
 
-   *total_time* = *repeat_out* * *time*
+    *total_time* = *repeat_out* * *time*
 
 time
 ****
 The return value *time* has prototype
 
-   ``double`` *time*
+    ``double`` *time*
 
 and is the number of wall clock seconds that it took
 to execute the repeats of *test_fun*
@@ -127,8 +127,8 @@ Timing
 The routine :ref:`elapsed_seconds-name` will be used to determine the
 amount of time it took to execute the test.
 {xrst_toc_hidden
-   include/cppad/utility/elapsed_seconds.hpp
-   speed/example/time_test.cpp
+    include/cppad/utility/elapsed_seconds.hpp
+    speed/example/time_test.cpp
 }
 Example
 *******
@@ -176,19 +176,19 @@ template <class Test>
 double time_test(Test test, double time_min )
 {
 # if CPPAD_EXTRA_RUN_BEFORE_TIMING
-   test(1);
+    test(1);
 # endif
-   size_t repeat = 0;
-   double s0     = elapsed_seconds();
-   double s1     = s0;
-   while( s1 - s0 < time_min )
-   {  repeat = std::max(size_t(1), 2 * repeat);
-      s0     = elapsed_seconds();
-      test(repeat);
-      s1     = elapsed_seconds();
-   }
-   double time = (s1 - s0) / double(repeat);
-   return time;
+    size_t repeat = 0;
+    double s0     = elapsed_seconds();
+    double s1     = s0;
+    while( s1 - s0 < time_min )
+    {   repeat = std::max(size_t(1), 2 * repeat);
+        s0     = elapsed_seconds();
+        test(repeat);
+        s1     = elapsed_seconds();
+    }
+    double time = (s1 - s0) / double(repeat);
+    return time;
 }
 /*!
 Preform one wall clock execution timing test.
@@ -217,19 +217,19 @@ template <class Test>
 double time_test(Test test, double time_min, size_t test_size)
 {
 # if CPPAD_EXTRA_RUN_BEFORE_TIMING
-   test(test_size, 1);
+    test(test_size, 1);
 # endif
-   size_t repeat = 0;
-   double s0     = elapsed_seconds();
-   double s1     = s0;
-   while( s1 - s0 < time_min )
-   {  repeat = std::max(size_t(1), 2 * repeat);
-      s0     = elapsed_seconds();
-      test(test_size, repeat);
-      s1     = elapsed_seconds();
-   }
-   double time = (s1 - s0) / double(repeat);
-   return time;
+    size_t repeat = 0;
+    double s0     = elapsed_seconds();
+    double s1     = s0;
+    while( s1 - s0 < time_min )
+    {   repeat = std::max(size_t(1), 2 * repeat);
+        s0     = elapsed_seconds();
+        test(test_size, repeat);
+        s1     = elapsed_seconds();
+    }
+    double time = (s1 - s0) / double(repeat);
+    return time;
 }
 /*!
 Preform one wall clock execution timing test.
@@ -260,23 +260,23 @@ is the time for each execution of the test.
 */
 template <class Test>
 double time_test(
-   Test test, double time_min, size_t test_size, size_t& repeat_out
+    Test test, double time_min, size_t test_size, size_t& repeat_out
 )
 {
 # if CPPAD_EXTRA_RUN_BEFORE_TIMING
-   test(test_size, 1);
+    test(test_size, 1);
 # endif
-   repeat_out    = 0;
-   double s0     = elapsed_seconds();
-   double s1     = s0;
-   while( s1 - s0 < time_min )
-   {  repeat_out = std::max(size_t(1), 2 * repeat_out);
-      s0         = elapsed_seconds();
-      test(test_size, repeat_out);
-      s1         = elapsed_seconds();
-   }
-   double time = (s1 - s0) / double(repeat_out);
-   return time;
+    repeat_out    = 0;
+    double s0     = elapsed_seconds();
+    double s1     = s0;
+    while( s1 - s0 < time_min )
+    {   repeat_out = std::max(size_t(1), 2 * repeat_out);
+        s0         = elapsed_seconds();
+        test(test_size, repeat_out);
+        s1         = elapsed_seconds();
+    }
+    double time = (s1 - s0) / double(repeat_out);
+    return time;
 }
 
 } // END_CPPAD_NAMESPACE

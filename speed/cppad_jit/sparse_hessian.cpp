@@ -19,13 +19,13 @@ Specifications
 {xrst_code cpp} */
 // A cppad_jit version of this test is not yet available
 bool link_sparse_hessian(
-   size_t                            size      ,
-   size_t                            repeat    ,
-   const CppAD::vector<size_t>&      row       ,
-   const CppAD::vector<size_t>&      col       ,
-   CppAD::vector<double>&            x         ,
-   CppAD::vector<double>&            hessian   ,
-   size_t&                           n_color
+    size_t                            size      ,
+    size_t                            repeat    ,
+    const CppAD::vector<size_t>&      row       ,
+    const CppAD::vector<size_t>&      col       ,
+    CppAD::vector<double>&            x         ,
+    CppAD::vector<double>&            hessian   ,
+    size_t&                           n_color
 )
 {  return false; }
 /* {xrst_code}

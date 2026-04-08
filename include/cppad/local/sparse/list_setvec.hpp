@@ -14,7 +14,7 @@ namespace CppAD { namespace local { namespace sparse {
 /*
 {xrst_begin_parent list_setvec dev}
 {xrst_spell
-   typedef
+    typedef
 }
 
 The list_setvec Class
@@ -28,14 +28,14 @@ typedef size_setvec_const_iterator<size_t>  list_setvec_const_iterator;
 /*{xrst_code}
 
 {xrst_toc_table
-   include/cppad/local/sparse/size_setvec.hpp
+    include/cppad/local/sparse/size_setvec.hpp
 }
 
 {xrst_end list_setvec}
 // ----------------------------------------------------------------------------
 {xrst_begin sparsity_user2internal_list_setvec dev}
 {xrst_spell
-   msg
+    msg
 }
 
 Copy A Vector of Standard Sets To A list_setvec Object
@@ -89,12 +89,12 @@ Prototype
 {xrst_code hpp} */
 template<class SetVector>
 void sparsity_user2internal(
-   list_setvec&            internal  ,
-   const SetVector&        user      ,
-   size_t                  n_set     ,
-   size_t                  end       ,
-   bool                    transpose ,
-   const char*             error_msg )
+    list_setvec&            internal  ,
+    const SetVector&        user      ,
+    size_t                  n_set     ,
+    size_t                  end       ,
+    bool                    transpose ,
+    const char*             error_msg )
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -102,43 +102,43 @@ void sparsity_user2internal(
 **/
 {
 # ifndef NDEBUG
-   if( transpose )
-      CPPAD_ASSERT_KNOWN( end == size_t( user.size() ), error_msg);
-   if( ! transpose )
-      CPPAD_ASSERT_KNOWN( n_set == size_t( user.size() ), error_msg);
+    if( transpose )
+        CPPAD_ASSERT_KNOWN( end == size_t( user.size() ), error_msg);
+    if( ! transpose )
+        CPPAD_ASSERT_KNOWN( n_set == size_t( user.size() ), error_msg);
 # endif
 
-   // iterator for user set
-   std::set<size_t>::const_iterator itr;
+    // iterator for user set
+    std::set<size_t>::const_iterator itr;
 
-   // size of internal sparsity pattern
-   internal.resize(n_set, end);
+    // size of internal sparsity pattern
+    internal.resize(n_set, end);
 
-   if( transpose )
-   {  // transposed pattern case
-      for(size_t j = 0; j < end; j++)
-      {  itr = user[j].begin();
-         while(itr != user[j].end())
-         {  size_t i = *itr++;
-            CPPAD_ASSERT_KNOWN(i < n_set, error_msg);
-            internal.post_element(i, j);
-         }
-      }
-      for(size_t i = 0; i < n_set; ++i)
-         internal.process_post(i);
-   }
-   else
-   {  for(size_t i = 0; i < n_set; i++)
-      {  itr = user[i].begin();
-         while(itr != user[i].end())
-         {  size_t j = *itr++;
-            CPPAD_ASSERT_KNOWN( j < end, error_msg);
-            internal.post_element(i, j);
-         }
-         internal.process_post(i);
-      }
-   }
-   return;
+    if( transpose )
+    {   // transposed pattern case
+        for(size_t j = 0; j < end; j++)
+        {   itr = user[j].begin();
+            while(itr != user[j].end())
+            {   size_t i = *itr++;
+                CPPAD_ASSERT_KNOWN(i < n_set, error_msg);
+                internal.post_element(i, j);
+            }
+        }
+        for(size_t i = 0; i < n_set; ++i)
+            internal.process_post(i);
+    }
+    else
+    {   for(size_t i = 0; i < n_set; i++)
+        {   itr = user[i].begin();
+            while(itr != user[i].end())
+            {   size_t j = *itr++;
+                CPPAD_ASSERT_KNOWN( j < end, error_msg);
+                internal.post_element(i, j);
+            }
+            internal.process_post(i);
+        }
+    }
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
@@ -147,9 +147,9 @@ void sparsity_user2internal(
 // Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.
 namespace CppAD { namespace local {
-   template <> inline bool
-   is_pod<sparse::size_setvec<size_t>::pair_s_type>(void)
-   {  return true; }
+    template <> inline bool
+    is_pod<sparse::size_setvec<size_t>::pair_s_type>(void)
+    {   return true; }
 } }
 
 # endif

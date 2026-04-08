@@ -5,31 +5,31 @@
 
 {xrst_begin 2011 app}
 {xrst_spell
-   automake
-   boostvector
-   builddir
-   executables
-   for for
-   geq
-   gpl
-   hasnan
-   initializer
-   inv
-   isnan
-   libspeed
-   makefile
-   matlab
-   omh
-   prefixdir
-   pthreads
-   retape
-   rosen
-   runge
-   svn
-   tgz
-   undefine
-   vcproj
-   wshadow
+    automake
+    boostvector
+    builddir
+    executables
+    for for
+    geq
+    gpl
+    hasnan
+    initializer
+    inv
+    isnan
+    libspeed
+    makefile
+    matlab
+    omh
+    prefixdir
+    pthreads
+    retape
+    rosen
+    runge
+    svn
+    tgz
+    undefine
+    vcproj
+    wshadow
 }
 
 Release Notes for 2011
@@ -74,7 +74,7 @@ The simplest way to make old :ref:`cppad_ipopt_nlp-name` code work with this
 change is to use the command
 ::
 
-   using namespace cppad_ipopt;
+    using namespace cppad_ipopt;
 
 12-20
 =====
@@ -206,9 +206,9 @@ The following changes were merged in from ``branches/thread`` :
 #. All of the make files were modified so that the command
    ::
 
-      make test
+        make test
 
-   would run the tests for the current directory.
+    would run the tests for the current directory.
 #. Extend the multi-threading speed tests
    ``sum_i_inv.cpp`` and :ref:`multi_newton.cpp-name` so they run
    using Boost threads and pthreads (as well as OpenMP threads).
@@ -279,7 +279,7 @@ Modify the CppAD trunk using the
 changes from svn revision 2060 to revision 2081 in the branch
 ::
 
-   https://projects.coin-or.org/svn/CppAD/branches/pthread
+    https://projects.coin-or.org/svn/CppAD/branches/pthread
 
 These changes are described below.
 
@@ -363,16 +363,16 @@ Modify the CppAD trunk using the
 changes from svn revision 2044 to revision 2056 in the branch
 ::
 
-   https://projects.coin-or.org/svn/CppAD/branches/base_require
+    https://projects.coin-or.org/svn/CppAD/branches/base_require
 
 These changes are described below.
 
 #. 08-10:
    Add the output stream optional argument *s* in
 
-      *f* . ``Forward`` (0, *x* , *s* )
+        *f* . ``Forward`` (0, *x* , *s* )
 
-   See :ref:`zero order forward mode<forward_zero-name>` and :ref:`PrintFor-name` .
+    See :ref:`zero order forward mode<forward_zero-name>` and :ref:`PrintFor-name` .
 #. 08-10:
    Improve omp_alloc.cpp example.
 
@@ -440,7 +440,7 @@ This makes ``nan`` print because it results in false for all comparisons.
 =====
 Add a conditional version of the :ref:`PrintFor-name` command
 
-   ``PrintFor`` ( *text* , *y* , *z* )
+    ``PrintFor`` ( *text* , *y* , *z* )
 
 which only prints when *z*  <= 0 .
 This is useful for error reporting during forward mode; i.e.,
@@ -578,12 +578,12 @@ Add the routine :ref:`parallel_ad-name` to fix bug when using
 
 #. Fix a bug whereby the assert
 
-   | |tab| ``Error detected by false result for``
-   | |tab| |tab| ! ``omp_in_parallel`` ()
-   | |tab| ``at line`` *n* ``in the file``
-   | |tab| *prefix* / ``include/cppad/omp_alloc.hpp``
+    | |tab| ``Error detected by false result for``
+    | |tab| |tab| ! ``omp_in_parallel`` ()
+    | |tab| ``at line`` *n* ``in the file``
+    | |tab| *prefix* / ``include/cppad/omp_alloc.hpp``
 
-   sometimes occurred.
+    sometimes occurred.
 #. The routine :ref:`omp_max_thread-name` was deprecated,
    use the routine :ref:`omp_max_num_threads-name` instead.
 #. The deprecated routines have been grouped together in the
@@ -642,8 +642,8 @@ In addition, in the file ``cppad/omp_alloc.hpp`` ,
 suppress the following Microsoft Visual Studio warning
 ::
 
-   warning C4345: behavior change: an object of POD type constructed with
-   an initializer of the form () will be default-initialized
+    warning C4345: behavior change: an object of POD type constructed with
+    an initializer of the form () will be default-initialized
 
 05-22
 =====
@@ -849,7 +849,7 @@ The following have been fixed:
 =====
 There were some problems running ``make test`` in the releases
 
-   ``https://www.coin-or.org/download/source/CppAD/cppad-20110101.0.`` *license* . ``tgz``
+    ``https://www.coin-or.org/download/source/CppAD/cppad-20110101.0.`` *license* . ``tgz``
 
 where *license* is ``gpl`` or ``cpl`` .
 
@@ -865,7 +865,7 @@ These problems are fixed in the trunk
 and these fixes will be copied to the corresponding stable and
 release versions; i.e.,
 
-   ``https://www.coin-or.org/download/source/CppAD/cppad-20110101.1.`` *license* . ``tgz``
+    ``https://www.coin-or.org/download/source/CppAD/cppad-20110101.1.`` *license* . ``tgz``
 
 will not have this problem.
 

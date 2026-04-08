@@ -36,7 +36,7 @@ Use :ref:`thread_alloc-name` instead.
 Contents
 ********
 {xrst_toc_table
-   include/cppad/utility/omp_alloc.hpp
+    include/cppad/utility/omp_alloc.hpp
 }
 
 {xrst_end omp_alloc}

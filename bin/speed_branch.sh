@@ -4,36 +4,36 @@
 # SPDX-FileContributor: 2003-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 possible_tests='
-   all
-   det_lu
-   det_minor
-   mat_mul ode
-   poly
-   sparse_hessian
-   sparse_jacobian
+    all
+    det_lu
+    det_minor
+    mat_mul ode
+    poly
+    sparse_hessian
+    sparse_jacobian
 '
 possible_options='
-   atomic
-   boolsparsity
-   colpack
-   memory
-   onetape
-   optimize
-   revsparsity
-   subgraph
+    atomic
+    boolsparsity
+    colpack
+    memory
+    onetape
+    optimize
+    revsparsity
+    subgraph
 '
 # ----------------------------------------------------------------------------
 program="bin/speed_branch.sh"
 if [ "$0" != "$program" ]
 then
-   echo "$program: must be executed from its parent directory"
-   exit 1
+    echo "$program: must be executed from its parent directory"
+    exit 1
 fi
 branch_start=$(git branch --show-current)
 if [ "$branch_start" != 'master' ] && [ "$branch_start" != 'main' ]
 then
-   echo 'bin/speed_branch.sh: must start from master or main branch'
-   exit 1
+    echo 'bin/speed_branch.sh: must start from master or main branch'
+    exit 1
 fi
 if [ "$3" == '' ]
 then
@@ -49,7 +49,7 @@ $tests
 possible options are:
 $options
 EOF
-   exit 1
+    exit 1
 fi
 #
 branch_one="$1"
@@ -59,88 +59,88 @@ shift
 test_name="$1"
 if ! echo "$possible_tests" | grep "$test_name" > /dev/null
 then
-   echo "speed_branch.sh: $test_name is not a valid test name"
-   exit 1
+    echo "speed_branch.sh: $test_name is not a valid test name"
+    exit 1
 fi
 shift
 option_list="$test_name"
 for option in $*
 do
-   if ! echo $possible_options | grep "$option" > /dev/null
-   then
-      echo "speed_branch.sh: $option is not a valid option"
-      exit 1
-   fi
-   option_list="${option_list}_$option"
+    if ! echo $possible_options | grep "$option" > /dev/null
+    then
+        echo "speed_branch.sh: $option is not a valid option"
+        exit 1
+    fi
+    option_list="${option_list}_$option"
 done
 if [ "$test_name" == 'all' ]
 then
-   test_name='speed'
+    test_name='speed'
 fi
 # ----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 if [ ! -d '.git' ]
 then
-   echo "$program: only implemented for git repository"
-   exit 1
+    echo "$program: only implemented for git repository"
+    exit 1
 fi
 # ----------------------------------------------------------------------------
 target_dir='build/speed/cppad'
 if [ ! -e $target_dir ]
 then
-   echo_eval mkdir -p $target_dir
+    echo_eval mkdir -p $target_dir
 fi
 # -----------------------------------------------------------------------------
 for branch in $branch_one $branch_two
 do
-   # for stable branches, remove stable/ from output file name
-   out_file=`echo $branch.$option_list.out | sed -e 's|stable/||'`
-   log_file=`echo $branch.log | sed -e 's|stable/||'`
-   #
-   if [ -e "$target_dir/$out_file" ]
-   then
-      echo "Using existing $target_dir/$out_file"
-   else
-      # use --quiet to suppress detached HEAD message
-      echo_eval git checkout --quiet $branch
-      #
-      # speed/main.cpp
-      echo "git show $branch_start:speed/main.cpp > speed/main.cpp"
-      git show $branch_start:speed/main.cpp > speed/main.cpp
-      #
-      day=`git log -1 --date=iso | grep '^Date:' | \
-         sed -e 's|Date: *||' -e 's|-||g' -e 's| .*||'`
-      if [ "$test_name" == 'speed' ] || [ "$test_name" == 'sparse_hessian' ]
-      then
-         if [ "$day" -le '20150130' ]
-         then
-            echo "test_name is all or sparse_hessian"
-            echo "and branch $branch came on or before 20150130"
-            echo "when bug was fixed in the sparse_hessian speed test."
-            exit 1
-         fi
-      fi
-      #
-      echo "bin/run_cmake.sh --debug_none --no_optional >& $target_dir/$log_file"
-      bin/run_cmake.sh --debug_none --no_optional >& $target_dir/$log_file
-      #
-      echo "ninja check_speed_cppad >>& $target_dir/$log_file"
-      ninja -C build check_speed_cppad >& speed_branch.log.$$
-      #
-      cat speed_branch.log.$$ >> $target_dir/$log_file
-      rm speed_branch.log.$$
-      #
-      echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
-      $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
-      #
-      # speed/main.cpp
-      echo_eval git checkout speed/main.cpp
-   fi
+    # for stable branches, remove stable/ from output file name
+    out_file=`echo $branch.$option_list.out | sed -e 's|stable/||'`
+    log_file=`echo $branch.log | sed -e 's|stable/||'`
+    #
+    if [ -e "$target_dir/$out_file" ]
+    then
+        echo "Using existing $target_dir/$out_file"
+    else
+        # use --quiet to suppress detached HEAD message
+        echo_eval git checkout --quiet $branch
+        #
+        # speed/main.cpp
+        echo "git show $branch_start:speed/main.cpp > speed/main.cpp"
+        git show $branch_start:speed/main.cpp > speed/main.cpp
+        #
+        day=`git log -1 --date=iso | grep '^Date:' | \
+            sed -e 's|Date: *||' -e 's|-||g' -e 's| .*||'`
+        if [ "$test_name" == 'speed' ] || [ "$test_name" == 'sparse_hessian' ]
+        then
+            if [ "$day" -le '20150130' ]
+            then
+                echo "test_name is all or sparse_hessian"
+                echo "and branch $branch came on or before 20150130"
+                echo "when bug was fixed in the sparse_hessian speed test."
+                exit 1
+            fi
+        fi
+        #
+        echo "bin/run_cmake.sh --debug_none --no_optional >& $target_dir/$log_file"
+        bin/run_cmake.sh --debug_none --no_optional >& $target_dir/$log_file
+        #
+        echo "ninja check_speed_cppad >>& $target_dir/$log_file"
+        ninja -C build check_speed_cppad >& speed_branch.log.$$
+        #
+        cat speed_branch.log.$$ >> $target_dir/$log_file
+        rm speed_branch.log.$$
+        #
+        echo "$target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file"
+        $target_dir/speed_cppad $test_name 123 $* > $target_dir/$out_file
+        #
+        # speed/main.cpp
+        echo_eval git checkout speed/main.cpp
+    fi
 done
 # return to master (branch where we started)
 echo_eval git checkout --quiet master

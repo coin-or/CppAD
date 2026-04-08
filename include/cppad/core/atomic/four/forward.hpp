@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_forward}
 {xrst_spell
-   ataylor
+    ataylor
 }
 
 Atomic Function Forward Mode
@@ -38,15 +38,15 @@ Prototype
 Base
 ====
 {xrst_literal
-   // BEGIN_PROTOTYPE_BASE
-   // END_PROTOTYPE_BASE
+    // BEGIN_PROTOTYPE_BASE
+    // END_PROTOTYPE_BASE
 }
 
 AD<Base>
 ========
 {xrst_literal
-   // BEGIN_PROTOTYPE_AD_BASE
-   // END_PROTOTYPE_AD_BASE
+    // BEGIN_PROTOTYPE_AD_BASE
+    // END_PROTOTYPE_AD_BASE
 }
 
 Base
@@ -68,7 +68,7 @@ They are also used by
 *f* . ``Forward`` and *f* . ``new_dynamic``
 where *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 and *afun* is used during the recording of *f* .
 
@@ -78,7 +78,7 @@ The ``AD`` < *Base* > syntax and prototype are used by
 *af* . ``Forward`` and *af* . ``new_dynamic``
 where *af* has prototype
 
-   ``ADFun< AD<`` *Base* > , *Base* > *af*
+    ``ADFun< AD<`` *Base* > , *Base* > *af*
 
 and *afun* is used in a function *af* ,
 created from *f* using :ref:`base2ad-name` .
@@ -132,13 +132,13 @@ For :math:`j = 0 , \ldots , n-1` and :math:`k = 0 , \ldots , q-1`,
 we use the Taylor coefficient notation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      x_j^k    & = & \R{taylor\_x} [ j * q + k ]
-      \\
-      X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^{q-1} t^{q-1}
-   \end{eqnarray}
+    \begin{eqnarray}
+        x_j^k    & = & \R{taylor\_x} [ j * q + k ]
+        \\
+        X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^{q-1} t^{q-1}
+    \end{eqnarray}
 
 Note that superscripts represent an index for :math:`x_j^k`
 and an exponent for :math:`t^k`.
@@ -147,17 +147,17 @@ to the derivatives of :math:`X(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 
 parameters
 ==========
 If the *j*-th component of *x* is a parameter,
 
-   *type_x* [ *j* ] < ``CppAD::variable_enum``
+    *type_x* [ *j* ] < ``CppAD::variable_enum``
 
 In this case, for *k*  > 0 ,
 
-   *taylor_x* [ *j* * *q* + *k*  ] == 0
+    *taylor_x* [ *j* * *q* + *k*  ] == 0
 
 ataylor_x
 *********
@@ -172,15 +172,15 @@ For :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , q-1`,
 if *select_y* [ *i* ] is true,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      Y_i (t)  & = & g_i [ X(t) ]
-      \\
-      Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o( t^{q-1} )
-      \\
-      \R{taylor\_y}  [ i * q + k ] & = & y_i^k
-   \end{eqnarray}
+    \begin{eqnarray}
+        Y_i (t)  & = & g_i [ X(t) ]
+        \\
+        Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o( t^{q-1} )
+        \\
+        \R{taylor\_y}  [ i * q + k ] & = & y_i^k
+    \end{eqnarray}
 
 where :math:`o( t^{q-1} ) / t^{q-1} \rightarrow 0`
 as :math:`t \rightarrow 0`.
@@ -191,7 +191,7 @@ to the derivatives of :math:`Y(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 
 If :math:`p > 0`,
 for :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , p-1`,
@@ -199,7 +199,7 @@ the input of *taylor_y* satisfies
 
 .. math::
 
-   \R{taylor\_y}  [ i * q + k ] = y_i^k
+    \R{taylor\_y}  [ i * q + k ] = y_i^k
 
 These values do not need to be recalculated
 and can be used during the computation of the higher order coefficients.
@@ -223,40 +223,40 @@ and it component wise Hessian :math:`g_i^{(2)} (x)`.
 Then you can compute *taylor_x* using the following formulas:
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   y_i^0 & = & Y(0)
-         = g_i ( x^0 )
-   \\
-   y_i^1 & = & Y^{(1)} ( 0 )
-         = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
-         = g_i^{(1)} ( x^0 ) x^1
-   \\
-   y_i^2
-   & = & \frac{1}{2 !} Y^{(2)} (0)
-   \\
-   & = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
-     +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
-   \\
-   & = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
-     +    g_i^{(1)} ( x^0 ) x^2
-   \end{eqnarray}
+    \begin{eqnarray}
+    y_i^0 & = & Y(0)
+            = g_i ( x^0 )
+    \\
+    y_i^1 & = & Y^{(1)} ( 0 )
+            = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+            = g_i^{(1)} ( x^0 ) x^1
+    \\
+    y_i^2
+    & = & \frac{1}{2 !} Y^{(2)} (0)
+    \\
+    & = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+      +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+    \\
+    & = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
+      +    g_i^{(1)} ( x^0 ) x^2
+    \end{eqnarray}
 
 For :math:`i = 0 , \ldots , m-1`, and :math:`k = 0 , 1 , 2`,
 
 .. math::
 
-   \R{taylor\_y} [ i * q + k ] = y_i^k
+    \R{taylor\_y} [ i * q + k ] = y_i^k
 
 Example
 *******
 The following is an example ``forward`` definition taken from
 :ref:`atomic_four_norm_sq.cpp-name` :
 {xrst_literal
-   example/atomic_four/norm_sq.cpp
-   // BEGIN FORWARD
-   // END FORWARD
+    example/atomic_four/norm_sq.cpp
+    // BEGIN FORWARD
+    // END FORWARD
 }
 
 {xrst_end atomic_four_forward}
@@ -268,26 +268,26 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_four<Base>::forward(
-   size_t                       call_id     ,
-   const vector<bool>&          select_y    ,
-   size_t                       order_low   ,
-   size_t                       order_up    ,
-   const vector<Base>&          taylor_x    ,
-   vector<Base>&                taylor_y    )
+    size_t                       call_id     ,
+    const vector<bool>&          select_y    ,
+    size_t                       order_low   ,
+    size_t                       order_up    ,
+    const vector<Base>&          taylor_x    ,
+    vector<Base>&                taylor_y    )
 // END_PROTOTYPE_BASE
-{  return false; }
+{   return false; }
 
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_four<Base>::forward(
-   size_t                       call_id      ,
-   const vector<bool>&          select_y    ,
-   size_t                       order_low    ,
-   size_t                       order_up     ,
-   const vector< AD<Base> >&    ataylor_x    ,
-   vector< AD<Base> >&          ataylor_y    )
+    size_t                       call_id      ,
+    const vector<bool>&          select_y    ,
+    size_t                       order_low    ,
+    size_t                       order_up     ,
+    const vector< AD<Base> >&    ataylor_x    ,
+    vector< AD<Base> >&          ataylor_y    )
 // END_PROTOTYPE_AD_BASE
-{  return false; }
+{   return false; }
 
 
 } // END_CPPAD_NAMESPACE

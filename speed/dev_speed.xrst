@@ -10,9 +10,9 @@ Speed Testing Developer Documentation
 Contents
 ********
 {xrst_toc_table
-   speed/src/dev_link.xrst
-   speed/src/dev_sparse_hessian.xrst
-   speed/src/link_sparse_jacobian.cpp
+    speed/src/dev_link.xrst
+    speed/src/dev_sparse_hessian.xrst
+    speed/src/link_sparse_jacobian.cpp
 }
 
 {xrst_end dev_speed}

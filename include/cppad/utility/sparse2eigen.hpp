@@ -8,7 +8,7 @@
 /*
 {xrst_begin sparse2eigen}
 {xrst_spell
-   nnz
+    nnz
 }
 
 Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix
@@ -22,8 +22,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Include
@@ -79,14 +79,14 @@ is in compressed format. For example, let
 It follows that, for *k* = 0 , ..., *nnz* :
 If *Options* is ``Eigen::RowMajor`` ,
 
-   *d_value* [ *k* ] == *s_value* [ *row_major* [ *k* ] ]
+    *d_value* [ *k* ] == *s_value* [ *row_major* [ *k* ] ]
 
 If *Options* is ``Eigen::ColMajor`` ,
 
-   *d_value* [ *k* ] == *s_value* [ *col_major* [ *k* ] ]
+    *d_value* [ *k* ] == *s_value* [ *col_major* [ *k* ] ]
 
 {xrst_toc_hidden
-   example/sparse/sparse2eigen.cpp
+    example/sparse/sparse2eigen.cpp
 }
 
 Example
@@ -110,26 +110,26 @@ void sparse2eigen(
 const CppAD::sparse_rcv<SizeVector, ValueVector>&               source       ,
 Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
 // END_PROTOTYPE
-{  using Eigen::Index;
-   typedef typename ValueVector::value_type value_type;
-   typedef Eigen::Triplet<value_type>       triplet;
-   std::vector<triplet> vec( source.nnz() );
-   //
-   const SizeVector&  row = source.row();
-   const SizeVector&  col = source.col();
-   const ValueVector& val = source.val();
-   //
-   for(size_t k = 0; k < source.nnz(); k++)
-      vec[k] = triplet( int(row[k]), int(col[k]), val[k] );
-   //
-   size_t nr = source.nr();
-   size_t nc = source.nc();
-   destination.resize( Index(nr), Index(nc) );
-   destination.setFromTriplets(vec.begin(), vec.end());
-   //
-   CPPAD_ASSERT_UNKNOWN( destination.isCompressed() );
-   //
-   return;
+{   using Eigen::Index;
+    typedef typename ValueVector::value_type value_type;
+    typedef Eigen::Triplet<value_type>       triplet;
+    std::vector<triplet> vec( source.nnz() );
+    //
+    const SizeVector&  row = source.row();
+    const SizeVector&  col = source.col();
+    const ValueVector& val = source.val();
+    //
+    for(size_t k = 0; k < source.nnz(); k++)
+        vec[k] = triplet( int(row[k]), int(col[k]), val[k] );
+    //
+    size_t nr = source.nr();
+    size_t nc = source.nc();
+    destination.resize( Index(nr), Index(nc) );
+    destination.setFromTriplets(vec.begin(), vec.end());
+    //
+    CPPAD_ASSERT_UNKNOWN( destination.isCompressed() );
+    //
+    return;
 }
 
 } // END_CPPAD_NAMESPACE

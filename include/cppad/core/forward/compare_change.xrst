@@ -23,7 +23,7 @@ We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
 :ref:`glossary@AD Function` corresponding to *f* ; i.e,
 given :math:`x \in \B{R}^n`, :math:`F(x)` is defined by
 
-   *F* ( *x* ) = *f* . ``Forward`` (0, *x* )
+    *F* ( *x* ) = *f* . ``Forward`` (0, *x* )
 
 see :ref:`forward_zero-name` .
 If :math:`x` is such that
@@ -37,24 +37,24 @@ f
 In the ``compare_change_number`` and ``compare_change_op_index``
 syntax, the object *f* has prototype
 
-   ``const ADFun`` < *Base* > *f*
+    ``const ADFun`` < *Base* > *f*
 
 In the ``compare_change_count``
 syntax, the object *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 count
 *****
 The argument *count* has prototype
 
-   *size_t* ``count``
+    *size_t* ``count``
 
 It specifies which comparison change should correspond to the
 information stored in *f* during subsequent calls to
 :ref:`forward_zero-name` ; i.e.,
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 For example, if *count*  == 1 ,
 the operator index corresponding to the first comparison change
@@ -66,20 +66,20 @@ Speed
 The special case where *count* == 0 , should be faster because
 the comparisons are not checked during
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 number
 ******
 The return value *number* has prototype
 
-   ``size_t`` *number*
+    ``size_t`` *number*
 
 If *count* is non-zero,
 *number* is the number of
 ``AD`` < *Base* > :ref:`comparison<Compare-name>` operations,
 corresponding to the previous call to
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 that have a different result for this value of *x*
 than the value used when *f* was created by taping an algorithm.
@@ -105,13 +105,13 @@ op_index
 ********
 The return value *op_index* has prototype
 
-   ``size_t`` *op_index*
+    ``size_t`` *op_index*
 
 If *count* is non-zero,
 *op_index* is the operator index corresponding the
 *count* -th comparison change during the previous call to
 
-   *f* . ``Forward`` (0, *x* )
+    *f* . ``Forward`` (0, *x* )
 
 If *count* is greater than the corresponding
 *number* , there is no such comparison change and *op_index*
@@ -132,10 +132,10 @@ For example, using an :ref:`conditional expression<CondExp-name>`
 may be appropriate in some cases.
 See :ref:`Independent@abort_op_index` in the syntax
 
-   ``Independent`` ( *x* , *abort_op_index* )
+    ``Independent`` ( *x* , *abort_op_index* )
 
 {xrst_toc_hidden
-   example/compare_change/compare_change.cpp
+    example/compare_change/compare_change.cpp
 }
 Example
 *******

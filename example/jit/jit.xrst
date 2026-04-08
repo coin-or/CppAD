@@ -15,11 +15,11 @@ These examples are not tested when the
 Contents
 ********
 {xrst_toc_table
-   example/jit/get_started.cpp
-   example/jit/compare_change.cpp
-   example/jit/compile.cpp
-   example/jit/atomic.cpp
-   example/jit/dynamic.cpp
+    example/jit/get_started.cpp
+    example/jit/compare_change.cpp
+    example/jit/compile.cpp
+    example/jit/atomic.cpp
+    example/jit/dynamic.cpp
 }
 
 {xrst_end example_jit}

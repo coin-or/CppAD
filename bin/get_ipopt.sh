@@ -69,8 +69,8 @@ ipopt_url='https://github.com/coin-or/Ipopt'
 #
 # echo_eval
 function echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 #
 # clone_url_name_version
@@ -79,34 +79,34 @@ function echo_eval() {
 # $2 = name
 # $3 = version
 function clone_url_name_version() {
-   if [ ! -e $2.git ]
-   then
-      echo_eval git clone $1.git $2.git
-   fi
-   echo_eval cd $2.git
-   echo_eval git reset --hard
-   echo_eval git fetch origin
-   echo_eval git checkout --quiet $3
-   if [ ! -e build ]
-   then
-      echo_eval mkdir build
-   fi
-   cd ..
+    if [ ! -e $2.git ]
+    then
+        echo_eval git clone $1.git $2.git
+    fi
+    echo_eval cd $2.git
+    echo_eval git reset --hard
+    echo_eval git fetch origin
+    echo_eval git checkout --quiet $3
+    if [ ! -e build ]
+    then
+        echo_eval mkdir build
+    fi
+    cd ..
 }
 # ----------------------------------------------------------------------------
 if [ $0 != 'bin/get_ipopt.sh' ]
 then
-   echo 'bin/get_ipopt.sh: must be executed from its parent directory'
-   exit 1
+    echo 'bin/get_ipopt.sh: must be executed from its parent directory'
+    exit 1
 fi
 # ----------------------------------------------------------------------------
 #
 # n_job
 if which nproc >& /dev/null
 then
-   n_job=$(nproc)
+    n_job=$(nproc)
 else
-   n_job=$(sysctl -n hw.ncpu)
+    n_job=$(sysctl -n hw.ncpu)
 fi
 #
 # configured_flag
@@ -114,31 +114,31 @@ configured_flag="external/Ipopt-${ipopt_version}.configured"
 echo "Executing get_ipopt.sh"
 if [ -e "$configured_flag" ]
 then
-   echo "Skipping configuration because $configured_flag exits"
-   echo_eval cd external/Ipopt.git/build
-   make -j $n_job install
-   echo "get_ipopt.sh: OK"
-   exit 0
+    echo "Skipping configuration because $configured_flag exits"
+    echo_eval cd external/Ipopt.git/build
+    make -j $n_job install
+    echo "get_ipopt.sh: OK"
+    exit 0
 fi
 if ls external/Ipopt-*.configured > /dev/null
 then
-   echo_eval rm -rf external/Mumps.git
-   echo_eval rm -rf external/ASL.git
-   echo_eval rm external/Ipopt-*.configured
+    echo_eval rm -rf external/Mumps.git
+    echo_eval rm -rf external/ASL.git
+    echo_eval rm external/Ipopt-*.configured
 fi
 #
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-   prefix="$(pwd)/$prefix"
+    prefix="$(pwd)/$prefix"
 fi
 echo "prefix=$prefix"
 #
 # external
 if [ ! -e external ]
 then
-   mkdir external
+    mkdir external
 fi
 echo_eval cd external
 #
@@ -155,23 +155,23 @@ clone_url_name_version $ipopt_url $name "releases/$ipopt_version"
 # external/build_type/mumps.git
 for name in 'ASL' 'Mumps'
 do
-   # clone_url_name_version
-   line=$(grep "ThirdParty/$name" 'Ipopt.git/.coin-or/Dependencies')
-   url=$(echo $line | awk '{print $2}' )
-   version=$(echo $line | awk '{print $3}' )
-   clone_url_name_version $url $name $version
-   #
-   # get.$name
-   cd $name.git
-   if [ -e "./get.$name" ]
-   then
-      if [ ! -e "./get.$name.done" ]
-      then
-         echo_eval ./get.$name
-         touch ./get.$name.done
-      fi
-   fi
-   cd ..
+    # clone_url_name_version
+    line=$(grep "ThirdParty/$name" 'Ipopt.git/.coin-or/Dependencies')
+    url=$(echo $line | awk '{print $2}' )
+    version=$(echo $line | awk '{print $3}' )
+    clone_url_name_version $url $name $version
+    #
+    # get.$name
+    cd $name.git
+    if [ -e "./get.$name" ]
+    then
+        if [ ! -e "./get.$name.done" ]
+        then
+            echo_eval ./get.$name
+            touch ./get.$name.done
+        fi
+    fi
+    cd ..
 done
 #
 # Install ASL
@@ -184,21 +184,21 @@ cd ../..
 configure_mumps="$configure_all"
 if [ "$(uname)" == 'Darwin' ]
 then
-   if which brew
-   then
-      metis_libdir=$(brew --prefix)/lib
-      metis_incdir=$(brew --prefix)/include
-      if [ ! -e "$metis_libdir/libmetis.dylib" ]
-      then
-         echo 'MacOS+brew: Cannot find metis library directory'
-      fi
-      if [ ! -e "$metis_incdir/metis.h" ]
-      then
-         echo 'MacOS+brew: Cannot find metis include directory'
-      fi
-      configure_mumps+=" --with-metis-lflags='-L$metis_libdir -lmetis'"
-      configure_mumps+=" --with-metis-cflags='-I$metis_incdir'"
-   fi
+    if which brew
+    then
+        metis_libdir=$(brew --prefix)/lib
+        metis_incdir=$(brew --prefix)/include
+        if [ ! -e "$metis_libdir/libmetis.dylib" ]
+        then
+            echo 'MacOS+brew: Cannot find metis library directory'
+        fi
+        if [ ! -e "$metis_incdir/metis.h" ]
+        then
+            echo 'MacOS+brew: Cannot find metis include directory'
+        fi
+        configure_mumps+=" --with-metis-lflags='-L$metis_libdir -lmetis'"
+        configure_mumps+=" --with-metis-cflags='-I$metis_incdir'"
+    fi
 fi
 cd Mumps.git/build
 echo_eval ../configure $configure_mumps

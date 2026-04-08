@@ -30,11 +30,11 @@ The recording is stopped,
 and the operation sequence is transferred to the AD function object *f* ,
 using either the :ref:`function constructor<fun_construct-name>`
 
-   ``ADFun`` < *Base* > *f* ( *x* , *y* )
+    ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 or the :ref:`dependent variable specifier<Dependent-name>`
 
-   *f* . ``Dependent`` ( *x* , *y* )
+    *f* . ``Dependent`` ( *x* , *y* )
 
 The only other way to stop a recording is using
 :ref:`abort_recording-name` .
@@ -47,7 +47,7 @@ x
 *
 The vector *x* has prototype
 
-   *ADVector* & *x*
+    *ADVector* & *x*
 
 (see *ADVector* below).
 The size of the vector *x* , must be greater than zero,
@@ -58,7 +58,7 @@ abort_op_index
 **************
 If this argument has prototype
 
-   ``size_t`` *abort_op_index*
+    ``size_t`` *abort_op_index*
 
 If it is present,
 it specifies the operator index at which the execution will aborted
@@ -76,7 +76,7 @@ record_compare
 **************
 This argument has prototype
 
-   ``bool`` *record_compare*
+    ``bool`` *record_compare*
 
 If it is present,
 it specifies if AD :ref:`compare-name`  operations are recorded.
@@ -92,7 +92,7 @@ dynamic
 *******
 If this argument is present, it has prototype
 
-   ``const`` *ADVector* & *dynamic*
+    ``const`` *ADVector* & *dynamic*
 
 (see *Vector* below).
 It specifies the independent
@@ -125,11 +125,11 @@ Each thread can have one, and only one, active recording.
 A call to ``Independent`` starts the recording for the current thread.
 The recording must be stopped by a corresponding call to
 
-   ``ADFun`` < *Base* > *f* ( *x* , *y* )
+    ``ADFun`` < *Base* > *f* ( *x* , *y* )
 
 or
 
-   *f* . ``Dependent`` ( *x* , *y* )
+    *f* . ``Dependent`` ( *x* , *y* )
 
 or :ref:`abort_recording-name`
 preformed by the same thread; i.e.,
@@ -138,7 +138,7 @@ preformed by the same thread; i.e.,
 Example
 *******
 {xrst_toc_hidden
-   example/general/independent.cpp
+    example/general/independent.cpp
 }
 The file
 :ref:`independent.cpp-name`

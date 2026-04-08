@@ -5,29 +5,29 @@
 
 {xrst_begin 2006 app}
 {xrst_spell
-   aclocal
-   autoconf
-   automake
-   avector
-   delem
-   div
-   dw
-   fy
-   gprof
-   kasper
-   kristensen
-   makefile
-   memcheck
-   of of
-   omh
-   rpm
-   sed
-   speedtest
-   tautschnig
-   usr
-   valgrind
-   yy
-   yyyymmdd
+    aclocal
+    autoconf
+    automake
+    avector
+    delem
+    div
+    dw
+    fy
+    gprof
+    kasper
+    kristensen
+    makefile
+    memcheck
+    of of
+    omh
+    rpm
+    sed
+    speedtest
+    tautschnig
+    usr
+    valgrind
+    yy
+    yyyymmdd
 }
 
 Release Notes for 2006
@@ -141,14 +141,14 @@ The wish list item
 to simplify and better organize the speed tests been completed:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   :ref:`speed/<speed-name>`,template functions that are speed tested
-   ``speed/example``,example usage of speed template functions
-   :ref:`speed/adolc<speed_adolc-name>`,Adolc drivers for the template functions
-   :ref:`speed/cppad<speed_cppad-name>`,CppAD drivers for the template functions
-   :ref:`speed/fadbad<speed_fadbad-name>`,Fadbad drivers for the template functions
-   speed/profile,profiling version of CppAD drivers
+    :ref:`speed/<speed-name>`,template functions that are speed tested
+    ``speed/example``,example usage of speed template functions
+    :ref:`speed/adolc<speed_adolc-name>`,Adolc drivers for the template functions
+    :ref:`speed/cppad<speed_cppad-name>`,CppAD drivers for the template functions
+    :ref:`speed/fadbad<speed_fadbad-name>`,Fadbad drivers for the template functions
+    speed/profile,profiling version of CppAD drivers
 
 12-13
 =====
@@ -184,7 +184,7 @@ The :ref:`pow-name` function was changed to be a an ``AD`` < *Base* >
 This function used to return a ``nan`` if
 *x* is negative because it was implemented as
 
-   ``pow`` ( *x* , *y* ) = ``exp`` ( ``log`` ( *x* ) * *y*  )
+    ``pow`` ( *x* , *y* ) = ``exp`` ( ``log`` ( *x* ) * *y*  )
 
 This has been fixed so that the function and its derivatives are now
 calculated properly when *x* is less than zero.
@@ -453,8 +453,8 @@ get the nightly build changed:
 Some error message occurred while executing
 ::
 
-   valgrind --tool=memcheck example/example
-   valgrind --tool=memcheck TestMore/TestMore
+    valgrind --tool=memcheck example/example
+    valgrind --tool=memcheck TestMore/TestMore
 
 These were not really bugs, but they have been fixed to avoid
 this conflict between CppAD and `valgrind <https://valgrind.org/>`_.
@@ -692,10 +692,10 @@ to :ref:`AD-name` gave a compile error (this has been fixed).
 Code example for this fix
 ::
 
-   VecAD<double> V(1);
-   AD<double> zero = 0;
-   V[zero] = 1.;
-   static_cast< AD<double> > ( V[zero] );
+    VecAD<double> V(1);
+    AD<double> zero = 0;
+    V[zero] = 1.;
+    static_cast< AD<double> > ( V[zero] );
 
 04-06
 =====

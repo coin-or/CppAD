@@ -12,9 +12,9 @@ Source: sparse_jac_fun
 | # ``define CPPAD_SPARSE_JAC_FUN_HPP``
 
 {xrst_literal
-   include/cppad/speed/sparse_jac_fun.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/speed/sparse_jac_fun.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

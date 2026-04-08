@@ -51,15 +51,15 @@ arg[0]
 ======
 is static cast to addr_t from the enum type
 {xrst_literal
-   include/cppad/local/declare_ad.hpp
-   // BEGIN_COMPARE_OP
-   // END_COMPARE_OP
+    include/cppad/local/declare_ad.hpp
+    // BEGIN_COMPARE_OP
+    // END_COMPARE_OP
 }
 The operator corresponding to Ne does not appear because that case
 is converted to the Eq case by switching *if_true* and *if_false* .
 Thus it must hold that::
 
-   arg[0] < addr_t(CompareNe)
+    arg[0] < addr_t(CompareNe)
 
 arg[1]
 ======
@@ -100,8 +100,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CEXP_FORWARD_ANY
-   // END_CEXP_FORWARD_ANY
+    // BEGIN_CEXP_FORWARD_ANY
+    // END_CEXP_FORWARD_ANY
 }
 
 arg
@@ -132,8 +132,8 @@ parameter
 maps parameter indices to parameter values .
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_op.xrst
-   headers: cap_order, order_low, order_up, taylor
+    include/cppad/local/var_op/template/forward_op.xrst
+    headers: cap_order, order_low, order_up, taylor
 }
 
 {xrst_end var_cexp_forward_any}
@@ -141,91 +141,91 @@ maps parameter indices to parameter values .
 // BEGIN_CEXP_FORWARD_ANY
 template <class Base>
 inline void cexp_forward_any(
-   size_t         order_low   ,
-   size_t         order_up    ,
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   ,
-   Base*          taylor      )
+    size_t         order_low   ,
+    size_t         order_up    ,
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    Base*          taylor      )
 // END_CEXP_FORWARD_ANY
-{  Base y_0, y_1, y_2, y_3;
-   size_t p = order_low;
-   size_t q = order_up;
-   //
-   Base zero(0);
-   Base* z = taylor + i_z * cap_order;
+{   Base y_0, y_1, y_2, y_3;
+    size_t p = order_low;
+    size_t q = order_up;
+    //
+    Base zero(0);
+    Base* z = taylor + i_z * cap_order;
 
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
-   if( arg[1] & 1 )
-   {
-      y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-      y_0 = parameter[ arg[2] ];
-   }
-   if( arg[1] & 2 )
-   {
-      y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-      y_1 = parameter[ arg[3] ];
-   }
-   if( p == 0 )
-   {  if( arg[1] & 4 )
-      {
-         y_2 = taylor[ size_t(arg[4]) * cap_order + 0 ];
-      }
-      else
-      {  CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-         y_2 = parameter[ arg[4] ];
-      }
-      if( arg[1] & 8 )
-      {
-         y_3 = taylor[ size_t(arg[5]) * cap_order + 0 ];
-      }
-      else
-      {  CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
-         y_3 = parameter[ arg[5] ];
-      }
-      z[0] = CondExpOp(
-         CompareOp( arg[0] ),
-         y_0,
-         y_1,
-         y_2,
-         y_3
-      );
-      p++;
-   }
-   for(size_t d = p; d <= q; d++)
-   {  if( arg[1] & 4 )
-      {
-         y_2 = taylor[ size_t(arg[4]) * cap_order + d];
-      }
-      else
-         y_2 = zero;
-      if( arg[1] & 8 )
-      {
-         y_3 = taylor[ size_t(arg[5]) * cap_order + d];
-      }
-      else
-         y_3 = zero;
-      z[d] = CondExpOp(
-         CompareOp( arg[0] ),
-         y_0,
-         y_1,
-         y_2,
-         y_3
-      );
-   }
-   return;
+    if( arg[1] & 1 )
+    {
+        y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+        y_0 = parameter[ arg[2] ];
+    }
+    if( arg[1] & 2 )
+    {
+        y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+        y_1 = parameter[ arg[3] ];
+    }
+    if( p == 0 )
+    {   if( arg[1] & 4 )
+        {
+            y_2 = taylor[ size_t(arg[4]) * cap_order + 0 ];
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
+            y_2 = parameter[ arg[4] ];
+        }
+        if( arg[1] & 8 )
+        {
+            y_3 = taylor[ size_t(arg[5]) * cap_order + 0 ];
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
+            y_3 = parameter[ arg[5] ];
+        }
+        z[0] = CondExpOp(
+            CompareOp( arg[0] ),
+            y_0,
+            y_1,
+            y_2,
+            y_3
+        );
+        p++;
+    }
+    for(size_t d = p; d <= q; d++)
+    {   if( arg[1] & 4 )
+        {
+            y_2 = taylor[ size_t(arg[4]) * cap_order + d];
+        }
+        else
+            y_2 = zero;
+        if( arg[1] & 8 )
+        {
+            y_3 = taylor[ size_t(arg[5]) * cap_order + d];
+        }
+        else
+            y_3 = zero;
+        z[d] = CondExpOp(
+            CompareOp( arg[0] ),
+            y_0,
+            y_1,
+            y_2,
+            y_3
+        );
+    }
+    return;
 }
 
 /*!
@@ -234,7 +234,7 @@ Multiple directions forward mode Taylor coefficients for op = CExpOp.
 <!-- replace conditional_exp_op -->
 The C++ source code corresponding to this operation is
 \verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
+    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
@@ -251,14 +251,14 @@ is the AD variable index corresponding to the variable z.
  arg[0]
 is static cast to size_t from the enum type
 \verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
+    enum CompareOp {
+        CompareLt,
+        CompareLe,
+        CompareEq,
+        CompareGe,
+        CompareGt,
+        CompareNe
+    }
 \endverbatim
 for this operation.
 Note that arg[0] cannot be equal to CompareNe.
@@ -339,68 +339,68 @@ in the ell-th direction.
 */
 template <class Base>
 inline void cexp_forward_dir(
-   size_t         order_up    ,
-   size_t         n_dir       ,
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   ,
-   Base*          taylor      )
-{  Base y_0, y_1, y_2, y_3;
-   size_t q = order_up;
-   size_t r = n_dir;
-   //
-   Base zero(0);
-   size_t num_taylor_per_var = (cap_order-1) * r + 1;
-   Base* z = taylor + i_z * num_taylor_per_var;
+    size_t         order_up    ,
+    size_t         n_dir       ,
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    Base*          taylor      )
+{   Base y_0, y_1, y_2, y_3;
+    size_t q = order_up;
+    size_t r = n_dir;
+    //
+    Base zero(0);
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    Base* z = taylor + i_z * num_taylor_per_var;
 
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-   CPPAD_ASSERT_UNKNOWN( 0 < q );
-   CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    CPPAD_ASSERT_UNKNOWN( 0 < q );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
-   if( arg[1] & 1 )
-   {
-      y_0 = taylor[ size_t(arg[2]) * num_taylor_per_var + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-      y_0 = parameter[ arg[2] ];
-   }
-   if( arg[1] & 2 )
-   {
-      y_1 = taylor[ size_t(arg[3]) * num_taylor_per_var + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-      y_1 = parameter[ arg[3] ];
-   }
-   size_t m = (q-1) * r + 1;
-   for(size_t ell = 0; ell < r; ell++)
-   {  if( arg[1] & 4 )
-      {
-         y_2 = taylor[ size_t(arg[4]) * num_taylor_per_var + m + ell];
-      }
-      else
-         y_2 = zero;
-      if( arg[1] & 8 )
-      {
-         y_3 = taylor[ size_t(arg[5]) * num_taylor_per_var + m + ell];
-      }
-      else
-         y_3 = zero;
-      z[m+ell] = CondExpOp(
-         CompareOp( arg[0] ),
-         y_0,
-         y_1,
-         y_2,
-         y_3
-      );
-   }
-   return;
+    if( arg[1] & 1 )
+    {
+        y_0 = taylor[ size_t(arg[2]) * num_taylor_per_var + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+        y_0 = parameter[ arg[2] ];
+    }
+    if( arg[1] & 2 )
+    {
+        y_1 = taylor[ size_t(arg[3]) * num_taylor_per_var + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+        y_1 = parameter[ arg[3] ];
+    }
+    size_t m = (q-1) * r + 1;
+    for(size_t ell = 0; ell < r; ell++)
+    {   if( arg[1] & 4 )
+        {
+            y_2 = taylor[ size_t(arg[4]) * num_taylor_per_var + m + ell];
+        }
+        else
+            y_2 = zero;
+        if( arg[1] & 8 )
+        {
+            y_3 = taylor[ size_t(arg[5]) * num_taylor_per_var + m + ell];
+        }
+        else
+            y_3 = zero;
+        z[m+ell] = CondExpOp(
+            CompareOp( arg[0] ),
+            y_0,
+            y_1,
+            y_2,
+            y_3
+        );
+    }
+    return;
 }
 
 /*!
@@ -409,7 +409,7 @@ Compute zero order forward mode Taylor coefficients for op = CExpOp.
 <!-- replace conditional_exp_op -->
 The C++ source code corresponding to this operation is
 \verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
+    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
@@ -426,14 +426,14 @@ is the AD variable index corresponding to the variable z.
  arg[0]
 is static cast to size_t from the enum type
 \verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
+    enum CompareOp {
+        CompareLt,
+        CompareLe,
+        CompareEq,
+        CompareGe,
+        CompareGt,
+        CompareNe
+    }
 \endverbatim
 for this operation.
 Note that arg[0] cannot be equal to CompareNe.
@@ -493,62 +493,62 @@ is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
 inline void cexp_forward_0(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   ,
-   Base*          taylor      )
-{  Base y_0, y_1, y_2, y_3;
-   //
-   Base* z;
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    Base*          taylor      )
+{   Base y_0, y_1, y_2, y_3;
+    //
+    Base* z;
 
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
-   if( arg[1] & 1 )
-   {
-      y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-      y_0 = parameter[ arg[2] ];
-   }
-   if( arg[1] & 2 )
-   {
-      y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-      y_1 = parameter[ arg[3] ];
-   }
-   if( arg[1] & 4 )
-   {
-      y_2 = taylor[ size_t(arg[4]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-      y_2 = parameter[ arg[4] ];
-   }
-   if( arg[1] & 8 )
-   {
-      y_3 = taylor[ size_t(arg[5]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
-      y_3 = parameter[ arg[5] ];
-   }
-   z = taylor + i_z * cap_order;
-   z[0] = CondExpOp(
-      CompareOp( arg[0] ),
-      y_0,
-      y_1,
-      y_2,
-      y_3
-   );
-   return;
+    if( arg[1] & 1 )
+    {
+        y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+        y_0 = parameter[ arg[2] ];
+    }
+    if( arg[1] & 2 )
+    {
+        y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+        y_1 = parameter[ arg[3] ];
+    }
+    if( arg[1] & 4 )
+    {
+        y_2 = taylor[ size_t(arg[4]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
+        y_2 = parameter[ arg[4] ];
+    }
+    if( arg[1] & 8 )
+    {
+        y_3 = taylor[ size_t(arg[5]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
+        y_3 = parameter[ arg[5] ];
+    }
+    z = taylor + i_z * cap_order;
+    z[0] = CondExpOp(
+        CompareOp( arg[0] ),
+        y_0,
+        y_1,
+        y_2,
+        y_3
+    );
+    return;
 }
 
 /*!
@@ -558,14 +558,14 @@ This routine is given the partial derivatives of a function
 G( z , y , x , w , ... )
 and it uses them to compute the partial derivatives of
 \verbatim
-   H( y , x , w , u , ... ) = G[ z(y) , y , x , w , u , ... ]
+    H( y , x , w , u , ... ) = G[ z(y) , y , x , w , u , ... ]
 \endverbatim
 where y above represents y_0, y_1, y_2, y_3.
 
 <!-- replace conditional_exp_op -->
 The C++ source code corresponding to this operation is
 \verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
+    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
@@ -582,14 +582,14 @@ is the AD variable index corresponding to the variable z.
  arg[0]
 is static cast to size_t from the enum type
 \verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
+    enum CompareOp {
+        CompareLt,
+        CompareLe,
+        CompareEq,
+        CompareGe,
+        CompareGt,
+        CompareNe
+    }
 \endverbatim
 for this operation.
 Note that arg[0] cannot be equal to CompareNe.
@@ -677,75 +677,75 @@ with respect to the k-th order Taylor coefficient corresponding to y_j.
 */
 template <class Base>
 inline void cexp_reverse(
-   size_t         i_z         ,
-   const addr_t*  arg         ,
-   size_t         num_par     ,
-   const Base*    parameter   ,
-   size_t         cap_order   ,
-   const Base*    taylor      ,
-   size_t         n_order     ,
-   Base*          partial     )
-{  // d
-   //
-   size_t d = n_order - 1;
-   //
-   Base y_0, y_1;
-   Base zero(0);
-   Base* pz;
-   Base* py_2;
-   Base* py_3;
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    const Base*    taylor      ,
+    size_t         n_order     ,
+    Base*          partial     )
+{   // d
+    //
+    size_t d = n_order - 1;
+    //
+    Base y_0, y_1;
+    Base zero(0);
+    Base* pz;
+    Base* py_2;
+    Base* py_3;
 
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
-   pz = partial + i_z * n_order + 0;
-   if( arg[1] & 1 )
-   {
-      y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-      y_0 = parameter[ arg[2] ];
-   }
-   if( arg[1] & 2 )
-   {
-      y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-      y_1 = parameter[ arg[3] ];
-   }
-   if( arg[1] & 4 )
-   {
-      py_2 = partial + size_t(arg[4]) * n_order;
-      size_t j = d + 1;
-      while(j--)
-      {  py_2[j] += CondExpOp(
-            CompareOp( arg[0] ),
-            y_0,
-            y_1,
-            pz[j],
-            zero
-         );
-      }
-   }
-   if( arg[1] & 8 )
-   {
-      py_3 = partial + size_t(arg[5]) * n_order;
-      size_t j = d + 1;
-      while(j--)
-      {  py_3[j] += CondExpOp(
-            CompareOp( arg[0] ),
-            y_0,
-            y_1,
-            zero,
-            pz[j]
-         );
-      }
-   }
-   return;
+    pz = partial + i_z * n_order + 0;
+    if( arg[1] & 1 )
+    {
+        y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+        y_0 = parameter[ arg[2] ];
+    }
+    if( arg[1] & 2 )
+    {
+        y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+        y_1 = parameter[ arg[3] ];
+    }
+    if( arg[1] & 4 )
+    {
+        py_2 = partial + size_t(arg[4]) * n_order;
+        size_t j = d + 1;
+        while(j--)
+        {   py_2[j] += CondExpOp(
+                CompareOp( arg[0] ),
+                y_0,
+                y_1,
+                pz[j],
+                zero
+            );
+        }
+    }
+    if( arg[1] & 8 )
+    {
+        py_3 = partial + size_t(arg[5]) * n_order;
+        size_t j = d + 1;
+        while(j--)
+        {   py_3[j] += CondExpOp(
+                CompareOp( arg[0] ),
+                y_0,
+                y_1,
+                zero,
+                pz[j]
+            );
+        }
+    }
+    return;
 }
 
 /*!
@@ -754,7 +754,7 @@ Compute forward Jacobian sparsity patterns for op = CExpOp.
 <!-- replace sparse_conditional_exp_op -->
 The C++ source code corresponding to this operation is
 \verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
+    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
@@ -770,14 +770,14 @@ is the AD variable index corresponding to the variable z.
  arg[0]
 is static cast to size_t from the enum type
 \verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
+    enum CompareOp {
+        CompareLt,
+        CompareLe,
+        CompareEq,
+        CompareGe,
+        CompareGt,
+        CompareNe
+    }
 \endverbatim
 for this operation.
 Note that arg[0] cannot be equal to CompareNe.
@@ -822,7 +822,7 @@ is the total number of values in the vector parameter.
 Are the derivatives with respect to left and right of the expression below
 considered to be non-zero:
 \code
-   CondExpRel(left, right, if_true, if_false)
+    CondExpRel(left, right, if_true, if_false)
 \endcode
 This is used by the optimizer to obtain the correct dependency relations.
 
@@ -847,37 +847,37 @@ depends on.
 */
 template <class Vector_set>
 inline void cexp_for_jac(
-   bool               dependency    ,
-   size_t             i_z           ,
-   const addr_t*      arg           ,
-   size_t             num_par       ,
-   Vector_set&        sparsity      )
-{  //
-   //
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    bool               dependency    ,
+    size_t             i_z           ,
+    const addr_t*      arg           ,
+    size_t             num_par       ,
+    Vector_set&        sparsity      )
+{   //
+    //
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 # ifndef NDEBUG
-   addr_t k = 1;
-   for( size_t j = 0; j < 4; j++)
-   {  if( ! ( arg[1] & k ) )
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
-      k *= 2;
-   }
+    addr_t k = 1;
+    for( size_t j = 0; j < 4; j++)
+    {   if( ! ( arg[1] & k ) )
+            CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+        k *= 2;
+    }
 # endif
-   sparsity.clear(i_z);
-   if( dependency )
-   {  if( arg[1] & 1 )
-         sparsity.binary_union(i_z, i_z, size_t(arg[2]), sparsity);
-      if( arg[1] & 2 )
-         sparsity.binary_union(i_z, i_z, size_t(arg[3]), sparsity);
-   }
-   if( arg[1] & 4 )
-      sparsity.binary_union(i_z, i_z, size_t(arg[4]), sparsity);
-   if( arg[1] & 8 )
-      sparsity.binary_union(i_z, i_z, size_t(arg[5]), sparsity);
-   return;
+    sparsity.clear(i_z);
+    if( dependency )
+    {   if( arg[1] & 1 )
+            sparsity.binary_union(i_z, i_z, size_t(arg[2]), sparsity);
+        if( arg[1] & 2 )
+            sparsity.binary_union(i_z, i_z, size_t(arg[3]), sparsity);
+    }
+    if( arg[1] & 4 )
+        sparsity.binary_union(i_z, i_z, size_t(arg[4]), sparsity);
+    if( arg[1] & 8 )
+        sparsity.binary_union(i_z, i_z, size_t(arg[5]), sparsity);
+    return;
 }
 
 /*!
@@ -887,14 +887,14 @@ This routine is given the sparsity patterns
 for a function G(z, y, x, ... )
 and it uses them to compute the sparsity patterns for
 \verbatim
-   H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+    H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
 where y represents the combination of y_0, y_1, y_2, and y_3.
 
 <!-- replace sparse_conditional_exp_op -->
 The C++ source code corresponding to this operation is
 \verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
+    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
@@ -910,14 +910,14 @@ is the AD variable index corresponding to the variable z.
  arg[0]
 is static cast to size_t from the enum type
 \verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
+    enum CompareOp {
+        CompareLt,
+        CompareLe,
+        CompareEq,
+        CompareGe,
+        CompareGt,
+        CompareNe
+    }
 \endverbatim
 for this operation.
 Note that arg[0] cannot be equal to CompareNe.
@@ -962,7 +962,7 @@ is the total number of values in the vector parameter.
 Are the derivatives with respect to left and right of the expression below
 considered to be non-zero:
 \code
-   CondExpRel(left, right, if_true, if_false)
+    CondExpRel(left, right, if_true, if_false)
 \endcode
 This is used by the optimizer to obtain the correct dependency relations.
 
@@ -989,37 +989,37 @@ On input and output, this pattern corresponds to the function G.
 */
 template <class Vector_set>
 inline void cexp_rev_jac(
-   bool                dependency    ,
-   size_t              i_z           ,
-   const addr_t*       arg           ,
-   size_t              num_par       ,
-   Vector_set&         sparsity      )
-{  //
-   //
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    bool                dependency    ,
+    size_t              i_z           ,
+    const addr_t*       arg           ,
+    size_t              num_par       ,
+    Vector_set&         sparsity      )
+{   //
+    //
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 # ifndef NDEBUG
-   addr_t k = 1;
-   for( size_t j = 0; j < 4; j++)
-   {  if( ! ( arg[1] & k ) )
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
-      k *= 2;
-   }
+    addr_t k = 1;
+    for( size_t j = 0; j < 4; j++)
+    {   if( ! ( arg[1] & k ) )
+            CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+        k *= 2;
+    }
 # endif
-   if( dependency )
-   {  if( arg[1] & 1 )
-         sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_z, sparsity);
-      if( arg[1] & 2 )
-         sparsity.binary_union( size_t(arg[3]), size_t(arg[3]), i_z, sparsity);
-   }
-   // --------------------------------------------------------------------
-   if( arg[1] & 4 )
-      sparsity.binary_union( size_t(arg[4]), size_t(arg[4]), i_z, sparsity);
-   if( arg[1] & 8 )
-      sparsity.binary_union( size_t(arg[5]), size_t(arg[5]), i_z, sparsity);
-   return;
+    if( dependency )
+    {   if( arg[1] & 1 )
+            sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_z, sparsity);
+        if( arg[1] & 2 )
+            sparsity.binary_union( size_t(arg[3]), size_t(arg[3]), i_z, sparsity);
+    }
+    // --------------------------------------------------------------------
+    if( arg[1] & 4 )
+        sparsity.binary_union( size_t(arg[4]), size_t(arg[4]), i_z, sparsity);
+    if( arg[1] & 8 )
+        sparsity.binary_union( size_t(arg[5]), size_t(arg[5]), i_z, sparsity);
+    return;
 }
 
 /*!
@@ -1029,14 +1029,14 @@ This routine is given the sparsity patterns
 for a function G(z, y, x, ... )
 and it uses them to compute the sparsity patterns for
 \verbatim
-   H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+    H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
 where y represents the combination of y_0, y_1, y_2, and y_3.
 
 <!-- replace sparse_conditional_exp_op -->
 The C++ source code corresponding to this operation is
 \verbatim
-   z = CondExpRel(y_0, y_1, y_2, y_3)
+    z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
@@ -1052,14 +1052,14 @@ is the AD variable index corresponding to the variable z.
  arg[0]
 is static cast to size_t from the enum type
 \verbatim
-   enum CompareOp {
-      CompareLt,
-      CompareLe,
-      CompareEq,
-      CompareGe,
-      CompareGt,
-      CompareNe
-   }
+    enum CompareOp {
+        CompareLt,
+        CompareLe,
+        CompareEq,
+        CompareGe,
+        CompareGt,
+        CompareNe
+    }
 \endverbatim
 for this operation.
 Note that arg[0] cannot be equal to CompareNe.
@@ -1147,37 +1147,37 @@ On output, this pattern corresponds to the function H.
 */
 template <class Vector_set>
 inline void cexp_rev_hes(
-   size_t               i_z           ,
-   const addr_t*        arg           ,
-   size_t               num_par       ,
-   bool*                jac_reverse   ,
-   Vector_set&          hes_sparsity  )
-{  //
-   //
+    size_t               i_z           ,
+    const addr_t*        arg           ,
+    size_t               num_par       ,
+    bool*                jac_reverse   ,
+    Vector_set&          hes_sparsity  )
+{   //
+    //
 
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
-   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-   CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-   CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+    CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 # ifndef NDEBUG
-   addr_t k = 1;
-   for( size_t j = 0; j < 4; j++)
-   {  if( ! ( arg[1] & k ) )
-         CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
-      k *= 2;
-   }
+    addr_t k = 1;
+    for( size_t j = 0; j < 4; j++)
+    {   if( ! ( arg[1] & k ) )
+            CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+        k *= 2;
+    }
 # endif
-   if( arg[1] & 4 )
-   {
-      hes_sparsity.binary_union( size_t(arg[4]), size_t(arg[4]), i_z, hes_sparsity);
-      jac_reverse[ arg[4] ] |= jac_reverse[i_z];
-   }
-   if( arg[1] & 8 )
-   {
-      hes_sparsity.binary_union( size_t(arg[5]), size_t(arg[5]), i_z, hes_sparsity);
-      jac_reverse[ arg[5] ] |= jac_reverse[i_z];
-   }
-   return;
+    if( arg[1] & 4 )
+    {
+        hes_sparsity.binary_union( size_t(arg[4]), size_t(arg[4]), i_z, hes_sparsity);
+        jac_reverse[ arg[4] ] |= jac_reverse[i_z];
+    }
+    if( arg[1] & 8 )
+    {
+        hes_sparsity.binary_union( size_t(arg[5]), size_t(arg[5]), i_z, hes_sparsity);
+        jac_reverse[ arg[5] ] |= jac_reverse[i_z];
+    }
+    return;
 }
 
 } } } // END namespace

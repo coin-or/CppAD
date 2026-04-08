@@ -5,14 +5,14 @@
 
 {xrst_begin CppAD_vector}
 {xrst_spell
-   citr
-   cout
-   dereference
-   endl
-   initializer
-   ostream
-   rvalues
-   typename
+    citr
+    cout
+    dereference
+    endl
+    initializer
+    ostream
+    rvalues
+    typename
 }
 
 The CppAD::vector Template Class
@@ -67,14 +67,14 @@ The size *n* in the constructor syntax below can be an
 ``int`` or ``unsigned int``
 (all simple vectors support ``size_t`` ):
 
-   ``CppAD::vector<`` *Scalar* > *vec* ( *n* )
+    ``CppAD::vector<`` *Scalar* > *vec* ( *n* )
 
 Value
 =====
 The size constructor can specify a *value* to assign
 to all of the vector elements:
 
-   ``CppAD::vector<`` *Scalar* > *vec* ( *n* , *value* )
+    ``CppAD::vector<`` *Scalar* > *vec* ( *n* , *value* )
 
 where *value* is a *Scalar* object.
 
@@ -84,25 +84,25 @@ Initializer Constructor
 If *e_1* , ... , *e_n* are values of type *Scalar*,
 the syntax below constructs a vector with the corresponding element values.
 
-   ``CppAD::vector`` < *Scalar* > *vec* ( { *e_1* , ... , *e_n* )
+    ``CppAD::vector`` < *Scalar* > *vec* ( { *e_1* , ... , *e_n* )
 
 
 capacity
 ********
 If *cap* is a ``size_t`` object,
 
-   *cap* = *vec* . ``capacity`` ()
+    *cap* = *vec* . ``capacity`` ()
 
 set *cap* to the number of *Scalar* objects that
 could fit in the memory currently allocated for *vec* .
 Note that
 
-   *vec* . ``size`` () <= *vec* . ``capacity`` ()
+    *vec* . ``size`` () <= *vec* . ``capacity`` ()
 
 swap
 ****
 
-   *vec* . ``swap`` ( *other* )
+    *vec* . ``swap`` ( *other* )
 
 exchanges the contents of *vec* and *other* .
 For example :ref:`vec.data()<CppAD_vector@data>` after the ``swap``
@@ -111,7 +111,7 @@ is equal to *other* . ``data`` () before ``swap`` .
 Assignment
 **********
 
-   *vec* = *other*
+    *vec* = *other*
 
 has all the properties listed for a
 :ref:`simple vector assignment<SimpleVector@Assignment>`
@@ -128,7 +128,7 @@ Return Reference
 A reference to the vector *vec* is returned.
 An example use of this reference is in multiple assignments of the form
 
-   *vec* = *other* = *another*
+    *vec* = *other* = *another*
 
 where *another* is a ``CppAD::vector<`` *Scalar* > object.
 
@@ -144,11 +144,11 @@ Comparison
 If *op* is == , != , < , <= , > , >= and
 *result* is a ``bool`` , and
 
-   *result* = *vec* *op* *other*
+    *result* = *vec* *op* *other*
 
 *result* is true if the comparison
 
-   *vec* [ *i* ] *op* *other [ *i* ]
+    *vec* [ *i* ] *op* *other [ *i* ]
 
 is true for all valid indices *i* .
 Otherwise, the *result* is false
@@ -157,7 +157,7 @@ Element Access
 **************
 If *i* has type ``size_t`` ,
 
-   *vec* [ *i* ]
+    *vec* [ *i* ]
 
 has all the properties listed for a
 :ref:`simple vector element access<SimpleVector@Element Access>`
@@ -183,7 +183,7 @@ push_back
 If *vec* has size *n* and
 *scalar* has type *Scalar* ,
 
-   *vec* . ``push_back`` ( *scalar* )
+    *vec* . ``push_back`` ( *scalar* )
 
 extends the vector so that its new size is *n* +1
 and *vec* [ *n* ] is equal to *s*
@@ -195,7 +195,7 @@ If *vec* has size *n* and
 *simple_vec* is a :ref:`simple vector<SimpleVector-name>`
 with elements of type *Scalar* and size *m* ,
 
-   *vec* . ``push_vector`` ( *simple_vec* )
+    *vec* . ``push_vector`` ( *simple_vec* )
 
 extends the vector *vec* so that its new size is *n* + *m*
 and *vec* [ *n* + *i* ] is equal to *simple_vec* [ *i* ]
@@ -206,7 +206,7 @@ Output
 ******
 If *os* is an ``std::ostream`` , the operation
 
-   *os* << *vec*
+    *os* << *vec*
 
 will output *vec* to the standard output stream *os* .
 The elements of *vec* are enclosed at the beginning by a
@@ -216,7 +216,7 @@ and they are enclosed at the end by ``}`` character.
 It is assumed by this operation that if *scalar*
 is an object with type *Scalar* ,
 
-   *os* << *scalar*
+    *os* << *scalar*
 
 will output the value *scalar* to *os* .
 
@@ -224,7 +224,7 @@ resize
 ******
 If *n* is a ``size_t`` or ``int`` ,
 
-   *vec* . ``resize`` ( *n* )
+    *vec* . ``resize`` ( *n* )
 
 sets the size of *vec* equal to *n* .
 
@@ -245,7 +245,7 @@ you can resize to zero and then to the new size to avoid the copy.
 clear
 *****
 
-   *vec* . ``clear`` ()
+    *vec* . ``clear`` ()
 
 frees all memory allocated for *vec*
 and both its size and capacity are set to zero.
@@ -256,7 +256,7 @@ see the :ref:`memory<CppAD_vector@Memory and Parallel Mode>` discussion.
 data
 ****
 
-   *vec* . ``data`` ()
+    *vec* . ``data`` ()
 
 returns a pointer to a *Scalar* object such that for
 0 <= *i* < *vec* . ``size`` () ,
@@ -340,7 +340,7 @@ bit_per_unit
 ============
 The static function call
 
-   *size* = ``vectorBool::bit_per_unit`` ()
+    *size* = ``vectorBool::bit_per_unit`` ()
 
 returns the ``size_t`` value *s*
 which is equal to the number of boolean values (bits) that are
@@ -378,20 +378,20 @@ operations:
 #. *element_t* can be converted to ``bool`` ; e.g.
    the following syntax is supported:
 
-      ``static_cast<bool>`` ( *vec_bool* [ *i* ] )
+        ``static_cast<bool>`` ( *vec_bool* [ *i* ] )
 
 #. *element_t* supports the assignment operator ``=`` where the
    right hand side is a ``bool`` or an *element_t* object; e.g.,
    if *flag* has type ``bool`` , the following syntax is supported:
 
-      *vec_bool* [ *i* ] = *flag*
+        *vec_bool* [ *i* ] = *flag*
 
 #. The result of an assignment to an *element_t*
    also has type *element_t* .
    For example, if *other_flag* has type ``bool`` ,
    the following syntax is supported:
 
-      *other_flag* = *vec_bool* [ *i* ] = *flag*
+        *other_flag* = *vec_bool* [ *i* ] = *flag*
 
 Memory and Parallel Mode
 ************************
@@ -414,8 +414,8 @@ These vectors use the multi-threaded fast memory allocator
 Example
 *******
 {xrst_toc_hidden
-   example/utility/cppad_vector.cpp
-   example/utility/vector_bool.cpp
+    example/utility/cppad_vector.cpp
+    example/utility/vector_bool.cpp
 }
 The files
 :ref:`cppad_vector.cpp-name` and
@@ -428,10 +428,10 @@ Exercise
 Create and run a program that contains the following code:
 ::
 
-   CppAD::vector<double> x(3);
-   size_t i;
-   for(i = 0; i < 3; i++)
-   x[i] = 4. - i;
-   std::cout << "x = " << x << std::endl;
+    CppAD::vector<double> x(3);
+    size_t i;
+    for(i = 0; i < 3; i++)
+    x[i] = 4. - i;
+    std::cout << "x = " << x << std::endl;
 
 {xrst_end CppAD_vector}

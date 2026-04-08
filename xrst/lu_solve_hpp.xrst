@@ -12,9 +12,9 @@ Source: LuSolve
 | # ``define CPPAD_LU_SOLVE_HPP``
 
 {xrst_literal
-   include/cppad/utility/lu_solve.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/utility/lu_solve.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

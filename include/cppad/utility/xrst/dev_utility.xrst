@@ -11,8 +11,8 @@ General Purpose Utilities Developer Documentation
 Contents
 ********
 {xrst_toc_table
-   include/cppad/utility/xrst/dev_cppad_vector.xrst
-   include/cppad/utility/xrst/dev_vector_bool.xrst
+    include/cppad/utility/xrst/dev_cppad_vector.xrst
+    include/cppad/utility/xrst/dev_vector_bool.xrst
 }
 
 {xrst_end dev_utility}

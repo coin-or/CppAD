@@ -5,25 +5,25 @@
 
 {xrst_begin 2009 app}
 {xrst_spell
-   adolc
-   apx
-   autoconf
-   automake
-   doxygen
-   eps
-   ip
-   ipopt
-   isnan
-   mhelp
-   nlp
-   of of
-   openmp
-   prev
-   pycppad
-   retape
-   svn
-   tarball
-   valgrind
+    adolc
+    apx
+    autoconf
+    automake
+    doxygen
+    eps
+    ip
+    ipopt
+    isnan
+    mhelp
+    nlp
+    of of
+    openmp
+    prev
+    pycppad
+    retape
+    svn
+    tarball
+    valgrind
 }
 
 Release Notes for 2009
@@ -280,10 +280,10 @@ The dates below represent when the correspond change was made.
    Some bugs have been fix and the routine can
    now be trusted to work correctly.
 
-   The function
-   :ref:`fun_property@size_VecAD` function was added
-   so that the user could see the ``VecAD`` vectors
-   and elements corresponding to an operation sequence.
+    The function
+    :ref:`fun_property@size_VecAD` function was added
+    so that the user could see the ``VecAD`` vectors
+    and elements corresponding to an operation sequence.
 
 #. 08-09:
    A routine for :ref:`optimizing<optimize-name>` the operation sequence
@@ -373,9 +373,9 @@ The dates below represent when the correspond change was made.
    This bug was demonstrated by the test case ``SecondOrderReverse``
    in the file ``test_more/cond_exp.cpp`` .
 
-   A simpler and useful example was provided for
-   :ref:`conditional expressions<CondExp-name>` ;
-   see :ref:`cond_exp.cpp-name` .
+    A simpler and useful example was provided for
+    :ref:`conditional expressions<CondExp-name>` ;
+    see :ref:`cond_exp.cpp-name` .
 
 #. 07-03:
    Some minor improvements were made to the documentation for
@@ -391,8 +391,8 @@ The dates below represent when the correspond change was made.
    Fix an example indexing error in
    ``introduction/exp_apx/exp_eps_for2.cpp`` (found by valgrind).
 
-   Add developer doxygen documentation of
-   tape evaluation for multiplication and division operators.
+    Add developer doxygen documentation of
+    tape evaluation for multiplication and division operators.
 
 #. 06-30:
    Add developer doxygen documentation of

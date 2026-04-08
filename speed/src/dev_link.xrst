@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin speed_available dev}
 {xrst_spell
-   src
+    src
 }
 
 Is A Speed Test Available
@@ -42,7 +42,7 @@ This function is implemented in the file
 ------------------------------------------------------------------------------
 {xrst_begin speed_correct dev}
 {xrst_spell
-   src
+    src
 }
 
 Does a A Speed Test Return Correct Results
@@ -51,7 +51,7 @@ Does a A Speed Test Return Correct Results
 Syntax
 ******
 
-   *ok* = ``correct_`` *name* ( *is_package_double* )
+    *ok* = ``correct_`` *name* ( *is_package_double* )
 
 name
 ****
@@ -86,7 +86,7 @@ This function is implemented in the file
 ------------------------------------------------------------------------------
 {xrst_begin speed_time dev}
 {xrst_spell
-   src
+    src
 }
 
 Measure Time It Takes for a A Speed Test to Run
@@ -95,7 +95,7 @@ Measure Time It Takes for a A Speed Test to Run
 Syntax
 ******
 
-   *time* = ``time_`` *name* ( *time_min* , *size* )
+    *time* = ``time_`` *name* ( *time_min* , *size* )
 
 name
 ****
@@ -143,7 +143,7 @@ Timing Callback Functions
 Syntax
 ******
 
-   *time* = ``time_`` *name* _ ``callback`` ( *size_t* , *repeat* )
+    *time* = ``time_`` *name* _ ``callback`` ( *size_t* , *repeat* )
 
 name
 ****

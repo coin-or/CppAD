@@ -31,7 +31,7 @@ seed
 ****
 The argument *seed* has prototype
 
-   ``size_t`` *seed*
+    ``size_t`` *seed*
 
 It specifies a seed
 for the uniform random number generator.
@@ -40,7 +40,7 @@ n
 *
 The argument *n* has prototype
 
-   ``size_t`` *n*
+    ``size_t`` *n*
 
 It specifies the number of elements in the random vector *x* .
 
@@ -48,7 +48,7 @@ x
 *
 The argument *x* has prototype
 
-   *Vector* & *x*
+    *Vector* & *x*
 
 .
 The input value of the elements of *x* does not matter.
@@ -60,13 +60,13 @@ Vector
 If *y* is a ``double`` value,
 the object *x* must support the syntax
 
-   *x* [ *i* ] = *y*
+    *x* [ *i* ] = *y*
 
 where *i* has type ``size_t`` with value less than
 or equal :math:`n-1`.
 This is the only requirement of the type *Vector* .
 {xrst_toc_hidden
-   xrst/uniform_01_hpp.xrst
+    xrst/uniform_01_hpp.xrst
 }
 
 Source Code
@@ -82,15 +82,15 @@ constraints the source code for this template function.
 # include <cstdlib>
 
 namespace CppAD {
-   inline void uniform_01(size_t seed)
-   {  std::srand( (unsigned int) seed); }
+    inline void uniform_01(size_t seed)
+    {   std::srand( (unsigned int) seed); }
 
-   template <class Vector>
-   void uniform_01(size_t n, Vector &x)
-   {  static double factor = 1. / double(RAND_MAX);
-      while(n--)
-         x[n] = std::rand() * factor;
-   }
+    template <class Vector>
+    void uniform_01(size_t n, Vector &x)
+    {   static double factor = 1. / double(RAND_MAX);
+        while(n--)
+            x[n] = std::rand() * factor;
+    }
 }
 // END C++
 # endif

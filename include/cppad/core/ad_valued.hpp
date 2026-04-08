@@ -16,12 +16,12 @@ AD Valued Operations and Functions
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/arithmetic.hpp
-   include/cppad/core/standard_math.hpp
-   include/cppad/core/cond_exp.hpp
-   include/cppad/core/discrete/user.xrst
-   include/cppad/core/numeric_limits.hpp
-   include/cppad/core/atomic/atomic.xrst
+    include/cppad/core/arithmetic.hpp
+    include/cppad/core/standard_math.hpp
+    include/cppad/core/cond_exp.hpp
+    include/cppad/core/discrete/user.xrst
+    include/cppad/core/numeric_limits.hpp
+    include/cppad/core/atomic/atomic.xrst
 }
 
 {xrst_end ADValued}

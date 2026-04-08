@@ -26,7 +26,7 @@ execute the following commands starting in the
 You can then run the corresponding speed tests
 with the following command
 
-   ./ ``speed_double speed`` *seed*
+    ./ ``speed_double speed`` *seed*
 
 where *seed* is a positive integer.
 See :ref:`speed_main-name` for more options.
@@ -34,13 +34,13 @@ See :ref:`speed_main-name` for more options.
 Contents
 ********
 {xrst_toc_list
-   speed/double/det_minor.cpp
-   speed/double/det_lu.cpp
-   speed/double/mat_mul.cpp
-   speed/double/ode.cpp
-   speed/double/poly.cpp
-   speed/double/sparse_hessian.cpp
-   speed/double/sparse_jacobian.cpp
+    speed/double/det_minor.cpp
+    speed/double/det_lu.cpp
+    speed/double/mat_mul.cpp
+    speed/double/ode.cpp
+    speed/double/poly.cpp
+    speed/double/sparse_hessian.cpp
+    speed/double/sparse_jacobian.cpp
 }
 
 {xrst_end speed_double}

@@ -29,7 +29,7 @@ This routine check if
 
 .. math::
 
-   F(x) = G(x)
+    F(x) = G(x)
 
 If :math:`F(x) \neq G(x)`, the
 :ref:`operation sequence<glossary@Operation@Sequence>`
@@ -41,7 +41,7 @@ f
 *
 The ``FunCheck`` argument *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 Note that the :ref:`ADFun-name` object *f* is not ``const``
 (see :ref:`Forward<FunCheck@FunCheck Uses Forward>` below).
@@ -50,12 +50,12 @@ g
 *
 The ``FunCheck`` argument *g* has prototype
 
-   *Fun* & *g*
+    *Fun* & *g*
 
 ( *Fun* is defined the properties of *g* ).
 The C++ function object *g* supports the syntax
 
-   *y* = *g* ( *x* )
+    *y* = *g* ( *x* )
 
 which computes :math:`y = G(x)`.
 
@@ -63,7 +63,7 @@ x
 =
 The *g* argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 (see :ref:`FunCheck@Vector` below)
 and its size
@@ -74,7 +74,7 @@ y
 *
 The *g* result *y* has prototype
 
-   *Vector* *y*
+    *Vector* *y*
 
 and its value is :math:`G(x)`.
 The size of *y*
@@ -85,7 +85,7 @@ x
 *
 The ``FunCheck`` argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 and its size
 must be equal to *n* , the dimension of the
@@ -97,7 +97,7 @@ r
 *
 The ``FunCheck`` argument *r* has prototype
 
-   ``const`` *Base* & *r*
+    ``const`` *Base* & *r*
 
 It specifies the relative error the element by element
 comparison of the value of :math:`F(x)` and :math:`G(x)`.
@@ -106,7 +106,7 @@ a
 *
 The ``FunCheck`` argument *a* has prototype
 
-   ``const`` *Base* & *a*
+    ``const`` *Base* & *a*
 
 It specifies the absolute error the element by element
 comparison of the value of :math:`F(x)` and :math:`G(x)`.
@@ -115,22 +115,22 @@ ok
 **
 The ``FunCheck`` result *ok* has prototype
 
-   ``bool`` *ok*
+    ``bool`` *ok*
 
 It is true, if for :math:`i = 0 , \ldots , m-1`
 either the relative error bound is satisfied
 
 .. math::
 
-   | F_i (x) - G_i (x) |
-   \leq
-   r ( | F_i (x) | + | G_i (x) | )
+    | F_i (x) - G_i (x) |
+    \leq
+    r ( | F_i (x) | + | G_i (x) | )
 
 or the absolute error bound is satisfied
 
 .. math::
 
-   | F_i (x) - G_i (x) | \leq a
+    | F_i (x) - G_i (x) | \leq a
 
 It is false if for some :math:`(i, j)` neither
 of these bounds is satisfied.
@@ -181,7 +181,7 @@ for this value of independent variables).
 Example
 *******
 {xrst_toc_hidden
-   example/general/fun_check.cpp
+    example/general/fun_check.cpp
 }
 The file
 :ref:`fun_check.cpp-name`
@@ -192,24 +192,24 @@ contains an example and test of this function.
 */
 
 namespace CppAD {
-   template <class Base, class RecBase, class Fun, class Vector>
-   bool FunCheck(
-      ADFun<Base, RecBase>  &f ,
-      Fun                   &g ,
-      const Vector          &x ,
-      const Base            &r ,
-      const Base            &a )
-   {  bool ok = true;
+    template <class Base, class RecBase, class Fun, class Vector>
+    bool FunCheck(
+        ADFun<Base, RecBase>  &f ,
+        Fun                   &g ,
+        const Vector          &x ,
+        const Base            &r ,
+        const Base            &a )
+    {   bool ok = true;
 
-      size_t m   = f.Range();
-      Vector yf  = f.Forward(0, x);
-      Vector yg  = g(x);
+        size_t m   = f.Range();
+        Vector yf  = f.Forward(0, x);
+        Vector yg  = g(x);
 
-      size_t i;
-      for(i = 0; i < m; i++)
-         ok  &= NearEqual(yf[i], yg[i], r, a);
-      return ok;
-   }
+        size_t i;
+        for(i = 0; i < m; i++)
+            ok  &= NearEqual(yf[i], yg[i], r, a);
+        return ok;
+    }
 }
 
 # endif

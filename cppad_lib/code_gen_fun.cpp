@@ -5,8 +5,8 @@
 /*
 {xrst_begin code_gen_fun}
 {xrst_spell
-   cg
-   jrcv
+    cg
+    jrcv
 }
 
 Generate Source Code and Compile an AD Function
@@ -46,35 +46,35 @@ Prototype
 Constructors
 ============
 {xrst_literal
-   // BEGIN_CTOR_VOID
-   // END_CTOR_VOID
+    // BEGIN_CTOR_VOID
+    // END_CTOR_VOID
 }
 {xrst_literal
-   // BEGIN_CTOR_FILE_NAME
-   // END_CTOR_FILE_NAME
+    // BEGIN_CTOR_FILE_NAME
+    // END_CTOR_FILE_NAME
 }
 {xrst_literal
-   // BEGIN_CTOR_CG_FUN
-   // END_CTOR_CG_FUN
+    // BEGIN_CTOR_CG_FUN
+    // END_CTOR_CG_FUN
 }
 
 Operations
 ==========
 {xrst_literal
-   // BEGIN_SWAP_OTHER_FUN
-   // END_SWAP_OTHER_FUN
+    // BEGIN_SWAP_OTHER_FUN
+    // END_SWAP_OTHER_FUN
 }
 {xrst_literal
-   // BEGIN_FUN_NAME_X
-   // END_FUN_NAME_X
+    // BEGIN_FUN_NAME_X
+    // END_FUN_NAME_X
 }
 {xrst_literal
-   // BEGIN_JACOBIAN
-   // END_JACOBIAN
+    // BEGIN_JACOBIAN
+    // END_JACOBIAN
 }
 {xrst_literal
-   // BEGIN_SPARSE_JACOBIAN
-   // END_SPARSE_JACOBIAN
+    // BEGIN_SPARSE_JACOBIAN
+    // END_SPARSE_JACOBIAN
 }
 
 CppAD::cg::CG<double>
@@ -86,7 +86,7 @@ It is defined by
 and used to convert the *cg_fun* function object to source code,
 compile the source code, and then link the corresponding function evaluation
 
-   *y* = ``cg_fun.Forward`` (0, *x* )
+    *y* = ``cg_fun.Forward`` (0, *x* )
 
 Speed
 *****
@@ -95,10 +95,10 @@ amount of time and the evaluation of the function is expected to be
 much faster; see the following speed tests:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   cppadcg_det_minor.cpp,:ref:`cppadcg_det_minor.cpp-title`
-   cppadcg_sparse_jacobian.cpp,:ref:`cppadcg_sparse_jacobian.cpp-title`
+    cppadcg_det_minor.cpp,:ref:`cppadcg_det_minor.cpp-title`
+    cppadcg_sparse_jacobian.cpp,:ref:`cppadcg_sparse_jacobian.cpp-title`
 
 fun_name
 ********
@@ -132,11 +132,11 @@ it determines which type of Jacobian :math:`f'(x)` will be enabled.
 The possible choices for *eval_jac* are:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   *eval_jac*,Available Jacobian
-   ``code_gen_fun::none_enum``,none
-   ``code_gen_fun::dense_enum``,*fun_name* . ``jacobian``
+    *eval_jac*,Available Jacobian
+    ``code_gen_fun::none_enum``,none
+    ``code_gen_fun::dense_enum``,*fun_name* . ``jacobian``
 
 The default value for *eval_jac* is none.
 
@@ -164,7 +164,7 @@ the Jacobian :math:`f'(x)` where
 
 .. math::
 
-   J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)
+    J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)
 
 Speed
 =====
@@ -192,25 +192,25 @@ a function (:ref:`sparse_jac_fun-name` ) or it's Jacobian to CppADCodeGen
 THis test indicates that both methods have similar setup
 and derivative calculation times.
 {xrst_toc_hidden
-   example/cppad_code_gen/function.cpp
-   example/cppad_code_gen/file.cpp
-   example/cppad_code_gen/jacobian.cpp
-   example/cppad_code_gen/jac_as_fun.cpp
-   example/cppad_code_gen/sparse_jacobian.cpp
-   example/cppad_code_gen/sparse_jac_as_fun.cpp
+    example/cppad_code_gen/function.cpp
+    example/cppad_code_gen/file.cpp
+    example/cppad_code_gen/jacobian.cpp
+    example/cppad_code_gen/jac_as_fun.cpp
+    example/cppad_code_gen/sparse_jacobian.cpp
+    example/cppad_code_gen/sparse_jac_as_fun.cpp
 }
 Examples
 ********
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   code_gen_fun_function.cpp,:ref:`code_gen_fun_function.cpp-title`
-   code_gen_fun_file.cpp,:ref:`code_gen_fun_file.cpp-title`
-   code_gen_fun_jacobian.cpp,:ref:`code_gen_fun_jacobian.cpp-title`
-   code_gen_fun_jac_as_fun.cpp,:ref:`code_gen_fun_jac_as_fun.cpp-title`
-   code_gen_fun_sparse_jacobian.cpp,:ref:`code_gen_fun_sparse_jacobian.cpp-title`
-   code_gen_fun_sparse_jac_as_fun.cpp,:ref:`code_gen_fun_sparse_jac_as_fun.cpp-title`
+    code_gen_fun_function.cpp,:ref:`code_gen_fun_function.cpp-title`
+    code_gen_fun_file.cpp,:ref:`code_gen_fun_file.cpp-title`
+    code_gen_fun_jacobian.cpp,:ref:`code_gen_fun_jacobian.cpp-title`
+    code_gen_fun_jac_as_fun.cpp,:ref:`code_gen_fun_jac_as_fun.cpp-title`
+    code_gen_fun_sparse_jacobian.cpp,:ref:`code_gen_fun_sparse_jacobian.cpp-title`
+    code_gen_fun_sparse_jac_as_fun.cpp,:ref:`code_gen_fun_sparse_jac_as_fun.cpp-title`
 
 Implementation
 **************
@@ -230,9 +230,9 @@ See Also
 Source
 ******
 {xrst_literal
-   include/cppad/example/code_gen_fun.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/example/code_gen_fun.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end code_gen_fun.hpp}
@@ -249,8 +249,8 @@ See Also
 Source
 ******
 {xrst_literal
-   // BEGIN_C++
-   // END_C++
+    // BEGIN_C++
+    // END_C++
 }
 
 {xrst_end code_gen_fun.cpp}
@@ -263,34 +263,34 @@ Source
 // ---------------------------------------------------------------------------
 // BEGIN_CTOR_CG_FUN
 code_gen_fun::code_gen_fun(
-   const std::string&                     file_name  ,
-   CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun     ,
-   evaluation_enum                        eval_jac   )
+    const std::string&                     file_name  ,
+    CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun     ,
+    evaluation_enum                        eval_jac   )
 // END_CTOR_CG_FUN
-{  // Generate source code
-   CppAD::cg::ModelCSourceGen<double> cgen(cg_fun, "model");
-   switch(eval_jac)
-   {  case none_enum:
-      break;
+{   // Generate source code
+    CppAD::cg::ModelCSourceGen<double> cgen(cg_fun, "model");
+    switch(eval_jac)
+    {   case none_enum:
+        break;
 
-      case dense_enum:
-      cgen.setCreateJacobian(true);
-      break;
+        case dense_enum:
+        cgen.setCreateJacobian(true);
+        break;
 
-      case sparse_enum:
-      cgen.setCreateSparseJacobian(true);
-      break;
-   }
-   CppAD::cg::ModelLibraryCSourceGen<double> libcgen(cgen);
+        case sparse_enum:
+        cgen.setCreateSparseJacobian(true);
+        break;
+    }
+    CppAD::cg::ModelLibraryCSourceGen<double> libcgen(cgen);
 
-   // Compile source, create the library file, and load the library
-   CppAD::cg::DynamicModelLibraryProcessor<double> proc(libcgen, file_name);
-   CppAD::cg::ClangCompiler<double> compiler;
-   bool loadLib = true;
-   dynamic_lib_ = proc.createDynamicLibrary(compiler, loadLib);
-   //
-   // create the model object
-   model_        = dynamic_lib_->model("model");
+    // Compile source, create the library file, and load the library
+    CppAD::cg::DynamicModelLibraryProcessor<double> proc(libcgen, file_name);
+    CppAD::cg::ClangCompiler<double> compiler;
+    bool loadLib = true;
+    dynamic_lib_ = proc.createDynamicLibrary(compiler, loadLib);
+    //
+    // create the model object
+    model_        = dynamic_lib_->model("model");
 }
 // ---------------------------------------------------------------------------
 // code_gen_fun fun_name(file_name)
@@ -298,17 +298,17 @@ code_gen_fun::code_gen_fun(
 // BEGIN_CTOR_FILE_NAME
 code_gen_fun::code_gen_fun(const std::string&  file_name )
 // END_CTOR_FILE_NAME
-{  // file name plus extension used for dynamic libraries on this system
-   std::string file_name_ext = file_name +
-      CppAD::cg::system::SystemInfo<>::DYNAMIC_LIB_EXTENSION;
+{   // file name plus extension used for dynamic libraries on this system
+    std::string file_name_ext = file_name +
+        CppAD::cg::system::SystemInfo<>::DYNAMIC_LIB_EXTENSION;
 
-   // load the library
-   CppAD::cg::DynamicLib<double>* ptr =
-      new CppAD::cg::LinuxDynamicLib<double>(file_name_ext);
-   dynamic_lib_  = std::unique_ptr< CppAD::cg::DynamicLib<double> >(ptr);
-   //
-   // create the model object
-   model_        = dynamic_lib_->model("model");
+    // load the library
+    CppAD::cg::DynamicLib<double>* ptr =
+        new CppAD::cg::LinuxDynamicLib<double>(file_name_ext);
+    dynamic_lib_  = std::unique_ptr< CppAD::cg::DynamicLib<double> >(ptr);
+    //
+    // create the model object
+    model_        = dynamic_lib_->model("model");
 }
 // ---------------------------------------------------------------------------
 // code_gen_fun fun_name
@@ -323,8 +323,8 @@ code_gen_fun::code_gen_fun(void)
 // BEGIN_SWAP_OTHER_FUN
 void code_gen_fun::swap(code_gen_fun& other_fun)
 // END_SWAP_OTHER_FUN
-{  std::swap(dynamic_lib_, other_fun.dynamic_lib_);
-   std::swap(model_, other_fun.model_ );
+{   std::swap(dynamic_lib_, other_fun.dynamic_lib_);
+    std::swap(model_, other_fun.model_ );
 }
 // --------------------------------------------------------------------------
 // y = fun_name(x)
@@ -333,7 +333,7 @@ void code_gen_fun::swap(code_gen_fun& other_fun)
 CppAD::vector<double>
 code_gen_fun::operator()(const CppAD::vector<double>& x)
 // END_FUN_NAME_X
-{  return model_->ForwardZero(x);
+{   return model_->ForwardZero(x);
 }
 // --------------------------------------------------------------------------
 // J = fun_name.jacobian(x)
@@ -342,10 +342,10 @@ code_gen_fun::operator()(const CppAD::vector<double>& x)
 CppAD::vector<double>
 code_gen_fun::jacobian(const CppAD::vector<double>& x)
 // END_JACOBIAN
-{  CPPAD_ASSERT_KNOWN( model_->isJacobianAvailable() ,
-      "code_gen_fun: dense jacobian not enables during constructor"
-   );
-   return model_-> Jacobian(x);
+{   CPPAD_ASSERT_KNOWN( model_->isJacobianAvailable() ,
+        "code_gen_fun: dense jacobian not enables during constructor"
+    );
+    return model_-> Jacobian(x);
 }
 // --------------------------------------------------------------------------
 // Jrcv = fun_name.sparse_jacobian(x)
@@ -354,36 +354,36 @@ code_gen_fun::jacobian(const CppAD::vector<double>& x)
 CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
 code_gen_fun::sparse_jacobian(const CppAD::vector<double>& x)
 // END_SPARSE_JACOBIAN
-{  CPPAD_ASSERT_KNOWN( model_->isSparseJacobianAvailable() ,
-      "code_gen_fun: sparse jacobian not enabled during constructor"
-   );
-   // x_std
-   size_t n = model_->Domain();
-   std::vector<double> x_std(n);
-   for(size_t j = 0; j < n; ++j)
-      x_std[j] = x[j];
-   //
-   // 2DO: Prepahs CppAD should have a sparse_rcv constructor (jac, row, col)
-   // that uses swap to swap the vectors
-   //
-   // jac, row, col
-   std::vector<double> jac;
-   std::vector<size_t> row, col;
-   model_-> SparseJacobian(x_std, jac, row, col);
-   //
-   // sparse_rc
-   size_t nr  = model_->Range();
-   size_t nc  = model_->Domain();
-   size_t nnz = row.size();
-   CppAD::sparse_rc< CppAD::vector<size_t> > pattern(nr, nc, nnz);
-   for(size_t k = 0; k < nnz; ++k)
-      pattern.set(k, row[k], col[k]);
-   // sparse_rcv
-   CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
-   Jrcv(pattern);
-   for(size_t k = 0; k < nnz; ++k)
-      Jrcv.set(k, jac[k]);
-   //
-   return Jrcv;
+{   CPPAD_ASSERT_KNOWN( model_->isSparseJacobianAvailable() ,
+        "code_gen_fun: sparse jacobian not enabled during constructor"
+    );
+    // x_std
+    size_t n = model_->Domain();
+    std::vector<double> x_std(n);
+    for(size_t j = 0; j < n; ++j)
+        x_std[j] = x[j];
+    //
+    // 2DO: Prepahs CppAD should have a sparse_rcv constructor (jac, row, col)
+    // that uses swap to swap the vectors
+    //
+    // jac, row, col
+    std::vector<double> jac;
+    std::vector<size_t> row, col;
+    model_-> SparseJacobian(x_std, jac, row, col);
+    //
+    // sparse_rc
+    size_t nr  = model_->Range();
+    size_t nc  = model_->Domain();
+    size_t nnz = row.size();
+    CppAD::sparse_rc< CppAD::vector<size_t> > pattern(nr, nc, nnz);
+    for(size_t k = 0; k < nnz; ++k)
+        pattern.set(k, row[k], col[k]);
+    // sparse_rcv
+    CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
+    Jrcv(pattern);
+    for(size_t k = 0; k < nnz; ++k)
+        Jrcv.set(k, jac[k]);
+    //
+    return Jrcv;
 }
 // END_C++

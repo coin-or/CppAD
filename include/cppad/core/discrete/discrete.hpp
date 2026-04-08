@@ -50,7 +50,7 @@ Source Code
 # define CPPAD_DISCRETE_FUNCTION(Base, name)            \
 inline CppAD::AD<Base> name (const CppAD::AD<Base>& ax) \
 {    static CppAD::discrete<Base> fun(#name, name);     \
-     return fun.ad(ax);                                 \
+      return fun.ad(ax);                                 \
 }                                                       \
 CppAD::AD<Base> this_variable_name_used_to_initialize_discrete_ ##name =  \
 name( CppAD::AD<Base>(0.0) );
@@ -94,11 +94,11 @@ Source Code
 template <class Base>
 class discrete {
 private:
-   template <class Type> friend void parallel_ad(void);
-   typedef Base (*Fun) (const Base& x);
-   const std::string    name_;
-   const Fun            f_;
-   const size_t         index_;
+    template <class Type> friend void parallel_ad(void);
+    typedef Base (*Fun) (const Base& x);
+    const std::string    name_;
+    const Fun            f_;
+    const size_t         index_;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -134,11 +134,11 @@ Source Code
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   static std::vector<discrete *>& List(void)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static std::vector<discrete *> list;
-      return list;
-   }
+    static std::vector<discrete *>& List(void)
+    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        static std::vector<discrete *> list;
+        return list;
+    }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -166,8 +166,8 @@ Source Code
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   static size_t list_size(void)
-   {  return List().size(); }
+    static size_t list_size(void)
+    {  return List().size(); }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -214,17 +214,17 @@ the static object returned by :ref:`discrete_list-name` .
 {xrst_end discrete_ctor}
 */
 public:
-   discrete(const std::string& name, Fun f) :
-   name_(name), f_(f) , index_( List().size() )
-   {  std::string msg = "discrete: first call to the discrete function ";
-      msg  += name;
-      msg  += " is in parallel mode.";
-      CPPAD_ASSERT_KNOWN(
-         ! thread_alloc::in_parallel() ,
-         msg.c_str()
-      );
-      List().push_back(this);
-   }
+    discrete(const std::string& name, Fun f) :
+    name_(name), f_(f) , index_( List().size() )
+    {  std::string msg = "discrete: first call to the discrete function ";
+        msg  += name;
+        msg  += " is in parallel mode.";
+        CPPAD_ASSERT_KNOWN(
+            ! thread_alloc::in_parallel() ,
+            msg.c_str()
+        );
+        List().push_back(this);
+    }
 /*
  ------------------------------------------------------------------------------
 {xrst_begin discrete_ad dev}
@@ -247,76 +247,76 @@ Prototype
 *********
 {xrst_spell_off}
 {xrst_code hpp} */
-   AD<Base> ad(const AD<Base> &ax) const
+    AD<Base> ad(const AD<Base> &ax) const
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end discrete_ad}
 */
-   {
-      CPPAD_ASSERT_KNOWN(
-         size_t( std::numeric_limits<addr_t>::max() ) >= index_,
-         "discrete: cppad_tape_addr_type maximum not large enough"
-      );
-      //
-      AD<Base> ay;
-      ay.value_ = f_(ax.value_);
-      //
-      // check if there is a recording in progress
-      local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-      if( tape == nullptr )
-         return ay;
-      //
-      // check if argument is a constant parameter
-      if( ax.tape_id_ != tape->id_ )
-         return ay;
-      //
-      if( ax.ad_type_ == dynamic_enum )
-      {
-         // tape dynamic parameter operation
-         ay.taddr_   = tape->Rec_.put_dyn_par(
-            ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
-         );
-         ay.tape_id_  = ax.tape_id_;
-         ay.ad_type_  = dynamic_enum;
-
-         // make result a dynamic parameter
-         ay.tape_id_    = tape->id_;
-         ay.ad_type_    = dynamic_enum;
-
-         CPPAD_ASSERT_UNKNOWN( Dynamic(ay) );
-      }
-      else if( ax.ad_type_ == variable_enum )
-      {
-         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
-         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
-
-         // put operand addresses in the tape
-         CPPAD_ASSERT_KNOWN(
+    {
+        CPPAD_ASSERT_KNOWN(
             size_t( std::numeric_limits<addr_t>::max() ) >= index_,
             "discrete: cppad_tape_addr_type maximum not large enough"
-         );
-         tape->Rec_.PutArg(addr_t(index_), ax.taddr_);
-         // put operator in the tape
-         ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
-         // make result a variable
-         ay.tape_id_    = tape->id_;
-         ay.ad_type_    = variable_enum;
+        );
+        //
+        AD<Base> ay;
+        ay.value_ = f_(ax.value_);
+        //
+        // check if there is a recording in progress
+        local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+        if( tape == nullptr )
+            return ay;
+        //
+        // check if argument is a constant parameter
+        if( ax.tape_id_ != tape->id_ )
+            return ay;
+        //
+        if( ax.ad_type_ == dynamic_enum )
+        {
+            // tape dynamic parameter operation
+            ay.taddr_   = tape->Rec_.put_dyn_par(
+                ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
+            );
+            ay.tape_id_  = ax.tape_id_;
+            ay.ad_type_  = dynamic_enum;
 
-         CPPAD_ASSERT_UNKNOWN( Variable(ay) );
-      }
-      else
-      {  // other types not yet being used and should have this tape id
-         CPPAD_ASSERT_UNKNOWN(false);
-      }
-      return ay;
-   }
+            // make result a dynamic parameter
+            ay.tape_id_    = tape->id_;
+            ay.ad_type_    = dynamic_enum;
+
+            CPPAD_ASSERT_UNKNOWN( Dynamic(ay) );
+        }
+        else if( ax.ad_type_ == variable_enum )
+        {
+            CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
+            CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
+
+            // put operand addresses in the tape
+            CPPAD_ASSERT_KNOWN(
+                size_t( std::numeric_limits<addr_t>::max() ) >= index_,
+                "discrete: cppad_tape_addr_type maximum not large enough"
+            );
+            tape->Rec_.PutArg(addr_t(index_), ax.taddr_);
+            // put operator in the tape
+            ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
+            // make result a variable
+            ay.tape_id_    = tape->id_;
+            ay.ad_type_    = variable_enum;
+
+            CPPAD_ASSERT_UNKNOWN( Variable(ay) );
+        }
+        else
+        {  // other types not yet being used and should have this tape id
+            CPPAD_ASSERT_UNKNOWN(false);
+        }
+        return ay;
+    }
 /*
  ------------------------------------------------------------------------------
 {xrst_begin discrete_index dev}
 {xrst_spell
-   msg
-   str
+    msg
+    str
 }
 
 Index That Identifies a Discrete Function
@@ -324,13 +324,13 @@ Index That Identifies a Discrete Function
 {xrst_code hpp} */
 static size_t index(const std::string& name)
 {  size_t i = List().size();
-   while(i--)
-   {  if( List()[i]->name_ == name )
-         return i;
-   }
-   std::string msg = "There is no discrete function named " + name;
-   CPPAD_ASSERT_KNOWN(false, msg.c_str());
-   return List().size();
+    while(i--)
+    {  if( List()[i]->name_ == name )
+            return i;
+    }
+    std::string msg = "There is no discrete function named " + name;
+    CPPAD_ASSERT_KNOWN(false, msg.c_str());
+    return List().size();
 }
 /* {xrst_code}
 
@@ -360,8 +360,8 @@ Source Code
 ***********
 {xrst_spell_off}
 {xrst_code hpp} */
-   static const std::string& name(size_t index)
-   {  return List()[index]->name_; }
+    static const std::string& name(size_t index)
+    {  return List()[index]->name_; }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -396,10 +396,10 @@ Source Code
 ***********
 {xrst_spell_off}
 {xrst_code hpp} */
-   static Base eval(size_t index, const Base& x)
-   {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
-      return List()[index]->f_(x);
-   }
+    static Base eval(size_t index, const Base& x)
+    {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
+        return List()[index]->f_(x);
+    }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -434,10 +434,10 @@ Source Code
 ***********
 {xrst_spell_off}
 {xrst_code hpp} */
-   static AD<Base> ad_eval(size_t index, const AD<Base>& ax)
-   {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
-      return List()[index]->ad(ax);
-   }
+    static AD<Base> ad_eval(size_t index, const AD<Base>& ax)
+    {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
+        return List()[index]->ad(ax);
+    }
 /* {xrst_code}
 {xrst_spell_on}
 

@@ -6,18 +6,18 @@ SPDX-FileContributor: 2024-25 Bradley M. Bell
 Under Construction:
 
 This file is intended to help document the forward_* sweep functions.
-   headers all:     CPPAD_@NAME@_TRACE, Portotype, Base, RecBase, play, num_var
-   headers all:     cap_order, cskip, load_op2var, taylor
-   headers 0 & any: change_count, change_number, change_op_index, sout, print
-   headers any:     order_low, order_up
-   headers dir:     order_up, n_dir
+    headers all:     CPPAD_@NAME@_TRACE, Portotype, Base, RecBase, play, num_var
+    headers all:     cap_order, cskip, load_op2var, taylor
+    headers 0 & any: change_count, change_number, change_op_index, sout, print
+    headers any:     order_low, order_up
+    headers dir:     order_up, n_dir
 
 It has the following xrst template replacements:
-   @title@  The title for this forward sweep
-   @#####@  Underlining for the tilte
-   @NAME@   is one of FORWARD_0, FORWARD_ANY, FORWARD_DIR
-            Prototype is surrounded by // BEGIN_@NAME@ and // END_@NAME@
-   @****@   Underlining for @NAME@
+    @title@  The title for this forward sweep
+    @#####@  Underlining for the tilte
+    @NAME@   is one of FORWARD_0, FORWARD_ANY, FORWARD_DIR
+                Prototype is surrounded by // BEGIN_@NAME@ and // END_@NAME@
+    @****@   Underlining for @NAME@
 }
 
 @title@
@@ -53,8 +53,8 @@ which is equal to *order_up* and non-zero for this case.
 Prototype
 *********
 {xrst_literal
-   // BEGIN_@NAME@
-   // END_@NAME@
+    // BEGIN_@NAME@
+    // END_@NAME@
 }
 
 Base
@@ -79,7 +79,7 @@ is a recording of the operations corresponding to a function
 
 .. math::
 
-   f : \B{R}^n \rightarrow \B{R}^m
+    f : \B{R}^n \rightarrow \B{R}^m
 
 where *n* is the number of independent variables and
 *m* is the number of dependent variables.
@@ -190,15 +190,15 @@ Input
 =====
 ::
 
-   for j = 1 , ... , n
-      taylor [ j * cap_order + 0 ] is an input
+    for j = 1 , ... , n
+        taylor [ j * cap_order + 0 ] is an input
 
 Output
 ======
 ::
 
-   for j = n  + 1 , ... , num_var - 1
-      taylor [ j * cap_order + 0 ] is an output
+    for j = n  + 1 , ... , num_var - 1
+        taylor [ j * cap_order + 0 ] is an output
 
 {xrst_resume}
 {xrst_comment ----------------------------------------------------------------}
@@ -221,22 +221,22 @@ Input
 =====
 ::
 
-   for j = 1 , ... , num_var - 1
-      for k = 0 , ... , order_low - 1
-         taylor [ j * cap_order + k ] is an input
+    for j = 1 , ... , num_var - 1
+        for k = 0 , ... , order_low - 1
+            taylor [ j * cap_order + k ] is an input
 
-   for j = 1 , ... , n
-      for k = order_low , ... , order_up
-         taylor [ j * cap_order + k ] is an input
+    for j = 1 , ... , n
+        for k = order_low , ... , order_up
+            taylor [ j * cap_order + k ] is an input
 
 
 Output
 ======
 ::
 
-   for j = n + 1 , ... , num_var - 1
-      for k = order_low , ... , order_up
-         taylor [ j * cap_order + k ] is an output
+    for j = n + 1 , ... , num_var - 1
+        for k = order_low , ... , order_up
+            taylor [ j * cap_order + k ] is an output
 
 
 {xrst_resume}
@@ -261,7 +261,7 @@ For each variable there is one Taylor coefficient of order zero
 and *n_dir* coefficients for orders greater than zero.
 The taylor coefficients capacity per variable is::
 
-   per_variable = (cap_order - 1) * n_dir + 1
+    per_variable = (cap_order - 1) * n_dir + 1
 
 The vector *taylor* has size *num_var* * *per_variable* .
 
@@ -269,10 +269,10 @@ The vector *taylor* has size *num_var* * *per_variable* .
 ===========
 For variable index j, order k, and direction index ell::
 
-   if k == 0
-      (j, k, ell) = j * per_variable
-   else
-      (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
+    if k == 0
+        (j, k, ell) = j * per_variable
+    else
+        (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
 
 The value taylor[ (j, k, ell) ] is the
 Taylor coefficient corresponding to
@@ -282,29 +282,29 @@ n_dir = 1
 =========
 If *n_dir* is equal to one then *ell* is zero and::
 
-   (j, k, ell) = j * cap_order + k
+    (j, k, ell) = j * cap_order + k
 
 Input
 =====
 ::
 
-   for j = 1, ..., n
-      for k = 0 , ... , order_up
-         for ell = 0 , ... , n_dir - 1
-            taylor [ (j, k, ell) ] is an input
+    for j = 1, ..., n
+        for k = 0 , ... , order_up
+            for ell = 0 , ... , n_dir - 1
+                taylor [ (j, k, ell) ] is an input
 
-   for j = n + 1, ..., num_var - 1
-      for k = 0 , ... , order_up - 1
-         for ell = 0 , ... , n_dir - 1
-            taylor [ (j, k, ell) ] is an input
+    for j = n + 1, ..., num_var - 1
+        for k = 0 , ... , order_up - 1
+            for ell = 0 , ... , n_dir - 1
+                taylor [ (j, k, ell) ] is an input
 
 Output
 ======
 ::
 
-   for j = n + 1, ..., num_var - 1
-      for ell = 0 , ... , n_dir - 1
-         taylor [ (j, order_up, ell) ] is an output
+    for j = n + 1, ..., num_var - 1
+        for ell = 0 , ... , n_dir - 1
+            taylor [ (j, order_up, ell) ] is an output
 
 {xrst_resume}
 {xrst_comment ----------------------------------------------------------------}

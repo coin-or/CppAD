@@ -33,7 +33,7 @@ execute the following commands starting in the
 You can then run the corresponding speed tests
 with the following command
 
-   ./ ``speed_sacado speed`` *seed*
+    ./ ``speed_sacado speed`` *seed*
 
 where *seed* is a positive integer.
 See :ref:`speed_main-name` for more options.
@@ -41,13 +41,13 @@ See :ref:`speed_main-name` for more options.
 Contents
 ********
 {xrst_toc_list
-   speed/sacado/det_minor.cpp
-   speed/sacado/det_lu.cpp
-   speed/sacado/mat_mul.cpp
-   speed/sacado/ode.cpp
-   speed/sacado/poly.cpp
-   speed/sacado/sparse_hessian.cpp
-   speed/sacado/sparse_jacobian.cpp
+    speed/sacado/det_minor.cpp
+    speed/sacado/det_lu.cpp
+    speed/sacado/mat_mul.cpp
+    speed/sacado/ode.cpp
+    speed/sacado/poly.cpp
+    speed/sacado/sparse_hessian.cpp
+    speed/sacado/sparse_jacobian.cpp
 }
 
 {xrst_end speed_sacado}

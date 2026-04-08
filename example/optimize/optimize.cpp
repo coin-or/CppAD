@@ -14,15 +14,15 @@ After executing the :ref:`cmake-name` command
 form the :ref:`download@Distribution Directory`,
 you can build and run these tests with the commands::
 
-   cd build
-   make check_example_optimize
+    cd build
+    make check_example_optimize
 
 Note that your choice of :ref:`cmake@generator` may require using
 an different version of make; e.g., ``ninja`` .
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end optimize.cpp}
@@ -47,27 +47,27 @@ extern bool optimize_twice(void);
 
 // main program that runs all the tests
 int main(void)
-{  std::string group = "example/optimize";
-   size_t      width = 20;
-   CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "example/optimize";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-   // This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-   // external compiled tests
-   Run( cumulative_sum,      "compare_op"         );
-   Run( cumulative_sum,      "cumulative_sum"     );
-   Run( conditional_skip,    "conditional_skip"   );
-   Run( forward_active,      "forward_active"     );
-   Run( nest_conditional,    "nest_conditional"   );
-   Run( print_for,           "print_for"          );
-   Run( reverse_active,      "reverse_active"     );
-   Run( optimize_twice,         "re_optimize"        );
-   //
-   // check for memory leak
-   bool memory_ok = CppAD::thread_alloc::free_all();
-   // print summary at end
-   bool ok = Run.summary(memory_ok);
-   //
-   return static_cast<int>( ! ok );
+    // external compiled tests
+    Run( cumulative_sum,      "compare_op"         );
+    Run( cumulative_sum,      "cumulative_sum"     );
+    Run( conditional_skip,    "conditional_skip"   );
+    Run( forward_active,      "forward_active"     );
+    Run( nest_conditional,    "nest_conditional"   );
+    Run( print_for,           "print_for"          );
+    Run( reverse_active,      "reverse_active"     );
+    Run( optimize_twice,         "re_optimize"        );
+    //
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }
 // END C++

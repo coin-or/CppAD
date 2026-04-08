@@ -7,11 +7,11 @@
 /*
 {xrst_begin team_thread.hpp}
 {xrst_spell
-   bthread
-   openmp
-   posix
-   pthread
-   sthread
+    bthread
+    openmp
+    posix
+    pthread
+    sthread
 }
 Specifications for A Team of AD Threads
 #######################################
@@ -27,8 +27,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 
 Purpose
@@ -74,7 +74,7 @@ team_destroy
 This routine terminates all the other threads except for
 thread number zero; i.e., it terminates the threads corresponding to
 
-   *thread_num* = 1 , ... , *num_threads* ``-1``
+    *thread_num* = 1 , ... , *num_threads* ``-1``
 
 team_name
 *********
@@ -88,10 +88,10 @@ is ``false`` if an error is detected during the
 corresponding call.
 Otherwise it is ``true`` .
 {xrst_toc_hidden
-   example/multi_thread/openmp/team_openmp.cpp
-   example/multi_thread/bthread/team_bthread.cpp
-   example/multi_thread/pthread/team_pthread.cpp
-   example/multi_thread/sthread/team_sthread.cpp
+    example/multi_thread/openmp/team_openmp.cpp
+    example/multi_thread/bthread/team_bthread.cpp
+    example/multi_thread/pthread/team_pthread.cpp
+    example/multi_thread/sthread/team_sthread.cpp
 }
 
 Example Use
@@ -104,12 +104,12 @@ Example Implementation
 Example implementations of these specifications can be found in the files:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   team_openmp.cpp,:ref:`team_openmp.cpp-title`
-   team_bthread.cpp,:ref:`team_bthread.cpp-title`
-   team_pthread.cpp,:ref:`team_pthread.cpp-title`
-   team_sthread.cpp,:ref:`team_sthread.cpp-title`
+    team_openmp.cpp,:ref:`team_openmp.cpp-title`
+    team_bthread.cpp,:ref:`team_bthread.cpp-title`
+    team_pthread.cpp,:ref:`team_pthread.cpp-title`
+    team_sthread.cpp,:ref:`team_sthread.cpp-title`
 
 Speed Test of Implementation
 ****************************
@@ -117,10 +117,10 @@ Speed tests of using CppAD with the team implementations above
 can be found in:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   harmonic.cpp,:ref:`harmonic.cpp-title`
-   multi_newton.cpp,:ref:`multi_newton.cpp-title`
+    harmonic.cpp,:ref:`harmonic.cpp-title`
+    multi_newton.cpp,:ref:`multi_newton.cpp-title`
 
 {xrst_end team_thread.hpp}
 */

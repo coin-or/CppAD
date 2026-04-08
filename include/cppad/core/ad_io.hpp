@@ -8,7 +8,7 @@
 /*
 {xrst_begin ad_input}
 {xrst_spell
-   istream
+    istream
 }
 
 AD Input Stream Operator
@@ -23,7 +23,7 @@ Purpose
 Sets *x* to a :ref:`glossary@Parameter`
 with value *b* corresponding to
 
-   *is* >> *b*
+    *is* >> *b*
 
 where *b* is a *Base* object.
 It is assumed that this *Base* input operation returns
@@ -33,24 +33,24 @@ is
 **
 The operand *is* has prototype
 
-   ``std::istream&`` *is*
+    ``std::istream&`` *is*
 
 x
 *
 The operand *x* has one of the following prototypes
 
-   ``AD`` < *Base* >& *x*
+    ``AD`` < *Base* >& *x*
 
 Result
 ******
 The result of this operation can be used as a reference to *is* .
 For example, if the operand *y* has prototype
 
-   ``AD`` < *Base* > *y*
+    ``AD`` < *Base* > *y*
 
 then the syntax
 
-   *is* >> *x* >> *y*
+    *is* >> *x* >> *y*
 
 will first read the *Base* value of *x* from *is* ,
 and then read the *Base* value to *y* .
@@ -66,7 +66,7 @@ AD of *Base*
 Example
 *******
 {xrst_toc_hidden
-   example/general/ad_input.cpp
+    example/general/ad_input.cpp
 }
 The file
 :ref:`ad_input.cpp-name`
@@ -76,7 +76,7 @@ contains an example and test of this operation.
 ------------------------------------------------------------------------------
 {xrst_begin ad_output}
 {xrst_spell
-   ostream
+    ostream
 }
 
 AD Output Stream Operator
@@ -99,7 +99,7 @@ Assumption
 **********
 If *b* is a *Base* object,
 
-   *os* << *b*
+    *os* << *b*
 
 returns a reference to *os* .
 
@@ -107,7 +107,7 @@ os
 **
 The operand *os* has prototype
 
-   ``std::ostream&`` *os*
+    ``std::ostream&`` *os*
 
 x
 *
@@ -121,11 +121,11 @@ Result
 The result of this operation can be used as a reference to *os* .
 For example, if the operand *y* has prototype
 
-   ``AD`` < *Base* > *y*
+    ``AD`` < *Base* > *y*
 
 then the syntax
 
-   *os* << *x* << *y*
+    *os* << *x* << *y*
 
 will output the value corresponding to *x*
 followed by the value corresponding to *y* .
@@ -141,7 +141,7 @@ AD of *Base*
 Example
 *******
 {xrst_toc_hidden
-   example/general/ad_output.cpp
+    example/general/ad_output.cpp
 }
 The file
 :ref:`ad_output.cpp-name`
@@ -173,10 +173,10 @@ and x.tape_is_ is zero; i.e., x is a parameter.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::istream& operator >> (std::istream& is, AD<Base>& x)
-{  // like assignment to a base type value
-   x.tape_id_ = 0;
-   CPPAD_ASSERT_UNKNOWN( Parameter(x) );
-   return (is >> x.value_);
+{   // like assignment to a base type value
+    x.tape_id_ = 0;
+    CPPAD_ASSERT_UNKNOWN( Parameter(x) );
+    return (is >> x.value_);
 }
 // ---------------------------------------------------------------------------
 /*!
@@ -195,7 +195,7 @@ This is equivalent to writing x.value_ to the output stream.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const AD<Base> &x)
-{  return (os << x.value_); }
+{   return (os << x.value_); }
 // ---------------------------------------------------------------------------
 /*!
 Write a VecAD_reference<Base> object to an output stream.
@@ -213,7 +213,7 @@ This is equivalent to writing the corresponding Base value to the stream.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const VecAD_reference<Base> &x)
-{  return (os << x.ADBase()); }
+{   return (os << x.ADBase()); }
 
 } // END_CPPAD_NAMESPACE
 # endif

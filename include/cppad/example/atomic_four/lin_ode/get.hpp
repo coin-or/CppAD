@@ -17,13 +17,13 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
-   // BEGIN sparse_rc_type
-   // END sparse_rc_type
+    include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+    // BEGIN sparse_rc_type
+    // END sparse_rc_type
 }
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 
 Purpose
@@ -56,8 +56,8 @@ If this output argument is true (false) the sparsity pattern is for
 Source
 ******
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end atomic_four_lin_ode_get.hpp}
@@ -69,30 +69,30 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
 void atomic_lin_ode<Base>::get(
-   size_t call_id, Base& r, Base& step, sparse_rc& pattern, bool& transpose
+    size_t call_id, Base& r, Base& step, sparse_rc& pattern, bool& transpose
 )
 // END PROTOTYPE
 {
-   // thread
-   size_t thread = thread_alloc::thread_num();
-   CPPAD_ASSERT_UNKNOWN( work_[thread] != nullptr );
-   //
-   // pattern_vec
-   CppAD::vector<sparse_rc>& pattern_vec( work_[thread]->pattern_vec );
-   //
-   // call_vec
-   CppAD::vector<call_struct>& call_vec( work_[thread]->call_vec );
-   //
-   CPPAD_ASSERT_UNKNOWN( thread == call_vec[call_id].thread );
-   //
-   // r
-   call_struct& call = call_vec[call_id];
-   r         = call.r;
-   step      = call.step;
-   pattern   = pattern_vec[call.pattern_index];
-   transpose = call.transpose;
-   //
-   return;
+    // thread
+    size_t thread = thread_alloc::thread_num();
+    CPPAD_ASSERT_UNKNOWN( work_[thread] != nullptr );
+    //
+    // pattern_vec
+    CppAD::vector<sparse_rc>& pattern_vec( work_[thread]->pattern_vec );
+    //
+    // call_vec
+    CppAD::vector<call_struct>& call_vec( work_[thread]->call_vec );
+    //
+    CPPAD_ASSERT_UNKNOWN( thread == call_vec[call_id].thread );
+    //
+    // r
+    call_struct& call = call_vec[call_id];
+    r         = call.r;
+    step      = call.step;
+    pattern   = pattern_vec[call.pattern_index];
+    transpose = call.transpose;
+    //
+    return;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

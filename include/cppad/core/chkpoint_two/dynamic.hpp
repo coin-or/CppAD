@@ -7,8 +7,8 @@
 /*
 {xrst_begin chkpoint_two_dynamic}
 {xrst_spell
-   chk
-   dyn
+    chk
+    dyn
 }
 
 Dynamic Parameters in Checkpoint Functions
@@ -21,8 +21,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 chk_fun
@@ -83,20 +83,20 @@ template <class Base>
 template <class BaseVector>
 void chkpoint_two<Base>::new_dynamic(const BaseVector& dynamic)
 // END_PROTOTYPE
-{  ADFun<Base>* g_ptr = &g_;
-   if( use_in_parallel_ )
-   {  size_t thread = thread_alloc::thread_num();
-      allocate_member(thread);
-      g_ptr = &(member_[thread]->g_);
-   }
+{   ADFun<Base>* g_ptr = &g_;
+    if( use_in_parallel_ )
+    {   size_t thread = thread_alloc::thread_num();
+        allocate_member(thread);
+        g_ptr = &(member_[thread]->g_);
+    }
 # ifndef NDEBUG
-   else if( thread_alloc::in_parallel() )
-   {  std::string msg = atomic_three<Base>::atomic_name();
-      msg += ": use_in_parallel is false and in_parallel() is true";
-      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-   }
+    else if( thread_alloc::in_parallel() )
+    {   std::string msg = atomic_three<Base>::atomic_name();
+        msg += ": use_in_parallel is false and in_parallel() is true";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
 # endif
-   g_ptr->new_dynamic(dynamic);
+    g_ptr->new_dynamic(dynamic);
 }
 
 } // END_CPPAD_NAMESPACE
