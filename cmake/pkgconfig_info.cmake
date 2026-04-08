@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # pkgconfig_info(package system_include)
 #
 # package: (in)
-# is the name of an optional package. In the case of eigen, the pkg-config
-# file is eigen3.pc (not eigen.pc).
+# is the name of an optional package.
 #
 # system_include: (in)
 # If this is true (false), the include directories for this package will
@@ -45,18 +44,11 @@ MACRO(pkgconfig_info package system_include)
             FIND_PACKAGE(PkgConfig REQUIRED)
         ENDIF( )
         #
-        # pkgconfig_info_package
-        IF( ${package} STREQUAL eigen )
-            SET(pkgconfig_info_package  eigen3)
-        ELSE( )
-            SET(pkgconfig_info_package ${package})
-        ENDIF( )
-        #
         # ${package} info
         pkg_check_modules(
-            ${pkgconfig_info_package} QUIET ${pkgconfig_info_package} )
+            ${package} QUIET ${package} )
         #
-        IF( ${pkgconfig_info_package}_FOUND )
+        IF( ${package}_FOUND )
             MESSAGE(STATUS "Found ${package} pkg-config file")
         ELSE( )
             MESSAGE(FATAL_ERROR
@@ -72,7 +64,7 @@ MACRO(pkgconfig_info package system_include)
         # pkgconfig_info_dirs
         STRING(
             REGEX REPLACE "/coin-or" ""
-            pkgconfig_info_dirs "${${pkgconfig_info_package}_INCLUDE_DIRS}"
+            pkgconfig_info_dirs "${${package}_INCLUDE_DIRS}"
         )
         #
         # INCLUDE_DIRECTORIES
