@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2009 app}
@@ -425,7 +425,7 @@ to be run without a lot of other demands on the system.
 
 06-21
 =====
-The configure instructions for :ref:`configure@ipopt_dir`
+The configure instructions for ``ipopt_dir``
 had the wrong path for ``IpIpoptApplication.hpp`` .
 This has been fixed.
 

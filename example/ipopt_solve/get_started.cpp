@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -32,8 +32,8 @@ solve the example problem in the Ipopt documentation; i.e., the problem
 
 Configuration Requirement
 *************************
-This example will be compiled and tested provided
-:ref:`cmake@include_ipopt` is on the cmake command line.
+This example will be compiled and tested provided that ipopt is found;
+see :ref:`ipopt@Finding Ipopt` .
 
 {xrst_literal
     // BEGIN C++

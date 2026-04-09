@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -109,7 +109,7 @@ are used to manage this memory allocation.
 Configuration Requirement
 *************************
 This example will be compiled and tested provided
-:ref:`cmake@include_ipopt` is on the cmake command line.
+:ref:`cmake@include_adolc` is on the cmake command line.
 
 Source
 ******

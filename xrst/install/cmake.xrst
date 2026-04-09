@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin cmake}
@@ -132,7 +132,6 @@ The full version of the command, with all its optional arguments is:
 | |tab| ``-D cppad_debug_and_release`` = *true_or_false*                    \\
 | |tab| \\
 | |tab| ``-D include_adolc`` = *true_or_false*                              \\
-| |tab| ``-D include_ipopt`` = *true_or_false*                              \\
 | |tab| ``-D include_cppadcg`` = *true_or_false*                            \\
 | |tab| \\
 | |tab| ``-D colpack_prefix`` = *colpack_prefix*                            \\
@@ -435,15 +434,6 @@ The default value for this option is false.
 If it is true,
 the :ref:`adolc-name` examples will be compiled and tested.
 In this case, ``adolc.pc`` must be in the ``PKG_CONFIG_PATH`` .
-
-include_ipopt
-*************
-The default value for this option is false.
-If it is true,
-the :ref:`ipopt-name` examples will be compiled and tested.
-In this case, ``ipopt.pc`` must be in the ``PKG_CONFIG_PATH`` .
-In addition, :ref:`ipopt_solve-name` and :ref:`cppad_ipopt_nlp-name`
-will be installed.
 
 include_cppadcg
 ***************

@@ -2,7 +2,7 @@
 # define CPPAD_IPOPT_SOLVE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin ipopt_solve}
@@ -53,8 +53,9 @@ optimizer and CppAD for the derivative and sparsity calculations.
 
 Include File
 ************
-If :ref:`cmake@include_ipopt` is on the cmake command line,
-the file ``cppad/ipopt/solve.hpp`` is included by ``cppad/cppad.hpp`` .
+If ipopt is found,
+the file ``cppad/ipopt/solve.hpp`` is included by ``cppad/cppad.hpp``
+( see :ref:`ipopt@Finding Ipopt` ).
 Otherwise,
 ``cppad/ipopt/solve.hpp`` can be included directly
 (If ``cppad/cppad.hpp`` has not yet been included,
