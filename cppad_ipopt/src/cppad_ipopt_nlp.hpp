@@ -2,7 +2,7 @@
 # define CPPAD_CPPAD_IPOPT_SRC_CPPAD_IPOPT_NLP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-26 Bradley M. Bell
+// SPDX-FileContributor: 2003-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cppad_ipopt_nlp app}
@@ -562,8 +562,8 @@ It is the final value of the objective function :math:`f(x)`.
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include <IpIpoptApplication.hpp>
-# include <IpTNLP.hpp>
+# include <coin-or/IpIpoptApplication.hpp>
+# include <coin-or/IpTNLP.hpp>
 
 /*!
 \file cppad_ipopt_nlp.hpp

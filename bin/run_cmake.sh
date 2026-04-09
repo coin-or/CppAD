@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-26 Bradley M. Bell
+# SPDX-FileContributor: 2003-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 echo $0 $*
@@ -27,6 +27,7 @@ clang='no'
 static='no'
 yes_adolc='yes'
 yes_colpack='yes'
+yes_ipopt='yes'
 yes_fadbad='yes'
 yes_cppad_jit='yes'
 yes_cppadcg='yes'
@@ -51,6 +52,7 @@ usage: bin/run_cmake.sh: \\
     [--static] \\
     [--no_adolc] \\
     [--no_colpack] \\
+    [--no_ipopt] \\
     [--no_fadbad] \\
     [--no_cppad_jit] \\
     [--no_cppadcg] \\
@@ -106,6 +108,10 @@ EOF
         yes_colpack='no'
         ;;
 
+        --no_ipopt)
+        yes_ipopt='no'
+        ;;
+
         --no_cppadcg)
         yes_cppadcg='no'
         ;;
@@ -125,6 +131,7 @@ EOF
         --no_optional)
         yes_adolc='no'
         yes_colpack='no'
+        yes_ipopt='no'
         yes_cppadcg='no'
         yes_fadbad='no'
         yes_sacado='no'
@@ -308,6 +315,15 @@ then
         exit 1
     fi
     prefix_list+=" colpack"
+fi
+if [ "$yes_ipopt" == 'yes' ]
+then
+    if [ ! -e "$prefix/include/coin-or/IpNLP.hpp" ]
+    then
+        echo "Cannot find $prefix/include/coin-or/IpoptConfig.hpp"
+        exit 1
+    fi
+    include_list+=" ipopt"
 fi
 if [ "$yes_sacado" == 'yes' ]
 then
