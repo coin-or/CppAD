@@ -21,7 +21,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20260409")
+SET(cppad_version "20260408")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -138,11 +138,6 @@ ENDIF( cmake_needs_dot_slash )
 IF( include_eigen )
     MESSAGE(FATAL_ERROR
         "include_eigen was removed; see release notes for 2024-10-02"
-    )
-ENDIF( )
-IF( include_ipopt )
-    MESSAGE(FATAL_ERROR
-        "include_ipopt was removed; see release notes for 2026-04-08"
     )
 ENDIF( )
 # -----------------------------------------------------------------------------

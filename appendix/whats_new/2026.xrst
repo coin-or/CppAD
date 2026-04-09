@@ -6,11 +6,12 @@
 {xrst_begin 2026 app}
 {xrst_spell
     rst
-    ipopt
 }
 
 Release Notes for 2026
 ######################
+
+
 
 mm-dd
 *****
@@ -25,10 +26,6 @@ mm-dd
     but 4 spaces is the most common choice used by programmers.
 
 #.  Rename the default git branch from master to main.
-
-#.  Use the a system install for ipopt and remove the
-    ``bin/get_ipopt.sh`` script. (This was done because ipopt
-    is available on most systems.)
 
 01-03
 =====

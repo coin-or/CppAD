@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-26 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2020 app}
@@ -164,7 +164,7 @@ instead of 0 or 1, this has been fixed.
    adolc, eigen, ipopt, and cppadcg; see
    :ref:`cmake@include_adolc` ,
    :ref:`cmake@Eigen` ,
-   ``include_ipopt`` , and
+   :ref:`cmake@include_ipopt` , and
    :ref:`cmake@include_cppadcg` .
 #. Fix warning that the variable ``not_used_rec_base`` was not initialized.
 
@@ -236,7 +236,7 @@ possibly uninitialized variable.
 
 05-27
 =====
-If ``include_ipopt`` is on the cmake command line,
+If :ref:`cmake@include_ipopt` is on the cmake command line,
 :ref:`ipopt_solve-name` is automatically included by ``cppad/cppad.hpp`` .
 The :ref:`sparse2eigen-name` utility can still be used even
 if ``include_eigen`` is not specified on the cmake command line.

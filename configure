@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-26 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 set -e -u
 echo $0 $*
 # # ----------------------------------------------------------------------------
@@ -19,6 +19,8 @@ echo $0 $*
 #     eigenvector
 #     fadbad
 #     fortran
+#     ip
+#     ipopt
 #     msvc
 #     nmake
 #     sacado
@@ -70,6 +72,7 @@ echo $0 $*
 # | |tab| ``ADOLC_DIR`` = *adolc_dir*                      \\
 # | |tab| ``FADBAD_DIR`` = *fadbad_dir*                    \\
 # | |tab| ``SADADO_DIR`` = *sacado_dir*                    \\
+# | |tab| ``IPOPT_DIR`` = *ipopt_dir*                      \\
 # | |tab| ``TAPE_ADDR_TYPE`` = *tape_addr_type*            \\
 # | |tab| ``TAPE_ID_TYPE`` = *tape_id_type*
 #
@@ -267,6 +270,29 @@ echo $0 $*
 #    make check_speed_fadbad
 #
 #
+# ipopt_dir
+# *********
+# The default value for this directory is empty; i.e., there
+# is no ipopt directory.
+# If you have
+# `Ipopt <https://coin-or.github.io/Ipopt>`_
+# installed on your system, you can
+# specify a value for *ipopt_dir* .
+# It must be such that
+#
+#    *ipopt_dir* / ``include/coin-or/IpIpoptApplication.hpp``
+#
+# is a valid reference to ``IpIpoptApplication.hpp`` .
+# In this case, the CppAD interface to Ipopt
+# examples can be built and tested
+# by executing the following commands starting in the build directory:
+#
+#    make check_cppad_ipopt
+#
+# Once this has been done, you can execute the program
+# ``cppad_ipopt_speed`` in the ``build/cppad_ipopt/speed`` directory;
+# see ``ipopt_ode_speed.cpp`` .
+#
 # sacado_dir
 # **********
 # The default value for this directory is empty; i.e., there
@@ -366,6 +392,7 @@ usage: <path_to_configure>/configure \\
    [ADOLC_DIR=adolc_dir] \\
    [FADBAD_DIR=fadbad_dir] \\
    [SACADO_DIR=sacado_dir] \\
+   [IPOPT_DIR=ipopt_dir] \\
    [TAPE_ADDR_TYPE=tape_addr_type] \\
    [TAPE_ID_TYPE=tape_id_type]
 The --help option just prints this message and exits.
@@ -399,6 +426,7 @@ postfix_dir='NOTFOUND'
 adolc_dir='NOTFOUND'
 fadbad_dir='NOTFOUND'
 sacado_dir='NOTFOUND'
+ipopt_dir='NOTFOUND'
 tape_addr_type='size_t'
 tape_id_type='size_t'
 while [ "$#" != 0 ]
@@ -455,6 +483,10 @@ do
 
       SACADO_DIR=*)
       sacado_dir=$( echo $1 | sed -e 's|SACADO_DIR=||' )
+      ;;
+
+      IPOPT_DIR=*)
+      ipopt_dir=$( echo $1 | sed -e 's|IPOPT_DIR=||' )
       ;;
 
       TAPE_ADDR_TYPE=*)
@@ -562,7 +594,7 @@ fi
 PKG_CONFIG_PATH=''
 #
 # include_$package, PKG_CONFIG_PATH
-for package in adolc
+for package in adolc ipopt
 do
    package_dir="${package}_dir"
    if [ "${!package_dir}" == NOTFOUND ]
@@ -638,6 +670,7 @@ echo cmake \
    -D cmake_install_docdir=share/doc \
    \
    -D include_adolc=$include_adolc \
+   -D include_ipopt=$include_ipopt \
    -D include_cppadcg=false \
    \
    -D colpack_prefix='NOTFOUND' \
@@ -674,6 +707,7 @@ cmake \
    -D cmake_install_docdir=share/doc \
    \
    -D include_adolc=$include_adolc \
+   -D include_ipopt=$include_adolc \
    -D include_cppadcg=false \
    \
    -D colpack_prefix='NOTFOUND' \

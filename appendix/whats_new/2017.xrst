@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-26 Bradley M. Bell
+# SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2017 app}
@@ -93,7 +93,7 @@ This was inspired by the TMB package.
 =====
 
 #. Add wish list item for :ref:`subgraph sparsity<wish_list@Subgraph@Sparsity>` .
-#. Fix :ref:`cmake_check-name` when ``include_ipopt``
+#. Fix :ref:`cmake_check-name` when :ref:`cmake@include_ipopt`
    is not present on the cmake command line
    (make was trying to build some of the ipopt tests).
 
