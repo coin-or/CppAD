@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # eigen_info()
 #
@@ -32,11 +32,12 @@ MACRO(eigen_info)
         pkg_check_modules(eigen QUIET eigen3 )
         #
         IF( eigen_FOUND )
-            MESSAGE(STATUS "Eigen found")
+            MESSAGE(STATUS "Found eigen3.pc")
             SET(cppad_has_eigen 1)
             INCLUDE_DIRECTORIES( SYSTEM ${eigen_INCLUDE_DIRS} )
         ELSE( )
-            MESSAGE(STATUS "Eigen not Found: eigen3.pc not in PKG_CONFIG_PATH")
+            MESSAGE(STATUS "Did not find eigen3.pc" )
+            MESSAGE(STATUS "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}" )
             SET(cppad_has_eigen 0)
         ENDIF( )
     ENDIF( )

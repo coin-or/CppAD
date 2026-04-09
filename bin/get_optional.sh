@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin get_optional.sh}
@@ -115,7 +115,7 @@ then
     echo_eval rm get_optional.err
 fi
 # -----------------------------------------------------------------------------
-list='colpack adolc fadbad ipopt sacado cppadcg'
+list='colpack adolc fadbad sacado cppadcg'
 for package in $list
 do
     echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"

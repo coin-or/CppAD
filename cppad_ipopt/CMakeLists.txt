@@ -1,17 +1,15 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 # Initialize list of tests as empty
 SET(check_cppad_ipopt_depends "")
 
 # assert include_ipopt
-IF ( NOT include_ipopt )
-    MESSAGE(FATAL_ERROR
-        "include_ipopt is not on the cmake command line"
-    )
-ENDIF ( NOT include_ipopt )
+IF ( NOT cppad_has_ipopt )
+    MESSAGE(FATAL_ERROR "cppad_ipopt: cppad_has_ipopt is 0 " )
+ENDIF ( NOT cppad_has_ipopt )
 
 # The CMakeLists.txt file in the specified source directory is processed
 # before the current input file continues beyond this command.

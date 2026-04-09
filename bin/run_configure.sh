@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 echo $0 $*
@@ -128,7 +128,6 @@ echo_eval cd build
     CXX_FLAGS="'$cppad_cxx_flags'" \
     ADOLC_DIR=$prefix \
     FADBAD_DIR=$prefix \
-    IPOPT_DIR=$prefix \
     $scaado_prefix \
     TAPE_ADDR_TYPE=size_t \
     TAPE_ID_TYPE=size_t

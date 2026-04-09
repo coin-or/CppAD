@@ -83,6 +83,9 @@ INCLUDE(cmake/pkgconfig_info.cmake)
 # eigen_info()
 INCLUDE(cmake/eigen_info.cmake)
 #
+# ipopt_info()
+INCLUDE(cmake/ipopt_info.cmake)
+#
 # add_check_executable(parent_target short_name)
 INCLUDE(cmake/add_check_executable.cmake)
 # =============================================================================
@@ -356,11 +359,11 @@ SET(system_include TRUE)
 # package = eigen
 eigen_info()
 #
+# package = ipopt
+ipopt_info()
+#
 # package = adolc
 pkgconfig_info(adolc ${system_include})
-#
-# package = ipopt
-pkgconfig_info(ipopt ${system_include})
 #
 # package = colpack
 prefix_info(colpack ${system_include} )
