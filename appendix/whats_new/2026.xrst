@@ -6,6 +6,7 @@
 {xrst_begin 2026 app}
 {xrst_spell
     rst
+    rpath
 }
 
 Release Notes for 2026
@@ -15,6 +16,11 @@ Release Notes for 2026
 
 mm-dd
 *****
+
+04-10
+=====
+Change the ``bin/test_one.sh`` script so that is used rpath instead of
+LD_LIBRARY_PATH.
 
 04-08
 =====

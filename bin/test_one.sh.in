@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set_libdir() {
     my_prefix="$1"
@@ -29,15 +29,6 @@ set_libdir() {
     fi
     my_path="$my_prefix/$libdir"
     library_flags="$library_flags -L$my_path -l$my_lib"
-    if ! echo "$LD_LIBRARY_PATH:" | grep "$my_path:" > /dev/null
-    then
-        if [ "$LD_LIBRARY_PATH" == '' ]
-        then
-            LD_LIBRARY_PATH="$my_path"
-        else
-            LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
-        fi
-    fi
 }
 # -----------------------------------------------------------------------------
 # Command line arguments
@@ -105,7 +96,7 @@ PKG_CONFIG_PATH="$PKG_CONFIG_PATH:@cppad_prefix@/lib64/pkgconfig"
 export PKG_CONFIG_PATH
 # ---------------------------------------------------------------------------
 # initialize
-export LD_LIBRARY_PATH=''
+rpath='@PROJECT_BINARY_DIR@/cppad_lib'
 include_flags=''
 library_flags=''
 #
@@ -115,7 +106,7 @@ then
     include_flags="$include_flags $(pkg-config adolc --cflags)"
     library_flags="$library_flags $(pkg-config adolc --libs)"
     library_path=$(pkg-config adolc --libs | sed -e 's|.*-L\([^ ]*\).*|\1|')
-    LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
+    rpath+=":$library_path"
 fi
 if [ @cppad_has_eigen@ == 1 ]
 then
@@ -129,10 +120,10 @@ then
     include_flags="$include_flags $(pkg-config ipopt --cflags)"
     library_flags="$library_flags $(pkg-config ipopt --libs)"
     library_path=$(pkg-config ipopt --libs | sed -e 's|.*-L\([^ ]*\).*|\1|')
-    LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
+    rpath+=":$library_path"
 fi
 #
-if [ @cppad_has_boost@ == 1 ]
+if [ @cppad_has_boost@ == 1 ] && [ $(uname) != 'Darwin' ]
 then
     library_flags="$library_flags -lboost_thread"
 fi
@@ -152,7 +143,12 @@ include_flags=$(echo $include_flags | \
 include_flags="-I $top_srcdir/include $include_flags"
 if [ @is_cppad_lib_dynamic@ ==  '1' ]
 then
-    cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so'
+    if [ $(uname) == 'Darwin' ]
+    then
+        cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.dylib'
+    else
+        cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so'
+    fi
 else
     cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.a'
 fi
@@ -203,31 +199,26 @@ then
 fi
 #
 # compile command
-compile_command="@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe
-    $dir/$file $extra
-    -g
-    $cxx_flags
-    $include_flags
-    $library_flags
-"
-echo "$compile_command 2> test_one.err"
-if ! $compile_command 2> test_one.err
+cat << EOF
+@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe \\
+    $dir/$file $extra \\
+    -g \\
+    $cxx_flags \\
+    $include_flags \\
+    $library_flags \\
+    -Wl,-rpath,"$rpath"
+EOF
+if ! @CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe \
+    $dir/$file $extra \
+    -g \
+    $cxx_flags \
+    $include_flags \
+    $library_flags \
+    -Wl,-rpath,"$rpath"
 then
     tail test_one.err
     echo 'test_one.sh: see test_one.err'
     exit 1
-fi
-# --------------------------------------------------------------------------
-# LD_LIBRARY_PATH
-my_path='@PROJECT_BINARY_DIR@/cppad_lib'
-if ! echo $LD_LIBRARY_PATH | grep "$my_path" > /dev/null
-then
-    if [ "$LD_LIBRARY_PATH" == '' ]
-    then
-        LD_LIBRARY_PATH="$my_path"
-    else
-        LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
-    fi
 fi
 # --------------------------------------------------------------------------
 # Execute the test
@@ -235,7 +226,6 @@ echo "./test_one.exe"
 if ! ./test_one.exe
 then
     cat test_one.err
-    echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
     exit 1
 fi
 # --------------------------------------------------------------------------
@@ -264,10 +254,8 @@ if [ -s test_one.tmp ]
 then
     cat test_one.tmp
     echo 'test_one.sh: unexpected warnings: see  test_one.tmp, test_one.err'
-    echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
     exit 1
 fi
 # --------------------------------------------------------------------------
 echo 'test_one.sh: OK'
-echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 exit 0
