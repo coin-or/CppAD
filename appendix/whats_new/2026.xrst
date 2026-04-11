@@ -17,6 +17,12 @@ Release Notes for 2026
 mm-dd
 *****
 
+04-11
+=====
+Constructing an AD object from an integer would result in a
+conversion warning when using clang on Mac systems.
+This warning has been suppressed, but only for this specific case.
+
 04-10
 =====
 Change the ``bin/test_one.sh`` script so that is used rpath instead of

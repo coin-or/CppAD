@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -183,6 +183,10 @@ There must be a constructor for Base from Type.
 \param t
 is the object that is being converted from T to AD<Base>.
 */
+#pragma GCC diagnostic push
+# ifdef __clang__
+#pragma GCC diagnostic ignored "-Wimplicit-int-float-conversion"
+# endif
 template <class Base>
 template <class T>
 AD<Base>::AD(const T &t)
@@ -191,6 +195,7 @@ AD<Base>::AD(const T &t)
 , taddr_(0)
 , ad_type_(constant_enum)
 { }
+#pragma GCC diagnostic pop
 
 } // END_CPPAD_NAMESPACE
 # endif
