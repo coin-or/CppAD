@@ -46,7 +46,7 @@ MACRO(pkgconfig_info package system_include)
         #
         # ${package} info
         pkg_check_modules(
-            ${package} QUIET ${package} )
+            ${package} ${package} )
         #
         IF( ${package}_FOUND )
             MESSAGE(STATUS "Found ${package} pkg-config file")

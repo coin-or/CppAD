@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_colpack.sh}
 # {xrst_comment_ch #}
@@ -132,7 +132,7 @@ else
     exit 1
 fi
 # -----------------------------------------------------------------------------
-if [[ "$(uname)" == CYGWIN* ]] || [ "$(uname)" == Darwin ]
+if [[ "$(uname)" == CYGWIN* ]]
 then
     lib_type='--enable-static --disable-shared'
     echo_eval ls -l ./configure

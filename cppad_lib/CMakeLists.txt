@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build and install the cppad_lib shared library
 #
@@ -63,6 +63,7 @@ ELSEIF( "${is_cppad_lib_dynamic}" STREQUAL "1" )
 ELSE( )
     MESSAGE(FATAL_ERROR "CMkakeLists.txt Error: invalid is_cppad_lib_dynamic")
 ENDIF( )
+TARGET_LINK_LIBRARIES(cppad_lib ${colpack_libs} )
 #
 # install(TARGETS myExe mySharedLib myStaticLib
 #  RUNTIME DESTINATION bin

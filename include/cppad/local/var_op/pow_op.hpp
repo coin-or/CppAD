@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_VAR_OP_POW_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { namespace var_op {
@@ -705,14 +705,14 @@ inline void powvp_reverse(
         // x^k terms
         for(size_t k = 1; k < j; ++k)
         {   Base bk   = Base( double(k) );
-            Base term = (bk * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
+            Base term = (bk * y - Base(double(j-k)) ) * z[j-k] / (bj * x[0]);
             work[k] += azmul(pz[j], term);
         }
         //
         // z^k terms
         for(size_t k = 1; k < j; ++k)
         {   Base bk   = Base( double(k) );
-            Base term = (Base(j-k) * y - bk) * x[j-k] / (bj * x[0]);
+            Base term = (Base(double(j-k)) * y - bk) * x[j-k] / (bj * x[0]);
             pz[k] += azmul(pz[j], term);
         }
         //

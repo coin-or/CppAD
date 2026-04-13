@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -214,7 +214,7 @@ CPPAD_TESTVECTOR(a1type) taylor_ode_adolc(
 
             for(i = 0; i < n; i++)
             {   // convert to (k+1)-Taylor coefficient for x
-                a1y_kp[i] = a1z_k[i] / a1type(k + 1);
+                a1y_kp[i] = a1z_k[i] / a1type(double(k + 1));
 
                 // add term for to this Taylor coefficient
                 // to solution for y(t, x)
@@ -284,7 +284,7 @@ bool mul_level_adolc_ode(void)
 
     // check function values
     double check = 1.;
-    double t     = nstep * a1dt.value();
+    double t     = double(nstep) * a1dt.value();
     for(i = 0; i < n; i++)
     {   check *= x[i] * t / double(i + 1);
         ok &= CppAD::NearEqual(y_final[i], check, eps, eps);

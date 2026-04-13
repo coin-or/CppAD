@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the cppad_ipopt/src library
 # Inherit build type from ../CMakeList.txt
@@ -27,6 +27,7 @@ IF( "${is_cppad_lib_dynamic}" STREQUAL "0" )
 ELSEIF( "${is_cppad_lib_dynamic}" STREQUAL "1" )
     ADD_LIBRARY( cppad_ipopt SHARED ${source_list} )
 ENDIF( )
+TARGET_LINK_LIBRARIES(cppad_ipopt ${cppad_lib} )
 
 # install(FILES files... DESTINATION <dir>
 #  [PERMISSIONS permissions...]

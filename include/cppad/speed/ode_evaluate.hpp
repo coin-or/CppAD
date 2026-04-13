@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_ODE_EVALUATE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -229,7 +229,7 @@ namespace CppAD {
             for(i = k; i < n; i++)
             {   // partial w.r.t x[i-k] of x[i-k] * t^k / k!
                 j = i - k;
-                fp[ i * n + j ] += 1.0 / Float(factorial);
+                fp[ i * n + j ] += 1.0 / Float(double(factorial));
             }
         }
     }
