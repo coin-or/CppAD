@@ -14,6 +14,9 @@
 Release Notes for 2026
 ######################
 
+Branch: eigen_5_random 
+**********************
+Add :ref:`numeric_limits@digits` to the CppAD numeric limits.
 
 
 mm-dd
