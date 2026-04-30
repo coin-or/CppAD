@@ -128,6 +128,10 @@ namespace Eigen {
         static CppAD::AD<Base> highest(void)
         {  return CppAD::numeric_limits< CppAD::AD<Base> >::max(); }
 
+        // number of base-radix digits that can be represented without change.
+        static int digits(void)
+        {  return CppAD::numeric_limits< CppAD::AD<Base> >::digits; }
+
         // number of decimal digits that can be represented without change.
         static int digits10(void)
         {  return CppAD::numeric_limits< CppAD::AD<Base> >::digits10; }

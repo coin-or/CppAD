@@ -23,6 +23,7 @@ Syntax
 | *max* = ``numeric_limits`` < *Float* >:: ``max`` ()
 | *nan* = ``numeric_limits`` < *Float* >:: ``quiet_NaN`` ()
 | *inf* = ``numeric_limits`` < *Float* >:: ``infinity`` ()
+| ``numeric_limits`` < *Float* >:: ``digits``
 | ``numeric_limits`` < *Float* >:: ``digits10``
 | ``numeric_limits`` < *Float* >:: ``max_digits10``
 
@@ -35,7 +36,7 @@ The functions above and have the prototype
 where *fun* is
 ``epsilon`` , ``min`` , ``max`` , ``quiet_NaN`` , and ``infinity`` .
 
-The values ``digits10`` and ``max_digits10`` are
+The values ``digits`` , ``digits10`` , and ``max_digits10`` are
 member variable and not a functions.
 
 std::numeric_limits
@@ -128,6 +129,15 @@ tests the value *inf* by checking that the following are true
 | |tab| *inf* + 100 == *inf*
 | |tab| ``isnan`` ( *inf* ``-`` *inf* )
 
+digits
+******
+The member variable ``digits`` has prototype
+
+    ``static const int numeric_limits`` < *Float* >:: ``digits``
+
+It is the number of base-radix digits that can be represented by a
+*Float* value without change; this is the digits of the mantissa.
+
 digits10
 ********
 The member variable ``digits10`` has prototype
@@ -219,6 +229,8 @@ public:
         );
         return Float(0);
     }
+    /// number of base-radix digits
+    static const int digits = -1;
     /// number of decimal digits
     static const int digits10 = -1;
 };
@@ -242,6 +254,8 @@ public:
     /// positive infinite value
     static AD<Base> infinity(void)
     {   return AD<Base>( numeric_limits<Base>::infinity() ); }
+    /// number of base-radix digits
+    static const int digits       = numeric_limits<Base>::digits;
     /// number of decimal digits
     static const int digits10     = numeric_limits<Base>::digits10;
     static const int max_digits10 = numeric_limits<Base>::max_digits10;

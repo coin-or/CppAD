@@ -45,6 +45,9 @@ bool test_numeric_limits(void)
     base_alloc nan = Value( CppAD::numeric_limits<my_ad>::quiet_NaN() );
     ok            &= *nan.ptrdbl_ != *nan.ptrdbl_;
     //
+    int   digits = CppAD::numeric_limits<my_ad>::digits;
+    ok            &= digits == std::numeric_limits<double>::digits;
+    //
     int   digits10 = CppAD::numeric_limits<my_ad>::digits10;
     ok            &= digits10 == std::numeric_limits<double>::digits10;
     //
