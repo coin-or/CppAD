@@ -1,0 +1,332 @@
+#! /usr/bin/env bash
+set -e -u
+# !! EDITS TO THIS FILE ARE LOST DURING UPDATES BY xrst.git/tools/dev_tools.sh !!
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# -----------------------------------------------------------------------------
+# tools/new_release.sh  [--skip_stable_check_all]
+# Creates and check a release for the year and release number specified below.
+#
+# tools/check_all.sh [--skip_external_links]
+# is used by new_release to skip checking external links.
+# new_release.sh skips this when testing before the new release (tag)  exists.
+# -----------------------------------------------------------------------------
+year='2026' # Year for this stable version
+release='0' # first release for each year starts with 0
+# -----------------------------------------------------------------------------
+if [ ! -e 'tools/new_release.sh' ]
+then
+    echo 'tools/new_release.sh: must be executed from its parent directory'
+    exit 1
+fi
+if [ ! -e './.git' ]
+then
+    echo 'tools/new_release.sh: cannot find ./.git'
+    exit 1
+fi
+if [[ "$year" =~ ^[0-9]{4}$ ]]
+then
+    echo "year = $year"
+else
+    echo "new_release.sh: year = $year is not valid"
+    exit 1
+fi
+if [[ "$release" =~ ^[0-9]{1,2}$ ]]
+then
+    echo "release = $release"
+else
+    echo "new_release.sh: release = $release is not valid"
+    exit 1
+fi
+#
+# skip_stable_check_all
+skip_stable_check_all='no'
+while [ $# != 0 ]
+do
+    if [ "$1" == '--skip_stable_check_all' ]
+    then
+        skip_stable_check_all='yes'
+    else
+        echo 'tools/new_release.sh [--skip_stable_check_all]'
+        echo "$1 is not a valid argument"
+        exit 1
+    fi
+    shift
+done
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+    echo $*
+    eval $*
+}
+# -----------------------------------------------------------------------------
+#
+# main_branch
+main_branch=$(git branch --show-current)
+if [ "$main_branch" != 'master' ] && [ "$main_branch" != 'main' ]
+then
+    echo 'tools/new_release.sh: execute using master or main branch'
+    exit 1
+fi
+#
+# sed
+source tools/grep_and_sed.sh
+#
+# version_file_list
+source tools/dev_settings.sh
+#
+# first_version_file
+first_version_file=$(echo $version_file_list | $sed -e 's|^ *||' -e 's| .*||')
+#
+# version_type
+cat << EOF > temp.sed
+/["'][0-9]{8}["']/b one
+/["'][0-9]{8}[.][0-9]{1,2}["']/b one
+/["'][0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}["']/b one
+b end
+#
+: one
+s|.*["']([0-9]{8})["'].*|\\1|
+s|.*["']([0-9]{8}[.][0-9]{1,2})["'].*|\\1|
+s|.*["']([0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2})["'].*|\\1|
+p
+#
+: end
+EOF
+version=$($sed -n -r -f temp.sed $first_version_file)
+if [[ "$version" =~ ^[0-9]{8}$ ]]
+then
+    version_type=1
+elif [[ "$version" =~ ^[0-9]{8}[.][0-9]{1,2}$ ]]
+then
+    version_type=2
+elif [[ "$version" =~ ^[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}$ ]]
+then
+    version_type=3
+fi
+#
+# tag
+if [ "$version_type" == 1 ] || [ "$version_type" == 2 ]
+then
+    tag="${year}0000.$release"
+else
+    tag=$year.0.$release
+fi
+#
+# tag_committed
+tag_committed='no'
+if git tag --list | grep "$tag" > /dev/null
+then
+    tag_committed='yes'
+fi
+#
+# stable_branch
+stable_branch=stable/$year
+
+#
+# stable_local_hash
+if ! git show-ref --hash "heads/$stable_branch" > /dev/null
+then
+     echo "Cannot find local version of $stable_branch. Do the following ?"
+     echo "git branch $stable_branch $main_branch"
+     exit 1
+fi
+stable_local_hash=$(git show-ref --hash "heads/$stable_branch" )
+#
+# stable_remote_hash
+if ! git show-ref --hash "origin/$stable_branch" > /dev/null
+then
+     echo "Cannot find remote version of $stable_branch. Do the following ?"
+     echo "git checkout $stable_branch"
+     echo "git push --set-upstream origin $stable_branch"
+     exit 1
+fi
+stable_remote_hash=$(git show-ref --hash "origin/$stable_branch" )
+#
+# main_local_hash
+main_local_hash=$(git show-ref --hash "heads/$main_branch" )
+#
+# main_remote_hash
+main_remote_hash=$(git show-ref --hash "origin/$main_branch" )
+#
+# ----------------------------------------------------------------------------
+# Changes to main_branch
+# ----------------------------------------------------------------------------
+#
+# version_file_list
+cat << EOF > temp.sed
+s|stable-[0-9]{4}|stable-$year|g
+s|release-[0-9]{4}|release-$year|g
+#
+s|archive/[0-9]{4}[.][0-9]*[.][0-9]*[.]tar[.]gz|archive/$tag.tar.gz|
+s|archive/[0-9]{8}[.]tar[.]gz|archive/$tag.tar.gz|
+s|archive/[0-9]{8}[.][0-9]*[.]tar[.]gz|archive/$tag.tar.gz|
+#
+s|tags/[0-9]{4}[.][0-9]*[.][0-9]*>|tags/$tag>|
+s|tags/[0-9]{8}>|tags/$tag>|
+s|tags/[0-9]{8}[.][0-9]*>|tags/$tag>|
+#
+s|tags/[0-9]{4}[.][0-9]*[.][0-9]* *\$|tags/$tag|
+s|tags/[0-9]{8} *\$|tags/$tag|
+s|tags/[0-9]{8}[.][0-9]* *\$|tags/$tag|
+#
+EOF
+for file in $version_file_list
+do
+    $sed -r -i $file -f temp.sed
+done
+#
+# run_xrst.sh
+if [ "$tag_committed" == 'yes' ]
+then
+    echo_eval tools/run_xrst.sh --external_links
+else
+    echo_eval tools/run_xrst.sh
+fi
+#
+# git_status
+git_status=$(git status --porcelain)
+if [ "$git_status" != '' ]
+then
+    echo "tools/new_release: git status is not empty for $main_branch branch"
+    echo 'use tools/git_commit.sh to commit its changes ?'
+    exit 1
+fi
+# ----------------------------------------------------------------------------
+# Changes to stable branch
+# ----------------------------------------------------------------------------
+if ! git show-ref $stable_branch > /dev/null
+then
+    echo "tools/new_release: neither local or remove $stable_branch exists."
+    echo 'Use the following to create it ?'
+    echo "   git branch $stable_branch"
+    exit 1
+fi
+if ! git checkout $stable_branch
+then
+    echo "tools/new_release: should be able to checkout $stable_branch"
+    exit 1
+fi
+#
+# version_file_list
+cat << EOF > temp.sed
+s|stable-[0-9]{4}|stable-$year|g
+s|release-[0-9]{4}|release-$year|g
+#
+s|archive/[0-9]{4}[.][0-9]*[.][0-9]*[.]tar[.]gz|archive/$tag.tar.gz|
+s|archive/[0-9]{8}[.]tar[.]gz|archive/$tag.tar.gz|
+s|archive/[0-9]{8}[.][0-9]*[.]tar[.]gz|archive/$tag.tar.gz|
+#
+s|tags/[0-9]{4}[.][0-9]*[.][0-9]*>|tags/$tag>|
+s|tags/[0-9]{8}>|tags/$tag>|
+s|tags/[0-9]{8}[.][0-9]*>|tags/$tag>|
+#
+s|tags/[0-9]{4}[.][0-9]*[.][0-9]* *\$|tags/$tag|
+s|tags/[0-9]{8} *\$|tags/$tag|
+s|tags/[0-9]{8}[.][0-9]* *\$|tags/$tag|
+#
+EOF
+for file in $version_file_list
+do
+    $sed -r -i $file -f temp.sed
+done
+#
+# first_version_file
+cat << EOF > temp.sed
+s|(["'])[0-9]{8}(["'])|\\1$tag\\2|
+s|(["'])[0-9]{8}[.][0-9]{1,2}(["'])|\\1$tag\\2|
+s|(["'])[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}(["'])|\\1$tag\\2|
+EOF
+$sed -r -f temp.sed -i $first_version_file
+if ! grep "['\"]$tag['\"]" $first_version_file > /dev/null
+then
+    echo "tools/rew_release: branch = $stable_branch"
+    echo "Version number should be $tag in $first_version_file"
+    exit 1
+fi
+#
+# check_version
+# changes to version ?
+if ! tools/check_version.sh
+then
+    echo 'Continuing even though tools/check_version made changes.'
+    if ! tools/check_version.sh
+    then
+        echo 'Continuing even though tools/check_version made more changes.'
+    fi
+fi
+#
+# check_all.sh
+if [ "$skip_stable_check_all" == 'no' ]
+then
+    if [ "$tag_committed" == 'yes' ]
+    then
+        echo_eval tools/check_all.sh --suppress_spell_warnings
+    else
+        echo_eval tools/check_all.sh \
+            --suppress_spell_warnings --skip_external_links
+    fi
+fi
+#
+# git_status
+git_status=$(git status --porcelain)
+if [ "$git_status" != '' ]
+then
+    echo "tools/new_release: git status --porcelean not empty for $stable_branch"
+    echo 'use tools/git_commit.sh to commit its changes ?'
+    exit 1
+fi
+# -----------------------------------------------------------------------------
+#
+# stable_remote
+if [ "$stable_remote_hash" == '' ]
+then
+    empty_hash='yes'
+    echo "tools/new_release: remote $stable_branch does not exist."
+    echo 'Use the following to create it ?'
+    echo "   git push origin $stable_branch"
+    exit 1
+fi
+if [ "$stable_local_hash" != "$stable_remote_hash" ]
+then
+    empty_hash='yes'
+    echo "tools/new_release: local and remote $stable_branch differ."
+    echo "local  $stable_local_hash"
+    echo "remote $stable_remote_hash"
+    echo 'Use git push to fix this ?'
+    exit 1
+fi
+#
+# push tag
+if [ "$tag_committed" == 'no' ]
+then
+    read -p 'commit release or abort [c/a] ?' response
+    if [ "$response" == 'a' ]
+    then
+        exit 1
+    fi
+    echo "git tag -a -m 'created by new_release.sh' $tag $stable_remote_hash"
+    git tag -a -m 'created by new_release.sh' $tag $stable_remote_hash
+    #
+    echo "git push origin $tag"
+    git push origin $tag
+    #
+    echo 'tools/new_release.sh: must be re-run to check external links'
+    exit 1
+fi
+#
+# main_remote
+git checkout $main_branch
+if [ "$main_local_hash" != "$main_remote_hash" ]
+then
+    empty_hash='yes'
+    echo "tools/new_release: local and remote $main_branch differ."
+    echo "local  $main_local_hash"
+    echo "remote $main_remote_hash"
+    echo 'Use git push to fix this ?'
+    exit 1
+fi
+# ----------------------------------------------------------------------------
+echo 'tools/new_release.sh: OK'
+exit 0

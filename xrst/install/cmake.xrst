@@ -186,7 +186,7 @@ Visual Studio
 
 #. Execute the following commands:
    {xrst_literal
-       bin/build.bat
+       tools/build.bat
    }
 
 Note that when using windows DLL's, CppAD builds a static version
@@ -613,7 +613,7 @@ If ``CMAKE_BUILD_TYPE`` is specified on the command line,
 then *cppad_debug_which* must be the empty string (its default value).
 
 {xrst_toc_hidden
-    bin/get_optional.sh
+    tools/get_optional.sh
     xrst/install/adolc.xrst
     xrst/install/eigen.xrst
     xrst/install/cppadcg.xrst
