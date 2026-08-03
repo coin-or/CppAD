@@ -1,6 +1,6 @@
-# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Construct cppad.pc from cppad.pc.in; see
 # http://people.freedesktop.org/~dbn/pkg-config-guide.html
@@ -22,8 +22,8 @@
 # Purpose
 # *******
 # The ``pkg-config`` program helps with the used if installed libraries
-# and include files; see its
-# `guide <https://people.freedesktop.org/~dbn/pkg-config-guide.html>`_
+# and include files; see
+# `pkg-config <https://www.freedesktop.org/wiki/Software/pkg-config/>`_
 # for more information on writing an using pkg-config files.
 #
 # cppad.pc

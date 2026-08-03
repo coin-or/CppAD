@@ -2,7 +2,7 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 if [ "$0" != 'bin/check_all.sh' ]
@@ -129,6 +129,7 @@ echo_log_eval() {
             -e '/independent.hpp:10[0-9]:.*warning.*outside array bounds/d' \
             -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
             -e '/abs_min_quad.hpp:424:.*bound.*exceeds maximum/d' \
+            -e '/[/]eigen3[/].*warning/d' \
             | $grep ': *warning *:'
         then
             warning='yes'
