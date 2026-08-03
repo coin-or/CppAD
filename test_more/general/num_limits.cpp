@@ -20,7 +20,7 @@ while multiplying the maximum normalized value results in infinity.
 
 $head Externals$$
 This example using external routines to get and set values
-so that the compiler does not set the correspdong code and optimize
+so that the compiler does not set the corresponds code and optimize
 it out.
 
 old verbatim%example/num_limits.cpp%0%// BEGIN C++%// END C++%1%$$

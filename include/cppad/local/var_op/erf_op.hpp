@@ -50,7 +50,7 @@ arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index corresponding to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
@@ -190,7 +190,7 @@ arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index corresponding to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
@@ -300,7 +300,7 @@ arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index corresponding to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
@@ -453,7 +453,7 @@ arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index corresponding to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,

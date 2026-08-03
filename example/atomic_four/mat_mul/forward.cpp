@@ -174,7 +174,7 @@ bool forward(void)
         ok &= J[ij] == check_J[ij];
     //
     // H_1
-    // Second order forward mode computaiton of f_1^2 (x)
+    // Second order forward mode computation of f_1^2 (x)
     // (use the fact that the diagonal of this Hessian is zero).
     CPPAD_TESTVECTOR(double) x2(nx), y2(nx), H_1(nx * nx);
     for(size_t j = 0; j < nx; ++j)

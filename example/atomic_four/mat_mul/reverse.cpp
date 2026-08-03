@@ -173,7 +173,7 @@ bool reverse(void)
         ok &= J[ij] == check_J[ij];
     //
     // H_0
-    // Second order reverse mode computaiton of f_0^2 (x)
+    // Second order reverse mode computation of f_0^2 (x)
     CPPAD_TESTVECTOR(double) x1(nx), w2(ny), dw2(2 * nx), H_0(nx * nx);
     for(size_t i = 0; i < ny; ++i)
         w2[i] = 0.0;
