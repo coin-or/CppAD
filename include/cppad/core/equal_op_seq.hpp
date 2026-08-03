@@ -35,7 +35,7 @@ but when they are related to the
 by the same operation sequence.
 After the assignment
 
-   *y* = *x*
+    *y* = *x*
 
 these two AD objects would not only have equal values,
 but would also correspond to the same operation sequence.
@@ -44,19 +44,19 @@ x
 *
 The argument *x* has prototype
 
-   ``const AD`` < *Base* > & *x*
+    ``const AD`` < *Base* > & *x*
 
 y
 *
 The argument *y* has prototype
 
-   ``const AD`` < *Base* > & *y*
+    ``const AD`` < *Base* > & *y*
 
 b
 *
 The result *b* has prototype
 
-   ``bool`` *b*
+    ``bool`` *b*
 
 The result is true if and only if one of the following cases holds:
 
@@ -72,7 +72,7 @@ The result is true if and only if one of the following cases holds:
 Example
 *******
 {xrst_toc_hidden
-   example/general/equal_op_seq.cpp
+    example/general/equal_op_seq.cpp
 }
 The file
 :ref:`equal_op_seq.cpp-name`
@@ -84,21 +84,21 @@ contains an example and test of ``EqualOpSeq`` .
 
 
 namespace CppAD {
-   template <class Base>
-   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-   bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
-   {
-      if( Parameter(x) )
-      {  if( Parameter(y) )
-            return EqualOpSeq(x.value_, y.value_);
-         else
+    template <class Base>
+    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+    bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
+    {
+        if( Parameter(x) )
+        {   if( Parameter(y) )
+                return EqualOpSeq(x.value_, y.value_);
+            else
+                return false;
+        }
+        else if( Parameter(y) )
             return false;
-      }
-      else if( Parameter(y) )
-         return false;
 
-      return (x.taddr_ == y.taddr_);
-   }
+        return (x.taddr_ == y.taddr_);
+    }
 
 }
 

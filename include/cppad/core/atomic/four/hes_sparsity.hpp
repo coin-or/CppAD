@@ -31,8 +31,8 @@ Deprecated 2022-05-16
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Implementation
@@ -107,7 +107,7 @@ and
 
 .. math::
 
-   \partial_{x(r)} \partial_{x(c)} g_i(x)
+    \partial_{x(r)} \partial_{x(c)} g_i(x)
 
 is possibly non-zero.
 Note that the sparsity pattern should be symmetric.
@@ -122,9 +122,9 @@ Example
 The following is an example ``hes_sparsity`` definition taken from
 :ref:`atomic_four_norm_sq.cpp-name` :
 {xrst_literal
-   example/atomic_four/norm_sq.cpp
-   // BEGIN HES_SPARSITY
-   // END HES_SPARSITY
+    example/atomic_four/norm_sq.cpp
+    // BEGIN HES_SPARSITY
+    // END HES_SPARSITY
 }
 
 {xrst_end atomic_four_hes_sparsity}
@@ -134,22 +134,22 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::hes_sparsity(
-   size_t                                  call_id      ,
-   const vector<bool>&                     ident_zero_x ,
-   const vector<bool>&                     select_x     ,
-   const vector<bool>&                     select_y     ,
-   sparse_rc< vector<size_t> >&            pattern_out  )
+    size_t                                  call_id      ,
+    const vector<bool>&                     ident_zero_x ,
+    const vector<bool>&                     select_x     ,
+    const vector<bool>&                     select_y     ,
+    sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
-{  return false; }
+{   return false; }
 //
 // deprecated version
 template <class Base>
 bool atomic_four<Base>::hes_sparsity(
-   size_t                                  call_id      ,
-   const vector<bool>&                     select_x     ,
-   const vector<bool>&                     select_y     ,
-   sparse_rc< vector<size_t> >&            pattern_out  )
-{  return false; }
+    size_t                                  call_id      ,
+    const vector<bool>&                     select_x     ,
+    const vector<bool>&                     select_y     ,
+    sparse_rc< vector<size_t> >&            pattern_out  )
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 

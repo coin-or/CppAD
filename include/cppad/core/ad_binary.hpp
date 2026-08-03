@@ -9,7 +9,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin ad_binary}
 {xrst_spell
-   div
+    div
 }
 
 AD Binary Arithmetic Operators
@@ -31,13 +31,13 @@ Op
 The operator *Op* is one of the following
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   **Op**,**Meaning**
-   ``+``,*z* is *x* plus *y*
-   ``-``,*z* is *x* minus *y*
-   ``*``,*z* is *x* times *y*
-   ``/``,*z* is *x* divided by *y*
+    **Op**,**Meaning**
+    ``+``,*z* is *x* plus *y*
+    ``-``,*z* is *x* minus *y*
+    ``*``,*z* is *x* times *y*
+    ``/``,*z* is *x* divided by *y*
 
 Base
 ****
@@ -48,7 +48,7 @@ x
 *
 The operand *x* has the following prototype
 
-   ``const`` *Type* & *x*
+    ``const`` *Type* & *x*
 
 where *Type* is
 ``VecAD`` < *Base* >:: ``reference`` ,
@@ -60,7 +60,7 @@ y
 *
 The operand *y* has the following prototype
 
-   ``const`` *Type* & *y*
+    ``const`` *Type* & *y*
 
 where *Type* is
 ``VecAD`` < *Base* >:: ``reference`` ,
@@ -72,7 +72,7 @@ z
 *
 The result *z* has the following prototype
 
-   *Type* *z*
+    *Type* *z*
 
 where *Type* is
 ``AD`` < *Base* > .
@@ -85,10 +85,10 @@ and hence it is part of the current
 AD of *Base*
 :ref:`operation sequence<glossary@Operation@Sequence>` .
 {xrst_toc_hidden
-   example/general/add.cpp
-   example/general/sub.cpp
-   example/general/mul.cpp
-   example/general/div.cpp
+    example/general/add.cpp
+    example/general/sub.cpp
+    example/general/mul.cpp
+    example/general/div.cpp
 }
 
 Zero Special Cases
@@ -108,12 +108,12 @@ The following files contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   add.cpp,:ref:`add.cpp-title`
-   sub.cpp,:ref:`sub.cpp-title`
-   mul.cpp,:ref:`mul.cpp-title`
-   div.cpp,:ref:`div.cpp-title`
+    add.cpp,:ref:`add.cpp-title`
+    sub.cpp,:ref:`sub.cpp-title`
+    mul.cpp,:ref:`mul.cpp-title`
+    div.cpp,:ref:`div.cpp-title`
 
 Derivative
 **********
@@ -125,29 +125,29 @@ Addition
 
 .. math::
 
-   \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
+    \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
 
 Subtraction
 ===========
 
 .. math::
 
-   \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
+    \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
 
 Multiplication
 ==============
 
 .. math::
 
-   \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
+    \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
 
 Division
 ========
 
 .. math::
 
-   \D{[ f(x) / g(x) ]}{x} =
-      [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
+    \D{[ f(x) / g(x) ]}{x} =
+        [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
 
 {xrst_end ad_binary}
 -----------------------------------------------------------------------------

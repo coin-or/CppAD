@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 {xrst_begin_parent var_unary_op dev}
 {xrst_spell
-   acosh
-   asinh
-   erfc
-   expm
-   neg
+    acosh
+    asinh
+    erfc
+    expm
+    neg
 }
 
 Unary Variable Operators
@@ -41,32 +41,32 @@ Fun
 ***
 
 .. csv-table::
-   :widths: auto
-   :header-rows: 1
+    :widths: auto
+    :header-rows: 1
 
-   op_code,    Fun,      z
-   AbsOp,     fabs,      absolute value of *x*
-   AcosOp,    acos,      inverse cosine of *x*
-   AcoshOp,   acosh,     inverse hyperbolic cosine of *x*
-   AsinOp,    asin,      inverse sine of *x*
-   AsinhOp,   asinh,     inverse hyperbolic sine of *x*
-   AtanOp,    atan,      inverse tangent  of *x*
-   AtanhOp,   atanh,     inverse hyperbolic tangent of *x*
-   CosOp,     cos,       cosine of *x*
-   CoshOp,    cosh,      hyperbolic cosine of *x*
-   ErfOp,     erf,       error function of *x*
-   ErfcOp,    erfc,      complementary error function of *x*
-   ExpOp,     exp,       exponential of *x*
-   Expm1Op,   expm1,     exponential of *x* minus one
-   Log1pOp,   log1p,     logarithm of 1 + *x*
-   LogOp,     log,       logarithm of *x*
-   NegOp,     -,         minus *x*
-   SignOp,    sign,      sign of *x*
-   SinOp,     sin,       sine of *x*
-   SinhOp,    sinh,      hyperbolic sine of *x*
-   SqrtOp,    sqrt,      square root of *x*
-   TanOp,     tan,       tangent of *x*
-   TanhOp,    tanh,      hyperbolic tangent of *x*
+    op_code,    Fun,      z
+    AbsOp,     fabs,      absolute value of *x*
+    AcosOp,    acos,      inverse cosine of *x*
+    AcoshOp,   acosh,     inverse hyperbolic cosine of *x*
+    AsinOp,    asin,      inverse sine of *x*
+    AsinhOp,   asinh,     inverse hyperbolic sine of *x*
+    AtanOp,    atan,      inverse tangent  of *x*
+    AtanhOp,   atanh,     inverse hyperbolic tangent of *x*
+    CosOp,     cos,       cosine of *x*
+    CoshOp,    cosh,      hyperbolic cosine of *x*
+    ErfOp,     erf,       error function of *x*
+    ErfcOp,    erfc,      complementary error function of *x*
+    ExpOp,     exp,       exponential of *x*
+    Expm1Op,   expm1,     exponential of *x* minus one
+    Log1pOp,   log1p,     logarithm of 1 + *x*
+    LogOp,     log,       logarithm of *x*
+    NegOp,     -,         minus *x*
+    SignOp,    sign,      sign of *x*
+    SinOp,     sin,       sine of *x*
+    SinhOp,    sinh,      hyperbolic sine of *x*
+    SqrtOp,    sqrt,      square root of *x*
+    TanOp,     tan,       tangent of *x*
+    TanhOp,    tanh,      hyperbolic tangent of *x*
 
 i_z
 ***
@@ -102,10 +102,10 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_0(
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {xrst_code}
 
 Base, Fun, i_z, arg
@@ -124,7 +124,7 @@ taylor
 ******
 The Taylor coefficient corresponding to variable *i* and order *k* is
 
-   *taylor* [ *i* * *cap_order* + *k*  ]
+    *taylor* [ *i* * *cap_order* + *k*  ]
 
 Input
 =====
@@ -155,12 +155,12 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_any(
-   size_t        order_low   ,
-   size_t        order_up    ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        order_low   ,
+    size_t        order_up    ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {xrst_code}
 
 Base, Fun, i_z, arg
@@ -172,8 +172,8 @@ see
 :ref:`var_unary_op@arg`
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_op.xrst
-   headers: cap_order, order_low, order_up, taylor
+    include/cppad/local/var_op/template/forward_op.xrst
+    headers: cap_order, order_low, order_up, taylor
 }
 
 
@@ -196,12 +196,12 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_forward_dir(
-   size_t        order_up    ,
-   size_t        n_dir       ,
-   size_t        i_z         ,
-   const addr_t* arg         ,
-   size_t        cap_order   ,
-   Base*         taylor      )
+    size_t        order_up    ,
+    size_t        n_dir       ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {xrst_code}
 
 Base, Fun, i_z, arg
@@ -213,8 +213,8 @@ see
 :ref:`var_unary_op@arg`
 
 {xrst_template ;
-   include/cppad/local/var_op/template/forward_dir.xrst
-   headers: n_dir, cap_order, order_up, taylor
+    include/cppad/local/var_op/template/forward_dir.xrst
+    headers: n_dir, cap_order, order_up, taylor
 }
 
 {xrst_end var_unary_forward_dir}
@@ -236,12 +236,12 @@ Prototype
 {xrst_code cpp}
 template <class Base>
 inline void Fun_reverse(
-   size_t        i_z          ,
-   const addr_t* arg          ,
-   size_t        cap_order    ,
-   const Base*   taylor       ,
-   size_t        n_order      ,
-   Base*         partial      )
+    size_t        i_z          ,
+    const addr_t* arg          ,
+    size_t        cap_order    ,
+    const Base*   taylor       ,
+    size_t        n_order      ,
+    Base*         partial      )
 {xrst_code}
 
 Base, Fun, i_z, arg
@@ -260,13 +260,13 @@ taylor
 ******
 The Taylor coefficient corresponding to variable *i* and order *k* is
 
-   *taylor* [ *i* * *cap_order* + *k*  ]
+    *taylor* [ *i* * *cap_order* + *k*  ]
 
 {xrst_template ;
-   include/cppad/local/var_op/template/reverse_op.xrst
-   headers: n_order, partial
+    include/cppad/local/var_op/template/reverse_op.xrst
+    headers: n_order, partial
 
-   @x, y@ ; x
+    @x, y@ ; x
 }
 
 {xrst_end var_unary_reverse}

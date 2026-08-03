@@ -10,7 +10,7 @@ C++ AD Graph Iterator Class
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/graph/cpp_graph_itr.hpp
+    include/cppad/local/graph/cpp_graph_itr.hpp
 }
 
 {xrst_end cpp_graph_itr}

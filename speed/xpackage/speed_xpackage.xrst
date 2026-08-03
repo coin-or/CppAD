@@ -5,11 +5,11 @@
 
 {xrst_begin speed_xpackage}
 {xrst_spell
-   cp
-   grep
-   ifdef
-   sed
-   txt
+    cp
+    grep
+    ifdef
+    sed
+    txt
 }
 
 Speed Test Example and Template for a New Package
@@ -29,7 +29,7 @@ Use the following command, in the
 to see which files link the example package ``xpackage``
 to the speed tests:
 
-   ``git grep -l xpackage``
+    ``git grep -l xpackage``
 
 Template
 ********
@@ -95,13 +95,13 @@ of the speed tests.
 Contents
 ********
 {xrst_toc_list
-   speed/xpackage/det_minor.cpp
-   speed/xpackage/det_lu.cpp
-   speed/xpackage/mat_mul.cpp
-   speed/xpackage/ode.cpp
-   speed/xpackage/poly.cpp
-   speed/xpackage/sparse_hessian.cpp
-   speed/xpackage/sparse_jacobian.cpp
+    speed/xpackage/det_minor.cpp
+    speed/xpackage/det_lu.cpp
+    speed/xpackage/mat_mul.cpp
+    speed/xpackage/ode.cpp
+    speed/xpackage/poly.cpp
+    speed/xpackage/sparse_hessian.cpp
+    speed/xpackage/sparse_jacobian.cpp
 }
 
 {xrst_end speed_xpackage}

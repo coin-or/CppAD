@@ -31,7 +31,7 @@ y
 *
 The result *y* has type
 
-   ``AD`` < *Base* > *y*
+    ``AD`` < *Base* > *y*
 
 It is equal to the operand *x* .
 
@@ -50,12 +50,12 @@ If :math:`f` is a
 
 .. math::
 
-   \D{[ + f(x) ]}{x} = \D{f(x)}{x}
+    \D{[ + f(x) ]}{x} = \D{f(x)}{x}
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/unary_plus.cpp
+    example/general/unary_plus.cpp
 }
 The file
 :ref:`unary_plus.cpp-name`
@@ -70,15 +70,15 @@ namespace CppAD {
 
 template <class Base>
 AD<Base> AD<Base>::operator + (void) const
-{  AD<Base> result(*this);
+{   AD<Base> result(*this);
 
-   return result;
+    return result;
 }
 
 
 template <class Base>
 AD<Base> operator + (const VecAD_reference<Base> &right)
-{  return right.ADBase(); }
+{   return right.ADBase(); }
 
 }
 //  END CppAD namespace

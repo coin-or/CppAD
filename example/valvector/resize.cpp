@@ -9,8 +9,8 @@ Example and Test of valvector Resize
 ####################################
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end valvector_resize.cpp}
@@ -20,27 +20,27 @@ Example and Test of valvector Resize
 # include <cppad/example/valvector/class.hpp>
 //
 bool resize(void)
-{  // scalar_type
-   typedef valvector::scalar_type scalar_type;
-   //
-   //
-   // ok
-   bool ok = true;
-   //
-   // v, ok
-   valvector v;
-   ok &= v.size() == 1;
-   //
-   // v
-   v.resize(3);
-   for(size_t i = 0; i < v.size(); ++i)
-      v[i] = scalar_type(i);
-   //
-   // ok
-   ok &= v.size() == 3;
-   for(size_t i = 0; i < v.size(); ++i)
-      ok &= v[i] == scalar_type(i);
-   //
-   return ok;
+{   // scalar_type
+    typedef valvector::scalar_type scalar_type;
+    //
+    //
+    // ok
+    bool ok = true;
+    //
+    // v, ok
+    valvector v;
+    ok &= v.size() == 1;
+    //
+    // v
+    v.resize(3);
+    for(size_t i = 0; i < v.size(); ++i)
+        v[i] = scalar_type(i);
+    //
+    // ok
+    ok &= v.size() == 3;
+    for(size_t i = 0; i < v.size(); ++i)
+        ok &= v[i] == scalar_type(i);
+    //
+    return ok;
 }
 // END C++

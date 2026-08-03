@@ -7,11 +7,11 @@
 /*
 {xrst_begin create_dll_lib}
 {xrst_spell
-   cmd
-   csrc
-   hc
-   hs
-   msg
+    cmd
+    csrc
+    hc
+    hs
+    msg
 }
 
 Create a Dynamic Link Library
@@ -25,8 +25,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CREATE_DLL_LIB
-   // END_CREATE_DLL_LIB
+    // BEGIN_CREATE_DLL_LIB
+    // END_CREATE_DLL_LIB
 }
 
 include
@@ -64,12 +64,12 @@ It does not include the output file flag or output file name.
 If :ref:`cmake-name` detects that this is the MSVC compiler,
 the default value for this option is
 
-   `cl /EHs /EHc /c /TC``
+    `cl /EHs /EHc /c /TC``
 
 If cmake detects that this is the Clang or GNU compiler,
 the default value for this option is
 
-   *cppad_c_compiler_cmd* ``-c -fPIC``
+    *cppad_c_compiler_cmd* ``-c -fPIC``
 
 Here and below *cppad_c_compiler_cmd* is the command used to run
 the C compiler (which is determined by cmake) .
@@ -81,11 +81,11 @@ This is an abbreviated version of the link command.
 It does not include the output file flag or output file name.
 In the MSVC case, the default for this option is
 
-   ``link /DLL``
+    ``link /DLL``
 
 In the Clang or GNU case, the default for this option is
 
-   *cppad_c_compiler_cmd* ``-shared`` .
+    *cppad_c_compiler_cmd* ``-shared`` .
 
 
 err_msg
@@ -111,124 +111,124 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_CREATE_DLL_LIB
 template <class StringVector>
 std::string create_dll_lib(
-   const std::string&                        dll_file   ,
-   const StringVector&                       csrc_files ,
-   const std::map<std::string, std::string>& options    )
+    const std::string&                        dll_file   ,
+    const StringVector&                       csrc_files ,
+    const std::map<std::string, std::string>& options    )
 // END_CREATE_DLL_LIB
-{  using std::string;
-   //
-   // err_msg
-   string err_msg = "";
-   //
-   // compile, link
-   string compile = "";
-   string  link   = "";
+{   using std::string;
+    //
+    // err_msg
+    string err_msg = "";
+    //
+    // compile, link
+    string compile = "";
+    string  link   = "";
 # if CPPAD_C_COMPILER_MSVC_FLAGS
-   compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /TC";
-   link    = "link /DLL";
+    compile = CPPAD_C_COMPILER_CMD " /EHs /EHc /c /TC";
+    link    = "link /DLL";
 # endif
 # if CPPAD_C_COMPILER_GNU_FLAGS
-   compile = CPPAD_C_COMPILER_CMD " -c -fPIC";
-   link    = CPPAD_C_COMPILER_CMD " -shared";
+    compile = CPPAD_C_COMPILER_CMD " -c -fPIC";
+    link    = CPPAD_C_COMPILER_CMD " -shared";
 # endif
-   for( const auto& pair : options )
-   {  const string& key = pair.first;
-      if( key == "compile" )
-         compile = pair.second;
-      else if( key == "link" )
-         link = pair.second;
-      else
-      {  err_msg = "options contains following invalid key: " + key;
-         return err_msg;
-      }
-   }
-   //
-   // check if we know how to create a dll with this compiler
-   if( compile == "" )
-   {  err_msg  = "Do not know how to create a dll using this C compiler\n";
-      err_msg += CPPAD_C_COMPILER_CMD;
-      return err_msg;
-   }
-   //
-   // check the std::system function exists
-   int flag = std::system(nullptr);
-   if( flag == 0 )
-   {  err_msg = "C++ std::system function not available\n";
-      return err_msg;
-   }
-   //
-   // check the file extensions
+    for( const auto& pair : options )
+    {   const string& key = pair.first;
+        if( key == "compile" )
+            compile = pair.second;
+        else if( key == "link" )
+            link = pair.second;
+        else
+        {   err_msg = "options contains following invalid key: " + key;
+            return err_msg;
+        }
+    }
+    //
+    // check if we know how to create a dll with this compiler
+    if( compile == "" )
+    {   err_msg  = "Do not know how to create a dll using this C compiler\n";
+        err_msg += CPPAD_C_COMPILER_CMD;
+        return err_msg;
+    }
+    //
+    // check the std::system function exists
+    int flag = std::system(nullptr);
+    if( flag == 0 )
+    {   err_msg = "C++ std::system function not available\n";
+        return err_msg;
+    }
+    //
+    // check the file extensions
 # ifdef _WIN32
-   string dll_ext = ".dll";
+    string dll_ext = ".dll";
 # else
-   string dll_ext = ".so";
+    string dll_ext = ".so";
 # endif
-   size_t last_match = dll_file.rfind(dll_ext);
-   size_t expected   = dll_file.size() - dll_ext.size();
-   if( last_match != expected )
-   {  err_msg += "dll_file = " + dll_file + "\ndoes not end with " + dll_ext;
-      return err_msg;
-   }
-   //
-   // o_file_list, o_file_vec;
-   string       o_file_list;
-   StringVector o_file_vec( csrc_files.size() );
-   //
-   // i_csrc
-   for(size_t i_csrc = 0; i_csrc < csrc_files.size(); ++i_csrc)
-   {  //
-      // c_file
-      string c_file = csrc_files[i_csrc];
-      //
-      // o_file
-      string o_file = local::temp_file();
-      //
-      // cmd
-      string cmd = compile + " " + c_file;
+    size_t last_match = dll_file.rfind(dll_ext);
+    size_t expected   = dll_file.size() - dll_ext.size();
+    if( last_match != expected )
+    {   err_msg += "dll_file = " + dll_file + "\ndoes not end with " + dll_ext;
+        return err_msg;
+    }
+    //
+    // o_file_list, o_file_vec;
+    string       o_file_list;
+    StringVector o_file_vec( csrc_files.size() );
+    //
+    // i_csrc
+    for(size_t i_csrc = 0; i_csrc < csrc_files.size(); ++i_csrc)
+    {   //
+        // c_file
+        string c_file = csrc_files[i_csrc];
+        //
+        // o_file
+        string o_file = local::temp_file();
+        //
+        // cmd
+        string cmd = compile + " " + c_file;
 # ifdef _MSC_VER
-      cmd += " /Fo\"" + o_file + "\" 1> nul 2> nul";
+        cmd += " /Fo\"" + o_file + "\" 1> nul 2> nul";
 # else
-      cmd += " -o " + o_file;
+        cmd += " -o " + o_file;
 # endif
-      //
-      // o_file
-      // compile c_file and put result in o_file
-      flag = std::system( cmd.c_str() );
-      if(  flag != 0 )
-      {  err_msg = "create_dll_lib: following system command failed\n";
-         err_msg += cmd;
-         return err_msg;
-      }
-      //
-      // o_file_list
-      o_file_list += " " + o_file;
-      //
-      // o_file_vec
-      o_file_vec[i_csrc] = o_file;
-   }
-   string cmd = link + " " + o_file_list;
+        //
+        // o_file
+        // compile c_file and put result in o_file
+        flag = std::system( cmd.c_str() );
+        if(  flag != 0 )
+        {   err_msg = "create_dll_lib: following system command failed\n";
+            err_msg += cmd;
+            return err_msg;
+        }
+        //
+        // o_file_list
+        o_file_list += " " + o_file;
+        //
+        // o_file_vec
+        o_file_vec[i_csrc] = o_file;
+    }
+    string cmd = link + " " + o_file_list;
 # ifdef _MSC_VER
-   cmd += " /OUT:" + dll_file + " 1> nul 2> nul";
+    cmd += " /OUT:" + dll_file + " 1> nul 2> nul";
 # else
-   cmd += " -o "   + dll_file;;
+    cmd += " -o "   + dll_file;;
 # endif
-   flag = std::system( cmd.c_str() );
-   if(  flag != 0 )
-   {  err_msg = "create_dll_lib: following system command failed\n";
-      err_msg += cmd;
-      return err_msg;
-   }
-   //
-   // remove o_file
-   for(size_t i = 0; i < o_file_vec.size(); ++i)
-   {  flag = std::remove( o_file_vec[i].c_str() );
-      if(  flag != 0 )
-      {  err_msg = "create_dll_lib: following system command failed\n";
-         err_msg += cmd;
-         return err_msg;
-      }
-   }
-   return err_msg;
+    flag = std::system( cmd.c_str() );
+    if(  flag != 0 )
+    {   err_msg = "create_dll_lib: following system command failed\n";
+        err_msg += cmd;
+        return err_msg;
+    }
+    //
+    // remove o_file
+    for(size_t i = 0; i < o_file_vec.size(); ++i)
+    {   flag = std::remove( o_file_vec[i].c_str() );
+        if(  flag != 0 )
+        {   err_msg = "create_dll_lib: following system command failed\n";
+            err_msg += cmd;
+            return err_msg;
+        }
+    }
+    return err_msg;
 }
 
 } // END_CPPAD_NAMESPACE

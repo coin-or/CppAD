@@ -24,10 +24,10 @@ A cppadcg version of this test is not yet implemented
 extern std::map<std::string, bool> global_option;
 
 bool link_det_lu(
-   size_t                     size     ,
-   size_t                     repeat   ,
-   CppAD::vector<double>     &matrix   ,
-   CppAD::vector<double>     &gradient )
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>     &matrix   ,
+    CppAD::vector<double>     &gradient )
 {  return false; }
 /* {xrst_code}
 {xrst_spell_on}

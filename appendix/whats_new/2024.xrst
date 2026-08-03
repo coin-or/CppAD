@@ -5,30 +5,30 @@
 
 {xrst_begin 2024 app}
 {xrst_spell
-   bitwise
-   boostvector
-   bostvector
-   cassert
-   cmd
-   dismod
-   dll
-   env
-   fadbad
-   homebrew
-   iostream
-   ipopt
-   isnan
-   nul
-   nx
-   omhelp
-   py
-   sacado
-   setvec
-   svec
-   usr
-   xcode
-   yy
-   yyyy
+    bitwise
+    boostvector
+    bostvector
+    cassert
+    cmd
+    dismod
+    dll
+    env
+    fadbad
+    homebrew
+    iostream
+    ipopt
+    isnan
+    nul
+    nx
+    omhelp
+    py
+    sacado
+    setvec
+    svec
+    usr
+    xcode
+    yy
+    yyyy
 }
 
 Release Notes for 2024
@@ -54,14 +54,14 @@ In the :ref:`atomic_four_norm_sq.cpp-name` example,
 remove dead code in its forward routine.
 To be specific, remove::
 
-   // Assume we are not using forward mode with order > 1
-   assert( ! ok );
-   return ok;
+    // Assume we are not using forward mode with order > 1
+    assert( ! ok );
+    return ok;
 
 Also in its reverse routine,
 improve the comment about the relation between G and H; to be specific::
 
-   // H( {x_j^k} ) = G[ F( {x_j^k} ), {x_j^k} ]
+    // H( {x_j^k} ) = G[ F( {x_j^k} ), {x_j^k} ]
 
 11-19
 =====
@@ -92,7 +92,7 @@ For example:
 Old Syntax
 ----------
 
-   ``atomic_user`` *a_square_root*
+    ``atomic_user`` *a_square_root*
 
 *a_square_root* ( *au* , *ay* )
 
@@ -106,7 +106,7 @@ New Syntax
 The :ref:`jit_compile.cpp-name` example line was missing
 CPPAD_C_COMPILER_CMD in the line (this has been fixed)::
 
-   const char* cmd = CPPAD_C_COMPILER_CMD " --version > temp";
+    const char* cmd = CPPAD_C_COMPILER_CMD " --version > temp";
 
 10-02
 =====
@@ -303,10 +303,10 @@ The multi-threading ``simple_ad`` examples where changed to
 The number of :ref:`parallel_ad@CheckSimpleVector` cases
 called by parallel_ad<Base>() was increased to include the following::
 
-   CheckSimpleVector< bool, CppAD::vectorBool >()
-   CheckSimpleVector< size_t, CppAD::vector<size_t> >()
-   CheckSimpleVector< Base, std::vector<Base> >()
-   CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >()
+    CheckSimpleVector< bool, CppAD::vectorBool >()
+    CheckSimpleVector< size_t, CppAD::vector<size_t> >()
+    CheckSimpleVector< Base, std::vector<Base> >()
+    CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >()
 
 In addition, the CheckSimpleVector :ref:`CheckSimpleVector@Parallel Mode`
 documentation and error message has been improved.
@@ -333,7 +333,7 @@ examples.
 Fix bug in the optimizer :ref:`optimize@options@val_graph` option.
 To be more specific, the following assert could occur during the optimization::
 
-   vector: index greater than or equal vector size
+    vector: index greater than or equal vector size
 
 
 02-29
@@ -392,11 +392,11 @@ title for these pages to Release Notes for the corresponding year.
 This breaks old links to these web pages.
 For example, the old link to the heading directly below was::
 
-   https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
+    https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
 
 Its new link, which is much shorter, is::
 
-   https://cppad.readthedocs.io/latest/2024.html#mm-dd-02-14
+    https://cppad.readthedocs.io/latest/2024.html#mm-dd-02-14
 
 02-14
 =====
@@ -466,12 +466,12 @@ forward_two documentation page.
 #. Each *file_name* in the latest documentation was moved
    (this is important if you have links to previous web pages):
 
-   .. list-table::
+    .. list-table::
 
-      *  - Old Location
-         - ``https://cppad.readthedocs.io/``\ *file_name*
-      *  - New Location
-         - ``https://cppad.readthedocs.io/latest/``\ *file_name*
+        *  - Old Location
+           - ``https://cppad.readthedocs.io/``\ *file_name*
+        *  - New Location
+           - ``https://cppad.readthedocs.io/latest/``\ *file_name*
 
 01-02
 =====

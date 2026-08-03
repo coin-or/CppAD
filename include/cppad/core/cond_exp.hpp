@@ -33,8 +33,8 @@ above have the following correspondence:
 
 .. csv-table::
 
-   *Rel* , ``Lt`` , ``Le`` , ``Eq`` , ``Ge`` , ``Gt``
-   *Cop* ,  <     , <=     , ==     , >=     , >
+    *Rel* , ``Lt`` , ``Le`` , ``Eq`` , ``Ge`` , ``Gt``
+    *Cop* ,  <     , <=     , ==     , >=     , >
 
 If *f* is the :ref:`ADFun-name` object corresponding to the
 AD operation sequence,
@@ -65,7 +65,7 @@ left
 ****
 The argument *left* has prototype
 
-   ``const`` *Type* & *left*
+    ``const`` *Type* & *left*
 
 It specifies the value for the left side of the comparison operator.
 
@@ -73,7 +73,7 @@ right
 *****
 The argument *right* has prototype
 
-   ``const`` *Type* & *right*
+    ``const`` *Type* & *right*
 
 It specifies the value for the right side of the comparison operator.
 
@@ -81,7 +81,7 @@ if_true
 *******
 The argument *if_true* has prototype
 
-   ``const`` *Type* & *if_true*
+    ``const`` *Type* & *if_true*
 
 It specifies the return value if the result of the comparison is true.
 
@@ -89,7 +89,7 @@ if_false
 ********
 The argument *if_false* has prototype
 
-   ``const`` *Type* & *if_false*
+    ``const`` *Type* & *if_false*
 
 It specifies the return value if the result of the comparison is false.
 
@@ -97,7 +97,7 @@ result
 ******
 The *result* has prototype
 
-   *Type* & *if_false*
+    *Type* & *if_false*
 
 Optimize
 ********
@@ -115,11 +115,11 @@ Deprecate 2005-08-07
 ********************
 Previous versions of CppAD used
 
-   ``CondExp`` ( *flag* , *if_true* , *if_false* )
+    ``CondExp`` ( *flag* , *if_true* , *if_false* )
 
 for the same meaning as
 
-   ``CondExpGt`` ( *flag* , *Type* (0), *if_true* , *if_false* )
+    ``CondExpGt`` ( *flag* , *Type* (0), *if_true* , *if_false* )
 
 Use of ``CondExp`` is deprecated, but continues to be supported.
 
@@ -137,7 +137,7 @@ Example
 Test
 ****
 {xrst_toc_hidden
-   example/general/cond_exp.cpp
+    example/general/cond_exp.cpp
 }
 The file
 :ref:`cond_exp.cpp-name`
@@ -149,9 +149,9 @@ The following implementation of the
 AD :ref:`atan2-name` function is a more complex
 example of using conditional expressions:
 {xrst_literal
-   include/cppad/core/atan2.hpp
-   BEGIN CondExp
-   // END CondExp
+    include/cppad/core/atan2.hpp
+    BEGIN CondExp
+    // END CondExp
 }
 
 {xrst_end CondExp}
@@ -162,51 +162,51 @@ namespace CppAD {
 
 template <class Base>
 AD<Base> CondExpOp(
-   enum  CompareOp cop       ,
-   const AD<Base> &left      ,
-   const AD<Base> &right     ,
-   const AD<Base> &if_true   ,
-   const AD<Base> &if_false  )
+    enum  CompareOp cop       ,
+    const AD<Base> &left      ,
+    const AD<Base> &right     ,
+    const AD<Base> &if_true   ,
+    const AD<Base> &if_false  )
 {
-   AD<Base> result;
-   CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+    AD<Base> result;
+    CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-   // check first case where do not need to tape
-   if( IdenticalCon(left) && IdenticalCon(right) )
-   {  result = CondExpOp(
-         cop, left.value_, right.value_, if_true.value_, if_false.value_
-      );
-      return result;
-   }
+    // check first case where do not need to tape
+    if( IdenticalCon(left) && IdenticalCon(right) )
+    {   result = CondExpOp(
+            cop, left.value_, right.value_, if_true.value_, if_false.value_
+        );
+        return result;
+    }
 
-   // must use CondExp in case Base is an AD type and recording
-   result.value_ = CondExpOp(cop,
-      left.value_, right.value_, if_true.value_, if_false.value_);
+    // must use CondExp in case Base is an AD type and recording
+    result.value_ = CondExpOp(cop,
+        left.value_, right.value_, if_true.value_, if_false.value_);
 
-   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
 
-   // add this operation to the tape
-   if( tape != nullptr ) tape->Rec_.cond_exp(
-         tape->id_, cop, result, left, right, if_true, if_false
-   );
+    // add this operation to the tape
+    if( tape != nullptr ) tape->Rec_.cond_exp(
+            tape->id_, cop, result, left, right, if_true, if_false
+    );
 
-   return result;
+    return result;
 }
 
 // ------------ CondExpOp(left, right, if_true, if_false) ----------------
 
 # define CPPAD_COND_EXP(Name)                                        \
-   template <class Base>                                           \
-   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION                           \
-   AD<Base> CondExp##Name(                                         \
-      const AD<Base> &left      ,                                \
-      const AD<Base> &right     ,                                \
-      const AD<Base> &if_true   ,                                \
-      const AD<Base> &if_false  )                                \
-   {                                                               \
-      return CondExpOp(Compare##Name,                            \
-         left, right, if_true, if_false);                      \
-   }
+    template <class Base>                                           \
+    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION                           \
+    AD<Base> CondExp##Name(                                         \
+        const AD<Base> &left      ,                                \
+        const AD<Base> &right     ,                                \
+        const AD<Base> &if_true   ,                                \
+        const AD<Base> &if_false  )                                \
+    {                                                                \
+        return CondExpOp(Compare##Name,                            \
+            left, right, if_true, if_false);                      \
+    }
 
 // AD<Base>
 CPPAD_COND_EXP(Lt)
@@ -217,11 +217,11 @@ CPPAD_COND_EXP(Gt)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 AD<Base> CondExp(
-   const AD<Base> &flag      ,
-   const AD<Base> &if_true   ,
-   const AD<Base> &if_false  )
+    const AD<Base> &flag      ,
+    const AD<Base> &if_true   ,
+    const AD<Base> &if_false  )
 {
-   return CondExpOp(CompareGt, flag, AD<Base>(0), if_true, if_false);
+    return CondExpOp(CompareGt, flag, AD<Base>(0), if_true, if_false);
 }
 
 # undef CPPAD_COND_EXP

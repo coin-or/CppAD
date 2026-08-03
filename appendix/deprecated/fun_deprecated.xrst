@@ -30,12 +30,12 @@ A recording of and AD of *Base*
 :ref:`operation sequence<glossary@Operation@Sequence>`
 is started by a call of the form
 
-   ``Independent`` ( *x* )
+    ``Independent`` ( *x* )
 
 If there is only one such recording at the current time,
 you can use *f* . ``Dependent`` ( *y* ) in place of
 
-   *f* . ``Dependent`` ( *x* , *y* )
+    *f* . ``Dependent`` ( *x* , *y* )
 
 See :ref:`Dependent-name` for a description of this operation.
 
@@ -50,7 +50,7 @@ Order
 *****
 The result *o* has prototype
 
-   ``size_t`` *o*
+    ``size_t`` *o*
 
 and is the order of the previous forward operation
 using the function *f* .
@@ -73,7 +73,7 @@ Memory
 ******
 The result
 
-   ``size_t`` *m*
+    ``size_t`` *m*
 
 and is the number of memory units (``sizeof`` ) required for the
 information currently stored in *f* .
@@ -94,7 +94,7 @@ Size
 ****
 The result *s* has prototype
 
-   ``size_t`` *s*
+    ``size_t`` *s*
 
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
@@ -114,7 +114,7 @@ taylor_size
 ***********
 The result *t* has prototype
 
-   ``size_t`` *t*
+    ``size_t`` *t*
 
 and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object *f* .
@@ -127,7 +127,7 @@ use_VecAD
 *********
 The result *u* has prototype
 
-   ``bool`` *u*
+    ``bool`` *u*
 
 If it is true, the
 AD of *Base*
@@ -140,13 +140,13 @@ Deprecated 2006-04-08
 =====================
 You can instead use
 
-   *u* = *f* . ``size_VecAD`` () > 0
+    *u* = *f* . ``size_VecAD`` () > 0
 
 size_taylor
 ***********
 The result *v* has prototype
 
-   ``size_t`` *v*
+    ``size_t`` *v*
 
 and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object *f* .
@@ -159,7 +159,7 @@ capacity_taylor
 ***************
 The result *w* has prototype
 
-   ``size_t`` *w*
+    ``size_t`` *w*
 
 and is the number of Taylor coefficient orders currently allocated
 in the ADFun object *f* .

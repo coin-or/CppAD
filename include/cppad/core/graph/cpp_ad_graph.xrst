@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin cpp_ad_graph}
 {xrst_spell
-   notpos
-   nx
+    notpos
+    nx
 }
 
 C++ Representation of an AD Graph
@@ -28,17 +28,17 @@ Node Indices
 The nodes in an AD graph have the following order:
 ::
 
-      p_0 , ... ,  p_{np-1} ,
-      x_0 , ... ,  x_{nx-1} ,
-      c_0 , ... ,  c_{nc-1} ,
-      r_0 , ... ,  r_{no-1}
+        p_0 , ... ,  p_{np-1} ,
+        x_0 , ... ,  x_{nx-1} ,
+        c_0 , ... ,  c_{nc-1} ,
+        r_0 , ... ,  r_{no-1}
 
 p
 =
 The sub-vector
 ::
 
-      p_0, ... , p_{np-1}
+        p_0, ... , p_{np-1}
 
 is the independent dynamic parameter vector;
 see :ref:`cpp_ad_graph@n_dynamic_ind` .
@@ -49,7 +49,7 @@ x
 The sub-vector
 ::
 
-      x_1, ... , x_nx
+        x_1, ... , x_nx
 
 is the independent variable vector;
 see :ref:`cpp_ad_graph@n_variable_ind` .
@@ -61,7 +61,7 @@ c
 The sub-vector
 ::
 
-      c_1, ... , c_nc
+        c_1, ... , c_nc
 
 is the constant parameter vector;
 see :ref:`cpp_ad_graph@constant_vec` .
@@ -155,7 +155,7 @@ for the *i*-th operator.
 For *j* = 0 , ..., *n_node_arg* [ *i* ] ``-1`` ,
 the *j*-th node argument for the *i*-th operator has node index
 
-   *operator_arg* [ *first_node* [ *i* ] + *j*  ]
+    *operator_arg* [ *first_node* [ *i* ] + *j*  ]
 
 The *operator_arg* sub-vector for the *i*-th operator starts are
 *first_node* [ *i* ] and has *n_node_arg* [ *i* ] elements
@@ -170,12 +170,12 @@ print_graph_op
 In the case where *operator_vec* [ *i* ]. ``op_enum`` is
 ``print_graph_op`` :
 
-   *before* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 2`` ]
+    *before* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 2`` ]
 
 is the index in :ref:`cpp_ad_graph@print_text_vec`
 of the text that is printed before the value and
 
-   *after* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+    *after* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
 
 is the index in :ref:`cpp_ad_graph@print_text_vec`
 of the text that is printed after the value.
@@ -184,19 +184,19 @@ starts at index *first_node* [ *i* ] ``-2``
 and has 4 = *n_node_arg* [ *i* ]+2 elements.
 The node with index
 
-   *notpos* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ]
+    *notpos* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ]
 
 is checked and if it is positive, nothing is printed by this operator.
 Otherwise, the value corresponding to the following node is printed:
 
-   *value* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] + 1 ]
+    *value* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] + 1 ]
 
 discrete_graph_op
 =================
 In the case where *operator_vec* [ *i* ]. ``op_enum`` is
 ``discrete_graph_op`` :
 
-   *name_index* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+    *name_index* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
 
 is the index in :ref:`cpp_ad_graph@discrete_name_vec`
 of the function being called by this operator.
@@ -210,16 +210,16 @@ atom_graph_op
 In the case where *operator_vec* [ *i* ]. ``op_enum`` is
 ``atom_graph_op`` :
 
-   *name_index* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 3`` ]
+    *name_index* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 3`` ]
 
 is the index in :ref:`cpp_ad_graph@atomic_name_vec`
 of the function being called by this operator.
 
-   *n_result* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 2`` ]
+    *n_result* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 2`` ]
 
 is the number of result nodes for this operator.
 
-   *n_node_arg* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+    *n_node_arg* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
 
 is the number of node arguments for this operator.
 For this operator,
@@ -232,7 +232,7 @@ sum_graph_op
 In the case where *operator_vec* [ *i* ]. ``op_enum`` is
 ``sum_graph_op`` :
 
-   *n_node_arg* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+    *n_node_arg* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
 
 is the number of node arguments for this operator.
 For this operator,
@@ -254,10 +254,10 @@ It is defined by the documentation sections under Contents below:
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/graph/graph_op_enum.hpp
-   include/cppad/core/graph/cpp_graph.xrst
-   include/cppad/core/graph/from_graph.hpp
-   include/cppad/core/graph/to_graph.hpp
+    include/cppad/core/graph/graph_op_enum.hpp
+    include/cppad/core/graph/cpp_graph.xrst
+    include/cppad/core/graph/from_graph.hpp
+    include/cppad/core/graph/to_graph.hpp
 }
 
 {xrst_end cpp_ad_graph}

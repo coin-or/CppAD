@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin Introduction}
 {xrst_spell
-   andreas
-   griewank
+    andreas
+    griewank
 }
 
 An Introduction by Example to Algorithmic Differentiation
@@ -118,9 +118,9 @@ SIAM Frontiers in Applied Mathematics,
 Contents
 ********
 {xrst_toc_table
-   introduction/exp_2.hpp
-   introduction/exp_eps.hpp
-   introduction/introduction.cpp
+    introduction/exp_2.hpp
+    introduction/exp_eps.hpp
+    introduction/introduction.cpp
 }
 
 {xrst_end Introduction}

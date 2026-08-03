@@ -6,15 +6,15 @@
 This file is intended to help document the multi threading get_started examples
 
 It has the following xrst template comments:
-   title: Getting Started Using @Name@ Threads With CppAD
-   start source code after: // <space> BEGIN_C++
-   end source code before:  // <space> END_C++
+    title: Getting Started Using @Name@ Threads With CppAD
+    start source code after: // <space> BEGIN_C++
+    end source code before:  // <space> END_C++
 
 It has the following xrst template replacements
-   @Name@    : is the name of this threading system
-   @####@    : is the underlining for the name of the threading system
-   @DEFAULT@ : is macro a macro name. If it is 1 (0),
-               the ADFun default ctor is used (is not used)
+    @Name@    : is the name of this threading system
+    @####@    : is the underlining for the name of the threading system
+    @DEFAULT@ : is macro a macro name. If it is 1 (0),
+                    the ADFun default ctor is used (is not used)
 }
 
 Getting Started Using @Name@ Threads With CppAD
@@ -34,10 +34,10 @@ If you use the :ref:`fun_construct@Sequence Constructor` for the original
 function, you will need to clear the Taylor coefficient memory associated
 with the function using :ref:`capacity_order-name` ; e.g. ::
 
-   {xrst_spell_off}
-   CppAD::ADFun fun(ax, ay);
-   fun.capacity_order(0);
-   {xrst_spell_on}
+    {xrst_spell_off}
+    CppAD::ADFun fun(ax, ay);
+    fun.capacity_order(0);
+    {xrst_spell_on}
 
 If you do not free the Taylor coefficient memory in ``fun`` ,
 the function assignments will allocate zero order Taylor coefficients for each
@@ -46,11 +46,11 @@ parallel mode, you may attempt to free that memory using another thread.
 For example, if you change @DEFAULT@ from 1 to 0, you will
 get the message::
 
-   Attempt to return memory for a different thread while in parallel mode
+    Attempt to return memory for a different thread while in parallel mode
 
 Source Code
 ***********
 {xrst_literal
-   // BEGIN_C++
-   // END_C++
+    // BEGIN_C++
+    // END_C++
 }

@@ -34,8 +34,8 @@ Deprecated 2022-05-10
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Implementation
@@ -89,7 +89,7 @@ the calculation of *pattern_out* .
 If *select_x* [ *j* ] is false, then there will be no indices
 *k* such that
 
-   *pattern_out* . ``col`` ()[ *k* ] == *j*
+    *pattern_out* . ``col`` ()[ *k* ] == *j*
 
 .
 If *select_x* [ *j* ] is true, the argument *ax* [ *j* ]
@@ -104,7 +104,7 @@ the calculation of *pattern_out* .
 If *select_y* [ *i* ] is false, then there will be no indices
 *k* such that
 
-   *pattern_out* . ``row`` ()[ *k* ] == *i*
+    *pattern_out* . ``row`` ()[ *k* ] == *i*
 
 .
 
@@ -138,9 +138,9 @@ Example
 The following is an example ``jac_sparsity`` definition taken from
 :ref:`atomic_four_norm_sq.cpp-name` :
 {xrst_literal
-   example/atomic_four/norm_sq.cpp
-   // BEGIN JAC_SPARSITY
-   // END JAC_SPARSITY
+    example/atomic_four/norm_sq.cpp
+    // BEGIN JAC_SPARSITY
+    // END JAC_SPARSITY
 }
 
 {xrst_end atomic_four_jac_sparsity}
@@ -152,24 +152,24 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
-   size_t                                  call_id      ,
-   bool                                    dependency   ,
-   const vector<bool>&                     ident_zero_x ,
-   const vector<bool>&                     select_x     ,
-   const vector<bool>&                     select_y     ,
-   sparse_rc< vector<size_t> >&            pattern_out  )
+    size_t                                  call_id      ,
+    bool                                    dependency   ,
+    const vector<bool>&                     ident_zero_x ,
+    const vector<bool>&                     select_x     ,
+    const vector<bool>&                     select_y     ,
+    sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
-{  return false; }
+{   return false; }
 //
 // deprecated version of jac_sparsity callback
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
-   size_t                                  call_id      ,
-   bool                                    dependency   ,
-   const vector<bool>&                     select_x     ,
-   const vector<bool>&                     select_y     ,
-   sparse_rc< vector<size_t> >&            pattern_out  )
-{  return false; }
+    size_t                                  call_id      ,
+    bool                                    dependency   ,
+    const vector<bool>&                     select_x     ,
+    const vector<bool>&                     select_y     ,
+    sparse_rc< vector<size_t> >&            pattern_out  )
+{   return false; }
 } // END_CPPAD_NAMESPACE
 
 # endif

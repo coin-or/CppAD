@@ -8,7 +8,7 @@
 /*
 {xrst_begin testvector}
 {xrst_spell
-   ublas
+    ublas
 }
 
 Using The CppAD Test Vector Template Class
@@ -25,19 +25,19 @@ which template class to use in the examples and tests; see below.
 This shows that any
 :ref:`simple vector<SimpleVector-name>` class can be used in place of
 
-   ``CPPAD_TESTVECTOR`` ( *Type* )
+    ``CPPAD_TESTVECTOR`` ( *Type* )
 
 When writing their own code,
 users can choose a specific simple vector they prefer; for example,
 
-   ``CppAD::vector<`` *Type* >
+    ``CppAD::vector<`` *Type* >
 
 CppAD::vector
 *************
 If in the :ref:`cmake@CMake Command`
 you specify :ref:`cppad_testvector-name` to be ``cppad`` ,
 
-   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``CppAD::vector<`` *Scalar*  >
+    # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``CppAD::vector<`` *Scalar*  >
 
 CPPAD_CPPADVECTOR, Deprecated 2022-06-22
 ========================================
@@ -49,7 +49,7 @@ std::vector
 If in the cmake command
 you specify *cppad_testvector* to be ``std`` ,
 
-   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``std::vector<`` *Scalar*  >
+    # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``std::vector<`` *Scalar*  >
 
 CPPAD_STDVECTOR, Deprecated 2022-06-22
 ======================================
@@ -61,7 +61,7 @@ boost::numeric::ublas::vector
 If in the cmake command
 you specify *cppad_testvector* to be ``boost`` ,
 
-   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``boost::numeric::ublas::vector<`` *Scalar*  >
+    # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``boost::numeric::ublas::vector<`` *Scalar*  >
 
 CPPAD_BOOSTVECTOR, Deprecated 2022-06-22
 ========================================
@@ -73,7 +73,7 @@ CppAD::eigen_vector
 If in the cmake command
 you specify *cppad_testvector* to be ``eigen`` ,
 
-   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``CppAD::eigen_vector<`` *Scalar*  >
+    # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``CppAD::eigen_vector<`` *Scalar*  >
 
 see :ref:`cppad_eigen.hpp@eigen_vector` .
 In this case CppAD will use the Eigen vector

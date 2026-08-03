@@ -11,17 +11,17 @@ Appendix
 Contents
 ********
 {xrst_toc_table
-   appendix/faq.xrst
-   appendix/directory.xrst
-   appendix/glossary.xrst
-   appendix/bib.xrst
-   appendix/wish_list.xrst
-   appendix/whats_new/whats_new.xrst
-   appendix/deprecated/deprecated.xrst
-   test_more/compare_c/CMakeLists.txt
-   appendix/numeric_ad.xrst
-   appendix/addon.xrst
-   appendix/license.xrst
+    appendix/faq.xrst
+    appendix/directory.xrst
+    appendix/glossary.xrst
+    appendix/bib.xrst
+    appendix/wish_list.xrst
+    appendix/whats_new/whats_new.xrst
+    appendix/deprecated/deprecated.xrst
+    test_more/compare_c/CMakeLists.txt
+    appendix/numeric_ad.xrst
+    appendix/addon.xrst
+    appendix/license.xrst
 }
 
 {xrst_end appendix}

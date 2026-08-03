@@ -23,7 +23,7 @@ These operations store a function in the :ref:`val_tape-name`.
 ------------------------------------------------------------------------------
 {xrst_begin val_set_ind dev}
 {xrst_spell
-   str
+    str
 }
 
 Setting Independent Variables
@@ -32,8 +32,8 @@ Setting Independent Variables
 set_ind
 *******
 {xrst_literal
-   // BEGIN_SET_IND
-   // END_SET_IND
+    // BEGIN_SET_IND
+    // END_SET_IND
 }
 This is the first step in a creating a recording. It does the following:
 
@@ -49,8 +49,8 @@ This is the first step in a creating a recording. It does the following:
 
 Directly after this operation:
 {xrst_literal
-   // BEGIN_POST_CONDITION
-   // END_POST_CONDITION
+    // BEGIN_POST_CONDITION
+    // END_POST_CONDITION
 }
 
 {xrst_end val_set_ind}
@@ -61,35 +61,35 @@ template <class Value>
 addr_t tape_t<Value>::set_ind(addr_t n_ind)
 // END_SET_IND
 {  Value nan = CppAD::numeric_limits<Value>::quiet_NaN();
-   n_ind_ = n_ind;
-   n_val_ = n_ind;
-   var_arg_.clear();
-   con_vec_.clear();
-   str_vec_.clear();
-   vec_initial_.clear();
-   dep_vec_.clear();
-   op_enum_vec_.clear();
-   op2arg_index_.clear();
-   // option_map_ does not change during this operation.
+    n_ind_ = n_ind;
+    n_val_ = n_ind;
+    var_arg_.clear();
+    con_vec_.clear();
+    str_vec_.clear();
+    vec_initial_.clear();
+    dep_vec_.clear();
+    op_enum_vec_.clear();
+    op2arg_index_.clear();
+    // option_map_ does not change during this operation.
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
-   // set_ind_inue
-   size_t thread  = thread_alloc::thread_num();
-   set_ind_inuse_ = thread_alloc::inuse(thread);
+    // set_ind_inue
+    size_t thread  = thread_alloc::thread_num();
+    set_ind_inuse_ = thread_alloc::inuse(thread);
 # endif
-   //
-   str_vec_.push_back( "" );
-   addr_t nan_addr = record_con_op(nan);
-   assert( n_val_ == n_ind + 1 );
-   //
-   // BEGIN_POST_CONDITION
-   CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == 1 ); // one operator
-   CPPAD_ASSERT_UNKNOWN( var_arg_.size() == 1 );     // one argument
-   CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
-   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );        // empty string
-   CPPAD_ASSERT_UNKNOWN( vec_initial_.size() == 0 );    // no dynamic vectors
-   CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
-   return nan_addr;
-   // END_POST_CONDITION
+    //
+    str_vec_.push_back( "" );
+    addr_t nan_addr = record_con_op(nan);
+    assert( n_val_ == n_ind + 1 );
+    //
+    // BEGIN_POST_CONDITION
+    CPPAD_ASSERT_UNKNOWN( op_enum_vec_.size() == 1 ); // one operator
+    CPPAD_ASSERT_UNKNOWN( var_arg_.size() == 1 );     // one argument
+    CPPAD_ASSERT_UNKNOWN( con_vec_.size() == 1 );     // one value constant
+    CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );        // empty string
+    CPPAD_ASSERT_UNKNOWN( vec_initial_.size() == 0 );    // no dynamic vectors
+    CPPAD_ASSERT_UNKNOWN( nan_addr == n_ind );        // return value
+    return nan_addr;
+    // END_POST_CONDITION
 }
 /*
 -------------------------------------------------------------------------------
@@ -101,8 +101,8 @@ Setting the Dependent Variables
 set_dep
 *******
 {xrst_literal
-   // BEGIN_SET_DEP
-   // END_SET_DEP
+    // BEGIN_SET_DEP
+    // END_SET_DEP
 }
 This sets the dependent vector to the corresponding indices
 in the value vector.
@@ -115,12 +115,12 @@ This is last step in creating a recording.
 template <class Value>
 void tape_t<Value>::set_dep(const Vector<addr_t>& dep_vec)
 // END_SET_DEP
-{  dep_vec_ = dep_vec;
+{   dep_vec_ = dep_vec;
 # if CPPAD_VAL_GRAPH_TAPE_TRACE
-   // inuse
-   size_t thread        = thread_alloc::thread_num();
-   size_t set_dep_inuse = thread_alloc::inuse(thread);
-   std::cout << "tape:       inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
+    // inuse
+    size_t thread        = thread_alloc::thread_num();
+    size_t set_dep_inuse = thread_alloc::inuse(thread);
+    std::cout << "tape:       inuse = " << set_dep_inuse-set_ind_inuse_ << "\n";
 # endif
 }
 /*
@@ -133,8 +133,8 @@ Recording Operators with One Result
 record_op
 *********
 {xrst_literal
-   // BEGIN_RECORD_OP
-   // END_RECORD_OP
+    // BEGIN_RECORD_OP
+    // END_RECORD_OP
 }
 This can be used to place any operator that has one result in the tape;
 e.g., the unary and binary operators.
@@ -161,34 +161,34 @@ template <class Value>
 addr_t tape_t<Value>::record_op(op_enum_t op_enum, const Vector<addr_t>& op_arg)
 // END_RECORD_OP
 {  //
-   // res_index
-   addr_t res_index = n_val_;
+    // res_index
+    addr_t res_index = n_val_;
 # ifndef NDEBUG
-   // arg_index
-   addr_t arg_index = addr_t( var_arg_.size() );
+    // arg_index
+    addr_t arg_index = addr_t( var_arg_.size() );
 # endif
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( op_enum ) );
-   //
-   // var_arg_
-   for(size_t i = 0; i < op_arg.size(); ++i)
-      var_arg_.push_back( op_arg[i] );
-   //
-   // n_val_
-   ++n_val_;
-   //
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t( op_enum ) );
+    //
+    // var_arg_
+    for(size_t i = 0; i < op_arg.size(); ++i)
+        var_arg_.push_back( op_arg[i] );
+    //
+    // n_val_
+    ++n_val_;
+    //
 # ifndef NDEBUG
-   base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
-   CPPAD_ASSERT_UNKNOWN(
-      size_t( op_ptr->n_arg(arg_index, var_arg_) ) == op_arg.size()
-   );
-   CPPAD_ASSERT_UNKNOWN(
-      size_t( op_ptr->n_res(arg_index, var_arg_) ) == 1
-   );
+    base_op_t<Value>* op_ptr = op_enum2class<Value>(op_enum);
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( op_ptr->n_arg(arg_index, var_arg_) ) == op_arg.size()
+    );
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( op_ptr->n_res(arg_index, var_arg_) ) == 1
+    );
 # endif
-   //
-   return res_index;
+    //
+    return res_index;
 }
 /*
 {xrst_betin val_record_con_op dev}
@@ -199,8 +199,8 @@ Recording Constants
 record_con_op
 *************
 {xrst_literal
-   // BEGIN_RECORD_CON_OP
-   // END_RECORD_CON_OP
+    // BEGIN_RECORD_CON_OP
+    // END_RECORD_CON_OP
 }
 This places a :ref:`val_con_op-name` operator in the tape.
 The return value is the index were *constant* will be placed
@@ -216,30 +216,30 @@ template <class Value>
 addr_t tape_t<Value>::record_con_op(const Value& constant)
 // END_RECORD_CON_OP
 {  //
-   // nan
-   if( op_enum_vec_.size() == 0 )
-   {  CPPAD_ASSERT_UNKNOWN( CppAD::isnan(constant) && n_val_ == n_ind_ );
-   }
-   else if( CppAD::isnan(constant) )
-      return n_ind_;
-   //
-   // con_index
-   addr_t con_index = addr_t( con_vec_.size() );
-   con_vec_.push_back( constant );
-   //
-   // res_index
-   addr_t res_index = n_val_;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( con_op_enum ) );
-   //
-   // var_arg_
-   var_arg_.push_back( con_index );
-   //
-   // n_val_
-   ++n_val_;
-   //
-   return res_index;
+    // nan
+    if( op_enum_vec_.size() == 0 )
+    {  CPPAD_ASSERT_UNKNOWN( CppAD::isnan(constant) && n_val_ == n_ind_ );
+    }
+    else if( CppAD::isnan(constant) )
+        return n_ind_;
+    //
+    // con_index
+    addr_t con_index = addr_t( con_vec_.size() );
+    con_vec_.push_back( constant );
+    //
+    // res_index
+    addr_t res_index = n_val_;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t( con_op_enum ) );
+    //
+    // var_arg_
+    var_arg_.push_back( con_index );
+    //
+    // n_val_
+    ++n_val_;
+    //
+    return res_index;
 }
 /*
 -------------------------------------------------------------------------------
@@ -251,8 +251,8 @@ Recording The Discrete Operations
 record_dis_op
 *************
 {xrst_literal
-   // BEGIN_RECORD_DIS_OP
-   // END_RECORD_DIS_OP
+    // BEGIN_RECORD_DIS_OP
+    // END_RECORD_DIS_OP
 }
 This places a :ref:`val_dis_op-name` operator in the tape.
 The argument *discrete_index* identifies which discrete function to use.
@@ -268,20 +268,20 @@ template <class Value>
 addr_t tape_t<Value>::record_dis_op(addr_t discrete_index, addr_t val_index)
 // END_RECORD_DIS_OP
 {  //
-   // res_index
-   addr_t res_index = n_val_;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( dis_op_enum ) );
-   //
-   // var_arg_
-   var_arg_.push_back( discrete_index );
-   var_arg_.push_back( val_index );
-   //
-   // n_val_
-   ++n_val_;
-   //
-   return res_index;
+    // res_index
+    addr_t res_index = n_val_;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t( dis_op_enum ) );
+    //
+    // var_arg_
+    var_arg_.push_back( discrete_index );
+    var_arg_.push_back( val_index );
+    //
+    // n_val_
+    ++n_val_;
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
@@ -293,8 +293,8 @@ Recording Comparison Operations
 record_comp_op
 **************
 {xrst_literal
-   // BEGIN_RECORD_COMP_OP
-   // END_RECORD_COMP_OP
+    // BEGIN_RECORD_COMP_OP
+    // END_RECORD_COMP_OP
 }
 This places a :ref:`val_comp_op-name` operator in the tape.
 The return value is always zero because there is
@@ -323,22 +323,22 @@ The return value is zero because this operator does not have a result
 // BEGIN_RECORD_COMP_OP
 template <class Value>
 addr_t tape_t<Value>::record_comp_op(
-   compare_enum_t compare_enum ,
-   addr_t         left_index   ,
-   addr_t         right_index  )
+    compare_enum_t compare_enum ,
+    addr_t         left_index   ,
+    addr_t         right_index  )
 // END_RECORD_COMP_OP
 {  // res_index
-   addr_t res_index = 0; // invalid result index
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( comp_op_enum ) );
-   //
-   // var_arg_
-   var_arg_.push_back( addr_t(compare_enum) );
-   var_arg_.push_back( left_index );
-   var_arg_.push_back( right_index );
-   //
-   return res_index;
+    addr_t res_index = 0; // invalid result index
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t( comp_op_enum ) );
+    //
+    // var_arg_
+    var_arg_.push_back( addr_t(compare_enum) );
+    var_arg_.push_back( left_index );
+    var_arg_.push_back( right_index );
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
@@ -350,8 +350,8 @@ Recording Call Operations
 record_call_op
 **************
 {xrst_literal
-   // BEGIN_RECORD_CALL_OP
-   // END_RECORD_CALL_OP
+    // BEGIN_RECORD_CALL_OP
+    // END_RECORD_CALL_OP
 }
 This places a :ref:`val_call_op-name` operator in the tape.
 
@@ -390,32 +390,32 @@ A total of *n_res* results are placed in the value vector.
 // BEGIN_RECORD_CALL_OP
 template <class Value>
 addr_t tape_t<Value>::record_call_op(
-   addr_t  atomic_index          ,
-   addr_t  call_id               ,
-   addr_t  n_res                 ,
-   const Vector<addr_t>& fun_arg )
+    addr_t  atomic_index          ,
+    addr_t  call_id               ,
+    addr_t  n_res                 ,
+    const Vector<addr_t>& fun_arg )
 // END_RECORD_CALL_OP
 {  //
-   // res_index
-   addr_t res_index = n_val_;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( call_op_enum ) );
-   //
-   // var_arg_
-   addr_t n_arg = 5 + addr_t( fun_arg.size() );
-   var_arg_.push_back( n_arg );
-   var_arg_.push_back( n_res );
-   var_arg_.push_back( atomic_index );
-   var_arg_.push_back( call_id );
-   for(size_t i = 0; i < fun_arg.size(); ++i)
-      var_arg_.push_back( fun_arg[i] );
-   var_arg_.push_back( n_arg );
-   //
-   // n_val_
-   n_val_ = n_val_ + addr_t(n_res);
-   //
-   return res_index;
+    // res_index
+    addr_t res_index = n_val_;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t( call_op_enum ) );
+    //
+    // var_arg_
+    addr_t n_arg = 5 + addr_t( fun_arg.size() );
+    var_arg_.push_back( n_arg );
+    var_arg_.push_back( n_res );
+    var_arg_.push_back( atomic_index );
+    var_arg_.push_back( call_id );
+    for(size_t i = 0; i < fun_arg.size(); ++i)
+        var_arg_.push_back( fun_arg[i] );
+    var_arg_.push_back( n_arg );
+    //
+    // n_val_
+    n_val_ = n_val_ + addr_t(n_res);
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
@@ -427,8 +427,8 @@ Recording Cumulative Summation Operations
 record_csum_op
 **************
 {xrst_literal
-   // BEGIN_RECORD_CSUM_OP
-   // END_RECORD_CSUM_OP
+    // BEGIN_RECORD_CSUM_OP
+    // END_RECORD_CSUM_OP
 }
 This places a :ref:`val_csum_op-name` operator in the tape.
 
@@ -453,34 +453,34 @@ the sum is placed.
 // BEGIN_RECORD_CSUM_OP
 template <class Value>
 addr_t tape_t<Value>::record_csum_op(
-   const Vector<addr_t>& add ,
-   const Vector<addr_t>& sub )
+    const Vector<addr_t>& add ,
+    const Vector<addr_t>& sub )
 // END_RECORD_CSUM_OP
 {  //
-   // n_add, n_sub, n_arg
-   addr_t n_add = addr_t( add.size() );
-   addr_t n_sub = addr_t( sub.size() );
-   addr_t n_arg = 3 + n_add + n_sub;
-   //
-   // res_index
-   addr_t res_index = n_val_;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t( csum_op_enum ) );
-   //
-   // var_arg_
-   var_arg_.push_back( n_add );
-   var_arg_.push_back( n_sub );
-   for(size_t i = 0; i < add.size(); ++i)
-      var_arg_.push_back( add[i] );
-   for(size_t i = 0; i < sub.size(); ++i)
-      var_arg_.push_back( sub[i] );
-   var_arg_.push_back( n_arg );
-   //
-   // n_val_
-   ++n_val_;
-   //
-   return res_index;
+    // n_add, n_sub, n_arg
+    addr_t n_add = addr_t( add.size() );
+    addr_t n_sub = addr_t( sub.size() );
+    addr_t n_arg = 3 + n_add + n_sub;
+    //
+    // res_index
+    addr_t res_index = n_val_;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t( csum_op_enum ) );
+    //
+    // var_arg_
+    var_arg_.push_back( n_add );
+    var_arg_.push_back( n_sub );
+    for(size_t i = 0; i < add.size(); ++i)
+        var_arg_.push_back( add[i] );
+    for(size_t i = 0; i < sub.size(); ++i)
+        var_arg_.push_back( sub[i] );
+    var_arg_.push_back( n_arg );
+    //
+    // n_val_
+    ++n_val_;
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
@@ -492,8 +492,8 @@ Recording Comparison Operations
 record_cexp_op
 **************
 {xrst_literal
-   // BEGIN_RECORD_CEXP_OP
-   // END_RECORD_CEXP_OP
+    // BEGIN_RECORD_CEXP_OP
+    // END_RECORD_CEXP_OP
 }
 This places a :ref:`val_cexp_op-name` operator in the tape.
 
@@ -530,36 +530,36 @@ the result is placed in the value vector.
 // BEGIN_RECORD_CEXP_OP
 template <class Value>
 addr_t tape_t<Value>::record_cexp_op(
-   compare_enum_t comp_enum ,
-   addr_t         left      ,
-   addr_t         right     ,
-   addr_t         if_true   ,
-   addr_t         if_false  )
+    compare_enum_t comp_enum ,
+    addr_t         left      ,
+    addr_t         right     ,
+    addr_t         if_true   ,
+    addr_t         if_false  )
 // END_RECORD_CEXP_OP
-{  //
-   // res_index
-   addr_t res_index = n_val_;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t(cexp_op_enum) );
-   //
-   // var_arg_
-   var_arg_.push_back( addr_t(comp_enum) );
-   var_arg_.push_back( left );
-   var_arg_.push_back( right );
-   var_arg_.push_back( if_true );
-   var_arg_.push_back( if_false );
-   //
-   // n_val_
-   ++n_val_;
-   //
-   return res_index;
+{   //
+    // res_index
+    addr_t res_index = n_val_;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t(cexp_op_enum) );
+    //
+    // var_arg_
+    var_arg_.push_back( addr_t(comp_enum) );
+    var_arg_.push_back( left );
+    var_arg_.push_back( right );
+    var_arg_.push_back( if_true );
+    var_arg_.push_back( if_false );
+    //
+    // n_val_
+    ++n_val_;
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_record_pri_op dev}
 {xrst_spell
-   str
+    str
 }
 
 Recording Print Operations
@@ -568,8 +568,8 @@ Recording Print Operations
 record_pri_op
 *************
 {xrst_literal
-   // BEGIN_RECORD_PRI_OP
-   // END_RECORD_PRI_OP
+    // BEGIN_RECORD_PRI_OP
+    // END_RECORD_PRI_OP
 }
 This places a :ref:`val_pri_op-name` operator in the tape.
 The return value is always zero because there is
@@ -607,46 +607,46 @@ The return value is zero because this operator does not have a result
 // BEGIN_RECORD_PRI_OP
 template <class Value>
 addr_t tape_t<Value>::record_pri_op(
-   const std::string& before      ,
-   const std::string& after       ,
-   addr_t             flag_index  ,
-   addr_t             value_index )
+    const std::string& before      ,
+    const std::string& after       ,
+    addr_t             flag_index  ,
+    addr_t             value_index )
 // END_RECORD_PRI_OP
 {  //
-   // str_index
-   using std::string;
-   auto str_index = [](const string& str, Vector<string>& str_vec)
-   {  size_t result = str_vec.size();
-      for(size_t i = 0; i < str_vec.size(); ++i)
-      {  if( str == str_vec[i] )
-            result = i;
-      }
-      if( result == str_vec.size() )
-         str_vec.push_back(str);
-      return addr_t( result );
-   };
-   // empty string
-   CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );
-   //
-   // res_index
-   addr_t res_index = 0; // invalid result index
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t(pri_op_enum) );
-   //
-   // str_vec_, var_arg_: before_index
-   addr_t before_index = str_index(before, str_vec_);
-   var_arg_.push_back( before_index );
-   //
-   // str_vec_, var_arg_: after_index
-   addr_t after_index = str_index(after, str_vec_);
-   var_arg_.push_back( after_index );
-   //
-   // var_arg_: flag_index, value_index
-   var_arg_.push_back( flag_index );
-   var_arg_.push_back( value_index );
-   //
-   return res_index;
+    // str_index
+    using std::string;
+    auto str_index = [](const string& str, Vector<string>& str_vec)
+    {  size_t result = str_vec.size();
+        for(size_t i = 0; i < str_vec.size(); ++i)
+        {  if( str == str_vec[i] )
+                result = i;
+        }
+        if( result == str_vec.size() )
+            str_vec.push_back(str);
+        return addr_t( result );
+    };
+    // empty string
+    CPPAD_ASSERT_UNKNOWN( str_vec_[0] == "" );
+    //
+    // res_index
+    addr_t res_index = 0; // invalid result index
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t(pri_op_enum) );
+    //
+    // str_vec_, var_arg_: before_index
+    addr_t before_index = str_index(before, str_vec_);
+    var_arg_.push_back( before_index );
+    //
+    // str_vec_, var_arg_: after_index
+    addr_t after_index = str_index(after, str_vec_);
+    var_arg_.push_back( after_index );
+    //
+    // var_arg_: flag_index, value_index
+    var_arg_.push_back( flag_index );
+    var_arg_.push_back( value_index );
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
@@ -658,8 +658,8 @@ Record Adding a Dynamic Vector
 record_vec_op
 *************
 {xrst_literal
-   // BEGIN_RECORD_VEC_OP
-   // END_RECORD_VEC_OP
+    // BEGIN_RECORD_VEC_OP
+    // END_RECORD_VEC_OP
 }
 This creates a new dynamic vector with the specified initial values.
 A dynamic vector must be created before a load or store can be recorded
@@ -671,7 +671,7 @@ The size of this vector is the size of the dynamic vector being created.
 The initial value for the dynamic vector at index *vector_index* is
 the value vector at index *initial*[ *vector_index* ]; i.e.,
 
-   *val_vec* [ *initial* [ *vector_index* ] ]
+    *val_vec* [ *initial* [ *vector_index* ] ]
 
 where *val_vec* is the value vector.
 
@@ -692,19 +692,19 @@ template <class Value>
 addr_t tape_t<Value>::record_vec_op(const Vector<addr_t>& initial)
 // END_RECORD_VEC_OP
 {  //
-   // which_vector
-   addr_t which_vector = addr_t( vec_initial_.size() );
-   //
-   // vec_initial_
-   vec_initial_.push_back( initial );
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t(vec_op_enum) );
-   //
-   // var_arg_
-   var_arg_.push_back( which_vector );
-   //
-   return which_vector;
+    // which_vector
+    addr_t which_vector = addr_t( vec_initial_.size() );
+    //
+    // vec_initial_
+    vec_initial_.push_back( initial );
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t(vec_op_enum) );
+    //
+    // var_arg_
+    var_arg_.push_back( which_vector );
+    //
+    return which_vector;
 }
 /*
 ------------------------------------------------------------------------------
@@ -716,8 +716,8 @@ Recording Load Operations
 record_load_op
 **************
 {xrst_literal
-   // BEGIN_RECORD_LOAD_OP
-   // END_RECORD_LOAD_OP
+    // BEGIN_RECORD_LOAD_OP
+    // END_RECORD_LOAD_OP
 }
 This places a :ref:`val_load_op-name` operator in the tape.
 
@@ -742,27 +742,27 @@ is placed in the value vector.
 // BEGIN_RECORD_LOAD_OP
 template <class Value>
 addr_t tape_t<Value>::record_load_op(
-   addr_t   which_vector  ,
-   addr_t   vector_index  )
+    addr_t   which_vector  ,
+    addr_t   vector_index  )
 // END_RECORD_LOAD_OP
 {  //
-   // check that vec_op_enum comes before load_op_enum
-   CPPAD_ASSERT_UNKNOWN( size_t(which_vector) < vec_initial_.size() );
-   //
-   // res_index
-   addr_t res_index = n_val_;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t(load_op_enum) );
-   //
-   // var_arg_
-   var_arg_.push_back( which_vector );
-   var_arg_.push_back( vector_index );
-   //
-   // n_val_
-   ++n_val_;
-   //
-   return res_index;
+    // check that vec_op_enum comes before load_op_enum
+    CPPAD_ASSERT_UNKNOWN( size_t(which_vector) < vec_initial_.size() );
+    //
+    // res_index
+    addr_t res_index = n_val_;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t(load_op_enum) );
+    //
+    // var_arg_
+    var_arg_.push_back( which_vector );
+    var_arg_.push_back( vector_index );
+    //
+    // n_val_
+    ++n_val_;
+    //
+    return res_index;
 }
 /*
 ------------------------------------------------------------------------------
@@ -774,8 +774,8 @@ Recording Store Operations
 record_store_op
 ***************
 {xrst_literal
-   // BEGIN_RECORD_STORE_OP
-   // END_RECORD_STORE_OP
+    // BEGIN_RECORD_STORE_OP
+    // END_RECORD_STORE_OP
 }
 This places a :ref:`val_store_op-name` operator in the tape.
 
@@ -800,26 +800,26 @@ no value vector result for this operator.
 // BEGIN_RECORD_STORE_OP
 template <class Value>
 addr_t tape_t<Value>::record_store_op(
-   addr_t   which_vector  ,
-   addr_t   vector_index  ,
-   addr_t   value_index   )
+    addr_t   which_vector  ,
+    addr_t   vector_index  ,
+    addr_t   value_index   )
 // END_RECORD_STORE_OP
-{  //
-   // check that vec_op_enum comes before store_op_enum
-   CPPAD_ASSERT_UNKNOWN( size_t(which_vector) < vec_initial_.size() );
-   //
-   // res_index
-   addr_t res_index = 0;
-   //
-   // op_enum_vec_
-   op_enum_vec_.push_back( uint8_t(store_op_enum) );
-   //
-   // var_arg_
-   var_arg_.push_back( which_vector );
-   var_arg_.push_back( vector_index );
-   var_arg_.push_back( value_index  );
-   //
-   return res_index;
+{   //
+    // check that vec_op_enum comes before store_op_enum
+    CPPAD_ASSERT_UNKNOWN( size_t(which_vector) < vec_initial_.size() );
+    //
+    // res_index
+    addr_t res_index = 0;
+    //
+    // op_enum_vec_
+    op_enum_vec_.push_back( uint8_t(store_op_enum) );
+    //
+    // var_arg_
+    var_arg_.push_back( which_vector );
+    var_arg_.push_back( vector_index );
+    var_arg_.push_back( value_index  );
+    //
+    return res_index;
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

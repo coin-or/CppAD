@@ -9,7 +9,7 @@
 ------------------------------------------------------------------------------
 {xrst_begin epsilon app}
 {xrst_spell
-   eps
+    eps
 }
 
 Machine Epsilon For AD Types
@@ -38,7 +38,7 @@ eps
 ***
 The result *eps* has prototype
 
-   *Float* ``eps``
+    *Float* ``eps``
 
 {xrst_end epsilon}
 ------------------------------------------------------------------------------
@@ -46,9 +46,9 @@ The result *eps* has prototype
 
 namespace CppAD {
 
-   template <class Type>
-   inline Type epsilon(void)
-   {  return Type ( numeric_limits<Type>::epsilon() ); }
+    template <class Type>
+    inline Type epsilon(void)
+    {   return Type ( numeric_limits<Type>::epsilon() ); }
 
 }
 # endif

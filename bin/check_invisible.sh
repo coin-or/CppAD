@@ -13,18 +13,18 @@ set -e -u
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/check_invisible.sh" ]
 then
-   echo "bin/check_invisible.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/check_invisible.sh: must be executed from its parent directory"
+    exit 1
 fi
 if [ "$#" == 0 ]
 then
-   all='false'
+    all='false'
 elif [ "$#" == 1 ] && [ "$1" == 'all' ]
 then
-   all='true'
+    all='true'
 else
-   echo 'usage: bin/check_invisible [all]'
-   exit 1
+    echo 'usage: bin/check_invisible [all]'
+    exit 1
 fi
 #
 # sed
@@ -38,26 +38,26 @@ source bin/dev_settings.sh
 echo '#' > sed.$$
 for name in $no_copyright_list
 do
-   if [ -f $name ]
-   then
-      echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
-   elif [ -d $name ]
-   then
-      echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
-   else
-      echo "$name in no_copyright_list is not a file or directory"
-      exit 1
-   fi
+    if [ -f $name ]
+    then
+        echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
+    elif [ -d $name ]
+    then
+        echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> sed.$$
+    else
+        echo "$name in no_copyright_list is not a file or directory"
+        exit 1
+    fi
 done
 #
 # file_list
 if [ "$all" == 'true' ]
 then
-   file_list=$(git ls-files | $sed -f sed.$$)
+    file_list=$(git ls-files | $sed -f sed.$$)
 else
-   file_list=$(git status --porcelain | \
-      $sed -e '/^D/d' -e 's|^...||' | $sed -f sed.$$
-   )
+    file_list=$(git status --porcelain | \
+        $sed -e '/^D/d' -e 's|^...||' | $sed -f sed.$$
+    )
 fi
 # ----------------------------------------------------------------------------
 #
@@ -73,31 +73,31 @@ EOF
 changed='no'
 for file in $file_list
 do
-   if [ -f "$file" ]
-   then
-      $sed -f sed.$$ $file > copy.$$
-      if ! diff $file copy.$$ > diff.$$
-      then
-         changed='yes'
-         echo "$file: original (<) invisible space removed (>)"
-         cat diff.$$
-         if [ -x $file ]
-         then
-            chmod +x copy.$$
-         fi
-         mv copy.$$ $file
-      else
-         rm copy.$$
-      fi
-      rm diff.$$
-   fi
+    if [ -f "$file" ]
+    then
+        $sed -f sed.$$ $file > copy.$$
+        if ! diff $file copy.$$ > diff.$$
+        then
+            changed='yes'
+            echo "$file: original (<) invisible space removed (>)"
+            cat diff.$$
+            if [ -x $file ]
+            then
+                chmod +x copy.$$
+            fi
+            mv copy.$$ $file
+        else
+            rm copy.$$
+        fi
+        rm diff.$$
+    fi
 done
 rm sed.$$
 if [ "$changed" == 'yes' ]
 then
-   echo 'check_invisible.sh: The invisible white space above have been fixed'
-   echo 'Re-execute bin/check_invisible.sh ?'
-   exit 1
+    echo 'check_invisible.sh: The invisible white space above have been fixed'
+    echo 'Re-execute bin/check_invisible.sh ?'
+    exit 1
 fi
 echo 'check_invisible.sh: OK'
 exit 0

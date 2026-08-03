@@ -22,24 +22,24 @@ set -e -u
 # ---------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-   echo $*
-   eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 if [ $# != 0 ]
 then
-   echo 'usage: bin/git_commit.sh: does not expect arguments'
-   exit 1
+    echo 'usage: bin/git_commit.sh: does not expect arguments'
+    exit 1
 fi
 if [ "$0" != 'bin/git_commit.sh' ]
 then
-   echo 'bin/git_commit.sh: must execute this script from its parent directory'
-   exit 1
+    echo 'bin/git_commit.sh: must execute this script from its parent directory'
+    exit 1
 fi
 if [ ! -e './.git' ]
 then
-   echo 'bin/git_commit.sh: cannot find ./.git'
-   exit 1
+    echo 'bin/git_commit.sh: cannot find ./.git'
+    exit 1
 fi
 #
 # grep, sed
@@ -52,8 +52,8 @@ source bin/dev_settings.sh
 set +u
 if [ "$EDITOR" == '' ]
 then
-   echo 'bin/git_commit.sh: EDITOR is not defined.'
-   exit 1
+    echo 'bin/git_commit.sh: EDITOR is not defined.'
+    exit 1
 fi
 set -u
 # -----------------------------------------------------------------------------
@@ -61,61 +61,61 @@ set -u
 echo 's|^...||' > temp.sed
 for name in $check_git_commit
 do
-   if [ -f $name ]
-   then
-      echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
-   elif [ -d $name ]
-   then
-      echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
-   else
-      echo "$name in check_git_commit is not a file or directory"
-      exit 1
-   fi
+    if [ -f $name ]
+    then
+        echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
+    elif [ -d $name ]
+    then
+        echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/p|' >> temp.sed
+    else
+        echo "$name in check_git_commit is not a file or directory"
+        exit 1
+    fi
 done
 list=$(
-   git status --porcelain | $sed -n -f temp.sed
+    git status --porcelain | $sed -n -f temp.sed
 )
 for file in $list
 do
-   res=''
-   while [ "$res" != 'revert' ] && [ "$res" != 'commit' ]
-   do
-      read -p "$file: Revert or commit changes [revert/commit] ?" res
-   done
-   if [ "$res" == 'revert' ]
-   then
-      git reset    $file
-      git checkout $file
-   fi
+    res=''
+    while [ "$res" != 'revert' ] && [ "$res" != 'commit' ]
+    do
+        read -p "$file: Revert or commit changes [revert/commit] ?" res
+    done
+    if [ "$res" == 'revert' ]
+    then
+        git reset    $file
+        git checkout $file
+    fi
 done
 # -----------------------------------------------------------------------------
 # new files
 # convert spaces in file names to @@
 list=$(
-   git status --porcelain | $sed -n -e '/^?? /p' |  \
-      $sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g'
+    git status --porcelain | $sed -n -e '/^?? /p' |  \
+        $sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g'
 )
 for file in $list
 do
-   # convert @@ in file names back to spaces
-   file=$(echo $file | $sed -e 's|@@| |g')
-   res=''
-   while [ "$res" != 'delete' ] && [ "$res" != 'add' ] && [ "$res" != 'abort' ]
-   do
-      read -p "'$file' is unknown to git, [delete/add/abort] ?" res
-   done
-   if [ "$res" == 'delete' ]
-   then
-      # may be spaces in file name so do not use echo_eval
-      echo "rm '$file'"
-      rm "$file"
-   elif [ "$res" == 'abort' ]
-   then
-      echo 'bin/git_commit.sh: aborting'
-      exit 1
-   else
-      git add "$file"
-   fi
+    # convert @@ in file names back to spaces
+    file=$(echo $file | $sed -e 's|@@| |g')
+    res=''
+    while [ "$res" != 'delete' ] && [ "$res" != 'add' ] && [ "$res" != 'abort' ]
+    do
+        read -p "'$file' is unknown to git, [delete/add/abort] ?" res
+    done
+    if [ "$res" == 'delete' ]
+    then
+        # may be spaces in file name so do not use echo_eval
+        echo "rm '$file'"
+        rm "$file"
+    elif [ "$res" == 'abort' ]
+    then
+        echo 'bin/git_commit.sh: aborting'
+        exit 1
+    else
+        git add "$file"
+    fi
 done
 # -----------------------------------------------------------------------------
 # temp.log
@@ -134,22 +134,22 @@ $EDITOR temp.log
 $sed -i -e '/^#/d' temp.log
 if ! head -1 temp.log | $grep "^$branch:" > /dev/null
 then
-   echo "Aborting because first line does not begin with $branch:"
-   echo 'See ./temp.log'
-   exit 1
+    echo "Aborting because first line does not begin with $branch:"
+    echo 'See ./temp.log'
+    exit 1
 fi
 if ! head -1 temp.log | $grep "^$branch:.*[^ \t]" > /dev/null
 then
-   echo "Aborting because only white space follow $branch: in first line"
-   echo 'See ./temp.log'
-   exit 1
+    echo "Aborting because only white space follow $branch: in first line"
+    echo 'See ./temp.log'
+    exit 1
 fi
 #
 # git_commit.log
 mv temp.log git_commit.log
 if which typos >& /dev/null
 then
-   typos git_commit.log
+    typos git_commit.log
 fi
 # -----------------------------------------------------------------------------
 # git add

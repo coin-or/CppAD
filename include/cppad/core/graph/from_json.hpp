@@ -23,8 +23,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 json
@@ -40,7 +40,7 @@ RecBase
 *******
 in the prototype above, *RecBase* is the same type as *Base* .
 {xrst_toc_hidden
-   example/json/from_json.cpp
+    example/json/from_json.cpp
 }
 Example
 *******
@@ -53,19 +53,19 @@ template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
 // END_PROTOTYPE
 {
-   using CppAD::isnan;
-   //
-   //
-   // C++ graph object
-   cpp_graph graph_obj;
-   //
-   // convert json to graph representation
-   local::graph::json_parser(json, graph_obj);
-   //
-   // convert the graph representation to a function
-   from_graph(graph_obj);
-   //
-   return;
+    using CppAD::isnan;
+    //
+    //
+    // C++ graph object
+    cpp_graph graph_obj;
+    //
+    // convert json to graph representation
+    local::graph::json_parser(json, graph_obj);
+    //
+    // convert the graph representation to a function
+    from_graph(graph_obj);
+    //
+    return;
 }
 
 # endif

@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin preprocessor}
 {xrst_spell
-   nullptr
+    nullptr
 }
 
 CppAD API Preprocessor Symbols
@@ -27,10 +27,10 @@ and including ``windows.h`` ,
 it is done as follows:
 ::
 
-   # ifndef NOMINMAX
-   # define NOMINMAX
-   # endif
-   # include <windows.h>
+    # ifndef NOMINMAX
+    # define NOMINMAX
+    # endif
+    # include <windows.h>
 
 Documented Here
 ***************
@@ -70,18 +70,18 @@ Documented Elsewhere
 ********************
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - :ref:`CPPAD_BOOL_BINARY<bool_fun@Create Binary>`
-   * - :ref:`CPPAD_BOOL_UNARY<bool_fun@Create Unary>`
-   * - :ref:`CPPAD_DISCRETE_FUNCTION<Discrete-name>`
-   * - :ref:`multi_thread@CPPAD_MAX_NUM_THREADS`
-   * - :ref:`base_limits@CPPAD_NUMERIC_LIMITS`
-   * - :ref:`base_std_math@CPPAD_STANDARD_MATH_UNARY`
-   * - :ref:`cmake@cppad_tape_addr_type`
-   * - :ref:`cmake@cppad_tape_id_type`
-   * - :ref:`CPPAD_TESTVECTOR<testvector-name>`
-   * - :ref:`base_to_string@CPPAD_TO_STRING`
+    * - :ref:`CPPAD_BOOL_BINARY<bool_fun@Create Binary>`
+    * - :ref:`CPPAD_BOOL_UNARY<bool_fun@Create Unary>`
+    * - :ref:`CPPAD_DISCRETE_FUNCTION<Discrete-name>`
+    * - :ref:`multi_thread@CPPAD_MAX_NUM_THREADS`
+    * - :ref:`base_limits@CPPAD_NUMERIC_LIMITS`
+    * - :ref:`base_std_math@CPPAD_STANDARD_MATH_UNARY`
+    * - :ref:`cmake@cppad_tape_addr_type`
+    * - :ref:`cmake@cppad_tape_id_type`
+    * - :ref:`CPPAD_TESTVECTOR<testvector-name>`
+    * - :ref:`base_to_string@CPPAD_TO_STRING`
 
 {xrst_comment
 # undef CPPAD_BOOL_BINARY
@@ -100,24 +100,24 @@ Deprecated
 ==========
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - :ref:`CppADCreateDiscrete<Discrete@CppADCreateDiscrete Deprecated 2007-07-28>`
-   * - :ref:`CPPAD_TRACK_NEW_VEC<track_new_del@TrackNewVec@Macro>`
-   * - :ref:`CPPAD_TRACK_DEL_VEC<track_new_del@TrackDelVec@Macro>`
-   * - :ref:`CPPAD_TRACK_EXTEND<track_new_del@TrackExtend@Macro>`
-   * - :ref:`CPPAD_TRACK_COUNT<track_new_del@TrackCount@Macro>`
-   * - :ref:`CppADTrackNewVec<track_new_del@TrackNewVec@Previously Deprecated>`
-   * - :ref:`CppADTrackDelVec<track_new_del@TrackDelVec@Previously Deprecated>`
-   * - :ref:`CppADTrackExtend<track_new_del@TrackExtend@Previously Deprecated>`
-   * - :ref:`CppADTrackCount<track_new_del@TrackCount@Previously Deprecated>`
-   * - :ref:`CppADCreateBinaryBool<bool_fun@Deprecated 2007-07-31>`
-   * - :ref:`CppADCreateUnaryBool<bool_fun@Deprecated 2007-07-31>`
-   * - :ref:`CPPAD_USER_ATOMIC<atomic_one@Deprecated 2013-05-27>`
-   * - :ref:`CPPAD_CPPADVECTOR<testvector@CppAD::vector@CPPAD_CPPADVECTOR, Deprecated 2022-06-22>`
-   * - :ref:`CPPAD_STDVECTOR<testvector@std::vector@CPPAD_STDVECTOR, Deprecated 2022-06-22>`
-   * - :ref:`CPPAD_EIGENVECTOR<testvector@CppAD::eigen_vector@CPPAD_EIGENVECTOR, Deprecated 2022-06-22>`
-   * - :ref:`CPPAD_BOOSTVECTOR<testvector@boost::numeric::ublas::vector@CPPAD_BOOSTVECTOR, Deprecated 2022-06-22>`
+    * - :ref:`CppADCreateDiscrete<Discrete@CppADCreateDiscrete Deprecated 2007-07-28>`
+    * - :ref:`CPPAD_TRACK_NEW_VEC<track_new_del@TrackNewVec@Macro>`
+    * - :ref:`CPPAD_TRACK_DEL_VEC<track_new_del@TrackDelVec@Macro>`
+    * - :ref:`CPPAD_TRACK_EXTEND<track_new_del@TrackExtend@Macro>`
+    * - :ref:`CPPAD_TRACK_COUNT<track_new_del@TrackCount@Macro>`
+    * - :ref:`CppADTrackNewVec<track_new_del@TrackNewVec@Previously Deprecated>`
+    * - :ref:`CppADTrackDelVec<track_new_del@TrackDelVec@Previously Deprecated>`
+    * - :ref:`CppADTrackExtend<track_new_del@TrackExtend@Previously Deprecated>`
+    * - :ref:`CppADTrackCount<track_new_del@TrackCount@Previously Deprecated>`
+    * - :ref:`CppADCreateBinaryBool<bool_fun@Deprecated 2007-07-31>`
+    * - :ref:`CppADCreateUnaryBool<bool_fun@Deprecated 2007-07-31>`
+    * - :ref:`CPPAD_USER_ATOMIC<atomic_one@Deprecated 2013-05-27>`
+    * - :ref:`CPPAD_CPPADVECTOR<testvector@CppAD::vector@CPPAD_CPPADVECTOR, Deprecated 2022-06-22>`
+    * - :ref:`CPPAD_STDVECTOR<testvector@std::vector@CPPAD_STDVECTOR, Deprecated 2022-06-22>`
+    * - :ref:`CPPAD_EIGENVECTOR<testvector@CppAD::eigen_vector@CPPAD_EIGENVECTOR, Deprecated 2022-06-22>`
+    * - :ref:`CPPAD_BOOSTVECTOR<testvector@boost::numeric::ublas::vector@CPPAD_BOOSTVECTOR, Deprecated 2022-06-22>`
 
 {xrst_comment
 # undef CppADCreateDiscrete

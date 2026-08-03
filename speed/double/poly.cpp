@@ -25,26 +25,26 @@ Implementation
 extern std::map<std::string, bool> global_option;
 
 bool link_poly(
-   size_t                     size     ,
-   size_t                     repeat   ,
-   CppAD::vector<double>     &a        ,  // coefficients of polynomial
-   CppAD::vector<double>     &z        ,  // polynomial argument value
-   CppAD::vector<double>     &p        )  // second derivative w.r.t z
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>     &a        ,  // coefficients of polynomial
+    CppAD::vector<double>     &z        ,  // polynomial argument value
+    CppAD::vector<double>     &p        )  // second derivative w.r.t z
 {
-   if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-      return false;
-   // -----------------------------------------------------
-   // setup
+    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
+        return false;
+    // -----------------------------------------------------
+    // setup
 
-   // ------------------------------------------------------
-   while(repeat--)
-   {  // get the next argument value
-      CppAD::uniform_01(1, z);
+    // ------------------------------------------------------
+    while(repeat--)
+    {  // get the next argument value
+        CppAD::uniform_01(1, z);
 
-      // evaluate the polynomial at the new argument value
-      p[0] = CppAD::Poly(0, a, z[0]);
-   }
-   return true;
+        // evaluate the polynomial at the new argument value
+        p[0] = CppAD::Poly(0, a, z[0]);
+    }
+    return true;
 }
 /* {xrst_code}
 {xrst_spell_on}

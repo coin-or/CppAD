@@ -7,20 +7,20 @@
 /*
 {xrst_begin_parent var_compare_op dev}
 {xrst_spell
-   eqpp
-   eqpv
-   eqvv
-   lepp
-   lepv
-   levp
-   levv
-   ltpp
-   ltpv
-   ltvp
-   ltvv
-   nepp
-   nepv
-   nevv
+    eqpp
+    eqpv
+    eqvv
+    lepp
+    lepv
+    levp
+    levv
+    ltpp
+    ltpv
+    ltvp
+    ltvv
+    nepp
+    nepv
+    nevv
 }
 
 Comparison Operators
@@ -97,8 +97,8 @@ Forward Comparison Operators
 Prototype
 *********
 {xrst_literal
-   // BEGIN_COMPARE_FORWARD_ANY
-   // END_COMPARE_FORWARD_ANY
+    // BEGIN_COMPARE_FORWARD_ANY
+    // END_COMPARE_FORWARD_ANY
 }
 
 RecBase
@@ -129,7 +129,7 @@ taylor
 The Taylor coefficient corresponding to
 variable index *i* and order zero is
 
-   *taylor* [ *i* * *cap_order* ]
+    *taylor* [ *i* * *cap_order* ]
 
 this_op_index
 *************
@@ -164,108 +164,108 @@ namespace CppAD { namespace local { namespace var_op { // BEGIN namespace
 
 // BEGIN_COMPARE_FORWARD_ANY
 template <class Base> void compare_forward_any(
-   op_code_var   op_code                 ,
-   const addr_t* arg                     ,
-   const Base*   parameter               ,
-   size_t        cap_order               ,
-   const Base*   taylor                  ,
-   size_t        this_op_index           ,
-   size_t        change_count            ,
-   size_t&       change_number           ,
-   size_t&       change_op_index         )
+    op_code_var   op_code                 ,
+    const addr_t* arg                     ,
+    const Base*   parameter               ,
+    size_t        cap_order               ,
+    const Base*   taylor                  ,
+    size_t        this_op_index           ,
+    size_t        change_count            ,
+    size_t&       change_number           ,
+    size_t&       change_op_index         )
 // END_COMPARE_FORWARD_ANY
-{  //
-   // n_arg, n_res
-   CPPAD_ASSERT_NARG_NRES(op_code, 2, 0);
-   //
-   // special case
-   if( change_count == 0 )
-      return;
-   //
-   // x, y
-   Base x, y;
-   switch(op_code)
-   {  //
-      // pp
-      case EqppOp:
-      case LeppOp:
-      case LtppOp:
-      case NeppOp:
-      x = parameter[ arg[0] ];
-      y = parameter[ arg[1] ];
-      break;
-      //
-      // pv
-      case EqpvOp:
-      case LepvOp:
-      case LtpvOp:
-      case NepvOp:
-      x = parameter[ arg[0] ];
-      y = taylor[ size_t(arg[1]) * cap_order ];
-      break;
+{   //
+    // n_arg, n_res
+    CPPAD_ASSERT_NARG_NRES(op_code, 2, 0);
+    //
+    // special case
+    if( change_count == 0 )
+        return;
+    //
+    // x, y
+    Base x, y;
+    switch(op_code)
+    {   //
+        // pp
+        case EqppOp:
+        case LeppOp:
+        case LtppOp:
+        case NeppOp:
+        x = parameter[ arg[0] ];
+        y = parameter[ arg[1] ];
+        break;
+        //
+        // pv
+        case EqpvOp:
+        case LepvOp:
+        case LtpvOp:
+        case NepvOp:
+        x = parameter[ arg[0] ];
+        y = taylor[ size_t(arg[1]) * cap_order ];
+        break;
 
-      // vp
-      case LevpOp:
-      case LtvpOp:
-      x = taylor[ size_t(arg[0]) * cap_order ];
-      y = parameter[ arg[1] ];
-      break;
-      //
-      // vv
-      case EqvvOp:
-      case LevvOp:
-      case LtvvOp:
-      case NevvOp:
-      x = taylor[ size_t(arg[0]) * cap_order ];
-      y = taylor[ size_t(arg[1]) * cap_order ];
-      break;
-      //
-      default:
-      // assign x and y to avoid compiler warnings
-      CPPAD_ASSERT_UNKNOWN( false );
-      x = CppAD::numeric_limits<Base>::quiet_NaN();
-      y = CppAD::numeric_limits<Base>::quiet_NaN();
-   }
-   bool change;
-   switch(op_code)
-   {  //
-      case EqppOp:
-      case EqpvOp:
-      case EqvvOp:
-      change = x != y;
-      break;
+        // vp
+        case LevpOp:
+        case LtvpOp:
+        x = taylor[ size_t(arg[0]) * cap_order ];
+        y = parameter[ arg[1] ];
+        break;
+        //
+        // vv
+        case EqvvOp:
+        case LevvOp:
+        case LtvvOp:
+        case NevvOp:
+        x = taylor[ size_t(arg[0]) * cap_order ];
+        y = taylor[ size_t(arg[1]) * cap_order ];
+        break;
+        //
+        default:
+        // assign x and y to avoid compiler warnings
+        CPPAD_ASSERT_UNKNOWN( false );
+        x = CppAD::numeric_limits<Base>::quiet_NaN();
+        y = CppAD::numeric_limits<Base>::quiet_NaN();
+    }
+    bool change;
+    switch(op_code)
+    {   //
+        case EqppOp:
+        case EqpvOp:
+        case EqvvOp:
+        change = x != y;
+        break;
 
-      case LeppOp:
-      case LepvOp:
-      case LevpOp:
-      case LevvOp:
-      change = GreaterThanZero(x - y);
-      break;
+        case LeppOp:
+        case LepvOp:
+        case LevpOp:
+        case LevvOp:
+        change = GreaterThanZero(x - y);
+        break;
 
-      case LtppOp:
-      case LtpvOp:
-      case LtvpOp:
-      case LtvvOp:
-      change = GreaterThanOrZero(x - y);
-      break;
+        case LtppOp:
+        case LtpvOp:
+        case LtvpOp:
+        case LtvvOp:
+        change = GreaterThanOrZero(x - y);
+        break;
 
-      case NeppOp:
-      case NepvOp:
-      case NevvOp:
-      change = x == y;
-      break;
+        case NeppOp:
+        case NepvOp:
+        case NevvOp:
+        change = x == y;
+        break;
 
-      default:
-      // assign change to avoid compiler warning
-      CPPAD_ASSERT_UNKNOWN( false );
-      change = true;
-      break;
-   }
-   if( change )
-   {  ++change_number;
-      if( change_number == change_count         )
-         change_op_index = this_op_index;
-   }
+        default:
+        // assign change to avoid compiler warning
+        CPPAD_ASSERT_UNKNOWN( false );
+        change = true;
+        break;
+    }
+    if( change )
+    {   ++change_number;
+        if( change_number == change_count         )
+            change_op_index = this_op_index;
+    }
 }
 }}} // END namespace
 # endif

@@ -12,9 +12,9 @@ Source: det_of_minor
 | # ``define CPPAD_DET_OF_MINOR_HPP``
 
 {xrst_literal
-   include/cppad/speed/det_of_minor.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/speed/det_of_minor.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

@@ -44,11 +44,11 @@ they have prototype
 
 In addition, the check
 
-   *x* == *x*
+    *x* == *x*
 
 will return the boolean value ``true`` , and
 
-   *x* == *y*
+    *x* == *y*
 
 will return ``false`` .
 
@@ -85,7 +85,7 @@ what the value of *Scalar* and *Vector* need to be initialized.
 Example
 *******
 {xrst_toc_hidden
-   example/utility/check_simple_vector.cpp
+    example/utility/check_simple_vector.cpp
 }
 The file :ref:`check_simple_vector.cpp-name`
 contains an example and test of this function where *S*
@@ -114,100 +114,100 @@ so *S* is not the same as *T* .
 namespace CppAD {
 
 # if ! CPPAD_CHECK_SIMPLE_VECTOR
-   template <class Scalar, class Vector>
-   inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
-   { }
-   template <class Scalar, class Vector>
-   inline void CheckSimpleVector(void)
-   { }
+    template <class Scalar, class Vector>
+    inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
+    { }
+    template <class Scalar, class Vector>
+    inline void CheckSimpleVector(void)
+    { }
 # else
-   template <class S, class T>
-   struct ok_if_S_same_as_T { };
+    template <class S, class T>
+    struct ok_if_S_same_as_T { };
 
-   template <class T>
-   struct ok_if_S_same_as_T<T,T> { T value; };
+    template <class T>
+    struct ok_if_S_same_as_T<T,T> { T value; };
 
-   template <class Scalar, class Vector>
-   inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
-   {  //
-      // count
-      static size_t count = 0;
-      if( count > 0  )
-         return;
-      CPPAD_ASSERT_KNOWN(
-         ! CppAD::thread_alloc::in_parallel() ,
-         "In parallel mode and CheckSimpleVector was not previously called\n"
-         "with this Scalar and Vector type; see the heading\n"
-         "Parallel Mode in the CheckSimpleVector documentation."
-      );
-      count++;
+    template <class Scalar, class Vector>
+    inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
+    {   //
+        // count
+        static size_t count = 0;
+        if( count > 0  )
+            return;
+        CPPAD_ASSERT_KNOWN(
+            ! CppAD::thread_alloc::in_parallel() ,
+            "In parallel mode and CheckSimpleVector was not previously called\n"
+            "with this Scalar and Vector type; see the heading\n"
+            "Parallel Mode in the CheckSimpleVector documentation."
+        );
+        count++;
 
-      // value_type must be type of elements of Vector
-      typedef typename Vector::value_type value_type;
+        // value_type must be type of elements of Vector
+        typedef typename Vector::value_type value_type;
 
-      // check that elements of Vector have type Scalar
-      struct ok_if_S_same_as_T<Scalar, value_type> x_copy;
-      x_copy.value = x;
+        // check that elements of Vector have type Scalar
+        struct ok_if_S_same_as_T<Scalar, value_type> x_copy;
+        x_copy.value = x;
 
-      // check default constructor
-      Vector d;
+        // check default constructor
+        Vector d;
 
-      // size member function
-      CPPAD_ASSERT_KNOWN(
-         d.size() == 0,
-         "default constructor result does not have size zero"
-      );
+        // size member function
+        CPPAD_ASSERT_KNOWN(
+            d.size() == 0,
+            "default constructor result does not have size zero"
+        );
 
-      // resize to same size as other vectors in test
-      d.resize(1);
+        // resize to same size as other vectors in test
+        d.resize(1);
 
-      // check sizing constructor
-      Vector s(1);
+        // check sizing constructor
+        Vector s(1);
 
-      // check element assignment
-      s[0] = y;
-      CPPAD_ASSERT_KNOWN(
-         s[0] == y,
-         "element assignment failed"
-      );
+        // check element assignment
+        s[0] = y;
+        CPPAD_ASSERT_KNOWN(
+            s[0] == y,
+            "element assignment failed"
+        );
 
-      // check copy constructor
-      s[0] = x_copy.value;
-      const Vector c(s);
-      s[0] = y;
-      CPPAD_ASSERT_KNOWN(
-         c[0] == x,
-         "copy constructor is shallow"
-      );
+        // check copy constructor
+        s[0] = x_copy.value;
+        const Vector c(s);
+        s[0] = y;
+        CPPAD_ASSERT_KNOWN(
+            c[0] == x,
+            "copy constructor is shallow"
+        );
 
-      // vector assignment operator
-      d[0] = x;
-      s    = d;
-      s[0] = y;
-      CPPAD_ASSERT_KNOWN(
-         d[0] == x,
-         "assignment operator is shallow"
-      );
+        // vector assignment operator
+        d[0] = x;
+        s    = d;
+        s[0] = y;
+        CPPAD_ASSERT_KNOWN(
+            d[0] == x,
+            "assignment operator is shallow"
+        );
 
-      // element access, right side const
-      // element assignment, left side not const
-      d[0] = c[0];
-      CPPAD_ASSERT_KNOWN(
-         d[0] == x,
-         "element assignment from const failed"
-      );
-   }
-   template <class Scalar, class Vector>
-   void CheckSimpleVector(void)
-   {  Scalar x;
-      Scalar y;
+        // element access, right side const
+        // element assignment, left side not const
+        d[0] = c[0];
+        CPPAD_ASSERT_KNOWN(
+            d[0] == x,
+            "element assignment from const failed"
+        );
+    }
+    template <class Scalar, class Vector>
+    void CheckSimpleVector(void)
+    {   Scalar x;
+        Scalar y;
 
-      // use assignment and not constructor
-      x = Scalar(0);
-      y = Scalar(1);
+        // use assignment and not constructor
+        x = Scalar(0);
+        y = Scalar(1);
 
-      CheckSimpleVector<Scalar, Vector>(x, y);
-   }
+        CheckSimpleVector<Scalar, Vector>(x, y);
+    }
 
 # endif
 

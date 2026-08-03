@@ -29,25 +29,25 @@ left
 ****
 This argument has prototype
 
-   ``const std::set<`` *Element* >& *left*
+    ``const std::set<`` *Element* >& *left*
 
 right
 *****
 This argument has prototype
 
-   ``const std::set<`` *Element* >& *right*
+    ``const std::set<`` *Element* >& *right*
 
 result
 ******
 The return value has prototype
 
-   ``std::set<`` *Element* >& *result*
+    ``std::set<`` *Element* >& *result*
 
 It contains the union of *left* and *right* .
 Note that C++11 detects that the return value is a temporary
 and uses it for the result instead of making a separate copy.
 {xrst_toc_hidden
-   example/utility/set_union.cpp
+    example/utility/set_union.cpp
 }
 Example
 *******
@@ -61,20 +61,20 @@ The file :ref:`set_union.cpp-name` contains an example and test of this
 # include <iterator>
 
 namespace CppAD {
-   template <class Element>
-   std::set<Element> set_union(
-      const std::set<Element>&     left   ,
-      const std::set<Element>&     right  )
-   {  std::set<Element> result;
-      std::set_union(
-         left.begin()              ,
-         left.end()                ,
-         right.begin()             ,
-         right.end()               ,
-         std::inserter(result, result.begin())
-      );
-      return result;
-   }
+    template <class Element>
+    std::set<Element> set_union(
+        const std::set<Element>&     left   ,
+        const std::set<Element>&     right  )
+    {   std::set<Element> result;
+        std::set_union(
+            left.begin()              ,
+            left.end()                ,
+            right.begin()             ,
+            right.end()               ,
+            std::inserter(result, result.begin())
+        );
+        return result;
+    }
 }
 
 # endif

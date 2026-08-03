@@ -5,16 +5,16 @@
 
 {xrst_begin 2020 app}
 {xrst_spell
-   autotools
-   callgrind
-   cg
-   github
-   gitlab
-   libs
-   msys
-   omh
-   optionlist
-   un
+    autotools
+    callgrind
+    cg
+    github
+    gitlab
+    libs
+    msys
+    omh
+    optionlist
+    un
 }
 
 Release Notes for 2020
@@ -304,11 +304,11 @@ were added so one can see the progress of the ``get_optional.sh`` script.
    :ref:`speed_main@test@correct`
    test results were printed as
 
-      *package* _ *test* _ *optionlist* _ ``ok`` = *result*
+        *package* _ *test* _ *optionlist* _ ``ok`` = *result*
 
-   This has been changed to
+    This has been changed to
 
-      *package* _ *test* _ *optionlist* _ ``correct`` = *result*
+        *package* _ *test* _ *optionlist* _ ``correct`` = *result*
 
 01-24
 =====

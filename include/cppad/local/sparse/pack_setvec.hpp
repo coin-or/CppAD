@@ -62,14 +62,14 @@ Source Code
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   typedef size_t    Pack;
-   const size_t      n_bit_;
-   const Pack        zero_;
-   const Pack        one_;
-   size_t            n_set_;
-   size_t            end_;
-   size_t            n_pack_;
-   pod_vector<Pack>  data_;
+    typedef size_t    Pack;
+    const size_t      n_bit_;
+    const Pack        zero_;
+    const Pack        one_;
+    size_t            n_set_;
+    size_t            end_;
+    size_t            n_pack_;
+    pod_vector<Pack>  data_;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -90,8 +90,8 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   size_t memory(void) const
-   {  return data_.capacity() * sizeof(Pack); }
+    size_t memory(void) const
+    {  return data_.capacity() * sizeof(Pack); }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -112,7 +112,7 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void print(void) const;
+    void print(void) const;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -120,7 +120,7 @@ public:
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_iterators dev}
 {xrst_spell
-   typedef
+    typedef
 }
 
 class pack_setvec: Iterators
@@ -135,9 +135,9 @@ typedef
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   /// declare a const iterator
-   friend class pack_setvec_const_iterator;
-   typedef pack_setvec_const_iterator const_iterator;
+    /// declare a const iterator
+    friend class pack_setvec_const_iterator;
+    typedef pack_setvec_const_iterator const_iterator;
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -174,10 +174,10 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   pack_setvec(void) :
-   n_bit_( std::numeric_limits<Pack>::digits ),
-   zero_(0), one_(1), n_set_(0), end_(0), n_pack_(0), data_(0)
-   { }
+    pack_setvec(void) :
+    n_bit_( std::numeric_limits<Pack>::digits ),
+    zero_(0), one_(1), n_set_(0), end_(0), n_pack_(0), data_(0)
+    { }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -193,8 +193,8 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   ~pack_setvec(void)
-   { }
+    ~pack_setvec(void)
+    { }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -217,9 +217,9 @@ This is a CppAD programing error (not CppAD user error).
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   pack_setvec(const pack_setvec& v) :
-   n_bit_( std::numeric_limits<Pack>::digits ), zero_(0), one_(1)
-   {  CPPAD_ASSERT_UNKNOWN(0); }
+    pack_setvec(const pack_setvec& v) :
+    n_bit_( std::numeric_limits<Pack>::digits ), zero_(0), one_(1)
+    {  CPPAD_ASSERT_UNKNOWN(0); }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -239,29 +239,29 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void resize(size_t n_set, size_t end)
+    void resize(size_t n_set, size_t end)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_vec_resize}
 */
-   {  n_set_          = n_set;
-      end_            = end;
-      if( n_set_ == 0 )
-      {  CPPAD_ASSERT_UNKNOWN( end == 0 );
-         data_.clear();
-         return;
-      }
-      // now start a new vector with empty sets
-      Pack zero(0);
-      //
-      n_pack_         = ( 1 + (end_ - 1) / n_bit_ );
-      size_t i        = n_set_ * n_pack_;
-      //
-      data_.resize(i);
-      while(i--)
-         data_[i] = zero;
-   }
+    {  n_set_          = n_set;
+        end_            = end;
+        if( n_set_ == 0 )
+        {  CPPAD_ASSERT_UNKNOWN( end == 0 );
+            data_.clear();
+            return;
+        }
+        // now start a new vector with empty sets
+        Pack zero(0);
+        //
+        n_pack_         = ( 1 + (end_ - 1) / n_bit_ );
+        size_t i        = n_set_ * n_pack_;
+        //
+        data_.resize(i);
+        while(i--)
+            data_[i] = zero;
+    }
 /* %$$
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_vec_n_set dev}
@@ -278,8 +278,8 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   size_t n_set(void) const
-   {  return n_set_;  }
+    size_t n_set(void) const
+    {  return n_set_;  }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -299,8 +299,8 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   size_t end(void) const
-   {  return end_; }
+    size_t end(void) const
+    {  return end_; }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -320,20 +320,20 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void operator=(const pack_setvec& other)
+    void operator=(const pack_setvec& other)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_vec_assignment}
 */
-   {  CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
-      CPPAD_ASSERT_UNKNOWN( zero_   == other.zero_);
-      CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
-      n_set_  = other.n_set_;
-      end_    = other.end_;
-      n_pack_ = other.n_pack_;
-      data_   = other.data_;
-   }
+    {  CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+        CPPAD_ASSERT_UNKNOWN( zero_   == other.zero_);
+        CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
+        n_set_  = other.n_set_;
+        end_    = other.end_;
+        n_pack_ = other.n_pack_;
+        data_   = other.data_;
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_vec_swap dev}
@@ -350,23 +350,23 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void swap(pack_setvec& other)
+    void swap(pack_setvec& other)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_vec_swap}
 */
-   {  // size_t objects
-      CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
-      CPPAD_ASSERT_UNKNOWN( zero_   == other.zero_);
-      CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
-      std::swap(n_set_  , other.n_set_);
-      std::swap(end_    , other.end_);
-      std::swap(n_pack_ , other.n_pack_);
-      //
-      // pod_vectors
-      data_.swap(other.data_);
-   }
+    {  // size_t objects
+        CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+        CPPAD_ASSERT_UNKNOWN( zero_   == other.zero_);
+        CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
+        std::swap(n_set_  , other.n_set_);
+        std::swap(end_    , other.end_);
+        std::swap(n_pack_ , other.n_pack_);
+        //
+        // pod_vectors
+        data_.swap(other.data_);
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_number_elements dev}
@@ -383,52 +383,52 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   size_t number_elements(size_t i) const
+    size_t number_elements(size_t i) const
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_number_elements}
 */
-   {  CPPAD_ASSERT_UNKNOWN( i < n_set_ );
-      //
-      // special case where data_[i] is 0 or 1
-      if( end_ == 1 )
-      {  CPPAD_ASSERT_UNKNOWN( n_pack_ == 1 );
-         return size_t( data_[i] );
-      }
-      //
-      // initialize count of non-zero bits in this set
-      size_t count = 0;
-      //
-      // mask corresponding to first bit in Pack
-      Pack mask = one_;
-      //
-      // number of bits in last Packing unit
-      size_t n_last = (end_ - 1) % n_bit_ + 1;
-      //
-      // count bits in last unit
-      Pack unit = data_[(i + 1) * n_pack_ - 1];
-      for(size_t bit = 0; bit < n_last; ++bit)
-      {  CPPAD_ASSERT_UNKNOWN( mask >= one_ );
-         if( mask & unit )
-            ++count;
-         mask = mask << 1;
-      }
-      if( n_pack_ == 1 )
-         return count;
-      //
-      // count bits in other units
-      for(size_t bit = 0; bit < n_bit_; ++bit)
-      {  CPPAD_ASSERT_UNKNOWN( mask >= one_ );
-         size_t k = n_pack_;
-         while(--k)
-         {  if( data_[i * n_pack_ + k] & mask )
-               ++count;
-         }
-         mask = mask << 1;
-      }
-      return count;
-   }
+    {  CPPAD_ASSERT_UNKNOWN( i < n_set_ );
+        //
+        // special case where data_[i] is 0 or 1
+        if( end_ == 1 )
+        {  CPPAD_ASSERT_UNKNOWN( n_pack_ == 1 );
+            return size_t( data_[i] );
+        }
+        //
+        // initialize count of non-zero bits in this set
+        size_t count = 0;
+        //
+        // mask corresponding to first bit in Pack
+        Pack mask = one_;
+        //
+        // number of bits in last Packing unit
+        size_t n_last = (end_ - 1) % n_bit_ + 1;
+        //
+        // count bits in last unit
+        Pack unit = data_[(i + 1) * n_pack_ - 1];
+        for(size_t bit = 0; bit < n_last; ++bit)
+        {  CPPAD_ASSERT_UNKNOWN( mask >= one_ );
+            if( mask & unit )
+                ++count;
+            mask = mask << 1;
+        }
+        if( n_pack_ == 1 )
+            return count;
+        //
+        // count bits in other units
+        for(size_t bit = 0; bit < n_bit_; ++bit)
+        {  CPPAD_ASSERT_UNKNOWN( mask >= one_ );
+            size_t k = n_pack_;
+            while(--k)
+            {  if( data_[i * n_pack_ + k] & mask )
+                    ++count;
+            }
+            mask = mask << 1;
+        }
+        return count;
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_add_element dev}
@@ -445,23 +445,23 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void add_element(size_t i, size_t element)
+    void add_element(size_t i, size_t element)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_add_element}
 */
-   {  CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
-      CPPAD_ASSERT_UNKNOWN( element < end_ );
-      if( end_ == 1 )
-         data_[i] |= one_;
-      else
-      {  size_t j  = element / n_bit_;
-         size_t k  = element - j * n_bit_;
-         Pack mask = one_ << k;
-         data_[ i * n_pack_ + j] |= mask;
-      }
-   }
+    {  CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
+        CPPAD_ASSERT_UNKNOWN( element < end_ );
+        if( end_ == 1 )
+            data_[i] |= one_;
+        else
+        {  size_t j  = element / n_bit_;
+            size_t k  = element - j * n_bit_;
+            Pack mask = one_ << k;
+            data_[ i * n_pack_ + j] |= mask;
+        }
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_post_element dev}
@@ -478,8 +478,8 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void post_element(size_t i, size_t element)
-   {  add_element(i, element); }
+    void post_element(size_t i, size_t element)
+    {  add_element(i, element); }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -501,8 +501,8 @@ Implementation
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void process_post(size_t i)
-   {  return; }
+    void process_post(size_t i)
+    {  return; }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -522,22 +522,22 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   bool is_element(size_t i, size_t element) const
+    bool is_element(size_t i, size_t element) const
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_is_element}
 */
-   {  CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
-      CPPAD_ASSERT_UNKNOWN( element < end_ );
-      if( end_ == 1 )
-         return data_[i] != zero_;
-      //
-      size_t j  = element / n_bit_;
-      size_t k  = element - j * n_bit_;
-      Pack mask = one_ << k;
-      return (data_[i * n_pack_ + j] & mask) != zero_;
-   }
+    {  CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
+        CPPAD_ASSERT_UNKNOWN( element < end_ );
+        if( end_ == 1 )
+            return data_[i] != zero_;
+        //
+        size_t j  = element / n_bit_;
+        size_t k  = element - j * n_bit_;
+        Pack mask = one_ << k;
+        return (data_[i * n_pack_ + j] & mask) != zero_;
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_clear dev}
@@ -554,19 +554,19 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void clear(size_t target)
+    void clear(size_t target)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_clear}
 */
-   {  CPPAD_ASSERT_UNKNOWN( target < n_set_ );
-      size_t t = target * n_pack_;
+    {  CPPAD_ASSERT_UNKNOWN( target < n_set_ );
+        size_t t = target * n_pack_;
 
-      size_t j = n_pack_;
-      while(j--)
-         data_[t++] = zero_;
-   }
+        size_t j = n_pack_;
+        while(j--)
+            data_[t++] = zero_;
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_assignment dev}
@@ -583,25 +583,25 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void assignment(
-      size_t               this_target  ,
-      size_t               other_value  ,
-      const pack_setvec&   other        )
+    void assignment(
+        size_t               this_target  ,
+        size_t               other_value  ,
+        const pack_setvec&   other        )
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_assignment}
 */
-   {  CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
-      CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_set_  );
-      CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
-      size_t t = this_target * n_pack_;
-      size_t v = other_value * n_pack_;
+    {  CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
+        CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_set_  );
+        CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
+        size_t t = this_target * n_pack_;
+        size_t v = other_value * n_pack_;
 
-      size_t j = n_pack_;
-      while(j--)
-         data_[t++] = other.data_[v++];
-   }
+        size_t j = n_pack_;
+        while(j--)
+            data_[t++] = other.data_[v++];
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_binary_union dev}
@@ -618,29 +618,29 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void binary_union(
-      size_t                  this_target  ,
-      size_t                  this_left    ,
-      size_t                  other_right  ,
-      const pack_setvec&      other        )
+    void binary_union(
+        size_t                  this_target  ,
+        size_t                  this_left    ,
+        size_t                  other_right  ,
+        const pack_setvec&      other        )
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_binary_union}
 */
-   {  CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
-      CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
-      CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
-      CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
+    {  CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
+        CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
+        CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
+        CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
 
-      size_t t  = this_target * n_pack_;
-      size_t l  = this_left  * n_pack_;
-      size_t r  = other_right * n_pack_;
+        size_t t  = this_target * n_pack_;
+        size_t l  = this_left  * n_pack_;
+        size_t r  = other_right * n_pack_;
 
-      size_t j = n_pack_;
-      while(j--)
-         data_[t++] = ( data_[l++] | other.data_[r++] );
-   }
+        size_t j = n_pack_;
+        while(j--)
+            data_[t++] = ( data_[l++] | other.data_[r++] );
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_binary_intersection dev}
@@ -657,29 +657,29 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   void binary_intersection(
-      size_t                  this_target  ,
-      size_t                  this_left    ,
-      size_t                  other_right  ,
-      const pack_setvec&      other        )
+    void binary_intersection(
+        size_t                  this_target  ,
+        size_t                  this_left    ,
+        size_t                  other_right  ,
+        const pack_setvec&      other        )
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_binary_intersection}
 */
-   {  CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
-      CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
-      CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
-      CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
+    {   CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
+        CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
+        CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
+        CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
 
-      size_t t  = this_target * n_pack_;
-      size_t l  = this_left  * n_pack_;
-      size_t r  = other_right * n_pack_;
+        size_t t  = this_target * n_pack_;
+        size_t l  = this_left  * n_pack_;
+        size_t r  = other_right * n_pack_;
 
-      size_t j = n_pack_;
-      while(j--)
-         data_[t++] = ( data_[l++] & other.data_[r++] );
-   }
+        size_t j = n_pack_;
+        while(j--)
+            data_[t++] = ( data_[l++] & other.data_[r++] );
+    }
 // ==========================================================================
 }; // END_CLASS_PACK_SETVEC
 // ==========================================================================
@@ -740,14 +740,14 @@ Source Code
 {xrst_spell_off}
 {xrst_code hpp} */
 private:
-   typedef pack_setvec::Pack Pack;
-   const size_t&             n_bit_;
-   const Pack&               one_;
-   const size_t&             n_pack_;
-   const size_t&             end_;
-   const pod_vector<Pack>&   data_;
-   size_t                    data_index_;
-   size_t                    next_element_;
+    typedef pack_setvec::Pack Pack;
+    const size_t&             n_bit_;
+    const Pack&               one_;
+    const size_t&             n_pack_;
+    const size_t&             end_;
+    const pod_vector<Pack>&   data_;
+    size_t                    data_index_;
+    size_t                    next_element_;
 public:
 /* {xrst_code}
 {xrst_spell_on}
@@ -768,30 +768,30 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   pack_setvec_const_iterator (const pack_setvec& pack, size_t set_index)
+    pack_setvec_const_iterator (const pack_setvec& pack, size_t set_index)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_const_iterator_ctor}
 */
-   :
-   n_bit_         ( pack.n_bit_ )        ,
-   one_           ( pack.one_   )        ,
-   n_pack_        ( pack.n_pack_ )       ,
-   end_           ( pack.end_ )          ,
-   data_          ( pack.data_ )         ,
-   data_index_    ( set_index * n_pack_ )
-   {  CPPAD_ASSERT_UNKNOWN( set_index < pack.n_set_ );
-      CPPAD_ASSERT_UNKNOWN( 0 < end_ );
-      //
-      next_element_ = 0;
-      if( data_[data_index_] & one_ )
-         return;
-      //
-      // element with index zero is not in this set of integers,
-      // advance to first element or end
-      ++(*this);
-   }
+    :
+    n_bit_         ( pack.n_bit_ )        ,
+    one_           ( pack.one_   )        ,
+    n_pack_        ( pack.n_pack_ )       ,
+    end_           ( pack.end_ )          ,
+    data_          ( pack.data_ )         ,
+    data_index_    ( set_index * n_pack_ )
+    {  CPPAD_ASSERT_UNKNOWN( set_index < pack.n_set_ );
+        CPPAD_ASSERT_UNKNOWN( 0 < end_ );
+        //
+        next_element_ = 0;
+        if( data_[data_index_] & one_ )
+            return;
+        //
+        // element with index zero is not in this set of integers,
+        // advance to first element or end
+        ++(*this);
+    }
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_setvec_const_iterator_dereference dev}
@@ -807,8 +807,8 @@ Implementation
 **************
 {xrst_spell_off}
 {xrst_code hpp} */
-   size_t operator*(void) const
-   {  return next_element_; }
+    size_t operator*(void) const
+    {  return next_element_; }
 /* {xrst_code}
 {xrst_spell_on}
 
@@ -828,77 +828,77 @@ Prototype
 {xrst_spell_off}
 {xrst_code hpp} */
 public:
-   pack_setvec_const_iterator& operator++(void)
+    pack_setvec_const_iterator& operator++(void)
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end pack_setvec_const_iterator_increment}
 */
-   {  CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
-      if( next_element_ == end_ )
-         return *this;
-      //
-      ++next_element_;
-      if( next_element_ == end_ )
-         return *this;
-      //
-      // bit index corresponding to next element
-      size_t bit = next_element_ % n_bit_;
-      //
-      // check if we have advanced to the next data index
-      if( bit == 0 )
-         ++data_index_;
-      //
-      // initialize mask
-      size_t mask = one_ << bit;
-      //
-      while( next_element_ < end_ )
-      {  // check if this element is in the set
-         if( data_[data_index_] & mask )
+    {   CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
+        if( next_element_ == end_ )
             return *this;
-         //
-         // try next larger element
-         ++next_element_;
-         ++bit;
-         mask <<= 1;
-         //
-         // check if we must go to next packed data index
-         CPPAD_ASSERT_UNKNOWN( bit <= n_bit_ );
-         if( bit == n_bit_ )
-         {  // get next packed value
-            bit   = 0;
-            mask  = one_;
+        //
+        ++next_element_;
+        if( next_element_ == end_ )
+            return *this;
+        //
+        // bit index corresponding to next element
+        size_t bit = next_element_ % n_bit_;
+        //
+        // check if we have advanced to the next data index
+        if( bit == 0 )
             ++data_index_;
-         }
-      }
-      CPPAD_ASSERT_UNKNOWN( next_element_ == end_ );
-      return *this;
-   }
+        //
+        // initialize mask
+        size_t mask = one_ << bit;
+        //
+        while( next_element_ < end_ )
+        {   // check if this element is in the set
+            if( data_[data_index_] & mask )
+                return *this;
+            //
+            // try next larger element
+            ++next_element_;
+            ++bit;
+            mask <<= 1;
+            //
+            // check if we must go to next packed data index
+            CPPAD_ASSERT_UNKNOWN( bit <= n_bit_ );
+            if( bit == n_bit_ )
+            {   // get next packed value
+                bit   = 0;
+                mask  = one_;
+                ++data_index_;
+            }
+        }
+        CPPAD_ASSERT_UNKNOWN( next_element_ == end_ );
+        return *this;
+    }
 // =========================================================================
 }; // END_CLASS_PACK_SETVEC_CONST_ITERATOR
 // =========================================================================
 
 // Implemented after pack_setvec_const_iterator so can use it
 inline void pack_setvec::print(void) const
-{  std::cout << "pack_setvec:\n";
-   for(size_t i = 0; i < n_set(); i++)
-   {  std::cout << "set[" << i << "] = {";
-      const_iterator itr(*this, i);
-      while( *itr != end() )
-      {  std::cout << *itr;
-         if( *(++itr) != end() )
-            std::cout << ",";
-      }
-      std::cout << "}\n";
-   }
-   return;
+{   std::cout << "pack_setvec:\n";
+    for(size_t i = 0; i < n_set(); i++)
+    {   std::cout << "set[" << i << "] = {";
+        const_iterator itr(*this, i);
+        while( *itr != end() )
+        {   std::cout << *itr;
+            if( *(++itr) != end() )
+                std::cout << ",";
+        }
+        std::cout << "}\n";
+    }
+    return;
 }
 
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin sparsity_user2internal_pack_setvec dev}
 {xrst_spell
-   msg
+    msg
 }
 
 Copy A Boolean Sparsity Pattern To A pack_setvec Object
@@ -932,18 +932,18 @@ transpose
 If *transpose* is false,
 element *j* is in the *i*-th *internal* set if
 
-   *user* [ *i* * *end* + *j*  ]
+    *user* [ *i* * *end* + *j*  ]
 
 Otherwise,
 element *j* is in the *i*-th *internal* set if
 
-   *user* [ *i* * *n_set* + *j*  ]
+    *user* [ *i* * *n_set* + *j*  ]
 
 error_msg
 *********
 is the error message to display if
 
-   *n_set* * *end* != *user* . ``size`` ()
+    *n_set* * *end* != *user* . ``size`` ()
 
 Prototype
 *********
@@ -951,43 +951,43 @@ Prototype
 {xrst_code hpp} */
 template<class SetVector>
 void sparsity_user2internal(
-   pack_setvec&            internal  ,
-   const SetVector&        user      ,
-   size_t                  n_set     ,
-   size_t                  end       ,
-   bool                    transpose ,
-   const char*             error_msg )
+    pack_setvec&            internal  ,
+    const SetVector&        user      ,
+    size_t                  n_set     ,
+    size_t                  end       ,
+    bool                    transpose ,
+    const char*             error_msg )
 /* {xrst_code}
 {xrst_spell_on}
 
 {xrst_end sparsity_user2internal_pack_setvec}
 */
-{  CPPAD_ASSERT_KNOWN(size_t( user.size() ) == n_set * end, error_msg );
+{   CPPAD_ASSERT_KNOWN(size_t( user.size() ) == n_set * end, error_msg );
 
-   // size of internal sparsity pattern
-   internal.resize(n_set, end);
+    // size of internal sparsity pattern
+    internal.resize(n_set, end);
 
-   if( transpose )
-   {  // transposed pattern case
-      for(size_t j = 0; j < end; j++)
-      {  for(size_t i = 0; i < n_set; i++)
-         {  // no advantage to using post_element for pack_setvec
-            if( user[ j * n_set + i ] )
-               internal.add_element(i, j);
-         }
-      }
-      return;
-   }
-   else
-   {  for(size_t i = 0; i < n_set; i++)
-      {  for(size_t j = 0; j < end; j++)
-         {  // no advantage to using post_element for pack_setvec
-            if( user[ i * end + j ] )
-               internal.add_element(i, j);
-         }
-      }
-   }
-   return;
+    if( transpose )
+    {   // transposed pattern case
+        for(size_t j = 0; j < end; j++)
+        {   for(size_t i = 0; i < n_set; i++)
+            {   // no advantage to using post_element for pack_setvec
+                if( user[ j * n_set + i ] )
+                    internal.add_element(i, j);
+            }
+        }
+        return;
+    }
+    else
+    {   for(size_t i = 0; i < n_set; i++)
+        {   for(size_t j = 0; j < end; j++)
+            {   // no advantage to using post_element for pack_setvec
+                if( user[ i * end + j ] )
+                    internal.add_element(i, j);
+            }
+        }
+    }
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE

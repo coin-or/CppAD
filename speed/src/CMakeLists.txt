@@ -12,13 +12,13 @@
 # and is not installed (do not have to worry about library search path).
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-   link_det_lu.cpp
-   link_det_minor.cpp
-   link_mat_mul.cpp
-   link_ode.cpp
-   link_poly.cpp
-   link_sparse_hessian.cpp
-   link_sparse_jacobian.cpp
+    link_det_lu.cpp
+    link_det_minor.cpp
+    link_mat_mul.cpp
+    link_ode.cpp
+    link_poly.cpp
+    link_sparse_hessian.cpp
+    link_sparse_jacobian.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

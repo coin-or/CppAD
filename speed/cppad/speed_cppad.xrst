@@ -28,7 +28,7 @@ execute the following commands starting in the
 You can then run the corresponding speed tests
 with the following command
 
-   ./ ``speed_cppad speed`` *seed*
+    ./ ``speed_cppad speed`` *seed*
 
 where *seed* is a positive integer.
 See :ref:`speed_main-name` for more options.
@@ -36,13 +36,13 @@ See :ref:`speed_main-name` for more options.
 Contents
 ********
 {xrst_toc_list
-   speed/cppad/det_minor.cpp
-   speed/cppad/det_lu.cpp
-   speed/cppad/mat_mul.cpp
-   speed/cppad/ode.cpp
-   speed/cppad/poly.cpp
-   speed/cppad/sparse_hessian.cpp
-   speed/cppad/sparse_jacobian.cpp
+    speed/cppad/det_minor.cpp
+    speed/cppad/det_lu.cpp
+    speed/cppad/mat_mul.cpp
+    speed/cppad/ode.cpp
+    speed/cppad/poly.cpp
+    speed/cppad/sparse_hessian.cpp
+    speed/cppad/sparse_jacobian.cpp
 }
 
 {xrst_end speed_cppad}

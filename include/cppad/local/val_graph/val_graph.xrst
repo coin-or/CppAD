@@ -34,7 +34,7 @@ The independent sub-vector is
 
 .. math::
 
-   x = ( v_0 , \cdots , v_{n-1} )
+    x = ( v_0 , \cdots , v_{n-1} )
 
 where :math:`n \leq p` is the length of the dependent vector.
 
@@ -54,7 +54,7 @@ that specify the dependent vector as follows
 
 .. math::
 
-   y  = ( v_{d[0]} , \cdots , v_{d[m-1]} )
+    y  = ( v_{d[0]} , \cdots , v_{d[m-1]} )
 
 note that :math:`d[j]` is used in place of :math:`d_j` above to
 avoid having two levels of sub-scripting.
@@ -100,7 +100,7 @@ The arguments need not be sequential, but the results are; i.e.,
 
 .. math::
 
-      ( v_\ell , v_{\ell+1} , \cdots ) = \phi ( v_j , v_k , \cdots )
+        ( v_\ell , v_{\ell+1} , \cdots ) = \phi ( v_j , v_k , \cdots )
 
 where
 :math:`n \leq \ell < p`,
@@ -111,18 +111,18 @@ where
 Implementation
 **************
 {xrst_toc_table
-   include/cppad/local/val_graph/val_type.hpp
-   include/cppad/local/val_graph/base_op.hpp
-   include/cppad/local/val_graph/print_op.hpp
-   include/cppad/local/val_graph/tape.hpp
-   include/cppad/local/val_graph/op_enum2class.hpp
-   include/cppad/local/val_graph/fun2val.hpp
-   include/cppad/local/val_graph/val2fun.hpp
-   include/cppad/local/val_graph/val_optimize.hpp
-   include/cppad/local/val_graph/dyn_type.hpp
-   include/cppad/local/val_graph/var_type.hpp
-   include/cppad/local/val_graph/call_atomic.hpp
-   include/cppad/local/val_graph/enable_parallel.hpp
+    include/cppad/local/val_graph/val_type.hpp
+    include/cppad/local/val_graph/base_op.hpp
+    include/cppad/local/val_graph/print_op.hpp
+    include/cppad/local/val_graph/tape.hpp
+    include/cppad/local/val_graph/op_enum2class.hpp
+    include/cppad/local/val_graph/fun2val.hpp
+    include/cppad/local/val_graph/val2fun.hpp
+    include/cppad/local/val_graph/val_optimize.hpp
+    include/cppad/local/val_graph/dyn_type.hpp
+    include/cppad/local/val_graph/var_type.hpp
+    include/cppad/local/val_graph/call_atomic.hpp
+    include/cppad/local/val_graph/enable_parallel.hpp
 }
 
 

@@ -9,8 +9,8 @@
 ------------------------------------------------------------------------------
 {xrst_begin numeric_limits}
 {xrst_spell
-   eps
-   isnan
+    eps
+    isnan
 }
 
 Numeric Limits For an AD and Base Types
@@ -23,6 +23,7 @@ Syntax
 | *max* = ``numeric_limits`` < *Float* >:: ``max`` ()
 | *nan* = ``numeric_limits`` < *Float* >:: ``quiet_NaN`` ()
 | *inf* = ``numeric_limits`` < *Float* >:: ``infinity`` ()
+| ``numeric_limits`` < *Float* >:: ``digits``
 | ``numeric_limits`` < *Float* >:: ``digits10``
 | ``numeric_limits`` < *Float* >:: ``max_digits10``
 
@@ -30,12 +31,12 @@ CppAD::numeric_limits
 *********************
 The functions above and have the prototype
 
-   ``static`` *Float* ``CppAD::numeric_limits<`` *Float* >:: *fun* ( *void* )
+    ``static`` *Float* ``CppAD::numeric_limits<`` *Float* >:: *fun* ( *void* )
 
 where *fun* is
 ``epsilon`` , ``min`` , ``max`` , ``quiet_NaN`` , and ``infinity`` .
 
-The values ``digits10`` and ``max_digits10`` are
+The values ``digits`` , ``digits10`` , and ``max_digits10`` are
 member variable and not a functions.
 
 std::numeric_limits
@@ -61,7 +62,7 @@ epsilon
 *******
 The result *eps* is equal to machine epsilon and has prototype
 
-   *Float* *eps*
+    *Float* *eps*
 
 The file :ref:`num_limits.cpp-name`
 tests the value *eps* by checking that the following are true
@@ -77,7 +78,7 @@ min
 The result *min* is equal to
 the minimum positive normalized value and has prototype
 
-   *Float* *min*
+    *Float* *min*
 
 The file :ref:`num_limits.cpp-name`
 tests the value *min* by checking that the following are true
@@ -93,7 +94,7 @@ max
 The result *max* is equal to
 the maximum finite value and has prototype
 
-   *Float* *max*
+    *Float* *max*
 
 The file :ref:`num_limits.cpp-name`
 tests the value *max* by checking that the following are true
@@ -108,19 +109,19 @@ quiet_NaN
 *********
 The result *nan* is not a number and has prototype
 
-   *Float* *nan*
+    *Float* *nan*
 
 The file :ref:`num_limits.cpp-name`
 tests the value *nan* by checking that the following is true
 
-   *nan* != *nan*
+    *nan* != *nan*
 
 infinity
 ********
 The result *inf* is equal to the
 positive infinite value and has prototype
 
-   *Float* *inf*
+    *Float* *inf*
 
 The file :ref:`num_limits.cpp-name`
 tests the value *inf* by checking that the following are true
@@ -128,11 +129,20 @@ tests the value *inf* by checking that the following are true
 | |tab| *inf* + 100 == *inf*
 | |tab| ``isnan`` ( *inf* ``-`` *inf* )
 
+digits
+******
+The member variable ``digits`` has prototype
+
+    ``static const int numeric_limits`` < *Float* >:: ``digits``
+
+It is the number of base-radix digits that can be represented by a
+*Float* value without change; this is the digits of the mantissa.
+
 digits10
 ********
 The member variable ``digits10`` has prototype
 
-   ``static const int numeric_limits`` < *Float* >:: ``digits10``
+    ``static const int numeric_limits`` < *Float* >:: ``digits10``
 
 It is the number of decimal digits that can be represented by a
 *Float* value.  A number with this many decimal digits can be
@@ -143,7 +153,7 @@ max_digits10
 ************
 The member variable ``max_digits10`` has prototype
 
-   ``static const int numeric_limits`` < *Float* >:: ``max_digits10``
+    ``static const int numeric_limits`` < *Float* >:: ``max_digits10``
 
 is the number of decimal digits that are necessary to uniquely represent
 all distinct values of the type *Float* .
@@ -153,7 +163,7 @@ and get the exact same result.
 Example
 *******
 {xrst_toc_hidden
-   example/general/num_limits.cpp
+    example/general/num_limits.cpp
 }
 The file
 :ref:`num_limits.cpp-name`
@@ -179,72 +189,76 @@ File that defines CppAD numeric_limits for AD types
 template <class Float>
 class numeric_limits {
 public:
-   /// machine epsilon
-   static Float epsilon(void)
-   {  CPPAD_ASSERT_KNOWN(
-      false,
-      "numeric_limits<Float>::epsilon() is not specialized for this Float"
-      );
-      return Float(0);
-   }
-   /// minimum positive normalized value
-   static Float min(void)
-   {  CPPAD_ASSERT_KNOWN(
-      false,
-      "numeric_limits<Float>::min() is not specialized for this Float"
-      );
-      return Float(0);
-   }
-   /// maximum finite value
-   static Float max(void)
-   {  CPPAD_ASSERT_KNOWN(
-      false,
-      "numeric_limits<Float>::max() is not specialized for this Float"
-      );
-      return Float(0);
-   }
-   /// not a number
-   static Float quiet_NaN(void)
-   {  CPPAD_ASSERT_KNOWN(
-      false,
-      "numeric_limits<Float>::quiet_NaN() is not specialized for this Float"
-      );
-      return Float(0);
-   }
-   /// positive infinite value
-   static Float infinity(void)
-   {  CPPAD_ASSERT_KNOWN(
-      false,
-      "numeric_limits<Float>::infinity() is not specialized for this Float"
-      );
-      return Float(0);
-   }
-   /// number of decimal digits
-   static const int digits10 = -1;
+    /// machine epsilon
+    static Float epsilon(void)
+    {   CPPAD_ASSERT_KNOWN(
+        false,
+        "numeric_limits<Float>::epsilon() is not specialized for this Float"
+        );
+        return Float(0);
+    }
+    /// minimum positive normalized value
+    static Float min(void)
+    {   CPPAD_ASSERT_KNOWN(
+        false,
+        "numeric_limits<Float>::min() is not specialized for this Float"
+        );
+        return Float(0);
+    }
+    /// maximum finite value
+    static Float max(void)
+    {   CPPAD_ASSERT_KNOWN(
+        false,
+        "numeric_limits<Float>::max() is not specialized for this Float"
+        );
+        return Float(0);
+    }
+    /// not a number
+    static Float quiet_NaN(void)
+    {   CPPAD_ASSERT_KNOWN(
+        false,
+        "numeric_limits<Float>::quiet_NaN() is not specialized for this Float"
+        );
+        return Float(0);
+    }
+    /// positive infinite value
+    static Float infinity(void)
+    {   CPPAD_ASSERT_KNOWN(
+        false,
+        "numeric_limits<Float>::infinity() is not specialized for this Float"
+        );
+        return Float(0);
+    }
+    /// number of base-radix digits
+    static const int digits = -1;
+    /// number of decimal digits
+    static const int digits10 = -1;
 };
 
 /// Partial specialization that defines limits for for all AD types
 template <class Base>
 class numeric_limits< AD<Base> > {
 public:
-   /// machine epsilon
-   static AD<Base> epsilon(void)
-   {  return AD<Base>( numeric_limits<Base>::epsilon() ); }
-   /// minimum positive normalized value
-   static AD<Base> min(void)
-   {  return AD<Base>( numeric_limits<Base>::min() ); }
-   /// maximum finite value
-   static AD<Base> max(void)
-   {  return AD<Base>( numeric_limits<Base>::max() ); }
-   /// not a number
-   static AD<Base> quiet_NaN(void)
-   {  return AD<Base>( numeric_limits<Base>::quiet_NaN() ); }
-   /// positive infinite value
-   static AD<Base> infinity(void)
-   {  return AD<Base>( numeric_limits<Base>::infinity() ); }
-   /// number of decimal digits
-   static const int digits10     = numeric_limits<Base>::digits10;
-   static const int max_digits10 = numeric_limits<Base>::max_digits10;
+    /// machine epsilon
+    static AD<Base> epsilon(void)
+    {   return AD<Base>( numeric_limits<Base>::epsilon() ); }
+    /// minimum positive normalized value
+    static AD<Base> min(void)
+    {   return AD<Base>( numeric_limits<Base>::min() ); }
+    /// maximum finite value
+    static AD<Base> max(void)
+    {   return AD<Base>( numeric_limits<Base>::max() ); }
+    /// not a number
+    static AD<Base> quiet_NaN(void)
+    {   return AD<Base>( numeric_limits<Base>::quiet_NaN() ); }
+    /// positive infinite value
+    static AD<Base> infinity(void)
+    {   return AD<Base>( numeric_limits<Base>::infinity() ); }
+    /// number of base-radix digits
+    static const int digits       = numeric_limits<Base>::digits;
+    /// number of decimal digits
+    static const int digits10     = numeric_limits<Base>::digits10;
+    static const int max_digits10 = numeric_limits<Base>::max_digits10;
 };
 
 } // END_CPPAD_NAMESPACE

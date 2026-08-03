@@ -12,9 +12,9 @@ Source: sparse_hes_fun
 | # ``define CPPAD_SPARSE_HES_FUN_HPP``
 
 {xrst_literal
-   include/cppad/speed/sparse_hes_fun.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/speed/sparse_hes_fun.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

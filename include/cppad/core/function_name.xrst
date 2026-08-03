@@ -20,11 +20,11 @@ f
 *
 In the set operation, *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 In the get operation, *f* has prototype
 
-   ``const ADFun`` < *Base* > *f*
+    ``const ADFun`` < *Base* > *f*
 
 (see ``ADFun`` < *Base* > :ref:`constructor<fun_construct-name>` ).
 
@@ -33,14 +33,14 @@ function_name
 is the name of the function.
 In the set operation, *function_name* has prototype
 
-   ``const std::string&`` *function_name*
+    ``const std::string&`` *function_name*
 
 In the get operation, *function_name* has prototype
 
-   ``std::string`` *function_name*
+    ``std::string`` *function_name*
 
 {xrst_toc_hidden
-   example/general/function_name.cpp
+    example/general/function_name.cpp
 }
 Example
 *******

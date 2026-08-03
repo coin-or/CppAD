@@ -8,7 +8,7 @@
 /*
 {xrst_begin base_require}
 {xrst_spell
-   ostream
+    ostream
 }
 
 AD<Base> Requirements for a CppAD Base Type
@@ -62,7 +62,7 @@ Output Operator
 ***************
 The type *Base* must support the syntax
 
-   *os* << *x*
+    *os* << *x*
 
 where *os* is an ``std::ostream&``
 and *x* is a ``const base_alloc&`` .
@@ -73,16 +73,16 @@ Integer
 *******
 The type *Base* must support the syntax
 
-   *i* = ``CppAD::Integer`` ( *x* )
+    *i* = ``CppAD::Integer`` ( *x* )
 
 which converts *x* to an ``int`` .
 The argument *x* has prototype
 
-   ``const`` *Base* & *x*
+    ``const`` *Base* & *x*
 
 and the return value *i* has prototype
 
-   ``int`` *i*
+    ``int`` *i*
 
 Suggestion
 ==========
@@ -102,7 +102,7 @@ Absolute Zero, azmul
 ********************
 The type *Base* must support the syntax
 
-   *z* = ``azmul`` ( *x* , *y* )
+    *z* = ``azmul`` ( *x* , *y* )
 
 see; :ref:`azmul-name` .
 The following preprocessor macro invocation suffices
@@ -116,27 +116,27 @@ where the macro is defined by
 {xrst_spell_off}
 {xrst_code cpp} */
 # define CPPAD_AZMUL(Base) \
-   inline Base azmul(const Base& x, const Base& y) \
-   {  Base zero(0.0);   \
-      if( x == zero ) \
-         return zero;  \
-      return x * y;     \
-   }
+    inline Base azmul(const Base& x, const Base& y) \
+    {  Base zero(0.0);   \
+        if( x == zero ) \
+            return zero;  \
+        return x * y;     \
+    }
 /* {xrst_code}
 {xrst_spell_on}
 
 Contents
 ********
 {xrst_toc_table
-   xrst/base_require/base_member.xrst
-   include/cppad/core/base_cond_exp.hpp
-   xrst/base_require/base_identical.xrst
-   xrst/base_require/base_ordered.xrst
-   include/cppad/core/base_std_math.hpp
-   include/cppad/core/base_limits.hpp
-   include/cppad/core/base_to_string.hpp
-   include/cppad/core/base_hash.hpp
-   xrst/base_require/base_example.xrst
+    xrst/base_require/base_member.xrst
+    include/cppad/core/base_cond_exp.hpp
+    xrst/base_require/base_identical.xrst
+    xrst/base_require/base_ordered.xrst
+    include/cppad/core/base_std_math.hpp
+    include/cppad/core/base_limits.hpp
+    include/cppad/core/base_to_string.hpp
+    include/cppad/core/base_hash.hpp
+    xrst/base_require/base_example.xrst
 }
 
 {xrst_end base_require}

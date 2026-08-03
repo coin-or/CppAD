@@ -9,7 +9,7 @@ SET(source_list compare_change.cpp)
 #
 # compile_flags
 set_compile_flags(
-   example_compare_change "${cppad_debug_which}" "${source_list}"
+    example_compare_change "${cppad_debug_which}" "${source_list}"
 )
 #
 # example_compare_change
@@ -17,8 +17,8 @@ ADD_EXECUTABLE(example_compare_change EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_compare_change
-   ${cppad_lib}
-   ${colpack_libs}
+    ${cppad_lib}
+    ${colpack_libs}
 )
 #
 # check_example_compare_change

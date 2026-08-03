@@ -19,8 +19,8 @@ Syntax
 Prototype
 =========
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Dependency Analysis
@@ -83,7 +83,7 @@ Otherwise, it is false.
 Contents
 ********
 {xrst_toc_table
-   example/atomic_three/rev_depend.cpp
+    example/atomic_three/rev_depend.cpp
 }
 Example
 *******
@@ -118,12 +118,12 @@ specifies which components of y affect values of interest.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::rev_depend(
-   const vector<Base>&         parameter_x ,
-   const vector<ad_type_enum>& type_x      ,
-   vector<bool>&               depend_x    ,
-   const vector<bool>&         depend_y    )
+    const vector<Base>&         parameter_x ,
+    const vector<ad_type_enum>& type_x      ,
+    vector<bool>&               depend_x    ,
+    const vector<bool>&         depend_y    )
 // END_PROTOTYPE
-{  return false; }
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 

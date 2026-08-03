@@ -5,59 +5,59 @@
 # ----------------------------------------------------------------------------
 if [ ! -e "bin/check_op_code.sh" ]
 then
-   echo "bin/check_op_code.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/check_op_code.sh: must be executed from its parent directory"
+    exit 1
 fi
 file='include/cppad/local/op_code_var.hpp'
 # ---------------------------------------------------------------------------
 # order in enum list
 sed -n -e '/^enum/,/NumberOp/p' $file | sed \
-   -e '/^enum/d' \
-   -e '/NumberOp/d' \
-   -e 's/^[ ]*//' \
-   -e 's/,.*//' > temp.1
+    -e '/^enum/d' \
+    -e '/NumberOp/d' \
+    -e 's/^[ ]*//' \
+    -e 's/,.*//' > temp.1
 # -----------------------------------------------------------------------------
 # check NumArgTable
 sed -n -e '/NumArgTable\[\]/,/NumberOp/p' $file | \
-   sed \
-      -e '/NumArgTable\[\]/d' \
-      -e '/NumberOp/d' \
-      -e 's|^ */[*] ||' \
-      -e 's| *[*]/.*||' > temp.2
+    sed \
+        -e '/NumArgTable\[\]/d' \
+        -e '/NumberOp/d' \
+        -e 's|^ */[*] ||' \
+        -e 's| *[*]/.*||' > temp.2
 #
 if ! diff temp.1 temp.2
 then
-   echo 'check_op_code.sh: NumArgTable list is different from enum list'
-   exit 1
+    echo 'check_op_code.sh: NumArgTable list is different from enum list'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # check NumResTable
 sed -n -e '/NumResTable\[\]/,/NumberOp/p' $file | \
-   sed \
-      -e '/NumResTable\[\]/d' \
-      -e '/NumberOp/d' \
-      -e 's|^ */[*] ||' \
-      -e 's| *[*]/.*||' > temp.2
+    sed \
+        -e '/NumResTable\[\]/d' \
+        -e '/NumberOp/d' \
+        -e 's|^ */[*] ||' \
+        -e 's| *[*]/.*||' > temp.2
 #
 if ! diff temp.1 temp.2
 then
-   echo 'check_op_code.sh: NumResTable list is different from enum list'
-   exit 1
+    echo 'check_op_code.sh: NumResTable list is different from enum list'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # check OpNameTable
 sed -n -e '/const char \*OpNameTable\[\]/,/"Number"/p' $file | \
-   sed \
-      -e '/OpNameTable\[\]/d' \
-      -e '/"Number"/d' \
-      -e 's|^ *"||' \
-      -e 's|".*||' \
-      > temp.2
+    sed \
+        -e '/OpNameTable\[\]/d' \
+        -e '/"Number"/d' \
+        -e 's|^ *"||' \
+        -e 's|".*||' \
+        > temp.2
 #
 if ! diff temp.1 temp.2
 then
-   echo 'check_op_code.sh: OpNameTable list is different from enum list'
-   exit 1
+    echo 'check_op_code.sh: OpNameTable list is different from enum list'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # clean up

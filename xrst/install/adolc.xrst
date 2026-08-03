@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin adolc}
 {xrst_spell
-   bashrc
-   cygdrive
+    bashrc
+    cygdrive
 }
 
 Including Adolc Examples and Tests
@@ -24,11 +24,11 @@ It also includes examples that combine Adolc with
 CppAD; see
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   base_adolc.hpp,:ref:`base_adolc.hpp-title`
-   mul_level_adolc.cpp,:ref:`mul_level_adolc.cpp-title`
-   mul_level_adolc_ode.cpp,:ref:`mul_level_adolc_ode.cpp-title`
+    base_adolc.hpp,:ref:`base_adolc.hpp-title`
+    mul_level_adolc.cpp,:ref:`mul_level_adolc.cpp-title`
+    mul_level_adolc_ode.cpp,:ref:`mul_level_adolc_ode.cpp-title`
 
 include_adolc
 *************
@@ -37,13 +37,13 @@ specify ``include_adolc=true`` on the
 :ref:`cmake-name` command line.
 The value of ``PKG_CONFIG_PATH`` must be such that the command
 
-   ``pkg-config adolc --path --print-errors``
+    ``pkg-config adolc --path --print-errors``
 
 finds the location of the file ``adolc.pc`` .
 Note that CppAD assumes adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 
-   ``--with-colpack`` = *adolc_prefix*
+    ``--with-colpack`` = *adolc_prefix*
 
 In other words ColPack is installed and
 with the same prefix as ACOL-C; see

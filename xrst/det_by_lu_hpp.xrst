@@ -12,9 +12,9 @@ Source: det_by_lu
 | # ``define CPPAD_DET_BY_LU_HPP``
 
 {xrst_literal
-   include/cppad/speed/det_by_lu.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/speed/det_by_lu.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

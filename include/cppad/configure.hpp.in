@@ -8,19 +8,19 @@
 /*!
 {xrst_begin configure.hpp dev}
 {xrst_spell
-   adolc
-   cmd
-   colpack
-   gettimeofday
-   ipopt
-   mkstemp
-   noexcept
-   nullptr
-   pragmas
-   tmpnam
-   unreferenced
-   yyyy
-   yyyymmdd
+    adolc
+    cmd
+    colpack
+    gettimeofday
+    ipopt
+    mkstemp
+    noexcept
+    nullptr
+    pragmas
+    tmpnam
+    unreferenced
+    yyyy
+    yyyymmdd
 }
 
 Preprocessor Symbols Set By CMake Command
@@ -220,7 +220,7 @@ CPPAD_TAPE_ADDR_TYPE
 Is the type used to store address on the tape.
 If it is not size_t, then
 {xrst_code cpp}
-   sizeof(CPPAD_TAPE_ADDR_TYPE) < sizeof( size_t )
+    sizeof(CPPAD_TAPE_ADDR_TYPE) < sizeof( size_t )
 {xrst_code}
 can be used to conserve memory.
 This type must support std::numeric_limits,
@@ -241,7 +241,7 @@ Is size_t the type the same as CPPAD_TAPE_ADDR_TYPE.
 {xrst_spell_off}
 {xrst_code hpp} */
 # define CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T \
-   @cppad_is_same_tape_addr_type_size_t@
+    @cppad_is_same_tape_addr_type_size_t@
 /* {xrst_code}
 {xrst_spell_off}
 
@@ -251,7 +251,7 @@ CPPAD_TAPE_ID_TYPE
 Is the type used to store tape identifiers.
 If it is not size_t, then
 {xrst_code cpp}
-   sizeof(CPPAD_TAPE_ID_TYPE) < sizeof( size_t )
+    sizeof(CPPAD_TAPE_ID_TYPE) < sizeof( size_t )
 {xrst_code}
 can be used to conserve memory.
 This type must support std::numeric_limits,

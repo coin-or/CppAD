@@ -28,8 +28,8 @@ Mapping From Operator Enum To Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_OP_ENUM2CLASS
-   // END_OP_ENUM2CLASS
+    // BEGIN_OP_ENUM2CLASS
+    // END_OP_ENUM2CLASS
 }
 
 Purpose
@@ -43,63 +43,63 @@ to a pointer to an operator base class object :ref:`val_base_op-name` .
 // BEGIN_OP_ENUM2CLASS
 
 # define CPPAD_VAL_GRAPH_INSTANCE(name) \
-   case name##_op_enum: \
-   op_ptr = name##_op_t<Value>::get_instance(); \
-   break;
+    case name##_op_enum: \
+    op_ptr = name##_op_t<Value>::get_instance(); \
+    break;
 
 template <class Value>
 base_op_t<Value>* op_enum2class(op_enum_t op_enum)
 // END_OP_ENUM2CLASS
-{  //
-   base_op_t<Value>* op_ptr;
-   switch(op_enum)
-   {
-      default:
-      assert( false );
-      op_ptr = nullptr; // set in this case to avoid compiler warning
-      break;
+{   //
+    base_op_t<Value>* op_ptr;
+    switch(op_enum)
+    {
+        default:
+        assert( false );
+        op_ptr = nullptr; // set in this case to avoid compiler warning
+        break;
 
-      // BEGIN_SORT_THIS_LINE_PLUS_1
-      CPPAD_VAL_GRAPH_INSTANCE(abs)
-      CPPAD_VAL_GRAPH_INSTANCE(acos)
-      CPPAD_VAL_GRAPH_INSTANCE(acosh)
-      CPPAD_VAL_GRAPH_INSTANCE(add)
-      CPPAD_VAL_GRAPH_INSTANCE(asin)
-      CPPAD_VAL_GRAPH_INSTANCE(asinh)
-      CPPAD_VAL_GRAPH_INSTANCE(atan)
-      CPPAD_VAL_GRAPH_INSTANCE(atanh)
-      CPPAD_VAL_GRAPH_INSTANCE(call)
-      CPPAD_VAL_GRAPH_INSTANCE(cexp)
-      CPPAD_VAL_GRAPH_INSTANCE(comp)
-      CPPAD_VAL_GRAPH_INSTANCE(con)
-      CPPAD_VAL_GRAPH_INSTANCE(cos)
-      CPPAD_VAL_GRAPH_INSTANCE(cosh)
-      CPPAD_VAL_GRAPH_INSTANCE(csum)
-      CPPAD_VAL_GRAPH_INSTANCE(dis)
-      CPPAD_VAL_GRAPH_INSTANCE(div)
-      CPPAD_VAL_GRAPH_INSTANCE(erf)
-      CPPAD_VAL_GRAPH_INSTANCE(erfc)
-      CPPAD_VAL_GRAPH_INSTANCE(exp)
-      CPPAD_VAL_GRAPH_INSTANCE(expm1)
-      CPPAD_VAL_GRAPH_INSTANCE(load)
-      CPPAD_VAL_GRAPH_INSTANCE(log)
-      CPPAD_VAL_GRAPH_INSTANCE(log1p)
-      CPPAD_VAL_GRAPH_INSTANCE(mul)
-      CPPAD_VAL_GRAPH_INSTANCE(neg)
-      CPPAD_VAL_GRAPH_INSTANCE(pow)
-      CPPAD_VAL_GRAPH_INSTANCE(pri)
-      CPPAD_VAL_GRAPH_INSTANCE(sign)
-      CPPAD_VAL_GRAPH_INSTANCE(sin)
-      CPPAD_VAL_GRAPH_INSTANCE(sinh)
-      CPPAD_VAL_GRAPH_INSTANCE(sqrt)
-      CPPAD_VAL_GRAPH_INSTANCE(store)
-      CPPAD_VAL_GRAPH_INSTANCE(sub)
-      CPPAD_VAL_GRAPH_INSTANCE(tan)
-      CPPAD_VAL_GRAPH_INSTANCE(tanh)
-      CPPAD_VAL_GRAPH_INSTANCE(vec)
-      // END_SORT_THIS_LINE_MINUS_1
-   }
-   return op_ptr;
+        // BEGIN_SORT_THIS_LINE_PLUS_1
+        CPPAD_VAL_GRAPH_INSTANCE(abs)
+        CPPAD_VAL_GRAPH_INSTANCE(acos)
+        CPPAD_VAL_GRAPH_INSTANCE(acosh)
+        CPPAD_VAL_GRAPH_INSTANCE(add)
+        CPPAD_VAL_GRAPH_INSTANCE(asin)
+        CPPAD_VAL_GRAPH_INSTANCE(asinh)
+        CPPAD_VAL_GRAPH_INSTANCE(atan)
+        CPPAD_VAL_GRAPH_INSTANCE(atanh)
+        CPPAD_VAL_GRAPH_INSTANCE(call)
+        CPPAD_VAL_GRAPH_INSTANCE(cexp)
+        CPPAD_VAL_GRAPH_INSTANCE(comp)
+        CPPAD_VAL_GRAPH_INSTANCE(con)
+        CPPAD_VAL_GRAPH_INSTANCE(cos)
+        CPPAD_VAL_GRAPH_INSTANCE(cosh)
+        CPPAD_VAL_GRAPH_INSTANCE(csum)
+        CPPAD_VAL_GRAPH_INSTANCE(dis)
+        CPPAD_VAL_GRAPH_INSTANCE(div)
+        CPPAD_VAL_GRAPH_INSTANCE(erf)
+        CPPAD_VAL_GRAPH_INSTANCE(erfc)
+        CPPAD_VAL_GRAPH_INSTANCE(exp)
+        CPPAD_VAL_GRAPH_INSTANCE(expm1)
+        CPPAD_VAL_GRAPH_INSTANCE(load)
+        CPPAD_VAL_GRAPH_INSTANCE(log)
+        CPPAD_VAL_GRAPH_INSTANCE(log1p)
+        CPPAD_VAL_GRAPH_INSTANCE(mul)
+        CPPAD_VAL_GRAPH_INSTANCE(neg)
+        CPPAD_VAL_GRAPH_INSTANCE(pow)
+        CPPAD_VAL_GRAPH_INSTANCE(pri)
+        CPPAD_VAL_GRAPH_INSTANCE(sign)
+        CPPAD_VAL_GRAPH_INSTANCE(sin)
+        CPPAD_VAL_GRAPH_INSTANCE(sinh)
+        CPPAD_VAL_GRAPH_INSTANCE(sqrt)
+        CPPAD_VAL_GRAPH_INSTANCE(store)
+        CPPAD_VAL_GRAPH_INSTANCE(sub)
+        CPPAD_VAL_GRAPH_INSTANCE(tan)
+        CPPAD_VAL_GRAPH_INSTANCE(tanh)
+        CPPAD_VAL_GRAPH_INSTANCE(vec)
+        // END_SORT_THIS_LINE_MINUS_1
+    }
+    return op_ptr;
 }
 
 # undef CPPAD_VAL_GRAPH_INSTANCE

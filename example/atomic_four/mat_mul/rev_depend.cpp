@@ -19,26 +19,26 @@ f(u)
 
 .. math::
 
-   f(u) =
-   \left( \begin{array}{cc}
-   2 u_0 & 2 u_1  \\
-   2 u_2 & 2 u_3  \\
-   \end{array} \right)
-   \left( \begin{array}{cc}
-   2 u_4 & 2 u_5  \\
-   2 u_6 & 2 u_7
-   \end{array} \right)
-   =
-   \left( \begin{array}{cc}
-   4( u_0 u_4 + u_1 u_6 )  & 4( u_0 u_5 + u_1 u_7 )  \\
-   4( u_2 u_4 + u_3 u_6 )  & 4( u_2 u_5 + u_3 u_7 )  \\
-   \end{array} \right)
+    f(u) =
+    \left( \begin{array}{cc}
+    2 u_0 & 2 u_1  \\
+    2 u_2 & 2 u_3  \\
+    \end{array} \right)
+    \left( \begin{array}{cc}
+    2 u_4 & 2 u_5  \\
+    2 u_6 & 2 u_7
+    \end{array} \right)
+    =
+    \left( \begin{array}{cc}
+    4( u_0 u_4 + u_1 u_6 )  & 4( u_0 u_5 + u_1 u_7 )  \\
+    4( u_2 u_4 + u_3 u_6 )  & 4( u_2 u_5 + u_3 u_7 )  \\
+    \end{array} \right)
 
 .. math::
 
-   f_{0,0} (u)
-   =
-   4 ( u_0 u_4 + u_1 u_6 )
+    f_{0,0} (u)
+    =
+    4 ( u_0 u_4 + u_1 u_6 )
 
 Forward Analysis
 ****************
@@ -64,8 +64,8 @@ is the difference between only using forward dependency and using both; i.e.,
 Source
 ******
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end atomic_four_mat_mul_rev_depend.cpp}
@@ -75,60 +75,60 @@ Source
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>
 
 bool rev_depend(void)
-{  // ok, eps
-   bool ok = true;
-   //
-   // AD
-   using CppAD::AD;
-   using CppAD::sparse_rc;
-   // -----------------------------------------------------------------------
-   // Record g
-   // -----------------------------------------------------------------------
-   //
-   // afun
-   CppAD::atomic_mat_mul<double> afun("atomic_mat_mul");
-   //
-   // nleft, n_middle, n_right
-   size_t n_left = 2, n_middle = 2, n_right = 2;
-   //
-   // nu, au
-   size_t nu = n_middle * (n_left + n_right);
-   CPPAD_TESTVECTOR( AD<double> ) au(nu);
-   for(size_t j = 0; j < nu; ++j)
-      au[j] = AD<double>(j + 2);
-   CppAD::Independent(au);
-   //
-   // nx, ax
-   CPPAD_TESTVECTOR( AD<double> ) ax(nu);
-   for(size_t j = 0; j < nu; ++j)
-      ax[j] = 2.0 * au[j];
-   //
-   // ny, ay
-   size_t ny = n_left * n_right;
-   CPPAD_TESTVECTOR( AD<double> ) ay(ny);
-   size_t call_id = afun.set(n_left, n_middle, n_right);
-   afun(call_id, ax, ay);
-   //
-   // az = f_{0,0} (x)
-   CPPAD_TESTVECTOR( AD<double> ) az(1);
-   az[0] = ay[ 0 * n_right + 0 ];
-   //
-   // g
-   CppAD::ADFun<double> g(au, az);
-   //
-   // size_var_before
-   size_t size_var_before = g.size_var();
-   //
-   //
-   // optimize
-   g.optimize("val_graph no_conditional_skip");
-   //
-   // size_var_after
-   size_t size_var_after = g.size_var();
-   //
-   // ok
-   ok &= size_var_before - size_var_after == 7;
-   //
-   return ok;
+{   // ok, eps
+    bool ok = true;
+    //
+    // AD
+    using CppAD::AD;
+    using CppAD::sparse_rc;
+    // -----------------------------------------------------------------------
+    // Record g
+    // -----------------------------------------------------------------------
+    //
+    // afun
+    CppAD::atomic_mat_mul<double> afun("atomic_mat_mul");
+    //
+    // nleft, n_middle, n_right
+    size_t n_left = 2, n_middle = 2, n_right = 2;
+    //
+    // nu, au
+    size_t nu = n_middle * (n_left + n_right);
+    CPPAD_TESTVECTOR( AD<double> ) au(nu);
+    for(size_t j = 0; j < nu; ++j)
+        au[j] = AD<double>(j + 2);
+    CppAD::Independent(au);
+    //
+    // nx, ax
+    CPPAD_TESTVECTOR( AD<double> ) ax(nu);
+    for(size_t j = 0; j < nu; ++j)
+        ax[j] = 2.0 * au[j];
+    //
+    // ny, ay
+    size_t ny = n_left * n_right;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+    size_t call_id = afun.set(n_left, n_middle, n_right);
+    afun(call_id, ax, ay);
+    //
+    // az = f_{0,0} (x)
+    CPPAD_TESTVECTOR( AD<double> ) az(1);
+    az[0] = ay[ 0 * n_right + 0 ];
+    //
+    // g
+    CppAD::ADFun<double> g(au, az);
+    //
+    // size_var_before
+    size_t size_var_before = g.size_var();
+    //
+    //
+    // optimize
+    g.optimize("val_graph no_conditional_skip");
+    //
+    // size_var_after
+    size_t size_var_after = g.size_var();
+    //
+    // ok
+    ok &= size_var_before - size_var_after == 7;
+    //
+    return ok;
 }
 // END C++

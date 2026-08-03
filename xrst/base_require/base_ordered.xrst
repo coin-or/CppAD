@@ -5,7 +5,7 @@
 /*
 {xrst_begin base_ordered}
 {xrst_spell
-   geq
+    geq
 }
 
 Base Type Requirements for Ordered Comparisons
@@ -18,20 +18,20 @@ The following operations
 ``AD`` < *Base* > :
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Syntax**
-     - **Result**
-   * - *b* = ``GreaterThanZero`` ( *x* )
-     - :math:`x > 0`
-   * - *b* = ``GreaterThanOrZero`` ( *x* )
-     - :math:`x \geq 0`
-   * - *b* = ``LessThanZero`` ( *x* )
-     - :math:`x < 0`
-   * - *b* = ``LessThanOrZero`` ( *x* )
-     - :math:`x \leq 0`
-   * - *b* = ``abs_geq`` ( *x* , *y* )
-     - :math:`|x| \geq |y|`.
+    * - **Syntax**
+      - **Result**
+    * - *b* = ``GreaterThanZero`` ( *x* )
+      - :math:`x > 0`
+    * - *b* = ``GreaterThanOrZero`` ( *x* )
+      - :math:`x \geq 0`
+    * - *b* = ``LessThanZero`` ( *x* )
+      - :math:`x < 0`
+    * - *b* = ``LessThanOrZero`` ( *x* )
+      - :math:`x \leq 0`
+    * - *b* = ``abs_geq`` ( *x* , *y* )
+      - :math:`|x| \geq |y|`.
 
 where the arguments and return value have the prototypes
 

@@ -25,8 +25,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ALL_ARGUMENT
-   // END_ALL_ARGUMENT
+    // BEGIN_ALL_ARGUMENT
+    // END_ALL_ARGUMENT
 }
 
 Base
@@ -59,25 +59,25 @@ is the independent dynamic parameter vector.
 // BEGIN_ALL_ARGUMENT
 template <class ADVector>
 void Independent(
-   ADVector&  x              ,
-   size_t     abort_op_index ,
-   bool       record_compare ,
-   ADVector&  dynamic        )
+    ADVector&  x              ,
+    size_t     abort_op_index ,
+    bool       record_compare ,
+    ADVector&  dynamic        )
 // END_ALL_ARGUMENT
-{  CPPAD_ASSERT_KNOWN(
-      abort_op_index == 0 || record_compare,
-      "Independent: abort_op_index is non-zero and record_compare is false."
-   );
-   typedef typename ADVector::value_type ADBase;
-   typedef typename ADBase::value_type   Base;
-   CPPAD_ASSERT_KNOWN(
-      ADBase::tape_ptr() == nullptr,
-      "Independent: cannot create a new tape because\n"
-      "a previous tape is still active (for this thread).\n"
-      "AD<Base>::abort_recording() would abort this previous recording."
-   );
-   local::ADTape<Base>* tape = ADBase::tape_manage(new_tape_manage);
-   tape->Independent(x, abort_op_index, record_compare, dynamic);
+{   CPPAD_ASSERT_KNOWN(
+        abort_op_index == 0 || record_compare,
+        "Independent: abort_op_index is non-zero and record_compare is false."
+    );
+    typedef typename ADVector::value_type ADBase;
+    typedef typename ADBase::value_type   Base;
+    CPPAD_ASSERT_KNOWN(
+        ADBase::tape_ptr() == nullptr,
+        "Independent: cannot create a new tape because\n"
+        "a previous tape is still active (for this thread).\n"
+        "AD<Base>::abort_recording() would abort this previous recording."
+    );
+    local::ADTape<Base>* tape = ADBase::tape_manage(new_tape_manage);
+    tape->Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ----------------------------------------------------------------------------
@@ -98,8 +98,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_THREE_ARGUMENT
-   // END_THREE_ARGUMENT
+    // BEGIN_THREE_ARGUMENT
+    // END_THREE_ARGUMENT
 }
 
 Base
@@ -130,7 +130,7 @@ template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
 // END_THREE_ARGUMENT
 {  ADVector dynamic(0); // empty vector
-   Independent(x, abort_op_index, record_compare, dynamic);
+    Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ------------------------------------------------------------------------------
@@ -151,8 +151,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_X_ABORT_OP_INDEX
-   // END_X_ABORT_OP_INDEX
+    // BEGIN_X_ABORT_OP_INDEX
+    // END_X_ABORT_OP_INDEX
 }
 
 Base
@@ -179,8 +179,8 @@ template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index)
 // END_X_ABORT_OP_INDEX
 {  bool     record_compare = true;
-   ADVector dynamic(0); // empty vector
-   Independent(x, abort_op_index, record_compare, dynamic);
+    ADVector dynamic(0); // empty vector
+    Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ------------------------------------------------------------------------------
@@ -201,8 +201,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_X_DYNAMIC
-   // END_X_DYNAMIC
+    // BEGIN_X_DYNAMIC
+    // END_X_DYNAMIC
 }
 
 Base
@@ -228,8 +228,8 @@ template <class ADVector>
 void Independent(ADVector& x, ADVector& dynamic)
 // END_X_DYNAMIC
 {  size_t   abort_op_index = 0;
-   bool     record_compare = true;
-   Independent(x, abort_op_index, record_compare, dynamic);
+    bool     record_compare = true;
+    Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ------------------------------------------------------------------------------
@@ -250,8 +250,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_ONE_ARGUMENT
-   // END_ONE_ARGUMENT
+    // BEGIN_ONE_ARGUMENT
+    // END_ONE_ARGUMENT
 }
 
 Base
@@ -272,10 +272,10 @@ is the vector of the independent variables.
 template <class ADVector>
 void Independent(ADVector &x)
 // END_ONE_ARGUMENT
-{  size_t   abort_op_index = 0;
-   bool     record_compare = true;
-   ADVector dynamic(0); // empty vector
-   Independent(x, abort_op_index, record_compare, dynamic);
+{   size_t   abort_op_index = 0;
+    bool     record_compare = true;
+    ADVector dynamic(0); // empty vector
+    Independent(x, abort_op_index, record_compare, dynamic);
 }
 
 } // END_CPPAD_NAMESPACE

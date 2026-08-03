@@ -10,8 +10,8 @@
 /*
 {xrst_begin base_double.hpp}
 {xrst_spell
-   azmul
-   namespaces
+    azmul
+    namespaces
 }
 
 Enable use of AD<Base> where Base is double
@@ -26,14 +26,14 @@ Hence its ``CondExpOp`` function is defined by
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline double CondExpOp(
-      enum CompareOp      cop          ,
-      const double&       left         ,
-      const double&       right        ,
-      const double&       exp_if_true  ,
-      const double&       exp_if_false )
-   {  return CondExpTemplate(cop, left, right, exp_if_true, exp_if_false);
-   }
+    inline double CondExpOp(
+        enum CompareOp      cop          ,
+        const double&       left         ,
+        const double&       right        ,
+        const double&       exp_if_true  ,
+        const double&       exp_if_false )
+    {  return CondExpTemplate(cop, left, right, exp_if_true, exp_if_false);
+    }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -44,7 +44,7 @@ The :ref:`CPPAD_COND_EXP_REL<base_cond_exp@CondExpRel>` macro invocation
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   CPPAD_COND_EXP_REL(double)
+    CPPAD_COND_EXP_REL(double)
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -59,8 +59,8 @@ The type ``double`` is simple (in this respect) and so we define
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline bool EqualOpSeq(const double& x, const double& y)
-   {  return x == y; }
+    inline bool EqualOpSeq(const double& x, const double& y)
+    {  return x == y; }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -71,14 +71,14 @@ The type ``double`` is simple (in this respect) and so we define
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline bool IdenticalCon(const double& x)
-   {  return true; }
-   inline bool IdenticalZero(const double& x)
-   {  return (x == 0.); }
-   inline bool IdenticalOne(const double& x)
-   {  return (x == 1.); }
-   inline bool IdenticalEqualCon(const double& x, const double& y)
-   {  return (x == y); }
+    inline bool IdenticalCon(const double& x)
+    {  return true; }
+    inline bool IdenticalZero(const double& x)
+    {  return (x == 0.); }
+    inline bool IdenticalOne(const double& x)
+    {  return (x == 1.); }
+    inline bool IdenticalEqualCon(const double& x, const double& y)
+    {  return (x == y); }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -88,8 +88,8 @@ Integer
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline int Integer(const double& x)
-   {  return static_cast<int>(x); }
+    inline int Integer(const double& x)
+    {  return static_cast<int>(x); }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -99,7 +99,7 @@ azmul
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   CPPAD_AZMUL( double )
+    CPPAD_AZMUL( double )
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -110,16 +110,16 @@ The ``double`` type supports ordered comparisons
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline bool GreaterThanZero(const double& x)
-   {  return x > 0.; }
-   inline bool GreaterThanOrZero(const double& x)
-   {  return x >= 0.; }
-   inline bool LessThanZero(const double& x)
-   {  return x < 0.; }
-   inline bool LessThanOrZero(const double& x)
-   {  return x <= 0.; }
-   inline bool abs_geq(const double& x, const double& y)
-   {  return std::fabs(x) >= std::fabs(y); }
+    inline bool GreaterThanZero(const double& x)
+    {  return x > 0.; }
+    inline bool GreaterThanOrZero(const double& x)
+    {  return x >= 0.; }
+    inline bool LessThanZero(const double& x)
+    {  return x < 0.; }
+    inline bool LessThanOrZero(const double& x)
+    {  return x <= 0.; }
+    inline bool abs_geq(const double& x, const double& y)
+    {  return std::fabs(x) >= std::fabs(y); }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -135,27 +135,27 @@ versions of these functions.
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   using std::acos;
-   using std::asin;
-   using std::atan;
-   using std::cos;
-   using std::cosh;
-   using std::exp;
-   using std::fabs;
-   using std::log;
-   using std::log10;
-   using std::sin;
-   using std::sinh;
-   using std::sqrt;
-   using std::tan;
-   using std::tanh;
-   using std::asinh;
-   using std::acosh;
-   using std::atanh;
-   using std::erf;
-   using std::erfc;
-   using std::expm1;
-   using std::log1p;
+    using std::acos;
+    using std::asin;
+    using std::atan;
+    using std::cos;
+    using std::cosh;
+    using std::exp;
+    using std::fabs;
+    using std::log;
+    using std::log10;
+    using std::sin;
+    using std::sinh;
+    using std::sqrt;
+    using std::tan;
+    using std::tanh;
+    using std::asinh;
+    using std::acosh;
+    using std::atanh;
+    using std::erf;
+    using std::erfc;
+    using std::expm1;
+    using std::log1p;
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -164,8 +164,8 @@ The absolute value function is special because its ``std`` name is
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline double abs(const double& x)
-   {  return std::fabs(x); }
+    inline double abs(const double& x)
+    {  return std::fabs(x); }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -177,13 +177,13 @@ is required to use ``AD<double>`` :
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   inline double sign(const double& x)
-   {  if( x > 0. )
-         return 1.;
-      if( x == 0. )
-         return 0.;
-      return -1.;
-   }
+    inline double sign(const double& x)
+    {  if( x > 0. )
+            return 1.;
+        if( x == 0. )
+            return 0.;
+        return -1.;
+    }
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -198,7 +198,7 @@ so use it instead of defining another function.
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   using std::pow;
+    using std::pow;
 }
 /* {xrst_code}
 {xrst_spell_on}
@@ -210,7 +210,7 @@ for the type ``double`` :
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace CppAD {
-   CPPAD_NUMERIC_LIMITS(double, double)
+    CPPAD_NUMERIC_LIMITS(double, double)
 }
 /* {xrst_code}
 {xrst_spell_on}

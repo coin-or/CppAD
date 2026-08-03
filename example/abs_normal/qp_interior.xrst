@@ -8,9 +8,9 @@ qp_interior Source Code
 #######################
 
 {xrst_literal
-   example/abs_normal/qp_interior.hpp
-   // BEGIN C++
-   // END C++
+    example/abs_normal/qp_interior.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end qp_interior.hpp}

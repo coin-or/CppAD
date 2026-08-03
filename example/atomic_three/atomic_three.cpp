@@ -14,15 +14,15 @@ After executing the :ref:`cmake-name` command
 form the :ref:`download@Distribution Directory`,
 you can build and run these tests with the commands::
 
-   cd build
-   make check_example_atomic_three
+    cd build
+    make check_example_atomic_three
 
 Note that your choice of :ref:`cmake@generator` may require using
 an different version of make; e.g., ``ninja`` .
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end atomic_three.cpp}
@@ -56,32 +56,32 @@ extern bool tangent(void);
 
 // main program that runs all the tests
 int main(void)
-{  std::string group = "example/atomic";
-   size_t      width = 20;
-   CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "example/atomic";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-   // This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-   // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( base2ad,             "base2ad"        );
-   Run( dynamic,             "dynamic"        );
-   Run( forward,             "forward"        );
-   Run( get_started,         "get_started"    );
-   Run( hes_sparsity,        "hes_sparsity"   );
-   Run( jac_sparsity,        "jac_sparsity"   );
-   Run( mat_mul,             "mat_mul"        );
-   Run( norm_sq,             "norm_sq"        );
-   Run( reciprocal,          "reciprocal"     );
-   Run( rev_depend,          "rev_depend"     );
-   Run( reverse,             "reverse"        );
-   Run( tangent,             "tangent"        );
-   // END_SORT_THIS_LINE_MINUS_1
+    // BEGIN_SORT_THIS_LINE_PLUS_1
+    Run( base2ad,             "base2ad"        );
+    Run( dynamic,             "dynamic"        );
+    Run( forward,             "forward"        );
+    Run( get_started,         "get_started"    );
+    Run( hes_sparsity,        "hes_sparsity"   );
+    Run( jac_sparsity,        "jac_sparsity"   );
+    Run( mat_mul,             "mat_mul"        );
+    Run( norm_sq,             "norm_sq"        );
+    Run( reciprocal,          "reciprocal"     );
+    Run( rev_depend,          "rev_depend"     );
+    Run( reverse,             "reverse"        );
+    Run( tangent,             "tangent"        );
+    // END_SORT_THIS_LINE_MINUS_1
 
-   // check for memory leak
-   bool memory_ok = CppAD::thread_alloc::free_all();
-   // print summary at end
-   bool ok = Run.summary(memory_ok);
-   //
-   return static_cast<int>( ! ok );
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }
 // END C++

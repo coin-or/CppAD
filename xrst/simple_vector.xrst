@@ -6,7 +6,7 @@
 /*
 {xrst_begin SimpleVector}
 {xrst_spell
-   valarray
+    valarray
 }
 
 C++ Concept: A Simple Vector
@@ -20,25 +20,25 @@ that satisfies the requirements below.
 The following is a list of some simple vector template classes:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Name**
-     - **Documentation**
-   * - ``std::vector``
-     - Section 16.3 of
-       :ref:`Bib@The C++ Programming Language`
-   * - ``std::valarray``
-     - Section 22.4 of
-       :ref:`Bib@The C++ Programming Language`
-   * - ``CppAD::vector``
-     - :ref:`CppAD_vector-title`
+    * - **Name**
+      - **Documentation**
+    * - ``std::vector``
+      - Section 16.3 of
+         :ref:`Bib@The C++ Programming Language`
+    * - ``std::valarray``
+      - Section 22.4 of
+         :ref:`Bib@The C++ Programming Language`
+    * - ``CppAD::vector``
+      - :ref:`CppAD_vector-title`
 
 Elements of Specified Type
 **************************
 A simple vector class with elements of type *Scalar* ,
 is any class that satisfies the requirements for a class of the form
 
-   *SimpleVector* < *Scalar* >
+    *SimpleVector* < *Scalar* >
 
 The routine :ref:`CheckSimpleVector-name` can be used to check
 that a class is a simple vector class with a specified element type.
@@ -47,7 +47,7 @@ Default Constructor
 *******************
 The syntax
 
-   *SimpleVector* < *Scalar* > *x* ;
+    *SimpleVector* < *Scalar* > *x* ;
 
 creates an empty vector *x* ( *x* . ``size`` () is zero)
 that can later contain elements of the specified type
@@ -57,7 +57,7 @@ Sizing Constructor
 ******************
 If *n* has type ``size_t`` ,
 
-   *SimpleVector* < *Scalar* > *x* ( *n* )
+    *SimpleVector* < *Scalar* > *x* ( *n* )
 
 creates a vector *x* with *n* elements
 each of the specified type.
@@ -66,7 +66,7 @@ Copy Constructor
 ****************
 If *x* is a *SimpleVector* < *Scalar* > object,
 
-   *SimpleVector* < *Scalar* > *y* ( *x* )
+    *SimpleVector* < *Scalar* > *y* ( *x* )
 
 creates a vector with the same type and number of elements
 as *x* .
@@ -90,7 +90,7 @@ Assignment
 If *x* and *y* are
 *SimpleVector* < *Scalar* > objects,
 
-   *y* = *x*
+    *y* = *x*
 
 uses the *Scalar* assignment operator ( ``=`` )
 to set each element of *y* equal to
@@ -105,7 +105,7 @@ and may be ``const`` .
 The type returned by this assignment is unspecified; for example,
 it might be void in which case the syntax
 
-   *z* = *y* = *x*
+    *z* = *y* = *x*
 
 would not be valid.
 
@@ -114,7 +114,7 @@ size
 If *x* is a *SimpleVector* < *Scalar* > object
 and ``n`` has type ``size_t`` ,
 
-   *n* = ``size_t`` ( *x* . ``size`` () )
+    *n* = ``size_t`` ( *x* . ``size`` () )
 
 sets *n* to the number of elements in the vector *x* .
 The object *x* may be ``const`` .
@@ -124,7 +124,7 @@ resize
 If *x* is a *SimpleVector* < *Scalar* > object
 and ``n`` has type ``size_t`` ,
 
-   *x* . ``resize`` ( *n* )
+    *x* . ``resize`` ( *n* )
 
 changes the number of elements contained in the vector *x*
 to be *n* .
@@ -138,11 +138,11 @@ value_type
 If *Vector* is any simple vector class,
 the syntax
 
-   *Vector* :: ``value_type``
+    *Vector* :: ``value_type``
 
 is the type of the elements corresponding to the vector class; i.e.,
 
-   *SimpleVector* < *Scalar* >:: ``value_type``
+    *SimpleVector* < *Scalar* >:: ``value_type``
 
 is equal to *Scalar* .
 
@@ -151,7 +151,7 @@ Element Access
 If *x* is a *SimpleVector* < *Scalar* > object
 and *i* has type ``size_t`` ,
 
-   *x* [ *i* ]
+    *x* [ *i* ]
 
 returns an object of an unspecified type,
 referred to here as *elementType* .
@@ -161,7 +161,7 @@ Using Value
 If *elementType* is not the same as *Scalar* ,
 the conversion operator
 
-   ``static_cast`` < *Scalar* >( *x* [ *i* ])
+    ``static_cast`` < *Scalar* >( *x* [ *i* ])
 
 is used implicitly when *x* [ *i* ] is used in an expression
 with values of type *Scalar* .
@@ -171,21 +171,21 @@ Assignment
 ==========
 If *y* is an object of type *Scalar* ,
 
-   *x* [ *i* ] = *y*
+    *x* [ *i* ] = *y*
 
 assigns the *i*-th element of *x* to have value *y* .
 For this type of usage, the object *x* can not be ``const`` .
 The type returned by this assignment is unspecified; for example,
 it might be void in which case the syntax
 
-   *z* = *x* [ *i* ] = *y*
+    *z* = *x* [ *i* ] = *y*
 
 would not be valid.
 
 Example
 *******
 {xrst_toc_hidden
-   example/utility/simple_vector.cpp
+    example/utility/simple_vector.cpp
 }
 The file
 :ref:`simple_vector.cpp-name`
@@ -198,29 +198,29 @@ Exercise
 #. If *Vector* is a simple vector template class,
    the following code may not be valid:
 
-   | |tab| *Vector* < ``double> x`` (2);
-   | |tab| ``x`` [2] = 1.;
+    | |tab| *Vector* < ``double> x`` (2);
+    | |tab| ``x`` [2] = 1.;
 
-   Create and run a program that executes the code segment
-   above where *Vector* is each of the following cases:
-   ``std::vector`` ,
-   ``CppAD::vector`` .
-   Do this both where the compiler option
-   ``-DNDEBUG`` is and is not present on the compilation command line.
+    Create and run a program that executes the code segment
+    above where *Vector* is each of the following cases:
+    ``std::vector`` ,
+    ``CppAD::vector`` .
+    Do this both where the compiler option
+    ``-DNDEBUG`` is and is not present on the compilation command line.
 #. If *Vector* is a simple vector template class,
    the following code may not be valid:
 
-   | |tab| *Vector* < ``int> x`` (2);
-   | |tab| *Vector* < ``int> y`` (1);
-   | |tab| ``x`` [0] = 0;
-   | |tab| ``x`` [1] = 1;
-   | |tab| ``y`` = ``x`` ;
+    | |tab| *Vector* < ``int> x`` (2);
+    | |tab| *Vector* < ``int> y`` (1);
+    | |tab| ``x`` [0] = 0;
+    | |tab| ``x`` [1] = 1;
+    | |tab| ``y`` = ``x`` ;
 
-   Create and run a program that executes the code segment
-   above where *Vector* is each of the following cases:
-   ``std::valarray`` ,
-   ``CppAD::vector`` .
-   Do this both where the compiler option
-   ``-DNDEBUG`` is and is not present on the compilation command line.
+    Create and run a program that executes the code segment
+    above where *Vector* is each of the following cases:
+    ``std::valarray`` ,
+    ``CppAD::vector`` .
+    Do this both where the compiler option
+    ``-DNDEBUG`` is and is not present on the compilation command line.
 
 {xrst_end SimpleVector}

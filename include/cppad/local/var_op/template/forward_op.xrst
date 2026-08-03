@@ -7,7 +7,7 @@ This file is intended to help document the multiple order forward Taylor
 computation for all operators.
 
 It has the following xrst template comments:
-   headers: cap_order, order_low, order_up, taylor
+    headers: cap_order, order_low, order_up, taylor
 
 It does not have any xrst template replacements:
 }
@@ -28,7 +28,7 @@ taylor
 ******
 The Taylor coefficient corresponding to variable *j* and order *k* is
 
-   *taylor* [ *j* * *cap_order* + *k*  ]
+    *taylor* [ *j* * *cap_order* + *k*  ]
 
 
 n_res
@@ -39,18 +39,18 @@ Input
 =====
 ::
 
-   for j = 0, ..., i_z - n_res
-      for k = 0 , ... , order_up
-         taylor [ j * cap_order + k ] is an input
+    for j = 0, ..., i_z - n_res
+        for k = 0 , ... , order_up
+            taylor [ j * cap_order + k ] is an input
 
-   for j = i_z - n_res + 1 , ... , i_z
-      for  k = 0 , ... , order_up - 1
-         taylor [ j * cap_order + k ] is an input
+    for j = i_z - n_res + 1 , ... , i_z
+        for  k = 0 , ... , order_up - 1
+            taylor [ j * cap_order + k ] is an input
 
 Output
 ======
 ::
 
-   for j = i_z - n_res + 1 , ... , i_z
-      for k = order_low , ... , order_up
-         taylor [ i_z * cap_order + k ] is an output
+    for j = i_z - n_res + 1 , ... , i_z
+        for k = order_low , ... , order_up
+            taylor [ i_z * cap_order + k ] is an output

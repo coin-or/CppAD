@@ -15,10 +15,10 @@ AD Arithmetic Operators and Compound Assignments
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/unary_plus.hpp
-   include/cppad/core/unary_minus.hpp
-   include/cppad/core/ad_binary.hpp
-   include/cppad/core/compound_assign.hpp
+    include/cppad/core/unary_plus.hpp
+    include/cppad/core/unary_minus.hpp
+    include/cppad/core/ad_binary.hpp
+    include/cppad/core/compound_assign.hpp
 }
 
 {xrst_end Arithmetic}

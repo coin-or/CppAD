@@ -5,16 +5,16 @@
 
 {xrst_begin 2023 app}
 {xrst_spell
-   autotools
-   cstdint
-   kludge
-   kokkos
-   mingw
-   msys
-   pacman
-   trilinos
-   uintptr
-   usr
+    autotools
+    cstdint
+    kludge
+    kokkos
+    mingw
+    msys
+    pacman
+    trilinos
+    uintptr
+    usr
 }
 
 Release Notes for 2023
@@ -96,19 +96,19 @@ and size with :ref:`CppAD_vector@Size Constructor@Value` constructor.
 
 #. Merge in the val_graph Branch:
 
-   #. Add :ref:`optimize@options@val_graph` to the
-      list of possible optimizer options.
-   #. Add the :ref:`speed_main@Global Options@val_graph`
-      option to the speed tests. This option has been implemented
-      with all of the :ref:`speed_cppad-name` tests.
-   #. Simplify :ref:`atomic_four_lin_ode_rev_depend.cpp-name`
-      and add m to the
-      `atomic_four_lin_ode_rev_depend.cpp@Problem Parameters`
-      that can be changed.
-   #. Fix the title of the
-      :ref:`atomic_four_lin_ode_base_solver.hpp-title` section.
-   #. Change all the atomic_four :ref:`examples <atomic_four_example-name>`
-      that use :ref:`optimize-name` to include the ``val_graph`` option.
+    #. Add :ref:`optimize@options@val_graph` to the
+       list of possible optimizer options.
+    #. Add the :ref:`speed_main@Global Options@val_graph`
+       option to the speed tests. This option has been implemented
+       with all of the :ref:`speed_cppad-name` tests.
+    #. Simplify :ref:`atomic_four_lin_ode_rev_depend.cpp-name`
+       and add m to the
+       `atomic_four_lin_ode_rev_depend.cpp@Problem Parameters`
+       that can be changed.
+    #. Fix the title of the
+       :ref:`atomic_four_lin_ode_base_solver.hpp-title` section.
+    #. Change all the atomic_four :ref:`examples <atomic_four_example-name>`
+       that use :ref:`optimize-name` to include the ``val_graph`` option.
 
 06-13
 =====
@@ -142,7 +142,7 @@ The ``cmake_needs_dot_slash`` symbol was removed from the cmake command line.
 It was a kludge for msys2 systems.
 The proper fix is to use
 {xrst_code sh}
-   pacman -S mingw-w64-x86_64-cmake
+    pacman -S mingw-w64-x86_64-cmake
 {xrst_code}
 ( not use ``pacman -S cmake`` )
 to install cmake on an msys2 system.

@@ -5,8 +5,8 @@
 
 {xrst_begin Install}
 {xrst_spell
-   autotools
-   nmake
+    autotools
+    nmake
 }
 
 CppAD Download, Test, and Install Instructions
@@ -33,7 +33,7 @@ Step 4: Installation
 Use the command
 ::
 
-   make install
+    make install
 
 to install CppAD.
 
@@ -58,11 +58,11 @@ package is used to build the CppAD documentation.
 Contents
 ********
 {xrst_toc_table
-   xrst/install/download.xrst
-   xrst/install/cmake.xrst
-   xrst/install/cmake_check.xrst
-   pkgconfig/CMakeLists.txt
-   bin/dos_build.bat
+    xrst/install/download.xrst
+    xrst/install/cmake.xrst
+    xrst/install/cmake_check.xrst
+    pkgconfig/CMakeLists.txt
+    bin/dos_build.bat
 }
 
 configure

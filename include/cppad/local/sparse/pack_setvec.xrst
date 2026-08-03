@@ -19,7 +19,7 @@ The public member function for the ``list_setvec`` class implement the
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/sparse/pack_setvec.hpp
+    include/cppad/local/sparse/pack_setvec.hpp
 }
 
 {xrst_end pack_setvec}

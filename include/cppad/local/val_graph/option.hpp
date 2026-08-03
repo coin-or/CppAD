@@ -17,8 +17,8 @@ Set an Option's Value
 Prototype
 *********
 {xrst_literal
-   // BEGIN_SET_OPTION
-   // END_SET_OPTION
+    // BEGIN_SET_OPTION
+    // END_SET_OPTION
 }
 
 keep_compare
@@ -41,31 +41,31 @@ template <class Value>
 void tape_t<Value>::initialize_option(void)
 // END_INITIALIZE_OPTION
 {
-   option_map_["keep_compare"] = "true";
-   option_map_["keep_print"]   = "true";
-   //
-   return;
+    option_map_["keep_compare"] = "true";
+    option_map_["keep_print"]   = "true";
+    //
+    return;
 }
 // ---------------------------------------------------------------------------
 // BEGIN_SET_OPTION
 template <class Value>
 void tape_t<Value>::set_option(
-   const std::string& name  ,
-   const std::string& value )
+    const std::string& name  ,
+    const std::string& value )
 // END_SET_OPTION
-{  //
-   if( option_map_.find(name) == option_map_.end() )
-   {  std::string msg = "value tape: There is no option named " + name;
-      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-   }
-   if( value != "true" && value != "false" )
-   {  std::string msg = "value tape: option [" + name + "]";
-      msg            += " value is not true or false ";
-      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-   }
-   option_map_[name] = value;
-   //
-   return;
+{   //
+    if( option_map_.find(name) == option_map_.end() )
+    {   std::string msg = "value tape: There is no option named " + name;
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+    if( value != "true" && value != "false" )
+    {   std::string msg = "value tape: option [" + name + "]";
+        msg            += " value is not true or false ";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+    option_map_[name] = value;
+    //
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

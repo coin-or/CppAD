@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin ipopt}
 {xrst_spell
-   cflags
+    cflags
 }
 
 Including Ipopt Library Examples, Tests, and pkg-config
@@ -23,7 +23,7 @@ then the pkg-config will find the
 necessary information to link in ipopt.
 The value of *PKG_CONFIG_PATH* must be such that the command
 
-   ``pkg-config ipopt --path --print-errors``
+    ``pkg-config ipopt --path --print-errors``
 
 finds the location of the file ``ipopt.pc`` .
 
@@ -46,6 +46,6 @@ Include Directories
 It may be necessary to remove ``/coin-or`` from the end of the
 include directories reported by
 
-   ``pkg-config ipopt --cflags``
+    ``pkg-config ipopt --cflags``
 
 {xrst_end ipopt}

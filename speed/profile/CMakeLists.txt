@@ -20,13 +20,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp
-   ../cppad/det_lu.cpp
-   ../cppad/det_minor.cpp
-   ../cppad/mat_mul.cpp
-   ../cppad/ode.cpp
-   ../cppad/poly.cpp
-   ../cppad/sparse_hessian.cpp
-   ../cppad/sparse_jacobian.cpp
+    ../cppad/det_lu.cpp
+    ../cppad/det_minor.cpp
+    ../cppad/mat_mul.cpp
+    ../cppad/ode.cpp
+    ../cppad/poly.cpp
+    ../cppad/sparse_hessian.cpp
+    ../cppad/sparse_jacobian.cpp
 )
 set_compile_flags( speed_profile "${cppad_debug_which}" "${source_list}" )
 #
@@ -34,15 +34,15 @@ ADD_EXECUTABLE( speed_profile EXCLUDE_FROM_ALL ${source_list} )
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_profile
-   ${cppad_lib}
-   ${colpack_libs}
+    ${cppad_lib}
+    ${colpack_libs}
 )
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
 # TARGET_LINK_LIBRARIES(speed_profile speed_src )
 TARGET_LINK_LIBRARIES(speed_profile
-   speed_src
-   ${cppad_lib}
-   ${colpack_libs}
+    speed_src
+    ${cppad_lib}
+    ${colpack_libs}
 )
 
 # check_speed_profile
@@ -54,7 +54,7 @@ add_check_executable(check_speed profile "correct 54321")
 #
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
 CONFIGURE_FILE(
-   ${CMAKE_CURRENT_SOURCE_DIR}/gprof.sed.in
-   ${CMAKE_CURRENT_BINARY_DIR}/gprof.sed
-   COPYONLY
+    ${CMAKE_CURRENT_SOURCE_DIR}/gprof.sed.in
+    ${CMAKE_CURRENT_BINARY_DIR}/gprof.sed
+    COPYONLY
 )

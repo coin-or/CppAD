@@ -7,8 +7,8 @@
 /*
 {xrst_begin atomic_four_reverse}
 {xrst_spell
-   apartial
-   ataylor
+    apartial
+    ataylor
 }
 
 Atomic Function Reverse Mode
@@ -39,15 +39,15 @@ Prototype
 Base
 ====
 {xrst_literal
-   // BEGIN_PROTOTYPE_BASE
-   // END_PROTOTYPE_BASE
+    // BEGIN_PROTOTYPE_BASE
+    // END_PROTOTYPE_BASE
 }
 
 AD<Base>
 ========
 {xrst_literal
-   // BEGIN_PROTOTYPE_AD_BASE
-   // END_PROTOTYPE_AD_BASE
+    // BEGIN_PROTOTYPE_AD_BASE
+    // END_PROTOTYPE_AD_BASE
 }
 
 Base
@@ -65,7 +65,7 @@ Base
 ====
 This syntax is used by *f* . ``Reverse`` where *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 and atomic function *afun* is used in *f* ;
 see :ref:`atomic_four_call@Base` .
@@ -74,7 +74,7 @@ AD<Base>
 ========
 This syntax is used by *af* . ``Reverse`` where *af* has prototype
 
-   ``ADFun< AD<`` *Base* > , *Base* > *af*
+    ``ADFun< AD<`` *Base* > , *Base* > *af*
 
 and the atomic function *afun* is used in
 *af* ; see :ref:`base2ad-name` .
@@ -119,13 +119,13 @@ For :math:`j = 0 , \ldots , n-1` and :math:`k = 0 , \ldots , q-1`,
 we use the Taylor coefficient notation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      x_j^k    & = & \R{taylor\_x} [ j * q + k ]
-      \\
-      X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^{q-1} t^{q-1}
-   \end{eqnarray}
+    \begin{eqnarray}
+        x_j^k    & = & \R{taylor\_x} [ j * q + k ]
+        \\
+        X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^{q-1} t^{q-1}
+    \end{eqnarray}
 
 Note that superscripts represent an index for :math:`x_j^k`
 and an exponent for :math:`t^k`.
@@ -134,17 +134,17 @@ to the derivatives of :math:`X(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 
 parameters
 ==========
 If the *j*-th component of *x* is a parameter,
 
-   *type_x* [ *j* ] < ``CppAD::variable_enum``
+    *type_x* [ *j* ] < ``CppAD::variable_enum``
 
 In this case, for *k*  > 0 ,
 
-   *taylor_x* [ *j* * *q* + *k*  ] == 0
+    *taylor_x* [ *j* * *q* + *k*  ] == 0
 
 ataylor_x
 *********
@@ -158,16 +158,16 @@ For :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , q-1`,
 we use the Taylor coefficient notation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      Y_i (t)  & = & g_i [ X(t) ]
-      \\
-      Y_i (t)  & = &
-         y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o ( t^{q-1} )
-      \\
-      y_i^k    & = & \R{taylor\_y} [ i * q + k ]
-   \end{eqnarray}
+    \begin{eqnarray}
+        Y_i (t)  & = & g_i [ X(t) ]
+        \\
+        Y_i (t)  & = &
+            y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o ( t^{q-1} )
+        \\
+        y_i^k    & = & \R{taylor\_y} [ i * q + k ]
+    \end{eqnarray}
 
 where :math:`o( t^{q-1} ) / t^{q-1} \rightarrow 0` as :math:`t \rightarrow 0`.
 Note that superscripts represent an index for :math:`y_j^k`
@@ -177,7 +177,7 @@ to the derivatives of :math:`Y(t)` at :math:`t = 0` in the following way:
 
 .. math::
 
-   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 
 ataylor_y
 *********
@@ -190,13 +190,13 @@ We use the notation :math:`\{ x_j^k \} \in \B{R}^{n \times q}` for
 
 .. math::
 
-   \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q-1 \}
+    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q-1 \}
 
 We use the notation :math:`\{ y_i^k \} \in \B{R}^{m \times q}` for
 
 .. math::
 
-   \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q-1 \}
+    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q-1 \}
 
 We use
 :math:`F : \B{R}^{n \times q} \rightarrow \B{R}^{m \times q}` by
@@ -204,13 +204,13 @@ to denote the function corresponding to the forward mode calculations
 
 .. math::
 
-   y_i^k = F_i^k [ \{ x_j^k \} ]
+    y_i^k = F_i^k [ \{ x_j^k \} ]
 
 Note that
 
 .. math::
 
-   F_i^0 ( \{ x_j^k \} ) = g_i ( X(0) )  = g_i ( x^0 )
+    F_i^0 ( \{ x_j^k \} ) = g_i ( X(0) )  = g_i ( x^0 )
 
 We also note that
 :math:`F_i^\ell ( \{ x_j^k \} )` is a function of
@@ -227,7 +227,7 @@ defined by
 
 .. math::
 
-   H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
+    H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
 
 partial_y
 *********
@@ -236,7 +236,7 @@ For :math:`i = 0 , \ldots , m-1`, :math:`k = 0 , \ldots , q-1`,
 
 .. math::
 
-   \R{partial\_y} [ i * q + k ] = \partial G / \partial y_i^k
+    \R{partial\_y} [ i * q + k ] = \partial G / \partial y_i^k
 
 apartial_y
 **********
@@ -252,25 +252,25 @@ Upon return,
 for :math:`j = 0 , \ldots , n-1` and :math:`\ell = 0 , \ldots , q-1`,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \R{partial\_x} [ j * q + \ell ] & = & \partial H / \partial x_j^\ell
-   \\
-   & = &
-   ( \partial G / \partial \{ y_i^k \} ) \cdot
-      ( \partial \{ y_i^k \} / \partial x_j^\ell )
-   \\
-   & = &
-   \sum_{k=0}^{q-1}
-   \sum_{i=0}^{m-1}
-   ( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
-   \\
-   & = &
-   \sum_{k=\ell}^{q-1}
-   \sum_{i=0}^{m-1}
-   \R{partial\_y}[ i * q + k ] ( \partial F_i^k / \partial x_j^\ell )
-   \end{eqnarray}
+    \begin{eqnarray}
+    \R{partial\_x} [ j * q + \ell ] & = & \partial H / \partial x_j^\ell
+    \\
+    & = &
+    ( \partial G / \partial \{ y_i^k \} ) \cdot
+        ( \partial \{ y_i^k \} / \partial x_j^\ell )
+    \\
+    & = &
+    \sum_{k=0}^{q-1}
+    \sum_{i=0}^{m-1}
+    ( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
+    \\
+    & = &
+    \sum_{k=\ell}^{q-1}
+    \sum_{i=0}^{m-1}
+    \R{partial\_y}[ i * q + k ] ( \partial F_i^k / \partial x_j^\ell )
+    \end{eqnarray}
 
 Note that we have used the fact that for :math:`k < \ell`,
 :math:`\partial F_i^k / \partial x_j^\ell = 0`.
@@ -302,9 +302,9 @@ Example
 The following is an example ``reverse`` definition taken from
 :ref:`atomic_four_norm_sq.cpp-name` :
 {xrst_literal
-   example/atomic_four/norm_sq.cpp
-   // BEGIN REVERSE
-   // END REVERSE
+    example/atomic_four/norm_sq.cpp
+    // BEGIN REVERSE
+    // END REVERSE
 }
 
 Examples
@@ -321,28 +321,28 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_four<Base>::reverse(
-   size_t                      call_id     ,
-   const vector<bool>&         select_x    ,
-   size_t                      order_up    ,
-   const vector<Base>&         taylor_x    ,
-   const vector<Base>&         taylor_y    ,
-   vector<Base>&               partial_x   ,
-   const vector<Base>&         partial_y   )
+    size_t                      call_id     ,
+    const vector<bool>&         select_x    ,
+    size_t                      order_up    ,
+    const vector<Base>&         taylor_x    ,
+    const vector<Base>&         taylor_y    ,
+    vector<Base>&               partial_x   ,
+    const vector<Base>&         partial_y   )
 // END_PROTOTYPE_BASE
-{  return false; }
+{   return false; }
 
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_four<Base>::reverse(
-   size_t                          call_id      ,
-   const vector<bool>&             select_x     ,
-   size_t                          order_up     ,
-   const vector< AD<Base> >&       ataylor_x    ,
-   const vector< AD<Base> >&       ataylor_y    ,
-   vector< AD<Base> >&             apartial_x   ,
-   const vector< AD<Base> >&       apartial_y   )
+    size_t                          call_id      ,
+    const vector<bool>&             select_x     ,
+    size_t                          order_up     ,
+    const vector< AD<Base> >&       ataylor_x    ,
+    const vector< AD<Base> >&       ataylor_y    ,
+    vector< AD<Base> >&             apartial_x   ,
+    const vector< AD<Base> >&       apartial_y   )
 // END_PROTOTYPE_AD_BASE
-{  return false; }
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 # endif

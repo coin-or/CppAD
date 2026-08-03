@@ -6,25 +6,25 @@ set -e -u
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/no_bitwise.sh" ]
 then
-   echo "bin/no_bitwise.sh: must be executed from its parent directory"
-   exit 1
+    echo "bin/no_bitwise.sh: must be executed from its parent directory"
+    exit 1
 fi
 if [ "$#" != 0 ]
 then
-   echo 'bin/no_bitwise.sh: does not expect any arguments'
-   exit 1
+    echo 'bin/no_bitwise.sh: does not expect any arguments'
+    exit 1
 fi
 # ----------------------------------------------------------------------------
 # git reset --hard ?
 response=''
 while [ "$response" != 'yes' ] && [ "$response" != 'abort' ]
 do
-   read -p 'git reset --hard [yes/abort] ?' response
+    read -p 'git reset --hard [yes/abort] ?' response
 done
 if [ "$response" == 'abort' ]
 then
-   echo 'bin/no_bitwise.sh: aborted'
-   exit 1
+    echo 'bin/no_bitwise.sh: aborted'
+    exit 1
 fi
 git reset --hard
 #
@@ -48,16 +48,16 @@ EOF
 #
 # file_list
 file_list=$(git ls-files | sed -n \
-   -e '/\.hpp$/p' \
-   -e '/\.cpp/p'\
-   -e '/example[/]abs_normal[/]qp_interior.hpp/d'
+    -e '/\.hpp$/p' \
+    -e '/\.cpp/p'\
+    -e '/example[/]abs_normal[/]qp_interior.hpp/d'
 )
 #
 # *.hpp, *.cpp
 # replace bitwise operands on logicals by logical operations.
 for file in $file_list
 do
-   sed -i $file -f sed.$$
+    sed -i $file -f sed.$$
 done
 #
 # sed.$$

@@ -5,7 +5,7 @@
 
 {xrst_begin glossary app}
 {xrst_spell
-   is is
+    is is
 }
 
 Glossary
@@ -43,7 +43,7 @@ If *Base* is a type,
 an AD type above *Base*
 is the following sequence of types:
 
-   ``AD`` < *Base* > , ``AD< AD<`` *Base* > > , ``AD< AD< AD<`` *Base* > > > , ...
+    ``AD`` < *Base* > , ``AD< AD<`` *Base* > > , ``AD< AD< AD<`` *Base* > > > , ...
 
 Base Function
 *************
@@ -63,10 +63,10 @@ The *j*-th elementary vector :math:`e^j \in \B{R}^m` is defined by
 
 .. math::
 
-   e_i^j = \left\{ \begin{array}{ll}
-      1 & {\rm if} \; i = j \\
-      0 & {\rm otherwise}
-   \end{array} \right.
+    e_i^j = \left\{ \begin{array}{ll}
+        1 & {\rm if} \; i = j \\
+        0 & {\rm otherwise}
+    \end{array} \right.
 
 Operation
 *********
@@ -91,7 +91,7 @@ Dependent
 Suppose that *x* and *y* are *Type* objects and
 the result of
 
-   *x* < *y*
+    *x* < *y*
 
 has type ``bool`` (where *Type* is not the same as ``bool`` ).
 If one executes the following code
@@ -158,7 +158,7 @@ for :math:`i = 0 , \ldots , m-1`, :math:`j = 0 , \ldots , n-1`
 
 .. math::
 
-   M_{i,j} = v[ i \times n + j ]
+    M_{i,j} = v[ i \times n + j ]
 
 Sparsity Pattern
 ****************
@@ -196,7 +196,7 @@ Active
 A new tape is created and becomes active
 after each call of the form (see :ref:`Independent-name` )
 
-   ``Independent`` ( *x* )
+    ``Independent`` ( *x* )
 
 All operations that depend on the elements of *x* are
 recorded on this active tape.
@@ -242,13 +242,13 @@ which is defined by
 
 .. math::
 
-   x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0)
+    x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0)
 
 It follows that
 
 .. math::
 
-   X(t) = x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p  + R(t)
+    X(t) = x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p  + R(t)
 
 where the remainder :math:`R(t)` divided by :math:`t^p`
 converges to zero and :math:`t` goes to zero.

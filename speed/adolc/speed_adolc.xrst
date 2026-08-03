@@ -33,7 +33,7 @@ execute the following commands starting in the
 You can then run the corresponding speed tests
 with the following command
 
-   ./ ``speed_adolc speed`` *seed*
+    ./ ``speed_adolc speed`` *seed*
 
 where *seed* is a positive integer.
 See :ref:`speed_main-name` for more options.
@@ -41,14 +41,14 @@ See :ref:`speed_main-name` for more options.
 Contents
 ********
 {xrst_toc_list
-   speed/adolc/det_minor.cpp
-   speed/adolc/det_lu.cpp
-   speed/adolc/mat_mul.cpp
-   speed/adolc/ode.cpp
-   speed/adolc/poly.cpp
-   speed/adolc/sparse_hessian.cpp
-   speed/adolc/sparse_jacobian.cpp
-   speed/adolc/alloc_mat.cpp
+    speed/adolc/det_minor.cpp
+    speed/adolc/det_lu.cpp
+    speed/adolc/mat_mul.cpp
+    speed/adolc/ode.cpp
+    speed/adolc/poly.cpp
+    speed/adolc/sparse_hessian.cpp
+    speed/adolc/sparse_jacobian.cpp
+    speed/adolc/alloc_mat.cpp
 }
 
 {xrst_end speed_adolc}

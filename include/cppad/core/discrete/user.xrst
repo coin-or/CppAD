@@ -6,7 +6,7 @@
 /*
 {xrst_begin Discrete}
 {xrst_spell
-   retaping
+    retaping
 }
 
 Discrete AD Functions
@@ -50,7 +50,7 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *Base* & *x*
+    ``const`` *Base* & *x*
 
 It is the value at which the user provided version of *name*
 is to be evaluated.
@@ -59,7 +59,7 @@ y
 *
 The result *y* has prototype
 
-   *Base* *y*
+    *Base* *y*
 
 It is the return value for the user provided version of *name* .
 
@@ -67,7 +67,7 @@ ax
 **
 The argument *ax* has prototype
 
-   ``const AD`` < *Base* >& *ax*
+    ``const AD`` < *Base* >& *ax*
 
 It is the value at which the CppAD provided version of *name*
 is to be evaluated.
@@ -76,7 +76,7 @@ ay
 **
 The result *ay* has prototype
 
-   ``AD`` < *Base* > *ay*
+    ``AD`` < *Base* > *ay*
 
 It is the return value for the CppAD provided version of *name* .
 
@@ -84,7 +84,7 @@ Create AD Version
 *****************
 The preprocessor macro invocation
 
-   ``CPPAD_DISCRETE_FUNCTION`` ( *Base* , *name* )
+    ``CPPAD_DISCRETE_FUNCTION`` ( *Base* , *name* )
 
 defines the ``AD`` < *Base* > version of *name* .
 This can be with in a namespace (not the ``CppAD`` namespace)
@@ -109,16 +109,16 @@ Parallel Mode
 *************
 The first call to
 
-   *name* ( *ax* )
+    *name* ( *ax* )
 
 must not be in :ref:`parallel<ta_in_parallel-name>` execution mode.
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/tape_index.cpp
-   example/general/interp_onetape.cpp
-   example/general/interp_retape.cpp
+    example/general/tape_index.cpp
+    example/general/interp_onetape.cpp
+    example/general/interp_retape.cpp
 }
 The file
 :ref:`tape_index.cpp-name`

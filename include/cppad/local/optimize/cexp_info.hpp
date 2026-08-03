@@ -10,8 +10,8 @@
 /*!
 {xrst_begin optimize_cexp_info dev}
 {xrst_spell
-   cskip
-   struct
+    cskip
+    struct
 }
 
 Optimization Information About Conditional Expressions
@@ -22,8 +22,8 @@ struct_cexp_info
 information about a conditional expression
 in the old operation sequence (before optimization).
 {xrst_literal
-   // BEGIN_STRUCT_CEXP_INFO
-   // END_STRUCT_CEXP_INFO
+    // BEGIN_STRUCT_CEXP_INFO
+    // END_STRUCT_CEXP_INFO
 }
 
 i_op
@@ -60,8 +60,8 @@ struct_cskip_new
 information about a conditional expression
 in thew new operation sequence (after optimization).
 {xrst_literal
-   // BEGIN_STRUCT_CSKIP_NEW
-   // END_STRUCT_CSKIP_NEW
+    // BEGIN_STRUCT_CSKIP_NEW
+    // END_STRUCT_CSKIP_NEW
 }
 
 left
@@ -94,29 +94,29 @@ Information about one conditional expression.
 */
 // BEGIN_STRUCT_CEXP_INFO
 struct struct_cexp_info {
-   addr_t                i_op;
-   addr_t                left;
-   addr_t                right;
-   addr_t                max_left_right;
-   CompareOp             cop;
-   unsigned char         flag;
+    addr_t                i_op;
+    addr_t                left;
+    addr_t                right;
+    addr_t                max_left_right;
+    CompareOp             cop;
+    unsigned char         flag;
 };
 // END_STRUCT_CEXP_INFO
 
 // BEGIN_STRUCT_CSKIP_NEW
 struct struct_cskip_new {
-   size_t left;
-   size_t right;
-   size_t max_left_right;
-   size_t i_arg;
+    size_t left;
+    size_t right;
+    size_t max_left_right;
+    size_t i_arg;
 };
 // END_STRUCT_CSKIP_NEW
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 
 namespace CppAD { namespace local {
-   template <> inline bool is_pod<optimize::struct_cskip_new>(void)
-   { return true; }
+    template <> inline bool is_pod<optimize::struct_cskip_new>(void)
+    { return true; }
 } }
 
 # endif

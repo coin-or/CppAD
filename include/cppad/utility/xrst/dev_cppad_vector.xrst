@@ -15,8 +15,8 @@ User API
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/utility/cppad_vector_itr.hpp
-   include/cppad/utility/vector.hpp
+    include/cppad/local/utility/cppad_vector_itr.hpp
+    include/cppad/utility/vector.hpp
 }
 
 {xrst_end dev_cppad_vector}

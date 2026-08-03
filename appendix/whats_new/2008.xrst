@@ -5,11 +5,11 @@
 
 {xrst_begin 2008 app}
 {xrst_spell
-   fg
-   retape
-   speedtest
-   subregions
-   tarballs
+    fg
+    retape
+    speedtest
+    subregions
+    tarballs
 }
 
 Release Notes for 2008
@@ -169,9 +169,9 @@ at the proper location. Here is the difference that occurred
 multiple places in the ``ipopt_cppad/ipopt_cppad_nlp.cpp`` source:
 ::
 
-   for(j = 0; j < n_; j++)
-   -       x_ad_vec[0] = x[j];
-   +       x_ad_vec[j] = x[j];
+    for(j = 0; j < n_; j++)
+    -       x_ad_vec[0] = x[j];
+    +       x_ad_vec[j] = x[j];
 
 This did not show up in testing because there currently is no test of
 ``ipopt_cppad_nlp`` where the operation sequence depends
@@ -204,7 +204,7 @@ This has been fixed.
 In addition, it seems that for some cases (or compilers)
 the assignment
 
-   *x* [ *i* ] = *y* [ *j* ]
+    *x* [ *i* ] = *y* [ *j* ]
 
 did not work properly when both *x* and *y*
 had type ``vectorBool`` .
@@ -367,7 +367,7 @@ were missing. This has also been fixed.
 There was an ambiguity problem
 (detected by g++ 4.3) with the following operations
 
-   *x* *op* *y*
+    *x* *op* *y*
 
 where *x* and *y* were ``AD<double>`` and
 *op* was a member operator of that class.

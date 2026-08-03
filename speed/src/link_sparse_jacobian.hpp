@@ -8,15 +8,15 @@
 # include <cppad/utility/vector.hpp>
 // BEGIN PROTOTYPE
 extern bool link_sparse_jacobian(
-   const std::string&                job       ,
-   size_t                            size      ,
-   size_t                            repeat    ,
-   size_t                            m         ,
-   const CppAD::vector<size_t>&      row       ,
-   const CppAD::vector<size_t>&      col       ,
-          CppAD::vector<double>&      x         ,
-          CppAD::vector<double>&      jacobian  ,
-          size_t&                     n_color
+    const std::string&                job       ,
+    size_t                            size      ,
+    size_t                            repeat    ,
+    size_t                            m         ,
+    const CppAD::vector<size_t>&      row       ,
+    const CppAD::vector<size_t>&      col       ,
+             CppAD::vector<double>&      x         ,
+             CppAD::vector<double>&      jacobian  ,
+             size_t&                     n_color
 );
 // END PROTOTYPE
 /*
@@ -29,8 +29,8 @@ Speed Testing Sparse Jacobians
 Prototype
 *********
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 
 Method
@@ -43,7 +43,7 @@ The non-zero entries in the Jacobian of this function have the form
 
 .. math::
 
-   \D{f[row[k]]}{x[col[k]]]}
+    \D{f[row[k]]}{x[col[k]]]}
 
 for some :math:`k` between zero and *K* = *row* . ``size`` () ``-1`` .
 All the other terms of the Jacobian are zero.
@@ -93,17 +93,17 @@ Row Major
 The indices *row* and *col* are in row major order; i.e.,
 for each *k* < *row* . ``size`` () ``-2``
 
-   *row* [ *k* ] <= *row* [ *k* +1]
+    *row* [ *k* ] <= *row* [ *k* +1]
 
 and if *row* [ *k* ] == *row* [ *k* +1] then
 
-   *col* [ *k* ] < *col* [ *k* +1]
+    *col* [ *k* ] < *col* [ *k* +1]
 
 x
 *
 The argument *x* has prototype
 
-   ``CppAD::vector<double>&`` *x*
+    ``CppAD::vector<double>&`` *x*
 
 and its size is :math:`n`; i.e., *x* . ``size`` () == *size* .
 The input value of the elements of *x* does not matter.
@@ -116,7 +116,7 @@ jacobian
 ********
 The argument *jacobian* has prototype
 
-   ``CppAD::vector<double>&`` *jacobian*
+    ``CppAD::vector<double>&`` *jacobian*
 
 and its size is *K* .
 The input value of its elements does not matter.
@@ -126,7 +126,7 @@ To be more specific, for
 
 .. math::
 
-   \D{f[ \R{row}[k] ]}{x[ \R{col}[k] ]} (x) = \R{jacobian} [k]
+    \D{f[ \R{row}[k] ]}{x[ \R{col}[k] ]} (x) = \R{jacobian} [k]
 
 n_color
 *******

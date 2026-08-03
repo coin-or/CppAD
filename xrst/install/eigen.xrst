@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin eigen}
 {xrst_spell
-   cholesky
-   inv
+    cholesky
+    inv
 }
 
 Including Eigen Examples, Tests, and sparse2eigen
@@ -39,15 +39,15 @@ use the linear algebra package Eigen:
 {xrst_comment check list with: grep 'eigen.*\.cpp' omh/example_list.omh'}
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   cppad_eigen.hpp,:ref:`cppad_eigen.hpp-title`
-   eigen_array.cpp,:ref:`eigen_array.cpp-title`
-   eigen_det.cpp,:ref:`eigen_det.cpp-title`
-   sparse2eigen.cpp,:ref:`sparse2eigen.cpp-title`
-   atomic_two_eigen_cholesky.hpp,:ref:`atomic_two_eigen_cholesky.hpp-title`
-   atomic_two_eigen_mat_inv.hpp,:ref:`atomic_two_eigen_mat_inv.hpp-title`
-   atomic_two_eigen_mat_mul.hpp,:ref:`atomic_two_eigen_mat_mul.hpp-title`
+    cppad_eigen.hpp,:ref:`cppad_eigen.hpp-title`
+    eigen_array.cpp,:ref:`eigen_array.cpp-title`
+    eigen_det.cpp,:ref:`eigen_det.cpp-title`
+    sparse2eigen.cpp,:ref:`sparse2eigen.cpp-title`
+    atomic_two_eigen_cholesky.hpp,:ref:`atomic_two_eigen_cholesky.hpp-title`
+    atomic_two_eigen_mat_inv.hpp,:ref:`atomic_two_eigen_mat_inv.hpp-title`
+    atomic_two_eigen_mat_mul.hpp,:ref:`atomic_two_eigen_mat_mul.hpp-title`
 
 Examples
 ********
@@ -68,7 +68,7 @@ Test Vector
 ***********
 If you eigen is found you can choose
 
-   ``-D cppad_testvector`` = ``eigen``
+    ``-D cppad_testvector`` = ``eigen``
 
 on the :ref:`cmake@CMake Command` line.
 This we set the CppAD :ref:`testvector-name` to use Eigen vectors.

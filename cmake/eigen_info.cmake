@@ -16,30 +16,30 @@
 #
 # This macro may use variables with the name eigen_*
 MACRO(eigen_info)
-   #
-   # check for pkg-config
-   IF( NOT PKG_CONFIG_FOUND )
-      FIND_PACKAGE(PkgConfig REQUIRED)
-   ENDIF( )
-   #
-   #
-   IF( NOT ${use_cplusplus_2014_ok} )
-      MESSAGE(STATUS "Eigen not supportedL: because c++14 not supported")
-      SET(cppad_has_eigen 0)
-   ELSE( )
-      #
-      # eigen_*
-      pkg_check_modules(eigen QUIET eigen3 )
-      #
-      IF( eigen_FOUND )
-         MESSAGE(STATUS "Eigen found")
-         SET(cppad_has_eigen 1)
-         INCLUDE_DIRECTORIES( SYSTEM ${eigen_INCLUDE_DIRS} )
-      ELSE( )
-         MESSAGE(STATUS "Eigen not Found: eigen3.pc not in PKG_CONFIG_PATH")
-         SET(cppad_has_eigen 0)
-      ENDIF( )
-   ENDIF( )
-   #
-   print_variable( cppad_has_eigen )
+    #
+    # check for pkg-config
+    IF( NOT PKG_CONFIG_FOUND )
+        FIND_PACKAGE(PkgConfig REQUIRED)
+    ENDIF( )
+    #
+    #
+    IF( NOT ${use_cplusplus_2014_ok} )
+        MESSAGE(STATUS "Eigen not supportedL: because c++14 not supported")
+        SET(cppad_has_eigen 0)
+    ELSE( )
+        #
+        # eigen_*
+        pkg_check_modules(eigen QUIET eigen3 )
+        #
+        IF( eigen_FOUND )
+            MESSAGE(STATUS "Eigen found")
+            SET(cppad_has_eigen 1)
+            INCLUDE_DIRECTORIES( SYSTEM ${eigen_INCLUDE_DIRS} )
+        ELSE( )
+            MESSAGE(STATUS "Eigen not Found: eigen3.pc not in PKG_CONFIG_PATH")
+            SET(cppad_has_eigen 0)
+        ENDIF( )
+    ENDIF( )
+    #
+    print_variable( cppad_has_eigen )
 ENDMACRO(eigen_info)

@@ -7,7 +7,7 @@
 /*
 {xrst_begin omp_max_thread app}
 {xrst_spell
-   mp
+    mp
 }
 
 OpenMP Parallel Setup
@@ -37,7 +37,7 @@ number
 ******
 The argument *number* has prototype
 
-   ``size_t`` *number*
+    ``size_t`` *number*
 
 It must be greater than zero and specifies the maximum number of
 OpenMp threads that will be active at one time.
@@ -70,16 +70,16 @@ template <class Base>
 void AD<Base>::omp_max_thread(size_t number)
 {
 # ifdef _OPENMP
-   thread_alloc::parallel_setup(
-      number, omp_alloc::in_parallel, omp_alloc::get_thread_num
-   );
+    thread_alloc::parallel_setup(
+        number, omp_alloc::in_parallel, omp_alloc::get_thread_num
+    );
 # else
-   CPPAD_ASSERT_KNOWN(
-      number == 1,
-      "omp_max_thread: number > 1 and _OPENMP is not defined"
-   );
+    CPPAD_ASSERT_KNOWN(
+        number == 1,
+        "omp_max_thread: number > 1 and _OPENMP is not defined"
+    );
 # endif
-   parallel_ad<Base>();
+    parallel_ad<Base>();
 }
 
 } // END CppAD namespace

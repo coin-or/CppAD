@@ -22,8 +22,8 @@ Forward Type Callback to Atomic Functions
 Prototype
 *********
 {xrst_literal
-   // BEGIN_FORWARD
-   // END_FORWARD
+    // BEGIN_FORWARD
+    // END_FORWARD
 }
 
 Value
@@ -63,100 +63,100 @@ the atomic_one :ref:`atomic_one@id` .
 // BEGIN_FORWARD
 template <class Value>
 void call_atomic_for_type(
-   const CppAD::vector<Value>&         constant_x  ,
-   const CppAD::vector<ad_type_enum>&  type_x      ,
-   CppAD::vector<ad_type_enum>&        type_y      ,
-   size_t                              atom_index  ,
-   size_t                              call_id     )
+    const CppAD::vector<Value>&         constant_x  ,
+    const CppAD::vector<ad_type_enum>&  type_x      ,
+    CppAD::vector<ad_type_enum>&        type_y      ,
+    size_t                              atom_index  ,
+    size_t                              call_id     )
 // END_FORWARD
-{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-   //
-   // type, v_ptr
-   bool         set_null = false;
-   size_t       type     = 0;       // set to avoid warning
-   std::string  name;
-   void*        v_ptr    = nullptr; // set to avoid warning
-   local::atomic_index<Value>(set_null, atom_index, type, &name, v_ptr);
+{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+    //
+    // type, v_ptr
+    bool         set_null = false;
+    size_t       type     = 0;       // set to avoid warning
+    std::string  name;
+    void*        v_ptr    = nullptr; // set to avoid warning
+    local::atomic_index<Value>(set_null, atom_index, type, &name, v_ptr);
 //
 # ifndef NDEBUG
-   bool ok = v_ptr != nullptr;
-   if( ok )
-   {
-      if( type == 2 )
-      {  size_t p = 0, q = 0, nx = type_x.size(), ny = type_y.size();
-         CppAD::vector<bool> vx(nx), vy(ny);
-         for(size_t i = 0; i < nx; ++i)
-            vx[i] = type_x[i] > constant_enum;
-         const CppAD::vector<Value>& taylor_x = constant_x;
-         CppAD::vector<Value> taylor_y(ny);
-         atomic_base<Value>* afun =
-            reinterpret_cast< atomic_base<Value>* >(v_ptr);
-         afun->set_old(call_id);
-         ok = afun->forward(
-            p, q, vx, vy, taylor_x, taylor_y
-         );
-         for(size_t i = 0; i < ny; ++i)
-         {  if( vy[i] )
-               type_y[i] = variable_enum;
-            else
-               type_y[i] = constant_enum;
-         }
-      }
-      else if( type == 3 )
-      {  CPPAD_ASSERT_UNKNOWN( type == 3 );
-         atomic_three<Value>* afun =
-            reinterpret_cast< atomic_three<Value>* >(v_ptr);
-         ok = afun->for_type(constant_x, type_x, type_y );
-      }
-      else
-      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
-         atomic_four<Value>* afun =
-            reinterpret_cast< atomic_four<Value>* >(v_ptr);
-         ok = afun->for_type(call_id, type_x, type_y);
-      }
-   }
-   if( ! ok )
-   {  // now take the extra time to copy the name
-      std::string msg = name;
-      if( v_ptr == nullptr )
-         msg += ": this atomic function has been deleted";
-      else
-         msg += ": atomic for_type returned false";
-      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-   }
+    bool ok = v_ptr != nullptr;
+    if( ok )
+    {
+        if( type == 2 )
+        {   size_t p = 0, q = 0, nx = type_x.size(), ny = type_y.size();
+            CppAD::vector<bool> vx(nx), vy(ny);
+            for(size_t i = 0; i < nx; ++i)
+                vx[i] = type_x[i] > constant_enum;
+            const CppAD::vector<Value>& taylor_x = constant_x;
+            CppAD::vector<Value> taylor_y(ny);
+            atomic_base<Value>* afun =
+                reinterpret_cast< atomic_base<Value>* >(v_ptr);
+            afun->set_old(call_id);
+            ok = afun->forward(
+                p, q, vx, vy, taylor_x, taylor_y
+            );
+            for(size_t i = 0; i < ny; ++i)
+            {   if( vy[i] )
+                    type_y[i] = variable_enum;
+                else
+                    type_y[i] = constant_enum;
+            }
+        }
+        else if( type == 3 )
+        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<Value>* afun =
+                reinterpret_cast< atomic_three<Value>* >(v_ptr);
+            ok = afun->for_type(constant_x, type_x, type_y );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<Value>* afun =
+                reinterpret_cast< atomic_four<Value>* >(v_ptr);
+            ok = afun->for_type(call_id, type_x, type_y);
+        }
+    }
+    if( ! ok )
+    {   // now take the extra time to copy the name
+        std::string msg = name;
+        if( v_ptr == nullptr )
+            msg += ": this atomic function has been deleted";
+        else
+            msg += ": atomic for_type returned false";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
 # else
-   if( type == 2 )
-   {  size_t p = 0, q = 0, nx = type_x.size(), ny = type_y.size();
-      CppAD::vector<bool> vx(nx), vy(ny);
-      for(size_t i = 0; i < nx; ++i)
-         vx[i] = type_x[i] > constant_enum;
-      const CppAD::vector<Value>& taylor_x = constant_x;
-      CppAD::vector<Value> taylor_y(ny);
-      atomic_base<Value>* afun =
-         reinterpret_cast< atomic_base<Value>* >(v_ptr);
-      afun->set_old(call_id);
-      afun->forward(
-         p, q, vx, vy, taylor_x, taylor_y
-      );
-      for(size_t i = 0; i < ny; ++i)
-      {  if( vy[i] )
-            type_y[i] = variable_enum;
-         else
-            type_y[i] = constant_enum;
-      }
-   }
-   else if( type == 3 )
-   {  CPPAD_ASSERT_UNKNOWN( type == 3 );
-      atomic_three<Value>* afun =
-         reinterpret_cast< atomic_three<Value>* >(v_ptr);
-      afun->for_type(constant_x, type_x, type_y );
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( type == 4 );
-      atomic_four<Value>* afun =
-         reinterpret_cast< atomic_four<Value>* >(v_ptr);
-      afun->for_type(call_id, type_x, type_y);
-   }
+    if( type == 2 )
+    {   size_t p = 0, q = 0, nx = type_x.size(), ny = type_y.size();
+        CppAD::vector<bool> vx(nx), vy(ny);
+        for(size_t i = 0; i < nx; ++i)
+            vx[i] = type_x[i] > constant_enum;
+        const CppAD::vector<Value>& taylor_x = constant_x;
+        CppAD::vector<Value> taylor_y(ny);
+        atomic_base<Value>* afun =
+            reinterpret_cast< atomic_base<Value>* >(v_ptr);
+        afun->set_old(call_id);
+        afun->forward(
+            p, q, vx, vy, taylor_x, taylor_y
+        );
+        for(size_t i = 0; i < ny; ++i)
+        {   if( vy[i] )
+                type_y[i] = variable_enum;
+            else
+                type_y[i] = constant_enum;
+        }
+    }
+    else if( type == 3 )
+    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+        atomic_three<Value>* afun =
+            reinterpret_cast< atomic_three<Value>* >(v_ptr);
+        afun->for_type(constant_x, type_x, type_y );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+        atomic_four<Value>* afun =
+            reinterpret_cast< atomic_four<Value>* >(v_ptr);
+        afun->for_type(call_id, type_x, type_y);
+    }
 # endif
 }
 

@@ -10,7 +10,7 @@ Developer Documentation for Dynamic Parameters
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/op_code_dyn.hpp
+    include/cppad/local/op_code_dyn.hpp
 }
 
 {xrst_end dev_dynamic}

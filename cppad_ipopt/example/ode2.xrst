@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_problem dev}
 {xrst_spell
-   ny
-   nz
+    ny
+    nz
 }
 
 An ODE Inverse Problem Example
@@ -23,33 +23,33 @@ can be changed and the example should still run
 (with no other changes).
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   **Name**,**Meaning**,**Value**
-   :math:`Na`,number of parameters to fit,3
-   :math:`Ny`,number components in ODE,2
-   :math:`Nz`,number of measurements,4
-   :math:`N(i)`,# of grid points between *i-1*-th and *i*-th measurement,
-   :math:`S(i)`,# of grid points up to an including *i*-th measurement,
+    **Name**,**Meaning**,**Value**
+    :math:`Na`,number of parameters to fit,3
+    :math:`Ny`,number components in ODE,2
+    :math:`Nz`,number of measurements,4
+    :math:`N(i)`,# of grid points between *i-1*-th and *i*-th measurement,
+    :math:`S(i)`,# of grid points up to an including *i*-th measurement,
 
 Forward Problem
 ***************
 We consider the following ordinary differential equation:
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      \partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
-      \\
-      \partial_t y_1 (t , a ) & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
-   \end{eqnarray}
+    \begin{eqnarray}
+        \partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
+        \\
+        \partial_t y_1 (t , a ) & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+    \end{eqnarray}
 
 with the initial conditions
 
 .. math::
 
-   y_0 (0 , a) = F(a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
+    y_0 (0 , a) = F(a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
 
 where :math:`Na` is the number of parameters,
 :math:`a \in \B{R}^{Na}` is an unknown parameter vector.
@@ -69,7 +69,7 @@ we model :math:`z_i` by
 
 .. math::
 
-   z_i = y_1 ( s_i , a) + e_i
+    z_i = y_1 ( s_i , a) + e_i
 
 where :math:`s_i \in \B{R}` is the time for the *i*-th measurement,
 :math:`e_i \sim {\bf N} (0 , \sigma^2 )` is the corresponding noise,
@@ -81,51 +81,51 @@ The following analytic solution to the forward problem is used
 to simulate a data set:
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
-      \\
-      y_1 (t , a) & = &
-      a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
-   \end{eqnarray}
+    \begin{eqnarray}
+        y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
+        \\
+        y_1 (t , a) & = &
+        a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+    \end{eqnarray}
 
 Simulation Parameter Values
 ===========================
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - :math:`\bar{a}_0 = 1`
-     - initial value of :math:`y_0 (t, a)`
-   * - :math:`\bar{a}_1 = 2`
-     - transfer rate from compartment zero to compartment one
-   * - :math:`\bar{a}_2 = 1`
-     - transfer rate from compartment one to outside world
-   * - :math:`\sigma = 0`
-     - standard deviation of measurement noise
-   * - :math:`e_i = 0`
-     - simulated measurement noise, :math:`i = 1 , \ldots , Nz`
-   * - :math:`s_i = i * .5`
-     - time corresponding to the *i*-th measurement,
-       :math:`i = 1 , \ldots , Nz`
+    * - :math:`\bar{a}_0 = 1`
+      - initial value of :math:`y_0 (t, a)`
+    * - :math:`\bar{a}_1 = 2`
+      - transfer rate from compartment zero to compartment one
+    * - :math:`\bar{a}_2 = 1`
+      - transfer rate from compartment one to outside world
+    * - :math:`\sigma = 0`
+      - standard deviation of measurement noise
+    * - :math:`e_i = 0`
+      - simulated measurement noise, :math:`i = 1 , \ldots , Nz`
+    * - :math:`s_i = i * .5`
+      - time corresponding to the *i*-th measurement,
+         :math:`i = 1 , \ldots , Nz`
 
 Simulated Measurement Values
 ============================
 The simulated measurement values are given by the equation
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   z_i
-   & = &  e_i + y_1 ( s_i , \bar{a} )
-   \\
-   & = &
-   e_i + \bar{a}_0 * \bar{a}_1 *
-      \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
-         { \bar{a}_1 - \bar{a}_2 }
-   \end{eqnarray}
+    \begin{eqnarray}
+    z_i
+    & = &  e_i + y_1 ( s_i , \bar{a} )
+    \\
+    & = &
+    e_i + \bar{a}_0 * \bar{a}_1 *
+        \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
+            { \bar{a}_1 - \bar{a}_2 }
+    \end{eqnarray}
 
 for :math:`k = 1, \ldots , Nz`.
 
@@ -135,13 +135,13 @@ The maximum likelihood estimate for :math:`a` given :math:`z`
 solves the following inverse problem
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   {\rm minimize} \;
-      & \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ]
-      & \;{\rm w.r.t} \; a \in \B{R}^{Na}
-   \end{eqnarray}
+    \begin{eqnarray}
+    {\rm minimize} \;
+        & \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ]
+        & \;{\rm w.r.t} \; a \in \B{R}^{Na}
+    \end{eqnarray}
 
 where the functions
 :math:`H_i : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}` is
@@ -149,7 +149,7 @@ defined by
 
 .. math::
 
-   H_i (y, a) = ( z_i - y_1 )^2
+    H_i (y, a) = ( z_i - y_1 )^2
 
 Trapezoidal Approximation
 *************************
@@ -158,7 +158,7 @@ This approximation procedures starts with
 
 .. math::
 
-   y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
+    y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
 
 Given a time grid :math:`\{ t_i \}` and
 an approximate value :math:`y^{i-1}` for :math:`y ( t_{i-1} , a )`,
@@ -167,19 +167,19 @@ the a trapezoidal method approximates :math:`y ( t_i , a )`
 
 .. math::
 
-   y^i  =  y^{i-1} +
-   \left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{t_i - t_{i-1} }{ 2 }
+    y^i  =  y^{i-1} +
+    \left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{t_i - t_{i-1} }{ 2 }
 
 where :math:`G : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}^{Ny}` is the
 function representing this ODE; i.e.
 
 .. math::
 
-   G(y, a) = \left(  \begin{array}{c}
-      - a_1 * y_0
-      \\
-      + a_1 * y_0 - a_2 * y_1
-   \end{array} \right)
+    G(y, a) = \left(  \begin{array}{c}
+        - a_1 * y_0
+        \\
+        + a_1 * y_0 - a_2 * y_1
+    \end{array} \right)
 
 This :math:`G(y, a)` is linear with respect to :math:`y`, hence
 the implicit equation defining :math:`y^i` can be solved
@@ -197,13 +197,13 @@ denoted by :math:`\{ t_i \}` which is defined by:
 for :math:`i = 1 , \ldots , Nz` and for :math:`j = 1 , \ldots , N(i)`,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      \Delta t_i & = & ( s_i - s_{i-1} ) / N(i)
-      \\
-      t_{S(i-1)+j} & = & s_{i-1} + \Delta t_i * j
-   \end{eqnarray}
+    \begin{eqnarray}
+        \Delta t_i & = & ( s_i - s_{i-1} ) / N(i)
+        \\
+        t_{S(i-1)+j} & = & s_{i-1} + \Delta t_i * j
+    \end{eqnarray}
 
 where :math:`s_0 = 0`,
 :math:`N(i)` is the number of time grid points between
@@ -250,21 +250,21 @@ the forward problem in the inverse problem.
 To be specific for our example,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   {\rm minimize}
-   & \sum_{i=1}^{Nz} H_i ( y^{N(i)} , a )
-   & \; {\rm w.r.t} \; y^1 \in \B{R}^{Ny} , \ldots , y^{S(Nz)} \in \B{R}^{Ny} ,
-     \; a \in \B{R}^{Na}
-   \\
-   {\rm subject \; to}
-      & y^j  =  y^{j-1} +
-   \left[ G( y^{j-1} , a ) + G( y^j , a ) \right] * \frac{ t_j - t_{j-1} }{ 2 }
-      & \; {\rm for} \; j = 1 , \ldots , S(Nz)
-   \\
-      & y^0 = F(a)
-   \end{eqnarray}
+    \begin{eqnarray}
+    {\rm minimize}
+    & \sum_{i=1}^{Nz} H_i ( y^{N(i)} , a )
+    & \; {\rm w.r.t} \; y^1 \in \B{R}^{Ny} , \ldots , y^{S(Nz)} \in \B{R}^{Ny} ,
+      \; a \in \B{R}^{Na}
+    \\
+    {\rm subject \; to}
+        & y^j  =  y^{j-1} +
+    \left[ G( y^{j-1} , a ) + G( y^j , a ) \right] * \frac{ t_j - t_{j-1} }{ 2 }
+        & \; {\rm for} \; j = 1 , \ldots , S(Nz)
+    \\
+        & y^0 = F(a)
+    \end{eqnarray}
 
 where for :math:`i = 1, \ldots , Nz`,
 :math:`N(i)` is the number of time intervals between
@@ -275,7 +275,7 @@ also solve the forward problem equations.
 In addition, the functions that need to be differentiated
 do not involve an iterative procedure.
 {xrst_toc_hidden
-   cppad_ipopt/example/ode_problem.hpp
+    cppad_ipopt/example/ode_problem.hpp
 }
 Source
 ******
@@ -286,9 +286,9 @@ source code that defines the example values and functions defined above.
 -----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_simple dev}
 {xrst_spell
-   fg
-   ny
-   nz
+    fg
+    ny
+    nz
 }
 
 ODE Fitting Using Simple Representation
@@ -309,18 +309,18 @@ has the following structure
 
 .. math::
 
-   x = ( y^0 , \cdots , y^{S(Nz)} , a )
+    x = ( y^0 , \cdots , y^{S(Nz)} , a )
 
 Note that :math:`x \in \B{R}^{S(Nz) + Na}` and
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
-      \\
-      a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
-   \end{eqnarray}
+    \begin{eqnarray}
+        y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
+        \\
+        a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
+    \end{eqnarray}
 
 Objective Function
 ******************
@@ -330,7 +330,7 @@ has the following representation,
 
 .. math::
 
-   fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
+    fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
 
 Initial Condition Constraint
 ****************************
@@ -340,7 +340,7 @@ and corresponding constraint equations, by
 
 .. math::
 
-   0 = fg_i ( x ) = y_i^0 - F_i (a)
+    0 = fg_i ( x ) = y_i^0 - F_i (a)
 
 Trapezoidal Approximation Constraint
 ************************************
@@ -351,12 +351,12 @@ and corresponding constraint equations, by
 
 .. math::
 
-   0 = fg_{Ny*i + j } = y_j^{i}  -  y_j^{i-1} -
-      \left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
-         \frac{t_i - t_{i-1} }{ 2 }
+    0 = fg_{Ny*i + j } = y_j^{i}  -  y_j^{i-1} -
+        \left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
+            \frac{t_i - t_{i-1} }{ 2 }
 
 {xrst_toc_hidden
-   cppad_ipopt/example/ode_simple.hpp
+    cppad_ipopt/example/ode_simple.hpp
 }
 Source
 ******
@@ -368,9 +368,9 @@ objective and constraints.
 -----------------------------------------------------------------------------
 {xrst_begin ipopt_nlp_ode_fast dev}
 {xrst_spell
-   fg
-   ny
-   nz
+    fg
+    ny
+    nz
 }
 
 ODE Fitting Using Fast Representation
@@ -393,13 +393,13 @@ we define the function :math:`r^k : \B{R}^{Ny+Na} \rightarrow \B{R}`
 by
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   fg_0 (x) & = & \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
-   \\
-   fg_0 (x) & = & \sum_{k=0}^{Nz-1} r^k ( u^{k,0} )
-   \end{eqnarray}
+    \begin{eqnarray}
+    fg_0 (x) & = & \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
+    \\
+    fg_0 (x) & = & \sum_{k=0}^{Nz-1} r^k ( u^{k,0} )
+    \end{eqnarray}
 
 where for :math:`k = 0 , \ldots , Nz-1`,
 :math:`u^{k,0} \in \B{R}^{Ny + Na}` is defined by
@@ -420,33 +420,33 @@ the components of the vector :math:`x`
 corresponding to the vector :math:`u^{k,0}` are
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   u^{k,0} & = & ( y^{S(k+1} , a )
-   \\
-   & = &
-   (   x_{Ny * S(k+1)} \; , \;
-      \ldots \; , \;
-      x_{Ny * S(k+1) + Ny - 1} \; , \;
-      x_{Ny * S(Nz) + Ny } \; , \;
-      \ldots \; , \;
-      x_{Ny * S(Nz) + Ny + Na - 1}
-   )
-   \end{eqnarray}
+    \begin{eqnarray}
+    u^{k,0} & = & ( y^{S(k+1} , a )
+    \\
+    & = &
+    (   x_{Ny * S(k+1)} \; , \;
+        \ldots \; , \;
+        x_{Ny * S(k+1) + Ny - 1} \; , \;
+        x_{Ny * S(Nz) + Ny } \; , \;
+        \ldots \; , \;
+        x_{Ny * S(Nz) + Ny + Na - 1}
+    )
+    \end{eqnarray}
 
 Thus, the domain indices are given by
 
 .. math::
 
-   J(k,0) = \{
-      Ny * S(k+1) \; , \;
-      \ldots  \; , \;
-      Ny * S(k+1) + Ny - 1 \; , \;
-      Ny * S(Nz) + Ny \; , \;
-      \ldots  \; , \;
-      Ny * S(Nz) + Ny + Na - 1
-   \}
+    J(k,0) = \{
+        Ny * S(k+1) \; , \;
+        \ldots  \; , \;
+        Ny * S(k+1) + Ny - 1 \; , \;
+        Ny * S(Nz) + Ny \; , \;
+        \ldots  \; , \;
+        Ny * S(Nz) + Ny + Na - 1
+    \}
 
 Initial Condition
 *****************
@@ -456,13 +456,13 @@ For :math:`k = Nz` we define the function
 :math:`r^k : \B{R}^{Ny} \times \B{R}^{Na + Ny}` by
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      0 & = & fg_i ( x ) = y_i^0 - F_i (a)
-      \\
-      0 & = & r_{i-1}^k ( u^{k,0} ) = y_i^0 - F_i(a)
-   \end{eqnarray}
+    \begin{eqnarray}
+        0 & = & fg_i ( x ) = y_i^0 - F_i (a)
+        \\
+        0 & = & r_{i-1}^k ( u^{k,0} ) = y_i^0 - F_i(a)
+    \end{eqnarray}
 
 where :math:`i = 1 , \ldots , Ny` and
 where :math:`u^{k,0} \in \B{R}^{Ny + Na}` is defined by
@@ -482,33 +482,33 @@ the components of the vector :math:`x`
 corresponding to the vector :math:`u^{k,0}` are
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   u^{k,0} & = & ( y^0 , a)
-   \\
-   & = &
-   (   x_0 \; , \;
-      \ldots \; , \;
-      x_{Ny-1} \; , \;
-      x_{Ny * S(Nz) + Ny } \; , \;
-      \ldots \; , \;
-      x_{Ny * S(Nz) + Ny + Na - 1}
-   )
-   \end{eqnarray}
+    \begin{eqnarray}
+    u^{k,0} & = & ( y^0 , a)
+    \\
+    & = &
+    (   x_0 \; , \;
+        \ldots \; , \;
+        x_{Ny-1} \; , \;
+        x_{Ny * S(Nz) + Ny } \; , \;
+        \ldots \; , \;
+        x_{Ny * S(Nz) + Ny + Na - 1}
+    )
+    \end{eqnarray}
 
 Thus, the domain indices are given by
 
 .. math::
 
-   J(k,0) = \{
-      0 \; , \;
-      \ldots  \; , \;
-      Ny - 1 \; , \;
-      Ny * S(Nz) + Ny \; , \;
-      \ldots  \; , \;
-      Ny * S(Nz) + Ny + Na - 1
-   \}
+    J(k,0) = \{
+        0 \; , \;
+        \ldots  \; , \;
+        Ny - 1 \; , \;
+        Ny * S(Nz) + Ny \; , \;
+        \ldots  \; , \;
+        Ny * S(Nz) + Ny + Na - 1
+    \}
 
 Trapezoidal Approximation
 *************************
@@ -519,27 +519,27 @@ we define the function :math:`r^{Nz+k} : \B{R}^{2*Ny+Na} \rightarrow \B{R}^{Ny}`
 
 .. math::
 
-   r^{Nz+k} ( y , w , a )
-   =
-   y - w -  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta t_k }{ 2 }
+    r^{Nz+k} ( y , w , a )
+    =
+    y - w -  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta t_k }{ 2 }
 
 For :math:`\ell = 0 , \ldots , N(k)-1`,
 using the notation :math:`i = Ny * S(k-1) + \ell + 1`,
 the corresponding trapezoidal approximation is represented by
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   0 & = & fg_{Ny+i} (x)
-   \\
-   & = &
-   y^i  -  y^{i-1} -
-   \left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{\Delta t_k }{ 2 }
-   \\
-   & = &
-   r^{Nz+k} ( u^{Nz+k , \ell} )
-   \end{eqnarray}
+    \begin{eqnarray}
+    0 & = & fg_{Ny+i} (x)
+    \\
+    & = &
+    y^i  -  y^{i-1} -
+    \left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{\Delta t_k }{ 2 }
+    \\
+    & = &
+    r^{Nz+k} ( u^{Nz+k , \ell} )
+    \end{eqnarray}
 
 where :math:`u^{Nz+k,\ell} \in \B{R}^{2*Ny + Na}` is defined by
 :math:`u^{Nz+k,\ell}  = ( y^{i-1} , y^i , a)`.
@@ -563,36 +563,36 @@ corresponding to the vector :math:`u^{k,\ell}` are
 (and the function :math:`fg (x)` in :ref:`cppad_ipopt_nlp-name` )
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   u^{k, \ell} & = & ( y^{i-1} , y^i , a )
-   \\
-   & = &
-   (   x_{Ny * (i-1)} \; , \;
-      \ldots \; , \;
-      x_{Ny * (i+1) - 1} \; , \;
-      x_{Ny * S(Nz) + Ny } \; , \;
-      \ldots \; , \;
-      x_{Ny * S(Nz) + Ny + Na - 1}
-   )
-   \end{eqnarray}
+    \begin{eqnarray}
+    u^{k, \ell} & = & ( y^{i-1} , y^i , a )
+    \\
+    & = &
+    (   x_{Ny * (i-1)} \; , \;
+        \ldots \; , \;
+        x_{Ny * (i+1) - 1} \; , \;
+        x_{Ny * S(Nz) + Ny } \; , \;
+        \ldots \; , \;
+        x_{Ny * S(Nz) + Ny + Na - 1}
+    )
+    \end{eqnarray}
 
 Thus, the domain indices are given by
 
 .. math::
 
-   J(k,\ell) = \{
-      Ny * (i-1) \; , \;
-      \ldots  \; , \;
-      Ny * (i+1) - 1 \; , \;
-      Ny * S(Nz) + Ny \; , \;
-      \ldots  \; , \;
-      Ny * S(Nz) + Ny + Na - 1
-   \}
+    J(k,\ell) = \{
+        Ny * (i-1) \; , \;
+        \ldots  \; , \;
+        Ny * (i+1) - 1 \; , \;
+        Ny * S(Nz) + Ny \; , \;
+        \ldots  \; , \;
+        Ny * S(Nz) + Ny + Na - 1
+    \}
 
 {xrst_toc_hidden
-   cppad_ipopt/example/ode_fast.hpp
+    cppad_ipopt/example/ode_fast.hpp
 }
 Source
 ******

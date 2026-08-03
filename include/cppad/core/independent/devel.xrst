@@ -10,7 +10,7 @@ Developer Documentation for Independent
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/independent/independent.hpp
+    include/cppad/core/independent/independent.hpp
 }
 
 {xrst_end devel_independent}

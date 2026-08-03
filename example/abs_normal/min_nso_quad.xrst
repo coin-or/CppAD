@@ -8,9 +8,9 @@ min_nso_quad Source Code
 ########################
 
 {xrst_literal
-   example/abs_normal/min_nso_quad.hpp
-   // BEGIN C++
-   // END C++
+    example/abs_normal/min_nso_quad.hpp
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end min_nso_quad.hpp}

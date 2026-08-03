@@ -35,7 +35,7 @@ ax
 **
 This argument has prototype
 
-   ``const`` *ADVector* & ``ax``
+    ``const`` *ADVector* & ``ax``
 
 and its size equal to *n* = *fun* . ``Domain`` ()
 where :ref:`chkpoint_two_ctor@fun` is the ``ADFun`` < *Base* >
@@ -48,7 +48,7 @@ ay
 **
 This argument has prototype
 
-   *ADVector* & ``ay``
+    *ADVector* & ``ay``
 
 and its size must be equal to *m* = *fun* . ``Range`` () .
 The input values of its elements do not matter.

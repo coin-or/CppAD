@@ -9,7 +9,7 @@ namespace CppAD { namespace local { namespace var_op {
 /*
 {xrst_begin_parent var_pri_op dev}
 {xrst_spell
-   pos
+    pos
 }
 
 Print A Variable or Parameter Operator
@@ -85,8 +85,8 @@ Zero Order Forward Print A Variable or Parameter
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PRI_FORWARD_0
-   // END_PRI_FORWARD_0
+    // BEGIN_PRI_FORWARD_0
+    // END_PRI_FORWARD_0
 }
 
 s_out
@@ -126,49 +126,49 @@ index j* is taylor[ j * cap_order + 0] .
 // BEGIN_PRI_FORWARD_0
 template <class Base>
 inline void pri_forward_0(
-   std::ostream& s_out       ,
-   const addr_t* arg         ,
-   size_t        num_text    ,
-   const char*   text        ,
-   size_t        num_par     ,
-   const Base*   parameter   ,
-   size_t        cap_order   ,
-   const Base*   taylor      )
+    std::ostream& s_out       ,
+    const addr_t* arg         ,
+    size_t        num_text    ,
+    const char*   text        ,
+    size_t        num_par     ,
+    const Base*   parameter   ,
+    size_t        cap_order   ,
+    const Base*   taylor      )
 // END_PRI_FORWARD_0
-{  Base pos, value;
-   //
-   const char* before;
-   const char* after;
-   CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
+{   Base pos, value;
+    //
+    const char* before;
+    const char* after;
+    CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
 
-   // pos
-   if( arg[0] & 1 )
-   {  pos = taylor[ size_t(arg[1]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-      pos = parameter[ arg[1] ];
-   }
+    // pos
+    if( arg[0] & 1 )
+    {   pos = taylor[ size_t(arg[1]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
+        pos = parameter[ arg[1] ];
+    }
 
-   // before
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_text );
-   before = text + arg[2];
+    // before
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_text );
+    before = text + arg[2];
 
-   // value
-   if( arg[0] & 2 )
-   {  value = taylor[ size_t(arg[3]) * cap_order + 0 ];
-   }
-   else
-   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-      value = parameter[ arg[3] ];
-   }
+    // value
+    if( arg[0] & 2 )
+    {   value = taylor[ size_t(arg[3]) * cap_order + 0 ];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+        value = parameter[ arg[3] ];
+    }
 
-   // after
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_text );
-   after = text + arg[4];
+    // after
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_text );
+    after = text + arg[4];
 
-   if( ! GreaterThanZero( pos ) )
-      s_out << before << value << after;
+    if( ! GreaterThanZero( pos ) )
+        s_out << before << value << after;
 }
 
 } } } // END namespace

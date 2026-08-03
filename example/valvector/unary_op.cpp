@@ -9,8 +9,8 @@ Example and Test of valvector Unary Operators
 #############################################
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end valvector_unary_op.cpp}
@@ -20,23 +20,23 @@ Example and Test of valvector Unary Operators
 # include <cppad/example/valvector/class.hpp>
 //
 bool unary_op(void)
-{  //
-   // ok
-   bool ok = true;
-   //
-   // v
-   valvector v( {-1, +1} );
-   //
-   // ok
-   valvector w = +v;
-   for(size_t i = 0; i < v.size(); ++i)
-      ok &= w[i] == v[i];
-   //
-   // ok
-   valvector u = -v;
-   for(size_t i = 0; i < v.size(); ++i)
-      ok &= u[i] == - v[i];
-   //
-   return ok;
+{   //
+    // ok
+    bool ok = true;
+    //
+    // v
+    valvector v( {-1, +1} );
+    //
+    // ok
+    valvector w = +v;
+    for(size_t i = 0; i < v.size(); ++i)
+        ok &= w[i] == v[i];
+    //
+    // ok
+    valvector u = -v;
+    for(size_t i = 0; i < v.size(); ++i)
+        ok &= u[i] == - v[i];
+    //
+    return ok;
 }
 // END C++

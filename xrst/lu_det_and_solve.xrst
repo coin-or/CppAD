@@ -11,9 +11,9 @@ Compute Determinants and Solve Equations by LU Factorization
 Contents
 ********
 {xrst_toc_table
-   include/cppad/utility/lu_solve.hpp
-   include/cppad/utility/lu_factor.hpp
-   include/cppad/utility/lu_invert.hpp
+    include/cppad/utility/lu_solve.hpp
+    include/cppad/utility/lu_factor.hpp
+    include/cppad/utility/lu_invert.hpp
 }
 
 {xrst_end lu_det_and_solve}

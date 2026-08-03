@@ -14,15 +14,15 @@ After executing the :ref:`cmake-name` command
 form the :ref:`download@Distribution Directory`,
 you can build and run these tests with the commands::
 
-   cd build
-   make check_example_utility
+    cd build
+    make check_example_utility
 
 Note that your choice of :ref:`cmake@generator` may require using
 an different version of make; e.g., ``ninja`` .
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end utility.cpp}
@@ -70,54 +70,54 @@ extern bool vectorBool(void);
 
 // main program that runs all the tests
 int main(void)
-{  std::string group = "example/utility";
-   size_t      width = 20;
-   CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "example/utility";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-   // This line is used by test_one.sh
+    // This line is used by test_one.sh
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
-   Run( CheckNumericType,       "CheckNumericType" );
-   Run( CheckSimpleVector,      "CheckSimpleVector" );
-   Run( CppAD_vector,           "CppAD_vector" );
-   Run( ErrorHandler,           "ErrorHandler" );
-   Run( LuFactor,               "LuFactor" );
-   Run( LuInvert,               "LuInvert" );
-   Run( LuSolve,                "LuSolve" );
-   Run( Near_Equal,             "Near_Equal" );
-   Run( OdeErrControl,          "OdeErrControl" );
-   Run( OdeErrMaxabs,           "OdeErrMaxabs" );
-   Run( OdeGear,                "OdeGear" );
-   Run( OdeGearControl,         "OdeGearControl" );
-   Run( RombergMul,             "RombergMul" );
-   Run( RombergOne,             "RombergOne" );
-   Run( SimpleVector,           "SimpleVector" );
-   Run( index_sort,             "index_sort" );
-   Run( nan,                    "nan" );
-   Run( poly,                   "poly" );
-   Run( pow_int,                "pow_int" );
-   Run( rosen_34,               "rosen_34" );
-   Run( runge_45,               "runge_45" );
-   Run( runge_45_1,             "runge_45_1" );
-   Run( set_union,              "set_union" );
-   Run( sparse_rc,              "sparse_rc" );
-   Run( sparse_rcv,             "sparse_rcv" );
-   Run( thread_alloc,           "thread_alloc" );
-   Run( to_string,              "to_string" );
-   Run( vectorBool,             "vectorBool" );
+    Run( CheckNumericType,       "CheckNumericType" );
+    Run( CheckSimpleVector,      "CheckSimpleVector" );
+    Run( CppAD_vector,           "CppAD_vector" );
+    Run( ErrorHandler,           "ErrorHandler" );
+    Run( LuFactor,               "LuFactor" );
+    Run( LuInvert,               "LuInvert" );
+    Run( LuSolve,                "LuSolve" );
+    Run( Near_Equal,             "Near_Equal" );
+    Run( OdeErrControl,          "OdeErrControl" );
+    Run( OdeErrMaxabs,           "OdeErrMaxabs" );
+    Run( OdeGear,                "OdeGear" );
+    Run( OdeGearControl,         "OdeGearControl" );
+    Run( RombergMul,             "RombergMul" );
+    Run( RombergOne,             "RombergOne" );
+    Run( SimpleVector,           "SimpleVector" );
+    Run( index_sort,             "index_sort" );
+    Run( nan,                    "nan" );
+    Run( poly,                   "poly" );
+    Run( pow_int,                "pow_int" );
+    Run( rosen_34,               "rosen_34" );
+    Run( runge_45,               "runge_45" );
+    Run( runge_45_1,             "runge_45_1" );
+    Run( set_union,              "set_union" );
+    Run( sparse_rc,              "sparse_rc" );
+    Run( sparse_rcv,             "sparse_rcv" );
+    Run( thread_alloc,           "thread_alloc" );
+    Run( to_string,              "to_string" );
+    Run( vectorBool,             "vectorBool" );
 // END_SORT_THIS_LINE_MINUS_1
 //
 # if CPPAD_C_COMPILER_GNU_FLAGS || CPPAD_C_COMPILER_MSVC_FLAGS
 # if CPPAD_USE_CPLUSPLUS_2017 && ! CPPAD_LINK_FLAGS_HAS_M32
-   Run( dll_lib,                "dll_lib" );
+    Run( dll_lib,                "dll_lib" );
 # endif
 # endif
-   //
-   // check for memory leak
-   bool memory_ok = CppAD::thread_alloc::free_all();
-   // print summary at end
-   bool ok = Run.summary(memory_ok);
-   //
-   return static_cast<int>( ! ok );
+    //
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }
 // END C++

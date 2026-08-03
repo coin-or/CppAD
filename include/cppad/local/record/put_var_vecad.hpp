@@ -21,8 +21,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PUT_VAR_VECAD_IND
-   // END_PUT_VAR_VECAD_IND
+    // BEGIN_PUT_VAR_VECAD_IND
+    // END_PUT_VAR_VECAD_IND
 }
 
 Purpose
@@ -50,18 +50,18 @@ template <class Base>
 addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 // END_PUT_VAR_VECAD_IND
 {  size_t offset = var_vecad_ind_.size();
-   var_vecad_ind_.push_back( vec_ind );
-   CPPAD_ASSERT_KNOWN(
-      size_t( addr_t( offset ) ) == offset,
-      "cppad_tape_addr_type cannot support needed index range"
-   );
-   return static_cast<addr_t>( offset );
+    var_vecad_ind_.push_back( vec_ind );
+    CPPAD_ASSERT_KNOWN(
+        size_t( addr_t( offset ) ) == offset,
+        "cppad_tape_addr_type cannot support needed index range"
+    );
+    return static_cast<addr_t>( offset );
 }
 /*
 ------------------------------------------------------------------------------
 {xrst_begin recorder_put_var_vecad dev}
 {xrst_spell
-   taddr
+    taddr
 }
 Tape Initialization for a Variable VecAD Object
 ###############################################
@@ -73,8 +73,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PUT_VAR_VECAD_VEC
-   // END_PUT_VAR_VECAD_VEC
+    // BEGIN_PUT_VAR_VECAD_VEC
+    // END_PUT_VAR_VECAD_VEC
 }
 
 Usage
@@ -103,25 +103,25 @@ These values are the parameter indices.
 // BEGIN_PUT_VAR_VECAD_VEC
 template <class Base>
 addr_t recorder<Base>::put_var_vecad(
-   size_t                        length   ,
-   const pod_vector<addr_t>&     taddr    )
+    size_t                        length   ,
+    const pod_vector<addr_t>&     taddr    )
 // END_PUT_VAR_VECAD_VEC
-{  CPPAD_ASSERT_UNKNOWN( length > 0 );
-   CPPAD_ASSERT_UNKNOWN( length == taddr.size() );
-   CPPAD_ASSERT_KNOWN(
-      size_t( std::numeric_limits<addr_t>::max() ) >= length,
-      "A VecAD vector length is too large fur cppad_tape_addr_type"
-   );
+{   CPPAD_ASSERT_UNKNOWN( length > 0 );
+    CPPAD_ASSERT_UNKNOWN( length == taddr.size() );
+    CPPAD_ASSERT_KNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= length,
+        "A VecAD vector length is too large fur cppad_tape_addr_type"
+    );
 
-   // store the length in VecInd
-   addr_t start = put_var_vecad_ind( addr_t(length) );
+    // store the length in VecInd
+    addr_t start = put_var_vecad_ind( addr_t(length) );
 
-   // store indices of the values in VecInd
-   for(size_t i = 0; i < length; i++)
-      put_var_vecad_ind( taddr[i] );
+    // store indices of the values in VecInd
+    for(size_t i = 0; i < length; i++)
+        put_var_vecad_ind( taddr[i] );
 
-   // return the taddr of the length (where the vector starts)
-   return start;
+    // return the taddr of the length (where the vector starts)
+    return start;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

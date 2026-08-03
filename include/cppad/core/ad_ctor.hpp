@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_CTOR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -31,11 +31,11 @@ implicit
 ========
 There is an implicit constructor where *x* has prototype
 
-   ``const VecAD`` < *Base* >& *x*
+    ``const VecAD`` < *Base* >& *x*
 
 There also is an implicit constructor where *x* has prototype
 
-   ``const`` *Base* & *x*
+    ``const`` *Base* & *x*
 
 In this case, *ay* is a
 :ref:`constant parameter<glossary@Parameter@Constant>`
@@ -44,7 +44,7 @@ explicit
 ========
 There is an explicit constructor where *x* has prototype
 
-   ``const`` *Type* & *x*
+    ``const`` *Type* & *x*
 
 for any type that has an explicit constructor of the form
 *Base* ( *x* ) .
@@ -55,12 +55,12 @@ ay
 **
 The target *ay* has prototype
 
-   ``AD`` < *Base* > *ay*
+    ``AD`` < *Base* > *ay*
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/ad_ctor.cpp
+    example/general/ad_ctor.cpp
 }
 The files :ref:`ad_ctor.cpp-name` contain examples and tests of these operations.
 It test returns true if it succeeds and false otherwise.
@@ -84,12 +84,12 @@ because they may be optimized better than the code below:
 template <class Base>
 AD<Base>::AD(const AD &x)
 {
-   value_    = x.value_;
-   tape_id_  = x.tape_id_;
-   taddr_    = x.taddr_;
-   ad_type_  = x.ad_type_;
+    value_    = x.value_;
+    tape_id_  = x.tape_id_;
+    taddr_    = x.taddr_;
+    ad_type_  = x.ad_type_;
 
-   return;
+    return;
 }
 \endcode
 */
@@ -127,8 +127,8 @@ AD<Base>::AD(const double &d)
 , tape_id_(0)
 , taddr_(0)
 , ad_type_(constant_enum)
-{  // check that this is a parameter
-   CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+{   // check that this is a parameter
+    CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
 // --------------------------------------------------------------------------
 # else
@@ -153,8 +153,8 @@ AD<Base>::AD(const Base &b)
 , tape_id_(0)
 , taddr_(0)
 , ad_type_(constant_enum)
-{  // check that this is a parameter
-   CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+{   // check that this is a parameter
+    CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
 # endif
 // --------------------------------------------------------------------------
@@ -167,7 +167,7 @@ Base type for this AD object.
 */
 template <class Base>
 AD<Base>::AD(const VecAD_reference<Base> &x)
-{  *this = x.ADBase(); }
+{   *this = x.ADBase(); }
 
 /*!
 Constructor from any other type, converts to Base type, and uses constructor
@@ -183,6 +183,10 @@ There must be a constructor for Base from Type.
 \param t
 is the object that is being converted from T to AD<Base>.
 */
+#pragma GCC diagnostic push
+# ifdef __clang__
+#pragma GCC diagnostic ignored "-Wimplicit-int-float-conversion"
+# endif
 template <class Base>
 template <class T>
 AD<Base>::AD(const T &t)
@@ -191,6 +195,7 @@ AD<Base>::AD(const T &t)
 , taddr_(0)
 , ad_type_(constant_enum)
 { }
+#pragma GCC diagnostic pop
 
 } // END_CPPAD_NAMESPACE
 # endif

@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 {xrst_begin json_graph_op}
 {xrst_spell
-   acosh
-   asinh
-   chkpoint
-   erfc
-   expm
-   neg
-   notpos
+    acosh
+    asinh
+    chkpoint
+    erfc
+    expm
+    neg
+    notpos
 }
 
 Json AD Graph Operator Definitions
@@ -44,7 +44,7 @@ have the following Json definition:
 where *name* is a :ref:`json_ad_graph@Token@String` .
 A corresponding *op_usage* has the form
 
-   [ *op_code* , *arg*  ]
+    [ *op_code* , *arg*  ]
 
 The possible values for the string *name* are listed
 in the table below.
@@ -52,33 +52,33 @@ The corresponding result is the node value as a function of the argument value.
 
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
-   *name*,result
-   ``abs``,absolute value
-   ``acos``,inverse cosine
-   ``acosh``,inverse hyperbolic cosine
-   ``asin``,inverse sine
-   ``asinh``,inverse hyperbolic sine
-   ``atan``,inverse tangent
-   ``atanh``,inverse hyperbolic sine
-   ``cos``,cosine
-   ``cosh``,hyperbolic cosine
-   ``erf``,error functions
-   ``erfc``,complementary error function
-   ``exp``,exponential
-   ``expm1``,minus one plus the exponential
-   ``log1p``,log  plus one
-   ``log``,logarithm
-   ``neg``,negative
-   ``sign``,sign function
-   ``sin``,sine
-   ``sinh``,hyperbolic sine
-   ``sqrt``,square root
-   ``tan``,tangent
-   ``tanh``,hyperbolic tangent
-   {xrst_comment END_SORT_THIS_LINE_MINUS_1}
+    {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
+    *name*,result
+    ``abs``,absolute value
+    ``acos``,inverse cosine
+    ``acosh``,inverse hyperbolic cosine
+    ``asin``,inverse sine
+    ``asinh``,inverse hyperbolic sine
+    ``atan``,inverse tangent
+    ``atanh``,inverse hyperbolic sine
+    ``cos``,cosine
+    ``cosh``,hyperbolic cosine
+    ``erf``,error functions
+    ``erfc``,complementary error function
+    ``exp``,exponential
+    ``expm1``,minus one plus the exponential
+    ``log1p``,log  plus one
+    ``log``,logarithm
+    ``neg``,negative
+    ``sign``,sign function
+    ``sin``,sine
+    ``sinh``,hyperbolic sine
+    ``sqrt``,square root
+    ``tan``,tangent
+    ``tanh``,hyperbolic tangent
+    {xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 Example
 =======
@@ -99,7 +99,7 @@ have the following Json definition:
 where *name* is a :ref:`json_ad_graph@Token@String` .
 A corresponding *op_usage* has the form
 
-   [ *op_code* , *first_arg* , *second_arg*  ]
+    [ *op_code* , *first_arg* , *second_arg*  ]
 
 The possible values for the string *name* are listed below:
 
@@ -152,7 +152,7 @@ This operator has the following Json definition:
 
 A corresponding *op_usage* has the form
 
-   [ *op_code* , *n_result* , *n_arg* , [ *first_arg* , ..., *last_arg*  ] ]
+    [ *op_code* , *n_result* , *n_arg* , [ *first_arg* , ..., *last_arg*  ] ]
 
 where *n_result* is always ``1`` .
 This operation creates one node with value equal to
@@ -206,11 +206,11 @@ Other Comparisons
 =================
 Note that
 
-   ``CondExpGt`` ( *left* , *right* , *if_true* , *if_false* )
+    ``CondExpGt`` ( *left* , *right* , *if_true* , *if_false* )
 
 is equivalent to
 
-   ``CondExpLe`` ( *left* , *right* , *if_false* , *if_true* )
+    ``CondExpLe`` ( *left* , *right* , *if_false* , *if_true* )
 
 Similar conversions can be used for all the possible
 :ref:`conditional expressions<CondExp-name>` .
@@ -236,7 +236,7 @@ where *rel* is ``eq`` (equal),
 ``lt`` (less than).
 A corresponding *op_usage* has the form
 
-   [ *op_code* , *n_result* , *n_arg* , [ *left* , *right*  ] ]
+    [ *op_code* , *n_result* , *n_arg* , [ *left* , *right*  ] ]
 
 n_result
 ========
@@ -252,7 +252,7 @@ left, right
 ===========
 The logical comparison is defined as the logical expression
 
-   *left* *cop* *right*
+    *left* *cop* *right*
 
 The comparison *cop* is define by the cases below.
 The Json graph corresponds to the comparison being true.
@@ -310,7 +310,7 @@ This operator has the following Json definition:
 
 A corresponding op_usage has the form
 
-   [ *op_code* , *name* , *n_result* , *n_arg* , [ *arg*  ]  ]
+    [ *op_code* , *name* , *n_result* , *n_arg* , [ *arg*  ]  ]
 
 name
 ====
@@ -419,7 +419,7 @@ This operator has the following Json definition:
 
 A corresponding *op_usage* has the form
 
-   [ *op_code* , *before* , *after* , *n_result* , *n_arg* , [ *notpos* , *value*  ] ]
+    [ *op_code* , *before* , *after* , *n_result* , *n_arg* , [ *notpos* , *value*  ] ]
 
 before
 ======
@@ -457,20 +457,20 @@ of this operator.
 Contents
 ********
 {xrst_toc_table
-   example/json/unary_op.cpp
-   example/json/add_op.cpp
-   example/json/azmul_op.cpp
-   example/json/div_op.cpp
-   example/json/mul_op.cpp
-   example/json/pow_op.cpp
-   example/json/sub_op.cpp
-   example/json/sum_op.cpp
-   example/json/cexp_op.cpp
-   example/json/comp_op.cpp
-   example/json/discrete_op.cpp
-   example/json/atom_op.cpp
-   example/json/atom4_op.cpp
-   example/json/print_op.cpp
+    example/json/unary_op.cpp
+    example/json/add_op.cpp
+    example/json/azmul_op.cpp
+    example/json/div_op.cpp
+    example/json/mul_op.cpp
+    example/json/pow_op.cpp
+    example/json/sub_op.cpp
+    example/json/sum_op.cpp
+    example/json/cexp_op.cpp
+    example/json/comp_op.cpp
+    example/json/discrete_op.cpp
+    example/json/atom_op.cpp
+    example/json/atom4_op.cpp
+    example/json/print_op.cpp
 }
 
 {xrst_end json_graph_op}

@@ -55,8 +55,8 @@ index_page_name='user_guide'
 #     archive/$tag.tar.gz
 # In addition, all occurrences of stable-yyyy and release-yyyy are updated.
 version_file_list='
-   CMakeLists.txt
-   user_guide.xrst
+    CMakeLists.txt
+    user_guide.xrst
 '
 # All the occurrences of the version in the files above are checked to see
 # that they agree.
@@ -68,7 +68,7 @@ version_file_list='
 # The entries are separate by white space, so the under bar character is used
 # for spaces in the full name.
 contributor_list='
-   bradbell:Bradley_M._Bell
+    bradbell:Bradley_M._Bell
 '
 #
 # no_copyright_list
@@ -76,22 +76,22 @@ contributor_list='
 # If an entry below is a directory it specifies all the files in the directory.
 # BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
-   .circleci/config.yml
-   .github/workflows
-   .gitignore
-   .readthedocs.yaml
-   .travis.yml
-   COPYING
-   appveyor.yml
-   authors
-   batch_edit.sed
-   bin/build.bat
-   cmake/cppad_uninstall.cmake
-   coin.png
-   epl-2.0.txt
-   typos.toml
-   uw_copy_040507.html
-   xrst.toml
+    .circleci/config.yml
+    .github/workflows
+    .gitignore
+    .readthedocs.yaml
+    .travis.yml
+    COPYING
+    appveyor.yml
+    authors
+    batch_edit.sed
+    bin/build.bat
+    cmake/cppad_uninstall.cmake
+    coin.png
+    epl-2.0.txt
+    typos.toml
+    uw_copy_040507.html
+    xrst.toml
 '
 # END_SORT_THIS_LINE_MINUS_2
 #
@@ -99,9 +99,9 @@ no_copyright_list='
 # These files are not checked for invisible white space or tabs.
 # If an entry below is a directory it specifies all the files in the directory.
 invisible_and_tab_ok='
-   batch_edit.sed
-   coin.png
-   uw_copy_040507.html
+    batch_edit.sed
+    coin.png
+    uw_copy_040507.html
 '
 #
 # check_git_commit

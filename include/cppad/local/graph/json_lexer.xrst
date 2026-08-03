@@ -10,7 +10,7 @@ Lexical Analysis Class for a Json AD Graph
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/graph/json_lexer.hpp
+    include/cppad/local/graph/json_lexer.hpp
 }
 
 {xrst_end json_lexer}

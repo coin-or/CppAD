@@ -33,7 +33,7 @@ execute the following commands starting in the
 You can then run the corresponding speed tests
 with the following command
 
-   ./ ``speed_fadbad speed`` *seed*
+    ./ ``speed_fadbad speed`` *seed*
 
 where *seed* is a positive integer.
 See :ref:`speed_main-name` for more options.
@@ -41,13 +41,13 @@ See :ref:`speed_main-name` for more options.
 Contents
 ********
 {xrst_toc_list
-   speed/fadbad/det_minor.cpp
-   speed/fadbad/det_lu.cpp
-   speed/fadbad/mat_mul.cpp
-   speed/fadbad/ode.cpp
-   speed/fadbad/poly.cpp
-   speed/fadbad/sparse_hessian.cpp
-   speed/fadbad/sparse_jacobian.cpp
+    speed/fadbad/det_minor.cpp
+    speed/fadbad/det_lu.cpp
+    speed/fadbad/mat_mul.cpp
+    speed/fadbad/ode.cpp
+    speed/fadbad/poly.cpp
+    speed/fadbad/sparse_hessian.cpp
+    speed/fadbad/sparse_jacobian.cpp
 }
 
 {xrst_end speed_fadbad}

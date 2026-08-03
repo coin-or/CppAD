@@ -7,7 +7,7 @@
 /*
 {xrst_begin atomic_four_lin_ode_rev_depend.hpp}
 {xrst_spell
-   wk
+    wk
 }
 
 Atomic Linear ODE Forward Type Calculation: Example Implementation
@@ -47,7 +47,7 @@ Hence it suffices to compute the dependency for
 
 .. math::
 
-   h (x) = \sum_{k=0}^4 w^k (x)
+    h (x) = \sum_{k=0}^4 w^k (x)
 
 where :math:`w^0 (x) = b(x)` and for :math:`k = 1, 2, \ldots`,
 :math:`w^k (x) = A(x) w^{k-1} (x)`.
@@ -55,8 +55,8 @@ where :math:`w^0 (x) = b(x)` and for :math:`k = 1, 2, \ldots`,
 Source
 ******
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end atomic_four_lin_ode_rev_depend.hpp}
@@ -69,71 +69,71 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // rev_depend override
 template <class Base>
 bool atomic_lin_ode<Base>::rev_depend(
-   size_t                                         call_id,
-   const CppAD::vector<bool>&                     ident_zero_x,
-   CppAD::vector<bool>&                           depend_x,
-   const CppAD::vector<bool>&                     depend_y
+    size_t                                         call_id,
+    const CppAD::vector<bool>&                     ident_zero_x,
+    CppAD::vector<bool>&                           depend_x,
+    const CppAD::vector<bool>&                     depend_y
 )
 {
-   // nnz
-   Base      r;
-   Base      step;
-   sparse_rc pattern;
-   bool      transpose;
-   get(call_id, r, step, pattern, transpose);
-   size_t nnz = pattern.nnz();
-   //
-   // m
-   size_t m = depend_y.size();
-   CPPAD_ASSERT_UNKNOWN( ident_zero_x.size() == depend_x.size() );
-   CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
-   CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
-   //
-   // depend_w
-   CppAD::vector<bool> depend_w = depend_y;
-   //
-   // depend_x
-   for(size_t p = 0; p < nnz; ++p)
-      depend_x[p] = false;
-   for(size_t i = 0; i < m; ++i)
-      depend_x[nnz + i] = depend_y[i];
-   //
-   // change
-   // Did depend_w change during the previous iteration of the while loop
-   bool change = true;
-   while(change)
-   {  change = false;
-      // we use k = 1, 2, ... to denote the pass through this loop
-      //
-      // depend_w, depend_x
-      // include dependency for w^k (x)
-      for(size_t p = 0; p < nnz; ++p) if( ! ident_zero_x[p] )
-      {  size_t i = pattern.row()[p];
-         size_t j = pattern.col()[p];
-         if( transpose )
-            std::swap(i, j);
-         //
-         // back propagate dependency on y
-         if( depend_w[i] && ! depend_w[j] )
-         {  change      = true;
-            depend_w[j] = true;
-         }
-         //
-         // depend_x
-         // for propagate dependency on A_{i,j}
-         if( depend_w[i] && ! depend_x[p] )
-         {  change      = true;
-            depend_x[p] = true;
-         }
-      }
-   }
-   //
-   // depend_x
-   // terms corresponding to b(x)
-   for(size_t i = 0; i < m; ++i)
-      depend_x[nnz + i] = depend_w[i];
-   //
-   return true;
+    // nnz
+    Base      r;
+    Base      step;
+    sparse_rc pattern;
+    bool      transpose;
+    get(call_id, r, step, pattern, transpose);
+    size_t nnz = pattern.nnz();
+    //
+    // m
+    size_t m = depend_y.size();
+    CPPAD_ASSERT_UNKNOWN( ident_zero_x.size() == depend_x.size() );
+    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
+    //
+    // depend_w
+    CppAD::vector<bool> depend_w = depend_y;
+    //
+    // depend_x
+    for(size_t p = 0; p < nnz; ++p)
+        depend_x[p] = false;
+    for(size_t i = 0; i < m; ++i)
+        depend_x[nnz + i] = depend_y[i];
+    //
+    // change
+    // Did depend_w change during the previous iteration of the while loop
+    bool change = true;
+    while(change)
+    {   change = false;
+        // we use k = 1, 2, ... to denote the pass through this loop
+        //
+        // depend_w, depend_x
+        // include dependency for w^k (x)
+        for(size_t p = 0; p < nnz; ++p) if( ! ident_zero_x[p] )
+        {   size_t i = pattern.row()[p];
+            size_t j = pattern.col()[p];
+            if( transpose )
+                std::swap(i, j);
+            //
+            // back propagate dependency on y
+            if( depend_w[i] && ! depend_w[j] )
+            {   change      = true;
+                depend_w[j] = true;
+            }
+            //
+            // depend_x
+            // for propagate dependency on A_{i,j}
+            if( depend_w[i] && ! depend_x[p] )
+            {   change      = true;
+                depend_x[p] = true;
+            }
+        }
+    }
+    //
+    // depend_x
+    // terms corresponding to b(x)
+    for(size_t i = 0; i < m; ++i)
+        depend_x[nnz + i] = depend_w[i];
+    //
+    return true;
 }
 } // END_CPPAD_NAMESPACE
 

@@ -63,7 +63,7 @@ in the ``AD< AD<double> >`` recording depend on the
 in the ``AD<double>`` recording,
 we must first declaring these variables; i.e.,
 
-   ``Independent`` ( *a1x* )
+    ``Independent`` ( *a1x* )
 
 where *a1x* is
 a :ref:`SimpleVector-name` with elements of type ``AD<double>`` .
@@ -74,7 +74,7 @@ Start AD< AD<double> > Recording
 ================================
 The next step is to declare the independent variables using
 
-   ``Independent`` ( *a2x* )
+    ``Independent`` ( *a2x* )
 
 where *a2x* is
 a :ref:`SimpleVector-name` with elements of type
@@ -88,7 +88,7 @@ The next step is to calculate the inner function
 using ``AD< AD<double> >`` class objects.
 We then stop the recording using
 
-   *a1f* . ``Dependent`` ( *a2x* , *a2y* )
+    *a1f* . ``Dependent`` ( *a2x* , *a2y* )
 
 where *a2y* is
 a :ref:`SimpleVector-name` with elements of type
@@ -103,7 +103,7 @@ in the ``AD< AD<double> >`` recording depend on the
 in the ``AD<double>`` recording,
 it is preferred to delay declaring these variables to this point; i.e.,
 
-   ``Independent`` ( *a1x* )
+    ``Independent`` ( *a1x* )
 
 where *a1x* is
 a :ref:`SimpleVector-name` with elements of type ``AD<double>`` .
@@ -118,7 +118,7 @@ Note that derivatives of the inner function can be included
 in the calculation of the outer function using *a1f* .
 We then stop the recording of ``AD<double>`` operations using
 
-   *g* . ``Dependent`` ( *a1x* , *a1y* )
+    *g* . ``Dependent`` ( *a1x* , *a1y* )
 
 where *a1y* is
 a :ref:`SimpleVector-name` with elements of type
@@ -130,8 +130,8 @@ Derivatives of Outer Function
 The AD function object *g* can then be used to calculate
 the derivatives of the outer function.
 {xrst_toc_hidden
-   example/general/mul_level.cpp
-   example/general/change_param.cpp
+    example/general/mul_level.cpp
+    example/general/change_param.cpp
 }
 
 Example

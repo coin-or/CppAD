@@ -29,17 +29,17 @@ ADD_SUBDIRECTORY(valvector)
 #
 # cppad_code_gen examples
 IF( cppad_has_cppadcg )
-   ADD_SUBDIRECTORY(cppad_code_gen)
+    ADD_SUBDIRECTORY(cppad_code_gen)
 ENDIF( cppad_has_cppadcg )
 #
 # ipopt_solve examples
 IF( cppad_has_ipopt)
-   ADD_SUBDIRECTORY(ipopt_solve)
+    ADD_SUBDIRECTORY(ipopt_solve)
 ENDIF( cppad_has_ipopt)
 #
 # jit examples
 IF( NOT cppad_link_flags_has_m32 )
-   ADD_SUBDIRECTORY(jit)
+    ADD_SUBDIRECTORY(jit)
 ENDIF( )
 
 

@@ -7,7 +7,7 @@ This file is intended to help document multiple direction forward Taylor
 computation for all operators.
 
 It has the following xrst template comments:
-   headers: n_dir, cap_order, order_up, taylor
+    headers: n_dir, cap_order, order_up, taylor
 
 It does not have any xrst template replacements:
 }
@@ -33,16 +33,16 @@ For each variable there is one Taylor coefficient of order zero
 and *n_dir* coefficients for orders greater than zero.
 The taylor coefficients capacity per variable is::
 
-   per_variable = (cap_order - 1) * n_dir + 1
+    per_variable = (cap_order - 1) * n_dir + 1
 
 (j, k, ell)
 ===========
 For variable index j, order k, and direction index ell::
 
-   if k == 0
-      (j, k, ell) = j * per_variable
-   else
-      (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
+    if k == 0
+        (j, k, ell) = j * per_variable
+    else
+        (j, k, ell) = j * per_variable + (k-1) * n_dir + 1 + ell
 
 The value taylor[ (j, k, ell) ] is the
 Taylor coefficient corresponding to
@@ -52,7 +52,7 @@ n_dir = 1
 =========
 If *n_dir* is equal to one then *ell* is zero and::
 
-   (j, k, ell) = j * cap_order + k
+    (j, k, ell) = j * cap_order + k
 
 n_res
 =====
@@ -62,20 +62,20 @@ Input
 =====
 ::
 
-   for j = 0, ..., i_z - n_res,
-      for k = 0 , ... , order_up
-         for ell = 0 , ... , n_dir - 1
-            taylor [ (j, k, ell) ] is an input
+    for j = 0, ..., i_z - n_res,
+        for k = 0 , ... , order_up
+            for ell = 0 , ... , n_dir - 1
+                taylor [ (j, k, ell) ] is an input
 
-   for j = i_z - n_res + 1, ..., i_z
-      for k = 0 , ... , order_up - 1
-         for ell = 0 , ... , n_dir - 1
-            taylor [ (j, k, ell) ] is an input
+    for j = i_z - n_res + 1, ..., i_z
+        for k = 0 , ... , order_up - 1
+            for ell = 0 , ... , n_dir - 1
+                taylor [ (j, k, ell) ] is an input
 
 Output
 ======
 ::
 
-   for j = i_z - n_res + 1, ..., i_z
-      for ell = 0 , ... , n_dir - 1
-         taylor [ (j, order_up, ell) ] is an output
+    for j = i_z - n_res + 1, ..., i_z
+        for ell = 0 , ... , n_dir - 1
+            taylor [ (j, order_up, ell) ] is an output

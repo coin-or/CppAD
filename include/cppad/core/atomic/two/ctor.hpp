@@ -66,7 +66,7 @@ name
 ====
 This ``atomic_base`` constructor argument has the following prototype
 
-   ``const std::string&`` *name*
+    ``const std::string&`` *name*
 
 It is the name for this atomic function and is used for error reporting.
 The suggested value for *name* is *afun* or *atomic_user* ,
@@ -76,23 +76,23 @@ sparsity
 ========
 This ``atomic_base`` constructor argument has prototype
 
-   ``atomic_base`` < *Base* >:: ``option_enum`` *sparsity*
+    ``atomic_base`` < *Base* >:: ``option_enum`` *sparsity*
 
 The current *sparsity* for an ``atomic_base`` object
 determines which type of sparsity patterns it uses
 and its value is one of the following:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - *sparsity*
-     - sparsity patterns
-   * - ``atomic_base`` < *Base* >:: ``pack_sparsity_enum``
-     - :ref:`CppAD_vector@vectorBool`
-   * - ``atomic_base`` < *Base* >:: ``bool_sparsity_enum``
-     - :ref:`vector<CppAD_vector-name>` ``<bool>``
-   * - ``atomic_base`` < *Base* >:: ``set_sparsity_enum``
-     - :ref:`vector<CppAD_vector-name>` ``<std::set<std::size_t> >``
+    * - *sparsity*
+      - sparsity patterns
+    * - ``atomic_base`` < *Base* >:: ``pack_sparsity_enum``
+      - :ref:`CppAD_vector@vectorBool`
+    * - ``atomic_base`` < *Base* >:: ``bool_sparsity_enum``
+      - :ref:`vector<CppAD_vector-name>` ``<bool>``
+    * - ``atomic_base`` < *Base* >:: ``set_sparsity_enum``
+      - :ref:`vector<CppAD_vector-name>` ``<std::set<std::size_t> >``
 
 There is a default value for *sparsity* if it is not
 included in the constructor (which may be either the bool or set option).
@@ -118,9 +118,9 @@ make sure user does not invoke the default constructor
 */
 template <class Base>
 atomic_base<Base>::atomic_base(void)
-{  CPPAD_ASSERT_KNOWN(false,
-      "Attempt to use the atomic_base default constructor"
-   );
+{   CPPAD_ASSERT_KNOWN(false,
+        "Attempt to use the atomic_base default constructor"
+    );
 }
 /*!
 Constructor
@@ -135,29 +135,29 @@ bool sparsity patterns.
 */
 template <class Base>
 atomic_base<Base>::atomic_base(
-      const std::string&     name,
-      option_enum            sparsity
+        const std::string&     name,
+        option_enum            sparsity
 ) :
 sparsity_( sparsity               )
-{  CPPAD_ASSERT_KNOWN(
-      ! thread_alloc::in_parallel() ,
-      "atomic_base: constructor cannot be called in parallel mode."
-   );
-   CPPAD_ASSERT_UNKNOWN( constant_enum < dynamic_enum );
-   CPPAD_ASSERT_UNKNOWN( dynamic_enum < variable_enum );
-   //
-   // atomic_index
-   bool        set_null  = false;
-   size_t      index     = 0;
-   size_t      type      = 2;
-   std::string copy_name = name;
-   void*       copy_this = reinterpret_cast<void*>( this );
-   index_  = local::atomic_index<Base>(
-      set_null, index, type, &copy_name, copy_this
-   );
-   // initialize work pointers as null;
-   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-      work_[thread] = nullptr;
+{   CPPAD_ASSERT_KNOWN(
+        ! thread_alloc::in_parallel() ,
+        "atomic_base: constructor cannot be called in parallel mode."
+    );
+    CPPAD_ASSERT_UNKNOWN( constant_enum < dynamic_enum );
+    CPPAD_ASSERT_UNKNOWN( dynamic_enum < variable_enum );
+    //
+    // atomic_index
+    bool        set_null  = false;
+    size_t      index     = 0;
+    size_t      type      = 2;
+    std::string copy_name = name;
+    void*       copy_this = reinterpret_cast<void*>( this );
+    index_  = local::atomic_index<Base>(
+        set_null, index, type, &copy_name, copy_this
+    );
+    // initialize work pointers as null;
+    for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+        work_[thread] = nullptr;
 }
 
 } // END_CPPAD_NAMESPACE

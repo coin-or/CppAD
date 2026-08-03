@@ -8,18 +8,18 @@
 /*
 {xrst_begin OdeGearControl}
 {xrst_spell
-   dep
-   eabs
-   ef
-   erel
-   maxabs
-   nstep
-   sini
-   smax
-   smin
-   test test
-   tf
-   xf
+    dep
+    eabs
+    ef
+    erel
+    maxabs
+    nstep
+    sini
+    smax
+    smin
+    test test
+    tf
+    xf
 }
 
 An Error Controller for Gear's Ode Solvers
@@ -39,12 +39,12 @@ We define :math:`X : [ti , tf] \rightarrow \B{R}^n` by
 the following initial value problem:
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      X(ti)  & = & xi    \\
-      X'(t)  & = & f[t , X(t)]
-   \end{eqnarray}
+    \begin{eqnarray}
+        X(ti)  & = & xi    \\
+        X'(t)  & = & f[t , X(t)]
+    \end{eqnarray}
 
 The routine :ref:`OdeGear-name` is a stiff multi-step method that
 can be used to approximate the solution to this equation.
@@ -67,7 +67,7 @@ xf
 **
 The return value *xf* has the prototype
 
-   *Vector* *xf*
+    *Vector* *xf*
 
 and the size of *xf* is equal to *n*
 (see description of :ref:`OdeGear@Vector` below).
@@ -78,7 +78,7 @@ Fun
 The class *Fun*
 and the object *F* satisfy the prototype
 
-   *Fun* & *F*
+    *Fun* & *F*
 
 This must support the following set of calls
 
@@ -89,7 +89,7 @@ t
 =
 The argument *t* has prototype
 
-   ``const`` *Scalar* & *t*
+    ``const`` *Scalar* & *t*
 
 (see description of :ref:`OdeGear@Scalar` below).
 
@@ -97,7 +97,7 @@ x
 =
 The argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 and has size *N*
 (see description of :ref:`OdeGear@Vector` below).
@@ -106,7 +106,7 @@ f
 =
 The argument *f* to *F* . ``Ode`` has prototype
 
-   *Vector* & *f*
+    *Vector* & *f*
 
 On input and output, *f* is a vector of size *N*
 and the input values of the elements of *f* do not matter.
@@ -118,7 +118,7 @@ f_x
 ===
 The argument *f_x* has prototype
 
-   *Vector* & *f_x*
+    *Vector* & *f_x*
 
 On input and output, *f_x* is a vector of size :math:`N * N`
 and the input values of the elements of *f_x* do not matter.
@@ -126,7 +126,7 @@ On output,
 
 .. math::
 
-   f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+    f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
 
 Warning
 =======
@@ -139,7 +139,7 @@ M
 *
 The argument *M* has prototype
 
-   ``size_t`` *M*
+    ``size_t`` *M*
 
 It specifies the order of the multi-step method; i.e.,
 the order of the approximating polynomial
@@ -150,7 +150,7 @@ ti
 **
 The argument *ti* has prototype
 
-   ``const`` *Scalar* & *ti*
+    ``const`` *Scalar* & *ti*
 
 It specifies the initial time for the integration of
 the differential equation.
@@ -159,7 +159,7 @@ tf
 **
 The argument *tf* has prototype
 
-   ``const`` *Scalar* & *tf*
+    ``const`` *Scalar* & *tf*
 
 It specifies the final time for the integration of
 the differential equation.
@@ -168,7 +168,7 @@ xi
 **
 The argument *xi* has prototype
 
-   ``const`` *Vector* & *xi*
+    ``const`` *Vector* & *xi*
 
 and size *n* .
 It specifies value of :math:`X(ti)`.
@@ -177,7 +177,7 @@ smin
 ****
 The argument *smin* has prototype
 
-   ``const`` *Scalar* & *smin*
+    ``const`` *Scalar* & *smin*
 
 The minimum value of :math:`T[M] -  T[M-1]` in a call to ``OdeGear``
 will be :math:`smin` except for the last two calls where it may be
@@ -188,7 +188,7 @@ smax
 ****
 The argument *smax* has prototype
 
-   ``const`` *Scalar* & *smax*
+    ``const`` *Scalar* & *smax*
 
 It specifies the maximum step size to use during the integration;
 i.e., the maximum value for :math:`T[M] - T[M-1]`
@@ -198,7 +198,7 @@ sini
 ****
 The argument *sini* has prototype
 
-   *Scalar* & *sini*
+    *Scalar* & *sini*
 
 The value of *sini* is the minimum
 step size to use during initialization of the multi-step method; i.e.,
@@ -210,7 +210,7 @@ eabs
 ****
 The argument *eabs* has prototype
 
-   ``const`` *Vector* & *eabs*
+    ``const`` *Vector* & *eabs*
 
 and size *n* .
 Each of the elements of *eabs* must be
@@ -225,7 +225,7 @@ erel
 ****
 The argument *erel* has prototype
 
-   ``const`` *Scalar* & *erel*
+    ``const`` *Scalar* & *erel*
 
 and is greater than or equal zero.
 It specifies a bound for the relative
@@ -238,7 +238,7 @@ ef
 **
 The argument value *ef* has prototype
 
-   *Vector* & *ef*
+    *Vector* & *ef*
 
 and size *n* .
 The input value of its elements does not matter.
@@ -248,14 +248,14 @@ absolute error in the approximation *xf* ; i.e.,
 
 .. math::
 
-   ef_i > | X( tf )_i - xf_i |
+    ef_i > | X( tf )_i - xf_i |
 
 maxabs
 ******
 The argument *maxabs* is optional in the call to ``OdeGearControl`` .
 If it is present, it has the prototype
 
-   *Vector* & *maxabs*
+    *Vector* & *maxabs*
 
 and size *n* .
 The input value of its elements does not matter.
@@ -265,15 +265,15 @@ maximum absolute value of :math:`X(t)`; i.e.,
 
 .. math::
 
-   maxabs[i] \approx \max \left\{
-      | X( t )_i | \; : \;  t \in [ti, tf]
-   \right\}
+    maxabs[i] \approx \max \left\{
+        | X( t )_i | \; : \;  t \in [ti, tf]
+    \right\}
 
 nstep
 *****
 The argument *nstep* has the prototype
 
-   *size_t* & *nstep*
+    *size_t* & *nstep*
 
 Its input value does not matter and its output value
 is the number of calls to :ref:`OdeGear-name`
@@ -293,10 +293,10 @@ and *tb* is the final step time,
 
 .. math::
 
-   \left| \tilde{X} (tb)_j  - X (tb)_j \right|
-   \leq
-   \frac{tf - ti}{tb - ta}
-   \left[ eabs[j] + erel \;  | \tilde{X} (tb)_j | \right]
+    \left| \tilde{X} (tb)_j  - X (tb)_j \right|
+    \leq
+    \frac{tf - ti}{tb - ta}
+    \left[ eabs[j] + erel \;  | \tilde{X} (tb)_j | \right]
 
 If :math:`X(tb)_j` is near zero for some :math:`tb \in [ti , tf]`,
 and one uses an absolute error criteria :math:`eabs[j]` of zero,
@@ -320,19 +320,19 @@ In addition, the following operations must be defined for
 *Scalar* objects *a* and *b* :
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Operation**
-     - **Description**
-   * - *a* <= *b*
-     - returns true (false) if *a* is less than or equal
-       (greater than) *b* .
-   * - *a* == *b*
-     - returns true (false) if *a* is equal to *b* .
-   * - ``log`` ( *a* )
-     - returns a *Scalar* equal to the logarithm of *a*
-   * - ``exp`` ( *a* )
-     - returns a *Scalar* equal to the exponential of *a*
+    * - **Operation**
+      - **Description**
+    * - *a* <= *b*
+      - returns true (false) if *a* is less than or equal
+         (greater than) *b* .
+    * - *a* == *b*
+      - returns true (false) if *a* is equal to *b* .
+    * - ``log`` ( *a* )
+      - returns a *Scalar* equal to the logarithm of *a*
+    * - ``exp`` ( *a* )
+      - returns a *Scalar* equal to the exponential of *a*
 
 Vector
 ******
@@ -344,7 +344,7 @@ if this is not the case.
 Example
 *******
 {xrst_toc_hidden
-   example/utility/ode_gear_control.cpp
+    example/utility/ode_gear_control.cpp
 }
 The file
 :ref:`ode_gear_control.cpp-name`
@@ -360,15 +360,15 @@ Given the value of :math:`e(s)`, a step of size :math:`\lambda s`
 would be ok provided that
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
-      a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
-      a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
-      a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
-      \lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
-   \end{eqnarray}
+    \begin{eqnarray}
+        a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
+        a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
+        a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
+        a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
+        \lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
+    \end{eqnarray}
 
 Thus if the right hand side of the last inequality is greater
 than or equal to one, the step of size :math:`s` is ok.
@@ -391,173 +391,173 @@ namespace CppAD { // Begin CppAD namespace
 
 template <class Scalar, class Vector, class Fun>
 Vector OdeGearControl(
-   Fun             &F     ,
-   size_t           M     ,
-   const Scalar    &ti    ,
-   const Scalar    &tf    ,
-   const Vector    &xi    ,
-   const Scalar    &smin  ,
-   const Scalar    &smax  ,
-   Scalar          &sini  ,
-   const Vector    &eabs  ,
-   const Scalar    &erel  ,
-   Vector          &ef    ,
-   Vector          &maxabs,
-   size_t          &nstep )
+    Fun             &F     ,
+    size_t           M     ,
+    const Scalar    &ti    ,
+    const Scalar    &tf    ,
+    const Vector    &xi    ,
+    const Scalar    &smin  ,
+    const Scalar    &smax  ,
+    Scalar          &sini  ,
+    const Vector    &eabs  ,
+    const Scalar    &erel  ,
+    Vector          &ef    ,
+    Vector          &maxabs,
+    size_t          &nstep )
 {
-   // check simple vector class specifications
-   CheckSimpleVector<Scalar, Vector>();
+    // check simple vector class specifications
+    CheckSimpleVector<Scalar, Vector>();
 
-   // dimension of the state space
-   size_t n = size_t(xi.size());
+    // dimension of the state space
+    size_t n = size_t(xi.size());
 
-   CPPAD_ASSERT_KNOWN(
-      M >= 1,
-      "Error in OdeGearControl: M is less than one"
-   );
-   CPPAD_ASSERT_KNOWN(
-      smin <= smax,
-      "Error in OdeGearControl: smin is greater than smax"
-   );
-   CPPAD_ASSERT_KNOWN(
-      sini <= smax,
-      "Error in OdeGearControl: sini is greater than smax"
-   );
-   CPPAD_ASSERT_KNOWN(
-      size_t(eabs.size()) == n,
-      "Error in OdeGearControl: size of eabs is not equal to n"
-   );
-   CPPAD_ASSERT_KNOWN(
-      size_t(maxabs.size()) == n,
-      "Error in OdeGearControl: size of maxabs is not equal to n"
-   );
+    CPPAD_ASSERT_KNOWN(
+        M >= 1,
+        "Error in OdeGearControl: M is less than one"
+    );
+    CPPAD_ASSERT_KNOWN(
+        smin <= smax,
+        "Error in OdeGearControl: smin is greater than smax"
+    );
+    CPPAD_ASSERT_KNOWN(
+        sini <= smax,
+        "Error in OdeGearControl: sini is greater than smax"
+    );
+    CPPAD_ASSERT_KNOWN(
+        size_t(eabs.size()) == n,
+        "Error in OdeGearControl: size of eabs is not equal to n"
+    );
+    CPPAD_ASSERT_KNOWN(
+        size_t(maxabs.size()) == n,
+        "Error in OdeGearControl: size of maxabs is not equal to n"
+    );
 
-   // some constants
-   const Scalar zero(0);
-   const Scalar one(1);
-   const Scalar one_plus( Scalar(3) / Scalar(2) );
-   const Scalar two(2);
-   const Scalar ten(10);
+    // some constants
+    const Scalar zero(0);
+    const Scalar one(1);
+    const Scalar one_plus( Scalar(3) / Scalar(2) );
+    const Scalar two(2);
+    const Scalar ten(10);
 
-   // temporary indices
-   size_t i, k;
+    // temporary indices
+    size_t i, k;
 
-   // temporary Scalars
-   Scalar step, sprevious, lambda, axi, a, root, r;
+    // temporary Scalars
+    Scalar step, sprevious, lambda, axi, a, root, r;
 
-   // vectors of Scalars
-   Vector T  (M + 1);
-   Vector X( (M + 1) * n );
-   Vector e(n);
-   Vector xf(n);
+    // vectors of Scalars
+    Vector T  (M + 1);
+    Vector X( (M + 1) * n );
+    Vector e(n);
+    Vector xf(n);
 
-   // initial integer values
-   size_t m = 1;
-   nstep    = 0;
+    // initial integer values
+    size_t m = 1;
+    nstep    = 0;
 
-   // initialize T
-   T[0] = ti;
+    // initialize T
+    T[0] = ti;
 
-   // initialize X, ef, maxabs
-   for(i = 0; i < n; i++)
-   for(i = 0; i < n; i++)
-   {  X[i] = xi[i];
-      ef[i] = zero;
-      X[i]  = xi[i];
-      if( zero <= xi[i] )
-         maxabs[i] = xi[i];
-      else
-         maxabs[i] = - xi[i];
+    // initialize X, ef, maxabs
+    for(i = 0; i < n; i++)
+    for(i = 0; i < n; i++)
+    {   X[i] = xi[i];
+        ef[i] = zero;
+        X[i]  = xi[i];
+        if( zero <= xi[i] )
+            maxabs[i] = xi[i];
+        else
+            maxabs[i] = - xi[i];
 
-   }
+    }
 
-   // initial step size
-   step = smin;
+    // initial step size
+    step = smin;
 
-   while( T[m-1] < tf )
-   {  sprevious = step;
+    while( T[m-1] < tf )
+    {   sprevious = step;
 
-      // check maximum
-      if( smax <= step )
-         step = smax;
+        // check maximum
+        if( smax <= step )
+            step = smax;
 
-      // check minimum
-      if( m < M )
-      {  if( step <= sini )
-            step = sini;
-      }
-      else
-         if( step <= smin )
-            step = smin;
+        // check minimum
+        if( m < M )
+        {   if( step <= sini )
+                step = sini;
+        }
+        else
+            if( step <= smin )
+                step = smin;
 
-      // check if near the end
-      if( tf <= T[m-1] + one_plus * step )
-         T[m] = tf;
-      else
-         T[m] = T[m-1] + step;
+        // check if near the end
+        if( tf <= T[m-1] + one_plus * step )
+            T[m] = tf;
+        else
+            T[m] = T[m-1] + step;
 
-      // try using this step size
-      nstep++;
-      OdeGear(F, m, n, T, X, e);
-      step = T[m] - T[m-1];
+        // try using this step size
+        nstep++;
+        OdeGear(F, m, n, T, X, e);
+        step = T[m] - T[m-1];
 
-      // compute value of lambda for this step
-      lambda = Scalar(10) *  sprevious / step;
-      for(i = 0; i < n; i++)
-      {  axi = X[m * n + i];
-         if( axi <= zero )
-            axi = - axi;
-         a  = eabs[i] + erel * axi;
-         if( e[i] > zero )
-         {  if( m == 1 )
-               root = (a / e[i]) / ten;
-            else
-            {  r = ( a / e[i] ) * step / (tf - ti);
-               root = exp( log(r) / Scalar(m-1) );
-            }
-            if( root <= lambda )
-               lambda = root;
-         }
-      }
-
-      bool advance;
-      if( m == M )
-         advance = one <= lambda || step <= one_plus * smin;
-      else
-         advance = one <= lambda || step <= one_plus * sini;
-
-
-      if( advance )
-      {  // accept the results of this time step
-         CPPAD_ASSERT_UNKNOWN( m <= M );
-         if( m == M )
-         {  // shift for next step
-            for(k = 0; k < m; k++)
-            {  T[k] = T[k+1];
-               for(i = 0; i < n; i++)
-                  X[k*n + i] = X[(k+1)*n + i];
-            }
-         }
-         // update ef and maxabs
-         for(i = 0; i < n; i++)
-         {  ef[i] = ef[i] + e[i];
-            axi = X[m * n + i];
+        // compute value of lambda for this step
+        lambda = Scalar(10) *  sprevious / step;
+        for(i = 0; i < n; i++)
+        {   axi = X[m * n + i];
             if( axi <= zero )
-               axi = - axi;
-            if( axi > maxabs[i] )
-               maxabs[i] = axi;
-         }
-         if( m != M )
-            m++;  // all we need do in this case
-      }
+                axi = - axi;
+            a  = eabs[i] + erel * axi;
+            if( e[i] > zero )
+            {   if( m == 1 )
+                    root = (a / e[i]) / ten;
+                else
+                {   r = ( a / e[i] ) * step / (tf - ti);
+                    root = exp( log(r) / Scalar(m-1) );
+                }
+                if( root <= lambda )
+                    lambda = root;
+            }
+        }
 
-      // new step suggested by error criteria
-      step = std::min(lambda , ten) * step / two;
-   }
-   for(i = 0; i < n; i++)
-      xf[i] = X[(m-1) * n + i];
+        bool advance;
+        if( m == M )
+            advance = one <= lambda || step <= one_plus * smin;
+        else
+            advance = one <= lambda || step <= one_plus * sini;
 
-   return xf;
+
+        if( advance )
+        {   // accept the results of this time step
+            CPPAD_ASSERT_UNKNOWN( m <= M );
+            if( m == M )
+            {   // shift for next step
+                for(k = 0; k < m; k++)
+                {   T[k] = T[k+1];
+                    for(i = 0; i < n; i++)
+                        X[k*n + i] = X[(k+1)*n + i];
+                }
+            }
+            // update ef and maxabs
+            for(i = 0; i < n; i++)
+            {   ef[i] = ef[i] + e[i];
+                axi = X[m * n + i];
+                if( axi <= zero )
+                    axi = - axi;
+                if( axi > maxabs[i] )
+                    maxabs[i] = axi;
+            }
+            if( m != M )
+                m++;  // all we need do in this case
+        }
+
+        // new step suggested by error criteria
+        step = std::min(lambda , ten) * step / two;
+    }
+    for(i = 0; i < n; i++)
+        xf[i] = X[(m-1) * n + i];
+
+    return xf;
 }
 
 } // End CppAD namespace

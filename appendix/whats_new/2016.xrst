@@ -5,16 +5,16 @@
 
 {xrst_begin 2016 app}
 {xrst_spell
-   adouble
-   autotools
-   chkpoint
-   chrono
-   colpack
-   makefile
-   mingw
-   valgrind
-   wmisleading
-   xam
+    adouble
+    autotools
+    chkpoint
+    chrono
+    colpack
+    makefile
+    mingw
+    valgrind
+    wmisleading
+    xam
 }
 
 Release Notes for 2016
@@ -129,9 +129,9 @@ the computation of :math:`M_k` exactly agrees with the corresponding
    To be specific, a warning of the form
    indentations;
 
-      ``warning: this`` ``'if'`` ``clause does not guard...`` [ ``-Wmisleading-indentation`` ]
+        ``warning: this`` ``'if'`` ``clause does not guard...`` [ ``-Wmisleading-indentation`` ]
 
-   using the gcc-6.2.1 compiler, was fixed and it may have fixed a bug.
+    using the gcc-6.2.1 compiler, was fixed and it may have fixed a bug.
 #. There was a problem with the
    :ref:`sacado<speed_sacado-name>` where the symbol
    ``HAS_C99_TR1_CMATH`` was being defined twice.
@@ -304,11 +304,11 @@ in the ``atomic_two_mat_mul.cpp`` example / test.
    in * . ``hpp`` files. For example,
    ::
 
-      # ifndef CPPAD_UTILITY_VECTOR_HPP
-      # define CPPAD_UTILITY_VECTOR_HPP
+        # ifndef CPPAD_UTILITY_VECTOR_HPP
+        # define CPPAD_UTILITY_VECTOR_HPP
 
-   appears in the file ``cppad/utility/vector.hpp`` . This makes it
-   easier to avoid conflicts when choosing :ref:`addon-name` names.
+    appears in the file ``cppad/utility/vector.hpp`` . This makes it
+    easier to avoid conflicts when choosing :ref:`addon-name` names.
 #. Add the :ref:`set_union-name` utility and use it to simplify the
    :ref:`atomic-name` examples that use
    :ref:`glossary@Sparsity Pattern@Vector of Sets`
@@ -363,7 +363,7 @@ are not one and not equal to each other:
    in the speed test main program to use one global variable with prototype
    {xrst_spell_off}
    {xrst_code cpp}
-      extern std::map<std::string, bool> global_option;
+       extern std::map<std::string, bool> global_option;
    {xrst_code}
    {xrst_spell_on}
 
@@ -406,9 +406,9 @@ For example, the results for the
 :ref:`cppad_sparse_hessian.cpp-name` test compare as follows:
 ::
 
-   sparse_hessian_size     = [  100,    400,   900,  1600, 2500 ]
-   sparse_hessian_rate_old = [ 1480, 265.21, 93.33, 41.93, 0.86 ]
-   sparse_hessian_rate_new = [ 1328, 241.61, 92.99, 40.51, 3.80 ]
+    sparse_hessian_size     = [  100,    400,   900,  1600, 2500 ]
+    sparse_hessian_rate_old = [ 1480, 265.21, 93.33, 41.93, 0.86 ]
+    sparse_hessian_rate_new = [ 1328, 241.61, 92.99, 40.51, 3.80 ]
 
 Note that the improvement is only for large problems. In fact,
 for large problems, preliminary testing indicates that
@@ -443,13 +443,13 @@ in the test ``test_more/chkpoint_one.cpp`` (the problem was in the test).
    when using
    ::
 
-      using namespace std;
-      using namespace CppAD;
+        using namespace std;
+        using namespace CppAD;
 
-   This is OK for simple programs, but not generally recommended.
-   See ``double`` version of base class definitions for
-   :ref:`base_double.hpp@Unary Standard Math`
-   for more details.
+    This is OK for simple programs, but not generally recommended.
+    See ``double`` version of base class definitions for
+    :ref:`base_double.hpp@Unary Standard Math`
+    for more details.
 #. Change Eigen array example
    :ref:`eigen_array.cpp-name`
    to use member function version of ``sin`` function

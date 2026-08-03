@@ -12,9 +12,9 @@ Source: LuFactor
 | # ``define CPPAD_LU_FACTOR_HPP``
 
 {xrst_literal
-   include/cppad/utility/lu_factor.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/utility/lu_factor.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

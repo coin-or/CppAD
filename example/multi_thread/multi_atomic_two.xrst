@@ -16,12 +16,12 @@ Source File
 All of the routines below are located in the file
 ::
 
-   example/multi_thread/multi_atomic_two.cpp
+    example/multi_thread/multi_atomic_two.cpp
 
 Contents
 ********
 {xrst_toc_table
-   example/multi_thread/multi_atomic_two.cpp
+    example/multi_thread/multi_atomic_two.cpp
 }
 
 {xrst_end multi_atomic_two.cpp}

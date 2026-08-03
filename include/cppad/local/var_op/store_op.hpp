@@ -9,10 +9,10 @@ namespace CppAD { namespace local { namespace var_op {
 /*
 {xrst_begin_parent var_store_op dev}
 {xrst_spell
-   stpp
-   stpv
-   stvp
-   stvv
+    stpp
+    stpv
+    stvp
+    stvv
 }
 
 Store an Element of a Variable VecAD Vector
@@ -54,14 +54,14 @@ op_code
 *******
 
 .. csv-table::
-   :widths: auto
-   :header-rows: 1
+    :widths: auto
+    :header-rows: 1
 
-   op_code, x, y
-   StppOp, parameter, parameter
-   StpvOp, parameter, variable
-   StvpOp, variable,  parameter
-   StvvOp, variable,  variable
+    op_code, x, y
+    StppOp, parameter, parameter
+    StpvOp, parameter, variable
+    StvpOp, variable,  parameter
+    StvvOp, variable,  variable
 
 num_vecad_ind
 *************
@@ -93,7 +93,7 @@ If *y* is a parameter (variable), arg[2] is the parameter index
 ------------------------------------------------------------------------------
 {xrst_begin var_store_forward_0 dev}
 {xrst_spell
-   isvar
+    isvar
 }
 
 Zero Order Forward Store an Element of a VecAD Vector
@@ -109,8 +109,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_FORWARD_0
-   // END_STORE_FORWARD_0
+    // BEGIN_STORE_FORWARD_0
+    // END_STORE_FORWARD_0
 }
 
 Base, op_code, num_vecad_ind, arg
@@ -168,68 +168,68 @@ corresponding to the value being stored.
 // BEGIN_STORE_FORWARD_0
 template <class Base>
 inline void store_forward_0(
-   op_code_var          op_code        ,
-   const addr_t*        arg            ,
-   size_t               num_var        ,
-   size_t               num_par        ,
-   const Base*          parameter      ,
-   size_t               cap_order      ,
-   const Base*          taylor         ,
-   pod_vector<bool>&    vec_ad2isvar   ,
-   pod_vector<size_t>&  vec_ad2index   )
+    op_code_var          op_code        ,
+    const addr_t*        arg            ,
+    size_t               num_var        ,
+    size_t               num_par        ,
+    const Base*          parameter      ,
+    size_t               cap_order      ,
+    const Base*          taylor         ,
+    pod_vector<bool>&    vec_ad2isvar   ,
+    pod_vector<size_t>&  vec_ad2index   )
 // END_STORE_FORWARD_0
 {  //
-   //
-   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == vec_ad2index.size() )
-   //
-   // i_y
-   size_t i_y = size_t( arg[2] );
-   //
-   // i_vec, isvar
-   // assign here to avoid compiler warning for default case
-   addr_t i_vec = std::numeric_limits<addr_t>::max();
-   bool   isvar = false;
-   switch(op_code)
-   {  //
-      default:
-      CPPAD_ASSERT_UNKNOWN(false);
-      break;
-      //
-      case StppOp:
-      i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
-      isvar = false;
-      CPPAD_ASSERT_UNKNOWN( i_y < num_par );
-      break;
-      //
-      case StpvOp:
-      i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
-      isvar = true;
-      CPPAD_ASSERT_UNKNOWN( i_y < num_var );
-      break;
-      //
-      case StvpOp:
-      i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-      isvar = false;
-      CPPAD_ASSERT_UNKNOWN( i_y < num_par );
-      break;
-      //
-      case StvvOp:
-      i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-      isvar = true;
-      CPPAD_ASSERT_UNKNOWN( i_y < num_var );
-      break;
-   }
-   //
-   CPPAD_ASSERT_KNOWN(
-      size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
-      "VecAD: zero order forward index out of range"
-   );
-   //
-   // vec_ad2isvar, vec_ad2index
-   vec_ad2isvar[ arg[0] + i_vec ]  = isvar;
-   vec_ad2index[ arg[0] + i_vec ]  = i_y;
+    //
+    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( vec_ad2isvar.size() == vec_ad2index.size() )
+    //
+    // i_y
+    size_t i_y = size_t( arg[2] );
+    //
+    // i_vec, isvar
+    // assign here to avoid compiler warning for default case
+    addr_t i_vec = std::numeric_limits<addr_t>::max();
+    bool   isvar = false;
+    switch(op_code)
+    {  //
+        default:
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+        //
+        case StppOp:
+        i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+        isvar = false;
+        CPPAD_ASSERT_UNKNOWN( i_y < num_par );
+        break;
+        //
+        case StpvOp:
+        i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+        isvar = true;
+        CPPAD_ASSERT_UNKNOWN( i_y < num_var );
+        break;
+        //
+        case StvpOp:
+        i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+        isvar = false;
+        CPPAD_ASSERT_UNKNOWN( i_y < num_par );
+        break;
+        //
+        case StvvOp:
+        i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+        isvar = true;
+        CPPAD_ASSERT_UNKNOWN( i_y < num_var );
+        break;
+    }
+    //
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
+        "VecAD: zero order forward index out of range"
+    );
+    //
+    // vec_ad2isvar, vec_ad2index
+    vec_ad2isvar[ arg[0] + i_vec ]  = isvar;
+    vec_ad2index[ arg[0] + i_vec ]  = i_y;
 }
 /*
 ------------------------------------------------------------------------------
@@ -248,8 +248,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_FOR_JAC
-   // END_STORE_FOR_JAC
+    // BEGIN_STORE_FOR_JAC
+    // END_STORE_FOR_JAC
 }
 
 op_code, num_vecad_ind, arg
@@ -301,54 +301,54 @@ the sparsity pattern for *x* is also added to the sparsity pattern for *v*.
 // BEGIN_STORE_FOR_JAC
 template <class Vector_set>
 inline void store_for_jac(
-   op_code_var               op_code        ,
-   size_t                    num_vecad_ind  ,
-   const addr_t*             arg            ,
-   bool                      dependency     ,
-   const pod_vector<size_t>& vecad_ind      ,
-   const Vector_set&         var_sparsity   ,
-   Vector_set&               vecad_sparsity )
+    op_code_var               op_code        ,
+    size_t                    num_vecad_ind  ,
+    const addr_t*             arg            ,
+    bool                      dependency     ,
+    const pod_vector<size_t>& vecad_ind      ,
+    const Vector_set&         var_sparsity   ,
+    Vector_set&               vecad_sparsity )
 // END_STORE_FOR_JAC
 {  //
-   //
-   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
-   //
-   // i_v
-   size_t i_v = vecad_ind[ arg[0] - 1 ];
-   CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   //
-   // i_x, i_y
-   size_t i_x = size_t( arg[1] );
-   size_t i_y = size_t( arg[2] );
-   //
-   switch(op_code)
-   {  //
-      default:
-      CPPAD_ASSERT_UNKNOWN(false);
-      break;
-      //
-      case StppOp:
-      break;
-      //
-      case StpvOp:
-      vecad_sparsity.binary_union(i_v, i_v, i_y, var_sparsity);
-      break;
-      //
-      case StvpOp:
-      if( dependency )
-         vecad_sparsity.binary_union(i_v, i_v, i_x, var_sparsity);
-      break;
-      //
-      case StvvOp:
-      if( dependency )
-         vecad_sparsity.binary_union(i_v, i_v, i_x, var_sparsity);
-      vecad_sparsity.binary_union(i_v, i_v, i_y, var_sparsity);
-      break;
-   }
-   return;
+    //
+    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+    //
+    // i_v
+    size_t i_v = vecad_ind[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    //
+    // i_x, i_y
+    size_t i_x = size_t( arg[1] );
+    size_t i_y = size_t( arg[2] );
+    //
+    switch(op_code)
+    {  //
+        default:
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+        //
+        case StppOp:
+        break;
+        //
+        case StpvOp:
+        vecad_sparsity.binary_union(i_v, i_v, i_y, var_sparsity);
+        break;
+        //
+        case StvpOp:
+        if( dependency )
+            vecad_sparsity.binary_union(i_v, i_v, i_x, var_sparsity);
+        break;
+        //
+        case StvvOp:
+        if( dependency )
+            vecad_sparsity.binary_union(i_v, i_v, i_x, var_sparsity);
+        vecad_sparsity.binary_union(i_v, i_v, i_y, var_sparsity);
+        break;
+    }
+    return;
 }
 /*
 ------------------------------------------------------------------------------
@@ -367,8 +367,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_REV_JAC
-   // END_STORE_REV_JAC
+    // BEGIN_STORE_REV_JAC
+    // END_STORE_REV_JAC
 }
 
 op_code, num_vecad_ind, arg
@@ -416,54 +416,54 @@ is the sparsity pattern for the vector *v*.
 // BEGIN_STORE_REV_JAC
 template <class Vector_set>
 inline void store_rev_jac(
-   op_code_var               op_code        ,
-   size_t                    num_vecad_ind  ,
-   const addr_t*             arg            ,
-   bool                      dependency     ,
-   const pod_vector<size_t>& vecad_ind      ,
-   Vector_set&               var_sparsity   ,
-   const Vector_set&         vecad_sparsity )
+    op_code_var               op_code        ,
+    size_t                    num_vecad_ind  ,
+    const addr_t*             arg            ,
+    bool                      dependency     ,
+    const pod_vector<size_t>& vecad_ind      ,
+    Vector_set&               var_sparsity   ,
+    const Vector_set&         vecad_sparsity )
 // END_STORE_REV_JAC
 {  //
-   //
-   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
-   //
-   // i_v
-   size_t i_v = vecad_ind[ arg[0] - 1 ];
-   CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   //
-   // i_x, i_y
-   size_t i_x = size_t( arg[1] );
-   size_t i_y = size_t( arg[2] );
-   //
-   switch(op_code)
-   {  //
-      default:
-      CPPAD_ASSERT_UNKNOWN(false);
-      break;
-      //
-      case StppOp:
-      break;
-      //
-      case StpvOp:
-      var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
-      break;
-      //
-      case StvpOp:
-      if( dependency )
-         var_sparsity.binary_union(i_x, i_x, i_v, vecad_sparsity);
-      break;
-      //
-      case StvvOp:
-      if( dependency )
-         var_sparsity.binary_union(i_x, i_x, i_v, vecad_sparsity);
-      var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
-      break;
-   }
-   return;
+    //
+    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( num_vecad_ind == vecad_ind.size() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+    //
+    // i_v
+    size_t i_v = vecad_ind[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    //
+    // i_x, i_y
+    size_t i_x = size_t( arg[1] );
+    size_t i_y = size_t( arg[2] );
+    //
+    switch(op_code)
+    {  //
+        default:
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+        //
+        case StppOp:
+        break;
+        //
+        case StpvOp:
+        var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
+        break;
+        //
+        case StvpOp:
+        if( dependency )
+            var_sparsity.binary_union(i_x, i_x, i_v, vecad_sparsity);
+        break;
+        //
+        case StvvOp:
+        if( dependency )
+            var_sparsity.binary_union(i_x, i_x, i_v, vecad_sparsity);
+        var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
+        break;
+    }
+    return;
 }
 /*
 ------------------------------------------------------------------------------
@@ -482,8 +482,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_REV_HES
-   // END_STORE_REV_HES
+    // BEGIN_STORE_REV_HES
+    // END_STORE_REV_HES
 }
 
 op_code, num_vecad_ind, arg
@@ -537,47 +537,47 @@ if the scalar function has non-zero partial w.r.t *v*.
 // BEGIN_STORE_REV_HES
 template <class Vector_set>
 inline void store_rev_hes(
-   op_code_var               op_code        ,
-   const addr_t*             arg            ,
-   size_t                    num_vecad_ind  ,
-   const pod_vector<size_t>& vecad_ind      ,
-   Vector_set&               var_sparsity   ,
-   const Vector_set&         vecad_sparsity ,
-   bool*                     var_rev_jac    ,
-   const pod_vector<bool>&   vecad_rev_jac  )
+    op_code_var               op_code        ,
+    const addr_t*             arg            ,
+    size_t                    num_vecad_ind  ,
+    const pod_vector<size_t>& vecad_ind      ,
+    Vector_set&               var_sparsity   ,
+    const Vector_set&         vecad_sparsity ,
+    bool*                     var_rev_jac    ,
+    const pod_vector<bool>&   vecad_rev_jac  )
 // END_STORE_REV_HES
 {  //
-   //
-   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
-   CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
-   //
-   // i_v
-   size_t i_v = vecad_ind[ arg[0] - 1 ];
-   CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   //
-   // i_y
-   size_t i_y = size_t( arg[2] );
-   //
-   switch(op_code)
-   {  //
-      default:
-      CPPAD_ASSERT_UNKNOWN(false);
-      break;
-      //
-      case StpvOp:
-      case StvvOp:
-      var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
-      var_rev_jac[i_y] |= vecad_rev_jac[i_v];
-      break;
-      //
-      case StppOp:
-      case StvpOp:
-      break;
-   }
-   //
-   return;
+    //
+    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+    CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
+    //
+    // i_v
+    size_t i_v = vecad_ind[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    //
+    // i_y
+    size_t i_y = size_t( arg[2] );
+    //
+    switch(op_code)
+    {  //
+        default:
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+        //
+        case StpvOp:
+        case StvvOp:
+        var_sparsity.binary_union(i_y, i_y, i_v, vecad_sparsity);
+        var_rev_jac[i_y] |= vecad_rev_jac[i_v];
+        break;
+        //
+        case StppOp:
+        case StvpOp:
+        break;
+    }
+    //
+    return;
 }
 /*
 ------------------------------------------------------------------------------
@@ -596,8 +596,8 @@ see
 Prototype
 *********
 {xrst_literal
-   // BEGIN_STORE_FOR_HES
-   // END_STORE_FOR_HES
+    // BEGIN_STORE_FOR_HES
+    // END_STORE_FOR_HES
 }
 
 op_code, num_vecad_ind, arg
@@ -651,51 +651,51 @@ if the scalar function has non-zero partial w.r.t *v*.
 // BEGIN_STORE_FOR_HES
 template <class Vector_set>
 inline void store_for_hes(
-   op_code_var               op_code        ,
-   const addr_t*             arg            ,
-   size_t                    num_vecad_ind  ,
-   size_t                    n              ,
-   const pod_vector<size_t>& vecad_ind      ,
-   Vector_set&               vecad_sparsity ,
-   const Vector_set&         for_hes_sparse )
+    op_code_var               op_code        ,
+    const addr_t*             arg            ,
+    size_t                    num_vecad_ind  ,
+    size_t                    n              ,
+    const pod_vector<size_t>& vecad_ind      ,
+    Vector_set&               vecad_sparsity ,
+    const Vector_set&         for_hes_sparse )
 // END_STORE_FOR_HES
-{  //
-   //
-   CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
-   CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
-   CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
-   //
-   // np1
-   size_t np1 = n + 1;
-   CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end() == np1 );
-   //
-   // i_v
-   size_t i_v = vecad_ind[ arg[0] - 1 ];
-   CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-   //
-   // i_y
-   size_t i_y = size_t( arg[2] );
-   //
-   switch(op_code)
-   {  //
-      default:
-      CPPAD_ASSERT_UNKNOWN(false);
-      break;
-      //
-      // vecad_sparsity
-      // set Jacobian sparsity for vector with index i_v
-      case StpvOp:
-      case StvvOp:
-      vecad_sparsity.binary_union(i_v, i_v, np1 + i_y, for_hes_sparse);
-      break;
-      //
-      case StppOp:
-      case StvpOp:
-      break;
-   }
-   //
-   return;
+{   //
+    //
+    CPPAD_ASSERT_NARG_NRES(op_code, 3, 0);
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_vecad_ind );
+    CPPAD_ASSERT_UNKNOWN( vecad_ind.size() == num_vecad_ind );
+    //
+    // np1
+    size_t np1 = n + 1;
+    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end() == np1 );
+    //
+    // i_v
+    size_t i_v = vecad_ind[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    //
+    // i_y
+    size_t i_y = size_t( arg[2] );
+    //
+    switch(op_code)
+    {   //
+        default:
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+        //
+        // vecad_sparsity
+        // set Jacobian sparsity for vector with index i_v
+        case StpvOp:
+        case StvvOp:
+        vecad_sparsity.binary_union(i_v, i_v, np1 + i_y, for_hes_sparse);
+        break;
+        //
+        case StppOp:
+        case StvpOp:
+        break;
+    }
+    //
+    return;
 }
 
 } } } // END namespace

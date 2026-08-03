@@ -31,7 +31,7 @@ x
 *
 The argument *x* has prototype
 
-   ``const AD`` < *Base* > & ``x``
+    ``const AD`` < *Base* > & ``x``
 
 The argument *x* may be a
 variable, dynamic parameter, or constant parameter.
@@ -40,14 +40,14 @@ y
 *
 The result *y* has prototype
 
-   ``AD`` < *Base* > & ``y``
+    ``AD`` < *Base* > & ``y``
 
 and is a constant parameter.
 
 Example
 *******
 {xrst_toc_hidden
-   example/general/var2par.cpp
+    example/general/var2par.cpp
 }
 The file
 :ref:`var2par.cpp-name`
@@ -63,16 +63,16 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 AD<Base> Var2Par(const AD<Base> &x)
-{  AD<Base> y(x.value_);
-   return y;
+{   AD<Base> y(x.value_);
+    return y;
 }
 
 
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 AD<Base> Var2Par(const VecAD_reference<Base> &x)
-{  AD<Base> y(x.ADBase());
-   y.id_ = 0;
+{   AD<Base> y(x.ADBase());
+    y.id_ = 0;
 }
 
 

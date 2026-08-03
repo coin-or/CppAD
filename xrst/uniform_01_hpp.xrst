@@ -12,9 +12,9 @@ Source: uniform_01
 | # ``define CPPAD_UNIFORM_01_HPP``
 
 {xrst_literal
-   include/cppad/speed/uniform_01.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/speed/uniform_01.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

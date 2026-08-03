@@ -39,10 +39,10 @@ the examples.
 Contents
 ********
 {xrst_toc_table
-   example/get_started/get_started.cpp
-   xrst/example_list.xrst
-   include/cppad/core/testvector.hpp
-   include/cppad/wno_conversion.hpp
+    example/get_started/get_started.cpp
+    xrst/example_list.xrst
+    include/cppad/core/testvector.hpp
+    include/cppad/wno_conversion.hpp
 }
 
 {xrst_end Example}

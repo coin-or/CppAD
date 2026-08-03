@@ -5,7 +5,7 @@
 
 {xrst_begin speed_cppadcg}
 {xrst_spell
-   onetape
+    onetape
 }
 
 Speed Test Derivatives Using Cppadcg
@@ -32,7 +32,7 @@ In addition, it will say that source code with the correct sizes
 has been created.
 If you then execute
 
-   ``make check_speed_cppadcg VERBOSE`` =1
+    ``make check_speed_cppadcg VERBOSE`` =1
 
 It will build ``speed_cppadcg`` with the proper sizes and
 run its correctness tests.
@@ -51,13 +51,13 @@ See :ref:`speed_main-name` for more options.
 Contents
 ********
 {xrst_toc_list
-   speed/cppadcg/det_minor.cpp
-   speed/cppadcg/det_lu.cpp
-   speed/cppadcg/mat_mul.cpp
-   speed/cppadcg/ode.cpp
-   speed/cppadcg/poly.cpp
-   speed/cppadcg/sparse_hessian.cpp
-   speed/cppadcg/sparse_jacobian.cpp
+    speed/cppadcg/det_minor.cpp
+    speed/cppadcg/det_lu.cpp
+    speed/cppadcg/mat_mul.cpp
+    speed/cppadcg/ode.cpp
+    speed/cppadcg/poly.cpp
+    speed/cppadcg/sparse_hessian.cpp
+    speed/cppadcg/sparse_jacobian.cpp
 }
 
 {xrst_end speed_cppadcg}

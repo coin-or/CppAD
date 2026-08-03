@@ -15,8 +15,8 @@ User API
 Contents
 ********
 {xrst_toc_table
-   include/cppad/local/utility/vector_bool.hpp
-   include/cppad/utility/vector_bool.hpp
+    include/cppad/local/utility/vector_bool.hpp
+    include/cppad/utility/vector_bool.hpp
 }
 
 {xrst_end dev_vector_bool}

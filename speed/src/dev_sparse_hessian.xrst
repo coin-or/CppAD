@@ -10,7 +10,7 @@ Developer Documentation for Speed Testing Sparse Hessian
 Contents
 ********
 {xrst_toc_table
-   speed/src/link_sparse_hessian.cpp
+    speed/src/link_sparse_hessian.cpp
 }
 
 {xrst_end dev_sparse_hessian}

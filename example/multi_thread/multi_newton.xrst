@@ -12,12 +12,12 @@ Source File
 All of the routines below are located in the file
 ::
 
-   example/multi_thread/multi_newton.cpp
+    example/multi_thread/multi_newton.cpp
 
 Contents
 ********
 {xrst_toc_table
-   example/multi_thread/multi_newton.cpp
+    example/multi_thread/multi_newton.cpp
 }
 
 {xrst_end multi_newton.cpp}

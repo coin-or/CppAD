@@ -24,17 +24,17 @@ partial of :math:`F` with respect to :math:`x_j`; i.e.,
 
 .. math::
 
-   dy
-   = \D{F}{ x_j } (x)
-   = \left[
-      \D{ F_0 }{ x_j } (x) , \cdots , \D{ F_{m-1} }{ x_j } (x)
-   \right]
+    dy
+    = \D{F}{ x_j } (x)
+    = \left[
+        \D{ F_0 }{ x_j } (x) , \cdots , \D{ F_{m-1} }{ x_j } (x)
+    \right]
 
 f
 *
 The object *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 Note that the :ref:`ADFun-name` object *f* is not ``const``
 (see :ref:`ForOne@ForOne Uses Forward` below).
@@ -43,7 +43,7 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *Vector* & *x*
+    ``const`` *Vector* & *x*
 
 (see :ref:`ForOne@Vector` below)
 and its size
@@ -56,7 +56,7 @@ j
 *
 The argument *j* has prototype
 
-   ``size_t`` *j*
+    ``size_t`` *j*
 
 an is less than *n* ,
 :ref:`fun_property@Domain` space for *f* .
@@ -67,7 +67,7 @@ dy
 **
 The result *dy* has prototype
 
-   *Vector* *dy*
+    *Vector* *dy*
 
 (see :ref:`ForOne@Vector` below)
 and its size is :math:`m`, the dimension of the
@@ -78,7 +78,7 @@ for :math:`i = 0 , \ldots , m - 1`
 
 .. math::
 
-   dy[i] = \D{ F_i }{ x_j } ( x )
+    dy[i] = \D{ F_i }{ x_j } ( x )
 
 Vector
 ******
@@ -101,7 +101,7 @@ and the other coefficients are unspecified.
 Example
 *******
 {xrst_toc_hidden
-   example/general/for_one.cpp
+    example/general/for_one.cpp
 }
 The routine
 :ref:`ForOne<for_one.cpp-name>` is both an example and test.
@@ -117,39 +117,39 @@ namespace CppAD {
 template <class Base, class RecBase>
 template <class Vector>
 Vector ADFun<Base,RecBase>::ForOne(const Vector &x, size_t j)
-{  size_t j1;
+{   size_t j1;
 
-   size_t n = Domain();
-   size_t m = Range();
+    size_t n = Domain();
+    size_t m = Range();
 
-   // check Vector is Simple Vector class with Base type elements
-   CheckSimpleVector<Base, Vector>();
+    // check Vector is Simple Vector class with Base type elements
+    CheckSimpleVector<Base, Vector>();
 
-   CPPAD_ASSERT_KNOWN(
-      x.size() == n,
-      "ForOne: Length of x not equal domain dimension for f"
-   );
-   CPPAD_ASSERT_KNOWN(
-      j < n,
-      "ForOne: the index j is not less than domain dimension for f"
-   );
+    CPPAD_ASSERT_KNOWN(
+        x.size() == n,
+        "ForOne: Length of x not equal domain dimension for f"
+    );
+    CPPAD_ASSERT_KNOWN(
+        j < n,
+        "ForOne: the index j is not less than domain dimension for f"
+    );
 
-   // point at which we are evaluating the second partials
-   Forward(0, x);
+    // point at which we are evaluating the second partials
+    Forward(0, x);
 
-   // direction in which are are taking the derivative
-   Vector dx(n);
-   for(j1 = 0; j1 < n; j1++)
-      dx[j1] = Base(0.0);
-   dx[j] = Base(1.0);
+    // direction in which are are taking the derivative
+    Vector dx(n);
+    for(j1 = 0; j1 < n; j1++)
+        dx[j1] = Base(0.0);
+    dx[j] = Base(1.0);
 
-   // dimension the return value
-   Vector dy(m);
+    // dimension the return value
+    Vector dy(m);
 
-   // compute the return value
-   dy = Forward(1, dx);
+    // compute the return value
+    dy = Forward(1, dx);
 
-   return dy;
+    return dy;
 }
 
 } // END CppAD namespace

@@ -5,26 +5,26 @@
 
 {xrst_begin 2015 app}
 {xrst_spell
-   addon
-   adouble
-   aeps
-   asctime
-   autotools
-   chrono
-   cskip
-   datadir
-   docdir
-   erfc
-   gettimeofday
-   gmtime
-   hasnan
-   ieee
-   includedirs
-   lcppad
-   libdirs
-   runge
-   src
-   unreferenced
+    addon
+    adouble
+    aeps
+    asctime
+    autotools
+    chrono
+    cskip
+    datadir
+    docdir
+    erfc
+    gettimeofday
+    gmtime
+    hasnan
+    ieee
+    includedirs
+    lcppad
+    libdirs
+    runge
+    src
+    unreferenced
 }
 
 Release Notes for 2015
@@ -45,7 +45,7 @@ Separate :ref:`to_string-name` from :ref:`ad_to_string-name` so that it
 can be used without the rest of CppAD; i.e.,
 by including
 
-   # ``include <cppad/utility/to_string.hpp>``
+    # ``include <cppad/utility/to_string.hpp>``
 
 12-28
 =====
@@ -88,12 +88,12 @@ This was removed on
    For example,
    ::
 
-      # include <cppad/runge_45.hpp>
+        # include <cppad/runge_45.hpp>
 
-   You should us the utility include instead; i.e.,
-   ::
+    You should us the utility include instead; i.e.,
+    ::
 
-      # include <cppad/utility.hpp>
+        # include <cppad/utility.hpp>
 
 #. The :ref:`numeric_ad-name` routines where moved from the ``library``
    the a separate documentation section.
@@ -111,21 +111,21 @@ This was removed on
 #. CppAD now installs the object library
    ::
 
-      -lcppad_lib
+        -lcppad_lib
 
-   to be included when linking.
-   Currently, it is only required when
-   :ref:`colpack_prefix-name` is specified on the
-   :ref:`cmake@CMake Command` .
+    to be included when linking.
+    Currently, it is only required when
+    :ref:`colpack_prefix-name` is specified on the
+    :ref:`cmake@CMake Command` .
 #. It is no longer necessary to compile and link the file
    ::
 
-      cppad_colpack.cpp
+        cppad_colpack.cpp
 
-   when :ref:`colpack_prefix-name`
-   is specified during the install process; see
-   :ref:`cmake@CMake Command` .
-   (It is included in ``cppad_lib`` ).
+    when :ref:`colpack_prefix-name`
+    is specified during the install process; see
+    :ref:`cmake@CMake Command` .
+    (It is included in ``cppad_lib`` ).
 
 11-24
 =====
@@ -607,7 +607,7 @@ for *work* and *p* .
 =====
 Remove the syntax
 
-   ``AD`` < *Base* > *y* = *x*
+    ``AD`` < *Base* > *y* = *x*
 
 for the :ref:`AD constructor<ad_ctor-name>` documentation because it does not
 work when the constructor is :ref:`ad_ctor@x@explicit` .
@@ -635,17 +635,17 @@ case that is not used.
 For example, if
 ::
 
-   Independent(ax);
-   AD<double> aeps = 1e-10;
-   ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
-   ADFun<double> f(ax, ay);
+    Independent(ax);
+    AD<double> aeps = 1e-10;
+    ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
+    ADFun<double> f(ax, ay);
 
 The corresponding reverse mode calculation,
 at ``x[0] = 0.0`` , would result in
 ::
 
-   Error detected by false result for
-   ! ( hasnan(value) && check_for_nan_ )
+    Error detected by false result for
+    ! ( hasnan(value) && check_for_nan_ )
 
 This has been fixed so that only the conditional expression case that is used
 affects the reverse mode results.
@@ -681,8 +681,8 @@ if :ref:`faq@Speed@NDEBUG` is not defined, one could get
 an assert with the message:
 ::
 
-   Error detected by false result for
-   var_index_ >= NumRes(op_)
+    Error detected by false result for
+    var_index_ >= NumRes(op_)
 
 02-10
 =====
@@ -737,7 +737,7 @@ which is used for by the :ref:`team_bthread.cpp-name` case of the
 Improve the documentation for the
 :ref:`cmake@CMake Command` line options
 
-   ``cmake_install_`` *dir*
+    ``cmake_install_`` *dir*
 
 for *dir* equal to
 ``prefix`` , ``postfix`` , ``includedirs`` , ``libdirs`` ,
@@ -765,7 +765,7 @@ There was a bug in the :ref:`cmake-name` install detection of compiler features.
 One symptom of this bug was that on systems that had the ``gettimeofday``
 function, the cmake install would sometimes report
 
-   ``cppad_has_gettimeofday`` = 0
+    ``cppad_has_gettimeofday`` = 0
 
 This has been fixed.
 
@@ -791,11 +791,11 @@ was the same as the size of a ``size_t`` . This has been fixed.
    even if :ref:`f.optimize()<optimize-name>` has been called.
    The deprecated function ``CompareChange`` used to always return zero after
 
-      *f* . ``optimize`` ()
+        *f* . ``optimize`` ()
 
-   and was not even defined when ``NDEBUG`` was defined.
-   There was a resulting speed effect for this; see
-   :ref:`optimize@options@no_compare_op` .
+    and was not even defined when ``NDEBUG`` was defined.
+    There was a resulting speed effect for this; see
+    :ref:`optimize@options@no_compare_op` .
 
 #. The date when some features where deprecated has been added to the
    documentation. For example, see

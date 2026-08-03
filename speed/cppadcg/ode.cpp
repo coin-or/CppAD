@@ -24,10 +24,10 @@ Implementation
 extern std::map<std::string, bool> global_option;
 
 bool link_ode(
-   size_t                     size       ,
-   size_t                     repeat     ,
-   CppAD::vector<double>      &x         ,
-   CppAD::vector<double>      &jacobian  )
+    size_t                     size       ,
+    size_t                     repeat     ,
+    CppAD::vector<double>      &x         ,
+    CppAD::vector<double>      &jacobian  )
 {  return false; }
 /* {xrst_code}
 {xrst_spell_on}

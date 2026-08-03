@@ -6,11 +6,11 @@ SPDX-FileContributor: 2024 Bradley M. Bell
 This file is intended to help document of all the atomic_op routines.
 
 It has the following xrst template comments:
-   headers: n_res, i_z, itr, play, parameter, trace, work
-   headers if @mode@ is reverse: G and H
+    headers: n_res, i_z, itr, play, parameter, trace, work
+    headers if @mode@ is reverse: G and H
 
 It has the following xrst template replacements:
-   @mode@ : Must be either forward or reverse.
+    @mode@ : Must be either forward or reverse.
 }
 
 Notation
@@ -42,7 +42,7 @@ We define :math:`H(x, \ldots )` by
 
 .. math::
 
-   H(x, \cdots ) = G [ y(x), x, \cdots ]
+    H(x, \cdots ) = G [ y(x), x, \cdots ]
 
 {xrst_resume}
 

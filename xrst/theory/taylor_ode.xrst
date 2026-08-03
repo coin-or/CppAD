@@ -31,7 +31,7 @@ It follows from :math:`y^1 (t) = z(t)` that
 
 .. math::
 
-   y^{(p+1)} (t) = z^{(p)} (t) / (k + 1)
+    y^{(p+1)} (t) = z^{(p)} (t) / (k + 1)
 
 where :math:`y^{(k)} (t)` is the *k*-th order Taylor coefficient
 for :math:`y(t)`; i.e., :math:`y^k (t) / k !`.
@@ -45,12 +45,12 @@ The *p*-th order Taylor method for approximates
 
 .. math::
 
-   y( t + \Delta t )
-   \approx
-   y^{(0)} (t) + y^{(1)} (t) \Delta t + \cdots + y^{(p)} (t)  \Delta t^p
+    y( t + \Delta t )
+    \approx
+    y^{(0)} (t) + y^{(1)} (t) \Delta t + \cdots + y^{(p)} (t)  \Delta t^p
 
 {xrst_toc_hidden
-   example/general/taylor_ode.cpp
+    example/general/taylor_ode.cpp
 }
 Example
 *******

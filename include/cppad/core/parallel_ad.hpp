@@ -7,9 +7,9 @@
 /*
 {xrst_begin parallel_ad}
 {xrst_spell
-   rosen
-   runge
-   teardown
+    rosen
+    runge
+    teardown
 }
 
 Enable AD Calculations During Parallel Mode
@@ -49,12 +49,12 @@ The set of these cases may increase in the future and currently includes
 the following:
 
 .. csv-table::
-   :header: Scalar, Vector
+    :header: Scalar, Vector
 
-   ``bool``          , ``CppAD::vectorBool``
-   ``size_t``        , ``CppAD::vector<size_t>``
-   *Base*            , *vector* < *Base* >
-   ``AD`` < *Base* > , *vector* ``AD`` < *Base* >
+    ``bool``          , ``CppAD::vectorBool``
+    ``size_t``        , ``CppAD::vector<size_t>``
+    *Base*            , *vector* < *Base* >
+    ``AD`` < *Base* > , *vector* ``AD`` < *Base* >
 
 Where *vector* above is
 ``CppAD::vector`` ,
@@ -107,58 +107,58 @@ static variables that my be used.
 
 template <class Base>
 void parallel_ad(void)
-{  CPPAD_ASSERT_KNOWN(
-      ! thread_alloc::in_parallel() ,
-      "parallel_ad must be called before entering parallel execution mode."
-   );
-   CPPAD_ASSERT_KNOWN(
-      AD<Base>::tape_ptr() == nullptr ,
-      "parallel_ad cannot be called while a tape recording is in progress"
-   );
+{   CPPAD_ASSERT_KNOWN(
+        ! thread_alloc::in_parallel() ,
+        "parallel_ad must be called before entering parallel execution mode."
+    );
+    CPPAD_ASSERT_KNOWN(
+        AD<Base>::tape_ptr() == nullptr ,
+        "parallel_ad cannot be called while a tape recording is in progress"
+    );
 
-   // ensure statics in following functions are initialized
-   ErrorHandler::Current();                // error_handler.hpp
-   elapsed_seconds();                      // elapsed_seconds.hpp
-   local::num_arg_dyn(local::abs_dyn);     // op_code_dyn.hpp
-   local::op_name_dyn(local::abs_dyn);     // op_code_dyn.hpp
-   local::NumArg(local::BeginOp);          // op_code_var.hpp
-   local::NumRes(local::BeginOp);          // op_code_var.hpp
-   local::one_element_std_set<size_t>();   // std_set.hpp
-   local::two_element_std_set<size_t>();   // std_set.hpp
+    // ensure statics in following functions are initialized
+    ErrorHandler::Current();                // error_handler.hpp
+    elapsed_seconds();                      // elapsed_seconds.hpp
+    local::num_arg_dyn(local::abs_dyn);     // op_code_dyn.hpp
+    local::op_name_dyn(local::abs_dyn);     // op_code_dyn.hpp
+    local::NumArg(local::BeginOp);          // op_code_var.hpp
+    local::NumRes(local::BeginOp);          // op_code_var.hpp
+    local::one_element_std_set<size_t>();   // std_set.hpp
+    local::two_element_std_set<size_t>();   // std_set.hpp
 
-   // the sparse_pack class has member functions with static data
-   local::sparse::pack_setvec sp;
-   sp.resize(1, 1);       // so can call add_element
-   sp.add_element(0, 0);  // has static data
-   sp.clear(0);           // has static data
-   sp.is_element(0, 0);   // has static data
-   local::sparse::pack_setvec::const_iterator itr(sp, 0); // has static data
-   ++itr;                                  // has static data
+    // the sparse_pack class has member functions with static data
+    local::sparse::pack_setvec sp;
+    sp.resize(1, 1);       // so can call add_element
+    sp.add_element(0, 0);  // has static data
+    sp.clear(0);           // has static data
+    sp.is_element(0, 0);   // has static data
+    local::sparse::pack_setvec::const_iterator itr(sp, 0); // has static data
+    ++itr;                                  // has static data
 
-   // statics that depend on the value of Base
-   AD<Base>::tape_id_ptr(0);                  // tape_link.hpp
-   AD<Base>::tape_handle(0);                  // tape_link.hpp
-   local::val_graph::enable_parallel<Base>(); // val_graph/*_op.hpp
-   discrete<Base>::List();                    // discrete.hpp
+    // statics that depend on the value of Base
+    AD<Base>::tape_id_ptr(0);                  // tape_link.hpp
+    AD<Base>::tape_handle(0);                  // tape_link.hpp
+    local::val_graph::enable_parallel<Base>(); // val_graph/*_op.hpp
+    discrete<Base>::List();                    // discrete.hpp
 
-   // Some check_simple_vector.hpp cases
-   //
-   CheckSimpleVector< bool, CppAD::vectorBool >();
-   CheckSimpleVector< size_t, CppAD::vector<size_t> >();
-   CheckSimpleVector< Base, CppAD::vector<Base> >();
-   CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
-   //
-   CheckSimpleVector< Base, std::vector<Base> >();
-   CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >();
-   //
+    // Some check_simple_vector.hpp cases
+    //
+    CheckSimpleVector< bool, CppAD::vectorBool >();
+    CheckSimpleVector< size_t, CppAD::vector<size_t> >();
+    CheckSimpleVector< Base, CppAD::vector<Base> >();
+    CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
+    //
+    CheckSimpleVector< Base, std::vector<Base> >();
+    CheckSimpleVector< AD<Base>, std::vector< AD<Base> > >();
+    //
 # if CPPAD_BOOSTVECTOR
-   CheckSimpleVector< Base, boost::numeric::ublas::vector<Base> >();
-   CheckSimpleVector< AD<Base>, boost::numeric::ublas::vector< AD<Base> > >();
+    CheckSimpleVector< Base, boost::numeric::ublas::vector<Base> >();
+    CheckSimpleVector< AD<Base>, boost::numeric::ublas::vector< AD<Base> > >();
 # endif
-   //
+    //
 # if CPPAD_EIGENVECTOR
-   CheckSimpleVector< Base, CppAD::eigen_vector<Base> >();
-   CheckSimpleVector< AD<Base>, CppAD::eigen_vector< AD<Base> > > ();
+    CheckSimpleVector< Base, CppAD::eigen_vector<Base> >();
+    CheckSimpleVector< AD<Base>, CppAD::eigen_vector< AD<Base> > > ();
 # endif
 
 }

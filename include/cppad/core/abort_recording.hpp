@@ -19,14 +19,14 @@ Purpose
 Sometimes it is necessary to abort the recording of an operation sequence
 that started with a call of the form
 
-   ``Independent`` ( *x* )
+    ``Independent`` ( *x* )
 
 If such a recording is currently in progress,
 ``abort_recording`` will stop the recording and delete the
 corresponding information.
 Otherwise, ``abort_recording`` has no effect.
 {xrst_toc_hidden
-   example/general/abort_recording.cpp
+    example/general/abort_recording.cpp
 }
 Example
 *******
@@ -40,12 +40,12 @@ contains an example and test of this operation.
 
 
 namespace CppAD {
-   template <class Base>
-   void AD<Base>::abort_recording(void)
-   {  local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-      if( tape != nullptr )
-         AD<Base>::tape_manage(delete_tape_manage);
-   }
+    template <class Base>
+    void AD<Base>::abort_recording(void)
+    {   local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+        if( tape != nullptr )
+            AD<Base>::tape_manage(delete_tape_manage);
+    }
 }
 
 # endif

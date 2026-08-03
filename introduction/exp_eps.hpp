@@ -7,8 +7,8 @@
 /*
 {xrst_begin exp_eps}
 {xrst_spell
-   apx
-   yyyymmdd
+    apx
+    yyyymmdd
 }
 
 An Epsilon Accurate Exponential Approximation
@@ -32,38 +32,38 @@ The exponential function can be defined by
 
 .. math::
 
-   \exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
+    \exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
 
 We define :math:`k ( x, \varepsilon )` as the smallest
 non-negative integer such that :math:`\varepsilon \geq x^k / k !`; i.e.,
 
 .. math::
 
-   k( x, \varepsilon ) =
-      \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
+    k( x, \varepsilon ) =
+        \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
 
 The mathematical form for our approximation of the exponential function is
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   {\rm exp\_eps} (x , \varepsilon ) & = & \left\{
-   \begin{array}{ll}
-   \frac{1}{ {\rm exp\_eps} (-x , \varepsilon ) }
-      & {\rm if} \; x < 0
-   \\
-   1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
-      & {\rm otherwise}
-   \end{array}
-   \right.
-   \end{eqnarray}
+    \begin{eqnarray}
+    {\rm exp\_eps} (x , \varepsilon ) & = & \left\{
+    \begin{array}{ll}
+    \frac{1}{ {\rm exp\_eps} (-x , \varepsilon ) }
+        & {\rm if} \; x < 0
+    \\
+    1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
+        & {\rm otherwise}
+    \end{array}
+    \right.
+    \end{eqnarray}
 
 include
 *******
 The include command in the syntax is relative to
 
-   ``cppad-`` *yyyymmdd* / ``introduction/exp_apx``
+    ``cppad-`` *yyyymmdd* / ``introduction/exp_apx``
 
 where ``cppad-`` *yyyymmdd* is the distribution directory
 created during the beginning steps of the
@@ -73,7 +73,7 @@ x
 *
 The argument *x* has prototype
 
-   ``const`` *Type* & *x*
+    ``const`` *Type* & *x*
 
 (see *Type* below).
 It specifies the point at which to evaluate the
@@ -83,7 +83,7 @@ epsilon
 *******
 The argument *epsilon* has prototype
 
-   ``const`` *Type* & *epsilon*
+    ``const`` *Type* & *epsilon*
 
 It specifies the accuracy with which
 to approximate the exponential function value; i.e.,
@@ -94,7 +94,7 @@ y
 *
 The result *y* has prototype
 
-   *Type* *y*
+    *Type* *y*
 
 It is the value of the exponential function
 approximation defined above.
@@ -105,40 +105,40 @@ If *u* and *v* are *Type* objects and *i*
 is an ``int`` :
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - **Operation**
-     - **Result Type**
-     - **Description**
-   * - *Type* ( *i* )
-     - *Type*
-     - object with value equal to *i*
-   * - *Type u* = *v*
-     - *Type*
-     - construct *u* with value equal to *v*
-   * - *u* > *v*
-     - ``bool``
-     - true,
-       if *u* greater than *v* , an false otherwise
-   * - *u* = *v*
-     - *Type*
-     - new *u* (and result) is value of *v*
-   * - *u* * *v*
-     - *Type*
-     - result is value of :math:`u * v`
-   * - *u* / *v*
-     - *Type*
-     - result is value of :math:`u / v`
-   * - *u* + *v*
-     - *Type*
-     - result is value of :math:`u + v`
-   * - ``-`` *u*
-     - *Type*
-     - result is value of :math:`- u`
+    * - **Operation**
+      - **Result Type**
+      - **Description**
+    * - *Type* ( *i* )
+      - *Type*
+      - object with value equal to *i*
+    * - *Type u* = *v*
+      - *Type*
+      - construct *u* with value equal to *v*
+    * - *u* > *v*
+      - ``bool``
+      - true,
+         if *u* greater than *v* , an false otherwise
+    * - *u* = *v*
+      - *Type*
+      - new *u* (and result) is value of *v*
+    * - *u* * *v*
+      - *Type*
+      - result is value of :math:`u * v`
+    * - *u* / *v*
+      - *Type*
+      - result is value of :math:`u / v`
+    * - *u* + *v*
+      - *Type*
+      - result is value of :math:`u + v`
+    * - ``-`` *u*
+      - *Type*
+      - result is value of :math:`- u`
 
 {xrst_toc_hidden
-   introduction/exp_eps.xrst
-   introduction/exp_eps_cppad.cpp
+    introduction/exp_eps.xrst
+    introduction/exp_eps_cppad.cpp
 }
 
 Implementation
@@ -160,13 +160,13 @@ Exercises
 #. Suppose that we make the following call to ``exp_eps`` :
    ::
 
-      double x       = 1.;
-      double epsilon = .01;
-      double y = exp_eps(x, epsilon);
+        double x       = 1.;
+        double epsilon = .01;
+        double y = exp_eps(x, epsilon);
 
-   What is the value assigned to
-   ``k`` , ``temp`` , ``term`` , and ``sum``
-   the first time through the ``while`` loop in :ref:`exp_eps.hpp-name` ?
+    What is the value assigned to
+    ``k`` , ``temp`` , ``term`` , and ``sum``
+    the first time through the ``while`` loop in :ref:`exp_eps.hpp-name` ?
 #. Continuing the previous exercise,
    what is the value assigned to
    ``k`` , ``temp`` , ``term`` , and ``sum``
@@ -178,24 +178,24 @@ Exercises
 // BEGIN C++
 template <class Type>
 Type exp_eps(const Type &x, const Type &epsilon)
-{  // abs_x = |x|
-   Type abs_x = x;
-   if( Type(0) > x )
-      abs_x = - x;
-   // initialize
-   int  k    = 0;          // initial order
-   Type term = 1.;         // term = |x|^k / k !
-   Type sum  = term;       // initial sum
-   while(term > epsilon)
-   {  k         = k + 1;          // order for next term
-      Type temp = term * abs_x;   // term = |x|^k / (k-1)!
-      term      = temp / Type(k); // term = |x|^k / k !
-      sum       = sum + term;     // sum  = 1 + ... + |x|^k / k !
-   }
-   // In the case where x is negative, use exp(x) = 1 / exp(-|x|)
-   if( Type(0) > x )
-      sum = Type(1) / sum;
-   return sum;
+{   // abs_x = |x|
+    Type abs_x = x;
+    if( Type(0) > x )
+        abs_x = - x;
+    // initialize
+    int  k    = 0;          // initial order
+    Type term = 1.;         // term = |x|^k / k !
+    Type sum  = term;       // initial sum
+    while(term > epsilon)
+    {   k         = k + 1;          // order for next term
+        Type temp = term * abs_x;   // term = |x|^k / (k-1)!
+        term      = temp / Type(k); // term = |x|^k / k !
+        sum       = sum + term;     // sum  = 1 + ... + |x|^k / k !
+    }
+    // In the case where x is negative, use exp(x) = 1 / exp(-|x|)
+    if( Type(0) > x )
+        sum = Type(1) / sum;
+    return sum;
 }
 // END C++
 

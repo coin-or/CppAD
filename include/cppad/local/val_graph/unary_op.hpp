@@ -8,36 +8,36 @@
 # include <cppad/local/val_graph/print_op.hpp>
 
 # define CPPAD_VAL_GRAPH_UNARY(Name, Op) \
-   template <class Value> \
-   class Name##_op_t : public unary_op_t<Value> { \
-   public: \
-      /* get_instance */ \
-      static Name##_op_t* get_instance(void) \
-      {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \
-         static Name##_op_t instance; \
-         return &instance; \
-      } \
-      /* op_enum */ \
-      op_enum_t op_enum(void) const override \
-      {  return Name##_op_enum; \
-      } \
-      /* eval */ \
-      void eval( \
-         const tape_t<Value>*      tape          , \
-         bool                      trace         , \
-         addr_t                    arg_index     , \
-         addr_t                    res_index     , \
-         Vector<Value>&            val_vec       , \
-         Vector< Vector<addr_t> >& ind_vec_vec   , \
-         size_t&                   compare_false ) const override \
-      {  const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
-         const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
-         val_vec[res_index]  = Op ( value ); \
-         if( trace ) this->print_op( \
-            #Name , arg_index, arg_vec, res_index, val_vec \
-         ); \
-      } \
-   }
+    template <class Value> \
+    class Name##_op_t : public unary_op_t<Value> { \
+    public: \
+        /* get_instance */ \
+        static Name##_op_t* get_instance(void) \
+        {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL; \
+            static Name##_op_t instance; \
+            return &instance; \
+        } \
+        /* op_enum */ \
+        op_enum_t op_enum(void) const override \
+        {   return Name##_op_enum; \
+        } \
+        /* eval */ \
+        void eval( \
+            const tape_t<Value>*      tape          , \
+            bool                      trace         , \
+            addr_t                    arg_index     , \
+            addr_t                    res_index     , \
+            Vector<Value>&            val_vec       , \
+            Vector< Vector<addr_t> >& ind_vec_vec   , \
+            size_t&                   compare_false ) const override \
+        {   const Vector<addr_t>& arg_vec( tape->arg_vec() ); \
+            const Value& value  = val_vec[ arg_vec[arg_index + 0] ]; \
+            val_vec[res_index]  = Op ( value ); \
+            if( trace ) this->print_op( \
+                #Name , arg_index, arg_vec, res_index, val_vec \
+            ); \
+        } \
+    }
 
 namespace CppAD { namespace local { namespace val_graph {
 /*
@@ -57,8 +57,8 @@ The Unary Value Operator Base Class
 Prototype
 *********
 {xrst_literal
-   // BEGIN_UNARY_OP_T
-   // END_UNARY_OP_T
+    // BEGIN_UNARY_OP_T
+    // END_UNARY_OP_T
 }
 
 Purpose
@@ -92,8 +92,8 @@ This override of :ref:`val_base_op@n_res` returns 1.
 print_op
 ********
 {xrst_literal
-   // BEGIN_PRINT_OP
-   // END_PRINT_OP
+    // BEGIN_PRINT_OP
+    // END_PRINT_OP
 }
 This member function uses :ref:`val_print_op-name` to print unary operators.
 
@@ -105,64 +105,64 @@ template <class Value>
 class unary_op_t : public base_op_t<Value> {
 // END_UNARY_OP_T
 public:
-   // n_before
-   addr_t n_before(void) const override
-   {  return 0; }
-   //
-   // n_after
-   addr_t n_after(void) const override
-   {  return 0; }
-   //
-   // is_unary
-   bool is_unary(void) const override
-   {  return true; }
-   //
-   // n_arg
-   addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 1; }
-   //
-   // n_res
-   addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 1; }
-   //
-   // op_enum
-   virtual op_enum_t op_enum(void) const override = 0;
-   //
-   // eval
-   virtual void eval(
-      const tape_t<Value>*      tape          ,
-      bool                      trace         ,
-      addr_t                    arg_index     ,
-      addr_t                    res_index     ,
-      Vector<Value>&            val_vec       ,
-      Vector< Vector<addr_t> >& ind_vec_vec   ,
-      size_t&                   compare_false ) const override = 0;
-   //
-   // BEGIN_PRINT_OP
-   void print_op(
-      const char*           name         ,
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ,
-      addr_t                res_index    ,
-      Vector<Value>&        val_vec      ) const
-   // END_PRINT_OP
-   {  //
-      Vector<addr_t> arg_val_index  = { arg_vec[ arg_index + 0 ] };
-      Vector<Value>  res_value      = { val_vec[res_index] };
-      CppAD::local::val_graph::print_op(
-         name, arg_val_index, res_index, res_value
-      );
-   }
+    // n_before
+    addr_t n_before(void) const override
+    {   return 0; }
+    //
+    // n_after
+    addr_t n_after(void) const override
+    {   return 0; }
+    //
+    // is_unary
+    bool is_unary(void) const override
+    {   return true; }
+    //
+    // n_arg
+    addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 1; }
+    //
+    // n_res
+    addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 1; }
+    //
+    // op_enum
+    virtual op_enum_t op_enum(void) const override = 0;
+    //
+    // eval
+    virtual void eval(
+        const tape_t<Value>*      tape          ,
+        bool                      trace         ,
+        addr_t                    arg_index     ,
+        addr_t                    res_index     ,
+        Vector<Value>&            val_vec       ,
+        Vector< Vector<addr_t> >& ind_vec_vec   ,
+        size_t&                   compare_false ) const override = 0;
+    //
+    // BEGIN_PRINT_OP
+    void print_op(
+        const char*           name         ,
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ,
+        addr_t                res_index    ,
+        Vector<Value>&        val_vec      ) const
+    // END_PRINT_OP
+    {   //
+        Vector<addr_t> arg_val_index  = { arg_vec[ arg_index + 0 ] };
+        Vector<Value>  res_value      = { val_vec[res_index] };
+        CppAD::local::val_graph::print_op(
+            name, arg_val_index, res_index, res_value
+        );
+    }
 };
 /*
 ------------------------------------------------------------------------------
 {xrst_begin val_unary_op_derived dev}
 {xrst_spell
-   neg
+    neg
 }
 
 The Unary Value Operator Derived Classes
@@ -178,11 +178,11 @@ Prototype
 Unary operators are defined for the following names:
 
 .. csv-table:: Unary Operators
-   :widths: auto
-   :header-rows: 1
+    :widths: auto
+    :header-rows: 1
 
-   Name,description
-   neg,result is negative of operand
+    Name,description
+    neg,result is negative of operand
 
 Context
 *******
@@ -208,7 +208,7 @@ the result equal to the unary operator applied to the operand; see
 
 
 {xrst_toc_hidden
-   val_graph/unary_xam.cpp
+    val_graph/unary_xam.cpp
 }
 Example
 *******

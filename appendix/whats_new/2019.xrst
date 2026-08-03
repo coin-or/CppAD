@@ -5,21 +5,21 @@
 
 {xrst_begin 2019 app}
 {xrst_spell
-   autotools
-   bthread
-   cholesky
-   colpack
-   goto
-   inv
-   lepp
-   mmdd
-   omhelp
-   pos
-   subgraphs
-   to to
-   usr
-   versa
-   yy
+    autotools
+    bthread
+    cholesky
+    colpack
+    goto
+    inv
+    lepp
+    mmdd
+    omhelp
+    pos
+    subgraphs
+    to to
+    usr
+    versa
+    yy
 }
 
 Release Notes for 2019
@@ -378,27 +378,27 @@ when using :ref:`chkpoint_two-name` function.
 #. Change Json *string_vec*
    from first to second line below:
 
-   | |tab| [ *n_string* , [ *first_string* , ..., *last_string*  ] ]
-   | |tab| *n_string* , [ *first_string* , ..., *last_string*  ]
+    | |tab| [ *n_string* , [ *first_string* , ..., *last_string*  ] ]
+    | |tab| *n_string* , [ *first_string* , ..., *last_string*  ]
 
-   ( *string_vec* was removed on :ref:`2019@mm-dd@08-29` ).
+    ( *string_vec* was removed on :ref:`2019@mm-dd@08-29` ).
 #. Change Json :ref:`json_ad_graph@constant_vec`
    from first to second line below:
 
-   | |tab| [ *n_constant* , [ *first_constant* , ..., *last_constant*  ] ]
-   | |tab| *n_constant* , [ *first_constant* , ..., *last_constant*  ]
+    | |tab| [ *n_constant* , [ *first_constant* , ..., *last_constant*  ] ]
+    | |tab| *n_constant* , [ *first_constant* , ..., *last_constant*  ]
 
 #. Change Json :ref:`json_ad_graph@op_usage_vec`
    from first to second line below:
 
-   | |tab| [ *n_op_usage* , [ *first_op_usage* , ..., *last_op_usage*  ] ]
-   | |tab| *n_op_usage* , [ *first_op_usage* , ..., *last_op_usage*  ]
+    | |tab| [ *n_op_usage* , [ *first_op_usage* , ..., *last_op_usage*  ] ]
+    | |tab| *n_op_usage* , [ *first_op_usage* , ..., *last_op_usage*  ]
 
 #. Change Json :ref:`json_ad_graph@dependent_vec`
    from first to second line below:
 
-   | |tab| [ *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ] ]
-   | |tab| *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ]
+    | |tab| [ *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ] ]
+    | |tab| *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ]
 
 08-06
 =====
@@ -620,7 +620,7 @@ on some systems that caused the corresponding check to be skipped.
 This has been fixed. To be specific,
 ::
 
-   make check_example_multi_thread_bthread: available
+    make check_example_multi_thread_bthread: available
 
 was not in the :ref:`cmake@CMake Command` output.
 This has been fixed.
@@ -651,12 +651,12 @@ This reduced the overhead (increased the speed) for the
    To be specific, the
    :ref:`cmake@CMake Command` would report
 
-      ``Could not find boost multi-threading library``
+        ``Could not find boost multi-threading library``
 
-   but it would still try to use the library.
-   This was because a file name with a ``-`` in it was
-   also being used for a cmake variable name.
-   This has been fixed.
+    but it would still try to use the library.
+    This was because a file name with a ``-`` in it was
+    also being used for a cmake variable name.
+    This has been fixed.
 
 02-06
 =====

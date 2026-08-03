@@ -7,7 +7,7 @@
 /*
 {xrst_begin base_to_string}
 {xrst_spell
-   struct
+    struct
 }
 
 Extending to_string To Another Floating Point Type
@@ -38,12 +38,12 @@ This macro is defined as follows:
 # define CPPAD_TO_STRING(Base) \
 template <> struct to_string_struct<Base>\
 {  std::string operator()(const Base& value) \
-   {  std::stringstream os;\
-      int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
-      os << std::setprecision(n_digits);\
-      os << value;\
-      return os.str();\
-   }\
+    {  std::stringstream os;\
+        int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
+        os << std::setprecision(n_digits);\
+        os << value;\
+        return os.str();\
+    }\
 };
 /* {xrst_code}
 {xrst_spell_on}

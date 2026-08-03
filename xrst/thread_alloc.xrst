@@ -32,8 +32,8 @@ the rest of the ``CppAD`` .
 Contents
 ********
 {xrst_toc_table
-   example/utility/thread_alloc.cpp
-   include/cppad/utility/thread_alloc.hpp
+    example/utility/thread_alloc.cpp
+    include/cppad/utility/thread_alloc.hpp
 }
 
 {xrst_end thread_alloc}

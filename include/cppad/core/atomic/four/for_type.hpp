@@ -17,8 +17,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Dependency Analysis
@@ -57,17 +57,17 @@ or :ref:`glossary@Variable` .
 It has the following possible values:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   *ad_type_enum*,Meaning
-   ``identical_zero_enum``,identically zero
-   ``constant_enum``,constant parameter
-   ``dynamic_enum``,dynamic parameter
-   ``variable_enum``,variable
+    *ad_type_enum*,Meaning
+    ``identical_zero_enum``,identically zero
+    ``constant_enum``,constant parameter
+    ``dynamic_enum``,dynamic parameter
+    ``variable_enum``,variable
 
 In addition,
 
-   ``identical_zero_enum < constant_enum < dynamic_enum < variable_enum``
+    ``identical_zero_enum < constant_enum < dynamic_enum < variable_enum``
 
 A value that is identically zero is also a constant parameter.
 In CppAD, multiplication of a variable by a value that is identically zero
@@ -111,9 +111,9 @@ Example
 The following is an example ``for_type`` definition taken from
 :ref:`atomic_four_norm_sq.cpp-name` :
 {xrst_literal
-   example/atomic_four/norm_sq.cpp
-   // BEGIN FOR_TYPE
-   // END FOR_TYPE
+    example/atomic_four/norm_sq.cpp
+    // BEGIN FOR_TYPE
+    // END FOR_TYPE
 }
 
 {xrst_end atomic_four_for_type}
@@ -125,11 +125,11 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::for_type(
-   size_t                       call_id     ,
-   const vector<ad_type_enum>&  type_x      ,
-   vector<ad_type_enum>&        type_y      )
+    size_t                       call_id     ,
+    const vector<ad_type_enum>&  type_x      ,
+    vector<ad_type_enum>&        type_y      )
 // END_PROTOTYPE
-{  return false; }
+{   return false; }
 
 } // END_CPPAD_NAMESPACE
 

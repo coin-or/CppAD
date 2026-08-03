@@ -10,8 +10,8 @@
 /*
 {xrst_begin optimize}
 {xrst_spell
-   onetape
-   substring
+    onetape
+    substring
 }
 
 Optimize an ADFun Object Tape
@@ -36,13 +36,13 @@ f
 *
 The object *f* has prototype
 
-   ``ADFun`` < *Base* > *f*
+    ``ADFun`` < *Base* > *f*
 
 options
 *******
 This argument has prototype
 
-   ``const std::string&`` *options*
+    ``const std::string&`` *options*
 
 The default for *options* is the empty string.
 If it is present, it must consist of one or more of the options below
@@ -211,27 +211,27 @@ Examples
 ********
 {xrst_comment childtable without Example instead of Contents for header}
 {xrst_toc_hidden
-   example/optimize/optimize_twice.cpp
-   example/optimize/forward_active.cpp
-   example/optimize/reverse_active.cpp
-   example/optimize/compare_op.cpp
-   example/optimize/print_for.cpp
-   example/optimize/conditional_skip.cpp
-   example/optimize/nest_conditional.cpp
-   example/optimize/cumulative_sum.cpp
+    example/optimize/optimize_twice.cpp
+    example/optimize/forward_active.cpp
+    example/optimize/reverse_active.cpp
+    example/optimize/compare_op.cpp
+    example/optimize/print_for.cpp
+    example/optimize/conditional_skip.cpp
+    example/optimize/nest_conditional.cpp
+    example/optimize/cumulative_sum.cpp
 }
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   optimize_twice.cpp,:ref:`optimize_twice.cpp-title`
-   optimize_forward_active.cpp,:ref:`optimize_forward_active.cpp-title`
-   optimize_reverse_active.cpp,:ref:`optimize_reverse_active.cpp-title`
-   optimize_compare_op.cpp,:ref:`optimize_compare_op.cpp-title`
-   optimize_print_for.cpp,:ref:`optimize_print_for.cpp-title`
-   optimize_conditional_skip.cpp,:ref:`optimize_conditional_skip.cpp-title`
-   optimize_nest_conditional.cpp,:ref:`optimize_nest_conditional.cpp-title`
-   optimize_cumulative_sum.cpp,:ref:`optimize_cumulative_sum.cpp-title`
+    optimize_twice.cpp,:ref:`optimize_twice.cpp-title`
+    optimize_forward_active.cpp,:ref:`optimize_forward_active.cpp-title`
+    optimize_reverse_active.cpp,:ref:`optimize_reverse_active.cpp-title`
+    optimize_compare_op.cpp,:ref:`optimize_compare_op.cpp-title`
+    optimize_print_for.cpp,:ref:`optimize_print_for.cpp-title`
+    optimize_conditional_skip.cpp,:ref:`optimize_conditional_skip.cpp-title`
+    optimize_nest_conditional.cpp,:ref:`optimize_nest_conditional.cpp-title`
+    optimize_cumulative_sum.cpp,:ref:`optimize_cumulative_sum.cpp-title`
 
 {xrst_end optimize}
 -----------------------------------------------------------------------------
@@ -271,158 +271,158 @@ template <class Base, class RecBase>
 void ADFun<Base,RecBase>::optimize(const std::string& options)
 {
 # if CPPAD_CORE_OPTIMIZE_PRINT_RESULT
-   // size of operation sequence before optimizatiton
-   size_t size_op_before = size_op();
+    // size of operation sequence before optimizatiton
+    size_t size_op_before = size_op();
 # endif
 
-   // number of independent variables
-   size_t n_ind_var = ind_taddr_.size();
+    // number of independent variables
+    size_t n_ind_var = ind_taddr_.size();
 
 # ifndef NDEBUG
-   // n_ind_dyn, ind_dynamic
-   size_t n_ind_dyn = play_.n_dyn_independent();
-   CppAD::vector<Base> ind_dynamic(n_ind_dyn);
-   //
-   // n_dep_var, x, y, check, max_taylor, check_zero_order
-   size_t n_dep_var = dep_taddr_.size();
-   CppAD::vector<Base> x(n_ind_var), y(n_dep_var), check(n_dep_var);
-   Base max_taylor(0);
-   bool check_zero_order = num_order_taylor_ > 0;
-   if( check_zero_order )
-   {  //
-      // ind_dynamic
-      for(size_t j = 0; j < n_ind_dyn; ++j)
-      {  const addr_t par_ind = play_.dyn2par_index()[j];
-         ind_dynamic[j]       = play_.par_all()[par_ind];
-      }
-      //
-      // x
-      // zero order coefficients for independent vars
-      for(size_t j = 0; j < n_ind_var; j++)
-      {  CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
-         CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]    == j+1   );
-         x[j] = taylor_[ ind_taddr_[j] * cap_order_taylor_ + 0];
-      }
-      // y
-      // zero order coefficients for dependent vars
-      for(size_t i = 0; i < n_dep_var; i++)
-      {  CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );
-         y[i] = taylor_[ dep_taddr_[i] * cap_order_taylor_ + 0];
-      }
-      // max_taylor
-      // maximum zero order coefficient not counting BeginOp at beginning
-      // (which is corresponds to uninitialized memory).
-      for(size_t i = 1; i < num_var_tape_; i++)
-      {  if(  abs_geq(taylor_[i*cap_order_taylor_+0] , max_taylor) )
-            max_taylor = taylor_[i*cap_order_taylor_+0];
-      }
-   }
+    // n_ind_dyn, ind_dynamic
+    size_t n_ind_dyn = play_.n_dyn_independent();
+    CppAD::vector<Base> ind_dynamic(n_ind_dyn);
+    //
+    // n_dep_var, x, y, check, max_taylor, check_zero_order
+    size_t n_dep_var = dep_taddr_.size();
+    CppAD::vector<Base> x(n_ind_var), y(n_dep_var), check(n_dep_var);
+    Base max_taylor(0);
+    bool check_zero_order = num_order_taylor_ > 0;
+    if( check_zero_order )
+    {   //
+        // ind_dynamic
+        for(size_t j = 0; j < n_ind_dyn; ++j)
+        {   const addr_t par_ind = play_.dyn2par_index()[j];
+            ind_dynamic[j]       = play_.par_all()[par_ind];
+        }
+        //
+        // x
+        // zero order coefficients for independent vars
+        for(size_t j = 0; j < n_ind_var; j++)
+        {   CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
+            CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]    == j+1   );
+            x[j] = taylor_[ ind_taddr_[j] * cap_order_taylor_ + 0];
+        }
+        // y
+        // zero order coefficients for dependent vars
+        for(size_t i = 0; i < n_dep_var; i++)
+        {   CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );
+            y[i] = taylor_[ dep_taddr_[i] * cap_order_taylor_ + 0];
+        }
+        // max_taylor
+        // maximum zero order coefficient not counting BeginOp at beginning
+        // (which is corresponds to uninitialized memory).
+        for(size_t i = 1; i < num_var_tape_; i++)
+        {   if(  abs_geq(taylor_[i*cap_order_taylor_+0] , max_taylor) )
+                max_taylor = taylor_[i*cap_order_taylor_+0];
+        }
+    }
 # endif
 
-   //
-   // val_graph
-   bool val_graph = options.find("val_graph") != std::string::npos;
-   //
-   if( val_graph )
-   {  val_optimize(options);
-      exceed_collision_limit_ = false;
-   }
-   else
-   {
-      // place to store the optimized version of the recording
-      local::recorder<Base> rec;
+    //
+    // val_graph
+    bool val_graph = options.find("val_graph") != std::string::npos;
+    //
+    if( val_graph )
+    {   val_optimize(options);
+        exceed_collision_limit_ = false;
+    }
+    else
+    {
+        // place to store the optimized version of the recording
+        local::recorder<Base> rec;
 
-      // create the optimized recording
-      size_t exceed = false;
-      switch( play_.address_type() )
-      {
-         case local::play::unsigned_short_enum:
-         exceed = local::optimize::optimize_run<unsigned short>(
-            options, n_ind_var, dep_taddr_, &play_, &rec
-         );
-         break;
+        // create the optimized recording
+        size_t exceed = false;
+        switch( play_.address_type() )
+        {
+            case local::play::unsigned_short_enum:
+            exceed = local::optimize::optimize_run<unsigned short>(
+                options, n_ind_var, dep_taddr_, &play_, &rec
+            );
+            break;
 
-         case local::play::addr_t_enum:
-         exceed = local::optimize::optimize_run<addr_t>(
-            options, n_ind_var, dep_taddr_, &play_, &rec
-         );
-         break;
+            case local::play::addr_t_enum:
+            exceed = local::optimize::optimize_run<addr_t>(
+                options, n_ind_var, dep_taddr_, &play_, &rec
+            );
+            break;
 
-         case local::play::size_t_enum:
-         exceed = local::optimize::optimize_run<size_t>(
-            options, n_ind_var, dep_taddr_, &play_, &rec
-         );
-         break;
+            case local::play::size_t_enum:
+            exceed = local::optimize::optimize_run<size_t>(
+                options, n_ind_var, dep_taddr_, &play_, &rec
+            );
+            break;
 
-         default:
-         CPPAD_ASSERT_UNKNOWN(false);
-      }
-      exceed_collision_limit_ = exceed;
+            default:
+            CPPAD_ASSERT_UNKNOWN(false);
+        }
+        exceed_collision_limit_ = exceed;
 
-      // now replace the recording
-      play_.get_recording(rec, n_ind_var);
-   }
+        // now replace the recording
+        play_.get_recording(rec, n_ind_var);
+    }
 
-   // number of variables in the recording
-   num_var_tape_  = play_.num_var();
+    // number of variables in the recording
+    num_var_tape_  = play_.num_var();
 
-   // set flag so this function knows it has been optimized
-   has_been_optimized_ = true;
+    // set flag so this function knows it has been optimized
+    has_been_optimized_ = true;
 
-   // free memory allocated for sparse Jacobian calculation
-   // (the results are no longer valid)
-   for_jac_sparse_pack_.resize(0, 0);
-   for_jac_sparse_set_.resize(0,0);
+    // free memory allocated for sparse Jacobian calculation
+    // (the results are no longer valid)
+    for_jac_sparse_pack_.resize(0, 0);
+    for_jac_sparse_set_.resize(0,0);
 
-   // free old Taylor coefficient memory
-   taylor_.clear();
-   num_order_taylor_     = 0;
-   cap_order_taylor_     = 0;
+    // free old Taylor coefficient memory
+    taylor_.clear();
+    num_order_taylor_     = 0;
+    cap_order_taylor_     = 0;
 
-   // resize and initialize conditional skip vector
-   // (must use player size because it now has the recoreder information)
-   cskip_op_.resize( play_.num_var_op() );
+    // resize and initialize conditional skip vector
+    // (must use player size because it now has the recoreder information)
+    cskip_op_.resize( play_.num_var_op() );
 
-   // resize subgraph_info_
-   subgraph_info_.resize(
-      ind_taddr_.size(),    // n_ind
-      dep_taddr_.size(),    // n_dep
-      play_.num_var_op(),   // n_op
-      play_.num_var()       // n_var
-   );
+    // resize subgraph_info_
+    subgraph_info_.resize(
+        ind_taddr_.size(),    // n_ind
+        dep_taddr_.size(),    // n_dep
+        play_.num_var_op(),   // n_op
+        play_.num_var()       // n_var
+    );
 
 # ifndef NDEBUG
-   if( check_zero_order )
-   {  std::stringstream s;
-      //
-      // zero order forward calculation using new operation sequence
-      new_dynamic(ind_dynamic);
-      check = Forward(0, x, s);
+    if( check_zero_order )
+    {   std::stringstream s;
+        //
+        // zero order forward calculation using new operation sequence
+        new_dynamic(ind_dynamic);
+        check = Forward(0, x, s);
 
-      // check results
-      Base eps99 = Base(99) * CppAD::numeric_limits<Base>::epsilon();
-      for(size_t i = 0; i < n_dep_var; i++)
-      if( ! abs_geq( eps99 * max_taylor , check[i] - y[i] ) )
-      {  std::string msg = "Error during check of f.optimize().";
-         msg += "\neps99 * max_taylor = " + to_string(eps99 * max_taylor);
-         msg += "\ncheck[i] = " + to_string(check[i]);
-         msg += "\ny[i]     = " + to_string(y[i]);
-         CPPAD_ASSERT_KNOWN(
-            abs_geq( eps99 * max_taylor , check[i] - y[i] ) ,
-            msg.c_str()
-         );
-      }
+        // check results
+        Base eps99 = Base(99) * CppAD::numeric_limits<Base>::epsilon();
+        for(size_t i = 0; i < n_dep_var; i++)
+        if( ! abs_geq( eps99 * max_taylor , check[i] - y[i] ) )
+        {   std::string msg = "Error during check of f.optimize().";
+            msg += "\neps99 * max_taylor = " + to_string(eps99 * max_taylor);
+            msg += "\ncheck[i] = " + to_string(check[i]);
+            msg += "\ny[i]     = " + to_string(y[i]);
+            CPPAD_ASSERT_KNOWN(
+                abs_geq( eps99 * max_taylor , check[i] - y[i] ) ,
+                msg.c_str()
+            );
+        }
 
-      // Erase memory that this calculation was done so NDEBUG gives
-      // same final state for this object (from users perspective)
-      num_order_taylor_     = 0;
-   }
+        // Erase memory that this calculation was done so NDEBUG gives
+        // same final state for this object (from users perspective)
+        num_order_taylor_     = 0;
+    }
 # endif
 # if CPPAD_CORE_OPTIMIZE_PRINT_RESULT
-   // size of operation sequence after optimizatiton
-   size_t size_op_after = size_op();
-   std::cout << "optimize: size_op:  before = " <<
-   size_op_before << ", after = " << size_op_after << "\n";
+    // size of operation sequence after optimizatiton
+    size_t size_op_after = size_op();
+    std::cout << "optimize: size_op:  before = " <<
+    size_op_before << ", after = " << size_op_after << "\n";
 # endif
 }
 

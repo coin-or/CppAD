@@ -24,8 +24,8 @@ The Cumulative Summation Value Operator
 Prototype
 *********
 {xrst_literal
-   // BEGIN_CSUM_OP_T
-   // END_CSUM_OP_T
+    // BEGIN_CSUM_OP_T
+    // END_CSUM_OP_T
 }
 
 Context
@@ -46,8 +46,8 @@ n_before
 ********
 This override of :ref:`val_base_op@n_before` returns 2.
 {xrst_literal
-   // BEGIN_ARG_BEFORE
-   // END_ARG_BEFORE
+    // BEGIN_ARG_BEFORE
+    // END_ARG_BEFORE
 }
 
 n_after
@@ -79,18 +79,18 @@ This override of :ref:`val_base_op@eval` computes the summation.
 #. The additions in the summation are
    ::
 
-      val_vec[ arg_vec[ arg_index + 2 ] ] ,
-      val_vec[ arg_vec[ arg_index + 3 ] ] ,
-      ...
-      val_vec[ arg_vec[ arg_index + 1 + n_add ] ]
+        val_vec[ arg_vec[ arg_index + 2 ] ] ,
+        val_vec[ arg_vec[ arg_index + 3 ] ] ,
+        ...
+        val_vec[ arg_vec[ arg_index + 1 + n_add ] ]
 
 #. The subtractions in the summation are
    ::
 
-      val_vec[ arg_vec[ arg_index + 2 + n_add ] ] ,
-      val_vec[ arg_vec[ arg_index + 3 + n_add ] ] ,
-      ...
-      val_vec[ arg_vec[ arg_index + 1 + n_add + n_sub ] ]
+        val_vec[ arg_vec[ arg_index + 2 + n_add ] ] ,
+        val_vec[ arg_vec[ arg_index + 3 + n_add ] ] ,
+        ...
+        val_vec[ arg_vec[ arg_index + 1 + n_add + n_sub ] ]
 
 trace
 =====
@@ -98,7 +98,7 @@ If trace is true, :ref:`val_print_csum_op-name`
 is called to print this operator.
 
 {xrst_toc_hidden
-   val_graph/csum_xam.cpp
+    val_graph/csum_xam.cpp
 }
 Example
 *******
@@ -111,107 +111,107 @@ is an example and test that uses this operator.
 template <class Value>
 class csum_op_t : public base_op_t<Value> {
 public:
-   // n_before
-   addr_t n_before(void) const override
-   {  return 2; }
-   //
-   // n_after
-   addr_t n_after(void) const override
-   {  return 1; }
-   //
-   // get_instance
-   static csum_op_t* get_instance(void)
-   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-      static csum_op_t instance;
-      return &instance;
-   }
-   // op_enum
-   // type of this operator
-   op_enum_t op_enum(void) const override
-   {  return csum_op_enum; }
-   //
-   // n_arg
-   addr_t n_arg(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  addr_t n_add = arg_vec[arg_index + 0];
-      addr_t n_sub = arg_vec[arg_index + 1];
-      return 3 + n_add + n_sub;
-   }
-   //
-   // n_res
-   addr_t n_res(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const override
-   {  return 1; }
-   //
-   // n_add
-   addr_t n_add(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const
-   {  return size_t( arg_vec[arg_index + 0] ); }
-   //
-   // n_sub
-   addr_t n_sub(
-      addr_t                arg_index    ,
-      const Vector<addr_t>& arg_vec      ) const
-   {  return size_t( arg_vec[arg_index + 1] ); }
-   //
-   // eval
-   void eval(
-      const tape_t<Value>*      tape          ,
-      bool                      trace         ,
-      addr_t                    arg_index     ,
-      addr_t                    res_index     ,
-      Vector<Value>&            val_vec       ,
-      Vector< Vector<addr_t> >& ind_vec_vec   ,
-      size_t&                   compare_false
-    ) const override;
+    // n_before
+    addr_t n_before(void) const override
+    {   return 2; }
+    //
+    // n_after
+    addr_t n_after(void) const override
+    {   return 1; }
+    //
+    // get_instance
+    static csum_op_t* get_instance(void)
+    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        static csum_op_t instance;
+        return &instance;
+    }
+    // op_enum
+    // type of this operator
+    op_enum_t op_enum(void) const override
+    {   return csum_op_enum; }
+    //
+    // n_arg
+    addr_t n_arg(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   addr_t n_add = arg_vec[arg_index + 0];
+        addr_t n_sub = arg_vec[arg_index + 1];
+        return 3 + n_add + n_sub;
+    }
+    //
+    // n_res
+    addr_t n_res(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const override
+    {   return 1; }
+    //
+    // n_add
+    addr_t n_add(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const
+    {   return size_t( arg_vec[arg_index + 0] ); }
+    //
+    // n_sub
+    addr_t n_sub(
+        addr_t                arg_index    ,
+        const Vector<addr_t>& arg_vec      ) const
+    {   return size_t( arg_vec[arg_index + 1] ); }
+    //
+    // eval
+    void eval(
+        const tape_t<Value>*      tape          ,
+        bool                      trace         ,
+        addr_t                    arg_index     ,
+        addr_t                    res_index     ,
+        Vector<Value>&            val_vec       ,
+        Vector< Vector<addr_t> >& ind_vec_vec   ,
+        size_t&                   compare_false
+     ) const override;
 // END_CSUM_OP_T
 };
 //
 // eval
 template <class Value>
 void csum_op_t<Value>::eval(
-   const tape_t<Value>*      tape          ,
-   bool                      trace         ,
-   addr_t                    arg_index     ,
-   addr_t                    res_index     ,
-   Vector<Value>&            val_vec       ,
-   Vector< Vector<addr_t> >& ind_vec_vec   ,
-   size_t&                   compare_false ) const
-{  //
-   // arg_vec
-   const Vector<addr_t>& arg_vec( tape->arg_vec() );
-   //
-   // n_add, n_sub
-   // BEGIN_ARG_BEFORE
-   addr_t n_add         =  arg_vec[arg_index + 0] ;
-   addr_t n_sub         =  arg_vec[arg_index + 1] ;
-   // END_ARG_BEFORE
-   //
-   // sum
-   Value sum(0.0);
-   for(addr_t i = 0; i < n_add; ++i)
-      sum += val_vec[ arg_vec[arg_index + 2 + i] ];
-   for(addr_t i = 0; i < n_sub; ++i)
-      sum -= val_vec[ arg_vec[arg_index + 2 + n_add + i] ];
-   //
-   // val_vec
-   val_vec[res_index] = sum;
-   //
-   // trace
-   if( ! trace )
-      return;
-   //
-   // print_csum_op
-   Vector<addr_t> arg(3 + n_add + n_sub);
-   for(addr_t i = 0; i < addr_t( arg.size() ); ++i)
-      arg[i] = arg_vec[ arg_index + i ];
-   Vector<Value> res_value = { val_vec[res_index] };
-   print_csum_op(arg, res_index, res_value );
-   //
-   return;
+    const tape_t<Value>*      tape          ,
+    bool                      trace         ,
+    addr_t                    arg_index     ,
+    addr_t                    res_index     ,
+    Vector<Value>&            val_vec       ,
+    Vector< Vector<addr_t> >& ind_vec_vec   ,
+    size_t&                   compare_false ) const
+{   //
+    // arg_vec
+    const Vector<addr_t>& arg_vec( tape->arg_vec() );
+    //
+    // n_add, n_sub
+    // BEGIN_ARG_BEFORE
+    addr_t n_add         =  arg_vec[arg_index + 0] ;
+    addr_t n_sub         =  arg_vec[arg_index + 1] ;
+    // END_ARG_BEFORE
+    //
+    // sum
+    Value sum(0.0);
+    for(addr_t i = 0; i < n_add; ++i)
+        sum += val_vec[ arg_vec[arg_index + 2 + i] ];
+    for(addr_t i = 0; i < n_sub; ++i)
+        sum -= val_vec[ arg_vec[arg_index + 2 + n_add + i] ];
+    //
+    // val_vec
+    val_vec[res_index] = sum;
+    //
+    // trace
+    if( ! trace )
+        return;
+    //
+    // print_csum_op
+    Vector<addr_t> arg(3 + n_add + n_sub);
+    for(addr_t i = 0; i < addr_t( arg.size() ); ++i)
+        arg[i] = arg_vec[ arg_index + i ];
+    Vector<Value> res_value = { val_vec[res_index] };
+    print_csum_op(arg, res_index, res_value );
+    //
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_VAL_GRAPH_NAMESPACE

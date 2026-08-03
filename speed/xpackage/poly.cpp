@@ -24,11 +24,11 @@ Implementation
 extern std::map<std::string, bool> global_option;
 
 bool link_poly(
-   size_t                     size     ,
-   size_t                     repeat   ,
-   CppAD::vector<double>     &a        ,  // coefficients of polynomial
-   CppAD::vector<double>     &z        ,  // polynomial argument value
-   CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>     &a        ,  // coefficients of polynomial
+    CppAD::vector<double>     &z        ,  // polynomial argument value
+    CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {  return false; }
 /* {xrst_code}
 {xrst_spell_on}

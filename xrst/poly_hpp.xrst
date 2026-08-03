@@ -12,9 +12,9 @@ Source: Poly
 | # ``define CPPAD_POLY_HPP``
 
 {xrst_literal
-   include/cppad/utility/poly.hpp
-   // BEGIN C++
-   // END C++
+    include/cppad/utility/poly.hpp
+    // BEGIN C++
+    // END C++
 }
 
 ``# endif``

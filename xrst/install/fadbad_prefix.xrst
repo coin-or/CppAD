@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin fadbad_prefix}
 {xrst_spell
-   badiff
+    badiff
 }
 
 Including Fadbad Speed Tests
@@ -28,7 +28,7 @@ The value of *fadbad_prefix* must be such that,
 for one of the directories *dir* in
 :ref:`cmake@cmake_install_includedirs` ,
 
-   *fadbad_prefix* / *dir* / ``FADBAD`` ++/ ``badiff.h``
+    *fadbad_prefix* / *dir* / ``FADBAD`` ++/ ``badiff.h``
 
 is a valid way to reference to the include file ``badiff.h`` ;
 

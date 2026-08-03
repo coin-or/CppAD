@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin sacado_prefix}
 {xrst_spell
-   kokkos
-   trilinos
+    kokkos
+    trilinos
 }
 
 Including Sacado Speed Tests
@@ -35,7 +35,7 @@ The value of *sacado_prefix* must be such that,
 for one of the directories *dir* in
 :ref:`cmake@cmake_install_includedirs` ,
 
-   *sacado_prefix* / *dir* / ``Sacado.hpp``
+    *sacado_prefix* / *dir* / ``Sacado.hpp``
 
 is a valid way to reference to the include file ``Sacado.hpp`` ;
 

@@ -11,8 +11,8 @@ atomic_four Developer Documentation
 Contents
 ********
 {xrst_toc_table
-   include/cppad/core/atomic/four/devel/jac_sparsity.hpp
-   include/cppad/core/atomic/four/devel/hes_sparsity.hpp
+    include/cppad/core/atomic/four/devel/jac_sparsity.hpp
+    include/cppad/core/atomic/four/devel/hes_sparsity.hpp
 }
 
 {xrst_end atomic_four_devel}
