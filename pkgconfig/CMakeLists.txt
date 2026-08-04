@@ -13,6 +13,7 @@
 #     includedir
 #     libdir
 #     libs
+#     dbn       
 # }
 # {xrst_comment_ch #}
 #
@@ -22,9 +23,11 @@
 # Purpose
 # *******
 # The ``pkg-config`` program helps with the used if installed libraries
-# and include files; see
-# `pkg-config <https://www.freedesktop.org/wiki/Software/pkg-config/>`_
-# for more information on writing an using pkg-config files.
+# and include files; see 
+# `pkg-config <https://en.wikipedia.org/wiki/Pkg-config>`_ .
+# For more information on writing an using pkg-config files; see
+#
+#   ``https://people.freedesktop.org/~dbn/pkg-config-guide.html``
 #
 # cppad.pc
 # ********
