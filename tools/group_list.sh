@@ -3,7 +3,7 @@ set -e -u
 # !! EDITS TO THIS FILE ARE LOST DURING UPDATES BY xrst.git/tools/dev_tools.sh !!
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # tools/group_list.sh
 # Returns a space separated list of the group names for this project.
@@ -11,6 +11,7 @@ set -e -u
 # file for this project.
 # If there is no xrst.toml file for this project, the group list is just
 # the default group.
+# ----------------------------------------------------------------------------
 #
 # sed
 source tools/grep_and_sed.sh

@@ -1,8 +1,7 @@
 # ---------------------------------------------------------------------------
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-26 Bradley M. Bell
-# SPDX-FileContributor: 2025 Perry de Valpine
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # ---------------------------------------------------------------------------
 # source tools/dev_settings.sh
 # Sets the value of the the development tool variables for this package.
@@ -16,10 +15,12 @@
 # If an file name below is a directory it specifies all the
 # files in the directory.
 #
-# spdx_license_id
+# spdx_license_id, spdx_copyright_text
+# The SPDX license identifier and copyright text.
 # Each file, except those specified by no_copyright_list, should have a line
-# that ends with the following text:
+# that ends with each of the following text cases:
 spdx_license_id='EPL-2.0 OR GPL-2.0-or-later'
+spdx_copyright_text='Bradley M. Bell <bradbell@seanet.com>'
 #
 # package_name
 package_name='cppad'
@@ -88,6 +89,7 @@ no_copyright_list='
     cmake/cppad_uninstall.cmake
     coin.png
     epl-2.0.txt
+    readme.md
     tools/build.bat
     typos.toml
     uw_copy_040507.html

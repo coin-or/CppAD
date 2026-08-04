@@ -3,13 +3,18 @@ set -e -u
 # !! EDITS TO THIS FILE ARE LOST DURING UPDATES BY xrst.git/tools/dev_tools.sh !!
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # -----------------------------------------------------------------------------
-# tools/check_tabls.h
+# script_path
+script_dir="$( dirname -- "${BASH_SOURCE[0]}" )"
+script_dir="$( cd -- "$script_dir" &> /dev/null && pwd )"
+script_path="$script_dir/$(basename $0)"
+#
+# tools/check_tab.sh
 # Checks for tabs in the source and returns an error if it finds any.
 # Files that are not checked can be specified in tools/dev_settings.sh.
 # -----------------------------------------------------------------------------
-if [ ! -e "tools/check_tab.sh" ]
+if [ ! -e 'tools/check_tab.sh' ]
 then
     echo "tools/check_tab.sh: must be executed from its parent directory"
     exit 1
@@ -77,5 +82,5 @@ then
 fi
 # -----------------------------------------------------------------------------
 rm sed.$$
-echo 'check_tab.sh: OK'
+echo "$script_path: OK"
 exit 0

@@ -3,14 +3,20 @@ set -e -u
 # !! EDITS TO THIS FILE ARE LOST DURING UPDATES BY xrst.git/tools/dev_tools.sh !!
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-25 Bradley M. Bell
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # -----------------------------------------------------------------------------
+# script_path
+script_dir="$( dirname -- "${BASH_SOURCE[0]}" )"
+script_dir="$( cd -- "$script_dir" &> /dev/null && pwd )"
+script_path="$script_dir/$(basename $0)"
+#
 # tools/new_release.sh  [--skip_stable_check_all]
 # Creates and check a release for the year and release number specified below.
 #
 # tools/check_all.sh [--skip_external_links]
 # is used by new_release to skip checking external links.
-# new_release.sh skips this when testing before the new release (tag)  exists.
+# new_release.sh uses --skip_external_links when testing before the
+# new release (tag)  exists.
 # -----------------------------------------------------------------------------
 year='2026' # Year for this stable version
 release='0' # first release for each year starts with 0
@@ -123,7 +129,6 @@ fi
 #
 # stable_branch
 stable_branch=stable/$year
-
 #
 # stable_local_hash
 if ! git show-ref --hash "heads/$stable_branch" > /dev/null
@@ -328,5 +333,5 @@ then
     exit 1
 fi
 # ----------------------------------------------------------------------------
-echo 'tools/new_release.sh: OK'
+echo "$script_path: OK"
 exit 0

@@ -3,8 +3,13 @@ set -e -u
 # !! EDITS TO THIS FILE ARE LOST DURING UPDATES BY xrst.git/tools/dev_tools.sh !!
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-26 Bradley M. Bell
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # -----------------------------------------------------------------------------
+# script_path
+script_dir="$( dirname -- "${BASH_SOURCE[0]}" )"
+script_dir="$( cd -- "$script_dir" &> /dev/null && pwd )"
+script_path="$script_dir/$(basename $0)"
+#
 # tools/check_verison.sh
 # Checks that the version number in the version_file_list are correct;
 # see tools/dev_settings.sh for more discussion.
@@ -22,7 +27,7 @@ source tools/grep_and_sed.sh
 # package_name, version_file_list
 source tools/dev_settings.sh
 #
-if [ ! -e "tools/check_version.sh" ]
+if [ ! -e 'tools/check_version.sh' ]
 then
     echo "tools/check_version.sh: must be executed from its parent directory"
     exit 1
@@ -165,5 +170,5 @@ then
     echo 'Re-execute tools/check_version.sh ?'
     exit 1
 fi
-echo 'check_version.sh OK'
+echo "$script_path: OK"
 exit 0

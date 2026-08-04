@@ -4,8 +4,13 @@ set -e -u
 # ---------------------------------------------------------------------------
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # ---------------------------------------------------------------------------
+# script_path
+script_dir="$( dirname -- "${BASH_SOURCE[0]}" )"
+script_dir="$( cd -- "$script_dir" &> /dev/null && pwd )"
+script_path="$script_dir/$(basename $0)"
+#
 # tools/git_commit.sh
 # Opens your editor with comments about this git commit.
 # 1.  The git commit log message will not include comment lines.
@@ -159,5 +164,5 @@ echo_eval git add --all
 # git commit
 git commit --file=git_commit.log
 #
-echo 'tools/git_commit.sh: OK'
+echo "$script_path: OK"
 exit 0
