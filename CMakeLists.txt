@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-26 Bradley M. Bell
-# ----------------------------------------------------------------------------
+# SPDX-FileContributor: 2026 Barak A. Pearlmutter
 # =============================================================================
 # Some constants
 # =============================================================================
@@ -21,7 +21,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20260804")
+SET(cppad_version "20260829")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -492,6 +492,24 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
         SET(cppad_abs_${dir_type} ${cppad_abs_${dir_type}}/${cppad_postfix} )
     ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
+ # ----------------------------------------------------------------------------
+# cppad_includearch_postfix, cppad_abs_includearchdir
+#
+# Some of the installed include files, cppad/configure.hpp so far, depend on
+# the architecture; e.g., on whether size_t and unsigned int are the same type.
+# On a multiarch system they are installed below cppad_abs_includearchdir and
+# the rest of the include files, which do not depend on the architecture, can
+# be shared between architectures.  Note that the compiler searches the
+# multiarch include directory ahead of the ordinary one.
+print_variable( CMAKE_LIBRARY_ARCHITECTURE )
+IF( CMAKE_LIBRARY_ARCHITECTURE )
+    SET(cppad_includearch_postfix "/${CMAKE_LIBRARY_ARCHITECTURE}" )
+ELSE( CMAKE_LIBRARY_ARCHITECTURE )
+    SET(cppad_includearch_postfix "" )
+ENDIF( CMAKE_LIBRARY_ARCHITECTURE )
+SET(cppad_abs_includearchdir
+    "${cppad_abs_includedir}${cppad_includearch_postfix}"
+)
 # ----------------------------------------------------------------------------
 # https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
 #
@@ -690,12 +708,20 @@ CONFIGURE_FILE(
 # Note a trailing / in the source directory name drops the source directory
 # name during the copy.
 #
-# During install copy all the cppad include files to
 # ${cppad_abs_includedir}/cppad
+# The architecture independent include files
 INSTALL(
     DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/cppad/"
     DESTINATION ${cppad_abs_includedir}/cppad
-    FILES_MATCHING PATTERN "*.hpp" PATTERN "xrst" EXCLUDE
+    FILES_MATCHING PATTERN "*.hpp"
+    PATTERN "configure.hpp" EXCLUDE
+)
+#
+# ${cppad_abs_includearchdir}/cppad
+# The architecture dependent include files
+INSTALL(
+    FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/cppad/configure.hpp"
+    DESTINATION ${cppad_abs_includearchdir}/cppad
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad

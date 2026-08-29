@@ -1,6 +1,7 @@
  # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-26 Bradley M. Bell
+# SPDX-FileContributor: 2026 Barak A. Pearlmutter
 # ----------------------------------------------------------------------------
 # Construct cppad.pc from cppad.pc.in; see
 # http://people.freedesktop.org/~dbn/pkg-config-guide.html
@@ -13,7 +14,7 @@
 #     includedir
 #     libdir
 #     libs
-#     dbn       
+#     dbn
 # }
 # {xrst_comment_ch #}
 #
@@ -23,7 +24,7 @@
 # Purpose
 # *******
 # The ``pkg-config`` program helps with the used if installed libraries
-# and include files; see 
+# and include files; see
 # `pkg-config <https://en.wikipedia.org/wiki/Pkg-config>`_ .
 # For more information on writing an using pkg-config files; see
 #
@@ -126,6 +127,17 @@ LIST(GET cmake_install_includedirs 0 cppad_includedir)
 #
 # cppad_libdir
 LIST(GET cmake_install_libdirs 0 cppad_libdir)
+#
+# cppad_includearchdir_cflag
+# The architecture dependent include files are installed below
+# includedir${cppad_includearch_postfix}; see the top source CMakeLists.txt.
+IF( cppad_includearch_postfix )
+    SET(cppad_includearchdir_cflag
+        " -I\${includedir}${cppad_includearch_postfix}"
+    )
+ELSE( cppad_includearch_postfix )
+    SET(cppad_includearchdir_cflag "")
+ENDIF( cppad_includearch_postfix )
 #
 # add_to_set
 MACRO(add_to_set variable_name element)
