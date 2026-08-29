@@ -18,6 +18,15 @@ Release Notes for 2026
 mm-dd
 *****
 
+08-29
+=====
+The include file ``configure.hpp`` depends on the machine architecture.
+This is a problem when compiling for multiple architectures on one machine
+(because there was only one such file).
+This was fixed ( when ``CMAKE_LIBRARY_ARCHITECTURE`` is defined )
+by moving include/cppad/configure.hpp   to include/arch/cppad/configure.hpp where arch is
+the ``CMAKE_LIBRARY_ARCHITECTURE``.
+
 04-30
 =====
 Add :ref:`numeric_limits@digits` to the CppAD numeric limits
