@@ -20,7 +20,7 @@ Description:           @cppad_description@
 Version:               @cppad_version@
 URL:                   @cppad_url@
 #
-Cflags:                -I${includedir}@cppad_includearch_cflag@
+Cflags:                -I${includedir}@cppad_includearchdir_cflag@
 Libs:                  @cppad_libdir_list@ @cppad_lib_list@
 Requires:              @cppad_requires@
 Libs.private:          @cppad_libs_private@
