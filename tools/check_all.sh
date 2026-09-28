@@ -130,7 +130,7 @@ echo_log_eval() {
             -e '/base_alloc.hpp:143:.*warning.*may be used uninitialized/d' \
             -e '/abs_min_quad.hpp:424:.*bound.*exceeds maximum/d' \
             -e '/[/]eigen3[/].*warning/d' \
-            -e '/[/]FADBAD[/].*warning/d' \
+            -e '/[/]FADBAD++[/].*warning/d' \
             | $grep ': *warning *:'
         then
             warning='yes'
