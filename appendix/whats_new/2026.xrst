@@ -9,11 +9,16 @@
     rpath
     colpack
     wimplicit
+    multiarch
 }
 
 Release Notes for 2026
 ######################
 
+Pull Request 262
+****************
+Correct multiarch include directory setting in the cppad pkg-config file;
+i.e., cppad.pc .
 
 mm-dd
 *****

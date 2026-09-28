@@ -74,7 +74,8 @@
 #
 # where *prefix* , *exec_prefix* , *includedir* , and
 # *libdir* are the
-# `gnu installation variables <https://www.gnu.org/prep/standards/html_node/Directory-Variables.html>`_.
+# `gnu directory variables
+# <https://www.gnu.org/software/automake/manual/html_node/Standard-Directory-Variables.html>`_
 #
 # cppad-uninstalled.pc
 # ********************
