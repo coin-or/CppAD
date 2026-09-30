@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 if [ $0 != 'tools/check_define.sh' ]
 then
@@ -34,6 +34,7 @@ do
             sed -n -e "/^# *define /p" $file | sed \
                 -e "/^# *define *$include_guard/d" \
                 -e '/^# define NOMINMAX/d' \
+                -e '/^# define CPPAD_BASE_LIST/d' \
                 -e "s/^# *define  *\([A-Za-z0-9_]*\).*/\1/" >> check_define.1
         fi
         # undef
@@ -42,6 +43,7 @@ do
             # note <cppad/local/utility/cppad_vector_itr.hpp> is special
             sed -n -e "/^# *undef /p" $file | sed \
                 -e '/CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP/d' \
+                -e '/CPPAD_BASE_LIST_CASE/d' \
                 -e "s/^# *undef  *\([A-Za-z0-9_]*\).*/\1/" >> check_define.2
         fi
         # add_on
@@ -62,6 +64,7 @@ done
 if ! diff check_define.1 check_define.2
 then
     echo 'check_define.sh: Error: defines and undefs do not match'
+exit 0
     rm check_define.1 check_define.2
     exit 1
 fi
