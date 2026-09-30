@@ -15,6 +15,12 @@
 Release Notes for 2026
 ######################
 
+static branch
+*************
+#.  The statics in :ref:`thread_alloc-name` were moved to cppad_lib,
+    the cppad library. This requires one to link cppad_lib 
+    whenever thread_alloc is used.
+
 mm-dd
 *****
 
