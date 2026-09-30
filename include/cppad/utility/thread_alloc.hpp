@@ -2,9 +2,21 @@
 # define CPPAD_UTILITY_THREAD_ALLOC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
+/*
+{xrst_begin thread_alloc_dev dev}
 
+The thread_alloc Class
+######################
+
+{xrst_toc_table
+    cppad_lib/thread_alloc.cpp
+}
+
+{xrst_end thread_alloc_dev}
+-------------------------------------------------------------------------------
+*/
 # include <sstream>
 # include <limits>
 # include <memory>
@@ -31,6 +43,7 @@ File used to define the CppAD multi-threading allocator class
 \def CPPAD_MAX_NUM_CAPACITY
 Maximum number of different capacities the allocator will attempt.
 This must be larger than the log base two of numeric_limit<size_t>::max().
+It is not undef in this file because it is used by cppad_lib/thread_alloc.cpp .
 */
 # define CPPAD_MAX_NUM_CAPACITY 100
 
@@ -164,82 +177,12 @@ private:
         return value;
     }
     // ---------------------------------------------------------------------
-    /*!
-    Get pointer to the information for this thread.
-
-    \param thread [in]
-    Is the thread number for this information pointer.
-
-    \param clear
-    If clear is true, then the information pointer for this thread
-    is deleted and the nullptr pointer is returned.
-    There must be no memory currently in either the inuse or available
-    lists when this routine is called.
-
-    \return
-    is the current information pointer for this thread.
-    If clear is false, and the current pointer is nullptr,
-    a new information record is allocated and its pointer returned.
-    In this case, if info is the returned pointer,
-    <code>info->count_inuse == 0</code> and
-    <code>info->count_available == 0</code>.
-    In addition,
-    for <code>c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1</code>
-    <code>info->root_inuse_[c].next_ == nullptr</code> and
-    <code>info->root_available_[c].next_ == nullptr</code>.
-    */
+    // BEGIN_THREAD_INFO
     static thread_alloc_info* thread_info(
         size_t             thread          ,
-        bool               clear = false   )
-    {   static thread_alloc_info* all_info[CPPAD_MAX_NUM_THREADS];
-        static thread_alloc_info  zero_info;
-
-        CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-
-        CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
-
-        thread_alloc_info* info = all_info[thread];
-        if( clear )
-        {   if( info != nullptr )
-            {
-# ifndef NDEBUG
-                CPPAD_ASSERT_UNKNOWN(
-                    info->count_inuse_     == 0 &&
-                    info->count_available_ == 0
-                );
-                for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
-                {   CPPAD_ASSERT_UNKNOWN(
-                        info->root_inuse_[c].next_     == nullptr &&
-                        info->root_available_[c].next_ == nullptr
-                    );
-                }
-# endif
-                if( thread != 0 )
-                    ::operator delete( reinterpret_cast<void*>(info) );
-                info             = nullptr;
-                all_info[thread] = info;
-            }
-        }
-        else if( info == nullptr )
-        {   if( thread == 0 )
-                info = &zero_info;
-            else
-            {   size_t size = sizeof(thread_alloc_info);
-                void* v_ptr = ::operator new(size);
-                info        = reinterpret_cast<thread_alloc_info*>(v_ptr);
-            }
-            all_info[thread] = info;
-
-            // initialize the information record
-            for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
-            {   info->root_inuse_[c].next_       = nullptr;
-                info->root_available_[c].next_   = nullptr;
-            }
-            info->count_inuse_     = 0;
-            info->count_available_ = 0;
-        }
-        return info;
-    }
+        bool               clear = false
+    );
+    // END_THREAD_INFO
     // -----------------------------------------------------------------------
     /*!
     Increase the number of bytes of memory that are currently in use; i.e.,
@@ -1518,7 +1461,6 @@ Example
 } // END_CPPAD_NAMESPACE
 
 // preprocessor symbols local to this file
-# undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY
 # undef CPPAD_TRACE_CAPACITY
 # undef CPPAD_TRACE_THREAD

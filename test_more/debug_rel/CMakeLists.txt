@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the test_more/general tests
 
@@ -30,6 +30,8 @@ ADD_EXECUTABLE(test_more_debug_rel EXCLUDE_FROM_ALL
     debug.cpp
     release.cpp
 )
+TARGET_LINK_LIBRARIES(test_more_debug_rel ${cppad_lib} )
+
 # debug_rel does not use cppad_lib
 
 # check_test_more_debug_rel
