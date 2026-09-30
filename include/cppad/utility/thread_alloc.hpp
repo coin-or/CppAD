@@ -133,12 +133,9 @@ private:
     };
 
     // ---------------------------------------------------------------------
-    /// Vector of fixed capacity values for this allocator
-    static const capacity_t* capacity_info(void)
-    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-        static const capacity_t capacity;
-        return &capacity;
-    }
+    // BEGIN_CAPACITY_INFO
+    static const capacity_t* capacity_info(void);
+    // END_CAPACITY_INFO
     // ---------------------------------------------------------------------
     /// Structure of information for each thread
     struct thread_alloc_info {

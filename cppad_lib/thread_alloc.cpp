@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin ta_thread_info_dev dev}
+{xrst_begin ta_thread_info dev}
 {xrst_spell
     nullptr
     inuse
@@ -15,7 +15,7 @@ Get pointer to the information for this thread
 Syntax
 ******
 {xrst_code cpp}
-    info = thread_info(thread, clear)
+    info = thread_alloc::thread_info(thread, clear)
 {xrst_code}
 
 Prototype
@@ -53,7 +53,7 @@ for c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1
     info->root_available_[c].next_ == nullptr
 {xrst_code}
 
-{xrst_end ta_thread_info_dev}
+{xrst_end ta_thread_info}
 -----------------------------------------------------------------------------
 */
 # include <cppad/utility/thread_alloc.hpp>
@@ -110,6 +110,33 @@ thread_alloc::thread_alloc_info* thread_alloc::thread_info(
         info->count_available_ = 0;
     }
     return info;
+}
+/*
+------------------------------------------------------------------------------
+{xrst_begin ta_capacity_info dev}
+
+Vector of capacity information for this allocator
+#################################################
+
+Syntax
+******
+{xrst_code cpp}
+    info  = thread_alloc::capacity_info()
+{xrst_code}
+
+Prototype
+*********
+{xrst_literal ,
+    include/cppad/utility/thread_alloc.hpp
+    BEGIN_CAPACITY_INFO , END_CAPACITY_INFO
+}
+
+{xrst_end ta_capacity_info}
+*/
+const thread_alloc::capacity_t* thread_alloc::capacity_info(void)
+{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    static const capacity_t capacity;
+    return &capacity;
 }
 
 } // END_CPPAD_NAMESPACE
