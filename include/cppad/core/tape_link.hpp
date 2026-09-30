@@ -2,7 +2,7 @@
 # define CPPAD_CORE_TAPE_LINK_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/local/define.hpp>
@@ -45,6 +45,8 @@ tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
     );
     return tape_id_table + thread;
 }
+extern template tape_id_t* AD<float>::tape_id_ptr(size_t thread);
+extern template tape_id_t* AD<double>::tape_id_ptr(size_t thread);
 
 /*!
 Handle for the tape for this AD<Base> class and the specific thread.
