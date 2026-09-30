@@ -21,6 +21,12 @@ The routines that connect the AD<Base> class to the corresponding tapes
 (one for each thread).
 */
 
+// Non-template storage functions — defined in cppad_lib/tape_storage.cpp
+// to avoid duplicate function-local statics across shared-library boundaries.
+// Windows export is handled by WINDOWS_EXPORT_ALL_SYMBOLS on cppad_lib.
+tape_id_t* tape_storage_id_ptr(size_t thread);
+void**     tape_storage_handle(size_t thread);
+
 /*!
 Pointer to the tape identifier for this AD<Base> class and the specific thread.
 
@@ -38,12 +44,11 @@ is a pointer to the tape identifier for this thread and AD<Base> class.
 */
 template <class Base>
 tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static tape_id_t tape_id_table[CPPAD_MAX_NUM_THREADS];
-    CPPAD_ASSERT_UNKNOWN(
-        (! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
-    );
-    return tape_id_table + thread;
+{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+   CPPAD_ASSERT_UNKNOWN(
+      (! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
+   );
+   return tape_storage_id_ptr(thread);
 }
 
 /*!
@@ -64,12 +69,11 @@ is a handle for the tape for this AD<Base> class and the specified thread.
 */
 template <class Base>
 local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static local::ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
-    CPPAD_ASSERT_UNKNOWN(
-        (! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
-    );
-    return tape_table + thread;
+{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+   CPPAD_ASSERT_UNKNOWN(
+      (! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
+   );
+   return reinterpret_cast<local::ADTape<Base>**>(tape_storage_handle(thread));
 }
 
 /*!
