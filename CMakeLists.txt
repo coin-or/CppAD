@@ -493,7 +493,7 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
     ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
  # ----------------------------------------------------------------------------
-# cppad_includearch_postfix, cppad_abs_includearchdir
+# cppad_abs_includearchdir
 #
 # Some of the installed include files, cppad/configure.hpp so far, depend on
 # the architecture; e.g., on whether size_t and unsigned int are the same type.
@@ -510,6 +510,7 @@ ENDIF( CMAKE_LIBRARY_ARCHITECTURE )
 SET(cppad_abs_includearchdir
     "${cppad_abs_includedir}${cppad_includearch_postfix}"
 )
+print_variable( cppad_abs_includearchdir )
 # ----------------------------------------------------------------------------
 # https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
 #

@@ -19,7 +19,7 @@ ErrorHandler::Handler &ErrorHandler::Current(void)
             const char* file = __FILE__;
             const char* exp  = "";
             const char* msg  =
-                "ErrorHandler::Current: irst call in parallel mode";
+                "ErrorHandler::Current: first call in parallel mode";
             Call(known, line, file, exp, msg);
         }
         first_call = false;
