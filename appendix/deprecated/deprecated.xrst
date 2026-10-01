@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin deprecated app}
 {xrst_spell
@@ -12,24 +12,26 @@ CppAD Deprecated API Features
 
 Contents
 ********
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
-    appendix/deprecated/include_deprecated.xrst
-    appendix/deprecated/fun_deprecated.xrst
     appendix/deprecated/compare_change.xrst
-    include/cppad/core/omp_max_thread.hpp
-    include/cppad/utility/track_new_del.hpp
+    appendix/deprecated/fun_deprecated.xrst
+    appendix/deprecated/include_deprecated.xrst
     appendix/deprecated/omp_alloc.xrst
-    include/cppad/utility/memory_leak.hpp
-    include/cppad/core/epsilon.hpp
+    configure
     cppad_ipopt/src/cppad_ipopt_nlp.hpp
+    cppad_lib/static/memory_leak.cpp
+    example/multi_thread/multi_atomic_two.xrst
+    example/multi_thread/multi_chkpoint_one.xrst
     include/cppad/core/atomic/one/atomic.hpp
     include/cppad/core/atomic/two/atomic.hpp
-    example/multi_thread/multi_atomic_two.xrst
     include/cppad/core/chkpoint_one/chkpoint_one.hpp
-    example/multi_thread/multi_chkpoint_one.xrst
+    include/cppad/core/epsilon.hpp
+    include/cppad/core/omp_max_thread.hpp
     include/cppad/core/zdouble.hpp
-    configure
+    include/cppad/utility/track_new_del.hpp
 }
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 Name Changes
 ************

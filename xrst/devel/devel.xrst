@@ -12,6 +12,7 @@ Contents
 ********
 {xrst_toc_table
     cppad_ipopt/example/ode1.xrst
+    cppad_lib/static/memory_leak.cpp
     cppad_lib/temp_file.cpp
     include/cppad/configure.hpp.in
     include/cppad/core/ad_type.hpp

@@ -36,6 +36,7 @@ SET(source_list
     link_dll_lib.cpp
     static/cpp_graph.cpp
     static/error_handler.cpp
+    static/memory_leak.cpp
     static/template_cases.cpp
     static/thread_alloc.cpp
     temp_file.cpp

@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_RUNGE_45_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -291,6 +291,7 @@ Vector Runge45(
     Vector       &e )
 {
     CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    // It is OK if statics below are different for each DLL (e.g., window);
 
     // check numeric type specifications
     CheckNumericType<Scalar>();
