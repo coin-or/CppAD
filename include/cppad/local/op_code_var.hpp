@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <string>
 # include <sstream>
@@ -378,7 +378,8 @@ inline size_t NumArg( op_code_var op)
     };
     // END_SORT_THIS_LINE_MINUS_3
 # ifndef NDEBUG
-    // only do these checks once to save time
+    //
+    // It is OK if first is different for each DLL (e.g., windows)
     static bool first = true;
     if( first )
     {   first = false;
@@ -418,8 +419,7 @@ AcoshOp  2                2  acosh(x) and sqrt(x*x-1) are required for this op
 \endverbatim
 */
 inline size_t NumRes(op_code_var op)
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-
+{
     // agreement with op_code_var is checked by bin/check_op_code.sh
     // BEGIN_SORT_THIS_LINE_PLUS_2
     static const size_t NumResTable[] = {

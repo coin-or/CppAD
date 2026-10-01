@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -297,6 +297,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
     };
     // END_SORT_THIS_LINE_MINUS_3
     //
+    // It is OK if first is different for each DLL (e.g., windows)
     static bool first = true;
     if( first )
     {  CPPAD_ASSERT_UNKNOWN(
@@ -387,6 +388,8 @@ inline const char* op_name_dyn(op_code_dyn op)
         /* number_dyn */   "number"
     };
     // END_SORT_THIS_LINE_MINUS_3
+    //
+    // It is OK if first is different for each DLL (e.g., windows)
     static bool first = true;
     if( first )
     {  CPPAD_ASSERT_UNKNOWN(
