@@ -2,7 +2,7 @@
 # define  CPPAD_LOCAL_VAL_GRAPH_CALL_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2023-24 Bradley M. Bell
+// SPDX-FileContributor: 2023-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cstdio>
 # include <cppad/local/val_graph/base_op.hpp>
@@ -125,6 +125,7 @@ public:
     // get_instance
     static call_op_t* get_instance(void)
     {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+        /* It is OK if this instance is different for each DLL */ \
         static call_op_t instance;
         return &instance;
     }
