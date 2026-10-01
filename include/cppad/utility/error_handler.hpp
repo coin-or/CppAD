@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_ERROR_HANDLER_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -206,26 +206,11 @@ private:
         // termination when NDEBUG is defined
         std::exit(1);
     }
-
-    // current error handler
-    static Handler &Current(void)
-    {   static bool first_call = true;
-        static Handler current = Default;
-        // CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-        // code below is like macro above but works when NDEBUG defined
-        if( first_call )
-        {   if( local::set_get_in_parallel() )
-            {   bool known       = false;
-                int  line        = __LINE__;
-                const char* file = __FILE__;
-                const char* exp  = "";
-                const char* msg  = "";
-                Call(known, line, file, exp, msg);
-            }
-            first_call = false;
-        }
-        return current;
-    }
+    // -----------------------------------------------------------------------
+    // Implemented in cppad_lib/static/erorr_handler.cpp
+    // BEGIN_CURRENT
+    static Handler &Current(void);
+    // END_CURRENT
 };
 
 } // END CppAD namespace

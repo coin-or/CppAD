@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_ELAPSED_SECONDS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -54,6 +54,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 inline double elapsed_seconds(void)
 // --------------------------------------------------------------------------
 {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    // It is OK if these statics are different for each DLL (e.g., windows)
     static bool first_ = true;
     static std::chrono::time_point<std::chrono::steady_clock> start_;
     if( first_ )
