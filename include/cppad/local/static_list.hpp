@@ -19,7 +19,8 @@ Execute CPPAD_STATIC_LIST_CASE for A List of Base Types
 // BEGIN_STATIC_LIST
 # define CPPAD_STATIC_LIST \
     CPPAD_STATIC_LIST_CASE(float) \
-    CPPAD_STATIC_LIST_CASE(double)
+    CPPAD_STATIC_LIST_CASE(double) \
+    CPPAD_STATIC_LIST_CASE( std::complex<double> )
 // END_STATIC_LIST
 
 
