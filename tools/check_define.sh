@@ -34,7 +34,7 @@ do
             sed -n -e "/^# *define /p" $file | sed \
                 -e "/^# *define *$include_guard/d" \
                 -e '/^# define NOMINMAX/d' \
-                -e '/^# define CPPAD_BASE_LIST/d' \
+                -e '/^# define CPPAD_STATIC_LIST/d' \
                 -e "s/^# *define  *\([A-Za-z0-9_]*\).*/\1/" >> check_define.1
         fi
         # undef
@@ -43,7 +43,7 @@ do
             # note <cppad/local/utility/cppad_vector_itr.hpp> is special
             sed -n -e "/^# *undef /p" $file | sed \
                 -e '/CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP/d' \
-                -e '/CPPAD_BASE_LIST_CASE/d' \
+                -e '/CPPAD_STATIC_LIST_CASE/d' \
                 -e "s/^# *undef  *\([A-Za-z0-9_]*\).*/\1/" >> check_define.2
         fi
         # add_on

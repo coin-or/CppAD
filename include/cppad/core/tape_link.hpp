@@ -8,7 +8,7 @@
 # include <cppad/local/define.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/local/base_list.hpp>
+# include <cppad/local/static_list.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -46,10 +46,10 @@ tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
     );
     return tape_id_table + thread;
 }
-# define CPPAD_BASE_LIST_CASE(base) \
+# define CPPAD_STATIC_LIST_CASE(base) \
     extern template tape_id_t* AD<base>::tape_id_ptr(size_t thread);
-CPPAD_BASE_LIST
-# undef CPPAD_BASE_LIST_CASE
+CPPAD_STATIC_LIST
+# undef CPPAD_STATIC_LIST_CASE
 
 /*!
 Handle for the tape for this AD<Base> class and the specific thread.
@@ -76,10 +76,10 @@ local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
     );
     return tape_table + thread;
 }
-# define CPPAD_BASE_LIST_CASE(base) \
+# define CPPAD_STATIC_LIST_CASE(base) \
     extern template local::ADTape<base>** AD<base>::tape_handle(size_t thread);
-CPPAD_BASE_LIST
-# undef CPPAD_BASE_LIST_CASE
+CPPAD_STATIC_LIST
+# undef CPPAD_STATIC_LIST_CASE
 
 /*!
 Pointer for the tape for this AD<Base> class and the current thread.

@@ -34,9 +34,9 @@ SET(source_list
     json_parser.cpp
     json_writer.cpp
     link_dll_lib.cpp
+    static/template_cases.cpp
+    static/thread_alloc.cpp
     temp_file.cpp
-    template_cases.cpp
-    thread_alloc.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 IF( cppad_has_cppadcg )

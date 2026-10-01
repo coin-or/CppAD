@@ -11,7 +11,7 @@ The thread_alloc Class
 ######################
 
 {xrst_toc_table
-    cppad_lib/thread_alloc.cpp
+    cppad_lib/static/thread_alloc.cpp
 }
 
 {xrst_end thread_alloc_dev}
@@ -43,7 +43,7 @@ File used to define the CppAD multi-threading allocator class
 \def CPPAD_MAX_NUM_CAPACITY
 Maximum number of different capacities the allocator will attempt.
 This must be larger than the log base two of numeric_limit<size_t>::max().
-It is not undef in this file because it is used by cppad_lib/thread_alloc.cpp .
+It is not undef in this file because it is used by cppad_lib/static/thread_alloc.cpp .
 */
 # define CPPAD_MAX_NUM_CAPACITY 100
 

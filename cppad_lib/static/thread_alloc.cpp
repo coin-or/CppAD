@@ -2,6 +2,8 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <cppad/utility/thread_alloc.hpp>
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
 {xrst_begin ta_thread_info dev}
 {xrst_spell
@@ -56,8 +58,6 @@ for c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1
 {xrst_end ta_thread_info}
 -----------------------------------------------------------------------------
 */
-# include <cppad/utility/thread_alloc.hpp>
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 thread_alloc::thread_alloc_info* thread_alloc::thread_info(
     size_t             thread  ,

@@ -3,19 +3,19 @@
 // SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/cppad.hpp>
-# include <cppad/local/base_list.hpp>
+# include <cppad/local/static_list.hpp>
 
 namespace CppAD {
     //
     // tape_id_ptr
-    # define CPPAD_BASE_LIST_CASE(base) \
+    # define CPPAD_STATIC_LIST_CASE(base) \
         template tape_id_t* AD<base>::tape_id_ptr(size_t thread);
-    CPPAD_BASE_LIST
-    # undef CPPAD_BASE_LIST_CASE
+    CPPAD_STATIC_LIST
+    # undef CPPAD_STATIC_LIST_CASE
     //
     // tape_handle
-    # define CPPAD_BASE_LIST_CASE(base) \
+    # define CPPAD_STATIC_LIST_CASE(base) \
         template local::ADTape<base>** AD<base>::tape_handle(size_t thread);
-    CPPAD_BASE_LIST
-    # undef CPPAD_BASE_LIST_CASE
+    CPPAD_STATIC_LIST
+    # undef CPPAD_STATIC_LIST_CASE
 }
