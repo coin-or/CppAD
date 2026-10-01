@@ -133,6 +133,7 @@ private:
     };
 
     // ---------------------------------------------------------------------
+    // implemented in cppad_lib/static/thread_alloc.cpp
     // BEGIN_CAPACITY_INFO
     static const capacity_t* capacity_info(void);
     // END_CAPACITY_INFO
@@ -174,6 +175,7 @@ private:
         return value;
     }
     // ---------------------------------------------------------------------
+    // implemented in cppad_lib/static/thread_alloc.cpp
     // BEGIN_THREAD_INFO
     static thread_alloc_info* thread_info(
         size_t             thread          ,

@@ -34,6 +34,7 @@ SET(source_list
     json_parser.cpp
     json_writer.cpp
     link_dll_lib.cpp
+    static/cpp_graph.cpp
     static/template_cases.cpp
     static/thread_alloc.cpp
     temp_file.cpp

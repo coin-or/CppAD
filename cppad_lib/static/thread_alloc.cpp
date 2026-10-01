@@ -58,7 +58,6 @@ for c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1
 {xrst_end ta_thread_info}
 -----------------------------------------------------------------------------
 */
-
 thread_alloc::thread_alloc_info* thread_alloc::thread_info(
     size_t             thread  ,
     bool               clear   )
