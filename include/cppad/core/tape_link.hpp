@@ -76,6 +76,10 @@ local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
     );
     return tape_table + thread;
 }
+# define CPPAD_BASE_LIST_CASE(base) \
+    extern template local::ADTape<base>** AD<base>::tape_handle(size_t thread);
+CPPAD_BASE_LIST
+# undef CPPAD_BASE_LIST_CASE
 
 /*!
 Pointer for the tape for this AD<Base> class and the current thread.

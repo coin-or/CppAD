@@ -12,4 +12,10 @@ namespace CppAD {
         template tape_id_t* AD<base>::tape_id_ptr(size_t thread);
     CPPAD_BASE_LIST
     # undef CPPAD_BASE_LIST_CASE
+    //
+    // tape_handle
+    # define CPPAD_BASE_LIST_CASE(base) \
+        template local::ADTape<base>** AD<base>::tape_handle(size_t thread);
+    CPPAD_BASE_LIST
+    # undef CPPAD_BASE_LIST_CASE
 }
