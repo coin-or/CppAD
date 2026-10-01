@@ -123,8 +123,6 @@ void parallel_ad(void)
     local::op_name_dyn(local::abs_dyn);     // op_code_dyn.hpp
     local::NumArg(local::BeginOp);          // op_code_var.hpp
     local::NumRes(local::BeginOp);          // op_code_var.hpp
-    local::one_element_std_set<size_t>();   // std_set.hpp
-    local::two_element_std_set<size_t>();   // std_set.hpp
 
     // the sparse_pack class has member functions with static data
     local::sparse::pack_setvec sp;
