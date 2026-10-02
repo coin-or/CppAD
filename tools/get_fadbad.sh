@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_fadbad.sh}
 # {xrst_comment_ch #}
@@ -46,7 +46,7 @@ version='2.1'
 # {xrst_end get_fadbad.sh}
 # -----------------------------------------------------------------------------
 package='fadbad'
-if [ $0 != "tools/get_$package.sh" ]
+if [ ! -e "tools/get_$package.sh" ]
 then
     echo "tools/get_$package.sh: must be executed from its parent directory"
     exit 1

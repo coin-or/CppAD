@@ -55,7 +55,7 @@ version='1.0.10'
 # {xrst_end get_colpack.sh}
 # -----------------------------------------------------------------------------
 package='colpack'
-if [ $0 != "tools/get_$package.sh" ]
+if [ ! -e "tools/get_$package.sh" ]
 then
     echo "tools/get_$package.sh: must be executed from its parent directory"
     exit 1

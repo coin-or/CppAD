@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_cppadcg.sh}
 # {xrst_spell
@@ -74,7 +74,7 @@ git_hash='e15c57207ea42a9572e9ed44df1894e09f7ce67e'
 # {xrst_end get_cppadcg.sh}
 # -----------------------------------------------------------------------------
 package='cppadcg'
-if [ $0 != "tools/get_$package.sh" ]
+if [ ! -e "tools/get_$package.sh" ]
 then
     echo "tools/get_$package.sh: must be executed from its parent directory"
     exit 1
