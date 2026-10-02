@@ -45,7 +45,7 @@ bool Test(void)
 
     // range space vector
     size_t m = 2;
-    ADVector Y(m);  // ADVector is the template paraemter in call to Test
+    ADVector Y(m);  // ADVector is the template parameter in call to Test
     Y[0] = a;
     Y[1] = b;
 

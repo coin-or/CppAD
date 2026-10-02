@@ -396,7 +396,7 @@ inline void powpv_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     // Taylor coefficients corresponding to arguments and result
@@ -515,7 +515,7 @@ inline void powvp_forward_any(
     Base* x = taylor + size_t(arg[0]) * cap_order;
     Base* z = taylor + i_z    * cap_order;
 
-    // Paraemter value
+    // Parameter value
     Base y = parameter[ arg[1] ];
 
     // Special solution when x[0] is zero
@@ -630,7 +630,7 @@ inline void powvp_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
 
-    // Paraemter value
+    // Parameter value
     Base y = parameter[ arg[1] ];
 
     // Taylor coefficients corresponding to arguments and result

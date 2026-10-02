@@ -125,10 +125,10 @@ Link, after case split, from rev_jac_sweep to atomic_base
 is the row dimension for the Jacobian sparsity patterns
 
 \param rt [out]
-is the tansposed Jacobian sparsity pattern w.r.t to range variables y
+is the transposed Jacobian sparsity pattern w.r.t to range variables y
 
 \param st [in]
-is the tansposed Jacobian sparsity pattern for the argument variables x
+is the transposed Jacobian sparsity pattern for the argument variables x
 
 \param x
 is the integer value for x arguments that are parameters.

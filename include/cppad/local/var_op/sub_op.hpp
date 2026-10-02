@@ -152,7 +152,7 @@ inline void subpv_forward_any(
     Base* y = taylor + size_t(arg[1]) * cap_order;
     Base* z = taylor + i_z    * cap_order;
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
     if( p == 0 )
     {   z[0] = x - y[0];
@@ -188,7 +188,7 @@ inline void subpv_forward_dir(
     Base* y = taylor + size_t(arg[1]) * num_taylor_per_var + m;
     Base* z = taylor + i_z    * num_taylor_per_var + m;
 
-    // Paraemter value
+    // Parameter value
     for(size_t ell = 0; ell < r; ell++)
         z[ell] = - y[ell];
 }
@@ -207,7 +207,7 @@ inline void subpv_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     // Taylor coefficients corresponding to arguments and result
