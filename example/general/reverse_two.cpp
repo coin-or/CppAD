@@ -61,7 +61,7 @@ bool reverse_two_cases(void)
     double check = 2.*x[0]*x[1]*dx[0] + x[0]*x[0]*dx[1];
     ok   &= NearEqual(dy[0], check, eps99, eps99);
 
-    // use second order reverse mode to evalaute second partials of y[0]
+    // use second order reverse mode to evaluate second partials of y[0]
     // with respect to (x[0], x[0]) and with respect to (x[0], x[1])
     Vector w(m), dw( n * 2 );
     w[0]  = 1.;

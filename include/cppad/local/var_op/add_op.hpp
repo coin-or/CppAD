@@ -157,7 +157,7 @@ inline void addpv_forward_any(
     Base* z = taylor + i_z    * cap_order;
 
     if( p == 0 )
-    {   // Paraemter value
+    {   // Parameter value
         Base x = parameter[ arg[0] ];
         z[0] = x + y[0];
         p++;
@@ -211,7 +211,7 @@ inline void addpv_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     // Taylor coefficients corresponding to arguments and result

@@ -184,7 +184,7 @@ inline void divpv_forward_any(
     Base* y = taylor + size_t(arg[1]) * cap_order;
     Base* z = taylor + i_z    * cap_order;
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     // Using CondExp, it can make sense to divide by zero,
@@ -253,7 +253,7 @@ inline void divpv_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(DivpvOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(DivpvOp) == 1 );
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     // Taylor coefficients corresponding to arguments and result

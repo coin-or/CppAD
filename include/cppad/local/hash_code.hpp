@@ -65,7 +65,7 @@ Specialized hash code for a CppAD operator and its arguments.
 
 \param op
 is the operator that we are computing a hash code for.
-If it is not one of the following operartors, the operator is not
+If it is not one of the following operators, the operator is not
 hash coded and zero is returned:
 
 \li unary operators:

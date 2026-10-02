@@ -167,7 +167,7 @@ inline void zmulpv_forward_any(
     Base* y = taylor + size_t(arg[1]) * cap_order;
     Base* z = taylor + i_z    * cap_order;
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     for(size_t d = p; d <= q; d++)
@@ -200,7 +200,7 @@ inline void zmulpv_forward_dir(
     Base* y = taylor + size_t(arg[1]) * num_taylor_per_var + m;
     Base* z = taylor + i_z    * num_taylor_per_var + m;
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     for(size_t ell = 0; ell < r; ell++)
@@ -221,7 +221,7 @@ inline void zmulpv_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(ZmulpvOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(ZmulpvOp) == 1 );
 
-    // Paraemter value
+    // Parameter value
     Base x = parameter[ arg[0] ];
 
     // Taylor coefficients corresponding to arguments and result
@@ -291,7 +291,7 @@ inline void zmulvp_forward_any(
     Base* x = taylor + size_t(arg[0]) * cap_order;
     Base* z = taylor + i_z    * cap_order;
 
-    // Paraemter value
+    // Parameter value
     Base y = parameter[ arg[1] ];
 
     for(size_t d = p; d <= q; d++)
@@ -324,7 +324,7 @@ inline void zmulvp_forward_dir(
     Base* x = taylor + size_t(arg[0]) * num_taylor_per_var + m;
     Base* z = taylor + i_z    * num_taylor_per_var + m;
 
-    // Paraemter value
+    // Parameter value
     Base y = parameter[ arg[1] ];
 
     for(size_t ell = 0; ell < r; ell++)
@@ -345,7 +345,7 @@ inline void zmulvp_forward_0(
     CPPAD_ASSERT_UNKNOWN( NumArg(ZmulvpOp) == 2 );
     CPPAD_ASSERT_UNKNOWN( NumRes(ZmulvpOp) == 1 );
 
-    // Paraemter value
+    // Parameter value
     Base y = parameter[ arg[1] ];
 
     // Taylor coefficients corresponding to arguments and result
