@@ -1,7 +1,7 @@
 echo off
 rem SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 rem SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-rem SPDX-FileContributor: 2024 Bradley M. Bell
+rem SPDX-FileContributor: 2024-26 Bradley M. Bell
 rem --------------------------------------------------------------------------
 goto end_of_comment_block
 {xrst_begin dos_build.bat}
@@ -15,7 +15,7 @@ Compile and Test CppAD using Dos
 Syntax
 ******
 {xrst_code bat}
-cmd /c bin\dos_build.bat
+cmd /c tools\dos_build.bat
 {xrst_code}
 
 Eigen
@@ -37,7 +37,7 @@ rem BEGIN SOURCE
 rem .git
 if not exist .git (
     echo Expected .git to be a subdirectory of working directory
-    exit 1
+    pause
 )
 rem
 rem CONDA_PREFIX
@@ -45,8 +45,12 @@ if defined CONDA_PREFIX (
     echo CONDA_PREFIX = %CONDA_PREFIX%
 ) else (
     echo CONDA_PREFIX is not defined
-    exit
+    pause
 )
+rem
+rem repo_directory
+set repo_directory=%cd%
+rem
 rem PKG_CONFIG_PATH
 set PKG_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
 echo PKG_CONFIG_PATH=%PKG_CONFIG_PATH%
@@ -55,7 +59,7 @@ if exist %PKG_CONFIG_PATH%\eigen3.pc (
 ) else (
     echo Did not find eigen3 in PKG_CONFIG_PATH: suggest
     echo conda install eigen
-    exit
+    pause
 )
 rem INCLUDE_DIR
 set INCLUDE_DIR=%CONDA_PREFIX%\Library\include
@@ -65,7 +69,7 @@ if exist %INCLUDE_DIR%\Eigen\Core (
 ) else (
     echo Did not find Eigen\Core in INCLUDE_DIR: suggest
     echo mklink /d %INCLUDE_DIR%\Eigen %INCLUDE_DIR%\eigen3\Eigen
-    exit
+    pause
 )
 rem MSVS_DIR
 set MSVS_DIR=C:\Program Files\Microsoft Visual Studio
@@ -75,7 +79,7 @@ if exist "%MSVS_DIR%" (
 ) else (
     echo Did not find MSVS_DIR
     echo Install Visual Studio ?
-    exit 1
+    pause
 )
 rem
 rem temp.out
@@ -103,17 +107,22 @@ if exist "%VCVARSALL_DIR%\vcvarsall.bat" (
     echo Found vcvarsall.bat in VCVARSALL_DIR
 ) else (
     echo Could not find vcvarsall.bat below MSVS_DIR
-    exit
+    echo Perhaps need to run conda install python
+    pause
 )
-rem vcvarsall.bat
-call "%VCVARSALL_DIR%\vcvarsall.bat" amd64
+if defined VCINSTALLDIR (
+    echo vcvarsall.bat has already been run
+) else (
+    echo "%VCVARSALL_DIR%\vcvarsall.bat" amd64
+    call "%VCVARSALL_DIR%\vcvarsall.bat" amd64
+)
 rem
 rem build
 if not exist build ( mkdir build )
 cd build
 if exist CMakeCache.txt ( rm CMakeCache.txt )
 rem
-rem cmakde
+echo cmake
 cmake ^
     -B . ^
     -S .. ^
@@ -121,8 +130,9 @@ cmake ^
     -D CMAKE_CXX_COMPILER=cl ^
     -D CMAKE_C_COMPILER=cl ^
     -D CMAKE_BUILD_TYPE=release ^
-    -D cppad_static_lib=true ^
-    -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus"
+    -D cppad_static_lib=false ^
+    -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus" ^
+    -D cppad_prefix="%repo_directory%\build\prefix"
 rem
 rem check
 cmake --build . --target check
