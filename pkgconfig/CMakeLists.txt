@@ -130,14 +130,16 @@ LIST(GET cmake_install_includedirs 0 cppad_includedir)
 LIST(GET cmake_install_libdirs 0 cppad_libdir)
 #
 # cppad_includearchdir_cflag
-# The architecture dependent include files are installed below
+# The architecture dependent include files come first and are installed below
 # includedir${cppad_includearch_postfix}; see the top source CMakeLists.txt.
 IF( cppad_includearch_postfix )
-    SET(cppad_includearchdir_cflag
-        " -I\${includedir}${cppad_includearch_postfix}"
+    SET(cppad_include_cflags
+        "-I\${includedir}${cppad_includearch_postfix} -I\${includedir}"
     )
 ELSE( cppad_includearch_postfix )
-    SET(cppad_includearchdir_cflag "")
+    SET(cppad_include_cflags
+        "-I\${includedir}"
+    )
 ENDIF( cppad_includearch_postfix )
 #
 # add_to_set

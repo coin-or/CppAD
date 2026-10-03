@@ -7,6 +7,10 @@
 # see https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
 # for the meaning of these variables.
 #
+# @cppad_include_cflags@
+# is either -I${includedir} or
+# -I${incluedir}/@cppad_include_postfix@ -I${includedir}
+#
 prefix=@cppad_prefix@
 exec_prefix=${prefix}
 includedir=${prefix}/@cppad_includedir@
@@ -20,7 +24,7 @@ Description:           @cppad_description@
 Version:               @cppad_version@
 URL:                   @cppad_url@
 #
-Cflags:                -I${includedir}@cppad_includearchdir_cflag@
+Cflags:                @cppad_include_cflags@
 Libs:                  @cppad_libdir_list@ @cppad_lib_list@
 Requires:              @cppad_requires@
 Libs.private:          @cppad_libs_private@
