@@ -21,7 +21,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20261002")
+SET(cppad_version "20261003")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -245,7 +245,7 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 SET(source "
 int main(void)
-{   static_assert( __cplusplus >= 201103 , \"c++11 is supported\" );
+{   static_assert( __cplusplus >= 201103 , \"c++11 not supported\" );
     return 0;
 }"
 )
@@ -259,7 +259,7 @@ ENDIF( NOT minimal_cplusplus  )
 # use_cplusplus_2014_ok
 SET(source "
 int main(void)
-{   static_assert( __cplusplus >= 201302L , \"c++17 is supported\" );
+{   static_assert( __cplusplus >= 201302L , \"c++14 not supported\" );
     return 0;
 }"
 )
@@ -268,7 +268,7 @@ compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2014_ok )
 # use_cplusplus_2017_ok
 SET(source "
 int main(void)
-{   static_assert( __cplusplus >= 201703L , \"c++17 is supported\" );
+{   static_assert( __cplusplus >= 201703L , \"c++17 not supported\" );
     return 0;
 }"
 )

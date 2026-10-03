@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 echo $0 $*
@@ -361,7 +361,11 @@ cppad_cxx_flags+=' -Wfloat-conversion -Wconversion'
 if [ "$debug_which" == 'debug_all' ]
 then
     # CMAKE_CXX_FLAGS_DEBUG include -g so do not need it here
-    cppad_cxx_flags+=" -O0"
+    cppad_cxx_flags+=' -fno-inline -O0'
+    if [ "$clang" == 'no' ]
+    then
+        cpapd_cxx_flags+=' -fdiagnostics-show-nesting-locations'
+    fi
 elif [ "$callgrind" == 'yes' ]
 then
     # This is a quote from the Callgrind manual:
