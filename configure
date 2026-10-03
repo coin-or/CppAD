@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 set -e -u
 echo $0 $*
 # # ----------------------------------------------------------------------------
@@ -673,7 +673,7 @@ echo cmake \
    -D include_ipopt=$include_ipopt \
    -D include_cppadcg=false \
    \
-   -D colpack_prefix='NOTFOUND' \
+   -D colpack_prefix=$adolc_dir \
    -D fadbad_prefix="$fadbad_dir" \
    -D sacado_prefix="$sacado_dir" \
    \
