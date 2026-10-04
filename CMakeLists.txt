@@ -651,13 +651,13 @@ ENDIF( cppad_has_ipopt )
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
 #
-# is_cppad_lib_dynamic
+# cppad_lib_static_01
 IF( cppad_static_lib )
-    SET(is_cppad_lib_dynamic 0)
+    SET(cppad_lib_static_01 1)
 ELSE( )
-    SET(is_cppad_lib_dynamic 1)
+    SET(cppad_lib_static_01 0)
 ENDIF( )
-print_variable(is_cppad_lib_dynamic)
+print_variable(cppad_lib_static_01)
 #
 # CMAKE_EXE_LINKER_FLAGS
 SET(CMAKE_EXE_LINKER_FLAGS "${cppad_link_flags}" )

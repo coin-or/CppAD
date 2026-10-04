@@ -22,9 +22,9 @@ SET(source_list
 set_compile_flags( cppad_ipopt "${cppad_debug_which}" "${source_list}" )
 #
 # add_library
-IF( "${is_cppad_lib_dynamic}" STREQUAL "0" )
+IF( ${cppad_lib_static_01} )
     ADD_LIBRARY( cppad_ipopt STATIC ${source_list} )
-ELSEIF( "${is_cppad_lib_dynamic}" STREQUAL "1" )
+ELSE( )
     ADD_LIBRARY( cppad_ipopt SHARED ${source_list} )
 ENDIF( )
 TARGET_LINK_LIBRARIES(cppad_ipopt ${cppad_lib} )

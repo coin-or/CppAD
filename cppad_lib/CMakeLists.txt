@@ -50,10 +50,10 @@ ENDIF( cppad_has_cppadcg )
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
 # add_library
-IF( "${is_cppad_lib_dynamic}" STREQUAL "0" )
+IF( ${cppad_lib_static_01} )
     MESSAGE( STATUS "Building static cppad_lib")
     ADD_LIBRARY( cppad_lib STATIC ${source_list} )
-ELSEIF( "${is_cppad_lib_dynamic}" STREQUAL "1" )
+ELSE( )
     MESSAGE( STATUS "Building shared cppad_lib")
     ADD_LIBRARY( cppad_lib SHARED ${source_list} )
     SET_TARGET_PROPERTIES( cppad_lib PROPERTIES
@@ -65,8 +65,6 @@ ELSEIF( "${is_cppad_lib_dynamic}" STREQUAL "1" )
     IF( dl_LIBRARY )
         TARGET_LINK_LIBRARIES(cppad_lib ${dl_LIBRARY})
     ENDIF( dl_LIBRARY )
-ELSE( )
-    MESSAGE(FATAL_ERROR "CMkakeLists.txt Error: invalid is_cppad_lib_dynamic")
 ENDIF( )
 TARGET_LINK_LIBRARIES(cppad_lib ${colpack_libs} )
 #

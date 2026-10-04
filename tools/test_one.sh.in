@@ -141,16 +141,16 @@ include_flags=$(echo $include_flags | \
     sed -e 's|  *-I *| -isystem |g' -e 's|^-I *|-isystem |'
 )
 include_flags="-I $top_srcdir/include $include_flags"
-if [ @is_cppad_lib_dynamic@ ==  '1' ]
+if [ @cppad_lib_static_01@ ]
 then
+    cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.a'
+else
     if [ $(uname) == 'Darwin' ]
     then
         cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.dylib'
     else
         cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so'
     fi
-else
-    cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.a'
 fi
 library_flags="$library_flags $cppad_lib_path -lpthread"
 #
