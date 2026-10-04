@@ -2,9 +2,10 @@
 # define CPPAD_LOCAL_CPPAD_COLPACK_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # if CPPAD_HAS_COLPACK
+# include <cppad/local/define.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
@@ -53,7 +54,7 @@ This routine tries to minimize, with respect to the choice of colors,
 the number of colors.
 */
 CPPAD_LIB_EXPORT void cppad_colpack_general(
-             CppAD::vector<size_t>&         color         ,
+             CppAD::vector<size_t>&      color         ,
     size_t                               m             ,
     size_t                               n             ,
     const CppAD::vector<unsigned int*>&  adolc_pattern
@@ -85,7 +86,7 @@ Efficient Computation of Sparse Hessians Using Coloring
 and Automatic Differentiation (pdf/ad/gebemedhin14.pdf)
 */
 CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
-             CppAD::vector<size_t>&         color         ,
+             CppAD::vector<size_t>&      color         ,
     size_t                               n             ,
     const CppAD::vector<unsigned int*>&  adolc_pattern
 );

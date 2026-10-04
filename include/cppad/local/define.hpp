@@ -2,8 +2,9 @@
 # define CPPAD_LOCAL_DEFINE_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <cppad/configure.hpp>
 
 /*!
 \file define.hpp
@@ -51,23 +52,17 @@ This macro is defined as empty for Microsoft compilers.
 // ----------------------------------------------------------------------------
 /*!
 \def CPPAD_LIB_EXPORT
-Special macro for exporting windows DLL symbols; see
+Special macro for exporting windows DLL symbols that are in cppad_lib; see
 https://gitlab.kitware.com/cmake/community/wikis/doc/tutorials/BuildingWinDLL
+https://docs.microsoft.com/en-us/cpp/cpp/using-dllimport-and-dllexport-in-cpp-classes?view=msvc-160
 */
-/*
-This commented out code is for building windows shared libraries which
-currently does not work for CppAD:
-# ifdef  _MSC_VER
-# ifdef  cppad_lib_EXPORTS
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
+# define CPPAD_LIB_EXPORT
+# elif defined(cppad_lib_EXPORTS )
 # define CPPAD_LIB_EXPORT __declspec(dllexport)
 # else
 # define CPPAD_LIB_EXPORT __declspec(dllimport)
-# endif  // cppad_lib_EXPORTS
-# else   // _MSC_VER
-# define CPPAD_LIB_EXPORT
 # endif
-*/
-# define CPPAD_LIB_EXPORT
 
 // ============================================================================
 /*!

@@ -64,7 +64,6 @@ done
 if ! diff check_define.1 check_define.2
 then
     echo 'check_define.sh: Error: defines and undefs do not match'
-exit 0
     rm check_define.1 check_define.2
     exit 1
 fi

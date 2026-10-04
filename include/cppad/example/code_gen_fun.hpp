@@ -2,22 +2,13 @@
 # define CPPAD_EXAMPLE_CODE_GEN_FUN_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 // BEGIN C++
+# include <cppad/local/define.hpp>
 # include <cppad/cg/cppadcg.hpp>
 
-// See https://docs.microsoft.com/en-us/cpp/cpp/
-//      using-dllimport-and-dllexport-in-cpp-classes?view=msvc-160
-// Also see define.hpp where CPPAD_LIB_EXPORTS is also defined and
-// undef.hpp where it gets undefined.
-# ifdef  _MSC_VER
-# ifdef  cppad_lib_EXPORTS
-# define CPPAD_LIB_EXPORT __declspec(dllexport)
-# else
-# define CPPAD_LIB_EXPORT __declspec(dllimport)
-# endif  // cppad_lib_EXPORTS
-# else   // _MSC_VER
+# ifndef CPPAD_LIB_EXPORT
 # define CPPAD_LIB_EXPORT
 # endif
 
