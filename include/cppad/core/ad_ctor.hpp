@@ -183,10 +183,6 @@ There must be a constructor for Base from Type.
 \param t
 is the object that is being converted from T to AD<Base>.
 */
-#pragma GCC diagnostic push
-# ifdef __clang__
-#pragma GCC diagnostic ignored "-Wimplicit-int-float-conversion"
-# endif
 template <class Base>
 template <class T>
 AD<Base>::AD(const T &t)
@@ -195,7 +191,6 @@ AD<Base>::AD(const T &t)
 , taddr_(0)
 , ad_type_(constant_enum)
 { }
-#pragma GCC diagnostic pop
 
 } // END_CPPAD_NAMESPACE
 # endif
