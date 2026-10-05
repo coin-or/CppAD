@@ -148,7 +148,7 @@ In addition, fix some other warnings and put some exceptions on
 
 09-09
 =====
-#. The :ref:`cmake@CMake Command@Visual Studio` instructions were improved.
+#. The Visual Studio install instructions were improved.
 #. ``CppAD`` was added before ``isnan`` , see the discussion of
    :ref:`nan@std::isnan` .
 

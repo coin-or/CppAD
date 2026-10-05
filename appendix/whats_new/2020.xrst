@@ -170,8 +170,7 @@ instead of 0 or 1, this has been fixed.
 
 10-26
 =====
-Improve the documentation for building the CppAD tests using
-:ref:`cmake@CMake Command@Visual Studio` .
+Improve the documentation for building the CppAD tests using Visual Studio.
 
 10-23
 =====

@@ -284,7 +284,7 @@ in the atomic reverse documentation.
    ``Debug`` (``Release`` ).
 #. Fix the ``Policy CMP0054`` warning during the
    :ref:`cmake@CMake Command` .
-#. Fix the :ref:`cmake@CMake Command@Visual Studio` build.
+#. Fix the Visual Studio build.
    This included commenting out part of the CppAD vector test
    because the MSC compiler is confused between the vector's const_iterator and
    iterator; see ``# ifndef _MSC_VER`` in :ref:`cppad_vector.cpp-name` .

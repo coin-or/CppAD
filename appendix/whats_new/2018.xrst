@@ -5,6 +5,7 @@
 
 {xrst_begin 2018 app}
 {xrst_spell
+    autotools
     addons
     enums
     eps
@@ -95,7 +96,7 @@ Fix name for special version of ``cmake`` required by
 #. For some unknown reason, the Microsoft Visual Studio compiler
    was giving a senseless error at the variable name ``small`` .
    This has been changed to ``eps`` in :ref:`interface2c.cpp-name` .
-#. The deprecated :ref:`cmake@CMake Command@autotools`
+#. The deprecated autotools install
    was fixed to work with the current version of CppAD.
 #. Fix a warning in ``test_more/cppad_for_tmb/multi_atomic_two.cpp``
    when using boost vectors for testing.
@@ -117,8 +118,7 @@ the ``base2ad`` feature.
 #. The :ref:`cmake@CMake Command@Simple` version of the cmake command
    is now suggested as a starting point installing CppAD.
 #. The windows install procedure has been fixed; see
-   :ref:`cmake@CMake Command@msys2` and
-   :ref:`cmake@CMake Command@Visual Studio` .
+   :ref:`cmake@CMake Command@msys2` and Visual Studio.
 #. The Visual Studio compiler gave a warning because the
    ``get_record_compare`` (not in use API)
    was returning ``size_t`` when
@@ -132,8 +132,7 @@ the ``base2ad`` feature.
    This copy constructor has been allowed (but only for this case).
 #. The Visual Studio compiler does not seem to be able to mix
    debug and release code. One of the tests had to be modified
-   enable the user to avoid this; see
-   :ref:`cmake@CMake Command@Visual Studio` .
+   enable the user to avoid this.
 
 11-01
 =====
@@ -463,8 +462,7 @@ This has been fixed.
 #. The windows install procedures have not been kept up to date
    and so have been removed.
    It has since been fixed; see
-   :ref:`cmake@CMake Command@msys2` and
-   :ref:`cmake@CMake Command@Visual Studio` .
+   :ref:`cmake@CMake Command@msys2` and Visual Studio.
 
 05-26
 =====

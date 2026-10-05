@@ -10,6 +10,17 @@
 Execute CPPAD_STATIC_LIST_CASE for A List of Base Types
 #######################################################
 
+Purpose
+*******
+Shared libraries in windows Visual C++ do not handel static variables
+the same as on linux.  
+If you are using Visual C++ and:ref:`cmake@cppad_static_lib` is false,
+you can only use AD< *Base* > for the base types listed below; e.g.,
+you can use AD<double> and AD< AD<double> > .
+
+
+CPPAD_STATIC_LIST
+*****************
 {xrst_literal ,
     BEGIN_STATIC_LIST, END_STATIC_LIST
 }
@@ -20,7 +31,10 @@ Execute CPPAD_STATIC_LIST_CASE for A List of Base Types
 # define CPPAD_STATIC_LIST \
     CPPAD_STATIC_LIST_CASE(float) \
     CPPAD_STATIC_LIST_CASE(double) \
-    CPPAD_STATIC_LIST_CASE( std::complex<double> )
+    CPPAD_STATIC_LIST_CASE( std::complex<double> ) \
+    CPPAD_STATIC_LIST_CASE( AD<float> ) \
+    CPPAD_STATIC_LIST_CASE( AD<double> ) \
+    CPPAD_STATIC_LIST_CASE( AD< std::complex<double> > ) 
 // END_STATIC_LIST
 
 

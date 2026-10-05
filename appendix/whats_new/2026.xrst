@@ -17,12 +17,15 @@ Release Notes for 2026
 
 static branch
 *************
-Static variables were moved to the cppad library,
-so that it is possible to build cppad_lib as shared library on Windows.
-This made the following utility routines require linking with cppad_lib;
-:ref:`ErrorHandler-name` ,
-:ref:`link_dll_lib-name`,
-:ref:`memory_leak-name`,
+#.  Static variables were moved to the cppad library,
+    so that it is possible to build cppad_lib as shared library on Windows.
+    This made the following utility routines require linking with cppad_lib;
+    :ref:`ErrorHandler-name` ,
+    :ref:`link_dll_lib-name`,
+    :ref:`memory_leak-name`,
+
+#.  The install instructions for the
+    :ref:`cmake@CMake Command@Windows Visual C++` case were updated.
 
 mm-dd
 *****

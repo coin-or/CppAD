@@ -148,8 +148,7 @@ in ``cppad_eigen.hpp`` .
 =====
 
 #. Modify the :ref:`cmake@CMake Command@msys2`
-   and :ref:`cmake@CMake Command@Visual Studio`
-   install suggestions.
+   and Visual Studio install suggestions.
 #. Split the JIT function type
    *type* _ ``forward_zero`` into
    ``jit_`` *type* for :ref:`to_csrc@JIT Functions` , and
