@@ -9,6 +9,7 @@
 # include <cppad/utility/vector.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
 # include <cppad/local/graph/cpp_graph_itr.hpp>
+# include <cppad/local/define.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -39,9 +40,8 @@ public:
         return const_iterator(operator_vec_, operator_arg_, op_index);
     }
     // ------------------------------------------------------------------------
-    // implemented in cppad_lib/static/cpp_graph.cpp
-    void initialize(void);
-    cpp_graph(void);
+    void CPPAD_LIB_EXPORT initialize(void);
+    CPPAD_LIB_EXPORT cpp_graph(void);
     // ------------------------------------------------------------------------
 /*
 ---------------------------------------------------------------------------------

@@ -33,6 +33,7 @@ The thread_alloc Class
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/set_get_in_parallel.hpp>
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file thread_alloc.hpp
@@ -133,9 +134,8 @@ private:
     };
 
     // ---------------------------------------------------------------------
-    // implemented in cppad_lib/static/thread_alloc.cpp
     // BEGIN_CAPACITY_INFO
-    static const capacity_t* capacity_info(void);
+    static const capacity_t* CPPAD_LIB_EXPORT capacity_info(void);
     // END_CAPACITY_INFO
     // ---------------------------------------------------------------------
     /// Structure of information for each thread
@@ -175,9 +175,8 @@ private:
         return value;
     }
     // ---------------------------------------------------------------------
-    // implemented in cppad_lib/static/thread_alloc.cpp
     // BEGIN_THREAD_INFO
-    static thread_alloc_info* thread_info(
+    static thread_alloc_info* CPPAD_LIB_EXPORT thread_info(
         size_t             thread          ,
         bool               clear = false
     );

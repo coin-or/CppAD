@@ -26,6 +26,10 @@ that are used by the CppAD examples and tests.
 
 // for conditional testing when implicit conversion is not present
 # undef CPPAD_DEPRECATED
+
+// This is not in user API but cannot be undefined here because it is used by
+// include/cppad/example/code_gen_fun.hpp
+# undef CPPAD_LIB_EXPORT
 -----------------------------------------------------------------------------
 */
 // Preprecessor definitions that do not persist. None of these are in the
@@ -54,7 +58,6 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_IS_SAME_TAPE_ADDR_TYPE_SIZE_T
 # undef CPPAD_IS_SAME_UNSIGNED_INT_SIZE_T
-# undef CPPAD_LIB_EXPORT
 # undef CPPAD_LIB_STATIC
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY

@@ -53,8 +53,8 @@ it is not the case that both
 This routine tries to minimize, with respect to the choice of colors,
 the number of colors.
 */
-CPPAD_LIB_EXPORT void cppad_colpack_general(
-             CppAD::vector<size_t>&      color         ,
+void CPPAD_LIB_EXPORT cppad_colpack_general(
+    CppAD::vector<size_t>&               color         ,
     size_t                               m             ,
     size_t                               n             ,
     const CppAD::vector<unsigned int*>&  adolc_pattern
@@ -85,8 +85,8 @@ The properties of this coloring have not yet been determined; see
 Efficient Computation of Sparse Hessians Using Coloring
 and Automatic Differentiation (pdf/ad/gebemedhin14.pdf)
 */
-CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
-             CppAD::vector<size_t>&      color         ,
+void CPPAD_LIB_EXPORT cppad_colpack_symmetric(
+    CppAD::vector<size_t>&               color         ,
     size_t                               n             ,
     const CppAD::vector<unsigned int*>&  adolc_pattern
 );

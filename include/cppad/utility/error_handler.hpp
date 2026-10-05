@@ -126,6 +126,7 @@ contains an example and test a test of using this routine.
 # include <cppad/local/set_get_in_parallel.hpp>
 # include <cassert>
 # include <cstdlib>
+# include <cppad/local/define.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -207,9 +208,8 @@ private:
         std::exit(1);
     }
     // -----------------------------------------------------------------------
-    // Implemented in cppad_lib/static/erorr_handler.cpp
     // BEGIN_CURRENT
-    static Handler &Current(void);
+    static Handler CPPAD_LIB_EXPORT &Current(void);
     // END_CURRENT
 };
 

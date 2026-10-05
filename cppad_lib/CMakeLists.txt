@@ -37,7 +37,7 @@ SET(source_list
     static/cpp_graph.cpp
     static/error_handler.cpp
     static/memory_leak.cpp
-    static/template_cases.cpp
+    static/tape_link.cpp
     static/thread_alloc.cpp
     temp_file.cpp
 )
@@ -60,6 +60,7 @@ ELSE( )
         SOVERSION ${soversion}
         LINK_OPTIONS "${cppad_link_flags}"
     )
+    TARGET_COMPILE_DEFINITIONS(cppad_lib PRIVATE cppad_lib_EXPORTS)
     #
     FIND_LIBRARY(dl_LIBRARY dl)
     IF( dl_LIBRARY )

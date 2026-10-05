@@ -8,10 +8,6 @@
 # include <cppad/local/define.hpp>
 # include <cppad/cg/cppadcg.hpp>
 
-# ifndef CPPAD_LIB_EXPORT
-# define CPPAD_LIB_EXPORT
-# endif
-
 class CPPAD_LIB_EXPORT code_gen_fun {
 public:
     // type of evaluation for Jacobians (possibly Hessians in the future)

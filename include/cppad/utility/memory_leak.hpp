@@ -4,10 +4,12 @@
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 // SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
+# include <cppad/local/define.hpp>
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_MEMORY_LEAK
-extern bool memory_leak(size_t add_static = 0);
+extern bool CPPAD_LIB_EXPORT memory_leak(size_t add_static = 0);
 // END_MEMORY_LEAK
 
 } // END_CPPAD_NAMESPACE
