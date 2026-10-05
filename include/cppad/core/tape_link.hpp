@@ -8,7 +8,7 @@
 # include <cppad/local/define.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/local/static_list.hpp>
+# include <cppad/core/static_list.hpp>
 # include <cppad/local/define.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL

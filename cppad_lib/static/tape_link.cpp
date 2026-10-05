@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/cppad.hpp>
-# include <cppad/local/static_list.hpp>
+# include <cppad/core/static_list.hpp>
 
 namespace CppAD {
     //

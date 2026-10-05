@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin cmake}
@@ -11,7 +11,6 @@
     cxx
     datadir
     dev
-    dlls
     docdir
     dylib
     ext
@@ -363,11 +362,10 @@ will build the  corresponding documentation in the
 
 cppad_static_lib
 ****************
+This determines if the cppad library will be a static or shared library.
 The default value for this option is true on
 ``msys``, ``cygwin`` and ``Windows`` and false otherwise.
-the cppad library will be a static (shared) library.
-If the target system uses windows dlls, this setting should be true and
-if it is false, a warning will be issued and it will be ignored.
+If you are using Visual C++; see :ref:`static_list-name` .
 
 cppad_debug_and_release
 ***********************
@@ -575,6 +573,7 @@ then *cppad_debug_which* must be the empty string (its default value).
     xrst/install/sacado_prefix.xrst
     xrst/install/colpack_prefix.xrst
     xrst/install/testvector.xrst
+    include/cppad/core/static_list.hpp
 }
 
 {xrst_end cmake}
