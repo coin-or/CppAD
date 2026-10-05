@@ -17,12 +17,20 @@ Release Notes for 2026
 
 static branch
 *************
-#.  The statics in :ref:`thread_alloc-name` were moved to cppad_lib,
-    the cppad library. This requires one to link cppad_lib 
-    whenever thread_alloc is used.
+Static variables were moved to the cppad library,
+so that it is possible to build cppad_lib as shared library on Windows.
+This made the following utility routines require linking with cppad_lib;
+:ref:`ErrorHandler-name` ,
+:ref:`link_dll_lib-name`,
+:ref:`memory_leak-name`,
 
 mm-dd
 *****
+
+10-03
+=====
+Fix linking colpack when :ref:`configure@adolc_dir` is included during the
+configure script (using configure is deprecated).
 
 09-28
 =====

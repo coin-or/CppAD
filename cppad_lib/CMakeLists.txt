@@ -60,6 +60,7 @@ ELSE( )
         SOVERSION ${soversion}
         LINK_OPTIONS "${cppad_link_flags}"
     )
+    # cppad_lib_EXPORTS: see include/cppad/local/define.hpp
     TARGET_COMPILE_DEFINITIONS(cppad_lib PRIVATE cppad_lib_EXPORTS)
     #
     FIND_LIBRARY(dl_LIBRARY dl)
