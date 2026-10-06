@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cctype>
 # include <cppad/local/graph/json_lexer.hpp>
@@ -26,8 +26,8 @@ void json_lexer::report_error(
     std::string recent_input = json_.substr( pos, index_ - pos + 1);
 
     std::string msg = "Error occurred while parsing Json AD graph";
-    if( function_name_ != "" )
-        msg += " for the function " + function_name_;
+    if( *function_name_ != "" )
+        msg += " for the function " + *function_name_;
     msg += ".\n";
     msg += "Expected a " + expected + " token but found " + found + "\n";
     msg += "Detected at end of following input:";
@@ -70,13 +70,13 @@ json_(json),
 index_(0),
 line_number_(1),
 char_number_(1),
-token_(""),
-function_name_("")
+token_( new std::string() ),
+function_name_( new std::string() )
 {
     skip_white_space();
     if( index_ < json_.size() )
-        token_ = json_[index_];
-    if( token_ != "{" )
+        *token_ = json_[index_];
+    if( *token_ != "{" )
     {   std::string expected = "'{'";
         std::string found    = "'";
         if( index_ < json_.size() )
@@ -86,11 +86,13 @@ function_name_("")
     }
     return;
 }
-
-
+json_lexer::~json_lexer(void) {
+    delete token_;
+    delete function_name_;
+}
 // token
 const std::string& json_lexer::token(void) const
-{   return token_; }
+{   return *token_; }
 
 // line_number
 size_t json_lexer::line_number(void) const
@@ -102,15 +104,15 @@ size_t json_lexer::char_number(void) const
 
 // set_function_name
 void json_lexer::set_function_name(const std::string& function_name)
-{   function_name_ = function_name; }
+{   *function_name_ = function_name; }
 
 // token2size_t
 size_t json_lexer::token2size_t(void) const
-{   return size_t( std::atoi( token_.c_str() ) ); }
+{   return size_t( std::atoi( token_->c_str() ) ); }
 
 // token2double
 double json_lexer::token2double(void) const
-{   return std::atof( token_.c_str() ); }
+{   return std::atof( token_->c_str() ); }
 
 // check_next_char
 void json_lexer::check_next_char(char ch)
@@ -121,9 +123,9 @@ void json_lexer::check_next_char(char ch)
     //
     bool ok = false;
     if( index_ < json_.size() )
-    {   token_.resize(1);
-        token_[0] = json_[index_];
-        ok = (token_[0] == ch) || (ch == '\0');
+    {   token_->resize(1);
+        (*token_)[0] = json_[index_];
+        ok = ( (*token_)[0] == ch) || (ch == '\0');
     }
     if( ! ok )
     {   std::string expected = "a character that is not white space";
@@ -155,11 +157,11 @@ void json_lexer::check_next_string(const std::string& expected)
         found_first_quote = json_[index_] == '"';
     //
     // set value of token
-    token_.resize(0);
+    token_->resize(0);
     if( found_first_quote )
     {   next_index();
         while( index_ < json_.size() && json_[index_] != '"' )
-        {   token_.push_back( json_[index_] );
+        {   token_->push_back( json_[index_] );
             next_index();
         }
     }
@@ -170,7 +172,7 @@ void json_lexer::check_next_string(const std::string& expected)
     //
     bool ok = found_first_quote & found_second_quote;
     if( ok & (expected != "" ) )
-        ok = expected == token_;
+        ok = expected == *token_;
     if( ! ok )
     {   std::string expected_token;
         if( expected == "" )
@@ -190,7 +192,7 @@ void json_lexer::check_next_string(const std::string& expected)
         }
         else
         {   found += '"';
-            found += token_;
+            found += *token_;
             if( found_second_quote )
                 found += '"';
         }
@@ -218,9 +220,9 @@ void json_lexer::next_non_neg_int(void)
         report_error(expected_token, found);
     }
     //
-    token_.resize(0);
+    token_->resize(0);
     while( ok )
-    {   token_.push_back( json_[index_] );
+    {   token_->push_back( json_[index_] );
         ok = index_ + 1 < json_.size();
         if( ok )
             ok = isdigit( json_[index_ + 1] );
@@ -253,9 +255,9 @@ void json_lexer::next_float(void)
         report_error(expected_token, found);
     }
     //
-    token_.resize(0);
+    token_->resize(0);
     while( ok )
-    {   token_.push_back( json_[index_] );
+    {   token_->push_back( json_[index_] );
         ok = index_ + 1 < json_.size();
         if( ok )
         {   char ch  = json_[index_ + 1];

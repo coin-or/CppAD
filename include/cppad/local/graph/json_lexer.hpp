@@ -12,7 +12,7 @@
 namespace CppAD { namespace local { namespace graph {
 
 // ===========================================================================
-class CPPAD_LIB_EXPORT json_lexer {
+class json_lexer {
 // ===========================================================================
 
 /*
@@ -81,8 +81,9 @@ private:
     size_t             index_;
     size_t             line_number_;
     size_t             char_number_;
-    std::string        token_;
-    std::string        function_name_;
+    // use pointers instead of values to fix Visual C++ warning C4251.
+    std::string*       token_;
+    std::string*       function_name_;
 public:
     const std::string& token(void)       const;
     size_t             line_number(void) const;
@@ -232,6 +233,7 @@ Prototype
 {xrst_code hpp} */
 public:
     json_lexer(const std::string& json);
+    ~json_lexer(void);
 /* {xrst_code}
 {xrst_spell_on}
 
