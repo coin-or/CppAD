@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin base_require.cpp}
@@ -20,9 +20,18 @@ meets the requirements specified by :ref:`base_require-name`
 for *Base* in ``AD`` < *Base* > .
 The program below is an example use of ``AD<base_alloc>`` .
 
+Restrictions
+************
+The type ``base_alloc`` is not in the list of base types in
+:ref:`static_list-name` .
+Hence this example is not run when building with Visual C++
+and using a shared CppAD library.
+
 {xrst_end base_require.cpp}
 */
 // BEGIN C++
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
+//
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -64,4 +73,5 @@ bool base_require(void)
 
     return ok;
 }
+#endif // CPPAD_LIB_STATIC || ! defined(_MSC_VER)
 // END C++

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin general.cpp}
@@ -221,7 +221,6 @@ int main(void)
     Run( azmul,             "azmul"            );
     Run( base2ad,           "base2ad"          );
     Run( base2vec_ad,       "base2vec_ad"      );
-    Run( base_require,      "base_require"     );
     Run( capacity_order,    "capacity_order"   );
     Run( change_param,      "change_param"     );
     Run( complex_poly,      "complex_poly"     );
@@ -271,6 +270,9 @@ int main(void)
 # if CPPAD_HAS_EIGEN
     Run( eigen_array,       "eigen_array"      );
     Run( eigen_det,         "eigen_det"        );
+# endif
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
+    Run( base_require,      "base_require"     );
 # endif
     //
     // check for memory leak
