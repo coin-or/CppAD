@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_LINK_DLL_LIB_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin link_dll_lib}
@@ -74,7 +74,8 @@ private:
     void* handle_;
     //
     // error message during constructor
-    std::string ctor_err_msg_;
+    // use pointer instead of value to fix Visual C++ warning C4251.
+    std::string* ctor_err_msg_;
     //
 # ifdef _WIN32
     static void*       dlopen(const char *filename, int flag);
