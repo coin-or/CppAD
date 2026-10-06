@@ -75,7 +75,8 @@ private:
     void* handle_;
     //
     // error message during constructor
-    std::string ctor_err_msg_;
+    // use pointer instead of value to fix Visual C++ warning C4251.
+    std::string* ctor_err_msg_;
     //
 # ifdef _WIN32
     static void*       dlopen(const char *filename, int flag);

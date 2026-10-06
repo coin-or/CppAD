@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-23 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/utility/to_string.hpp>
 # include <cppad/utility/link_dll_lib.hpp>
@@ -56,6 +56,8 @@ const char* link_dll_lib::dlerror(void)
 # endif
 //
 link_dll_lib::link_dll_lib(const std::string& dll_file, std::string& err_msg)
+: handle_(nullptr)
+, ctor_err_msg_(nullptr)
 {   handle_ = dlopen(dll_file.c_str(), RTLD_LAZY);
     if( handle_ != nullptr )
         err_msg = "";
@@ -67,17 +69,20 @@ link_dll_lib::link_dll_lib(const std::string& dll_file, std::string& err_msg)
             err_msg += err_str;
         }
     }
-    ctor_err_msg_ = err_msg;
+    ctor_err_msg_  = new std::string();
+    *ctor_err_msg_ = err_msg;
 }
 link_dll_lib::~link_dll_lib(void)
 {   if( handle_ != nullptr )
         dlclose(handle_);
+    if( ctor_err_msg_ != nullptr )
+        delete ctor_err_msg_;
 }
 void* link_dll_lib::operator()
 (const std::string& function_name, std::string& err_msg) const
 // END_OPERATOR
 {   if( handle_ == nullptr )
-    {   err_msg = ctor_err_msg_;
+    {   err_msg = *ctor_err_msg_;
         return nullptr;
     }
     void* fun_ptr = dlsym(handle_, function_name.c_str());
