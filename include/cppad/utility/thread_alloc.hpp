@@ -135,7 +135,7 @@ private:
 
     // ---------------------------------------------------------------------
     // BEGIN_CAPACITY_INFO
-    static const capacity_t* CPPAD_LIB_EXPORT capacity_info(void);
+    static CPPAD_LIB_EXPORT const capacity_t* capacity_info(void);
     // END_CAPACITY_INFO
     // ---------------------------------------------------------------------
     /// Structure of information for each thread
@@ -176,7 +176,7 @@ private:
     }
     // ---------------------------------------------------------------------
     // BEGIN_THREAD_INFO
-    static thread_alloc_info* CPPAD_LIB_EXPORT thread_info(
+    static CPPAD_LIB_EXPORT thread_alloc_info* thread_info(
         size_t             thread          ,
         bool               clear = false
     );

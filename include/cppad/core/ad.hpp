@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // simple AD operations that must be defined for AD as well as base class
@@ -297,11 +297,11 @@ private:
     local::ADTape<Base>* tape_this(void) const;
     //
     // static
-    static tape_id_t*            tape_id_ptr(size_t thread);
-    static local::ADTape<Base>** tape_handle(size_t thread);
+    static CPPAD_LIB_EXPORT tape_id_t*  tape_id_ptr(size_t thread);
+    static local::ADTape<Base>**        tape_handle(size_t thread);
     static local::ADTape<Base>*         tape_manage(tape_manage_enum job);
-    static local::ADTape<Base>*  tape_ptr(void);
-    static local::ADTape<Base>*  tape_ptr(tape_id_t tape_id);
+    static local::ADTape<Base>*         tape_ptr(void);
+    static local::ADTape<Base>*         tape_ptr(tape_id_t tape_id);
 };
 // ---------------------------------------------------------------------------
 

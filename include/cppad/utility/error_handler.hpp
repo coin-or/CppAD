@@ -209,7 +209,7 @@ private:
     }
     // -----------------------------------------------------------------------
     // BEGIN_CURRENT
-    static Handler CPPAD_LIB_EXPORT &Current(void);
+    static CPPAD_LIB_EXPORT Handler &Current(void);
     // END_CURRENT
 };
 

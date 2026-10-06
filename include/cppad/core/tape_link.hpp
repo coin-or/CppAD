@@ -48,8 +48,8 @@ tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
     return tape_id_table + thread;
 }
 # define CPPAD_STATIC_LIST_CASE(base) \
-    extern template tape_id_t*  \
-    CPPAD_LIB_EXPORT AD<base>::tape_id_ptr(size_t thread);
+    extern template \
+    CPPAD_LIB_EXPORT tape_id_t* AD<base>::tape_id_ptr(size_t thread);
 CPPAD_STATIC_LIST
 # undef CPPAD_STATIC_LIST_CASE
 
@@ -79,8 +79,8 @@ local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
     return tape_table + thread;
 }
 # define CPPAD_STATIC_LIST_CASE(base) \
-    extern template local::ADTape<base>** \
-    CPPAD_LIB_EXPORT AD<base>::tape_handle(size_t thread);
+    extern template \
+    CPPAD_LIB_EXPORT local::ADTape<base>** AD<base>::tape_handle(size_t thread);
 CPPAD_STATIC_LIST
 # undef CPPAD_STATIC_LIST_CASE
 

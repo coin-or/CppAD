@@ -40,7 +40,7 @@ public:
         return const_iterator(operator_vec_, operator_arg_, op_index);
     }
     // ------------------------------------------------------------------------
-    void CPPAD_LIB_EXPORT initialize(void);
+    CPPAD_LIB_EXPORT void initialize(void);
     CPPAD_LIB_EXPORT cpp_graph(void);
     // ------------------------------------------------------------------------
 /*
