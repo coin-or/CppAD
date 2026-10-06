@@ -18,6 +18,10 @@ If you are using Visual C++ and :ref:`cmake@cppad_static_lib` is false,
 you can only use AD< *Base* > for the base types listed below; e.g.,
 you can use AD<double> and AD< AD<double> > .
 
+TODO
+****
+Figure out a way to avoid this limitation on base types.
+
 
 CPPAD_STATIC_LIST
 *****************

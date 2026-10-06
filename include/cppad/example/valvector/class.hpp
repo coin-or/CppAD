@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_VALVECTOR_CLASS_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2024 Bradley M. Bell
+// SPDX-FileContributor: 2024-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin_parent valvector}
@@ -33,6 +33,13 @@ Other Examples
 ==============
 The file :ref:`valvector.cpp-name` tests that all of the valvector examples
 git the expected results.
+
+Restrictions
+************
+The type ``valvector`` is not in the list of base types in
+:ref:`static_list-name`.
+Hence these examples are not run when building with
+Visual C++ and using a shared CppAD library.
 
 Operations
 **********

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build the example directory tests
 # Inherit environment from ../CMakeList.txt
@@ -24,7 +24,6 @@ ADD_SUBDIRECTORY(optimize)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(sparse)
 ADD_SUBDIRECTORY(utility)
-ADD_SUBDIRECTORY(valvector)
 # END_SORT_THIS_LINE_MINUS_1
 #
 # cppad_code_gen examples
@@ -41,9 +40,12 @@ ENDIF( cppad_has_ipopt)
 IF( NOT cppad_link_flags_has_m32 )
     ADD_SUBDIRECTORY(jit)
 ENDIF( )
-
-
-
+#
+# valvector base class examples
+IF( cppad_static_lib  OR (NOT MSVC) )
+    ADD_SUBDIRECTORY(valvector)
+ENDIF()
+#
 # Add the check_example target
 ADD_CUSTOM_TARGET(check_example "" DEPENDS ${check_example_depends})
 MESSAGE(STATUS "make check_example: available")

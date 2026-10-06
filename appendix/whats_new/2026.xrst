@@ -10,6 +10,7 @@
     colpack
     wimplicit
     multiarch
+    valvector
 }
 
 Release Notes for 2026
@@ -26,6 +27,11 @@ static branch
 
 #.  The install instructions for the
     :ref:`cmake@CMake Command@Windows Visual C++` case were updated.
+
+#.  The base class limitations mentioned above were also mentioned
+    as restrictions for the following examples:
+    :ref:`base_require <base_require.cpp@Restrictions>` ,
+    :ref:`valvector <valvector@Restrictions>` .
 
 mm-dd
 *****
