@@ -6,9 +6,10 @@
 // ----------------------------------------------------------------------------
 # include <string>
 # include <iostream>
+# include <cppad/local/define.hpp>
 
 namespace CppAD { namespace local {
-    std::string temp_file(void);
+    CPPAD_LIB_EXPORT std::string temp_file(void);
 } }
 
 # endif
