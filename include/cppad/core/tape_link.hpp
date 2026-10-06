@@ -38,6 +38,7 @@ is the thread number. The following condition must hold
 \return
 is a pointer to the tape identifier for this thread and AD<Base> class.
 */
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER) || defined(cppad_lib_EXPORTS)
 template <class Base>
 tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
 {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
@@ -47,6 +48,10 @@ tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
     );
     return tape_id_table + thread;
 }
+# else
+template <class Base>
+tape_id_t* AD<Base>::tape_id_ptr(size_t thread);
+# endif
 # define CPPAD_STATIC_LIST_CASE(base) \
     extern template \
     CPPAD_LIB_EXPORT tape_id_t* AD<base>::tape_id_ptr(size_t thread);

@@ -50,6 +50,7 @@ if defined CONDA_PREFIX (
 rem
 rem repo_directory
 set repo_directory=%cd%
+set cppad_prefix=%repo_directory:\=/%/build/prefix
 rem
 rem PKG_CONFIG_PATH
 set PKG_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
@@ -132,7 +133,11 @@ cmake ^
     -D CMAKE_BUILD_TYPE=release ^
     -D cppad_static_lib=false ^
     -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus" ^
-    -D cppad_prefix="%repo_directory%\build\prefix"
+    -D cppad_prefix="%cppad_prefix%/build/prefix"
+rem
+rem PATH
+echo %PATH% | findstr /i %repo_directory%\build\cppad_lib > nul || ^
+set PATH=%PATH%;%repo_directory%\build\cppad_lib
 rem
 rem check
 cmake --build . --target check
