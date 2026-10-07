@@ -35,9 +35,11 @@ CPPAD_STATIC_LIST
 # define CPPAD_STATIC_LIST \
     CPPAD_STATIC_LIST_CASE(float) \
     CPPAD_STATIC_LIST_CASE(double) \
+    CPPAD_STATIC_LIST_CASE(zdouble) \
     CPPAD_STATIC_LIST_CASE( std::complex<double> ) \
     CPPAD_STATIC_LIST_CASE( AD<float> ) \
     CPPAD_STATIC_LIST_CASE( AD<double> ) \
+    CPPAD_STATIC_LIST_CASE( AD<zdouble> ) \
     CPPAD_STATIC_LIST_CASE( AD< std::complex<double> > )
 // END_STATIC_LIST
 

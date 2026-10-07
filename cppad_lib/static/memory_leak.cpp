@@ -105,6 +105,7 @@ to standard output describing the memory leak that was detected.
 # include <cppad/utility/omp_alloc.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/utility/track_new_del.hpp>
+# include <cppad/utility/memory_leak.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*

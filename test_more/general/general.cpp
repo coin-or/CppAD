@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 // CPPAD_HAS_* defines
@@ -276,7 +276,9 @@ int main(void)
     //
     // Run base_alloc after memory leak check because base_alloc.hpp uses
     // thread_alloc to allocate memory for static copies of nan.
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
     Run( base_alloc_test,  "base_alloc"    );
+# endif
     //
     // print summary at end
     bool ok = Run.summary(memory_ok);

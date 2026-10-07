@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
+
 # include "../../example/general/base_alloc.hpp"
 # include <cppad/cppad.hpp>
-
+//
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
+//
 namespace { // BEGIN empty namespace
 
 bool test_parameter(void)
@@ -86,3 +89,4 @@ bool base_alloc_test(void)
     //
     return ok;
 }
+# endif // CPPAD_LIB_STATIC || ! defined(_MSC_VER)

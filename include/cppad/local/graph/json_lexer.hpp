@@ -7,12 +7,13 @@
 
 # include <string>
 # include <cppad/core/cppad_assert.hpp>
+# include <cppad/local/define.hpp>
 
 // BEGIN_NAMESPACE_CPPAD_LOCAL_GRAPH
 namespace CppAD { namespace local { namespace graph {
 
 // ===========================================================================
-class json_lexer {
+class CPPAD_LIB_EXPORT json_lexer {
 // ===========================================================================
 
 /*

@@ -9,7 +9,7 @@
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_MEMORY_LEAK
-extern bool CPPAD_LIB_EXPORT memory_leak(size_t add_static = 0);
+extern CPPAD_LIB_EXPORT bool memory_leak(size_t add_static = 0);
 // END_MEMORY_LEAK
 
 } // END_CPPAD_NAMESPACE

@@ -30,14 +30,15 @@ and using a shared CppAD library.
 {xrst_end base_require.cpp}
 */
 // BEGIN C++
-# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
 //
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
 # include "base_alloc.hpp"
 # include <cppad/cppad.hpp>
-
+//
+# if CPPAD_LIB_STATIC || ! defined(_MSC_VER)
+//
 bool base_require(void)
 {   bool ok = true;
     using CppAD::thread_alloc;
