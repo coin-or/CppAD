@@ -76,333 +76,254 @@ class thread_alloc{
 // ============================================================================
 private:
 
-    class capacity_t {
-    public:
-        /// number of capacity values actually used
-        size_t number;
-        /// the different capacity values
-        size_t value[CPPAD_MAX_NUM_CAPACITY];
-        /// ctor
-        capacity_t(void)
-        {   // Cannot figure out how to call thread_alloc::in_parallel here.
-            // CPPAD_ASSERT_UNKNOWN(
-            //    ! thread_alloc::in_parallel() , "thread_alloc: "
-            //    "parallel mode and parallel_setup not yet called."
-            // );
-            number           = 0;
-            size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
-            while( capacity < std::numeric_limits<size_t>::max() / 2 )
-            {   CPPAD_ASSERT_UNKNOWN( number < CPPAD_MAX_NUM_CAPACITY );
-                value[number++] = capacity;
-                // next capactiy is 3/2 times the current one
-                capacity        = 3 * ( (capacity + 1) / 2 );
-            }
-            CPPAD_ASSERT_UNKNOWN( number > 0 );
-        }
-    };
+   class capacity_t {
+   public:
+      /// number of capacity values actually used
+      size_t number;
+      /// the different capacity values
+      size_t value[CPPAD_MAX_NUM_CAPACITY];
+      /// ctor
+      capacity_t(void)
+      {  // Cannot figure out how to call thread_alloc::in_parallel here.
+         // CPPAD_ASSERT_UNKNOWN(
+         //    ! thread_alloc::in_parallel() , "thread_alloc: "
+         //    "parallel mode and parallel_setup not yet called."
+         // );
+         number           = 0;
+         size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
+         while( capacity < std::numeric_limits<size_t>::max() / 2 )
+         {  CPPAD_ASSERT_UNKNOWN( number < CPPAD_MAX_NUM_CAPACITY );
+            value[number++] = capacity;
+            // next capactiy is 3/2 times the current one
+            capacity        = 3 * ( (capacity + 1) / 2 );
+         }
+         CPPAD_ASSERT_UNKNOWN( number > 0 );
+      }
+   };
 
-    class block_t {
-    public:
-        /// extra information (currently used by create and delete array)
-        size_t             extra_;
-        /// an index that uniquely identifies both thread and capacity
-        size_t             tc_index_;
-        /// pointer to the next memory allocation with the same tc_index_
-        void*              next_;
-        ///
-        /// Calculated by include/cppad/CMakeLists.txt
-        CPPAD_PADDING_BLOCK_T
-        // -----------------------------------------------------------------
-        /// make default constructor private. It is only used by constructor
-        /// for `root arrays below.
-        block_t(void) : extra_(0), tc_index_(0), next_(nullptr)
-        { }
-    };
+   class block_t {
+   public:
+      /// extra information (currently used by create and delete array)
+      size_t             extra_;
+      /// an index that uniquely identifies both thread and capacity
+      size_t             tc_index_;
+      /// pointer to the next memory allocation with the same tc_index_
+      void*              next_;
+      ///
+      /// Calculated by include/cppad/CMakeLists.txt
+      CPPAD_PADDING_BLOCK_T
+      // -----------------------------------------------------------------
+      /// make default constructor private. It is only used by constructor
+      /// for `root arrays below.
+      block_t(void) : extra_(0), tc_index_(0), next_(nullptr)
+      { }
+   };
 
-    // ---------------------------------------------------------------------
-    /// Vector of fixed capacity values for this allocator
-    static const capacity_t* capacity_info(void)
-    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-        static const capacity_t capacity;
-        return &capacity;
-    }
-    // ---------------------------------------------------------------------
-    /// Structure of information for each thread
-    struct thread_alloc_info {
-        /// count of available bytes for this thread
-        size_t  count_inuse_;
-        /// count of inuse bytes for this thread
-        size_t  count_available_;
-        /// root of available list for this thread and each capacity
-        block_t root_available_[CPPAD_MAX_NUM_CAPACITY];
-        /*!
-        root of inuse list for this thread and each capacity
-        If NDEBUG is defined or CPPAD_DEBUG_AND_RELEASE is true,
-        this memory is not used, but it still helps to separate
-        this structure from the structure for the next thread.
-        */
-        block_t root_inuse_[CPPAD_MAX_NUM_CAPACITY];
-    };
-    // ---------------------------------------------------------------------
-    /*!
-    Set and Get hold available memory flag.
+   // ---------------------------------------------------------------------
+   /// Vector of fixed capacity values for this allocator
+   static const capacity_t* capacity_info(void)
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static const capacity_t capacity;
+      return &capacity;
+   }
+   // ---------------------------------------------------------------------
+   /// Structure of information for each thread
+   struct thread_alloc_info {
+      /// count of available bytes for this thread
+      size_t  count_inuse_;
+      /// count of inuse bytes for this thread
+      size_t  count_available_;
+      /// root of available list for this thread and each capacity
+      block_t root_available_[CPPAD_MAX_NUM_CAPACITY];
+      /*!
+      root of inuse list for this thread and each capacity
+      If NDEBUG is defined or CPPAD_DEBUG_AND_RELEASE is true,
+      this memory is not used, but it still helps to separate
+      this structure from the structure for the next thread.
+      */
+      block_t root_inuse_[CPPAD_MAX_NUM_CAPACITY];
+   };
+   // ---------------------------------------------------------------------
+   /*!
+   Set and Get hold available memory flag.
 
-    \param set [in]
-    if true, the value returned by this return is changed.
+   \param set [in]
+   if true, the value returned by this return is changed.
 
-    \param new_value [in]
-    if set is true, this is the new value returned by this routine.
-    Otherwise, new_value is ignored.
+   \param new_value [in]
+   if set is true, this is the new value returned by this routine.
+   Otherwise, new_value is ignored.
 
-    \return
-    the current setting for this routine (which is initially false).
-    */
-    static bool set_get_hold_memory(bool set, bool new_value = false)
-    {   static bool value = false;
-        if( set )
-            value = new_value;
-        return value;
-    }
-    // ---------------------------------------------------------------------
-    /*!
-    Get pointer to the information for this thread.
+   \return
+   the current setting for this routine (which is initially false).
+   */
+   // ---------------------------------------------------------------------
+   /*!
+   Get pointer to the information for this thread.
 
-    \param thread [in]
-    Is the thread number for this information pointer.
+   \param thread [in]
+   Is the thread number for this information pointer.
 
-    \param clear
-    If clear is true, then the information pointer for this thread
-    is deleted and the nullptr pointer is returned.
-    There must be no memory currently in either the inuse or available
-    lists when this routine is called.
+   \param clear
+   If clear is true, then the information pointer for this thread
+   is deleted and the nullptr pointer is returned.
+   There must be no memory currently in either the inuse or available
+   lists when this routine is called.
 
-    \return
-    is the current information pointer for this thread.
-    If clear is false, and the current pointer is nullptr,
-    a new information record is allocated and its pointer returned.
-    In this case, if info is the returned pointer,
-    <code>info->count_inuse == 0</code> and
-    <code>info->count_available == 0</code>.
-    In addition,
-    for <code>c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1</code>
-    <code>info->root_inuse_[c].next_ == nullptr</code> and
-    <code>info->root_available_[c].next_ == nullptr</code>.
-    */
-    static thread_alloc_info* thread_info(
-        size_t             thread          ,
-        bool               clear = false   )
-    {   static thread_alloc_info* all_info[CPPAD_MAX_NUM_THREADS];
-        static thread_alloc_info  zero_info;
+   \return
+   is the current information pointer for this thread.
+   If clear is false, and the current pointer is nullptr,
+   a new information record is allocated and its pointer returned.
+   In this case, if info is the returned pointer,
+   <code>info->count_inuse == 0</code> and
+   <code>info->count_available == 0</code>.
+   In addition,
+   for <code>c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1</code>
+   <code>info->root_inuse_[c].next_ == nullptr</code> and
+   <code>info->root_available_[c].next_ == nullptr</code>.
+   */
+   // -----------------------------------------------------------------------
+   /*!
+   Increase the number of bytes of memory that are currently in use; i.e.,
+   that been obtained with get_memory and not yet returned.
 
-        CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+   \param inc [in]
+   amount to increase memory in use.
 
-        CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
+   \param thread [in]
+   Thread for which we are increasing the number of bytes in use
+   (must be less than num_threads).
+   During parallel execution, this must be the thread
+   that is currently executing.
+   */
+   static void inc_inuse(size_t inc, size_t thread)
+   {
+      CPPAD_ASSERT_UNKNOWN( thread < num_threads() );
+      CPPAD_ASSERT_UNKNOWN(
+         thread == thread_num() || (! in_parallel())
+      );
+      thread_alloc_info* info = thread_info(thread);
 
-        thread_alloc_info* info = all_info[thread];
-        if( clear )
-        {   if( info != nullptr )
-            {
-# ifndef NDEBUG
-                CPPAD_ASSERT_UNKNOWN(
-                    info->count_inuse_     == 0 &&
-                    info->count_available_ == 0
-                );
-                for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
-                {   CPPAD_ASSERT_UNKNOWN(
-                        info->root_inuse_[c].next_     == nullptr &&
-                        info->root_available_[c].next_ == nullptr
-                    );
-                }
-# endif
-                if( thread != 0 )
-                    ::operator delete( reinterpret_cast<void*>(info) );
-                info             = nullptr;
-                all_info[thread] = info;
-            }
-        }
-        else if( info == nullptr )
-        {   if( thread == 0 )
-                info = &zero_info;
-            else
-            {   size_t size = sizeof(thread_alloc_info);
-                void* v_ptr = ::operator new(size);
-                info        = reinterpret_cast<thread_alloc_info*>(v_ptr);
-            }
-            all_info[thread] = info;
+      // do the addition
+      size_t result = info->count_inuse_ + inc;
+      CPPAD_ASSERT_UNKNOWN( result >= info->count_inuse_ );
 
-            // initialize the information record
-            for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
-            {   info->root_inuse_[c].next_       = nullptr;
-                info->root_available_[c].next_   = nullptr;
-            }
-            info->count_inuse_     = 0;
-            info->count_available_ = 0;
-        }
-        return info;
-    }
-    // -----------------------------------------------------------------------
-    /*!
-    Increase the number of bytes of memory that are currently in use; i.e.,
-    that been obtained with get_memory and not yet returned.
+      info->count_inuse_ = result;
+   }
+   // -----------------------------------------------------------------------
+   /*!
+   Increase the number of bytes of memory that are currently available; i.e.,
+   have been obtained obtained from the system and are being held future use.
 
-    \param inc [in]
-    amount to increase memory in use.
+   \copydetails inc_inuse
+   */
+   static void inc_available(size_t inc, size_t thread)
+   {
+      CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
+      CPPAD_ASSERT_UNKNOWN(
+         thread == thread_num() || (! in_parallel())
+      );
+      thread_alloc_info* info = thread_info(thread);
+      // do the addition
+      size_t result = info->count_available_ + inc;
+      CPPAD_ASSERT_UNKNOWN( result >= info->count_available_ );
 
-    \param thread [in]
-    Thread for which we are increasing the number of bytes in use
-    (must be less than num_threads).
-    During parallel execution, this must be the thread
-    that is currently executing.
-    */
-    static void inc_inuse(size_t inc, size_t thread)
-    {
-        CPPAD_ASSERT_UNKNOWN( thread < num_threads() );
-        CPPAD_ASSERT_UNKNOWN(
-            thread == thread_num() || (! in_parallel())
-        );
-        thread_alloc_info* info = thread_info(thread);
+      info->count_available_ = result;
+   }
+   // -----------------------------------------------------------------------
+   /*!
+   Decrease the number of bytes of memory that are currently in use; i.e.,
+   that been obtained with get_memory and not yet returned.
 
-        // do the addition
-        size_t result = info->count_inuse_ + inc;
-        CPPAD_ASSERT_UNKNOWN( result >= info->count_inuse_ );
+   \param dec [in]
+   amount to decrease number of bytes in use.
 
-        info->count_inuse_ = result;
-    }
-    // -----------------------------------------------------------------------
-    /*!
-    Increase the number of bytes of memory that are currently available; i.e.,
-    have been obtained obtained from the system and are being held future use.
+   \param thread [in]
+   Thread for which we are decreasing the number of bytes in use
+   (must be less than num_threads).
+   During parallel execution, this must be the thread
+   that is currently executing.
+   */
+   static void dec_inuse(size_t dec, size_t thread)
+   {
+      CPPAD_ASSERT_UNKNOWN(
+         thread < num_threads() || (! in_parallel())
+      );
+      CPPAD_ASSERT_UNKNOWN(
+         thread == thread_num() || (! in_parallel())
+      );
+      thread_alloc_info* info = thread_info(thread);
 
-    \copydetails inc_inuse
-    */
-    static void inc_available(size_t inc, size_t thread)
-    {
-        CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
-        CPPAD_ASSERT_UNKNOWN(
-            thread == thread_num() || (! in_parallel())
-        );
-        thread_alloc_info* info = thread_info(thread);
-        // do the addition
-        size_t result = info->count_available_ + inc;
-        CPPAD_ASSERT_UNKNOWN( result >= info->count_available_ );
+      // do the subtraction
+      CPPAD_ASSERT_UNKNOWN( info->count_inuse_ >= dec );
+      info->count_inuse_ = info->count_inuse_ - dec;
+   }
+   // -----------------------------------------------------------------------
+   /*!
+   Decrease the number of bytes of memory that are currently available; i.e.,
+   have been obtained obtained from the system and are being held future use.
 
-        info->count_available_ = result;
-    }
-    // -----------------------------------------------------------------------
-    /*!
-    Decrease the number of bytes of memory that are currently in use; i.e.,
-    that been obtained with get_memory and not yet returned.
+   \copydetails dec_inuse
+   */
+   static void dec_available(size_t dec, size_t thread)
+   {
+      CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
+      CPPAD_ASSERT_UNKNOWN(
+         thread == thread_num() || (! in_parallel())
+      );
+      thread_alloc_info* info = thread_info(thread);
+      // do the subtraction
+      CPPAD_ASSERT_UNKNOWN( info->count_available_ >= dec );
+      info->count_available_ =  info->count_available_ - dec;
+   }
 
-    \param dec [in]
-    amount to decrease number of bytes in use.
+   // ----------------------------------------------------------------------
+   /*!
+   Set and get the number of threads that are sharing memory.
 
-    \param thread [in]
-    Thread for which we are decreasing the number of bytes in use
-    (must be less than num_threads).
-    During parallel execution, this must be the thread
-    that is currently executing.
-    */
-    static void dec_inuse(size_t dec, size_t thread)
-    {
-        CPPAD_ASSERT_UNKNOWN(
-            thread < num_threads() || (! in_parallel())
-        );
-        CPPAD_ASSERT_UNKNOWN(
-            thread == thread_num() || (! in_parallel())
-        );
-        thread_alloc_info* info = thread_info(thread);
+   \param number_new
+   If number is zero, we are only retrieving the current maximum
+   number of threads. Otherwise, we are setting and retrieving
+   maximum number of threads.
 
-        // do the subtraction
-        CPPAD_ASSERT_UNKNOWN( info->count_inuse_ >= dec );
-        info->count_inuse_ = info->count_inuse_ - dec;
-    }
-    // -----------------------------------------------------------------------
-    /*!
-    Decrease the number of bytes of memory that are currently available; i.e.,
-    have been obtained obtained from the system and are being held future use.
+   \return
+   the number of threads that are sharing memory.
+   If number_new is non-zero, the return value is equal to
+   number_new.
+   */
+   /*!
+   Set and call the routine that determine the current thread number.
 
-    \copydetails dec_inuse
-    */
-    static void dec_available(size_t dec, size_t thread)
-    {
-        CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
-        CPPAD_ASSERT_UNKNOWN(
-            thread == thread_num() || (! in_parallel())
-        );
-        thread_alloc_info* info = thread_info(thread);
-        // do the subtraction
-        CPPAD_ASSERT_UNKNOWN( info->count_available_ >= dec );
-        info->count_available_ =  info->count_available_ - dec;
-    }
+   \return
+   returns value for the most recent setting for thread_num_new.
+   If set is true,
+   or the most recent setting is nullptr (its initial value),
+   the return value is zero.
+   Otherwise the routine corresponding to the most recent setting
+   is called and its value returned by set_get_thread_num.
 
-    // ----------------------------------------------------------------------
-    /*!
-    Set and get the number of threads that are sharing memory.
+   \param thread_num_new [in]
+   If set is false, thread_num_new it is not used.
+   Otherwise, the current value of thread_num_new becomes the
+   most recent setting for thread_num.
 
-    \param number_new
-    If number is zero, we are only retrieving the current maximum
-    number of threads. Otherwise, we are setting and retrieving
-    maximum number of threads.
-
-    \return
-    the number of threads that are sharing memory.
-    If number_new is non-zero, the return value is equal to
-    number_new.
-    */
-    static size_t set_get_num_threads(size_t number_new)
-    {   static size_t number_user = 1;
-
-        CPPAD_ASSERT_UNKNOWN( number_new <= CPPAD_MAX_NUM_THREADS );
-        CPPAD_ASSERT_UNKNOWN( ! in_parallel() || (number_new == 0) );
-
-        // case where we are changing the number of threads
-        if( number_new != 0 )
-            number_user = number_new;
-
-        return number_user;
-    }
-    /*!
-    Set and call the routine that determine the current thread number.
-
-    \return
-    returns value for the most recent setting for thread_num_new.
-    If set is true,
-    or the most recent setting is nullptr (its initial value),
-    the return value is zero.
-    Otherwise the routine corresponding to the most recent setting
-    is called and its value returned by set_get_thread_num.
-
-    \param thread_num_new [in]
-    If set is false, thread_num_new it is not used.
-    Otherwise, the current value of thread_num_new becomes the
-    most recent setting for thread_num.
-
-    \param set
-    If set is true, then thread_num_new is becomes the most
-    recent setting for this set_get_thread_num.
-    */
-    static size_t set_get_thread_num(
-        size_t (*thread_num_new)(void)  ,
-        bool set = false                )
-    {   static size_t (*thread_num_user)(void) = nullptr;
-
-        if( set )
-        {   thread_num_user = thread_num_new;
-            return 0;
-        }
-
-        if( thread_num_user == nullptr )
-            return 0;
-
-        size_t thread = thread_num_user();
-        CPPAD_ASSERT_KNOWN(
-            thread < set_get_num_threads(0) ,
-            "parallel_setup: thread_num() >= num_threads"
-        );
-        return thread;
-    }
+   \param set
+   If set is true, then thread_num_new is becomes the most
+   recent setting for this set_get_thread_num.
+   */
 // ============================================================================
 public:
+   // Functions with definitions in cppad_lib/thread_alloc_storage.cpp.
+   // Declared public (not private) to avoid ABI incompatibility with
+   // test code that uses #define private public.
+   static bool set_get_hold_memory(bool set, bool new_value = false);
+   static thread_alloc_info* thread_info(
+      size_t             thread          ,
+      bool               clear = false   );
+   static size_t set_get_num_threads(size_t number_new);
+   static size_t set_get_thread_num(
+      size_t (*thread_num_new)(void)  ,
+      bool set = false                );
 /*
 {xrst_begin ta_parallel_setup}
 Setup thread_alloc For Use in Multi-Threading Environment
