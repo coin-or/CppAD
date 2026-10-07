@@ -84,10 +84,9 @@ if exist "%MSVS_DIR%" (
 )
 rem
 rem temp.out
-set SAVE_DIR=%cd%
 cd  %MSVS_DIR%
-dir /s vcvarsall.bat > %SAVE_DIR%/temp.out
-cd %SAVE_DIR%
+dir /s vcvarsall.bat > %repo_directory%/temp.out
+cd %repo_directory%
 ren
 rem temp.py
 echo import re                            > temp.py
@@ -122,6 +121,7 @@ rem build
 if not exist build ( mkdir build )
 cd build
 if exist CMakeCache.txt ( rm CMakeCache.txt )
+if exist test_install ( rmdir /s /q test_install )
 rem
 echo cmake
 cmake ^
@@ -131,16 +131,60 @@ cmake ^
     -D CMAKE_CXX_COMPILER=cl ^
     -D CMAKE_C_COMPILER=cl ^
     -D CMAKE_BUILD_TYPE=release ^
+    -D cmake_install_libdirs=lib ^
     -D cppad_static_lib=false ^
     -D cppad_cxx_flags="/MP /EHs /EHc /std:c++17 /Zc:__cplusplus" ^
-    -D cppad_prefix="%cppad_prefix%/build/prefix"
+    -D cppad_prefix="%cppad_prefix%"
+if %ERRORLEVEL% NEQ 0 (
+    echo tools/dos_build.bat: cmake command failed
+    cd ..
+    exit /b %ERRORLEVEL%
+)
+rem
+rem
 rem
 rem PATH
+rem needed to link cppad_lib dll during testing
 echo %PATH% | findstr /i %repo_directory%\build\cppad_lib > nul || ^
 set PATH=%PATH%;%repo_directory%\build\cppad_lib
 rem
 rem check
 cmake --build . --target check
+if %ERRORLEVEL% NEQ 0 (
+    echo tools/dos_build.bat: check failed
+    cd ..
+    exit /b %ERRORLEVEL%
+)
 rem
+rem install
+cmake --build . --target install
+if %ERRORLEVEL% NEQ 0 (
+    echo tools/dos_build.bat: install failed
+    cd ..
+    exit /b %ERRORLEVEL%
+)
+rem
+rem
+rem test_install
+mkdir test_install
+cd test_install
+copy ..\..\example\get_started\get_started.cpp get_started.cpp
+cl /Ehsc get_started.cpp ^
+    /I %CONDA_PREFIX%\Library\include ^
+    /I %cppad_prefix%\include ^
+    /link %cppad_prefix%\lib\cppad_lib.lib
+if %ERRORLEVEL% NEQ 0 (
+    echo tools/dos_build.bat: test of install: failed to build get_started.exe
+    cd ..\..
+    exit /b %ERRORLEVEL%
+)
+get_started.exe
+if %ERRORLEVEL% NEQ 0 (
+    echo tools/dos_build.bat: test of install: get_started.exe failed
+    cd ..\..
+    exit /b %ERRORLEVEL%
+)
 echo tools/dos_build.bat: OK
+cd ..\..
+rem
 rem END SOURCE
