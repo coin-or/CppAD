@@ -16,10 +16,17 @@
 Release Notes for 2026
 ######################
 
-static branch
-*************
-#.  Static variables were moved to the cppad library,
-    so that it is possible to build cppad_lib as shared library on Windows.
+mm-dd
+*****
+
+09-10
+=====
+#.  The :ref:`dos_build.bat-name` example was added.
+    This builds and tests making cppad_lib a shared library using
+    Visual C++ on windows.
+
+#.  Static variables were moved to the cppad library, so that it is possible
+    to build cppad_lib as shared library using Visual C++.
     This made the following utility routines require linking with cppad_lib;
     :ref:`ErrorHandler-name` ,
     :ref:`link_dll_lib-name`,
@@ -32,9 +39,6 @@ static branch
     as restrictions for the following examples:
     :ref:`base_require <base_require.cpp@Restrictions>` ,
     :ref:`valvector <valvector@Restrictions>` .
-
-mm-dd
-*****
 
 10-03
 =====
