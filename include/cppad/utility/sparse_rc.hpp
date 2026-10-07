@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_SPARSE_RC_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -373,8 +373,10 @@ public:
     { }
     //
     // move semantics constructor
-    // (none of the default constructor values are used by destructor)
+    // nr_, nc_, and nn_z are not used but some compilers generate warnings
+    // if we do not set them; see issue 259.
     sparse_rc(sparse_rc&& other)
+    : nr_(0), nc_(0), nnz_(0)
     {   swap(other); }
     //
     // destructor

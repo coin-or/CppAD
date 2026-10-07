@@ -11,6 +11,7 @@
     wimplicit
     multiarch
     valvector
+    rc
 }
 
 Release Notes for 2026
@@ -21,6 +22,11 @@ mm-dd
 
 09-10
 =====
+#.  Fix may be used uninitialized warning (see issue 259) in
+    {xrst_code cpp}
+    sparse_rc::sparse_rc(sparse_rc&&)
+    {xrst_code}
+
 #.  The :ref:`dos_build.bat-name` example was added.
     This builds and tests making cppad_lib a shared library using
     Visual C++ on windows.
