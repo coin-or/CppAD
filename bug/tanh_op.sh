@@ -64,22 +64,18 @@ int main() {
     x[0] = 2.0;
     CppAD::Independent(x);
     AD u = S * x[0] * x[0];
-    AD v = S * x[0] * x[0] * x[0];
-    y[0] = tanh(u) * v + u;
+    y[0] = tanh(u) * u;
     CppAD::ADFun<double> f(x, y);
 
     std::vector<double> xv{2.0}, seed{1.0}, zero{0.0}, weight{1.0};
     f.Forward(0, xv);
-    auto gradient = f.Forward(1, seed);
+    f.Forward(1, seed);
     auto second = f.Forward(2, zero);
     auto reverse = f.Reverse(2, weight);
-    auto hessian = f.Hessian(xv, 0);
 
     std::printf("See https://github.com/coin-or/CppAD/issues/261\n");
-    std::printf("gradient = %g\n", gradient[0]);
-    std::printf("Forward(2) * 2 = %g\n", 2.0 * second[0]);
-    std::printf("Reverse(2) = %g\n", reverse[1]);
-    std::printf("Hessian = %g\n", hessian[0]);
+    std::printf("Forward(2) * 2 = %.5e\n", 2.0 * second[0]);
+    std::printf("Reverse(2) = %.5e\n", reverse[1]);
 }
 EOF
 #
