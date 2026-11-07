@@ -40,7 +40,7 @@ ipopt_flags=$(pkg-config -cflags ipopt | sed -e 's|/coin-or | |' )
 link_flags=$(pkg-config -libs cppad)
 #
 # extra_flags
-extra_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -g -O0'
+extra_flags='-Wall -pedantic-errors -Wshadow -Wconversion -g -O0'
 #
 # build/bug
 if [ -e build/bug ]
@@ -75,6 +75,7 @@ EOF
 cmd="
     g++
     $name.cpp
+    -std=c++14
     -I../../include
     $extra_flags
     $eigen_flags
