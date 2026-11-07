@@ -10,6 +10,7 @@ then
     echo 'usage: bug/pow.sh'
     exit 1
 fi
+export LD_LIBRARY_PATH="$(pwd)/build/prefix/lib64"
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
@@ -60,10 +61,12 @@ int main(int argc, char** argv)
     return 0;
 }
 EOF
-cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -g -O0'
-eigen_dir="$HOME/prefix/eigen/include"
-echo "g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
-g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name
+cxx_flags='-Wall -pedantic-errors -Wshadow -Wconversion -g -O0'
+eigen_dir="/usr/include/eigen3"
+echo "g++ -std=c++14 -I../../include -isystem $eigen_dir \
+    -L $LD_LIBRARY_PATH -lcppad_lib $cxx_flags $name.cpp -o $name"
+g++ -std=c++14 -I../../include -isystem $eigen_dir \
+    -L $LD_LIBRARY_PATH -lcppad_lib $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
 if ! ./$name

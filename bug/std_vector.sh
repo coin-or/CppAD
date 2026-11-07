@@ -9,6 +9,9 @@
 # ‘std::vector<bool>::reference {aka std::_Bit_reference}’ and ‘bool’)
 #  y[1] |= true;
 #     ^
+#
+# This is not a bug but rather a property of std::vector<bool> which packs
+# 8 booleans in a byte.
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
 then

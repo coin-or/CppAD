@@ -46,6 +46,7 @@ then
     echo 'opt_level is: 0, 1, 2, or 3.'
     exit 1
 fi
+export LD_LIBRARY_PATH="$(pwd)/build/prefix/lib64"
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
@@ -153,13 +154,18 @@ int main(void)
     return 1;
 }
 EOF
-cxx_flags="-Wall -std=c++11 -Wshadow -Wconversion -O$opt_level"
+eigen_dir='/usr/include/eigen3'
+cxx_flags="-Wall -Wshadow -Wconversion -O$opt_level"
 if [ "$debug" == 'no' ]
 then
     cxx_flags="$cxx_flags -DNDEBUG"
 fi
-echo "$compiler -I../../include $cxx_flags $name.cpp -o $name"
-$compiler -I../../include $cxx_flags $name.cpp -o $name
+echo "$compiler -I../../include -isystem $eigen_dir \
+    -L $LD_LIBRARY_PATH -l cppad_lib \
+    $cxx_flags $name.cpp -o $name"
+$compiler -I../../include -isystem $eigen_dir \
+    -L $LD_LIBRARY_PATH -l cppad_lib \
+    $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
 if ! ./$name
