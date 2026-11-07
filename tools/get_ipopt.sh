@@ -21,7 +21,7 @@ set -e -u
 # Purpose
 # *******
 # If you are using Unix, this command will download and install
-# `Ipopt <https://coin-or.github.io/Ipopt/>`_ in the
+# `Ipopt <https://www.coin-or.org/Ipopt/>`_ in the
 # CppAD ``build`` directory.
 #
 # Requirements

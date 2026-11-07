@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2010 app}
@@ -93,8 +93,7 @@ the function
 
     ``CheckSimpleVector`` ( ``const`` *Scalar* & *x* , ``const`` *Scalar* & *y* )
 
-was not defined; see
-`bug report <https://list.coin-or.org/pipermail/cppad/2010q2/000166.html>`_.
+was not defined.
 This has been fixed.
 
 04-28
@@ -125,8 +124,7 @@ that caused the following improper abort:
 
 This was fixed in the trunk.
 It was also fixed in the release with version number ``20100101.3``
-which can be downloaded from the CppAD
-`download directory <https://www.coin-or.org/download/source/CppAD/>`_.
+which can be downloaded from the coin-or web site.
 
 04-01
 =====

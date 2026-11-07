@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2009 app}
@@ -409,9 +409,7 @@ The dates below represent when the correspond change was made.
 06-25
 =====
 The tarball for most recent release (of the subversion trunk for CppAD)
-was not being placed in the
-`download <https://www.coin-or.org/download/source/CppAD/>`_
-directory.
+was not being placed in the proper directory.
 This has been fixed.
 
 06-22

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
 {xrst_begin 2006 app}
@@ -206,8 +206,7 @@ This has been fixed.
 12-07
 =====
 Fix bug in the
-subversion installation instructions; see
-`bug report <https://list.coin-or.org/pipermail/cppad/2006q4/000076.html>`_.
+subversion installation instructions.
 
 The some of the automatically generated ``makefile.in`` files
 had an improper license statement in the GPL license version.
@@ -977,8 +976,7 @@ The :ref:`multiplication<ad_binary-name>` documentation and example have been im
 The :ref:`subtraction<ad_binary-name>` documentation and example have been improved.
 
 There was a bug :ref:`RevTwo-name` that was not detected by the
-:ref:`rev_two.cpp-name` test. This bug was reported by
-`Kasper Kristensen <https://list.coin-or.org/pipermail/cppad/2006-February/000020.html>`_
+:ref:`rev_two.cpp-name` test. This bug was reported by Kasper Kristensen.
 A test was added ``TestMore/rev_two.cpp`` that detects this problem
 and the problem has been fixed.
 

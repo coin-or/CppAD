@@ -25,7 +25,6 @@ echo $0 $*
 #     nmake
 #     sacado
 #     stdvector
-#     sys
 #     ublas
 #     usr
 # }
@@ -141,10 +140,7 @@ echo $0 $*
 # placed at the front of a list of compilers to search for.
 # In addition, nmake_ make files will be generated; i.e.,
 # you will use ``nmake`` instead of ``make`` to build, test, and install.
-# The resulting C++, C, and Fortran compiler orders work Coin-OR specific;
-# see
-# `Building with Visual Studio in MSys2
-# <https://coin-or.github.io/user_introduction.html#building-with-visual-studio-in-msys2>`_ .
+# The resulting C++, C, and Fortran compiler orders work Coin-OR specific.
 #
 # .. _nmake: https://learn.microsoft.com/en-us/cpp/build/reference/nmake-reference?view=msvc-170
 #
@@ -275,7 +271,7 @@ echo $0 $*
 # The default value for this directory is empty; i.e., there
 # is no ipopt directory.
 # If you have
-# `Ipopt <https://coin-or.github.io/Ipopt>`_
+# `Ipopt <https://www.coin-or.org/Ipopt/>`_
 # installed on your system, you can
 # specify a value for *ipopt_dir* .
 # It must be such that

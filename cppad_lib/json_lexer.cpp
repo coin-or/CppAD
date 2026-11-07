@@ -34,7 +34,7 @@ void json_lexer::report_error(
     msg += recent_input + "\n";
     msg += "This end is character " + to_string(char_number_);
     msg += " in line " + to_string(line_number_) + " of the json.\n";
-    msg += "See https://coin-or.github.io/CppAD/doc/json_ad_graph.htm.";
+    msg += "See https://www.coin-or.org/CppAD/doc/json_ad_graph.htm.";
     //
     // use this source code as point of detection
     bool known       = true;
