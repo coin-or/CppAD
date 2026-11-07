@@ -12,6 +12,7 @@
     multiarch
     valvector
     rc
+    src
 }
 
 Release Notes for 2026
@@ -20,9 +21,14 @@ Release Notes for 2026
 mm-dd
 *****
 
+11-07
+=====
+Fix a warning in speed/src/link_sparse_jacobian.cpp when testing with
+:ref:`cmake@cmake_build_type` equal to release.
+
 09-10
 =====
-#.  Fix may be used uninitialized warning (see issue 259) in
+#.  Fix 'may be used uninitialized' warning (see issue 259) in
     {xrst_code cpp}
     sparse_rc::sparse_rc(sparse_rc&&)
     {xrst_code}

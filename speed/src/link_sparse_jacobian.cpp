@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/utility/near_equal.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
@@ -14,7 +14,9 @@ namespace { // BEGIN_EMPTY_NAMESPACE
     static CppAD::vector<size_t> info_size_vec_;
     static CppAD::vector<size_t> info_n_color_vec_;
     //
+# ifndef NDEBUG
     static size_t                callback_size_    = 0;
+# endif
     static size_t                callback_n_color_ = 0;
     static CppAD::vector<size_t> callback_row_;
     static CppAD::vector<size_t> callback_col_;
@@ -295,7 +297,9 @@ double time_sparse_jacobian(double time_min, size_t size)
     using CppAD::vector;
     //
     // set callback_row_, callback_col_, callback_size_
+# ifndef NDEBUG
     callback_size_   = size;
+# endif
     size_t n         = size;
     size_t m         = 2 * n;
     choose_row_col(n, m, callback_row_, callback_col_);
@@ -326,7 +330,9 @@ double time_sparse_jacobian(double time_min, size_t size)
         callback_n_color_ = n_color;
     //
     // memory allocated for callback_row_, callback_col_
+# ifndef NDEBUG
     callback_size_ = 0;
+# endif
     callback_row_.clear();
     callback_col_.clear();
     //
