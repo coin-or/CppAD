@@ -31,10 +31,12 @@ do
 done
 #
 # eigen_flags
-eigen_flags=$(pkg-config -cflags eigen3)
+eigen_flags=$(pkg-config -cflags eigen3 | sed -e 's|-I|-isystem |')
 #
 # ipopt_flags
-ipopt_flags=$(pkg-config -cflags ipopt | sed -e 's|/coin-or | |' )
+ipopt_flags=$(
+    pkg-config -cflags ipopt | sed -e 's|-I|-isystem |' -e 's|/coin-or | |' 
+)
 #
 # link_flags
 link_flags=$(pkg-config -libs cppad)
