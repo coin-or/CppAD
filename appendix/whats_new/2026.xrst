@@ -21,6 +21,12 @@ Release Notes for 2026
 mm-dd
 *****
 
+11-08
+=====
+Modify the computation of tan and tanh reverse mode derivatives in a way
+that should reduce round-off error and make the code look more like
+:ref:`tangent reverse mode theory<tan_reverse-name>` .
+
 11-07
 =====
 Fix a warning in speed/src/link_sparse_jacobian.cpp when testing with

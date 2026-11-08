@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_VAR_OP_TANH_OP_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 
@@ -163,11 +163,12 @@ inline void tanh_reverse(
     Base base_two(2);
     while(j)
     {
-        px[j]   += pz[j];
-        pz[j]   /= Base(double(j));
-        for(k = 1; k <= j; k++)
-        {   px[k]   -= azmul(pz[j], y[j-k]) * Base(double(k));
-            py[j-k] -= azmul(pz[j], x[k]) * Base(double(k));
+        px[j] += azmul(pz[j], Base(1.0) - y[0]);
+        py[0] -= azmul(pz[j], x[j]);
+        for(k = 1; k < j; k++)
+        {   Base ratio = Base( double(k) / double(j) );
+            px[k]   -= azmul(pz[j], y[j-k]) * ratio;
+            py[j-k] -= azmul(pz[j], x[k])   * ratio;
         }
         for(k = 0; k < j; k++)
             pz[k] += azmul(py[j-1], z[j-k-1]) * base_two;
