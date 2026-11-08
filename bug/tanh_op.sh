@@ -56,26 +56,36 @@ cat << EOF > $name.cpp
 #include <cppad/cppad.hpp>
 #include <cstdio>
 #include <vector>
+//
+// test_precision
+template <class Float> 
+void test_precision(void) {
+    //
+    using CppAD::AD;
+    std::vector< AD<Float> > ax(1), ay(1);
+    ax[0] = 1.0;
+    CppAD::Independent(ax);
+    AD<Float>  au = ax[0] * ax[0];
+    ay[0] = tanh(au) * au;
+    CppAD::ADFun<Float> f(ax, ay);
 
-int main() {
-    using AD = CppAD::AD<double>;
-    const double S = 1e16;
-    std::vector<AD> x(1), y(1);
-    x[0] = 2.0;
-    CppAD::Independent(x);
-    AD u = S * x[0] * x[0];
-    y[0] = tanh(u) * u;
-    CppAD::ADFun<double> f(x, y);
+    std::vector<Float> x{1e5}, dx{1.0}, zero{0.0}, weight{1.0};
+    f.Forward(0, x);
+    f.Forward(1, dx);
+    auto forward_2 = f.Forward(2, zero);
+    auto reverse_2 = f.Reverse(2, weight);
 
-    std::vector<double> xv{2.0}, seed{1.0}, zero{0.0}, weight{1.0};
-    f.Forward(0, xv);
-    f.Forward(1, seed);
-    auto second = f.Forward(2, zero);
-    auto reverse = f.Reverse(2, weight);
-
+    std::printf("forward_2 * 2 = %.5e\n", 2.0 * forward_2[0]);
+    std::printf("reverse_2     = %.5e\n", reverse_2[1]);
+}
+//
+// main
+int main(void) {
     std::printf("See https://github.com/coin-or/CppAD/issues/261\n");
-    std::printf("Forward(2) * 2 = %.5e\n", 2.0 * second[0]);
-    std::printf("Reverse(2) = %.5e\n", reverse[1]);
+    std::printf("Test using float\n");
+    test_precision<float>();
+    std::printf("Test using double\n");
+    test_precision<double>();
 }
 EOF
 #
