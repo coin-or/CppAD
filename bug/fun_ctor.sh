@@ -55,11 +55,6 @@ cd build/bug
 # $name.cpp
 cat << EOF > $name.cpp
 #include <cppad/cppad.hpp>
-#include <cstddef>
-#include <cstdio>
-#include <cstring>
-#include <new>
-#include <utility>
 
 int main() {
     std::printf("https://github.com/coin-or/CppAD/issues/263\n");
