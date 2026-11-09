@@ -21,7 +21,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20261108")
+SET(cppad_version "20261109")
 SET(cppad_url          "https://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 IF( NOT DEFINED CMAKE_BUILD_TYPE)
@@ -239,10 +239,6 @@ command_line_arg(cppad_static_lib ${default_cppad_static_lib} BOOL
 # ----------------------------------------------------------------------------
 #
 # Ensure c++11 support
-SET(CMAKE_REQUIRED_DEFINITIONS "")
-SET(CMAKE_REQUIRED_FLAGS       "${cppad_cxx_flags}")
-SET(CMAKE_REQUIRED_INCLUDES    "")
-SET(CMAKE_REQUIRED_LIBRARIES   "")
 SET(source "
 int main(void)
 {   static_assert( __cplusplus >= 201103 , \"c++11 not supported\" );
