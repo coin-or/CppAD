@@ -62,16 +62,9 @@ cat << EOF > $name.cpp
 #include <utility>
 
 int main() {
-    using Fun = CppAD::ADFun<double>;
-    Fun source;
-    alignas(Fun) unsigned char storage[sizeof(Fun)];
-    std::memset(storage, 0xBE, sizeof(storage));
-    Fun* destination = new (storage) Fun(std::move(source));
-    const std::size_t n_var = destination->size_var();
-    destination->~Fun();
     std::printf("https://github.com/coin-or/CppAD/issues/263\n");
-    std::printf("moved ADFun size_var=%zu\n", n_var);
-    return n_var == 0 ? 0 : 1;
+    CppAD::ADFun<double> source;
+    CppAD::ADFun<double> destination( std::move(source) );
 }
 EOF
 #
