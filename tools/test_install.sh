@@ -2,7 +2,7 @@
 set -e -u
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-24 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # This script name is 'test_*' instead of 'check_*' because it requires
 # that cmake has already created build/bukld.ninja or Makefile.
@@ -120,6 +120,26 @@ echo 'ipopt_solve: ./get_started'
 if ! ./get_started
 then
     echo "$program: $(pwd)/get_started test failed."
+    exit 1
+fi
+#
+#
+# Test for https://github.com/coin-or/CppAD/issues/263
+cat << EOF > fun_ctor.cpp
+#include <cppad/cppad.hpp>
+
+int main() {
+    CppAD::ADFun<double> source;
+    CppAD::ADFun<double> destination( std::move(source) );
+    return 0;
+}
+EOF
+echo_eval g++ -fsanitize=undefined -fno-sanitize-recover=undefined \
+    $cflags $libs -Wl,-rpath $rpath fun_ctor.cpp -o fun_ctor
+echo 'issue 263: ./fun_ctor'
+if ! ./fun_ctor
+then
+    echo "$program: $(pwd)/fun_ctor (test for issue 263) failed."
     exit 1
 fi
 # -----------------------------------------------------------------------------

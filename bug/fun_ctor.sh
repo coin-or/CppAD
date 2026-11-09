@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # -----------------------------------------------------------------------------
 set -e -u
 #
@@ -35,7 +35,7 @@ eigen_flags=$(pkg-config -cflags eigen3 | sed -e 's|-I|-isystem |')
 #
 # ipopt_flags
 ipopt_flags=$(
-    pkg-config -cflags ipopt | sed -e 's|-I|-isystem |' -e 's|/coin-or | |' 
+    pkg-config -cflags ipopt | sed -e 's|-I|-isystem |' -e 's|/coin-or | |'
 )
 #
 # link_flags
@@ -81,7 +81,7 @@ cmd="
 echo $cmd
 if ! $cmd
 then
-    echo "The compliation failed"
+    echo "The compile command above failed"
     exit 1
 fi
 #

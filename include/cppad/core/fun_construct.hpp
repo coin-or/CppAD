@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-25 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin fun_construct}
@@ -259,6 +259,7 @@ num_var_tape_(0)
 // (none of the default constructor values matter to the destructor)
 template <class Base, class RecBase>
 ADFun<Base,RecBase>::ADFun(ADFun&& f)
+: ADFun<Base, RecBase>()
 {   swap(f); }
 //
 // destructor

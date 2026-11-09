@@ -13,6 +13,9 @@
     valvector
     rc
     src
+    fsanitize
+    runtime
+    typename
 }
 
 Release Notes for 2026
@@ -20,6 +23,25 @@ Release Notes for 2026
 
 mm-dd
 *****
+
+11-09
+=====
+If the following program was compiled
+using g++ or clang++ with ``-fsanitize=undefined`` :
+{xrst_code cpp}
+#include <cppad/cppad.hpp>
+int main() {
+    CppAD::ADFun<double> source;
+    CppAD::ADFun<double> destination( std::move(source) );
+    return 0;
+}
+{xrst_code}
+the following error was generated when the program ran
+
+    runtime error: load of value ???, which is not a valid value for type
+    'typename std::remove_reference<bool &>::type' (aka 'bool')
+
+This has been fixed.
 
 11-08
 =====
