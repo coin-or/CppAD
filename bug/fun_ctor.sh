@@ -60,13 +60,14 @@ int main() {
     std::printf("https://github.com/coin-or/CppAD/issues/263\n");
     CppAD::ADFun<double> source;
     CppAD::ADFun<double> destination( std::move(source) );
+    return 0;
 }
 EOF
 #
 # $name
 cmd="
-    clang++
-    -fsanitize=undefined
+    g++
+    -fsanitize=undefined -fno-sanitize-recover=undefined
     $name.cpp
     -std=c++14
     -I../../include
@@ -77,7 +78,12 @@ cmd="
     $link_flags
 "
 #
-$cmd
+echo $cmd
+if ! $cmd
+then
+    echo "The compliation failed"
+    exit 1
+fi
 #
 echo "build/bug/$name"
 if ! ./$name
