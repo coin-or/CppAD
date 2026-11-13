@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_POW_INT_HPP
 // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 // SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-// SPDX-FileContributor: 2003-24 Bradley M. Bell
+// SPDX-FileContributor: 2003-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -29,7 +29,7 @@ Determines the value of the power function
 
     {\rm pow} (x, y) = x^y
 
-for integer exponents *n*
+for integer exponents *y*
 using multiplication and possibly division to compute the value.
 The other CppAD :ref:`pow-name` function may use logarithms and exponentiation
 to compute derivatives of the same value
